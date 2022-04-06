@@ -1,6 +1,9 @@
 /obj/projectile/bullet/incendiary
 	damage = 20
+	/// How many firestacks to apply to the target
 	var/fire_stacks = 4
+	/// If TRUE, leaves a trail of hotspots as it flies, very very chaotic
+	var/leaves_fire_trail = TRUE
 
 /obj/projectile/bullet/incendiary/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -11,10 +14,11 @@
 
 /obj/projectile/bullet/incendiary/Move()
 	. = ..()
-	var/turf/location = get_turf(src)
-	if(location)
-		new /obj/effect/hotspot(location)
-		location.hotspot_expose(700, 50, 1)
+	if(leaves_fire_trail)
+		var/turf/location = get_turf(src)
+		if(location)
+			new /obj/effect/hotspot(location)
+			location.hotspot_expose(700, 50, 1)
 
 /// Used in [the backblast element][/datum/element/backblast]
 /obj/projectile/bullet/incendiary/backblast

@@ -166,8 +166,12 @@
 	ears = /obj/item/radio/headset
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id/advanced/bountyhunter
-	l_hand = /obj/item/tank/internals/plasma/full
-	r_hand = /obj/item/flamethrower/full/tank
+	l_hand = /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
+
+	backpack_contents = list(
+		/obj/item/ammo_casing/shotgun/rubbershot = 4,
+		/obj/item/ammo_casing/shotgun/incendiary/no_trail = 4,
+		)
 
 /datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
