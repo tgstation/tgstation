@@ -100,7 +100,7 @@
 	if(overwritten)
 		if(check_area_hazardous(overwritten.type))
 			return // Overwrote a hazardous area, still hazardous fool
-		area_created -= overwritten // While its not guarenteed to be in the area_created list it's a good idea to ensure we dont have handing refs
+		area_created -= overwritten // While its not guaranteed to be in the area_created list it's a good idea to ensure we dont have handing refs
 		area_created += created // Congrats, you are now allowed in this area
 		return
 
