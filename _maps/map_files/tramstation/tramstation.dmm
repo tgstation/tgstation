@@ -6661,6 +6661,9 @@
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/central/greater)
+"bav" = (
+/turf/closed/wall,
+/area/engineering/atmospherics_engine)
 "baw" = (
 /obj/machinery/duct,
 /obj/structure/cable,
@@ -7418,7 +7421,7 @@
 /area/commons/lounge)
 "box" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/maintenance/disposal/incinerator)
 "boB" = (
 /obj/machinery/door/firedoor,
@@ -107616,7 +107619,7 @@ mbE
 one
 dGP
 xAF
-dGP
+one
 one
 one
 wUS
@@ -107873,7 +107876,7 @@ hKI
 one
 kZV
 lKA
-dGP
+one
 dhe
 dhe
 dDG
@@ -108130,7 +108133,7 @@ vKh
 one
 rjA
 gOJ
-dGP
+one
 ajc
 dDG
 dDG
@@ -108387,9 +108390,9 @@ vKh
 one
 pKU
 gju
-dGP
-dGP
-dGP
+one
+one
+one
 aRN
 gPt
 dDG
@@ -108898,7 +108901,7 @@ rzp
 rzp
 nWL
 tVq
-diU
+bav
 dOL
 eep
 box
@@ -109155,7 +109158,7 @@ rzp
 rzp
 tWb
 jbA
-diU
+bav
 hpc
 gyi
 cfV
@@ -109412,7 +109415,7 @@ wNL
 rzp
 aUJ
 eLR
-diU
+bav
 grz
 nJg
 nJg
@@ -109926,7 +109929,7 @@ caj
 bvs
 pOc
 nET
-diU
+bav
 pQG
 ddE
 nhy
@@ -110183,7 +110186,7 @@ bvs
 bvs
 tuo
 rkS
-diU
+bav
 uMy
 nJg
 nJg
@@ -110440,7 +110443,7 @@ rzp
 rzp
 mwL
 fzd
-diU
+bav
 aay
 fks
 hfT

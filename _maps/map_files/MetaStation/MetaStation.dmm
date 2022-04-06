@@ -11807,10 +11807,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"ddN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/closed/wall,
-/area/maintenance/starboard/greater)
 "ddR" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/table/reinforced,
@@ -22521,6 +22517,10 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"gXl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/closed/wall,
+/area/engineering/atmos)
 "gXE" = (
 /obj/effect/turf_decal/siding/white,
 /obj/effect/turf_decal/trimline/brown/warning,
@@ -36982,7 +36982,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/closed/wall/r_wall,
+/turf/closed/wall,
 /area/engineering/atmos)
 "mng" = (
 /obj/machinery/shower{
@@ -51434,7 +51434,7 @@
 /area/engineering/gravity_generator)
 "rAg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/maintenance/starboard/lesser)
 "rAm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -62107,7 +62107,7 @@
 /area/cargo/sorting)
 "vKF" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/maintenance/starboard/greater)
 "vKT" = (
 /obj/structure/disposalpipe/segment{
@@ -63725,7 +63725,7 @@
 /area/engineering/storage/tech)
 "wsi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/service/janitor)
 "wsp" = (
 /obj/machinery/door/window/left/directional/south{
@@ -68504,7 +68504,7 @@
 /area/command/heads_quarters/rd)
 "yiI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/maintenance/starboard/greater)
 "yiT" = (
 /obj/structure/table/glass,
@@ -108239,7 +108239,7 @@ kyF
 deE
 uMS
 jll
-kyF
+jvD
 yiI
 aGJ
 xOg
@@ -108753,7 +108753,7 @@ qjr
 vuA
 hRL
 pxk
-ddN
+xkU
 aaU
 afQ
 xCy
@@ -109010,7 +109010,7 @@ dFI
 kyF
 xEw
 mEA
-ddN
+xkU
 cba
 elA
 hXQ
@@ -109268,7 +109268,7 @@ jvD
 gJp
 jEv
 xkU
-qYv
+gXl
 mmR
 qYv
 gzN

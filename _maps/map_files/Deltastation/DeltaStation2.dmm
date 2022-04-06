@@ -73800,8 +73800,8 @@
 /obj/effect/turf_decal/bot,
 /obj/item/reagent_containers/food/condiment/enzyme{
 	layer = 5;
-	pixel_y = 8;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /turf/open/floor/iron,
 /area/service/kitchen/abandoned)
@@ -80976,6 +80976,9 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
+"vyW" = (
+/turf/closed/wall,
+/area/maintenance/disposal/incinerator)
 "vzf" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -111929,7 +111932,7 @@ mmL
 fhh
 oda
 dOx
-aFr
+vyW
 sxy
 rau
 olt
@@ -112186,7 +112189,7 @@ gUc
 qTM
 wkQ
 iqx
-aFr
+vyW
 enz
 kTq
 gWr
@@ -113211,10 +113214,10 @@ aFq
 aFq
 mTG
 gpf
-aFr
-aFr
-aFr
-aFr
+vyW
+vyW
+vyW
+vyW
 qqN
 mRd
 wOd
