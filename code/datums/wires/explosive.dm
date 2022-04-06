@@ -50,6 +50,11 @@
 		var/obj/item/grenade/chem_grenade/grenade = holder
 		grenade.landminemode = sensor
 		sensor.proximity_monitor.set_ignore_if_not_on_turf(FALSE)
+	else if(istype(S,/obj/item/assembly/health))
+		var/obj/item/assembly/health/sensor = S
+		if(!sensor.secured)
+			sensor.toggle_secure()
+		sensor.toggle_scan(TRUE)
 	fingerprint = S.fingerprintslast
 	return ..()
 
