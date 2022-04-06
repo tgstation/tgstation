@@ -436,12 +436,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 
 /mob/living/proc/treat_message(message)
-
 	if(HAS_TRAIT(src, TRAIT_UNINTELLIGIBLE_SPEECH))
 		message = unintelligize(message)
-
-	if(derpspeech)
-		message = derpspeech(message, stuttering)
 
 	SEND_SIGNAL(src, COMSIG_LIVING_TREAT_MESSAGE, args)
 
@@ -489,7 +485,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			. = "shakily signs"
 		else
 			. = "stammers"
-	else if(derpspeech)
+	else if(has_status_effect(/datum/status_effect/speech/stutter/derpspeech))
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
 			. = "incoherently signs"
 		else

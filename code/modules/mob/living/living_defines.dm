@@ -125,9 +125,6 @@
 	var/list/status_effects ///a list of all status effects the mob has
 	var/druggy = 0
 
-	//Speech
-	var/derpspeech = 0
-
 	var/list/implants = null
 
 	var/last_words ///used for database logging

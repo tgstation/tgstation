@@ -674,6 +674,40 @@
 		apply_status_effect(impediment, duration)
 
 /**
+ * Sets a speech impediment of some kind of a mob's speech to a specific value.
+ * If only_if_higher is TRUE, it will only set the value up to the passed duration,
+ * so any pre-existing speech impediments won't be reduced down
+ *
+ * duration - the duration, in deciseconds, of the impediment. 0 or lower will either remove the current impediment or do nothing if none are present
+ * impediment - the type of impediment status effect given to the mob
+ * only_if_higher - if TRUE, we will only set the impediment to the new duration if the new duration is longer than any existing duration
+ */
+/mob/living/proc/set_speech_impediment(duration, impediment, only_if_higher = FALSE)
+	if(!isnum(duration))
+		CRASH("add_speech_impediment: called with an invalid duration. (Got: [duration])")
+
+	if(!ispath(impediment, /datum/status_effect/speech))
+		CRASH("add_speech_impediment: called with an invalid slurring_type. (Got: [impediment])")
+
+	var/datum/status_effect/speech/existing = has_status_effect(impediment)
+	if(existing)
+		// set_speech_impediment to 0 technically acts as a way to clear speech impediments
+		if(duration <= 0)
+			qdel(existing)
+			return
+
+		if(only_if_higher)
+			var/remaining_duration = existing.duration - world.time
+			if(remaining_duration >= duration)
+				return
+
+		existing.duration = world.time + duration
+
+	else if(duration > 0)
+		apply_status_effect(impediment, duration)
+
+
+/**
  * Removes slurring of some kind from the mob's speech, if they are currently slurring.
  *
  * duration - the duration, in deciseconds, to remove from the mob's current slurring.

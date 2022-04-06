@@ -609,8 +609,7 @@
 			quirk_holder.Jitter(10)
 			msg += "causing you to start fidgeting!"
 		if(2)
-			//quirk_holder.stuttering = max(3, quirk_holder.stuttering)
-			quirk_holder.add_speech_impediment(6 SECONDS, /datum/status_effect/speech/stutter)
+			quirk_holder.set_speech_impediment(6 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 			msg += "causing you to start stuttering!"
 		if(3)
 			quirk_holder.Stun(2 SECONDS)

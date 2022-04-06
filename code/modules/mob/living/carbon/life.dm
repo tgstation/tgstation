@@ -415,7 +415,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 #define BALLMER_POINTS 5
 
-//this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
+// This updates all special effects that really should be status effect datums: Druggy, Hallucinations, Drunkenness, Mute, etc..
 /mob/living/carbon/handle_status_effects(delta_time, times_fired)
 	..()
 

@@ -23,7 +23,7 @@
 
 	user.do_attack_animation(M)
 	M.Paralyze(100)
-	M.apply_effect(EFFECT_STUTTER, 5)
+	M.add_speech_impediment(10 SECONDS, /datum/status_effect/speech/stutter)
 
 	M.visible_message(span_danger("[user] prods [M] with [src]!"), \
 					span_userdanger("[user] prods you with [src]!"))

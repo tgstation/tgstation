@@ -1,5 +1,6 @@
 /datum/status_effect/speech
-
+	id = null
+	alert_type = null
 
 /datum/status_effect/speech/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
@@ -12,23 +13,37 @@
 /datum/status_effect/speech/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE)
 
+/**
+ * Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
+ *
+ * Iterates over all of the characters in the past message
+ * and calls apply_speech() on each.
+ *
+ * message_args[1] is the original message passed into the signal.
+ */
 /datum/status_effect/speech/proc/handle_message(datum/source, list/message_args)
 	SIGNAL_HANDLER
 
-	var/phrase = html_decode(message_args["message"])
+	var/phrase = html_decode(message_args[1])
 	if(!length(phrase))
 		return
 
 	var/final_phrase = ""
+	var/original_char = ""
 
 	for(var/i = 1, i <= length(phrase), i += length(original_char))
-		var/original_char = phrase[i]
-		var/modified_char = original_char
+		original_char = phrase[i]
 
-		final_phrase += apply_speech(original_char, modified_char)
+		final_phrase += apply_speech(original_char, original_char)
 
-	message_args["message"] = sanitize(final_phrase)
+	message_args[1] = sanitize(final_phrase)
 
+/**
+ * Applies the speech effects on the past character, changing
+ * the original_char into the modified_char.
+ *
+ * Return the modified_char to be reapplied to the message.
+ */
 /datum/status_effect/speech/proc/apply_speech(original_char, modified_char)
 	stack_trace("[type] didn't implement apply_speech.")
 	return original_char
@@ -60,6 +75,45 @@
 
 	return modified_char
 
+/datum/status_effect/speech/stutter/derpspeech
+	id = "derp_stutter"
+	/// The probability of making our message entirely uppercase + adding exclamations
+	var/capitalize_prob = 50
+	/// The probability of adding a stutter to the entire message, if we're not already stuttering
+	var/message_stutter_prob = 15
+
+/datum/status_effect/speech/stutter/derpspeech/handle_message(datum/source, list/message_args)
+
+	var/message = message_args[1]
+
+	message = replacetext(message, " am ", " ")
+	message = replacetext(message, " is ", " ")
+	message = replacetext(message, " are ", " ")
+	message = replacetext(message, "you", "u")
+	message = replacetext(message, "help", "halp")
+	message = replacetext(message, "grief", "grife")
+	message = replacetext(message, "space", "spess")
+	message = replacetext(message, "carp", "crap")
+	message = replacetext(message, "reason", "raisin")
+
+	if(prob(capitalize_prob))
+		var/exclamation = pick("!", "!!", "!!!")
+		message = uppertext(message)
+		message += "[apply_speech(exclamation, exclamation)]"
+
+	message_args[1] = message
+
+	var/mob/living/living_source = source
+	if(!isliving(source) || living_source.has_status_effect(/datum/status_effect/speech/stutter))
+		return
+
+	// If we're not stuttering, we have a chance of calling parent here, adding stutter effects
+	if(prob(message_stutter_prob))
+		return ..()
+
+	// Otherwise just return and don't call parent, we already modified our speech
+	return
+
 /datum/status_effect/speech/slurring
 	/// The chance that any given character in a message will be replaced with a common character
 	var/common_prob = 25
@@ -87,7 +141,7 @@
 	if(!.)
 		return
 
-	var/list/speech_changes = strings(text_modification_file)
+	var/list/speech_changes = strings(text_modification_file, "replacements")
 	common_replacements = speech_changes["characters"]["common"]
 	uncommon_replacements = speech_changes["characters"]["uncommon"]
 	string_replacements = speech_changes["string_replacements"]
@@ -151,3 +205,8 @@
 
 /datum/status_effect/speech/slurring/heretic
 	id = "heretic_slurring"
+	common_prob = 40
+	uncommon_prob = 20
+	replacement_prob = 10
+	doubletext_prob = 0
+	text_modification_file = "slurring_heretic_text.json"

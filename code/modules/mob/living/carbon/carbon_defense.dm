@@ -214,8 +214,10 @@
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
 				Paralyze(power*20)
-				if(stuttering < power)
-					stuttering = power
+				add_speech_impediment()
+				//if(stuttering < power)
+				//	stuttering = power
+				add_speech_impediment(power / 2, /datum/status_effect/speech/stutter)
 				if (prob(stunprob) && M.powerlevel >= 8)
 					adjustFireLoss(M.powerlevel * rand(6,10))
 					updatehealth()

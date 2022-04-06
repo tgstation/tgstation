@@ -564,8 +564,7 @@
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.Jitter(20)
 	target.set_confusion(max(10, target.get_confusion()))
-	//target.stuttering = max(8, target.stuttering)
-	target.add_speech_impediment(16 SECONDS, /datum/status_effect/speech/stutter)
+	target.set_speech_impediment(16 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 2 SECONDS)

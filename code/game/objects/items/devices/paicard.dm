@@ -117,7 +117,9 @@
 		if("fix_speech")
 			to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
 			to_chat(usr, span_notice("You fix the pAI's speech modulator."))
-			pai.remove_status_effect(/datum/status_effect/speech)
+			for(var/effect in typesof(/datum/status_effect/speech))
+				pai.remove_status_effect(effect)
+
 		if("request")
 			if(!pai)
 				SSpai.findPAI(src, usr)

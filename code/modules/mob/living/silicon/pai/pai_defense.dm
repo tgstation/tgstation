@@ -20,7 +20,7 @@
 			add_speech_impediment(INFINITY, /datum/status_effect/speech/slurring/normal)
 			to_chat(src, span_danger("Warning: Audio synthesizer CPU stuck."))
 		if(3)
-			derpspeech = 1 // Ditto.
+			add_speech_impediment(INFINITY, /datum/status_effect/speech/stutter/derpspeech)
 			to_chat(src, span_danger("Warning: Vocabulary databank corrupted."))
 	if(prob(40))
 		mind.language_holder.selected_language = get_random_spoken_language()

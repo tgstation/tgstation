@@ -72,46 +72,6 @@
 			. += "*"
 	return sanitize(.)
 
-///Adds stuttering to the message passed in
-/proc/stutter(phrase)
-	phrase = html_decode(phrase)
-	var/leng = length(phrase)
-	. = ""
-	var/newletter = ""
-	var/rawchar = ""
-	var/static/regex/nostutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
-	for(var/i = 1, i <= leng, i += length(rawchar))
-		rawchar = newletter = phrase[i]
-		if(prob(80) && !nostutter.Find(rawchar))
-			if(prob(10))
-				newletter = "[newletter]-[newletter]-[newletter]-[newletter]"
-			else if(prob(20))
-				newletter = "[newletter]-[newletter]-[newletter]"
-			else if (prob(5))
-				newletter = ""
-			else
-				newletter = "[newletter]-[newletter]"
-		. += newletter
-	return sanitize(.)
-
-///Convert a message to derpy speak
-/proc/derpspeech(message, stuttering)
-	message = replacetext(message, " am ", " ")
-	message = replacetext(message, " is ", " ")
-	message = replacetext(message, " are ", " ")
-	message = replacetext(message, "you", "u")
-	message = replacetext(message, "help", "halp")
-	message = replacetext(message, "grief", "grife")
-	message = replacetext(message, "space", "spess")
-	message = replacetext(message, "carp", "crap")
-	message = replacetext(message, "reason", "raisin")
-	if(prob(50))
-		message = uppertext(message)
-		message += "[stutter(pick("!", "!!", "!!!"))]"
-	if(!stuttering && prob(15))
-		message = stutter(message)
-	return message
-
 /**
  * Turn text into complete gibberish!
  *
