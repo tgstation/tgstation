@@ -482,12 +482,20 @@
 
 	if(href_list["add_antag"])
 		add_antag_wrapper(text2path(href_list["add_antag"]),usr)
+
 	if(href_list["remove_antag"])
 		var/datum/antagonist/A = locate(href_list["remove_antag"]) in antag_datums
 		if(!istype(A))
 			to_chat(usr,span_warning("Invalid antagonist ref to be removed."))
 			return
 		A.admin_remove(usr)
+
+	if(href_list["open_antag_vv"])
+		var/datum/antagonist/to_vv = locate(href_list["open_antag_vv"]) in antag_datums
+		if(!istype(to_vv))
+			to_chat(usr, span_warning("Invalid antagonist ref to be vv'd."))
+			return
+		usr.client?.debug_variables(to_vv)
 
 	if (href_list["role_edit"])
 		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.name_occupations)

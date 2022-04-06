@@ -203,10 +203,10 @@
 		var/mob/user = throwingdatum.thrower
 		log_combat(throwingdatum?.thrower, hit_atom, "consumed", src)
 		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)], thrown by [key_name_admin(user)].")
-		investigate_log("has consumed [key_name(victim)], thrown by [key_name(user)]", INVESTIGATE_SUPERMATTER)
+		investigate_log("has consumed [key_name(victim)], thrown by [key_name(user)]", INVESTIGATE_ENGINE)
 	else
 		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)] via throw impact.")
-		investigate_log("has consumed [key_name(victim)] via throw impact.", INVESTIGATE_SUPERMATTER)
+		investigate_log("has consumed [key_name(victim)] via throw impact.", INVESTIGATE_ENGINE)
 	victim.visible_message(span_danger("As [victim] is hit by [src], both flash into dust and silence fills the room..."),\
 		span_userdanger("You're hit by [src] and everything suddenly goes silent.\n[src] flashes into dust, and soon as you can register this, you do as well."),\
 		span_hear("Everything suddenly goes silent."))
@@ -321,11 +321,11 @@
 			return
 		victim.dust()
 		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)].")
-		investigate_log("has consumed [key_name(victim)].", INVESTIGATE_SUPERMATTER)
+		investigate_log("has consumed [key_name(victim)].", INVESTIGATE_ENGINE)
 	else if(istype(AM, /obj/singularity))
 		return
 	else
-		investigate_log("has consumed [AM].", INVESTIGATE_SUPERMATTER)
+		investigate_log("has consumed [AM].", INVESTIGATE_ENGINE)
 		qdel(AM)
 	if (user)
 		log_combat(user, AM, "consumed", sliver, "via [src]")

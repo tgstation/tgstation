@@ -123,3 +123,126 @@
   - rscadd: Added an ic atmos reaction guide. Available in your atmos control consoles/monitors,
       ntosatmos app, and analyzer.
   - code_imp: Some changes to how gas canister descriptions are generated.
+2022-04-02:
+  Ebin-Halcyon:
+  - imageadd: New and updated maid costume sprites
+  Rhials:
+  - spellcheck: Cargo crate naming has been made slightly more consistent. Rejoice.
+  - bugfix: When an airlock that is being hacked receives plasteel reinforcement,
+      it will no longer keep the hacking UI open and useable.
+  TheSmallBlue:
+  - spellcheck: There are no longer two ID Getter Components
+  TiviPlus:
+  - code_imp: changed some mech FOV cone backend to work better
+  - bugfix: fixed mmis seeing the wrong mech UI
+  san7890:
+  - rscadd: A new plushie has appeared on TramStation. Seek it out if you dare.
+  timothymtorres:
+  - bugfix: Fix shutters contextual screentips to not display as open with LMB.
+2022-04-03:
+  Kapu1178:
+  - balance: Humans aren't spaceproof anymore
+  - rscadd: Limbgrower limbs are now a sickly green
+  - refactor: Digitigrade legs should now behave consistently.
+  - refactor: Limbs will no longer update appearance as owner is transferred, allowing
+      for multi-species frankensteins
+  - bugfix: CHANGELING TRANSFORM FUNCTIONS PROPERLY
+  - rscdel: Synths and synth-related mechanics (Synth fugative)
+  RandomGamer123:
+  - bugfix: Stops find_safe_turf, used by salvation signposts in deep space and the
+      super secret room, from teleporting people into the windows of the toxins test
+      area and killing them if they didn't have spaceproof equipment.
+  Rhials:
+  - bugfix: Fixed up the wiring in Icebox Xenobiology's shutter buttons. The two buttons
+      no longer close the same shutters, and now close their intended targets.
+  Zonespace27:
+  - bugfix: Standard HoS headset no longer protects against loud sounds.
+  dragomagol:
+  - admin: singulo and supermatter logging have been combined into engine logging!
+  san7890:
+  - bugfix: You know that shower room in the northeastern portion of IceBox Station?
+      We fixed the, erm, posters, there.
+  timothymtorres:
+  - bugfix: Fix Cryo areas to have CO2 filtering from the gas loops.
+2022-04-04:
+  Ebb-Real:
+  - expansion: Bandanas are now craftable from 2 pieces of cloth.
+  - expansion: Adds the striped bandana and adds various preset colored bandanas to
+      clothing vendors and lockers.
+  - expansion: You can now dye bandanas with washing machines and customize bandanas
+      from inside the clothesmate.
+  - bugfix: You can no longer reset all the values of a bandana just by adjusting
+      it, this included integrity.
+  - imageadd: Adds bandana GAGS sprites.
+  - imagedel: Removes old non GAGS sprites.
+  - refactor: Refractors bandana neckerchief code.
+  Fikou:
+  - rscadd: Adds the Navigate verb, creates a holographic path to an area of your
+      choosing.
+  - rscdel: Removed wayfinding pinpointers.
+  Ghommie:
+  - bugfix: Fixed large persistent paintings being shown off the wall
+  Wallem:
+  - imageadd: Resprites the mass driver
+  azizonkg:
+  - bugfix: fixed typo in filename that cause build fail
+  wesoda25:
+  - admin: admin messages now appear every time you connect until you click a link
+      confirming that you read them
+2022-04-05:
+  JohnFulpWillard:
+  - bugfix: DNA Vault's DNA scanners no longer accept Plasmamen, Skeleton, and Golems
+      as DNA.
+  - expansion: 'A new Traitor Final objective has been added: Harvest the DNA of a
+      Space Carp, and use it to turn yourself into a Space Dragon!'
+2022-04-06:
+  AdipemDragon:
+  - imageadd: Specialized medkits have some new distinct symbols to aid in distinguishing
+      them on the spot.
+  ArcaneDefence:
+  - qol: Moffins are now found in the mothic food category instead of the pastry category.
+  Cheshify:
+  - bugfix: The detective now has the correct consoles on icebox
+  ErdinyoBarboza:
+  - spellcheck: Sulphuric Acid is now properly named Sulfuric Acid.
+  Fikou:
+  - bugfix: fixes navigation ui for pais and borgs
+  Melbert:
+  - expansion: Metastation's Drone Room is now its own area, with its APC and Air
+      Alarm, instead of sharing an area with the maintenance. It has otherwise remained
+      largely unchanged, though some extra wall amenities were afforded to it.
+  - admin: Adds "Open VV" to traitor panel antags, which opens that antag's vv panel.
+  - admin: '"Mark as in/completed" by objectives in the traitor panel now changes
+      color based on whether the objective is determined to be "complete", instead
+      of whether an admin has marked it to be complete. For some objectives, it might
+      not update color (only text) when an admin marks it as completed - this means
+      the objective disregards whether an admin has marked it as complete.'
+  SmArtKar:
+  - spellcheck: Drop pod debris is no longer capitalised
+  Son-of-Space:
+  - bugfix: Labor shuttle is useable again on Meta, Box, Tram, and Runtime.
+  - bugfix: fixed a shutter name on IceBox
+  dragomagol:
+  - bugfix: paper logs once again include the paper's contents
+  - bugfix: Airlock cycle links work now!
+  san7890:
+  - bugfix: Nanotrasen dug around on TramStation, DeltaStation, and KiloStation and
+      found that grilles were covering a few gas flow meters in each of their atmospherics
+      divisions. This should now be fully rectified.
+  - rscadd: TramStation's Supply Division has had a redrawing in areas on both the
+      upper and lower decks.
+  - imageadd: New area turfs for the Station-Side Mining Dock have been added to our
+      catalogue. We hope that you all eagerly anticipate this new collection as it's
+      quite vogue for Spring fashion.
+  - balance: IceBoxStation's Public Mining Storage got shuffled around a bit. Nanotrasen
+      realized they were spending too much on reinforced walls, and decided to re-opt
+      for normal walls instead. To accomodate for this downturn in reinforced wallage,
+      another layer of protection was added to the southern wall of the AI's Upload.
+  - bugfix: The Public Mining Storage now has an APC. Whoopsie.
+  - bugfix: On the mapping end, it's now easier than ever to tell whatever the fuck
+      "Mining" is (it goes for so many things these days it's ridiculous) from "Mining
+      Storage". Very cool.
+  - bugfix: On Tramstation, the external access airlock to the Supermatter's cooling
+      loop uses a different form of lighting that functions in the outside setting.
+  vincentiusvin:
+  - bugfix: fixed breathedeep catridges not working
