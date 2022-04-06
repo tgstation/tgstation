@@ -474,3 +474,20 @@ MAXFINE 2000
 
 ## Whether native FoV is enabled for all people.
 #NATIVE_FOV
+
+### Free golems
+## Whether or not free golems should be mechanically disencouraged to visit the station.
+## All other options will not go into effect if this is off.
+FREE_GOLEMS_STAY_HOME
+
+## How much click delay free golems have on station.
+## Set to 1 for no change.
+FREE_GOLEM_NEXT_MOVE_MODIFIER 4
+
+## How much action speed should be slowed down for free golems on station.
+## Set to 0 for no change.
+FREE_GOLEM_ACTION_SPEED_SLOWDOWN 4
+
+## How much a free golem's move speed should be lowered on station.
+## Set to 0 for no change.
+FREE_GOLEM_MOVE_SPEED_MODIFIER 4

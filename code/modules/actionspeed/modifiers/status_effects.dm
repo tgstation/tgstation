@@ -6,6 +6,3 @@
 
 /datum/actionspeed_modifier/nooartrium
 	multiplicative_slowdown = 0.5
-
-/datum/actionspeed_modifier/status_effect/hazard_area
-	multiplicative_slowdown = 4

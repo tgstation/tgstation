@@ -15,7 +15,3 @@
 /datum/movespeed_modifier/status_effect/sepia
 	variable = TRUE
 	blacklisted_movetypes = (FLYING|FLOATING)
-
-/datum/movespeed_modifier/status_effect/hazard_area
-	multiplicative_slowdown = 4
-

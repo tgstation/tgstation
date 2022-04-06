@@ -9,18 +9,34 @@
 	var/list/area_blacklist
 	/// The whitelist of areas that the parent is allowed to be in. If set this overrides the blacklist
 	var/list/area_whitelist
+	/// How much to slow down clicks
+	var/next_move_modifier = 4
+	/// How much to slow down actions
+	var/action_speed_slowdown = 4
+	/// How much to slow down movespeed
+	var/move_speed_modifier = 4
 	/// A variable storing the typepath of the last checked area to prevent any further logic running if it has not changed
 	VAR_PRIVATE/last_parent_area
 
-/datum/component/hazard_area/Initialize(area_blacklist, area_whitelist)
+/datum/component/hazard_area/Initialize(
+	area_blacklist,
+	area_whitelist,
+	next_move_modifier,
+	action_speed_slowdown,
+	move_speed_modifier,
+)
 	. = ..()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(!islist(area_blacklist) && !islist(area_whitelist))
 		stack_trace("[type] - neither area_blacklist nor area_whitelist were provided.")
 		return COMPONENT_INCOMPATIBLE
+
 	src.area_blacklist = area_blacklist
 	src.area_whitelist = area_whitelist
+	src.next_move_modifier = next_move_modifier
+	src.action_speed_slowdown = action_speed_slowdown
+	src.move_speed_modifier = move_speed_modifier
 
 /datum/component/hazard_area/RegisterWithParent()
 	var/mob/parent_mob = parent
@@ -83,7 +99,7 @@
 	var/should_have_status_effect = check_area_hazardous(last_parent_area)
 
 	if(should_have_status_effect && !effect) // Should have the status - and doesnt
-		parent_living.apply_status_effect(/datum/status_effect/hazard_area)
+		parent_living.apply_status_effect(/datum/status_effect/hazard_area, next_move_modifier, action_speed_slowdown, move_speed_modifier)
 		if(parent_living.buckled)
 			parent_living.buckled.balloon_alert(parent, "you fall off!")
 			parent_living.buckled.unbuckle_mob(parent_living, force=TRUE)
@@ -111,20 +127,48 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/hazard_area
 
+	var/next_move_modifier = 4
+	var/action_speed_slowdown = 4
+	var/move_speed_modifier = 4
+
 /datum/status_effect/hazard_area/nextmove_modifier()
-	return 4
+	return next_move_modifier
 
 /datum/status_effect/hazard_area/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area, update=TRUE)
-	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area, update=TRUE)
+	owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area, update = TRUE, multiplicative_slowdown = move_speed_modifier)
+	owner.add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area, update = TRUE, multiplicative_slowdown = action_speed_slowdown)
 
 /datum/status_effect/hazard_area/on_remove()
 	. = ..()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area, update=TRUE)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area, update=TRUE)
 
+/datum/status_effect/hazard_area/on_creation(
+	mob/living/new_owner,
+	next_move_modifier,
+	action_speed_slowdown,
+	move_speed_modifier,
+)
+	. = ..()
+
+	if (!isnull(next_move_modifier))
+		src.next_move_modifier = next_move_modifier
+
+	if (!isnull(action_speed_slowdown))
+		src.action_speed_slowdown = action_speed_slowdown
+
+	if (!isnull(move_speed_modifier))
+		src.move_speed_modifier = move_speed_modifier
+
 /atom/movable/screen/alert/status_effect/hazard_area
 	name = "Hazardous Area"
 	desc = "The area you are currently within is incredibly hazardous to you. Check your surroudings and vacate as soon as possible."
 	icon_state = "hazard_area"
+
+
+/datum/actionspeed_modifier/status_effect/hazard_area
+	variable = TRUE
+
+/datum/movespeed_modifier/status_effect/hazard_area
+	variable = TRUE

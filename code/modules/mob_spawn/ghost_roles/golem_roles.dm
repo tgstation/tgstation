@@ -52,10 +52,8 @@
 		if (policy)
 			to_chat(new_spawn, policy)
 		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
-		var/static/list/allowed_areas
-		if(!allowed_areas)
-			allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin))
-		new_spawn.AddComponent(/datum/component/hazard_area, area_whitelist=allowed_areas)
+
+		try_keep_home(new_spawn)
 	else
 		new_spawn.mind.enslave_mind_to_creator(owner)
 		log_game("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
@@ -70,6 +68,22 @@
 		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/servant_golem))
 	else
 		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/free_golem))
+
+/obj/effect/mob_spawn/ghost_role/human/golem/proc/try_keep_home(mob/new_spawn)
+	var/static/list/allowed_areas
+	if (!allowed_areas)
+		allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin))
+
+	if (!CONFIG_GET(flag/free_golems_stay_home))
+		return
+
+	new_spawn.AddComponent(
+		/datum/component/hazard_area, \
+		area_whitelist = allowed_areas, \
+		next_move_modifier = CONFIG_GET(number/free_golem_next_move_modifier), \
+		action_speed_slowdown = CONFIG_GET(number/free_golem_action_speed_slowdown), \
+		move_speed_modifier = CONFIG_GET(number/free_golem_move_speed_modifier), \
+	)
 
 /obj/effect/mob_spawn/ghost_role/human/golem/attack_hand(mob/user, list/modifiers)
 	. = ..()

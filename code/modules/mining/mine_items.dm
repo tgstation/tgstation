@@ -84,7 +84,8 @@
 		to_chat(user, span_warning("You get a feeling that leaving the station might be a REALLY dumb idea..."))
 		dumb_rev_heads += user.mind
 		return
-	. = ..()
+
+	return ..()
 
 /obj/machinery/computer/shuttle/mining/common
 	name = "lavaland shuttle console"
