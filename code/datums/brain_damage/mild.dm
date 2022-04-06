@@ -93,7 +93,7 @@
 				owner.add_confusion(10)
 				owner.blur_eyes(10)
 			if(6 to 9)
-				owner.slurring += 30
+				owner.add_slurring(1 MINUTES)
 			if(10)
 				to_chat(owner, span_notice("You forget for a moment what you were doing."))
 				owner.Stun(20)

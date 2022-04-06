@@ -1,0 +1,19 @@
+{
+	"characters": {
+		"common": {
+			"o": "u",
+			"t": "ch",
+			"a": "ah",
+			"u": "oo",
+			"c": " NAR ",
+			"s": " SIE "
+		},
+		"uncommon": {
+			" ": "...huuuhhh...",
+			".": "  *BURP*."
+		}
+	},
+	"string_additions": [
+		"'"
+	]
+}

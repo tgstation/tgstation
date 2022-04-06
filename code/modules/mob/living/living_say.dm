@@ -446,11 +446,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(stuttering)
 		message = stutter(message)
 
-	if(slurring)
-		message = slur(message)
-
-	if(cultslurring)
-		message = cultslur(message)
+	var/list/message_args = args
+	SEND_SIGNAL(src, COMSIG_LIVING_TREAT_MESSAGE, args)
 
 	message = capitalize(message)
 

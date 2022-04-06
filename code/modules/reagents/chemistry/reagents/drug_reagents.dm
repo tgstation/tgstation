@@ -445,8 +445,9 @@
 	addiction_types = list(/datum/addiction/hallucinogens = 12)
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, delta_time, times_fired)
-	if(!psychonaut.slurring)
-		psychonaut.slurring = 1 * REM * delta_time
+	if(!psychonaut.has_status_effect(/datum/status_effect/slurring))
+		psychonaut.add_slurring(1 SECONDS * REM * delta_time)
+
 	switch(current_cycle)
 		if(1 to 5)
 			if(DT_PROB(5, delta_time))

@@ -163,10 +163,6 @@
 /mob/living/proc/handle_status_effects(delta_time, times_fired)
 	if(stuttering)
 		stuttering = max(stuttering - (0.5 * delta_time), 0)
-	if(slurring)
-		slurring = max(slurring - (0.5 * delta_time),0)
-	if(cultslurring)
-		cultslurring = max(cultslurring - (0.5 * delta_time), 0)
 
 /mob/living/proc/handle_traits(delta_time, times_fired)
 	//Eyes

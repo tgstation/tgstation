@@ -458,7 +458,7 @@
 				var/mob/living/carbon/C = L
 				C.silent += 6
 				C.stuttering += 15
-				C.cultslurring += 15
+				C.add_slurring(30 SECONDS, /datum/status_effect/slurring/cult)
 				C.Jitter(1.5 SECONDS)
 		uses--
 	..()
@@ -755,7 +755,7 @@
 				if(H.stat == DEAD)
 					to_chat(user,span_warning("[H.p_their(TRUE)] blood has stopped flowing, you'll have to find another way to extract it."))
 					return
-				if(H.cultslurring)
+				if(H.has_status_effect(/datum/status_effect/slurring/cult))
 					to_chat(user,span_danger("[H.p_their(TRUE)] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!"))
 					return
 				if(H.blood_volume > BLOOD_VOLUME_SAFE)

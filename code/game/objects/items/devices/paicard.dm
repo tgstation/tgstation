@@ -118,7 +118,7 @@
 			to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
 			to_chat(usr, span_notice("You fix the pAI's speech modulator."))
 			pai.stuttering = 0
-			pai.slurring = 0
+			pai.remove_status_effect(/datum/status_effect/slurring)
 			pai.derpspeech = 0
 		if("request")
 			if(!pai)

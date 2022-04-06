@@ -84,7 +84,7 @@
 	M.disgust = 0
 	M.drowsyness = 0
 	M.stuttering = 0
-	M.slurring = 0
+	M.remove_status_effect(/datum/status_effect/slurring)
 	M.jitteriness = 0
 	M.hallucination = 0
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
@@ -986,13 +986,13 @@
 	ph = 4
 	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	inverse_chem_val 	= 0.35
-	inverse_chem		= /datum/reagent/inverse/antihol
+	inverse_chem_val = 0.35
+	inverse_chem = /datum/reagent/inverse/antihol
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = 0
 	M.set_drowsyness(0)
-	M.slurring = 0
+	M.remove_status_effect(/datum/status_effect/slurring)
 	M.set_confusion(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	M.adjustToxLoss(-0.2 * REM * delta_time, 0)

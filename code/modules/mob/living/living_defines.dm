@@ -127,8 +127,6 @@
 
 	//Speech
 	var/stuttering = 0
-	var/slurring = 0
-	var/cultslurring = 0
 	var/derpspeech = 0
 
 	var/list/implants = null

@@ -1470,9 +1470,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_confusion(max(drinker.get_confusion() + (2 * REM * delta_time),0))
 		drinker.Dizzy(10 * REM * delta_time)
-	if (!drinker.slurring)
-		drinker.slurring = 1 * REM * delta_time
-	drinker.slurring += 3 * REM * delta_time
+	drinker.add_slurring(6 SECONDS * REM * delta_time)
 	switch(current_cycle)
 		if(51 to 200)
 			drinker.Sleeping(100 * REM * delta_time)
@@ -1499,9 +1497,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	drinker.dizziness += 1.5 * REM * delta_time
 	switch(current_cycle)
 		if(15 to 45)
-			if(!drinker.slurring)
-				drinker.slurring = 1 * REM * delta_time
-			drinker.slurring += 3 * REM * delta_time
+			drinker.add_slurring(3 SECONDS * REM * delta_time)
+
 		if(45 to 55)
 			if(DT_PROB(30, delta_time))
 				drinker.set_confusion(max(drinker.get_confusion() + 3, 0))
@@ -1574,8 +1571,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/hippies_delight/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if (!drinker.slurring)
-		drinker.slurring = 1 * REM * delta_time
+	if(!drinker.has_status_effect(/datum/status_effect/slurring))
+		drinker.add_slurring(1 SECONDS * REM * delta_time)
+
 	switch(current_cycle)
 		if(1 to 5)
 			drinker.Dizzy(10 * REM * delta_time)
@@ -1632,7 +1630,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.cultslurring = min(drinker.cultslurring + (3 * REM * delta_time), 3)
+	drinker.add_slurring(3 SECONDS * REM * delta_time, /datum/status_effect/slurring/cult, max_amount = 3 SECONDS)
 	drinker.stuttering = min(drinker.stuttering + (3 * REM * delta_time), 3)
 	..()
 

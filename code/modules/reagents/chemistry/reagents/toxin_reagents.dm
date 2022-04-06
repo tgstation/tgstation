@@ -254,7 +254,7 @@
 		if(1 to 5)
 			M.add_confusion(1 * REM * delta_time)
 			M.adjust_drowsyness(1 * REM * delta_time)
-			M.slurring += 3 * REM * delta_time
+			M.add_slurring(6 SECONDS * REM * delta_time)
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
 		if(9 to INFINITY)
