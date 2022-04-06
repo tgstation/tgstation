@@ -82,6 +82,13 @@
 		return !(checking in area_whitelist)
 	return checking in area_blacklist
 
+/**
+ * This signal handler does a few house cleaning tasks when a new area is created.
+ * If the created area already exists in the blacklist or whitelist it simply returns,
+ * however if it isn't we check for an overwritten area and if non-hazardous setup the area to
+ * allow the parent.
+ * If there isnt an overwritten area it assumes it to be non-hazardous, abuse it and you will weep -ZephyrTFA
+ */
 /datum/component/hazard_area/proc/on_area_creation(area/created, area/overwritten, mob/creator)
 	SIGNAL_HANDLER
 
