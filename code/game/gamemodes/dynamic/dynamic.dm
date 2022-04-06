@@ -78,14 +78,29 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// The maximum time the recurring latejoin ruleset timer is allowed to be.
 	var/latejoin_delay_max = (25 MINUTES)
 
-	/// When world.time is over this number the mode tries to inject a midround ruleset.
-	var/midround_injection_cooldown = 0
+	/// The low bound for the midround roll time splits.
+	/// This number influences where to place midround rolls, making this smaller
+	/// will make midround rolls more frequent, and vice versa.
+	/// A midround will never be able to roll before this.
+	var/midround_lower_bound = 10 MINUTES
 
-	/// The minimum time the recurring midround ruleset timer is allowed to be.
-	var/midround_delay_min = (15 MINUTES)
+	/// The upper bound for the midround roll time splits.
+	/// This number influences where to place midround rolls, making this larger
+	/// will make midround rolls less frequent, and vice versa.
+	/// A midround will never be able to roll farther than this.
+	var/midround_upper_bound = 100 MINUTES
 
-	/// The maximum time the recurring midround ruleset timer is allowed to be.
-	var/midround_delay_max = (35 MINUTES)
+	/// The distance between the chosen midround roll point (which is deterministic),
+	/// and when it can actually roll.
+	/// Basically, if this is set to 5 minutes, and a midround roll point is decided to be at 20 minutes,
+	/// then it can roll anywhere between 15 and 25 minutes.
+	var/midround_roll_distance = 5 MINUTES
+
+	/// The amount of threat per midround roll.
+	/// Basically, if this is set to 5, then for every 5 threat, one midround roll will be added.
+	/// The equation this is used in rounds up, meaning that if this is set to 5, and you have 6
+	/// threat, then you will get 2 midround rolls.
+	var/threat_per_midround_roll = 5
 
 	/// If above this threat, increase the chance of injection
 	var/higher_injection_chance_minimum_threat = 70
@@ -127,14 +142,31 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// The maximum amount of time for antag random events to be hijacked.
 	var/random_event_hijack_maximum = 18 MINUTES
 
+	/// What is the lower bound of when the roundstart annoucement is sent out?
+	var/waittime_l = 600
+
+	/// What is the higher bound of when the roundstart annoucement is sent out?
+	var/waittime_h = 1800
+
+	/// Maximum amount of threat allowed to generate.
+	var/max_threat_level = 100
+
+	/// The chance that a heavy impact midround ruleset will run next time
+	var/hijacked_random_event_injection_chance = 50
+
+	/// Any midround before this point is guaranteed to be light
+	var/midround_light_upper_bound = 25 MINUTES
+
+	/// Any midround after this point is guaranteed to be heavy
+	var/midround_heavy_lower_bound = 60 MINUTES
+
+	// == EVERYTHING BELOW THIS POINT SHOULD NOT BE CONFIGURED ==
+
 	/// A list of recorded "snapshots" of the round, stored in the dynamic.json log
 	var/list/datum/dynamic_snapshot/snapshots
 
 	/// The time when the last midround injection was attempted, whether or not it was successful
 	var/last_midround_injection_attempt = 0
-
-	/// The amount to inject when a round event is hijacked
-	var/hijacked_random_event_injection_chance = 50
 
 	/// Whether or not a random event has been hijacked this midround cycle
 	var/random_event_hijacked = HIJACKED_NOTHING
@@ -150,14 +182,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Can differ from the actual threat amount.
 	var/shown_threat
 
-	/// What is the lower bound of when the roundstart annoucement is sent out?
-	var/waittime_l = 600
-	/// What is the higher bound of when the roundstart annoucement is sent out?
-	var/waittime_h = 1800
-
-	/// Maximum amount of threat allowed to generate.
-	var/max_threat_level = 100
-
+	VAR_PRIVATE/next_midround_injection
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -186,9 +211,17 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			dat += "[DR.ruletype] - <b>[DR.name]</b><br>"
 	else
 		dat += "none.<br>"
-	dat += "<br>Injection Timers: (<b>[get_injection_chance(dry_run = TRUE)]%</b> latejoin chance, <b>[get_midround_injection_chance(dry_run = TRUE)]%</b> midround chance)<BR>"
+	dat += "<br>Injection Timers: (<b>[get_injection_chance(dry_run = TRUE)]%</b> latejoin chance, <b>[get_heavy_midround_injection_chance(dry_run = TRUE)]%</b> heavy midround chance)<BR>"
 	dat += "Latejoin: [DisplayTimeText(latejoin_injection_cooldown-world.time)] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
-	dat += "Midround: [DisplayTimeText(midround_injection_cooldown-world.time)] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
+
+	var/next_injection = next_midround_injection()
+	if (next_injection == INFINITY)
+		dat += "All midrounds have been exhausted."
+	else
+		// MOTHBLOCKS TODO: Midround injection
+		// dat += "Midround: [DisplayTimeText(next_injection - world.time)] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
+		dat += "Midround: [DisplayTimeText(next_injection - world.time)]<BR>"
+
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -215,8 +248,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a latejoin injection.")
 	else if (href_list["injectmid"])
-		midround_injection_cooldown = 0
-		forced_injection = TRUE
+		// MOTHBLOCKS TODO: Forced midround injection
+		// forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a midround injection.")
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
@@ -361,9 +394,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/set_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
 	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
-
-	var/midround_injection_cooldown_middle = 0.5*(midround_delay_max + midround_delay_min)
-	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time
 
 /datum/game_mode/dynamic/pre_setup()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
@@ -606,49 +636,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
 
-	if (midround_injection_cooldown < world.time)
-		if (GLOB.dynamic_forced_extended)
-			return
-
-		// Somehow it managed to trigger midround multiple times so this was moved here.
-		// There is no way this should be able to trigger an injection twice now.
-		var/midround_injection_cooldown_middle = 0.5*(midround_delay_max + midround_delay_min)
-		midround_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time)
-
-		// Time to inject some threat into the round
-		if(EMERGENCY_PAST_POINT_OF_NO_RETURN) // Unless the shuttle is past the point of no return
-			return
-
-		message_admins("DYNAMIC: Checking for midround injection.")
-		log_game("DYNAMIC: Checking for midround injection.")
-
-		last_midround_injection_attempt = world.time
-
-		if (prob(get_midround_injection_chance()))
-			var/list/drafted_rules = list()
-			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
-				if (!rule.weight)
-					continue
-				if (rule.acceptable(GLOB.alive_player_list.len, threat_level) && mid_round_budget >= rule.cost)
-					// If admins have disabled dynamic from picking from the ghost pool
-					if(rule.ruletype == "Latejoin" && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
-						continue
-					rule.trim_candidates()
-					if (rule.ready())
-						drafted_rules[rule] = rule.get_weight()
-			if (drafted_rules.len > 0)
-				pick_midround_rule(drafted_rules)
-		else if (random_event_hijacked == HIJACKED_TOO_SOON)
-			log_game("DYNAMIC: Midround injection failed when random event was hijacked. Spawning another random event in its place.")
-
-			// A random event antag would have rolled had this injection check passed.
-			// As a refund, spawn a non-ghost-role random event.
-			SSevents.spawnEvent()
-			SSevents.reschedule()
-
-		random_event_hijacked = HIJACKED_NOTHING
+	try_midround_roll()
 
 /// Gets the chance for latejoin injection, the dry_run argument is only used for forced injection.
+/// Used in midround injection as well to influence the likelihood that a heavy ruleset is rolled.
 /datum/game_mode/dynamic/proc/get_injection_chance(dry_run = FALSE)
 	if(forced_injection)
 		forced_injection = dry_run
@@ -670,16 +661,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (mid_round_budget < lower_injection_chance_minimum_threat)
 		chance -= lower_injection_chance
 	return round(max(0,chance))
-
-/// Gets the chance for midround injection, the dry_run argument is only used for forced injection.
-/// Usually defers to the latejoin injection chance.
-/datum/game_mode/dynamic/proc/get_midround_injection_chance(dry_run)
-	var/chance = get_injection_chance(dry_run)
-
-	if (random_event_hijacked != HIJACKED_NOTHING)
-		chance += hijacked_random_event_injection_chance
-
-	return chance
 
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)

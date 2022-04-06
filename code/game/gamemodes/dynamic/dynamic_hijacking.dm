@@ -17,11 +17,9 @@
 	if (world.time - last_midround_injection_attempt < time_range)
 		random_event_hijacked = HIJACKED_TOO_RECENT
 		dynamic_log("Random event [round_event_control.name] tried to roll, but the last midround injection \
-			was too recent. Injection chance has been raised to [get_midround_injection_chance(dry_run = TRUE)]%.")
+			was too recent. Heavy injection chance has been raised to [get_heavy_midround_injection_chance(dry_run = TRUE)]%.")
 		return CANCEL_PRE_RANDOM_EVENT
 
-	if (midround_injection_cooldown - world.time < time_range)
-		random_event_hijacked = HIJACKED_TOO_SOON
-		dynamic_log("Random event [round_event_control.name] tried to roll, but the next midround injection \
-			is too soon. Injection chance has been raised to [get_midround_injection_chance(dry_run = TRUE)]%.")
+	if (next_midround_injection() - world.time < time_range)
+		dynamic_log("Random event [round_event_control.name] tried to roll, but the next midround injection is too soon.")
 		return CANCEL_PRE_RANDOM_EVENT

@@ -11,6 +11,8 @@
 
 /datum/dynamic_ruleset/midround // Can be drafted once in a while during a round
 	ruletype = "Midround"
+	// MOTHBLOCKS TODO: Unit test that everything has this set
+	var/midround_ruleset_style
 	/// If the ruleset should be restricted from ghost roles.
 	var/restrict_ghost_roles = TRUE
 	/// What mob type the ruleset is restricted to.
@@ -181,6 +183,7 @@
 
 /datum/dynamic_ruleset/midround/autotraitor
 	name = "Syndicate Sleeper Agent"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_SLEEPER_AGENT
 	antag_flag_override = ROLE_TRAITOR
@@ -258,6 +261,7 @@
 
 /datum/dynamic_ruleset/midround/families
 	name = "Family Head Aspirants"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	persistent = TRUE
 	antag_datum = /datum/antagonist/gang
 	antag_flag = ROLE_FAMILY_HEAD_ASPIRANT
@@ -335,6 +339,7 @@
 
 /datum/dynamic_ruleset/midround/malf
 	name = "Malfunctioning AI"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/malf_ai
 	antag_flag = ROLE_MALF_MIDROUND
 	antag_flag_override = ROLE_MALF
@@ -395,6 +400,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD_MIDROUND
 	antag_flag_override = ROLE_WIZARD
@@ -432,6 +438,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/nuclear
 	name = "Nuclear Assault"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_OPERATIVE_MIDROUND
 	antag_flag_override = ROLE_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop
@@ -482,6 +489,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob
 	name = "Blob"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/blob
 	antag_flag = ROLE_BLOB
 	enemy_roles = list(
@@ -504,6 +512,7 @@
 /// Infects a random player, making them explode into a blob.
 /datum/dynamic_ruleset/midround/blob_infection
 	name = "Blob Infection"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/blob/infection
 	antag_flag = ROLE_BLOB_INFECTION
 	antag_flag_override = ROLE_BLOB
@@ -561,6 +570,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph
 	name = "Alien Infestation"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/xeno
 	antag_flag = ROLE_ALIEN
 	enemy_roles = list(
@@ -612,6 +622,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare
 	name = "Nightmare"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/nightmare
 	antag_flag = ROLE_NIGHTMARE
 	antag_flag_override = ROLE_ALIEN
@@ -663,6 +674,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon
 	name = "Space Dragon"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/space_dragon
 	antag_flag = ROLE_SPACE_DRAGON
 	antag_flag_override = ROLE_SPACE_DRAGON
@@ -713,6 +725,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors
 	name = "Abductors"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/abductor
 	antag_flag = ROLE_ABDUCTOR
 	enemy_roles = list(
@@ -756,6 +769,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja
 	name = "Space Ninja"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/ninja
 	antag_flag = ROLE_NINJA
 	enemy_roles = list(
@@ -800,6 +814,7 @@
 
 /datum/dynamic_ruleset/midround/spiders
 	name = "Spiders"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_SPIDER
 	required_type = /mob/dead/observer
 	enemy_roles = list(
@@ -823,6 +838,7 @@
 /// Revenant ruleset
 /datum/dynamic_ruleset/midround/from_ghosts/revenant
 	name = "Revenant"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/revenant
 	antag_flag = ROLE_REVENANT
 	enemy_roles = list(
@@ -874,6 +890,7 @@
 /// Sentient Disease ruleset
 /datum/dynamic_ruleset/midround/from_ghosts/sentient_disease
 	name = "Sentient Disease"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_datum = /datum/antagonist/disease
 	antag_flag = ROLE_SENTIENT_DISEASE
 	required_candidates = 1
@@ -893,6 +910,7 @@
 /// Space Pirates ruleset
 /datum/dynamic_ruleset/midround/pirates
 	name = "Space Pirates"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = "Space Pirates"
 	required_type = /mob/dead/observer
 	enemy_roles = list(
@@ -920,6 +938,7 @@
 /// Obsessed ruleset
 /datum/dynamic_ruleset/midround/obsessed
 	name = "Obsessed"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/obsessed
 	antag_flag = ROLE_OBSESSED
 	restricted_roles = list(
@@ -965,6 +984,7 @@
 /// Thief ruleset
 /datum/dynamic_ruleset/midround/opportunist
 	name = "Opportunist"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/thief
 	antag_flag = ROLE_OPPORTUNIST
 	antag_flag_override = ROLE_THIEF
