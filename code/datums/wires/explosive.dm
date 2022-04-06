@@ -54,7 +54,8 @@
 		var/obj/item/assembly/health/sensor = S
 		if(!sensor.secured)
 			sensor.toggle_secure()
-		sensor.toggle_scan(TRUE)
+		if(!sensor.scanning)
+			sensor.toggle_scan()
 	fingerprint = S.fingerprintslast
 	return ..()
 
