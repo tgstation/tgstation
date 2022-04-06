@@ -277,6 +277,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 20
 	rarity = 1
+	base_value = 10
 	desc = "We still don't know what it does, but it sells for a lot."
 
 /obj/effect/overlay/gas
