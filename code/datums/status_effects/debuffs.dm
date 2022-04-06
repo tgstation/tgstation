@@ -534,6 +534,7 @@
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_TELEPORTED, COMSIG_MOVABLE_MOVED))
 	return ..()
 
+/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area
 /datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
 	SIGNAL_HANDLER
 
@@ -548,6 +549,7 @@
 	source.Stun(1 SECONDS)
 	return COMPONENT_BLOCK_TELEPORT
 
+/// Signal proc for [COMSIG_MOVABLE_MOVED] that blocks any movement out of our locked area
 /datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
 
@@ -1236,6 +1238,7 @@
 	remove_ghoul_status()
 	return ..()
 
+/// Removes the ghoul effects from our owner and returns them to normal.
 /datum/status_effect/ghoul/proc/remove_ghoul_status(datum/source)
 	SIGNAL_HANDLER
 

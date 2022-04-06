@@ -461,15 +461,12 @@
 	alert_type = null
 	status_type = STATUS_EFFECT_MULTIPLE
 	tick_interval = -1
-	// Set in on_creation()
 	/// The number of blades we summon up to.
 	var/max_num_blades = 4
 	/// The radius of the blade's orbit.
 	var/blade_orbit_radius = 20
 	/// The time between spawning blades.
 	var/time_between_initial_blades = 0.25 SECONDS
-
-	// Internal vars
 	/// If TRUE, we self-delete our status effect after all the blades are deleted.
 	var/delete_on_blades_gone = TRUE
 	/// A list of blade effects orbiting / protecting our owner
@@ -506,12 +503,15 @@
 
 	return ..()
 
+/// Creates a floating blade, adds it to our blade list, and makes it orbit our owner.
 /datum/status_effect/protective_blades/proc/create_blade()
 	var/obj/effect/floating_blade/blade = new(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
 	playsound(get_turf(owner), 'sound/items/unsheath.ogg', 33, TRUE)
 
+/// Signal proc for [COMSIG_HUMAN_CHECK_SHIELDS].
+/// If we have a blade in our list, consume it and block the incoming attack (shield it)
 /datum/status_effect/protective_blades/proc/on_shield_reaction(
 	mob/living/carbon/human/source,
 	atom/movable/hitby,
@@ -538,6 +538,7 @@
 
 	return SHIELD_BLOCK
 
+/// Remove the passed blade from our blades list properly
 /datum/status_effect/protective_blades/proc/remove_blade(obj/effect/floating_blade/to_remove)
 	if(QDELETED(to_remove))
 		CRASH("[type] called remove_blade() with a blade that was QDELETED or null.")
@@ -553,7 +554,7 @@
 
 	return TRUE
 
-/// A special subtype that doesn't disappear when all blades are gone
+/// A subtype that doesn't self-delete / disappear when all blades are gone
 /// It instead regenerates over time back to the max after blades are consumed
 /datum/status_effect/protective_blades/recharging
 	delete_on_blades_gone = FALSE
