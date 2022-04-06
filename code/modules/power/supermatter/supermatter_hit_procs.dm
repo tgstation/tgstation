@@ -255,7 +255,7 @@
 	var/object_size
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
-		object_size = consumed_mob.mob_size
+		object_size = consumed_mob.mob_size + 2
 		if(consumed_mob.status_flags & GODMODE)
 			return
 		message_admins("[src] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(src)].")
@@ -282,7 +282,7 @@
 		matter_power += 70 * object_size
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(src, max_range = 2 * object_size, threshold = 0.6 / object_size, chance = 10 * object_size)
+	radiation_pulse(src, max_range = 1.5 * object_size, threshold = 1.2 / object_size, chance = 10 * object_size)
 	for(var/mob/living/near_mob in range(2 * object_size))
 		investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_ENGINE)
 		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))
