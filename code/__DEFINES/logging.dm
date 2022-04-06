@@ -5,7 +5,6 @@
 #define INVESTIGATE_CARGO "cargo"
 #define INVESTIGATE_CRAFTING "crafting"
 #define INVESTIGATE_ENGINE "engine"
-#define INVESTIGATE_EXONET "exonet"
 #define INVESTIGATE_EXPERIMENTOR "experimentor"
 #define INVESTIGATE_GRAVITY "gravity"
 #define INVESTIGATE_HALLUCINATIONS "hallucinations"
@@ -15,7 +14,6 @@
 #define INVESTIGATE_RADIATION "radiation"
 #define INVESTIGATE_RECORDS "records"
 #define INVESTIGATE_RESEARCH "research"
-#define INVESTIGATE_TELESCI "telesci"
 #define INVESTIGATE_WIRES "wires"
 
 // Logging types for log_message()

@@ -13,6 +13,14 @@
 		remove_card()
 	return ..()
 
+/obj/machinery/accounting/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(inserted_id)
+		return FALSE
+	if(default_unfasten_wrench(user, tool))
+		update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/accounting/attackby(obj/item/I, mob/living/user, params)
 	if(isidcard(I))
 		var/obj/item/card/id/new_id = I
@@ -40,9 +48,6 @@
 		return
 	else
 		if(!inserted_id && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-			update_appearance()
-			return
-		if(!inserted_id && default_unfasten_wrench(user, I))
 			update_appearance()
 			return
 		if(default_deconstruction_crowbar(I))
