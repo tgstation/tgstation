@@ -39,6 +39,11 @@
 	UnregisterSignal(SSdcs, COMSIG_AREA_CREATED)
 	parent_mob.lose_area_sensitivity(type)
 
+/datum/component/hazard_area/Destroy(force, silent)
+	. = ..()
+	area_created.Cut() // Lets not have hanging refs to areas thanks
+	area_created = null
+
 /**
  * This signal handler checks the area the target ladder is in and if hazardous prevents them from using it
  */
