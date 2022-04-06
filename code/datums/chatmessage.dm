@@ -126,7 +126,10 @@
 	hearers -= hearer
 
 /**
- * actually generates the runechat image for the message spoken by target and heard by owner.
+ * generates the spanned text used for the final image and creates a callback in SSrunechat to call generate_image() next tick.
+ * This proc exists solely to handle everything in the image creation process before MeasureText() returns, as otherwise when the client
+ * returns the results of MeasureText() we are in the verb execution portion of the tick which means we're in danger of overtiming.
+ * delaying the final image processing to SSrunechat's next fire() fixes this.
  *
  * Arguments:
  * * text - the text used in the image, gets edited if it holds non allowed characters and/or the listener doesnt understand the speakers language
