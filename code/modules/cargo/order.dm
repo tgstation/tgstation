@@ -24,8 +24,10 @@
 		investigate_log("Supply order #[order_id] generated a manifest with the incorrect station name.", INVESTIGATE_CARGO)
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_CONTENTS
+		investigate_log("Supply order #[order_id] generated a manifest missing listed contents.", INVESTIGATE_CARGO)
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_ITEM
+		investigate_log("Supply order #[order_id] generated with missing contents", INVESTIGATE_CARGO)
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_approved()
 	return stamped?.len && !is_denied()
@@ -95,7 +97,6 @@
 	P.info += "<ul>"
 	for(var/atom/movable/AM in container.contents - P)
 		if((P.errors & MANIFEST_ERROR_CONTENTS))
-			investigate_log("Supply order #[id] generated a manifest missing listed contents.", INVESTIGATE_CARGO)
 			if(prob(50))
 				P.info += "<li>[AM.name]</li>"
 			else
@@ -108,7 +109,6 @@
 		if(istype(container, /obj/structure/closet/crate/secure) || istype(container, /obj/structure/closet/crate/large))
 			P.errors &= ~MANIFEST_ERROR_ITEM
 		else
-			investigate_log("Supply order #[id] generated with missing content.", INVESTIGATE_CARGO)
 			var/lost = max(round(container.contents.len / 10), 1)
 			while(--lost >= 0)
 				qdel(pick(container.contents))
