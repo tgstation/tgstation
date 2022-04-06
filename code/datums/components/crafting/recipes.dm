@@ -778,7 +778,7 @@
 /datum/crafting_recipe/sillycup
 	name = "Paper Cup"
 	result =  /obj/item/reagent_containers/food/drinks/sillycup
-	time = 10
+	time = 1 SECONDS
 	reqs = list(/obj/item/paper = 2)
 	category = CAT_MISC
 
