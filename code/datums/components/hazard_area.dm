@@ -41,7 +41,6 @@
 
 /datum/component/hazard_area/Destroy(force, silent)
 	. = ..()
-	area_created.Cut() // Lets not have hanging refs to areas thanks
 	area_created = null
 
 /**
