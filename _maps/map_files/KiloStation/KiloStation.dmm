@@ -12160,9 +12160,9 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/obj/item/radio/intercom/directional/east,
 /obj/structure/cable,
 /obj/machinery/status_display/ai/directional/south,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai)
 "bxU" = (
@@ -23934,10 +23934,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/machinery/requests_console/directional/west,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai)
 "dug" = (
@@ -28745,11 +28745,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 8
-	},
-/obj/machinery/requests_console/directional/south{
-	department = "AI";
-	departmentType = 5;
-	name = "AI Requests Console"
 	},
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai)
