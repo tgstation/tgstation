@@ -135,7 +135,7 @@
 		/obj/item = 20) //20% success (sort of) with any sharp item with a force>=10
 	time = 54
 	preop_sound = list(
-		TOOL_SAW = 'sound/surgery/saw.ogg',
+		/obj/item/circular_saw = 'sound/surgery/saw.ogg',
 		/obj/item/melee/arm_blade = 'sound/surgery/scalpel1.ogg',
 		/obj/item/fireaxe = 'sound/surgery/scalpel1.ogg',
 		/obj/item/hatchet = 'sound/surgery/scalpel1.ogg',
