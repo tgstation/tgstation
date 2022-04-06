@@ -85,6 +85,7 @@
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
+	SSsimple_mobs.processing_simple_mobs += src
 
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -100,7 +101,11 @@
 	if(speak_emote)
 		speak_emote = string_list(speak_emote)
 
-/mob/living/basic/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/basic/Destroy()
+	. = ..()
+	SSsimple_mobs.processing_simple_mobs -= src
+
+/mob/living/basic/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	. = ..()
 	///Automatic stamina re-gain
 	if(staminaloss > 0)

@@ -30,7 +30,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	health = 75
 	maxHealth = 75
-	// randomizes hunting intervals, minimum 5 turns
+	/// randomizes hunting intervals, minimum 5 turns
 	var/time_to_hunt = 5
 
 /mob/living/simple_animal/ant/Initialize(mapload)
@@ -38,13 +38,11 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	time_to_hunt = rand(5,10)
 
-/mob/living/simple_animal/ant/Life(delta_time = SSMOBS_DT, times_fired) // In this larger state, the ants have become the predators.
+/mob/living/simple_animal/ant/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired) // In this larger state, the ants have become the predators.
 	. = ..()
 	turns_since_scan++
 	if(turns_since_scan > time_to_hunt)
 		turns_since_scan = 0
-		var/list/target_types = list(/mob/living/basic/cockroach)
-		for(var/mob/living/simple_animal/hostile/potential_target in view(2, get_turf(src)))
-			if(potential_target.type in target_types)
-				hunt(potential_target)
-				return
+		for(var/mob/living/basic/cockroach/potential_target in view(2, get_turf(src)))
+			hunt(potential_target)
+			return

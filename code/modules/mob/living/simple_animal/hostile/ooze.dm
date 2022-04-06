@@ -49,7 +49,7 @@
 		return ..()
 
 ///Handles nutrition gain/loss of mob and also makes it take damage if it's too low on nutrition, only happens for sentient mobs.
-/mob/living/simple_animal/hostile/ooze/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/ooze/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	. = ..()
 
 	if(!mind && stat != DEAD)//no mind no change

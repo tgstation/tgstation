@@ -151,7 +151,7 @@
 /mob/living/simple_animal/hostile/bear/butter/add_cell_sample()
 	return //You cannot grow a real bear from butter.
 
-/mob/living/simple_animal/hostile/bear/butter/Life(delta_time = SSMOBS_DT, times_fired) //Heals butter bear really fast when he takes damage.
+/mob/living/simple_animal/hostile/bear/butter/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired) //Heals butter bear really fast when he takes damage.
 	if(stat)
 		return
 	if(health < maxHealth)

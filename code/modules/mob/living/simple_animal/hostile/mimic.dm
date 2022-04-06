@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(mimic_blacklist, list(/obj/structure/table, /obj/structure/cabl
 		overlay_googly_eyes = FALSE
 	CopyObject(copy, creator, destroy_original)
 
-/mob/living/simple_animal/hostile/mimic/copy/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/mimic/copy/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	..()
 	if(idledamage && !target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
 		adjustBruteLoss(0.5 * delta_time)

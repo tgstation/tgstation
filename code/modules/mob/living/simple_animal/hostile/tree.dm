@@ -51,7 +51,7 @@
 	. = ..()
 	add_cell_sample()
 
-/mob/living/simple_animal/hostile/tree/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/tree/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	..()
 	if(!is_tree || !isopenturf(loc))
 		return

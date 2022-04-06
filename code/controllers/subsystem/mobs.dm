@@ -6,13 +6,14 @@ SUBSYSTEM_DEF(mobs)
 	wait = 2 SECONDS
 
 	var/list/currentrun = list()
+
 	var/static/list/clients_by_zlevel[][]
 	var/static/list/dead_players_by_zlevel[][] = list(list()) // Needs to support zlevel 1 here, MaxZChanged only happens when z2 is created and new_players can login before that.
 	var/static/list/cubemonkeys = list()
 	var/static/list/cheeserats = list()
 
 /datum/controller/subsystem/mobs/stat_entry(msg)
-	msg = "P:[length(GLOB.mob_living_list)]"
+	msg = "P:[length(GLOB.carbon_list + GLOB.silicon_mobs)]"
 	return ..()
 
 /datum/controller/subsystem/mobs/proc/MaxZChanged()
@@ -27,7 +28,7 @@ SUBSYSTEM_DEF(mobs)
 
 /datum/controller/subsystem/mobs/fire(resumed = FALSE)
 	if (!resumed)
-		src.currentrun = GLOB.mob_living_list.Copy()
+		src.currentrun = GLOB.carbon_list.Copy() + GLOB.silicon_mobs.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun

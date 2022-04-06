@@ -111,9 +111,6 @@
 			breather.throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
 		return FALSE
 
-	//for(var/gas_id in GLOB.meta_gas_info)
-	//	breath.assert_gas(gas_id)
-
 	if(istype(breather.wear_mask) && (breather.wear_mask.clothing_flags & GAS_FILTERING) && breather.wear_mask.has_filter)
 		breath = breather.wear_mask.consume_filter(breath)
 
@@ -137,6 +134,8 @@
 
 	handle_gas_override(breather,breath_gases, gas_breathed)
 
+	//loop through each gas and check what it is in the order of most common gases to be breathing. since most humans are breathing
+	//oxygen, nitrogen, and maybe co2 this is just 2-3 checks most of the time
 	for(var/gas_id in breath_gases)
 		switch(gas_id)
 			if(/datum/gas/oxygen) //OXYGEN
@@ -152,7 +151,7 @@
 						breather.clear_alert("too_much_oxy")
 
 				//Too little oxygen!
-				if(safe_oxygen_min)
+				if(safe_oxygen_min) //TODOKYLER: make this work if oxygen isnt in the mix at all
 					if(O2_pp < safe_oxygen_min)
 						o2_breathed = handle_too_little_breath(breather, O2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
 						breather.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)

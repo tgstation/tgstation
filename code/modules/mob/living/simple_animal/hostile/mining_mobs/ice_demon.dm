@@ -72,7 +72,7 @@
 	SLEEP_CHECK_DEATH(8, src)
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/ice_demon/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/asteroid/ice_demon/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	. = ..()
 	if(!. || target)
 		return

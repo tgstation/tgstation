@@ -33,7 +33,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-/mob/living/simple_animal/crab/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/crab/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	..()
 	//CRAB movement
 	if(!ckey && !stat)

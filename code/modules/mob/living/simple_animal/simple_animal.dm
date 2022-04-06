@@ -171,6 +171,7 @@
 /mob/living/simple_animal/Initialize(mapload)
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
+	SSsimple_mobs.processing_simple_mobs += src
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
 	if(!real_name)
@@ -205,13 +206,14 @@
 	if(!isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
 
-/mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
 		adjustStaminaLoss(-stamina_recovery * delta_time, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
+	SSsimple_mobs.processing_simple_mobs -= src
 	if (SSnpcpool.state == SS_PAUSED && LAZYLEN(SSnpcpool.currentrun))
 		SSnpcpool.currentrun -= src
 
@@ -269,7 +271,7 @@
 					if(Process_Spacemove(anydir))
 						Move(get_step(src, anydir), anydir)
 						turns_since_move = 0
-			return 1
+			return TRUE
 
 /mob/living/simple_animal/proc/handle_automated_speech(override)
 	set waitfor = FALSE
@@ -647,13 +649,29 @@
 						SSidlenpcpool.idle_mobs_by_zlevel[T.z] += src
 			GLOB.simple_animals[AIStatus] -= src
 			GLOB.simple_animals[togglestatus] += src
+
+			var/old_state = AIStatus
 			AIStatus = togglestatus
+
+			if(togglestatus == AI_ON)
+				on_ai_enabled(old_state)
+
+			else
+				on_ai_disabled(old_state)
 		else
 			stack_trace("Something attempted to set simple animals AI to an invalid state: [togglestatus]")
 
 /mob/living/simple_animal/proc/consider_wakeup()
 	if (pulledby || shouldwakeup)
 		toggle_ai(AI_ON)
+
+///proc called when this mobs ai status is set to something other than AI_ON
+/mob/living/simple_animal/proc/on_ai_disabled(old_state)
+	return
+
+///proc called when this mobs ai status is set to AI_ON
+/mob/living/simple_animal/proc/on_ai_enabled(old_state)
+	return
 
 /mob/living/simple_animal/on_changed_z_level(turf/old_turf, turf/new_turf)
 	..()

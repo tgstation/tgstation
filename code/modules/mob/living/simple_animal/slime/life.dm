@@ -6,7 +6,7 @@
 	var/SStun = 0 // stun variable
 
 
-/mob/living/simple_animal/slime/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/slime/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	if (notransform)
 		return
 	. = ..()

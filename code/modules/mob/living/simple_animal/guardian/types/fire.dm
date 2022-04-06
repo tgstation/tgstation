@@ -21,7 +21,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/mob/living/simple_animal/hostile/guardian/fire/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/guardian/fire/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	. = ..()
 	if(summoner)
 		summoner.extinguish_mob()

@@ -77,7 +77,7 @@
 		machine.check_eye(src)
 
 	if(stat != DEAD)
-		return 1
+		return TRUE
 
 /mob/living/proc/handle_breathing(delta_time, times_fired)
 	SEND_SIGNAL(src, COMSIG_LIVING_HANDLE_BREATHING, delta_time, times_fired)

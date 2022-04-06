@@ -151,7 +151,7 @@
 	else
 		addtimer(CALLBACK(src, .proc/suffocate), 300)
 
-/mob/living/simple_animal/hostile/retaliate/goose/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/retaliate/goose/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	. = ..()
 	if(choking && !stat)
 		do_jitter_animation(50)

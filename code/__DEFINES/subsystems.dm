@@ -180,6 +180,7 @@
 #define FIRE_PRIORITY_PROCESS 25
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
+#define FIRE_PRIORITY_SIMPLE_MOBS 27
 #define FIRE_PRIORITY_SPACEDRIFT 30
 #define FIRE_PRIOTITY_SMOOTHING 35
 #define FIRE_PRIORITY_NETWORKS 40
@@ -303,4 +304,5 @@
 #define SSFLUIDS_DT (SSfluids.wait/10)
 #define SSMACHINES_DT (SSmachines.wait/10)
 #define SSMOBS_DT (SSmobs.wait/10)
+#define SSSIMPLE_MOBS_DT (SSsimple_mobs.wait/10)//coded by lizards
 #define SSOBJ_DT (SSobj.wait/10)

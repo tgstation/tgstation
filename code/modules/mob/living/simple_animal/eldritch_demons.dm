@@ -328,7 +328,7 @@
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
-/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	if(stat == DEAD)
 		return ..()
 	var/turf/T = get_turf(src)

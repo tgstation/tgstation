@@ -125,7 +125,7 @@
 	Read_Memory()
 	. = ..()
 
-/mob/living/simple_animal/pet/cat/runtime/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/pet/cat/runtime/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -201,7 +201,7 @@
 	regenerate_icons()
 
 
-/mob/living/simple_animal/pet/cat/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/pet/cat/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	if(!stat && !buckled && !client)
 		if(DT_PROB(0.5, delta_time))
 			manual_emote(pick("stretches out for a belly rub.", "wags [p_their()] tail.", "lies down."))
@@ -304,7 +304,7 @@
 		to_chat(src, span_notice("Your name is now <b>\"new_name\"</b>!"))
 		name = new_name
 
-/mob/living/simple_animal/pet/cat/cak/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/pet/cat/cak/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	..()
 	if(stat)
 		return
