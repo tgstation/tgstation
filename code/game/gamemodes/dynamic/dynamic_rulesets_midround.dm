@@ -203,8 +203,8 @@
 	)
 	required_candidates = 1
 	weight = 7
-	cost = 10
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	cost = 3
+	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
 
 	/// Whether or not this instance of sleeper agent should be randomly acceptable.
@@ -356,7 +356,7 @@
 	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
 	required_candidates = 1
 	weight = 3
-	cost = 22
+	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	required_type = /mob/living/silicon/ai
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/malf_ai)
@@ -413,7 +413,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 1
-	cost = 20
+	cost = 10
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	flags = HIGH_IMPACT_RULESET
 
@@ -453,7 +453,7 @@
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
 	weight = 5
-	cost = 35
+	cost = 35 // MOTHBLOCKS TODO: Change this to be much lower ONLY once we get minimum threat stuff
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
@@ -501,7 +501,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 2
-	cost = 10
+	cost = 8
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 
@@ -635,7 +635,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 3
-	cost = 10
+	cost = 5
 	requirements = list(101,101,101,70,50,40,20,15,10,10)
 	repeatable = TRUE
 	var/list/spawn_locs = list()
@@ -687,7 +687,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
-	cost = 10
+	cost = 7
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 	var/list/spawn_locs = list()
@@ -738,7 +738,7 @@
 	required_candidates = 2
 	required_applicants = 2
 	weight = 4
-	cost = 10
+	cost = 7
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 	var/datum/team/abductor_team/new_team
@@ -781,7 +781,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
-	cost = 10
+	cost = 8
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 	var/list/spawn_locs = list()
@@ -826,7 +826,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 0
 	weight = 3
-	cost = 10
+	cost = 8
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 	var/spawncount = 2
@@ -850,7 +850,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
-	cost = 10
+	cost = 6
 	requirements = list(101,101,101,70,50,40,20,15,10,10)
 	repeatable = TRUE
 	var/dead_mobs_required = 20
@@ -895,7 +895,7 @@
 	antag_flag = ROLE_SENTIENT_DISEASE
 	required_candidates = 1
 	weight = 4
-	cost = 10
+	cost = 8
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 
@@ -922,7 +922,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 0
 	weight = 4
-	cost = 10
+	cost = 8
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 
