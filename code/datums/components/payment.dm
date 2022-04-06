@@ -147,7 +147,7 @@
 			holochange.name = "[holochange.credits] credit holochip"
 			if(istype(user, /mob/living/carbon/human))
 				var/mob/living/carbon/human/paying_customer = user
-				if(!paying_customer.put_in_hands(holochange))
+				if(!INVOKE_ASYNC(paying_customer, /mob.proc/put_in_hands, holochange))
 					user.pulling = holochange
 			else
 				user.pulling = holochange
