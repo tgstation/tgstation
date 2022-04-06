@@ -496,3 +496,13 @@
 	)
 	result = /obj/item/food/soup/vegetarian_chili
 	subcategory = CAT_MOTH
+
+/datum/crafting_recipe/food/moffin
+	name = "Moffin"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/food/pastrybase = 1,
+		/obj/item/stack/sheet/cloth = 1,
+	)
+	result = /obj/item/food/muffin/moffin
+	subcategory = CAT_MOTH

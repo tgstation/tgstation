@@ -414,11 +414,11 @@
 				// the javascript was modified, somehow, outside of
 				// byond.  but right now we are logging it as
 				// the generated html might get beyond this limit
-				log_paper("[key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-MAX_PAPER_LENGTH]")
+				log_paper("[key_name(ui.user)] wrote to [name], and overwrote it by [paper_len - MAX_PAPER_LENGTH]: \"[in_paper]\"")
 			if(paper_len == 0)
 				to_chat(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
 			else
-				log_paper("[key_name(ui.user)] writing to paper [name]")
+				log_paper("[key_name(ui.user)] wrote to [name]: \"[in_paper]\"")
 				if(info != in_paper)
 					to_chat(ui.user, "You have added to your paper masterpiece!");
 					info = in_paper
