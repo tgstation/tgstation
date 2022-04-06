@@ -278,19 +278,27 @@
 
 	var/turf/checked_turf = source
 	var/result = check_atmos(checked_turf)
+	var/issue_len = length(issue_turfs)
+	var/atmos_turfs_len = TURF_SHARES(checked_turf)
+
+	if(result && atmos_turfs_len)
+		issue_turfs |= checked_turf
+	else if(!result && issue_len || !atmos_turfs_len)
+		issue_turfs -= checked_turf
+
+	issue_len = length(issue_turfs)
+
+	if(issue_len)
+		if(!alarm_type)
+			result = check_atmos(issue_turfs[1])
+			if(result)
+				start_activation_process(result)
+				return
 	
-	if(!length(issue_turfs) && alarm_type)
+	else if(alarm_type)
 		start_deactivation_process()
 		return
-	else if(length(issue_turfs) && !alarm_type)
-		result = check_atmos(issue_turfs[1])
-		if(result)
-			start_activation_process(result)
-			return
-	if(result && TURF_SHARES(checked_turf) && issue_turfs)
-		issue_turfs |= checked_turf
-	else if((!result && length(issue_turfs) || !TURF_SHARES(checked_turf)) && issue_turfs)
-		issue_turfs -= checked_turf
+	
 	
 
 /**
@@ -613,6 +621,7 @@
 /obj/machinery/door/firedoor/Moved(atom/oldloc)
 	. = ..()
 	unregister_adjacent_turfs(oldloc)
+	register_adjacent_turfs(src)
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
