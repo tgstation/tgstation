@@ -8304,6 +8304,7 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/tcommsat/server)
 "cSK" = (
+/obj/machinery/airalarm/directional/east,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/commons/storage/mining)
@@ -12267,6 +12268,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/plating,
 /area/commons/storage/mining)
 "eWw" = (
@@ -19057,7 +19059,8 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "iqr" = (
-/turf/closed/wall/r_wall,
+/obj/structure/sign/warning,
+/turf/closed/wall,
 /area/commons/storage/mining)
 "iqv" = (
 /obj/structure/disposalpipe/segment{
@@ -20124,10 +20127,6 @@
 /obj/item/food/grown/carrot,
 /turf/open/misc/asteroid/snow/standard_air,
 /area/science/research)
-"iOA" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/r_wall,
-/area/commons/storage/mining)
 "iOM" = (
 /turf/closed/wall,
 /area/security/warden)
@@ -24699,6 +24698,7 @@
 	pixel_x = 35
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/hos)
 "kZL" = (
@@ -28036,12 +28036,13 @@
 /obj/machinery/door/airlock/security{
 	name = "Security Office"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron/dark/textured,
 /area/security/office)
 "mRQ" = (
@@ -31763,6 +31764,7 @@
 /area/engineering/supermatter/room)
 "oKs" = (
 /obj/item/radio/intercom/directional/west,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/commons/storage/mining)
 "oKt" = (
@@ -49686,10 +49688,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
-"xzI" = (
-/obj/machinery/airalarm/directional/east,
-/turf/open/floor/iron,
-/area/commons/storage/mining)
 "xzP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -78680,7 +78678,7 @@ bfv
 gGl
 gGl
 gGl
-iqr
+jnk
 jnk
 jnk
 jnk
@@ -78934,17 +78932,17 @@ bnn
 xDk
 nVd
 bfv
-iqr
-iqr
-iqr
-iqr
-iqr
-iqr
-xhI
-xhI
-xhI
-xhI
+bfv
 jnk
+xhI
+xhI
+xhI
+xhI
+xhI
+xhI
+xhI
+xhI
+xhI
 jnk
 aJn
 aJq
@@ -79191,8 +79189,9 @@ aZR
 bbm
 toe
 bfv
-iqr
-iqr
+bfv
+jnk
+xhI
 tca
 odB
 hDA
@@ -79201,7 +79200,6 @@ ihd
 mML
 ihd
 xhI
-jnk
 jnk
 aJn
 aJq
@@ -79448,8 +79446,9 @@ aZR
 aZR
 woD
 bfv
-iqr
-iqr
+bfv
+gOQ
+xhI
 jeK
 xKD
 kds
@@ -79457,7 +79456,6 @@ gOQ
 eeM
 eeM
 eeM
-xhI
 xhI
 xhI
 xhI
@@ -79705,18 +79703,18 @@ aCN
 mNc
 cEt
 bfv
+bfv
 uiO
-iqr
-iqr
+xhI
+xhI
 deq
+xhI
 iqr
-iOA
 qpk
 eeM
 rmD
 unj
 oKs
-cSK
 xhI
 gfw
 qll
@@ -79962,6 +79960,7 @@ bcf
 bdg
 bed
 bfv
+bfv
 kbh
 eWg
 nhm
@@ -79970,7 +79969,6 @@ hhJ
 xjO
 cOE
 qaH
-ueT
 ueT
 ueT
 ueT
@@ -80219,17 +80217,17 @@ aCP
 hZQ
 vAG
 bfv
+bfv
 omj
-iqr
-iqr
+xhI
+xhI
 rHS
+xhI
 iqr
-iOA
 toY
 eeM
 fWx
 cNY
-xzI
 cSK
 xhI
 bwh
@@ -80476,8 +80474,9 @@ aZR
 aZR
 oeE
 bfv
-iqr
-iqr
+bfv
+gOQ
+xhI
 kcl
 mwH
 vwl
@@ -80485,7 +80484,6 @@ gOQ
 eeM
 eeM
 eeM
-xhI
 xhI
 xhI
 xhI
@@ -80733,8 +80731,9 @@ aZR
 bbm
 toe
 bfv
-iqr
-iqr
+bfv
+jnk
+xhI
 ftr
 hRf
 rfb
@@ -80743,7 +80742,6 @@ ihd
 qgb
 ihd
 xhI
-jnk
 jnk
 aJn
 fGw
@@ -80990,17 +80988,17 @@ bnt
 aZU
 olN
 bfv
-iqr
-iqr
-iqr
-iqr
-iqr
-iqr
-xhI
-xhI
-xhI
-xhI
+bfv
 jnk
+xhI
+xhI
+xhI
+xhI
+xhI
+xhI
+xhI
+xhI
+xhI
 jnk
 aJn
 aJq
@@ -81250,7 +81248,7 @@ bfv
 olj
 olj
 olj
-iqr
+jnk
 jnk
 jnk
 jnk

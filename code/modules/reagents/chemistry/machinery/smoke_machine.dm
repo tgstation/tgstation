@@ -90,6 +90,13 @@
 		smoke.set_up(setting * 3, location = location, carry = reagents, efficiency = efficiency)
 		smoke.start()
 
+/obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_unfasten_wrench(user, tool, time = 4 SECONDS))
+		on = FALSE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return FALSE
+
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
@@ -98,9 +105,6 @@
 		if(units)
 			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
 			return
-	if(default_unfasten_wrench(user, I, 40))
-		on = FALSE
-		return
 	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", I))
 		return
 	if(default_deconstruction_crowbar(I))
