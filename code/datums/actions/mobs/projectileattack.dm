@@ -203,7 +203,7 @@
 	cooldown_time = 4 SECONDS
 	projectile_type = /obj/projectile/colossus
 	projectile_sound = 'sound/magic/clockwork/invoke_general.ogg'
-	var/list/firing_directions = GLOB.
+	var/list/firing_directions
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/New(Target)
 	. = ..()
