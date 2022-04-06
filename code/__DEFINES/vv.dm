@@ -113,7 +113,6 @@
 #define VV_HK_GIVE_SPELL "give_spell"
 #define VV_HK_REMOVE_SPELL "remove_spell"
 #define VV_HK_GIVE_DISEASE "give_disease"
-#define VV_HK_GIVE_SPEECH_IMPEDIMENT "impede_speech"
 #define VV_HK_GODMODE "godmode"
 #define VV_HK_DROP_ALL "dropall"
 #define VV_HK_REGEN_ICONS "regen_icons"
@@ -123,6 +122,9 @@
 #define VV_HK_GIVE_DIRECT_CONTROL "give_direct_control"
 #define VV_HK_OFFER_GHOSTS "offer_ghosts"
 #define VV_HK_SDQL_SPELL "sdql_spell"
+
+// /mob/living
+#define VV_HK_GIVE_SPEECH_IMPEDIMENT "impede_speech"
 
 // /mob/living/carbon
 #define VV_HK_MAKE_AI "aiify"
