@@ -75,6 +75,8 @@
  * * checking - This should be the typepath of the area being checked, but there is a conversion handler if you pass in a reference instead
  */
 /datum/component/hazard_area/proc/check_area_hazardous(area/checking)
+	if(LAZYFIND(area_created, checking))
+		return FALSE
 	if(!ispath(checking))
 		checking = checking.type
 	if(area_whitelist)
