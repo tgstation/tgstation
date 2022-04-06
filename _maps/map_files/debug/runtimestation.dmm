@@ -111,10 +111,6 @@
 "aA" = (
 /turf/open/floor/iron,
 /area/engineering/main)
-"aB" = (
-/obj/machinery/newscaster/security_unit,
-/turf/closed/wall/r_wall,
-/area/engineering/main)
 "aC" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -1053,6 +1049,13 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
+"dO" = (
+/obj/structure/table,
+/obj/machinery/light/directional/south,
+/obj/item/storage/medkit/regular,
+/obj/item/healthanalyzer/advanced,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "dP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1129,7 +1132,7 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/box;
+	roundstart_template = /datum/map_template/shuttle/labour/generic;
 	width = 9
 	},
 /turf/open/space/basic,
@@ -2026,11 +2029,6 @@
 /obj/machinery/chem_mass_spec,
 /turf/open/floor/iron,
 /area/medical/chemistry)
-"mO" = (
-/obj/machinery/gravity_generator/main/station,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/engineering/gravity_generator)
 "nn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -2106,8 +2104,8 @@
 /turf/open/floor/iron/dark,
 /area/construction)
 "sE" = (
-/obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
+/obj/machinery/power/rtg/debug,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "sH" = (
@@ -2230,10 +2228,6 @@
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/science/misc_lab)
-"xy" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/engineering/gravity_generator)
 "yK" = (
 /obj/structure/fans/tiny/invisible,
 /obj/effect/turf_decal/stripes/line{
@@ -2246,13 +2240,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"AA" = (
-/obj/structure/table,
-/obj/machinery/light/directional/south,
-/obj/item/storage/medkit/regular,
-/obj/item/healthanalyzer/advanced,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
 "AE" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
@@ -2379,6 +2366,11 @@
 	},
 /turf/open/floor/iron,
 /area/command/bridge)
+"IE" = (
+/obj/machinery/gravity_generator/main/station,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/engineering/gravity_generator)
 "II" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2436,6 +2428,10 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
+"MN" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/engineering/gravity_generator)
 "MY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
@@ -2557,6 +2553,10 @@
 "VA" = (
 /obj/structure/fans/tiny,
 /obj/structure/cable,
+/turf/open/floor/iron,
+/area/engineering/main)
+"We" = (
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/engineering/main)
 "Wh" = (
@@ -7189,7 +7189,7 @@ aa
 aj
 al
 aA
-aB
+aj
 WT
 aj
 aj
@@ -7281,7 +7281,7 @@ aa
 aj
 ap
 aA
-aA
+We
 Vy
 aS
 bd
@@ -7582,7 +7582,7 @@ dJ
 dJ
 dJ
 dJ
-AA
+dO
 cS
 gz
 fO
@@ -8018,9 +8018,9 @@ ad
 af
 ak
 av
-xy
-xy
-xy
+MN
+MN
+MN
 av
 by
 bU
@@ -8110,9 +8110,9 @@ ad
 af
 ak
 dT
-xy
+MN
 av
-mO
+IE
 av
 by
 bV
@@ -8202,9 +8202,9 @@ ad
 af
 ak
 av
-xy
-xy
-xy
+MN
+MN
+MN
 av
 by
 bW

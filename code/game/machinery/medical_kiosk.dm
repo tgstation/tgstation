@@ -82,13 +82,13 @@
 	if(!is_operational)
 		icon_state = "[base_icon_state]_off"
 		return ..()
-	icon_state = "[base_icon_state][scan_active ? "active" : null]"
+	icon_state = "[base_icon_state][scan_active ? "_active" : null]"
 	return ..()
 
-/obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/I) //Allows for wrenching/unwrenching the machine.
+/obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/tool) //Allows for wrenching/unwrenching the machine.
 	..()
-	default_unfasten_wrench(user, I, time = 10)
-	return TRUE
+	default_unfasten_wrench(user, tool, time = 0.1 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/medical_kiosk/RefreshParts()
 	var/obj/item/circuitboard/machine/medical_kiosk/board = circuit

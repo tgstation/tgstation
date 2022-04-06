@@ -25,7 +25,7 @@ at the cost of risking a vicious bite.**/
 		/obj/item/restraints/handcuffs/cable/pink = 1,
 		/obj/item/restraints/handcuffs/alien = 2,
 		/obj/item/coin/bananium = 9,
-		/datum/aquarium_behaviour/fish/ratfish = 10,
+		/obj/item/fish/ratfish = 10,
 		/obj/item/knife/butcher = 5,
 		/obj/item/coin/mythril = 1,
 	)
@@ -33,16 +33,14 @@ at the cost of risking a vicious bite.**/
 
 /obj/structure/moisture_trap/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 20)
 	if(prob(40))
 		critter_infested = FALSE
 	if(prob(75))
 		var/picked_item = pick_weight(loot_table)
-		if(ispath(picked_item, /datum/aquarium_behaviour/fish))
-			hidden_item = generate_fish(src, picked_item)
-		else
-			hidden_item = new picked_item(src)
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 20)
-	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
+		hidden_item = new picked_item(src)
+
 
 /obj/structure/moisture_trap/Destroy()
 	if(hidden_item)

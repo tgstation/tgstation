@@ -187,6 +187,8 @@
 	if(!spawn_bodyparts)
 		return
 
+	AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/tracks, target_dir_change = TRUE)
+
 	allow_pulling = TRUE
 	// Sets the hp of the head to be exactly the (length * hp), so the head is de facto the hardest to destroy.
 	maxHealth = worm_length * maxHealth
@@ -251,7 +253,6 @@
 	if(!follow)
 		return
 
-	gib_trail()
 	if(back && back.loc != oldloc)
 		back.Move(oldloc)
 
@@ -260,14 +261,6 @@
 		forceMove(front.oldloc)
 
 	oldloc = loc
-
-/// Creates a tail of blood / gibs as we move.
-/mob/living/simple_animal/hostile/heretic_summon/armsy/proc/gib_trail()
-	if(front) // head makes gibs
-		return
-	var/chosen_decal = pick(typesof(/obj/effect/decal/cleanable/blood/tracks))
-	var/obj/effect/decal/cleanable/blood/gibs/decal = new chosen_decal(drop_location())
-	decal.setDir(dir)
 
 /mob/living/simple_animal/hostile/heretic_summon/armsy/Destroy()
 	if(front)

@@ -13,13 +13,14 @@
 		cards += generate_card("[card]")
 
 /obj/item/toy/cards/deck/wizoff/examine_more(mob/user)
-	var/list/msg = list(span_notice("Remember the rules of Wiz-Off!"))
-	msg += "\t[span_info("Each player draws 5 cards.")]"
-	msg += "\t[span_info("There are five rounds. Each round, a player selects a card to play, and the winner is selected based on the following rules:")]"
-	msg += "\t[span_info("Defensive beats Offensive!")]"
-	msg += "\t[span_info("Offensive beats Utility!")]"
-	msg += "\t[span_info("Utility beats Defensive!")]"
-	msg += "\t[span_info("If both players play the same type of spell, the higher number wins!")]"
-	msg += "\t[span_info("The player who wins the most of the 5 rounds wins the game!")]"
-	msg += "\t[span_notice("Now get ready to battle for the fate of the universe: Wiz-Off!")]"
-	return msg
+	. = ..()
+	. += span_notice("Remember the rules of Wiz-Off!")
+	. += "\t[span_info("Each player draws 5 cards.")]"
+	. += "\t[span_info("There are five rounds. Each round, a player selects a card to play, and the winner is selected based on the following rules:")]"
+	. += "\t[span_info("Defensive beats Offensive!")]"
+	. += "\t[span_info("Offensive beats Utility!")]"
+	. += "\t[span_info("Utility beats Defensive!")]"
+	. += "\t[span_info("If both players play the same type of spell, the higher number wins!")]"
+	. += "\t[span_info("The player who wins the most of the 5 rounds wins the game!")]"
+	. += "\t[span_notice("Now get ready to battle for the fate of the universe: Wiz-Off!")]"
+	return .

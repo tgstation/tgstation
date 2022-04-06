@@ -13,6 +13,7 @@
 	loseBackupPower - handles the effect of backup power going offline.
 	regainBackupPower - handles the effect of main power coming back on.
 	shock - has a chance of electrocuting its target.
+	isSecure - 1 if there some form of shielding in front of the airlock wires.
 */
 
 /// Overlay cache.  Why isn't this just in /obj/machinery/door/airlock?  Because its used just a
@@ -121,6 +122,7 @@
 	var/detonated = FALSE
 	var/abandoned = FALSE
 	var/cutAiWire = FALSE
+	var/autoname = FALSE
 	var/doorOpen = 'sound/machines/airlock.ogg'
 	var/doorClose = 'sound/machines/airlockclose.ogg'
 	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
@@ -174,38 +176,6 @@
 	AddElement(/datum/element/connect_loc, connections)
 
 	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/door/airlock/LateInitialize()
-	. = ..()
-	if (cyclelinkeddir)
-		cyclelinkairlock()
-	if(closeOtherId)
-		update_other_id()
-	if(abandoned)
-		var/outcome = rand(1,100)
-		switch(outcome)
-			if(1 to 9)
-				var/turf/here = get_turf(src)
-				for(var/turf/closed/T in range(2, src))
-					here.PlaceOnTop(T.type)
-					qdel(src)
-					return
-				here.PlaceOnTop(/turf/closed/wall)
-				qdel(src)
-				return
-			if(9 to 11)
-				lights = FALSE
-				locked = TRUE
-			if(12 to 15)
-				locked = TRUE
-			if(16 to 23)
-				welded = TRUE
-			if(24 to 30)
-				panel_open = TRUE
-	if(cutAiWire)
-		wires.cut(WIRE_AI)
-	update_appearance()
-
 
 /obj/machinery/door/airlock/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(id_tag)
@@ -470,6 +440,9 @@
 		return TRUE
 	else
 		return FALSE
+
+/obj/machinery/door/airlock/proc/is_secure()
+	return (security_level > 0)
 
 /obj/machinery/door/airlock/update_icon(updates=ALL, state=0, override=FALSE)
 	if(operating && !override)
@@ -1164,7 +1137,6 @@
 				return
 		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 
-
 /obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked || seal )
 		return FALSE
@@ -1180,7 +1152,7 @@
 		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 
 	if(autoclose)
-		autoclose_in(normalspeed ? 150 : 15)
+		autoclose_in(normalspeed ? 8 SECONDS : 1.5 SECONDS)
 
 	if(!density)
 		return TRUE

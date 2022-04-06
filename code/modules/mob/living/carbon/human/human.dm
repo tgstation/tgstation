@@ -8,6 +8,7 @@
 	create_bodyparts()
 
 	setup_human_dna()
+	prepare_huds() //Prevents a nasty runtime on human init
 
 	if(dna.species)
 		INVOKE_ASYNC(src, .proc/set_species, dna.species.type)
@@ -473,8 +474,7 @@
 		facial_hairstyle = "Shaved"
 	hairstyle = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
-	update_body()
-	update_hair()
+	update_body(is_creating = TRUE)
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	..()
@@ -1147,12 +1147,6 @@
 /mob/living/carbon/human/species/snail
 	race = /datum/species/snail
 
-/mob/living/carbon/human/species/synth
-	race = /datum/species/synth
-
-/mob/living/carbon/human/species/synth/military
-	race = /datum/species/synth/military
-
 /mob/living/carbon/human/species/vampire
 	race = /datum/species/vampire
 
@@ -1161,6 +1155,3 @@
 
 /mob/living/carbon/human/species/zombie/infectious
 	race = /datum/species/zombie/infectious
-
-/mob/living/carbon/human/species/zombie/krokodil_addict
-	race = /datum/species/krokodil_addict

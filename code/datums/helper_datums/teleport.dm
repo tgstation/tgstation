@@ -100,7 +100,7 @@
 		effect.start()
 
 // Safe location finder
-/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = TRUE)
+/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
 	if(!zlevels)
 		if (zlevel)
 			zlevels = list(zlevel)
@@ -118,7 +118,7 @@
 			return random_location
 
 /// Checks if a given turf is a "safe" location
-/proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = TRUE, no_teleport = FALSE)
+/proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = FALSE, no_teleport = FALSE)
 	. = FALSE
 	if(!isfloorturf(random_location))
 		return

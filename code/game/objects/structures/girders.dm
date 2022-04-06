@@ -190,6 +190,10 @@
 				return
 
 		if(!sheets.has_unique_girder && sheets.material_type)
+			if(istype(src, /obj/structure/girder/reinforced))
+				to_chat(user, span_warning("You need plasteel to make a reinforced wall!"))
+				return
+
 			var/M = sheets.sheettype
 			if(state == GIRDER_TRAM)
 				if(!sheets.tram_wall_type)

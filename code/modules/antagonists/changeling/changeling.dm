@@ -652,9 +652,11 @@
 
 	chosen_dna.transfer_identity(user, TRUE)
 
-	user.Digitigrade_Leg_Swap(!(DIGITIGRADE in chosen_dna.species?.species_traits))
+	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
+		if(IS_ORGANIC_LIMB(limb))
+			limb.update_limb(is_creating = TRUE)
+
 	user.updateappearance(mutcolor_update = TRUE)
-	user.update_body()
 	user.domutcheck()
 
 	// Get rid of any scars from previous Changeling-ing
