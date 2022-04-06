@@ -159,12 +159,14 @@
 	back = /obj/item/storage/backpack
 	head = /obj/item/clothing/head/hunter
 	suit = /obj/item/clothing/suit/space/hunter
+	belt = /obj/item/gun/ballistic/automatic/pistol/fire_mag
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/hunter
 	glasses = /obj/item/clothing/glasses/sunglasses/gar
 	ears = /obj/item/radio/headset
 	r_pocket = /obj/item/restraints/handcuffs/cable
+	l_pocket = /obj/item/ammo_box/magazine/m9mm/fire
 	id = /obj/item/card/id/advanced/bountyhunter
 	l_hand = /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
 
