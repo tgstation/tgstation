@@ -993,7 +993,7 @@
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = 0
 	M.set_drowsyness(0)
-	M.remove_status_effect(/datum/status_effect/speech/slurring/normal)
+	M.remove_status_effect(/datum/status_effect/speech/slurring/drunk)
 	M.set_confusion(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	M.adjustToxLoss(-0.2 * REM * delta_time, 0)

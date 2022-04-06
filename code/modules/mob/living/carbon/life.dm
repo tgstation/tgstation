@@ -482,7 +482,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 			if(DT_PROB(16, delta_time))
-				add_speech_impediment(4 SECONDS, /datum/status_effect/speech/slurring/normal)
+				add_speech_impediment(4 SECONDS, /datum/status_effect/speech/slurring/drunk)
 			jitteriness = max(jitteriness - (1.5 * delta_time), 0)
 			throw_alert(ALERT_DRUNK, /atom/movable/screen/alert/drunk)
 			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
@@ -492,9 +492,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 		if(drunkenness >= 11)
-			var/datum/status_effect/speech/slurring/normal/already_slurring = has_status_effect(/datum/status_effect/speech/slurring/normal)
+			var/datum/status_effect/speech/slurring/drunk/already_slurring = has_status_effect(/datum/status_effect/speech/slurring/drunk)
 			if(!already_slurring || already_slurring.duration - world.time <= 10 SECONDS)
-				add_speech_impediment(1.2 SECONDS * delta_time, /datum/status_effect/speech/slurring/normal)
+				add_speech_impediment(1.2 SECONDS * delta_time, /datum/status_effect/speech/slurring/drunk)
 
 		if(mind && (is_scientist_job(mind.assigned_role) || is_research_director_job(mind.assigned_role)))
 			if(SSresearch.science_tech)

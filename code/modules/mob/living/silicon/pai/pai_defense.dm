@@ -17,7 +17,7 @@
 			add_speech_impediment(1 MINUTES / severity, /datum/status_effect/speech/stutter)
 			to_chat(src, span_danger("Warning: Feedback loop detected in speech module."))
 		if(2)
-			add_speech_impediment(INFINITY, /datum/status_effect/speech/slurring/normal)
+			add_speech_impediment(INFINITY, /datum/status_effect/speech/slurring/drunk)
 			to_chat(src, span_danger("Warning: Audio synthesizer CPU stuck."))
 		if(3)
 			add_speech_impediment(INFINITY, /datum/status_effect/speech/stutter/derpspeech)

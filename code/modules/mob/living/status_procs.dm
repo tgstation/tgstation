@@ -706,7 +706,6 @@
 	else if(duration > 0)
 		apply_status_effect(impediment, duration)
 
-
 /**
  * Removes slurring of some kind from the mob's speech, if they are currently slurring.
  *

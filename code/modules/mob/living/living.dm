@@ -843,9 +843,6 @@
 	set_confusion(0)
 	dizziness = 0
 	set_drowsyness(0)
-	// Remove all speech related status effects
-	for(var/effect in typesof(/datum/status_effect/speech))
-		remove_status_effect(effect)
 	jitteriness = 0
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, admin_revive)

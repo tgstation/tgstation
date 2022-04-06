@@ -8,10 +8,18 @@
 
 /datum/status_effect/speech/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, .proc/handle_message)
+	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_heal)
 	return TRUE
 
 /datum/status_effect/speech/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE)
+	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
+
+/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], removes all stutters and slurring on full heal
+/datum/status_effect/speech/proc/on_heal(datum/source, admin_revive)
+	SIGNAL_HANDLER
+
+	qdel(src)
 
 /**
  * Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
@@ -189,13 +197,13 @@
 
 	return modified_char
 
-/datum/status_effect/speech/slurring/normal
-	id = "slurring"
+/datum/status_effect/speech/slurring/drunk
+	id = "drunk_slurring"
 	common_prob = 33
 	uncommon_prob = 5
 	replacement_prob = 5
 	doubletext_prob = 10
-	text_modification_file = "slurring_text.json"
+	text_modification_file = "slurring_drunk_text.json"
 
 /datum/status_effect/speech/slurring/cult
 	id = "cult_slurring"

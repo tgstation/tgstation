@@ -91,7 +91,7 @@
 				owner.add_confusion(10)
 				owner.blur_eyes(10)
 			if(6 to 9)
-				owner.add_speech_impediment(1 MINUTES, /datum/status_effect/speech/slurring/normal)
+				owner.add_speech_impediment(1 MINUTES, /datum/status_effect/speech/slurring/drunk)
 			if(10)
 				to_chat(owner, span_notice("You forget for a moment what you were doing."))
 				owner.Stun(20)
