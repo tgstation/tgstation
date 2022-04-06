@@ -38,7 +38,7 @@
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
 		return
-	log_combat(src, target, "has started to harvest")
+	log_combat(src, target, "started to harvest")
 	face_atom(target)
 	draining = TRUE
 	essence_drained += rand(15, 20)
