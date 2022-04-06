@@ -721,11 +721,11 @@
 	if(is_husked)
 		limb.icon = icon_husk
 		limb.icon_state = "[husk_type]_husk_[body_zone]"
-		icon_exists(limb.icon, limb.icon_state, TRUE) //Prints a stack trace on the first failure of a given iconstate.
+		icon_exists(limb.icon, limb.icon_state, scream = TRUE) //Prints a stack trace on the first failure of a given iconstate.
 		if(aux_zone) //Hand shit
 			aux = image(limb.icon, "[husk_type]_husk_[aux_zone]", -aux_layer, image_dir)
 			. += aux
-		return
+		return .
 	//END HUSK SHIIIIT
 
 	////This is the MEAT of limb icon code
