@@ -185,3 +185,50 @@
 /obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
 	. = ..()
 	borgo.lamp_color = COLOR_RED //Syndicate likes it red
+
+// Round start tablets
+
+/obj/item/modular_computer/tablet/role
+	icon_state = "pda"
+
+	greyscale_config = /datum/greyscale_config/tablet
+	greyscale_colors = "#999875#a92323"
+
+	var/default_disk = 0
+
+/obj/item/modular_computer/tablet/role/update_icon_state()
+	. = ..()
+	icon_state = "pda"
+
+/obj/item/modular_computer/tablet/role/update_overlays()
+	. = ..()
+	var/init_icon = initial(icon)
+	var/obj/item/computer_hardware/card_slot/card = all_components[MC_CARD]
+	if(!init_icon)
+		return
+	if(card)
+		if(card.stored_card)
+			. += mutable_appearance(init_icon, "id_overlay")
+	if(light_on)
+		. += mutable_appearance(init_icon, "light_overlay")
+
+/obj/item/modular_computer/tablet/role/attack_ai(mob/user)
+	return // we don't want ais or cyborgs using a private role tablet
+
+/obj/item/modular_computer/tablet/role/proc/get_types_to_preload()
+	var/list/preload = list()
+	preload += default_disk
+	return preload
+
+/obj/item/modular_computer/tablet/role/Initialize(mapload)
+	. = ..()
+	install_component(new /obj/item/computer_hardware/hard_drive/small)
+	install_component(new /obj/item/computer_hardware/processor_unit/small)
+	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
+	install_component(new /obj/item/computer_hardware/network_card)
+	install_component(new /obj/item/computer_hardware/card_slot)
+	install_component(new /obj/item/computer_hardware/identifier)
+
+	if(default_disk)
+		var/obj/item/computer_hardware/hard_drive/portable/disk = SSwardrobe.provide_type(default_disk, src)
+		install_component(disk)

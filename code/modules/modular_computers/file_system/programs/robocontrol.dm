@@ -25,14 +25,14 @@
 	var/list/botlist = list()
 	var/list/mulelist = list()
 
-	var/obj/item/computer_hardware/cartridge_slot/cart_slot = computer ? computer.all_components[MC_CART] : null
+	var/obj/item/computer_hardware/hard_drive/role/job_disk = computer ? computer.all_components[MC_HDD_JOB] : null
 	var/obj/item/computer_hardware/card_slot/card_slot = computer ? computer.all_components[MC_CARD] : null
 	data["have_id_slot"] = !!card_slot
 	if(computer)
 		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
 		data["id_owner"] = id_card ? id_card.registered_name : ""
-	if(cart_mode && cart_slot)
-		data["id_owner"] = "CARTRIDGE OVERRIDE"
+	if(cart_mode && job_disk)
+		data["id_owner"] = "JOB DISK OVERRIDE"
 
 	botcount = 0
 

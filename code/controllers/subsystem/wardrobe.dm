@@ -346,8 +346,8 @@ SUBSYSTEM_DEF(wardrobe)
 		CHECK_TICK
 
 /datum/controller/subsystem/wardrobe/proc/load_tablet_nicknacks()
-	for(var/obj/item/modular_computer/tablet/nano/pager as anything in typesof(/obj/item/modular_computer/tablet/nano))
-		var/obj/item/modular_computer/tablet/nano/flip_phone = new pager()
+	for(var/obj/item/modular_computer/tablet/role/pager as anything in typesof(/obj/item/modular_computer/tablet/role))
+		var/obj/item/modular_computer/tablet/role/flip_phone = new pager()
 		for(var/datum/outfit_item_type as anything in flip_phone.get_types_to_preload())
 			canonize_type(outfit_item_type)
 		qdel(flip_phone)

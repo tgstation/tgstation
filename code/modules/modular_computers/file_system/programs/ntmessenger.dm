@@ -153,10 +153,10 @@
 	data["isSilicon"] = is_silicon
 	data["photo"] = photo_path
 
-	var/obj/item/computer_hardware/cartridge_slot/cart = computer.all_components[MC_CART]
+	var/obj/item/computer_hardware/hard_drive/role/disk = computer.all_components[MC_HDD_JOB]
 
-	if(cart)
-		data["canSpam"] = cart.CanSpam()
+	if(disk)
+		data["canSpam"] = disk.CanSpam()
 
 	return data
 

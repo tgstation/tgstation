@@ -13,7 +13,7 @@
 	var/obj/item/pda/stored_pda = null
 	/// A blacklist of PDA types that we should not be able to paint.
 	var/static/list/pda_type_blacklist = list(
-		/obj/item/modular_computer/tablet/nano/heads,
+		/obj/item/modular_computer/tablet/role/heads,
 		/*
 		/obj/item/pda/ai/pai,
 		/obj/item/pda/ai,
@@ -135,7 +135,7 @@
 		to_chat(user, span_warning("The machine rejects your [O]. This PDA does not appear to be compatible with the PDA Painter."))
 		return
 
-	if(istype(O, /obj/item/modular_computer/tablet/nano))
+	if(istype(O, /obj/item/modular_computer/tablet/role))
 		insert_pda(O, user)
 		return
 
@@ -166,7 +166,7 @@
  * * new_pda - The PDA to insert.
  * * user - The user to try and eject the PDA into the hands of.
  */
-/obj/machinery/pdapainter/proc/insert_pda(obj/item/modular_computer/tablet/nano/new_pda, mob/living/user)
+/obj/machinery/pdapainter/proc/insert_pda(obj/item/modular_computer/tablet/role/new_pda, mob/living/user)
 	if(!istype(new_pda))
 		return FALSE
 
@@ -285,7 +285,7 @@
 				return TRUE
 
 			var/obj/item/held_item = usr.get_active_held_item()
-			if(istype(held_item, /obj/item/modular_computer/tablet/nano))
+			if(istype(held_item, /obj/item/modular_computer/tablet/role))
 				// If we successfully inserted, we've ejected the old item. Return early.
 				if(insert_pda(held_item, usr))
 					return TRUE
@@ -315,7 +315,7 @@
 				return TRUE
 
 			var/selection = params["selection"]
-			var/obj/item/modular_computer/tablet/nano/pda_path = /obj/item/modular_computer/tablet/nano/
+			var/obj/item/modular_computer/tablet/role/pda_path = /obj/item/modular_computer/tablet/role/
 
 			for(var/path in pda_types)
 				if(pda_types[path] == selection)

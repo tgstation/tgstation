@@ -32,6 +32,7 @@
 #define DISK_HYDRO (1<<10)
 #define DISK_ROBOS (1<<11)
 #define DISK_JANI (1<<12)
+#define DISK_SEC (1<<13)
 
 /// PDA ui menu defines
 #define PDA_UI_HUB 0
