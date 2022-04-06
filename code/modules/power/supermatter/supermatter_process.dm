@@ -280,10 +280,11 @@
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
 		var/pressure_multiplier = max((1 / ((env.return_pressure() ** pressure_bonus_curve_angle) + 1) * pressure_bonus_derived_steepness) + pressure_bonus_derived_constant, 1)
+		var/co2_power_increase = max(1 + gas_comp[/datum/gas/carbon_dioxide] * 0.5, 1)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
-			zap_str = 2.5 * power * power_multiplier * pressure_multiplier,
+			zap_str = 2.5 * power * power_multiplier * pressure_multiplier * co2_power_increase,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
 			zap_cutoff = 300,
 			power_level = power
