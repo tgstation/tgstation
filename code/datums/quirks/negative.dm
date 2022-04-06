@@ -542,6 +542,7 @@
 					to_chat(quirker, span_danger("You feel self-conscious and stop talking. You need a moment to recover!"))
 					break
 			if(prob(max(5,(nearby_people*12.5*moodmod)))) //Minimum 1/20 chance of stutter
+				/*
 				word = html_decode(word)
 				var/leng = length(word)
 				var/stuttered = ""
@@ -560,8 +561,11 @@
 					stuttered += newletter
 				sanitize(stuttered)
 				new_message += stuttered
+				*/
+				quirker.add_speech_impediment(0.5 SECONDS, /datum/status_effect/speech/stutter)
 			else
 				new_message += word
+
 		message = jointext(new_message, " ")
 	var/mob/living/carbon/human/quirker = quirk_holder
 	if(prob(min(50,(0.50*(nearby_people*12.5)*moodmod)))) //Max 50% chance of not talking
@@ -605,7 +609,8 @@
 			quirk_holder.Jitter(10)
 			msg += "causing you to start fidgeting!"
 		if(2)
-			quirk_holder.stuttering = max(3, quirk_holder.stuttering)
+			//quirk_holder.stuttering = max(3, quirk_holder.stuttering)
+			quirk_holder.add_speech_impediment(6 SECONDS, /datum/status_effect/speech/stutter)
 			msg += "causing you to start stuttering!"
 		if(3)
 			quirk_holder.Stun(2 SECONDS)

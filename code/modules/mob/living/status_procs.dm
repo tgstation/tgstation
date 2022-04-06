@@ -638,27 +638,27 @@
 	flags_1 &= ~ SHOCKED_1
 
 /**
- * Adds slurring of some kind to the mob's speech.
+ * Adds a speech impediment of some kind to the mob's speech.
  *
- * duration - the duration, in deciseconds, of the slurring.
- * slurring_type - the type of slurring given to the mob
- * max_duration - if set, we will only add slurring duration up until that set duration
+ * duration - the duration, in deciseconds, of the impediment.
+ * impediment - the type of impediment status effect given to the mob
+ * max_duration - if set, we will only add duration to that impediment up until that set duration
  */
-/mob/living/proc/add_slurring(duration, slurring_type = /datum/status_effect/slurring/normal, max_duration)
+/mob/living/proc/add_speech_impediment(duration, impediment, max_duration)
 	if(!isnum(duration) || duration <= 0)
-		CRASH("add_slurring: called with an invalid duration. (Got: [duration])")
+		CRASH("add_speech_impediment: called with an invalid duration. (Got: [duration])")
 
-	if(!ispath(slurring_type, /datum/status_effect/slurring))
-		CRASH("add_slurring: called with an invalid slurring_type. (Got: [slurring_type])")
+	if(!ispath(impediment, /datum/status_effect/speech))
+		CRASH("add_speech_impediment: called with an invalid slurring_type. (Got: [impediment])")
 
 	if(isnum(max_duration))
 		if(max_duration <= 0)
-			CRASH("add_slurring: Called with an invalid max_duration. (Got: [max_duration])")
+			CRASH("add_speech_impediment: Called with an invalid max_duration. (Got: [max_duration])")
 
 		if(duration >= max_duration)
 			duration = max_duration
 
-	var/datum/status_effect/slurring/existing = has_status_effect(slurring_type)
+	var/datum/status_effect/speech/existing = has_status_effect(impediment)
 	if(existing)
 		if(isnum(max_duration))
 			var/remaining_duration = existing.duration - world.time
@@ -671,7 +671,7 @@
 			existing.duration += duration
 
 	else
-		apply_status_effect(slurring_type, duration)
+		apply_status_effect(impediment, duration)
 
 /**
  * Removes slurring of some kind from the mob's speech, if they are currently slurring.
@@ -679,14 +679,17 @@
  * duration - the duration, in deciseconds, to remove from the mob's current slurring.
  * slurring_type - the type of slurring given to the mob
  */
-/mob/living/proc/remove_slurring(duration, slurring_type = /datum/status_effect/slurring)
-	if(!isnum(duration) || duration >= 0 || !ispath(slurring_type, /datum/status_effect/slurring))
-		return
+/mob/living/proc/remove_speech_impediment(duration, impediment)
+	if(!isnum(duration) || duration >= 0)
+		CRASH("remove_speech_impediment: called with an invalid duration. (Got: [duration])")
 
-	var/datum/status_effect/slurring/existing = has_status_effect(slurring_type)
+	if(!ispath(impediment, /datum/status_effect/speech))
+		CRASH("remove_speech_impediment: called with an invalid slurring_type. (Got: [impediment])")
+
+	var/datum/status_effect/speech/existing = has_status_effect(impediment)
 	if(!existing)
 		return
 
 	existing.duration -= duration
-	if(existing_duration < world.time)
+	if(existing.duration < world.time)
 		qdel(existing)

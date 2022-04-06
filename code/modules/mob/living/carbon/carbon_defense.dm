@@ -388,7 +388,7 @@
 	//Jitter and other fluff.
 	jitteriness += 1000
 	do_jitter_animation(jitteriness)
-	stuttering += 2
+	add_speech_impediment(4 SECONDS, /datum/status_effect/speech/stutter)
 	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 20)
 	return shock_damage
 

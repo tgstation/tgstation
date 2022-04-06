@@ -113,7 +113,7 @@
 			playsound(carbon_user, 'sound/effects/wounds/sizzle1.ogg', 70, vary = TRUE)
 			if(prob(50))
 				carbon_user.emote("scream")
-				carbon_user.stuttering += 13
+				carbon_user.add_speech_impediment(26 SECONDS, /datum/status_effect/speech/stutter)
 
 		on_mob_hit(user, user)
 

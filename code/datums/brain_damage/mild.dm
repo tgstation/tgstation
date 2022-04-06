@@ -27,12 +27,11 @@
 	lose_text = "<span class='notice'>You feel in control of your speech.</span>"
 
 /datum/brain_trauma/mild/stuttering/on_life(delta_time, times_fired)
-	owner.stuttering = min(owner.stuttering + 5, 25)
-	..()
+	owner.add_speech_impediment(5 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 50 SECONDS)
 
 /datum/brain_trauma/mild/stuttering/on_lose()
-	owner.stuttering = 0
-	..()
+	owner.remove_status_effect(/datum/status_effect/speech/stutter)
+	return ..()
 
 /datum/brain_trauma/mild/dumbness
 	name = "Dumbness"
@@ -93,7 +92,7 @@
 				owner.add_confusion(10)
 				owner.blur_eyes(10)
 			if(6 to 9)
-				owner.add_slurring(1 MINUTES)
+				owner.add_speech_impediment(1 MINUTES, /datum/status_effect/speech/slurring/normal)
 			if(10)
 				to_chat(owner, span_notice("You forget for a moment what you were doing."))
 				owner.Stun(20)

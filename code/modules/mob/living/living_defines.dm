@@ -126,7 +126,6 @@
 	var/druggy = 0
 
 	//Speech
-	var/stuttering = 0
 	var/derpspeech = 0
 
 	var/list/implants = null

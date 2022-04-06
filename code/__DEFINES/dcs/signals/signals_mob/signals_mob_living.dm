@@ -86,3 +86,6 @@
 ///From base of mob/living/ZImpactDamage() (mob/living, levels, turf/t)
 #define COMSIG_LIVING_Z_IMPACT "living_z_impact"
 	#define NO_Z_IMPACT_DAMAGE (1<<0)
+
+/// From mob/living/treat_message(): (list/message_args)
+#define COMSIG_LIVING_TREAT_MESSAGE "living_treat_message"

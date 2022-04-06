@@ -14,10 +14,10 @@
 	//Ask and you shall receive
 	switch(rand(1, 3))
 		if(1)
-			stuttering += 30/severity //temporary, clears in a few ticks after silent is over.
+			add_speech_impediment(1 MINUTES / severity, /datum/status_effect/speech/stutter)
 			to_chat(src, span_danger("Warning: Feedback loop detected in speech module."))
 		if(2)
-			slurring = INFINITY // permanent until speech is fixed through the pAI card UI by someone else.
+			add_speech_impediment(INFINITY, /datum/status_effect/speech/slurring/normal)
 			to_chat(src, span_danger("Warning: Audio synthesizer CPU stuck."))
 		if(3)
 			derpspeech = 1 // Ditto.

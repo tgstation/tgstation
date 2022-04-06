@@ -843,8 +843,8 @@
 	set_confusion(0)
 	dizziness = 0
 	set_drowsyness(0)
-	stuttering = 0
-	slurring = 0
+	// Removes slurring, stuttering, etc. from our mob
+	remove_status_effect(/datum/status_effect/speech)
 	jitteriness = 0
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, admin_revive)
