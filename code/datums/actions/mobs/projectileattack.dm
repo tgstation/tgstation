@@ -165,11 +165,6 @@
 	projectile_sound = 'sound/magic/clockwork/invoke_general.ogg'
 	var/list/shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/New(Target, projectile, homing, spread, list/angles)
-	. = ..()
-	if(angles)
-		shot_angles = angles
-
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/attack_sequence(mob/living/firer, atom/target)
 	fire_shotgun(firer, target, shot_angles)
 
@@ -208,13 +203,11 @@
 	cooldown_time = 4 SECONDS
 	projectile_type = /obj/projectile/colossus
 	projectile_sound = 'sound/magic/clockwork/invoke_general.ogg'
-	var/list/firing_directions
+	var/list/firing_directions = GLOB.
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/New(Target, projectile, homing, spread, list/dirs)
+/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/New(Target)
 	. = ..()
-	if(dirs)
-		firing_directions = dirs
-	else
+	if(!firing_directions)
 		firing_directions = GLOB.alldirs.Copy()
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/attack_sequence(mob/living/firer, atom/target)
