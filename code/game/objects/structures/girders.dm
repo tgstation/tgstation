@@ -188,13 +188,13 @@
 
 		if(!sheets.has_unique_girder && sheets.material_type)
 			if(istype(src, /obj/structure/girder/reinforced))
-				to_chat(user, span_warning("You need plasteel to make a reinforced wall!"))
+				user.balloon_alert("need plasteel!")
 				return
 
 			var/M = sheets.sheettype
 			if(state == GIRDER_TRAM)
 				if(!sheets.tram_wall_type)
-					user.balloon_alert("need Titanium, Plastitanium, or Iron!")
+					user.balloon_alert("need titanium, plastitanium, or iron!")
 					return
 				if(sheets.get_amount() < 2)
 					user.balloon_alert("need 2 sheets!")
