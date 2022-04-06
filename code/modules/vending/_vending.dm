@@ -430,12 +430,14 @@ GLOBAL_LIST_EMPTY(vending_products)
 	default_deconstruction_crowbar(I)
 	return TRUE
 
-/obj/machinery/vending/wrench_act(mob/living/user, obj/item/I)
-	..()
-	if(panel_open)
-		default_unfasten_wrench(user, I, time = 60)
+/obj/machinery/vending/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!panel_open)
+		return FALSE
+	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
 		unbuckle_all_mobs(TRUE)
-	return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return FALSE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -599,7 +601,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(5) // limb squish!
 						for(var/i in C.bodyparts)
 							var/obj/item/bodypart/squish_part = i
-							if(squish_part.is_organic_limb())
+							if(IS_ORGANIC_LIMB(squish_part))
 								var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
 								squish_part.force_wound_upwards(type_wound)
 							else

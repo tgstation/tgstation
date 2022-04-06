@@ -557,10 +557,10 @@
  */
 /obj/structure/sign/painting/proc/load_persistent()
 	if(!persistence_id)
-		return
+		return FALSE
 	var/list/valid_paintings = SSpersistent_paintings.get_paintings_with_tag(persistence_id)
 	if(!length(valid_paintings))
-		return //aborts loading anything this category has no usable paintings
+		return FALSE //aborts loading anything this category has no usable paintings
 	var/datum/painting/painting = pick(valid_paintings)
 	var/png = "data/paintings/images/[painting.md5].png"
 	var/icon/I = new(png)
@@ -585,6 +585,7 @@
 	current_canvas = new_canvas
 	current_canvas.update_appearance()
 	update_appearance()
+	return TRUE
 
 /obj/structure/sign/painting/proc/save_persistent()
 	if(!persistence_id || !current_canvas || current_canvas.no_save || current_canvas.painting_metadata.loaded_from_json)
@@ -683,8 +684,15 @@
 
 /obj/structure/sign/painting/large/frame_canvas(mob/user, obj/item/canvas/new_canvas)
 	. = ..()
-	if(!.)
-		return
+	if(.)
+		set_painting_offsets()
+
+/obj/structure/sign/painting/large/load_persistent()
+	. = ..()
+	if(.)
+		set_painting_offsets()
+
+/obj/structure/sign/painting/large/proc/set_painting_offsets()
 	switch(dir)
 		if(EAST)
 			transform = transform.Turn(90)

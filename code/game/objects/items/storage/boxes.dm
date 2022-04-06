@@ -1098,6 +1098,11 @@
 		/obj/item/stock_parts/matter_bin/bluespace = 3)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/box/syndie_kit/space_dragon/PopulateContents()
+	new /obj/item/dna_probe/carp_scanner(src)
+	new /obj/item/clothing/suit/hooded/carp_costume/spaceproof/old(src)
+	new /obj/item/clothing/mask/gas/carp(src)
+
 /obj/item/storage/box/dishdrive
 	name = "DIY Dish Drive Kit"
 	desc = "Contains everything you need to build your own Dish Drive!"
