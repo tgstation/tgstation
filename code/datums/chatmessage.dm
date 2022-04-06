@@ -77,7 +77,7 @@
 	src.lifespan = lifespan
 	///how long this datum will actually exist for. its how long the default message animations take + 1 second buffer
 	var/total_existence_time = CHAT_MESSAGE_SPAWN_TIME + lifespan + CHAT_MESSAGE_EOL_FADE + 1 SECONDS
-	fadertimer = addtimer(CALLBACK(src, .proc/end_of_life), total_existence_time, TIMER_STOPPABLE|TIMER_DELETE_ME)
+	fadertimer = addtimer(CALLBACK(src, .proc/end_of_life), total_existence_time, TIMER_STOPPABLE|TIMER_DELETE_ME, SSrunechat)
 
 	//in the case of a hash collision this will drop the older chatmessage datum from this list. this is fine however
 	//since the dropped datum will still properly handle itself including deletion etc.
