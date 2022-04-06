@@ -480,7 +480,8 @@
 
 /obj/structure/tank_frame/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	return default_unfasten_wrench(user, tool, 0.5 SECONDS)
+	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/tank_frame/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

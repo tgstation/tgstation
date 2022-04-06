@@ -36,6 +36,14 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Charging power: <b>[charge_rate]W</b>.")
 
+/obj/machinery/cell_charger/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(charging)
+		return FALSE
+	if(default_unfasten_wrench(user, tool))
+		update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
 		if(machine_stat & BROKEN)
@@ -64,8 +72,6 @@
 		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
 			return
 		if(default_deconstruction_crowbar(W))
-			return
-		if(!charging && default_unfasten_wrench(user, W))
 			return
 		return ..()
 

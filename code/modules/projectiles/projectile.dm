@@ -949,12 +949,10 @@
 	var/ty = (text2num(screen_loc_Y[1]) - 1) * world.icon_size + text2num(screen_loc_Y[2])
 
 	//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-	var/list/screenview = getviewsize(user.client.view)
-	var/screenviewX = screenview[1] * world.icon_size
-	var/screenviewY = screenview[2] * world.icon_size
+	var/list/screenview = view_to_pixels(user.client.view)
 
-	var/ox = round(screenviewX/2) - user.client.pixel_x //"origin" x
-	var/oy = round(screenviewY/2) - user.client.pixel_y //"origin" y
+	var/ox = round(screenview[1] / 2) - user.client.pixel_x //"origin" x
+	var/oy = round(screenview[2] / 2) - user.client.pixel_y //"origin" y
 	angle = ATAN2(tx - oy, ty - ox)
 	return list(angle, p_x, p_y)
 
