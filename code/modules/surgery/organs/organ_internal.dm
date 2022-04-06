@@ -10,7 +10,7 @@
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
 	var/organ_flags = ORGAN_EDIBLE
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
-	var/damage = 0 //total damage this organ has sustained
+	var/damage = 0
 	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
 	var/healing_factor = 0 //fraction of maxhealth healed per on_life(), set to 0 for generic organs
 	var/decay_factor = 0 //same as above but when without a living owner, set to 0 for generic organs
@@ -74,8 +74,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	SEND_SIGNAL(reciever, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
 	owner = reciever
-	reciever.internal_organs |= src
-	reciever.internal_organs_slot[slot] = src
+	reciever.slot_in_organ(src, slot)
 	moveToNullspace()
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
 	for(var/datum/action/action as anything in actions)

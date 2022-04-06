@@ -152,7 +152,8 @@
 #define G_FEMALE 2
 #define G_PLURAL 3
 
-///Organ slot processing order for life proc
+/// Defines how a mob's internal_organs_slot is ordered
+/// Exists so Life()'s organ process order is consistent
 GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_BRAIN,
 	ORGAN_SLOT_APPENDIX,

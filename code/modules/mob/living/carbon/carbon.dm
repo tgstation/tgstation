@@ -1031,6 +1031,17 @@
 		var/obj/item/organ/I = X
 		I.Insert(src)
 
+/// Takes an organ to slot in, and the slot to put it in, and puts in inside our lists properly
+/// To be called once the organ is actually inside us. NOT a helper proc
+/mob/living/carbon/proc/slot_in_organ(obj/item/organ/insert, slot)
+	internal_organs |= insert
+	internal_organs_slot[slot] = insert
+	/// internal_organs_slot must ALWAYS be ordered in the same way as organ_process_order
+	/// Otherwise life processing breaks down
+	sortTim(internal_organs_slot, /proc/cmp_organ_slot_asc)
+
+/proc/cmp_organ_slot_asc(slot_a, slot_b)
+	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
