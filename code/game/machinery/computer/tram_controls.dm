@@ -28,7 +28,11 @@
  * Locates tram parts in the lift global list after everything is done.
  */
 /obj/machinery/computer/tram_controls/proc/find_tram()
-	tram_ref = WEAKREF(GLOB.central_tram)
+	for(var/atom/tram as anything in GLOB.central_trams)
+		if(tram.z != z)
+			continue
+		tram_ref = WEAKREF(tram)
+		break
 
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
@@ -73,6 +77,8 @@
 /obj/machinery/computer/tram_controls/proc/get_destinations()
 	. = list()
 	for(var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks)
+		if(destination.z != z)
+			continue
 		var/list/this_destination = list()
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons
@@ -88,6 +94,8 @@
 		if ("send")
 			var/obj/effect/landmark/tram/to_where
 			for (var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks)
+				if(destination.z != z)
+					continue
 				if(destination.destination_id == params["destination"])
 					to_where = destination
 					break
@@ -159,7 +167,12 @@
 		return
 
 	var/destination
+	var/turf/current_turf = get_turf(src)
+	if(!current_turf)
+		return
 	for(var/obj/effect/landmark/tram/possible_destination as anything in GLOB.tram_landmarks)
+		if(possible_destination.z != current_turf.z)
+			continue
 		if(possible_destination.name == new_destination.value)
 			destination = possible_destination
 			break

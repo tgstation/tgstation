@@ -485,7 +485,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/obj/effect/landmark/tram/from_where
 	var/travel_direction
 
-GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
+GLOBAL_LIST_EMPTY_TYPED(central_trams, /obj/structure/industrial_lift/tram/central)
 
 /obj/structure/industrial_lift/tram/Initialize(mapload)
 	. = ..()
@@ -494,16 +494,13 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 /obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
 
 /obj/structure/industrial_lift/tram/central/Initialize(mapload)
-	if(GLOB.central_tram)
-		return INITIALIZE_HINT_QDEL
-
 	. = ..()
-
-	SStramprocess.can_fire = TRUE
-	GLOB.central_tram = src
+	if(!SStramprocess.can_fire)
+		SStramprocess.can_fire = TRUE
+	GLOB.central_trams += src
 
 /obj/structure/industrial_lift/tram/central/Destroy()
-	GLOB.central_tram = null
+	GLOB.central_trams -= src
 	return ..()
 
 /obj/structure/industrial_lift/tram/LateInitialize()
