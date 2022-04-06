@@ -453,7 +453,7 @@
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
 	weight = 5
-	cost = 35 // MOTHBLOCKS TODO: Change this to be much lower ONLY once we get minimum threat stuff
+	cost = 35 // MOTHBLOCKS TODO: Change this to be much lower ONLY once we get minimum round time stuff
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
