@@ -1,6 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - bugfix: "The chairs on the casino shuttle are now facing the proper directions"
-  - bugfix: "The Zeta shuttle brig now uses the brig shuttle area"
-  - qol: "Shuttle doors that previously had varedited accesses now use preset access helpers"

@@ -180,9 +180,9 @@
 	. = ..()
 	access_list += ACCESS_SECURITY
 
-/obj/effect/mapping_helpers/airlock/access/any/security/doors/Initialize()
+/obj/effect/mapping_helpers/airlock/access/any/security/entrance/Initialize()
 	. = ..()
-	access_list += ACCESS_SEC_DOORS
+	access_list += ACCESS_BRIG_ENTRANCE
 
 /obj/effect/mapping_helpers/airlock/access/any/security/brig/Initialize()
 	. = ..()
@@ -191,6 +191,10 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/armory/Initialize()
 	. = ..()
 	access_list += ACCESS_ARMORY
+
+/obj/effect/mapping_helpers/airlock/access/any/security/detective/Initialize()
+	. = ..()
+	access_list += ACCESS_FORENSICS
 
 /obj/effect/mapping_helpers/airlock/access/any/security/court/Initialize()
 	. = ..()
@@ -529,9 +533,9 @@
 	. = ..()
 	access_list += ACCESS_SECURITY
 
-/obj/effect/mapping_helpers/airlock/access/all/security/doors/Initialize()
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance/Initialize()
 	. = ..()
-	access_list += ACCESS_SEC_DOORS
+	access_list += ACCESS_BRIG_ENTRANCE
 
 /obj/effect/mapping_helpers/airlock/access/all/security/brig/Initialize()
 	. = ..()
@@ -540,6 +544,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/armory/Initialize()
 	. = ..()
 	access_list += ACCESS_ARMORY
+
+/obj/effect/mapping_helpers/airlock/access/all/security/detective/Initialize()
+	. = ..()
+	access_list += ACCESS_FORENSICS
 
 /obj/effect/mapping_helpers/airlock/access/all/security/court/Initialize()
 	. = ..()

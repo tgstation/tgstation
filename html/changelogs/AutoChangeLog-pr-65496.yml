@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes: 
-  - bugfix: "Fixed airlocks and windoors not being able to be attacked by melee weapons in combat mode."

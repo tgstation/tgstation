@@ -1,6 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer offer things to yourself, choosing instead to take them directly"
-  - bugfix: "Can no longer headpat mobs without heads"
-  - expansion: "Adds screentips for headpatting, hugging and tail pulling"
