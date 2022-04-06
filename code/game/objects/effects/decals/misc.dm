@@ -54,7 +54,7 @@
 		end_life(source)
 		return
 
-	var/puff_reagents_string = reagents.log_list()
+	var/puff_reagents_string = reagents.get_reagent_log_string()
 	var/travelled_max_distance = (source.lifetime - source.delay <= 0)
 	var/turf/our_turf = get_turf(src)
 

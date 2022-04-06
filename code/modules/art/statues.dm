@@ -23,11 +23,16 @@
 	AddElement(/datum/element/beauty, impressiveness * 75)
 	AddComponent(/datum/component/simple_rotation)
 
+/obj/structure/cannon/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return FALSE
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(default_unfasten_wrench(user, W))
-			return
 		if(W.tool_behaviour == TOOL_WELDER)
 			if(!W.tool_start_check(user, amount=0))
 				return FALSE

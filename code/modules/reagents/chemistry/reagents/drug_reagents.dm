@@ -116,10 +116,10 @@
 		to_chat(M, span_notice("[high_message]"))
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle == 35 && creation_purity <= 0.6)
-		if(!istype(M.dna.species, /datum/species/krokodil_addict))
+		if(!istype(M.dna.species, /datum/species/human/krokodil_addict))
 			to_chat(M, span_userdanger("Your skin falls off easily!"))
 			M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
-			M.set_species(/datum/species/krokodil_addict)
+			M.set_species(/datum/species/human/krokodil_addict)
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M, delta_time, times_fired)

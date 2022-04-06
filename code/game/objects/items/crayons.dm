@@ -786,7 +786,7 @@
 
 	if(istype(target, /obj/item/bodypart) && actually_paints)
 		var/obj/item/bodypart/limb = target
-		if(limb.status == BODYPART_ROBOTIC)
+		if(!IS_ORGANIC_LIMB(limb))
 			var/list/skins = list()
 			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 			for(var/skin_option in style_list_icons)

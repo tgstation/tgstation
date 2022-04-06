@@ -7,6 +7,6 @@
 	throw_speed = 1
 	throw_range = 10
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	author = "Forces beyond your comprehension"
-	unique = 1
-	title = "the Codex Gigas"
+	starting_title = "the Codex Gigas"
+	starting_author = "Forces beyond your comprehension"
+	unique = TRUE
