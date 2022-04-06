@@ -6,20 +6,22 @@ SUBSYSTEM_DEF(idlenpcpool)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
-	var/static/list/idle_mobs_by_zlevel[][]
+	///stores all simple_animal instances with AIStatus == AI_DISTANCE_OFF
+	///list of lists. each sublist corresponds to a z level at its index and stores all z level deactivated simple mobs in that z level.
+	var/static/list/distance_deactivated_mobs_by_z_level[][]
 
 /datum/controller/subsystem/idlenpcpool/stat_entry(msg)
 	var/list/idlelist = GLOB.simple_animals[AI_IDLE]
-	var/list/zlist = GLOB.simple_animals[AI_Z_OFF]
+	var/list/zlist = GLOB.simple_animals[AI_DISTANCE_OFF]
 	msg = "IdleNPCS:[length(idlelist)]|Z:[length(zlist)]"
 	return ..()
 
 /datum/controller/subsystem/idlenpcpool/proc/MaxZChanged()
-	if (!islist(idle_mobs_by_zlevel))
-		idle_mobs_by_zlevel = new /list(world.maxz,0)
-	while (SSidlenpcpool.idle_mobs_by_zlevel.len < world.maxz)
-		SSidlenpcpool.idle_mobs_by_zlevel.len++
-		SSidlenpcpool.idle_mobs_by_zlevel[idle_mobs_by_zlevel.len] = list()
+	if (!islist(distance_deactivated_mobs_by_z_level))
+		distance_deactivated_mobs_by_z_level = new /list(world.maxz,0)
+	while (SSidlenpcpool.distance_deactivated_mobs_by_z_level.len < world.maxz)
+		SSidlenpcpool.distance_deactivated_mobs_by_z_level.len++
+		SSidlenpcpool.distance_deactivated_mobs_by_z_level[distance_deactivated_mobs_by_z_level.len] = list()
 
 /datum/controller/subsystem/idlenpcpool/fire(resumed = FALSE)
 

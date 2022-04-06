@@ -1489,8 +1489,8 @@
 				//Figure out how many clients were here before
 				var/oldlen = SSmobs.clients_by_zlevel[new_z].len
 				SSmobs.clients_by_zlevel[new_z] += src
-				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
-					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
+				for (var/I in length(SSidlenpcpool.distance_deactivated_mobs_by_z_level[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
+					var/mob/living/simple_animal/SA = SSidlenpcpool.distance_deactivated_mobs_by_z_level[new_z][I]
 					if (SA)
 						if(oldlen == 0)
 							//Start AI idle if nobody else was on this z level before (mobs will switch off when this is the case)
@@ -1501,7 +1501,7 @@
 							SA.consider_wakeup() // Ask the mob if it wants to turn on it's AI
 					//They should clean up in destroy, but often don't so we get them here
 					else
-						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
+						SSidlenpcpool.distance_deactivated_mobs_by_z_level[new_z] -= SA
 
 
 			registered_z = new_z

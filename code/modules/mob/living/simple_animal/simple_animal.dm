@@ -138,7 +138,11 @@
 	var/dextrous = FALSE
 	var/dextrous_hud_type = /datum/hud/dextrous
 
-	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players).
+	///The Status of our AI, can be set to:
+	///AI_ON (On, usual processing),
+	///AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near),
+	///AI_OFF (Off, Not processing ever),
+	///AI_DISTANCE_OFF (Temporarily off due to nonpresence of players).
 	var/AIStatus = AI_ON
 	///once we have become sentient, we can never go back.
 	var/can_have_ai = TRUE
@@ -166,6 +170,11 @@
 
 	///Is this animal horrible at hunting?
 	var/inept_hunter = FALSE
+
+	///lazy list of spatial grid cells we are listening for players to enter.
+	///if we move while we have registered this we unregister these cells and register the new bounding box.
+	///since spatial grid cells should never delete we can hold onto references like this.
+	var/list/datum/spatial_grid_cell/listening_grid_cells
 
 
 /mob/living/simple_animal/Initialize(mapload)
@@ -222,8 +231,8 @@
 		nest = null
 
 	var/turf/T = get_turf(src)
-	if (T && AIStatus == AI_Z_OFF)
-		SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
+	if (T && AIStatus == AI_DISTANCE_OFF)
+		SSidlenpcpool.distance_deactivated_mobs_by_z_level[T.z] -= src
 
 	return ..()
 
@@ -639,14 +648,14 @@
 	if(!can_have_ai && (togglestatus != AI_OFF))
 		return
 	if (AIStatus != togglestatus)
-		if (togglestatus > 0 && togglestatus < 5)
-			if (togglestatus == AI_Z_OFF || AIStatus == AI_Z_OFF)
+		if (togglestatus >= FIRST_AI_ACTIVATION_STAGE && togglestatus <= LAST_AI_ACTIVATION_STAGE)
+			if (togglestatus == AI_DISTANCE_OFF || AIStatus == AI_DISTANCE_OFF)
 				var/turf/T = get_turf(src)
 				if (T)
-					if (AIStatus == AI_Z_OFF)
-						SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
+					if (AIStatus == AI_DISTANCE_OFF)
+						SSidlenpcpool.distance_deactivated_mobs_by_z_level[T.z] -= src
 					else
-						SSidlenpcpool.idle_mobs_by_zlevel[T.z] += src
+						SSidlenpcpool.distance_deactivated_mobs_by_z_level[T.z] += src
 			GLOB.simple_animals[AIStatus] -= src
 			GLOB.simple_animals[togglestatus] += src
 
@@ -660,6 +669,38 @@
 				on_ai_disabled(old_state)
 		else
 			stack_trace("Something attempted to set simple animals AI to an invalid state: [togglestatus]")
+
+/mob/living/simple_animal/proc/register_to_clients_getting_near(range)
+	if(range <= 0)
+		for(var/datum/spatial_grid_cell/old_cell as anything in listening_grid_cells)
+			UnregisterSignal(old_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS))
+
+		UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+		return FALSE
+
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_moved_while_off)
+	var/list/grid_cells_in_range = SSspatial_grid.get_cells_in_range(src, range)
+
+	if(listening_grid_cells)//we already have grid cells we're listening to, so find the difference and update
+		var/list/newly_out_of_range_cells = listening_grid_cells - grid_cells_in_range
+
+		for(var/datum/spatial_grid_cell/old_cell as anything in newly_out_of_range_cells)
+			UnregisterSignal(old_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS))
+
+	for(var/datum/spatial_grid_cell/intersecting_cell as anything in grid_cells_in_range)
+		RegisterSignal(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS), .proc/check_near_player)
+
+	listening_grid_cells = grid_cells_in_range
+
+	return TRUE
+
+///signal handler for SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS) that checks whether we should wake up our ai for the player mob
+///getting close to us.
+/mob/living/simple_animal/proc/check_near_player(datum/source)
+	SIGNAL_HANDLER
+
+/mob/living/simple_animal/proc/on_moved_while_off(datum/source)
+	SIGNAL_HANDLER
 
 /mob/living/simple_animal/proc/consider_wakeup()
 	if (pulledby || shouldwakeup)
@@ -675,8 +716,8 @@
 
 /mob/living/simple_animal/on_changed_z_level(turf/old_turf, turf/new_turf)
 	..()
-	if (old_turf && AIStatus == AI_Z_OFF)
-		SSidlenpcpool.idle_mobs_by_zlevel[old_turf.z] -= src
+	if (old_turf && AIStatus == AI_DISTANCE_OFF)
+		SSidlenpcpool.distance_deactivated_mobs_by_z_level[old_turf.z] -= src
 		toggle_ai(initial(AIStatus))
 
 ///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holograpic and butter-based creatures don't yield viable cells samples.

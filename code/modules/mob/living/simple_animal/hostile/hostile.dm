@@ -33,6 +33,8 @@
 	var/check_friendly_fire = 0 // Should the ranged mob check for friendlies when shooting
 	var/retreat_distance = null //If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
 	var/minimum_distance = 1 //Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
+	///whether we should remove ourselves from the SSsimple_mobs processing list if our ai is turned off. saves processing time
+	var/stop_life = TRUE
 
 
 //These vars are related to how mobs locate and target
@@ -63,7 +65,7 @@
 	GiveTarget(null)
 	return ..()
 
-/mob/living/simple_animal/hostile/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/Life(delta_time = SSSIMPLE_MOBS_DT, times_fired)
 	. = ..()
 	if(!.) //dead
 		SSmove_manager.stop_looping(src)
@@ -83,7 +85,7 @@
 		if(!MoveToTarget(possible_targets))     //if we lose our target
 			if(AIShouldSleep(possible_targets)) // we try to acquire a new one
 				toggle_ai(AI_IDLE) // otherwise we go idle
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/hostile/handle_automated_movement()
 	. = ..()
@@ -138,9 +140,10 @@
 
 		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
 
-		for(var/HM in typecache_filter_list(range(vision_range, target_from), hostile_machines))
-			if(can_see(target_from, HM, vision_range))
-				. += HM
+		for(var/obj/hostile_machine in view(vision_range, target_from))
+			if(hostile_machines[hostile_machine.type] && can_see(target_from, hostile_machine, vision_range))
+				. += hostile_machine
+
 	else
 		. = oview(vision_range, target_from)
 
@@ -148,13 +151,12 @@
 	. = list()
 	if(!HasTargetsList)
 		possible_targets = ListTargets()
-	for(var/pos_targ in possible_targets)
-		var/atom/A = pos_targ
-		if(Found(A))//Just in case people want to override targetting
-			. = list(A)
+	for(var/atom/possible_target in possible_targets)
+		if(Found(possible_target))//Just in case people want to override targetting
+			. = list(possible_target)
 			break
-		if(CanAttack(A))//Can we attack it?
-			. += A
+		if(CanAttack(possible_target))//Can we attack it?
+			. += possible_target
 			continue
 	var/Target = PickTarget(.)
 	GiveTarget(Target)
@@ -518,16 +520,16 @@
 /mob/living/simple_animal/hostile/proc/AICanContinue(list/possible_targets)
 	switch(AIStatus)
 		if(AI_ON)
-			. = 1
+			. = TRUE
 		if(AI_IDLE)
-			if(FindTarget(possible_targets, 1))
-				. = 1
+			if(FindTarget(possible_targets, TRUE))
+				. = TRUE
 				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
 			else
-				. = 0
+				return FALSE
 
 /mob/living/simple_animal/hostile/proc/AIShouldSleep(list/possible_targets)
-	return !FindTarget(possible_targets, 1)
+	return !FindTarget(possible_targets, TRUE)
 
 
 //These two procs handle losing our target if we've failed to attack them for
@@ -563,7 +565,7 @@
 		return
 
 	if (!length(SSmobs.clients_by_zlevel[T.z])) // It's fine to use .len here but doesn't compile on 511
-		toggle_ai(AI_Z_OFF)
+		toggle_ai(AI_DISTANCE_OFF)
 		return
 
 	var/cheap_search = isturf(T) && !is_station_level(T.z)
@@ -572,21 +574,28 @@
 	else
 		tlist = ListTargets()
 
-	if(AIStatus == AI_IDLE && FindTarget(tlist, 1))
+	if(AIStatus == AI_IDLE && FindTarget(tlist, TRUE))
 		if(cheap_search) //Try again with full effort
 			FindTarget()
 		toggle_ai(AI_ON)
 
+/mob/living/simple_animal/hostile/on_ai_disabled(old_state)
+	if(old_state != AI_DISTANCE_OFF && old_state != AI_OFF)
+
+
+/mob/living/simple_animal/hostile/on_ai_enabled(old_state)
+	if(stop_life)
+		SSsimple_mobs.processing_simple_mobs += src
+
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(_Z)//Step 1, find out what we can see
-	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
+	var/static/list/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
 	. = list()
-	for (var/I in SSmobs.clients_by_zlevel[_Z])
-		var/mob/M = I
-		if (get_dist(M, src) < vision_range)
-			if (isturf(M.loc))
-				. += M
-			else if (M.loc.type in hostile_machines)
-				. += M.loc
+	for (var/mob/client_mob as anything in SSmobs.clients_by_zlevel[_Z])
+		if (get_dist(client_mob, src) < vision_range)
+			if (isturf(client_mob.loc))
+				. += client_mob
+			else if (client_mob.loc.type in hostile_machines)
+				. += client_mob.loc
 
 /mob/living/simple_animal/hostile/proc/get_targets_from()
 	var/atom/target_from = targets_from.resolve()
