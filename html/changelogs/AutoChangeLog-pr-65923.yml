@@ -1,0 +1,5 @@
+author: "Kapu1178"
+delete-after: True
+changes: 
+  - bugfix: "Husks render again"
+  - bugfix: "Lizards, Moths, and Podpeople character creation icons fixed"
