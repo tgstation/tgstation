@@ -13,9 +13,6 @@
 ///from base of area/Exited(): (/area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
 
-/// Called when a new area is created by a mob using create_area - (area/created_area, area/old_area, mob/creator)
-#define COMSIG_AREA_CREATED "mob_created_area"
-
 // Alarm listener datum signals
 ///Sent when an alarm is fired (alarm, area/source_area)
 #define COMSIG_ALARM_TRIGGERED "comsig_alarm_triggered"

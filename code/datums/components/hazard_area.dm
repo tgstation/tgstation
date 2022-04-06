@@ -88,7 +88,7 @@
  * allow the parent.
  * If there isnt an overwritten area it assumes it to be non-hazardous, abuse it and you will weep -ZephyrTFA
  */
-/datum/component/hazard_area/proc/on_area_creation(area/created, area/overwritten, mob/creator)
+/datum/component/hazard_area/proc/on_area_creation(datum/source, area/created, area/overwritten, mob/creator)
 	SIGNAL_HANDLER
 
 	if(created.type in area_whitelist)
