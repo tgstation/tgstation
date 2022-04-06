@@ -9,6 +9,8 @@
 	var/list/area_blacklist
 	/// The whitelist of areas that the parent is allowed to be in. If set this overrides the blacklist
 	var/list/area_whitelist
+	/// A list of areas that have been created and are considered to not be hazardous
+	var/list/area_created
 	/// A variable storing the typepath of the last checked area to prevent any further logic running if it has not changed
 	VAR_PRIVATE/last_parent_area
 
@@ -21,6 +23,7 @@
 		return COMPONENT_INCOMPATIBLE
 	src.area_blacklist = area_blacklist
 	src.area_whitelist = area_whitelist
+	area_created = new
 
 /datum/component/hazard_area/RegisterWithParent()
 	var/mob/parent_mob = parent
@@ -28,10 +31,12 @@
 	RegisterSignal(parent_mob, COMSIG_ENTER_AREA, .proc/handle_parent_area_change)
 	RegisterSignal(parent_mob, COMSIG_LADDER_TRAVEL, .proc/reject_ladder_movement)
 	RegisterSignal(parent_mob, COMSIG_VEHICLE_RIDDEN, .proc/reject_vehicle)
+	RegisterSignal(SSdcs, COMSIG_AREA_CREATED, .proc/on_area_creation)
 
 /datum/component/hazard_area/UnregisterFromParent()
 	var/mob/parent_mob = parent
 	UnregisterSignal(parent_mob, list(COMSIG_ENTER_AREA, COMSIG_LADDER_TRAVEL, COMSIG_VEHICLE_RIDDEN))
+	UnregisterSignal(SSdcs, COMSIG_AREA_CREATED)
 	parent_mob.lose_area_sensitivity(type)
 
 /**
@@ -54,8 +59,9 @@
 		return
 
 	vehicle.balloon_alert(parent, "you slip and fall off!")
-	var/mob/living/parent_living = parent
-	parent_living.Stun(0.5 SECONDS)
+	if(isliving(parent)) // We don't know for certain if we are a mob/living subtype
+		var/mob/living/parent_living = parent
+		parent_living.Stun(0.5 SECONDS)
 	return EJECT_FROM_VEHICLE
 
 /**
@@ -70,6 +76,26 @@
 	if(area_whitelist)
 		return !(checking in area_whitelist)
 	return checking in area_blacklist
+
+/datum/component/hazard_area/proc/on_area_creation(area/created, area/overwritten, mob/creator)
+	SIGNAL_HANDLER
+
+	if(created.type in area_whitelist)
+		return // in whitelist, probably expanded an already whitelisted area
+
+	if(created.type in area_blacklist)
+		return // in blacklist, expanding a blacklisted area doesnt magically give you permission to enter
+
+	if(overwritten)
+		if(check_area_hazardous(overwritten.type))
+			return // Overwrote a hazardous area, still hazardous fool
+		area_created -= overwritten // While its not guarenteed to be in the area_created list it's a good idea to ensure we dont have handing refs
+		area_created += created // Congrats, you are now allowed in this area
+		return
+
+	// No overwritten area, which means its a brand new area, for now we are going to be nice and assume its non-hazardous
+	// If people abuse this in the future to put rooms right next to the station add an is_station_level check
+	area_created += created
 
 /**
  * This proc handles the status effect applied to the parent, most noteably applying or removing it as required
