@@ -1071,30 +1071,35 @@
 	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
-	var/was_weightless = alerts[ALERT_GRAVITY] && istype(alerts[ALERT_GRAVITY], /atom/movable/screen/alert/weightless)
-	var/was_negative = alerts[ALERT_GRAVITY] && istype(alerts[ALERT_GRAVITY], /atom/movable/screen/alert/negative)
+	var/atom/movable/screen/alert/gravity_alert = alerts[ALERT_GRAVITY]
 	switch(gravity)
-		if(NEGATIVE_GRAVITY_RANGE)
-			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/negative)
-			if(!was_negative)
+		if(-INFINITY to NEGATIVE_GRAVITY)
+			if(!istype(gravity_alert, /atom/movable/screen/alert/negative))
+				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/negative)
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
 				flipped_matrix.e = -flipped_matrix.e
 				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT)
 				base_pixel_y += 4
-		if(WEIGHTLESS_RANGE)
-			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
-			if(!was_weightless)
+		if(NEGATIVE_GRAVITY + 0.01 to 0)
+			if(!istype(gravity_alert, /atom/movable/screen/alert/weightless))
+				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
 				ADD_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
-		if(STANDRARD_GRAVITY_RANGE)
-			clear_alert(ALERT_GRAVITY)
-		if(HIGH_GRAVITY_RANGE)
+		if(0.01 to STANDARD_GRAVITY)
+			if(gravity_alert)
+				clear_alert(ALERT_GRAVITY)
+		if(STANDARD_GRAVITY + 0.01 to GRAVITY_DAMAGE_THRESHOLD - 0.01)
 			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/highgravity)
-		if(CRUSHING_GRAVITY_RANGE)
+		if(GRAVITY_DAMAGE_THRESHOLD to INFINITY)
 			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/veryhighgravity)
-	if(!(gravity in WEIGHTLESS_RANGE) && was_weightless)
+
+	// If we had no gravity alert, or the same alert as before, go home
+	if(!gravity_alert || alerts[ALERT_GRAVITY] == gravity_alert)
+		return
+	// By this point we know that we do not have the same alert as we used to
+	if(istype(gravity_alert, /atom/movable/screen/alert/weightless))
 		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
-	if(!(gravity in NEGATIVE_GRAVITY_RANGE) && was_negative)
+	if(istype(gravity_alert, /atom/movable/screen/alert/negative))
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
 		flipped_matrix.e = -flipped_matrix.e
