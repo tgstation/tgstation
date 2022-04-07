@@ -14,14 +14,6 @@
 	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 
-/obj/item/bodypart/chest/moth/female
-	icon = 'icons/mob/species/moth/bodyparts.dmi'
-	icon_state = "moth_chest_f"
-	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
-	limb_id = SPECIES_MOTH
-	is_dimorphic = TRUE
-	should_draw_greyscale = FALSE
-
 /obj/item/bodypart/l_arm/moth
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
 	icon_state = "moth_l_arm"
