@@ -2,10 +2,6 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ac" = (
-/obj/structure/grille,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
 "ad" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
@@ -22,9 +18,6 @@
 	icon_state = "damaged5"
 	},
 /area/solars/derelict_starboard)
-"ai" = (
-/turf/template_noop,
-/area/ruin/space/derelict/singularity_engine)
 "al" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -188,7 +181,7 @@
 "bd" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "be" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
@@ -216,7 +209,7 @@
 "bi" = (
 /obj/structure/grille,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "bj" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -332,13 +325,11 @@
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/bridge/ai_upload)
-"bL" = (
-/turf/template_noop,
-/area/ruin/space/derelict/bridge/ai_upload)
 "bM" = (
 /obj/item/stack/sheet/glass,
+/obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/space/derelict/bridge/ai_upload)
+/area/space/nearstation)
 "bO" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
@@ -351,10 +342,6 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
-/area/ruin/space/derelict/bridge/ai_upload)
-"bR" = (
-/obj/structure/lattice,
-/turf/template_noop,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bS" = (
 /obj/machinery/light/small/directional/east,
@@ -422,8 +409,9 @@
 /turf/closed/wall,
 /area/ruin/unpowered/no_grav)
 "ci" = (
-/turf/closed/wall/r_wall,
-/area/template_noop)
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/singularity_engine)
 "cl" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/gravity_generator)
@@ -435,8 +423,9 @@
 /obj/item/stack/ore/iron,
 /obj/item/stack/ore/iron,
 /obj/item/stack/ore/iron,
+/obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "co" = (
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
@@ -525,8 +514,9 @@
 /area/ruin/space/derelict/gravity_generator)
 "cI" = (
 /obj/item/stack/ore/slag,
+/obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "cO" = (
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/gravity_generator)
@@ -637,7 +627,7 @@
 /area/ruin/space/derelict/gravity_generator)
 "dj" = (
 /turf/open/floor/iron/solarpanel/airless,
-/area/template_noop)
+/area/space/nearstation)
 "dk" = (
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
@@ -684,8 +674,9 @@
 /area/ruin/space/derelict/gravity_generator)
 "dv" = (
 /obj/item/stock_parts/matter_bin,
+/obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "dw" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/iron,
@@ -883,9 +874,12 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "eu" = (
-/obj/item/stack/rods,
-/turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
 "ev" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/plating/airless,
@@ -963,9 +957,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "eL" = (
+/obj/item/stack/rods,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/space/derelict/singularity_engine)
+/area/space/nearstation)
 "eN" = (
 /obj/item/paper/fluff/ruins/thederelict/nukie_objectives,
 /turf/open/floor/iron/airless{
@@ -1174,9 +1169,6 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
-"fC" = (
-/turf/template_noop,
-/area/ruin/space/derelict/bridge/access)
 "fD" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -1359,7 +1351,7 @@
 /area/ruin/space/derelict/bridge/access)
 "gr" = (
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "gs" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1416,7 +1408,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "floorscorched1"
 	},
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "gI" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -1542,12 +1534,13 @@
 /area/ruin/space/derelict/medical/chapel)
 "hm" = (
 /obj/item/shard,
+/obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "hn" = (
-/obj/structure/grille,
+/obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/ruin/space/derelict/singularity_engine)
+/area/space/nearstation)
 "ho" = (
 /obj/item/shard,
 /turf/open/floor/iron/airless{
@@ -1677,7 +1670,7 @@
 	},
 /obj/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "hS" = (
 /turf/open/floor/iron/chapel{
 	dir = 4
@@ -1724,11 +1717,11 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged5"
 	},
-/area/template_noop)
+/area/space/nearstation)
 "ib" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "ic" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -1778,7 +1771,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged4"
 	},
-/area/template_noop)
+/area/space/nearstation)
 "ir" = (
 /obj/structure/chair{
 	dir = 1
@@ -1797,13 +1790,13 @@
 "it" = (
 /obj/structure/window/reinforced,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "iu" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 6
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "iw" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/chapel{
@@ -1910,8 +1903,9 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
+/obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "iT" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1921,7 +1915,7 @@
 	},
 /obj/structure/grille,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "iV" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -2170,7 +2164,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "jX" = (
 /obj/structure/cable,
 /turf/open/floor/iron/airless{
@@ -2286,9 +2280,9 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kF" = (
-/obj/effect/spawner/random/maintenance,
-/turf/template_noop,
-/area/ruin/space/derelict/hallway/primary/port)
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "kI" = (
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/iron/airless,
@@ -2347,8 +2341,9 @@
 /area/ruin/space/derelict/hallway/primary/port)
 "kU" = (
 /obj/item/cigbutt,
+/obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "kV" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -2379,10 +2374,10 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "ld" = (
-/obj/structure/lattice,
 /obj/item/stack/cable_coil/cut,
+/obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "le" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/iron/airless,
@@ -2468,13 +2463,6 @@
 "ly" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/atmospherics)
-"lz" = (
-/turf/template_noop,
-/area/ruin/space/derelict/hallway/primary/port)
-"lA" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/ruin/space/derelict/hallway/primary/port)
 "lB" = (
 /obj/structure/window/reinforced,
 /obj/structure/cable,
@@ -2600,7 +2588,7 @@
 /obj/structure/lattice,
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
-/area/ruin/space/derelict/hallway/primary/port)
+/area/space/nearstation)
 "mc" = (
 /obj/machinery/door/window{
 	dir = 8
@@ -2625,7 +2613,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "mh" = (
 /obj/machinery/door/window{
 	base_state = "right";
@@ -2665,11 +2653,11 @@
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "mn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "mo" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/airless,
@@ -2740,9 +2728,9 @@
 /turf/template_noop,
 /area/ruin/space/derelict/atmospherics)
 "mA" = (
-/obj/item/stack/cable_coil/cut,
-/turf/template_noop,
-/area/ruin/space/derelict/hallway/primary/port)
+/obj/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "mB" = (
 /obj/structure/door_assembly/door_assembly_mai{
 	name = "airlock assembly"
@@ -3031,7 +3019,7 @@
 	width = 35
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "nU" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -3185,8 +3173,9 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "rK" = (
-/turf/template_noop,
-/area/ruin/space/derelict/medical)
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "sd" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron/airless,
@@ -3196,8 +3185,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "tS" = (
-/turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/turf/closed/wall/r_wall,
+/area/space/nearstation)
 "ux" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
@@ -3209,9 +3198,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
 "vf" = (
-/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "vo" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/gold{
@@ -3227,7 +3218,7 @@
 	dir = 1
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "vG" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -3255,12 +3246,6 @@
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/singularity_engine)
-"xi" = (
-/obj/item/shard{
-	icon_state = "medium"
-	},
-/turf/template_noop,
-/area/ruin/unpowered/no_grav)
 "xr" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
@@ -3320,7 +3305,7 @@
 "Av" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
-/area/ruin/space/derelict/hallway/primary/port)
+/area/space/nearstation)
 "AA" = (
 /obj/structure/rack,
 /obj/item/melee/baton,
@@ -3336,7 +3321,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged4"
 	},
-/area/template_noop)
+/area/space/nearstation)
 "Bs" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance/eight,
@@ -3346,11 +3331,11 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged3"
 	},
-/area/template_noop)
+/area/space/nearstation)
 "BO" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/solarpanel/airless,
-/area/template_noop)
+/area/space/nearstation)
 "CZ" = (
 /obj/item/clothing/suit/space/eva,
 /turf/open/floor/iron/airless{
@@ -3389,7 +3374,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
-/area/template_noop)
+/area/space/nearstation)
 "ES" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -3405,9 +3390,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "Gu" = (
-/obj/structure/grille,
+/obj/effect/spawner/random/maintenance,
+/obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Gz" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance,
@@ -3416,7 +3402,7 @@
 "GM" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "GP" = (
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -3436,11 +3422,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
-"Ih" = (
-/turf/open/floor/iron/airless{
-	icon_state = "damaged3"
-	},
-/area/ruin/space/derelict/hallway/primary/port)
 "Ik" = (
 /obj/structure/closet/crate,
 /obj/item/clothing/head/beanie/rasta,
@@ -3474,7 +3455,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "floorscorched2"
 	},
-/area/template_noop)
+/area/space/nearstation)
 "Jl" = (
 /obj/effect/spawner/random/maintenance,
 /turf/template_noop,
@@ -3500,10 +3481,6 @@
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
-"KT" = (
-/obj/item/stack/cable_coil/cut,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/hallway/primary/port)
 "Le" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Arrivals Docking Bay 1"
@@ -3522,7 +3499,7 @@
 /area/ruin/space/derelict/bridge/ai_upload)
 "Lv" = (
 /turf/closed/wall,
-/area/template_noop)
+/area/space/nearstation)
 "LX" = (
 /obj/machinery/power/smes/engineering{
 	charge = 0
@@ -3639,7 +3616,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
-/area/ruin/space/derelict/hallway/primary/port)
+/area/space/nearstation)
 "QW" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
@@ -3678,11 +3655,11 @@
 "Su" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "SR" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -3703,7 +3680,7 @@
 /area/ruin/space/derelict/solar_control)
 "Uz" = (
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/space/nearstation)
 "UG" = (
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -3829,17 +3806,17 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
-ZB
+GM
 iH
-ZB
+GM
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -3939,11 +3916,11 @@ aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 aa
-Gu
+bi
 hQ
 hQ
 iu
@@ -3951,10 +3928,10 @@ iI
 iT
 hQ
 hQ
-Gu
-ZB
-ZB
-ZB
+bi
+GM
+GM
+GM
 aa
 aa
 aa
@@ -4051,8 +4028,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 gX
 gX
 gX
@@ -4065,10 +4042,10 @@ Nx
 Qb
 vG
 jL
-aY
-aY
-ZB
-ZB
+tS
+tS
+GM
+GM
 aa
 aa
 aa
@@ -4165,7 +4142,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 gX
 hj
 gX
@@ -4178,9 +4155,9 @@ iV
 ij
 hS
 jL
-gP
+Bx
 gH
-ay
+Uz
 aa
 aa
 aa
@@ -4277,8 +4254,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 gX
 hj
 gX
@@ -4291,8 +4268,8 @@ iW
 ii
 hT
 jL
-ay
-Jl
+Uz
+Gu
 aa
 aa
 aa
@@ -4390,8 +4367,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 gX
 hj
 hj
@@ -4404,7 +4381,7 @@ iV
 ij
 ju
 jL
-ZB
+GM
 aa
 aa
 aa
@@ -4504,7 +4481,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 gX
 hj
 ht
@@ -4617,7 +4594,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 gX
 hk
 hk
@@ -4843,7 +4820,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 gX
 hk
 hk
@@ -4856,7 +4833,7 @@ hS
 ij
 hS
 jL
-ZB
+GM
 aa
 aa
 aa
@@ -4956,7 +4933,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 gX
 hk
 gX
@@ -4969,9 +4946,9 @@ gX
 gX
 jv
 jL
-ZB
-ZB
-ay
+GM
+GM
+Uz
 aa
 aa
 aa
@@ -5068,8 +5045,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 gX
 hk
 gX
@@ -5082,9 +5059,9 @@ hH
 gX
 jw
 jL
-Jl
-ay
-ZB
+Gu
+Uz
+GM
 aa
 aa
 aa
@@ -5181,7 +5158,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 gX
 hl
@@ -5196,9 +5173,9 @@ gX
 jw
 jL
 jV
-gP
-ay
-aY
+Bx
+Uz
+tS
 aa
 aa
 aa
@@ -5294,7 +5271,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 gX
 hj
@@ -5316,7 +5293,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -5407,8 +5384,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 gX
 gX
 gX
@@ -5429,7 +5406,7 @@ fZ
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -5521,9 +5498,9 @@ aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 gX
 hk
 hH
@@ -5539,10 +5516,10 @@ gL
 mJ
 gn
 gL
-ZB
-ZB
+GM
+GM
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -5635,8 +5612,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 gX
 hk
 hk
@@ -5653,9 +5630,9 @@ gn
 gL
 gm
 gn
-ZB
-ZB
-ZB
+GM
+GM
+GM
 aa
 aa
 aa
@@ -5749,7 +5726,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 gX
 gX
 gX
@@ -5768,7 +5745,7 @@ fZ
 fZ
 fZ
 gL
-ZB
+GM
 aa
 aa
 aa
@@ -5881,8 +5858,8 @@ kN
 wr
 fZ
 gL
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -5995,7 +5972,7 @@ go
 fZ
 gL
 gL
-ZB
+GM
 aa
 aa
 aa
@@ -6080,9 +6057,9 @@ aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 aa
 aa
 aa
@@ -6110,7 +6087,7 @@ ln
 gL
 gL
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -6193,10 +6170,10 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -6223,17 +6200,17 @@ ka
 jY
 gL
 aa
-ZB
+GM
 aa
 aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -6304,13 +6281,13 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 dr
 dr
 dr
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -6336,17 +6313,17 @@ jY
 lF
 gL
 gL
-ZB
+GM
 aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -6380,17 +6357,13 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
-ZB
-ZB
-ZB
-aa
-aa
-aa
-aa
+GM
+GM
+GM
 aa
 aa
 aa
@@ -6416,7 +6389,11 @@ aa
 aa
 aa
 aa
-ZB
+aa
+aa
+aa
+aa
+GM
 dr
 dr
 dr
@@ -6424,7 +6401,7 @@ dr
 dr
 dr
 dr
-ZB
+GM
 aa
 aa
 aa
@@ -6449,20 +6426,20 @@ yP
 go
 jY
 gL
-ZB
-ZB
-ZB
-ZB
+GM
+GM
+GM
+GM
 aa
 aa
 aa
 aa
-ZB
+GM
 aa
-ZB
-ZB
+GM
+GM
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -6492,18 +6469,16 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
-ZB
-ZB
-ZB
-aa
-aa
-aa
-ZB
-ZB
+GM
+GM
+GM
 aa
 aa
+aa
+GM
+GM
 aa
 aa
 aa
@@ -6524,12 +6499,14 @@ aa
 aa
 aa
 aa
-ZB
-ZB
 aa
-ZB
-ZB
-ZB
+aa
+GM
+GM
+aa
+GM
+GM
+GM
 dr
 dr
 xa
@@ -6537,8 +6514,8 @@ em
 ez
 dr
 dr
-ZB
-ZB
+GM
+GM
 aa
 aa
 hy
@@ -6564,18 +6541,18 @@ go
 gL
 gL
 fZ
-ZB
-ZB
-ZB
-ZB
-ZB
-ZB
-ZB
-ZB
-ch
-ZB
-ZB
-ZB
+GM
+GM
+GM
+GM
+GM
+GM
+GM
+GM
+Lv
+GM
+GM
+GM
 aa
 aa
 aa
@@ -6605,7 +6582,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 ax
 ax
 ax
@@ -6614,7 +6591,7 @@ ax
 ax
 ax
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -6634,14 +6611,14 @@ aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 dr
 dr
 ez
@@ -6651,7 +6628,7 @@ ez
 ez
 dr
 dr
-ZB
+GM
 aa
 hm
 hz
@@ -6681,16 +6658,16 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
 md
-mZ
-mZ
-ZB
-ZB
-ZB
+Uz
+Uz
+GM
+GM
+GM
 aa
 aa
 aa
@@ -6719,7 +6696,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 ax
 aK
 aR
@@ -6727,16 +6704,16 @@ aW
 aR
 ax
 aa
-ZB
-ZB
-ZB
-ZB
-ZB
-ZB
-ZB
-ZB
-ZB
-ZB
+GM
+GM
+GM
+GM
+GM
+GM
+GM
+GM
+GM
+GM
 aa
 aa
 aa
@@ -6746,9 +6723,9 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
-ZB
+GM
 dr
 dr
 dr
@@ -6794,16 +6771,16 @@ gL
 aa
 gL
 gL
-ZB
+GM
 gL
 aa
 aa
 me
 mU
-mZ
-ZB
-ay
-ZB
+Uz
+GM
+Uz
+GM
 aa
 aa
 aa
@@ -6831,7 +6808,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 ax
 ax
 aL
@@ -6849,18 +6826,18 @@ bl
 bl
 bl
 bl
-ZB
-ZB
-ZB
-ZB
-ZB
+GM
+GM
+GM
+GM
+GM
 aa
 aa
 aa
-ZB
-ZB
-ZB
-ZB
+GM
+GM
+GM
+GM
 dr
 dr
 dr
@@ -6909,15 +6886,15 @@ mJ
 gL
 fZ
 gL
-ZB
+GM
 gL
 md
 mU
 mZ
 ny
-ac
-ZB
-ZB
+rK
+GM
+GM
 aa
 aa
 aa
@@ -6945,34 +6922,34 @@ aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 ax
 aX
 be
 ax
-vf
-vf
-vf
-vf
-vf
-vf
+rK
+rK
+rK
+rK
+rK
+rK
 Uz
 Uz
 Bf
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
-ZB
+GM
+GM
+GM
+GM
 dr
 dr
 ee
@@ -6994,8 +6971,8 @@ dX
 dW
 dW
 hB
-eL
-hz
+GM
+Uz
 hz
 hz
 hY
@@ -7028,7 +7005,7 @@ md
 mU
 mU
 nz
-ac
+rK
 aa
 aa
 aa
@@ -7060,7 +7037,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 ax
 ax
 aW
@@ -7073,7 +7050,7 @@ bl
 bl
 bl
 bl
-ZB
+GM
 aa
 aa
 aa
@@ -7083,9 +7060,9 @@ aa
 aa
 aa
 aa
-ZB
-ci
-ZB
+GM
+tS
+GM
 dr
 dr
 ef
@@ -7106,12 +7083,12 @@ gI
 dP
 gY
 hn
-eL
-eL
-hz
-hz
-hz
-hz
+GM
+GM
+Uz
+Uz
+Uz
+Uz
 hY
 hY
 jE
@@ -7141,7 +7118,7 @@ md
 na
 mU
 nz
-ac
+rK
 aa
 aa
 aa
@@ -7174,7 +7151,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 ax
 aR
 aR
@@ -7186,8 +7163,8 @@ aR
 aR
 bg
 ax
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -7196,7 +7173,7 @@ aa
 aa
 aa
 aa
-ci
+tS
 BO
 dr
 dr
@@ -7217,14 +7194,14 @@ gt
 fq
 gJ
 gR
-eL
-eL
+GM
+GM
 hn
-eL
-eL
-rK
-rK
-hz
+GM
+GM
+aa
+aa
+Uz
 hz
 jj
 hv
@@ -7254,7 +7231,7 @@ md
 mU
 mU
 nz
-ac
+rK
 aa
 aa
 aa
@@ -7300,7 +7277,7 @@ bo
 ax
 ax
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -7310,7 +7287,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 dr
 dr
 dP
@@ -7330,13 +7307,13 @@ gj
 dW
 dW
 dW
-eL
-eL
-eL
-eL
-eL
-eL
-rK
+GM
+GM
+GM
+GM
+GM
+GM
+aa
 iO
 hz
 jk
@@ -7367,7 +7344,7 @@ mW
 mU
 mU
 md
-ac
+rK
 aa
 aa
 aa
@@ -7423,7 +7400,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 dr
 dA
 zp
@@ -7448,8 +7425,8 @@ dW
 ez
 dr
 dr
-eL
-eL
+GM
+GM
 hv
 ja
 hv
@@ -7480,7 +7457,7 @@ md
 mU
 mU
 nz
-ac
+rK
 aa
 aa
 aa
@@ -7531,8 +7508,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 cl
 cl
 cl
@@ -7556,13 +7533,13 @@ dW
 dO
 dX
 dO
-fb
+ci
 ho
 ez
 dr
 dr
 dr
-eL
+GM
 hv
 hz
 OD
@@ -7593,7 +7570,7 @@ md
 mU
 mU
 nz
-ac
+rK
 aa
 aa
 aa
@@ -7644,8 +7621,8 @@ aa
 aa
 aa
 cn
-cu
-cu
+iq
+iq
 cw
 cO
 cY
@@ -7661,11 +7638,11 @@ eZ
 dW
 dW
 dW
-ai
-ai
-ai
-ai
-ai
+aa
+aa
+aa
+aa
+aa
 dW
 dW
 gS
@@ -7706,7 +7683,7 @@ md
 nc
 mU
 nz
-ac
+rK
 aa
 aa
 aa
@@ -7753,9 +7730,9 @@ ax
 ax
 aa
 aa
-ZB
+GM
 aa
-ZB
+GM
 co
 cv
 cG
@@ -7774,11 +7751,11 @@ dW
 dW
 dW
 dW
-ai
-ai
-ai
-ai
-ai
+aa
+aa
+aa
+aa
+aa
 dW
 dW
 dO
@@ -7819,7 +7796,7 @@ md
 mI
 mU
 nz
-ac
+rK
 aa
 aa
 aa
@@ -7866,7 +7843,7 @@ ax
 ax
 aa
 Uz
-ZB
+GM
 aa
 cl
 cp
@@ -7887,11 +7864,11 @@ fa
 dW
 dW
 dW
-ai
-ai
-ai
-ai
-ai
+aa
+aa
+aa
+aa
+aa
 dW
 dW
 dP
@@ -7932,7 +7909,7 @@ md
 ne
 no
 nz
-ac
+rK
 aa
 aa
 aa
@@ -7978,7 +7955,7 @@ ax
 ax
 ax
 aa
-vf
+rK
 Lv
 aa
 cl
@@ -8000,11 +7977,11 @@ dW
 dW
 dW
 dW
-ai
-ai
-ai
-ai
-ai
+aa
+aa
+aa
+aa
+aa
 dW
 dP
 dX
@@ -8045,7 +8022,7 @@ md
 nf
 np
 md
-ch
+Lv
 aa
 aa
 aa
@@ -8091,7 +8068,7 @@ aR
 bg
 ax
 aa
-vf
+rK
 Lv
 aa
 cl
@@ -8113,11 +8090,11 @@ dW
 dW
 dW
 dW
-ai
-ai
-ai
-ai
-ai
+aa
+aa
+aa
+aa
+aa
 dW
 dO
 eh
@@ -8158,7 +8135,7 @@ md
 ng
 nq
 nz
-ac
+rK
 aa
 aa
 aa
@@ -8204,15 +8181,15 @@ bp
 aR
 ax
 ax
-vf
+rK
 Lv
 aa
 cl
 cl
-ZB
+GM
 aa
 aa
-ZB
+GM
 cl
 cl
 dr
@@ -8241,8 +8218,8 @@ dr
 dr
 dr
 GM
-tS
-tS
+aa
+aa
 jm
 jF
 fZ
@@ -8271,7 +8248,7 @@ md
 nh
 nr
 nz
-ac
+rK
 aa
 aa
 aa
@@ -8317,8 +8294,8 @@ bp
 ax
 ax
 ax
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -8326,8 +8303,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 dr
 dr
 dO
@@ -8384,7 +8361,7 @@ md
 ni
 ns
 nz
-ac
+rK
 aa
 aa
 aa
@@ -8440,7 +8417,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 dr
 dr
 dX
@@ -8466,8 +8443,8 @@ dO
 dr
 dr
 GM
-tS
-tS
+aa
+aa
 GM
 ay
 gD
@@ -8497,7 +8474,7 @@ md
 nj
 nt
 nz
-ac
+rK
 aa
 aa
 aa
@@ -8552,7 +8529,7 @@ aa
 aa
 aa
 aa
-ci
+tS
 dj
 dr
 dr
@@ -8579,8 +8556,8 @@ dP
 dr
 dr
 GM
-tS
-xi
+aa
+iR
 GM
 ay
 ay
@@ -8605,12 +8582,12 @@ mp
 mp
 mt
 lx
-lz
+aa
 md
 nk
 nu
 nz
-ac
+rK
 aa
 aa
 aa
@@ -8665,9 +8642,9 @@ aa
 aa
 aa
 aa
-ZB
-ci
-ZB
+GM
+tS
+GM
 dr
 dr
 en
@@ -8691,9 +8668,9 @@ ez
 dr
 dr
 GM
-tS
-iD
-tS
+aa
+mA
+aa
 GM
 ay
 ay
@@ -8716,14 +8693,14 @@ mt
 lx
 lx
 mt
-lA
-lA
-lz
+GM
+GM
+aa
 md
 nl
 nv
 md
-eu
+Av
 aa
 aa
 aa
@@ -8778,9 +8755,9 @@ aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 dr
 dr
 eo
@@ -8803,11 +8780,11 @@ ez
 ez
 dr
 dr
-tS
-tS
-iD
-tS
-tS
+aa
+aa
+mA
+aa
+aa
 jo
 gP
 gD
@@ -8817,26 +8794,26 @@ gc
 go
 gk
 Vz
-Tm
-lz
-lz
-lz
-lz
-OT
-lz
-lA
-lA
-lz
-Ih
-Ih
-lz
-lA
-lz
+Uz
+aa
+aa
+aa
+aa
+tS
+aa
+GM
+GM
+aa
+Bx
+Bx
+aa
+GM
+aa
 md
 mI
 mU
 nz
-eu
+Av
 aa
 aa
 aa
@@ -8869,7 +8846,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 ax
 ax
 ax
@@ -8892,9 +8869,9 @@ aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 dr
 dr
 dr
@@ -8916,8 +8893,8 @@ dr
 dr
 dr
 GM
-ay
-ay
+Uz
+Uz
 iE
 ay
 jb
@@ -8930,26 +8907,26 @@ gc
 go
 gk
 Vz
-Tm
-lz
-lA
-lA
-lA
-OT
-lA
-lA
-lA
-lz
-lz
-kF
-lz
-lA
-lz
+Uz
+aa
+GM
+GM
+GM
+tS
+GM
+GM
+GM
+aa
+aa
+Jl
+aa
+GM
+aa
 md
 mI
 mU
 nz
-eu
+Av
 aa
 aa
 aa
@@ -8965,8 +8942,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 "}
@@ -8982,7 +8959,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -9005,10 +8982,10 @@ aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
-ZB
+GM
+GM
+GM
+GM
 dr
 dr
 dr
@@ -9043,26 +9020,26 @@ gc
 go
 gk
 Sm
-Tm
-lA
-lA
-lz
-lA
-OT
-lz
-Ih
-lA
-lA
-lA
-lA
-lA
-KN
-lz
+Uz
+GM
+GM
+aa
+GM
+tS
+aa
+Bx
+GM
+GM
+GM
+GM
+GM
+Lv
+aa
 md
 mI
 mU
 nz
-ac
+rK
 aa
 aa
 aa
@@ -9078,10 +9055,10 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
-ZB
-ZB
+GM
+GM
 "}
 (48,1,1) = {"
 aa
@@ -9095,7 +9072,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -9119,15 +9096,15 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 dr
 dr
 dW
@@ -9137,10 +9114,10 @@ dX
 ez
 dr
 dr
-tS
-tS
-tS
-tS
+aa
+aa
+aa
+aa
 gL
 mJ
 gm
@@ -9156,26 +9133,26 @@ gc
 go
 gk
 Vz
-Tm
+Uz
 Av
-lA
-lz
-lA
-OT
-lA
-OT
+GM
+aa
+GM
+tS
+GM
+tS
 QA
-lA
-OT
-Tm
-KN
-KN
-KN
+GM
+tS
+Uz
+Lv
+Lv
+Lv
 md
 mI
 mU
 nz
-ac
+rK
 aa
 aa
 aa
@@ -9184,17 +9161,17 @@ aa
 aa
 aa
 nB
-vf
-vf
-vf
-vf
-vf
-vf
-ZB
-vf
-vf
-vf
-vf
+rK
+rK
+rK
+rK
+rK
+rK
+GM
+rK
+rK
+rK
+rK
 "}
 (49,1,1) = {"
 aa
@@ -9240,8 +9217,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 dr
 dr
 ez
@@ -9250,7 +9227,7 @@ ez
 dr
 dr
 GM
-tS
+aa
 gL
 gL
 gl
@@ -9270,32 +9247,32 @@ go
 gk
 Vz
 Vz
-Tm
-lA
-lz
+Uz
+GM
+aa
 mb
-lz
-lz
-mA
-lA
-lz
-OT
-Tm
-lz
-lA
-lz
+aa
+aa
+dk
+GM
+aa
+tS
+Uz
+aa
+GM
+aa
 md
 mI
 mU
 nz
-ac
+rK
 aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 nB
 aa
 aa
@@ -9304,10 +9281,10 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
-vf
+rK
 "}
 (50,1,1) = {"
 aa
@@ -9321,7 +9298,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -9354,7 +9331,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 dr
 dr
 dr
@@ -9384,31 +9361,31 @@ kR
 lc
 li
 Vz
-Tm
-Tm
-Tm
-lz
-lz
-lz
-lA
-lz
-lz
-lz
-lz
-lA
-lz
+Uz
+Uz
+Uz
+aa
+aa
+aa
+GM
+aa
+aa
+aa
+aa
+GM
+aa
 md
 mI
 mU
 md
-aY
+tS
 nB
 nI
-ZB
-ZB
-ld
-nV
-nV
+GM
+GM
+mb
+Uz
+Uz
 nB
 aa
 aa
@@ -9420,7 +9397,7 @@ on
 ol
 on
 aa
-vf
+rK
 "}
 (51,1,1) = {"
 aa
@@ -9434,7 +9411,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -9469,7 +9446,7 @@ aa
 Oj
 Oj
 aa
-ZB
+GM
 dr
 dr
 gk
@@ -9499,27 +9476,27 @@ lj
 lB
 lQ
 lj
-Tm
-KT
-lz
-lz
-lA
-lz
-lz
-lz
-lz
-lA
-lz
+Uz
+ib
+aa
+aa
+GM
+aa
+aa
+aa
+aa
+GM
+aa
 md
 mI
 mU
 nz
-ac
+rK
 aa
-nV
-ZB
-nV
-nV
+Uz
+GM
+Uz
+Uz
 wK
 nR
 aa
@@ -9533,7 +9510,7 @@ on
 ol
 on
 aa
-vf
+rK
 "}
 (52,1,1) = {"
 aa
@@ -9547,7 +9524,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -9614,24 +9591,24 @@ Vz
 Vz
 Vz
 OT
-lA
-lA
-lA
-lA
-lA
-lA
-lA
-lA
-Tm
+GM
+GM
+GM
+GM
+GM
+GM
+GM
+GM
+Uz
 md
 mI
 mU
 nz
-ac
+rK
 aa
-nV
-nV
-nV
+Uz
+Uz
+Uz
 wK
 og
 nR
@@ -9646,7 +9623,7 @@ on
 ol
 on
 aa
-vf
+rK
 "}
 (53,1,1) = {"
 aa
@@ -9661,7 +9638,7 @@ aa
 aa
 aa
 aa
-ci
+tS
 ax
 bj
 bj
@@ -9685,7 +9662,7 @@ aa
 aa
 aa
 aa
-dk
+ld
 aa
 aa
 aa
@@ -9727,20 +9704,20 @@ lD
 lX
 mc
 OT
-Tm
-Tm
-lz
-lz
-lA
-lz
-lz
-Tm
+Uz
+Uz
+aa
+aa
+GM
+aa
+aa
+Uz
 Vz
 md
 mI
 mU
 nz
-ac
+rK
 aa
 nB
 nB
@@ -9749,7 +9726,7 @@ nB
 oe
 nB
 nB
-ZB
+GM
 aa
 aa
 ol
@@ -9759,7 +9736,7 @@ aa
 ol
 aa
 aa
-vf
+rK
 "}
 (54,1,1) = {"
 aa
@@ -9773,7 +9750,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -9804,7 +9781,7 @@ aa
 aa
 aa
 aa
-dk
+ld
 cs
 fw
 fx
@@ -9841,19 +9818,19 @@ Vz
 Vz
 OT
 Vz
-KT
-Tm
-lz
-lA
-lz
-lz
-Tm
+ib
+Uz
+aa
+GM
+aa
+aa
+Uz
 Vz
 md
 mI
 mU
 nz
-ac
+rK
 aa
 nJ
 nO
@@ -9872,7 +9849,7 @@ ol
 ol
 ol
 oD
-vf
+rK
 "}
 (55,1,1) = {"
 aa
@@ -9895,8 +9872,8 @@ bj
 bj
 ax
 bz
-bL
-bR
+aa
+GM
 bK
 cd
 ax
@@ -9909,10 +9886,10 @@ aa
 aa
 aa
 aa
-dk
+ld
 aa
-Jl
-dk
+Gu
+ld
 aa
 aa
 aa
@@ -9955,11 +9932,11 @@ Vz
 OT
 Vz
 Tm
-Tm
-Tm
+Uz
+Uz
 OT
-lz
-Tm
+aa
+Uz
 Vz
 Vz
 md
@@ -9975,7 +9952,7 @@ nB
 og
 nB
 nB
-ZB
+GM
 aa
 aa
 ol
@@ -9985,7 +9962,7 @@ aa
 ol
 aa
 aa
-ZB
+GM
 "}
 (56,1,1) = {"
 aa
@@ -9999,7 +9976,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -10009,22 +9986,22 @@ bj
 ax
 bz
 bM
-bL
+aa
 bF
 bO
 ax
-ci
-ci
-ci
-ci
+tS
+tS
+tS
+tS
 aa
 aa
 aa
 aa
 aa
-dk
+ld
 dv
-aa
+GM
 aa
 aa
 aa
@@ -10071,7 +10048,7 @@ lj
 Vz
 Vz
 OT
-Tm
+Uz
 Vz
 Vz
 Vz
@@ -10098,7 +10075,7 @@ on
 ol
 on
 aa
-vf
+rK
 "}
 (57,1,1) = {"
 aa
@@ -10136,14 +10113,14 @@ aa
 aa
 aa
 Oj
-dk
+ld
 Oj
 aa
 aa
 aa
 aa
 aa
-ZB
+GM
 cs
 fz
 fx
@@ -10211,7 +10188,7 @@ on
 ol
 on
 aa
-vf
+rK
 "}
 (58,1,1) = {"
 aa
@@ -10225,7 +10202,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -10255,8 +10232,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 cs
 fA
 fx
@@ -10285,11 +10262,11 @@ kq
 go
 kK
 aa
-gD
-ay
-ZB
-ZB
-ZB
+Ev
+Uz
+GM
+GM
+GM
 me
 ml
 mu
@@ -10324,7 +10301,7 @@ on
 ol
 on
 aa
-ZB
+GM
 "}
 (59,1,1) = {"
 aa
@@ -10338,7 +10315,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -10367,9 +10344,9 @@ Oj
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 cs
 fB
 fx
@@ -10399,10 +10376,10 @@ gk
 ch
 aa
 aa
-ZB
-ch
+GM
+Lv
 aa
-ZB
+GM
 mf
 mf
 mf
@@ -10434,25 +10411,25 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
-ZB
+GM
 "}
 (60,1,1) = {"
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
-ZB
-ci
+GM
+tS
 ax
 bj
 bj
@@ -10507,13 +10484,13 @@ Uz
 fZ
 gc
 fZ
-fD
-fD
-ZB
+kF
+kF
+GM
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aY
@@ -10540,28 +10517,28 @@ mf
 mf
 mf
 mf
-vf
-vf
-vf
-vf
-ZB
-vf
-vf
-ZB
-ZB
-vf
-ZB
+rK
+rK
+rK
+rK
+GM
+rK
+rK
+GM
+GM
+rK
+GM
 "}
 (61,1,1) = {"
 aa
 aa
 aa
-ZB
-vf
-vf
-vf
-vf
-ZB
+GM
+rK
+rK
+rK
+rK
+GM
 aa
 aa
 aa
@@ -10616,17 +10593,17 @@ iq
 IA
 aa
 aa
-ZB
+GM
 jG
 jR
 jG
-ZB
-ZB
+GM
+GM
 aa
 aa
-eV
-ZB
-ZB
+eL
+GM
+GM
 aa
 aa
 aY
@@ -10653,31 +10630,31 @@ oc
 nN
 nN
 nN
-ZB
+GM
 aa
 aa
 aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 aa
 "}
 (62,1,1) = {"
-ZB
-ZB
+GM
+GM
 aa
 aa
-ZB
+GM
 aa
 aa
-vf
+rK
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -10724,12 +10701,12 @@ ZB
 ch
 ay
 ch
-ZB
+GM
 aa
 aa
 aa
 aa
-ZB
+GM
 jG
 jS
 ch
@@ -10738,11 +10715,11 @@ aa
 aa
 aa
 aa
-ZB
+GM
 dk
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -10766,7 +10743,7 @@ mf
 mf
 mf
 mf
-ZB
+GM
 aa
 aa
 aa
@@ -10779,18 +10756,18 @@ aa
 aa
 "}
 (63,1,1) = {"
-ZB
+GM
 aa
 af
 aq
 ap
-ZB
-ZB
-vf
+GM
+GM
+rK
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -10832,16 +10809,16 @@ fx
 fx
 cs
 cs
-ZB
+GM
 hc
 gC
 gC
 ch
-ZB
-ZB
-ZB
-ZB
-ZB
+GM
+GM
+GM
+GM
+GM
 Uz
 ch
 jR
@@ -10851,10 +10828,10 @@ aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
-ZB
+GM
+GM
+GM
+GM
 aa
 aa
 aa
@@ -10879,7 +10856,7 @@ nN
 nN
 oc
 oc
-ZB
+GM
 aa
 aa
 aa
@@ -10892,18 +10869,18 @@ aa
 aa
 "}
 (64,1,1) = {"
-vf
+rK
 aa
 ag
 aq
 ap
 aa
 aa
-vf
+rK
 aa
 aa
 aa
-ZB
+GM
 Uz
 ax
 bj
@@ -10945,17 +10922,17 @@ fx
 fx
 cs
 cs
-ZB
+GM
 ch
 ay
 gC
 hc
-ZB
+GM
 aa
 aa
 aa
 aa
-ZB
+GM
 jG
 jG
 ay
@@ -10965,8 +10942,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -10992,8 +10969,8 @@ mf
 mf
 mf
 mf
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -11005,18 +10982,18 @@ aa
 aa
 "}
 (65,1,1) = {"
-vf
+rK
 aa
 ap
 aq
 ap
 aa
 aa
-vf
-ZB
-ZB
-ZB
-ZB
+rK
+GM
+GM
+GM
+GM
 Uz
 ax
 bj
@@ -11049,8 +11026,8 @@ dm
 cx
 cx
 cs
-fC
-fC
+aa
+aa
 cs
 fx
 gg
@@ -11078,8 +11055,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -11098,15 +11075,15 @@ aa
 it
 ml
 vC
-ZB
-ZB
+GM
+GM
 aa
-ZB
+GM
 aa
-ZB
-ZB
+GM
+GM
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -11118,14 +11095,14 @@ aa
 aa
 "}
 (66,1,1) = {"
-vf
+rK
 aa
 aa
 aq
 aa
 aa
 aa
-vf
+rK
 Uz
 Uz
 Uz
@@ -11162,15 +11139,15 @@ eJ
 eO
 dF
 cs
-fC
-fC
+aa
+aa
 cs
 cs
 cs
 cs
 cs
 cs
-ZB
+GM
 aa
 ch
 gC
@@ -11181,17 +11158,17 @@ aa
 dk
 aa
 aa
-ZB
+GM
 aa
 jG
 kd
 ay
-aa
-aa
+GM
+GM
 kU
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -11218,8 +11195,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -11231,7 +11208,7 @@ aa
 aa
 "}
 (67,1,1) = {"
-vf
+rK
 aa
 ap
 aq
@@ -11275,15 +11252,15 @@ eK
 eP
 fe
 fo
-aY
-ZB
-ZB
-dk
-ZB
+tS
+GM
+GM
+ld
+GM
 aa
 aa
 aa
-ZB
+GM
 aa
 hc
 gC
@@ -11294,7 +11271,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 ch
 Ba
@@ -11303,9 +11280,9 @@ aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 aa
 aa
 aa
@@ -11322,9 +11299,9 @@ aa
 aa
 aa
 aa
-ZB
+GM
 vC
-ZB
+GM
 aa
 aa
 aa
@@ -11344,7 +11321,7 @@ aa
 aa
 "}
 (68,1,1) = {"
-vf
+rK
 aa
 ap
 aq
@@ -11388,16 +11365,16 @@ eK
 Hx
 eP
 fo
-ZB
+GM
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
-ay
-ay
+Uz
+Uz
 gW
 hp
 hq
@@ -11407,7 +11384,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 ch
 kf
@@ -11415,8 +11392,8 @@ ch
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -11433,10 +11410,10 @@ aa
 aa
 aa
 aa
-mv
-aa
-aa
-ZB
+eu
+GM
+GM
+GM
 aa
 aa
 aa
@@ -11501,15 +11478,15 @@ eK
 ea
 ff
 fp
-ay
+Uz
 aa
 aa
 aa
 aa
 aa
 aa
-ay
-ay
+Uz
+Uz
 gr
 gW
 hp
@@ -11521,16 +11498,16 @@ aa
 aa
 aa
 Uz
-ZB
+GM
 jT
 kg
 aa
 aa
 aa
-ZB
-ld
-ZB
-ZB
+GM
+mb
+GM
+GM
 aa
 aa
 aa
@@ -11549,7 +11526,7 @@ aa
 aa
 iR
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -11614,15 +11591,15 @@ eK
 eK
 zB
 fo
-ay
+Uz
 aa
 aa
 aa
 aa
 aa
 aa
-ay
-gC
+Uz
+IA
 gr
 gW
 hq
@@ -11633,7 +11610,7 @@ ia
 aa
 aa
 aa
-ZB
+GM
 aa
 ch
 kb
@@ -11641,10 +11618,10 @@ jG
 aa
 aa
 aa
-ld
+mb
 aa
 aa
-ZB
+GM
 aa
 aa
 eV
@@ -11660,9 +11637,9 @@ aa
 aa
 aa
 aa
+GM
 aa
-aa
-ZB
+GM
 aa
 aa
 aa
@@ -11734,28 +11711,28 @@ aa
 aa
 aa
 aa
-ch
-ch
-ch
+Lv
+Lv
+Lv
 gW
 hq
 hr
 gV
 Uz
-ZB
+GM
 iq
 aa
 aa
-ZB
+GM
 aa
 ch
 jR
 jG
 aa
 aa
-ZB
-ZB
-ZB
+GM
+GM
+GM
 aa
 aa
 aa
@@ -11773,9 +11750,9 @@ aa
 aa
 aa
 aa
-aa
-ZB
-ZB
+GM
+GM
+GM
 aa
 aa
 aa
@@ -11796,7 +11773,7 @@ aa
 aa
 "}
 (72,1,1) = {"
-ZB
+GM
 aa
 ap
 aq
@@ -11840,23 +11817,23 @@ ea
 ea
 oE
 fo
-aY
-ZB
-ZB
+tS
+GM
+GM
 aa
 aa
 aa
 aa
-ay
-ay
-ay
+Uz
+Uz
+Uz
 gW
 hr
 hq
 gV
 ib
 iq
-ZB
+GM
 Bx
 gV
 Uz
@@ -11866,8 +11843,8 @@ kb
 jG
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -11886,7 +11863,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -11909,7 +11886,7 @@ aa
 aa
 "}
 (73,1,1) = {"
-ZB
+GM
 aa
 ap
 aq
@@ -11953,15 +11930,15 @@ ea
 eS
 oE
 dz
-fD
-ZB
+kF
+GM
 aa
 aa
 aa
 aa
-ay
-ay
-aY
+Uz
+Uz
+tS
 gV
 gW
 gW
@@ -11973,7 +11950,7 @@ gV
 gV
 gV
 Uz
-ZB
+GM
 hc
 kb
 jG
@@ -11998,8 +11975,8 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -12022,16 +11999,16 @@ aa
 aa
 "}
 (74,1,1) = {"
-vf
+rK
 aa
 aa
 aq
 aa
 aa
 aa
-vf
-vf
-vf
+rK
+rK
+rK
 as
 aV
 bc
@@ -12066,14 +12043,14 @@ ea
 eT
 Hx
 dz
-ay
+Uz
 aa
 aa
 aa
 aa
-ay
-ay
-gD
+Uz
+Uz
+Ev
 gr
 gV
 hd
@@ -12110,7 +12087,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -12135,41 +12112,41 @@ aa
 aa
 "}
 (75,1,1) = {"
-vf
+rK
 aa
 ap
 aq
 ap
 aa
 aa
-vf
-ZB
-vf
-vf
-aa
+rK
+GM
+rK
+rK
+GM
 bd
-Gu
-Gu
+bi
+bi
 aa
 aa
 aa
 aa
-Gu
-Gu
+bi
+bi
 as
 az
 as
 bi
 bi
-ch
-ZB
+Lv
+GM
 aa
 aa
 aa
 aa
 aa
-ZB
-ac
+GM
+rK
 dz
 dN
 ed
@@ -12179,15 +12156,15 @@ et
 eU
 FU
 dz
-ch
+Lv
 aa
 aa
 aa
 aa
-ay
-ay
+Uz
+Uz
 SR
-gC
+IA
 gV
 he
 hd
@@ -12222,7 +12199,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -12248,18 +12225,18 @@ aa
 aa
 "}
 (76,1,1) = {"
-vf
+rK
 aa
 ap
 aq
 ap
 aa
 aa
-vf
+rK
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -12274,33 +12251,33 @@ ca
 as
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
 aa
 aa
 aa
-ZB
-ch
+GM
+Lv
 aa
-ac
-eu
-ac
-ac
-ay
-eu
-ac
-ac
-ZB
+rK
+Av
+rK
+rK
+Uz
+Av
+rK
+rK
+GM
 aa
-ay
-ay
-ay
-ay
+Uz
+Uz
+Uz
+Uz
 gH
-gD
+Ev
 gV
 hf
 yE
@@ -12324,7 +12301,7 @@ hf
 hf
 hf
 lY
-jF
+vf
 mn
 aa
 aa
@@ -12334,7 +12311,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -12361,14 +12338,14 @@ aa
 aa
 "}
 (77,1,1) = {"
-vf
+rK
 aa
 ap
 aq
 ap
-ZB
-ZB
-vf
+GM
+GM
+rK
 aa
 aa
 aa
@@ -12381,14 +12358,11 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
-ZB
-ZB
-aa
-aa
-aa
+GM
+GM
 aa
 aa
 aa
@@ -12396,24 +12370,27 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+aa
+aa
+aa
+GM
+GM
 aa
 aa
 aa
 aa
-eV
+eL
 aa
-ZB
+GM
 aa
-ZB
+GM
 aa
-ay
-ay
+Uz
+Uz
 gr
-gC
+IA
 gr
-gP
+Bx
 gV
 hg
 hf
@@ -12437,8 +12414,8 @@ hf
 hf
 hf
 jJ
-ay
-ch
+Uz
+Lv
 aa
 aa
 aa
@@ -12448,7 +12425,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -12474,19 +12451,15 @@ aa
 aa
 "}
 (78,1,1) = {"
-vf
+rK
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
-ZB
-ZB
-aa
-aa
-aa
-aa
+GM
+GM
 aa
 aa
 aa
@@ -12518,15 +12491,19 @@ aa
 aa
 aa
 aa
-ZB
 aa
 aa
-aY
-aY
-aY
-aY
-aY
-aY
+aa
+aa
+GM
+aa
+aa
+tS
+tS
+tS
+tS
+tS
+tS
 gV
 hf
 hf
@@ -12550,7 +12527,7 @@ hf
 hf
 hf
 jJ
-ay
+Uz
 aa
 aa
 aa
@@ -12561,7 +12538,7 @@ aa
 aa
 aa
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -12587,15 +12564,15 @@ aa
 aa
 "}
 (79,1,1) = {"
-vf
-vf
-vf
-vf
-ZB
-vf
-vf
-vf
-ZB
+rK
+rK
+rK
+rK
+GM
+rK
+rK
+rK
+GM
 aa
 aa
 aa
@@ -12634,12 +12611,12 @@ aa
 aa
 aa
 aa
-ch
-ch
-ch
-ch
-ch
-ch
+Lv
+Lv
+Lv
+Lv
+Lv
+Lv
 gW
 hh
 hi
@@ -12663,7 +12640,7 @@ hP
 hf
 hf
 jJ
-ay
+Uz
 aa
 aa
 aa
@@ -12671,10 +12648,10 @@ aa
 aa
 aa
 aa
-ay
-ac
-ac
-ZB
+Uz
+rK
+rK
+GM
 aa
 aa
 aa
@@ -12700,19 +12677,14 @@ aa
 aa
 "}
 (80,1,1) = {"
-ZB
+GM
 aa
 aa
 aa
 aa
-ZB
-ZB
-ZB
-aa
-aa
-aa
-aa
-aa
+GM
+GM
+GM
 aa
 aa
 aa
@@ -12747,10 +12719,15 @@ aa
 aa
 aa
 aa
-ay
-ay
-ay
-gD
+aa
+aa
+aa
+aa
+aa
+Uz
+Uz
+Uz
+Ev
 gr
 Su
 gW
@@ -12776,18 +12753,18 @@ hf
 hf
 hf
 jJ
-ay
-ch
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+Uz
+Lv
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -12860,12 +12837,12 @@ aa
 aa
 aa
 aa
-ch
-fD
-ch
-ch
-fD
-ch
+Lv
+kF
+Lv
+Lv
+kF
+Lv
 gW
 gW
 gW
@@ -12891,15 +12868,15 @@ Hl
 jJ
 aa
 aa
-ay
+Uz
 aa
-ay
+Uz
 aa
-ay
+Uz
 aa
-ay
+Uz
 aa
-ZB
+GM
 aa
 aa
 aa
@@ -12972,15 +12949,15 @@ aa
 aa
 aa
 aa
-ZB
-ay
-ay
-ay
-ay
-ay
-ay
-ay
-ZB
+GM
+Uz
+Uz
+Uz
+Uz
+Uz
+Uz
+Uz
+GM
 aa
 aa
 aa
@@ -13002,17 +12979,17 @@ gV
 gV
 gV
 gV
-aY
-aY
-aY
-aY
-aY
-aY
-aY
-aY
-aY
-aY
-ZB
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+GM
 aa
 aa
 aa
@@ -13085,15 +13062,15 @@ aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
 aa
 aa
-ZB
-ZB
+GM
+GM
 aa
 aa
 aa
@@ -13109,24 +13086,24 @@ jK
 aa
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
+rK
 aa
-ZB
+GM
 aa
 aa
 aa
