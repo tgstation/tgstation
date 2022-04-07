@@ -5613,11 +5613,6 @@
 	dir = 1
 	},
 /area/mine/eva)
-"qc" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
 "qd" = (
 /obj/structure/sign/warning/xeno_mining{
 	pixel_x = 29
@@ -13581,9 +13576,9 @@
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
 "Mt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft/lesser)
 "Mv" = (
@@ -31503,7 +31498,7 @@ mO
 mO
 mO
 rz
-qc
+cR
 oN
 nf
 DT
@@ -31760,8 +31755,8 @@ mO
 mO
 mO
 mO
-qc
-qc
+cR
+cR
 HL
 CL
 at
@@ -32018,8 +32013,8 @@ mO
 mO
 mO
 mO
-qc
-qc
+cR
+cR
 cM
 Ic
 Cu
@@ -38193,7 +38188,7 @@ rn
 Zq
 SU
 of
-bq
+Bd
 XV
 XV
 Bd
@@ -38441,16 +38436,16 @@ uI
 xq
 iy
 iy
-bq
+Bd
 Zn
-bq
-bq
-bq
+Bd
+Bd
+Bd
 Ck
 ul
 ws
 mP
-bq
+Bd
 TU
 uZ
 kj
@@ -38698,16 +38693,16 @@ KG
 uS
 iy
 iy
-bq
+Bd
 Ba
 Ru
 ZZ
-bq
-bq
-bq
-bq
-bq
-bq
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 No
 Rc
 Ru
@@ -38954,8 +38949,8 @@ el
 Yx
 sO
 XK
-bf
-bq
+Bd
+Bd
 EY
 dC
 dw
@@ -39211,14 +39206,14 @@ NK
 KG
 iL
 gi
-bf
+Bd
 Kv
 Ru
 Bd
 My
-bf
-bf
-bf
+Bd
+Bd
+Bd
 Gc
 Na
 Bd
@@ -39468,16 +39463,16 @@ Aw
 uI
 KO
 bf
-bf
-bf
-bf
-bf
+Bd
+Bd
+Bd
+Bd
 IV
 rO
 WX
-bf
-bf
-bf
+Bd
+Bd
+Bd
 Bd
 Bd
 wL
