@@ -71,7 +71,7 @@
 		SSmove_manager.stop_looping(src)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
-	if(AIStatus == AI_OFF)
+	if(AIStatus == AI_OFF || AIStatus == AI_DISTANCE_OFF)
 		return FALSE
 	var/list/possible_targets = ListTargets() //we look around for potential targets and make it a list for later use.
 
@@ -151,7 +151,7 @@
 	. = list()
 	if(!HasTargetsList)
 		possible_targets = ListTargets()
-	for(var/atom/possible_target in possible_targets)
+	for(var/atom/possible_target as anything in possible_targets)
 		if(Found(possible_target))//Just in case people want to override targetting
 			. = list(possible_target)
 			break
@@ -273,20 +273,20 @@
 	stop_automated_movement = 1
 	if(!target || !CanAttack(target))
 		LoseTarget()
-		return 0
+		return FALSE
 	var/atom/target_from = GET_TARGETS_FROM(src)
 	if(target in possible_targets)
 		var/turf/T = get_turf(src)
 		if(target.z != T.z)
 			LoseTarget()
-			return 0
+			return FALSE
 		var/target_distance = get_dist(target_from,target)
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(target_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
 		if(!Process_Spacemove()) //Drifting
 			SSmove_manager.stop_looping(src)
-			return 1
+			return TRUE
 		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
 				SSmove_manager.move_away(src, target, retreat_distance, move_to_delay, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
@@ -301,8 +301,8 @@
 				if(rapid_melee > 1 && target_distance <= melee_queue_distance)
 					MeleeAction(FALSE)
 				in_melee = FALSE //If we're just preparing to strike do not enter sidestep mode
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 	if(environment_smash)
 		if(target.loc != null && get_dist(target_from, target.loc) <= vision_range) //We can't see our target, but he's in our vision range still
 			if(ranged_ignores_vision && ranged_cooldown <= world.time) //we can't see our target... but we can fire at them!
@@ -310,12 +310,12 @@
 			if((environment_smash & ENVIRONMENT_SMASH_WALLS) || (environment_smash & ENVIRONMENT_SMASH_RWALLS)) //If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)
 				FindHidden()
-				return 1
+				return TRUE
 			else
 				if(FindHidden())
-					return 1
+					return TRUE
 	LoseTarget()
-	return 0
+	return FALSE
 
 /mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
 	if(target == src.target)
@@ -506,7 +506,7 @@
 		Goto(A,move_to_delay,minimum_distance)
 		if(A.Adjacent(target_from))
 			A.attack_animal(src)
-		return 1
+		return TRUE
 
 
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, modifiers) //Player firing
@@ -532,8 +532,8 @@
 	return !FindTarget(possible_targets, TRUE)
 
 
-//These two procs handle losing our target if we've failed to attack them for
-//more than lose_patience_timeout deciseconds, which probably means we're stuck
+///These two procs handle losing our target if we've failed to attack them for
+///more than lose_patience_timeout deciseconds, which probably means we're stuck
 /mob/living/simple_animal/hostile/proc/GainPatience()
 	if(lose_patience_timeout)
 		LosePatience()
@@ -556,36 +556,131 @@
 		value = initial(search_objects)
 	search_objects = value
 
-/mob/living/simple_animal/hostile/consider_wakeup()
+///check whether we should set our AIStatus to AI_DISTANCE_OFF, which requires that no client mobs we can see are within spatial grid cells
+///intersecting a certain radius from us.
+///returns TRUE if theres no way we can see any player mobs and should shut off
+///returns FALSE if we shouldnt change AIStatus to AI_DISTANCE_OFF
+/mob/living/simple_animal/hostile/proc/check_disable_proximity_conditions()
+	if(AIStatus == AI_DISTANCE_OFF)
+		return FALSE
+
+	if(target)//if we see a target dont do shit until its nulled out
+		return FALSE
+
+	var/turf/our_turf = get_turf(src)
+	if(!our_turf)
+		return TRUE
+
+	if(length(SSmobs.clients_by_zlevel[our_turf.z]))
+		var/list/nearby_client_mobs = SSspatial_grid.orthogonal_range_search(src, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, vision_range)
+		for(var/mob/client_mob as anything in nearby_client_mobs)
+			if(client_mob.invisibility <= see_invisible)
+				return FALSE
+
+		return TRUE
+	else
+		return TRUE
+
+/mob/living/simple_animal/hostile/consider_wakeup(reactivate = FALSE)
 	..()
 	var/list/tlist
 	var/turf/T = get_turf(src)
 
 	if (!T)
-		return
+		return FALSE
 
-	if (!length(SSmobs.clients_by_zlevel[T.z])) // It's fine to use .len here but doesn't compile on 511
+	if (AIStatus != AI_DISTANCE_OFF && check_disable_proximity_conditions())
 		toggle_ai(AI_DISTANCE_OFF)
-		return
+		return FALSE
 
-	var/cheap_search = isturf(T) && !is_station_level(T.z)
+	var/cheap_search = !is_station_level(T.z)
 	if (cheap_search)
 		tlist = ListTargetsLazy(T.z)
 	else
 		tlist = ListTargets()
 
-	if(AIStatus == AI_IDLE && FindTarget(tlist, TRUE))
+	if((AIStatus == AI_IDLE || AIStatus == AI_DISTANCE_OFF && reactivate) && FindTarget(tlist, TRUE))
 		if(cheap_search) //Try again with full effort
 			FindTarget()
 		toggle_ai(AI_ON)
 
-/mob/living/simple_animal/hostile/on_ai_disabled(old_state)
-	if(old_state != AI_DISTANCE_OFF && old_state != AI_OFF)
+///hostile mobs turn completely off if no players are close enough to save cpu resources. this does that by registering to
+///every spatial grid cell in range for players entering it.
+/mob/living/simple_animal/hostile/proc/register_to_players_getting_near(range)
+	if(range <= 0)
+		for(var/datum/spatial_grid_cell/old_cell as anything in listening_grid_cells)//unset old registrations
+			UnregisterSignal(old_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS))
 
+		UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+		listening_grid_cells = null
+		return FALSE
+
+	//override because moving multiple times will proc this every time
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_moved_while_off, override = TRUE)
+	var/list/grid_cells_in_range = SSspatial_grid.get_cells_in_range(src, range)
+
+	if(listening_grid_cells)//we already have grid cells we're listening to, so find the difference and update
+		var/list/newly_out_of_range_cells = listening_grid_cells - grid_cells_in_range
+
+		for(var/datum/spatial_grid_cell/old_cell as anything in newly_out_of_range_cells)
+			UnregisterSignal(old_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS))
+
+	for(var/datum/spatial_grid_cell/intersecting_cell as anything in grid_cells_in_range)
+		RegisterSignal(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS), .proc/check_near_player, override = TRUE)
+
+	listening_grid_cells = grid_cells_in_range
+	if(!length(listening_grid_cells))
+		listening_grid_cells = null
+
+	return TRUE
+
+///signal handler for SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS) that checks whether we should wake up our ai for the player mob
+///getting close to us.
+/mob/living/simple_animal/hostile/proc/check_near_player(datum/spatial_grid_cell/entered_cell, atom/movable/entering_movable_with_client)
+	SIGNAL_HANDLER
+
+	if(see_invisible < entering_movable_with_client.invisibility)
+		return//we cant see the player mob or its location by default, no sense turning on
+
+	if(AIStatus == AI_DISTANCE_OFF)
+		if(get_dist(get_turf(src), get_turf(entering_movable_with_client)) <= vision_range)
+			toggle_ai(AI_ON)
+		else
+			toggle_ai(AI_IDLE)
+
+	return
+
+///signal handler that adjusts our spatial grid bounding box if we move while our ai is turned off.
+/mob/living/simple_animal/hostile/proc/on_moved_while_off(datum/source)
+	SIGNAL_HANDLER
+
+	register_to_players_getting_near(vision_range)
+	return
+
+/mob/living/simple_animal/hostile/on_ai_distance_disabled(old_state)
+	. = ..()
+
+	if(stop_life)//we're in the simulation fog of war so dont waste processing resources on us when it doesnt affect players
+		SSsimple_mobs.processing_simple_mobs -= src//we can stay in current_run for 1 iteration. as a treat.
+
+	register_to_players_getting_near(vision_range)
+
+/mob/living/simple_animal/hostile/on_ai_disabled(old_state)
+	. = ..()
+
+	if(old_state == AI_DISTANCE_OFF)//we arent on but we are no longer off due to no near players, so unset functionality coupled to AI_DISTANCE_OFF
+		SSsimple_mobs.processing_simple_mobs |= src
+		register_to_players_getting_near(0)
 
 /mob/living/simple_animal/hostile/on_ai_enabled(old_state)
+	. = ..()
+	if(old_state != AI_DISTANCE_OFF)
+		return
+
 	if(stop_life)
-		SSsimple_mobs.processing_simple_mobs += src
+		SSsimple_mobs.processing_simple_mobs |= src
+
+	register_to_players_getting_near(0)
 
 /mob/living/simple_animal/hostile/proc/ListTargetsLazy(_Z)//Step 1, find out what we can see
 	var/static/list/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))

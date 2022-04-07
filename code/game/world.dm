@@ -353,7 +353,6 @@ GLOBAL_VAR(restart_counter)
 /world/proc/incrementMaxZ()
 	maxz++
 	SSmobs.MaxZChanged()
-	SSidlenpcpool.MaxZChanged()
 
 
 /world/proc/change_fps(new_value = 20)

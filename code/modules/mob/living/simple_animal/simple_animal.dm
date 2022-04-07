@@ -31,9 +31,9 @@
 	///Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/stop_automated_movement = 0
 	///Does the mob wander around when idle?
-	var/wander = 1
-	///When set to 1 this stops the animal from moving when someone is pulling it.
-	var/stop_automated_movement_when_pulled = 1
+	var/wander = TRUE
+	///When set to TRUE this stops the animal from moving when someone is pulling it.
+	var/stop_automated_movement_when_pulled = TRUE
 
 	///When someone interacts with the simple animal.
 	///Help-intent verb in present continuous tense.
@@ -223,6 +223,8 @@
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
 	SSsimple_mobs.processing_simple_mobs -= src
+	SSsimple_mobs.current_run -= src
+
 	if (SSnpcpool.state == SS_PAUSED && LAZYLEN(SSnpcpool.currentrun))
 		SSnpcpool.currentrun -= src
 
@@ -230,9 +232,7 @@
 		nest.spawned_mobs -= src
 		nest = null
 
-	var/turf/T = get_turf(src)
-	if (T && AIStatus == AI_DISTANCE_OFF)
-		SSidlenpcpool.distance_deactivated_mobs_by_z_level[T.z] -= src
+	listening_grid_cells = null
 
 	return ..()
 
@@ -647,22 +647,19 @@
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
 	if(!can_have_ai && (togglestatus != AI_OFF))
 		return
+
 	if (AIStatus != togglestatus)
 		if (togglestatus >= FIRST_AI_ACTIVATION_STAGE && togglestatus <= LAST_AI_ACTIVATION_STAGE)
-			if (togglestatus == AI_DISTANCE_OFF || AIStatus == AI_DISTANCE_OFF)
-				var/turf/T = get_turf(src)
-				if (T)
-					if (AIStatus == AI_DISTANCE_OFF)
-						SSidlenpcpool.distance_deactivated_mobs_by_z_level[T.z] -= src
-					else
-						SSidlenpcpool.distance_deactivated_mobs_by_z_level[T.z] += src
 			GLOB.simple_animals[AIStatus] -= src
 			GLOB.simple_animals[togglestatus] += src
 
 			var/old_state = AIStatus
 			AIStatus = togglestatus
 
-			if(togglestatus == AI_ON)
+			if(togglestatus == AI_DISTANCE_OFF)
+				on_ai_distance_disabled(old_state)
+
+			else if(togglestatus == AI_ON)
 				on_ai_enabled(old_state)
 
 			else
@@ -670,55 +667,24 @@
 		else
 			stack_trace("Something attempted to set simple animals AI to an invalid state: [togglestatus]")
 
-/mob/living/simple_animal/proc/register_to_clients_getting_near(range)
-	if(range <= 0)
-		for(var/datum/spatial_grid_cell/old_cell as anything in listening_grid_cells)
-			UnregisterSignal(old_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS))
-
-		UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-		return FALSE
-
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_moved_while_off)
-	var/list/grid_cells_in_range = SSspatial_grid.get_cells_in_range(src, range)
-
-	if(listening_grid_cells)//we already have grid cells we're listening to, so find the difference and update
-		var/list/newly_out_of_range_cells = listening_grid_cells - grid_cells_in_range
-
-		for(var/datum/spatial_grid_cell/old_cell as anything in newly_out_of_range_cells)
-			UnregisterSignal(old_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS))
-
-	for(var/datum/spatial_grid_cell/intersecting_cell as anything in grid_cells_in_range)
-		RegisterSignal(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS), .proc/check_near_player)
-
-	listening_grid_cells = grid_cells_in_range
-
-	return TRUE
-
-///signal handler for SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS) that checks whether we should wake up our ai for the player mob
-///getting close to us.
-/mob/living/simple_animal/proc/check_near_player(datum/source)
-	SIGNAL_HANDLER
-
-/mob/living/simple_animal/proc/on_moved_while_off(datum/source)
-	SIGNAL_HANDLER
-
-/mob/living/simple_animal/proc/consider_wakeup()
+///check if we should activate our ai. reactivate is an optional argument to force checks to come out of AI_DISTANCE_OFF
+/mob/living/simple_animal/proc/consider_wakeup(reactivate = FALSE)
 	if (pulledby || shouldwakeup)
 		toggle_ai(AI_ON)
 
-///proc called when this mobs ai status is set to something other than AI_ON
+///called when this mobs ai status is set to something other than AI_ON
 /mob/living/simple_animal/proc/on_ai_disabled(old_state)
+	SHOULD_CALL_PARENT(TRUE)
 	return
 
-///proc called when this mobs ai status is set to AI_ON
+/mob/living/simple_animal/proc/on_ai_distance_disabled(old_state)
+	SHOULD_CALL_PARENT(TRUE)
+	return
+
+///called when this mobs ai status is set to AI_ON
 /mob/living/simple_animal/proc/on_ai_enabled(old_state)
+	SHOULD_CALL_PARENT(TRUE)
 	return
-
-/mob/living/simple_animal/on_changed_z_level(turf/old_turf, turf/new_turf)
-	..()
-	if (old_turf && AIStatus == AI_DISTANCE_OFF)
-		SSidlenpcpool.distance_deactivated_mobs_by_z_level[old_turf.z] -= src
-		toggle_ai(initial(AIStatus))
 
 ///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holograpic and butter-based creatures don't yield viable cells samples.
 /mob/living/simple_animal/proc/add_cell_sample()
