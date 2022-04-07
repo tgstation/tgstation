@@ -133,7 +133,7 @@
 			if(!computer || !card_slot || !id_card)
 				to_chat(current_user, span_notice("No ID found, authorization failed."))
 				return
-			if(!(ACCESS_ROBOTICS in id_card.access))
+			if(!(ACCESS_CE in id_card.access))
 				to_chat(current_user, span_notice("Required access not found on ID."))
 				return
 			GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
