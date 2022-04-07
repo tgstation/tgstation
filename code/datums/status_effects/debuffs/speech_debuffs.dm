@@ -76,7 +76,7 @@
 			modified_char = "[modified_char]-[modified_char]-[modified_char]-[modified_char]"
 		else if(prob(20))
 			modified_char = "[modified_char]-[modified_char]-[modified_char]"
-		else if (prob(95))
+		else if(prob(95))
 			modified_char = "[modified_char]-[modified_char]"
 		else
 			modified_char = ""
@@ -92,7 +92,7 @@
 
 /datum/status_effect/speech/stutter/derpspeech/handle_message(datum/source, list/message_args)
 
-	var/message = message_args[1]
+	var/message = html_decode(message_args[1])
 
 	message = replacetext(message, " am ", " ")
 	message = replacetext(message, " is ", " ")
