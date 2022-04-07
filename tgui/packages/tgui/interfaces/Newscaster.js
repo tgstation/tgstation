@@ -23,41 +23,37 @@ export const Newscaster = (props, context) => {
   const BOUNTYBOARD_SCREEN = 2;
   const [screenmode, setScreenmode] = useSharedState(context, 'tab_main', NEWSCASTER_SCREEN);
   return (
-    <Window
-      width={575}
-      height={560}>
+    <>
       <NewscasterChannelCreation />
       <NewscasterCommentCreation />
-      <NewscasterWantedScreen />
-      <Window.Content scrollable>
-        <Stack fill vertical>
-          <Stack.Item>
-            <Tabs fluid textAlign="center">
-              <Tabs.Tab
-                color="Green"
-                selected={screenmode === NEWSCASTER_SCREEN}
-                onClick={() => setScreenmode(NEWSCASTER_SCREEN)}>
-                Newscaster
-              </Tabs.Tab>
-              <Tabs.Tab
-                Color="Blue"
-                selected={screenmode === BOUNTYBOARD_SCREEN}
-                onClick={() => setScreenmode(BOUNTYBOARD_SCREEN)}>
-                Bounty Board
-              </Tabs.Tab>
-            </Tabs>
-          </Stack.Item>
-          <Stack.Item grow>
-            {screenmode === NEWSCASTER_SCREEN && (
-              <NewscasterContent />
-            )}
-            {screenmode === BOUNTYBOARD_SCREEN && (
-              <BountyBoardContent />
-            )}
-          </Stack.Item>
-        </Stack>
-      </Window.Content>
-    </Window>
+      <Stack fill vertical>
+        <NewscasterWantedScreen />
+        <Stack.Item>
+          <Tabs fluid textAlign="center">
+            <Tabs.Tab
+              color="Green"
+              selected={screenmode === NEWSCASTER_SCREEN}
+              onClick={() => setScreenmode(NEWSCASTER_SCREEN)}>
+              Newscaster
+            </Tabs.Tab>
+            <Tabs.Tab
+              Color="Blue"
+              selected={screenmode === BOUNTYBOARD_SCREEN}
+              onClick={() => setScreenmode(BOUNTYBOARD_SCREEN)}>
+              Bounty Board
+            </Tabs.Tab>
+          </Tabs>
+        </Stack.Item>
+        <Stack.Item grow>
+          {screenmode === NEWSCASTER_SCREEN && (
+            <NewscasterContent />
+          )}
+          {screenmode === BOUNTYBOARD_SCREEN && (
+            <BountyBoardContent />
+          )}
+        </Stack.Item>
+      </Stack>
+    </>
   );
 };
 
@@ -310,7 +306,7 @@ const NewscasterWantedScreen = (props, context) => {
   );
 };
 
-const NewscasterContent = (props, context) => {
+export const NewscasterContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     current_channel = {},

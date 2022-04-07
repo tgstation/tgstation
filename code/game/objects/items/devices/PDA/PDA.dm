@@ -346,8 +346,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_EMOJI_GUIDE]'>[PDAIMG(emoji)]Emoji Guidebook</a></li>"
 					if (istype(cartridge.radio))
 						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_SIGNALER]'>[PDAIMG(signaler)]Signaler System</a></li>"
-					if (cartridge.access & CART_NEWSCASTER)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_NEWSCASTER]'>[PDAIMG(notes)]Newscaster Access </a></li>"
 					if (cartridge.access & CART_REAGENT_SCANNER)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Reagent Scan'>[PDAIMG(reagent)][scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
 					if (cartridge.access & CART_ATMOS)
