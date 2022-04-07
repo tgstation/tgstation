@@ -30,7 +30,7 @@
 	var/obj/item/card/id/id_card = card_slot?.stored_card
 	data["have_id_slot"] = !!card_slot
 	if(computer)
-	    var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
+		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
 		data["id_owner"] = id_card ? id_card.registered_name : ""
 	if(cart_mode && job_disk)
 		data["id_owner"] = "JOB DISK OVERRIDE"

@@ -1,6 +1,6 @@
 /// Basic machine used to paint PDAs and re-trim ID cards.
 /obj/machinery/pdapainter
-	name = "\improper Nanotablet & ID Painter"
+	name = "\improper Tablet & ID Painter"
 	desc = "A painting machine that can be used to paint PDAs and trim IDs. To use, simply insert the item and choose the desired preset."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
@@ -317,7 +317,7 @@
 				return TRUE
 
 			var/selection = params["selection"]
-			var/obj/item/modular_computer/tablet/role/pda_path = /obj/item/modular_computer/tablet/role/
+			var/obj/item/modular_computer/tablet/role/pda_path = /obj/item/modular_computer/tablet/role
 
 			for(var/path in pda_types)
 				if(pda_types[path] == selection)
