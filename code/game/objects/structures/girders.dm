@@ -206,7 +206,7 @@
 				return
 
 			var/M = sheets.sheettype
-			var/amount = construction_cost[exotic_material]
+			var/amount = construction_cost.exotic_material
 			if(state == GIRDER_TRAM)
 				if(!sheets.tram_wall_type)
 					user.balloon_alert("need titanium, plastitanium, or iron!")
