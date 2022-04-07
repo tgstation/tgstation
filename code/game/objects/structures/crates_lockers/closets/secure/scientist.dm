@@ -20,6 +20,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
 	new /obj/item/storage/photo_album/rd(src)
 	new /obj/item/storage/box/skillchips/science(src)
+	new /obj/item/skillchip/job/research_director(src)
 
 
 
