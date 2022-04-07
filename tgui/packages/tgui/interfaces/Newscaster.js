@@ -10,7 +10,6 @@ import { useBackend, useSharedState, useLocalState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';
 import { BlockQuote, Box, Button, Divider, LabeledList, Modal, Section, Stack, Tabs, TextArea } from '../components';
-import { Window } from '../layouts';
 import { marked } from 'marked';
 import { sanitizeText } from "../sanitize";
 
