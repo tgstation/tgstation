@@ -852,6 +852,9 @@
 
 	var/old_bleed_rate = cached_bleed_rate
 	cached_bleed_rate = 0
+	if(!owner)
+		return
+
 	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || !IS_ORGANIC_LIMB(src))
 		if(cached_bleed_rate != old_bleed_rate)
 			update_part_wound_overlay()
