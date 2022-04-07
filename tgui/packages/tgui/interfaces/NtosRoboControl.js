@@ -75,8 +75,8 @@ export const NtosRoboControl = (props, context) => {
             <Section>
               <Button
                 icon="address-card"
-                tooltip="Grants or removes access for Drones to mess with machines and wires otherwise deemed dangerous."
-                content={droneaccess ? 'Grant drone access' : 'Revoke drone access'}
+                tooltip="Grant/Remove Drone access to interact with machines and wires that would otherwise be deemed dangerous."
+                content={droneaccess ? 'Grant Drone Access' : 'Revoke Drone Access'}
                 color={droneaccess ? 'good' : 'bad'}
                 onClick={() => act('changedroneaccess')} />
               <Dropdown
