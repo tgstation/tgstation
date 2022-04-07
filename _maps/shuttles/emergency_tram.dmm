@@ -111,10 +111,8 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ax" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "ay" = (
@@ -128,11 +126,9 @@
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "aA" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small/directional/north,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "aB" = (
@@ -189,18 +185,14 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "aM" = (
@@ -371,11 +363,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/light/small/directional/north,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "bk" = (
@@ -383,11 +373,9 @@
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "bl" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/light/small/directional/north,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "uu" = (

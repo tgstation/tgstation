@@ -136,9 +136,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "ay" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "az" = (
@@ -233,10 +231,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "aS" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aT" = (
@@ -271,9 +267,7 @@
 /area/shuttle/escape)
 "aY" = (
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aZ" = (
@@ -296,18 +290,14 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "be" = (
@@ -489,10 +479,8 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bK" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bL" = (

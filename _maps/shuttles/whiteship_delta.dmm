@@ -224,12 +224,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "az" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "aA" = (
@@ -527,13 +525,11 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "bh" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/girder/displaced,
 /obj/item/stack/sheet/mineral/titanium,
 /obj/item/stack/rods,
 /obj/item/stack/cable_coil/cut,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/bar)
 "bi" = (
@@ -1639,11 +1635,9 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/cargo)
 "dx" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/girder/reinforced,
 /obj/item/stack/sheet/iron,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
 "dy" = (
@@ -1853,9 +1847,6 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/medbay)
 "jl" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/frame/computer{
 	anchored = 1;
 	dir = 8
@@ -1865,6 +1856,7 @@
 /obj/item/stack/rods,
 /obj/item/stack/cable_coil/cut,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
 "kG" = (
@@ -1973,10 +1965,6 @@
 	pixel_x = 4;
 	pixel_y = 12
 	},
-/obj/item/toy/cards/cardhand{
-	init_cards = list("2 of Diamonds","3 of Clubs");
-	pixel_x = -5
-	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = 7;
 	pixel_y = 4
@@ -1985,6 +1973,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/item/toy/cards/singlecard,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "La" = (
@@ -2075,15 +2064,13 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
 "WR" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/frame/computer{
 	anchored = 1;
 	dir = 8
 	},
 /obj/item/shard,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
 

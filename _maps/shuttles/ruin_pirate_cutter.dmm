@@ -637,9 +637,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/pirate)
 "HO" = (
@@ -701,9 +699,6 @@
 /area/shuttle/caravan/pirate)
 "Mq" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Weapon Storage"
 	},
@@ -714,6 +709,7 @@
 	pixel_x = 2
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
 "Mx" = (

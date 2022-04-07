@@ -463,9 +463,6 @@
 "be" = (
 /obj/machinery/space_heater,
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
@@ -837,11 +834,8 @@
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
 "ep" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
 /obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "er" = (
@@ -876,8 +870,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "piratebridge"
 	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ez" = (
@@ -887,14 +880,11 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "eA" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
 /obj/structure/frame/computer{
 	anchored = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "eE" = (
@@ -1019,12 +1009,10 @@
 	pixel_y = 12
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/window{
-	dir = 4
-	},
 /obj/machinery/door/window{
 	name = "Decontamination"
 	},
+/obj/structure/window/spawner/east,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "JT" = (

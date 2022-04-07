@@ -290,10 +290,7 @@
 /area/shuttle/abandoned)
 "aX" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aY" = (

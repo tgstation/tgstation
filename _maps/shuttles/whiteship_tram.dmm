@@ -625,10 +625,10 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/west,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/structure/window/reinforced/plasma/spawner/west,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "bT" = (
@@ -724,8 +724,6 @@
 /turf/open/floor/mineral/titanium/airless,
 /area/shuttle/abandoned/cargo)
 "cx" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
 	},
@@ -737,6 +735,8 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
@@ -1064,10 +1064,10 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/plasma/spawner,
-/obj/structure/window/reinforced/plasma/spawner/east,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "gq" = (

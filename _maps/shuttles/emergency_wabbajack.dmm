@@ -5,11 +5,6 @@
 "ab" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"ac" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/shuttle/tinted,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "ad" = (
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron,
@@ -178,9 +173,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aK" = (
@@ -265,8 +258,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "be" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/north{
 	resistance_flags = 33
 	},
 /turf/open/lava/smooth/airless,
@@ -338,9 +330,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "IH" = (
@@ -452,7 +442,7 @@ bf
 bg
 "}
 (4,1,1) = {"
-ac
+as
 ad
 ae
 ad
@@ -476,7 +466,7 @@ bf
 bg
 "}
 (5,1,1) = {"
-ac
+as
 ae
 ad
 ae
@@ -500,7 +490,7 @@ bf
 bg
 "}
 (6,1,1) = {"
-ac
+as
 af
 ad
 bi
@@ -524,7 +514,7 @@ bf
 bg
 "}
 (7,1,1) = {"
-ac
+as
 ae
 ad
 ae
@@ -548,7 +538,7 @@ bf
 bg
 "}
 (8,1,1) = {"
-ac
+as
 ad
 ae
 ad

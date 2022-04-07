@@ -128,14 +128,12 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "aq" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
 /obj/item/clothing/head/welding,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "as" = (
@@ -145,18 +143,13 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
 "at" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
 "au" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/rack,
 /obj/item/storage/medkit/regular{
 	pixel_x = 3;
@@ -164,6 +157,7 @@
 	},
 /obj/item/storage/box/zipties,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "av" = (
@@ -297,9 +291,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "aS" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/flashlight/seclite{
@@ -307,6 +298,7 @@
 	pixel_y = 3
 	},
 /obj/item/flashlight/seclite,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
 "aT" = (
