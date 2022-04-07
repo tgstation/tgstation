@@ -206,9 +206,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
-"bi" = (
-/turf/open/floor/plating,
-/area/space/nearstation)
 "bj" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -408,11 +405,9 @@
 /turf/closed/wall,
 /area/ruin/unpowered/no_grav)
 "ci" = (
-/obj/structure/cable,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged4"
-	},
-/area/ruin/space/derelict/bridge/ai_upload)
+/obj/structure/table,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "cl" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/gravity_generator)
@@ -445,7 +440,10 @@
 	},
 /area/ruin/space/derelict/gravity_generator)
 "cr" = (
-/obj/item/stack/cable_coil/five,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "cs" = (
@@ -1535,9 +1533,9 @@
 /turf/template_noop,
 /area/space/nearstation)
 "hn" = (
-/obj/structure/table,
+/obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/space/derelict/hallway/primary)
 "ho" = (
 /obj/item/shard,
 /turf/open/floor/iron/airless{
@@ -1665,7 +1663,7 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "hS" = (
 /turf/open/floor/iron/chapel{
@@ -1791,7 +1789,7 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 6
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "iw" = (
 /obj/structure/window/reinforced,
@@ -1845,6 +1843,10 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/medical/chapel)
+"iI" = (
+/obj/item/stack/cable_coil/five,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "iJ" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict/medical/chapel)
@@ -1903,7 +1905,7 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 5
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "iV" = (
 /obj/structure/window/reinforced{
@@ -3323,13 +3325,6 @@
 	icon_state = "damaged3"
 	},
 /area/space/nearstation)
-"BO" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/bridge/ai_upload)
 "CZ" = (
 /obj/item/clothing/suit/space/eva,
 /turf/open/floor/iron/airless{
@@ -3451,9 +3446,11 @@
 	},
 /area/space/nearstation)
 "Jl" = (
-/obj/effect/spawner/random/structure/girder,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/hallway/primary)
+/obj/structure/cable,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged4"
+	},
+/area/ruin/space/derelict/bridge/ai_upload)
 "Kf" = (
 /obj/item/paper/fluff/ruins/thederelict/vaultraider,
 /obj/effect/decal/remains/human{
@@ -3675,15 +3672,15 @@
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"UG" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "Vg" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/power_turbine,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
-"Vt" = (
-/obj/effect/spawner/random/structure/girder,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "Vz" = (
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -3913,7 +3910,7 @@ iJ
 iT
 hQ
 hQ
-bi
+Uz
 GM
 GM
 GM
@@ -7429,7 +7426,7 @@ fZ
 fZ
 fZ
 fZ
-Jl
+hn
 fZ
 fZ
 fZ
@@ -8882,7 +8879,7 @@ Uz
 Uz
 iE
 Uz
-hn
+ci
 eV
 jp
 jb
@@ -9744,7 +9741,7 @@ bj
 bj
 ax
 bE
-ci
+Jl
 bQ
 bY
 YQ
@@ -10086,7 +10083,7 @@ bF
 Kf
 CZ
 bZ
-ci
+Jl
 ax
 aa
 aa
@@ -10197,7 +10194,7 @@ bj
 ax
 bG
 Ob
-cr
+iI
 bz
 YQ
 ax
@@ -10312,7 +10309,7 @@ bO
 bE
 bO
 bO
-BO
+cr
 ax
 aa
 aa
@@ -10469,8 +10466,8 @@ Uz
 fZ
 gc
 fZ
-Vt
-Vt
+UG
+UG
 GM
 aa
 aa
@@ -11915,7 +11912,7 @@ ea
 eS
 oE
 dz
-Vt
+UG
 GM
 aa
 aa
