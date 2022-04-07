@@ -215,7 +215,6 @@
 
 	if(!used_id || !used_id.access)
 		return FALSE
-	used_id = used_id.GetID()
 
 	for(var/requested_access in maints_access_required)
 		if(requested_access in used_id.access)
