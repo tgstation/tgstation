@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "On the mapping end: cyborg, monkey, moth, and plasmamen limbs will no longer show up as absolutely nothing."
