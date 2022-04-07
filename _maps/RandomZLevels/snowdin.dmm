@@ -8884,10 +8884,8 @@
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "BU" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "BV" = (
@@ -11894,12 +11892,15 @@
 	},
 /area/awaymission/snowdin/cave)
 "OA" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/shuttle/engine/heater{
+	dir = 4
 	},
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/snow,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/cave)
 "OB" = (
 /obj/machinery/light/small/directional/north,
@@ -11929,10 +11930,8 @@
 /area/awaymission/snowdin/post/mining_main/robotics)
 "OR" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "OT" = (
@@ -12727,11 +12726,9 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "SV" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/item/circular_saw,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "SX" = (
@@ -36680,7 +36677,7 @@ Zy
 Zy
 Zy
 CC
-OA
+OR
 ka
 BU
 VB
@@ -37463,9 +37460,9 @@ Ym
 Ym
 Ym
 CD
-CP
-CP
-CP
+OA
+OA
+OA
 CC
 AU
 Zy

@@ -4766,9 +4766,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	temperature = 251
@@ -5055,9 +5053,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mu" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "mv" = (

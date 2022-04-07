@@ -867,9 +867,6 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "et" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -877,6 +874,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "eu" = (
@@ -884,9 +882,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "ev" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -894,6 +889,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "ew" = (
@@ -926,9 +922,7 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "eC" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "eD" = (
@@ -1114,9 +1108,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/academy/classrooms)
 "fo" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -1124,12 +1115,10 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "fp" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -1139,6 +1128,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "fq" = (
@@ -1194,15 +1184,13 @@
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "fv" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "fw" = (
@@ -1378,9 +1366,7 @@
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "gC" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gD" = (
@@ -1755,9 +1741,7 @@
 /area/awaymission/academy/academyaft)
 "iQ" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "iR" = (

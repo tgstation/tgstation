@@ -473,10 +473,8 @@
 	},
 /area/awaymission/caves/research)
 "cB" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/xenoblood,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -532,10 +530,8 @@
 	},
 /area/awaymission/caves/research)
 "cO" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/window/left/directional/east,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -580,9 +576,7 @@
 	},
 /area/awaymission/caves/research)
 "cW" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

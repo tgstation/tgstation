@@ -367,10 +367,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"bd" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space,
-/area/awaymission/undergroundoutpost45/central)
 "bf" = (
 /obj/item/storage/belt/security,
 /obj/item/assembly/flash/handheld,
@@ -1136,9 +1132,7 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/structure/window{
-	dir = 8
-	},
+/obj/structure/window/spawner/west,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -1157,9 +1151,7 @@
 	dir = 4
 	},
 /obj/structure/reagent_dispensers/fueltank,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/east,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -45236,7 +45228,7 @@ cC
 ct
 dc
 aD
-bd
+aP
 dZ
 aS
 aP

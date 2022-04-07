@@ -110,7 +110,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate3)
 "aD" = (
@@ -176,9 +176,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate2)
 "aX" = (
@@ -186,9 +184,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate2)
 "aY" = (
@@ -408,9 +404,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "bZ" = (
@@ -1667,9 +1661,7 @@
 /area/awaymission/spacebattle/syndicate7)
 "gR" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate4)
 "gS" = (
@@ -1778,9 +1770,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate7)
 "hm" = (
@@ -2132,9 +2122,7 @@
 /area/awaymission/spacebattle/syndicate5)
 "iR" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "iS" = (
@@ -2147,9 +2135,7 @@
 /area/awaymission/spacebattle/syndicate5)
 "iW" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate5)
 "iX" = (
@@ -2183,9 +2169,7 @@
 /area/awaymission/spacebattle/syndicate6)
 "ji" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate6)
 "jj" = (
@@ -2639,6 +2623,14 @@
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
+"ve" = (
+/obj/structure/window/reinforced,
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/plating/airless,
+/area/awaymission/spacebattle/cruiser)
 "vu" = (
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white,
@@ -2748,6 +2740,14 @@
 "Yq" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate4)
+"Zu" = (
+/obj/structure/window/reinforced,
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating/airless,
+/area/awaymission/spacebattle/cruiser)
 "ZL" = (
 /obj/structure/closet/crate/medical,
 /obj/item/storage/medkit/fire,
@@ -51437,7 +51437,7 @@ ab
 ab
 ab
 bI
-bN
+ve
 fe
 bQ
 bQ
@@ -52208,7 +52208,7 @@ ab
 ab
 ab
 bK
-bP
+Zu
 bR
 bR
 bR
