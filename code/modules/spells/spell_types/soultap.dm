@@ -26,6 +26,10 @@
 		to_chat(user, span_warning("You have no soul to tap into!"))
 		return
 
+	if(HAS_TRAIT(user, TRAIT_ROD_FORM)) // stops caster from being able to rod form while rod forming, and make a singularity
+		to_chat(user, span_warning("Your soul's velocity is far too great to tap into right now!"))
+		return
+
 	to_chat(user, span_danger("Your body feels drained and there is a burning pain in your chest."))
 	user.maxHealth -= HEALTH_LOST_PER_SOUL_TAP
 	user.health = min(user.health, user.maxHealth)
