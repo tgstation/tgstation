@@ -542,27 +542,10 @@
 					to_chat(quirker, span_danger("You feel self-conscious and stop talking. You need a moment to recover!"))
 					break
 			if(prob(max(5,(nearby_people*12.5*moodmod)))) //Minimum 1/20 chance of stutter
-				/*
-				word = html_decode(word)
-				var/leng = length(word)
-				var/stuttered = ""
-				var/newletter = ""
-				var/rawchar = ""
-				var/static/regex/nostutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
-				for(var/i = 1, i <= leng, i += length(rawchar))
-					rawchar = newletter = word[i]
-					if(prob(80) && !nostutter.Find(rawchar))
-						if(prob(10))
-							newletter = "[newletter]-[newletter]-[newletter]-[newletter]"
-						else if(prob(20))
-							newletter = "[newletter]-[newletter]-[newletter]"
-						else
-							newletter = "[newletter]-[newletter]"
-					stuttered += newletter
-				sanitize(stuttered)
-				new_message += stuttered
-				*/
+				// Add a short stutter, THEN treat our word
 				quirker.add_speech_impediment(0.5 SECONDS, /datum/status_effect/speech/stutter)
+				new_message += treat_message(word)
+
 			else
 				new_message += word
 
