@@ -33681,6 +33681,7 @@
 "hxQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/closet/masks,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -39917,6 +39918,7 @@
 /obj/item/cigbutt{
 	pixel_y = 7
 	},
+/obj/item/razor,
 /turf/open/floor/iron/white,
 /area/commons/fitness/recreation)
 "jpd" = (
@@ -79838,6 +79840,7 @@
 /area/security/courtroom)
 "vis" = (
 /obj/structure/closet/athletic_mixed,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
