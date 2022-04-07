@@ -1394,16 +1394,16 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	if(fire_stacks > 0 && !on_fire)
-		on_fire = TRUE
-		src.visible_message(span_warning("[src] catches fire!"), \
-						span_userdanger("You're set on fire!"))
-		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire)
-		update_fire()
-		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
-		return TRUE
-	return FALSE
+	if(fire_stacks <= 0 || on_fire)
+		return
+	on_fire = TRUE
+	src.visible_message(span_warning("[src] catches fire!"), \
+					span_userdanger("You're set on fire!"))
+	firelight_ref = WEAKREF(new /obj/effect/dummy/lighting_obj/moblight/fire(src))
+	throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire)
+	update_fire()
+	SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
+	return TRUE
 
 /**
  * Extinguish all fire on the mob
@@ -1416,8 +1416,7 @@
 		return
 	on_fire = FALSE
 	fire_stacks = min(0, fire_stacks) //Makes sure we don't get rid of negative firestacks.
-	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
-		qdel(F)
+	QDEL_NULL(firelight_ref)
 	clear_alert(ALERT_FIRE)
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 	SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)

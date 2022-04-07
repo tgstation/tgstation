@@ -103,8 +103,9 @@
 	//metabolize reagents
 	liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
 
-	applyOrganDamage(damange_to_deal)
-	
+	if(damange_to_deal)
+		applyOrganDamage(damange_to_deal)
+
 	if(provide_pain_message && damage > 10 && DT_PROB(damage/6, delta_time)) //the higher the damage the higher the probability
 		to_chat(liver_owner, span_warning("You feel a dull pain in your abdomen."))
 
