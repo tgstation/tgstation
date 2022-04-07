@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "Mapping helpers have been added for access reqs in security on DeltaStation"
+  - bugfix: "Access requirements in security are now standardized on DeltaStation"
