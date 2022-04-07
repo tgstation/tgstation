@@ -83,7 +83,6 @@
 	switch(action)
 		if("set_search_title")
 			var/newtitle = params["title"]
-			newtitle = sanitize(newtitle)
 			if(newtitle != title)
 				params_changed = TRUE
 			title = newtitle
@@ -92,14 +91,12 @@
 			var/newcategory = params["category"]
 			if(!(newcategory in SSlibrary.search_categories)) //Nice try
 				newcategory = DEFAULT_SEARCH_CATAGORY
-			newcategory = sanitize(newcategory)
 			if(newcategory != category)
 				params_changed = TRUE
 			category = newcategory
 			return TRUE
 		if("set_search_author")
 			var/newauthor = params["author"]
-			newauthor = sanitize(newauthor)
 			if(newauthor != author)
 				params_changed = TRUE
 			author = newauthor
@@ -479,7 +476,6 @@
 			var/upload_category = params["category"]
 			if(!(upload_category in SSlibrary.upload_categories)) //Nice try
 				upload_category = DEFAULT_UPLOAD_CATAGORY
-			upload_category = sanitize(upload_category)
 
 			INVOKE_ASYNC(src, .proc/upload_from_scanner, upload_category)
 			return TRUE
@@ -769,12 +765,15 @@
 	density = TRUE
 	var/busy = FALSE
 
+/obj/machinery/bookbinder/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/bookbinder/attackby(obj/hitby, mob/user, params)
 	if(istype(hitby, /obj/item/paper))
 		prebind_book(user, hitby)
 		return
-	if(default_unfasten_wrench(user, hitby))
-		return TRUE
 	return ..()
 
 /obj/machinery/bookbinder/proc/prebind_book(mob/user, obj/item/paper/draw_from)

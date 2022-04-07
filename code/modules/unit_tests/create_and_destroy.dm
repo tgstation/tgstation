@@ -25,6 +25,8 @@
 		/mob/dview,
 		//Requires a circuit url
 		/obj/effect/mapping_helpers/circuit_spawner,
+		//Template type
+		/obj/item/bodypart,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers/atom_injector)

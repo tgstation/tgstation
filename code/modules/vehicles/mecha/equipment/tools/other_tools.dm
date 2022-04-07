@@ -204,7 +204,6 @@
 	var/health_boost = 0.5
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
-	selectable = 0
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -371,7 +370,6 @@
 	name = "generic exosuit thrusters" //parent object, in-game sources will be a child object
 	desc = "A generic set of thrusters, from an unknown source. Uses not-understood methods to propel exosuits seemingly for free."
 	icon_state = "thrusters"
-	selectable = FALSE
 	equipment_slot = MECHA_UTILITY
 	var/effect_type = /obj/effect/particle_effect/sparks
 

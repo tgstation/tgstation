@@ -123,6 +123,11 @@
 	if (prob(50))
 		qdel(src)
 
+/obj/machinery/chem_master/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
 		return
@@ -130,8 +135,6 @@
 	else if(default_deconstruction_crowbar(I))
 		return
 
-	if(default_unfasten_wrench(user, I))
-		return
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = TRUE // no afterattack
 		if(panel_open)

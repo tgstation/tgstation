@@ -2087,12 +2087,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
-"gg" = (
-/obj/structure/bed,
-/obj/effect/landmark/awaystart,
-/obj/item/bedsheet/nanotrasen,
-/turf/open/floor/carpet,
-/area/awaymission/snowdin/post/dorm)
 "gh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	piping_layer = 4;
@@ -5625,11 +5619,6 @@
 /obj/machinery/microwave,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/snowdin/post/cavern2)
-"pi" = (
-/obj/structure/bed,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/awaymission/snowdin/post/secpost)
 "pj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -6964,12 +6953,6 @@
 /area/awaymission/snowdin/post/cavern1)
 "tZ" = (
 /turf/closed/wall/rust,
-/area/awaymission/snowdin/post/cavern1)
-"ub" = (
-/obj/structure/bed,
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
-	},
 /area/awaymission/snowdin/post/cavern1)
 "uc" = (
 /obj/structure/table/wood,
@@ -8639,6 +8622,15 @@
 	slowdown = 1
 	},
 /area/awaymission/snowdin/cave)
+"Bd" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/grey{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/awaymission/snowdin/post/mining_main)
 "Be" = (
 /obj/effect/landmark/awaystart,
 /obj/effect/turf_decal/tile/neutral{
@@ -9205,6 +9197,19 @@
 "Dx" = (
 /obj/machinery/light/built/directional/south,
 /turf/open/floor/plating/snowed,
+/area/awaymission/snowdin/cave)
+"Dy" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/skeleton/ice{
+	name = "Privateer Jones"
+	},
+/turf/open/misc/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
 /area/awaymission/snowdin/cave)
 "DA" = (
 /obj/item/stack/rods,
@@ -10286,11 +10291,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
-"Iq" = (
-/obj/structure/bed,
-/obj/item/bedsheet/grey,
-/turf/open/floor/iron/grimy,
-/area/awaymission/snowdin/post/mining_main)
 "Ir" = (
 /obj/structure/closet/cabinet,
 /turf/open/floor/iron/grimy,
@@ -11548,6 +11548,13 @@
 /obj/item/stack/rods,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
+"MO" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/awaymission/snowdin/post/secpost)
 "MP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8;
@@ -11801,6 +11808,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/secpost)
+"Oc" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/effect/landmark/awaystart,
+/obj/item/bedsheet/nanotrasen{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/awaymission/snowdin/post/dorm)
 "Oe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -11987,6 +12004,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/dorm)
+"Pg" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/awaymission/snowdin/post/cavern1)
 "Ph" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/misc/asteroid/snow{
@@ -12323,6 +12348,16 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/dorm)
+"QX" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/snowdin/cave)
 "QY" = (
 /obj/structure/girder,
 /obj/effect/turf_decal/weather/snow,
@@ -12358,17 +12393,6 @@
 /obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
-"Ri" = (
-/obj/structure/bed,
-/mob/living/simple_animal/hostile/skeleton/ice{
-	name = "Privateer Jones"
-	},
-/turf/open/misc/asteroid/snow{
-	floor_variance = 0;
-	icon_state = "snow_dug";
-	slowdown = 1
-	},
-/area/awaymission/snowdin/cave)
 "Rj" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -18504,7 +18528,7 @@ dB
 Cx
 eN
 dC
-gg
+Oc
 Nb
 hG
 aK
@@ -22116,7 +22140,7 @@ mG
 nD
 oc
 oz
-pi
+MO
 pH
 qn
 qn
@@ -23598,10 +23622,10 @@ ae
 ae
 GP
 HT
-Iq
+Bd
 Go
 HT
-Iq
+Bd
 Go
 Go
 Go
@@ -24632,7 +24656,7 @@ IR
 Go
 Is
 Ir
-Iq
+Bd
 Go
 Kw
 Gq
@@ -44537,9 +44561,9 @@ ae
 ae
 ae
 aj
-SF
+QX
 RP
-SF
+QX
 aj
 aj
 aj
@@ -45055,7 +45079,7 @@ SF
 st
 RP
 RP
-Ri
+Dy
 aj
 aj
 aj
@@ -60194,7 +60218,7 @@ eJ
 eJ
 eJ
 tZ
-ub
+Pg
 ue
 ue
 tY

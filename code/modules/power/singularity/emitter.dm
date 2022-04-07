@@ -125,9 +125,9 @@
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
-		message_admins("Emitter deleted at [ADMIN_VERBOSEJMP(T)]")
-		log_game("Emitter deleted at [AREACOORD(T)]")
-		investigate_log("<font color='red'>deleted</font> at [AREACOORD(T)]", INVESTIGATE_SINGULO)
+		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)]")
+		log_game("[src] deleted at [AREACOORD(T)]")
+		investigate_log("deleted at [AREACOORD(T)]", INVESTIGATE_ENGINE)
 	QDEL_NULL(sparks)
 	return ..()
 
@@ -158,9 +158,9 @@
 		fire_delay = maximum_fire_delay
 
 	to_chat(user, span_notice("You turn [active ? "on" : "off"] [src]."))
-	message_admins("Emitter turned [active ? "ON" : "OFF"] by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
-	log_game("Emitter turned [active ? "ON" : "OFF"] by [key_name(user)] in [AREACOORD(src)]")
-	investigate_log("turned [active ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_SINGULO)
+	message_admins("[src] turned [active ? "ON" : "OFF"] by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
+	log_game("[src] turned [active ? "ON" : "OFF"] by [key_name(user)] in [AREACOORD(src)]")
+	investigate_log("turned [active ? "ON" : "OFF"] by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_ENGINE)
 	update_appearance()
 
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -189,15 +189,15 @@
 		if(powered)
 			powered = FALSE
 			update_appearance()
-			investigate_log("lost power and turned <font color='red'>OFF</font> at [AREACOORD(src)]", INVESTIGATE_SINGULO)
-			log_game("Emitter lost power in [AREACOORD(src)]")
+			investigate_log("lost power and turned OFF at [AREACOORD(src)]", INVESTIGATE_ENGINE)
+			log_game("[src] lost power in [AREACOORD(src)]")
 		return
 
 	add_load(active_power_usage)
 	if(!powered)
 		powered = TRUE
 		update_appearance()
-		investigate_log("regained power and turned <font color='green'>ON</font> at [AREACOORD(src)]", INVESTIGATE_SINGULO)
+		investigate_log("regained power and turned ON at [AREACOORD(src)]", INVESTIGATE_ENGINE)
 	if(charge <= 80)
 		charge += 2.5 * delta_time
 	if(!check_delay() || manual == TRUE)
@@ -254,10 +254,10 @@
 
 	return ..()
 
-/obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/item)
+/obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, item)
-	return TRUE
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/item)
 	..()

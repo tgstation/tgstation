@@ -37,7 +37,7 @@
 
 /datum/crafting_recipe/durathread_bandana
 	name = "Durathread Bandana"
-	result = /obj/item/clothing/mask/bandana/durathread
+	result = /obj/item/clothing/mask/bandana/color/durathread
 	reqs = list(/obj/item/stack/sheet/durathread = 1)
 	time = 25
 	category = CAT_CLOTHING

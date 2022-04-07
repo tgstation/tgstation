@@ -466,8 +466,12 @@
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "eD" = (
-/obj/structure/bed/pod,
-/obj/item/bedsheet/purple,
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/purple{
+	dir = 4
+	},
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "eF" = (
@@ -1417,8 +1421,12 @@
 /turf/open/floor/carpet/royalblue,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "mm" = (
-/obj/structure/bed/pod,
-/obj/item/bedsheet/blue,
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/blue{
+	dir = 4
+	},
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "mq" = (
@@ -3490,8 +3498,12 @@
 /turf/open/floor/carpet/green,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "LN" = (
-/obj/structure/bed/pod,
-/obj/item/bedsheet/green,
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/green{
+	dir = 4
+	},
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "LS" = (
