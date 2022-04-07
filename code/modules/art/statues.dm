@@ -530,17 +530,15 @@ Moving interrupts
 
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
 	var/list/overlays_to_remove = list()
-	for(var/special_overlay in content_ma.overlays)
-		var/image/I = special_overlay
-		if(I.plane in plane_whitelist)
+	for(var/mutable_appearance/special_overlay as anything in content_ma.overlays)
+		if(special_overlay.plane in plane_whitelist)
 			continue
 		overlays_to_remove += special_overlay
 	content_ma.overlays -= overlays_to_remove
 
 	var/list/underlays_to_remove = list()
-	for(var/special_underlay in content_ma.underlays)
-		var/image/I = special_underlay
-		if(I.plane in plane_whitelist)
+	for(var/mutable_appearance/special_underlay as anything in content_ma.underlays)
+		if(special_underlay.plane in plane_whitelist)
 			continue
 		underlays_to_remove += special_underlay
 	content_ma.underlays -= underlays_to_remove
