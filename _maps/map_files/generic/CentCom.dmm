@@ -1010,6 +1010,33 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
+"dS" = (
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding{
+	color = "#2e2e2e";
+	dir = 10
+	},
+/obj/item/bedsheet/syndie{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/textured_half{
+	dir = 1
+	},
+/area/centcom/holding)
 "dT" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/clothing/mask/animal/pig,
@@ -1714,6 +1741,13 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/dark,
 /area/tdome/administration)
+"gq" = (
+/obj/machinery/light/directional/west,
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evacuation/ship)
 "gs" = (
 /obj/item/paper/pamphlet/centcom/visitor_info,
 /obj/item/paper/pamphlet/centcom/visitor_info,
@@ -2187,29 +2221,6 @@
 /obj/structure/chair/office,
 /turf/open/floor/iron/grimy,
 /area/centcom/prison)
-"hX" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 10
-	},
-/obj/structure/bed,
-/obj/item/bedsheet/syndie,
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
-/area/centcom/holding)
 "hY" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/handcuffs,
@@ -9284,6 +9295,12 @@
 	},
 /turf/open/floor/vault/rock,
 /area/centcom/holding)
+"Ii" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evacuation/ship)
 "Ir" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 1
@@ -9950,11 +9967,6 @@
 "Lw" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
-/area/centcom/evacuation/ship)
-"Lx" = (
-/obj/structure/bed,
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evacuation/ship)
 "Ly" = (
 /obj/machinery/door/airlock/titanium,
@@ -34613,7 +34625,7 @@ pJ
 pJ
 Oi
 ex
-hX
+dS
 Qu
 YC
 YC
@@ -37697,7 +37709,7 @@ pJ
 pJ
 Oi
 ex
-hX
+dS
 sm
 YC
 YC
@@ -39806,11 +39818,11 @@ Lj
 Ln
 Lq
 KH
-Lv
-Lv
-Lx
-Lv
-Lv
+Ii
+Ii
+gq
+Ii
+Ii
 KH
 KH
 aa
