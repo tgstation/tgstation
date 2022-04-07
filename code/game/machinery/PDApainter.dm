@@ -159,7 +159,6 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-
 	if(stored_pda)
 		eject_pda(user)
 	else
