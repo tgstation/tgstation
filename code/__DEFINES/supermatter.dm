@@ -65,8 +65,6 @@
 #define HELIUM_CONSUMPTION_PP (ONE_ATMOSPHERE*0.01)
 /// How the amount of helium consumed per tick scales with partial pressure. Higher values decrease the rate helium consumption scales with partial pressure. Should be >0
 #define HELIUM_PRESSURE_SCALING (ONE_ATMOSPHERE*0.125)
-/// How much the amount of helium consumed per tick scales with gasmix power ratio. Higher values means gasmix has a greater effect on the helium consumed.
-#define HELIUM_GASMIX_SCALING (1)
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached

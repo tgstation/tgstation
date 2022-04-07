@@ -222,7 +222,7 @@
 	//Very high energy radiaton will convert helium into tritium.
 	if(gas_comp[/datum/gas/helium] && power > POWER_PENALTY_THRESHOLD)
 		var/helium_pp = env.return_pressure() * gas_comp[/datum/gas/helium]
-		var/consumed_helium = clamp(((helium_pp - HELIUM_CONSUMPTION_PP) / (helium_pp + HELIUM_PRESSURE_SCALING)) * gasmix_power_ratio * HELIUM_GASMIX_SCALING * clamp((power - POWER_PENALTY_THRESHOLD) / POWER_PENALTY_THRESHOLD, 0, 1), HELIUM_CONSUMPTION_RATIO_MIN, HELIUM_CONSUMPTION_RATIO_MAX)
+		var/consumed_helium = clamp(((helium_pp - HELIUM_CONSUMPTION_PP) / (helium_pp + HELIUM_PRESSURE_SCALING)) * gasmix_power_ratio * clamp((power - POWER_PENALTY_THRESHOLD) / POWER_PENALTY_THRESHOLD, 0, 1), HELIUM_CONSUMPTION_RATIO_MIN, HELIUM_CONSUMPTION_RATIO_MAX)
 		consumed_helium = min(consumed_helium * gas_comp[/datum/gas/helium] * combined_gas, removed.gases[/datum/gas/helium][MOLES])
 		if(consumed_helium)
 			removed.gases[/datum/gas/helium][MOLES] -= consumed_helium
