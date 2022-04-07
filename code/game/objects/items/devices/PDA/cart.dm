@@ -38,7 +38,7 @@
 /obj/item/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
-	access = CART_ENGINE | CART_DRONEPHONE
+	access = CART_ENGINE
 	bot_access = list(
 		FLOOR_BOT,
 	)
@@ -46,7 +46,7 @@
 /obj/item/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
-	access = CART_ATMOS | CART_DRONEPHONE
+	access = CART_ATMOS
 	bot_access = list(
 		FLOOR_BOT,
 		FIRE_BOT,
@@ -90,7 +90,7 @@
 	name = "\improper CustodiPRO cartridge"
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
-	access = CART_JANITOR | CART_DRONEPHONE
+	access = CART_JANITOR
 	bot_access = list(
 		CLEAN_BOT,
 	)
@@ -109,7 +109,6 @@
 /obj/item/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty quad-bot interlink!"
-	access = CART_DRONEPHONE
 	bot_access = list(
 		FLOOR_BOT,
 		CLEAN_BOT,
@@ -149,7 +148,7 @@
 /obj/item/cartridge/hop
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
-	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_JANITOR | CART_SECURITY | CART_NEWSCASTER | CART_QUARTERMASTER | CART_DRONEPHONE
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_JANITOR | CART_SECURITY | CART_NEWSCASTER | CART_QUARTERMASTER
 	bot_access = list(
 		MULE_BOT,
 		CLEAN_BOT,
@@ -169,7 +168,7 @@
 /obj/item/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
-	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE | CART_DRONEACCESS
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS
 	bot_access = list(
 		FLOOR_BOT,
 		FIRE_BOT,
@@ -186,7 +185,7 @@
 /obj/item/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
-	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS | CART_DRONEPHONE
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS
 	bot_access = list(
 		FLOOR_BOT,
 		CLEAN_BOT,

@@ -13,8 +13,6 @@
 #define CART_STATUS_DISPLAY (1<<11)
 #define CART_QUARTERMASTER (1<<12)
 #define CART_HYDROPONICS (1<<13)
-#define CART_DRONEPHONE (1<<14)
-#define CART_DRONEACCESS (1<<15)
 
 /// PDA ui menu defines
 #define PDA_UI_HUB 0

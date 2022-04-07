@@ -61,9 +61,24 @@
 			newbot["mule_check"] = TRUE
 		botlist += list(newbot)
 
+	for(var/mob/living/simple_animal/drone/all_drones as anything in GLOB.drones_list)
+		if(all_drones.hacked)
+			continue
+		if(all_drones.z != zlevel)
+			continue
+		var/list/drone_data = list(
+			"name" = all_drones.name,
+			"status" = all_drones.stat,
+			"drone_ref" = REF(all_drones),
+		)
+		data["drones"] += list(drone_data)
+
+
 	data["bots"] = botlist
 	data["mules"] = mulelist
 	data["botcount"] = botlist.len
+	data["droneaccess"] = GLOB.drone_machine_blacklist_enabled
+	data["dronepingtypes"] = list("Low","Medium","High","Critical")
 
 	return data
 
@@ -114,4 +129,21 @@
 				card_slot.try_eject(current_user)
 			else
 				playsound(get_turf(ui_host()) , 'sound/machines/buzz-sigh.ogg', 25, FALSE)
-	return
+		if("changedroneaccess")
+			if(!computer || !card_slot || !id_card)
+				to_chat(current_user, span_notice("No ID found, authorization failed."))
+				return
+			if(!(ACCESS_ROBOTICS in id_card.access))
+				to_chat(current_user, span_notice("Required access not found on ID."))
+				return
+			GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
+		if("ping_drones")
+			if(!(params["ping_type"]))
+				return
+			var/area/current_area = get_area(current_user)
+			if(!current_area || QDELETED(current_user))
+				return
+			var/msg = span_boldnotice("NON-DRONE PING: [current_user.name]: [params["ping_type"]] priority alert in [current_area.name]!")
+			_alert_drones(msg, TRUE, current_user)
+			to_chat(current_user, msg)
+			playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
