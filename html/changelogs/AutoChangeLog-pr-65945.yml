@@ -1,4 +1,0 @@
-author: "tnekohue"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug with the RCD silo link upgrade when its connected and turned off."
