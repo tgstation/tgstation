@@ -165,9 +165,6 @@
 /datum/dynamic_ruleset/midround/from_ghosts/proc/attempt_replacement()
 	var/datum/dynamic_ruleset/midround/autotraitor/sleeper_agent = new
 
-	// Otherwise, it has a chance to fail. We don't want that, since this is already pretty unlikely.
-	sleeper_agent.has_failure_chance = FALSE
-
 	mode.configure_ruleset(sleeper_agent)
 
 	if (!mode.picking_specific_rule(sleeper_agent))
@@ -206,27 +203,6 @@
 	cost = 3
 	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
-
-	/// Whether or not this instance of sleeper agent should be randomly acceptable.
-	/// If TRUE, then this has a threat level% chance to succeed.
-	var/has_failure_chance = TRUE
-
-/datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
-	var/player_count = GLOB.alive_player_list.len
-	var/antag_count = GLOB.current_living_antags.len
-	var/max_traitors = round(player_count / 10) + 1
-
-	// adding traitors if the antag population is getting low
-	var/too_little_antags = antag_count < max_traitors
-	if (!too_little_antags)
-		log_game("DYNAMIC: Too many living antags compared to living players ([antag_count] living antags, [player_count] living players, [max_traitors] max traitors)")
-		return FALSE
-
-	if (has_failure_chance && !prob(mode.threat_level))
-		log_game("DYNAMIC: Random chance to roll autotraitor failed, it was a [mode.threat_level]% chance.")
-		return FALSE
-
-	return ..()
 
 /datum/dynamic_ruleset/midround/autotraitor/trim_candidates()
 	..()
