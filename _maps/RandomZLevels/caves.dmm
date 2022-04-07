@@ -1059,7 +1059,9 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "fq" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
@@ -1089,7 +1091,9 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "fA" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fB" = (

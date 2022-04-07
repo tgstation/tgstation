@@ -246,3 +246,46 @@
       loop uses a different form of lighting that functions in the outside setting.
   vincentiusvin:
   - bugfix: fixed breathedeep catridges not working
+2022-04-07:
+  Fikou:
+  - bugfix: you can no longer stuff infinite ais in modsuits
+  Ghilker:
+  - bugfix: fix machinery being clickable from behind a directional window
+  JohnFulpWillard:
+  - admin: Individual material crafting is now logged in crafting.html
+  - bugfix: Food processors now give more processed food, depending on its matter
+      bin.
+  Kapu1178:
+  - bugfix: Husks render again
+  - bugfix: Lizards, Moths, and Podpeople character creation icons fixed
+  LemonInTheDark:
+  - bugfix: Machine interaction works again, get trolled
+  Pickle-Coding:
+  - bugfix: Fixes cryocells kicking you out early.
+  Son-of-Space:
+  - bugfix: Engineers have reconnected the disposals loop on DeltaStation
+  TiviPlus:
+  - qol: Mechs will now immediately cancel progress bars instead of waiting until
+      till the end to tell yyou you moved
+  carshalash:
+  - qol: Adds a recipe to make paper cups and triples ice cream vat capacity.
+  dragomagol:
+  - admin: Launchpad investigate logs have been moved to game log
+  kawoppi:
+  - expansion: Frogs can now be picked up. You can fit them in your pockets too!
+  - expansion: Frogs can now be put on your head.
+  - imageadd: Added sprites for (rare) frogs placed on heads
+  san7890:
+  - imageadd: On the mapping end, donut boxes now look like... donut boxes! They used
+      to look like flat, white rectangles. Now they don't! Great!
+  - code_imp: CI will now lint for commented-out lines of code in map files. This
+      is very good.
+  timothymtorres:
+  - bugfix: Fix reinforced girders to only use plasteel for construction
+  tnekohue:
+  - bugfix: Fixed a bug with the RCD silo link upgrade when its connected and turned
+      off.
+  tralezab:
+  - rscadd: Beds, Sofas, Slimes, And Jellypeople now provide a soft landing
+  vincentiusvin:
+  - balance: made runtimestation more powerful.
