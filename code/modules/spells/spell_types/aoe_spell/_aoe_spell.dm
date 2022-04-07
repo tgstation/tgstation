@@ -39,6 +39,7 @@
 		cast_on_thing_in_aoe(thing_to_target, cast_on)
 		num_targets++
 
+// MELBERT TODO: this needs to be reworked, unoptimized
 /**
  * Gets a list of atoms around [center]
  * that are within range and affected by our aoe.
