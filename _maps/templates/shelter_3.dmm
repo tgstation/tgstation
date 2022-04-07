@@ -148,7 +148,7 @@
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/survivalpod)
 "x" = (
-/obj/structure/chair/stool/bar/directional/south,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/carpet/black,
 /area/survivalpod)
 "y" = (
@@ -175,17 +175,7 @@
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
 /area/survivalpod)
 "C" = (
-/obj/structure/window/reinforced/survival_pod{
-	dir = 8
-	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 4
-	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
-/obj/structure/window/reinforced/survival_pod,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/survival_pod,
 /turf/open/floor/pod/dark,
 /area/survivalpod)
 "D" = (

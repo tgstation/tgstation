@@ -1,4 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"e" = (
+/obj/structure/closet/crate/necropolis/tendril,
+/obj/item/skeleton_key,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape/arena)
 "f" = (
 /turf/template_noop,
 /area/template_noop)
@@ -137,16 +142,16 @@ g
 g
 h
 k
-l
+e
 j
 m
-l
+e
 j
 m
-l
+e
 j
 k
-l
+e
 j
 m
 l
@@ -257,16 +262,16 @@ g
 g
 h
 k
-l
+e
 j
 m
-l
+e
 j
 m
-l
+e
 j
 m
-l
+e
 j
 m
 l

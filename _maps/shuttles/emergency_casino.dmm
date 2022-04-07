@@ -455,19 +455,15 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "mc" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/shower{
 	dir = 8;
 	name = "emergency shower";
 	pixel_x = -6;
 	pixel_y = -7
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "mi" = (
@@ -525,10 +521,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ni" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/shower{
 	dir = 8;
 	name = "emergency shower";
@@ -536,6 +528,8 @@
 	pixel_y = -4
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "nx" = (
@@ -1017,9 +1011,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced/plasma{
-	dir = 4
-	},
+/obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "DA" = (

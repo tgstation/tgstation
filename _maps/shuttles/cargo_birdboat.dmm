@@ -3,7 +3,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "e" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/inverted{
+	dir = 5;
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
@@ -120,10 +121,8 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "u" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "w" = (
@@ -162,6 +161,14 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
+"K" = (
+/obj/machinery/conveyor/inverted{
+	dir = 9;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
 "P" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -171,11 +178,20 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "R" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/inverted{
+	dir = 5;
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
 /turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"S" = (
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "cargoshuttle";
+	name = "cargo shuttle conveyor belt"
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 
 (1,1,1) = {"
@@ -193,7 +209,7 @@ w
 (2,1,1) = {"
 b
 e
-P
+K
 R
 n
 B
@@ -229,7 +245,7 @@ y
 (5,1,1) = {"
 b
 f
-h
+k
 j
 n
 n
@@ -240,9 +256,9 @@ y
 "}
 (6,1,1) = {"
 b
-f
+S
 i
-k
+h
 n
 p
 n
