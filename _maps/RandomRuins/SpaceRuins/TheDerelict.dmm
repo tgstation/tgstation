@@ -5,7 +5,7 @@
 "ad" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/iron/airless,
+/turf/open/floor/plating/airless,
 /area/solars/derelict_starboard)
 "af" = (
 /turf/open/floor/plating/airless{
@@ -14,8 +14,8 @@
 /area/solars/derelict_starboard)
 "ag" = (
 /obj/structure/cable,
-/turf/open/floor/iron/airless{
-	icon_state = "damaged5"
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
 	},
 /area/solars/derelict_starboard)
 "al" = (
@@ -41,7 +41,7 @@
 	name = "Derelict Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless,
+/turf/open/floor/plating/airless,
 /area/solars/derelict_starboard)
 "aq" = (
 /obj/structure/lattice/catwalk,
@@ -179,9 +179,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/solar_control)
 "bd" = (
-/obj/structure/grille/broken,
+/obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/space/derelict/hallway/primary)
 "be" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
@@ -207,8 +207,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "bi" = (
-/obj/structure/grille,
-/turf/template_noop,
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "bj" = (
 /obj/structure/grille,
@@ -408,10 +408,6 @@
 "ch" = (
 /turf/closed/wall,
 /area/ruin/unpowered/no_grav)
-"ci" = (
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
 "cl" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/gravity_generator)
@@ -626,7 +622,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/gravity_generator)
 "dj" = (
-/turf/open/floor/iron/solarpanel/airless,
+/obj/structure/table,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "dk" = (
 /obj/item/stack/cable_coil/cut,
@@ -994,10 +991,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
-"eV" = (
-/obj/item/stack/rods,
-/turf/template_noop,
-/area/template_noop)
 "eW" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
@@ -1538,8 +1531,7 @@
 /turf/template_noop,
 /area/space/nearstation)
 "hn" = (
-/obj/effect/spawner/random/structure/grille,
-/turf/template_noop,
+/turf/open/floor/iron/white/airless,
 /area/space/nearstation)
 "ho" = (
 /obj/item/shard,
@@ -1665,11 +1657,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "hQ" = (
-/obj/structure/window/reinforced{
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 4
 	},
-/obj/structure/grille,
-/turf/template_noop,
+/turf/open/floor/plating,
 /area/space/nearstation)
 "hS" = (
 /turf/open/floor/iron/chapel{
@@ -1795,7 +1786,7 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 6
 	},
-/turf/template_noop,
+/turf/open/floor/plating,
 /area/space/nearstation)
 "iw" = (
 /obj/structure/window/reinforced,
@@ -1835,7 +1826,7 @@
 "iE" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/white/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "iG" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1848,10 +1839,11 @@
 	name = "Derelict Mass Driver"
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space/derelict/medical/chapel)
 "iI" = (
-/turf/open/floor/plating,
-/area/ruin/unpowered/no_grav)
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "iJ" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict/medical/chapel)
@@ -1898,7 +1890,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "iR" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -1907,14 +1899,10 @@
 /turf/template_noop,
 /area/space/nearstation)
 "iT" = (
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/template_noop,
+/turf/open/floor/plating,
 /area/space/nearstation)
 "iV" = (
 /obj/structure/window/reinforced{
@@ -2000,17 +1988,17 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "jn" = (
 /obj/item/shard,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "jo" = (
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/space/nearstation)
 "jp" = (
 /turf/open/floor/iron/white/airless,
 /area/ruin/unpowered/no_grav)
@@ -2288,19 +2276,19 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "kJ" = (
-/obj/structure/girder,
+/obj/effect/spawner/random/structure/girder,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kK" = (
-/obj/structure/girder,
+/obj/effect/spawner/random/structure/girder,
 /turf/open/floor/iron/airless,
 /area/ruin/unpowered/no_grav)
 "kL" = (
 /obj/structure/window/fulltile,
-/turf/template_noop,
-/area/template_noop)
+/turf/open/floor/plating,
+/area/ruin/space/derelict/arrival)
 "kM" = (
-/obj/structure/girder,
+/obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "kN" = (
@@ -2602,7 +2590,7 @@
 /turf/closed/wall,
 /area/ruin/space/derelict/hallway/secondary)
 "me" = (
-/obj/structure/girder,
+/obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "mf" = (
@@ -2973,7 +2961,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nI" = (
-/obj/structure/girder/reinforced,
+/obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/se_solar)
 "nJ" = (
@@ -3119,7 +3107,7 @@
 	name = "Derelict Solar Array"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/airless,
+/turf/open/floor/plating/airless,
 /area/solars/derelict_aft)
 "op" = (
 /obj/machinery/power/solar{
@@ -3148,7 +3136,7 @@
 "oD" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/iron/airless,
+/turf/open/floor/plating/airless,
 /area/solars/derelict_aft)
 "oE" = (
 /obj/structure/frame/computer{
@@ -3332,10 +3320,6 @@
 	icon_state = "damaged3"
 	},
 /area/space/nearstation)
-"BO" = (
-/obj/effect/spawner/random/maintenance,
-/turf/open/floor/iron/solarpanel/airless,
-/area/space/nearstation)
 "CZ" = (
 /obj/item/clothing/suit/space/eva,
 /turf/open/floor/iron/airless{
@@ -3457,9 +3441,8 @@
 	},
 /area/space/nearstation)
 "Jl" = (
-/obj/effect/spawner/random/maintenance,
-/turf/template_noop,
-/area/template_noop)
+/turf/open/floor/plating,
+/area/space/nearstation)
 "Kf" = (
 /obj/item/paper/fluff/ruins/thederelict/vaultraider,
 /obj/effect/decal/remains/human{
@@ -3919,16 +3902,16 @@ aa
 GM
 GM
 GM
+GM
 aa
-bi
 hQ
 hQ
 iu
-iI
+iJ
 iT
 hQ
 hQ
-bi
+Jl
 GM
 GM
 GM
@@ -5515,7 +5498,7 @@ yH
 gL
 mJ
 gn
-gL
+Uz
 GM
 GM
 aa
@@ -5628,8 +5611,8 @@ jX
 gL
 gn
 gL
-gm
-gn
+Bx
+Ev
 GM
 GM
 GM
@@ -5744,7 +5727,7 @@ fZ
 fZ
 fZ
 fZ
-gL
+Uz
 GM
 aa
 aa
@@ -5857,7 +5840,7 @@ fZ
 kN
 wr
 fZ
-gL
+Uz
 GM
 GM
 aa
@@ -5970,8 +5953,8 @@ fZ
 jZ
 go
 fZ
-gL
-gL
+Uz
+Uz
 GM
 aa
 aa
@@ -6084,8 +6067,8 @@ go
 kX
 fZ
 ln
-gL
-gL
+Uz
+Uz
 aa
 GM
 aa
@@ -6198,7 +6181,7 @@ fZ
 fZ
 ka
 jY
-gL
+Uz
 aa
 GM
 aa
@@ -6311,8 +6294,8 @@ wr
 fZ
 jY
 lF
-gL
-gL
+Uz
+Uz
 GM
 aa
 aa
@@ -6425,7 +6408,7 @@ fZ
 yP
 go
 jY
-gL
+Uz
 GM
 GM
 GM
@@ -6538,8 +6521,8 @@ fZ
 jY
 lG
 go
-gL
-gL
+Uz
+Uz
 fZ
 GM
 GM
@@ -6767,12 +6750,12 @@ go
 go
 mi
 fZ
-gL
+Uz
 aa
-gL
-gL
+Uz
+Uz
 GM
-gL
+Uz
 aa
 aa
 me
@@ -6880,19 +6863,19 @@ go
 go
 go
 fZ
-gL
-gL
-mJ
-gL
-fZ
-gL
+Uz
+Uz
+ib
+Uz
+Lv
+Uz
 GM
-gL
+Uz
 md
 mU
 mZ
 ny
-rK
+bi
 GM
 GM
 aa
@@ -6998,14 +6981,14 @@ gm
 gL
 gL
 gL
-gL
-gL
-gL
+Uz
+Uz
+Uz
 md
 mU
 mU
 nz
-rK
+bi
 aa
 aa
 aa
@@ -7082,7 +7065,7 @@ ez
 gI
 dP
 gY
-hn
+rK
 GM
 GM
 Uz
@@ -7118,7 +7101,7 @@ md
 na
 mU
 nz
-rK
+bi
 aa
 aa
 aa
@@ -7174,7 +7157,7 @@ aa
 aa
 aa
 tS
-BO
+SR
 dr
 dr
 dO
@@ -7196,7 +7179,7 @@ gJ
 gR
 GM
 GM
-hn
+rK
 GM
 GM
 aa
@@ -7231,7 +7214,7 @@ md
 mU
 mU
 nz
-rK
+bi
 aa
 aa
 aa
@@ -7344,7 +7327,7 @@ mW
 mU
 mU
 md
-rK
+bi
 aa
 aa
 aa
@@ -7444,7 +7427,7 @@ fZ
 fZ
 fZ
 fZ
-gO
+bd
 fZ
 fZ
 fZ
@@ -7457,7 +7440,7 @@ md
 mU
 mU
 nz
-rK
+bi
 aa
 aa
 aa
@@ -7533,7 +7516,7 @@ dW
 dO
 dX
 dO
-ci
+fb
 ho
 ez
 dr
@@ -7570,7 +7553,7 @@ md
 mU
 mU
 nz
-rK
+bi
 aa
 aa
 aa
@@ -7683,7 +7666,7 @@ md
 nc
 mU
 nz
-rK
+bi
 aa
 aa
 aa
@@ -7796,7 +7779,7 @@ md
 mI
 mU
 nz
-rK
+bi
 aa
 aa
 aa
@@ -7909,7 +7892,7 @@ md
 ne
 no
 nz
-rK
+bi
 aa
 aa
 aa
@@ -7993,7 +7976,7 @@ dr
 ux
 dr
 iQ
-ay
+Uz
 ay
 gP
 fZ
@@ -8106,8 +8089,8 @@ dr
 dr
 dr
 GM
-ay
-ay
+Uz
+Uz
 gD
 fZ
 fZ
@@ -8135,7 +8118,7 @@ md
 ng
 nq
 nz
-rK
+bi
 aa
 aa
 aa
@@ -8248,7 +8231,7 @@ md
 nh
 nr
 nz
-rK
+bi
 aa
 aa
 aa
@@ -8361,7 +8344,7 @@ md
 ni
 ns
 nz
-rK
+bi
 aa
 aa
 aa
@@ -8446,7 +8429,7 @@ GM
 aa
 aa
 GM
-ay
+Uz
 gD
 jp
 fZ
@@ -8474,7 +8457,7 @@ md
 nj
 nt
 nz
-rK
+bi
 aa
 aa
 aa
@@ -8530,7 +8513,7 @@ aa
 aa
 aa
 tS
-dj
+Uz
 dr
 dr
 dO
@@ -8559,7 +8542,7 @@ GM
 aa
 iR
 GM
-ay
+Uz
 ay
 jp
 fZ
@@ -8587,7 +8570,7 @@ md
 nk
 nu
 nz
-rK
+bi
 aa
 aa
 aa
@@ -8672,7 +8655,7 @@ aa
 mA
 aa
 GM
-ay
+Uz
 ay
 jp
 fZ
@@ -8896,9 +8879,9 @@ GM
 Uz
 Uz
 iE
-ay
-jb
-jp
+Uz
+dj
+hn
 jp
 jb
 fZ
@@ -8918,7 +8901,7 @@ GM
 GM
 aa
 aa
-Jl
+Gu
 aa
 GM
 aa
@@ -9039,7 +9022,7 @@ md
 mI
 mU
 nz
-rK
+bi
 aa
 aa
 aa
@@ -9152,7 +9135,7 @@ md
 mI
 mU
 nz
-rK
+bi
 aa
 aa
 aa
@@ -9161,17 +9144,17 @@ aa
 aa
 aa
 nB
-rK
-rK
-rK
-rK
-rK
-rK
+bi
+bi
+bi
+bi
+bi
+bi
 GM
-rK
-rK
-rK
-rK
+bi
+bi
+bi
+bi
 "}
 (49,1,1) = {"
 aa
@@ -9265,7 +9248,7 @@ md
 mI
 mU
 nz
-rK
+bi
 aa
 aa
 aa
@@ -9284,7 +9267,7 @@ aa
 GM
 aa
 aa
-rK
+bi
 "}
 (50,1,1) = {"
 aa
@@ -9397,7 +9380,7 @@ on
 ol
 on
 aa
-rK
+bi
 "}
 (51,1,1) = {"
 aa
@@ -9491,7 +9474,7 @@ md
 mI
 mU
 nz
-rK
+bi
 aa
 Uz
 GM
@@ -9510,7 +9493,7 @@ on
 ol
 on
 aa
-rK
+bi
 "}
 (52,1,1) = {"
 aa
@@ -9604,7 +9587,7 @@ md
 mI
 mU
 nz
-rK
+bi
 aa
 Uz
 Uz
@@ -9623,7 +9606,7 @@ on
 ol
 on
 aa
-rK
+bi
 "}
 (53,1,1) = {"
 aa
@@ -9717,7 +9700,7 @@ md
 mI
 mU
 nz
-rK
+bi
 aa
 nB
 nB
@@ -9736,7 +9719,7 @@ aa
 ol
 aa
 aa
-rK
+bi
 "}
 (54,1,1) = {"
 aa
@@ -9830,7 +9813,7 @@ md
 mI
 mU
 nz
-rK
+bi
 aa
 nJ
 nO
@@ -9849,7 +9832,7 @@ ol
 ol
 ol
 oD
-rK
+bi
 "}
 (55,1,1) = {"
 aa
@@ -10075,7 +10058,7 @@ on
 ol
 on
 aa
-rK
+bi
 "}
 (57,1,1) = {"
 aa
@@ -10188,7 +10171,7 @@ on
 ol
 on
 aa
-rK
+bi
 "}
 (58,1,1) = {"
 aa
@@ -10294,9 +10277,9 @@ nB
 aa
 aa
 oq
-dk
+ld
 aa
-dk
+ld
 on
 ol
 on
@@ -10484,8 +10467,8 @@ Uz
 fZ
 gc
 fZ
-kF
-kF
+iI
+iI
 GM
 aa
 aa
@@ -10517,16 +10500,16 @@ mf
 mf
 mf
 mf
-rK
-rK
-rK
-rK
+bi
+bi
+bi
+bi
 GM
-rK
-rK
+bi
+bi
 GM
 GM
-rK
+bi
 GM
 "}
 (61,1,1) = {"
@@ -10534,10 +10517,10 @@ aa
 aa
 aa
 GM
-rK
-rK
-rK
-rK
+bi
+bi
+bi
+bi
 GM
 aa
 aa
@@ -10650,7 +10633,7 @@ aa
 GM
 aa
 aa
-rK
+bi
 aa
 aa
 aa
@@ -10763,7 +10746,7 @@ aq
 ap
 GM
 GM
-rK
+bi
 aa
 aa
 aa
@@ -10869,14 +10852,14 @@ aa
 aa
 "}
 (64,1,1) = {"
-rK
+bi
 aa
 ag
 aq
 ap
 aa
 aa
-rK
+bi
 aa
 aa
 aa
@@ -10982,14 +10965,14 @@ aa
 aa
 "}
 (65,1,1) = {"
-rK
+bi
 aa
 ap
 aq
 ap
 aa
 aa
-rK
+bi
 GM
 GM
 GM
@@ -11095,14 +11078,14 @@ aa
 aa
 "}
 (66,1,1) = {"
-rK
+bi
 aa
 aa
 aq
 aa
 aa
 aa
-rK
+bi
 Uz
 Uz
 Uz
@@ -11208,7 +11191,7 @@ aa
 aa
 "}
 (67,1,1) = {"
-rK
+bi
 aa
 ap
 aq
@@ -11321,7 +11304,7 @@ aa
 aa
 "}
 (68,1,1) = {"
-rK
+bi
 aa
 ap
 aq
@@ -11622,9 +11605,9 @@ mb
 aa
 aa
 GM
-aa
-aa
-eV
+GM
+GM
+eL
 aa
 aa
 aa
@@ -11930,7 +11913,7 @@ ea
 eS
 oE
 dz
-kF
+iI
 GM
 aa
 aa
@@ -11999,16 +11982,16 @@ aa
 aa
 "}
 (74,1,1) = {"
-rK
+bi
 aa
 aa
 aq
 aa
 aa
 aa
-rK
-rK
-rK
+bi
+bi
+bi
 as
 aV
 bc
@@ -12112,19 +12095,19 @@ aa
 aa
 "}
 (75,1,1) = {"
-rK
+bi
 aa
 ap
 aq
 ap
 aa
 aa
-rK
+bi
 GM
-rK
-rK
+bi
+bi
 GM
-bd
+bi
 bi
 bi
 aa
@@ -12225,14 +12208,14 @@ aa
 aa
 "}
 (76,1,1) = {"
-rK
+bi
 aa
 ap
 aq
 ap
 aa
 aa
-rK
+bi
 aa
 aa
 aa
@@ -12245,7 +12228,7 @@ aa
 aa
 aa
 aa
-aa
+GM
 as
 ca
 as
@@ -12338,14 +12321,14 @@ aa
 aa
 "}
 (77,1,1) = {"
-rK
+bi
 aa
 ap
 aq
 ap
 GM
 GM
-rK
+bi
 aa
 aa
 aa
@@ -12451,7 +12434,7 @@ aa
 aa
 "}
 (78,1,1) = {"
-rK
+bi
 aa
 aa
 aa
@@ -12564,14 +12547,14 @@ aa
 aa
 "}
 (79,1,1) = {"
-rK
-rK
-rK
-rK
+bi
+bi
+bi
+bi
 GM
-rK
-rK
-rK
+bi
+bi
+bi
 GM
 aa
 aa
@@ -12649,8 +12632,8 @@ aa
 aa
 aa
 Uz
-rK
-rK
+bi
+bi
 GM
 aa
 aa
@@ -12755,14 +12738,14 @@ hf
 jJ
 Uz
 Lv
-rK
-rK
-rK
-rK
-rK
-rK
-rK
-rK
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
 aa
 GM
 aa
@@ -13086,22 +13069,22 @@ jK
 aa
 aa
 aa
-rK
-rK
-rK
-rK
-rK
-rK
-rK
-rK
-rK
-rK
-rK
-rK
-rK
-rK
-rK
-rK
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
 aa
 GM
 aa
