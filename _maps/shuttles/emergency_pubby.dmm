@@ -433,10 +433,6 @@
 /obj/structure/table/glass,
 /obj/machinery/light/directional/north,
 /obj/item/storage/medkit/regular,
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -446,6 +442,7 @@
 /obj/machinery/vending/wallmed/directional/north{
 	use_power = 0
 	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ba" = (
@@ -466,15 +463,12 @@
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8;
-	layer = 2.9
-	},
 /obj/structure/table,
 /obj/item/food/canned/beans{
 	pixel_x = 3;
 	pixel_y = 4
 	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/cafeteria,
 /area/shuttle/escape)
 "be" = (
@@ -513,9 +507,6 @@
 /area/shuttle/escape)
 "bi" = (
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
@@ -524,6 +515,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bj" = (
@@ -551,10 +543,7 @@
 /area/shuttle/escape)
 "bo" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 2
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bq" = (
@@ -619,17 +608,11 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bB" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bC" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bD" = (
@@ -697,19 +680,14 @@
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "xt" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Lu" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "Uu" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "XA" = (

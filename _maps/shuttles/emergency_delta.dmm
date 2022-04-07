@@ -30,11 +30,6 @@
 "af" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"ag" = (
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "ah" = (
 /obj/item/clothing/suit/hazardvest{
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
@@ -1590,10 +1585,10 @@ ad
 af
 af
 af
-ag
+hB
 aF
 aF
-ag
+hB
 aP
 af
 af

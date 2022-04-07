@@ -4,7 +4,7 @@
 /area/template_noop)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -12,9 +12,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
@@ -73,9 +71,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "q" = (
@@ -129,14 +125,10 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "B" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/table/reinforced,
 /obj/item/radio,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "D" = (
@@ -160,9 +152,7 @@
 /obj/machinery/computer/emergency_shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "H" = (
@@ -173,11 +163,9 @@
 /area/shuttle/escape/brig)
 "I" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
 /obj/item/storage/medkit/regular,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "J" = (
@@ -223,26 +211,24 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "W" = (
+/obj/structure/window/reinforced/spawner/north,
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "X" = (
+/obj/structure/window/reinforced/spawner,
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4
+	dir = 8
 	},
-/obj/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Y" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Z" = (

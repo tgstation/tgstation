@@ -1582,12 +1582,10 @@
 /area/shuttle/escape)
 "dc" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "dd" = (

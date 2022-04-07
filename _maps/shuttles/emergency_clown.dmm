@@ -189,11 +189,9 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/bed,
 /obj/item/bedsheet/random,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aQ" = (
@@ -276,10 +274,8 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "bf" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bg" = (
@@ -305,15 +301,13 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "EM" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/bed{
 	dir = 4
 	},
 /obj/item/bedsheet/random{
 	dir = 4
 	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "RX" = (

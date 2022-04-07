@@ -71,9 +71,7 @@
 "aq" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/reagent_dispensers/fueltank,
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/east,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ar" = (
@@ -86,9 +84,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/luxury)
 "at" = (
@@ -377,12 +373,10 @@
 /area/shuttle/escape/luxury)
 "bp" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
+/obj/structure/window/spawner/east,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bq" = (
@@ -452,14 +446,12 @@
 /area/shuttle/escape/luxury)
 "bA" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
 /obj/effect/decal/cleanable/oil,
 /obj/effect/spawner/random/maintenance/two,
+/obj/structure/window/spawner/east,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bB" = (
@@ -508,9 +500,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/north,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bK" = (
@@ -518,9 +508,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/window{
-	dir = 1
-	},
+/obj/structure/window/spawner/north,
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "bL" = (

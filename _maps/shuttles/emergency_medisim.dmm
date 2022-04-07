@@ -66,6 +66,11 @@
 /obj/structure/railing/corner,
 /turf/template_noop,
 /area/shuttle/escape)
+"eR" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/light_emitter,
+/turf/open/misc/sandy_dirt,
+/area/shuttle/escape/simulation)
 "eX" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -289,6 +294,10 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"kV" = (
+/obj/effect/light_emitter,
+/turf/open/misc/grass,
+/area/shuttle/escape/simulation)
 "lg" = (
 /obj/structure/fluff/big_chain{
 	pixel_y = 9
@@ -352,8 +361,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/sandy_dirt,
 /area/shuttle/escape/simulation)
+"oW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/light_emitter,
+/turf/open/misc/grass,
+/area/shuttle/escape/simulation)
 "oY" = (
 /obj/effect/gibspawner/human,
+/obj/effect/light_emitter,
 /turf/open/floor/plating,
 /area/shuttle/escape/simulation)
 "pB" = (
@@ -420,6 +435,7 @@
 /area/shuttle/escape/simulation)
 "rQ" = (
 /obj/item/ctf/blue/medisim,
+/obj/effect/light_emitter,
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/simulation)
 "rT" = (
@@ -1040,6 +1056,10 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"Qr" = (
+/obj/effect/light_emitter,
+/turf/open/floor/stone,
+/area/shuttle/escape/simulation)
 "QH" = (
 /obj/structure/rack,
 /obj/item/food/egg/red,
@@ -1062,6 +1082,7 @@
 /area/shuttle/escape)
 "Rj" = (
 /obj/effect/decal/remains/human,
+/obj/effect/light_emitter,
 /turf/open/floor/plating,
 /area/shuttle/escape/simulation)
 "Rl" = (
@@ -1171,6 +1192,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/effect/light_emitter,
 /turf/open/floor/wood,
 /area/shuttle/escape/simulation)
 "Va" = (
@@ -1335,6 +1357,7 @@
 /area/shuttle/escape/simulation)
 "Zv" = (
 /obj/item/ctf/red/medisim,
+/obj/effect/light_emitter,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/simulation)
 "Zx" = (
@@ -2061,7 +2084,7 @@ EN
 pF
 NS
 NS
-NS
+Qr
 NS
 pF
 ai
@@ -2077,7 +2100,7 @@ YV
 JF
 pF
 NS
-NS
+Qr
 NS
 NS
 pF
@@ -2098,7 +2121,7 @@ YV
 be
 YV
 IS
-YV
+kV
 YV
 mG
 KK
@@ -2181,7 +2204,7 @@ RJ
 Aa
 Aa
 NR
-uJ
+eR
 pB
 pB
 oO
@@ -2189,7 +2212,7 @@ Kv
 Uv
 pB
 zd
-uJ
+eR
 Bd
 Aa
 Aa
@@ -2272,7 +2295,7 @@ MD
 YV
 TK
 YV
-hd
+oW
 MX
 YV
 BP

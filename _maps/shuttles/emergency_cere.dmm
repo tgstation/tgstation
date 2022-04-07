@@ -14,9 +14,7 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ai" = (
@@ -29,9 +27,7 @@
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "al" = (
@@ -57,9 +53,7 @@
 /obj/machinery/computer/station_alert{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "at" = (
@@ -72,9 +66,7 @@
 /obj/machinery/computer/communications{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "av" = (
@@ -105,9 +97,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aB" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -115,9 +105,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aD" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -521,20 +509,16 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bX" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bY" = (
@@ -757,15 +741,10 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cC" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cD" = (
@@ -803,9 +782,6 @@
 /area/shuttle/escape)
 "cF" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/item/circular_saw,
 /obj/item/scalpel{
 	pixel_y = 12
@@ -817,6 +793,7 @@
 	},
 /obj/item/retractor,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cH" = (
@@ -833,15 +810,13 @@
 /area/shuttle/escape)
 "cJ" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/surgical_drapes,
 /obj/item/razor,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cM" = (
@@ -1143,10 +1118,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dy" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "dz" = (
@@ -1274,6 +1247,14 @@
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"QD" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Xo" = (
 /obj/machinery/computer/security{
@@ -1967,7 +1948,7 @@ bX
 bX
 bX
 bX
-bX
+QD
 bX
 bR
 ab

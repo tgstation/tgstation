@@ -3,12 +3,11 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/preopen{
 	id = "escape_cockpit_windows";
 	name = "Cockpit Blast Door"
 	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ac" = (
@@ -974,34 +973,28 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ci" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot_white,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cj" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ck" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cl" = (
@@ -1136,14 +1129,12 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cA" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cB" = (
@@ -2037,9 +2028,7 @@
 /area/shuttle/escape)
 "ek" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "el" = (
