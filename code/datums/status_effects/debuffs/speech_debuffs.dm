@@ -133,7 +133,7 @@
 	var/doubletext_prob = 0
 
 	/// The file we pull text modifications from
-	var/text_modification_file = "slurring_text.json"
+	var/text_modification_file = ""
 
 	/// Common replacements for characters - populated in on_creation
 	var/list/common_replacements
@@ -148,6 +148,9 @@
 	. = ..()
 	if(!.)
 		return
+
+	if(!text_modification_file)
+		CRASH("[type] was created without a text modification file.")
 
 	var/list/speech_changes = strings(text_modification_file, "replacements")
 	common_replacements = speech_changes["characters"]["common"]
@@ -177,7 +180,7 @@
 		var/additions_len = length(string_additions)
 		if(replacements_len && additions_len)
 			// Calculate the probability of grabbing a replacement vs an addition
-			var/weight = (length(string_replacements) + length(string_additions)) / length(string_replacements) * 100
+			var/weight = (replacements_len + additions_len) / replacements_len * 100
 			if(prob(weight))
 				modified_char = pick(string_replacements)
 			else
@@ -186,7 +189,7 @@
 		else if(replacements_len)
 			modified_char = pick(string_replacements)
 
-		else if(string_additions)
+		else if(additions_len)
 			modified_char += pick(string_additions)
 
 	if(prob(doubletext_prob))

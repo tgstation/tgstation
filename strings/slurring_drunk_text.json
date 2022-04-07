@@ -3,11 +3,10 @@
 		"characters": {
 			"common": {
 				"o": "u",
-				"t": "ch",
+				"s": "ch",
 				"a": "ah",
 				"u": "oo",
-				"c": " NAR ",
-				"s": " SIE "
+				"c": "k"
 			},
 			"uncommon": {
 				" ": "...huuuhhh...",
