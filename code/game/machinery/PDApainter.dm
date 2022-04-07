@@ -133,10 +133,6 @@
 		to_chat(user, span_warning("The machine rejects your [O]. This ID card does not appear to be compatible with the PDA Painter."))
 		return
 
-	if(istype(O, /obj/item/pda/chameleon))
-		to_chat(user, span_warning("The machine rejects your [O]. This PDA does not appear to be compatible with the PDA Painter."))
-		return
-
 	if(istype(O, /obj/item/modular_computer/tablet/role))
 		insert_pda(O, user)
 		return

@@ -305,9 +305,6 @@ SUBSYSTEM_DEF(wardrobe)
 /// Mind this
 /datum/controller/subsystem/wardrobe/proc/setup_callbacks()
 	var/list/play_with = new /list(WARDROBE_CALLBACK_REMOVE) // Turns out there's a global list of pdas. Let's work around that yeah?
-	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, /obj/item/pda/proc/display_pda)
-	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, /obj/item/pda/proc/cloak_pda)
-	initial_callbacks[/obj/item/pda] = play_with
 
 	play_with = new /list(WARDROBE_CALLBACK_REMOVE) // Don't want organs rotting on the job
 	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, /obj/item/organ/proc/enter_wardrobe)

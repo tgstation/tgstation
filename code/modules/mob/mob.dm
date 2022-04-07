@@ -1021,11 +1021,10 @@
 					break
 				search_id = 0
 
-		else if( search_pda && istype(A, /obj/item/pda) )
-			var/obj/item/pda/PDA = A
-			if(PDA.owner == oldname)
-				PDA.owner = newname
-				PDA.update_label()
+		else if( search_pda && istype(A, /obj/item/modular_computer/tablet/role) )
+			var/obj/item/modular_computer/tablet/role/PDA = A
+			if(PDA.saved_identification == oldname)
+				PDA.saved_identification = newname
 				if(!search_id)
 					break
 				search_pda = 0

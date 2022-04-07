@@ -40,7 +40,7 @@
 	backpack_contents = list(
 		/obj/item/modular_computer/tablet/preset/advanced/custodial = 1,
 		)
-	belt = /obj/item/pda/janitor
+	belt = /obj/item/modular_computer/tablet/role/janitor
 	ears = /obj/item/radio/headset/headset_srv
 
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/H, visualsOnly)

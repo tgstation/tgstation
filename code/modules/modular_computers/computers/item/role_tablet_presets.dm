@@ -168,17 +168,13 @@
 /obj/item/modular_computer/tablet/role/syndicate
 	name = "military tablet"
 	greyscale_colors = "#891417#80FF80"
-	saved_identification = "Johndoe"
+	saved_identification = "John Doe"
 	saved_job = "Citizen"
+	invisible = TRUE
 
-/obj/item/modular_computer/tablet/role/syndicate/Initialize()
-	. = ..()
-
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-
-	if(hard_drive)
-		var/datum/computer_file/program/messenger/msg = hard_drive.find_file_by_name("nt_messenger")
-
-		if(msg)
-			msg.sAndR = FALSE
+/obj/item/modular_computer/tablet/role/clear
+	name = "clear tablet"
+	icon_state = ""
+	greyscale_config = null
+	greyscale_colors = null
 

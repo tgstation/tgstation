@@ -326,7 +326,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			return
 
 	// OTHER
-	if((istype(I, /obj/item/paper) || istype(I, /obj/item/pda)) && isliving(user))
+	if(istype(I, /obj/item/paper) && isliving(user))
 		var/mob/living/paper_user = user
 
 		var/itemname = ""
@@ -335,10 +335,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			var/obj/item/paper/pressed_paper = I
 			itemname = pressed_paper.name
 			info = pressed_paper.info
-		else
-			var/obj/item/pda/pressed_pda = I
-			itemname = pressed_pda.name
-			info = pressed_pda.notehtml
 
 		itemname = sanitize(itemname)
 		to_chat(paper_user, span_notice("You hold \the [itemname] up to the camera..."))

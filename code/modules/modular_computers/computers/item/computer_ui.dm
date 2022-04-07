@@ -248,11 +248,12 @@
 			if(!cardholder)
 				return
 
-			if(id_hardware)
-				name = "[cardholder.current_identification] ([cardholder.current_job])"
-
 			src.saved_identification = cardholder.current_identification
 			src.saved_job = cardholder.current_job
+
+			if(id_hardware)
+				id_hardware.UpdateDisplay()
+
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 
 		else

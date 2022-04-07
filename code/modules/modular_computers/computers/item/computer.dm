@@ -58,11 +58,14 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
 	var/comp_light_luminosity = 3 //The brightness of that light
 	var/comp_light_color //The color of that light
+	var/invisible = FALSE // whether or not the tablet is invisible in messenger and other apps
 
 	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
+
+	var/obj/item/computer_hardware/identifier/id = all_components[MC_IDENTIFY]
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src
@@ -70,6 +73,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	idle_threads = list()
 	if(looping_sound)
 		soundloop = new(src, enabled)
+	if(id)
+		id.UpdateDisplay()
 	update_appearance()
 	Add_Messenger()
 

@@ -44,7 +44,7 @@
 	backpack_contents = list(
 		/obj/item/modular_computer/tablet/preset/cargo = 1,
 		)
-	belt = /obj/item/pda/cargo
+	belt = /obj/item/modular_computer/tablet/role/cargo
 	ears = /obj/item/radio/headset/headset_cargo
 	l_hand = /obj/item/export_scanner
 

@@ -41,7 +41,7 @@
 	backpack_contents = list(
 		/obj/item/modular_computer/tablet/preset/cargo/quartermaster = 1,
 		)
-	belt = /obj/item/pda/quartermaster
+	belt = /obj/item/modular_computer/tablet/role/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sneakers/brown

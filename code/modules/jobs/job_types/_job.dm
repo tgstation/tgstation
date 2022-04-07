@@ -311,13 +311,13 @@
 			C.registered_account = B
 			B.bank_cards += C
 		H.sec_hud_set_ID()
-/*
-	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)
+
+	var/obj/item/modular_computer/tablet/role/PDA = H.get_item_by_slot(pda_slot)
 	if(istype(PDA))
-		PDA.owner = H.real_name
-		PDA.ownjob = J.title
-		PDA.update_label()
-*/
+		PDA.saved_identification = H.real_name
+		PDA.saved_job = J.title
+		PDA.name = "[H.real_name] ([J.title])"
+
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
