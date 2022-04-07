@@ -211,10 +211,7 @@
 	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
 		return TRUE
 
-	var/obj/item/card/id/used_id
-	used_id = user.get_idcard(TRUE)
-	if(id) //IDs used directly overwrites
-		used_id = id
+	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
 
 	if(!used_id || !used_id.access)
 		return FALSE
