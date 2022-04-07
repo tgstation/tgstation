@@ -178,10 +178,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/solar_control)
-"bd" = (
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "be" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
@@ -206,6 +202,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
+"bi" = (
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "bj" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -405,9 +405,9 @@
 /turf/closed/wall,
 /area/ruin/unpowered/no_grav)
 "ci" = (
-/obj/structure/table,
+/obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/space/derelict/hallway/primary/port)
 "cl" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/gravity_generator)
@@ -439,13 +439,6 @@
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/gravity_generator)
-"cr" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/bridge/ai_upload)
 "cs" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/bridge/access)
@@ -990,9 +983,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
-"eV" = (
-/turf/open/floor/iron/white/airless,
-/area/space/nearstation)
 "eW" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
@@ -1533,9 +1523,9 @@
 /turf/template_noop,
 /area/space/nearstation)
 "hn" = (
-/obj/effect/spawner/random/structure/girder,
+/obj/item/stack/rods,
 /turf/open/floor/plating/airless,
-/area/ruin/space/derelict/hallway/primary)
+/area/ruin/space/derelict/hallway/primary/port)
 "ho" = (
 /obj/item/shard,
 /turf/open/floor/iron/airless{
@@ -1829,7 +1819,7 @@
 "iE" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/white/airless,
-/area/space/nearstation)
+/area/ruin/unpowered/no_grav)
 "iG" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1843,10 +1833,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/medical/chapel)
-"iI" = (
-/obj/item/stack/cable_coil/five,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/bridge/ai_upload)
 "iJ" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict/medical/chapel)
@@ -1893,7 +1879,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/unpowered/no_grav)
 "iR" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -1991,17 +1977,17 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/unpowered/no_grav)
 "jn" = (
 /obj/item/shard,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/unpowered/no_grav)
 "jo" = (
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/unpowered/no_grav)
 "jp" = (
 /turf/open/floor/iron/white/airless,
 /area/ruin/unpowered/no_grav)
@@ -2720,9 +2706,12 @@
 /turf/template_noop,
 /area/ruin/space/derelict/atmospherics)
 "mA" = (
-/obj/structure/window/reinforced,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/space/derelict/bridge/ai_upload)
 "mB" = (
 /obj/structure/door_assembly/door_assembly_mai{
 	name = "airlock assembly"
@@ -2967,7 +2956,7 @@
 "nI" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
-/area/ruin/space/derelict/se_solar)
+/area/space/nearstation)
 "nJ" = (
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
@@ -3675,11 +3664,15 @@
 "UG" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/ruin/space/derelict/hallway/primary)
 "Vg" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/power_turbine,
 /turf/open/floor/iron,
+/area/ruin/space/derelict/bridge/ai_upload)
+"Vt" = (
+/obj/item/stack/cable_coil/five,
+/turf/open/floor/plating/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Vz" = (
 /turf/open/floor/iron/airless,
@@ -5726,7 +5719,7 @@ fZ
 fZ
 fZ
 fZ
-Uz
+gL
 GM
 aa
 aa
@@ -5839,7 +5832,7 @@ fZ
 kN
 wr
 fZ
-Uz
+gL
 GM
 GM
 aa
@@ -5952,8 +5945,8 @@ fZ
 jZ
 go
 fZ
-Uz
-Uz
+gL
+gL
 GM
 aa
 aa
@@ -6066,8 +6059,8 @@ go
 kX
 fZ
 ln
-Uz
-Uz
+gL
+gL
 aa
 GM
 aa
@@ -6180,7 +6173,7 @@ fZ
 fZ
 ka
 jY
-Uz
+gL
 aa
 GM
 aa
@@ -6293,8 +6286,8 @@ wr
 fZ
 jY
 lF
-Uz
-Uz
+gL
+gL
 GM
 aa
 aa
@@ -6407,7 +6400,7 @@ fZ
 yP
 go
 jY
-Uz
+gL
 GM
 GM
 GM
@@ -6520,8 +6513,8 @@ fZ
 jY
 lG
 go
-Uz
-Uz
+gL
+gL
 fZ
 GM
 GM
@@ -6531,7 +6524,7 @@ GM
 GM
 GM
 GM
-Lv
+md
 GM
 GM
 GM
@@ -6645,8 +6638,8 @@ aa
 aa
 aa
 md
-Uz
-Uz
+mZ
+mZ
 GM
 GM
 GM
@@ -6749,17 +6742,17 @@ go
 go
 mi
 fZ
-Uz
+gL
 aa
-Uz
-Uz
+gL
+gL
 GM
-Uz
+gL
 aa
 aa
 me
 mU
-Uz
+mZ
 GM
 Uz
 GM
@@ -6862,19 +6855,19 @@ go
 go
 go
 fZ
-Uz
-Uz
-ib
-Uz
+gL
+gL
+mJ
+gL
 Lv
-Uz
+gL
 GM
-Uz
+gL
 md
 mU
 mZ
 ny
-bd
+bi
 GM
 GM
 aa
@@ -6980,14 +6973,14 @@ gm
 gL
 gL
 gL
-Uz
-Uz
-Uz
+gL
+gL
+gL
 md
 mU
 mU
 nz
-bd
+bi
 aa
 aa
 aa
@@ -7100,7 +7093,7 @@ md
 na
 mU
 nz
-bd
+bi
 aa
 aa
 aa
@@ -7213,7 +7206,7 @@ md
 mU
 mU
 nz
-bd
+bi
 aa
 aa
 aa
@@ -7326,7 +7319,7 @@ mW
 mU
 mU
 md
-bd
+bi
 aa
 aa
 aa
@@ -7426,7 +7419,7 @@ fZ
 fZ
 fZ
 fZ
-hn
+UG
 fZ
 fZ
 fZ
@@ -7439,7 +7432,7 @@ md
 mU
 mU
 nz
-bd
+bi
 aa
 aa
 aa
@@ -7552,7 +7545,7 @@ md
 mU
 mU
 nz
-bd
+bi
 aa
 aa
 aa
@@ -7665,7 +7658,7 @@ md
 nc
 mU
 nz
-bd
+bi
 aa
 aa
 aa
@@ -7778,7 +7771,7 @@ md
 mI
 mU
 nz
-bd
+bi
 aa
 aa
 aa
@@ -7891,7 +7884,7 @@ md
 ne
 no
 nz
-bd
+bi
 aa
 aa
 aa
@@ -7975,7 +7968,7 @@ dr
 ux
 dr
 iQ
-Uz
+ay
 ay
 gP
 fZ
@@ -8088,8 +8081,8 @@ dr
 dr
 dr
 GM
-Uz
-Uz
+ay
+ay
 gD
 fZ
 fZ
@@ -8117,7 +8110,7 @@ md
 ng
 nq
 nz
-bd
+bi
 aa
 aa
 aa
@@ -8230,7 +8223,7 @@ md
 nh
 nr
 nz
-bd
+bi
 aa
 aa
 aa
@@ -8343,7 +8336,7 @@ md
 ni
 ns
 nz
-bd
+bi
 aa
 aa
 aa
@@ -8428,7 +8421,7 @@ GM
 aa
 aa
 GM
-Uz
+ay
 gD
 jp
 fZ
@@ -8456,7 +8449,7 @@ md
 nj
 nt
 nz
-bd
+bi
 aa
 aa
 aa
@@ -8541,7 +8534,7 @@ GM
 aa
 iR
 GM
-Uz
+ay
 ay
 jp
 fZ
@@ -8569,7 +8562,7 @@ md
 nk
 nu
 nz
-bd
+bi
 aa
 aa
 aa
@@ -8651,10 +8644,10 @@ dr
 dr
 GM
 aa
-mA
+iD
 aa
 GM
-Uz
+ay
 ay
 jp
 fZ
@@ -8764,7 +8757,7 @@ dr
 dr
 aa
 aa
-mA
+iD
 aa
 aa
 jo
@@ -8776,7 +8769,7 @@ gc
 go
 gk
 Vz
-Uz
+Tm
 aa
 aa
 aa
@@ -8875,12 +8868,12 @@ dr
 dr
 dr
 GM
-Uz
-Uz
+ay
+ay
 iE
-Uz
-ci
-eV
+ay
+jb
+jp
 jp
 jb
 fZ
@@ -8889,7 +8882,7 @@ gc
 go
 gk
 Vz
-Uz
+Tm
 aa
 GM
 GM
@@ -9002,7 +8995,7 @@ gc
 go
 gk
 Sm
-Uz
+Tm
 GM
 GM
 aa
@@ -9021,7 +9014,7 @@ md
 mI
 mU
 nz
-bd
+bi
 aa
 aa
 aa
@@ -9115,8 +9108,8 @@ gc
 go
 gk
 Vz
-Uz
-Av
+Tm
+hn
 GM
 aa
 GM
@@ -9134,7 +9127,7 @@ md
 mI
 mU
 nz
-bd
+bi
 aa
 aa
 aa
@@ -9143,17 +9136,17 @@ aa
 aa
 aa
 nB
-bd
-bd
-bd
-bd
-bd
-bd
+bi
+bi
+bi
+bi
+bi
+bi
 GM
-bd
-bd
-bd
-bd
+bi
+bi
+bi
+bi
 "}
 (49,1,1) = {"
 aa
@@ -9229,7 +9222,7 @@ go
 gk
 Vz
 Vz
-Uz
+Tm
 GM
 aa
 mb
@@ -9247,7 +9240,7 @@ md
 mI
 mU
 nz
-bd
+bi
 aa
 aa
 aa
@@ -9266,7 +9259,7 @@ aa
 GM
 aa
 aa
-bd
+bi
 "}
 (50,1,1) = {"
 aa
@@ -9343,9 +9336,9 @@ kR
 lc
 li
 Vz
-Uz
-Uz
-Uz
+Tm
+Tm
+Tm
 aa
 aa
 aa
@@ -9361,13 +9354,13 @@ mI
 mU
 md
 tS
-nB
+tS
 nI
 GM
 GM
 mb
-Uz
-Uz
+nV
+nV
 nB
 aa
 aa
@@ -9379,7 +9372,7 @@ on
 ol
 on
 aa
-bd
+bi
 "}
 (51,1,1) = {"
 aa
@@ -9458,8 +9451,8 @@ lj
 lB
 lQ
 lj
-Uz
-ib
+Tm
+ci
 aa
 aa
 GM
@@ -9473,12 +9466,12 @@ md
 mI
 mU
 nz
-bd
+bi
 aa
-Uz
+nV
 GM
-Uz
-Uz
+nV
+nV
 wK
 nR
 aa
@@ -9492,7 +9485,7 @@ on
 ol
 on
 aa
-bd
+bi
 "}
 (52,1,1) = {"
 aa
@@ -9581,16 +9574,16 @@ GM
 GM
 GM
 GM
-Uz
+Tm
 md
 mI
 mU
 nz
-bd
+bi
 aa
-Uz
-Uz
-Uz
+nV
+nV
+nV
 wK
 og
 nR
@@ -9605,7 +9598,7 @@ on
 ol
 on
 aa
-bd
+bi
 "}
 (53,1,1) = {"
 aa
@@ -9686,20 +9679,20 @@ lD
 lX
 mc
 OT
-Uz
-Uz
+Tm
+Tm
 aa
 aa
 GM
 aa
 aa
-Uz
+Tm
 Vz
 md
 mI
 mU
 nz
-bd
+bi
 aa
 nB
 nB
@@ -9718,7 +9711,7 @@ aa
 ol
 aa
 aa
-bd
+bi
 "}
 (54,1,1) = {"
 aa
@@ -9800,19 +9793,19 @@ Vz
 Vz
 OT
 Vz
-ib
-Uz
+ci
+Tm
 aa
 GM
 aa
 aa
-Uz
+Tm
 Vz
 md
 mI
 mU
 nz
-bd
+bi
 aa
 nJ
 nO
@@ -9831,7 +9824,7 @@ ol
 ol
 ol
 oD
-bd
+bi
 "}
 (55,1,1) = {"
 aa
@@ -9914,11 +9907,11 @@ Vz
 OT
 Vz
 Tm
-Uz
+Tm
 Uz
 OT
 aa
-Uz
+Tm
 Vz
 Vz
 md
@@ -10030,7 +10023,7 @@ lj
 Vz
 Vz
 OT
-Uz
+Tm
 Vz
 Vz
 Vz
@@ -10057,7 +10050,7 @@ on
 ol
 on
 aa
-bd
+bi
 "}
 (57,1,1) = {"
 aa
@@ -10170,7 +10163,7 @@ on
 ol
 on
 aa
-bd
+bi
 "}
 (58,1,1) = {"
 aa
@@ -10194,7 +10187,7 @@ bj
 ax
 bG
 Ob
-iI
+Vt
 bz
 YQ
 ax
@@ -10309,7 +10302,7 @@ bO
 bE
 bO
 bO
-cr
+mA
 ax
 aa
 aa
@@ -10466,8 +10459,8 @@ Uz
 fZ
 gc
 fZ
-UG
-UG
+nI
+nI
 GM
 aa
 aa
@@ -10499,16 +10492,16 @@ mf
 mf
 mf
 mf
-bd
-bd
-bd
-bd
+bi
+bi
+bi
+bi
 GM
-bd
-bd
+bi
+bi
 GM
 GM
-bd
+bi
 GM
 "}
 (61,1,1) = {"
@@ -10516,10 +10509,10 @@ aa
 aa
 aa
 GM
-bd
-bd
-bd
-bd
+bi
+bi
+bi
+bi
 GM
 aa
 aa
@@ -10632,7 +10625,7 @@ aa
 GM
 aa
 aa
-bd
+bi
 aa
 aa
 aa
@@ -10745,7 +10738,7 @@ aq
 ap
 GM
 GM
-bd
+bi
 aa
 aa
 aa
@@ -10851,14 +10844,14 @@ aa
 aa
 "}
 (64,1,1) = {"
-bd
+bi
 aa
 ag
 aq
 ap
 aa
 aa
-bd
+bi
 aa
 aa
 aa
@@ -10964,14 +10957,14 @@ aa
 aa
 "}
 (65,1,1) = {"
-bd
+bi
 aa
 ap
 aq
 ap
 aa
 aa
-bd
+bi
 GM
 GM
 GM
@@ -11077,14 +11070,14 @@ aa
 aa
 "}
 (66,1,1) = {"
-bd
+bi
 aa
 aa
 aq
 aa
 aa
 aa
-bd
+bi
 Uz
 Uz
 Uz
@@ -11168,7 +11161,7 @@ aa
 aa
 aa
 aa
-mZ
+Uz
 vC
 aa
 aa
@@ -11190,7 +11183,7 @@ aa
 aa
 "}
 (67,1,1) = {"
-bd
+bi
 aa
 ap
 aq
@@ -11303,7 +11296,7 @@ aa
 aa
 "}
 (68,1,1) = {"
-bd
+bi
 aa
 ap
 aq
@@ -11912,7 +11905,7 @@ ea
 eS
 oE
 dz
-UG
+nI
 GM
 aa
 aa
@@ -11981,16 +11974,16 @@ aa
 aa
 "}
 (74,1,1) = {"
-bd
+bi
 aa
 aa
 aq
 aa
 aa
 aa
-bd
-bd
-bd
+bi
+bi
+bi
 as
 aV
 bc
@@ -12094,32 +12087,32 @@ aa
 aa
 "}
 (75,1,1) = {"
-bd
+bi
 aa
 ap
 aq
 ap
 aa
 aa
-bd
+bi
 GM
-bd
-bd
+bi
+bi
 GM
-bd
-bd
-bd
+bi
+bi
+bi
 aa
 aa
 aa
 aa
-bd
-bd
+bi
+bi
 as
 az
 as
-bd
-bd
+bi
+bi
 Lv
 GM
 aa
@@ -12207,14 +12200,14 @@ aa
 aa
 "}
 (76,1,1) = {"
-bd
+bi
 aa
 ap
 aq
 ap
 aa
 aa
-bd
+bi
 aa
 aa
 aa
@@ -12320,14 +12313,14 @@ aa
 aa
 "}
 (77,1,1) = {"
-bd
+bi
 aa
 ap
 aq
 ap
 GM
 GM
-bd
+bi
 aa
 aa
 aa
@@ -12433,7 +12426,7 @@ aa
 aa
 "}
 (78,1,1) = {"
-bd
+bi
 aa
 aa
 aa
@@ -12546,14 +12539,14 @@ aa
 aa
 "}
 (79,1,1) = {"
-bd
-bd
-bd
-bd
+bi
+bi
+bi
+bi
 GM
-bd
-bd
-bd
+bi
+bi
+bi
 GM
 aa
 aa
@@ -12631,8 +12624,8 @@ aa
 aa
 aa
 Uz
-bd
-bd
+bi
+bi
 GM
 aa
 aa
@@ -12737,14 +12730,14 @@ hf
 jJ
 Uz
 Lv
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
 aa
 GM
 aa
@@ -13068,22 +13061,22 @@ jK
 aa
 aa
 aa
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
+bi
 aa
 GM
 aa
