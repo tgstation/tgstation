@@ -138,7 +138,6 @@
 	wizard.notransform = FALSE
 	wizard.forceMove(get_turf(src))
 	our_wizard = null
-
 	REMOVE_TRAIT(wizard, TRAIT_ROD_FORM, MAGIC_TRAIT)
 
 #undef BASE_WIZ_ROD_RANGE
