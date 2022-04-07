@@ -202,7 +202,7 @@
 		ROLE_POSITRONIC_BRAIN,
 	)
 	required_candidates = 1
-	weight = 7
+	weight = 20
 	cost = 3
 	requirements = list(3,3,3,3,3,3,3,3,3,3)
 	repeatable = TRUE
@@ -1002,7 +1002,7 @@
 		ROLE_POSITRONIC_BRAIN,
 	)
 	required_candidates = 1
-	weight = 0 // Disabled until Dynamic midround rolling handles minor threats better
+	weight = 2
 	cost = 3 //Worth less than obsessed, but there's more of them.
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	repeatable = TRUE
