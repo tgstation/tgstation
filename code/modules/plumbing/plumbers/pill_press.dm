@@ -93,7 +93,7 @@
 			pill_amount++
 			if(pill_amount >= max_floor_products) //too much so just stop
 				break
-		if(pill_amount < max_floor_products)
+		if(pill_amount < max_floor_products && anchored)
 			var/atom/movable/AM = stored_products[1] //AM because forceMove is all we need
 			stored_products -= AM
 			AM.forceMove(drop_location())
