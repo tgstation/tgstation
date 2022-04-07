@@ -21,7 +21,7 @@
 	if (human_user != src)
 		context[SCREENTIP_CONTEXT_RMB] = "Shove"
 
-		if (human_user.combat_mode)
+		if (!human_user.combat_mode)
 			if (body_position == STANDING_UP)
 				if(check_zone(user.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD))
 					context[SCREENTIP_CONTEXT_LMB] = "Headpat"
