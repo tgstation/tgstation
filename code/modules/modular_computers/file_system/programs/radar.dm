@@ -278,7 +278,7 @@
 
 		if(istype(custodial_tools, /obj/structure/janitorialcart))
 			var/obj/structure/janitorialcart/janicart = custodial_tools
-			tool_name = "[janicart.name] - Water level: [janicart.reagents.total_volume] / 100"
+			tool_name = "[janicart.name] - Water level: [janicart.reagents.total_volume] / [janicart.reagents.maximum_volume]"
 
 		if(istype(custodial_tools, /mob/living/simple_animal/bot/cleanbot))
 			var/mob/living/simple_animal/bot/cleanbot/cleanbots = custodial_tools
