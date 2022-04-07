@@ -207,3 +207,5 @@
 		QDEL_NULL(current_gauze)
 
 	wound_damage_multiplier = dam_mul
+	update_bleed_rate()
+	
