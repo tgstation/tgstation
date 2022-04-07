@@ -43,6 +43,7 @@
 	var/aux_layer
 	/// bitflag used to check which clothes cover this bodypart
 	var/body_part
+	/// List of obj/item's embedded inside us. Managed by embedded components, do not modify directly
 	var/list/embedded_objects = list()
 	/// are we a hand? if so, which one!
 	var/held_index = 0
@@ -795,6 +796,28 @@
 	drop_organs()
 	return ..()
 
+/// INTERNAL PROC, DO NOT USE
+/// Properly sets us up to manage an inserted embeded object
+/obj/item/bodypart/proc/_embed_object(obj/item/embed)
+	if(embed in embedded_objects) // go away
+		return
+	// We don't need to do anything with projectile embedding, because it will never reach this point
+	RegisterSignal(embed, COMSIG_ITEM_EMBEDDING_UPDATE, .proc/embedded_object_changed)
+	embedded_objects += embed
+	refresh_bleed_rate()
+
+/// INTERNAL PROC, DO NOT USE
+/// Cleans up any attachment we have to the embedded object, removes it from our list
+/obj/item/bodypart/proc/_unembed_object(obj/item/unembed)
+	UnregisterSignal(unembed, COMSIG_ITEM_EMBEDDING_UPDATE)
+	embedded_objects -= unembed
+	refresh_bleed_rate()
+
+/obj/item/bodypart/proc/embedded_object_changed(obj/item/embedded_source)
+	SIGNAL_HANDLER
+	/// Embedded objects effect bleed rate, gotta refresh lads
+	refresh_bleed_rate()
+
 /// Sets our generic bleedstacks
 /obj/item/bodypart/proc/setBleedStacks(set_to)
 	adjustBleedStacks(set_to - generic_bleedstacks)
@@ -825,34 +848,32 @@
 /obj/item/bodypart/proc/refresh_bleed_rate()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	bleed_rate = 0
+	cached_bleed_rate = 0
 	if(HAS_TRAIT(owner, TRAIT_NOBLEED))
 		return
 	if(!IS_ORGANIC_LIMB(src))// maybe in the future we can bleed oil from aug parts, but not now
 		return
 
 	if(generic_bleedstacks > 0)
-		bleed_rate += 0.5
+		cached_bleed_rate += 0.5
 
-	//We want an accurate reading of .len
-	list_clear_nulls(embedded_objects)
 	for(var/obj/item/embeddies in embedded_objects)
 		if(!embeddies.isEmbedHarmless())
-			bleed_rate += 0.25
+			cached_bleed_rate += 0.25
 
 	for(var/datum/wound/iter_wound as anything in wounds)
-		bleed_rate += iter_wound.blood_flow
+		cached_bleed_rate += iter_wound.blood_flow
 
 	if(!ignore_modifiers)
 		if(owner.body_position == LYING_DOWN)
-			bleed_rate *= 0.75
+			cached_bleed_rate *= 0.75
 		if(grasped_by)
-			bleed_rate *= 0.7
+			cached_bleed_rate *= 0.7
 
-	if(!bleed_rate)
+	if(!cached_bleed_rate)
 		QDEL_NULL(grasped_by)
 
-	return bleed_rate
+	return cached_bleed_rate
 
 /**
  * Calculates how much blood this limb is losing per life tick
