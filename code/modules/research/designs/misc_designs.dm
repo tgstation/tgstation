@@ -223,7 +223,7 @@
 	id = "nv_scigoggles"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/plasma = 350, /datum/material/uranium = 1000)
-	build_path = /obj/item/clothing/glasses/night/chemical
+	build_path = /obj/item/clothing/glasses/science/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
