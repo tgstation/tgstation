@@ -305,7 +305,7 @@ const NewscasterWantedScreen = (props, context) => {
   );
 };
 
-export const NewscasterContent = (props, context) => {
+const NewscasterContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     current_channel = {},
