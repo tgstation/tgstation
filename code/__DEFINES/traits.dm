@@ -426,8 +426,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Normally only present in the mind of a Research Director.
 #define TRAIT_ROD_SUPLEX "rod_suplex"
 
-/// If present on a mob, they're currently in rod form
-/// Used to stop soul tapping shenanigans (biddle singularities!)
+/// This mob is currently in rod form.
 #define TRAIT_ROD_FORM "rod_form"
 
 //SKILLS
