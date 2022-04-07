@@ -342,8 +342,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if (cartridge)
 					if(!isnull(cartridge.bot_access))
 						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_BOTS_ACCESS]'>[PDAIMG(medbot)]Bots Access</a></li>"
-					if (cartridge.access & CART_JANITOR)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_JANNIE_LOCATOR]'>[PDAIMG(bucket)]Custodial Locator</a></li>"
 					if(cartridge.access & CART_MIME)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_EMOJI_GUIDE]'>[PDAIMG(emoji)]Emoji Guidebook</a></li>"
 					if (istype(cartridge.radio))

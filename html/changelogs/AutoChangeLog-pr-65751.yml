@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fix an exploit where permanent invisibility can be gained from using shadowcloak stacked with other transparency effects."

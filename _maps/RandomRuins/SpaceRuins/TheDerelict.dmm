@@ -1164,6 +1164,11 @@
 /obj/item/stock_parts/matter_bin,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
+"fB" = (
+/obj/structure/table,
+/obj/item/stock_parts/cell/high,
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/bridge/access)
 "fC" = (
 /turf/template_noop,
 /area/ruin/space/derelict/bridge/access)
@@ -2053,13 +2058,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
-"jA" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/bed,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/derelict/medical)
 "jB" = (
 /obj/item/stack/medical/ointment,
 /turf/open/floor/iron/white/airless,
@@ -2299,10 +2297,6 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
-"kN" = (
-/obj/structure/bed,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
 "kO" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
@@ -3327,6 +3321,12 @@
 	icon_state = "damaged4"
 	},
 /area/template_noop)
+"Bp" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary)
 "Bs" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance/eight,
@@ -3341,6 +3341,15 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/solarpanel/airless,
 /area/template_noop)
+"Ch" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/derelict/medical)
 "CZ" = (
 /obj/item/clothing/suit/space/eva,
 /turf/open/floor/iron/airless{
@@ -3594,11 +3603,6 @@
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/medical)
-"PG" = (
-/obj/structure/table,
-/obj/item/stock_parts/cell/high,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
 "PR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /turf/open/floor/iron/airless,
@@ -3691,6 +3695,12 @@
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
+"Uf" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary/port)
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/template_noop)
@@ -5862,7 +5872,7 @@ go
 go
 jX
 fZ
-kN
+Bp
 wr
 fZ
 gL
@@ -6314,7 +6324,7 @@ yH
 go
 gc
 fZ
-kN
+Bp
 wr
 fZ
 jY
@@ -6421,7 +6431,7 @@ iB
 iL
 iY
 jg
-jA
+Ch
 fZ
 go
 go
@@ -9934,8 +9944,8 @@ fZ
 KN
 Vz
 Vz
-lE
-lE
+Uf
+Uf
 Vz
 OT
 Vz
@@ -10356,7 +10366,7 @@ ZB
 ZB
 ZB
 cs
-PG
+fB
 fx
 fx
 fS

@@ -1875,8 +1875,12 @@
 /turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "hJ" = (
-/obj/structure/bed,
-/obj/item/bedsheet/captain,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/captain{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hK" = (
