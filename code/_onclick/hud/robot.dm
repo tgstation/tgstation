@@ -83,7 +83,7 @@
 
 // Navigation
 	using = new /atom/movable/screen/navigate
-	using.screen_loc = ui_navigate_menu
+	using.screen_loc = ui_borg_navigate_menu
 	static_inventory += using
 
 //Radio
