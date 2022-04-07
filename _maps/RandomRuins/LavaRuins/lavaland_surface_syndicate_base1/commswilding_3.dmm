@@ -32,15 +32,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
-"h" = (
-/obj/structure/railing,
-/obj/effect/mapping_helpers/no_lava,
-/obj/effect/turf_decal/stripes/line,
-/obj/item/clothing/gloves/tackler/offbrand{
-	desc = "For a different kind of tackle fishing."
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
 "j" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -289,7 +280,7 @@ o
 b
 w
 K
-h
+v
 "}
 (4,1,1) = {"
 G

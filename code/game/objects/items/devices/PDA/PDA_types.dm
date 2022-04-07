@@ -105,7 +105,6 @@
 
 /obj/item/pda/janitor
 	name = "janitor PDA"
-	default_cartridge = /obj/item/cartridge/janitor
 	greyscale_colors = "#933ea8#235AB2"
 	ttone = "slip"
 
