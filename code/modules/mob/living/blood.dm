@@ -66,7 +66,7 @@
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		var/iter_bleed_rate = iter_part.get_part_bleed_rate()
 		temp_bleed += iter_bleed_rate * delta_time
-		iter_part.generic_bleedstacks = max(0, iter_part.generic_bleedstacks - 1)
+		iter_part.adjustBleedStacks(-1, 0)
 		if(iter_part.update_part_wound_overlay())
 			update_bleed_icons = TRUE
 
@@ -189,7 +189,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	for(var/i in bodyparts)
 		var/obj/item/bodypart/BP = i
-		BP.generic_bleedstacks = 0
+		BP.setBleedStacks(0)
 
 /****************************************************
 				BLOOD TRANSFERS

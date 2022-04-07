@@ -16,6 +16,8 @@
 	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
+	/// The mob that "owns" this limb
+	/// DO NOT MODIFY DIRECTLY. Use set_owner()
 	var/mob/living/carbon/owner
 
 	///A bitfield of bodytypes for clothing, surgery, and misc information
@@ -124,6 +126,8 @@
 	var/scars_covered_by_clothes = TRUE
 	/// So we know if we need to scream if this limb hits max damage
 	var/last_maxed
+	/// Our current bleed rate. Cached, update with refresh_bleed_rate()
+	var/cached_bleed_rate = 0
 	/// How much generic bleedstacks we have on this bodypart
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
@@ -519,6 +523,8 @@
 			UnregisterSignal(old_owner, list(
 				SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE),
 				SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
+				SIGNAL_REMOVETRAIT(TRAIT_NOBLEED),
+				SIGNAL_ADDTRAIT(TRAIT_NOBLEED),
 				))
 	if(owner)
 		if(initial(can_be_disabled))
@@ -527,6 +533,10 @@
 				needs_update_disabled = FALSE
 			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE), .proc/on_owner_nolimbdisable_trait_loss)
 			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE), .proc/on_owner_nolimbdisable_trait_gain)
+			// Bleeding stuff
+			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOBLEED), .proc/on_owner_nobleed_loss)
+			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBLEED), .proc/on_owner_nobleed_gain)
+
 		if(needs_update_disabled)
 			update_disabled()
 
@@ -785,21 +795,42 @@
 	drop_organs()
 	return ..()
 
-/**
- * Calculates how much blood this limb is losing per life tick
- *
- * Arguments:
- * * ignore_modifiers - If TRUE, ignore the bleed reduction for laying down and grabbing your limb
- */
-/obj/item/bodypart/proc/get_part_bleed_rate(ignore_modifiers = FALSE)
+/// Sets our generic bleedstacks
+/obj/item/bodypart/proc/setBleedStacks(set_to)
+	adjustBleedStacks(set_to - generic_bleedstacks)
+
+/// Modifies our generic bleedstacks. You must use this to change the variable
+/// Takes the amount to adjust by, and the lowest amount we're allowed to have post adjust
+/obj/item/bodypart/proc/adjustBleedStacks(adjust_by, minimum = -INFINITY)
+	if(!adjust_by)
+		return
+	var/old_bleedstacks = generic_bleedstacks
+	generic_bleedstacks = max(generic_bleedstacks + adjust_by, minimum)
+
+	// If we've started or stopped bleeding, we need to refresh our bleed rate
+	if((old_bleedstacks <= 0 && generic_bleedstacks > 0) \
+		|| old_bleedstacks > 0 && generic_bleedstacks <= 0)
+		refresh_bleed_rate()
+
+/obj/item/bodypart/proc/on_owner_nobleed_loss(datum/source)
+	SIGNAL_HANDLER
+	refresh_bleed_rate()
+
+/obj/item/bodypart/proc/on_owner_nobleed_gain(datum/source)
+	SIGNAL_HANDLER
+	refresh_bleed_rate()
+
+/// We cache our rate of bleeding sans any modifiers
+/// Call this proc to recalculate it
+/obj/item/bodypart/proc/refresh_bleed_rate()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	bleed_rate = 0
 	if(HAS_TRAIT(owner, TRAIT_NOBLEED))
 		return
 	if(!IS_ORGANIC_LIMB(src))// maybe in the future we can bleed oil from aug parts, but not now
 		return
 
-	var/bleed_rate = 0
 	if(generic_bleedstacks > 0)
 		bleed_rate += 0.5
 
@@ -822,6 +853,15 @@
 		QDEL_NULL(grasped_by)
 
 	return bleed_rate
+
+/**
+ * Calculates how much blood this limb is losing per life tick
+ *
+ * Arguments:
+ * * ignore_modifiers - If TRUE, ignore the bleed reduction for laying down and grabbing your limb
+ */
+/obj/item/bodypart/proc/get_part_bleed_rate(ignore_modifiers = FALSE)
+
 
 // how much blood the limb needs to be losing per tick (not counting laying down/self grasping modifiers) to get the different bleed icons
 #define BLEED_OVERLAY_LOW 0.5
