@@ -507,11 +507,10 @@
 
 	if(owner == new_owner)
 		return FALSE //`null` is a valid option, so we need to use a num var to make it clear no change was made.
-	. = owner
+	var/mob/living/carbon/old_owner = owner
 	owner = new_owner
 	var/needs_update_disabled = FALSE //Only really relevant if there's an owner
-	if(.)
-		var/mob/living/carbon/old_owner = .
+	if(old_owner)
 		if(initial(can_be_disabled))
 			if(HAS_TRAIT(old_owner, TRAIT_NOLIMBDISABLE))
 				if(!owner || !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
@@ -530,6 +529,8 @@
 			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE), .proc/on_owner_nolimbdisable_trait_gain)
 		if(needs_update_disabled)
 			update_disabled()
+
+	return old_owner
 
 
 ///Proc to change the value of the `can_be_disabled` variable and react to the event of its change.

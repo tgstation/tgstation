@@ -999,7 +999,7 @@
 ///Proc to hook behavior on bodypart additions.
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	bodyparts += new_bodypart
-	new_bodypart.owner = src
+	new_bodypart.set_owner(src)
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
