@@ -149,6 +149,7 @@
 
 	name = "[limb_id] [parse_zone(body_zone)]"
 	update_icon_dropped()
+	refresh_bleed_rate()
 
 /obj/item/bodypart/Destroy()
 	if(owner)
@@ -541,6 +542,7 @@
 		if(needs_update_disabled)
 			update_disabled()
 
+	refresh_bleed_rate()
 	return old_owner
 
 
@@ -843,15 +845,16 @@
 	SIGNAL_HANDLER
 	refresh_bleed_rate()
 
-/// We cache our rate of bleeding sans any modifiers
-/// Call this proc to recalculate it
+/// Refresh the cache of our rate of bleeding sans any modifiers
+/// ANYTHING ADDED TO THIS PROC NEEDS TO CALL IT WHEN IT'S EFFECT CHANGES
 /obj/item/bodypart/proc/refresh_bleed_rate()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	var/old_bleed_rate = cached_bleed_rate
 	cached_bleed_rate = 0
-	if(HAS_TRAIT(owner, TRAIT_NOBLEED))
-		return
-	if(!IS_ORGANIC_LIMB(src))// maybe in the future we can bleed oil from aug parts, but not now
+	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || !IS_ORGANIC_LIMB(src))
+		if(cached_bleed_rate != old_bleed_rate)
+			update_part_wound_overlay()
 		return
 
 	if(generic_bleedstacks > 0)
@@ -864,25 +867,23 @@
 	for(var/datum/wound/iter_wound as anything in wounds)
 		cached_bleed_rate += iter_wound.blood_flow
 
-	if(!ignore_modifiers)
-		if(owner.body_position == LYING_DOWN)
-			cached_bleed_rate *= 0.75
-		if(grasped_by)
-			cached_bleed_rate *= 0.7
-
 	if(!cached_bleed_rate)
 		QDEL_NULL(grasped_by)
 
+	// Our bleed overlay is based directly off bleed_rate, so go aheead and update that would you?
+	if(cached_bleed_rate != old_bleed_rate)
+		update_part_wound_overlay()
+
 	return cached_bleed_rate
 
-/**
- * Calculates how much blood this limb is losing per life tick
- *
- * Arguments:
- * * ignore_modifiers - If TRUE, ignore the bleed reduction for laying down and grabbing your limb
- */
-/obj/item/bodypart/proc/get_part_bleed_rate(ignore_modifiers = FALSE)
-
+/// Returns our bleed rate, taking into account laying down and grabbing the limb
+/obj/item/bodypart/proc/get_modified_bleed_rate()
+	var/bleed_rate = cached_bleed_rate
+	if(owner.body_position == LYING_DOWN)
+		bleed_rate *= 0.75
+	if(grasped_by)
+		bleed_rate *= 0.7
+	return bleed_rate
 
 // how much blood the limb needs to be losing per tick (not counting laying down/self grasping modifiers) to get the different bleed icons
 #define BLEED_OVERLAY_LOW 0.5
@@ -898,8 +899,8 @@
 			owner.update_wound_overlays()
 		return FALSE
 
-	var/bleed_rate = get_part_bleed_rate(ignore_modifiers = TRUE)
-	var/new_bleed_icon
+	var/bleed_rate = cached_bleed_rate
+	var/new_bleed_icon = null
 
 	switch(bleed_rate)
 		if(-INFINITY to BLEED_OVERLAY_LOW)
@@ -919,7 +920,7 @@
 
 	if(new_bleed_icon != bleed_overlay_icon)
 		bleed_overlay_icon = new_bleed_icon
-		return TRUE
+		owner.update_wound_overlays()
 
 #undef BLEED_OVERLAY_LOW
 #undef BLEED_OVERLAY_MED

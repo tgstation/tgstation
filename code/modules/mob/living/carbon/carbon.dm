@@ -1233,17 +1233,15 @@
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
-	for(var/i in bodyparts)
-		var/obj/item/bodypart/BP = i
-		if(BP.get_part_bleed_rate())
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		if(part.get_modified_bleed_rate())
 			return TRUE
 
 /// get our total bleedrate
 /mob/living/carbon/proc/get_total_bleed_rate()
 	var/total_bleed_rate = 0
-	for(var/i in bodyparts)
-		var/obj/item/bodypart/BP = i
-		total_bleed_rate += BP.get_part_bleed_rate()
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		total_bleed_rate += part.get_modified_bleed_rate()
 
 	return total_bleed_rate
 
