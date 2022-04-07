@@ -286,6 +286,7 @@
 			if(O)
 				O.setDir(usr.dir)
 			use(recipe.req_amount * multiplier)
+			usr.investigate_log("[key_name(usr)] crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 			if(recipe.applies_mats && LAZYLEN(mats_per_unit))
 				if(isstack(O))
