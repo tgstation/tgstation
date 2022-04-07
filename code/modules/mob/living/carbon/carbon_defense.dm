@@ -582,8 +582,9 @@
 				to_chat(src, span_warning("Your ears start to ring badly!"))
 				if(prob(ears.damage - 5))
 					to_chat(src, span_userdanger("You can't hear anything!"))
-					ears.damage = min(ears.damage, ears.maxHealth) // does this actually do anything useful? all this would do is set an upper bound on damage, is this supposed to be a max?
+					// Makes you deaf, enough that you need a proper source of healing, it won't self heal
 					// you need earmuffs, inacusiate, or replacement
+					ears.setOrganDamage(ears.maxHealth)
 			else if(ears.damage >= 5)
 				to_chat(src, span_warning("Your ears start to ring!"))
 			SEND_SOUND(src, sound('sound/weapons/flash_ring.ogg',0,1,0,250))
