@@ -1,0 +1,4 @@
+author: "Riggle"
+delete-after: True
+changes: 
+  - bugfix: "Revenant logs are no longer wrapped in a span"

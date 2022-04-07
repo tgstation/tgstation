@@ -315,7 +315,6 @@
 	product_ads = "Come and get your janitorial clothing, now endorsed by lizard janitors everywhere!"
 	vend_reply = "Thank you for using the JaniDrobe!"
 	products = list(/obj/item/clothing/under/rank/civilian/janitor = 2,
-					/obj/item/cartridge/janitor = 2,
 					/obj/item/clothing/under/rank/civilian/janitor/skirt = 2,
 					/obj/item/clothing/suit/hooded/wintercoat/janitor = 2,
 					/obj/item/clothing/gloves/color/black = 2,

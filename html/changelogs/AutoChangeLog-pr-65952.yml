@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - admin: "Individual material crafting is now logged in crafting.html"
