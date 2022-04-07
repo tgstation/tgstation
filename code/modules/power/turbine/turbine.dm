@@ -38,14 +38,11 @@
 		installed_part = new part_path(src)
 
 	var/turf/our_turf = get_turf(src)
-	if(our_turf.thermal_conductivity != 0 && isopenturf(our_turf))
-		our_turf_thermal_conductivity = our_turf.thermal_conductivity
-		our_turf.thermal_conductivity = 0
+	our_turf.add_thermal_conductivity_source(0, TEMPORARY_THERMAL_CONDUCTIVITY)
 
 /obj/machinery/power/turbine/Destroy()
 	var/turf/our_turf = get_turf(src)
-	if(our_turf.thermal_conductivity == 0 && isopenturf(our_turf))
-		our_turf.thermal_conductivity = our_turf_thermal_conductivity
+	our_turf.remove_thermal_conductivity_source(0, TEMPORARY_THERMAL_CONDUCTIVITY)
 
 	if(installed_part)
 		QDEL_NULL(installed_part)

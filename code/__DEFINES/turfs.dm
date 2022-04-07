@@ -64,3 +64,7 @@
  * Use instead of `A.loc.loc`.
  */
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
+
+#define TEMPORARY_THERMAL_CONDUCTIVITY 1
+
+#define MAX_TEMPORARY_THERMAL_CONDUCTIVITY 1
