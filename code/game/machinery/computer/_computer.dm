@@ -48,10 +48,8 @@
 	. = ..()
 	if(machine_stat & NOPOWER)
 		set_light(0)
-		update_use_power(NO_POWER_USE)
 	else
 		set_light(brightness_on)
-		update_use_power(ACTIVE_POWER_USE)
 
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
