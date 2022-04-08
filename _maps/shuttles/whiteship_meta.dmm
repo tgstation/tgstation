@@ -2186,9 +2186,13 @@
 /area/shuttle/abandoned/cargo)
 "Sv" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/machinery/light/small/built/directional/east,
-/obj/item/bedsheet/brown,
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

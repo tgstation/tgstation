@@ -298,12 +298,30 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
+"sn" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/blue{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered/snow_biodome)
 "tb" = (
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "tl" = (
 /turf/open/floor/pod/light,
+/area/ruin/powered/snow_biodome)
+"uO" = (
+/obj/item/bedsheet/blue{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
 /area/ruin/powered/snow_biodome)
 "vr" = (
 /obj/machinery/light/small/directional/north,
@@ -782,8 +800,8 @@ ac
 am
 aq
 aq
-au
-au
+uO
+sn
 aq
 aq
 aq

@@ -40,6 +40,7 @@
 			rod_max_distance,
 			rod_damage_bonus,
 		)
+		ADD_TRAIT(caster, TRAIT_ROD_FORM, MAGIC_TRAIT)
 
 /// Wizard Version of the Immovable Rod.
 /obj/effect/immovablerod/wizard
@@ -137,5 +138,6 @@
 	wizard.notransform = FALSE
 	wizard.forceMove(get_turf(src))
 	our_wizard = null
+	REMOVE_TRAIT(wizard, TRAIT_ROD_FORM, MAGIC_TRAIT)
 
 #undef BASE_WIZ_ROD_RANGE
