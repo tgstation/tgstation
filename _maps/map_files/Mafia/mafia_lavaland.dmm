@@ -52,11 +52,11 @@
 	name = "miner equipment locker"
 	},
 /obj/item/clothing/under/rank/cargo/miner/lavaland,
-/turf/open/floor/grass/fakebasalt,
+/turf/open/floor/fakebasalt,
 /area/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/grass/fakebasalt,
+/turf/open/floor/fakebasalt,
 /area/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
@@ -88,7 +88,7 @@
 /turf/closed/indestructible/fakeglass,
 /area/mafia)
 "q" = (
-/turf/open/floor/grass/fakebasalt,
+/turf/open/floor/fakebasalt,
 /area/mafia)
 "r" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
