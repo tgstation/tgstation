@@ -667,23 +667,21 @@
 		else
 			stack_trace("Something attempted to set simple animals AI to an invalid state: [togglestatus]")
 
-///check if we should activate our ai. reactivate is an optional argument to force checks to come out of AI_DISTANCE_OFF
-/mob/living/simple_animal/proc/consider_wakeup(reactivate = FALSE)
+///check if we should activate our ai.
+/mob/living/simple_animal/proc/consider_wakeup()
 	if (pulledby || shouldwakeup)
 		toggle_ai(AI_ON)
 
 ///called when this mobs ai status is set to something other than AI_ON
 /mob/living/simple_animal/proc/on_ai_disabled(old_state)
-	SHOULD_CALL_PARENT(TRUE)
+
 	return
 
 /mob/living/simple_animal/proc/on_ai_distance_disabled(old_state)
-	SHOULD_CALL_PARENT(TRUE)
 	return
 
 ///called when this mobs ai status is set to AI_ON
 /mob/living/simple_animal/proc/on_ai_enabled(old_state)
-	SHOULD_CALL_PARENT(TRUE)
 	return
 
 ///This proc is used for adding the swabbale element to mobs so that they are able to be biopsied and making sure holograpic and butter-based creatures don't yield viable cells samples.

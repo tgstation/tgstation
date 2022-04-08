@@ -641,7 +641,7 @@
 	else
 		return TRUE
 
-/mob/living/simple_animal/hostile/consider_wakeup(reactivate = FALSE)
+/mob/living/simple_animal/hostile/consider_wakeup()
 	..()
 	var/list/tlist
 	var/turf/T = get_turf(src)
@@ -659,7 +659,7 @@
 	else
 		tlist = ListTargets()
 
-	if((AIStatus == AI_IDLE || AIStatus == AI_DISTANCE_OFF && reactivate) && FindTarget(tlist, TRUE))
+	if(AIStatus == AI_IDLE && FindTarget(tlist, TRUE))
 		if(cheap_search) //Try again with full effort
 			FindTarget()
 		toggle_ai(AI_ON)
@@ -718,22 +718,17 @@
 	return
 
 /mob/living/simple_animal/hostile/on_ai_distance_disabled(old_state)
-	. = ..()
-
 	if(stop_life)//we're in the simulation fog of war so dont waste processing resources on us when it doesnt affect players
 		SSsimple_mobs.processing_simple_mobs -= src//we can stay in current_run for 1 iteration. as a treat.
 
 	register_to_players_getting_near(vision_range)
 
 /mob/living/simple_animal/hostile/on_ai_disabled(old_state)
-	. = ..()
-
 	if(old_state == AI_DISTANCE_OFF)//we arent on but we are no longer off due to no near players, so unset functionality coupled to AI_DISTANCE_OFF
 		SSsimple_mobs.processing_simple_mobs |= src
 		register_to_players_getting_near(0)
 
 /mob/living/simple_animal/hostile/on_ai_enabled(old_state)
-	. = ..()
 	if(old_state != AI_DISTANCE_OFF)
 		return
 
