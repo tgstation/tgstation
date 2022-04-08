@@ -35,12 +35,11 @@
 /turf/closed/indestructible/syndicate,
 /area/ctf)
 "cl" = (
-/obj/structure/window/reinforced{
-	dir = 4;
-	resistance_flags = 64
-	},
 /obj/structure/shuttle/engine/heater{
 	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/east{
+	resistance_flags = 64
 	},
 /turf/closed/indestructible/syndicate,
 /area/ctf)
@@ -92,13 +91,12 @@
 /area/ctf)
 "dt" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	resistance_flags = 64
-	},
-/obj/structure/window/reinforced{
 	resistance_flags = 64
 	},
 /obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/window/reinforced/spawner/north{
+	resistance_flags = 64
+	},
 /turf/open/floor/grass,
 /area/ctf)
 "dS" = (
@@ -279,8 +277,7 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/ctf)
 "nV" = (
-/obj/structure/window/reinforced{
-	dir = 8;
+/obj/structure/window/reinforced/spawner/west{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/titanium/tiled,
@@ -292,8 +289,7 @@
 /turf/open/floor/pod/light,
 /area/ctf)
 "oL" = (
-/obj/structure/window/reinforced{
-	dir = 1;
+/obj/structure/window/reinforced/spawner/north{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/titanium/tiled,
@@ -507,8 +503,7 @@
 /turf/open/floor/circuit,
 /area/ctf)
 "CU" = (
-/obj/structure/window/reinforced{
-	dir = 4;
+/obj/structure/window/reinforced/spawner/east{
 	resistance_flags = 64
 	},
 /turf/open/floor/mineral/titanium/tiled,
@@ -540,12 +535,11 @@
 /turf/open/floor/pod/light,
 /area/ctf)
 "FP" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	resistance_flags = 64
-	},
 /obj/structure/shuttle/engine/heater{
 	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/west{
+	resistance_flags = 64
 	},
 /turf/closed/indestructible/syndicate,
 /area/ctf)
@@ -573,17 +567,15 @@
 /area/space/nearstation)
 "GH" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	resistance_flags = 64
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	resistance_flags = 64
-	},
-/obj/structure/window/reinforced{
 	resistance_flags = 64
 	},
 /obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/window/reinforced/spawner/east{
+	resistance_flags = 64
+	},
+/obj/structure/window/reinforced/spawner/north{
+	resistance_flags = 64
+	},
 /turf/open/floor/grass,
 /area/ctf)
 "Hy" = (
@@ -612,17 +604,15 @@
 /area/ctf)
 "HN" = (
 /obj/structure/window/reinforced{
-	dir = 8;
-	resistance_flags = 64
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	resistance_flags = 64
-	},
-/obj/structure/window/reinforced{
 	resistance_flags = 64
 	},
 /obj/structure/flora/ausbushes/fernybush,
+/obj/structure/window/reinforced/spawner/west{
+	resistance_flags = 64
+	},
+/obj/structure/window/reinforced/spawner/north{
+	resistance_flags = 64
+	},
 /turf/open/floor/grass,
 /area/ctf)
 "HZ" = (
