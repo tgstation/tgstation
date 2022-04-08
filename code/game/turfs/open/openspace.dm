@@ -19,6 +19,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	pathing_pass_method = TURF_PATHING_PASS_PROC
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -155,6 +156,11 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	return FALSE
 
 /turf/open/openspace/rust_heretic_act()
+	return FALSE
+
+/turf/open/openspace/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	if(caller && !caller.can_z_move(DOWN, src, null , ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
+		return TRUE
 	return FALSE
 
 /turf/open/openspace/icemoon

@@ -1,4 +1,0 @@
-author: "B4CKU"
-delete-after: True
-changes: 
-  - bugfix: "finishing grenades no longer prints the error message when it shouldn't"

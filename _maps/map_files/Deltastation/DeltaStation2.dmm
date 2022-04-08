@@ -3603,6 +3603,7 @@
 /obj/item/folder/blue,
 /obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "aTa" = (
@@ -48140,11 +48141,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/requests_console/directional/north{
-	department = "AI";
-	departmentType = 5;
-	name = "AI Requests Console"
-	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "lIO" = (
@@ -60250,12 +60246,6 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
-"pua" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/ai)
 "pue" = (
 /obj/structure/reagent_dispensers/plumbed{
 	dir = 1
@@ -75928,7 +75918,7 @@
 "tVe" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/newscaster/directional/north,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "tVu" = (
@@ -82817,6 +82807,7 @@
 /obj/item/folder/blue,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/requests_console/directional/west,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "wdO" = (
@@ -97813,7 +97804,7 @@ btH
 bIW
 btH
 btH
-pua
+lMy
 abJ
 ldm
 bPC
