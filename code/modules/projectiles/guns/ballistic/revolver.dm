@@ -202,7 +202,7 @@
 					DETAIL_PROTAGONIST = user,
 					DETAIL_LOADED_ROUNDS = loaded_rounds,
 					DETAIL_BODYPART = affecting.name,
-					DETAIL_OUTCOME = chambered ? "won" : "lost"
+					DETAIL_OUTCOME = (chambered ? "won" : "lost")
 				),
 				story_value = STORY_VALUE_AMAZING,
 				memory_flags = MEMORY_CHECK_BLINDNESS,
