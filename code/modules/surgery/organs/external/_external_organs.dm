@@ -287,3 +287,4 @@
 /obj/item/organ/external/pod_hair/override_color(rgb_value)
 	var/list/rgb_list = rgb2num(rgb_value)
 	return rgb(255 - rgb_list[1], 255 - rgb_list[2], 255 - rgb_list[3])
+
