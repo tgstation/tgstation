@@ -12,11 +12,6 @@
 	///The parts can be registered on the main one only when their panel is closed
 	var/can_connect = TRUE
 
-	///Overlay for panel_open
-	var/open_overlay //#TODO: get the overlay done
-	///Overlay for machine activation
-	var/on_overlay //#TODO: get the overlay done
-
 	///Reference to our turbine part
 	var/obj/item/turbine_parts/installed_part
 	///Path of the turbine part we can install
@@ -85,13 +80,6 @@
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/power/turbine/update_overlays()
-	. = ..()
-	if(panel_open)
-		. += open_overlay
-	if(active)
-		. += on_overlay
-
 /obj/machinery/power/turbine/wrench_act(mob/living/user, obj/item/tool)
 	return default_change_direction_wrench(user, tool)
 
@@ -132,7 +120,7 @@
 
 /obj/machinery/power/turbine/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(istype(gone, installed_part))
+	if(gone == installed_part)
 		installed_part = null
 
 /obj/machinery/power/turbine/attackby(obj/item/object, mob/user, params)

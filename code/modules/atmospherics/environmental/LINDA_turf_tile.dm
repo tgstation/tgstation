@@ -669,7 +669,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 /turf/proc/add_thermal_conductivity_source(conductivity, priority)
 	if(!thermal_conductivities || !LAZYLEN(thermal_conductivities))
 		LAZYSETLEN(thermal_conductivities, MAX_TEMPORARY_THERMAL_CONDUCTIVITY)
-	if(!conductivity)
+	if(!isnull(conductivity))//0 conductivity is valid
 		return
 	if(priority > LAZYLEN(thermal_conductivities))
 		return
@@ -680,8 +680,6 @@ Then we space some of our heat, and think about if we should stop conducting.
  * Removes a source of thermal conductivity to change our conductivity to the next one in priority or restore it to the initial value
  */
 /turf/proc/remove_thermal_conductivity_source(conductivity, priority)
-	if(!thermal_conductivities)
-		return
 	if(priority > LAZYLEN(thermal_conductivities))
 		return
 	if(conductivity && thermal_conductivities[priority] != conductivity)
@@ -698,11 +696,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 	if(!thermal_conductivities)
 		return
 	for(var/checked_conductivity in thermal_conductivities)
-		if(islist(checked_conductivity))
-			var/list/conductivity_list = checked_conductivity
-			if(conductivity_list.len)
-				thermal_conductivity = conductivity_list
-				return
-		else if(checked_conductivity)
+		if(checked_conductivity)
 			thermal_conductivity = checked_conductivity
 			return
+	LAZYNULL(thermal_conductivities)

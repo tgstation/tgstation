@@ -17,10 +17,6 @@
 	. = ..()
 	locate_machinery()
 
-/obj/machinery/computer/turbine_computer/Destroy()
-	unregister_machine()
-	return ..()
-
 /obj/machinery/computer/turbine_computer/locate_machinery(multitool_connection)
 	if(!mapping_id)
 		return
@@ -46,13 +42,6 @@
 
 /obj/machinery/computer/turbine_computer/proc/register_machine(machine)
 	turbine_core = WEAKREF(machine)
-	RegisterSignal(machine, COMSIG_PARENT_QDELETING, .proc/unregister_machine)
-
-/obj/machinery/computer/turbine_computer/proc/unregister_machine()
-	SIGNAL_HANDLER
-	if(turbine_core)
-		var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core.resolve()
-		UnregisterSignal(main_control, COMSIG_PARENT_QDELETING)
 
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
