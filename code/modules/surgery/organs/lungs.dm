@@ -128,6 +128,15 @@
 	var/added_co2 = 0
 	///how much o2 we end up breathing out. added after everything else
 	var/added_o2 = 0
+	var/o2_breathed = 0
+	var/co2_breathed = 0
+	//if these gases arent encountered in the air mix then these will still be 0 and thus perform any alerts/suffocation effects we need to.
+	var/O2_pp = 0
+	var/N2_pp = 0
+	var/CO2_pp = 0
+	var/Plasma_pp = 0
+	var/miasma_pp = 0
+	var/SA_pp = 0
 
 	///whether we have been affected by miasma or not. only becomes true if we care about miasma and miasma has been breathed
 	var/affected_by_miasma = FALSE
@@ -139,8 +148,7 @@
 	for(var/gas_id in breath_gases)
 		switch(gas_id)
 			if(/datum/gas/oxygen) //OXYGEN
-				var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8 * breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium]?[MOLES]))
-				var/o2_breathed = 0
+				O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8 * breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium]?[MOLES]))
 
 				if(safe_oxygen_max)
 					if(O2_pp > safe_oxygen_max)
@@ -151,7 +159,7 @@
 						breather.clear_alert("too_much_oxy")
 
 				//Too little oxygen!
-				if(safe_oxygen_min) //TODOKYLER: make this work if oxygen isnt in the mix at all
+				if(safe_oxygen_min)
 					if(O2_pp < safe_oxygen_min)
 						o2_breathed = handle_too_little_breath(breather, O2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
 						breather.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
@@ -168,7 +176,7 @@
 				continue
 
 			if(/datum/gas/nitrogen)//NITROGEN
-				var/N2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
+				N2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
 
 				if(safe_nitro_max)
 					if(N2_pp > safe_nitro_max)
@@ -198,8 +206,7 @@
 				continue
 
 			if(/datum/gas/carbon_dioxide) //CO2
-				var/CO2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
-				var/co2_breathed = 0
+				CO2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
 				if(safe_co2_max)
 					if(CO2_pp > safe_co2_max)
 						if(!breather.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
@@ -235,7 +242,7 @@
 				continue
 
 			if(/datum/gas/plasma) //PLASMA
-				var/Plasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
+				Plasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
 				var/plasma_breathed = 0
 				if(safe_plasma_max)
 					if(Plasma_pp > safe_plasma_max)
@@ -263,7 +270,7 @@
 				continue
 
 			if(/datum/gas/nitrous_oxide)//NITROUS OXIDE
-				var/SA_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
+				SA_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
 				if(SA_pp > SA_para_min) // Enough to make us stunned for a bit
 					breather.throw_alert("too_much_n2o", /atom/movable/screen/alert/too_much_n2o)
 					breather.Unconscious(60) // 60 gives them one second to wake up and run away a bit!
@@ -358,6 +365,7 @@
 					if(healium_pp > healium_sleep_min)
 						var/existing = breather.reagents.get_reagent_amount(/datum/reagent/healium)
 						breather.reagents.add_reagent(/datum/reagent/healium,max(0, 1 - existing))
+
 				var/healium_breathed = breath_gases[/datum/gas/healium][MOLES]
 				breath_gases[/datum/gas/healium][MOLES] -= healium_breathed
 				continue
@@ -369,6 +377,7 @@
 					breather.adjustOxyLoss(5)
 					breather.adjustFireLoss(8)
 					breather.adjustToxLoss(8)
+
 				var/zauker_breathed = breath_gases[/datum/gas/zauker][MOLES]
 				breath_gases[/datum/gas/zauker][MOLES] -= zauker_breathed
 				continue
@@ -379,6 +388,7 @@
 					breather.adjustOxyLoss(5)
 					var/existing = breather.reagents.get_reagent_amount(/datum/reagent/halon)
 					breather.reagents.add_reagent(/datum/reagent/halon,max(0, 1 - existing))
+
 				var/halon_breathed = breath_gases[/datum/gas/halon][MOLES]
 				breath_gases[/datum/gas/halon][MOLES] -= halon_breathed
 				continue
@@ -388,13 +398,14 @@
 				if (hypernob_breathed > gas_stimulation_min)
 					var/existing = breather.reagents.get_reagent_amount(/datum/reagent/hypernoblium)
 					breather.reagents.add_reagent(/datum/reagent/hypernoblium,max(0, 1 - existing))
+
 				breath_gases[/datum/gas/hypernoblium][MOLES] -= hypernob_breathed
 				continue
 
 			if(/datum/gas/miasma) //MIASMA
 				if(suffers_miasma)
 					affected_by_miasma = TRUE
-					var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
+					miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
 
 					//Miasma sickness
 					if(prob(0.5 * miasma_pp))
@@ -445,6 +456,48 @@
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else if (n2o_euphoria == EUPHORIA_INACTIVE && healium_euphoria == EUPHORIA_INACTIVE)
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+
+	//for all the gases we have possible minimums for, we need to check those minimums if the gases were never in the gas loop
+
+	if(!O2_pp)
+		if(safe_oxygen_min)
+			breather.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+			handle_too_little_breath(breather, O2_pp, safe_oxygen_min, 0)
+
+		if(safe_oxygen_max)
+			breather.clear_alert("too_much_oxy")
+
+	if(!N2_pp)
+		if(safe_nitro_min)
+			handle_too_little_breath(breather, N2_pp, safe_nitro_min, 0)
+			breather.throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
+
+		if(safe_nitro_max)
+			breather.clear_alert("too_much_nitro")
+
+	if(!CO2_pp)
+		if(safe_co2_max)
+			breather.co2overloadtime = 0
+			breather.clear_alert("too_much_co2")
+
+		if(safe_co2_min)
+			handle_too_little_breath(breather, CO2_pp, safe_co2_min, 0)
+			breather.throw_alert("not_enough_co2", /atom/movable/screen/alert/not_enough_co2)
+
+	if(!Plasma_pp)
+		if(safe_plasma_max)
+			breather.clear_alert("too_much_plas")
+
+		if(safe_plasma_min)
+			handle_too_little_breath(breather, Plasma_pp, safe_plasma_min, 0)
+			breather.throw_alert("not_enough_plas", /atom/movable/screen/alert/not_enough_plas)
+
+	if(!SA_pp)
+		n2o_euphoria = EUPHORIA_INACTIVE
+		breather.clear_alert("too_much_n2o")
+
+	if(!miasma_pp)
+		SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
 	if(added_co2)
 		ASSERT_GAS(/datum/gas/carbon_dioxide, breath)
