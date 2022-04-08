@@ -2759,10 +2759,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"xi" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/mine/living_quarters)
 "xn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
@@ -11530,7 +11526,7 @@ dZ
 cM
 cM
 cM
-xi
+cR
 cM
 cR
 oL
