@@ -14,6 +14,8 @@
 		/obj/item/ai_module/core/full/paladin_devotion,
 		/obj/item/ai_module/core/full/paladin,
 		/obj/item/ai_module/core/full/drone,
+		/obj/item/ai_module/core/full/custom, // uses lawsets from config/silicon_laws.txt (defaults to asmiov if no lawsets)
+		/obj/item/ai_module/supplied/freeform,
 	)
 
 /obj/effect/spawner/random/aimodule/neutral
@@ -28,6 +30,7 @@
 		/obj/item/ai_module/core/full/hulkamania,
 		/obj/item/ai_module/supplied/safeguard,
 		/obj/item/ai_module/supplied/protect_station,
+		/obj/item/ai_module/supplied/quarantine,
 		/obj/item/ai_module/remove,
 	)
 
@@ -41,7 +44,6 @@
 		/obj/item/ai_module/core/full/damaged,
 		/obj/item/ai_module/reset/purge,
 		/obj/item/ai_module/zeroth/onehuman,
-		/obj/item/ai_module/supplied/quarantine,
 		/obj/item/ai_module/supplied/oxygen,
-		/obj/item/ai_module/supplied/freeform,
+		/obj/item/ai_module/core/freeformcore,
 	)
