@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes: 
+  - bugfix: "TramStations AI sat teleporter now has a button to control the shutters. Please stop banging on them to be let in."
