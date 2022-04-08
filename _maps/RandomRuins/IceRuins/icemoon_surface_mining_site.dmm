@@ -82,7 +82,9 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "s" = (
-/obj/effect/decal/cleanable/trail_holder,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "t" = (

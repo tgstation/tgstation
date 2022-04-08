@@ -114,10 +114,11 @@
 	},
 /area/ruin/powered/shuttle)
 "sM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/east,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 4
+	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "te" = (
@@ -228,10 +229,8 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "CH" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
 /obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "Et" = (
@@ -254,10 +253,10 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/shuttle)
 "FP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
 /obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "Gl" = (
@@ -269,17 +268,17 @@
 	},
 /area/ruin/powered/shuttle)
 "GH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "GQ" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/grille,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "HT" = (
@@ -298,9 +297,10 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Jt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/east,
 /obj/effect/decal/cleanable/glass,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 4
+	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "Kh" = (
@@ -423,9 +423,9 @@
 	},
 /area/ruin/powered/shuttle)
 "Zd" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 

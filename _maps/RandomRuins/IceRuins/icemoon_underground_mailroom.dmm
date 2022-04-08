@@ -17,9 +17,7 @@
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "ba" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/textured,
 /area/ruin/powered/mailroom)
 "bK" = (
@@ -367,10 +365,8 @@
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "MT" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/light/cold/directional/north,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/textured,
 /area/ruin/powered/mailroom)
 "Nq" = (
