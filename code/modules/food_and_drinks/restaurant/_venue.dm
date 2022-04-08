@@ -75,12 +75,10 @@
 		var/datum/custom_order/custom_order = new order(src)
 		food_image = custom_order.get_order_appearance(src)
 		food_line = custom_order.get_order_line(src)
-		. = custom_order.dispense_order()
+		order = custom_order.dispense_order()
 	else
 		food_image = get_food_appearance(order)
 		food_line = order_food_line(order)
-		. = order
-
 	customer_pawn.say(food_line)
 
 	// common code for the food thoughts appearance
@@ -90,6 +88,8 @@
 	food_image.plane = HUD_PLANE
 	food_image.appearance_flags = RESET_COLOR
 	customer_pawn.hud_to_show_on_hover = customer_pawn.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/food_demands, "food_thoughts", food_image)
+
+	return order
 
 ///Checks if the object used is correct for the venue
 /datum/venue/proc/is_correct_order(atom/movable/object_used, wanted_item)
