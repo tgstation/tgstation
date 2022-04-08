@@ -1535,10 +1535,10 @@
 
 /datum/reagent/zauker/on_mob_life(mob/living/L, delta_time, times_fired)
 	. = ..()
-	L.adjustBruteLoss(25 * REM * delta_time, FALSE)
-	L.adjustOxyLoss(5 * REM * delta_time, FALSE)
-	L.adjustFireLoss(8 * REM * delta_time, FALSE)
-	L.adjustToxLoss(8 * REM * delta_time, FALSE)
+	L.adjustBruteLoss(6 * REM * delta_time, FALSE)
+	L.adjustOxyLoss(1 * REM * delta_time, FALSE)
+	L.adjustFireLoss(2 * REM * delta_time, FALSE)
+	L.adjustToxLoss(2 * REM * delta_time, FALSE)
 
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
