@@ -62,6 +62,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 
 	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
 
+	var/pai = null
+
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 

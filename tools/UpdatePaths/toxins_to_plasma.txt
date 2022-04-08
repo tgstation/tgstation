@@ -32,7 +32,7 @@
 
 /obj/item/storage/backpack/satchel/tox : /obj/item/storage/backpack/satchel/science
 /obj/item/cartridge/signal/toxins : /obj/item/cartridge/signal/ordnance
-/obj/item/modular_computer/tablet/role/toxins : /obj/item/modular_computer/tablet/role/science
+/obj/item/pda/toxins : /obj/item/pda/science
 /obj/item/book/manual/wiki/toxins : /obj/item/book/manual/wiki/ordnance
 /obj/item/storage/backpack/duffelbag/toxins : /obj/item/storage/backpack/duffelbag/science
 /obj/item/paper/fluff/jobs/toxins/chemical_info : /obj/item/paper/fluff/jobs/ordnance/chemical_info

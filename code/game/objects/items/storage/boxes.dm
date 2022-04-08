@@ -550,7 +550,7 @@
 /obj/item/storage/box/pdas/PopulateContents()
 	for(var/i in 1 to 4)
 		new /obj/item/modular_computer/tablet/role(src)
-	new /obj/item/cartridge/head(src)
+	new /obj/item/computer_hardware/hard_drive/role/head(src)
 
 	var/newcart = pick( /obj/item/computer_hardware/hard_drive/role/engineering,
 						/obj/item/computer_hardware/hard_drive/role/security,
@@ -591,9 +591,9 @@
 	illustration = "pda"
 
 /obj/item/storage/box/seccarts/PopulateContents()
-	new /obj/item/cartridge/detective(src)
+	new /obj/item/computer_hardware/hard_drive/role/detective(src)
 	for(var/i in 1 to 6)
-		new /obj/item/cartridge/security(src)
+		new /obj/item/computer_hardware/hard_drive/role/security(src)
 
 /obj/item/storage/box/firingpins
 	name = "box of standard firing pins"

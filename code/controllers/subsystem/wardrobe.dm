@@ -43,7 +43,6 @@ SUBSYSTEM_DEF(wardrobe)
 	setup_callbacks()
 	load_outfits()
 	load_species()
-	load_pda_nicknacks()
 	load_storage_contents()
 	hard_refresh_queue()
 	stock_hit = 0
@@ -331,14 +330,6 @@ SUBSYSTEM_DEF(wardrobe)
 		for(var/obj/item/species_request as anything in fossil_record.get_types_to_preload())
 			for(var/i in 1 to 5) // Store 5 of each species, since that seems on par with 1 of each outfit
 				canonize_type(species_request)
-		CHECK_TICK
-
-/datum/controller/subsystem/wardrobe/proc/load_pda_nicknacks()
-	for(var/obj/item/pda/pager as anything in typesof(/obj/item/pda))
-		var/obj/item/pda/flip_phone = new pager()
-		for(var/datum/outfit_item_type as anything in flip_phone.get_types_to_preload())
-			canonize_type(outfit_item_type)
-		qdel(flip_phone)
 		CHECK_TICK
 
 /datum/controller/subsystem/wardrobe/proc/load_storage_contents()

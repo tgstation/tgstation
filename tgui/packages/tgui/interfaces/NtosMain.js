@@ -6,6 +6,7 @@ export const NtosMain = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     device_theme,
+    show_imprint,
     programs = [],
     has_light,
     light_on,
@@ -44,7 +45,7 @@ export const NtosMain = (props, context) => {
             </Button>
           </Section>
         )}
-        {!!cardholder && (
+        {!!(cardholder && show_imprint) && (
           <Section
             title="User Login"
             buttons={(

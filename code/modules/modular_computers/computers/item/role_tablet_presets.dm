@@ -71,7 +71,7 @@
 	greyscale_colors = "#e2e2e2#000099#5d99be"
 
 /obj/item/modular_computer/tablet/role/heads/rd
-	name = "researchdirector tablet"
+	name = "research director tablet"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/rd
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#e2e2e2#000099#9F5CA5"

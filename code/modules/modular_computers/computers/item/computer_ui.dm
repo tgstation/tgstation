@@ -51,6 +51,7 @@
 	var/list/data = get_header_data()
 	data["device_theme"] = device_theme
 	data["login"] = list()
+	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet/)
 
 	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
 	var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
