@@ -546,10 +546,10 @@
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bt" = (
-/obj/structure/window/spawner,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/genericbush,
 /obj/structure/flora/ausbushes/brflowers,
+/obj/structure/window,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bu" = (

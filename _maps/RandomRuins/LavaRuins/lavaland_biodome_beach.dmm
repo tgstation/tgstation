@@ -102,18 +102,14 @@
 /turf/open/floor/carpet/red,
 /area/ruin/powered/beach)
 "bG" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/window/reinforced,
 /obj/item/megaphone,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bH" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/mob_spawn/ghost_role/human/beach/lifeguard,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bL" = (
@@ -765,16 +761,12 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Ao" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/item/bikehorn/airhorn,
 /obj/structure/table/wood,
 /obj/item/storage/medkit/regular,
 /obj/item/storage/medkit/brute,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "AB" = (
@@ -979,17 +971,12 @@
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "GA" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
 /obj/structure/chair/stool/directional/south,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/red,
 /obj/item/clothing/glasses/sunglasses,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "GB" = (

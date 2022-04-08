@@ -1986,16 +1986,13 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 30
 	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
 /obj/item/book/manual/chef_recipes{
 	pixel_x = 2;
 	pixel_y = 6
 	},
 /obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/food/drinks/shaker,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/bar)
 "lm" = (
