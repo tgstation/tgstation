@@ -37314,9 +37314,6 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/plating,
 /area/science/lower)
-"lYa" = (
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/space)
 "lYN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -145891,7 +145888,6 @@ aYr
 aYr
 aYr
 aYr
-ajc
 aYr
 aYr
 aYr
@@ -145903,7 +145899,8 @@ aYr
 aYr
 aYr
 aYr
-ajc
+aYr
+aYr
 aYr
 aYr
 aYr
@@ -196838,7 +196835,7 @@ aYr
 aYr
 aYr
 aYr
-lYa
+aYr
 aYr
 aYr
 aYr
