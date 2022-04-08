@@ -7,6 +7,9 @@
 
 	hud_type = /datum/hud/living
 
+	///what mob subsystem we process in to call Life()
+	var/life_subsystem = /datum/controller/subsystem/mobs
+
 	var/resize = 1 ///Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null

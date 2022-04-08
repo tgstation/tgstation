@@ -90,3 +90,11 @@
 	PreInit();\
 }\
 /datum/controller/subsystem/processing/##X
+
+#define MOB_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/mobs/##X);\
+/datum/controller/subsystem/mobs/##X/New(){\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
+}\
+/datum/controller/subsystem/mobs/##X/fire() {..()/*literally just so it shows up in the profiler*/}  \
+/datum/controller/subsystem/mobs/##X

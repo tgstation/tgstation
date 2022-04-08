@@ -1,5 +1,9 @@
 /mob/living/Initialize(mapload)
 	. = ..()
+	if(life_subsystem)
+		for(var/datum/controller/subsystem/mobs/possible_match in Master.subsystems)
+			if(possible_match.type == life_subsystem)
+				possible_match.processing_list += src
 	register_init_signals()
 	if(unique_name)
 		set_name()
@@ -36,6 +40,12 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
+
+	if(life_subsystem)
+		for(var/datum/controller/subsystem/mobs/possible_match in Master.subsystems)
+			if(possible_match.type == life_subsystem)
+				possible_match.processing_list -= src
+				possible_match.currentrun -= src
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src

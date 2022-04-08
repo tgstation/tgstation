@@ -722,13 +722,13 @@
 
 /mob/living/simple_animal/hostile/on_ai_distance_disabled(old_state)
 	if(stop_life)//we're in the simulation fog of war so dont waste processing resources on us when it doesnt affect players
-		SSsimple_mobs.processing_simple_mobs -= src//we can stay in current_run for 1 iteration. as a treat.
+		SSsimple_mobs.processing_list -= src//we can stay in current_run for 1 iteration. as a treat.
 
 	register_to_players_getting_near(vision_range)
 
 /mob/living/simple_animal/hostile/on_ai_disabled(old_state)
 	if(old_state == AI_DISTANCE_OFF)//we arent on but we are no longer off due to no near players, so unset functionality coupled to AI_DISTANCE_OFF
-		SSsimple_mobs.processing_simple_mobs |= src
+		SSsimple_mobs.processing_list |= src
 		register_to_players_getting_near(0)
 
 /mob/living/simple_animal/hostile/on_ai_enabled(old_state)
@@ -736,7 +736,7 @@
 		return
 
 	if(stop_life)
-		SSsimple_mobs.processing_simple_mobs |= src
+		SSsimple_mobs.processing_list |= src
 
 	register_to_players_getting_near(0)
 

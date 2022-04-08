@@ -7,6 +7,7 @@
 	gender = PLURAL //placeholder
 	living_flags = MOVES_ON_ITS_OWN
 	status_flags = CANPUSH
+	life_subsystem = /datum/controller/subsystem/mobs/simple_mobs
 
 	var/icon_living = ""
 	///Icon when the animal is dead. Don't use animated icons for this.
@@ -182,7 +183,6 @@
 /mob/living/simple_animal/Initialize(mapload)
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
-	SSsimple_mobs.processing_simple_mobs += src
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
 	if(!real_name)
@@ -224,8 +224,6 @@
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
-	SSsimple_mobs.processing_simple_mobs -= src
-	SSsimple_mobs.current_run -= src
 
 	if (SSnpcpool.state == SS_PAUSED && LAZYLEN(SSnpcpool.currentrun))
 		SSnpcpool.currentrun -= src

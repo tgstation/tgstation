@@ -5,6 +5,10 @@ SUBSYSTEM_DEF(mobs)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	wait = 2 SECONDS
 
+	///what simple animals get processed by this subsystem.
+	var/list/processing_list = list()
+
+	///the actual queue processing the mobs in our tick
 	var/list/currentrun = list()
 
 	var/static/list/clients_by_zlevel[][]
@@ -13,7 +17,7 @@ SUBSYSTEM_DEF(mobs)
 	var/static/list/cheeserats = list()
 
 /datum/controller/subsystem/mobs/stat_entry(msg)
-	msg = "P:[length(GLOB.carbon_list + GLOB.silicon_mobs)]"
+	msg = "P:[length(processing_list)]"
 	return ..()
 
 /datum/controller/subsystem/mobs/proc/MaxZChanged()
@@ -28,7 +32,7 @@ SUBSYSTEM_DEF(mobs)
 
 /datum/controller/subsystem/mobs/fire(resumed = FALSE)
 	if (!resumed)
-		src.currentrun = GLOB.carbon_list.Copy() + GLOB.silicon_mobs.Copy()
+		src.currentrun = processing_list.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
