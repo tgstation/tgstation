@@ -3401,6 +3401,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/security/prison)
+"aOV" = (
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/space,
+/area/space/nearstation)
+"aOX" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/space,
+/area/space/nearstation)
 "aOY" = (
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/space,
@@ -3658,9 +3667,9 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space/nearstation)
-"aSD" = (
+"aSG" = (
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/space,
 /area/space/nearstation)
 "aSI" = (
@@ -4432,11 +4441,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/starboard/fore)
-"bcQ" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/space,
-/area/space/nearstation)
 "bcX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4607,11 +4611,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
-"bgo" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
-/turf/open/space,
-/area/space/nearstation)
 "bgp" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
 	dir = 4
@@ -4960,6 +4959,11 @@
 /area/space/nearstation)
 "blx" = (
 /turf/closed/wall,
+/area/space/nearstation)
+"bly" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/space,
 /area/space/nearstation)
 "blA" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
@@ -6103,6 +6107,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"bAT" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating,
+/area/cargo/sorting)
 "bAU" = (
 /obj/machinery/microwave{
 	pixel_y = 4
@@ -9598,16 +9607,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
-"cCd" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "packageExternal"
-	},
-/obj/structure/plasticflaps/opaque,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/plating,
-/area/cargo/qm)
 "cCe" = (
 /turf/closed/wall,
 /area/medical/morgue)
@@ -11293,10 +11292,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"cVP" = (
-/obj/structure/window/reinforced/spawner/north,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/aisat/exterior)
 "cVU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/medical/patient_stretcher,
@@ -21988,12 +21983,6 @@
 "gPT" = (
 /turf/closed/wall/r_wall,
 /area/medical/coldroom)
-"gPX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/aisat/exterior)
 "gQf" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
@@ -24556,6 +24545,11 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"hLx" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/aisat/exterior)
 "hLH" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Prison Workshop"
@@ -28577,11 +28571,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/port/aft)
-"jqB" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/aisat/exterior)
 "jqI" = (
 /obj/machinery/airalarm/directional/west,
 /obj/structure/rack,
@@ -29784,6 +29773,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/port)
+"jMP" = (
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/aisat/exterior)
 "jMU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -32335,11 +32328,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
-"kLG" = (
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/aisat/exterior)
 "kMi" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/structure/crate_empty,
@@ -45534,6 +45522,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/hallway/primary/central)
+"puO" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "packageExternal"
+	},
+/obj/structure/plasticflaps/opaque,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating,
+/area/cargo/qm)
 "puS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -48637,8 +48635,8 @@
 /area/engineering/atmos/storage/gas)
 "qCQ" = (
 /obj/structure/window/reinforced/spawner/north,
-/turf/open/space,
-/area/space/nearstation)
+/turf/open/space/basic,
+/area/space)
 "qCV" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -51244,6 +51242,11 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
+"rHO" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/aisat/exterior)
 "rHY" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
@@ -52060,6 +52063,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
 /turf/open/floor/iron/dark,
 /area/engineering/supermatter/room)
+"rVB" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/aisat/exterior)
 "rVK" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -54218,6 +54226,11 @@
 	},
 /turf/open/floor/iron,
 /area/commons/storage/tools)
+"sTF" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/aisat/exterior)
 "sTJ" = (
 /turf/open/floor/carpet,
 /area/commons/dorms)
@@ -56835,6 +56848,12 @@
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/department/science/xenobiology)
+"tRm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/aisat/exterior)
 "tRH" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Gravity Generator Room";
@@ -59035,11 +59054,6 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"uOm" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced/spawner/east,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/aisat/exterior)
 "uOF" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -60998,10 +61012,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/service/cafeteria)
-"vCa" = (
-/obj/structure/window/reinforced/spawner/north,
-/turf/open/space/basic,
-/area/space)
 "vCn" = (
 /obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/siding{
@@ -61009,11 +61019,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/science/lab)
-"vCy" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/aisat/exterior)
 "vCz" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
@@ -61209,11 +61214,6 @@
 /obj/item/binoculars,
 /turf/open/space/basic,
 /area/space/nearstation)
-"vFk" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/plating,
-/area/cargo/sorting)
 "vFp" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=16-Fore";
@@ -87001,8 +87001,8 @@ oMe
 sPo
 sPo
 sPo
-cCd
-cCd
+puO
+puO
 pFA
 sQf
 tbb
@@ -89050,7 +89050,7 @@ dhy
 rVn
 fhB
 jdn
-vFk
+bAT
 hel
 eGZ
 pcU
@@ -119381,7 +119381,7 @@ lMJ
 aMq
 qjC
 qjC
-qCQ
+aOV
 blw
 aNw
 ajl
@@ -119638,12 +119638,12 @@ lMJ
 aMq
 pyP
 pyP
-qCQ
+aOV
 aMq
 xct
 jBb
 ero
-qCQ
+aOV
 aaa
 aaa
 aaa
@@ -120149,15 +120149,15 @@ aaa
 aaa
 aaa
 lMJ
-aSD
+bly
 xew
 pyP
-bgo
-aSD
+aOX
+bly
 gMA
 xXK
 skt
-bgo
+aOX
 aNw
 aTQ
 aNw
@@ -120409,16 +120409,16 @@ tJV
 iKh
 wCz
 olg
-gPX
-gPX
+tRm
+tRm
 eGd
 vyM
 gey
-gPX
-gPX
-gPX
+tRm
+tRm
+tRm
 icG
-qCQ
+aOV
 aaa
 aaa
 aaa
@@ -120655,27 +120655,27 @@ aNw
 aTQ
 mOA
 aTQ
-aSD
+bly
 tTu
-kLG
-kLG
-kLG
-kLG
-kLG
-kLG
+rHO
+rHO
+rHO
+rHO
+rHO
+rHO
 mtR
 aVk
 aOY
 aOY
-bcQ
+aSG
 gMA
 neG
 rHz
 eNR
 aOY
-bcQ
+aSG
 lTt
-bgo
+aOX
 aNw
 aNw
 aNw
@@ -120909,10 +120909,10 @@ lMJ
 lMJ
 aMr
 tmO
-kLG
-kLG
-kLG
-kLG
+rHO
+rHO
+rHO
+rHO
 rGG
 aVk
 aOY
@@ -120932,20 +120932,20 @@ eNR
 aaa
 aMq
 vKf
-kLG
-kLG
-kLG
-kLG
-kLG
-kLG
+rHO
+rHO
+rHO
+rHO
+rHO
+rHO
 ndb
-kLG
-kLG
-kLG
-kLG
-kLG
-kLG
-vCy
+rHO
+rHO
+rHO
+rHO
+rHO
+rHO
+hLx
 bBb
 lMJ
 lMJ
@@ -121201,9 +121201,9 @@ aOY
 aNC
 ops
 aNC
-bcQ
+aSG
 qbF
-qCQ
+aOV
 aaa
 aaa
 rrt
@@ -121460,7 +121460,7 @@ anS
 lMJ
 aMr
 qbF
-qCQ
+aOV
 aaa
 aaa
 rrt
@@ -121717,7 +121717,7 @@ anS
 anS
 tXy
 qbF
-qCQ
+aOV
 aaa
 aaa
 rrt
@@ -121937,7 +121937,7 @@ aaa
 aaa
 aMq
 qbF
-qCQ
+aOV
 aaa
 aaa
 gfU
@@ -121974,7 +121974,7 @@ lMJ
 lMJ
 aMr
 qbF
-qCQ
+aOV
 aaa
 aaa
 rrt
@@ -122192,9 +122192,9 @@ aaa
 rrt
 aaa
 aNw
-aSD
+bly
 qbF
-qCQ
+aOV
 aaa
 aaa
 gfU
@@ -122231,7 +122231,7 @@ aaa
 aaa
 aMq
 qbF
-bgo
+aOX
 aNw
 aaa
 rrt
@@ -122451,7 +122451,7 @@ aMq
 tmO
 qim
 oqn
-qCQ
+aOV
 aaa
 gfU
 gfU
@@ -122487,10 +122487,10 @@ gfU
 eNR
 aaa
 aMq
-cVP
+jMP
 qim
-vCy
-qCQ
+hLx
+aOV
 rrt
 aaa
 aaa
@@ -122705,10 +122705,10 @@ aaa
 aaa
 rrt
 aMq
-cVP
+jMP
 iQr
 oqn
-qCQ
+aOV
 aaa
 gfU
 gfU
@@ -122743,11 +122743,11 @@ bUL
 bCD
 gfU
 gfU
-aSD
-cVP
+bly
+jMP
 uKj
 oqn
-qCQ
+aOV
 rrt
 aaa
 aaa
@@ -123000,7 +123000,7 @@ yfd
 dII
 cff
 fMJ
-gPX
+tRm
 eNh
 orU
 ixw
@@ -123219,10 +123219,10 @@ aaa
 aaa
 rrt
 aMq
-cVP
+jMP
 iQr
 oqn
-qCQ
+aOV
 aaa
 gfU
 gfU
@@ -123257,11 +123257,11 @@ yjO
 bCD
 gfU
 gfU
-bcQ
-cVP
+aSG
+jMP
 uKj
 oqn
-qCQ
+aOV
 rrt
 aaa
 aaa
@@ -123476,10 +123476,10 @@ aaa
 aaa
 rrt
 aMq
-jqB
+sTF
 wmB
 oqn
-qCQ
+aOV
 aaa
 gfU
 gfU
@@ -123515,10 +123515,10 @@ gfU
 eNR
 aaa
 aMq
-cVP
+jMP
 wmB
-uOm
-qCQ
+rVB
+aOV
 rrt
 aaa
 aaa
@@ -123734,9 +123734,9 @@ aaa
 rrt
 aaa
 aOY
-bcQ
+aSG
 qbF
-qCQ
+aOV
 aaa
 aaa
 gfU
@@ -123993,7 +123993,7 @@ aaa
 aaa
 aMq
 qbF
-qCQ
+aOV
 aaa
 aaa
 gfU
@@ -124030,7 +124030,7 @@ aaa
 aaa
 aMq
 qbF
-qCQ
+aOV
 aaa
 aaa
 rrt
@@ -124250,7 +124250,7 @@ aaa
 aaa
 aMq
 qbF
-qCQ
+aOV
 aaa
 aaa
 aaa
@@ -124287,7 +124287,7 @@ aaa
 aaa
 aMq
 qbF
-qCQ
+aOV
 aaa
 aaa
 rrt
@@ -124507,7 +124507,7 @@ aaa
 aaa
 aMq
 qbF
-qCQ
+aOV
 aaa
 aaa
 aaa
@@ -124544,7 +124544,7 @@ aaa
 aaa
 aMq
 qbF
-qCQ
+aOV
 aaa
 aaa
 rrt
@@ -124764,7 +124764,7 @@ aaa
 aaa
 aMq
 qbF
-bgo
+aOX
 aNw
 aNw
 aNw
@@ -124799,9 +124799,9 @@ aNw
 aNw
 aNw
 aNw
-aSD
+bly
 qbF
-qCQ
+aOV
 aaa
 aaa
 rrt
@@ -125020,13 +125020,13 @@ blx
 lMJ
 lMJ
 aMr
-jqB
-kLG
-kLG
-kLG
-kLG
+sTF
+rHO
+rHO
+rHO
+rHO
 mGk
-bgo
+aOX
 aNw
 aNw
 aNw
@@ -125044,20 +125044,20 @@ gfU
 aaa
 aMq
 bbO
-kLG
-kLG
-kLG
-kLG
-kLG
-kLG
+rHO
+rHO
+rHO
+rHO
+rHO
+rHO
 wLC
-kLG
-kLG
-kLG
-kLG
-kLG
-kLG
-uOm
+rHO
+rHO
+rHO
+rHO
+rHO
+rHO
+rVB
 bBb
 lMJ
 lMJ
@@ -125281,22 +125281,22 @@ aNC
 aOY
 aOY
 aOY
-bcQ
+aSG
 vOO
-kLG
-kLG
-kLG
-kLG
-kLG
-kLG
+rHO
+rHO
+rHO
+rHO
+rHO
+rHO
 eRF
-qCQ
+aOV
 aaa
 aaa
 aaa
 aMq
 nTJ
-qCQ
+aOV
 aaa
 aaa
 aMq
@@ -125545,20 +125545,20 @@ aOY
 aOY
 aOY
 aOY
-bcQ
+aSG
 qbF
-bgo
+aOX
 aNw
 aNw
 aNw
-aSD
+bly
 lTt
-bgo
+aOX
 aNw
 aNw
-aSD
+bly
 qbF
-qCQ
+aOV
 aaa
 aaa
 aaa
@@ -125803,19 +125803,19 @@ aaa
 aaa
 aaa
 aMq
-jqB
-kLG
-kLG
-kLG
-kLG
-kLG
+sTF
+rHO
+rHO
+rHO
+rHO
+rHO
 fTo
-kLG
-kLG
-kLG
-kLG
-uOm
-qCQ
+rHO
+rHO
+rHO
+rHO
+rVB
+aOV
 aaa
 aaa
 aaa
@@ -127092,7 +127092,7 @@ aaa
 aaa
 aaa
 aaa
-vCa
+qCQ
 aaa
 aaa
 aaa
