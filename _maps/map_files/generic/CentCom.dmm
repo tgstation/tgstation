@@ -9823,11 +9823,6 @@
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/plating,
 /area/centcom/evacuation/ship)
-"KP" = (
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/centcom/evacuation/ship)
 "KQ" = (
 /turf/open/floor/plating,
 /area/centcom/evacuation/ship)
@@ -40837,7 +40832,7 @@ aa
 aa
 aa
 aa
-KP
+Lw
 JE
 Lb
 KV

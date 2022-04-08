@@ -1040,8 +1040,7 @@
 /area/engineering/storage)
 "gK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8;
-	icon_state = "connector_map-2"
+	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
@@ -1059,8 +1058,7 @@
 /area/hallway/primary/central)
 "hi" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	icon_state = "inje_map-2"
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -1504,8 +1502,7 @@
 "FL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden{
-	dir = 4;
-	icon_state = "pipe11-2"
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/construction)
