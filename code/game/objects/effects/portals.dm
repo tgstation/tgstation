@@ -147,7 +147,7 @@
 /obj/effect/portal/projected/CanAllowThrough(mob/living/mover, border_dir)
 	if(!linked)
 		return TRUE
-	if(mover.resting & TRUE)
+	if(mover.resting)
 		return TRUE
 	..()
 
