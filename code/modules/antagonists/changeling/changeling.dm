@@ -67,6 +67,11 @@
 	/// A reference to our cellular emporium action (which opens the UI for the datum).
 	var/datum/action/innate/cellular_emporium/emporium_action
 
+	/// UI displaying how many chems we have
+	var/atom/movable/screen/ling/chems/lingchemdisplay
+	/// UI displayng our currently active sting
+	var/atom/movable/screen/ling/sting/lingstingdisplay
+
 	/// The name of our "hive" that our ling came from. Flavor.
 	var/hive_name
 
@@ -125,8 +130,19 @@
 	handle_clown_mutation(living_mob, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, .proc/on_login)
 	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, .proc/on_life)
-	living_mob.hud_used?.lingchemdisplay.invisibility = 0
-	living_mob.hud_used?.lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+
+	if(living_mob.hud_used)
+		var/datum/hud/hud_used = living_mob.hud_used
+
+		lingchemdisplay = new /atom/movable/screen/ling/chems()
+		lingchemdisplay.hud = hud_used
+		hud_used.infodisplay += lingchemdisplay
+
+		lingstingdisplay = new /atom/movable/screen/ling/sting()
+		lingstingdisplay.hud = hud_used
+		hud_used.infodisplay += lingstingdisplay
+
+		hud_used.show_hud(hud_used.hud_version)
 
 	if(!iscarbon(mob_to_tweak))
 		return
@@ -144,7 +160,14 @@
 	var/mob/living/living_mob = mob_override || owner.current
 	handle_clown_mutation(living_mob, removing = FALSE)
 	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
-	living_mob.hud_used?.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
+
+	if(living_mob.hud_used)
+		var/datum/hud/hud_used = living_mob.hud_used
+
+		hud_used.infodisplay -= lingchemdisplay
+		hud_used.infodisplay -= lingstingdisplay
+		QDEL_NULL(lingchemdisplay)
+		QDEL_NULL(lingstingdisplay)
 
 /datum/antagonist/changeling/on_removal()
 	remove_changeling_powers(include_innate = TRUE)
@@ -238,7 +261,7 @@
 	var/cap_to = isnum(override_cap) ? override_cap : total_chem_storage
 	chem_charges = clamp(chem_charges + amount, 0, cap_to)
 
-	owner.current.hud_used?.lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+	lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
 
 /*
  * Remove changeling powers from the current Changeling's purchased_powers list.
