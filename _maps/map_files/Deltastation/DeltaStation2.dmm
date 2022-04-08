@@ -5731,6 +5731,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "bvH" = (
@@ -37086,9 +37087,6 @@
 /turf/open/floor/wood,
 /area/service/library)
 "iuy" = (
-/obj/structure/table/glass,
-/obj/item/folder/white,
-/obj/item/storage/secure/briefcase,
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32;
 	pixel_y = -32
@@ -37098,6 +37096,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "iuC" = (
@@ -61477,6 +61476,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
+"pKZ" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/pdapainter/security,
+/turf/open/floor/iron/dark,
+/area/command/heads_quarters/hos)
 "pLc" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/door/firedoor,
@@ -71540,10 +71544,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "sGK" = (
-/obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
-/obj/item/storage/secure/briefcase,
-/obj/item/taperecorder,
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom{
 	pixel_x = -26;
@@ -71554,6 +71555,7 @@
 	dir = 4;
 	pixel_x = -26
 	},
+/obj/machinery/pdapainter/research,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "sGN" = (
@@ -73790,8 +73792,8 @@
 /obj/effect/turf_decal/bot,
 /obj/item/reagent_containers/food/condiment/enzyme{
 	layer = 5;
-	pixel_y = 8;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /turf/open/floor/iron,
 /area/service/kitchen/abandoned)
@@ -76507,6 +76509,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/effect/turf_decal/bot,
+/obj/item/taperecorder,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "ugK" = (
@@ -78042,12 +78045,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/security/warden)
-"uDv" = (
-/obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/command/heads_quarters/hos)
 "uDB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -144819,13 +144816,13 @@ aad
 aad
 aad
 tKS
-fUy
+rSv
 uCv
 nja
 hll
 xOf
 ksr
-uDv
+fUy
 tKS
 aaa
 qYo
@@ -145076,7 +145073,7 @@ aaa
 aad
 aaa
 tKS
-rSv
+pKZ
 ybi
 equ
 agz

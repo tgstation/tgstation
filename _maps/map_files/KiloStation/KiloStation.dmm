@@ -22477,8 +22477,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/photocopier,
 /obj/structure/cable,
+/obj/machinery/pdapainter/security,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "cST" = (
@@ -23205,6 +23205,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "deB" = (
@@ -39127,10 +39128,6 @@
 /turf/open/floor/iron/dark,
 /area/security/lockers)
 "iGn" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/hyper,
-/obj/item/stack/cable_coil,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -39138,6 +39135,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "iGt" = (
@@ -45211,6 +45209,7 @@
 	pixel_y = 4
 	},
 /obj/item/stamp/hos,
+/obj/item/paper_bin,
 /turf/open/floor/carpet/red,
 /area/command/heads_quarters/hos)
 "kyE" = (
@@ -48235,10 +48234,10 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/machinery/rnd/bepis,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "lzN" = (
@@ -71097,11 +71096,9 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "sSi" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
+/obj/machinery/photocopier,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "sSm" = (

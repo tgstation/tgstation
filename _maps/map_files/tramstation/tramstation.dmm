@@ -6732,11 +6732,13 @@
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
 "bbw" = (
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/structure/chair{
+	dir = 1
+	},
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "bbI" = (
@@ -14370,6 +14372,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
+/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
 "dSy" = (
@@ -21003,6 +21006,7 @@
 	pixel_x = 12
 	},
 /obj/machinery/newscaster/directional/north,
+/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -31190,9 +31194,6 @@
 /turf/open/floor/iron,
 /area/commons/storage/tools)
 "jSG" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/machinery/firealarm/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33152,6 +33153,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/commons/dorms)
+"kBQ" = (
+/obj/machinery/pdapainter/security,
+/turf/open/floor/carpet,
+/area/command/heads_quarters/hos)
 "kBT" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -34058,6 +34063,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "kTr" = (
@@ -44847,10 +44853,10 @@
 	network = list("ss13","minisat")
 	},
 /obj/machinery/button/door/directional/south{
-	pixel_x = 8;
-	req_access_txt = "17;65";
 	id = "teledoor";
-	name = "MiniSat Shutter Control"
+	name = "MiniSat Shutter Control";
+	pixel_x = 8;
+	req_access_txt = "17;65"
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
@@ -45887,6 +45893,11 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/engineering/main)
+"phU" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/carpet,
+/area/command/heads_quarters/hos)
 "pii" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet,
@@ -157122,10 +157133,10 @@ aYr
 dDG
 dDG
 dhe
-dhe
-dhe
-dhe
-dhe
+ogH
+ogH
+ogH
+ogH
 hNf
 hNf
 hOb
@@ -157380,10 +157391,10 @@ dDG
 dDG
 dDG
 ogH
-ogH
-ogH
-ogH
-ogH
+hYU
+aoz
+mNh
+phU
 hNf
 hNf
 pLA
@@ -157637,9 +157648,9 @@ dDG
 dDG
 dDG
 ogH
-hYU
-aoz
-mNh
+vZz
+inb
+avg
 bbw
 dyY
 xPy
@@ -157894,9 +157905,9 @@ aYr
 dDG
 dhe
 ogH
-vZz
-inb
-avg
+wBH
+vWh
+pXw
 jSG
 cso
 aLd
@@ -158151,9 +158162,9 @@ aYr
 aYr
 dhe
 ogH
-wBH
+kBQ
 vWh
-pXw
+vWh
 tUe
 suv
 xPC

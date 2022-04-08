@@ -10982,6 +10982,7 @@
 	id = "ceprivacy";
 	name = "Privacy Shutters Control"
 	},
+/obj/item/storage/secure/briefcase,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "cPO" = (
@@ -12016,6 +12017,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/photocopier,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "dfl" = (
@@ -27073,8 +27075,8 @@
 /obj/machinery/light/directional/south,
 /obj/structure/bed/pod{
 	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "medical bed";
-	dir = 4
+	dir = 4;
+	name = "medical bed"
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
@@ -27895,7 +27897,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/obj/item/kirbyplants/random,
+/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "iYp" = (
@@ -44591,8 +44593,8 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "oTE" = (
-/obj/machinery/photocopier,
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/pdapainter/security,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "oTI" = (
@@ -45277,6 +45279,7 @@
 /obj/item/clipboard,
 /obj/item/paper/monitorkey,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/item/clothing/mask/cigarette/cigar,
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
 "phy" = (
@@ -50127,14 +50130,12 @@
 /turf/closed/wall/r_wall,
 /area/command/bridge)
 "qZM" = (
-/obj/structure/rack,
-/obj/item/storage/secure/briefcase,
-/obj/item/clothing/mask/cigarette/cigar,
 /obj/machinery/computer/security/telescreen/ce{
 	dir = 1;
 	pixel_y = -30
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "qZN" = (
@@ -67363,9 +67364,9 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "xHS" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "xIm" = (
