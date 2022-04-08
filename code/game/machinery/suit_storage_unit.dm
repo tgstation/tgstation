@@ -443,7 +443,8 @@
 		return
 
 	var/cell_charged = cell.give(charge_rate * delta_time)
-	use_power(cell_charged)
+	if(cell_charged)
+		use_power(cell_charged)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))
