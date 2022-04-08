@@ -1,0 +1,5 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - balance: "Stationary gas tanks now cost 12 material for the plating instead of 20"
+  - balance: "The base level of stationary gas tank pressure limits has been brought up to the base level of canisters. Higher quality materials still increase this further as before."
