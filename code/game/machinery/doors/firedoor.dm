@@ -214,11 +214,10 @@
 /obj/machinery/door/firedoor/proc/refresh_shared_turfs(datum/source, list/leaving_members, list/joining_members)
 	SIGNAL_HANDLER
 	var/datum/merger/temp_group = source
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	if(temp_group.origin != src)
 		return
 	var/list/shared_problems = list() // We only want to do this once, this is a nice way of pulling that off
-	for(var/obj/machinery/door/firedoor/firelock as anything in merge_group.members)
+	for(var/obj/machinery/door/firedoor/firelock as anything in temp_group.members)
 		firelock.issue_turfs = shared_problems
 		for(var/dir in GLOB.cardinals)
 			var/turf/checked_turf = get_step(get_turf(firelock), dir)
@@ -249,19 +248,11 @@
 
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/datum/gas_mixture/environment = checked_turf.return_air()
-	var/obj/machinery/airalarm/air_alarm = LAZYACCESS(my_area.airalarms,1)
-	
-	if(air_alarm)
-		var/datum/tlv/selected_temperature = air_alarm.TLV["temperature"]
-		if(environment?.temperature >= selected_temperature?.hazard_max)
-			return FIRELOCK_ALARM_TYPE_HOT
-		if(environment?.temperature <= selected_temperature?.hazard_min)
-			return FIRELOCK_ALARM_TYPE_COLD
-	else
-		if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-			return FIRELOCK_ALARM_TYPE_HOT
-		if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
-			return FIRELOCK_ALARM_TYPE_COLD
+
+	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		return FIRELOCK_ALARM_TYPE_HOT
+	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+		return FIRELOCK_ALARM_TYPE_COLD
 	return
 
 /obj/machinery/door/firedoor/proc/process_results(datum/source)
