@@ -6,7 +6,6 @@
 	icon_state = "classic"
 	base_icon_state = "classic"
 	use_power = ACTIVE_POWER_USE
-	active_power_usage = 60
 	power_channel = AREA_USAGE_EQUIP
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the unit is open
@@ -441,7 +440,7 @@
 		cell = mod.get_cell()
 	if(!cell)
 		return
-	use_power(charge_rate * delta_time)
+	use_power((active_power_usage + charge_rate) * delta_time)
 	cell.give(charge_rate * delta_time)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)

@@ -7,9 +7,6 @@
 	icon_state = "mw"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/microwave
 	pass_flags = PASSTABLE
 	light_color = LIGHT_COLOR_YELLOW
@@ -52,6 +49,8 @@
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		max_n_of_items = 10 * M.rating
 		break
+
+	active_power_usage = initial(active_power_usage) * efficiency
 
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
@@ -319,7 +318,7 @@
 				pre_success()
 		return
 	time--
-	use_power(500)
+	use_power(active_power_usage)
 	addtimer(CALLBACK(src, .proc/loop, type, time, wait), wait)
 
 /obj/machinery/microwave/power_change()

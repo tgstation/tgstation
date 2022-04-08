@@ -7,9 +7,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 50
+	active_power_usage = 500
 	circuit = /obj/item/circuitboard/machine/monkey_recycler
 	var/stored_matter = 0
 	var/cube_production = 0.2
@@ -30,10 +28,15 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 
 /obj/machinery/monkey_recycler/RefreshParts() //Ranges from 0.2 to 0.8 per monkey recycled
 	cube_production = 0
+	var/parts_rating = 0
 	for(var/obj/item/stock_parts/manipulator/B in component_parts)
 		cube_production += B.rating * 0.1
+		parts_rating += B.rating
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		cube_production += M.rating * 0.1
+		parts_rating += M.rating
+
+	active_power_usage = initial(active_power_usage) * parts_rating
 
 /obj/machinery/monkey_recycler/examine(mob/user)
 	. = ..()
@@ -81,7 +84,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-	use_power(500)
+	use_power(active_power_usage)
 	stored_matter += cube_production
 	addtimer(VARSET_CALLBACK(src, pixel_x, base_pixel_x))
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, user, span_notice("The machine now has [stored_matter] monkey\s worth of material stored.")))

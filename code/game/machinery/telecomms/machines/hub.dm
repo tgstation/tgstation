@@ -33,6 +33,8 @@
 		// Then broadcast that signal to
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
+	use_power(active_power_usage)
+
 //Preset HUB
 
 /obj/machinery/telecomms/hub/preset

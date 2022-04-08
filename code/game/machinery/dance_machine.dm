@@ -464,6 +464,7 @@
 				if(!L || !L.client)
 					continue
 				L.stop_sound_channel(CHANNEL_JUKEBOX)
+		use_power(active_power_usage)
 	else if(active)
 		active = FALSE
 		STOP_PROCESSING(SSobj, src)

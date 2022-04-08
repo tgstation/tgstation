@@ -28,6 +28,8 @@
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
 		relay_information(signal, /obj/machinery/telecomms/bus)
 
+	use_power(active_power_usage)
+
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/subspace/signal)
 	if (z in signal.levels)
 		return TRUE

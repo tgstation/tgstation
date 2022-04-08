@@ -45,6 +45,8 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
+	active_power_usage = initial(active_power_usage) * tot_rating
+
 /obj/machinery/rnd/server/update_icon_state()
 	if(machine_stat & EMPED || machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]-off"
@@ -60,8 +62,10 @@
 /obj/machinery/rnd/server/proc/refresh_working()
 	if(machine_stat & EMPED || research_disabled || machine_stat & NOPOWER)
 		working = FALSE
+		update_use_power(NO_POWER_USE)
 	else
 		working = TRUE
+		update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/rnd/server/emp_act()

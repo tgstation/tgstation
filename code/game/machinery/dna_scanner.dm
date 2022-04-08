@@ -6,9 +6,6 @@
 	base_icon_state = "scanner"
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the door is open
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 50
-	active_power_usage = 300
 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
 	circuit = /obj/item/circuitboard/machine/dnascanner
 	var/locked = FALSE
@@ -29,6 +26,8 @@
 		precision_coeff = M.rating
 	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
+
+	active_power_usage = initial(active_power_usage) * (scan_level + precision_coeff)
 
 /obj/machinery/dna_scannernew/examine(mob/user)
 	. = ..()

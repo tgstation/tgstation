@@ -43,6 +43,7 @@
 		rating += L.rating
 	bite_size = initial(bite_size) + rating * 2.5
 	nutrient_to_meat = initial(nutrient_to_meat) - rating * 5
+	active_power_usage = initial(active_power_usage) * rating * 2
 
 /obj/machinery/fat_sucker/examine(mob/user)
 	. = ..()
@@ -153,7 +154,7 @@
 		playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
 	else
 		next_fact--
-	use_power(500)
+	use_power(active_power_usage)
 
 /obj/machinery/fat_sucker/proc/start_extracting()
 	if(state_open || !occupant || processing || !powered())

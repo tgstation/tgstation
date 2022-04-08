@@ -45,6 +45,7 @@
 	for(var/obj/item/stock_parts/capacitor/cap in component_parts)
 		total_rating += cap.rating
 	recharge_power = total_rating * 12.5
+	active_power_usage = initial(active_power_usage) * total_rating
 
 /obj/machinery/mech_bay_recharge_port/examine(mob/user)
 	. = ..()
@@ -65,7 +66,7 @@
 	if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
 		var/delta = min(recharge_power * delta_time, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
 		recharging_mech.give_power(delta)
-		use_power(delta*150)
+		use_power(delta * active_power_usage)
 	else
 		recharge_console.update_appearance()
 	if(recharging_mech.loc != recharging_turf)

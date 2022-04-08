@@ -8,7 +8,7 @@
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
-	idle_power_usage = 5000
+	active_power_usage = 2000
 	use_power = NO_POWER_USE
 	///The amount of water in the tray (max 100)
 	var/waterlevel = 100
@@ -170,6 +170,7 @@
 	maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
 	reagents.maximum_volume = maxnutri
 	nutridrain = 1/rating
+	active_power_usage = initial(active_power_usage) * rating
 
 /obj/machinery/hydroponics/constructable/examine(mob/user)
 	. = ..()
@@ -461,7 +462,7 @@
 
 	self_sustaining = new_value
 
-	update_use_power(self_sustaining ? IDLE_POWER_USE : NO_POWER_USE)
+	update_use_power(self_sustaining ? ACTIVE_POWER_USE : NO_POWER_USE)
 	update_appearance()
 
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SELFSUSTAINING, new_value)

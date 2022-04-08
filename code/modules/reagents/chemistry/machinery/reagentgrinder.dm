@@ -7,9 +7,6 @@
 	icon_state = "juicer1"
 	base_icon_state = "juicer"
 	layer = BELOW_OBJ_LAYER
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/reagentgrinder
 	pass_flags = PASSTABLE
 	resistance_flags = ACID_PROOF
@@ -71,6 +68,8 @@
 	speed = 1
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		speed = M.rating
+
+	active_power_usage = initial(active_power_usage) * speed
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
@@ -270,6 +269,7 @@
 			playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
 		else
 			playsound(src, 'sound/machines/juicer.ogg', 20, TRUE)
+	use_power(active_power_usage * time)
 	addtimer(CALLBACK(src, .proc/stop_operating), time / speed)
 
 /obj/machinery/reagentgrinder/proc/stop_operating()

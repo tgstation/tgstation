@@ -3,9 +3,6 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 300
-	active_power_usage = 300
 	max_integrity = 200
 	integrity_failure = 0.5
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 40, ACID = 20)
@@ -51,8 +48,10 @@
 	. = ..()
 	if(machine_stat & NOPOWER)
 		set_light(0)
+		update_use_power(NO_POWER_USE)
 	else
 		set_light(brightness_on)
+		update_use_power(ACTIVE_POWER_USE)
 
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

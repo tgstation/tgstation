@@ -49,17 +49,21 @@
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
 	var/mat_mod = 0
+	var/parts_rating = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		mat_mod = 2 * B.rating
+		parts_rating += B.rating
 	mat_mod *= 50000
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		amt_made = 12.5 * M.rating //% of materials salvaged
+		parts_rating += M.rating
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced
 	butchering.bonus_modifier = amount_produced/5
+	active_power_usage = initial(active_power_usage) * parts_rating
 
 /obj/machinery/recycler/examine(mob/user)
 	. = ..()
@@ -139,17 +143,20 @@
 		else if(isliving(AM))
 			living_detected = TRUE
 			crunchy_nom += AM
+
 	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
 	if(living_detected) // First, check if we have any living beings detected.
 		if(obj_flags & EMAGGED)
 			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
 				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
 					crush_living(CRUNCH)
+					use_power(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
 	for(var/nommed in nom)
 		recycle_item(nommed)
+		use_power(active_power_usage)
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)

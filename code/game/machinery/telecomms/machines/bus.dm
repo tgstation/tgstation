@@ -46,6 +46,8 @@
 		if(relay_information(signal, send))
 			break
 
+	use_power(active_power_usage)
+
 //Preset Buses
 
 /obj/machinery/telecomms/bus/preset_one

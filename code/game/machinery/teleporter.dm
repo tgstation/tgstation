@@ -31,6 +31,7 @@
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		A += M.rating
 	accuracy = A
+	active_power_usage = initial(active_power_usage) * A
 
 /obj/machinery/teleport/hub/examine(mob/user)
 	. = ..()
@@ -77,7 +78,7 @@
 		return
 	if (ismovable(M))
 		if(do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
-			use_power(5000)
+			use_power(active_power_usage)
 			if(!calibrated && prob(30 - ((accuracy) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
@@ -129,6 +130,7 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		E += C.rating
 	efficiency = E - 1
+	active_power_usage = initial(active_power_usage) * E
 
 /obj/machinery/teleport/station/examine(mob/user)
 	. = ..()
@@ -200,7 +202,7 @@
 			to_chat(user, span_alert("The teleporter hub isn't responding."))
 		else
 			engaged = !engaged
-			use_power(5000)
+			use_power(active_power_usage)
 			to_chat(user, span_notice("Teleporter [engaged ? "" : "dis"]engaged!"))
 	else
 		teleporter_console.target_ref = null

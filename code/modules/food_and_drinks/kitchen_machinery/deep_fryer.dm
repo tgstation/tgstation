@@ -17,7 +17,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	icon_state = "fryer_off"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
-	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/deep_fryer
@@ -52,6 +51,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		oil_efficiency += M.rating
 	oil_use = initial(oil_use) - (oil_efficiency * 0.00475)
 	fry_speed = oil_efficiency
+	active_power_usage = initial(active_power_usage) * fry_speed
 
 /obj/machinery/deepfryer/examine(mob/user)
 	. = ..()
@@ -107,6 +107,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		else if (cook_time >= DEEPFRYER_BURNTIME && !frying_burnt)
 			frying_burnt = TRUE
 			visible_message(span_warning("[src] emits an acrid smell!"))
+
+		use_power(active_power_usage)
 
 
 /obj/machinery/deepfryer/attack_ai(mob/user)

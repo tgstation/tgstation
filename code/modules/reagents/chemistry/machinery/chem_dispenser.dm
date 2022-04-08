@@ -125,7 +125,7 @@
 	if (recharge_counter >= 8)
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
-			use_power(250*recharge_amount)
+			use_power(active_power_usage * recharge_amount)
 		recharge_counter = 0
 		return
 	recharge_counter += delta_time
@@ -406,16 +406,22 @@
 /obj/machinery/chem_dispenser/RefreshParts()
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
+	var/parts_rating = 0
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		newpowereff += 0.0166666666*M.rating
+		parts_rating += M.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_amount *= C.rating
+		parts_rating += C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > 3)
 			dispensable_reagents |= upgrade_reagents
+		parts_rating += M.rating
 	powerefficiency = round(newpowereff, 0.01)
+
+	active_power_usage = initial(active_power_usage) * parts_rating
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)

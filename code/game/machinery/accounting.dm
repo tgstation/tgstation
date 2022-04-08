@@ -45,6 +45,7 @@
 		playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
 		say("New account registered under account ID number [bank_account.account_id].")
 		update_appearance()
+		use_power(active_power_usage)
 		return
 	else
 		if(!inserted_id && default_deconstruction_screwdriver(user, icon_state, icon_state, I))

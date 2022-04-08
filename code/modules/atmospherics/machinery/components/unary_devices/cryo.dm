@@ -80,6 +80,10 @@
 
 	showpipe = FALSE
 
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 30
+	active_power_usage = 300
+
 	var/autoeject = TRUE
 	var/volume = 100
 
@@ -141,6 +145,7 @@
 	unconscious_factor = initial(unconscious_factor) * C
 	heat_capacity = initial(heat_capacity) / C
 	conduction_coefficient = initial(conduction_coefficient) * C
+	active_power_usage = initial(active_power_usage) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user) //this is leaving out everything but efficiency since they follow the same idea of "better beaker, better results"
 	. = ..()
@@ -215,6 +220,10 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, active)
 	. = on
 	on = active
+	if(on)
+		update_use_power(ACTIVE_POWER_USE)
+	else
+		update_use_power(IDLE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)

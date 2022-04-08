@@ -6,9 +6,8 @@
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
+	idle_power_usage = 200
+	active_power_usage = 1000
 	circuit = /obj/item/circuitboard/machine/limbgrower
 
 	/// The category of limbs we're browing in our UI.
@@ -163,7 +162,7 @@
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 					return
 
-				power = max(2000, (power + consumed_reagents_list[reagent_id]))
+				power = max(active_power_usage, (power + consumed_reagents_list[reagent_id]))
 
 			busy = TRUE
 			use_power(power)
@@ -239,9 +238,12 @@
 		reagents.maximum_volume += our_beaker.volume
 		our_beaker.reagents.trans_to(src, our_beaker.reagents.total_volume)
 	production_coefficient = 1.25
+	var/manipulator_rating = 0
 	for(var/obj/item/stock_parts/manipulator/our_manipulator in component_parts)
 		production_coefficient -= our_manipulator.rating * 0.25
+		manipulator_rating += our_manipulator.rating
 	production_coefficient = clamp(production_coefficient, 0, 1) // coefficient goes from 1 -> 0.75 -> 0.5 -> 0.25
+	active_power_usage = initial(active_power_usage) * manipulator_rating
 
 /obj/machinery/limbgrower/examine(mob/user)
 	. = ..()

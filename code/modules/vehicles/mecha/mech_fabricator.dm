@@ -6,7 +6,7 @@
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
-	active_power_usage = 5000
+	active_power_usage = 2500
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/machine/mechfab
 	processing_flags = START_PROCESSING_MANUALLY
@@ -80,6 +80,7 @@
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
+	var/parts_rating = 0
 
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
@@ -90,13 +91,17 @@
 	T = 1.15
 	for(var/obj/item/stock_parts/micro_laser/Ma in component_parts)
 		T -= Ma.rating*0.15
+		parts_rating += Ma.rating
 	component_coeff = T
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
 	for(var/obj/item/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
+		parts_rating += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
+
+	active_power_usage = initial(active_power_usage) * parts_rating
 
 	// Adjust the build time of any item currently being built.
 	if(being_built)

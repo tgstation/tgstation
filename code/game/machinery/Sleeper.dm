@@ -54,6 +54,7 @@
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]
 	reset_chem_buttons()
+	active_power_usage = initial(active_power_usage) * (E + I)
 
 /obj/machinery/sleeper/update_icon_state()
 	icon_state = "[base_icon_state][state_open ? "-open" : null]"
@@ -161,6 +162,7 @@
 /obj/machinery/sleeper/process()
 	..()
 	check_nap_violations()
+	use_power(active_power_usage)
 
 /obj/machinery/sleeper/nap_violation(mob/violator)
 	open_machine()

@@ -58,7 +58,7 @@
 		update_appearance()
 		return FALSE
 
-	use_power(100)
+	use_power(active_power_usage)
 	to_chat(user, span_notice("You finish pressing a new license plate!"))
 
 	pressing = FALSE

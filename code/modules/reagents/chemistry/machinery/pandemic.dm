@@ -210,6 +210,7 @@
 			if(!istype(A) || !A.mutable)
 				to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
 				return
+			use_power(active_power_usage)
 			A = A.Copy()
 			var/list/data = list("viruses" = list(A))
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
@@ -225,6 +226,7 @@
 		if("create_vaccine_bottle")
 			if (wait)
 				return
+			use_power(active_power_usage)
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())

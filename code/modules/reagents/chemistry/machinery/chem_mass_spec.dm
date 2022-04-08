@@ -49,8 +49,12 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 
 /obj/machinery/chem_mass_spec/RefreshParts()
 	cms_coefficient = 1
+	var/parts_rating = 0
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
 		cms_coefficient /= laser.rating
+		parts_rating += laser.rating
+
+	active_power_usage = initial(active_power_usage) * parts_rating
 
 /obj/machinery/chem_mass_spec/deconstruct(disassembled)
 	if(beaker1)
@@ -306,6 +310,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		return FALSE
 	if(!processing_reagents)
 		return TRUE
+	use_power(active_power_usage)
 	if(progress_time >= delay_time)
 		processing_reagents = FALSE
 		progress_time = 0

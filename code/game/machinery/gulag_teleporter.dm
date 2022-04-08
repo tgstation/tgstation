@@ -15,7 +15,6 @@ The console is located at computer/gulag_teleporter.dm
 	state_open = FALSE
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the door is open
-	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
 	circuit = /obj/item/circuitboard/machine/gulag_teleporter
@@ -166,6 +165,8 @@ The console is located at computer/gulag_teleporter.dm
 		prisoner.equip_to_appropriate_slot(id, qdel_on_fail = TRUE)
 	if(R)
 		R.fields["criminal"] = "Incarcerated"
+
+	use_power(active_power_usage)
 
 /obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"

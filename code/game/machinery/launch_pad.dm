@@ -5,7 +5,6 @@
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "lpad-idle"
-	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 2500
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
@@ -26,11 +25,12 @@
 	var/teleport_beam = "sm_arc_supercharged"
 
 /obj/machinery/launchpad/RefreshParts()
-	var/E = 0
+	var/max_range_multiplier = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		E += M.rating
+		max_range_multiplier += M.rating
 	range = initial(range)
-	range *= E
+	range *= max_range_multiplier
+	active_power_usage = initial(active_power_usage) * max_range_multiplier * 2
 
 /obj/machinery/launchpad/Initialize(mapload)
 	. = ..()
@@ -165,7 +165,7 @@
 		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
-	use_power(1000)
+	use_power(active_power_usage)
 
 	var/turf/source = target
 	var/list/log_msg = list()

@@ -31,6 +31,8 @@
 		else
 			signal.levels |= relay_turf.z
 
+	use_power(active_power_usage)
+
 /// Checks to see if it can send/receive.
 /obj/machinery/telecomms/relay/proc/can(datum/signal/signal)
 	if(!on)

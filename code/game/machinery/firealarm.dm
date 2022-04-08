@@ -18,9 +18,8 @@
 	max_integrity = 250
 	integrity_failure = 0.4
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 90, ACID = 30)
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 6
+	idle_power_usage = 10
+	active_power_usage = 20
 	power_channel = AREA_USAGE_ENVIRON
 	resistance_flags = FIRE_PROOF
 
@@ -181,6 +180,7 @@
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
 	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_TRIGGER)
+	addStaticPower(active_power_usage, power_channel)
 
 /**
  * Resets all firelocks in the area. Also tells the area to disable alarm lighting, if it was enabled.
@@ -199,6 +199,7 @@
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 	soundloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
+	removeStaticPower(active_power_usage, power_channel)
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != 2)

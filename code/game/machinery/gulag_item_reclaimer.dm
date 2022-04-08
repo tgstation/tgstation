@@ -88,3 +88,4 @@
 		stored_items[user] -= W
 		W.forceMove(drop_location)
 	stored_items -= user
+	use_power(active_power_usage)

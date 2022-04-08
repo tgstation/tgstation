@@ -5,7 +5,6 @@
 	icon_state = "medipen_refiller"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medipen_refiller
-	idle_power_usage = 100
 	/// list of medipen subtypes it can refill
 	var/list/allowed = list(/obj/item/reagent_containers/hypospray/medipen = /datum/reagent/medicine/epinephrine,
 						    /obj/item/reagent_containers/hypospray/medipen/atropine = /datum/reagent/medicine/atropine,
@@ -26,11 +25,14 @@
 
 /obj/machinery/medipen_refiller/RefreshParts()
 	var/new_volume = 100
+	var/part_rating = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		new_volume += 100 * B.rating
+		part_rating += B.rating
 	if(!reagents)
 		create_reagents(new_volume, TRANSPARENT)
 	reagents.maximum_volume = new_volume
+	active_power_usage = initial(active_power_usage) * part_rating
 	return TRUE
 
 ///  handles the messages and animation, calls refill to end the animation
@@ -94,3 +96,4 @@
 	cut_overlays()
 	busy = FALSE
 	to_chat(user, span_notice("Medipen refilled."))
+	use_power(active_power_usage)

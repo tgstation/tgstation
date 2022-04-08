@@ -156,7 +156,6 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	bound_y = 0
 	density = TRUE
 
-	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 5000
 
