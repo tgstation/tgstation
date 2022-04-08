@@ -65,8 +65,8 @@
 	has_light = FALSE //tablet light button actually enables/disables the borg lamp
 	comp_light_luminosity = 0
 	has_variants = FALSE
-	///Ref to the borg we're installed in. Set by the borg during our creation.
-	var/mob/living/silicon/robot/borgo
+	///Ref to the silicon we're installed in. Set by the borg during our creation.
+	var/mob/living/silicon/borgo
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
 	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
@@ -150,22 +150,28 @@
 /obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
-	.["light_on"] = borgo?.lamp_enabled
-	.["comp_light_color"] = borgo?.lamp_color
+	if(istype(borgo, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/robo = borgo
+		.["light_on"] = robo.lamp_enabled
+		.["comp_light_color"] = robo.lamp_color
 
 //Makes the flashlight button affect the borg rather than the tablet
 /obj/item/modular_computer/tablet/integrated/toggle_flashlight()
 	if(!borgo || QDELETED(borgo))
 		return FALSE
-	borgo.toggle_headlamp()
+	if(istype(borgo, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/robo = borgo
+		robo.toggle_headlamp()
 	return TRUE
 
 //Makes the flashlight color setting affect the borg rather than the tablet
 /obj/item/modular_computer/tablet/integrated/set_flashlight_color(color)
 	if(!borgo || QDELETED(borgo) || !color)
 		return FALSE
-	borgo.lamp_color = color
-	borgo.toggle_headlamp(FALSE, TRUE)
+	if(istype(borgo, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/robo = borgo
+		robo.lamp_color = color
+		robo.toggle_headlamp(FALSE, TRUE)
 	return TRUE
 
 /obj/item/modular_computer/tablet/integrated/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
@@ -174,6 +180,8 @@
 	borgo.playsound_local(src, sound, 50, TRUE)
 	to_chat(borgo, span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
+/obj/item/modular_computer/tablet/integrated/ui_state(mob/user)
+	return GLOB.reverse_contained_state
 
 /obj/item/modular_computer/tablet/integrated/syndicate
 	icon_state = "tablet-silicon-syndicate"
@@ -184,7 +192,9 @@
 
 /obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
 	. = ..()
-	borgo.lamp_color = COLOR_RED //Syndicate likes it red
+	if(istype(borgo, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/robo = borgo
+		robo.lamp_color = COLOR_RED //Syndicate likes it red
 
 // Round start tablets
 
@@ -213,12 +223,8 @@
 		. += mutable_appearance(init_icon, "light_overlay")
 
 /obj/item/modular_computer/tablet/role/attack_ai(mob/user)
+	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
 	return // we don't want ais or cyborgs using a private role tablet
-
-/obj/item/modular_computer/tablet/role/proc/get_types_to_preload()
-	var/list/preload = list()
-	preload += default_disk
-	return preload
 
 /obj/item/modular_computer/tablet/role/Initialize(mapload)
 	. = ..()
@@ -230,5 +236,5 @@
 	install_component(new /obj/item/computer_hardware/identifier)
 
 	if(default_disk)
-		var/obj/item/computer_hardware/hard_drive/portable/disk = SSwardrobe.provide_type(default_disk, src)
+		var/obj/item/computer_hardware/hard_drive/portable/disk = new default_disk(src)
 		install_component(disk)

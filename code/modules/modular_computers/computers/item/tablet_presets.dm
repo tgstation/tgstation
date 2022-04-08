@@ -102,18 +102,5 @@
 /obj/item/modular_computer/tablet/integrated/Initialize(mapload)
 	. = ..()
 	install_component(new /obj/item/computer_hardware/processor_unit/small)
-	install_component(new /obj/item/computer_hardware/hard_drive/small/integrated)
 	install_component(new /obj/item/computer_hardware/recharger/cyborg)
 	install_component(new /obj/item/computer_hardware/network_card/integrated)
-
-/obj/item/modular_computer/tablet/ai/Initialize(mapload)
-	. = ..()
-	var/obj/item/computer_hardware/hard_drive/small/integrated/ai/hdd = new(src)
-	install_component(hdd)
-	install_component(new /obj/item/computer_hardware/processor_unit/small)
-	install_component(new /obj/item/computer_hardware/recharger/cyborg)
-	install_component(new /obj/item/computer_hardware/network_card/integrated)
-
-/obj/item/modular_computer/tablet/ai/handle_power()
-	return TRUE // noooo more fortnite
-

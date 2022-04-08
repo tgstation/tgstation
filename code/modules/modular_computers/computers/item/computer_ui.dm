@@ -4,6 +4,8 @@
 
 // Operates TGUI
 /obj/item/modular_computer/ui_interact(mob/user, datum/tgui/ui)
+	if(issilicon(user)) // silicons have some issues regarding real_name
+		saved_identification = user.real_name
 	if(!enabled)
 		if(ui)
 			ui.close()

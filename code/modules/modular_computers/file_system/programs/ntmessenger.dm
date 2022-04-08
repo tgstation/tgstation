@@ -74,6 +74,10 @@
 		usr << browse_rsc(img, deter_path) // funny random assignment for now, i'll make an actual key later
 		photo_path = deter_path
 
+/datum/computer_file/program/messenger/ui_state(mob/user)
+	if(istype(user, /mob/living/silicon))
+		return GLOB.reverse_contained_state
+
 /datum/computer_file/program/messenger/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)

@@ -18,12 +18,20 @@
 
 /obj/item/computer_hardware/hard_drive/role/Initialize(mapload)
 	. = ..()
+	var/list/progs_to_store = list()
+
 	if(disk_flags & DISK_POWER)
-		store_file(new /datum/computer_file/program/power_monitor(src))
+		progs_to_store += new /datum/computer_file/program/power_monitor(src)
 	if(disk_flags & DISK_ATMOS)
-		store_file(new /datum/computer_file/program/atmosscan(src))
+		progs_to_store += new /datum/computer_file/program/atmosscan(src)
 	if(disk_flags & DISK_MANIFEST)
-		store_file(new /datum/computer_file/program/crew_manifest(src))
+		progs_to_store += new /datum/computer_file/program/crew_manifest(src)
+
+	for (var/datum/computer_file/program/prog in progs_to_store)
+		prog.usage_flags = PROGRAM_ALL
+		store_file(prog)
+
+
 
 /obj/item/computer_hardware/hard_drive/role/proc/CanSpam()
 	return can_spam

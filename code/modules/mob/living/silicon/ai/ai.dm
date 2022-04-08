@@ -107,7 +107,6 @@
 	var/atom/lastloc
 	interaction_range = null
 
-	var/obj/item/modular_computer/tablet/ai/modularInterface
 	var/atom/movable/screen/ai/modPC/interfaceButton
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
@@ -160,11 +159,6 @@
 	spark_system.attach(src)
 
 	add_verb(src, /mob/living/silicon/ai/proc/show_laws_verb)
-
-	aiPDA = new/obj/item/pda/ai(src)
-	aiPDA.owner = real_name
-	aiPDA.ownjob = "AI"
-	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 	create_modularInterface()
 
@@ -238,14 +232,6 @@
 		ai_voicechanger.owner = null
 		ai_voicechanger = null
 	return ..()
-
-/mob/living/silicon/ai/proc/create_modularInterface()
-	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/ai(src)
-	modularInterface.layer = ABOVE_HUD_PLANE
-	modularInterface.plane = ABOVE_HUD_PLANE
-	modularInterface.saved_identification = real_name
-	modularInterface.saved_job = "AI"
 
 /// Removes all malfunction-related abilities from the AI
 /mob/living/silicon/ai/proc/remove_malf_abilities()
@@ -850,11 +836,6 @@
 		// Notify Cyborgs
 		for(var/mob/living/silicon/robot/Slave in connected_robots)
 			Slave.show_laws()
-
-/mob/living/silicon/ai/replace_identification_name(oldname,newname)
-	if(aiPDA)
-		aiPDA.owner = newname
-		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
 
 /datum/action/innate/choose_modules
 	name = "Malfunction Modules"

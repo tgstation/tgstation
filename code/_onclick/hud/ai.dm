@@ -49,7 +49,7 @@
 	AI.toggle_camera_light()
 
 /atom/movable/screen/ai/modPC
-	name = "Modular Interface"
+	name = "Messenger"
 	icon_state = "pda_send"
 	var/mob/living/silicon/ai/robot
 
@@ -119,26 +119,6 @@
 	var/mob/living/silicon/ai/AI = usr
 	AI.checklaws()
 
-/atom/movable/screen/ai/pda_msg_send
-	name = "PDA - Send Message"
-	icon_state = "pda_send"
-
-/atom/movable/screen/ai/pda_msg_send/Click()
-	if(..())
-		return
-	var/mob/living/silicon/ai/AI = usr
-	AI.cmd_send_pdamesg(usr)
-
-/atom/movable/screen/ai/pda_msg_show
-	name = "PDA - Show Message Log"
-	icon_state = "pda_receive"
-
-/atom/movable/screen/ai/pda_msg_show/Click()
-	if(..())
-		return
-	var/mob/living/silicon/ai/AI = usr
-	AI.cmd_show_message_log(usr)
-
 /atom/movable/screen/ai/image_take
 	name = "Take Image"
 	icon_state = "take_picture"
@@ -201,7 +181,7 @@
 /datum/hud/ai/New(mob/owner)
 	..()
 	var/atom/movable/screen/using
-	var/mob/living/silicon/robot/ayeye = mymob
+	var/mob/living/silicon/ai/ayeye = mymob
 
 // Language menu
 	using = new /atom/movable/screen/language_menu
@@ -270,27 +250,13 @@
 	static_inventory += using
 
 // Modular Interface
-	using = new /atom/movable/screen/ai/modPC
+	using = new /atom/movable/screen/ai/modPC()
 	using.screen_loc = ui_ai_mod_int
 	using.hud = src
 	static_inventory += using
 	ayeye.interfaceButton = using
-	if(ayeye.modularInterface)
-		using.vis_contents += ayeye.modularInterface
 	var/atom/movable/screen/ai/modPC/tabletbutton = using
 	tabletbutton.robot = ayeye
-
-//PDA message
-	using = new /atom/movable/screen/ai/pda_msg_send()
-	using.screen_loc = ui_ai_pda_send
-	using.hud = src
-	static_inventory += using
-
-//PDA log
-	using = new /atom/movable/screen/ai/pda_msg_show()
-	using.screen_loc = ui_ai_pda_log
-	using.hud = src
-	static_inventory += using
 
 //Take image
 	using = new /atom/movable/screen/ai/image_take()
