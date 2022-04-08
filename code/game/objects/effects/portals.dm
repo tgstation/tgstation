@@ -149,7 +149,7 @@
 		return TRUE
 	if(mover.resting)
 		return TRUE
-	..()
+	return ..()
 
 /obj/effect/portal/permanent
 	name = "permanent portal"
