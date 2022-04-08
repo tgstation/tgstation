@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(simple_mobs)
 	wait = 3 SECONDS
 
 	///what simple animals get processed by this subsystem. some stay in the global list but are removed from here.
-	var/list/processing_simple_mobs = list()//TODOKYLER: remove some hostile mobs from this list if theyre turned off. and register to spatial grid to wake up
+	var/list/processing_simple_mobs = list()
 
 	var/list/current_run = list()
 
