@@ -415,9 +415,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bo" = (
-/obj/structure/window{
-	dir = 4
-	},
+/obj/structure/window/spawner/east,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bp" = (
@@ -1390,10 +1388,7 @@
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "eH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile/ice{
-	name = "frozen window"
-	},
+/obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/lumbermill)
 "eI" = (
@@ -2609,57 +2604,45 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "iZ" = (
-/obj/structure/window/reinforced/fulltile/ice{
-	name = "frozen window"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "fightingcommunity10"
 	},
+/obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ja" = (
-/obj/structure/window/reinforced/fulltile/ice{
-	name = "frozen window"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "fightingcommunity20"
 	},
+/obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "jb" = (
-/obj/structure/window/reinforced/fulltile/ice{
-	name = "frozen window"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "fightingcommunity30"
 	},
+/obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "jc" = (
-/obj/structure/window/reinforced/fulltile/ice{
-	name = "frozen window"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "fightingcommunity40"
 	},
+/obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "jd" = (
-/obj/structure/window/reinforced/fulltile/ice{
-	name = "frozen window"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "fightingcommunity50"
 	},
+/obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "je" = (
-/obj/structure/window/reinforced/fulltile/ice{
-	name = "frozen window"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "fightingcommunity60"
 	},
+/obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "jf" = (
@@ -3716,10 +3699,8 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nT" = (
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/chair/stool/directional/west,
+/obj/structure/window/spawner/east,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nU" = (
@@ -4452,6 +4433,10 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"Ls" = (
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
 "LE" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/nullrod/claymore/multiverse{
@@ -28021,7 +28006,7 @@ aq
 eg
 aq
 aN
-ao
+Ls
 th
 RC
 RC
@@ -28278,7 +28263,7 @@ aq
 eg
 aq
 iR
-ao
+Ls
 th
 RC
 RC
@@ -28535,7 +28520,7 @@ cC
 eg
 aq
 bp
-ao
+Ls
 th
 RC
 RC
@@ -29563,7 +29548,7 @@ aq
 eg
 aq
 aN
-ao
+Ls
 th
 RC
 RC
@@ -29820,7 +29805,7 @@ aq
 eg
 aq
 iU
-ao
+Ls
 th
 RC
 pL
@@ -30077,7 +30062,7 @@ aq
 eg
 aq
 bp
-ao
+Ls
 th
 RC
 RC
@@ -31105,7 +31090,7 @@ aq
 eg
 aq
 aN
-ao
+Ls
 th
 RC
 RC
@@ -31362,7 +31347,7 @@ aq
 eg
 aq
 iS
-ao
+Ls
 th
 RC
 RC
@@ -31619,7 +31604,7 @@ aq
 eg
 aq
 bp
-ao
+Ls
 th
 RC
 RC
@@ -32647,7 +32632,7 @@ aq
 eg
 aq
 aN
-ao
+Ls
 th
 RC
 pL
@@ -32904,7 +32889,7 @@ aq
 eg
 aq
 iT
-ao
+Ls
 th
 RC
 RC
@@ -33161,7 +33146,7 @@ eg
 eg
 aq
 bp
-ao
+Ls
 th
 RC
 RC
@@ -36229,9 +36214,9 @@ aQ
 dv
 an
 an
-ao
-ao
-ao
+Ls
+Ls
+Ls
 an
 an
 je
@@ -36494,11 +36479,11 @@ th
 th
 th
 an
-ao
-ao
+Ls
+Ls
 an
-ao
-ao
+Ls
+Ls
 an
 th
 th
