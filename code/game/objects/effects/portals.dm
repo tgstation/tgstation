@@ -56,7 +56,9 @@
 	. = ..()
 	if(HAS_TRAIT(mover, TRAIT_NO_TELEPORT) && !force_teleport)
 		return TRUE
-	teleport(mover)
+
+/obj/effect/portal/Bumped(atom/movable/bumper)
+	teleport(bumper)
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
