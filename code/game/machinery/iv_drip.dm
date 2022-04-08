@@ -38,6 +38,7 @@
 	update_appearance()
 	if(use_internal_storage)
 		create_reagents(100, TRANSPARENT)
+	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null

@@ -31,6 +31,7 @@
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
+	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
 /obj/machinery/limbgrower/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
