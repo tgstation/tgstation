@@ -525,6 +525,24 @@ Moving interrupts
 	content_ma.pixel_x = 0
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
+
+	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, GAME_PLANE_UPPER, GAME_PLANE_FOV_HIDDEN, GAME_PLANE_UPPER, GAME_PLANE_UPPER_FOV_HIDDEN, FLOOR_PLANE)
+
+	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
+	var/list/overlays_to_remove = list()
+	for(var/mutable_appearance/special_overlay as anything in content_ma.overlays)
+		if(special_overlay.plane in plane_whitelist)
+			continue
+		overlays_to_remove += special_overlay
+	content_ma.overlays -= overlays_to_remove
+
+	var/list/underlays_to_remove = list()
+	for(var/mutable_appearance/special_underlay as anything in content_ma.underlays)
+		if(special_underlay.plane in plane_whitelist)
+			continue
+		underlays_to_remove += special_underlay
+	content_ma.underlays -= underlays_to_remove
+
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	update_appearance()
