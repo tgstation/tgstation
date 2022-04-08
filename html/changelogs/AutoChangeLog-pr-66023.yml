@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes: 
-  - bugfix: "Old Stations Charlie & Delta storage rooms APCs now start with 0 charge, your immersion has been restored."

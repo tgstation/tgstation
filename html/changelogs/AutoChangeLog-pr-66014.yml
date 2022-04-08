@@ -1,4 +1,0 @@
-author: "LordVollkorn"
-delete-after: True
-changes: 
-  - bugfix: "Health sensors inside of chemical grenades will now work as intended and the process is almost impossible to screw up."

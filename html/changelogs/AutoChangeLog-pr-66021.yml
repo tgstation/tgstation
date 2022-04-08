@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes: 
-  - bugfix: "A floating poster in Ice Box's service hall was properly contained."
