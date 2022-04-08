@@ -41,27 +41,14 @@
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
-
-
-/obj/machinery/door/examine(mob/user)
-	. = ..()
-	if(red_alert_access)
-		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
-			. += span_notice("Due to a security threat, its access requirements have been lifted!")
-		else
-			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
-	. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
-
-/obj/machinery/door/check_access_list(list/access_list)
-	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
-		return TRUE
-	return ..()
+	var/can_open_with_hands = TRUE /// Whether or not the door can be opened by hand (used for blast doors and shutters)
 
 /obj/machinery/door/Initialize(mapload)
 	. = ..()
 	set_init_door_layer()
 	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
+	register_context()
 	GLOB.airlocks += src
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
@@ -74,6 +61,33 @@
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
+
+/obj/machinery/door/examine(mob/user)
+	. = ..()
+	if(red_alert_access)
+		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
+			. += span_notice("Due to a security threat, its access requirements have been lifted!")
+		else
+			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
+	. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
+
+/obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!can_open_with_hands)
+		return .
+
+	if(isaicamera(user) || issilicon(user))
+		return .
+
+	if (isnull(held_item) && Adjacent(user))
+		context[SCREENTIP_CONTEXT_LMB] = "Open"
+		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/door/check_access_list(list/access_list)
+	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
+		return TRUE
+	return ..()
 
 /obj/machinery/door/proc/set_init_door_layer()
 	if(density)
@@ -123,7 +137,7 @@
 
 /obj/machinery/door/Bumped(atom/movable/AM)
 	. = ..()
-	if(operating || (obj_flags & EMAGGED))
+	if(operating || (obj_flags & EMAGGED) || (!can_open_with_hands && density))
 		return
 	if(ismob(AM))
 		var/mob/B = AM
@@ -167,8 +181,9 @@
 		return !opacity
 
 /obj/machinery/door/proc/bumpopen(mob/user)
-	if(operating)
+	if(operating || !can_open_with_hands)
 		return
+		
 	add_fingerprint(user)
 	if(!density || (obj_flags & EMAGGED))
 		return
@@ -188,19 +203,16 @@
 		return
 	return try_to_activate_door(user)
 
-
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
 		return
 	return ..()
 
-
 /obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE)
 	add_fingerprint(user)
-	if(operating || (obj_flags & EMAGGED))
+	if(operating || (obj_flags & EMAGGED) || !can_open_with_hands)
 		return
-	access_bypass |= !requiresID()
-	if(access_bypass || allowed(user))
+	if(access_bypass || (requiresID() && allowed(user)))
 		if(density)
 			open()
 		else
@@ -216,8 +228,8 @@
 		return TRUE
 	return ..()
 
-/obj/machinery/door/proc/unrestricted_side(mob/M) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
-	return get_dir(src, M) & unres_sides
+/obj/machinery/door/proc/unrestricted_side(mob/opener) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	return get_dir(src, opener) & unres_sides
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
@@ -234,38 +246,42 @@
 /obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
 	return
 
+/obj/machinery/door/welder_act(mob/living/user, obj/item/tool)
+	try_to_weld(tool, user)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/door/crowbar_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return
+
+	var/forced_open = FALSE
+	if(istype(tool, /obj/item/crowbar))
+		var/obj/item/crowbar/crowbar = tool
+		forced_open = crowbar.force_opens
+	try_to_crowbar(tool, user, forced_open)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
-	if(!user.combat_mode && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
-		var/forced_open = FALSE
-		if(istype(I, /obj/item/crowbar))
-			var/obj/item/crowbar/C = I
-			forced_open = C.force_opens
-		try_to_crowbar(I, user, forced_open)
+	if(!user.combat_mode && istype(I, /obj/item/fireaxe))
+		try_to_crowbar(I, user, FALSE)
 		return TRUE
-	else if(I.tool_behaviour == TOOL_WELDER)
-		try_to_weld(I, user, params)
-		return TRUE
-	else if((!(I.item_flags & NOBLUDGEON) && !user.combat_mode) && try_to_activate_door(user))
+	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
+		return ..()
+	else if(try_to_activate_door(user))
 		return TRUE
 	return ..()
 
-/obj/machinery/door/attackby_secondary(obj/item/weapon, mob/user, params)
-	if (weapon.tool_behaviour == TOOL_WELDER)
-		try_to_weld_secondary(weapon, user)
+/obj/machinery/door/welder_act_secondary(mob/living/user, obj/item/tool)
+	try_to_weld_secondary(tool, user)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if (weapon.tool_behaviour == TOOL_CROWBAR)
-		var/forced_open = FALSE
-		if(istype(weapon, /obj/item/crowbar))
-			var/obj/item/crowbar/crowbar = weapon
-			forced_open = crowbar.force_opens
-		try_to_crowbar_secondary(weapon, user, forced_open)
-
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	..()
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/machinery/door/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	var/forced_open = FALSE
+	if(istype(tool, /obj/item/crowbar))
+		var/obj/item/crowbar/crowbar = tool
+		forced_open = crowbar.force_opens
+	try_to_crowbar_secondary(tool, user, forced_open)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()

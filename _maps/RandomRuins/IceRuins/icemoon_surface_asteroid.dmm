@@ -75,7 +75,7 @@
 /area/icemoon/surface)
 "N" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors/nospawn)
 "O" = (
 /obj/structure/fluff/clockwork/alloy_shards,
 /turf/open/floor/bronze,

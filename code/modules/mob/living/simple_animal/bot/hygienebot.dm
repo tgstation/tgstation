@@ -6,7 +6,7 @@
 	icon_state = "hygienebot"
 	base_icon_state = "hygienebot"
 	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
-	layer = ABOVE_MOB_LAYER
+	layer = MOB_UPPER_LAYER
 	density = FALSE
 	anchored = FALSE
 	health = 100
@@ -51,12 +51,9 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/hygienebot/explode()
-	visible_message(span_boldannounce("[src] blows apart in a foamy explosion!"))
-	do_sparks(3, TRUE, src)
-	bot_mode_flags &= ~BOT_MODE_ON
 	new /obj/effect/particle_effect/foam(loc)
 
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/hygienebot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

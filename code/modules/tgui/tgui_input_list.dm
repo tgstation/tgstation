@@ -23,7 +23,7 @@
 			return
 	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
-		return input(user, message, title) as null|anything in items
+		return input(user, message, title, default) as null|anything in items
 	var/datum/tgui_list_input/input = new(user, message, title, items, default, timeout)
 	input.ui_interact(user)
 	input.wait()
@@ -143,16 +143,15 @@
 
 /datum/tgui_list_input/ui_static_data(mob/user)
 	. = list()
+	.["init_value"] = default || items[1]
 	.["items"] = items
+	.["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["message"] = message
+	.["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	.["title"] = title
 
 /datum/tgui_list_input/ui_data(mob/user)
 	. = list()
-	.["init_value"] = default || items[1]
-	.["message"] = message
-	.["preferences"] = list()
-	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
-	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
-	.["title"] = title
 	if(timeout)
 		.["timeout"] = clamp((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS), 0, 1)
 

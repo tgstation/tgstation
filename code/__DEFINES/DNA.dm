@@ -35,7 +35,9 @@
 #define DNA_SKIN_TONE_BLOCK 3
 #define DNA_UNI_IDENTITY_BLOCKS 7
 
-#define DNA_FEATURE_BLOCKS 15
+/// This number needs to equal the total number of DNA blocks
+#define DNA_FEATURE_BLOCKS 16
+
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
 #define DNA_LIZARD_MARKINGS_BLOCK 3
@@ -51,6 +53,7 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_MONKEY_TAIL_BLOCK 15
+#define DNA_POD_HAIR_BLOCK 16
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -65,30 +68,28 @@
 #define NOBLOOD 6
 #define NOTRANSSTING 7
 #define NOZOMBIE 8
-/// Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
-#define DIGITIGRADE 9
-#define NO_UNDERWEAR 10
-#define NOSTOMACH 11
-#define NO_DNA_COPY 12
-#define DRINKSBLOOD 13
+#define NO_UNDERWEAR 9
+#define NOSTOMACH 10
+#define NO_DNA_COPY 11
+#define DRINKSBLOOD 12
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define DYNCOLORS 14
-#define AGENDER 15
+#define DYNCOLORS 13
+#define AGENDER 14
 /// Do not draw eyes or eyeless overlay
-#define NOEYESPRITES 16
+#define NOEYESPRITES 15
 /// Used for determining which wounds are applicable to this species.
 /// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
-#define HAS_FLESH 17
+#define HAS_FLESH 16
 /// if we have bones (can suffer bone wounds)
-#define HAS_BONE 18
+#define HAS_BONE 17
 ///If we have a limb-specific overlay sprite
-#define HAS_MARKINGS 19
+#define HAS_MARKINGS 18
 /// Do not draw blood overlay
-#define NOBLOODOVERLAY 20
+#define NOBLOODOVERLAY 19
 ///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
-#define NOAUGMENTS 21
+#define NOAUGMENTS 20
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
-#define BLOOD_CLANS 22
+#define BLOOD_CLANS 21
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
@@ -125,6 +126,7 @@
 #define ORGAN_SLOT_EXTERNAL_WINGS "wings"
 #define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
 #define ORGAN_SLOT_EXTERNAL_BODYMARKINGS "bodymarkings"
+#define ORGAN_SLOT_EXTERNAL_POD_HAIR "pod_hair"
 
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
@@ -145,7 +147,7 @@
 #define CHROMOSOME_NONE 1
 #define CHROMOSOME_USED 2
 
-//used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their body_type for the actual sprites, which is not genetic)
+//used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their physique for the actual sprites, which is not genetic)
 #define G_MALE 1
 #define G_FEMALE 2
 #define G_PLURAL 3
@@ -183,42 +185,10 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
 	ORGAN_SLOT_XENO_EGGSAC,))
 
-//Defines for Species IDs
-#define SPECIES_HUMAN "human"
-#define SPECIES_FELINE "felinid"
-#define SPECIES_MOTH "moth"
-#define SPECIES_ETHEREAL "ethereal"
-#define SPECIES_PLASMAMAN "plasmaman"
-#define SPECIES_FLY "fly"
-#define SPECIES_MONKEY "monkey"
-#define SPECIES_JELLYPERSON "jelly"
-#define SPECIES_SLIMEPERSON "slime"
-#define SPECIES_LUMINESCENT "lum"
-#define SPECIES_STARGAZER "stargazer"
-#define SPECIES_LIZARD "lizard"
-#define SPECIES_LIZARD_ASH "ashlizard"
-#define SPECIES_LIZARD_SILVER "silverlizard"
-#define SPECIES_DULLAHAN "dullahan"
-#define SPECIES_SKELETON "skeleton"
-#define SPECIES_VAMPIRE "vampire"
-#define SPECIES_ZOMBIE "memezombies"
-#define SPECIES_ZOMBIE_HALLOWEEN "zombie"
-#define SPECIES_ADDICT "goofzombies"
-
-#define SPECIES_ABDUCTOR "abductor"
-#define SPECIES_ANDROID "android"
-#define SPECIES_MUSHROOM "mush"
-#define SPECIES_PODPERSON "pod"
-#define SPECIES_SHADOW "shadow"
-#define SPECIES_NIGHTMARE "nightmare"
-#define SPECIES_SNAIL "snail"
-#define SPECIES_SYNTH "synth"
-#define SPECIES_SYNTH_MILITARY "military_synth"
-
 //Defines for Golem Species IDs
-#define SPECIES_GOLEM "iron_golem"
-#define SPECIES_GOLEM_ADAMANTINE "adamantine_golem"
-#define SPECIES_GOLEM_PLASMA "plasma_golem"
+#define SPECIES_GOLEM "golem"
+#define SPECIES_GOLEM_ADAMANTINE "a_golem"
+#define SPECIES_GOLEM_PLASMA "p_golem"
 #define SPECIES_GOLEM_DIAMOND "diamond_golem"
 #define SPECIES_GOLEM_GOLD "gold_golem"
 #define SPECIES_GOLEM_SILVER "silver_golem"
@@ -231,14 +201,30 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_GOLEM_SAND "sand_golem"
 #define SPECIES_GOLEM_GLASS "glass_golem"
 #define SPECIES_GOLEM_BLUESPACE "bluespace_golem"
-#define SPECIES_GOLEM_BANANIUM "bananium_golem"
-#define SPECIES_GOLEM_CULT "runic_golem"
-#define SPECIES_GOLEM_CLOTH "cloth_golem"
+#define SPECIES_GOLEM_BANANIUM "ba_golem"
+#define SPECIES_GOLEM_CULT "cultgolem"
+#define SPECIES_GOLEM_CLOTH "clothgolem"
 #define SPECIES_GOLEM_PLASTIC "plastic_golem"
 #define SPECIES_GOLEM_BRONZE "bronze_golem"
-#define SPECIES_GOLEM_CARDBOARD "cardboard_golem"
+#define SPECIES_GOLEM_CARDBOARD "c_golem"
 #define SPECIES_GOLEM_LEATHER "leather_golem"
-#define SPECIES_GOLEM_DURATHREAD "durathread_golem"
-#define SPECIES_GOLEM_BONE "bone_golem"
-#define SPECIES_GOLEM_SNOW "snow_golem"
+#define SPECIES_GOLEM_DURATHREAD "d_golem"
+#define SPECIES_GOLEM_BONE "b_golem"
+#define SPECIES_GOLEM_SNOW "sn_golem"
 #define SPECIES_GOLEM_HYDROGEN "metallic_hydrogen_golem"
+
+// Defines for used in creating "perks" for the species preference pages.
+/// A key that designates UI icon displayed on the perk.
+#define SPECIES_PERK_ICON "ui_icon"
+/// A key that designates the name of the perk.
+#define SPECIES_PERK_NAME "name"
+/// A key that designates the description of the perk.
+#define SPECIES_PERK_DESC "description"
+/// A key that designates what type of perk it is (see below).
+#define SPECIES_PERK_TYPE "perk_type"
+
+// The possible types each perk can be.
+// Positive perks are shown in green, negative in red, and neutral in grey.
+#define SPECIES_POSITIVE_PERK "positive"
+#define SPECIES_NEGATIVE_PERK "negative"
+#define SPECIES_NEUTRAL_PERK "neutral"

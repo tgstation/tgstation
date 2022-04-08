@@ -134,15 +134,17 @@
 	update_appearance()
 	return TRUE
 
+/obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/reagentgrinder/attackby(obj/item/I, mob/living/user, params)
 	//You can only screw open empty grinder
 	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		return
 
 	if(default_deconstruction_crowbar(I))
-		return
-
-	if(default_unfasten_wrench(user, I))
 		return
 
 	if(panel_open) //Can't insert objects when its screwed open

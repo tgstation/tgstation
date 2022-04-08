@@ -52,7 +52,7 @@
 				freak_out(O)
 				return
 		for(var/mob/living/carbon/human/HU in seen_atoms) //check equipment for trigger items
-			for(var/X in HU.get_all_slots() | HU.held_items)
+			for(var/X in HU.get_all_worn_items() | HU.held_items)
 				var/obj/I = X
 				if(!QDELETED(I) && (is_type_in_typecache(I, trigger_objs) || (phobia_type == "blood" && HAS_BLOOD_DNA(I))))
 					freak_out(I)
@@ -213,7 +213,7 @@
 /datum/brain_trauma/mild/phobia/guns
 	phobia_type = "guns"
 	random_gain = FALSE
-	
+
 /datum/brain_trauma/mild/phobia/blood
 	phobia_type = "blood"
 	random_gain = FALSE

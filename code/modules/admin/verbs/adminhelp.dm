@@ -126,7 +126,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		var/datum/admin_help/T = C.current_ticket
 		T.AddInteraction("Client disconnected.")
 		//Gotta async this cause clients only logout on destroy, and sleeping in destroy is disgusting
-		INVOKE_ASYNC(SSblackbox, /datum/controller/subsystem/blackbox/proc/LogAhelp, T, "Disconnected", "Client disconnected", C.ckey)
+		INVOKE_ASYNC(SSblackbox, /datum/controller/subsystem/blackbox/proc/LogAhelp, T.id, "Disconnected", "Client disconnected", C.ckey)
 		T.initiator = null
 
 //Get a ticket given a ckey
@@ -159,6 +159,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /obj/effect/statclick/ticket_list/proc/Action()
 	Click()
 
+#define WEBHOOK_NONE 0
+#define WEBHOOK_URGENT 1
+#define WEBHOOK_NON_URGENT 2
+
 /**
  * # Adminhelp Ticket
  */
@@ -189,6 +193,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/static/ticket_counter = 0
 	/// The list of clients currently responding to the opening ticket before it gets a response
 	var/list/opening_responders
+	/// Whether this ahelp has sent a webhook or not, and what type
+	var/webhook_sent = WEBHOOK_NONE
 
 /**
  * Call this on its own to create a ticket, don't manually assign current_ticket
@@ -231,30 +237,93 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		send_message_to_tgs(msg, urgent)
 	GLOB.ahelp_tickets.active_tickets += src
 
+/datum/admin_help/proc/format_embed_discord(message)
+	var/datum/discord_embed/embed = new()
+	embed.title = "Ticket #[id]"
+	embed.description = "<byond://[world.internet_address]:[world.port]>"
+	embed.author = key_name(initiator_ckey)
+	var/round_state
+	switch(SSticker.current_state)
+		if(GAME_STATE_STARTUP, GAME_STATE_PREGAME, GAME_STATE_SETTING_UP)
+			round_state = "Round has not started"
+		if(GAME_STATE_PLAYING)
+			round_state = "Round is ongoing."
+			if(SSshuttle.emergency.getModeStr())
+				round_state += "\n[SSshuttle.emergency.getModeStr()]: [SSshuttle.emergency.getTimerStr()]"
+				if(SSticker.emergency_reason)
+					round_state += ", Shuttle call reason: [SSticker.emergency_reason]"
+		if(GAME_STATE_FINISHED)
+			round_state = "Round has ended"
+	var/list/admin_counts = get_admin_counts(R_BAN)
+	var/stealth_admins = jointext(admin_counts["stealth"], ", ")
+	var/afk_admins = jointext(admin_counts["afk"], ", ")
+	var/other_admins = jointext(admin_counts["noflags"], ", ")
+	var/admin_text = ""
+	var/player_count = "**Total**: [length(GLOB.clients)], **Living**: [length(GLOB.alive_player_list)], **Dead**: [length(GLOB.dead_player_list)], **Observers**: [length(GLOB.current_observers_list)]"
+	if(stealth_admins)
+		admin_text += "**Stealthed**: [stealth_admins]\n"
+	if(afk_admins)
+		admin_text += "**AFK**: [afk_admins]\n"
+	if(other_admins)
+		admin_text += "**Lacks +BAN**: [other_admins]\n"
+	embed.fields = list(
+		"CKEY" = initiator_ckey,
+		"PLAYERS" = player_count,
+		"ROUND STATE" = round_state,
+		"ROUND ID" = GLOB.round_id,
+		"ROUND TIME" = ROUND_TIME,
+		"MESSAGE" = message,
+		"ADMINS" = admin_text,
+	)
+	if(CONFIG_GET(string/adminhelp_ahelp_link))
+		var/ahelp_link = replacetext(CONFIG_GET(string/adminhelp_ahelp_link), "$RID", GLOB.round_id)
+		ahelp_link = replacetext(ahelp_link, "$TID", id)
+		embed.url = ahelp_link
+	return embed
+
 /datum/admin_help/proc/send_message_to_tgs(message, urgent = FALSE)
 	var/message_to_send = message
 
 	if(urgent)
-		var/extra_message_to_send = "[message] - Requested an admin"
 		var/extra_message = CONFIG_GET(string/urgent_ahelp_message)
-		if(extra_message)
-			extra_message_to_send += " ([extra_message])"
 		to_chat(initiator, span_boldwarning("Notified admins to prioritize your ticket"))
-		send2adminchat_webhook("RELAY: [initiator_ckey] | Ticket #[id]: [extra_message_to_send]")
+		var/datum/discord_embed/embed = format_embed_discord(message)
+		embed.content = extra_message
+		embed.footer = "This player requested an admin"
+		send2adminchat_webhook(embed, urgent = TRUE)
+		webhook_sent = WEBHOOK_URGENT
 	//send it to TGS if nobody is on and tell us how many were on
 	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
 		to_chat(initiator, span_notice("No active admins are online, your adminhelp was sent to admins who are available through IRC or Discord."), confidential = TRUE)
 		heard_by_no_admins = TRUE
+		var/regular_webhook_url = CONFIG_GET(string/regular_adminhelp_webhook_url)
+		if(regular_webhook_url && (!urgent || regular_webhook_url != CONFIG_GET(string/urgent_adminhelp_webhook_url)))
+			var/extra_message = CONFIG_GET(string/ahelp_message)
+			var/datum/discord_embed/embed = format_embed_discord(message)
+			embed.content = extra_message
+			embed.footer = "This player sent an ahelp when no admins are available [urgent? "and also requested an admin": ""]"
+			send2adminchat_webhook(embed, urgent = FALSE)
+			webhook_sent = WEBHOOK_NON_URGENT
 
-/proc/send2adminchat_webhook(message)
-	if(!CONFIG_GET(string/adminhelp_webhook_url))
+/proc/send2adminchat_webhook(message_or_embed, urgent)
+	var/webhook = CONFIG_GET(string/urgent_adminhelp_webhook_url)
+	if(!urgent)
+		webhook = CONFIG_GET(string/regular_adminhelp_webhook_url)
+
+	if(!webhook)
 		return
-	var/message_content = replacetext(replacetext(message, "\proper", ""), "\improper", "")
-	message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message, "`", ""), " ```$1``` ")
 	var/list/webhook_info = list()
-	webhook_info["content"] = message_content
+	if(istext(message_or_embed))
+		var/message_content = replacetext(replacetext(message_or_embed, "\proper", ""), "\improper", "")
+		message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message_content, "`", ""), " ```$1``` ")
+		webhook_info["content"] = message_content
+	else
+		var/datum/discord_embed/embed = message_or_embed
+		webhook_info["embeds"] = list(embed.convert_to_list())
+		if(embed.content)
+			webhook_info["content"] = embed.content
 	if(CONFIG_GET(string/adminhelp_webhook_name))
 		webhook_info["username"] = CONFIG_GET(string/adminhelp_webhook_name)
 	if(CONFIG_GET(string/adminhelp_webhook_pfp))
@@ -264,7 +333,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
 	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_POST, CONFIG_GET(string/adminhelp_webhook_url), json_encode(webhook_info), headers, "tmp/response.json")
+	request.prepare(RUSTG_HTTP_METHOD_POST, webhook, json_encode(webhook_info), headers, "tmp/response.json")
 	request.begin_async()
 
 /datum/admin_help/Destroy()
@@ -522,6 +591,19 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //Forwarded action from admin/Topic
 /datum/admin_help/proc/Action(action)
 	testing("Ahelp action: [action]")
+	if(webhook_sent != WEBHOOK_NONE)
+		var/datum/discord_embed/embed = new()
+		embed.title = "Ticket #[id]"
+		if(CONFIG_GET(string/adminhelp_ahelp_link))
+			var/ahelp_link = replacetext(CONFIG_GET(string/adminhelp_ahelp_link), "$RID", GLOB.round_id)
+			ahelp_link = replacetext(ahelp_link, "$TID", id)
+			embed.url = ahelp_link
+		embed.description = "[key_name(usr)] has sent an action to this ticket. Action ID: [action]"
+		if(webhook_sent == WEBHOOK_URGENT)
+			send2adminchat_webhook(embed, urgent = TRUE)
+		if(webhook_sent == WEBHOOK_NON_URGENT || CONFIG_GET(string/regular_adminhelp_webhook_url) != CONFIG_GET(string/urgent_adminhelp_webhook_url))
+			send2adminchat_webhook(embed, urgent = FALSE)
+		webhook_sent = WEBHOOK_NONE
 	switch(action)
 		if("ticket")
 			TicketPanel()
@@ -592,7 +674,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	. = list()
 	.["bannedFromUrgentAhelp"] = is_banned_from(user.ckey, "Urgent Adminhelp")
 	.["urgentAhelpPromptMessage"] = CONFIG_GET(string/urgent_ahelp_user_prompt)
-	var/webhook_url = CONFIG_GET(string/adminhelp_webhook_url)
+	var/webhook_url = CONFIG_GET(string/urgent_adminhelp_webhook_url)
 	if(webhook_url)
 		.["urgentAhelpEnabled"] = TRUE
 
@@ -895,32 +977,78 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	return potential_hits
 
 /**
- * Checks a given message to see if any of the words contain an active admin's ckey with an @ before it
+ * Checks a given message to see if any of the words are something we want to treat specially, as detailed below.
  *
- * Returns nothing if no pings are found, otherwise returns an associative list with ckey -> client
- * Also modifies msg to underline the pings, then stores them in the key [ADMINSAY_PING_UNDERLINE_NAME_INDEX] for returning
+ * There are 3 cases where a word is something we want to act on
+ * 1. Admin pings, like @adminckey. Pings the admin in question, text is not clickable
+ * 2. Datum refs, like @0x2001169 or @mob_23. Clicking on the link opens up the VV for that datum
+ * 3. Ticket refs, like #3. Displays the status and ahelper in the link, clicking on it brings up the ticket panel for it.
+ * Returns a list being used as a tuple. Index ASAY_LINK_NEW_MESSAGE_INDEX contains the new message text (with clickable links and such)
+ * while index ASAY_LINK_PINGED_ADMINS_INDEX contains a list of pinged admin clients, if there are any.
  *
  * Arguments:
  * * msg - the message being scanned
  */
-/proc/check_admin_pings(msg)
-	//explode the input msg into a list
-	var/list/msglist = splittext(msg, " ")
-	var/list/admins_to_ping = list()
+/proc/check_asay_links(msg)
+	var/list/msglist = splittext(msg, " ") //explode the input msg into a list
+	var/list/pinged_admins = list() // if we ping any admins, store them here so we can ping them after
+	var/modified = FALSE // did we find anything?
 
 	var/i = 0
 	for(var/word in msglist)
 		i++
 		if(!length(word))
 			continue
-		if(word[1] != "@")
-			continue
-		var/ckey_check = lowertext(copytext(word, 2))
-		var/client/client_check = GLOB.directory[ckey_check]
-		if(client_check?.holder)
-			msglist[i] = "<u>[word]</u>"
-			admins_to_ping[ckey_check] = client_check
 
-	if(length(admins_to_ping))
-		admins_to_ping[ADMINSAY_PING_UNDERLINE_NAME_INDEX] = jointext(msglist, " ") // without tuples, we must make do!
-		return admins_to_ping
+		switch(word[1])
+			if("@")
+				var/stripped_word = ckey(copytext(word, 2))
+
+				// first we check if it's a ckey of an admin
+				var/client/client_check = GLOB.directory[stripped_word]
+				if(client_check?.holder)
+					msglist[i] = "<u>[word]</u>"
+					pinged_admins[stripped_word] = client_check
+					modified = TRUE
+					continue
+
+				// then if not, we check if it's a datum ref
+
+				var/word_with_brackets = "\[[stripped_word]\]" // the actual memory address lookups need the bracket wraps
+				var/datum/datum_check = locate(word_with_brackets)
+				if(!istype(datum_check))
+					continue
+				msglist[i] = "<u><a href='?_src_=vars;[HrefToken(TRUE)];Vars=[word_with_brackets]'>[word]</A></u>"
+				modified = TRUE
+
+			if("#") // check if we're linking a ticket
+				var/possible_ticket_id = text2num(copytext(word, 2))
+				if(!possible_ticket_id)
+					continue
+
+				var/datum/admin_help/ahelp_check = GLOB.ahelp_tickets?.TicketByID(possible_ticket_id)
+				if(!ahelp_check)
+					continue
+
+				var/state_word
+				switch(ahelp_check.state)
+					if(AHELP_ACTIVE)
+						state_word = "Active"
+					if(AHELP_CLOSED)
+						state_word = "Closed"
+					if(AHELP_RESOLVED)
+						state_word = "Resolved"
+
+				msglist[i]= "<u><A href='?_src_=holder;[HrefToken()];ahelp=[REF(ahelp_check)];ahelp_action=ticket'>[word] ([state_word] | [ahelp_check.initiator_key_name])</A></u>"
+				modified = TRUE
+
+	if(modified)
+		var/list/return_list = list()
+		return_list[ASAY_LINK_NEW_MESSAGE_INDEX] = jointext(msglist, " ") // without tuples, we must make do!
+		return_list[ASAY_LINK_PINGED_ADMINS_INDEX] = pinged_admins
+		return return_list
+
+
+#undef WEBHOOK_URGENT
+#undef WEBHOOK_NONE
+#undef WEBHOOK_NON_URGENT

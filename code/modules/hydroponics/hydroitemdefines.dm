@@ -10,11 +10,43 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron = 30, /datum/material/glass = 20)
+
+/obj/item/plant_analyzer/Initialize(mapload)
+	. = ..()
+	register_item_context()
 
 /obj/item/plant_analyzer/examine()
 	. = ..()
 	. += span_notice("Left click a plant to scan its growth stats, and right click to scan its chemical reagent stats.")
+
+/obj/item/plant_analyzer/add_item_context(
+	obj/item/source,
+	list/context,
+	atom/target,
+)
+
+	if(isliving(target))
+		// It's a health analyzer, but for podpeople.
+		var/mob/living/living_target = target
+		if(!(living_target.mob_biotypes & MOB_PLANT))
+			return NONE
+
+		context[SCREENTIP_CONTEXT_LMB] = "Scan health"
+		context[SCREENTIP_CONTEXT_RMB] = "Scan chemicals"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(isitem(target))
+		// Easier to handle this here, as grown items are split across two type-paths
+		var/obj/item/item_target = target
+		if(!item_target.get_plant_seed())
+			return NONE
+
+		context[SCREENTIP_CONTEXT_LMB] = "Scan plant stats"
+		context[SCREENTIP_CONTEXT_RMB] = "Scan plant chemicals"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
@@ -139,6 +171,7 @@
 	if(scanned_tray.myseed)
 		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
 		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
+		returned_message += "- Plant Health: [span_notice("[scanned_tray.plant_health]")]\n"
 		returned_message += scan_plant_stats(scanned_tray.myseed)
 	else
 		returned_message += span_bold("No plant found.\n")
@@ -502,7 +535,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src, "desecration" ,50, TRUE, -1)
+			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
@@ -539,6 +572,37 @@
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
+/// Secateurs can be used to style podperson "hair"
+/obj/item/secateurs/attack(mob/trimmed, mob/living/trimmer)
+	if(ispodperson(trimmed))
+		var/mob/living/carbon/human/pod = trimmed
+		var/location = trimmer.zone_selected
+		if((location in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !pod.get_bodypart(BODY_ZONE_HEAD))
+			to_chat(trimmer, span_warning("[pod] [pod.p_do()]n't have a head!"))
+			return
+		if(location == BODY_ZONE_HEAD && !trimmer.combat_mode)
+			if(!trimmer.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				return
+			var/new_style = tgui_input_list(trimmer, "Select a hairstyle", "Grooming", GLOB.pod_hair_list)
+			if(isnull(new_style))
+				return
+			trimmer.visible_message(
+				span_notice("[trimmer] tries to change [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
+				span_notice("You try to change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
+			)
+			if(new_style && do_after(trimmer, 6 SECONDS, target = pod))
+				trimmer.visible_message(
+					span_notice("[trimmer] successfully changes [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
+					span_notice("You successfully change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
+				)
+
+				var/datum/species/pod/species = pod.dna?.species
+				species?.change_hairstyle(pod, new_style)
+		else
+			return ..()
+	else
+		return ..()
+
 /obj/item/geneshears
 	name = "Botanogenetic Plant Shears"
 	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
@@ -557,7 +621,6 @@
 	attack_verb_continuous = list("slashes", "slices", "cuts")
 	attack_verb_simple = list("slash", "slice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-
 
 // *************************************
 // Nutrient defines for hydroponics

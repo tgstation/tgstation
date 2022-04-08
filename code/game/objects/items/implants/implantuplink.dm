@@ -22,11 +22,10 @@
 	. = ..()
 	var/datum/component/uplink/new_uplink = AddComponent(/datum/component/uplink, owner = target?.key, lockable = TRUE, enabled = FALSE, uplink_handler_override = uplink_handler, starting_tc = starting_tc)
 	new_uplink.unlock_text = "Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."
-	if(target.mind)
+	if(!uplink_handler)
 		new_uplink.uplink_handler.owner = target.mind
 		new_uplink.uplink_handler.assigned_role = target.mind.assigned_role.title
 		new_uplink.uplink_handler.assigned_species = target.dna.species.id
-
 
 /**
  * Proc called when component is removed; ie. uplink component

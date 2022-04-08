@@ -1,32 +1,18 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
+"aa" = (
 /turf/template_noop,
 /area/template_noop)
-"b" = (
+"ab" = (
 /obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"c" = (
+"ac" = (
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"d" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/sbc_corvette)
-"e" = (
+"ae" = (
 /obj/machinery/turretid{
 	ailock = 1;
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
@@ -46,22 +32,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"f" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
+"ag" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/shuttle/starfury/corvette{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"h" = (
+"ah" = (
 /obj/structure/closet/emcloset{
 	anchored = 1
 	},
@@ -79,7 +57,14 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"j" = (
+"ai" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/corvette{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"aj" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "SBC_corvette_bolt";
 	name = "Syndicate Corvette Airlock";
@@ -89,7 +74,7 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
-"k" = (
+"ak" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -98,19 +83,19 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"l" = (
+"al" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"m" = (
+"am" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	max_integrity = 80
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_corvette)
-"n" = (
+"an" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
 /obj/machinery/button/door{
@@ -126,7 +111,7 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"o" = (
+"ao" = (
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
@@ -137,29 +122,29 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"r" = (
-/obj/machinery/computer/security{
-	network = list("SBC_Corvette")
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+"ap" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"s" = (
+"aq" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/multitool,
+/obj/item/clothing/head/welding,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"as" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"t" = (
+"at" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -168,14 +153,27 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
-"v" = (
+"au" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/zipties,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"av" = (
 /obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"w" = (
+"aw" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/chair/comfy/shuttle{
@@ -184,33 +182,18 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"x" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/rack,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/neutral{
+"ay" = (
+/obj/machinery/computer/secure_data{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/item/storage/box/zipties,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"z" = (
+"az" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"A" = (
+"aA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -220,45 +203,13 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"B" = (
-/obj/machinery/computer/secure_data{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/sbc_corvette)
-"C" = (
+"aC" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
-"D" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/computer/shuttle/starfury/corvette{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/sbc_corvette)
-"E" = (
+"aE" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "SBC_corvette_bolt";
 	name = "Syndicate Corvette Airlock";
@@ -267,13 +218,13 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
-"F" = (
+"aF" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"G" = (
+"aG" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -285,68 +236,36 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"H" = (
+"aH" = (
 /obj/machinery/porta_turret/syndicate/pod{
 	dir = 1;
 	max_integrity = 80
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_corvette)
-"I" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/item/wrench,
-/obj/machinery/cell_charger,
-/turf/open/floor/iron/dark,
-/area/shuttle/sbc_corvette)
-"J" = (
+"aJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"K" = (
+"aK" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Corvette Ready Room";
 	req_access_txt = "150"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"L" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/corvette{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/sbc_corvette)
-"M" = (
+"aM" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_corvette)
-"N" = (
+"aN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"O" = (
+"aO" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "SBC_corvette_blast";
 	layer = 3
@@ -354,14 +273,20 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
-"P" = (
+"aP" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Corvette Cockpit";
 	req_access_txt = "150"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"R" = (
+"aQ" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"aR" = (
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
@@ -371,40 +296,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"T" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/sbc_corvette)
-"U" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/sbc_corvette)
-"V" = (
+"aS" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/flashlight/seclite{
 	pixel_x = 4;
 	pixel_y = 3
@@ -412,14 +309,33 @@
 /obj/item/flashlight/seclite,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"W" = (
+"aT" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"aU" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"aW" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
 	name = "tactical chair"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"X" = (
+"aX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -429,156 +345,150 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"Y" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/rack,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/multitool,
-/obj/item/clothing/head/welding,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/sbc_corvette)
-"Z" = (
+"aZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
+"qH" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/wrench,
+/obj/machinery/cell_charger,
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"Jb" = (
+/obj/machinery/computer/security{
+	network = list("SBC_Corvette")
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
 
 (1,1,1) = {"
-a
-C
-C
-C
-C
-C
-a
+aa
+aC
+aC
+aC
+aC
+aC
+aa
 "}
 (2,1,1) = {"
-H
-t
-t
-t
-t
-t
-m
+aH
+at
+at
+at
+at
+at
+am
 "}
 (3,1,1) = {"
-M
-M
-Y
-V
-x
-M
-M
+aM
+aM
+aq
+aS
+au
+aM
+aM
 "}
 (4,1,1) = {"
-M
-k
-J
-N
-s
-X
-M
+aM
+ak
+aJ
+aN
+as
+aX
+aM
 "}
 (5,1,1) = {"
-M
-G
-z
-c
-F
-w
-M
+aM
+aG
+az
+ac
+aF
+aw
+aM
 "}
 (6,1,1) = {"
-M
-v
-b
-c
-v
-b
-M
+aM
+av
+ab
+ac
+av
+ab
+aM
 "}
 (7,1,1) = {"
-H
-M
-M
-K
-M
-M
-m
+aH
+aM
+aM
+aK
+aM
+aM
+am
 "}
 (8,1,1) = {"
-E
-s
-T
-Z
-U
-J
-j
+aE
+as
+aT
+aZ
+aU
+aJ
+aj
 "}
 (9,1,1) = {"
-M
-n
-A
-l
-l
-h
-M
+aM
+an
+aA
+al
+al
+ah
+aM
 "}
 (10,1,1) = {"
-M
-M
-M
-P
-M
-M
-M
+aM
+aM
+aM
+aP
+aM
+aM
+aM
 "}
 (11,1,1) = {"
-M
-r
-o
-c
-R
-B
-M
+aM
+Jb
+ao
+ac
+aR
+ay
+aM
 "}
 (12,1,1) = {"
-O
-I
-c
-W
-e
-f
-O
+aO
+qH
+ac
+aW
+ae
+aQ
+aO
 "}
 (13,1,1) = {"
-O
-O
-L
-D
-d
-O
-O
+aO
+aO
+ai
+ag
+ap
+aO
+aO
 "}
 (14,1,1) = {"
-a
-O
-O
-O
-O
-O
-a
+aa
+aO
+aO
+aO
+aO
+aO
+aa
 "}

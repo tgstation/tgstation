@@ -515,13 +515,38 @@
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+	/// The number of cables needed to make a battery.
+	var/cables_needed_per_battery = 5
 
 /datum/plant_gene/trait/battery/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
 
+	our_plant.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+	RegisterSignal(our_plant, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
+
+/*
+ * Signal proc for [COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM] to add context to plant batteries.
+ */
+/datum/plant_gene/trait/battery/proc/on_requesting_context_from_item(
+	obj/item/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	SIGNAL_HANDLER
+
+	if(!istype(held_item, /obj/item/stack/cable_coil))
+		return NONE
+
+	var/obj/item/stack/cable_coil/cabling = held_item
+	if(cabling.amount < cables_needed_per_battery)
+		return NONE
+
+	context[SCREENTIP_CONTEXT_LMB] = "Make [source.name] battery"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /*
  * When a plant with this gene is hit (attackby) with cables, we turn it into a battery.
@@ -538,7 +563,7 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/obj/item/stack/cable_coil/cabling = hit_item
-	if(!cabling.use(5))
+	if(!cabling.use(cables_needed_per_battery))
 		to_chat(user, span_warning("You need five lengths of cable to make a [our_plant] battery!"))
 		return
 

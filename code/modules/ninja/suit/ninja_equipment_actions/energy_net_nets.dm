@@ -18,21 +18,22 @@
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
 	anchored = TRUE//Can't drag/grab the net.
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	max_integrity = 60 //How much health it has.
 	can_buckle = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	///The creature currently caught in the net
-	var/mob/living/affecting
+	var/mob/living/affected_mob
 
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BRUTE || damage_type == BURN)
 		playsound(src, 'sound/weapons/slash.ogg', 80, TRUE)
 
 /obj/structure/energy_net/Destroy()
-	if(!QDELETED(affecting))
-		affecting.visible_message(span_notice("[affecting.name] is recovered from the energy net!"), span_notice("You are recovered from the energy net!"), span_hear("You hear a grunt."))
-	affecting = null
+	if(!QDELETED(affected_mob))
+		affected_mob.visible_message(span_notice("[affected_mob.name] is recovered from the energy net!"), span_notice("You are recovered from the energy net!"), span_hear("You hear a grunt."))
+	affected_mob = null
 	return ..()
 
 /obj/structure/energy_net/attack_paw(mob/user, list/modifiers)

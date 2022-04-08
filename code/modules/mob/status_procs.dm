@@ -61,7 +61,7 @@
 	switch(stat)
 		if(CONSCIOUS, SOFT_CRIT)
 			if(HAS_TRAIT(src, TRAIT_BLIND) || eye_blind)
-				throw_alert("blind", /atom/movable/screen/alert/blind)
+				throw_alert(ALERT_BLIND, /atom/movable/screen/alert/blind)
 				do_set_blindness(TRUE)
 			else
 				do_set_blindness(FALSE)
@@ -78,7 +78,7 @@
 		// You are blind why should you be able to make out details like color, only shapes near you
 		add_client_colour(/datum/client_colour/monochrome/blind)
 	else
-		clear_alert("blind")
+		clear_alert(ALERT_BLIND)
 		clear_fullscreen("blind")
 		remove_client_colour(/datum/client_colour/monochrome/blind)
 

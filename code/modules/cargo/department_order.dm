@@ -113,11 +113,14 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		return
 
 	. = TRUE
-	var/id = text2path(params["id"])
+	var/id = params["id"]
+	id = text2path(id) || id
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(!pack)
 		say("Something went wrong!")
 		CRASH("requested supply pack id \"[id]\" not found!")
+	if(pack.hidden || pack.DropPodOnly || pack.special)
+		return
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"
 	var/ckey = usr.ckey

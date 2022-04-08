@@ -107,6 +107,7 @@
 	add_cell_sample()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/soft_landing)
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -384,7 +385,7 @@
 			force_effect = round(W.force/2)
 		if(prob(10 + force_effect))
 			discipline_slime(user)
-	if(istype(W, /obj/item/storage/bag/bio))
+	if(istype(W, /obj/item/storage/bag/xeno))
 		var/obj/item/storage/P = W
 		if(!effectmod)
 			to_chat(user, span_warning("The slime is not currently being mutated."))

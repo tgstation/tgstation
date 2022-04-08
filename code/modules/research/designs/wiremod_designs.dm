@@ -73,6 +73,16 @@
 	id = "comp_delay"
 	build_path = /obj/item/circuit_component/delay
 
+/datum/design/component/format
+	name = "Format List Component"
+	id = "comp_format"
+	build_path = /obj/item/circuit_component/format
+
+/datum/design/component/format_assoc
+	name = "Format Associative List Component"
+	id = "comp_format_assoc"
+	build_path = /obj/item/circuit_component/format/assoc
+
 /datum/design/component/index
 	name = "Index Component"
 	id = "comp_index"
@@ -341,6 +351,16 @@
 	id = "comp_bar_overlay"
 	build_path = /obj/item/circuit_component/object_overlay/bar
 
+/datum/design/component/bci/vox
+	name = "VOX Announcement Component"
+	id = "comp_vox"
+	build_path = /obj/item/circuit_component/vox
+
+/datum/design/component/bci/thought_listener
+	name = "Thought Listener Component"
+	id = "comp_thought_listener"
+	build_path = /obj/item/circuit_component/thought_listener
+
 /datum/design/component/bci/target_intercept
 	name = "BCI Target Interceptor"
 	id = "comp_target_intercept"
@@ -372,7 +392,7 @@
 	build_path = /obj/item/circuit_component/id_getter
 
 /datum/design/component/id_info_reader
-	name = "ID Getter Component"
+	name = "ID Info Reader Component"
 	id = "comp_id_info_reader"
 	build_path = /obj/item/circuit_component/id_info_reader
 
@@ -380,6 +400,16 @@
 	name = "ID Access Reader Component"
 	id = "comp_id_access_reader"
 	build_path = /obj/item/circuit_component/id_access_reader
+
+/datum/design/component/setter_trigger
+	name = "Set Variable Trigger"
+	id = "comp_set_variable_trigger"
+	build_path = /obj/item/circuit_component/variable/setter/trigger
+
+/datum/design/component/view_sensor
+	name = "View Sensor Component"
+	id = "comp_view_sensor"
+	build_path = /obj/item/circuit_component/view_sensor
 
 /datum/design/component/access_checker
 	name = "Access Checker Component"

@@ -198,7 +198,7 @@
 		"cost" = cost,
 		"id" = D.id,
 		"subCategory" = sub_category,
-		"categoryOverride" = category_override,
+		"category_override" = category_override,
 		"searchMeta" = D.search_metadata
 	)
 

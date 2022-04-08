@@ -362,7 +362,7 @@
 
 	to_chat(user, "<span class='notice'>You begin to awaken [our_plant]...</span>")
 	begin_awaken(our_plant, 3 SECONDS)
-	log_game("[key_name(user)] awakened a [our_plant] at [AREACOORD(user)].")
+	our_plant.investigate_log("was awakened by [key_name(user)] at [AREACOORD(user)].", INVESTIGATE_BOTANY)
 
 /*
  * Called when a user accidentally activates the plant via backfire effect.
@@ -376,6 +376,7 @@
 	if(!awakening && !isspaceturf(user.loc) && prob(25))
 		to_chat(user, "<span class='danger'>[our_plant] begins to growl and shake!</span>")
 		begin_awaken(our_plant, 1 SECONDS)
+		our_plant.investigate_log("was awakened (via plant backfire) by [key_name(user)] at [AREACOORD(user)].", INVESTIGATE_BOTANY)
 
 /*
  * Actually begin the process of awakening the plant.

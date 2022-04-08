@@ -13,7 +13,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 3
 	throwforce = 5
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	drop_sound = 'sound/items/handling/weldingtool_drop.ogg'
 	pickup_sound = 'sound/items/handling/weldingtool_pickup.ogg'
@@ -98,11 +98,12 @@
 	user.visible_message(span_suicide("[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (FIRELOSS)
 
+/obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
+	flamethrower_screwdriver(tool, user)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/weldingtool/attackby(obj/item/tool, mob/user, params)
-	if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-		flamethrower_screwdriver(tool, user)
-	else if(istype(tool, /obj/item/stack/rods))
+	if(istype(tool, /obj/item/stack/rods))
 		flamethrower_rods(tool, user)
 	else
 		. = ..()
@@ -119,7 +120,7 @@
 
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == BODYPART_ROBOTIC && !user.combat_mode)
+	if(affecting && !IS_ORGANIC_LIMB(affecting) && !user.combat_mode)
 		if(src.use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
 			if(user == attacked_humanoid)
 				user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid]'s [affecting.name]."),
@@ -135,14 +136,12 @@
 	if(!proximity)
 		return
 
-	if(isOn())
+	if(isOn() && !QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
 		handle_fuel_and_temps(1, user)
-
-		if(!QDELETED(attacked_atom) && isliving(attacked_atom)) // can't ignite something that doesn't exist
-			var/mob/living/attacked_mob = attacked_atom
-			if(attacked_mob.IgniteMob())
-				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
-				log_game("[key_name(user)] set [key_name(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
+		var/mob/living/attacked_mob = attacked_atom
+		if(attacked_mob.IgniteMob())
+			message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
+			log_game("[key_name(user)] set [key_name(attacked_mob)] on fire with [src] at [AREACOORD(user)]")
 
 	if(!status && attacked_atom.is_refillable())
 		reagents.trans_to(attacked_atom, reagents.total_volume, transfered_by = user)
@@ -247,7 +246,7 @@
 
 	force = 3
 	damtype = BRUTE
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	update_appearance()
 
 

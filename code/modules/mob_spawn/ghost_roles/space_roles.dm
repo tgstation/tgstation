@@ -105,7 +105,7 @@
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
 	you_are_text = "You are a crewmember aboard the syndicate flagship: the SBC Starfury."
-	flavour_text = "Your job is to follow your captain's orders, maintain the ship, and keep the engine running. If you are not familiar with how the supermatter engine functions: do not attempt to start it."
+	flavour_text = "Your job is to follow your captain's orders, maintain the ship, and keep the power flowing."
 	important_text = "The armory is not a candy store, and your role is not to assault the station directly, leave that work to the assault operatives."
 	prompt_name = "a battlecruiser crewmember"
 	outfit = /datum/outfit/syndicate_empty/battlecruiser

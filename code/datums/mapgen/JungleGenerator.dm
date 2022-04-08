@@ -85,6 +85,11 @@
 	icon = 'icons/turf/debug.dmi'
 	icon_state = "genturf"
 
+/turf/open/genturf/alternative //currently used for edge cases in which you want a certain type of map generation intermingled with other genturfs
+	name = "alternative ungenerated turf"
+	desc = "If you see this, and you're not a ghost, yell at coders pretty loudly"
+	icon_state = "genturf_alternative"
+
 /area/mine/planetgeneration
 	name = "planet generation area"
 	static_lighting = FALSE

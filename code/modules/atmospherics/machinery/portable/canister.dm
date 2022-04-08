@@ -100,6 +100,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	else
 		create_gas()
 
+	if(ispath(gas_type, /datum/gas))
+		desc = "[GLOB.meta_gas_info[gas_type][META_GAS_NAME]]. [GLOB.meta_gas_info[gas_type][META_GAS_DESC]]"
+
 	update_window()
 
 	var/random_quality = rand()
@@ -120,7 +123,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += span_notice("This canister is Tier [mode]. A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]</b>.")
+		. += span_notice("This canister is Tier [mode]. A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(heat_limit, "K", 0)]</b>.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
@@ -133,7 +136,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/antinoblium
 	name = "Antinoblium canister"
-	desc = "Antinoblium, we still don't know what it does, but it sells for a lot"
 	gas_type = /datum/gas/antinoblium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -141,21 +143,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "\improper BZ canister"
-	desc = "BZ, a powerful hallucinogenic nerve agent."
 	gas_type = /datum/gas/bz
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#d0d2a0"
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Carbon dioxide canister"
-	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	gas_type = /datum/gas/carbon_dioxide
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#4e4c48"
 
 /obj/machinery/portable_atmospherics/canister/freon
 	name = "Freon canister"
-	desc = "Freon. Can absorb heat"
 	gas_type = /datum/gas/freon
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -163,7 +162,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/halon
 	name = "Halon canister"
-	desc = "Halon, removes oxygen from high temperature fires and cools down the area"
 	gas_type = /datum/gas/halon
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -171,7 +169,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/healium
 	name = "Healium canister"
-	desc = "Healium, causes deep sleep"
 	gas_type = /datum/gas/healium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -179,7 +176,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/helium
 	name = "Helium canister"
-	desc = "Helium, inert gas"
 	gas_type = /datum/gas/helium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -187,7 +183,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/hydrogen
 	name = "Hydrogen canister"
-	desc = "Hydrogen, highly flammable"
 	gas_type = /datum/gas/hydrogen
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/stripe
@@ -195,7 +190,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/miasma
 	name = "Miasma canister"
-	desc = "Miasma. Makes you wish your nose was blocked."
 	gas_type = /datum/gas/miasma
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -203,49 +197,42 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
-	desc = "Nitrogen gas. Reportedly useful for something."
 	gas_type = /datum/gas/nitrogen
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#d41010"
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "Nitrous oxide canister"
-	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	gas_type = /datum/gas/nitrous_oxide
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#c63e3b#f7d5d3"
 
 /obj/machinery/portable_atmospherics/canister/nitrium
 	name = "Nitrium canister"
-	desc = "Nitrium gas. Feels great 'til the acid eats your lungs."
 	gas_type = /datum/gas/nitrium
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#7b4732"
 
 /obj/machinery/portable_atmospherics/canister/nob
 	name = "Hyper-noblium canister"
-	desc = "Hyper-Noblium. More noble than all other gases."
 	gas_type = /datum/gas/hypernoblium
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#6399fc#b2b2b2"
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Oxygen canister"
-	desc = "Oxygen. Necessary for human life."
 	gas_type = /datum/gas/oxygen
 	greyscale_config = /datum/greyscale_config/canister/stripe
 	greyscale_colors = "#2786e5#e8fefe"
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "Pluoxium canister"
-	desc = "Pluoxium. Like oxygen, but more bang for your buck."
 	gas_type = /datum/gas/pluoxium
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#2786e5"
 
 /obj/machinery/portable_atmospherics/canister/proto_nitrate
 	name = "Proto Nitrate canister"
-	desc = "Proto Nitrate, reacts differently with various gases"
 	gas_type = /datum/gas/proto_nitrate
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -253,21 +240,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/plasma
 	name = "Plasma canister"
-	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	gas_type = /datum/gas/plasma
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#f62800#000000"
 
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "Tritium canister"
-	desc = "Tritium. Inhalation might cause irradiation."
 	gas_type = /datum/gas/tritium
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#3fcd40#000000"
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "Water vapor canister"
-	desc = "Water Vapor. We get it, you vape."
 	gas_type = /datum/gas/water_vapor
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -275,7 +259,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/zauker
 	name = "Zauker canister"
-	desc = "Zauker, highly toxic"
 	gas_type = /datum/gas/zauker
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -295,6 +278,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	air_contents.gases[/datum/gas/hydrogen][MOLES] = 300
 	air_contents.gases[/datum/gas/tritium][MOLES] = 300
 	air_contents.temperature = 10000
+	SSair.start_processing_machine(src)
+
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix
+	name = "Anesthetic mix"
+	desc = "A mixture of N2O and Oxygen"
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#9fba6c#3d4680"
+
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix/create_gas()
+	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (N2O_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 	SSair.start_processing_machine(src)
 
 /**
@@ -413,7 +408,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		if((10) to (5 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-0")
 			. += emissive_appearance(canister_overlay_file, "can-0-light", alpha = src.alpha)
-	
+
 	update_window()
 
 /obj/machinery/portable_atmospherics/canister/update_greyscale()

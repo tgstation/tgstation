@@ -100,7 +100,6 @@
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
 	complexity_max = theme.complexity_max
-	skin = new_skin || theme.default_skin
 	ui_theme = theme.ui_theme
 	charge_drain = theme.charge_drain
 	initial_modules += theme.inbuilt_modules
@@ -134,8 +133,7 @@
 		piece.min_cold_protection_temperature = theme.min_cold_protection_temperature
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
-		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-	update_flags()
+	set_mod_skin(new_skin || theme.default_skin)
 	update_speed()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
@@ -371,14 +369,6 @@
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
 		return TRUE
-	else if(istype(attacking_item, /obj/item/mod/paint))
-		if(active || activating)
-			balloon_alert(user, "suit is active!")
-		else if(paint(user, attacking_item))
-			balloon_alert(user, "suit painted")
-		else
-			balloon_alert(user, "not painted!")
-		return TRUE
 	else if(open && attacking_item.GetID())
 		update_access(user, attacking_item.GetID())
 		return TRUE
@@ -439,8 +429,8 @@
 
 /obj/item/mod/control/proc/set_wearer(mob/user)
 	wearer = user
+	SEND_SIGNAL(src, COMSIG_MOD_WEARER_SET, wearer)
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
-	RegisterSignal(wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
 	RegisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_unequip)
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
@@ -451,7 +441,8 @@
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
 	UnregisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP)
-	wearer.clear_alert("mod_charge")
+	wearer.clear_alert(ALERT_MODSUIT_CHARGE)
+	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null
 
 /obj/item/mod/control/proc/on_unequip()
@@ -514,29 +505,12 @@
 		return
 	picked_module.on_select()
 
-/obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
-	if(length(theme.skins) <= 1)
-		return FALSE
-	var/list/skins = list()
-	for(var/mod_skin in theme.skins)
-		skins[mod_skin] = image(icon = icon, icon_state = "[mod_skin]-control")
-	var/pick = show_radial_menu(user, src, skins, custom_check = FALSE, require_near = TRUE)
-	if(!pick || !user.is_holding(paint))
-		return FALSE
-	skin = pick
-	var/list/skin_updating = mod_parts.Copy() + src
-	for(var/obj/item/piece as anything in skin_updating)
-		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-	update_flags()
-	wearer?.regenerate_icons()
-	return TRUE
-
 /obj/item/mod/control/proc/shock(mob/living/user)
 	if(!istype(user) || get_charge() < 1)
 		return FALSE
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
-	return electrocute_mob(user, get_cell(), src, 0.7, check_range)
+	return electrocute_mob(user, get_charge_source(), src, 0.7, check_range)
 
 /obj/item/mod/control/proc/install(module, mob/user)
 	var/obj/item/mod/module/new_module = module
@@ -618,7 +592,7 @@
 	if(!wearer)
 		return
 	if(!core)
-		wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocore)
+		wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocore)
 		return
 	core.update_charge_alert()
 
@@ -632,6 +606,26 @@
 	balloon_alert(wearer, "no power!")
 	toggle_activate(wearer, force_deactivate = TRUE)
 
+/obj/item/mod/control/proc/set_mod_color(new_color)
+	var/list/all_parts = mod_parts.Copy() + src
+	for(var/obj/item/part as anything in all_parts)
+		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		part.add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
+	wearer?.regenerate_icons()
+
+/obj/item/mod/control/proc/set_mod_skin(new_skin)
+	skin = new_skin
+	var/list/skin_updating = mod_parts.Copy() + src
+	var/list/selected_skin = theme.skins[new_skin]
+	for(var/obj/item/piece as anything in skin_updating)
+		if(selected_skin[MOD_ICON_OVERRIDE])
+			piece.icon = selected_skin[MOD_ICON_OVERRIDE]
+		if(selected_skin[MOD_WORN_ICON_OVERRIDE])
+			piece.worn_icon = selected_skin[MOD_WORN_ICON_OVERRIDE]
+		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
+	update_flags()
+	wearer?.regenerate_icons()
+
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, direction)
 	SIGNAL_HANDLER
 
@@ -643,23 +637,14 @@
 		return
 	if(part.loc == wearer)
 		return
-	if(modules.Find(part))
+	if(part in modules)
 		uninstall(part)
 		return
-	if(mod_parts.Find(part))
+	if(part in mod_parts)
 		conceal(wearer, part)
 		if(active)
 			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
 		return
-
-/obj/item/mod/control/proc/on_borg_charge(datum/source, amount)
-	SIGNAL_HANDLER
-
-	update_charge_alert()
-	var/obj/item/stock_parts/cell/cell = get_cell()
-	if(!cell)
-		return
-	cell.give(amount)
 
 /obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER
@@ -667,14 +652,11 @@
 	if(slowdown_inactive <= 0)
 		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
 		return SPEED_POTION_STOP
-	if(wearer)
-		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's on someone!"))
+	if(active)
+		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's active!"))
 		return SPEED_POTION_STOP
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
-	var/list/all_parts = mod_parts.Copy() + src
-	for(var/obj/item/part as anything in all_parts)
-		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		part.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+	set_mod_color("#FF0000")
 	slowdown_inactive = 0
 	slowdown_active = 0
 	update_speed()

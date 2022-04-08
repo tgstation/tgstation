@@ -378,11 +378,35 @@
 	name = "Medbot"
 	result = /mob/living/simple_animal/bot/medbot
 	reqs = list(/obj/item/healthanalyzer = 1,
-				/obj/item/storage/firstaid = 1,
+				/obj/item/storage/medkit = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
+	parts = list(
+		/obj/item/storage/medkit = 1,
+		/obj/item/healthanalyzer = 1,
+		)
 	time = 40
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
+	var/mob/living/simple_animal/bot/medbot/bot = result
+	var/obj/item/storage/medkit/medkit = bot.contents[3]
+	bot.medkit_type = medkit
+	bot.healthanalyzer = bot.contents[4]
+
+	if (istype(medkit, /obj/item/storage/medkit/fire))
+		bot.skin = "ointment"
+	else if (istype(medkit, /obj/item/storage/medkit/toxin))
+		bot.skin = "tox"
+	else if (istype(medkit, /obj/item/storage/medkit/o2))
+		bot.skin = "o2"
+	else if (istype(medkit, /obj/item/storage/medkit/brute))
+		bot.skin = "brute"
+	else if (istype(medkit, /obj/item/storage/medkit/advanced))
+		bot.skin = "advanced"
+
+	bot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
+	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
@@ -634,7 +658,8 @@
 
 /datum/crafting_recipe/radiogloves/New()
 	..()
-	blacklist |= subtypesof(/obj/item/radio)
+	blacklist |= typesof(/obj/item/radio/headset)
+	blacklist |= typesof(/obj/item/radio/intercom)
 
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
@@ -748,6 +773,13 @@
 	reqs = list(/datum/reagent/water = 50, /obj/item/stack/sheet/mineral/wood = 1)
 	tool_paths = list(/obj/item/hatchet)
 	result = /obj/item/paper_bin/bundlenatural
+	category = CAT_MISC
+
+/datum/crafting_recipe/sillycup
+	name = "Paper Cup"
+	result =  /obj/item/reagent_containers/food/drinks/sillycup
+	time = 1 SECONDS
+	reqs = list(/obj/item/paper = 2)
 	category = CAT_MISC
 
 /datum/crafting_recipe/toysword
@@ -1172,7 +1204,7 @@
 	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE))
 		return FALSE
 	var/turf/T = get_turf(user)
-	if(istype(T,/turf/open/water) || istype(T,/turf/open/floor/plating/beach/water))
+	if(istype(T, /turf/open/water))
 		return TRUE
 	var/obj/machinery/shower/S = locate() in T
 	if(S?.on)

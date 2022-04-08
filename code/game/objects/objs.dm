@@ -76,7 +76,7 @@
 		/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
 
 
-/obj/Destroy(force=FALSE)
+/obj/Destroy(force)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
@@ -209,22 +209,6 @@
 /obj/get_dumping_location()
 	return get_turf(src)
 
-/**
- * This proc is used for telling whether something can pass by this object in a given direction, for use by the pathfinding system.
- *
- * Trying to generate one long path across the station will call this proc on every single object on every single tile that we're seeing if we can move through, likely
- * multiple times per tile since we're likely checking if we can access said tile from multiple directions, so keep these as lightweight as possible.
- *
- * Arguments:
- * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
- * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
- * * caller- The movable we're checking pass flags for, if we're making any such checks
- **/
-/obj/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
-	if(istype(caller) && (caller.pass_flags & pass_flags_self))
-		return TRUE
-	. = !density
-
 /obj/proc/check_uplink_validity()
 	return 1
 
@@ -356,8 +340,8 @@
 		return FALSE
 	return TRUE
 
-/obj/analyzer_act(mob/living/user, obj/item/I)
-	if(atmosanalyzer_scan(user, src))
+/obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
+	if(atmos_scan(user=user, target=src, tool=tool, silent=FALSE))
 		return TRUE
 	return ..()
 
@@ -371,7 +355,7 @@
 /obj/handle_ricochet(obj/projectile/P)
 	. = ..()
 	if(. && receive_ricochet_damage_coeff)
-		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
+		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.armor_flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
 
 /obj/update_overlays()
 	. = ..()
