@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes: 
-  - bugfix: "fixes a runtime with conveyor where right clicking it with any item would cause a runtime"

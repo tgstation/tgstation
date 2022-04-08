@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an issue where reagent logging would incorrectly output \"no reagents\" when a reagent transfer had actually happened."

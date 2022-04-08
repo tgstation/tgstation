@@ -583,7 +583,7 @@
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustOxyLoss(2 * REM * delta_time, FALSE)
-	M.adjustBruteLoss(2 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustBruteLoss(2 * REM * delta_time, FALSE, FALSE, BODYTYPE_ORGANIC)
 	M.adjustToxLoss(2 * REM * delta_time, FALSE)
 	..()
 	. = TRUE
@@ -998,7 +998,7 @@
 
 
 /datum/reagent/toxin/acid
-	name = "Sulphuric Acid"
+	name = "Sulfuric Acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1

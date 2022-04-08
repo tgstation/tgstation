@@ -38,7 +38,7 @@
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
 		return
-	log_combat(span_warning("has started to harvest [key_name(target)]."), LOG_ATTACK)
+	log_combat(src, target, "started to harvest")
 	face_atom(target)
 	draining = TRUE
 	essence_drained += rand(15, 20)
@@ -356,8 +356,7 @@
 		if(iscarbon(mob))
 			if(ishuman(mob))
 				var/mob/living/carbon/human/H = mob
-				if(H.dna && H.dna.species)
-					H.dna.species.handle_hair(H,"#1d2953") //will be reset when blight is cured
+				H.set_haircolor("#1d2953", override = TRUE) //will be reset when blight is cured
 				var/blightfound = FALSE
 				for(var/datum/disease/revblight/blight in H.diseases)
 					blightfound = TRUE

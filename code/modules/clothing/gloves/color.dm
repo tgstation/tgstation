@@ -263,3 +263,8 @@
 	desc = "Breathable red gloves for expert handling of a pen and notebook."
 	icon_state = "aerostatic_gloves"
 	inhand_icon_state = "aerostatic_gloves"
+
+/obj/item/clothing/gloves/maid
+	name = "maid arm covers"
+	desc = "Cylindrical looking tubes that go over your arm, weird."
+	icon_state = "maid_arms"

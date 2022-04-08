@@ -284,8 +284,9 @@
 	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, .proc/on_export)
 
 /obj/item/bounty_cube/Destroy()
-	UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
-	QDEL_NULL(radio)
+	if(radio)
+		UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
+		QDEL_NULL(radio)
 	return ..()
 
 /obj/item/bounty_cube/examine()

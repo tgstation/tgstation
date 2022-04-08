@@ -2063,13 +2063,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
-"jA" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/bed,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/derelict/medical)
 "jB" = (
 /obj/item/stack/medical/ointment,
 /turf/open/floor/iron/white/airless,
@@ -2309,10 +2302,6 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
-"kN" = (
-/obj/structure/bed,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
 "kO" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
@@ -3366,6 +3355,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
+"DQ" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary)
 "DX" = (
 /obj/machinery/light/directional/south,
 /obj/structure/closet/crate,
@@ -3711,6 +3706,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge/ai_upload)
+"US" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary/port)
 "Vg" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/power_turbine,
@@ -3749,6 +3750,15 @@
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
+"Yq" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/derelict/medical)
 "YQ" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
@@ -5877,7 +5887,7 @@ go
 go
 jX
 fZ
-kN
+DQ
 wr
 fZ
 gL
@@ -6329,7 +6339,7 @@ yH
 go
 gc
 fZ
-kN
+DQ
 wr
 fZ
 jY
@@ -6436,7 +6446,7 @@ iB
 iL
 iY
 jg
-jA
+Yq
 fZ
 go
 go
@@ -9949,8 +9959,8 @@ fZ
 KN
 Vz
 Vz
-lE
-lE
+US
+US
 Vz
 OT
 Vz

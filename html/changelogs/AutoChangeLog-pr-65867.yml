@@ -1,0 +1,5 @@
+author: "Ebb-Real"
+delete-after: True
+changes: 
+  - expansion: "Adds the science night vision goggles, they scan chems!"
+  - expansion: "Science sunglasses now have a research scanner installed."

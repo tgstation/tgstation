@@ -34,7 +34,7 @@
 		ninja.Beam(net_target, "n_beam", time = 15)
 		ninja.say("Get over here!", forced = "ninja net")
 		var/obj/structure/energy_net/net = new /obj/structure/energy_net(net_target.drop_location())
-		net.affecting = net_target
+		net.affected_mob = net_target
 		ninja.visible_message(span_danger("[ninja] caught [net_target] with an energy net!"),span_notice("You caught [net_target] with an energy net!"))
 
 		if(net_target.buckled)

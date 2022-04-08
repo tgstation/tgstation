@@ -13,6 +13,7 @@
 	armor = list(MELEE = 50, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
+	can_open_with_hands = FALSE
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 	var/id = 1
@@ -111,6 +112,44 @@
 /obj/machinery/door/poddoor/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.id]_[id]"
 
+//"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
+/obj/machinery/door/poddoor/ex_act(severity, target)
+	if(severity <= EXPLODE_LIGHT)
+		return FALSE
+	return ..()
+
+/obj/machinery/door/poddoor/do_animate(animation)
+	switch(animation)
+		if("opening")
+			flick("opening", src)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
+		if("closing")
+			flick("closing", src)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
+
+/obj/machinery/door/poddoor/update_icon_state()
+	. = ..()
+	icon_state = density ? "closed" : "open"
+
+/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+	if(density & !(resistance_flags & INDESTRUCTIBLE))
+		add_fingerprint(user)
+		user.visible_message(span_warning("[user] begins prying open [src]."),\
+					span_noticealien("You begin digging your claws into [src] with all your might!"),\
+					span_warning("You hear groaning metal..."))
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+
+		var/time_to_open = 5 SECONDS
+		if(hasPower())
+			time_to_open = 15 SECONDS
+
+		if(do_after(user, time_to_open, src))
+			if(density && !open(TRUE)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
+				to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
+
+	else
+		return ..()
+
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
 	density = FALSE
@@ -172,54 +211,3 @@
 /obj/machinery/door/poddoor/massdriver_trash
 	name = "Disposals Launcher Bay Door"
 	id = MASSDRIVER_DISPOSALS
-
-/obj/machinery/door/poddoor/Bumped(atom/movable/AM)
-	if(density)
-		return 0
-	else
-		return ..()
-
-/obj/machinery/door/poddoor/bumpopen()
-	return
-
-//"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
-/obj/machinery/door/poddoor/ex_act(severity, target)
-	if(severity <= EXPLODE_LIGHT)
-		return FALSE
-	return ..()
-
-/obj/machinery/door/poddoor/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("opening", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
-		if("closing")
-			flick("closing", src)
-			playsound(src, 'sound/machines/blastdoor.ogg', 30, TRUE)
-
-/obj/machinery/door/poddoor/update_icon_state()
-	. = ..()
-	icon_state = density ? "closed" : "open"
-
-/obj/machinery/door/poddoor/try_to_activate_door(mob/user)
-	return
-
-/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
-	if(density & !(resistance_flags & INDESTRUCTIBLE))
-		add_fingerprint(user)
-		user.visible_message(span_warning("[user] begins prying open [src]."),\
-					span_noticealien("You begin digging your claws into [src] with all your might!"),\
-					span_warning("You hear groaning metal..."))
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-
-		var/time_to_open = 5 SECONDS
-		if(hasPower())
-			time_to_open = 15 SECONDS
-
-		if(do_after(user, time_to_open, src))
-			if(density && !open(TRUE)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
-				to_chat(user, span_warning("Despite your efforts, [src] managed to resist your attempts to open it!"))
-
-	else
-		return ..()
-

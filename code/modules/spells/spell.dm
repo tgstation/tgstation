@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				to_chat(user, span_warning("Magic seems to flee from you, you can't gather enough power to cast this spell."))
 			return FALSE
 
-	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
+	if(!phase_allowed && istype(user.loc, /obj/effect/dummy) || HAS_TRAIT(user, TRAIT_ROD_FORM))
 		to_chat(user, span_warning("[name] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE
 
