@@ -221,7 +221,7 @@
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "russian_roulette_lose", /datum/mood_event/russian_roulette_lose)
 				return
 
-		if(loaded_rounds)
+		if(loaded_rounds && is_target_face)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "russian_roulette_win", /datum/mood_event/russian_roulette_win)
 
 		user.visible_message(span_danger("*click*"))
