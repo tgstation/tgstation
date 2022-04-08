@@ -373,10 +373,10 @@
 /turf/template_noop,
 /area/template_noop)
 "be" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/west,
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ancientstation/delta/ai)
 "bf" = (
@@ -397,13 +397,9 @@
 	name = "Broken Computer"
 	},
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ancientstation/delta/ai)
 "bi" = (
@@ -740,15 +736,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/beta/hall)
 "ci" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/transit_tube{
 	dir = 4
 	},
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/charlie/hall)
 "cj" = (
@@ -834,15 +826,11 @@
 /turf/template_noop,
 /area/template_noop)
 "cv" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/transit_tube{
 	dir = 4
 	},
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/delta/hall)
 "cw" = (
@@ -869,15 +857,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/delta/hall)
 "cz" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/window/reinforced,
 /obj/structure/table,
 /obj/machinery/door/window/brigdoor/right/directional/east,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ancientstation/delta/ai)
 "cA" = (
@@ -913,9 +897,9 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/delta/proto)
 "cF" = (
-/obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner,
 /obj/structure/alien/weeds,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ancientstation/delta/ai)
 "cG" = (
@@ -3041,12 +3025,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/ancientstation/charlie/kitchen)
 "ij" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/transit_tube{
 	dir = 4
 	},
@@ -3057,6 +3035,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/charlie/hall)
 "ik" = (
@@ -3635,12 +3615,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/charlie/hall)
 "jp" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/transit_tube{
 	dir = 4
 	},
@@ -3651,6 +3625,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/delta/hall)
 "jq" = (
@@ -4113,12 +4089,10 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/delta/proto)
 "ku" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/door/poddoor{
 	id = "proto"
 	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/delta/proto)
 "kv" = (
@@ -4140,12 +4114,10 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/delta/proto)
 "ky" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/poddoor{
 	id = "proto"
 	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/delta/proto)
 "kA" = (
@@ -6118,10 +6090,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/beta/atmos)
 "pv" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/ancientstation/beta/atmos)
 "px" = (
@@ -6184,13 +6153,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/beta/atmos)
 "qz" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/ancientstation/beta/atmos)
 "qA" = (
@@ -6858,13 +6825,11 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/delta/storage)
 "KF" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8
 	},
 /obj/machinery/light/small/directional/south,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/ancientstation/beta/atmos)
 "KG" = (
@@ -6983,9 +6948,6 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/charlie/hall)
 "NQ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
@@ -6994,6 +6956,7 @@
 	internal_pressure_bound = 5066;
 	name = "Nitrogen Out"
 	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/engine/o2,
 /area/ruin/space/has_grav/ancientstation/beta/atmos)
 "NZ" = (
@@ -7342,13 +7305,6 @@
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/beta/mining)
 "WT" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
 	frequency = 1442;
@@ -7356,6 +7312,8 @@
 	internal_pressure_bound = 5066;
 	name = "Oxygen Out"
 	},
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/ancientstation/beta/atmos)
 "Xr" = (

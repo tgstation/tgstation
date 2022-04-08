@@ -159,9 +159,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/turf/open/floor/iron/airless,
 /area/ruin/unpowered)
 "aE" = (
 /obj/structure/door_assembly/door_assembly_mhatch{

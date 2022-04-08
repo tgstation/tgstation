@@ -223,12 +223,10 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/bar)
 "cc" = (
-/obj/structure/window{
-	dir = 8
-	},
 /obj/structure/toilet{
 	dir = 1
 	},
+/obj/structure/window/spawner/west,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "cf" = (
@@ -1289,13 +1287,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"lf" = (
-/obj/structure/window{
-	dir = 1
-	},
-/obj/machinery/shower,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/hotel/bar)
 "lh" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/sign/poster/official/no_erp{
@@ -3061,12 +3052,10 @@
 /turf/open/floor/carpet/royalblue,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "FB" = (
-/obj/structure/window{
-	dir = 8
-	},
 /obj/structure/toilet{
 	dir = 1
 	},
+/obj/structure/window/spawner/west,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "FM" = (
@@ -3099,12 +3088,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "Gb" = (
-/obj/structure/window{
-	dir = 8
-	},
 /obj/structure/toilet{
 	pixel_y = 5
 	},
+/obj/structure/window/spawner/west,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "Gc" = (
@@ -3763,12 +3750,10 @@
 /turf/open/floor/carpet/royalblue,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "Pj" = (
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/toilet{
 	pixel_y = 5
 	},
+/obj/structure/window/spawner/east,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "Pl" = (
@@ -4241,12 +4226,10 @@
 	},
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "UI" = (
-/obj/structure/window{
-	dir = 4
-	},
 /obj/structure/toilet{
 	dir = 1
 	},
+/obj/structure/window/spawner/east,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "UL" = (
@@ -4347,12 +4330,10 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/dock)
 "Wb" = (
-/obj/structure/window{
-	dir = 8
-	},
 /obj/structure/toilet{
 	pixel_y = 5
 	},
+/obj/structure/window/spawner/west,
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "We" = (
@@ -6441,7 +6422,7 @@ PI
 WD
 Zb
 cP
-lf
+eA
 WD
 KA
 iM

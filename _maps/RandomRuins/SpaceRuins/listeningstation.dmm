@@ -822,12 +822,10 @@
 /obj/machinery/washing_machine{
 	pixel_x = 4
 	},
-/obj/structure/window{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/window/spawner/west,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "FN" = (

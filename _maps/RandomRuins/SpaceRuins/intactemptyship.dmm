@@ -2,20 +2,8 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
-"b" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/ruin/space/has_grav/powered/authorship)
 "c" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/authorship)
-"d" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
 /area/ruin/space/has_grav/powered/authorship)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -24,12 +12,10 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/powered/authorship)
 "f" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/powered/authorship)
 "g" = (
@@ -116,20 +102,9 @@
 /mob/living/simple_animal/bot/medbot/derelict,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
-"z" = (
-/turf/closed/wall/mineral/plastitanium{
-	icon_state = "diagonalWall3"
-	},
-/area/ruin/space/has_grav/powered/authorship)
 "A" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/titanium/purple,
-/area/ruin/space/has_grav/powered/authorship)
-"B" = (
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
 /area/ruin/space/has_grav/powered/authorship)
 "C" = (
 /obj/machinery/light/directional/south,
@@ -145,11 +120,11 @@
 a
 a
 a
-b
+c
 c
 s
 c
-z
+c
 a
 a
 a
@@ -168,7 +143,7 @@ e
 a
 "}
 (3,1,1) = {"
-b
+c
 f
 f
 c
@@ -178,7 +153,7 @@ x
 c
 f
 f
-z
+c
 "}
 (4,1,1) = {"
 c
@@ -246,7 +221,7 @@ j
 c
 "}
 (9,1,1) = {"
-d
+c
 c
 c
 c
@@ -256,7 +231,7 @@ p
 c
 c
 c
-B
+c
 "}
 (10,1,1) = {"
 a
@@ -300,13 +275,13 @@ a
 (13,1,1) = {"
 a
 a
-d
 c
 c
 c
 c
 c
-B
+c
+c
 a
 a
 "}
