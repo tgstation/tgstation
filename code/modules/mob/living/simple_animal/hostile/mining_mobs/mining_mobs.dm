@@ -13,6 +13,7 @@
 	response_harm_simple = "strike"
 	status_flags = 0
 	combat_mode = TRUE
+	stop_life = TRUE
 	var/crusher_loot
 	var/throw_message = "bounces off of"
 	var/fromtendril = FALSE

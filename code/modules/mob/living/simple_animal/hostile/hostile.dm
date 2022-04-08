@@ -67,7 +67,7 @@
 	var/minimum_distance = 1
 
 	///whether we should remove ourselves from the SSsimple_mobs processing list if our ai is turned off. saves processing time
-	var/stop_life = TRUE
+	var/stop_life = FALSE
 
 
 //These vars are related to how mobs locate and target

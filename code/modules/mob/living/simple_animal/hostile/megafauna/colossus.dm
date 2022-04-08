@@ -498,6 +498,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
+	stop_life = TRUE
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize(mapload)
 	. = ..()
