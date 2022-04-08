@@ -3190,7 +3190,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
 "apR" = (
@@ -23192,7 +23191,6 @@
 /area/hallway/primary/fore)
 "ddY" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/wood/tile,
 /area/service/library)
 "deb" = (
@@ -28809,7 +28807,6 @@
 "fbo" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/bag/tray,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchenshutters";
@@ -30226,6 +30223,9 @@
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 1
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
 /area/science/lab)
@@ -35295,7 +35295,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/storage/fancy/donut_box,
 /obj/structure/table,
 /obj/machinery/camera/directional/east{
 	c_tag = "Courtroom Jury";
@@ -63174,6 +63173,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/donkpockets{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/cargo/sorting)
 "quK" = (
@@ -66474,7 +66476,6 @@
 /obj/machinery/microwave{
 	pixel_y = 5
 	},
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/service)
 "rva" = (
@@ -71086,7 +71087,6 @@
 /turf/open/floor/iron/dark,
 /area/security/lockers)
 "sRX" = (
-/obj/item/storage/fancy/donut_box,
 /obj/structure/table/wood,
 /obj/structure/cable,
 /turf/open/floor/carpet/royalblack,
@@ -77249,6 +77249,9 @@
 	},
 /obj/effect/turf_decal/siding/yellow{
 	dir = 8
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/lobby)

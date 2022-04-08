@@ -6258,11 +6258,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/maintenance/port/aft)
-"chw" = (
-/obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
-/turf/open/floor/carpet,
-/area/command/heads_quarters/captain)
 "chH" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -17240,6 +17235,9 @@
 "hsd" = (
 /obj/effect/turf_decal/tile/red/full,
 /obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/large,
 /area/service/kitchen/diner)
 "hsh" = (
@@ -25205,6 +25203,7 @@
 	pixel_y = 12
 	},
 /obj/item/food/candy_trash,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/science/mixing/hallway)
 "lry" = (
@@ -29036,6 +29035,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/white,
 /area/medical/break_room)
 "ntF" = (
@@ -29376,7 +29376,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "nEf" = (
-/obj/item/storage/fancy/donut_box,
 /obj/structure/table,
 /turf/open/floor/wood,
 /area/command/meeting_room)
@@ -35176,7 +35175,6 @@
 "qod" = (
 /obj/structure/rack,
 /obj/machinery/status_display/evac/directional/south,
-/obj/item/storage/box/donkpockets,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -42628,6 +42626,10 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/radio/intercom/directional/north,
+/obj/item/storage/fancy/donut_box{
+	pixel_y = 9;
+	pixel_x = 4
+	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "uat" = (
@@ -44308,6 +44310,7 @@
 /obj/structure/table,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/spawner/random/trash/cigbutt,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/engineering/lobby)
 "uNS" = (
@@ -50443,7 +50446,6 @@
 	pixel_y = 32
 	},
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "xUM" = (
@@ -82561,7 +82563,7 @@ hcp
 qsj
 olj
 cZv
-chw
+uhQ
 uhQ
 kzW
 jaJ

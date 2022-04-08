@@ -7686,7 +7686,6 @@
 /area/engineering/gravity_generator)
 "bSE" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/donkpockets,
 /turf/open/floor/iron/grimy,
 /area/tcommsat/computer)
 "bSF" = (
@@ -21928,7 +21927,6 @@
 /area/security/checkpoint/escape)
 "eeL" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
 	},
@@ -22670,7 +22668,6 @@
 /area/commons/toilet/locker)
 "enp" = (
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23942,7 +23939,6 @@
 /area/maintenance/starboard/aft)
 "eHZ" = (
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
@@ -24756,6 +24752,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/science/breakroom)
 "eUn" = (
@@ -27020,7 +27017,6 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/machinery/requests_console/directional/west{
 	department = "Kitchen";
 	departmentType = 2;
@@ -28862,12 +28858,12 @@
 /area/cargo/office)
 "gge" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/donkpockets,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/medical/break_room)
 "ggt" = (
@@ -36547,8 +36543,6 @@
 "inN" = (
 /obj/item/clothing/neck/stethoscope,
 /obj/structure/table,
-/obj/item/storage/box/donkpockets,
-/obj/item/storage/box/donkpockets,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -41148,7 +41142,6 @@
 /area/hallway/secondary/entry)
 "jFF" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
@@ -42338,7 +42331,6 @@
 /area/service/kitchen)
 "jZj" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/captain)
 "jZl" = (
@@ -43717,7 +43709,6 @@
 /area/maintenance/port/greater)
 "ktw" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/carpet,
 /area/service/chapel/office)
@@ -47656,7 +47647,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/storage/fancy/donut_box,
 /obj/machinery/requests_console/directional/south{
 	announcementConsole = 1;
 	department = "Bridge";
@@ -55180,7 +55170,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/carpet/red,
 /area/hallway/secondary/service)
 "nQR" = (
@@ -57242,8 +57231,8 @@
 /area/security/prison)
 "otC" = (
 /obj/structure/table,
-/obj/item/storage/box/donkpockets,
 /obj/effect/turf_decal/bot,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
 "otN" = (
@@ -67656,7 +67645,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/grimy,
 /area/command/meeting_room/council)
 "rDf" = (
@@ -70946,7 +70934,6 @@
 /area/security/brig)
 "syi" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
@@ -78044,7 +78031,6 @@
 /area/security/warden)
 "uDv" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
@@ -81390,11 +81376,6 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/qm)
-"vHf" = (
-/obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
-/turf/open/floor/iron/grimy,
-/area/service/library)
 "vHk" = (
 /obj/machinery/rnd/server,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -82071,8 +82052,9 @@
 "vUb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/food/drinks/britcup,
 /obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/item/reagent_containers/food/drinks/britcup,
 /turf/open/floor/iron,
 /area/medical/medbay/lobby)
 "vUj" = (
@@ -84384,6 +84366,9 @@
 /area/hallway/secondary/exit/departure_lounge)
 "wFj" = (
 /obj/structure/table/reinforced,
+/obj/item/storage/box/donkpockets{
+	pixel_x = -6
+	},
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/south,
@@ -122492,7 +122477,7 @@ lxk
 bzt
 taU
 ybZ
-vHf
+iMC
 kPq
 kBt
 aRL

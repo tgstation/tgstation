@@ -8824,7 +8824,6 @@
 /area/science/mixing)
 "bOz" = (
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /obj/machinery/syndicatebomb/training,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -10294,7 +10293,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/radio/intercom/directional/north,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "cun" = (
@@ -13888,7 +13886,6 @@
 "dIJ" = (
 /obj/structure/table,
 /obj/item/assembly/flash/handheld,
-/obj/item/storage/fancy/donut_box,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -41668,7 +41665,6 @@
 /area/medical/treatment_center)
 "nHp" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain)
 "nIu" = (
