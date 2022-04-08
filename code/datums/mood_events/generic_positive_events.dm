@@ -273,6 +273,6 @@
 	timeout = 5 MINUTES
 
 /datum/mood_event/russian_roulette_win
-	description =  = "I gambled my life and won! I'm lucky to be alive..."
+	description = "I gambled my life and won! I'm lucky to be alive..."
 	mood_change = 15
 	timeout = 5 MINUTES
