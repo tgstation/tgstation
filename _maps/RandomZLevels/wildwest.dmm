@@ -719,9 +719,7 @@
 /turf/open/misc/ironsand,
 /area/awaymission/wildwest/mines)
 "do" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/space,
 /area/space/nearstation)
 "dq" = (
@@ -945,9 +943,7 @@
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/space,
 /area/space/nearstation)
 "eg" = (
@@ -957,9 +953,7 @@
 /turf/open/misc/ironsand,
 /area/awaymission/wildwest/gov)
 "eh" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/misc/ironsand,
 /area/awaymission/wildwest/gov)
 "ei" = (
@@ -1005,9 +999,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "es" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/misc/ironsand{
 	icon_state = "ironsand2"
 	},
@@ -1034,9 +1026,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "ey" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/misc/ironsand{
 	icon_state = "ironsand4"
 	},
@@ -1049,9 +1039,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "eD" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/misc/ironsand{
 	icon_state = "ironsand12"
 	},
@@ -1076,9 +1064,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eI" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/misc/ironsand{
 	icon_state = "ironsand7"
 	},
@@ -1180,9 +1166,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/wildwest/mines)
 "fc" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/misc/ironsand{
 	icon_state = "ironsand9"
 	},
@@ -1323,10 +1307,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/wildwest/mines)
 "fy" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/window/reinforced/tinted/frosted,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/space,
 /area/space/nearstation)
 "fz" = (
@@ -1413,12 +1395,10 @@
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "fM" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 1
 	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "fN" = (
@@ -1474,9 +1454,7 @@
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "fW" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "fX" = (
@@ -1499,10 +1477,8 @@
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "gb" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/window/reinforced/tinted/frosted,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "gc" = (
@@ -1563,12 +1539,8 @@
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "go" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "gs" = (
@@ -1641,10 +1613,8 @@
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "gF" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "gG" = (
@@ -17316,8 +17286,8 @@ bO
 bW
 bW
 bO
-bO
-bW
+br
+do
 do
 do
 do
