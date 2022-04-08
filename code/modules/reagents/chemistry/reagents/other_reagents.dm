@@ -1525,7 +1525,7 @@
 /datum/reagent/pluoxium/on_mob_end_metabolize(mob/living/L)
 	. = ..()
 	REMOVE_TRAIT(L, TRAIT_NOCRITDAMAGE, type)
-	return ..()
+
 
 /datum/reagent/halon
 	name = "Halon"
