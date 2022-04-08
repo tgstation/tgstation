@@ -56,9 +56,7 @@
 	. = ..()
 	if(HAS_TRAIT(mover, TRAIT_NO_TELEPORT) && !force_teleport)
 		return TRUE
-
-/obj/effect/portal/Bumped(atom/movable/bumper)
-	teleport(bumper)
+	teleport(mover)
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -139,6 +137,17 @@
 	else
 		real_target = get_turf(linked)
 	return real_target
+
+/obj/effect/portal/projected
+	name = "projected portal"
+	desc = "A manipulated portal projected by some kind of techknowledgy. It looks like you could crawl under it."
+
+/obj/effect/portal/projected/CanAllowThrough(mob/living/mover, border_dir)
+	if(!linked)
+		return TRUE
+	if(mover.resting & TRUE)
+		return TRUE
+	..()
 
 /obj/effect/portal/permanent
 	name = "permanent portal"
