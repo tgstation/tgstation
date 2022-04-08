@@ -138,9 +138,6 @@
 /obj/structure/frame/computer,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
-"aY" = (
-/turf/closed/wall/r_wall,
-/area/ruin/unpowered/no_grav)
 "aZ" = (
 /obj/machinery/computer/monitor/secret{
 	dir = 4
@@ -2445,12 +2442,6 @@
 /obj/item/stack/rods,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
-"mv" = (
-/obj/item/shard{
-	icon_state = "small"
-	},
-/turf/template_noop,
-/area/template_noop)
 "mw" = (
 /obj/structure/frame/computer,
 /obj/structure/window/reinforced{
@@ -3057,6 +3048,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/shard{
+	icon_state = "small"
+	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "zg" = (
@@ -3336,10 +3330,6 @@
 /obj/item/clothing/head/xenos,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
-"IL" = (
-/obj/effect/spawner/random/structure/girder,
-/turf/open/floor/iron/airless,
-/area/ruin/unpowered/no_grav)
 "Kf" = (
 /obj/item/paper/fluff/ruins/thederelict/vaultraider,
 /obj/effect/decal/remains/human{
@@ -10134,11 +10124,11 @@ go
 go
 fZ
 fZ
-ch
-ch
-ch
-ch
-ch
+KN
+KN
+KN
+KN
+KN
 md
 mf
 mf
@@ -10245,7 +10235,7 @@ gc
 go
 kq
 go
-IL
+Oa
 aa
 QL
 sz
@@ -10358,7 +10348,7 @@ jQ
 gk
 gk
 gk
-ch
+fZ
 aa
 aa
 vF
@@ -10478,7 +10468,7 @@ aa
 vF
 aa
 aa
-aY
+Bj
 aa
 aa
 aa
@@ -10591,9 +10581,9 @@ vF
 vF
 aa
 aa
-aY
-ay
-ch
+Bj
+sz
+pd
 aa
 aa
 aa
@@ -10701,7 +10691,7 @@ aa
 aa
 aa
 vF
-dk
+GQ
 aa
 vF
 vF
@@ -10914,7 +10904,7 @@ gC
 hc
 vF
 aa
-aa
+vF
 aa
 aa
 vF
@@ -11027,7 +11017,7 @@ gC
 hc
 aa
 aa
-aa
+vF
 aa
 aa
 sz
@@ -11140,7 +11130,7 @@ ay
 hc
 aa
 aa
-dk
+GQ
 aa
 aa
 vF
@@ -12062,7 +12052,7 @@ ll
 lY
 yS
 zi
-mv
+aa
 aa
 aa
 aa
