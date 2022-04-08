@@ -295,7 +295,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/black
 	colour = "black"
-	effect_desc = "Transforsms the user into a random type of golem."
+	effect_desc = "Transforms the user into a random type of golem."
 
 /obj/item/slimecross/chilling/black/do_effect(mob/user)
 	if(ishuman(user))
