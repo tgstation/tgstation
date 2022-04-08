@@ -50,15 +50,13 @@
 
 	fly.Remove(organ_owner)
 
-/obj/item/organ/external/wings/functional/on_life(delta_time, times_fired)
+/obj/item/organ/external/wings/functional/process(delta_time, times_fired)
 	. = ..()
 
 	handle_flight(owner)
 
 ///Called on_life(). Handle flight code and check if we're still flying
 /obj/item/organ/external/wings/functional/proc/handle_flight(mob/living/carbon/human/human)
-	if(human.movement_type & ~FLYING)
-		return FALSE
 	if(!can_fly(human))
 		toggle_flight(human)
 		return FALSE
@@ -115,12 +113,14 @@
 		ADD_TRAIT(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
 		passtable_on(human, SPECIES_TRAIT)
 		open_wings()
+		START_PROCESSING(SSobj, src)
 	else
 		human.physiology.stun_mod *= 0.5
 		REMOVE_TRAIT(human, TRAIT_NO_FLOATING_ANIM, SPECIES_FLIGHT_TRAIT)
 		REMOVE_TRAIT(human, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT)
 		passtable_off(human, SPECIES_TRAIT)
 		close_wings()
+		STOP_PROCESSING(SSobj, src)
 
 ///SPREAD OUR WINGS AND FLLLLLYYYYYY
 /obj/item/organ/external/wings/functional/proc/open_wings()
