@@ -1,0 +1,4 @@
+author: "thgvr"
+delete-after: True
+changes: 
+  - bugfix: "You should no longer fall through a specific spot in space in Tramstation's upper level."
