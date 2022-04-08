@@ -105,7 +105,7 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
-	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned")
+	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
 	registered_account = blank_bank_account
 	blank_bank_account.account_job = new /datum/job/unassigned
 	registered_account.replaceable = TRUE

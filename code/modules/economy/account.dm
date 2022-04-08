@@ -26,10 +26,11 @@
 	///Cooldown timer on replacing a civilain bounty. Bounties can only be replaced once every 5 minutes.
 	COOLDOWN_DECLARE(bounty_timer)
 
-/datum/bank_account/New(newname, job, modifier = 1)
+/datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
 	account_job = job
 	payday_modifier = modifier
+	add_to_accounts = player_account
 	setup_unique_account_id()
 
 /datum/bank_account/Destroy()
@@ -222,7 +223,7 @@
 	var/department_id = "REPLACE_ME"
 	add_to_accounts = FALSE
 
-/datum/bank_account/department/New(dep_id, budget)
+/datum/bank_account/department/New(dep_id, budget, player_account = FALSE)
 	department_id = dep_id
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]
