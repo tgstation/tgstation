@@ -1,0 +1,5 @@
+author: "capsaicinz"
+delete-after: True
+changes: 
+  - bugfix: "you can no longer create singularities by using soultap while in rod form"
+  - balance: "wizards can no longer cast spells while in rod form"
