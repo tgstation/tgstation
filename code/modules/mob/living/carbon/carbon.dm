@@ -1036,13 +1036,9 @@
 /mob/living/carbon/proc/slot_in_organ(obj/item/organ/insert, slot)
 	internal_organs |= insert
 	internal_organs_slot[slot] = insert
-	/// internal_organs must ALWAYS be ordered in the same way as organ_process_order
+	/// internal_organs_slot must ALWAYS be ordered in the same way as organ_process_order
 	/// Otherwise life processing breaks down
 	sortTim(internal_organs_slot, /proc/cmp_organ_slot_asc)
-	// Now that internal_organs_slot is sorted, we're gonna use it to also sort internal_organs
-	internal_organs = list()
-	for(var/intenral_slot in internal_organs_slot)
-		internal_organs += internal_organs_slot[intenral_slot]
 
 /proc/cmp_organ_slot_asc(slot_a, slot_b)
 	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)

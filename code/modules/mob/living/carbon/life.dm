@@ -334,14 +334,16 @@
 	if(stat == DEAD)
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
-		for(var/obj/item/organ/organ as anything in internal_organs)
+		for(var/V in internal_organs)
+			var/obj/item/organ/organ = V
 			organ.on_death(delta_time, times_fired) //Needed so organs decay while inside the body.
 		return
 
-	// NOTE: internal_organs is sorted by GLOB.organ_process_order on insertion
-	// It has a defined order, check that list to find it
-	for(var/obj/item/organ/organ as anything in internal_organs)
-		// I could iterate internal_organs_slot here, but this code is hot enough the assoc access actually does barely matter
+	// NOTE: internal_organs_slot is sorted by GLOB.organ_process_order on insertion
+	for(var/slot in internal_organs_slot)
+		// We don't use getorganslot here because we know we have the organ we want, since we're iterating the list containing em already
+		// This code is hot enough that it's just not worth the time
+		var/obj/item/organ/organ = internal_organs_slot[slot]
 		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
 			organ.on_life(delta_time, times_fired)
 
