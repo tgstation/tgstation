@@ -7626,8 +7626,14 @@
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/security/processing)
+"cEh" = (
+/turf/closed/wall,
+/area/maintenance/central/lesser)
 "cEk" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /turf/open/floor/plating/snowed/icemoon,
@@ -11362,6 +11368,9 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
+"euL" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/central/lesser)
 "evg" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/recharge_station,
@@ -16236,6 +16245,9 @@
 	name = "Labor Camp Shuttle Airlock";
 	req_access_txt = "2";
 	shuttledocked = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark/smooth_large,
@@ -24173,6 +24185,9 @@
 	name = "Labor Camp Shuttle Airlock";
 	shuttledocked = 1
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/security/processing)
 "kLO" = (
@@ -25939,7 +25954,7 @@
 /area/security/office)
 "lLi" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "lLn" = (
 /obj/structure/sign/painting/library{
@@ -36072,6 +36087,9 @@
 	name = "Labor Camp Shuttle Airlock";
 	req_access_txt = "2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark/smooth_large,
 /area/security/processing)
@@ -37376,7 +37394,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/command/meeting_room)
+/area/maintenance/central/greater)
 "rzN" = (
 /obj/effect/turf_decal/tile/red/full,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -38100,6 +38118,9 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/iron/dark/textured,
 /area/security/warden)
+"rQx" = (
+/turf/closed/wall,
+/area/maintenance/central/greater)
 "rQA" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 8
@@ -38635,7 +38656,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/command/meeting_room)
+/area/maintenance/central/greater)
 "sco" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -40146,6 +40167,19 @@
 	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/maintenance/starboard/fore)
+"sMo" = (
+/obj/machinery/door/airlock/maintenance{
+	req_one_access_txt = "8;12"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "sci-toxins-passthrough"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/upper)
 "sMr" = (
 /obj/effect/landmark/start/ai,
 /obj/item/radio/intercom/directional/west{
@@ -40636,7 +40670,7 @@
 	cycle_id = "sci-toxins-passthrough"
 	},
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/starboard/aft)
 "sYM" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light/directional/east,
@@ -46851,7 +46885,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "weu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47848,7 +47882,7 @@
 	name = "Engineering External Access";
 	req_one_access_txt = "10;24"
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating,
 /area/engineering/storage_shared)
 "wEf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
@@ -76363,8 +76397,8 @@ xty
 nGx
 nGx
 gGl
-gGl
-gGl
+eBR
+eBR
 eBR
 hyk
 eBR
@@ -76877,12 +76911,12 @@ xQa
 xQa
 xQa
 kmD
-nuf
-nuf
+rQx
+rQx
 rGN
 cqg
-iWV
-wXS
+rQx
+eBR
 awv
 qBZ
 jtT
@@ -77135,10 +77169,10 @@ pOt
 pOt
 mlv
 ndL
-nuf
+rQx
 ekB
 bge
-iWV
+rQx
 ngI
 cYf
 vRS
@@ -77392,10 +77426,10 @@ rmk
 phQ
 qbP
 iAE
-nuf
+rQx
 kNN
 jCW
-iWV
+rQx
 aYA
 cDA
 cDA
@@ -77649,10 +77683,10 @@ uPG
 hhc
 vBt
 hym
-nuf
-nuf
-nuf
-iWV
+rQx
+rQx
+rQx
+rQx
 mSL
 ngC
 wVs
@@ -83048,11 +83082,11 @@ jdv
 jdv
 jdv
 tGc
-olj
-vtF
-vtF
-vtF
-cUa
+euL
+cEh
+cEh
+cEh
+euL
 tDE
 qrr
 giE
@@ -83562,11 +83596,11 @@ olj
 olj
 olj
 olj
-olj
-vtF
-vtF
-vtF
-cUa
+euL
+cEh
+cEh
+cEh
+euL
 cUa
 tiv
 cUa
@@ -101822,7 +101856,7 @@ oSD
 oSD
 knQ
 aMI
-sYH
+sMo
 abJ
 ocU
 iaj
