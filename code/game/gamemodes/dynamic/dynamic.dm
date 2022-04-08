@@ -100,7 +100,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Basically, if this is set to 5, then for every 5 threat, one midround roll will be added.
 	/// The equation this is used in rounds up, meaning that if this is set to 5, and you have 6
 	/// threat, then you will get 2 midround rolls.
-	var/threat_per_midround_roll = 5
+	var/threat_per_midround_roll = 6.5
 
 	/// If above this threat, increase the chance of injection
 	var/higher_injection_chance_minimum_threat = 70
