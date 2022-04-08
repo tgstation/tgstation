@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Kilostation's Brig, Medbay, and Chapel's pipes are all connected to the station's distro and waste."

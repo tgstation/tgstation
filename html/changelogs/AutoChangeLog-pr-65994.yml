@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "KiloStation's Botany no longer has a bit of it defined as the defunct \"Central\" Maintenance."
