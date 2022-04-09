@@ -34,4 +34,5 @@
 	welded = TRUE
 
 /obj/machinery/power/emitter/energycannon/RefreshParts()
-	return ..()
+	SHOULD_CALL_PARENT(FALSE)
+	return
