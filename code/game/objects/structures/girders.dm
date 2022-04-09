@@ -177,7 +177,6 @@
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
-					user.balloon_alert(user, "plating added")
 					var/turf/T = get_turf(src)
 					T.PlaceOnTop(/turf/closed/wall/r_wall)
 					transfer_fingerprints_to(T)
