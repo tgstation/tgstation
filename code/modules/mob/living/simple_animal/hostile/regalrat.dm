@@ -180,7 +180,7 @@
 		var/time_to_open = 0.5 SECONDS
 		if(prying_door.hasPower())
 			time_to_open = 5 SECONDS
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
 		if(do_after(src, time_to_open, prying_door))
 			opening_airlock = FALSE
 			if(prying_door.density && !prying_door.open(2))
