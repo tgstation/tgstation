@@ -54,10 +54,9 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	. = ..()
 	if(!on)
 		return
-	if(parents[1] == parents[2])
-		return parents[1]
 	. += parents[1]
-	. += parents[2]
+	if(parents[1] != parents[2])
+		. += parents[2]
 
 /obj/machinery/atmospherics/components/binary/valve/interact(mob/user)
 	add_fingerprint(usr)
