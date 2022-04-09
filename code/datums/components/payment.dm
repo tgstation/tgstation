@@ -76,6 +76,7 @@
 		user.balloon_alert(user, "Cost: [total_cost] credits.")
 		return COMPONENT_OBJ_CANCEL_CHARGE
 	target_acc.transfer_money(card.registered_account, total_cost)
+	log_econ("[total_cost] credits were spent on [parent] by [user] via [card.registered_account.account_holder]'s card.")
 	card.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 
@@ -151,6 +152,7 @@
 					user.pulling = holochange
 			else
 				user.pulling = holochange
+		log_econ("[total_cost] credits were spent on [parent] by [user].")
 		to_chat(user, span_notice("Purchase completed with held credits."))
 		playsound(user, 'sound/effects/cashregister.ogg', 20, TRUE)
 		return TRUE
