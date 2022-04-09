@@ -172,7 +172,7 @@
 				amount = 1 // hur dur let's make plasteel have different construction amounts 4norasin
 				if(sheets.get_amount() < amount)
 					return
-				user.balloon_alert(user, "adding plating...")
+				balloon_alert(user, "adding plating...")
 				if(do_after(user, 50*platingmodifier, target = src))
 					if(sheets.get_amount() < amount)
 						return
