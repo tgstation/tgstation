@@ -134,7 +134,7 @@
 	return ..()
 
 /obj/machinery/grill/proc/finish_grill()
-	if(grile_time >= 30)
+	if(grill_time >= 30)
 		SEND_SIGNAL(grilled_item, COMSIG_GRILL_FOOD)
 	switch(grill_time) //no 0-20 to prevent spam
 		if(20 to 30)
