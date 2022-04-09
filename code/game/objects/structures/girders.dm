@@ -47,7 +47,7 @@
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/gun/energy/plasmacutter))
-		user.balloon_alert(user, "slicing apart...")
+		balloon_alert(user, "slicing apart...")
 		if(W.use_tool(src, user, 40, volume=100))
 			user.balloon_alert(user, "sliced apart")
 			var/obj/item/stack/sheet/iron/M = new (loc, 2)
