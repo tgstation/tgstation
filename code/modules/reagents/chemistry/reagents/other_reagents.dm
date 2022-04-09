@@ -1500,10 +1500,10 @@
 	return ..()
 
 /datum/reagent/healium/on_mob_life(mob/living/breather, delta_time, times_fired)
-	. = ..()
 	breather.adjustFireLoss(-2 * REM * delta_time, FALSE)
 	breather.adjustToxLoss(-5 * REM * delta_time, FALSE)
 	breather.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+	..()
 	return TRUE
 
 /datum/reagent/halon
