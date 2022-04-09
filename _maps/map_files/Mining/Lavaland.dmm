@@ -4502,11 +4502,6 @@
 	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
-"Yc" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/closet/crate,
-/turf/open/floor/plating,
-/area/mine/production)
 "Yd" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningbathroom";
@@ -18202,7 +18197,7 @@ pU
 pU
 aj
 aj
-Yc
+br
 eC
 br
 aj

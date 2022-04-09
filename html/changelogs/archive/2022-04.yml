@@ -341,3 +341,42 @@
   - qol: Girder construction now uses balloon alerts
   - bugfix: Fix an exploit where permanent invisibility can be gained from using shadowcloak
       stacked with other transparency effects.
+2022-04-09:
+  AnturK:
+  - bugfix: Spacemen no longer can sculpt light effects from stone
+  Ebb-Real:
+  - expansion: Adds the science night vision goggles, they scan chems!
+  - expansion: Science sunglasses now have a research scanner installed.
+  JohnFulpWillard:
+  - bugfix: Kilostation's Brig, Medbay, and Chapel's pipes are all connected to the
+      station's distro and waste.
+  Melbert:
+  - bugfix: Fixes a runtime with bounty cubes on Destroy
+  TheBoondock:
+  - bugfix: layering issue with venus fly trap and spacevine
+  cacogen:
+  - expansion: Armour tags on clothing tell you when an item blocks pepperspray or
+      facehuggers
+  capsaicinz:
+  - bugfix: you can no longer create singularities by using soultap while in rod form
+  - balance: wizards can no longer cast spells while in rod form
+  ninjanomnom:
+  - balance: Stationary gas tanks now cost 12 material for the plating instead of
+      20
+  - balance: The base level of stationary gas tank pressure limits has been brought
+      up to the base level of canisters. Higher quality materials still increase this
+      further as before.
+  robbertapir:
+  - bugfix: Petri dish cultures no longer stay behind on the sprite like some sort
+      of ghost after being washed out of it. Cells don't have souls.
+  san7890:
+  - bugfix: KiloStation's Botany no longer has a bit of it defined as the defunct
+      "Central" Maintenance.
+  thgvr:
+  - bugfix: Digitigrade legs should now display correctly with certain clothing options.
+  unit0016:
+  - bugfix: A handful of issues on icebox, pertaining to /area/s, firelocks, airlocks,
+      mapping helpers, mapping mistakes, a literal space tile, and more have been
+      squashed!
+  - bugfix: You can actually move the Syndicate Infiltrator's docking position on
+      icebox again. Yeah. I know.
