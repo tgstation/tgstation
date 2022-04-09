@@ -12819,9 +12819,9 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/lobby)
 "dnc" = (
-/obj/structure/table/glass,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "dnh" = (
@@ -19346,6 +19346,7 @@
 	pixel_y = -34;
 	req_access_txt = "55"
 	},
+/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/cafeteria,
 /area/command/heads_quarters/rd)
 "fCu" = (
@@ -29703,11 +29704,6 @@
 /obj/item/electropack,
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"jpt" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/command/heads_quarters/hos)
 "jpF" = (
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
@@ -33993,6 +33989,9 @@
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
 "kRE" = (
+/obj/structure/chair{
+	dir = 1
+	},
 /obj/machinery/firealarm/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42202,7 +42201,6 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "nQp" = (
@@ -42740,13 +42738,11 @@
 /turf/open/floor/iron/white,
 /area/science/genetics)
 "oaU" = (
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/chair{
-	dir = 1
-	},
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "obE" = (
@@ -50425,7 +50421,6 @@
 	pixel_x = 12
 	},
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -157423,7 +157418,7 @@ ogH
 hYU
 aoz
 mNh
-jpt
+ogH
 hNf
 hNf
 pLA

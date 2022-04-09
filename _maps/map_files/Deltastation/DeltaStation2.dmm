@@ -8844,13 +8844,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/courtroom)
-"ceV" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/command/heads_quarters/hos)
 "cfb" = (
 /obj/machinery/computer/security{
 	dir = 4
@@ -27414,6 +27407,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
+/obj/item/kirbyplants/dead,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "fJi" = (
@@ -40608,7 +40602,10 @@
 /turf/open/floor/plating,
 /area/cargo/storage)
 "jyA" = (
+/obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
+/obj/item/storage/secure/briefcase,
+/obj/item/taperecorder,
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom{
 	pixel_x = -26;
@@ -40619,7 +40616,6 @@
 	dir = 4;
 	pixel_x = -26
 	},
-/obj/machinery/pdapainter/research,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "jyD" = (
@@ -46685,6 +46681,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/lab)
+"loZ" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/donut_box,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/command/heads_quarters/hos)
 "lpf" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 4
@@ -48967,6 +48969,7 @@
 	pixel_y = -6;
 	req_access_txt = "58"
 	},
+/obj/item/paper_bin,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "lSn" = (
@@ -59533,7 +59536,6 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/effect/turf_decal/bot,
-/obj/item/taperecorder,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "peW" = (
@@ -59615,6 +59617,9 @@
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "pfO" = (
+/obj/structure/table/glass,
+/obj/item/folder/white,
+/obj/item/storage/secure/briefcase,
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32;
 	pixel_y = -32
@@ -59624,7 +59629,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "pfX" = (
@@ -60638,9 +60642,6 @@
 /turf/open/floor/iron,
 /area/maintenance/fore)
 "pxA" = (
-/obj/structure/table/glass,
-/obj/item/clipboard,
-/obj/item/toy/figure/cmo,
 /obj/machinery/computer/security/telescreen/cmo{
 	dir = 4;
 	pixel_x = -30
@@ -60648,6 +60649,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "pxF" = (
@@ -64071,11 +64073,9 @@
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "qwF" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
 /obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/bot,
+/obj/machinery/pdapainter/research,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "qxg" = (
@@ -67630,11 +67630,13 @@
 /turf/open/floor/carpet/blue,
 /area/commons/vacant_room/office)
 "rAE" = (
-/obj/structure/disposalpipe/segment,
-/obj/item/kirbyplants/dead,
 /obj/structure/cable,
-/obj/effect/turf_decal/bot,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "rAN" = (
@@ -80987,6 +80989,9 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/structure/table/glass,
+/obj/item/clipboard,
+/obj/item/toy/figure/cmo,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "vyC" = (
@@ -144914,13 +144919,13 @@ aad
 aad
 aad
 tKS
-rSv
+fUy
 uCv
 nja
 hll
 xOf
 ksr
-fUy
+loZ
 tKS
 aaa
 qYo
@@ -145171,13 +145176,13 @@ aaa
 aad
 aaa
 tKS
-rTA
+rSv
 ybi
 equ
 agz
 ftP
 ybi
-ceV
+rTA
 tKS
 aad
 qYo

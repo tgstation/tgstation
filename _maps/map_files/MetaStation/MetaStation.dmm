@@ -3289,6 +3289,9 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/bed/dogbed/runtime,
+/mob/living/simple_animal/pet/cat/runtime,
+/obj/item/toy/cattoy,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "aMH" = (
@@ -28143,9 +28146,9 @@
 /turf/open/floor/plating,
 /area/science/research)
 "jeR" = (
+/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "jeT" = (
@@ -30722,7 +30725,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/obj/machinery/pdapainter/research,
+/obj/item/kirbyplants/dead,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "kbY" = (
@@ -49919,7 +49922,6 @@
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
 "qXy" = (
-/obj/item/kirbyplants/dead,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -49931,6 +49933,7 @@
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 4
 	},
+/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "qXO" = (
@@ -51756,14 +51759,11 @@
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "rIM" = (
-/obj/machinery/disposal/bin,
 /obj/machinery/status_display/ai/directional/east,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "rJg" = (
@@ -59787,14 +59787,14 @@
 /turf/open/floor/iron/dark,
 /area/science/mixing/launch)
 "uTH" = (
-/obj/structure/bed/dogbed/runtime,
-/obj/item/toy/cattoy,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/mob/living/simple_animal/pet/cat/runtime,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "uTI" = (

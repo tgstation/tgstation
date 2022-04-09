@@ -10237,7 +10237,7 @@
 /area/medical/treatment_center)
 "dTb" = (
 /obj/machinery/pdapainter/security,
-/turf/open/floor/carpet/royalblue,
+/turf/open/floor/wood/large,
 /area/command/heads_quarters/hos)
 "dTe" = (
 /obj/structure/window/reinforced/fulltile,
@@ -15401,6 +15401,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "gDW" = (
+/obj/machinery/pdapainter/engineering,
 /obj/machinery/button/door/directional/west{
 	id = "atmos";
 	name = "Atmospherics Lockdown";
@@ -15419,7 +15420,6 @@
 	req_access_txt = "10"
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/ce)
 "gEi" = (
@@ -29191,15 +29191,6 @@
 /obj/machinery/duct,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
-"nAZ" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "hosspace";
-	name = "space shutters"
-	},
-/turf/open/floor/plating,
-/area/command/heads_quarters/hos)
 "nBq" = (
 /obj/structure/closet/bombcloset,
 /obj/effect/turf_decal/stripes/corner{
@@ -80779,10 +80770,10 @@ jnk
 cgW
 jnk
 jnk
-gLf
-gLf
 jfg
-nAZ
+gLf
+gLf
+gLf
 sqx
 sqx
 sqx

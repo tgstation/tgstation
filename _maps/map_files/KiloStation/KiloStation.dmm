@@ -24745,6 +24745,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison)
 "dKm" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/hyper,
+/obj/item/stack/cable_coil,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -24752,7 +24756,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "dKp" = (
@@ -50531,6 +50534,7 @@
 "mlE" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "mlF" = (
@@ -55821,6 +55825,19 @@
 /obj/item/clothing/mask/cigarette/cigar,
 /obj/machinery/light/directional/west,
 /obj/machinery/airalarm/directional/west,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	desc = "A bottle of whiskey. There's a label that reads 'tears' taped to the front.";
+	name = "Bottle of Tears";
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+	pixel_y = 2
+	},
 /turf/open/floor/wood,
 /area/command/heads_quarters/hos)
 "oca" = (
@@ -57567,7 +57584,6 @@
 	pixel_y = 4
 	},
 /obj/item/stamp/hos,
-/obj/item/paper_bin,
 /turf/open/floor/carpet/red,
 /area/command/heads_quarters/hos)
 "oDe" = (
@@ -66542,10 +66558,7 @@
 /area/science/research)
 "rwP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/closed/wall/r_wall,
 /area/maintenance/starboard/aft)
 "rxg" = (
 /obj/structure/cable,
@@ -79084,13 +79097,6 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-05"
 	},
-/obj/structure/noticeboard/directional/east,
-/obj/item/paper/monitorkey,
-/obj/machinery/camera/directional/east{
-	c_tag = "Chief Engineer's Office";
-	name = "engineering camera";
-	network = list("ss13","engine")
-	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "vEC" = (
@@ -79175,23 +79181,6 @@
 /turf/open/floor/wood,
 /area/maintenance/starboard/fore)
 "vFw" = (
-/obj/structure/table/wood,
-/obj/item/storage/box/seccarts{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
-	desc = "A bottle of whiskey. There's a label that reads 'tears' taped to the front.";
-	name = "Bottle of Tears";
-	pixel_x = 3;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
-	pixel_y = 2
-	},
 /obj/machinery/keycard_auth/directional/south{
 	pixel_x = -6
 	},
@@ -79201,6 +79190,7 @@
 	name = "Space Blast Door Toggle";
 	pixel_x = 8
 	},
+/obj/machinery/pdapainter/security,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hos)
 "vFz" = (
@@ -84997,9 +84987,14 @@
 /turf/open/floor/iron,
 /area/command/bridge)
 "xAZ" = (
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
-/obj/machinery/photocopier,
+/obj/item/storage/box/seccarts{
+	pixel_y = 5
+	},
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "xBk" = (
@@ -85431,8 +85426,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/photocopier,
 /obj/structure/cable,
-/obj/machinery/pdapainter/security,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "xKJ" = (
@@ -86304,6 +86299,19 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/captain)
+"xZc" = (
+/obj/machinery/pdapainter/engineering,
+/obj/structure/noticeboard/directional/east{
+	dir = 8
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Chief Engineer's Office";
+	name = "engineering camera";
+	network = list("ss13","engine")
+	},
+/obj/item/paper/monitorkey,
+/turf/open/floor/iron/dark,
+/area/maintenance/starboard/aft)
 "xZt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -124068,7 +124076,7 @@ lSn
 poh
 efC
 efC
-efC
+xZc
 oNQ
 bPO
 jZl
