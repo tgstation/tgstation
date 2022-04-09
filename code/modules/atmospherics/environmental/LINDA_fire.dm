@@ -91,6 +91,8 @@
 	/// Whether the hotspot becomes passive and follows the gasmix temp instead of changing it.
 	var/bypassing = FALSE
 	var/visual_update_tick = 0
+	///Are we burning freon?
+	var/cold_fire = FALSE
 
 
 /obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
@@ -132,7 +134,7 @@
 	bypassing = !just_spawned && (volume > CELL_VOLUME*0.95)
 
 	//Passive mode
-	if(bypassing || temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
+	if(bypassing || cold_fire)
 		reference = location.air // Our color and volume will depend on the turf's gasmix
 	//Active mode
 	else
@@ -174,7 +176,7 @@
 	var/heat_a = 255
 	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
 
-	if(temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
+	if(cold_fire)
 		heat_r = 0
 		heat_g = LERP(255, temperature, 1.2)
 		heat_b = LERP(255, temperature, 0.9)
@@ -245,7 +247,11 @@
 	if(location.excited_group)
 		location.excited_group.reset_cooldowns()
 
-	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST && temperature > FREON_MAXIMUM_BURN_TEMPERATURE) || (volume <= 1))
+	cold_fire = FALSE
+	if(temperature <= FREON_MAXIMUM_BURN_TEMPERATURE)
+		cold_fire = TRUE
+
+	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST && !cold_fire) || (volume <= 1))
 		qdel(src)
 		return
 
