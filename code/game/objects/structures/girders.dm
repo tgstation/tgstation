@@ -79,7 +79,6 @@
 					if(rod.get_amount() < amount)
 						return
 					rod.use(amount)
-					user.balloon_alert(user, "entrance concealed")
 					var/obj/structure/falsewall/iron/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
