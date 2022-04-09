@@ -1,5 +1,5 @@
 ///Tosses an error into the exception list with a manual error name. Use ONLY when a stack_trace call is pointless.
-#define THROW_ERROR(message) INVOKE_ASYNC(_test_error(message, __FILE__, __LINE__))
+#define THROW_ERROR(message) _test_error(message, __FILE__, __LINE__)
 
 ///gives us the stack trace from CRASH() without ending the current proc.
 /proc/stack_trace(msg)
