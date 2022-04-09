@@ -120,7 +120,7 @@
 	favor_cost = 40 //actually really strong
 	glow_color = "#83F6FF"
 	repeats_okay = FALSE
-	///assoc list of weakrefs to who heard the song and
+	///assoc list of weakrefs to who heard the song, for the finishing effect to look at.
 	var/list/listener_counter = list()
 
 /datum/religion_rites/song_tuner/lullaby/Destroy()
