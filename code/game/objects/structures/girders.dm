@@ -57,7 +57,7 @@
 
 	else if(istype(W, /obj/item/stack))
 		if(iswallturf(loc) || (locate(/obj/structure/falsewall) in src.loc.contents))
-			user.balloon_alert(user, "wall already present!")
+			balloon_alert(user, "wall already present!")
 			return
 		if(!isfloorturf(src.loc) && state != GIRDER_TRAM)
 			user.balloon_alert(user, "need floor!")
