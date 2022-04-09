@@ -336,7 +336,7 @@ SUBSYSTEM_DEF(wardrobe)
 	for(var/obj/item/storage/crate as anything in subtypesof(/obj/item/storage))
 		if(!initial(crate.preload))
 			continue
-		var/obj/item/pda/another_crate = new crate()
+		var/obj/item/storage/another_crate = new crate()
 		//Unlike other uses, I really don't want people being lazy with this one.
 		var/list/somehow_more_boxes = another_crate.get_types_to_preload()
 		if(!length(somehow_more_boxes))

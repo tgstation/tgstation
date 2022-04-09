@@ -75,12 +75,14 @@
 	default_disk = /obj/item/computer_hardware/hard_drive/role/rd
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#e2e2e2#000099#9F5CA5"
+	insert_type = /obj/item/pen/fountain
 
 /obj/item/modular_computer/tablet/role/captain
 	name = "captain tablet"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/captain
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#F5D67B"
+	insert_type = /obj/item/pen/fountain
 
 /obj/item/modular_computer/tablet/role/captain/Initialize(mapload)
 	. = ..()
@@ -111,6 +113,7 @@
 	name = "lawyer tablet"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/lawyer
 	greyscale_colors = "#5B74A5#f7e062"
+	insert_type = /obj/item/pen/fountain
 
 /obj/item/modular_computer/tablet/role/botanist
 	name = "botanist tablet"
@@ -149,25 +152,40 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 
-// unimplemented
-
 /obj/item/modular_computer/tablet/role/clown
 	name = "clown tablet"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/clown
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
-	greyscale_colors = "#e2e2e2#000099#0097ca"
+	greyscale_config = /datum/greyscale_config/tablet/clown
+	greyscale_colors = null
+	insert_type = /obj/item/toy/crayon/rainbow
+
+/obj/item/modular_computer/tablet/role/clown/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery/clowning, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip), slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT))
+	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, .proc/after_sitcom_laugh))
+
+/obj/item/modular_computer/tablet/role/clown/proc/AfterSlip(mob/living/carbon/human/M)
+	if (istype(M) && (M.real_name != saved_identification))
+		var/obj/item/computer_hardware/hard_drive/role/virus/clown/cart = all_components[MC_HDD_JOB]
+		if(istype(cart) && cart.charges < 5)
+			cart.charges++
+			playsound(src,'sound/machines/ping.ogg',30,TRUE)
+
+/obj/item/modular_computer/tablet/role/clown/proc/after_sitcom_laugh(mob/victim)
+	victim.visible_message("[src] lets out a burst of laughter!")
 
 /obj/item/modular_computer/tablet/role/mime
 	name = "mime tablet"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/mime
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
-	greyscale_colors = "#e2e2e2#000099#0097ca"
+	greyscale_config = /datum/greyscale_config/tablet/mime
+	greyscale_colors = "#e2e2e2#cc4242"
+	insert_type = /obj/item/toy/crayon/mime
 
 /obj/item/modular_computer/tablet/role/curator
 	name = "curator tablet"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/curator
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
-	greyscale_colors = "#e2e2e2#000099#0097ca"
+	icon_state = "pda-library"
+	insert_type = /obj/item/pen/fountain
 
 /obj/item/modular_computer/tablet/role/syndicate
 	name = "military tablet"
@@ -178,7 +196,7 @@
 
 /obj/item/modular_computer/tablet/role/clear
 	name = "clear tablet"
-	icon_state = ""
+	icon_state = "pda-clear"
 	greyscale_config = null
 	greyscale_colors = null
 

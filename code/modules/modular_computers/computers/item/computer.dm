@@ -135,7 +135,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 		if(card_slot2?.try_eject(user) || card_slot?.try_eject(user))
 			return TRUE
-		return FALSE
+		if(!istype(src, /obj/item/modular_computer/tablet))
+			return FALSE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/modular_computer/GetAccess()

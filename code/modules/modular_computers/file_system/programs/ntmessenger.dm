@@ -285,7 +285,7 @@
 		log_bomber(user, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
 	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [message_data["contents"]]"))
 
-	if (!ringerStatus)
+	if (ringerStatus)
 		computer.send_sound()
 
 	last_text = world.time

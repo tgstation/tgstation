@@ -25,6 +25,10 @@
 	var/finish_color = null
 	var/scanning_mode = TABLET_SCANNER_NONE
 
+	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
+	var/obj/item/insert_type = /obj/item/pen
+	var/obj/item/inserted_item
+
 	var/note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, bringing you the best in electronics and software since 2467!"  // the note used by the notekeeping app, stored here for convenience
 
 /obj/item/modular_computer/tablet/update_icon_state()
@@ -50,6 +54,50 @@
 					to_chat(user, span_notice("No active chemical agents found in [A]."))
 			else
 				to_chat(user, span_notice("No significant chemical agents found in [A]."))
+
+/obj/item/modular_computer/tablet/interact(mob/user)
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
+		explode(usr, from_message_menu = TRUE)
+		return
+
+/obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
+	. = ..()
+
+	if(is_type_in_list(W, contained_item))
+		if(inserted_item)
+			to_chat(user, span_warning("There is already \a [inserted_item] in \the [src]!"))
+		else
+			if(!user.transferItemToLoc(W, src))
+				return
+			to_chat(user, span_notice("You insert \the [W] into \the [src]."))
+			inserted_item = W
+			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
+
+/obj/item/modular_computer/tablet/AltClick(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	remove_pen(user)
+
+/obj/item/modular_computer/tablet/proc/tab_no_detonate()
+	SIGNAL_HANDLER
+	return COMPONENT_PDA_NO_DETONATE
+
+/obj/item/modular_computer/tablet/proc/remove_pen(mob/user)
+
+	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK doesn't work even with this removed but here for readability
+		return
+
+	if(inserted_item)
+		to_chat(user, span_notice("You remove [inserted_item] from [src]."))
+		user.put_in_hands(inserted_item)
+		inserted_item = null
+		update_appearance()
+		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
+	else
+		to_chat(user, span_warning("This tablet does not have a pen in it!"))
 
 // Tablet 'splosion..
 
@@ -77,15 +125,7 @@
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
 	qdel(src)
 
-/obj/item/modular_computer/tablet/interact(mob/user)
-	. = ..()
-	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
-		explode(usr, from_message_menu = TRUE)
-		return
-
-/obj/item/modular_computer/tablet/proc/tab_no_detonate()
-	SIGNAL_HANDLER
-	return COMPONENT_PDA_NO_DETONATE
+// SUBTYPES
 
 /obj/item/modular_computer/tablet/syndicate_contract_uplink
 	name = "contractor tablet"
@@ -299,3 +339,6 @@
 	if(default_disk)
 		var/obj/item/computer_hardware/hard_drive/portable/disk = new default_disk(src)
 		install_component(disk)
+
+	if(insert_type)
+		inserted_item = new insert_type(src)

@@ -10,17 +10,14 @@
 	/// Current ID card inserted into the machine.
 	var/obj/item/card/id/stored_id_card = null
 	/// Current PDA inserted into the machine.
-	var/obj/item/pda/stored_pda = null
+	var/obj/item/modular_computer/tablet/role/stored_pda = null
 	/// A blacklist of PDA types that we should not be able to paint.
 	var/static/list/pda_type_blacklist = list(
 		/obj/item/modular_computer/tablet/role/heads,
-		/*
-		/obj/item/pda/ai/pai,
-		/obj/item/pda/ai,
-		/obj/item/pda/clear,
-		/obj/item/pda/syndicate,
-		/obj/item/pda/chameleon,
-		/obj/item/pda/chameleon/broken*/)
+		/obj/item/modular_computer/tablet/role/clear,
+		/obj/item/modular_computer/tablet/role/syndicate,
+		/obj/item/modular_computer/tablet/role/chameleon,
+		/obj/item/modular_computer/tablet/role/chameleon/broken)
 	/// A list of the PDA types that this machine can currently paint.
 	var/list/pda_types = list()
 	/// A list of the card trims that this machine can currently imprint onto a card.

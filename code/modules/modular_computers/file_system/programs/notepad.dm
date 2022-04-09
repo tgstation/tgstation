@@ -6,7 +6,7 @@
 	extended_desc = "Jot down your work-safe thoughts and what not."
 	size = 2
 	tgui_id = "NtosNotepad"
-	program_icon = "pencil"
+	program_icon = "book"
 	usage_flags = PROGRAM_TABLET
 
 /datum/computer_file/program/notepad/ui_act(action, list/params, datum/tgui/ui)
