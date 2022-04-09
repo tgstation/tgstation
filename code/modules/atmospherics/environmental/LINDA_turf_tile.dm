@@ -5,6 +5,8 @@
 	var/heat_capacity = INFINITY //This should be opt in rather then opt out
 	///Archived version of the temperature on a turf
 	var/temperature_archived
+	///All currently stored conductivities changes
+	var/list/thermal_conductivities
 
 	///list of turfs adjacent to us that air can flow onto
 	var/list/atmos_adjacent_turfs
@@ -660,3 +662,41 @@ Then we space some of our heat, and think about if we should stop conducting.
 			(heat_capacity * sharer.heat_capacity / (heat_capacity + sharer.heat_capacity)) //The larger the combined capacity the less is shared
 		temperature -= heat / heat_capacity //The higher your own heat cap the less heat you get from this arrangement
 		sharer.temperature += heat / sharer.heat_capacity
+
+/**
+ * Adds a source of thermal conductivity to change our conductivity to the one indicated
+ */
+/turf/proc/add_thermal_conductivity_source(conductivity, priority)
+	if(!thermal_conductivities || !LAZYLEN(thermal_conductivities))
+		LAZYSETLEN(thermal_conductivities, MAX_TEMPORARY_THERMAL_CONDUCTIVITY)
+	if(!isnull(conductivity))//0 conductivity is valid
+		return
+	if(priority > LAZYLEN(thermal_conductivities))
+		return
+	LAZYSET(thermal_conductivities, priority, conductivity)
+	update_thermal_conductivity()
+
+/**
+ * Removes a source of thermal conductivity to change our conductivity to the next one in priority or restore it to the initial value
+ */
+/turf/proc/remove_thermal_conductivity_source(conductivity, priority)
+	if(priority > LAZYLEN(thermal_conductivities))
+		return
+	if(conductivity && thermal_conductivities[priority] != conductivity)
+		return
+	LAZYSET(thermal_conductivities, priority, null)
+	update_thermal_conductivity()
+
+/**
+ * Updates the thermal conductivity.
+ * Restores it to the initial value, then updates it with the conductivities stored in the list
+ */
+/turf/proc/update_thermal_conductivity()
+	thermal_conductivity = initial(thermal_conductivity)
+	if(!thermal_conductivities)
+		return
+	for(var/checked_conductivity in thermal_conductivities)
+		if(checked_conductivity)
+			thermal_conductivity = checked_conductivity
+			return
+	LAZYNULL(thermal_conductivities)

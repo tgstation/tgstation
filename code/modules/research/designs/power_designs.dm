@@ -80,3 +80,33 @@
 	id = "superpacman"
 	build_path = /obj/item/circuitboard/machine/pacman/super
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/turbine_part_compressor
+	name = "Turbine Part - Compressor"
+	desc = "The basic tier of a compressor blade."
+	id = "turbine_part_compressor"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 500)
+	construction_time = 100
+	build_path = /obj/item/turbine_parts/compressor
+	category = list("Misc","Power Designs","Machinery","initial")
+
+/datum/design/turbine_part_rotor
+	name = "Turbine Part - Rotor"
+	desc = "The basic tier of a rotor shaft."
+	id = "turbine_part_rotor"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 500)
+	construction_time = 100
+	build_path = /obj/item/turbine_parts/rotor
+	category = list("Misc","Power Designs","Machinery","initial")
+
+/datum/design/turbine_part_stator
+	name = "Turbine Part - Stator"
+	desc = "The basic tier of a stator."
+	id = "turbine_part_stator"
+	build_type = PROTOLATHE | AUTOLATHE
+	materials = list(/datum/material/iron = 500)
+	construction_time = 100
+	build_path = /obj/item/turbine_parts/stator
+	category = list("Misc","Power Designs","Machinery","initial")

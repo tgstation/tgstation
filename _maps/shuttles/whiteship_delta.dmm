@@ -80,8 +80,12 @@
 "al" = (
 /obj/machinery/light/small/built/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/bed,
-/obj/item/bedsheet/centcom,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/centcom{
+	dir = 4
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/airalarm/all_access{
 	dir = 4;

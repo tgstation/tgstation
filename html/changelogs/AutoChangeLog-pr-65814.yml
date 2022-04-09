@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes: 
-  - qol: "Mechs will now immediately cancel progress bars instead of waiting until till the end to tell yyou you moved"
