@@ -74,7 +74,7 @@
 				if(rod.get_amount() < amount)
 					balloon_alert(user, "need [amount] rods!")
 					return
-				user.balloon_alert(user, "concealing entrance...")
+				balloon_alert(user, "concealing entrance...")
 				if(do_after(user, 20, target = src))
 					if(rod.get_amount() < amount)
 						return
