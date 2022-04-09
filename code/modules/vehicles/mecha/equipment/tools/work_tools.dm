@@ -205,7 +205,7 @@
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_EXTINGUISHER,
 		"reagents" = reagents.total_volume,
 		"total_reagents" = reagents.maximum_volume,
-		"minimum_required" = required_amount,
+		"minimum_requ" = required_amount,
 	)
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/ui_act(action, list/params)

@@ -1,5 +1,6 @@
 import { useBackend } from '../../backend';
-import { Button, Fragment, LabeledList, ProgressBar } from '../../components';
+import { Button, LabeledList, ProgressBar } from '../../components';
+import { Fragment } from 'inferno';
 import { OperatorData, MechaUtility } from './data';
 
 export const UtilityModulesPane = (props, context) => {
@@ -80,30 +81,31 @@ const SnowflakeExtinguisher = (props: {module: MechaUtility}, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   return (
     <Fragment>
-    <ProgressBar
-      value={props.module.snowflake.reagents}
-      minValue={0}
-      maxValue={props.module.snowflake.total_reagents}>
-      {props.module.snowflake.reagents}
-    </ProgressBar>
+      <ProgressBar
+        value={props.module.snowflake.reagents}
+        minValue={0}
+        maxValue={props.module.snowflake.total_reagents}>
+        {props.module.snowflake.reagents}
+      </ProgressBar>
       <Button
         tooltip={"ACTIVATE"}
         color={"red"}
-        disabled={props.module.snowflake.reagents < props.module.snowflake.minimum_required ? 1 : 0}
+        disabled={
+          props.module.snowflake.reagents < props.module.snowflake.minimum_requ
+            ? 1 : 0
+        }
         icon={"fire-extinguisher"}
         onClick={() => act('equip_act', {
           ref: props.module.ref,
           gear_action: "activate",
-        })}
-        selected={module.activated} />
+        })} />
       <Button
         tooltip={"REFILL"}
         icon={"fill"}
         onClick={() => act('equip_act', {
           ref: props.module.ref,
           gear_action: "refill",
-        })}
-        selected={module.activated} />
+        })} />
       <Button
         tooltip={"REPAIR"}
         icon={"wrench"}
