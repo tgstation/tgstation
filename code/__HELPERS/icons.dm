@@ -1342,5 +1342,5 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	else
 		icon_states_cache[file][state] = FALSE
 		if(scream)
-			THROW_ERROR("Icon Lookup for state: [state] in file [file] failed.")
+			THROW_ERROR("Icon Lookup for state: \"[state]\" in file \"[file]\" failed.")
 		return FALSE
