@@ -305,8 +305,7 @@ Chilling extracts:
 		var/static/list/random_golem_types
 		random_golem_types = subtypesof(/datum/species/golem) - type
 
-		for(var/i in random_golem_types)
-			var/datum/species/golem/golem = i
+		for(var/datum/species/golem/golem as anything in random_golem_types)
 			if(!initial(golem.random_eligible))
 				random_golem_types -= golem
 		H.set_species(pick(random_golem_types))
