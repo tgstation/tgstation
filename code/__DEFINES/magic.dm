@@ -65,8 +65,9 @@
 
 DEFINE_BITFIELD(spell_requirements, list(
 	"SPELL_REQUIRES_HUMAN" = SPELL_REQUIRES_HUMAN,
-	"SPELL_REQUIRES_NO_ANTIMAGIC" = SPELL_REQUIRES_NO_ANTIMAGIC,
+	"SPELL_REQUIRES_MIND" = SPELL_REQUIRES_MIND,
 	"SPELL_REQUIRES_NON_ABSTRACT" = SPELL_REQUIRES_NON_ABSTRACT,
+	"SPELL_REQUIRES_NO_ANTIMAGIC" = SPELL_REQUIRES_NO_ANTIMAGIC,
 	"SPELL_REQUIRES_OFF_CENTCOM" = SPELL_REQUIRES_OFF_CENTCOM,
 	"SPELL_REQUIRES_UNPHASED" = SPELL_REQUIRES_UNPHASED,
 	"SPELL_REQUIRES_WIZARD_GARB" = SPELL_REQUIRES_WIZARD_GARB,
@@ -79,3 +80,16 @@ DEFINE_BITFIELD(spell_requirements, list(
 #define TELEPORT_SPELL_SKIP_DENSE (1 << 1)
 /// Whether the teleport spell skips over blocked turfs
 #define TELEPORT_SPELL_SKIP_BLOCKED (1 << 2)
+
+/// Default magic resistance that blocks normal magic (wizard, spells, magical staff projectiles)
+#define MAGIC_RESISTANCE (1<<0)
+/// Tinfoil hat magic resistance that blocks mental magic (telepathy, mind curses, abductors, jelly people)
+#define MAGIC_RESISTANCE_MIND (1<<1)
+/// Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god)
+#define MAGIC_RESISTANCE_HOLY (1<<2)
+
+DEFINE_BITFIELD(antimagic_flags, list(
+	"MAGIC_RESISTANCE" = MAGIC_RESISTANCE,
+	"MAGIC_RESISTANCE_HOLY" = MAGIC_RESISTANCE_HOLY,
+	"MAGIC_RESISTANCE_MIND" = MAGIC_RESISTANCE_MIND,
+))

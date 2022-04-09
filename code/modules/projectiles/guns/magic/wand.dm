@@ -72,7 +72,7 @@
 /obj/item/gun/magic/wand/death/zap_self(mob/living/user)
 	..()
 	charges--
-	if(user.anti_magic_check())
+	if(user.can_block_magic())
 		user.visible_message(span_warning("[src] has no effect on [user]!"))
 		return
 	if(isliving(user))
@@ -111,7 +111,7 @@
 /obj/item/gun/magic/wand/resurrection/zap_self(mob/living/user)
 	..()
 	charges--
-	if(user.anti_magic_check())
+	if(user.can_block_magic())
 		user.visible_message(span_warning("[src] has no effect on [user]!"))
 		return
 	if(isliving(user))

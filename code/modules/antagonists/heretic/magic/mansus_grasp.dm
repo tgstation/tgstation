@@ -12,6 +12,7 @@
 	invocation = "R'CH T'H TR'TH!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
+	antimagic_flags = NONE // no casting restriction, but there is a can_block_magic check in afterattack to allow antimagic
 
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 
@@ -23,7 +24,7 @@
 		return FALSE
 
 	var/mob/living/living_hit = victim
-	if(living_hit.anti_magic_check())
+	if(living_hit.can_block_magic())
 		victim.visible_message(
 			span_danger("The spell bounces off of [victim]!"),
 			span_danger("The spell bounces off of you!"),

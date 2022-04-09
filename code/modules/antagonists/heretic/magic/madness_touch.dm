@@ -10,6 +10,7 @@
 	cooldown_time = 15 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 
 /datum/action/cooldown/spell/touch/mad_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(!ishuman(victim))
@@ -19,7 +20,7 @@
 	if(!human_victim.mind || IS_HERETIC(human_victim))
 		return FALSE
 
-	if(human_victim.anti_magic_check())
+	if(human_victim.can_block_magic(antimagic_flags))
 		victim.visible_message(
 			span_danger("The spell bounces off of [victim]!"),
 			span_danger("The spell bounces off of you!"),

@@ -91,17 +91,18 @@
 
 /obj/item/ritual_totem/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, 1, FALSE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire))//one charge of anti_magic
+	AddComponent(/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
+		charges = 1, \
+		expiration = CALLBACK(src, .proc/expire), \
+	)
 	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
 
-/obj/item/ritual_totem/proc/block_magic(mob/user, major)
-	if(major)
-		to_chat(user, span_warning("[src] consumes the magic within itself!"))
-
+/// When the ritual totem is depleted of antimagic
 /obj/item/ritual_totem/proc/expire(mob/user)
-	to_chat(user, span_warning("[src] quickly decays into rot!"))
-	qdel(src)
+	to_chat(user, span_warning("[src] consumes the magic within itself and quickly decays into rot!"))
 	new /obj/effect/decal/cleanable/ash(drop_location())
+	qdel(src)
 
 /obj/item/ritual_totem/can_be_pulled(user, grab_state, force)
 	. = ..()

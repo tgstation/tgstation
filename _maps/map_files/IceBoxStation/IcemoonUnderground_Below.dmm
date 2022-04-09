@@ -30,12 +30,12 @@
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
 "an" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "Lakeview_Bathroom";
 	name = "Privacy Shutters"
+	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/mine/eva)
@@ -725,9 +725,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "lZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/mine/mechbay)
 "md" = (
@@ -929,9 +927,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "pj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/mine/eva)
 "pm" = (
@@ -1374,7 +1370,6 @@
 	},
 /obj/machinery/button/door/directional/north{
 	id = "Lakeview_Bathroom";
-	name = "Mech Bay Door Control";
 	pixel_x = 22;
 	pixel_y = -10;
 	req_access_txt = "29"
@@ -1618,10 +1613,9 @@
 /turf/open/floor/stone,
 /area/mine/eva)
 "BT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/mine/eva)
 "BV" = (
@@ -2621,10 +2615,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Rn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner,
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
 /area/mine/eva)
 "Ro" = (
@@ -2965,9 +2956,9 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "Wj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/mine/eva)
 "Wl" = (
@@ -34608,8 +34599,8 @@ wk
 wk
 wk
 wk
+wk
 ut
-zt
 zt
 zt
 zt
@@ -34866,7 +34857,7 @@ wk
 wk
 ut
 wk
-zt
+ut
 zt
 zt
 zt
@@ -35121,9 +35112,9 @@ wk
 wk
 wk
 ut
+wk
 ut
-zt
-zt
+ut
 zt
 zt
 zt
@@ -35379,8 +35370,8 @@ wk
 wk
 wk
 ut
-zt
-zt
+wk
+wk
 zt
 zt
 zt
@@ -35636,8 +35627,8 @@ wk
 wk
 wk
 ut
-zt
-zt
+ut
+ut
 zt
 zt
 zt

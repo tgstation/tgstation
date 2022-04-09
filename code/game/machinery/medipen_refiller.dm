@@ -72,10 +72,10 @@
 		reagents.expose(get_turf(src), TOUCH)
 		reagents.clear_reagents()
 
-/obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+/obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/medipen_refiller/crowbar_act(mob/user, obj/item/I)
 	..()

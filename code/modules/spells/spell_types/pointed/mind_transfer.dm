@@ -7,7 +7,8 @@
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 60 SECONDS
 	cooldown_reduction_per_rank =  10 SECONDS
-	spell_requirements = SPELL_REQUIRES_MIND
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_MIND
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 
 	invocation = "GIN'YU CAPAN"
 	invocation_type = INVOCATION_WHISPER
@@ -83,7 +84,7 @@
 			to_swap = stand.summoner
 
 	var/datum/mind/mind_to_swap = to_swap.mind
-	if(to_swap.anti_magic_check(TRUE, FALSE) \
+	if(to_swap.can_block_magic(antimagic_flags) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/wizard) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/cult) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/changeling) \

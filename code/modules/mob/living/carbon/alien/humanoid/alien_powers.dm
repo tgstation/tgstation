@@ -120,15 +120,15 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/chosen_recipient = tgui_input_list(owner, "Select whisper recipient", "Whisper", sort_names(possible_recipients))
 	if(QDELETED(chosen_recipient) || QDELETED(src) || QDELETED(owner)|| !IsAvailable())
 		return FALSE
-	if(chosen_recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(owner, span_noticealien("As you try to communicate with [chosen_recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+	if(chosen_recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		to_chat(owner, span_warning("As you reach into [chosen_recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
 		return FALSE
 
 	var/to_whisper = tgui_input_text(owner, title = "Alien Whisper")
 	if(QDELETED(chosen_recipient) || QDELETED(src) || QDELETED(owner) || !IsAvailable() || !to_whisper)
 		return FALSE
-	if(chosen_recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(owner, span_notice("As you try to communicate with [chosen_recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+	if(chosen_recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		to_chat(owner, span_warning("As you reach into [chosen_recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
 		return FALSE
 
 	log_directed_talk(owner, chosen_recipient, to_whisper, LOG_SAY, tag = "alien whisper")

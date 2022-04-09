@@ -76,7 +76,7 @@
 #define ui_crafting "EAST-4:22,SOUTH:5"
 #define ui_building "EAST-4:22,SOUTH:21"
 #define ui_language_menu "EAST-4:6,SOUTH:21"
-#define ui_skill_menu "EAST-4:22,SOUTH:5"
+#define ui_navigate_menu "EAST-4:22,SOUTH:5"
 
 //Upper-middle right (alerts)
 #define ui_alert1 "EAST-1:28,CENTER+5:27"
@@ -142,6 +142,7 @@
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
+#define ui_borg_navigate_menu "CENTER+4:19,SOUTH+1:6"
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"
@@ -149,6 +150,7 @@
 #define ui_alien_queen_finder "EAST,CENTER-3:15"
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
 #define ui_alien_language_menu "EAST-4:20,SOUTH:5"
+#define ui_alien_navigate_menu "EAST-4:20,SOUTH:5"
 
 //AI
 #define ui_ai_core "SOUTH:6,WEST"
@@ -187,6 +189,7 @@
 #define ui_pai_view_images "SOUTH:6,WEST+13"
 #define ui_pai_radio "SOUTH:6,WEST+14"
 #define ui_pai_language_menu "SOUTH+1:8,WEST+13:31"
+#define ui_pai_navigate_menu "SOUTH+1:8,WEST+13:31"
 
 //Ghosts
 #define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"

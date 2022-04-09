@@ -32,7 +32,7 @@
 	for(var/mob/living/carbon/human/victim as anything in nearby)
 		if(victim == owner)
 			continue
-		if(victim.anti_magic_check())
+		if(victim.can_block_magic())
 			victim.visible_message(
 				span_danger("[victim]'s flashes in a firey glow, but repels the blaze!"),
 				span_danger("Your body begins to flash a firey glow, but you are protected!!")

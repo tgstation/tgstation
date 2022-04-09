@@ -72,7 +72,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	/// Can be "none", "whisper", "shout", "emote"
 	var/invocation_type = INVOCATION_NONE
 	/// Flag for certain states that the spell requires the user be in to cast.
-	var/spell_requirements = SPELL_REQUIRES_WIZARD_GARB
+	var/spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NO_ANTIMAGIC
+	/// This determines what type of antimagic is needed to block the spell.
+	/// (MAGIC_RESISTANCE, MAGIC_RESISTANCE_MIND, MAGIC_RESISTANCE_HOLY)
+	/// If SPELL_REQUIRES_NO_ANTIMAGIC is set in Spell requirements,
+	/// The spell cannot be cast if the caster has any of the antimagic flags set.
+	var/antimagic_flags = MAGIC_RESISTANCE
 	/// The current spell level, if taken multiple times by a wizard
 	var/spell_level = 1
 	/// The max possible spell level
@@ -144,17 +149,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	if((spell_requirements & SPELL_REQUIRES_MIND) && !owner.mind)
 		return FALSE
 
-	if(!(spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC))
-		var/antimagic = owner.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
-		if(antimagic)
-			if(feedback)
-				if(isitem(antimagic))
-					to_chat(owner, span_warning("[antimagic] is interfering with your ability to cast [src]."))
-				else
-					to_chat(owner, span_warning("Magic seems to flee from you - You can't gather enough power to cast [src]."))
-			return FALSE
+	if((spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC) && !owner.can_cast_magic(antimagic_flags))
+		if(feedback)
+			to_chat(owner, span_warning("Some form of antimagic is preventing you from casting [src]!"))
+		return FALSE
 
-	if((spell_requirements & SPELL_REQUIRES_UNPHASED) && istype(owner.loc, /obj/effect/dummy/phased_mob))
+	if(((spell_requirements & SPELL_REQUIRES_UNPHASED) && istype(owner.loc, /obj/effect/dummy/phased_mob)) || HAS_TRAIT(owner, TRAIT_ROD_FORM))
 		if(feedback)
 			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE

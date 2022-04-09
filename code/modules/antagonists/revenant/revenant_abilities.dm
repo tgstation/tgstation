@@ -38,7 +38,7 @@
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
 		return
-	log_combat(span_warning("has started to harvest [key_name(target)]."), LOG_ATTACK)
+	log_combat(src, target, "started to harvest")
 	face_atom(target)
 	draining = TRUE
 	essence_drained += rand(15, 20)
@@ -80,10 +80,10 @@
 				reveal(46)
 				stun(46)
 				target.visible_message(span_warning("[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray."))
-				if(target.anti_magic_check(FALSE, TRUE))
+				if(target.can_block_magic(MAGIC_RESISTANCE_HOLY))
 					to_chat(src, span_revenminor("Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!"))
 					target.visible_message(span_warning("[target] slumps onto the ground."), \
-											   span_revenwarning("Violet lights, dancing in your vision, receding--"))
+					span_revenwarning("Violet lights, dancing in your vision, receding--"))
 					draining = FALSE
 					return
 				var/datum/beam/B = Beam(target,icon_state="drain_life")
@@ -129,13 +129,14 @@
 	telepathy_span = "revennotice"
 	bold_telepathy_span = "revenboldnotice"
 
-	blocked_by_holy = TRUE
-	blocked_by_tinfoil = FALSE
+	antimagic_flags = MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND
 
 /datum/action/cooldown/spell/aoe/revenant
 	panel = "Revenant Abilities (Locked)"
 	background_icon_state = "bg_revenant"
 	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
+
+	antimagic_flags = MAGIC_RESISTANCE_HOLY
 
 	/// If it's locked, and needs to be unlocked before use
 	var/locked = TRUE
@@ -247,7 +248,7 @@
 		if(human_mob == caster)
 			continue
 		to_shock.Beam(human_mob, icon_state = "purple_lightning", time = 0.5 SECONDS)
-		if(!human_mob.anti_magic_check(FALSE, TRUE))
+		if(!human_mob.can_block_magic(antimagic_flags))
 			human_mob.electrocute_act(shock_damage, to_shock, flags = SHOCK_NOGLOVES)
 
 		do_sparks(4, FALSE, human_mob)
@@ -330,7 +331,7 @@
 	for(var/mob/living/carbon/human/human in victim)
 		if(human == caster)
 			continue
-		if(human.anti_magic_check(FALSE, TRUE))
+		if(human.can_block_magic(antimagic_flags))
 			continue
 		to_chat(human, span_revenwarning("You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")]."))
 		new /obj/effect/temp_visual/revenant(human.loc)
@@ -368,7 +369,8 @@
 	for(var/mob/living/mob in victim)
 		if(mob == caster)
 			continue
-		if(mob.anti_magic_check(FALSE, TRUE))
+		if(mob.can_block_magic(antimagic_flags))
+			to_chat(caster, span_warning("The spell had no effect on [mob]!"))
 			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
 		if(iscarbon(mob))

@@ -29,8 +29,11 @@
 #define SEALED_INVISIBILITY "sealed_invisibility"
 #define UNSEALED_COVER "unsealed_cover"
 #define SEALED_COVER "sealed_cover"
-
 #define PIECE_TRAITS "traits"
+
+//Defines used to override MOD clothing's icon and worn icon files in the skin.
+#define MOD_ICON_OVERRIDE "mod_icon_override"
+#define MOD_WORN_ICON_OVERRIDE "mod_worn_icon_override"
 
 /// Global list of all /datum/mod_theme
 GLOBAL_LIST_INIT(mod_themes, setup_mod_themes())

@@ -56,25 +56,10 @@
 	desc = "Read the target's mind."
 	button_icon_state = "mindread"
 	cooldown_time = 5 SECONDS
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	antimagic_flags = MAGIC_RESISTANCE_MIND
 
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
-
-	/// The text that displays when someone's wearing antimagic (tinfoil) when afflicted by our spell
-	var/antimagic_block_text = span_warning("As you reach out with your mind, \
-		you're suddenly stopped by a vision of a massive tinfoil wall \
-		that streches beyond visible range. It seems you've been foiled.")
-
-/datum/action/cooldown/spell/pointed/mindread/can_cast_spell(feedback = TRUE)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(owner.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		if(feedback)
-			to_chat(owner, antimagic_block_text)
-		return FALSE
-
-	return TRUE
 
 /datum/action/cooldown/spell/pointed/mindread/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
@@ -91,8 +76,9 @@
 
 /datum/action/cooldown/spell/pointed/mindread/cast(mob/living/cast_on)
 	. = ..()
-	if(cast_on.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(owner, antimagic_block_text)
+	if(cast_on.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		to_chat(owner, span_warning("As you reach into [cast_on]'s mind, \
+			you are stopped by a mental blockage. It seems you've been foiled."))
 		return
 
 	to_chat(owner, span_boldnotice("You plunge into [cast_on]'s mind..."))

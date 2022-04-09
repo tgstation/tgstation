@@ -95,3 +95,12 @@
 	. = ..() //extend the zap
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
 		overload()
+
+/obj/machinery/power/rtg/debug
+	name = "Debug RTG"
+	desc = "You really shouldn't be seeing this if you're not a coder or jannie."
+	power_gen = 20000
+	circuit = null
+
+/obj/machinery/power/rtg/debug/RefreshParts()
+	return

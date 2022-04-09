@@ -13,7 +13,7 @@
 
 	invocation = "CLANG!"
 	invocation_type = INVOCATION_SHOUT
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_OFF_CENTCOM|SPELL_REQUIRES_UNPHASED
+	spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_OFF_CENTCOM|SPELL_REQUIRES_UNPHASED
 
 	/// The extra distance we travel per additional spell level.
 	var/distance_per_spell_rank = 3
@@ -89,7 +89,7 @@
 	return ..()
 
 /obj/effect/immovablerod/wizard/penetrate(mob/living/penetrated)
-	if(penetrated.anti_magic_check())
+	if(penetrated.can_block_magic())
 		penetrated.visible_message(
 			span_danger("[src] hits [penetrated], but it bounces back, then vanishes!"),
 			span_userdanger("[src] hits you... but it bounces back, then vanishes!"),
@@ -139,6 +139,7 @@
 	wizard.forceMove(src)
 	wizard.notransform = TRUE
 	wizard.status_flags |= GODMODE
+	ADD_TRAIT(wizard, TRAIT_ROD_FORM, MAGIC_TRAIT)
 
 /**
  * Eject our current wizard, removing them from the rod
@@ -153,5 +154,6 @@
 	wizard.notransform = FALSE
 	wizard.forceMove(get_turf(src))
 	our_wizard = null
+	REMOVE_TRAIT(wizard, TRAIT_ROD_FORM, MAGIC_TRAIT)
 
 #undef BASE_WIZ_ROD_RANGE
