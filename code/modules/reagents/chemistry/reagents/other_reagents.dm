@@ -657,7 +657,7 @@
 	taste_description = "rocks"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/mutationtoxin/golem/on_mob_life()
+/datum/reagent/mutationtoxin/golem/on_mob_metabolize()
 	var/static/list/random_golem_types
 	random_golem_types = subtypesof(/datum/species/golem) - type
 	for(var/i in random_golem_types)
