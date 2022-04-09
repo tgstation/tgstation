@@ -64,7 +64,7 @@
 			return
 		if(state == GIRDER_TRAM)
 			if(!locate(/obj/structure/industrial_lift/tram) in src.loc.contents)
-				user.balloon_alert(user, "need tram floors!")
+				balloon_alert(user, "need tram floors!")
 				return
 
 		if(istype(W, /obj/item/stack/rods))
