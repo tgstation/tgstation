@@ -85,7 +85,7 @@
 					return
 			else
 				if(rod.get_amount() < amount)
-					user.balloon_alert(user, "need [amount] rods!")
+					balloon_alert(user, "need [amount] rods!")
 					return
 				user.balloon_alert(user, "adding plating...")
 				if(do_after(user, 40, target = src))
