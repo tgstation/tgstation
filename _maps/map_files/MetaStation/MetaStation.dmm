@@ -16481,10 +16481,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "eFr" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Science Ordnance Test Lab 2";
-	network = list("ss13","rd")
-	},
 /obj/structure/table,
 /obj/item/assembly/prox_sensor{
 	pixel_x = -4;
@@ -25784,8 +25780,8 @@
 "ijG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/camera/directional/east{
-	network = list("ss13","rd");
-	c_tag = "Science Ordnance Mix Lab"
+	c_tag = "Science Ordnance Test Lab";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -26475,6 +26471,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "iwb" = (
@@ -28528,10 +28525,6 @@
 /area/medical/morgue)
 "jlP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/camera/directional/south{
-	c_tag = "Science Ordnance Mix";
-	network = list("ss13","rd")
-	},
 /obj/machinery/firealarm/directional/south,
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/dark,
@@ -39335,7 +39328,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/south{
-	c_tag = "Science Ordnance Mix Lab 1";
+	c_tag = "Science Ordnance Mix Lab";
 	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
@@ -54788,7 +54781,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/camera/directional/east{
-	c_tag = "Science Ordnance Lab Storage";
+	c_tag = "Science Ordnance Storage";
 	network = list("ss13","rd")
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
