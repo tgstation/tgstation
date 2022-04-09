@@ -171,7 +171,7 @@
 		return FALSE
 	opening_airlock = TRUE
 	var/obj/machinery/door/airlock/prying_door = target
-	if(prying_door.density && !(prying_door.locked || prying_door.welded || prying_door.seal))
+	if(prying_door.density && !prying_door.locked && !prying_door.welded && !prying_door.seal)
 		visible_message(
 			span_warning("[src] begins prying open the airlock..."),
 			span_notice("You begin digging your claws into the airlock..."),
