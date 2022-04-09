@@ -1,0 +1,4 @@
+author: "TheBonded"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer create infinite snow with a crowbar"
