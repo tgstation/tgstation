@@ -1,4 +1,0 @@
-author: "robbertapir"
-delete-after: True
-changes: 
-  - bugfix: "Petri dish cultures no longer stay behind on the sprite like some sort of ghost after being washed out of it. Cells don't have souls."
