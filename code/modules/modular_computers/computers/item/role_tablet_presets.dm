@@ -153,13 +153,13 @@
 
 /obj/item/modular_computer/tablet/role/clown
 	name = "clown tablet"
-//	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/clown
+	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/clown
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 
 /obj/item/modular_computer/tablet/role/mime
 	name = "mime tablet"
-//	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/mime
+	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/mime
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 

@@ -20,9 +20,12 @@
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //Same as the PDA
 	looping_sound = FALSE
+
 	var/has_variants = TRUE
 	var/finish_color = null
 	var/scanning_mode = TABLET_SCANNER_NONE
+
+	var/note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, bringing you the best in electronics and software since 2467!"  // the note used by the notekeeping app, stored here for convenience
 
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants)

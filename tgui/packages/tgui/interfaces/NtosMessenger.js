@@ -36,7 +36,7 @@ export const NtosMessenger = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     owner,
-    messages = ["hi"],
+    messages = [],
     ringerStatus,
     sAndR,
     messengers = [],

@@ -171,7 +171,10 @@
 	custom_price = PAYCHECK_MEDIUM * 2
 
 /obj/item/computer_hardware/hard_drive/small/install_default_programs()
-	store_file(new/datum/computer_file/program/messenger(src))
+	. = ..()
+
+	store_file(new /datum/computer_file/program/messenger(src))
+	store_file(new /datum/computer_file/program/notepad(src))
 
 // For borg integrated tablets. No downloader.
 /obj/item/computer_hardware/hard_drive/small/integrated/install_default_programs()
