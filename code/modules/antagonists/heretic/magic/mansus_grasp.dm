@@ -82,6 +82,7 @@
 	hit.adjustBruteLoss(10)
 	if(iscarbon(hit))
 		var/mob/living/carbon/carbon_hit = hit
+		carbon_hit.cultslurring += 2
 		carbon_hit.AdjustKnockdown(5 SECONDS)
 		carbon_hit.adjustStaminaLoss(80)
 

@@ -463,6 +463,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Used for limbs.
 #define TRAIT_DISABLED_BY_WOUND "disabled-by-wound"
 
+/// Mobs with this trait can't send the mining shuttle console when used outside the station itself
+#define TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION "forbid_mining_shuttle_console_outside_station"
 
 //important_recursive_contents traits
 /*
@@ -607,7 +609,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// trait denoting someone will sometimes recover out of crit
 #define TRAIT_UNBREAKABLE "unbreakable"
-
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0

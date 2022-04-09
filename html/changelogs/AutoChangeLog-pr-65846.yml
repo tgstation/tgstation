@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "TramStation atmos is more effectively separated into areas"
+  - qol: "It is easier to isolate and fix atmos issues in the Tramstation tunnel"
