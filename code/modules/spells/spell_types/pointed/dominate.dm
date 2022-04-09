@@ -11,7 +11,8 @@
 	cooldown_time = 1 MINUTES
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
-	antimagic_flags = ALL // All things work here, logically
+	// An UNHOLY, MAGIC SPELL that INFLUECNES THE MIND - all things work here, logically
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND
 
 	cast_range = 7
 	active_msg = "You prepare to dominate the mind of a target..."
