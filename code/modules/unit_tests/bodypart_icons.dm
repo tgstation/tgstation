@@ -2,10 +2,10 @@
 /datum/unit_test/bodypart_icons
 
 /datum/unit_test/bodypart_icons/Run()
-		var/list/ignored_types(
-			/obj/item/bodypart/l_arm/mushroom = TRUE, //Doesn't have hands for some reason
-			/obj/item/bodypart/r_arm/mushroom = TRUE, //Doesn't have hands for some reason
-		)
+	var/list/ignored_types = list(
+		/obj/item/bodypart/l_arm/mushroom = TRUE, //Doesn't have hands for some reason
+		/obj/item/bodypart/r_arm/mushroom = TRUE, //Doesn't have hands for some reason
+	)
 
 	for(var/obj/item/bodypart/bodypart_path as anything in subtypesof(/obj/item/bodypart))
 		if(ignored_types[bodypart_path])
