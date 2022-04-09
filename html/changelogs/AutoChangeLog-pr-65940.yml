@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - expansion: "Evangelion jumpsuits have been added to robotics vendor's contraband section"
+  - imageadd: "Ports new evangelion jumpsuit sprites"

@@ -19,10 +19,18 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/chasm,
 	/turf/open/lava,
 	/turf/open/water,
-	/turf/open/openspace
+	/turf/open/openspace,
+	/turf/open/space/openspace
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
+
+GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
+	/turf/open/openspace,
+	/turf/open/space/openspace
+	)))
+
+#define isopenspaceturf(A) (is_type_in_typecache(A, GLOB.turfs_openspace))
 
 #define isopenturf(A) (istype(A, /turf/open))
 
@@ -78,8 +86,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
 
-//more carbon mobs
-
+//More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
 
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
@@ -147,7 +154,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
-
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -241,7 +247,6 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
 	/obj/item/storage/book)))
-
 
 // Jobs
 #define is_job(job_type)  (istype(job_type, /datum/job))
