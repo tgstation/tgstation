@@ -60,7 +60,7 @@
 			balloon_alert(user, "wall already present!")
 			return
 		if(!isfloorturf(src.loc) && state != GIRDER_TRAM)
-			user.balloon_alert(user, "need floor!")
+			balloon_alert(user, "need floor!")
 			return
 		if(state == GIRDER_TRAM)
 			if(!locate(/obj/structure/industrial_lift/tram) in src.loc.contents)
