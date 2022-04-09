@@ -388,11 +388,6 @@
 	color = "#FF8888"
 	},
 /area/ruin/space/derelict/bridge/ai_upload)
-"bX" = (
-/obj/structure/rack,
-/obj/item/circuitboard/computer/turbine_computer,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/ai_upload)
 "bY" = (
 /obj/structure/frame/computer{
 	dir = 1
@@ -2063,13 +2058,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
-"jA" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/bed,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/derelict/medical)
 "jB" = (
 /obj/item/stack/medical/ointment,
 /turf/open/floor/iron/white/airless,
@@ -2309,10 +2297,6 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
-"kN" = (
-/obj/structure/bed,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
 "kO" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
@@ -3337,6 +3321,12 @@
 	icon_state = "damaged4"
 	},
 /area/template_noop)
+"Bp" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary)
 "Bs" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance/eight,
@@ -3351,6 +3341,15 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/solarpanel/airless,
 /area/template_noop)
+"Ch" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/derelict/medical)
 "CZ" = (
 /obj/item/clothing/suit/space/eva,
 /turf/open/floor/iron/airless{
@@ -3579,11 +3578,6 @@
 "Oj" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge/access)
-"Oo" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/power_compressor,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/ai_upload)
 "OD" = (
 /obj/structure/closet/wardrobe/genetics_white,
 /obj/effect/spawner/random/maintenance/two,
@@ -3701,6 +3695,12 @@
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
+"Uf" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary/port)
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/template_noop)
@@ -3710,11 +3710,6 @@
 	dir = 1
 	},
 /turf/closed/wall/r_wall,
-/area/ruin/space/derelict/bridge/ai_upload)
-"Vg" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/power_turbine,
-/turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Vt" = (
 /obj/structure/cable,
@@ -5877,7 +5872,7 @@ go
 go
 jX
 fZ
-kN
+Bp
 wr
 fZ
 gL
@@ -6329,7 +6324,7 @@ yH
 go
 gc
 fZ
-kN
+Bp
 wr
 fZ
 jY
@@ -6436,7 +6431,7 @@ iB
 iL
 iY
 jg
-jA
+Ch
 fZ
 go
 go
@@ -8875,9 +8870,9 @@ ax
 ax
 ax
 bo
-Oo
-Vg
-bX
+by
+by
+by
 bg
 ax
 bV
@@ -9949,8 +9944,8 @@ fZ
 KN
 Vz
 Vz
-lE
-lE
+Uf
+Uf
 Vz
 OT
 Vz

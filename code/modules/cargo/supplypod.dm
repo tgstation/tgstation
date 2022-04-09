@@ -511,7 +511,7 @@
 	alpha = max(0, 255-(amount*20))
 
 /obj/effect/supplypod_rubble //This is the object that forceMoves the supplypod to it's location
-	name = "Debris"
+	name = "debris"
 	desc = "A small crater of rubble. Closer inspection reveals the debris to be made primarily of space-grade metal fragments. You're pretty sure that this will disperse before too long."
 	icon = 'icons/obj/supplypods.dmi'
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER // We want this to go right below the layer of supplypods and supplypod_rubble's forground.

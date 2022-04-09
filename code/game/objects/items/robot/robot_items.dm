@@ -356,8 +356,6 @@
 	var/firedelay = 0
 	var/hitspeed = 2
 
-/obj/item/borg/lollipop/clown
-
 /obj/item/borg/lollipop/equipped()
 	. = ..()
 	check_amount()
