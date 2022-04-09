@@ -186,7 +186,7 @@
 				amount = 1 // hur dur x2
 				if(sheets.get_amount() < amount)
 					return
-				user.balloon_alert(user, "reinforcing frame...")
+				balloon_alert(user, "reinforcing frame...")
 				if(do_after(user, 60*platingmodifier, target = src))
 					if(sheets.get_amount() < amount)
 						return
