@@ -5953,6 +5953,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "bvZ" = (
@@ -7360,8 +7361,6 @@
 "bOm" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "bOn" = (
@@ -13117,6 +13116,7 @@
 /obj/machinery/portable_atmospherics/pump,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "dxp" = (
@@ -15175,10 +15175,9 @@
 /area/science/xenobiology)
 "egO" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "egS" = (
@@ -16018,7 +16017,6 @@
 /area/maintenance/port/aft)
 "evn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "evv" = (
@@ -19235,8 +19233,6 @@
 /obj/structure/table,
 /obj/item/analyzer,
 /obj/machinery/light/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/science/mixing/hallway)
 "fFl" = (
@@ -20886,10 +20882,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/storage/tools)
-"glM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/iron/white,
-/area/science/mixing)
 "glN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
@@ -28560,7 +28552,6 @@
 /area/engineering/storage/tech)
 "jmi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "jmD" = (
@@ -35971,11 +35962,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/grass,
 /area/medical/virology)
-"lZm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
-/area/science/mixing)
 "lZn" = (
 /obj/machinery/door/airlock{
 	name = "Theater Backstage";
@@ -39277,6 +39263,7 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "mYY" = (
@@ -39323,9 +39310,6 @@
 "mZz" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 10
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Science Ordnance Mix Lab";
@@ -44604,12 +44588,12 @@
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
 "oYN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "oYR" = (
@@ -53331,6 +53315,7 @@
 	name = "Lil Pump"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "sqN" = (
@@ -58105,7 +58090,6 @@
 	atmos_chambers = list("ordnancegas1" = "Burn Chamber", "ordnancegas2" = "Freezer Chamber");
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/mixing/chamber)
 "uir" = (
@@ -58469,8 +58453,6 @@
 /area/construction/mining/aux_base)
 "uqp" = (
 /obj/effect/decal/cleanable/oil,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/science/mixing/hallway)
 "uqu" = (
@@ -60369,6 +60351,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "vfL" = (
@@ -60454,6 +60437,10 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "vhJ" = (
@@ -61873,7 +61860,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/white,
 /area/science/mixing)
@@ -63771,11 +63757,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"wty" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall/r_wall,
-/area/science/mixing)
 "wtH" = (
 /obj/machinery/light_switch/directional/east,
 /obj/structure/dresser,
@@ -100995,7 +100976,7 @@ wQA
 wQA
 wQA
 vQA
-wty
+cyK
 mlv
 crR
 dxj
@@ -101254,7 +101235,7 @@ wzl
 jmi
 bOm
 vId
-tJw
+wQA
 tJw
 wQA
 wQA
@@ -101509,7 +101490,7 @@ wDy
 xaO
 wQA
 xET
-lZm
+fwp
 mZz
 weD
 sqN
@@ -101766,7 +101747,7 @@ miJ
 qNl
 wzl
 fTY
-lZm
+fwp
 fwp
 qwW
 fjU
@@ -102023,7 +102004,7 @@ hbL
 wQA
 wQA
 bWL
-evn
+fwp
 iBU
 vtJ
 sCw
@@ -102279,10 +102260,10 @@ cyK
 nsg
 wwN
 xFp
-glM
-evn
+fwp
+fwp
 uin
-wTQ
+wQA
 wTQ
 wQA
 teF
@@ -102536,7 +102517,7 @@ cyK
 lLn
 qtz
 vfI
-fwp
+evn
 oYN
 egO
 vhH
