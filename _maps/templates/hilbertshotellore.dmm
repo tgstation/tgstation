@@ -105,7 +105,7 @@
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
-/obj/item/mod/module/rewinder,
+/obj/item/mod/module/eradication_lock,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "ay" = (
@@ -211,9 +211,7 @@
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "aR" = (
-/obj/machinery/smartfridge/food{
-	initial_contents = list(/obj/item/mod/module/eradication_lock)
-	},
+/obj/machinery/smartfridge/food,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "aS" = (
