@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "reworked turbine to be a 3x1 machine, with flow and pressure based calculations. A paper explaining how to use will spawn when building it and on the roundstart one."
+  - bugfix: "fixes an issue with the old turbine where you could generate infinite power with cold gases"
