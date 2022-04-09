@@ -3252,15 +3252,13 @@
 /obj/structure/sign/plaques/kiddie{
 	pixel_y = 32
 	},
-/obj/structure/table,
 /obj/machinery/camera/directional/north{
 	c_tag = "AI Upload Chamber - Fore";
 	network = list("aiupload")
 	},
-/obj/item/kirbyplants/photosynthetic{
-	pixel_y = 10
-	},
-/turf/open/floor/iron/dark,
+/obj/structure/table/wood/fancy/green,
+/obj/effect/spawner/random/aimodule/harmless,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "aLB" = (
 /obj/effect/landmark/start/lawyer,
@@ -3310,7 +3308,8 @@
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "aMH" = (
-/turf/open/floor/circuit,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "aMQ" = (
 /obj/machinery/door/firedoor,
@@ -3385,7 +3384,7 @@
 /obj/machinery/porta_turret/ai{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aOc" = (
 /obj/machinery/holopad/secure,
@@ -3395,7 +3394,7 @@
 /obj/machinery/porta_turret/ai{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
 "aOo" = (
 /obj/machinery/camera/directional/north{
@@ -3459,9 +3458,9 @@
 /area/science/cytology)
 "aPt" = (
 /obj/structure/table,
-/obj/item/ai_module/supplied/quarantine,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/obj/item/kirbyplants/photosynthetic,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aPv" = (
 /obj/structure/cable,
@@ -3476,9 +3475,9 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "aPx" = (
 /obj/structure/table,
-/obj/item/ai_module/supplied/freeform,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/obj/item/kirbyplants/photosynthetic,
+/turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
 "aPz" = (
 /obj/machinery/navbeacon{
@@ -11124,7 +11123,7 @@
 	network = list("aiupload")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/circuit,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "cRa" = (
 /obj/structure/sign/warning/biohazard,
@@ -23608,7 +23607,7 @@
 /area/hallway/primary/central)
 "hoN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/circuit,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "hpk" = (
 /obj/structure/disposaloutlet{
@@ -25878,6 +25877,7 @@
 /obj/machinery/flasher/directional/south{
 	id = "AI"
 	},
+/obj/item/ai_module/core/full/asimov,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "iko" = (
@@ -28662,10 +28662,8 @@
 /obj/machinery/flasher/directional/north{
 	id = "AI"
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "jnU" = (
 /turf/open/floor/iron/white,
@@ -29140,10 +29138,8 @@
 /area/science/xenobiology)
 "jux" = (
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "juD" = (
 /obj/machinery/door/airlock/maintenance{
@@ -30772,6 +30768,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engineering/break_room)
+"kaQ" = (
+/turf/open/floor/circuit/green,
+/area/ai_monitored/turret_protected/ai_upload)
 "kaY" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -37102,6 +37101,10 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
+"moq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/ai_monitored/turret_protected/ai_upload)
 "mot" = (
 /obj/structure/mirror/directional/west,
 /obj/machinery/shower{
@@ -37515,7 +37518,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/south,
-/turf/open/floor/circuit,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "mut" = (
 /obj/machinery/mech_bay_recharge_port,
@@ -44914,11 +44917,6 @@
 /obj/effect/landmark/start/atmospheric_technician,
 /turf/open/floor/iron/dark,
 /area/engineering/atmospherics_engine)
-"oZE" = (
-/obj/machinery/porta_turret/ai,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/ai_monitored/turret_protected/ai_upload)
 "oZG" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -45800,7 +45798,6 @@
 /area/science/research)
 "prw" = (
 /obj/machinery/porta_turret/ai,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "prB" = (
@@ -47370,6 +47367,10 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
+"pVJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/circuit/green,
+/area/ai_monitored/turret_protected/ai_upload)
 "pVL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -48716,22 +48717,18 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "quf" = (
-/obj/structure/table,
-/obj/machinery/door/window{
-	dir = 8;
-	name = "High-Risk Modules";
-	req_access_txt = "20"
-	},
 /obj/structure/window/reinforced,
 /obj/machinery/flasher/directional/north{
 	id = "AI"
 	},
 /obj/effect/spawner/random/aimodule/harmful,
-/obj/item/ai_module/supplied/oxygen,
-/obj/item/ai_module/supplied/protect_station,
-/obj/item/ai_module/zeroth/onehuman,
-/obj/item/ai_module/reset/purge,
-/turf/open/floor/iron/dark,
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	name = "High-Risk Modules";
+	req_access_txt = "20";
+	dir = 8
+	},
+/turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
 "qui" = (
 /obj/effect/turf_decal/box/corners{
@@ -49326,6 +49323,10 @@
 	},
 /turf/open/floor/grass,
 /area/science/genetics)
+"qFL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/circuit/red,
+/area/ai_monitored/turret_protected/ai_upload)
 "qFO" = (
 /obj/machinery/light_switch/directional/north,
 /obj/structure/showcase/cyborg/old{
@@ -62222,7 +62223,7 @@
 "vLf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
 "vLo" = (
 /obj/structure/disposalpipe/segment{
@@ -64582,10 +64583,11 @@
 	},
 /area/maintenance/port)
 "wIj" = (
-/obj/structure/table,
-/obj/item/ai_module/core/full/asimov,
-/obj/effect/spawner/random/aimodule/harmless,
-/obj/item/ai_module/core/freeformcore,
+/obj/machinery/flasher/directional/north{
+	id = "AI"
+	},
+/obj/structure/table/wood/fancy/blue,
+/obj/effect/spawner/random/aimodule/neutral,
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
@@ -64594,12 +64596,7 @@
 	req_access_txt = "20"
 	},
 /obj/structure/window/reinforced,
-/obj/effect/spawner/random/aimodule/neutral,
-/obj/item/ai_module/core/full/custom,
-/obj/machinery/flasher/directional/north{
-	id = "AI"
-	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "wIq" = (
 /obj/structure/table,
@@ -93877,7 +93874,7 @@ jnO
 aMH
 rjI
 aPv
-mph
+moq
 eQg
 aJS
 ktt
@@ -94131,7 +94128,7 @@ aHx
 aaa
 aJS
 aLs
-aMH
+kaQ
 aOc
 aPw
 ome
@@ -94388,7 +94385,7 @@ aHx
 aaa
 aJS
 jux
-aMH
+pVJ
 iRO
 aPv
 hoN
@@ -94644,9 +94641,9 @@ vdH
 aHx
 aaf
 aJS
-oZE
-hoN
-hoN
+prw
+qFL
+qFL
 vLf
 cQZ
 aJS

@@ -4,6 +4,7 @@
 	icon_state = "circuit"
 	spawn_loot_double = FALSE
 	spawn_loot_count = 3
+	spawn_loot_split = TRUE
 
 // AI uploads have both ai_module/reset and ai_module/core/full/asimov directly mapped in
 /obj/effect/spawner/random/aimodule/harmless

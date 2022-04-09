@@ -7127,7 +7127,8 @@
 /area/service/kitchen)
 "bMO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/circuit/green,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "bMQ" = (
 /obj/effect/turf_decal/bot,
@@ -8145,6 +8146,10 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
+"bXs" = (
+/obj/structure/cable,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai_upload)
 "bXv" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
@@ -9396,10 +9401,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"ckp" = (
-/obj/structure/cable,
-/turf/open/floor/circuit/green,
-/area/ai_monitored/turret_protected/ai_upload)
 "ckD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14102,25 +14103,17 @@
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "dbM" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor{
+/obj/structure/cable,
+/obj/structure/table/wood/fancy/blue,
+/obj/structure/window/reinforced,
+/obj/machinery/door/window{
+	base_state = "right";
 	dir = 8;
+	icon_state = "right";
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/structure/window/reinforced,
-/obj/item/ai_module/supplied/protect_station{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/ai_module/zeroth/onehuman,
-/obj/item/ai_module/reset/purge{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "dbX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15718,26 +15711,22 @@
 /turf/closed/wall,
 /area/science/research)
 "dlG" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor/right/directional/west{
-	name = "Core Modules";
-	req_access_txt = "20"
-	},
-/obj/effect/spawner/random/aimodule/harmful{
-	spawn_loot_count = 2;
-	spawn_loot_double = 0;
-	spawn_loot_split = 1
-	},
-/obj/item/ai_module/supplied/oxygen{
-	pixel_x = -3;
-	pixel_y = -3
-	},
 /obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/ai/directional/north,
-/turf/open/floor/iron/dark,
+/obj/structure/table/wood/fancy/blue,
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 8;
+	icon_state = "right";
+	name = "Core Modules";
+	req_access_txt = "20"
+	},
+/obj/effect/spawner/random/aimodule/neutral{
+	pixel_y = -16
+	},
+/turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "dlJ" = (
 /obj/structure/disposalpipe/segment,
@@ -24512,6 +24501,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
+"eQN" = (
+/turf/open/floor/circuit/red,
+/area/ai_monitored/turret_protected/ai_upload)
 "eQX" = (
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -6
@@ -28194,8 +28186,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "fVR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42021,14 +42012,11 @@
 /turf/open/floor/iron,
 /area/science/research)
 "jVc" = (
-/obj/structure/table/reinforced,
-/obj/effect/spawner/random/aimodule/neutral{
-	spawn_loot_count = 3;
-	spawn_loot_double = 0;
-	spawn_loot_split = 1
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/east,
+/obj/item/kirbyplants/photosynthetic{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "jVh" = (
@@ -42195,10 +42183,11 @@
 /turf/open/floor/wood,
 /area/service/electronic_marketing_den)
 "jXG" = (
-/obj/structure/table/reinforced,
-/obj/item/ai_module/supplied/freeform,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/west,
+/obj/item/kirbyplants/photosynthetic{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "jXI" = (
@@ -42341,25 +42330,15 @@
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/captain)
 "jZl" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor/right/directional/west{
-	dir = 4;
-	name = "Core Modules";
-	req_access_txt = "20"
-	},
 /obj/structure/window/reinforced,
-/obj/item/ai_module/core/freeformcore{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/ai_module/core/full/custom,
-/obj/item/ai_module/core/full/asimov{
-	pixel_x = -3;
-	pixel_y = -3
-	},
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	name = "High-Risk Modules";
+	req_access_txt = "20";
+	dir = 4
+	},
+/turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
 "jZo" = (
 /obj/effect/decal/cleanable/dirt,
@@ -46582,6 +46561,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/warden)
+"lnY" = (
+/obj/structure/cable,
+/turf/open/floor/circuit/red,
+/area/ai_monitored/turret_protected/ai_upload)
 "lok" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -49926,23 +49909,20 @@
 /turf/open/floor/iron,
 /area/commons/toilet/locker)
 "mfD" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
-	name = "Core Modules";
-	req_access_txt = "20"
-	},
-/obj/effect/spawner/random/aimodule/harmless{
-	spawn_loot_count = 3;
-	spawn_loot_double = 0;
-	spawn_loot_split = 1
-	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/ai/directional/north,
-/turf/open/floor/iron/dark,
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	name = "High-Risk Modules";
+	req_access_txt = "20";
+	dir = 4
+	},
+/obj/effect/spawner/random/aimodule/harmful{
+	pixel_y = -16
+	},
+/turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
 "mfK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -62976,6 +62956,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
+"qie" = (
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai_upload)
 "qif" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
@@ -68414,10 +68397,13 @@
 /area/science/mixing)
 "rNr" = (
 /obj/structure/table/reinforced,
-/obj/item/ai_module/supplied/quarantine,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/status_display/evac/directional/south,
+/obj/item/ai_module/core/full/asimov{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "rNU" = (
@@ -71205,7 +71191,8 @@
 "sBI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/circuit/green,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "sBL" = (
 /obj/effect/landmark/start/scientist,
@@ -78150,8 +78137,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "uEO" = (
 /turf/closed/wall/r_wall,
@@ -80630,7 +80616,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/circuit/green,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "vtG" = (
 /obj/structure/table/reinforced,
@@ -87624,15 +87611,12 @@
 /turf/open/floor/iron,
 /area/science/mixing/launch)
 "xHD" = (
-/obj/structure/table/reinforced,
-/obj/item/kirbyplants/photosynthetic{
-	pixel_y = 10
-	},
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
+/obj/structure/table/wood/fancy/green,
+/obj/effect/spawner/random/aimodule/harmless,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "xHF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -97310,8 +97294,8 @@ ikT
 qTF
 bRD
 ruN
-hmU
-sdK
+eQN
+lnY
 fDO
 hmU
 jXG
@@ -97567,10 +97551,10 @@ bYe
 mlh
 bPC
 gwu
-cfu
-ckp
+hmU
+sdK
 sBI
-ckp
+sdK
 qdV
 pnu
 cdt
@@ -97824,11 +97808,11 @@ bYe
 kkh
 bPC
 hmU
-cfu
+hmU
 sdK
 mMd
-cfu
 hmU
+cfu
 fVO
 cdt
 bkE
@@ -98338,11 +98322,11 @@ bYe
 kKz
 bPC
 apT
-cfu
+hmU
 sdK
 gjl
-cfu
 hmU
+cfu
 uEK
 cdt
 bkE
@@ -98595,10 +98579,10 @@ bYf
 aHr
 bPC
 gwu
-cfu
-ckp
+hmU
+sdK
 bMO
-cfu
+hmU
 tEd
 aBi
 cdt
@@ -98852,8 +98836,8 @@ asa
 kan
 bPC
 uhG
-hmU
-sdK
+qie
+bXs
 wVJ
 hmU
 jVc

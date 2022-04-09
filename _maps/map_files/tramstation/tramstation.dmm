@@ -333,7 +333,7 @@
 /area/hallway/secondary/entry)
 "acO" = (
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "acS" = (
 /obj/machinery/hydroponics/constructable,
@@ -2748,7 +2748,7 @@
 	frequency = 1447;
 	name = "ai intercom"
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "aux" = (
 /obj/machinery/door/firedoor,
@@ -7438,6 +7438,12 @@
 /obj/machinery/status_display/ai/directional/south,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
+"bps" = (
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
+/turf/open/floor/circuit/red,
+/area/ai_monitored/turret_protected/ai_upload)
 "bpM" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
@@ -10981,7 +10987,7 @@
 /area/maintenance/radshelter/civil)
 "cHW" = (
 /obj/machinery/status_display/evac/directional/east,
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
 "cHX" = (
 /obj/machinery/door/window/left/directional/west{
@@ -13864,26 +13870,20 @@
 /turf/open/floor/iron/white,
 /area/service/kitchen)
 "dII" = (
-/obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_y = 2
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8;
-	pixel_y = 2
-	},
-/obj/machinery/door/window/left/directional/north{
-	name = "High-Risk Modules";
-	req_access_txt = "20"
-	},
-/obj/item/ai_module/supplied/protect_station,
+/obj/structure/table/wood/fancy/red,
 /obj/effect/spawner/random/aimodule/harmful,
-/obj/item/ai_module/reset/purge,
-/obj/item/ai_module/zeroth/onehuman,
-/obj/item/ai_module/supplied/oxygen,
-/turf/open/floor/circuit,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	name = "High-Risk Modules";
+	req_access_txt = "20";
+	dir = 1
+	},
+/turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
 "dIJ" = (
 /obj/structure/table,
@@ -14875,7 +14875,7 @@
 	dir = 10;
 	network = list("ss13","aiupload")
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "dZR" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -17677,21 +17677,10 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "eXj" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot_white,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "eXk" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
@@ -20369,7 +20358,9 @@
 "fSg" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/turf/open/floor/circuit,
+/obj/structure/table/wood/fancy/green,
+/obj/effect/spawner/random/aimodule/harmless,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "fSh" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
@@ -21371,21 +21362,10 @@
 /turf/open/floor/iron/smooth,
 /area/maintenance/starboard/lesser)
 "gkF" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot_white,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "gkY" = (
 /obj/machinery/conveyor{
@@ -32394,6 +32374,12 @@
 	},
 /turf/open/floor/vault,
 /area/hallway/primary/tram/center)
+"knI" = (
+/obj/machinery/porta_turret/ai{
+	dir = 4
+	},
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai_upload)
 "knV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -33706,7 +33692,7 @@
 /obj/machinery/flasher/directional/east{
 	id = "AI"
 	},
-/turf/open/floor/circuit,
+/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
 "kMh" = (
 /turf/open/openspace/airless/planetary,
@@ -35485,11 +35471,11 @@
 /area/engineering/atmos)
 "lpU" = (
 /obj/structure/table,
-/obj/item/ai_module/supplied/quarantine,
 /obj/structure/sign/plaques/kiddie{
 	pixel_y = -32
 	},
-/turf/open/floor/circuit,
+/obj/item/ai_module/core/full/asimov,
+/turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
 "lpV" = (
 /turf/closed/wall,
@@ -38890,6 +38876,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/office)
+"mDl" = (
+/turf/open/floor/iron/dark,
+/area/ai_monitored/turret_protected/ai_upload)
 "mDq" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/status_display/evac/directional/north,
@@ -44813,7 +44802,7 @@
 /area/engineering/break_room)
 "oMJ" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/circuit,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "oMP" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -62904,6 +62893,9 @@
 /obj/structure/grille/broken,
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
+"vzs" = (
+/turf/open/floor/circuit/red,
+/area/ai_monitored/turret_protected/ai_upload)
 "vzu" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -63964,27 +63956,20 @@
 /turf/open/floor/iron,
 /area/science/misc_lab)
 "vVG" = (
-/obj/structure/table,
+/obj/structure/table/wood/fancy/blue,
+/obj/effect/spawner/random/aimodule/neutral,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_y = 2
+	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 8;
-	pixel_y = 2
+	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/window/left/directional/south{
+/obj/machinery/door/window{
+	base_state = "right";
+	icon_state = "right";
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/item/ai_module/core/full/custom,
-/obj/effect/spawner/random/aimodule/neutral,
-/obj/effect/spawner/random/aimodule/harmless,
-/obj/item/ai_module/core/freeformcore,
-/obj/item/ai_module/core/full/asimov,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "vVO" = (
@@ -184958,11 +184943,11 @@ dhe
 nhJ
 nhJ
 kzi
-byg
+mDl
 dZO
 pvv
 oMJ
-byg
+mDl
 kzi
 nhJ
 nhJ
@@ -185219,7 +185204,7 @@ byg
 ixm
 cWU
 lKY
-byg
+vzs
 lpU
 nhJ
 nhJ
@@ -185476,7 +185461,7 @@ byg
 eXj
 acO
 gkF
-byg
+vzs
 dII
 nhJ
 nhJ
@@ -185728,13 +185713,13 @@ dhe
 dhe
 nhJ
 nhJ
-kzi
+knI
 usV
 auw
 fSg
 kMb
 cHW
-kzi
+bps
 nhJ
 nhJ
 gNY
