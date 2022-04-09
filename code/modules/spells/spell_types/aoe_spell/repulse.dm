@@ -22,7 +22,7 @@
 /datum/action/cooldown/spell/aoe/repulse/cast_on_thing_in_aoe(atom/movable/victim, atom/caster)
 	if(ismob(victim))
 		var/mob/victim_mob = victim
-		if(victim_mob.anti_magic_check())
+		if(victim_mob.can_block_magic(antimagic_flags))
 			return
 
 	var/turf/throwtarget = get_edge_target_turf(caster, get_dir(caster, get_step_away(victim, caster)))
@@ -61,18 +61,6 @@
 	cooldown_time = 40 SECONDS
 	cooldown_reduction_per_rank = 6.25 SECONDS
 
-/datum/action/cooldown/spell/aoe/repulse/wizard/is_affected_by_aoe(atom/center, atom/thing)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	if(isliving(thing))
-		var/mob/living/living_thing = thing
-		if(living_thing.anti_magic_check())
-			return FALSE
-
-	return TRUE
-
 /datum/action/cooldown/spell/aoe/repulse/xeno
 	name = "Tail Sweep"
 	desc = "Throw back attackers with a sweep of your tail."
@@ -85,7 +73,7 @@
 	cooldown_time = 15 SECONDS
 
 	invocation_type = INVOCATION_NONE
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	antimagic_flags = NONE
 	outer_radius = 2
 
 	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep

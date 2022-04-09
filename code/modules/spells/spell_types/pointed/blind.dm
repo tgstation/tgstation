@@ -11,7 +11,7 @@
 
 	invocation = "STI KALY"
 	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	active_msg = "You prepare to blind a target..."
 
@@ -34,6 +34,11 @@
 
 /datum/action/cooldown/spell/pointed/blind/cast(mob/living/carbon/human/cast_on)
 	. = ..()
+	if(cast_on.can_block_magic(antimagic_flags))
+		to_chat(cast_on, span_notice("Your eye itches, but it passes momentarily."))
+		to_chat(owner, span_warning("The spell had no effect!"))
+		return FALSE
+
 	to_chat(cast_on, span_warning("Your eyes cry out in pain!"))
 	cast_on.blind_eyes(eye_blind_amount)
 	cast_on.blur_eyes(eye_blurry_amount)

@@ -9,7 +9,7 @@
 	school = SCHOOL_MIME
 	cooldown_time = 5 MINUTES
 
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIND
+	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIND
 	spell_max_level = 1
 
 /datum/action/cooldown/spell/vow_of_silence/cast(mob/living/carbon/human/cast_on)

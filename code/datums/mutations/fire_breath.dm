@@ -35,6 +35,7 @@
 	cooldown_time = 40 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+	antimagic_flags = NONE
 
 	cone_levels = 3
 	respect_density = TRUE

@@ -8,7 +8,7 @@
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 30 SECONDS
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_OFF_CENTCOM
+	spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_OFF_CENTCOM
 	spell_max_level = 1
 
 	/// Weather we're ready to cast again yet or not
@@ -39,8 +39,8 @@
 
 	for(var/turf/swap_a as anything in to_switcharoo)
 		var/turf/swap_b = to_switcharoo[swap_a]
-		var/obj/effect/cross_action/spacetime_dist/effect_a = new /obj/effect/cross_action/spacetime_dist(swap_a)
-		var/obj/effect/cross_action/spacetime_dist/effect_b = new /obj/effect/cross_action/spacetime_dist(swap_b)
+		var/obj/effect/cross_action/spacetime_dist/effect_a = new /obj/effect/cross_action/spacetime_dist(swap_a, antimagic_flags)
+		var/obj/effect/cross_action/spacetime_dist/effect_b = new /obj/effect/cross_action/spacetime_dist(swap_b, antimagic_flags)
 		effect_a.linked_dist = effect_b
 		effect_a.add_overlay(swap_b.photograph())
 		effect_b.linked_dist = effect_a
@@ -97,6 +97,8 @@
 	name = "spacetime distortion"
 	desc = "A distortion in spacetime. You can hear faint music..."
 	icon_state = ""
+	/// A flags which save people from being thrown about
+	var/antimagic_flags = MAGIC_RESISTANCE
 	var/obj/effect/cross_action/spacetime_dist/linked_dist
 	var/busy = FALSE
 	var/sound
@@ -108,18 +110,19 @@
 /obj/effect/cross_action/singularity_pull()
 	return
 
-/obj/effect/cross_action/spacetime_dist/Initialize(mapload)
+/obj/effect/cross_action/spacetime_dist/Initialize(mapload, flags = MAGIC_RESISTANCE)
 	. = ..()
 	setDir(pick(GLOB.cardinals))
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	antimagic_flags = flags
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
-		if(M.anti_magic_check(chargecost = 0))
+		if(M.can_block_magic(antimagic_flags, chargecost = 0))
 			return
 	if(linked_dist && walks_left > 0)
 		flick("purplesparkles", src)

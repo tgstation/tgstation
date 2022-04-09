@@ -22,7 +22,8 @@
 	name = "Santa Teleport"
 
 	invocation = "HO HO HO!"
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED
+	spell_requirements = NONE
+	antimagic_flags = NONE
 
 	invocation_says_area = FALSE // Santa moves in mysterious ways
 
@@ -33,6 +34,8 @@
 
 	invocation = null
 	invocation_type = INVOCATION_NONE
+	spell_requirements = NONE
+
 	invocation_says_area = FALSE
 
 /datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/before_cast(atom/cast_on)

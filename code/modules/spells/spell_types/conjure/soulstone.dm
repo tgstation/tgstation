@@ -15,7 +15,7 @@
 
 /datum/action/cooldown/spell/conjure/soulstone/cult
 	cooldown_time = 6 MINUTES
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB
+	spell_requirements = SPELL_REQUIRES_WIZARD_GARB // MELBERT TODO
 
 /datum/action/cooldown/spell/conjure/soulstone/noncult
 	summon_type = list(/obj/item/soulstone/anybody)

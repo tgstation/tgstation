@@ -8,14 +8,14 @@
 	school = SCHOOL_EVOCATION
 	cooldown_time = 5 SECONDS
 	cooldown_reduction_per_rank = 1 SECONDS
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	invocation = "Sigi'lu M'Fan 'Tasia!"
 	invocation_type = INVOCATION_SHOUT
 
 	base_icon_state = "spellcard"
 	cast_range = 40
-	projectile_type = /obj/projectile/spellcard
+	projectile_type = /obj/projectile/magic/spellcard
 	projectile_amount = 5
 	projectiles_per_fire = 7
 

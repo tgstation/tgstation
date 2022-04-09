@@ -10,7 +10,7 @@
 
 	invocation = "AULIE OXIN FIERA"
 	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	outer_radius = 3
 
 	var/static/list/knockable_things = typecacheof(list(

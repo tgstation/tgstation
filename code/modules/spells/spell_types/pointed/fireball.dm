@@ -10,7 +10,7 @@
 
 	invocation = "ONI SOMA!"
 	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	base_icon_state = "fireball"
 	active_msg = "You prepare to cast your fireball spell!"

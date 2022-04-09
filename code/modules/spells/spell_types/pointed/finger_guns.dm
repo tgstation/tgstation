@@ -10,12 +10,14 @@
 
 	school = SCHOOL_MIME
 	cooldown_time = 30 SECONDS
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN
-	spell_max_level = 1
 
 	invocation = "" // Set by get_invocation_content()
 	invocation_type = INVOCATION_EMOTE
 	invocation_self_message = span_danger("You fire your finger gun!")
+
+	spell_requirements = SPELL_REQUIRES_HUMAN
+	antimagic_flags = NONE
+	spell_max_level = 1
 
 	base_icon_state = "finger_guns"
 	active_msg = "You draw your fingers!"

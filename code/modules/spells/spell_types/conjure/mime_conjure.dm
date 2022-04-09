@@ -9,7 +9,8 @@
 	invocation_self_message = "You do a weird gesture."
 	invocation_type = INVOCATION_EMOTE
 
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN
+	spell_requirements = SPELL_REQUIRES_HUMAN
+	antimagic_flags = NONE
 	spell_max_level = 1
 
 /datum/action/cooldown/spell/conjure/mime/New()

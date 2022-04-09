@@ -10,7 +10,7 @@
 
 	invocation = "DIRI CEL"
 	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 /datum/action/cooldown/spell/charge/is_valid_target(atom/cast_on)
 	return isliving(cast_on)

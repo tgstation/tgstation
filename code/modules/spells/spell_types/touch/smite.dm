@@ -25,13 +25,10 @@
 		nearby_spectator.flash_act(affect_silicon = FALSE)
 
 	var/mob/living/living_victim = victim
-	var/atom/antimagic_source = living_victim.anti_magic_check()
-	if(antimagic_source)
-		if(isitem(antimagic_source))
-			victim.visible_message(span_warning("[target]'s [antimagic_source] glows brightly as it wards off the spell!"))
+	if(living_victim.can_block_magic(antimagic_flags))
 		caster.visible_message(
 			span_warning("The feedback blows [caster]'s arm off!"),
-			span_userdanger("The spell bounces from [antimagic_source]'s skin back into your arm!"),
+			span_userdanger("The spell bounces from [living_victim]'s skin back into your arm!"),
 		)
 		caster.flash_act()
 		var/obj/item/bodypart/to_dismember = caster.get_holding_bodypart_of_item(hand)

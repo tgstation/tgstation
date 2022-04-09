@@ -28,7 +28,7 @@
 
 	if(isliving(hit_atom))
 		var/mob/living/hit_living = hit_atom
-		if(!hit_living.anti_magic_check())
+		if(!hit_living.can_block_magic())
 			hit_living.electrocute_act(80, src, flags = SHOCK_ILLUSION)
 	qdel(src)
 

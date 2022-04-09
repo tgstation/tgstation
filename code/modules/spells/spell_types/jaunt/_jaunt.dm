@@ -15,10 +15,14 @@
 	school = SCHOOL_TRANSMUTATION
 
 	invocation_type = INVOCATION_NONE
-	spell_requirements = SPELL_REQUIRES_NON_ABSTRACT
 
 	/// What dummy mob type do we put jaunters in on jaunt?
 	var/jaunt_type = /obj/effect/dummy/phased_mob
+
+/datum/action/cooldown/spell/jaunt/New(Target)
+	. = ..()
+	// No matter what any subtypes set, it should always require non-abstract and unphased for jaunt
+	spell_requirements |= (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
 
 /datum/action/cooldown/spell/jaunt/can_cast_spell(feedback = TRUE)
 	. = ..()

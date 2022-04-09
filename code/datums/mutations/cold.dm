@@ -35,6 +35,7 @@
 	button_icon_state = "icebeam0"
 	cooldown_time = 15 SECONDS
 	spell_requirements = NONE
+	antimagic_flags = NONE
 
 	base_icon_state = "icebeam"
 	active_msg = "You focus your cryokinesis!"

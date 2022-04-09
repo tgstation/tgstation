@@ -11,6 +11,7 @@
 	cooldown_time = 75 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY
 
 	cast_range = 5
 	active_msg = "You prepare to instill a deep terror in a target..."
@@ -25,7 +26,7 @@
 
 /datum/action/cooldown/spell/pointed/abyssal_gaze/cast(mob/living/carbon/cast_on)
 	. = ..()
-	if(cast_on.anti_magic_check(TRUE, TRUE))
+	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(owner, span_warning("The spell had no effect!"))
 		to_chat(cast_on, span_warning("You feel a freezing darkness closing in on you, but it rapidly dissipates."))
 		return FALSE

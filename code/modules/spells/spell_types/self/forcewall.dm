@@ -10,7 +10,7 @@
 
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = INVOCATION_SHOUT
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	/// The typepath to the wall we create on cast.
 	var/wall_type = /obj/effect/forcefield/wizard
@@ -20,12 +20,12 @@
 	new wall_type(get_turf(owner), owner)
 
 	if(owner.dir == SOUTH || owner.dir == NORTH)
-		new wall_type(get_step(owner, EAST), owner)
-		new wall_type(get_step(owner, WEST), owner)
+		new wall_type(get_step(owner, EAST), owner, antimagic_flags)
+		new wall_type(get_step(owner, WEST), owner, antimagic_flags)
 
 	else
-		new wall_type(get_step(owner, NORTH), owner)
-		new wall_type(get_step(owner, SOUTH), owner)
+		new wall_type(get_step(owner, NORTH), owner, antimagic_flags)
+		new wall_type(get_step(owner, SOUTH), owner, antimagic_flags)
 
 /datum/action/cooldown/spell/forcewall/cult
 	name = "Shield"
@@ -51,7 +51,8 @@
 	school = SCHOOL_MIME
 	cooldown_time = 1 MINUTES
 	cooldown_reduction_per_rank = 0 SECONDS
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN
+	spell_requirements = SPELL_REQUIRES_HUMAN
+	antimagic_flags = NONE
 
 	invocation = "" // Set via get_invocation_content().
 	invocation_type = INVOCATION_EMOTE

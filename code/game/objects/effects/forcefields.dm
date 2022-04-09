@@ -19,12 +19,15 @@
 
 /// The wizard's forcefield, summoned by forcewall
 /obj/effect/forcefield/wizard
+	/// Flags for what antimagic can just ignore our forcefields
+	var/antimagic_flags = MAGIC_RESISTANCE
 	/// A weakref to whoever casted our forcefield.
 	var/datum/weakref/caster_weakref
 
-/obj/effect/forcefield/wizard/Initialize(mapload, mob/caster)
+/obj/effect/forcefield/wizard/Initialize(mapload, mob/caster, flags = MAGIC_RESISTANCE) // melbert todo
 	. = ..()
 	caster_weakref = WEAKREF(caster)
+	antimagic_flags = flags
 
 /obj/effect/forcefield/wizard/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -32,7 +35,7 @@
 		return TRUE
 	if(isliving(mover))
 		var/mob/living/living_mover = mover
-		if(living_mover.anti_magic_check(chargecost = 0))
+		if(living_mover.can_block_magic(antimagic_flags, chargecost = 0))
 			return TRUE
 
 /// Cult forcefields

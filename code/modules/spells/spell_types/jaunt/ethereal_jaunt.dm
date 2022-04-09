@@ -7,7 +7,6 @@
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED
 	jaunt_type = /obj/effect/dummy/phased_mob/spell_jaunt
 
 	var/exit_jaunt_sound = 'sound/magic/ethereal_exit.ogg'
@@ -207,7 +206,7 @@
 	button_icon_state = "phaseshift"
 
 	cooldown_time = 25 SECONDS
-	spell_requirements = SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED
+	spell_requirements = NONE
 
 	jaunt_duration = 5 SECONDS
 	jaunt_in_time = 0.6 SECONDS

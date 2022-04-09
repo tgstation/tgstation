@@ -1,6 +1,5 @@
 /datum/action/cooldown/spell/shapeshift
 	school = SCHOOL_TRANSMUTATION
-	spell_requirements = SPELL_REQUIRES_NON_ABSTRACT
 
 	/// Whehter we revert to our human form on death.
 	var/revert_on_death = TRUE
@@ -15,6 +14,11 @@
 	var/mob/living/shapeshift_type
 	/// All possible types we can become
 	var/list/atom/possible_shapes
+
+/datum/action/cooldown/spell/shapeshift/New(Target)
+	. = ..()
+	// Any shapeshifting should require non-abstract form
+	spell_requirements |= SPELL_REQUIRES_NON_ABSTRACT
 
 /datum/action/cooldown/spell/shapeshift/is_valid_target(atom/cast_on)
 	return isliving(cast_on)

@@ -20,7 +20,7 @@
 	. = ..()
 	var/list/to_summon_in = list()
 	for(var/turf/summon_turf in range(summon_radius, cast_on))
-		if(summon_respects_density && summon_turfs.density)
+		if(summon_respects_density && summon_turf.density)
 			continue
 		to_summon_in += summon_turf
 

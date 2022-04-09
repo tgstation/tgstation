@@ -24,7 +24,7 @@
 	return view(outer_radius, center)
 
 /datum/action/cooldown/spell/aoe/sacred_flame/cast_on_thing_in_aoe(mob/living/victim, mob/living/caster)
-	if(victim.anti_magic_check())
+	if(victim.can_block_magic(antimagic_flags))
 		return
 
 	victim.adjust_fire_stacks(firestacks_to_give)

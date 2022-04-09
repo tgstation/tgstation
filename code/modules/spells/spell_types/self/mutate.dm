@@ -5,12 +5,15 @@
 	sound = 'sound/magic/mutate.ogg'
 
 	school = SCHOOL_TRANSMUTATION
-	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB
 
 	/// A list of all mutations we add on cast
 	var/list/mutations_to_add = list()
 	/// The duration the mutations will last afetr cast (keep this above the minimum cooldown)
 	var/mutation_duration = 10 SECONDS
+
+/datum/action/cooldown/spell/apply_mutations/New(Target)
+	. = ..()
+	spell_requirements |= SPELL_REQUIRES_HUMAN // The spell involves mutations, so it always require human / dna
 
 /datum/action/cooldown/spell/apply_mutations/Remove()
 	remove_mutations(owner)

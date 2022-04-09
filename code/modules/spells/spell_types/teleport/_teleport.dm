@@ -8,7 +8,6 @@
 	sound = 'sound/weapons/zapbang.ogg'
 
 	school = SCHOOL_TRANSLOCATION
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED
 
 	/// Whether we force the teleport to happen (ie, it cannot be blocked by noteleport areas or blessings or whatever)
 	var/force_teleport = FALSE
@@ -16,6 +15,11 @@
 	var/destination_flags = NONE
 	/// The sound played on arrival, after the teleport.
 	var/post_teleport_sound = 'sound/weapons/zapbang.ogg'
+
+/datum/action/cooldown/spell/teleport/New(Target)
+	. = ..()
+	// Teleporting out of jaunts or as a non-abstract entity is always a bad idea
+	spell_requirements |= (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
 
 /datum/action/cooldown/spell/teleport/cast(atom/cast_on)
 	. = ..()

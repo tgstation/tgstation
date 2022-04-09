@@ -80,7 +80,7 @@
 	origin.Beam(to_zap, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
 	playsound(get_turf(to_zap), 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
 
-	if(to_zap.anti_magic_check())
+	if(to_zap.can_block_magic(antimagic_flags))
 		to_zap.visible_message(
 			span_warning("[to_zap] absorbs the spell, remaining unharmed!"),
 			span_userdanger("You absorb the spell, remaining unharmed!"),

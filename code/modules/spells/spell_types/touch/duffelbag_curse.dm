@@ -10,7 +10,7 @@
 	cooldown_reduction_per_rank = 1 SECONDS
 
 	invocation = "HU'SWCH H'ANS!!"
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	hand_path = /obj/item/melee/touch_attack/duffelbag
 
@@ -28,7 +28,7 @@
 		"upbringing on the space farm",
 		"fond memories with your buddy Keith",
 	)
-	if(duffel_victim.anti_magic_check())
+	if(duffel_victim.can_block_magic(antimagic_flags))
 		to_chat(caster, span_warning("The spell can't seem to affect [duffel_victim]!"))
 		to_chat(duffel_victim, span_warning("You really don't feel like talking about your [pick(elaborate_backstory)] with complete strangers today."))
 		return TRUE

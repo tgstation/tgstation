@@ -11,6 +11,7 @@
 	cooldown_time = 1 MINUTES
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+	antimagic_flags = ALL // All things work here, logically
 
 	cast_range = 7
 	active_msg = "You prepare to dominate the mind of a target..."
@@ -28,11 +29,18 @@
 		return FALSE
 	if("cult" in animal.faction)
 		return FALSE
+	if(HAS_TRAIT(animal, TRAIT_HOLY))
+		return FALSE
 
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/dominate/cast(mob/living/simple_animal/cast_on)
 	. = ..()
+	if(cast_on.can_block_magic(antimagic_flags))
+		to_chat(cast_on, span_warning("Your feel someone attempting to subject your mind to terrible machinations!"))
+		to_chat(owner, span_warning("[cast_on] resists your domination!"))
+		return FALSE
+
 	var/turf/cast_turf = get_turf(cast_on)
 	cast_on.add_atom_colour("#990000", FIXED_COLOUR_PRIORITY)
 	cast_on.faction |= "cult"

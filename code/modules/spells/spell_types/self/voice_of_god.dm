@@ -6,9 +6,10 @@
 	sound = 'sound/magic/clockwork/invoke_general.ogg'
 
 	cooldown_time = 120 SECONDS // Varies depending on command
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	invocation = "" // Handled by the VOICE OF GOD itself
 	invocation_type = INVOCATION_SHOUT
+	spell_requirements = NONE
+	antimagic_flags = NONE
 
 	/// The command to deliver on cast
 	var/command

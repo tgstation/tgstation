@@ -5,7 +5,8 @@
 	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
 	button_icon_state = "r_transmit"
 
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	antimagic_flags = MAGIC_RESISTANCE_MIND
 
 	/// The next mob we send a telepathy message to.
 	var/mob/living/to_telepath_to
@@ -18,13 +19,6 @@
 	var/telepathy_span = "notice"
 	/// The bolded span surrounding the telepathy message
 	var/bold_telepathy_span = "boldnotice"
-
-	/// Whether we're blocked by antimagic
-	var/blocked_by_antimagic = FALSE
-	/// Whether we're blocked by holiness
-	var/blocked_by_holy = FALSE
-	/// Whether we're blocked by tinfoil
-	var/blocked_by_tinfoil = TRUE
 
 /datum/action/cooldown/spell/telepathy/before_cast(atom/cast_on)
 	. = ..()
@@ -54,7 +48,7 @@
 	var/formatted_message = "<span class='[telepathy_span]'>[message]</span>"
 
 	to_chat(cast_on, "<span class='[bold_telepathy_span]'>You transmit to [to_telepath_to]:</span> [formatted_message]")
-	if(!to_telepath_to.anti_magic_check(blocked_by_antimagic, blocked_by_holy, blocked_by_tinfoil, 0)) //hear no evil
+	if(!to_telepath_to.can_block_magic(antimagic_flags, charge_cost = 0)) //hear no evil
 		to_chat(to_telepath_to, "<span class='[bold_telepathy_span]'>You hear something behind you talking...</span> [formatted_message]")
 
 	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)

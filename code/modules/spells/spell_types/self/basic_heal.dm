@@ -7,7 +7,7 @@
 	school = SCHOOL_RESTORATION
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 1.25 SECONDS
-	spell_requirements = SPELL_REQUIRES_HUMAN
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN
 
 	invocation = "Victus sano!"
 	invocation_type = INVOCATION_WHISPER

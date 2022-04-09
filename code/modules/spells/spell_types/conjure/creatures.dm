@@ -13,11 +13,3 @@
 	summon_radius = 3
 	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
 	summon_amount = 10
-
-/datum/action/cooldown/spell/conjure/creature/cult
-	name = "Summon Creatures (DANGEROUS)" // I think this is even less dangerous, but OK
-
-	cooldown_time = 8.33 MINUTES
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB
-
-	summon_amount = 2

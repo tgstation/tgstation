@@ -10,7 +10,7 @@
 
 	invocation = "RAC'WA NO!"
 	invocation_type = INVOCATION_SHOUT
-	spell_requirements = SPELL_REQUIRES_NON_ABSTRACT
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	possible_shapes = list(
 		/mob/living/simple_animal/mouse,

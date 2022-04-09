@@ -37,7 +37,7 @@
 
 	cooldown_time = 40 SECONDS
 	invocation_type = INVOCATION_NONE
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	max_targets = 6
 	projectile_type = /obj/projectile/magic/aoe/magic_missile/lesser
