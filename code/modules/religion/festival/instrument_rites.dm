@@ -55,7 +55,7 @@
 	if(!song_datum || !GLOB.religious_sect)
 		return
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		if(listener == song_player || listener.anti_magic_check(magic = FALSE, holy = TRUE))
+		if(listener == song_player || listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
 			continue
 		if(listener.mind?.holy_role)
 			continue
@@ -80,7 +80,7 @@
 	if(!song_datum)
 		return
 	for(var/mob/living/listener in song_datum.hearing_mobs)
-		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
+		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
 			continue
 		listener.apply_status_effect(/datum/status_effect/antimagic, 2 MINUTES)
 
@@ -97,7 +97,7 @@
 	if(!song_datum)
 		return
 	for(var/mob/living/listener in song_datum.hearing_mobs)
-		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
+		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
 			continue
 		var/pain_juice = 1
 		if(listener.mind?.holy_role)
@@ -106,7 +106,7 @@
 
 /datum/religion_rites/song_tuner/pain/finish_effect(atom/song_player, datum/song/song_datum)
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
+		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
 			continue
 		var/obj/item/bodypart/sliced_limb = pick(listener.bodyparts)
 		sliced_limb.force_wound_upwards(/datum/wound/slash/moderate/many_cuts)
@@ -131,7 +131,7 @@
 	if(!song_datum)
 		return
 	for(var/mob/living/listener in song_datum.hearing_mobs)
-		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
+		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
 			continue
 		if(listener.mind?.holy_role)
 			continue
@@ -142,7 +142,7 @@
 
 /datum/religion_rites/song_tuner/lullaby/finish_effect(atom/song_player, datum/song/song_datum)
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
+		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
 			continue
 		to_chat(listener, span_danger("Wow, the ending of that song was... pretty..."))
 		listener.AdjustSleeping(5 SECONDS)
