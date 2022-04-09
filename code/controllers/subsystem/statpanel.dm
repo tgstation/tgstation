@@ -263,7 +263,7 @@ SUBSYSTEM_DEF(statpanels)
 	set hidden = TRUE
 
 	stat_tab = tab
-	SSstatpanels.immediate_send_stat_data(src)
+	QUEUE_OR_CALL_VERB(SSstatpanels, /datum/controller/subsystem/statpanels:proc/immediate_send_stat_data, VERB_DEFAULT_QUEUE_THRESHOLD, src)
 
 /client/verb/send_tabs(tabs as text|null)
 	set name = "Send Tabs"
