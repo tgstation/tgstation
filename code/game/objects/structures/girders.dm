@@ -191,7 +191,6 @@
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
-					user.balloon_alert(user, "frame reinforced")
 					var/obj/structure/girder/reinforced/R = new (loc)
 					transfer_fingerprints_to(R)
 					qdel(src)
