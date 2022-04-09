@@ -126,5 +126,5 @@
 
 /atom/movable/screen/alert/status_effect/hazard_area
 	name = "Hazardous Area"
-	desc = "The area you are currently within is incredibly hazardous to you. Check your surroudings and vacate as soon as possible."
+	desc = "The area you are currently within is incredibly hazardous to you. Check your surroundings and vacate as soon as possible."
 	icon_state = "hazard_area"
