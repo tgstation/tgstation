@@ -1179,7 +1179,6 @@
 #include "code\game\gamemodes\dynamic\dynamic_simulations.dm"
 #include "code\game\gamemodes\dynamic\ruleset_picking.dm"
 #include "code\game\machinery\_machinery.dm"
-#include "code\game\machinery\accounting.dm"
 #include "code\game\machinery\ai_slipper.dm"
 #include "code\game\machinery\airlock_control.dm"
 #include "code\game\machinery\announcement_system.dm"

@@ -1049,7 +1049,6 @@
 	description = "Organized record databases and how they're used."
 	prereq_ids = list("comptech")
 	design_ids = list(
-		"accounting",
 		"automated_announcement",
 		"med_data",
 		"prisonmanage",
