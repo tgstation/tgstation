@@ -1,0 +1,5 @@
+author: "KazooBard"
+delete-after: True
+changes: 
+  - balance: "Regular mansus grasp now inflicts cultslur on the target for 4 seconds."
+  - balance: "Increased void mark and void grasp silence duration from 8 seconds each to 10 seconds each."
