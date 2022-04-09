@@ -171,23 +171,24 @@
 		return FALSE
 	opening_airlock = TRUE
 	var/obj/machinery/door/airlock/prying_door = target
-	if(prying_door.density && !prying_door.locked && !prying_door.welded && !prying_door.seal)
-		visible_message(
-			span_warning("[src] begins prying open the airlock..."),
-			span_notice("You begin digging your claws into the airlock..."),
-			span_warning("You hear groaning metal..."),
-		)
-		var/time_to_open = 0.5 SECONDS
-		if(prying_door.hasPower())
-			time_to_open = 5 SECONDS
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
-		if(do_after(src, time_to_open, prying_door))
-			opening_airlock = FALSE
-			if(prying_door.density && !prying_door.open(2))
-				to_chat(src, span_warning("Despite your efforts, the airlock managed to resist your attempts to open it!"))
-				return FALSE
-			prying_door.open()
+	if(!prying_door.density || prying_door.locked || prying_door.welded || prying_door.seal)
+		return FALSE
+	visible_message(
+		span_warning("[src] begins prying open the airlock..."),
+		span_notice("You begin digging your claws into the airlock..."),
+		span_warning("You hear groaning metal..."),
+	)
+	var/time_to_open = 0.5 SECONDS
+	if(prying_door.hasPower())
+		time_to_open = 5 SECONDS
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, vary = TRUE)
+	if(do_after(src, time_to_open, prying_door))
+		opening_airlock = FALSE
+		if(prying_door.density && !prying_door.open(2))
+			to_chat(src, span_warning("Despite your efforts, the airlock managed to resist your attempts to open it!"))
 			return FALSE
+		prying_door.open()
+		return FALSE
 	opening_airlock = FALSE
 
 /mob/living/simple_animal/hostile/regalrat/controlled/Initialize(mapload)
