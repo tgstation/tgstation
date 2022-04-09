@@ -40,12 +40,11 @@
 	return ..()
 
 /obj/machinery/rnd/server/RefreshParts()
+	. = ..()
 	var/tot_rating = 0
 	for(var/obj/item/stock_parts/SP in src)
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
-
-	active_power_usage = initial(active_power_usage) * tot_rating
 
 /obj/machinery/rnd/server/update_icon_state()
 	if(machine_stat & EMPED || machine_stat & NOPOWER)

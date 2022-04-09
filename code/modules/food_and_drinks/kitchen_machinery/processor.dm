@@ -39,12 +39,11 @@
 			LAZYADD(processor_inputs[machine_type], typecache)
 
 /obj/machinery/processor/RefreshParts()
+	. = ..()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		rating_amount = B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating_speed = M.rating
-
-	active_power_usage = initial(active_power_usage) * (rating_amount + rating_speed)
 
 /obj/machinery/processor/examine(mob/user)
 	. = ..()

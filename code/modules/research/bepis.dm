@@ -85,6 +85,7 @@
 	return default_deconstruction_screwdriver(user, "chamber_open", "chamber", tool)
 
 /obj/machinery/rnd/bepis/RefreshParts()
+	. = ..()
 	var/C = 0
 	var/M = 0
 	var/L = 0

@@ -55,6 +55,7 @@
 	if(!emptying) //suspend heating/cooling during emptying phase
 		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 		reagents.handle_reactions()
+		use_power(active_power_usage * delta_time)
 	else if(acclimate_state != NEUTRAL)
 		acclimate_state = NEUTRAL
 		update_appearance()

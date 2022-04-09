@@ -26,6 +26,7 @@
 	add_avail(power_gen)
 
 /obj/machinery/power/rtg/RefreshParts()
+	. = ..()
 	var/part_level = 0
 	for(var/obj/item/stock_parts/SP in component_parts)
 		part_level += SP.rating
@@ -103,4 +104,4 @@
 	circuit = null
 
 /obj/machinery/power/rtg/debug/RefreshParts()
-	return
+	return ..()

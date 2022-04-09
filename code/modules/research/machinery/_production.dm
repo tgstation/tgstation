@@ -45,6 +45,7 @@
 			cached_designs |= d
 
 /obj/machinery/rnd/production/RefreshParts()
+	. = ..()
 	calculate_efficiency()
 
 /obj/machinery/rnd/production/ui_interact(mob/user)
@@ -54,7 +55,6 @@
 	popup.open()
 
 /obj/machinery/rnd/production/proc/calculate_efficiency()
-	var/parts_rating = 0
 	efficiency_coeff = 1
 	if(reagents) //If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
 		reagents.maximum_volume = 0
@@ -65,18 +65,14 @@
 		var/total_storage = 0
 		for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 			total_storage += M.rating * 75000
-			parts_rating += M.rating
 		materials.set_local_size(total_storage)
 	var/total_rating = 1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		total_rating = clamp(total_rating - (M.rating * 0.1), 0, 1)
-		parts_rating += M.rating
 	if(total_rating == 0)
 		efficiency_coeff = INFINITY
 	else
 		efficiency_coeff = 1/total_rating
-
-	active_power_usage = initial(active_power_usage) * parts_rating
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction()

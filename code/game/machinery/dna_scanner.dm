@@ -17,6 +17,7 @@
 	var/obj/machinery/computer/scan_consolenew/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
+	. = ..()
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
@@ -26,8 +27,6 @@
 		precision_coeff = M.rating
 	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
-
-	active_power_usage = initial(active_power_usage) * (scan_level + precision_coeff)
 
 /obj/machinery/dna_scannernew/examine(mob/user)
 	. = ..()

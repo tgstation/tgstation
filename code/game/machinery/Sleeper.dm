@@ -41,6 +41,7 @@
 	reset_chem_buttons()
 
 /obj/machinery/sleeper/RefreshParts()
+	. = ..()
 	var/E
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		E += B.rating
@@ -54,7 +55,6 @@
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]
 	reset_chem_buttons()
-	active_power_usage = initial(active_power_usage) * (E + I)
 
 /obj/machinery/sleeper/update_icon_state()
 	icon_state = "[base_icon_state][state_open ? "-open" : null]"

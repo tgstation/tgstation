@@ -91,6 +91,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/medical_kiosk/RefreshParts()
+	. = ..()
 	var/obj/item/circuitboard/machine/medical_kiosk/board = circuit
 	if(board)
 		active_price = board.custom_cost

@@ -33,12 +33,9 @@
 				load(new typekey(src))
 
 /obj/machinery/smartfridge/RefreshParts()
-	var/parts_rating = 0
+	. = ..()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
-		parts_rating += B.rating
-
-	active_power_usage = initial(active_power_usage) * parts_rating
 
 /obj/machinery/smartfridge/examine(mob/user)
 	. = ..()
@@ -289,7 +286,6 @@
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 	..()
 
-/obj/machinery/smartfridge/drying_rack/RefreshParts()
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
 /obj/machinery/smartfridge/drying_rack/spawn_frame()
@@ -457,6 +453,7 @@
 		organ.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
+	. = ..()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 20 * B.rating
 		repair_rate = max(0, STANDARD_ORGAN_HEALING * (B.rating - 1) * 0.5)

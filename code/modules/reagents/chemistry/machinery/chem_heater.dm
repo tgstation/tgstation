@@ -81,13 +81,10 @@
 	return TRUE
 
 /obj/machinery/chem_heater/RefreshParts()
+	. = ..()
 	heater_coefficient = 0.1
-	var/parts_rating = 0
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		heater_coefficient *= M.rating
-		parts_rating += M.rating
-
-	active_power_usage = initial(active_power_usage) * parts_rating
 
 /obj/machinery/chem_heater/examine(mob/user)
 	. = ..()

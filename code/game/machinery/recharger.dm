@@ -20,9 +20,9 @@
 	))
 
 /obj/machinery/recharger/RefreshParts()
+	. = ..()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
-	active_power_usage = initial(active_power_usage) * recharge_coeff
 
 /obj/machinery/recharger/examine(mob/user)
 	. = ..()

@@ -404,6 +404,7 @@
 	visible_message(span_danger("[src] malfunctions, spraying chemicals everywhere!"))
 
 /obj/machinery/chem_dispenser/RefreshParts()
+	. = ..()
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
 	var/parts_rating = 0
@@ -420,8 +421,6 @@
 			dispensable_reagents |= upgrade_reagents
 		parts_rating += M.rating
 	powerefficiency = round(newpowereff, 0.01)
-
-	active_power_usage = initial(active_power_usage) * parts_rating
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)

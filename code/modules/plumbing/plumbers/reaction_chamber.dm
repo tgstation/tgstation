@@ -73,6 +73,8 @@
 		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 		reagents.handle_reactions()
 
+	use_power(active_power_usage * delta_time)
+
 /obj/machinery/plumbing/reaction_chamber/power_change()
 	. = ..()
 	if(use_power != NO_POWER_USE)

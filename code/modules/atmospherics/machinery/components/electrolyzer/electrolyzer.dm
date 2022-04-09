@@ -118,6 +118,7 @@
 	env.garbage_collect()
 
 /obj/machinery/electrolyzer/RefreshParts()
+	. = ..()
 	var/manipulator = 0
 	var/cap = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)

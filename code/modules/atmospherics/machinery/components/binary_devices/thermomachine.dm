@@ -84,6 +84,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/RefreshParts()
+	. = ..()
 	var/calculated_bin_rating
 	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
 		calculated_bin_rating += bin.rating

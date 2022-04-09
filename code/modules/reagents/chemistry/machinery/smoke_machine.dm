@@ -49,6 +49,7 @@
 	return ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
+	. = ..()
 	var/new_volume = REAGENTS_BASE_VOLUME
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		new_volume += REAGENTS_BASE_VOLUME * B.rating
@@ -59,17 +60,12 @@
 		reagents.expose(loc, TOUCH) // if someone manages to downgrade it without deconstructing
 		reagents.clear_reagents()
 	efficiency = 9
-	var/parts_rating = 0
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		efficiency += C.rating
-		parts_rating += C.rating
 	max_range = 1
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		max_range += M.rating
-		parts_rating += M.rating
 	max_range = max(3, max_range)
-
-	active_power_usage = initial(active_power_usage) * parts_rating
 
 /obj/machinery/smoke_machine/on_set_is_operational(old_value)
 	if(old_value) //Turned off

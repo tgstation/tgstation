@@ -24,14 +24,12 @@
 		name = "auto-autopsy"
 
 /obj/machinery/harvester/RefreshParts()
+	. = ..()
 	interval = 0
 	var/max_time = 40
-	var/rating = 0
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		rating += L.rating
 		max_time -= L.rating
 	interval = max(max_time,1)
-	active_power_usage = initial(active_power_usage) * rating
 
 /obj/machinery/harvester/update_icon_state()
 	if(state_open)

@@ -47,23 +47,20 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/recycler/RefreshParts()
+	. = ..()
 	var/amt_made = 0
 	var/mat_mod = 0
-	var/parts_rating = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		mat_mod = 2 * B.rating
-		parts_rating += B.rating
 	mat_mod *= 50000
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		amt_made = 12.5 * M.rating //% of materials salvaged
-		parts_rating += M.rating
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_mod
 	amount_produced = min(50, amt_made) + 50
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced
 	butchering.bonus_modifier = amount_produced/5
-	active_power_usage = initial(active_power_usage) * parts_rating
 
 /obj/machinery/recycler/examine(mob/user)
 	. = ..()

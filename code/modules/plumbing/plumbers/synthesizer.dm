@@ -51,6 +51,7 @@
 	if(reagents.total_volume >= amount*delta_time*0.5) //otherwise we get leftovers, and we need this to be precise
 		return
 	reagents.add_reagent(reagent_id, amount*delta_time*0.5)
+	use_power(active_power_usage * amount * delta_time * 0.5)
 
 /obj/machinery/plumbing/synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

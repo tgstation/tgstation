@@ -25,12 +25,12 @@
 	var/teleport_beam = "sm_arc_supercharged"
 
 /obj/machinery/launchpad/RefreshParts()
+	. = ..()
 	var/max_range_multiplier = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		max_range_multiplier += M.rating
 	range = initial(range)
 	range *= max_range_multiplier
-	active_power_usage = initial(active_power_usage) * max_range_multiplier * 2
 
 /obj/machinery/launchpad/Initialize(mapload)
 	. = ..()

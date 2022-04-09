@@ -125,6 +125,7 @@
 		charging.emp_act(severity)
 
 /obj/machinery/cell_charger/RefreshParts()
+	. = ..()
 	charge_rate = 250
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		charge_rate *= C.rating

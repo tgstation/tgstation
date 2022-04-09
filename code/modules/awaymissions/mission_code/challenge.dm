@@ -34,4 +34,4 @@
 	welded = TRUE
 
 /obj/machinery/power/emitter/energycannon/RefreshParts()
-	return
+	return ..()

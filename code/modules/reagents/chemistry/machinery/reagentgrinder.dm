@@ -65,11 +65,10 @@
 			SSexplosions.low_mov_atom += beaker
 
 /obj/machinery/reagentgrinder/RefreshParts()
+	. = ..()
 	speed = 1
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		speed = M.rating
-
-	active_power_usage = initial(active_power_usage) * speed
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()

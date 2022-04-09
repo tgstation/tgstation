@@ -438,7 +438,7 @@
 		cell = suit.cell
 	if(mod)
 		cell = mod.get_cell()
-	if(!cell)
+	if(!cell || cell.charge == cell.maxcharge)
 		return
 	use_power((active_power_usage + charge_rate) * delta_time)
 	cell.give(charge_rate * delta_time)

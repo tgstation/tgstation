@@ -41,11 +41,11 @@
 	recharging_turf = get_step(loc, dir)
 
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
+	. = ..()
 	var/total_rating = 0
 	for(var/obj/item/stock_parts/capacitor/cap in component_parts)
 		total_rating += cap.rating
 	recharge_power = total_rating * 12.5
-	active_power_usage = initial(active_power_usage) * total_rating
 
 /obj/machinery/mech_bay_recharge_port/examine(mob/user)
 	. = ..()

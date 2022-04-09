@@ -42,6 +42,7 @@
 		return
 	var/obj/item/I = AM
 	if(I.juice_results || I.grind_results)
+		use_power(active_power_usage)
 		if(I.juice_results)
 			I.on_juice()
 			reagents.add_reagent_list(I.juice_results)

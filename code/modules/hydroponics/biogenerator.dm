@@ -44,6 +44,7 @@
 		update_appearance()
 
 /obj/machinery/biogenerator/RefreshParts()
+	. = ..()
 	var/E = 0
 	var/P = 0
 	var/max_storage = 40
@@ -55,7 +56,6 @@
 	efficiency = E
 	productivity = P
 	max_items = max_storage
-	active_power_usage = initial(active_power_usage) * (efficiency + productivity)
 
 /obj/machinery/biogenerator/examine(mob/user)
 	. = ..()

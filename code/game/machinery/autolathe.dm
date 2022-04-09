@@ -336,21 +336,17 @@
 	busy = FALSE
 
 /obj/machinery/autolathe/RefreshParts()
-	var/parts_rating = 0
+	. = ..()
 	var/mat_capacity = 0
 	for(var/obj/item/stock_parts/matter_bin/new_matter_bin in component_parts)
 		mat_capacity += new_matter_bin.rating*75000
-		parts_rating += new_matter_bin.rating
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.max_amount = mat_capacity
 
 	var/efficiency=1.8
 	for(var/obj/item/stock_parts/manipulator/new_manipulator in component_parts)
 		efficiency -= new_manipulator.rating*0.2
-		parts_rating += new_manipulator.rating
 	creation_efficiency = max(1,efficiency) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of manipulator efficiency
-
-	active_power_usage = initial(active_power_usage) * parts_rating
 
 /obj/machinery/autolathe/examine(mob/user)
 	. += ..()
@@ -428,3 +424,10 @@
 //Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
 /obj/item/proc/autolathe_crafted(obj/machinery/autolathe/A)
 	return
+
+
+/proc/max_tierer()
+	for(var/obj/machinery/current as anything in GLOB.machines)
+		for(var/obj/item/stock_parts/part in current.component_parts)
+			part.rating = 4
+		current.RefreshParts()

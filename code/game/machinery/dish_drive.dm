@@ -68,6 +68,7 @@
 	..()
 
 /obj/machinery/dish_drive/RefreshParts()
+	. = ..()
 	var/total_rating = 0
 	for(var/obj/item/stock_parts/S in component_parts)
 		total_rating += S.rating
@@ -80,7 +81,6 @@
 	if(board)
 		suction_enabled = board.suction
 		transmit_enabled = board.transmit
-
 
 /obj/machinery/dish_drive/process()
 	if(time_since_dishes <= world.time && transmit_enabled)

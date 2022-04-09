@@ -37,13 +37,12 @@
 	. = ..()
 
 /obj/machinery/fat_sucker/RefreshParts()
-	..()
+	. = ..()
 	var/rating = 0
 	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		rating += L.rating
 	bite_size = initial(bite_size) + rating * 2.5
 	nutrient_to_meat = initial(nutrient_to_meat) - rating * 5
-	active_power_usage = initial(active_power_usage) * rating * 2
 
 /obj/machinery/fat_sucker/examine(mob/user)
 	. = ..()

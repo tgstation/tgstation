@@ -193,11 +193,11 @@ Possible to do for anyone motivated enough:
 		outgoing_call.ConnectionFailure(src)
 
 /obj/machinery/holopad/RefreshParts()
+	. = ..()
 	var/holograph_range = 4
 	for(var/obj/item/stock_parts/capacitor/B in component_parts)
 		holograph_range += 1 * B.rating
 	holo_range = holograph_range
-	active_power_usage = initial(active_power_usage) * holograph_range
 
 /obj/machinery/holopad/examine(mob/user)
 	. = ..()
