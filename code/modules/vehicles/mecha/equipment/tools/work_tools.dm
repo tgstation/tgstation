@@ -188,14 +188,17 @@
 	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/proc/attempt_refill(mob/usr)
+	if(reagents.maximum_volume == reagents.total_volume)
+		return
 	var/turf/in_front = get_step(chassis, chassis.dir)
 	var/obj/structure/reagent_dispensers/watertank/refill_source = locate(/obj/structure/reagent_dispensers/watertank) in in_front
 	if(!refill_source)
+		to_chat(usr, span_notice("Refill failed. No compatible tank found."))
 		return
 	if(!refill_source.reagents?.total_volume)
 		return
-	if(reagents.maximum_volume == reagents.total_volume)
-		return
+		to_chat(usr, span_notice("Refill failed. Source tank empty."))
+
 	refill_source.reagents.trans_to(src, reagents.maximum_volume)
 	playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
 	return
