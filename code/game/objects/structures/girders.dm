@@ -72,7 +72,7 @@
 			var/amount = construction_cost[rod.type]
 			if(state == GIRDER_DISPLACED)
 				if(rod.get_amount() < amount)
-					user.balloon_alert(user, "need [amount] rods!")
+					balloon_alert(user, "need [amount] rods!")
 					return
 				user.balloon_alert(user, "concealing entrance...")
 				if(do_after(user, 20, target = src))
