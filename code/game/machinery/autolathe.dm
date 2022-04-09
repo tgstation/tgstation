@@ -424,10 +424,3 @@
 //Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes
 /obj/item/proc/autolathe_crafted(obj/machinery/autolathe/A)
 	return
-
-
-/proc/max_tierer()
-	for(var/obj/machinery/current as anything in GLOB.machines)
-		for(var/obj/item/stock_parts/part in current.component_parts)
-			part.rating = 4
-		current.RefreshParts()

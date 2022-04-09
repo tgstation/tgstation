@@ -998,3 +998,10 @@
 	if(isliving(user))
 		last_used_time = world.time
 		last_user_mobtype = user.type
+
+/proc/max_tierer()
+	for(var/obj/machinery/current as anything in GLOB.machines)
+		for(var/obj/item/stock_parts/part in current.component_parts)
+			part.rating = 4
+			part.energy_rating = 16
+		current.RefreshParts()
