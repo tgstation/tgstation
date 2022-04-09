@@ -70,9 +70,7 @@
 		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/free_golem))
 
 /obj/effect/mob_spawn/ghost_role/human/golem/proc/try_keep_home(mob/new_spawn)
-	var/static/list/allowed_areas
-	if (!allowed_areas)
-		allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin))
+	var/static/list/allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin))
 
 	ADD_TRAIT(new_spawn, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION, INNATE_TRAIT)
 	new_spawn.AddComponent(/datum/component/hazard_area, area_whitelist = allowed_areas)
