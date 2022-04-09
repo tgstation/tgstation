@@ -186,7 +186,7 @@
 	colour = "#cccccc"
 
 /datum/client_colour/glass_colour/nightmare
-	colour = list(255,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -150,0,0,0) //every color is either red or black
+	colour = list(255,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, -130,0,0,0) //every color is either red or black
 
 /datum/client_colour/monochrome
 	colour = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
