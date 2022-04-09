@@ -164,7 +164,6 @@
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
-					user.balloon_alert(user, "entrance concealed")
 					var/obj/structure/falsewall/reinforced/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
