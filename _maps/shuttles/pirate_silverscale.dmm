@@ -114,6 +114,15 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
+"ff" = (
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/shuttle/pirate)
 "fj" = (
 /obj/machinery/computer/shuttle/pirate{
 	dir = 8
@@ -1293,7 +1302,7 @@ Sh
 rB
 fN
 Sv
-uP
+ff
 rB
 "}
 (16,1,1) = {"
