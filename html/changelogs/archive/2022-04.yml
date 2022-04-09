@@ -289,3 +289,94 @@
   - rscadd: Beds, Sofas, Slimes, And Jellypeople now provide a soft landing
   vincentiusvin:
   - balance: made runtimestation more powerful.
+2022-04-08:
+  B4CKU:
+  - bugfix: finishing grenades no longer prints the error message when it shouldn't
+  Ghilker:
+  - bugfix: crystallizer max quality can now be reached regardless of recipe total
+      moles amount
+  JohnFulpWillard:
+  - bugfix: Robocontrol on computers now work again.
+  - refactor: Janitor's custodial PDA cartridge has been replaced with a Custodial
+      locator tablet app.
+  Jolly:
+  - bugfix: TramStations AI sat teleporter now has a button to control the shutters.
+      Please stop banging on them to be let in.
+  - bugfix: A floating poster in Ice Box's service hall was properly contained.
+  - bugfix: Old Stations Charlie & Delta storage rooms APCs now start with 0 charge,
+      your immersion has been restored.
+  LordVollkorn:
+  - bugfix: Health sensors inside of chemical grenades will now work as intended and
+      the process is almost impossible to screw up.
+  Riggle:
+  - bugfix: Revenant logs are no longer wrapped in a span
+  SmArtKar:
+  - bugfix: Added a missing air alarm in Tramstation's cargo office
+  Son-of-Space:
+  - bugfix: Mapping helpers have been added for access reqs in security on DeltaStation
+  - bugfix: Access requirements in security are now standardized on DeltaStation
+  TheBoondock:
+  - bugfix: fixes rev runtime when a headrev body is destroyed
+  san7890:
+  - bugfix: TramStation's Medbay's White Medkits actually have stuff in them now.
+  - bugfix: TramStation's Surgery Rooms are now actually named appropriately. The
+      person who mixed up their starship directions is being executed at noon.
+  - bugfix: The Ash Walker's Base on Lavaland decided to stop putting tiles under
+      solid rock.
+  - bugfix: The Syndicate Operatives positioned on Lavaland are no longer able to
+      violate the ONE THING they were told to not perform (leave the base).
+  - bugfix: 'On the mapping end: cyborg, monkey, moth, and plasmamen limbs will no
+      longer show up as absolutely nothing.'
+  - bugfix: 'On Meta, Delta, and Kilo: Nanotrasen has decided to shuffle around those
+      brand-new newscasters to ensure the AIs could actually see the buttons they
+      want to hit.'
+  - balance: On IceBoxStation, Nanotrasen finally decided to reinforce the western
+      walls on the Captain's Room and the Teleporter Room.
+  - rscadd: A conformational change in reality has caused every single bed (when applicable)
+      to be tastefully rotated in the opposite direction.
+  thgvr:
+  - bugfix: You should no longer fall through a specific spot in space in Tramstation's
+      upper level.
+  timothymtorres:
+  - qol: Girder construction now uses balloon alerts
+  - bugfix: Fix an exploit where permanent invisibility can be gained from using shadowcloak
+      stacked with other transparency effects.
+2022-04-09:
+  AnturK:
+  - bugfix: Spacemen no longer can sculpt light effects from stone
+  Ebb-Real:
+  - expansion: Adds the science night vision goggles, they scan chems!
+  - expansion: Science sunglasses now have a research scanner installed.
+  JohnFulpWillard:
+  - bugfix: Kilostation's Brig, Medbay, and Chapel's pipes are all connected to the
+      station's distro and waste.
+  Melbert:
+  - bugfix: Fixes a runtime with bounty cubes on Destroy
+  TheBoondock:
+  - bugfix: layering issue with venus fly trap and spacevine
+  cacogen:
+  - expansion: Armour tags on clothing tell you when an item blocks pepperspray or
+      facehuggers
+  capsaicinz:
+  - bugfix: you can no longer create singularities by using soultap while in rod form
+  - balance: wizards can no longer cast spells while in rod form
+  ninjanomnom:
+  - balance: Stationary gas tanks now cost 12 material for the plating instead of
+      20
+  - balance: The base level of stationary gas tank pressure limits has been brought
+      up to the base level of canisters. Higher quality materials still increase this
+      further as before.
+  robbertapir:
+  - bugfix: Petri dish cultures no longer stay behind on the sprite like some sort
+      of ghost after being washed out of it. Cells don't have souls.
+  san7890:
+  - bugfix: KiloStation's Botany no longer has a bit of it defined as the defunct
+      "Central" Maintenance.
+  thgvr:
+  - bugfix: Digitigrade legs should now display correctly with certain clothing options.
+  unit0016:
+  - bugfix: A handful of issues on icebox, pertaining to /area/s, firelocks, airlocks,
+      mapping helpers, mapping mistakes, a literal space tile, and more have been
+      squashed!
+  - bugfix: You can actually move the Syndicate Infiltrator's docking position on
+      icebox again. Yeah. I know.
