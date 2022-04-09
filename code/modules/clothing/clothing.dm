@@ -305,16 +305,16 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
-	if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee || armor.fire || armor.acid)
+	if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee || armor.fire || armor.acid || flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
 		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 /obj/item/clothing/Topic(href, href_list)
 	. = ..()
 
 	if(href_list["list_armor"])
-		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES (I-X)</u></b>")
+		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES</u></b>")
 		if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee)
-			readout += "\n<b>ARMOR</b>"
+			readout += "\n<b>ARMOR (I-X)</b>"
 			if(armor.bio)
 				readout += "\nTOXIN [armor_to_protection_class(armor.bio)]"
 			if(armor.bomb)
@@ -328,11 +328,21 @@
 			if(armor.melee)
 				readout += "\nMELEE [armor_to_protection_class(armor.melee)]"
 		if(armor.fire || armor.acid)
-			readout += "\n<b>DURABILITY</b>"
+			readout += "\n<b>DURABILITY (I-X)</b>"
 			if(armor.fire)
 				readout += "\nFIRE [armor_to_protection_class(armor.fire)]"
 			if(armor.acid)
 				readout += "\nACID [armor_to_protection_class(armor.acid)]"
+		if(flags_cover & HEADCOVERSMOUTH || flags_cover & PEPPERPROOF)
+			var/list/things_blocked = list()
+			if(flags_cover & HEADCOVERSMOUTH)
+				things_blocked += span_tooltip("Because this item is worn on the head and is covering the mouth, it will block facehugger proboscides, killing facehuggers.", "facehuggers")
+			if(flags_cover & PEPPERPROOF)
+				things_blocked += "pepperspray"
+			if(length(things_blocked))
+				readout += "\n<b>COVERAGE</b>"
+				readout += "\nIt will block [english_list(things_blocked)]."
+
 		readout += "</span>"
 
 		to_chat(usr, "[readout.Join()]")

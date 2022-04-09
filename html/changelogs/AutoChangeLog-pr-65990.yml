@@ -1,4 +1,0 @@
-author: "thgvr"
-delete-after: True
-changes: 
-  - bugfix: "Digitigrade legs should now display correctly with certain clothing options."
