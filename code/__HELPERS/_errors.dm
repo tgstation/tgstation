@@ -1,4 +1,4 @@
-///Tosses an error into the exception list with a manual error name. Use ONLY when a stack_trace call is pointless.
+///Tosses an error into the exception list with a manual error name. Useful for when you want something in the runtime viewer but do not wish to flood it with a full stack trace.
 #define THROW_ERROR(message) _test_error(message, __FILE__, __LINE__)
 
 ///gives us the stack trace from CRASH() without ending the current proc.
