@@ -7,6 +7,7 @@
 	size = 8
 	requires_ntnet = TRUE
 	requires_ntnet_feature = NTNET_COMMUNICATION
+	usage_flags = PROGRAM_TABLET
 	ui_header = "ntnrc_idle.gif"
 	available_on_ntnet = TRUE
 	tgui_id = "NtosMessenger"
@@ -24,6 +25,7 @@
 	var/viewingMessages = FALSE // whether or not we're looking at messages atm
 	var/monitor_hidden = FALSE // whether or not this device is currently hidden from the message monitor
 	var/sort = TRUE // whether or not we're sorting by job
+	var/sending_virus = FALSE // whether or not we're sending a virus
 
 	var/photo_path // the path for the current loaded image in rsc
 
@@ -136,17 +138,29 @@
 			var/obj/item/computer_hardware/hard_drive/drive = target.all_components[MC_HDD]
 
 			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
-				if(!app.sAndR)
+				if(!app.sAndR && !sending_virus)
 					to_chat(usr, span_notice("ERROR: Device has receiving disabled."))
 					return
+				if(sending_virus)
+					var/obj/item/computer_hardware/hard_drive/role/virus/disk = computer.all_components[MC_HDD_JOB]
+					if(istype(disk))
+						disk.send_virus(target, usr)
+						return(UI_UPDATE)
 				send_message(usr, list(target))
 				return(UI_UPDATE)
 		if("PDA_clearPhoto")
 			computer.saved_image = null
 			photo_path = null
+			return(UI_UPDATE)
+		if("PDA_toggleVirus")
+			sending_virus = !sending_virus
+			return(UI_UPDATE)
+
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = get_header_data()
+
+	var/obj/item/computer_hardware/hard_drive/role/disk = computer.all_components[MC_HDD_JOB]
 
 	data["owner"] = computer.saved_identification
 	data["messages"] = messages
@@ -158,10 +172,10 @@
 	data["isSilicon"] = is_silicon
 	data["photo"] = photo_path
 
-	var/obj/item/computer_hardware/hard_drive/role/disk = computer.all_components[MC_HDD_JOB]
-
 	if(disk)
 		data["canSpam"] = disk.CanSpam()
+		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/role/virus)
+		data["sending_virus"] = sending_virus
 
 	return data
 
@@ -181,7 +195,7 @@
 		return
 	return t
 
-/datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/obj/item/modular_computer/targets, everyone = FALSE, rigged = FALSE)
+/datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/obj/item/modular_computer/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	var/message = msg_input(user, rigged)
 	if(!message || !targets.len)
 		return FALSE
@@ -222,8 +236,8 @@
 		return FALSE
 
 	var/datum/signal/subspace/messaging/modular/signal = new(computer, list(
-		"name" = computer.saved_identification,
-		"job" = computer.saved_job,
+		"name" = fake_name || computer.saved_identification,
+		"job" = fake_job || computer.saved_job,
 		"message" = message,
 		"ref" = REF(computer),
 		"targets" = targets,
@@ -330,3 +344,8 @@
 		switch(choice)
 			if("Message")
 				send_message(usr, list(locate(href_list["target"])))
+			if("Mess_us_up")
+				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
+					var/obj/item/modular_computer/tablet/comp = computer
+					comp.explode(usr, from_message_menu = TRUE)
+					return

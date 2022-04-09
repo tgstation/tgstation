@@ -39,6 +39,10 @@
 		to_chat(user, span_danger("\The [src] beeps three times, it's screen displaying a \"DISK ERROR\" warning."))
 		return // No HDD, No HDD files list or no stored files. Something is very broken.
 
+	if(honkamnt > 0) // EXTRA annoying, huh!
+		honkamnt--
+		playsound(src, 'sound/items/bikehorn.ogg', 30, TRUE)
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "NtosMain")
@@ -52,6 +56,8 @@
 	data["device_theme"] = device_theme
 	data["login"] = list()
 	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet/)
+
+	data["disk"] = null
 
 	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
 	var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]

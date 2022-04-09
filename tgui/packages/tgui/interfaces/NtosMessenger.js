@@ -45,6 +45,8 @@ export const NtosMessenger = (props, context) => {
     canSpam,
     isSilicon,
     photo,
+    virus_attach,
+    sending_virus,
   } = data;
   if (viewingMessages) {
     return (
@@ -148,6 +150,14 @@ export const NtosMessenger = (props, context) => {
                 content={sortByJob ? "Sort by: Job" : "Sort by: Name"}
                 onClick={() => act('PDA_changeSortStyle')}
               />
+              {!!virus_attach && (
+                <Button
+                  icon="bug"
+                  color="bad"
+                  content={sending_virus ? "Attach Virus: Yes" : "Attach Virus: No"}
+                  onClick={() => act('PDA_toggleVirus')}
+                />
+              )}
             </Box>
           </Section>
         </Stack>
@@ -195,6 +205,7 @@ export const NtosMessenger = (props, context) => {
             {!!canSpam && (
               <Button
                 fluid
+                mt={1}
                 content="Send to all..."
                 onClick={() => act('PDA_sendEveryone')}
               />

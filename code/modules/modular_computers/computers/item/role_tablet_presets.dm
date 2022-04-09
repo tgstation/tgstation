@@ -82,6 +82,10 @@
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#F5D67B"
 
+/obj/item/modular_computer/tablet/role/captain/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/tab_no_detonate)
+
 /obj/item/modular_computer/tablet/role/cargo
 	name = "cargo technician tablet"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/quartermaster

@@ -1,3 +1,7 @@
+#define TABLET_SCANNER_NONE 1<<0
+#define TABLET_SCANNER_MEDICAL 1<<1
+#define TABLET_SCANNER_REAGENT 1<<2
+
 /obj/item/modular_computer/tablet  //Its called tablet for theme of 90ies but actually its a "big smartphone" sized
 	name = "tablet computer"
 	icon = 'icons/obj/modular_tablet.dmi'
@@ -18,6 +22,7 @@
 	looping_sound = FALSE
 	var/has_variants = TRUE
 	var/finish_color = null
+	var/scanning_mode = TABLET_SCANNER_NONE
 
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants)
@@ -25,6 +30,59 @@
 			finish_color = pick("red", "blue", "brown", "green", "black")
 		icon_state = icon_state_powered = icon_state_unpowered = "[base_icon_state]-[finish_color]"
 	return ..()
+
+/obj/item/modular_computer/tablet/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	switch(scanning_mode)
+		if(TABLET_SCANNER_REAGENT)
+			if(!isnull(A.reagents))
+				if(A.reagents.reagent_list.len > 0)
+					var/reagents_length = A.reagents.reagent_list.len
+					to_chat(user, span_notice("[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found."))
+					for (var/re in A.reagents.reagent_list)
+						to_chat(user, span_notice("\t [re]"))
+				else
+					to_chat(user, span_notice("No active chemical agents found in [A]."))
+			else
+				to_chat(user, span_notice("No significant chemical agents found in [A]."))
+
+// Tablet 'splosion..
+
+/obj/item/modular_computer/tablet/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)
+	var/turf/T = get_turf(src)
+
+	if(from_message_menu)
+		log_bomber(null, null, target, "'s tablet exploded as [target.p_they()] tried to open their tablet message menu because of a recent tablet bomb.")
+	else
+		log_bomber(bomber, "successfully tablet-bombed", target, "as [target.p_they()] tried to reply to a rigged tablet message [bomber && !is_special_character(bomber) ? "(SENT BY NON-ANTAG)" : ""]")
+
+	if (ismob(loc))
+		var/mob/M = loc
+		M.show_message(span_userdanger("Your [src] explodes!"), MSG_VISUAL, span_warning("You hear a loud *pop*!"), MSG_AUDIBLE)
+	else
+		visible_message(span_danger("[src] explodes!"), span_warning("You hear a loud *pop*!"))
+
+	target.client?.give_award(/datum/award/achievement/misc/clickbait, target)
+
+	if(T)
+		T.hotspot_expose(700,125)
+		if(istype(all_components[MC_HDD_JOB], /obj/item/computer_hardware/hard_drive/role/virus/deto))
+			explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 4)
+		else
+			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
+	qdel(src)
+
+/obj/item/modular_computer/tablet/interact(mob/user)
+	. = ..()
+	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
+		explode(usr, from_message_menu = TRUE)
+		return
+
+/obj/item/modular_computer/tablet/proc/tab_no_detonate()
+	SIGNAL_HANDLER
+	return COMPONENT_PDA_NO_DETONATE
 
 /obj/item/modular_computer/tablet/syndicate_contract_uplink
 	name = "contractor tablet"

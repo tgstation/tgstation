@@ -59,7 +59,7 @@
 //Modular computer part defines
 #define MC_CPU "CPU"
 #define MC_HDD "HDD"
-#define MC_HDD_JOB "MC_HDD_JOB"
+#define MC_HDD_JOB "HDD_JOB"
 #define MC_SDD "SDD"
 #define MC_CARD "CARD"
 #define MC_CARD2 "CARD2"

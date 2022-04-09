@@ -53,6 +53,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	var/saved_identification = null // next two values are the currently imprinted id and job values
 	var/saved_job = null
 
+	var/honkamnt = 0 /// honk honk honk honk honk honkh onk honkhnoohnk
+
 	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
 	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed

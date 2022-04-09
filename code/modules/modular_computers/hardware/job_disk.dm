@@ -26,6 +26,8 @@
 		progs_to_store += new /datum/computer_file/program/atmosscan(src)
 	if(disk_flags & DISK_MANIFEST)
 		progs_to_store += new /datum/computer_file/program/crew_manifest(src)
+	if(disk_flags & DISK_JANI)
+		progs_to_store += new /datum/computer_file/program/radar/custodial_locator(src)
 
 	for (var/datum/computer_file/program/prog in progs_to_store)
 		prog.usage_flags = PROGRAM_ALL
