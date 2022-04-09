@@ -282,8 +282,8 @@
 		matter_power += 70 * object_size
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(src, max_range = 1.5 * object_size, threshold = 1.2 / object_size, chance = 10 * object_size)
-	for(var/mob/living/near_mob in range(2 * object_size))
+	radiation_pulse(src, max_range = 6, threshold = 1.2 / object_size, chance = 10 * object_size)
+	for(var/mob/living/near_mob in range(10))
 		investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_ENGINE)
 		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))
 			continue
