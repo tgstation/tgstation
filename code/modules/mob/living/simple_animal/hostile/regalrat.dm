@@ -172,9 +172,11 @@
 	opening_airlock = TRUE
 	var/obj/machinery/door/airlock/prying_door = target
 	if(prying_door.density && !(prying_door.locked || prying_door.welded || prying_door.seal))
-		visible_message(span_warning("[src] begins prying open the airlock..."),\
-			span_notice("You begin digging your claws into the airlock..."),\
-			span_warning("You hear groaning metal..."))
+		visible_message(
+			span_warning("[src] begins prying open the airlock..."),
+			span_notice("You begin digging your claws into the airlock..."),
+			span_warning("You hear groaning metal..."),
+		)
 		var/time_to_open = 0.5 SECONDS
 		if(prying_door.hasPower())
 			time_to_open = 5 SECONDS
