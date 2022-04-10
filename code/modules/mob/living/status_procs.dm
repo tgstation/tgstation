@@ -690,9 +690,9 @@
 	if(!ispath(effect, /datum/status_effect))
 		CRASH("set_timed_status_effect: called with an invalid effect type. (Got: [effect])")
 
-	var/datum/status_effect/speech/existing = has_status_effect(effect)
+	var/datum/status_effect/existing = has_status_effect(effect)
 	if(existing)
-		// set_timed_status_effect to 0 technically acts as a way to clear speech impediments
+		// set_timed_status_effect to 0 technically acts as a way to clear effects
 		if(duration <= 0)
 			qdel(existing)
 			return
@@ -721,7 +721,7 @@
 	if(!ispath(effect, /datum/status_effect))
 		CRASH("remove_timed_status_effect: called with an invalid effect type. (Got: [effect])")
 
-	var/datum/status_effect/speech/existing = has_status_effect(effect)
+	var/datum/status_effect/existing = has_status_effect(effect)
 	if(!existing)
 		return
 
