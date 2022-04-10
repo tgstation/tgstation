@@ -27,12 +27,10 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 
-	var/cockroach_cell_line = CELL_LINE_TABLE_COCKROACH
-
 /mob/living/basic/cockroach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/effect/decal/cleanable/insectguts))
-	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
 	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
 	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -79,12 +77,10 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list("hostile")
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
-	cockroach_cell_line = CELL_LINE_TABLE_GLOCKROACH
 
 /mob/living/basic/cockroach/glockroach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/glockroach)
-	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
 
 /datum/ai_controller/basic_controller/cockroach/glockroach
 	planning_subtrees = list(
@@ -115,7 +111,6 @@
 	faction = list("hostile")
 	sharpness = SHARP_POINTY
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/hauberoach
-	cockroach_cell_line = CELL_LINE_TABLE_HAUBEROACH
 
 /mob/living/basic/cockroach/hauberoach/Initialize(mapload)
 	. = ..()
