@@ -13,8 +13,16 @@
 	var/list/thief_flavor
 	///if added by an admin, they can choose a thief flavor
 	var/admin_choice_flavor
+	///an area marked as the thieves guild- makes thieves happier to be in, and all thieves of the round know of it. only has a 20% chance of existing in a round.
+	var/static/area/thieves_guild
+	///bool checked for the first thief in a round to decide if there should be one this round
+	var/static/decided_on_guild = FALSE
 
 /datum/antagonist/thief/on_gain()
+	if(!decided_on_guild)
+		decided_on_guild = TRUE
+		if(prob(20))
+			create_thieves_guild()
 	flavor_and_objectives()
 	. = ..() //ui opens here, objectives must exist beforehand
 
@@ -29,16 +37,43 @@
 		admin_choice_flavor = choice
 	. = ..()
 
+/datum/antagonist/thief/proc/create_thieves_guild()
+	var/list/possible_guild_locations = list(
+		/area/maintenance/space_hut/cabin,
+		/area/maintenance/space_hut/observatory,
+		/area/service/kitchen/abandoned,
+		/area/service/electronic_marketing_den,
+		/area/service/abandoned_gambling_den,
+		/area/service/abandoned_gambling_den/gaming,
+		/area/service/theater/abandoned,
+		/area/service/library/abandoned,
+		/area/service/hydroponics/garden/abandoned,
+		/area/medical/abandoned,
+		/area/science/research/abandoned,
+		/area/maintenance/department/crew_quarters/bar,
+	)
+	//remove every guild location that isn't on this map
+	possible_guild_locations = special_list_filter(possible_guild_locations, CALLBACK(src, .proc/filter_nonexistent_areas))
+	//for custom maps without any abandoned locations
+	if(!possible_guild_locations.len)
+		return
+	var/chosen_type = pick(possible_guild_locations)
+	thieves_guild = GLOB.areas_by_type[chosen_type]
+
+///checks if an area exists in the global areas, obviously comes up null (falsey) if say, abandoned cabin is checked on metastation.
+/datum/antagonist/thief/proc/filter_nonexistent_areas(area_type)
+	return GLOB.areas_by_type[area_type]
+
 /datum/antagonist/thief/proc/flavor_and_objectives()
 	//this list has a maximum pickweight of 100.
 	//if you're adding a new type of thief, DON'T just add TOTAL pickweight. adjusting the others, numb nuts.
 	var/static/list/weighted_flavors = list(
 		"Thief" = 50,
-		"Black Market Outfitter" = 20,
+		"Black Market Outfitter" = 13,
 		"Organ Market Collector" = 13,
 		"All Access Fan" = 10,
-		"Chronicler" = 5,
-		"Deranged" = 2,
+		"Chronicler" = 7,
+		"Deranged" = 7,
 		"Hoarder" = 0, //disabled until we have more reasonable nonreplenishable items to hoard- still admin selectable though
 	)
 	var/chosen_flavor = admin_choice_flavor || pick_weight(weighted_flavors)
@@ -90,6 +125,7 @@
 	data["goal"] = thief_flavor["goal"]
 	data["intro"] = thief_flavor["introduction"]
 	data["policy"] = get_policy(ROLE_THIEF)
+	data["guild"] = thieves_guild ? thieves_guild.name : ""
 	return data
 
 /datum/outfit/thief

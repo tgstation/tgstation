@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 ///steal a shit ton of unique ids, escape with them. The part that makes this not "hold a box of blank ids" is the fact they need a registered bank account
 /datum/objective/all_access
 	name = "all access"
-	explanation_text = "Steal unique ids!"
+	explanation_text = "Steal ID cards from other registered crewmembers!"
 	///how many we want for greentext
 	var/amount = 8
 
@@ -139,4 +139,4 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 	return stolen_amount >= amount
 
 /datum/objective/all_access/update_explanation_text()
-	explanation_text = "Steal at least [amount] unique ids as you can. They need to be the centcom-granted IDs they were given when they arrived, not ones created on station."
+	explanation_text = "Steal at least [amount] unique ID cards from other registered crewmembers. It's not enough to swipe replacement ID cards that were created and assigned while on the station, you need to swipe IDs that other crewmembers were initially issued!"

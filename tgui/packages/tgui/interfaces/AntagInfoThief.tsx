@@ -14,6 +14,7 @@ type Info = {
   goal: string;
   intro: string;
   honor: BooleanLike;
+  guild: string;
   policy: string;
 };
 
@@ -22,6 +23,7 @@ export const AntagInfoThief = (props, context) => {
   const {
     intro,
     goal,
+    guild,
     policy,
   } = data;
   return (
@@ -45,6 +47,16 @@ export const AntagInfoThief = (props, context) => {
               </Stack>
             </Section>
           </Stack.Item>
+          {!!guild && (
+            <Stack.Item>
+              <Section textAlign="center" textColor="green">
+                This station has an established Thieves Guild, of which you
+                have been invited to join. It is at the {guild}. Use it as
+                a space to plan heists with other thieves, and store stolen
+                goods!
+              </Section>
+            </Stack.Item>
+          )}
           {!!policy && (
             <Stack.Item>
               <Section textAlign="center" textColor="red" fontSize="19px">
