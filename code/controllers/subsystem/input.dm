@@ -62,6 +62,7 @@ SUBSYSTEM_DEF(input)
 	if(!TICK_CHECK_HIGH_PRIORITY \
 		|| average_click_delay >= MAXIMUM_CLICK_LATENCY \
 		|| FOR_ADMINS_IF_CLICKS_BROKE_immediately_execute_all_clicks \
+		|| usr.client?.holder \
 		|| !initialized \
 		|| !(runlevels & Master.current_runlevel))
 

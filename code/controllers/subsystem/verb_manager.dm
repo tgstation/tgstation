@@ -55,7 +55,14 @@ SUBSYSTEM_DEF(verb_manager)
 /datum/controller/subsystem/verb_manager/proc/queue_verb(datum/thing_to_call, proc_to_call, ...)
 	//since this queue is meant specifically to delay user input as little as possible without overrunning the tick, the callback must have usr.
 	//no, you cant queue everything up for this eat shit. if its not user input then it cant go into a queue that never yields
-	if(QDELETED(thing_to_call) || !proc_to_call || !usr || FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs || !initialized || !(runlevels & Master.current_runlevel))
+	if(QDELETED(thing_to_call) \
+	|| !proc_to_call \
+	|| !ismob(usr) \
+	|| QDELING(usr) \
+	|| usr.client?.holder /*dont worry admins cant cause overtime :clueless:*/ \
+	|| FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs \
+	|| !initialized \
+	|| !(runlevels & Master.current_runlevel))
 		return FALSE
 
 	verb_queue += CALLBACK(arglist(args))
