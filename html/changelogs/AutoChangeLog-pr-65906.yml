@@ -1,0 +1,6 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscdel: "Navigate verb uses landmarks now, which means that underfloor wayfinding beacons (which could be used to change the names of destinations) are gone"
+  - qol: "Adds Nearest Way Up and Nearest Way Down to the navigate list, which point to the nearest ladder or staircase up or down"
+  - bugfix: "Fixes runtime with navigation verb paths where deleted paths were still attempting to animate"
