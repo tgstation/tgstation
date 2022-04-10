@@ -1,4 +1,3 @@
-
 /**
  * # Giant Spider
  *
@@ -30,6 +29,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
 	unsuitable_cold_damage = 8
 	unsuitable_heat_damage = 8
+	flammable = TRUE
 	obj_damage = 30
 	melee_damage_lower = 20
 	melee_damage_upper = 25
@@ -81,6 +81,20 @@
 		to_chat(src, span_spider("<b>[directive]</b>"))
 	GLOB.spidermobs[src] = TRUE
 
+/mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
+	if(is_busy)
+		return
+	else if(target == src && fire_stacks > 0)
+		visible_message(span_notice("[src] tries to put out their flames!"),span_notice("You try putting out the flames on yourself..."))
+		is_busy = TRUE
+		if(do_after(src, 6 SECONDS, target = target))
+			fire_stacks = 0
+			visible_message(span_notice("[src] puts out their flames."),span_notice("You put out your flames."))
+		is_busy = FALSE
+		return
+	else if(!istype(target, /mob/living/simple_animal/hostile/giant_spider))
+		return ..()
+
 /mob/living/simple_animal/hostile/giant_spider/Destroy()
 	GLOB.spidermobs -= src
 	return ..()
@@ -89,6 +103,13 @@
 	if(locate(/obj/structure/spider/stickyweb) in loc)
 		return TRUE
 	return ..()
+
+/mob/living/simple_animal/hostile/giant_spider/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
+	. = ..()
+	for(var/datum/reagent/current_reagent as anything in reagents)
+		if(istype(current_reagent, /datum/reagent/toxin/pestkiller))
+			apply_damage(50 * volume_modifier, STAMINA, BODY_ZONE_CHEST)
+			return
 
 /**
  * # Spider Hunter
@@ -107,7 +128,7 @@
 	health = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	poison_per_bite = 5
+	poison_per_bite = 2
 	move_to_delay = 5
 	speed = -0.1
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage."
@@ -132,7 +153,6 @@
 	health = 40
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	poison_per_bite = 3
 	web_speed = 0.25
 	web_sealer = TRUE
 	menu_description = "Support spider variant specializing in healing their brethren and placing webbings very swiftly, but has very low amount of health and deals low damage."
@@ -187,7 +207,6 @@
 	melee_damage_upper = 40
 	obj_damage = 100
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	poison_per_bite = 0
 	move_to_delay = 8
 	speed = 1
 	status_flags = NONE
@@ -241,7 +260,7 @@
 	health = 40
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	poison_per_bite = 5
+	poison_per_bite = 2
 	move_to_delay = 4
 	poison_type = /datum/reagent/toxin/venom
 	speed = -0.5
@@ -265,20 +284,20 @@
 	icon_state = "midwife"
 	icon_living = "midwife"
 	icon_dead = "midwife_dead"
-	maxHealth = 40
-	health = 40
-	melee_damage_lower = 5
-	melee_damage_upper = 10
-	poison_per_bite = 3
+	maxHealth = 60
+	health = 60
+	melee_damage_lower = 10
+	melee_damage_upper = 15
 	gold_core_spawnable = NO_SPAWN
+	web_speed = 0.5
 	web_sealer = TRUE
-	menu_description = "Royal spider variant specializing in reproduction and leadership, but has very low amount of health and deals low damage."
+	menu_description = "Royal spider variant specializing in reproduction and leadership, but deals low damage."
 	///If the spider is trying to cocoon something, what that something is.
 	var/atom/movable/cocoon_target
 	///How many humans this spider has drained but not layed enriched eggs for.
 	var/fed = 0
 	///How long it takes for a broodmother to lay eggs.
-	var/egg_lay_time = 15 SECONDS
+	var/egg_lay_time = 12 SECONDS
 	///The ability for the spider to wrap targets.
 	var/obj/effect/proc_holder/wrap/wrap
 	///The ability for the spider to lay basic eggs.
@@ -684,6 +703,9 @@
 		if(health >= maxHealth)
 			to_chat(src, span_warning("You're not injured, there's no reason to heal."))
 			return
+		else if(fire_stacks > 0)
+			to_chat(src, span_warning("You can't regenerate while you're on fire!"))
+			return ..()
 		visible_message(span_notice("[src] begins mending themselves..."),span_notice("You begin mending your wounds..."))
 		is_busy = TRUE
 		if(do_after(src, 20, target = src))
