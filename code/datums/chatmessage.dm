@@ -204,6 +204,9 @@
 	// Approximate text height
 	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
 	var/measurement = owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH)//resolving it to a var so the macro doesnt call MeasureText() twice
+	if(!owned_by || QDELETED(src))
+		return
+
 	var/mheight = WXH_TO_HEIGHT(measurement)
 	SSrunechat.message_queue += CALLBACK(src, .proc/generate_image, target, owner, complete_text, mheight)
 	//queue to the subsystem because when client input returns we're in the verb stage of tick execution which means
@@ -220,7 +223,7 @@
  */
 /datum/chatmessage/proc/generate_image(atom/target, mob/owner, complete_text, mheight)
 	var/client/owned_by = owner.client
-	if(!owned_by)//possible now since generate_image() is called via a queue
+	if(!owned_by || QDELETED(target) || QDELETED(src))//possible now since generate_image() is called via a queue
 		return
 
 	var/our_approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
@@ -231,6 +234,10 @@
 		var/combined_height = our_approx_lines
 
 		for(var/datum/chatmessage/preexisting_message as anything in owned_by.seen_messages[message_loc])
+			if(QDELETED(preexisting_message))
+				stack_trace("qdeleted message encountered in a clients seen_messages list!")
+				LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, preexisting_message)
+				continue
 
 			var/image/other_message_image = preexisting_message.hearers[owned_by]
 
@@ -321,8 +328,8 @@
 		fade_times_by_image[message_image] = world.time  + lifespan + CHAT_MESSAGE_SPAWN_TIME
 
 	LAZYADDASSOCLIST(associated_client.seen_messages, message_loc, src)
-	LAZYADDASSOC(messages, message_image, associated_client)
-	LAZYADDASSOC(hearers, associated_client, message_image)
+	LAZYSET(messages, message_image, associated_client)
+	LAZYSET(hearers, associated_client, message_image)
 
 /**
  * Creates a message overlay at a defined location for a given speaker. assumes that this mob has a client
