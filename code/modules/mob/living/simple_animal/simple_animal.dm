@@ -69,6 +69,10 @@
 
 	/// List of weather immunity traits that are then added on Initialize(), see traits.dm.
 	var/list/weather_immunities
+	/// Is this mob flammable?
+	var/flammable = FALSE
+	/// How much burn damage this mob takes from being on fire
+	var/burning_damage = 5
 
 	///Healable by medical stacks? Defaults to yes.
 	var/healable = 1
@@ -184,7 +188,8 @@
 		AddComponent(/datum/component/personal_crafting)
 		ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
 		ADD_TRAIT(src, TRAIT_CAN_STRIP, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
+	if(!flammable)
+		ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
 	for(var/trait in weather_immunities)
 		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
 
@@ -491,13 +496,30 @@
 	return TRUE
 
 /mob/living/simple_animal/handle_fire(delta_time, times_fired)
-	return TRUE
+	if(!flammable)
+		return TRUE
+	. = ..()
+	if(fire_stacks > 0)
+		adjustFireLoss(burning_damage)
 
 /mob/living/simple_animal/IgniteMob()
-	return FALSE
+	if(!flammable)
+		return FALSE
+	. = ..()
 
 /mob/living/simple_animal/extinguish_mob()
-	return
+	if(!flammable)
+		return
+	. = ..()
+
+/mob/living/simple_animal/update_fire()
+	if(!flammable)
+		return
+	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/onfire.dmi', "Generic_mob_burning")
+	if(on_fire)
+		add_overlay(fire_overlay)
+	else
+		cut_overlay(fire_overlay)
 
 /mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
