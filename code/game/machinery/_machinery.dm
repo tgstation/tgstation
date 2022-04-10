@@ -109,7 +109,7 @@
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = IDLE_POWER_USE
 	var/idle_power_usage = 25
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = ACTIVE_POWER_USE
-	var/active_power_usage = 2000
+	var/active_power_usage = 500
 	///the current amount of static power usage this machine is taking from its area
 	var/static_power_usage = 0
 	var/power_channel = AREA_USAGE_EQUIP
@@ -172,7 +172,6 @@
 	if(use_power == NO_POWER_USE)
 		return
 
-	RefreshParts()
 	update_current_power_usage()
 	setup_area_power_relationship()
 

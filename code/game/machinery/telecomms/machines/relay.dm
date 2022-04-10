@@ -13,7 +13,7 @@
 	telecomms_type = /obj/machinery/telecomms/relay
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
+	idle_power_usage = 1
 	netspeed = 5
 	long_range_link = 1
 	circuit = /obj/item/circuitboard/machine/telecomms/relay

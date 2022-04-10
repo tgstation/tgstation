@@ -15,7 +15,7 @@
 	telecomms_type = /obj/machinery/telecomms/hub
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
+	idle_power_usage = 1
 	long_range_link = TRUE
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/hub

@@ -15,7 +15,7 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	telecomms_type = /obj/machinery/telecomms/broadcaster
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
+	idle_power_usage = 1
 	circuit = /obj/item/circuitboard/machine/telecomms/broadcaster
 
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)

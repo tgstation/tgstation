@@ -226,7 +226,7 @@
 	return !shut_up
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
-	. = ..()
+	SHOULD_CALL_PARENT(FALSE)
 	if(!component_parts)
 		return
 

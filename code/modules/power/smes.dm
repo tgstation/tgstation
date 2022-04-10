@@ -61,7 +61,7 @@
 	update_appearance()
 
 /obj/machinery/power/smes/RefreshParts()
-	. = ..()
+	SHOULD_CALL_PARENT(FALSE)
 	var/IO = 0
 	var/MC = 0
 	var/C
@@ -408,7 +408,8 @@
 	log_smes()
 
 /obj/machinery/power/smes/engineering
-	charge = 1.5e6 // Engineering starts with some charge for singulo
+	charge = 3e6 // Engineering starts with some charge for singulo
+	output_level = 90000
 
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
