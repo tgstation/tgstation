@@ -8,6 +8,7 @@ export const MechStatPane = (props, context) => {
   const {
     name,
     integrity,
+    airtank_present,
     air_source,
     cabin_pressure,
     cabin_dangerous_highpressure,
@@ -49,7 +50,9 @@ export const MechStatPane = (props, context) => {
         <Section title="Enviromental Data">
           <LabeledList>
             <LabeledList.Item label="Air Source">
-              <Button onClick={() => act('toggle_airsource')}>
+              <Button 
+                disabled = {!airtank_present}
+                onClick={() => act('toggle_airsource')}>
                 {air_source}
               </Button>
             </LabeledList.Item>
