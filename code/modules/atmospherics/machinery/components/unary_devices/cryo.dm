@@ -80,10 +80,6 @@
 
 	showpipe = FALSE
 
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 30
-	active_power_usage = 300
-
 	var/autoeject = TRUE
 	var/volume = 100
 

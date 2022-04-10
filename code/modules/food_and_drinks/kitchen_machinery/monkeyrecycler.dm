@@ -7,7 +7,6 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	active_power_usage = 500
 	circuit = /obj/item/circuitboard/machine/monkey_recycler
 	var/stored_matter = 0
 	var/cube_production = 0.2

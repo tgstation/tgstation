@@ -195,7 +195,6 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "scanner_off"
 	desc = "Sophisticated scanning array. Easily influenced by enviroment."
-	active_power_usage = 500
 
 /obj/machinery/exoscanner/Initialize(mapload)
 	. = ..()

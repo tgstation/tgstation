@@ -180,7 +180,6 @@
 		set_light(l_range = 0)
 	update_appearance()
 
-	active_power_usage = (brightness * 10)
 	if(on != on_gs)
 		on_gs = on
 		if(on)

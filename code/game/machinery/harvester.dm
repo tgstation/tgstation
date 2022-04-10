@@ -7,8 +7,6 @@
 	base_icon_state = "harvester"
 	verb_say = "states"
 	state_open = FALSE
-	idle_power_usage = 50
-	active_power_usage = 500
 	circuit = /obj/item/circuitboard/machine/harvester
 	light_color = LIGHT_COLOR_BLUE
 	var/interval = 20

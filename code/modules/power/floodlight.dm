@@ -61,7 +61,7 @@
 	density = TRUE
 	max_integrity = 100
 	integrity_failure = 0.8
-	idle_power_usage = 100
+	idle_power_usage = 0
 	active_power_usage = 1000
 	anchored = FALSE
 	light_power = 1.75

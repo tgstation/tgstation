@@ -21,6 +21,9 @@
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
+	idle_power_usage = 10
+	active_power_usage = 150
+
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 	var/shockedby
 	var/visible = TRUE
@@ -183,7 +186,7 @@
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating || !can_open_with_hands)
 		return
-		
+
 	add_fingerprint(user)
 	if(!density || (obj_flags & EMAGGED))
 		return
@@ -343,6 +346,7 @@
 	if(operating)
 		return
 	operating = TRUE
+	use_power(active_power_usage)
 	do_animate("opening")
 	set_opacity(0)
 	sleep(5)

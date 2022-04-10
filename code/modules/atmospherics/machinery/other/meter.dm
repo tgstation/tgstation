@@ -6,8 +6,8 @@
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 9
+	idle_power_usage = 5
+	active_power_usage = 30
 	max_integrity = 150
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 40, ACID = 0)
 	greyscale_config = /datum/greyscale_config/meter

@@ -232,9 +232,7 @@
 	icon_state = "blpad-idle"
 	icon_teleport = "blpad-beam"
 	anchored = FALSE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 0
-	active_power_usage = 0
+	use_power = NO_POWER_USE
 	teleport_speed = 20
 	range = 8
 	stationary = FALSE
