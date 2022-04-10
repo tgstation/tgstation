@@ -552,6 +552,7 @@
 		return
 	. = resting
 	resting = new_resting
+	SEND_SIGNAL(src, COMSIG_LIVING_SET_RESTING)
 	if(new_resting)
 		if(body_position == LYING_DOWN)
 			if(!silent)
