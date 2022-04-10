@@ -12,7 +12,7 @@
 	telecomms_type = /obj/machinery/telecomms/server
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
+	idle_power_usage = 1
 	circuit = /obj/item/circuitboard/machine/telecomms/server
 	var/list/log_entries = list()
 	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)

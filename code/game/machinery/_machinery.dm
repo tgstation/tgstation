@@ -107,9 +107,9 @@
 		//1 = use idle_power_usage
 		//2 = use active_power_usage
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = IDLE_POWER_USE
-	var/idle_power_usage = 25
+	var/idle_power_usage = 30
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = ACTIVE_POWER_USE
-	var/active_power_usage = 500
+	var/active_power_usage = 750
 	///the current amount of static power usage this machine is taking from its area
 	var/static_power_usage = 0
 	var/power_channel = AREA_USAGE_EQUIP

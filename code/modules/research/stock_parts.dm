@@ -272,7 +272,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "An advanced capacitor used in the construction of a variety of devices."
 	icon_state = "adv_capacitor"
 	rating = 2
-	energy_rating = 4
+	energy_rating = 3
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
 /obj/item/stock_parts/scanning_module/adv
@@ -280,7 +280,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "adv_scan_module"
 	rating = 2
-	energy_rating = 4
+	energy_rating = 3
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 
 /obj/item/stock_parts/manipulator/nano
@@ -288,7 +288,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "nano_mani"
 	rating = 2
-	energy_rating = 4
+	energy_rating = 3
 	custom_materials = list(/datum/material/iron=30)
 
 /obj/item/stock_parts/micro_laser/high
@@ -296,7 +296,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny laser used in certain devices."
 	icon_state = "high_micro_laser"
 	rating = 2
-	energy_rating = 4
+	energy_rating = 3
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 
 /obj/item/stock_parts/matter_bin/adv
@@ -304,7 +304,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "advanced_matter_bin"
 	rating = 2
-	energy_rating = 4
+	energy_rating = 3
 	custom_materials = list(/datum/material/iron=80)
 
 //Rating 3
@@ -314,7 +314,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
 	icon_state = "super_capacitor"
 	rating = 3
-	energy_rating = 8
+	energy_rating = 5
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
 /obj/item/stock_parts/scanning_module/phasic
@@ -322,7 +322,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
 	icon_state = "super_scan_module"
 	rating = 3
-	energy_rating = 8
+	energy_rating = 5
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 
 /obj/item/stock_parts/manipulator/pico
@@ -330,7 +330,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
 	rating = 3
-	energy_rating = 8
+	energy_rating = 5
 	custom_materials = list(/datum/material/iron=30)
 
 /obj/item/stock_parts/micro_laser/ultra
@@ -338,7 +338,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "ultra_high_micro_laser"
 	desc = "A tiny laser used in certain devices."
 	rating = 3
-	energy_rating = 8
+	energy_rating = 5
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 
 /obj/item/stock_parts/matter_bin/super
@@ -346,7 +346,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "super_matter_bin"
 	rating = 3
-	energy_rating = 8
+	energy_rating = 5
 	custom_materials = list(/datum/material/iron=80)
 
 //Rating 4
@@ -356,7 +356,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A capacity capacitor used in the construction of a variety of devices."
 	icon_state = "quadratic_capacitor"
 	rating = 4
-	energy_rating = 16
+	energy_rating = 10
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
 /obj/item/stock_parts/scanning_module/triphasic
@@ -364,7 +364,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A compact, ultra resolution triphasic scanning module used in the construction of certain devices."
 	icon_state = "triphasic_scan_module"
 	rating = 4
-	energy_rating = 16
+	energy_rating = 10
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 
 /obj/item/stock_parts/manipulator/femto
@@ -372,7 +372,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "femto_mani"
 	rating = 4
-	energy_rating = 16
+	energy_rating = 10
 	custom_materials = list(/datum/material/iron=30)
 
 /obj/item/stock_parts/micro_laser/quadultra
@@ -380,7 +380,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "quadultra_micro_laser"
 	desc = "A tiny laser used in certain devices."
 	rating = 4
-	energy_rating = 16
+	energy_rating = 10
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 
 /obj/item/stock_parts/matter_bin/bluespace
@@ -388,7 +388,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "bluespace_matter_bin"
 	rating = 4
-	energy_rating = 16
+	energy_rating = 10
 	custom_materials = list(/datum/material/iron=80)
 
 // Subspace stock parts
