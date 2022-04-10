@@ -3,7 +3,6 @@
 	desc = "It produces items using iron, glass, plastic and maybe some more."
 	icon_state = "autolathe"
 	density = TRUE
-	idle_power_usage = 50
 	active_power_usage = 500
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER

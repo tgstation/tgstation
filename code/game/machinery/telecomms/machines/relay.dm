@@ -13,7 +13,7 @@
 	telecomms_type = /obj/machinery/telecomms/relay
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 30
+	idle_power_usage = 5
 	netspeed = 5
 	long_range_link = 1
 	circuit = /obj/item/circuitboard/machine/telecomms/relay
@@ -31,7 +31,7 @@
 		else
 			signal.levels |= relay_turf.z
 
-	use_power(active_power_usage)
+	use_power(idle_power_usage)
 
 /// Checks to see if it can send/receive.
 /obj/machinery/telecomms/relay/proc/can(datum/signal/signal)

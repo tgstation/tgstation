@@ -3,8 +3,6 @@
 	desc = "A machine used to deposit and withdraw station funds."
 	icon_screen = "vault"
 	icon_keyboard = "security_key"
-	idle_power_usage = 100
-
 	var/siphoning = FALSE
 	var/next_warning = 0
 	var/obj/item/radio/radio

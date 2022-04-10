@@ -3,7 +3,6 @@
 	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "qpad-idle"
-	idle_power_usage = 200
 	active_power_usage = 10000
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/quantumpad

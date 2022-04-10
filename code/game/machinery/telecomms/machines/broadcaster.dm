@@ -15,7 +15,7 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	telecomms_type = /obj/machinery/telecomms/broadcaster
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 25
+	idle_power_usage = 5
 	circuit = /obj/item/circuitboard/machine/telecomms/broadcaster
 
 /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/subspace/signal, obj/machinery/telecomms/machine_from)
@@ -54,7 +54,7 @@ GLOBAL_VAR_INIT(message_delay, 0) // To make sure restarting the recentmessages 
 	/* --- Do a snazzy animation! --- */
 	flick("broadcaster_send", src)
 
-	use_power(active_power_usage)
+	use_power(idle_power_usage)
 
 /proc/end_message_delay()
 	GLOB.message_delay = FALSE

@@ -5,7 +5,6 @@
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "lpad-idle"
-	idle_power_usage = 200
 	active_power_usage = 2500
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
 	circuit = /obj/item/circuitboard/machine/launchpad

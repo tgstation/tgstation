@@ -15,7 +15,7 @@
 	telecomms_type = /obj/machinery/telecomms/hub
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 80
+	idle_power_usage = 5
 	long_range_link = TRUE
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/hub
@@ -33,7 +33,7 @@
 		// Then broadcast that signal to
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
-	use_power(active_power_usage)
+	use_power(idle_power_usage)
 
 //Preset HUB
 
