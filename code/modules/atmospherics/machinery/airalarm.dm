@@ -136,7 +136,6 @@
 
 	alarm_manager = new(src)
 	my_area = get_area(src)
-	LAZYADD(my_area.airalarms, src)
 	update_appearance()
 
 	set_frequency(frequency)
@@ -144,12 +143,11 @@
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/air_alarm,
 	))
-	
+
 
 
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
-		LAZYREMOVE(my_area.airalarms, src)
 		my_area = null
 	SSradio.remove_object(src, frequency)
 	QDEL_NULL(wires)
