@@ -57,7 +57,6 @@
 	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
 		/obj/item/storage/box/ids = 1,
 		)
 	belt = /obj/item/modular_computer/tablet/role/heads/hop

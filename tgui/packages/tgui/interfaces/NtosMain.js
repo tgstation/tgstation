@@ -75,47 +75,6 @@ export const NtosMain = (props, context) => {
             </Table>
           </Section>
         )}
-        {!!disk && (
-          <Section
-            title={disk_name ? (disk_name.substring(0, disk_name.length-5)) : "No Job Disk Inserted"} // pain
-            buttons={(
-              <Button
-                icon="eject"
-                content="Eject Job Disk"
-                disabled={!disk_name}
-                onClick={() => act('PC_Eject_Disk', { name: "job disk" })} />
-            )}>
-            <Table>
-              {disk_programs.map(program => (
-                <Table.Row key={program.name}>
-                  <Table.Cell>
-                    <Button
-                      fluid
-                      color={program.alert ? 'yellow' : 'transparent'}
-                      icon={program.icon}
-                      content={program.desc}
-                      onClick={() => act('PC_runprogram', {
-                        name: program.name,
-                        is_disk: true,
-                      })} />
-                  </Table.Cell>
-                  <Table.Cell collapsing width="18px">
-                    {!!program.running && (
-                      <Button
-                        color="transparent"
-                        icon="times"
-                        tooltip="Close program"
-                        tooltipPosition="left"
-                        onClick={() => act('PC_killprogram', {
-                          name: program.name,
-                        })} />
-                    )}
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table>
-          </Section>
-        )}
         {!!removable_media.length && (
           <Section title="Media Eject">
             <Table>
@@ -166,6 +125,47 @@ export const NtosMain = (props, context) => {
             ))}
           </Table>
         </Section>
+        {!!disk && (
+          <Section
+            title={disk_name ? (disk_name.substring(0, disk_name.length-5)) : "No Job Disk Inserted"} // pain
+            buttons={(
+              <Button
+                icon="eject"
+                content="Eject Job Disk"
+                disabled={!disk_name}
+                onClick={() => act('PC_Eject_Disk', { name: "job disk" })} />
+            )}>
+            <Table>
+              {disk_programs.map(program => (
+                <Table.Row key={program.name}>
+                  <Table.Cell>
+                    <Button
+                      fluid
+                      color={program.alert ? 'yellow' : 'transparent'}
+                      icon={program.icon}
+                      content={program.desc}
+                      onClick={() => act('PC_runprogram', {
+                        name: program.name,
+                        is_disk: true,
+                      })} />
+                  </Table.Cell>
+                  <Table.Cell collapsing width="18px">
+                    {!!program.running && (
+                      <Button
+                        color="transparent"
+                        icon="times"
+                        tooltip="Close program"
+                        tooltipPosition="left"
+                        onClick={() => act('PC_killprogram', {
+                          name: program.name,
+                        })} />
+                    )}
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table>
+          </Section>
+        )}
       </NtosWindow.Content>
     </NtosWindow>
   );

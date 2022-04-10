@@ -37,9 +37,6 @@
 
 	id_trim = /datum/id_trim/job/janitor
 	uniform = /obj/item/clothing/under/rank/civilian/janitor
-	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/advanced/custodial = 1,
-		)
 	belt = /obj/item/modular_computer/tablet/role/janitor
 	ears = /obj/item/radio/headset/headset_srv
 

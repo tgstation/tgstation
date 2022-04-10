@@ -41,9 +41,6 @@
 
 	id_trim = /datum/id_trim/job/cargo_technician
 	uniform = /obj/item/clothing/under/rank/cargo/tech
-	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/cargo = 1,
-		)
 	belt = /obj/item/modular_computer/tablet/role/cargo
 	ears = /obj/item/radio/headset/headset_cargo
 	l_hand = /obj/item/export_scanner

@@ -38,9 +38,6 @@
 
 	id_trim = /datum/id_trim/job/quartermaster
 	uniform = /obj/item/clothing/under/rank/cargo/qm
-	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/cargo/quartermaster = 1,
-		)
 	belt = /obj/item/modular_computer/tablet/role/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
 	glasses = /obj/item/clothing/glasses/sunglasses

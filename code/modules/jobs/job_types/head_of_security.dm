@@ -55,7 +55,6 @@
 	suit_store = /obj/item/gun/energy/e_gun
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
 		)
 	belt = /obj/item/modular_computer/tablet/role/heads/hos
 	ears = /obj/item/radio/headset/heads/hos/alt

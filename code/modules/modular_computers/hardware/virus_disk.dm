@@ -1,12 +1,13 @@
 /obj/item/computer_hardware/hard_drive/role/virus
-	name = "generic virus disk"
+	name = "\improper generic virus disk"
+	icon_state = "virusdisk"
 	var/charges = 5
 
 /obj/item/computer_hardware/hard_drive/role/virus/proc/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
 	return
 
 /obj/item/computer_hardware/hard_drive/role/virus/clown
-	name = "H.O.N.K. disk"
+	name = "\improper H.O.N.K. disk"
 
 /obj/item/computer_hardware/hard_drive/role/virus/clown/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
 	if(charges <= 0)
@@ -21,7 +22,7 @@
 		to_chat(user, span_notice("ERROR: Could not find device."))
 
 /obj/item/computer_hardware/hard_drive/role/virus/mime
-	name = "sound of silence disk"
+	name = "\improper sound of silence disk"
 
 /obj/item/computer_hardware/hard_drive/role/virus/mime/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
 	if(charges <= 0)
@@ -41,7 +42,7 @@
 		to_chat(user, span_notice("ERROR: Could not find device."))
 
 /obj/item/computer_hardware/hard_drive/role/virus/deto
-	name = "D.E.T.O.M.A.T.I.X. disk"
+	name = "\improper D.E.T.O.M.A.T.I.X. disk"
 	charges = 6
 
 /obj/item/computer_hardware/hard_drive/role/virus/deto/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
@@ -53,7 +54,7 @@
 	var/obj/item/computer_hardware/hard_drive/role/disk = target.all_components[MC_HDD_JOB]
 
 	if(disk)
-		difficulty += bit_count(disk.disk_flags & (DISK_MED | DISK_SEC | DISK_POWER | DISK_CLOWN | DISK_MANIFEST))
+		difficulty += bit_count(disk.disk_flags & (DISK_MED | DISK_SEC | DISK_POWER | DISK_MANIFEST))
 		if(disk.disk_flags & DISK_MANIFEST)
 			difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
 	if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))
@@ -81,7 +82,7 @@
 			addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference), 10 SECONDS)
 
 /obj/item/computer_hardware/hard_drive/role/virus/frame
-	name = "F.R.A.M.E. disk"
+	name = "\improper F.R.A.M.E. disk"
 
 	var/telecrystals = 0
 	var/current_progression = 0
