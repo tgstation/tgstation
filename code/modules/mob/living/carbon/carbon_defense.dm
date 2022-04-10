@@ -213,8 +213,8 @@
 
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
-				Paralyze(power*20)
-				set_timed_status_effect(power / 2, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
+				Paralyze(power * 2 SECONDS)
+				set_timed_status_effect(power * 2 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 				if (prob(stunprob) && M.powerlevel >= 8)
 					adjustFireLoss(M.powerlevel * rand(6,10))
 					updatehealth()
