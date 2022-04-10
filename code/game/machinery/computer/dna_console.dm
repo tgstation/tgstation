@@ -201,7 +201,7 @@
 			qdel(Item)
 			to_chat(user,span_notice("Recycled [Item]."))
 			return
-		if(!Activator.used)
+		else
 			to_chat(user,span_notice("Cannot recycle unused activators."))
 			return
 	return ..()
