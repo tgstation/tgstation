@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "The screentip context no longer lies about what happens when you left click another carbon mob with combat mode on."

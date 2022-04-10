@@ -33466,9 +33466,9 @@
 /turf/open/floor/iron,
 /area/maintenance/port/greater)
 "hxQ" = (
-/obj/structure/table,
-/obj/item/razor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/closet/masks,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -39744,6 +39744,7 @@
 /obj/item/cigbutt{
 	pixel_y = 7
 	},
+/obj/item/razor,
 /turf/open/floor/iron/white,
 /area/commons/fitness/recreation)
 "jpd" = (
@@ -40364,9 +40365,9 @@
 /area/command/gateway)
 "jyk" = (
 /obj/structure/table,
-/obj/item/stack/medical/gauze,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "jym" = (
@@ -79459,8 +79460,8 @@
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
 "vis" = (
-/obj/structure/table,
-/obj/item/storage/medkit/regular,
+/obj/structure/closet/athletic_mixed,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -127151,7 +127152,7 @@ uOV
 enA
 xtd
 vrI
-uXH
+xtd
 aDI
 pYR
 bjb
@@ -127665,7 +127666,7 @@ uwH
 bKA
 aum
 hyX
-xtd
+uXH
 aDI
 aDI
 aDI

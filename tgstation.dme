@@ -3512,6 +3512,7 @@
 #include "code\modules\modular_computers\file_system\programs\crewmanifest.dm"
 #include "code\modules\modular_computers\file_system\programs\file_browser.dm"
 #include "code\modules\modular_computers\file_system\programs\jobmanagement.dm"
+#include "code\modules\modular_computers\file_system\programs\newscasterapp.dm"
 #include "code\modules\modular_computers\file_system\programs\ntdownloader.dm"
 #include "code\modules\modular_computers\file_system\programs\ntmonitor.dm"
 #include "code\modules\modular_computers\file_system\programs\ntnrc_client.dm"

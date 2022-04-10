@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "On DeltaStation, Nanotrasen will no longer place a Gas Vendor and an Intercom in such a position on one of the walls on the Clown's bedroom where they overlap."
