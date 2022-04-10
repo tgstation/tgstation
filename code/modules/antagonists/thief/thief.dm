@@ -28,7 +28,7 @@
 
 /datum/antagonist/thief/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	ADD_TRAIT(mob_override, TRAIT_GUILD_MEMBER, TRAIT_THIEF)
+	ADD_TRAIT(mob_override, TRAIT_GUILD_MEMBER, THIEF_TRAIT)
 
 /datum/antagonist/thief/admin_add(datum/mind/new_owner, mob/admin)
 	load_strings_file(THIEF_FLAVOR_FILE)
