@@ -280,10 +280,6 @@
 			corpseholder.open()
 	for(var/obj/machinery/dna_scannernew/dna in T)
 		dna.open_machine()
-	for(var/obj/structure/window/window in T)
-		window.take_damage(rand(30,80))
-		if(window?.fulltile)
-			new /obj/effect/temp_visual/revenant/cracks(window.loc)
 	for(var/obj/machinery/light/light in T)
 		light.flicker(20) //spooky
 
