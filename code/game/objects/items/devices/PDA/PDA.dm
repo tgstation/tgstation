@@ -350,8 +350,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Reagent Scan'>[PDAIMG(reagent)][scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
 					if (cartridge.access & CART_ATMOS)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Gas Scan'>[PDAIMG(reagent)][scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
-					if (cartridge.access & CART_REMOTE_DOOR)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Toggle Door'>[PDAIMG(rdoor)]Toggle Remote Door</a></li>"
 					if (cartridge.access & CART_DRONEPHONE)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Drone Phone'>[PDAIMG(dronephone)]Drone Phone</a></li>"
 					if (cartridge.access & CART_DRONEACCESS)
@@ -677,17 +675,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 				else
 					U << browse(null, "window=pda")
 					return
-
-//SYNDICATE FUNCTIONS===================================
-
-			if("Toggle Door")
-				if(cartridge && cartridge.access & CART_REMOTE_DOOR)
-					for(var/obj/machinery/door/poddoor/M in GLOB.machines)
-						if(M.id == cartridge.remote_door_id)
-							if(M.density)
-								M.open()
-							else
-								M.close()
 
 //pAI FUNCTIONS===================================
 
