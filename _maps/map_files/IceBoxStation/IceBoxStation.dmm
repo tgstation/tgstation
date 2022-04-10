@@ -9984,7 +9984,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Airlock"
 	},
-/obj/machinery/navbeacon/wayfinding/dockesc,
+/obj/effect/landmark/navigate_destination/dockesc,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "dMo" = (
