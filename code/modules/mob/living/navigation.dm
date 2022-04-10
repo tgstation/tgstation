@@ -25,7 +25,7 @@
 
 /mob/living/proc/create_navigation()
 	var/list/destination_list = list()
-	for(var/destination in GLOB.navigate_destinations)
+	for(var/atom/destination in GLOB.navigate_destinations)
 		if(!isatom(destination) || destination.z != z || get_dist(destination, src) > MAX_NAVIGATE_RANGE)
 			continue
 		var/destination_name = GLOB.navigate_destinations[destination]
