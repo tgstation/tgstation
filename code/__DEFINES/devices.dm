@@ -7,10 +7,8 @@
 #define CART_CLOWN (1<<5)
 #define CART_MIME (1<<6)
 #define CART_REAGENT_SCANNER (1<<7)
-#define CART_REMOTE_DOOR (1<<9)
 #define CART_STATUS_DISPLAY (1<<10)
 #define CART_QUARTERMASTER (1<<11)
-#define CART_HYDROPONICS (1<<12)
 
 /// PDA ui menu defines
 #define PDA_UI_HUB 0
