@@ -127,8 +127,8 @@
 		stutter = 0 SECONDS, // Ditto
 		eyeblur = 0,
 		drowsy = 0,
-		blocked = 0, // This one's not an effect, don't be confused
-		stamina = 0, // This one's a damage type and not an effect
+		blocked = 0, // This one's not an effect, don't be confused - it's block chance
+		stamina = 0, // This one's a damage type, and not an effect
 		jitter = 0,
 		paralyze = 0,
 		immobilize = 0,
