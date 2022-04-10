@@ -85,12 +85,18 @@
 
 /// Gets the chance for a heavy ruleset midround injection, the dry_run argument is only used for forced injection.
 /datum/game_mode/dynamic/proc/get_heavy_midround_injection_chance(dry_run)
-	var/chance = get_injection_chance(dry_run)
+	var/chance_modifier = 1
 	var/next_midround_roll = next_midround_injection() - SSticker.round_start_time
 
 	if (random_event_hijacked != HIJACKED_NOTHING)
-		chance += hijacked_random_event_injection_chance
+		chance_modifier += (hijacked_random_event_injection_chance_modifier / 100)
+
+	if (GLOB.current_living_antags.len == 0)
+		chance_modifier += 0.5
+
+	if (GLOB.dead_player_list.len > GLOB.alive_player_list.len)
+		chance_modifier -= 0.3
 
 	var/heavy_coefficient = CLAMP01((next_midround_roll - midround_light_upper_bound) / (midround_heavy_lower_bound - midround_light_upper_bound))
 
-	return chance * heavy_coefficient
+	return 100 * (heavy_coefficient * max(1, chance_modifier))

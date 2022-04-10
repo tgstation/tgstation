@@ -102,18 +102,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// threat, then you will get 2 midround rolls.
 	var/threat_per_midround_roll = 6.5
 
-	/// If above this threat, increase the chance of injection
-	var/higher_injection_chance_minimum_threat = 70
-
-	/// The chance of injection increase when above higher_injection_chance_minimum_threat
-	var/higher_injection_chance = 15
-
-	/// If below this threat, decrease the chance of injection
-	var/lower_injection_chance_minimum_threat = 10
-
-	/// The chance of injection decrease when above lower_injection_chance_minimum_threat
-	var/lower_injection_chance = 15
-
 	/// A number between -5 and +5.
 	/// A negative value will give a more peaceful round and
 	/// a positive value will give a round with higher threat.
@@ -151,14 +139,18 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Maximum amount of threat allowed to generate.
 	var/max_threat_level = 100
 
-	/// The chance that a heavy impact midround ruleset will run next time
-	var/hijacked_random_event_injection_chance = 50
+	/// The extra chance multiplier that a heavy impact midround ruleset will run next time.
+	/// For example, if this is set to 50, then the next heavy roll will be about 50% more likely to happen.
+	var/hijacked_random_event_injection_chance_modifier = 50
 
 	/// Any midround before this point is guaranteed to be light
 	var/midround_light_upper_bound = 25 MINUTES
 
 	/// Any midround after this point is guaranteed to be heavy
 	var/midround_heavy_lower_bound = 75 MINUTES
+
+	/// The chance for latejoins to roll when ready
+	var/latejoin_roll_chance = 50
 
 	// == EVERYTHING BELOW THIS POINT SHOULD NOT BE CONFIGURED ==
 
@@ -211,7 +203,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			dat += "[DR.ruletype] - <b>[DR.name]</b><br>"
 	else
 		dat += "none.<br>"
-	dat += "<br>Injection Timers: (<b>[get_injection_chance(dry_run = TRUE)]%</b> latejoin chance, <b>[get_heavy_midround_injection_chance(dry_run = TRUE)]%</b> heavy midround chance)<BR>"
+	dat += "<br>Injection Timers: (<b>[get_heavy_midround_injection_chance(dry_run = TRUE)]%</b> heavy midround chance)<BR>"
 	dat += "Latejoin: [DisplayTimeText(latejoin_injection_cooldown-world.time)] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 
 	var/next_injection = next_midround_injection()
@@ -638,30 +630,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	try_midround_roll()
 
-/// Gets the chance for latejoin injection, the dry_run argument is only used for forced injection.
-/// Used in midround injection as well to influence the likelihood that a heavy ruleset is rolled.
-/datum/game_mode/dynamic/proc/get_injection_chance(dry_run = FALSE)
-	if(forced_injection)
-		forced_injection = dry_run
-		return 100
-	var/chance = 0
-	var/max_pop_per_antag = max(5,15 - round(threat_level/10) - round(GLOB.alive_player_list.len/5))
-	if (!GLOB.current_living_antags.len)
-		chance += 50 // No antags at all? let's boost those odds!
-	else
-		var/current_pop_per_antag = GLOB.alive_player_list.len / GLOB.current_living_antags.len
-		if (current_pop_per_antag > max_pop_per_antag)
-			chance += min(50, 25+10*(current_pop_per_antag-max_pop_per_antag))
-		else
-			chance += 25-10*(max_pop_per_antag-current_pop_per_antag)
-	if (GLOB.dead_player_list.len > GLOB.alive_player_list.len)
-		chance -= 30 // More than half the crew died? ew, let's calm down on antags
-	if (mid_round_budget > higher_injection_chance_minimum_threat)
-		chance += higher_injection_chance
-	if (mid_round_budget < lower_injection_chance_minimum_threat)
-		chance -= lower_injection_chance
-	return round(max(0,chance))
-
 /// Removes type from the list
 /datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
 	for(var/I in type_list)
@@ -695,7 +663,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, forced_latejoin_rule), forced_latejoin_rule.delay)
 		forced_latejoin_rule = null
 
-	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))
+	else if (latejoin_injection_cooldown < world.time && (forced_injection || prob(latejoin_roll_chance)))
+		forced_injection = FALSE
+
 		var/list/drafted_rules = list()
 		for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 			if (!rule.weight)
