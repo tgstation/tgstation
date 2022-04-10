@@ -712,6 +712,12 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"XA" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
 
 (1,1,1) = {"
 aa
@@ -805,7 +811,7 @@ bw
 bw
 Lu
 ax
-bD
+XA
 bE
 bc
 "}
