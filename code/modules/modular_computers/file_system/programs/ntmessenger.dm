@@ -35,7 +35,7 @@
 	var/list/dictionary = list()
 
 	for(var/obj/item/modular_computer/messenger in GetViewableDevices(sort))
-		if(messenger.saved_identification && messenger.saved_job)
+		if(messenger.saved_identification && messenger.saved_job && !(messenger == computer))
 			var/list/data = list()
 			data["name"] = messenger.saved_identification
 			data["job"] = messenger.saved_job
@@ -60,7 +60,7 @@
 		if(!drive)
 			continue
 		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
-			if(!P.saved_identification || !P.saved_job || P.invisible || app.monitor_hidden || (P == computer))
+			if(!P.saved_identification || !P.saved_job || P.invisible || app.monitor_hidden)
 				continue
 			dictionary += P
 
