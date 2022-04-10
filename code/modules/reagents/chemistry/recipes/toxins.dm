@@ -409,7 +409,7 @@
 /datum/chemical_reaction/leadacetate
 	results = list(/datum/reagent/toxin/leadacetate = 1)
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/lead = 1, /datum/reagent/hydrogen_peroxide = 1)
-	mix_message = "Just looking at beaker makes you ear and head hurt."
+	mix_message = "Just looking at beaker makes your ear and head hurt."
 	is_cold_recipe = FALSE
 	required_temp = 200
 	optimal_temp = 500
