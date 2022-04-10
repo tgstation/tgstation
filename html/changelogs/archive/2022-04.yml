@@ -341,3 +341,113 @@
   - qol: Girder construction now uses balloon alerts
   - bugfix: Fix an exploit where permanent invisibility can be gained from using shadowcloak
       stacked with other transparency effects.
+2022-04-09:
+  AnturK:
+  - bugfix: Spacemen no longer can sculpt light effects from stone
+  Ebb-Real:
+  - expansion: Adds the science night vision goggles, they scan chems!
+  - expansion: Science sunglasses now have a research scanner installed.
+  JohnFulpWillard:
+  - bugfix: Kilostation's Brig, Medbay, and Chapel's pipes are all connected to the
+      station's distro and waste.
+  Melbert:
+  - bugfix: Fixes a runtime with bounty cubes on Destroy
+  TheBoondock:
+  - bugfix: layering issue with venus fly trap and spacevine
+  cacogen:
+  - expansion: Armour tags on clothing tell you when an item blocks pepperspray or
+      facehuggers
+  capsaicinz:
+  - bugfix: you can no longer create singularities by using soultap while in rod form
+  - balance: wizards can no longer cast spells while in rod form
+  ninjanomnom:
+  - balance: Stationary gas tanks now cost 12 material for the plating instead of
+      20
+  - balance: The base level of stationary gas tank pressure limits has been brought
+      up to the base level of canisters. Higher quality materials still increase this
+      further as before.
+  robbertapir:
+  - bugfix: Petri dish cultures no longer stay behind on the sprite like some sort
+      of ghost after being washed out of it. Cells don't have souls.
+  san7890:
+  - bugfix: KiloStation's Botany no longer has a bit of it defined as the defunct
+      "Central" Maintenance.
+  thgvr:
+  - bugfix: Digitigrade legs should now display correctly with certain clothing options.
+  unit0016:
+  - bugfix: A handful of issues on icebox, pertaining to /area/s, firelocks, airlocks,
+      mapping helpers, mapping mistakes, a literal space tile, and more have been
+      squashed!
+  - bugfix: You can actually move the Syndicate Infiltrator's docking position on
+      icebox again. Yeah. I know.
+2022-04-10:
+  ArcaneMusic:
+  - qol: All ID cards have been given a basic, standalone bank account. Not just for
+      crew, new and old, but also for IDs fresh out of the box.
+  - rscdel: The accounting machine has been retired from station use, as accounts
+      come with a default bank account now.
+  Ghilker:
+  - rscadd: reworked turbine to be a 3x1 machine, with flow and pressure based calculations.
+      A paper explaining how to use will spawn when building it and on the roundstart
+      one.
+  - bugfix: fixes an issue with the old turbine where you could generate infinite
+      power with cold gases
+  - balance: SM consumes items and gain power based on their size
+  Ghommie:
+  - bugfix: The screentip context no longer lies about what happens when you left
+      click another carbon mob with combat mode on.
+  KazooBard:
+  - balance: Regular mansus grasp now inflicts cultslur on the target for 4 seconds.
+  - balance: Increased void mark and void grasp silence duration from 8 seconds each
+      to 10 seconds each.
+  Melbert:
+  - imageadd: Cigars have sprites when held in hand
+  Mothblocks:
+  - balance: Free golems can no longer use shuttle consoles, other than to go home.
+  OneAsianTortoise:
+  - bugfix: removes the crate in window in lavaland base
+  Rhials:
+  - bugfix: The note in the Sloth ruin is fixed! Head on down to Lavaland and reap
+      the rewards!
+  SmArtKar:
+  - expansion: Evangelion jumpsuits have been added to robotics vendor's contraband
+      section
+  - imageadd: Ports new evangelion jumpsuit sprites
+  Son-of-Space:
+  - bugfix: TramStation atmos is more effectively separated into areas
+  - qol: It is easier to isolate and fix atmos issues in the Tramstation tunnel
+  TheBonded:
+  - bugfix: You can no longer create infinite snow with a crowbar
+  TiviPlus:
+  - bugfix: mech armor modules give armor properly now
+  - bugfix: Fix being unable to reload nukie missiles
+  ZephyrTFA:
+  - bugfix: SSUs no longer use power when doing nothing
+  thgvr:
+  - bugfix: Deltastation should once more have wrestling masks and athletic shorts.
+  timothymtorres:
+  - refactor: Refactor antimagic component to be more robust.
+  - soundadd: Add different sound effects for when magic is blocked
+  - bugfix: Equipping or dropping antimagic items now properly updates the magic buttons
+  - bugfix: Any magic being blocked or restricting casting now displays a message
+  - bugfix: Any mind antimagic now properly blocks telepathy effects
+  - bugfix: Remove bloodsplatter when fireball is blocked by antimagic
+  - bugfix: Remove lockers when staff of locker projectiles blocked by antimagic
+  - bugfix: Fire breath is no longer blocked by antimagic
+  - bugfix: Spellcards are now blocked by antimagic
+  - qol: Add antimagic chat notification and animation effects. Mobs will now glow
+      when they successfully block magic.
+  - balance: Foilhats prevent someone from casting mind magic (telepathy, mindswap,
+      etc.)
+  - balance: Bibles, ritual totems, nullrods, holymelons, and `TRAIT_HOLY` prevent
+      someone from casting unholy magic (cult spells, etc.)
+  - balance: Nullrods, ritual totems, and holymelons prevent someone from casting
+      wizard magic (fireball, magic missile, etc.)
+  - balance: Immorality talismans, berserker suits, and `TRAIT_ANTIMAGIC` prevents
+      all types of magic (except stuff like mime abilities)
+  - balance: Touch of Madness and Mindswap is now blocked with `MAGIC_RESISTANCE`
+      and `MAGIC_RESISTANCE_MIND`
+  - balance: Voice of god is now blocked with `MAGIC_RESISTANCE_HOLY` and `MAGIC_RESISTANCE_MIND`
+  - rscdel: Cult blink and cult summon creature spells were never used in the code
+      and have been removed.
+  - bugfix: Fix moonicorns not falling through openspace properly.

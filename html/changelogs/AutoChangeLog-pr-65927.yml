@@ -1,5 +1,0 @@
-author: "unit0016"
-delete-after: True
-changes: 
-  - bugfix: "A handful of issues on icebox, pertaining to /area/s, firelocks, airlocks, mapping helpers, mapping mistakes, a literal space tile, and more have been squashed!"
-  - bugfix: "You can actually move the Syndicate Infiltrator's docking position on icebox again. Yeah. I know."

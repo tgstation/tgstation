@@ -105,6 +105,11 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
+	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
+	registered_account = blank_bank_account
+	blank_bank_account.account_job = new /datum/job/unassigned
+	registered_account.replaceable = TRUE
+
 	// Applying the trim updates the label and icon, so don't do this twice.
 	if(ispath(trim))
 		SSid_access.apply_trim_to_card(src, trim)
@@ -640,15 +645,16 @@
 		return FALSE
 	if(old_account)
 		old_account.bank_cards -= src
+		account.account_balance += old_account.account_balance
 	account.bank_cards += src
 	registered_account = account
-	to_chat(user, span_notice("The provided account has been linked to this ID card."))
+	to_chat(user, span_notice("The provided account has been linked to this ID card. It contains [account.account_balance] credits."))
 	return TRUE
 
 /obj/item/card/id/AltClick(mob/living/user)
 	if(!alt_click_can_use_id(user))
 		return
-	if(!registered_account)
+	if(!registered_account || registered_account.replaceable)
 		set_new_account(user)
 		return
 	if (registered_account.being_dumped)
