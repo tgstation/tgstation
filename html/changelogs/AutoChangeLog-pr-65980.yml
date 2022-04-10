@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - qol: "All ID cards have been given a basic, standalone bank account. Not just for crew, new and old, but also for IDs fresh out of the box."
-  - rscdel: "The accounting machine has been retired from station use, as accounts come with a default bank account now."
