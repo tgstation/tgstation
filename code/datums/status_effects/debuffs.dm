@@ -510,7 +510,7 @@
 
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.silent += 4
+		carbon_owner.silent += 5
 
 	return ..()
 

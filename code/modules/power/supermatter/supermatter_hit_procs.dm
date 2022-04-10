@@ -252,15 +252,17 @@
 	. |= FALL_STOP_INTERCEPTING | FALL_INTERCEPTED
 
 /obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/consumed_object)
+	var/object_size
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
+		object_size = consumed_mob.mob_size + 2
 		if(consumed_mob.status_flags & GODMODE)
 			return
 		message_admins("[src] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.dust(force = TRUE)
 		if(power_changes)
-			matter_power += 200
+			matter_power += 100 * object_size
 		if(takes_damage && is_clown_job(consumed_mob.mind?.assigned_role))
 			damage += rand(-300, 300) // HONK
 			damage = max(damage, 0)
@@ -274,11 +276,13 @@
 				message_admins("[src] has consumed [consumed_object], [suspicion] [ADMIN_JMP(src)].")
 			investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_ENGINE)
 		qdel(consumed_object)
-	if(!iseffect(consumed_object) && power_changes)
-		matter_power += 200
+	if(!iseffect(consumed_object) && isitem(consumed_object) && power_changes)
+		var/obj/item/consumed_item = consumed_object
+		object_size = consumed_item.w_class
+		matter_power += 70 * object_size
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(src, max_range = 6, threshold = 0.3, chance = 30)
+	radiation_pulse(src, max_range = 6, threshold = 1.2 / object_size, chance = 10 * object_size)
 	for(var/mob/living/near_mob in range(10))
 		investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_ENGINE)
 		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))

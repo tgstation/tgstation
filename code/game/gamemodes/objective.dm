@@ -166,7 +166,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	clothes_req = FALSE
 	nonabstract_req = TRUE
 	phase_allowed = TRUE
-	antimagic_allowed = TRUE
+	antimagic_flags = NONE
 	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/self/special_equipment_fallback/cast(list/targets, mob/user)

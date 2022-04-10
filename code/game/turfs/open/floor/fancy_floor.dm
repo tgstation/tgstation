@@ -170,7 +170,7 @@
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/diggable, /obj/item/stack/sheet/mineral/snow, 2, "dig up")
+	AddComponent(/datum/component/diggable, /obj/item/stack/tile/mineral/snow, 2, "dig up")
 
 /turf/open/floor/fake_snow/setup_broken_states()
 	return list("snow_dug")

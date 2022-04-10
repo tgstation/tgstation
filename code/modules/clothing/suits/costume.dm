@@ -470,6 +470,7 @@
 	icon_state = "MajimaJacket"
 	inhand_icon_state = "MajimaJacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/dutch
 	name = "dutch's jacket"
@@ -478,6 +479,7 @@
 	inhand_icon_state = "DutchJacket"
 	body_parts_covered = ARMS
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/driscoll
 	name = "driscoll poncho"
@@ -485,6 +487,7 @@
 	icon_state = "driscoll_suit"
 	inhand_icon_state = "driscoll_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/irs
 	name = "internal revenue service jacket"
@@ -492,6 +495,7 @@
 	icon_state = "irs_suit"
 	inhand_icon_state = "irs_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/osi
 	name = "\improper O.S.I. body armor"
@@ -499,6 +503,7 @@
 	icon_state = "osi_suit"
 	inhand_icon_state = "osi_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/tmc
 	name = "\improper Lost M.C. cut"
@@ -506,6 +511,7 @@
 	icon_state = "tmc_suit"
 	inhand_icon_state = "tmc_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/pg
 	name = "powder ganger jacket"
@@ -513,6 +519,7 @@
 	icon_state = "pg_suit"
 	inhand_icon_state = "pg_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/deckers
 	name = "decker hoodie"
@@ -520,6 +527,7 @@
 	icon_state = "decker_suit"
 	inhand_icon_state = "decker_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/morningstar
 	name = "morningstar coat"
@@ -527,6 +535,7 @@
 	icon_state = "morningstar_suit"
 	inhand_icon_state = "morningstar_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/saints
 	name = "Third Street Saints fur coat"
@@ -536,6 +545,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/phantom
 	name = "phantom thief coat"
@@ -543,6 +553,7 @@
 	icon_state = "phantom_suit"
 	inhand_icon_state = "phantom_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/allies
 	name = "allies body armor"
@@ -550,6 +561,7 @@
 	icon_state = "allies_armor"
 	inhand_icon_state = "allies_armor"
 	body_parts_covered = CHEST|GROIN
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/soviet
 	name = "soviet armored coat"
