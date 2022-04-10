@@ -44,6 +44,8 @@
 	var/destination_id = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
 	var/navigate_target = destination_list[destination_id]
 
+	if(isnull(navigate_target))
+		return
 	if(incapacitated())
 		return
 	COOLDOWN_START(src, navigate_cooldown, 15 SECONDS)
@@ -58,7 +60,7 @@
 		navigate_target = new_target
 
 	if(!isatom(navigate_target))
-		stack_trace("Navigate target [navigate_target] is not an atom, somehow.")
+		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
 		return
 
 	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, id = get_idcard(), skip_first = FALSE)
