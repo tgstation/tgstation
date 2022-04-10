@@ -1526,20 +1526,20 @@
 
 /datum/reagent/zauker
 	name = "Zauker"
-	description = "An unstable gas that is toxic to all living beings"
+	description = "An unstable gas that is toxic to all living beings."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = "90560B"
 	taste_description = "bitter"
 	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/zauker/on_mob_life(mob/living/L, delta_time, times_fired)
-	. = ..()
-	L.adjustBruteLoss(6 * REM * delta_time, FALSE)
-	L.adjustOxyLoss(1 * REM * delta_time, FALSE)
-	L.adjustFireLoss(2 * REM * delta_time, FALSE)
-	L.adjustToxLoss(2 * REM * delta_time, FALSE)
-
+/datum/reagent/zauker/on_mob_life(mob/living/breather, delta_time, times_fired)
+	breather.adjustBruteLoss(6 * REM * delta_time, FALSE)
+	breather.adjustOxyLoss(1 * REM * delta_time, FALSE)
+	breather.adjustFireLoss(2 * REM * delta_time, FALSE)
+	breather.adjustToxLoss(2 * REM * delta_time, FALSE)
+	..()
+	return TRUE
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
