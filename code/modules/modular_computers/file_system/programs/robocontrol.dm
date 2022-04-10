@@ -13,6 +13,12 @@
 	var/botcount = 0
 	///Access granted by the used to summon robots.
 	var/list/current_access = list()
+	var/list/drone_ping_types = list(
+		"Low",
+		"Medium",
+		"High",
+		"Critical",
+	)
 
 /datum/computer_file/program/robocontrol/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -78,7 +84,7 @@
 	data["mules"] = mulelist
 	data["botcount"] = botlist.len
 	data["droneaccess"] = GLOB.drone_machine_blacklist_enabled
-	data["dronepingtypes"] = list("Low","Medium","High","Critical")
+	data["dronepingtypes"] = drone_ping_types
 
 	return data
 
@@ -138,7 +144,7 @@
 				return
 			GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
 		if("ping_drones")
-			if(!(params["ping_type"]))
+			if(!(params["ping_type"]) || !(params["ping_type"] in drone_ping_types))
 				return
 			var/area/current_area = get_area(current_user)
 			if(!current_area || QDELETED(current_user))
