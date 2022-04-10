@@ -196,8 +196,8 @@
 		to_chat(usr, span_notice("Refill failed. No compatible tank found."))
 		return
 	if(!refill_source.reagents?.total_volume)
-		return
 		to_chat(usr, span_notice("Refill failed. Source tank empty."))
+		return
 
 	refill_source.reagents.trans_to(src, reagents.maximum_volume)
 	playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)

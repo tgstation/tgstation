@@ -1,6 +1,5 @@
 import { useBackend } from '../../backend';
 import { Button, LabeledList, ProgressBar } from '../../components';
-import { Fragment } from 'inferno';
 import { OperatorData, MechaUtility } from './data';
 
 export const UtilityModulesPane = (props, context) => {
@@ -80,7 +79,7 @@ const SnowflakeEjector = (props: {module: MechaUtility}, context) => {
 const SnowflakeExtinguisher = (props: {module: MechaUtility}, context) => {
   const { act, data } = useBackend<OperatorData>(context);
   return (
-    <Fragment>
+    <>
       <ProgressBar
         value={props.module.snowflake.reagents}
         minValue={0}
@@ -120,6 +119,6 @@ const SnowflakeExtinguisher = (props: {module: MechaUtility}, context) => {
           ref: props.module.ref,
           gear_action: "detach",
         })} />
-    </Fragment>
+    </>
   );
 };
