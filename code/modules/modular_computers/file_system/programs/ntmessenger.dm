@@ -60,7 +60,7 @@
 		if(!drive)
 			continue
 		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
-			if(!P.saved_identification || !P.saved_job || P.invisible || app.monitor_hidden)
+			if(!P.saved_identification || !P.saved_job || P.invisible || app.monitor_hidden || (P == computer))
 				continue
 			dictionary += P
 
