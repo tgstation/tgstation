@@ -35,8 +35,6 @@
 	ignore += typesof(/turf/baseturf_bottom)
 	//This demands a borg, so we'll let if off easy
 	ignore += typesof(/obj/item/modular_computer/tablet/integrated)
-	//This demands an AI. Yuuup.
-	ignore += typesof(/obj/item/modular_computer/tablet/ai)
 	//This one demands a computer, ditto
 	ignore += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier

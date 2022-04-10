@@ -13,6 +13,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	max_integrity = 100
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
 
+	var/bypass_state = FALSE // bypassing the set icon state
+
 	var/enabled = 0 // Whether the computer is turned on.
 	var/upgradable = TRUE // whether or not the computer can be upgraded
 	var/deconstructable = TRUE // whether or not the computer can be deconstructed
@@ -277,7 +279,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	. += get_modular_computer_parts_examine(user)
 
 /obj/item/modular_computer/update_icon_state()
-	icon_state = enabled ? icon_state_powered : icon_state_unpowered
+	if(!bypass_state)
+		icon_state = enabled ? icon_state_powered : icon_state_unpowered
 	return ..()
 
 /obj/item/modular_computer/update_overlays()

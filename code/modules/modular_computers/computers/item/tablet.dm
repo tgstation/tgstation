@@ -1,7 +1,3 @@
-#define TABLET_SCANNER_NONE 1<<0
-#define TABLET_SCANNER_MEDICAL 1<<1
-#define TABLET_SCANNER_REAGENT 1<<2
-
 /obj/item/modular_computer/tablet  //Its called tablet for theme of 90ies but actually its a "big smartphone" sized
 	name = "tablet computer"
 	icon = 'icons/obj/modular_tablet.dmi'
@@ -23,7 +19,6 @@
 
 	var/has_variants = TRUE
 	var/finish_color = null
-	var/scanning_mode = TABLET_SCANNER_NONE
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/insert_type = /obj/item/pen
@@ -32,28 +27,11 @@
 	var/note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, bringing you the best in electronics and software since 2467!"  // the note used by the notekeeping app, stored here for convenience
 
 /obj/item/modular_computer/tablet/update_icon_state()
-	if(has_variants)
+	if(has_variants && !bypass_state)
 		if(!finish_color)
 			finish_color = pick("red", "blue", "brown", "green", "black")
 		icon_state = icon_state_powered = icon_state_unpowered = "[base_icon_state]-[finish_color]"
 	return ..()
-
-/obj/item/modular_computer/tablet/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	switch(scanning_mode)
-		if(TABLET_SCANNER_REAGENT)
-			if(!isnull(A.reagents))
-				if(A.reagents.reagent_list.len > 0)
-					var/reagents_length = A.reagents.reagent_list.len
-					to_chat(user, span_notice("[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found."))
-					for (var/re in A.reagents.reagent_list)
-						to_chat(user, span_notice("\t [re]"))
-				else
-					to_chat(user, span_notice("No active chemical agents found in [A]."))
-			else
-				to_chat(user, span_notice("No significant chemical agents found in [A]."))
 
 /obj/item/modular_computer/tablet/interact(mob/user)
 	. = ..()
@@ -191,37 +169,6 @@
 		return ..()
 	return FALSE
 
-/obj/item/modular_computer/tablet/ai
-	name = "modular interface"
-	icon_state = "tablet-silicon"
-	icon_state_powered = "tablet-silicon"
-	icon_state_unpowered = "tablet-silicon"
-	base_icon_state = "tablet-silicon"
-	has_light = FALSE //tablet light button actually enables/disables the borg lamp
-	comp_light_luminosity = 0
-	has_variants = FALSE
-	///Ref to the borg we're installed in. Set by the borg during our creation.
-	var/mob/living/silicon/ai/ayeye
-
-/obj/item/modular_computer/tablet/ai/Initialize(mapload)
-	. = ..()
-	vis_flags |= VIS_INHERIT_ID
-	ayeye = loc
-	if(!istype(ayeye))
-		ayeye = null
-		stack_trace("[type] initialized outside of an AI, deleting.")
-		return INITIALIZE_HINT_QDEL
-
-/obj/item/modular_computer/tablet/ai/Destroy()
-	ayeye = null
-	return ..()
-
-/obj/item/modular_computer/tablet/ai/turn_on(mob/user)
-	if(ayeye?.stat != DEAD)
-		return ..()
-	return FALSE
-
-
 /**
  * Returns a ref to the RoboTact app, creating the app if need be.
  *
@@ -305,11 +252,9 @@
 	greyscale_config = /datum/greyscale_config/tablet
 	greyscale_colors = "#999875#a92323"
 
-	var/default_disk = 0
+	bypass_state = TRUE
 
-/obj/item/modular_computer/tablet/role/update_icon_state()
-	. = ..()
-	icon_state = "pda"
+	var/default_disk = 0
 
 /obj/item/modular_computer/tablet/role/update_overlays()
 	. = ..()
@@ -322,6 +267,8 @@
 			. += mutable_appearance(init_icon, "id_overlay")
 	if(light_on)
 		. += mutable_appearance(init_icon, "light_overlay")
+	if(istype(src, /obj/item/modular_computer/tablet/role/clown))
+		. += mutable_appearance(init_icon, "pda_stripe_clown") // clowns have eyes that go over their screen, so it needs to be compiled last
 
 /obj/item/modular_computer/tablet/role/attack_ai(mob/user)
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
@@ -335,6 +282,7 @@
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/card_slot)
 	install_component(new /obj/item/computer_hardware/identifier)
+	install_component(new /obj/item/computer_hardware/sensorpackage)
 
 	if(default_disk)
 		var/obj/item/computer_hardware/hard_drive/portable/disk = new default_disk(src)

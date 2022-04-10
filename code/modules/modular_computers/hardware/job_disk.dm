@@ -26,8 +26,23 @@
 		progs_to_store += new /datum/computer_file/program/atmosscan(src)
 	if(disk_flags & DISK_MANIFEST)
 		progs_to_store += new /datum/computer_file/program/crew_manifest(src)
+	if(disk_flags & DISK_SEC)
+		progs_to_store += new /datum/computer_file/program/records/security(src)
 	if(disk_flags & DISK_JANI)
 		progs_to_store += new /datum/computer_file/program/radar/custodial_locator(src)
+	if(disk_flags & DISK_CHEM)
+		progs_to_store += new /datum/computer_file/program/phys_scanner/reagent(src)
+	if(disk_flags & DISK_MED)
+		progs_to_store += new /datum/computer_file/program/phys_scanner/medical(src)
+		progs_to_store += new /datum/computer_file/program/records/medical(src)
+	if(disk_flags & DISK_ROBOS)
+		var/datum/computer_file/program/robocontrol/robo = new(src)
+		robo.cart_mode = TRUE
+		progs_to_store += robo
+	if(disk_flags & DISK_CARGO)
+		progs_to_store += new /datum/computer_file/program/shipping(src)
+	if(disk_flags & DISK_SIGNAL)
+		progs_to_store += new /datum/computer_file/program/signaler(src)
 
 	for (var/datum/computer_file/program/prog in progs_to_store)
 		prog.usage_flags = PROGRAM_ALL
@@ -55,7 +70,7 @@
 
 /obj/item/computer_hardware/hard_drive/role/medical
 	name = "\improper Med-U disk"
-	disk_flags = DISK_MED
+	disk_flags = DISK_MED | DISK_ROBOS
 	bot_access = list(
 		MED_BOT,
 	)
@@ -63,13 +78,10 @@
 /obj/item/computer_hardware/hard_drive/role/chemistry
 	name = "\improper ChemWhiz disk"
 	disk_flags = DISK_CHEM
-	bot_access = list(
-		MED_BOT,
-	)
 
 /obj/item/computer_hardware/hard_drive/role/security
 	name = "\improper R.O.B.U.S.T. disk"
-	disk_flags = DISK_SEC | DISK_MANIFEST
+	disk_flags = DISK_SEC | DISK_MANIFEST | DISK_ROBOS
 	bot_access = list(
 		SEC_BOT,
 		ADVANCED_SEC_BOT,
@@ -77,7 +89,7 @@
 
 /obj/item/computer_hardware/hard_drive/role/detective
 	name = "\improper D.E.T.E.C.T. disk"
-	disk_flags = DISK_SEC | DISK_MED | DISK_MANIFEST
+	disk_flags = DISK_SEC | DISK_MED | DISK_MANIFEST | DISK_ROBOS
 	bot_access = list(
 		SEC_BOT,
 		ADVANCED_SEC_BOT,
@@ -115,16 +127,17 @@
 /obj/item/computer_hardware/hard_drive/role/signal
 	name = "generic signaler disk"
 	desc = "A data disk with an integrated radio signaler module."
+	disk_flags = DISK_SIGNAL
 
 /obj/item/computer_hardware/hard_drive/role/signal/ordnance
 	name = "\improper Signal Ace 2 disk"
 	desc = "Complete with integrated radio signaler!"
-	disk_flags = DISK_CHEM | DISK_ATMOS
+	disk_flags = DISK_SIGNAL | DISK_CHEM | DISK_ATMOS
 
 /obj/item/computer_hardware/hard_drive/role/quartermaster
 	name = "space parts & space vendors disk"
 	desc = "Perfect for the Quartermaster on the go!"
-	disk_flags = DISK_CARGO
+	disk_flags = DISK_CARGO | DISK_ROBOS
 	bot_access = list(
 		MULE_BOT,
 	)
@@ -144,7 +157,7 @@
 
 /obj/item/computer_hardware/hard_drive/role/hos
 	name = "\improper R.O.B.U.S.T. DELUXE disk"
-	disk_flags = DISK_MANIFEST | DISK_STATUS | CART_SECURITY
+	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_SEC | DISK_ROBOS
 	bot_access = list(
 		SEC_BOT,
 		ADVANCED_SEC_BOT,
@@ -161,7 +174,7 @@
 
 /obj/item/computer_hardware/hard_drive/role/cmo
 	name = "\improper Med-U DELUXE disk"
-	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_CHEM | DISK_MED
+	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_CHEM | DISK_MED | DISK_ROBOS
 	bot_access = list(
 		MED_BOT,
 	)

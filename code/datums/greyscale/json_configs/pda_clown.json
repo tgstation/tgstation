@@ -4,11 +4,6 @@
 			"type": "icon_state",
 			"icon_state": "pda-clown",
 			"blend_mode": "overlay"
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "pda_stripe_clown",
-			"blend_mode": "overlay"
 		}
 	]
 }

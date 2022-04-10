@@ -93,11 +93,19 @@
 	default_disk = /obj/item/computer_hardware/hard_drive/role/quartermaster
 	greyscale_colors = "#D6B328#6506ca"
 
+/obj/item/modular_computer/tablet/role/quartermaster/Initialize(mapload)
+	. = ..()
+	install_component(new /obj/item/computer_hardware/printer/mini)
+
 /obj/item/modular_computer/tablet/role/quartermaster
 	name = "quartermaster tablet"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/quartermaster
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D6B328#6506ca#927444"
+
+/obj/item/modular_computer/tablet/role/quartermaster/Initialize(mapload)
+	. = ..()
+	install_component(new /obj/item/computer_hardware/printer/mini)
 
 /obj/item/modular_computer/tablet/role/shaftminer
 	name = "shaft miner tablet"
@@ -155,7 +163,8 @@
 /obj/item/modular_computer/tablet/role/clown
 	name = "clown tablet"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/clown
-	greyscale_config = /datum/greyscale_config/tablet/clown
+	icon_state = "pda-clown"
+	greyscale_config = null
 	greyscale_colors = null
 	insert_type = /obj/item/toy/crayon/rainbow
 
@@ -184,8 +193,11 @@
 /obj/item/modular_computer/tablet/role/curator
 	name = "curator tablet"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/curator
+	greyscale_config = null
+	greyscale_colors = null
 	icon_state = "pda-library"
 	insert_type = /obj/item/pen/fountain
+	display_overlays = FALSE
 
 /obj/item/modular_computer/tablet/role/syndicate
 	name = "military tablet"

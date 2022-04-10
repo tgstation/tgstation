@@ -15,9 +15,6 @@
 	var/list/current_access = list()
 	///Whether or not this is the cartridge program version.
 	var/cart_mode = FALSE
-	///The bots that the inserted cartridge can access.
-	var/cart_access
-
 /datum/computer_file/program/robocontrol/ui_data(mob/user)
 	var/list/data = get_header_data()
 	var/turf/current_turf = get_turf(ui_host())
@@ -41,7 +38,7 @@
 			continue
 		if(computer && !simple_bot.check_access(user) && !cart_mode) // Only check Bots we can access)
 			continue
-		if(!(simple_bot.bot_type in cart_access) && cart_mode)
+		if(!(simple_bot.bot_type in job_disk.bot_access) && cart_mode)
 			continue
 		var/list/newbot = list(
 			"name" = simple_bot.name,
