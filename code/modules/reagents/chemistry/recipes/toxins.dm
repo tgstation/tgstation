@@ -405,3 +405,23 @@
 	purity_min = 0.4
 	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/leadacetate
+	results = list(/datum/reagent/toxin/leadacetate = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/lead = 1, /datum/reagent/hydrogen_peroxide = 1)
+	mix_message = "Just looking at beaker makes you ear and head hurt."
+	is_cold_recipe = FALSE
+	required_temp = 200
+	optimal_temp = 500
+	overheat_temp = 800
+	optimal_ph_min = 5
+	optimal_ph_max = 11
+	determin_ph_range = 3
+	temp_exponent_factor = 1
+	ph_exponent_factor = 1
+	thermic_constant = 100
+	H_ion_release = 5
+	rate_up_lim = 12
+	purity_min = 0.5
+	reaction_flags = REACTION_PH_VOL_CONSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER

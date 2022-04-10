@@ -162,13 +162,16 @@
 /datum/chemical_reaction/nitrous_oxide/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	return //This is empty because the explosion reaction will occur instead (see pyrotechnics.dm). This is just here to update the lookup ui.
 
+/datum/chemical_reaction/lead
+	results = list(/datum/reagent/lead = 7)
+	required_reagents = list(/datum/reagent/toxin/acid = 1, /datum/reagent/toxin/acid/fluacid = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/uranium = 1, /datum/reagent/toxin/mutetoxin = 1, /datum/reagent/toxin/mindbreaker = 1, /datum/reagent/toxin/chloralhydrate = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 //Technically a mutation toxin
 /datum/chemical_reaction/mulligan
 	results = list(/datum/reagent/mulligan = 1)
 	required_reagents = list(/datum/reagent/mutationtoxin/jelly = 1, /datum/reagent/toxin/mutagen = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
-
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
@@ -232,7 +235,6 @@
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
 			D.Evolve(level_min, level_max)
-
 
 /datum/chemical_reaction/mix_virus/mix_virus_2
 	required_reagents = list(/datum/reagent/toxin/mutagen = 1)
@@ -311,10 +313,7 @@
 		if(D)
 			D.Neuter()
 
-
-
 ////////////////////////////////// foam and foam precursor ///////////////////////////////////////////////////
-
 
 /datum/chemical_reaction/surfactant
 	results = list(/datum/reagent/fluorosurfactant = 5)
@@ -368,7 +367,6 @@
 	required_reagents = list(/datum/reagent/foaming_agent = 3, /datum/reagent/acetone = 1, /datum/reagent/iron = 1)
 	mix_message = "The solution mixes into a frothy metal foam and conforms to the walls of its container."
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
-
 
 /////////////////////////////// Cleaning and hydroponics /////////////////////////////////////////////////
 
