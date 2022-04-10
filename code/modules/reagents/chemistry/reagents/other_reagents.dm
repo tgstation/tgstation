@@ -1511,7 +1511,7 @@
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = "90560B"
-	taste_description = "tasteless"
+	taste_description = "like air but better"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/pluoxium/on_mob_life(mob/living/L, delta_time, times_fired)
