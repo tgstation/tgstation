@@ -70,13 +70,20 @@
 			break
 	if(!flammable_limb && !H.on_fire) //Allows their suit to attempt to autoextinguish if augged and on fire
 		return
-	if(!atmos_sealed && (!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves)))
+	if(!atmos_sealed)
+		var/can_burn = FALSE
+		if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves))
+			can_burn = TRUE
+		else if(!istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) && !HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY))
+			can_burn = TRUE
+		if(!can_burn)
+			return
 		var/datum/gas_mixture/environment = H.loc.return_air()
 		if(environment?.total_moles())
 			if(environment.gases[/datum/gas/hypernoblium] && (environment.gases[/datum/gas/hypernoblium][MOLES]) >= 5)
 				if(H.on_fire && H.fire_stacks > 0)
 					H.adjust_fire_stacks(-10 * delta_time)
-			else if(!HAS_TRAIT(H, TRAIT_NOFIRE) && !HAS_TRAIT(H, TRAIT_NOSELFIGNITION))
+			else if(!HAS_TRAIT(H, TRAIT_NOFIRE))
 				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
 					H.adjust_fire_stacks(0.25 * delta_time)
 					if(!H.on_fire && H.fire_stacks > 0)
