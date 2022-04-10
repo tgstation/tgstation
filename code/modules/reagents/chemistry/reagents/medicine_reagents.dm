@@ -80,7 +80,7 @@
 	M.SetSleeping(0)
 
 	M.silent = FALSE
-	M.dizziness = 0
+	M.remove_status_effect(/datum/status_effect/dizziness)
 	M.disgust = 0
 	M.drowsyness = 0
 	M.stuttering = 0
@@ -251,7 +251,7 @@
 
 /datum/reagent/medicine/rezadone/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustToxLoss(1 * REM * delta_time, 0)
-	M.Dizzy(5 * REM * delta_time)
+	M.add_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.Jitter(5 * REM * delta_time)
 	..()
 	. = TRUE
@@ -628,7 +628,7 @@
 /datum/reagent/medicine/morphine/overdose_process(mob/living/M, delta_time, times_fired)
 	if(DT_PROB(18, delta_time))
 		M.drop_all_held_items()
-		M.Dizzy(2)
+		M.add_timed_status_effect(4 SECONDS, /datum/status_effect/dizziness)
 		M.Jitter(2)
 	..()
 
@@ -772,14 +772,14 @@
 		. = TRUE
 	M.losebreath = 0
 	if(DT_PROB(10, delta_time))
-		M.Dizzy(5)
+		M.add_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness)
 		M.Jitter(5)
 	..()
 
 /datum/reagent/medicine/atropine/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustToxLoss(0.5 * REM * delta_time, 0)
 	. = TRUE
-	M.Dizzy(1 * REM * delta_time)
+	M.add_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.Jitter(1 * REM * delta_time)
 	..()
 
@@ -990,7 +990,7 @@
 	inverse_chem		= /datum/reagent/inverse/antihol
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = 0
+	M.remove_status_effect(/datum/status_effect/dizziness)
 	M.set_drowsyness(0)
 	M.slurring = 0
 	M.set_confusion(0)
@@ -1214,7 +1214,7 @@
 	metabolizer.AdjustAllImmobility(-20 * REM * delta_time)
 	metabolizer.adjustStaminaLoss(-10 * REM * delta_time, 0)
 	metabolizer.Jitter(10 * REM * delta_time)
-	metabolizer.Dizzy(10 * REM * delta_time)
+	metabolizer.add_timed_status_effect(20 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	return TRUE
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
@@ -1228,7 +1228,7 @@
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
-	L.Dizzy(0)
+	L.remove_status_effect(/datum/status_effect/dizziness)
 	L.Jitter(0)
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/metabolizer, delta_time, times_fired)
@@ -1341,7 +1341,7 @@
 		if(1 to 40)
 			M.jitteriness = min(M.jitteriness + (1 * REM * delta_time), 10)
 			M.stuttering = min(M.stuttering + (1 * REM * delta_time), 10)
-			M.Dizzy(5 * REM * delta_time)
+			M.add_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 			if(DT_PROB(30, delta_time))
 				M.losebreath++
 		if(41 to 80)
@@ -1349,7 +1349,7 @@
 			M.adjustStaminaLoss(0.1 * REM * delta_time, 0)
 			M.jitteriness = min(M.jitteriness + (1 * REM * delta_time), 20)
 			M.stuttering = min(M.stuttering + (1 * REM * delta_time), 20)
-			M.Dizzy(10 * REM * delta_time)
+			M.add_timed_status_effect(20 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 			if(DT_PROB(30, delta_time))
 				M.losebreath++
 			if(DT_PROB(10, delta_time))
@@ -1387,7 +1387,7 @@
 
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.jitteriness = max(M.jitteriness - (6 * REM * delta_time), 0)
-	M.dizziness = max(M.dizziness - (6 * REM * delta_time), 0)
+	M.remove_timed_status_effect(12 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.set_confusion(max(M.get_confusion() - (6 * REM * delta_time), 0))
 	M.disgust = max(M.disgust - (6 * REM * delta_time), 0)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)

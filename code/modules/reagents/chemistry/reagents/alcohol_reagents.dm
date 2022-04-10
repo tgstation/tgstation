@@ -163,7 +163,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.dizziness = max(drinker.dizziness - (5 * REM * delta_time), 0)
+	drinker.remove_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	drinker.adjust_drowsyness(-3 * REM * delta_time)
 	drinker.AdjustSleeping(-40 * REM * delta_time)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
@@ -1469,7 +1469,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	drinker.set_drugginess(50 * REM * delta_time)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_confusion(max(drinker.get_confusion() + (2 * REM * delta_time),0))
-		drinker.Dizzy(10 * REM * delta_time)
+		drinker.add_timed_status_effect(20 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
+
 	if (!drinker.slurring)
 		drinker.slurring = 1 * REM * delta_time
 	drinker.slurring += 3 * REM * delta_time
@@ -1496,7 +1497,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/gargle_blaster/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.dizziness += 1.5 * REM * delta_time
+	drinker.add_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	switch(current_cycle)
 		if(15 to 45)
 			if(!drinker.slurring)
@@ -1530,7 +1531,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	drinker.set_drugginess(50 * REM * delta_time)
-	drinker.dizziness += 2 * REM * delta_time
+	drinker.add_timed_status_effect(4 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time, 150)
 	if(DT_PROB(10, delta_time))
 		drinker.adjustStaminaLoss(10)
@@ -1578,25 +1579,25 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		drinker.slurring = 1 * REM * delta_time
 	switch(current_cycle)
 		if(1 to 5)
-			drinker.Dizzy(10 * REM * delta_time)
+			drinker.add_timed_status_effect(20 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 			drinker.set_drugginess(30 * REM * delta_time)
 			if(DT_PROB(5, delta_time))
 				drinker.emote(pick("twitch","giggle"))
 		if(5 to 10)
 			drinker.Jitter(20 * REM * delta_time)
-			drinker.Dizzy(20 * REM * delta_time)
+			drinker.add_timed_status_effect(40 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 			drinker.set_drugginess(45 * REM * delta_time)
 			if(DT_PROB(10, delta_time))
 				drinker.emote(pick("twitch","giggle"))
 		if (10 to 200)
 			drinker.Jitter(40 * REM * delta_time)
-			drinker.Dizzy(40 * REM * delta_time)
+			drinker.add_timed_status_effect(80 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 			drinker.set_drugginess(60 * REM * delta_time)
 			if(DT_PROB(16, delta_time))
 				drinker.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
 			drinker.Jitter(60 * REM * delta_time)
-			drinker.Dizzy(60 * REM * delta_time)
+			drinker.add_timed_status_effect(120 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 			drinker.set_drugginess(75 * REM * delta_time)
 			if(DT_PROB(23, delta_time))
 				drinker.emote(pick("twitch","giggle"))

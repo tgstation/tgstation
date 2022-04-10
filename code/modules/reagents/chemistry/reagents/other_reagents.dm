@@ -294,7 +294,7 @@
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering + (2 * delta_time), 10)
-		M.Dizzy(5)
+		M.add_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness)
 		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
 			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
 			if(prob(10))
@@ -1221,7 +1221,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/cryptobiolin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.Dizzy(1)
+	M.add_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness)
 	M.set_confusion(clamp(M.get_confusion(), 1, 20))
 	..()
 
@@ -2473,8 +2473,7 @@
 /datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.get_confusion() < 6)
 		M.set_confusion(clamp(M.get_confusion() + (3 * REM * delta_time), 0, 5))
-	if(M.dizziness < 6)
-		M.dizziness = clamp(M.dizziness + (3 * REM * delta_time), 0, 5)
+	M.add_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/dizziness, max_duration = 12 SECONDS)
 	if(DT_PROB(10, delta_time))
 		to_chat(M, "You feel confused and disoriented.")
 	..()

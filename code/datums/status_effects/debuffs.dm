@@ -708,8 +708,8 @@
 
 /datum/status_effect/trance/tick()
 	if(stun)
-		owner.Stun(60, TRUE)
-	owner.dizziness = 20
+		owner.Stun(6 SECONDS, TRUE)
+	owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
 
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
@@ -729,7 +729,7 @@
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
-	owner.dizziness = 0
+	owner.remove_status_effect(/datum/status_effect/dizziness)
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
@@ -942,7 +942,7 @@
 		if(0 to 10)
 			human_owner.vomit()
 		if(20 to 30)
-			human_owner.Dizzy(50)
+			human_owner.add_timed_status_effect(100 SECONDS, /datum/status_effect/dizziness)
 			human_owner.Jitter(50)
 		if(30 to 40)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 5)

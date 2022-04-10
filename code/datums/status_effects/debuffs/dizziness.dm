@@ -5,16 +5,17 @@
 	/// The strength of the dizziness on us. The stronger the dizzy, the faster it goes away
 	var/dizziness_strength = 1
 
-/datum/status_effect/dizziness(mob/living/new_owner, duration = 10 SECONDS)
+/datum/status_effect/dizziness/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/dizziness/on_apply()
-	RegsiterSignal(owner, COMSIG_LIVING_SET_RESTING, .proc/on_rest)
+	RegisterSignal(owner, COMSIG_LIVING_SET_RESTING, .proc/on_rest)
+	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/clear_dizziness)
 	return TRUE
 
 /datum/status_effect/dizziness/on_remove()
-	UnregsiterSignal(owner, COMSIG_LIVING_SET_RESTING)
+	UnregisterSignal(owner, list(COMSIG_LIVING_SET_RESTING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
 
 /// Signal proc for [COMSIG_LIVING_SET_RESTING]. Whenever we rest, it depletes faster but is more dizzying
 /datum/status_effect/dizziness/proc/on_rest(mob/living/source)
@@ -23,6 +24,12 @@
 	dizziness_strength = initial(dizziness_strength)
 	if(source.resting)
 		dizziness_strength *= 3
+
+/// Signal proc that self deletes our dizziness effect
+/datum/status_effect/dizziness/proc/clear_dizziness(datum/source)
+	SIGNAL_HANDLER
+
+	qdel(src)
 
 /datum/status_effect/dizziness/tick()
 	// How much time is left, in seconds

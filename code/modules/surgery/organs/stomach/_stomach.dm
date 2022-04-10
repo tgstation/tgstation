@@ -220,7 +220,8 @@
 				disgusted.add_confusion(2.5)
 				disgusted.stuttering += 1
 				disgusted.vomit(10, 0, 1, 0, 1, 0)
-			disgusted.Dizzy(5)
+			disgusted.add_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness)
+
 		if(disgusted.disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(DT_PROB(13, delta_time))
 				disgusted.blur_eyes(3) //We need to add more shit down here

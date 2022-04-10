@@ -5,7 +5,7 @@
 ///How often a carbon becomes penalized
 #define BEYBLADE_DIZZINESS_PROBABILITY 20
 ///How long the screenshake lasts
-#define BEYBLADE_DIZZINESS_VALUE 10
+#define BEYBLADE_DIZZINESS_DURATION 20 SECONDS
 ///How much confusion a carbon gets when penalized
 #define BEYBLADE_CONFUSION_INCREMENT 10
 ///A max for how penalized a carbon will be for beyblading
@@ -121,7 +121,7 @@
 		return
 	if(prob(BEYBLADE_DIZZINESS_PROBABILITY))
 		to_chat(user, span_warning("You feel woozy from spinning."))
-		user.Dizzy(BEYBLADE_DIZZINESS_VALUE)
+		user.add_timed_status_effect(BEYBLADE_DIZZINESS_DURATION, /datum/status_effect/dizziness)
 		if(current_confusion < BEYBLADE_CONFUSION_LIMIT)
 			user.add_confusion(BEYBLADE_CONFUSION_INCREMENT)
 
