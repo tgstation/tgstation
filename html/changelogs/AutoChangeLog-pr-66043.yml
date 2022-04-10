@@ -1,0 +1,4 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - bugfix: "Fire alarms no longer magically emit light when they lose power."
