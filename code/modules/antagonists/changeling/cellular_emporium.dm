@@ -95,7 +95,6 @@
 
 /datum/action/innate/cellular_emporium/New(our_target)
 	. = ..()
-	button.name = name
 	if(istype(our_target, /datum/cellular_emporium))
 		cellular_emporium = our_target
 	else

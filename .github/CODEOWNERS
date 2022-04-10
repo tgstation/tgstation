@@ -9,7 +9,7 @@
 # Cobby
 /code/modules/reagents/ @ExcessiveUseOfCobblestone
 /code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/game/objects/items/storage/firstaid.dm @ExcessiveUseOfCobblestone
+/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
 
 # Cyberboss
 
@@ -109,6 +109,11 @@
 /code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
 /goon/ @JohnFulpWillard
 
+# Kapu1178
+
+/code/modules/surgery/bodyparts @Kapu1178
+/code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
+
 # MrStonedOne
 
 /SQL/database_changelog.txt @MrStonedOne
@@ -125,6 +130,13 @@
 
 /code/modules/capture_the_flag/ @NamelessFairy
 /_maps/map_files/CTF/ @NamelessFairy
+
+# Pickle-Coding
+
+/code/__DEFINES/atmospherics/ @Pickle-Coding
+/code/__DEFINES/reactions.dm @Pickle-Coding
+/code/modules/atmospherics/ @Pickle-Coding
+/code/modules/power/ @Pickle-Coding
 
 # MULTIPLE OWNERS
 

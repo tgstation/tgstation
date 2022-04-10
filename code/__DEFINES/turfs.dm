@@ -39,12 +39,12 @@
 #define TURF_WET_PERMAFROST (1<<1)
 /// Turf has a thin layer of ice on the floor and mobs will slip
 #define TURF_WET_ICE (1<<2)
-/// Turf has lube on the floor and mobs will slip 
+/// Turf has lube on the floor and mobs will slip
 #define TURF_WET_LUBE (1<<3)
-/// Turf has superlube on the floor and mobs will slip even if they are crawling 
+/// Turf has superlube on the floor and mobs will slip even if they are crawling
 #define TURF_WET_SUPERLUBE (1<<4)
 
-/// Checks if a turf is wet 
+/// Checks if a turf is wet
 #define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
 
 /// Maximum amount of time, (in deciseconds) a tile can be wet for.
@@ -64,3 +64,13 @@
  * Use instead of `A.loc.loc`.
  */
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
+
+#define TEMPORARY_THERMAL_CONDUCTIVITY 1
+
+#define MAX_TEMPORARY_THERMAL_CONDUCTIVITY 1
+/// Turf will be passable if density is 0
+#define TURF_PATHING_PASS_DENSITY 0
+/// Turf will be passable depending on [CanAStarPass] return value
+#define TURF_PATHING_PASS_PROC 1
+/// Turf is never passable
+#define TURF_PATHING_PASS_NO 2

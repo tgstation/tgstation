@@ -12,8 +12,6 @@
 
 	var/access = 0 //Bit flags for cartridge access
 
-	var/remote_door_id = ""
-
 	var/list/bot_access = list()
 //	Selection: SEC_BOT | ADVANCED_SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
 
@@ -38,7 +36,7 @@
 /obj/item/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
-	access = CART_ENGINE | CART_DRONEPHONE
+	access = CART_ENGINE
 	bot_access = list(
 		FLOOR_BOT,
 	)
@@ -46,7 +44,7 @@
 /obj/item/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
-	access = CART_ATMOS | CART_DRONEPHONE
+	access = CART_ATMOS
 	bot_access = list(
 		FLOOR_BOT,
 		FIRE_BOT,
@@ -86,30 +84,15 @@
 		ADVANCED_SEC_BOT,
 	)
 
-/obj/item/cartridge/janitor
-	name = "\improper CustodiPRO cartridge"
-	desc = "The ultimate in clean-room design."
-	icon_state = "cart-j"
-	access = CART_JANITOR | CART_DRONEPHONE
-	bot_access = list(
-		CLEAN_BOT,
-	)
-
 /obj/item/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-s"
 	access = CART_SECURITY
 	spam_enabled = 1
 
-/obj/item/cartridge/curator
-	name = "\improper Lib-Tweet cartridge"
-	icon_state = "cart-s"
-	access = CART_NEWSCASTER
-
 /obj/item/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty quad-bot interlink!"
-	access = CART_DRONEPHONE
 	bot_access = list(
 		FLOOR_BOT,
 		CLEAN_BOT,
@@ -149,7 +132,7 @@
 /obj/item/cartridge/hop
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
-	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_JANITOR | CART_SECURITY | CART_NEWSCASTER | CART_QUARTERMASTER | CART_DRONEPHONE
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_SECURITY | CART_QUARTERMASTER
 	bot_access = list(
 		MULE_BOT,
 		CLEAN_BOT,
@@ -169,7 +152,7 @@
 /obj/item/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
-	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE | CART_DRONEACCESS
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS
 	bot_access = list(
 		FLOOR_BOT,
 		FIRE_BOT,
@@ -186,7 +169,7 @@
 /obj/item/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
-	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS | CART_DRONEPHONE
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS
 	bot_access = list(
 		FLOOR_BOT,
 		CLEAN_BOT,
@@ -201,9 +184,9 @@
 
 /obj/item/cartridge/captain
 	name = "\improper Value-PAK cartridge"
-	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime, Clown, and Syndie)
+	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Clown and Mime ones)
 	icon_state = "cart-c"
-	access = ~(CART_CLOWN | CART_MIME | CART_REMOTE_DOOR)
+	access = ~(CART_CLOWN | CART_MIME)
 	spam_enabled = 1
 	bot_access = list(
 		SEC_BOT,
@@ -485,90 +468,6 @@
 				menu += "<b>No ore silo detected!</b>"
 			menu = jointext(menu, "")
 
-		if (PDA_UI_JANNIE_LOCATOR)
-			menu = "<h4>[PDAIMG(bucket)] Persistent Custodial Object Locator</h4>"
-
-			var/turf/cl = get_turf(src)
-			if (cl)
-				menu += "Current Orbital Location: <b>\[[cl.x],[cl.y]\]</b>"
-
-				menu += "<h4>Located Mops:</h4>"
-
-				var/ldat
-				for (var/obj/item/mop/M in world)
-					var/turf/ml = get_turf(M)
-
-					if(ml)
-						if (ml.z != cl.z)
-							continue
-						var/direction = get_dir(src, M)
-						ldat += "Mop - <b>\[[ml.x],[ml.y] ([uppertext(dir2text(direction))])\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
-
-				if (!ldat)
-					menu += "None"
-				else
-					menu += "[ldat]"
-
-				menu += "<h4>Located Janitorial Cart:</h4>"
-
-				ldat = null
-				for (var/obj/structure/janitorialcart/B in world)
-					var/turf/bl = get_turf(B)
-
-					if(bl)
-						if (bl.z != cl.z)
-							continue
-						var/direction = get_dir(src, B)
-						ldat += "Cart - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - Water level: [B.reagents.total_volume]/100<br>"
-
-				if (!ldat)
-					menu += "None"
-				else
-					menu += "[ldat]"
-
-				menu += "<h4>Located Cleanbots:</h4>"
-
-				ldat = null
-				for (var/mob/living/simple_animal/bot/cleanbot/B in GLOB.alive_mob_list)
-					var/turf/bl = get_turf(B)
-
-					if(bl)
-						if (bl.z != cl.z)
-							continue
-						var/direction = get_dir(src, B)
-						ldat += "Cleanbot - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - [B.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]<br>"
-
-				if (!ldat)
-					menu += "None"
-				else
-					menu += "[ldat]"
-
-			else
-				menu += "ERROR: Unable to determine current location."
-			menu += "<br><br><A href='byond://?src=[REF(src)];choice=49'>Refresh GPS Locator</a>"
-
-		if (PDA_UI_NEWSCASTER)
-			menu = "<h4>[PDAIMG(notes)] Newscaster Access</h4>"
-			menu += "<br> Current Newsfeed: <A href='byond://?src=[REF(src)];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
-			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
-				if (chan.channel_name == current_channel)
-					current = chan
-			if(!current)
-				menu += "<h5> ERROR : NO CHANNEL FOUND </h5>"
-				return menu
-			var/i = 1
-			for(var/datum/newscaster/feed_message/msg in current.messages)
-				menu +="-[msg.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.returnAuthor(-1)]</FONT>\]</FONT><BR>"
-				menu +="<b><font size=1>[msg.comments.len] comment[msg.comments.len > 1 ? "s" : ""]</font></b><br>"
-				if(msg.img)
-					user << browse_rsc(msg.img, "tmp_photo[i].png")
-					menu +="<img src='tmp_photo[i].png' width = '180'><BR>"
-				i++
-				for(var/datum/newscaster/feed_comment/comment in msg.comments)
-					menu +="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
-			menu += "<br> <A href='byond://?src=[REF(src)];choice=Newscaster Message'>Post Message</a>"
-
 		if (PDA_UI_BOTS_ACCESS)
 			menu = "<h4>[PDAIMG(medbot)] Bots Interlink</h4>"
 			bot_control()
@@ -587,9 +486,6 @@
 
 			menu += "<br> To use an emoji in a pda message, refer to the guide and add \":\" around the emoji. Your PDA supports the following emoji:<br>"
 			menu += emoji_table
-
-		if (PDA_UI_NEWSCASTER_ERROR) //Newscaster message permission error
-			menu = "<h5> ERROR : NOT AUTHORIZED [host_pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
 
 	return menu
 
@@ -652,29 +548,6 @@
 
 		if("Supply Orders")
 			host_pda.ui_mode = PDA_UI_SUPPLY_RECORDS
-
-		if("Newscaster Access")
-			host_pda.ui_mode = PDA_UI_NEWSCASTER
-
-		if("Newscaster Message")
-			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
-			var/message = host_pda.msg_input()
-			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
-				if (chan.channel_name == current_channel)
-					current = chan
-			if(current.locked && current.author != host_pda_owner_name)
-				host_pda.ui_mode = PDA_UI_NEWSCASTER_ERROR
-				host_pda.Topic(null,list("choice"="Refresh"))
-				return
-			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
-			host_pda.Topic(null,list("choice"=num2text(host_pda.ui_mode)))
-			return
-
-		if("Newscaster Switch Channel")
-			current_channel = host_pda.msg_input()
-			host_pda.Topic(null,list("choice"=num2text(host_pda.ui_mode)))
-			return
 
 	//emoji previews
 	if(href_list["emoji"])
@@ -760,7 +633,7 @@
 		menu += "Keep an ID inserted to upload access codes upon summoning."
 
 	menu += "<HR><A href='byond://?src=[REF(src)];op=botlist'>[PDAIMG(back)]Return to bot list</A>"
-		
+
 	return menu
 
 //If the cartridge adds a special line to the top of the messaging app

@@ -11,7 +11,7 @@
 /area/shuttle/escape)
 "d" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "e" = (
@@ -26,7 +26,7 @@
 /area/shuttle/escape)
 "g" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -98,8 +98,8 @@
 /area/shuttle/escape)
 "u" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -212,8 +212,8 @@
 /turf/open/floor/cult,
 /area/shuttle/escape)
 "Q" = (
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},

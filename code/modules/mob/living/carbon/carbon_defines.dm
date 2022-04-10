@@ -74,7 +74,8 @@
 	/// A collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
 	var/list/hand_bodyparts = list()
 
-	var/icon_render_key = ""
+	///A cache of bodypart = icon to prevent excessive icon creation.
+	var/list/icon_render_keys = list()
 	var/static/list/limb_icon_cache = list()
 
 	//halucination vars

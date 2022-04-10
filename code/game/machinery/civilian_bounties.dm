@@ -284,8 +284,9 @@
 	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, .proc/on_export)
 
 /obj/item/bounty_cube/Destroy()
-	UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
-	QDEL_NULL(radio)
+	if(radio)
+		UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
+		QDEL_NULL(radio)
 	return ..()
 
 /obj/item/bounty_cube/examine()
@@ -379,7 +380,7 @@
 	addtimer(CALLBACK(src, .proc/launch_payload), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
-	playsound(src, "sparks", 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	switch(uses)
 		if(2)
 			new /obj/machinery/piratepad/civilian(drop_location())

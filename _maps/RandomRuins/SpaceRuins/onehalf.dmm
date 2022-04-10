@@ -40,11 +40,11 @@
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "an" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "ao" = (
@@ -128,11 +128,11 @@
 "aB" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aC" = (
@@ -932,7 +932,7 @@
 "db" = (
 /obj/machinery/light/directional/south,
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "dc" = (
@@ -980,6 +980,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
+"sZ" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/dorms_med)
 "KC" = (
 /obj/structure/frame/computer,
 /obj/structure/cable,
@@ -1214,9 +1223,9 @@ aa
 aa
 ab
 ag
-ao
+sZ
 aC
-ao
+sZ
 ag
 bj
 bz

@@ -1,4 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - bugfix: "Genturf error and roundstart active turf fixed on Icebox"

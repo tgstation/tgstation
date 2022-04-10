@@ -344,8 +344,8 @@
 		if(QDELETED(G))
 			return
 
-		if(C.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(user, span_warning("Your target seems to have some sort of tinfoil protection on, blocking the message from being sent!"))
+		if(C.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+			to_chat(user, span_warning("Your target seems to have some sort of mental blockage, preventing the message from being sent! It seems you've been foiled."))
 			return
 
 		G.mind_control(command, user)
@@ -537,21 +537,21 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/L,mob/living/user)
 	playsound(src, on_stun_sound, 50, TRUE, -1)
 	if(L.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
-		if(L.anti_magic_check(FALSE, FALSE, TRUE))
-			to_chat(user, span_warning("The specimen's tinfoil protection is interfering with the sleep inducement!"))
-			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but [L.p_their()] tinfoil protection [L.p_them()]!"), \
-								span_userdanger("You feel a strange wave of heavy drowsiness wash over you, but your tinfoil protection deflects most of it!"))
+		if(L.can_block_magic(MAGIC_RESISTANCE_MIND))
+			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
+			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but is unsuccessful!"), \
+			span_userdanger("You feel a strange wave of heavy drowsiness wash over you!"))
 			L.adjust_drowsyness(2)
 			return
 		L.visible_message(span_danger("[user] induces sleep in [L] with [src]!"), \
-							span_userdanger("You suddenly feel very drowsy!"))
+		span_userdanger("You suddenly feel very drowsy!"))
 		L.Sleeping(sleep_time)
 		log_combat(user, L, "put to sleep")
 	else
-		if(L.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(user, span_warning("The specimen's tinfoil protection is completely blocking our sleep inducement methods!"))
-			L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src], but [L.p_their()] tinfoil protection completely protected [L.p_them()]!"), \
-								span_userdanger("Any sense of drowsiness is quickly diminished as your tinfoil protection deflects the effects!"))
+		if(L.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our sleep inducement methods! It seems you've been foiled."))
+			L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src], but is unsuccessful!"), \
+			span_userdanger("Any sense of drowsiness is quickly diminished!"))
 			return
 		L.adjust_drowsyness(1)
 		to_chat(user, span_warning("Sleep inducement works fully only on stunned specimens! "))
@@ -652,10 +652,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
-/obj/item/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		return // Stops humans from disassembling abductor headsets.
-	return ..()
+// Stops humans from disassembling abductor headsets.
+/obj/item/radio/headset/abductor/screwdriver_act(mob/living/user, obj/item/tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/abductor_machine_beacon
 	name = "machine beacon"

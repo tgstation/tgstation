@@ -160,13 +160,13 @@
 
 	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYPART_ORGANIC)
+	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYTYPE_ORGANIC)
 
 	if(!parts.len)
 		return
 
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYPART_ORGANIC))
+		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
@@ -278,7 +278,7 @@
 /datum/symptom/heal/darkness/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 2 * actual_power
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYPART_ORGANIC)
+	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYTYPE_ORGANIC)
 
 	if(!parts.len)
 		return
@@ -287,7 +287,7 @@
 		to_chat(M, span_notice("The darkness soothes and mends your wounds."))
 
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, null, BODYPART_ORGANIC)) //more effective on brute
+		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, null, BODYTYPE_ORGANIC)) //more effective on brute
 			M.update_damage_overlays()
 	return 1
 
@@ -381,7 +381,7 @@
 		return
 
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYPART_ORGANIC))
+		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
 	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
@@ -434,7 +434,7 @@
 /datum/symptom/heal/water/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 2 * actual_power
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYPART_ORGANIC) //more effective on burns
+	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYTYPE_ORGANIC) //more effective on burns
 
 	if(!parts.len)
 		return
@@ -443,7 +443,7 @@
 		to_chat(M, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
 
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, null, BODYPART_ORGANIC))
+		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, null, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
 	return 1
@@ -452,6 +452,9 @@
 	if(M.getBruteLoss() || M.getFireLoss())
 		return TRUE
 	return FALSE
+
+///Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
+#define HEALING_PER_MOL 1.1
 
 /datum/symptom/heal/plasma
 	name = "Plasma Fixation"
@@ -488,10 +491,10 @@
 		environment = M.loc.return_air()
 	if(environment)
 		gases = environment.gases
-		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] > gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
-			. += power * 0.5
+		if(gases[/datum/gas/plasma])
+			. += power * min(0.5, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
-		. += power * 0.75
+		. += power * 0.75 //Determines how much the symptom heals if injected or ingested
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power
@@ -511,16 +514,18 @@
 
 	M.adjustToxLoss(-heal_amt)
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYPART_ORGANIC)
+	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYTYPE_ORGANIC)
 	if(!parts.len)
 		return
 	if(prob(5))
 		to_chat(M, span_notice("The pain from your wounds fades rapidly."))
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYPART_ORGANIC))
+		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
+///Plasma End
+#undef HEALING_PER_MOL
 
 /datum/symptom/heal/radiation
 	name = "Radioactive Resonance"
@@ -559,7 +564,7 @@
 
 	M.adjustToxLoss(-(2 * heal_amt))
 
-	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYPART_ORGANIC)
+	var/list/parts = M.get_damaged_bodyparts(1,1, null, BODYTYPE_ORGANIC)
 
 	if(!parts.len)
 		return
@@ -568,6 +573,6 @@
 		to_chat(M, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
 
 	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYPART_ORGANIC))
+		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1

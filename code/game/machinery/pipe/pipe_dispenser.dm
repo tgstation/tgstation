@@ -66,7 +66,7 @@
 	switch(action)
 		if("color")
 			paint_color = params["paint_color"]
-		
+
 		if("pipe_type")
 			switch(category)
 				if(ATMOS_PIPEDISPENSER)
@@ -74,17 +74,17 @@
 						var/datum/pipe_info/info = GLOB.atmos_pipe_recipes[params["category"]][params["pipe_type"]]
 						var/recipe_type = info.type
 						var/p_type = info.id
-						
+
 						// No spawning arbitrary paths (literally 1984)
 						if(!verify_recipe(GLOB.atmos_pipe_recipes, p_type))
 							return
-						
+
 						// If this is a meter, make that.
 						if(recipe_type == /datum/pipe_info/meter)
 							new /obj/item/pipe_meter(loc)
 							wait = world.time + 1 SECONDS
 							return
-						
+
 						// Otherwise, make a pipe/device
 						var/p_dir = params["pipe_dir"]
 						var/obj/item/pipe/pipe_out = new (loc, p_type, p_dir)
@@ -98,17 +98,17 @@
 					if(wait < world.time)
 						var/datum/pipe_info/info = GLOB.disposal_pipe_recipes[params["category"]][params["pipe_type"]]
 						var/p_type = info.id
-						
+
 						// No spawning arbitrary paths (literally 1984)
 						if(!verify_recipe(GLOB.disposal_pipe_recipes, p_type))
 							return
-						
+
 						var/obj/structure/disposalconstruct/disposal_out = new (loc, p_type)
 						if(!disposal_out.can_place())
 							to_chat(usr, span_warning("There's not enough room to build that here!"))
 							qdel(disposal_out)
 							return
-						
+
 						disposal_out.add_fingerprint(usr)
 						disposal_out.update_appearance()
 						disposal_out.setDir(params["pipe_dir"])
@@ -117,11 +117,11 @@
 					if(wait < world.time)
 						var/datum/pipe_info/info = GLOB.transit_tube_recipes[params["category"]][params["pipe_type"]]
 						var/p_type = info.id
-						
+
 						// No spawning arbitrary paths (literally 1984)
 						if(!verify_recipe(GLOB.transit_tube_recipes, p_type))
 							return
-						
+
 						var/obj/structure/c_transit_tube/tube_out = new p_type(loc)
 						tube_out.add_fingerprint(usr)
 						tube_out.update_appearance()
@@ -129,7 +129,7 @@
 						wait = world.time + 1 SECONDS
 		if("piping_layer")
 			piping_layer = text2num(params["piping_layer"])
-		
+
 		if("init_dir_setting")
 			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
 			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
@@ -137,10 +137,10 @@
 				p_init_dir = target_dir
 			else
 				to_chat(usr, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
-		
+
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
-		
+
 	return TRUE
 
 /obj/machinery/pipedispenser/ui_interact(mob/user, datum/tgui/ui)
@@ -167,9 +167,9 @@
 				return TRUE
 	return FALSE
 
-/obj/machinery/pipedispenser/wrench_act(mob/living/user, obj/item/I)
-	..()
-	if(default_unfasten_wrench(user, I, 40))
+/obj/machinery/pipedispenser/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_unfasten_wrench(user, tool, time = 4 SECONDS))
 		user << browse(null, "window=pipedispenser")
 
 	return TRUE

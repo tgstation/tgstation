@@ -61,7 +61,7 @@
 	var/list/data = list()
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
-	
+
 	try
 		var/list/blanks = json_decode(file2text("config/blanks.json"))
 		if (blanks != null)
@@ -72,7 +72,7 @@
 			data["forms_exist"] = FALSE
 	catch()
 		data["forms_exist"] = FALSE
-	
+
 	if(photo_copy)
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
@@ -244,19 +244,6 @@
 	copied_item.pixel_y = copied_item.base_pixel_y + rand(-10, 10)
 
 /**
- * Handles the copying of devil contract paper. Transfers all the text, stamps and so on from the old paper, to the copy.
- *
- * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
- * Does not check if it has enough toner because devil contracts cost no toner to print.
- */
-/obj/machinery/photocopier/proc/make_devil_paper_copy()
-	if(!paper_copy)
-		return
-	var/obj/item/paper/employment_contract/E = paper_copy
-	var/obj/item/paper/employment_contract/C = new(loc, E.employee_name)
-	give_pixel_offset(C)
-
-/**
  * Handles the copying of paper. Transfers all the text, stamps and so on from the old paper, to the copy.
  *
  * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
@@ -372,11 +359,13 @@
 		object.forceMove(drop_location())
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
-/obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
-	if(default_unfasten_wrench(user, O))
-		return
+/obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	else if(istype(O, /obj/item/paper))
+/obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/paper))
 		if(copier_empty())
 			if(!user.temporarilyRemoveItemFromInventory(O))
 				return

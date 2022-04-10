@@ -550,7 +550,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 
 			if(obj_flags & EMAGGED)
-				new /obj/effect/spawner/newbomb/timer(loc)
+				new /obj/effect/spawner/newbomb/plasma(loc, /obj/item/assembly/timer)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
@@ -602,14 +602,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return ..() //well boys we did it, lists are no more
 
 /obj/machinery/computer/arcade/battle/examine_more(mob/user)
-	var/list/msg = list(span_notice("<i>You notice some writing scribbled on the side of [src]...</i>"))
-	msg += "\t[span_info("smart -> defend, defend, light attack")]"
-	msg += "\t[span_info("shotgun -> defend, defend, power attack")]"
-	msg += "\t[span_info("short temper -> counter, counter, counter")]"
-	msg += "\t[span_info("poisonous -> light attack, light attack, light attack")]"
-	msg += "\t[span_info("chonker -> power attack, power attack, power attack")]"
-	msg += "\t[span_info("magical -> defend until outmagiced")]"
-	return msg
+	. = ..()
+	. += span_notice("<i>You notice some writing scribbled on the side of [src]...</i>")
+	. += "\t[span_info("smart -> defend, defend, light attack")]"
+	. += "\t[span_info("shotgun -> defend, defend, power attack")]"
+	. += "\t[span_info("short temper -> counter, counter, counter")]"
+	. += "\t[span_info("poisonous -> light attack, light attack, light attack")]"
+	. += "\t[span_info("chonker -> power attack, power attack, power attack")]"
+	. += "\t[span_info("magical -> defend until outmagiced")]"
+	return .
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

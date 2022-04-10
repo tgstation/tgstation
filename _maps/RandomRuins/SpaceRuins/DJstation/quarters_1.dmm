@@ -37,6 +37,15 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
+"A" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/random{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/djstation)
 "B" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Rest Room"
@@ -103,7 +112,7 @@ W
 a
 a
 i
-k
+A
 Z
 u
 i

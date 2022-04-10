@@ -1,0 +1,4 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - bugfix: "relocates the SMES terminal to not be in a wall in the lizard gas space ruin"

@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - rscdel: "The Detomatix cartridge's ability to open the nuclear operative pod doors has been removed."
