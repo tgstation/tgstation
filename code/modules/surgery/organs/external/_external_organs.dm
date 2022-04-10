@@ -149,6 +149,7 @@
 ///Colorizes the limb it's inserted to, if required.
 /obj/item/organ/external/proc/override_color(rgb_value)
 	return
+
 ///The horns of a lizard!
 /obj/item/organ/external/horns
 	zone = BODY_ZONE_HEAD
