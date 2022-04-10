@@ -51,7 +51,7 @@ export const MechStatPane = (props, context) => {
           <LabeledList>
             <LabeledList.Item label="Air Source">
               <Button 
-                disabled = {!airtank_present}
+                disabled={!airtank_present}
                 onClick={() => act('toggle_airsource')}>
                 {air_source}
               </Button>
