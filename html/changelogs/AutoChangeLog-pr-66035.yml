@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - refactor: "The Curators newscaster PDA app has been moved into a new Newscaster tablet app, with a full new UI."
