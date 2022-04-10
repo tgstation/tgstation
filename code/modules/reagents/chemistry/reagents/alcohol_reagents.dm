@@ -1470,7 +1470,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_confusion(max(drinker.get_confusion() + (2 * REM * delta_time),0))
 		drinker.Dizzy(10 * REM * delta_time)
-	drinker.add_speech_impediment(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
+	drinker.add_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
 	switch(current_cycle)
 		if(51 to 200)
 			drinker.Sleeping(100 * REM * delta_time)
@@ -1497,7 +1497,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	drinker.dizziness += 1.5 * REM * delta_time
 	switch(current_cycle)
 		if(15 to 45)
-			drinker.add_speech_impediment(3 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
+			drinker.add_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
 
 		if(45 to 55)
 			if(DT_PROB(30, delta_time))
@@ -1571,7 +1571,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/hippies_delight/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_speech_impediment(1 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk, only_if_higher = TRUE)
+	drinker.set_timed_status_effect(1 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk, only_if_higher = TRUE)
 
 	switch(current_cycle)
 		if(1 to 5)
@@ -1629,8 +1629,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.add_speech_impediment(3 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/cult, max_duration = 3 SECONDS)
-	drinker.add_speech_impediment(3 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 3 SECONDS)
+	drinker.add_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/cult, max_duration = 3 SECONDS)
+	drinker.add_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 3 SECONDS)
 	return ..()
 
 /datum/reagent/consumable/ethanol/triple_sec
@@ -2386,7 +2386,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(drinker.mind?.holy_role)
 		drinker.adjustFireLoss(-2.5 * REM * delta_time, 0)
 		drinker.jitteriness = max(drinker.jitteriness - (1 * REM * delta_time), 0)
-		drinker.remove_speech_impediment(2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter)
+		drinker.remove_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter)
 	return ..()
 
 /datum/reagent/consumable/ethanol/blazaam

@@ -1341,7 +1341,7 @@
 	switch(overdose_progress)
 		if(1 to 40)
 			M.jitteriness = min(M.jitteriness + (1 * REM * delta_time), 10)
-			M.add_speech_impediment(2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
+			M.add_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
 			M.Dizzy(5 * REM * delta_time)
 			if(DT_PROB(30, delta_time))
 				M.losebreath++
@@ -1349,7 +1349,7 @@
 			M.adjustOxyLoss(0.1 * REM * delta_time, 0)
 			M.adjustStaminaLoss(0.1 * REM * delta_time, 0)
 			M.jitteriness = min(M.jitteriness + (1 * REM * delta_time), 20)
-			M.add_speech_impediment(2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 40 SECONDS)
+			M.add_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 40 SECONDS)
 			M.Dizzy(10 * REM * delta_time)
 			if(DT_PROB(30, delta_time))
 				M.losebreath++

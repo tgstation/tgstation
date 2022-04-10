@@ -2245,4 +2245,4 @@
 	if(!isnum(duration) || duration <= 0 || QDELETED(src) || !check_rights(NONE))
 		return
 
-	add_speech_impediment(duration SECONDS, impediments[chosen])
+	add_timed_status_effect(duration SECONDS, impediments[chosen])

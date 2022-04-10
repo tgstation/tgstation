@@ -363,8 +363,8 @@
 	SEND_SIGNAL(sac_target, COMSIG_CLEAR_MOOD_EVENT, "shadow_realm")
 
 	// Wherever we end up, we sure as hell won't be able to explain
-	sac_target.add_speech_impediment(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
-	sac_target.add_speech_impediment(40 SECONDS, /datum/status_effect/speech/stutter)
+	sac_target.add_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
+	sac_target.add_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
 
 	// They're already back on the station for some reason, don't bother teleporting
 	if(is_station_level(sac_target.z))

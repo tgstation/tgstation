@@ -158,9 +158,9 @@
 		apply_damage(stamina, STAMINA, null, blocked)
 
 	if(slur)
-		add_speech_impediment(slur, /datum/status_effect/speech/slurring/drunk)
+		add_timed_status_effect(slur, /datum/status_effect/speech/slurring/drunk)
 	if(stutter)
-		add_speech_impediment(stutter, /datum/status_effect/speech/stutter)
+		add_timed_status_effect(stutter, /datum/status_effect/speech/stutter)
 
 	return TRUE
 

@@ -638,27 +638,28 @@
 	flags_1 &= ~ SHOCKED_1
 
 /**
- * Adds a speech impediment of some kind to the mob's speech.
+ * Adds a timed status effect to the mob, additionally taking into account any existing timed status effects.
+ * This can be any status effect that takes into account duration with their initialize arguments.
  *
- * duration - the duration, in deciseconds, of the impediment.
- * impediment - the type of impediment status effect given to the mob
- * max_duration - if set, we will only add duration to that impediment up until that set duration
+ * duration - the duration, in deciseconds, of the effect.
+ * effect - the type of status effect given to the mob
+ * max_duration - if set, we will only add duration to that status effect up until that set duration
  */
-/mob/living/proc/add_speech_impediment(duration, impediment, max_duration)
+/mob/living/proc/add_timed_status_effect(duration, effect, max_duration)
 	if(!isnum(duration) || duration <= 0)
-		CRASH("add_speech_impediment: called with an invalid duration. (Got: [duration])")
+		CRASH("add_timed_status_effect: called with an invalid duration. (Got: [duration])")
 
-	if(!ispath(impediment, /datum/status_effect/speech))
-		CRASH("add_speech_impediment: called with an invalid impediment type. (Got: [impediment])")
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("add_timed_status_effect: called with an invalid effect type. (Got: [effect])")
 
 	if(isnum(max_duration))
 		if(max_duration <= 0)
-			CRASH("add_speech_impediment: Called with an invalid max_duration. (Got: [max_duration])")
+			CRASH("add_timed_status_effect: Called with an invalid max_duration. (Got: [max_duration])")
 
 		if(duration >= max_duration)
 			duration = max_duration
 
-	var/datum/status_effect/speech/existing = has_status_effect(impediment)
+	var/datum/status_effect/existing = has_status_effect(effect)
 	if(existing)
 		if(isnum(max_duration))
 			var/remaining_duration = existing.duration - world.time
@@ -671,27 +672,27 @@
 			existing.duration += duration
 
 	else
-		apply_status_effect(impediment, duration)
+		apply_status_effect(effect, duration)
 
 /**
- * Sets a speech impediment of some kind of a mob's speech to a specific value.
+ * Sets a timed status effect of some kind on a mob to a specific value.
  * If only_if_higher is TRUE, it will only set the value up to the passed duration,
- * so any pre-existing speech impediments won't be reduced down
+ * so any pre-existing status effects of the same type won't be reduced down
  *
- * duration - the duration, in deciseconds, of the impediment. 0 or lower will either remove the current impediment or do nothing if none are present
- * impediment - the type of impediment status effect given to the mob
- * only_if_higher - if TRUE, we will only set the impediment to the new duration if the new duration is longer than any existing duration
+ * duration - the duration, in deciseconds, of the effect. 0 or lower will either remove the current effect or do nothing if none are present
+ * effect - the type of status effect given to the mob
+ * only_if_higher - if TRUE, we will only set the effect to the new duration if the new duration is longer than any existing duration
  */
-/mob/living/proc/set_speech_impediment(duration, impediment, only_if_higher = FALSE)
+/mob/living/proc/set_timed_status_effect(duration, effect, only_if_higher = FALSE)
 	if(!isnum(duration))
-		CRASH("add_speech_impediment: called with an invalid duration. (Got: [duration])")
+		CRASH("set_timed_status_effect: called with an invalid duration. (Got: [duration])")
 
-	if(!ispath(impediment, /datum/status_effect/speech))
-		CRASH("add_speech_impediment: called with an invalid impediment type. (Got: [impediment])")
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("set_timed_status_effect: called with an invalid effect type. (Got: [effect])")
 
-	var/datum/status_effect/speech/existing = has_status_effect(impediment)
+	var/datum/status_effect/speech/existing = has_status_effect(effect)
 	if(existing)
-		// set_speech_impediment to 0 technically acts as a way to clear speech impediments
+		// set_timed_status_effect to 0 technically acts as a way to clear speech impediments
 		if(duration <= 0)
 			qdel(existing)
 			return
@@ -704,22 +705,23 @@
 		existing.duration = world.time + duration
 
 	else if(duration > 0)
-		apply_status_effect(impediment, duration)
+		apply_status_effect(effect, duration)
 
 /**
- * Removes duration from a mob's impediment, if they are currently impeeded.
+ * Removes duration from a timed status effect on the mob, if present.
+ * If reduced to 0 duration (duration <= world time), the effect will be deleted.
  *
- * duration - the duration, in deciseconds, to remove from the mob's current impediment.
- * impediment - the type of impediment to remove from the mob
+ * duration - the duration, in deciseconds, to remove from the mob's current effect.
+ * effect - the type of effect to remove from the mob
  */
-/mob/living/proc/remove_speech_impediment(duration, impediment)
-	if(!isnum(duration) || duration >= 0)
-		CRASH("remove_speech_impediment: called with an invalid duration. (Got: [duration])")
+/mob/living/proc/remove_timed_status_effect(duration, effect)
+	if(!isnum(duration) || duration <= 0)
+		CRASH("remove_timed_status_effect: called with an invalid duration. (Got: [duration])")
 
-	if(!ispath(impediment, /datum/status_effect/speech))
-		CRASH("remove_speech_impediment: called with an invalid impediment type. (Got: [impediment])")
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("remove_timed_status_effect: called with an invalid effect type. (Got: [effect])")
 
-	var/datum/status_effect/speech/existing = has_status_effect(impediment)
+	var/datum/status_effect/speech/existing = has_status_effect(effect)
 	if(!existing)
 		return
 

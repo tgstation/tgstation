@@ -38,7 +38,7 @@
 	if(A.stage >= 3)
 		M.dizziness = max(0, M.dizziness - 2)
 		M.adjust_drowsyness(-2)
-		M.remove_speech_impediment(1 SECONDS, /datum/status_effect/speech/slurring/drunk)
+		M.remove_timed_status_effect(1 SECONDS, /datum/status_effect/speech/slurring/drunk)
 
 		M.set_confusion(max(0, M.get_confusion() - 2))
 		if(purge_alcohol)
