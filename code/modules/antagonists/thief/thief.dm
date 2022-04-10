@@ -26,6 +26,10 @@
 	flavor_and_objectives()
 	. = ..() //ui opens here, objectives must exist beforehand
 
+/datum/antagonist/thief/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	ADD_TRAIT(mob_override, TRAIT_GUILD_MEMBER, TRAIT_THIEF)
+
 /datum/antagonist/thief/admin_add(datum/mind/new_owner, mob/admin)
 	load_strings_file(THIEF_FLAVOR_FILE)
 	var/list/all_thief_flavors = GLOB.string_cache[THIEF_FLAVOR_FILE]
@@ -59,6 +63,9 @@
 		return
 	var/chosen_type = pick(possible_guild_locations)
 	thieves_guild = GLOB.areas_by_type[chosen_type]
+	thieves_guild.mood_trait = TRAIT_GUILD_MEMBER
+	thieves_guild.mood_bonus = 5
+	thieves_guild.mood_message = "I love being in the Thieves Guild!"
 
 ///checks if an area exists in the global areas, obviously comes up null (falsey) if say, abandoned cabin is checked on metastation.
 /datum/antagonist/thief/proc/filter_nonexistent_areas(area_type)
