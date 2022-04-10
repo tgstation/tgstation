@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - refactor: "Drone PDA apps have been refactored and is now part of Botkeeper, such as granting access to dangerous machinery and sending pings."
