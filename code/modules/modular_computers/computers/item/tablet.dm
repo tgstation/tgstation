@@ -61,7 +61,7 @@
 
 /obj/item/modular_computer/tablet/proc/tab_no_detonate()
 	SIGNAL_HANDLER
-	return COMPONENT_PDA_NO_DETONATE
+	return COMPONENT_TABLET_NO_DETONATE
 
 /obj/item/modular_computer/tablet/proc/remove_pen(mob/user)
 
@@ -246,7 +246,7 @@
 
 // Round start tablets
 
-/obj/item/modular_computer/tablet/role
+/obj/item/modular_computer/tablet/pda
 	icon_state = "pda"
 
 	greyscale_config = /datum/greyscale_config/tablet
@@ -256,7 +256,7 @@
 
 	var/default_disk = 0
 
-/obj/item/modular_computer/tablet/role/update_overlays()
+/obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
 	var/init_icon = initial(icon)
 	var/obj/item/computer_hardware/card_slot/card = all_components[MC_CARD]
@@ -267,14 +267,14 @@
 			. += mutable_appearance(init_icon, "id_overlay")
 	if(light_on)
 		. += mutable_appearance(init_icon, "light_overlay")
-	if(istype(src, /obj/item/modular_computer/tablet/role/clown))
+	if(istype(src, /obj/item/modular_computer/tablet/pda/clown))
 		. += mutable_appearance(init_icon, "pda_stripe_clown") // clowns have eyes that go over their screen, so it needs to be compiled last
 
-/obj/item/modular_computer/tablet/role/attack_ai(mob/user)
+/obj/item/modular_computer/tablet/pda/attack_ai(mob/user)
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
 	return // we don't want ais or cyborgs using a private role tablet
 
-/obj/item/modular_computer/tablet/role/Initialize(mapload)
+/obj/item/modular_computer/tablet/pda/Initialize(mapload)
 	. = ..()
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/processor_unit/small)

@@ -244,7 +244,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/card/id/advanced
 	ears = /obj/item/radio/headset
-	belt = /obj/item/modular_computer/tablet/role
+	belt = /obj/item/modular_computer/tablet/pda
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	box = /obj/item/storage/box/survival
@@ -312,7 +312,7 @@
 			B.bank_cards += C
 		H.sec_hud_set_ID()
 
-	var/obj/item/modular_computer/tablet/role/PDA = H.get_item_by_slot(pda_slot)
+	var/obj/item/modular_computer/tablet/pda/PDA = H.get_item_by_slot(pda_slot)
 	if(istype(PDA))
 		PDA.saved_identification = H.real_name
 		PDA.saved_job = J.title

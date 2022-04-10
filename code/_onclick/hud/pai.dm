@@ -180,7 +180,7 @@
 /datum/hud/pai/New(mob/living/silicon/pai/owner)
 	..()
 	var/atom/movable/screen/using
-	var/mob/living/silicon/pai/pay = mymob
+	var/mob/living/silicon/pai/mypai = mymob
 
 // Software menu
 	using = new /atom/movable/screen/pai/software
@@ -241,9 +241,9 @@
 	using = new /atom/movable/screen/pai/modPC()
 	using.screen_loc = ui_pai_mod_int
 	static_inventory += using
-	pay.interfaceButton = using
+	mypai.interfaceButton = using
 	var/atom/movable/screen/pai/modPC/tabletbutton = using
-	tabletbutton.pAI = pay
+	tabletbutton.pAI = mypai
 
 // Internal GPS
 	using = new /atom/movable/screen/pai/internal_gps()

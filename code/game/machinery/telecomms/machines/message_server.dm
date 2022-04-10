@@ -82,8 +82,8 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/telecomms/message_server
 
-	var/list/datum/data_modular_msg/pda_msgs = list()
-	var/list/datum/data_modular_msg/modular_msgs = list()
+	var/list/datum/data_tablet_msg/pda_msgs = list()
+	var/list/datum/data_tablet_msg/modular_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/decryptkey = "password"
 	var/calibrating = 15 MINUTES //Init reads this and adds world.time, then becomes 0 when that time has passed and the machine works
@@ -96,9 +96,9 @@
 	if (calibrating)
 		calibrating += world.time
 		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
-		pda_msgs += new /datum/data_modular_msg("System Administrator", "system", "This is an automated message. System calibration started at [station_time_timestamp()]")
+		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", "This is an automated message. System calibration started at [station_time_timestamp()].")
 	else
-		pda_msgs += new /datum/data_modular_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
+		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
 /obj/machinery/telecomms/message_server/Destroy()
 	for(var/obj/machinery/computer/message_monitor/monitor in GLOB.telecomms_list)
@@ -122,7 +122,7 @@
 	. = ..()
 	if(calibrating && calibrating <= world.time)
 		calibrating = 0
-		pda_msgs += new /datum/data_modular_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
+		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
 /obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/messaging/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-message signals
@@ -130,16 +130,16 @@
 		return
 
 	// log the signal
-	if(istype(signal, /datum/signal/subspace/messaging/modular))
-		var/datum/signal/subspace/messaging/modular/PDAsignal = signal
-		var/datum/data_modular_msg/M = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
-		pda_msgs += M
-		signal.logged = M
+	if(istype(signal, /datum/signal/subspace/messaging/tablet_msg))
+		var/datum/signal/subspace/messaging/tablet_msg/PDAsignal = signal
+		var/datum/data_tablet_msg/msg = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
+		pda_msgs += msg
+		signal.logged = msg
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
-		var/datum/data_rc_msg/M = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
-		signal.logged = M
+		var/datum/data_rc_msg/msg = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
+		signal.logged = msg
 		if(signal.data["send_dpt"]) // don't log messages not from a department but allow them to work
-			rc_msgs += M
+			rc_msgs += msg
 	signal.data["reject"] = FALSE
 
 	// pass it along to either the hub or the broadcaster
@@ -173,17 +173,17 @@
 	copy.levels = levels
 	return copy
 
-// Modular signal datum
-/datum/signal/subspace/messaging/modular/proc/format_target()
+// Tablet message signal datum
+/datum/signal/subspace/messaging/tablet_msg/proc/format_target()
 	if (length(data["targets"]) > 1)
 		return "Everyone"
 	var/obj/item/modular_computer/target = data["targets"][1]
 	return "[target.saved_identification] ([target.saved_job])"
 
-/datum/signal/subspace/messaging/modular/proc/format_message()
+/datum/signal/subspace/messaging/tablet_msg/proc/format_message()
 	return "\"[data["message"]]\""
 
-/datum/signal/subspace/messaging/modular/broadcast()
+/datum/signal/subspace/messaging/tablet_msg/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
 		return
 	for (var/obj/item/modular_computer/comp in data["targets"])
@@ -201,14 +201,14 @@
 			Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
 
 // Log datums stored by the message server.
-/datum/data_modular_msg
+/datum/data_tablet_msg
 	var/sender = "Unspecified"
 	var/recipient = "Unspecified"
 	var/message = "Blank"  // transferred message
 	var/datum/picture/picture  // attached photo
 	var/automated = 0 //automated message
 
-/datum/data_modular_msg/New(param_rec, param_sender, param_message, param_photo)
+/datum/data_tablet_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)
 		recipient = param_rec
 	if(param_sender)
@@ -218,7 +218,7 @@
 	if(param_photo)
 		picture = param_photo
 
-/datum/data_modular_msg/Topic(href,href_list)
+/datum/data_tablet_msg/Topic(href,href_list)
 	..()
 	if(href_list["photo"])
 		var/mob/M = usr

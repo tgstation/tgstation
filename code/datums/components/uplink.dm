@@ -59,8 +59,8 @@
 		RegisterSignal(parent, COMSIG_IMPLANT_OTHER, .proc/old_implant)
 		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, .proc/new_implant)
 	else if(istype(parent, /obj/item/modular_computer/tablet))
-		RegisterSignal(parent, COMSIG_PDA_CHANGE_RINGTONE, .proc/new_ringtone)
-		RegisterSignal(parent, COMSIG_PDA_CHECK_DETONATE, .proc/check_detonate)
+		RegisterSignal(parent, COMSIG_TABLET_CHANGE_ID, .proc/new_ringtone)
+		RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, .proc/check_detonate)
 	else if(istype(parent, /obj/item/radio))
 		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
@@ -330,8 +330,6 @@
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
 	SIGNAL_HANDLER
 
-	//var/obj/item/modular_computer/master = parent
-	to_chat(user, span_notice("Attempting to unlock."))
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
 		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
 			failsafe(user)
@@ -346,7 +344,7 @@
 /datum/component/uplink/proc/check_detonate()
 	SIGNAL_HANDLER
 
-	return COMPONENT_PDA_NO_DETONATE
+	return COMPONENT_TABLET_NO_DETONATE
 
 // Radio signal responses
 

@@ -12,7 +12,7 @@
 		/obj/item/computer_hardware/hard_drive/role/security = 10,
 		/obj/item/computer_hardware/hard_drive/role/janitor = 10,
 		/obj/item/computer_hardware/hard_drive/role/signal/ordnance = 10,
-		/obj/item/modular_computer/tablet/role/heads = 10,
+		/obj/item/modular_computer/tablet/pda/heads = 10,
 		/obj/item/computer_hardware/hard_drive/role/captain = 3,
 		/obj/item/computer_hardware/hard_drive/role/quartermaster = 10
 	)

@@ -352,13 +352,13 @@
 
 /datum/action/item_action/chameleon/change/tablet/update_item(obj/item/picked_item)
 	..()
-	var/obj/item/modular_computer/tablet/role/agent_pda = target
+	var/obj/item/modular_computer/tablet/pda/agent_pda = target
 	if(istype(agent_pda))
 		agent_pda.update_appearance()
 
 /datum/action/item_action/chameleon/change/tablet/apply_job_data(datum/job/job_datum)
 	..()
-	var/obj/item/modular_computer/tablet/role/agent_pda = target
+	var/obj/item/modular_computer/tablet/pda/agent_pda = target
 	if(istype(agent_pda) && istype(job_datum))
 		agent_pda.saved_job = job_datum.title
 
@@ -692,25 +692,25 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/modular_computer/tablet/role/chameleon
+/obj/item/modular_computer/tablet/pda/chameleon
 	name = "tablet"
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action
 
-/obj/item/modular_computer/tablet/role/chameleon/Initialize(mapload)
+/obj/item/modular_computer/tablet/pda/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/modular_computer/tablet/role
+	chameleon_action.chameleon_type = /obj/item/modular_computer/tablet/pda
 	chameleon_action.chameleon_name = "tablet"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/modular_computer/tablet/role/heads), only_root_path = TRUE)
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/modular_computer/tablet/pda/heads), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
-/obj/item/modular_computer/tablet/role/chameleon/emp_act(severity)
+/obj/item/modular_computer/tablet/pda/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/modular_computer/tablet/role/chameleon/broken/Initialize(mapload)
+/obj/item/modular_computer/tablet/pda/chameleon/broken/Initialize(mapload)
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 

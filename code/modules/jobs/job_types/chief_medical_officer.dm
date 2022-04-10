@@ -61,7 +61,7 @@
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/role/heads/cmo
+	belt = /obj/item/modular_computer/tablet/pda/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	l_pocket = /obj/item/pinpointer/crew

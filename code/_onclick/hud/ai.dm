@@ -181,7 +181,7 @@
 /datum/hud/ai/New(mob/owner)
 	..()
 	var/atom/movable/screen/using
-	var/mob/living/silicon/ai/ayeye = mymob
+	var/mob/living/silicon/ai/myai = mymob
 
 // Language menu
 	using = new /atom/movable/screen/language_menu
@@ -254,9 +254,9 @@
 	using.screen_loc = ui_ai_mod_int
 	using.hud = src
 	static_inventory += using
-	ayeye.interfaceButton = using
+	myai.interfaceButton = using
 	var/atom/movable/screen/ai/modPC/tabletbutton = using
-	tabletbutton.robot = ayeye
+	tabletbutton.robot = myai
 
 //Take image
 	using = new /atom/movable/screen/ai/image_take()

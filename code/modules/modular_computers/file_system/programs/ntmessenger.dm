@@ -5,8 +5,6 @@
 	program_icon_state = "command"
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 8
-	requires_ntnet = TRUE
-	requires_ntnet_feature = NTNET_COMMUNICATION
 	usage_flags = PROGRAM_TABLET
 	ui_header = "ntnrc_idle.gif"
 	available_on_ntnet = TRUE
@@ -55,7 +53,7 @@
 	else
 		sortmode = /proc/cmp_pdaname_asc
 
-	for(var/obj/item/modular_computer/P in sort_list(GLOB.MMessengers, sortmode))
+	for(var/obj/item/modular_computer/P in sort_list(GLOB.TabletMessengers, sortmode))
 		var/obj/item/computer_hardware/hard_drive/drive = P.all_components[MC_HDD]
 		if(!drive)
 			continue
@@ -88,13 +86,14 @@
 
 	switch(action)
 		if("PDA_ringSet")
-			var/t = tgui_input_text(usr, "Enter a new ringtone", "Computer Ringtone", tTone, 20)
+			var/t = tgui_input_text(usr, "Enter a new tablet ID", "Computer ID", "", 20)
 			var/mob/living/usr_mob = usr
 			if(in_range(computer, usr_mob) && computer.loc == usr_mob && t)
-				if(SEND_SIGNAL(computer, COMSIG_PDA_CHANGE_RINGTONE, usr_mob, t) & COMPONENT_STOP_RINGTONE_CHANGE)
+				if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, usr_mob, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 					return
 				else
 					tTone = t
+					return(UI_UPDATE)
 		if("PDA_ringerStatus")
 			ringerStatus = !ringerStatus
 			return(UI_UPDATE)
@@ -226,16 +225,10 @@
 		if (comp.saved_identification && comp.saved_job)  // != src is checked by the UI
 			string_targets += STRINGIFY_PDA_TARGET(comp.saved_identification, comp.saved_job)
 
-	for (var/obj/machinery/computer/message_monitor/M in targets)
-		// In case of "Reply" to a message from a console, this will make the
-		// message be logged successfully. If the console is impersonating
-		// someone by matching their name and job, the reply will reach the
-		// impersonated PDA.
-		string_targets += STRINGIFY_PDA_TARGET(M.customsender, M.customjob)
 	if (!string_targets.len)
 		return FALSE
 
-	var/datum/signal/subspace/messaging/modular/signal = new(computer, list(
+	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
 		"name" = fake_name || computer.saved_identification,
 		"job" = fake_job || computer.saved_job,
 		"message" = message,
@@ -297,7 +290,7 @@
 	messages += list(message_data)
 	return TRUE
 
-/datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/modular/signal)
+/datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/tablet_msg/signal)
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]

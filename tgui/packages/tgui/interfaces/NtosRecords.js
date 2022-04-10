@@ -36,7 +36,7 @@ export const NtosRecords = (props, context) => {
         </Section>
         {(mode==="security") && (
           records.map(record => (
-            <Section hidden={!((record.name+" "+record.rank+" "+record.species+" "+record.gender+" "+record.age+" "+record.fingerprint).match(filterTerm)) && filterTerm} key={record.id}>
+            <Section hidden={!((record.name + " " + record.rank + " "+record.species + " " + record.gender + " " + record.age + " " + record.fingerprint).match(filterTerm)) && filterTerm} key={record.id}>
               <Box bold>
                 <Icon name="user" mr={1} />
                 {record.name}
@@ -54,7 +54,7 @@ export const NtosRecords = (props, context) => {
         )}
         {(mode==="medical") && (
           records.map(record => (
-            <Section hidden={!((record.name+" "+record.bloodtype+" "+record.m_stat+" "+record.p_stat).match(filterTerm)) && filterTerm} key={record.id}>
+            <Section hidden={!((record.name + " " + record.bloodtype + " " + record.m_stat + " " + record.p_stat).match(filterTerm)) && filterTerm} key={record.id}>
               <Box bold>
                 <Icon name="user" mr={1} />
                 {record.name}

@@ -57,7 +57,7 @@
 		difficulty += bit_count(disk.disk_flags & (DISK_MED | DISK_SEC | DISK_POWER | DISK_MANIFEST))
 		if(disk.disk_flags & DISK_MANIFEST)
 			difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
-	if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))
+	if(SEND_SIGNAL(target, COMSIG_TABLET_CHECK_DETONATE) & COMPONENT_TABLET_NO_DETONATE || prob(difficulty * 15))
 		user.show_message(span_danger("ERROR: Target could not be bombed."), MSG_VISUAL)
 		charges--
 		return

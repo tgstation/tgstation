@@ -33,11 +33,6 @@
 	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>" // The message that shows on the main menu.
 	var/auth = FALSE // Are they authenticated?
 	var/optioncount = 7
-	// Custom Message Properties
-	var/customsender = "System Administrator"
-	var/obj/item/modular_computer/customrecepient = null
-	var/customjob = "Admin"
-	var/custommessage = "This is a test, please ignore."
 
 /obj/machinery/computer/message_monitor/screwdriver_act(mob/living/user, obj/item/I)
 	if(obj_flags & EMAGGED)
@@ -137,7 +132,7 @@
 			var/index = 0
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"
-			for(var/datum/data_modular_msg/pda in linkedServer.pda_msgs)
+			for(var/datum/data_tablet_msg/pda in linkedServer.pda_msgs)
 				index++
 				if(index > 3000)
 					break
@@ -230,12 +225,6 @@
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
 	obj_flags &= ~EMAGGED
-
-/obj/machinery/computer/message_monitor/proc/ResetMessage()
-	customsender = "System Administrator"
-	customrecepient = null
-	custommessage = "This is a test, please ignore."
-	customjob = "Admin"
 
 /obj/machinery/computer/message_monitor/Topic(href, href_list)
 	if(..())
@@ -332,7 +321,7 @@
 			if(screen == MSG_MON_SCREEN_LOGS)
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
-				else //if(istype(href_list["delete_logs"], /datum/data_modular_msg))
+				else if(istype(href_list["delete_logs"], /datum/data_tablet_msg))
 					linkedServer.pda_msgs -= locate(href_list["delete_logs"]) in linkedServer.pda_msgs
 					message = span_notice("NOTICE: Log Deleted!")
 		//Delete the request console log.
@@ -341,7 +330,7 @@
 			if(screen == MSG_MON_SCREEN_REQUEST_LOGS)
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
-				else //if(istype(href_list["delete_logs"], /datum/data_modular_msg))
+				else if(istype(href_list["delete_logs"], /datum/data_tablet_msg))
 					linkedServer.rc_msgs -= locate(href_list["delete_requests"]) in linkedServer.rc_msgs
 					message = span_notice("NOTICE: Log Deleted!")
 

@@ -67,7 +67,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/hardhat/white
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	l_pocket = /obj/item/modular_computer/tablet/role/heads/ce
+	l_pocket = /obj/item/modular_computer/tablet/pda/heads/ce
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng

@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
+GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
 
 // This is the base type that does all the hardware stuff.
 // Other types expand it - tablets use a direct subtypes, and
@@ -640,7 +640,7 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	return ..()
 
 /obj/item/modular_computer/proc/Add_Messenger()
-	GLOB.MMessengers += src
+	GLOB.TabletMessengers += src
 
 /obj/item/modular_computer/proc/Remove_Messenger()
-	GLOB.MMessengers -= src
+	GLOB.TabletMessengers -= src

@@ -959,7 +959,7 @@
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dm" = (
 /obj/structure/table/reinforced,
-/obj/item/modular_computer/tablet/role/syndicate{
+/obj/item/modular_computer/tablet/pda/syndicate{
 	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/mime;
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
 	name = "soviet tablet";
@@ -3562,7 +3562,7 @@
 /area/awaymission/cabin/caves)
 "nb" = (
 /obj/effect/turf_decal/weather/snow,
-/obj/item/modular_computer/tablet/role/syndicate{
+/obj/item/modular_computer/tablet/pda/syndicate{
 	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/clown;
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
 	name = "soviet tablet";

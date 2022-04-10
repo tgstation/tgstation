@@ -474,36 +474,36 @@
  * Used to see pda_region in [/datum/controller/subsystem/id_access/proc/setup_tgui_lists]
  */
 #define PDA_PAINTING_REGIONS list( \
-	/obj/item/modular_computer/tablet/role = list(REGION_GENERAL), \
-	/obj/item/modular_computer/tablet/role/clown = list(REGION_GENERAL), \
-	/obj/item/modular_computer/tablet/role/mime = list(REGION_GENERAL), \
-	/obj/item/modular_computer/tablet/role/medical = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/tablet/role/viro = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/tablet/role/engineering = list(REGION_ENGINEERING), \
-	/obj/item/modular_computer/tablet/role/security = list(REGION_SECURITY), \
-	/obj/item/modular_computer/tablet/role/detective = list(REGION_SECURITY), \
-	/obj/item/modular_computer/tablet/role/warden = list(REGION_SECURITY), \
-	/obj/item/modular_computer/tablet/role/janitor = list(REGION_GENERAL), \
-	/obj/item/modular_computer/tablet/role/science = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/tablet/role/heads/hop = list(REGION_COMMAND), \
-	/obj/item/modular_computer/tablet/role/heads/hos = list(REGION_COMMAND), \
-	/obj/item/modular_computer/tablet/role/heads/cmo = list(REGION_COMMAND), \
-	/obj/item/modular_computer/tablet/role/heads/ce = list(REGION_COMMAND), \
-	/obj/item/modular_computer/tablet/role/heads/rd = list(REGION_COMMAND), \
-	/obj/item/modular_computer/tablet/role/captain = list(REGION_COMMAND), \
-	/obj/item/modular_computer/tablet/role/cargo = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/tablet/role/quartermaster = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/tablet/role/shaftminer = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/tablet/role/chaplain = list(REGION_GENERAL), \
-	/obj/item/modular_computer/tablet/role/lawyer = list(REGION_GENERAL, REGION_SECURITY), \
-	/obj/item/modular_computer/tablet/role/botanist = list(REGION_GENERAL), \
-	/obj/item/modular_computer/tablet/role/roboticist = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/tablet/role/curator = list(REGION_GENERAL), \
-	/obj/item/modular_computer/tablet/role/cook = list(REGION_GENERAL), \
-	/obj/item/modular_computer/tablet/role/bar = list(REGION_GENERAL), \
-	/obj/item/modular_computer/tablet/role/atmos = list(REGION_ENGINEERING), \
-	/obj/item/modular_computer/tablet/role/chemist = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/tablet/role/geneticist = list(REGION_RESEARCH), \
+	/obj/item/modular_computer/tablet/pda = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/pda/clown = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/pda/mime = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/pda/medical = list(REGION_MEDBAY), \
+	/obj/item/modular_computer/tablet/pda/viro = list(REGION_MEDBAY), \
+	/obj/item/modular_computer/tablet/pda/engineering = list(REGION_ENGINEERING), \
+	/obj/item/modular_computer/tablet/pda/security = list(REGION_SECURITY), \
+	/obj/item/modular_computer/tablet/pda/detective = list(REGION_SECURITY), \
+	/obj/item/modular_computer/tablet/pda/warden = list(REGION_SECURITY), \
+	/obj/item/modular_computer/tablet/pda/janitor = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/pda/science = list(REGION_RESEARCH), \
+	/obj/item/modular_computer/tablet/pda/heads/hop = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/pda/heads/hos = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/pda/heads/cmo = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/pda/heads/ce = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/pda/heads/rd = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/pda/captain = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/pda/cargo = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/tablet/pda/quartermaster = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/tablet/pda/shaftminer = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/tablet/pda/chaplain = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/pda/lawyer = list(REGION_GENERAL, REGION_SECURITY), \
+	/obj/item/modular_computer/tablet/pda/botanist = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/pda/roboticist = list(REGION_RESEARCH), \
+	/obj/item/modular_computer/tablet/pda/curator = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/pda/cook = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/pda/bar = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/pda/atmos = list(REGION_ENGINEERING), \
+	/obj/item/modular_computer/tablet/pda/chemist = list(REGION_MEDBAY), \
+	/obj/item/modular_computer/tablet/pda/geneticist = list(REGION_RESEARCH), \
 )
 
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.

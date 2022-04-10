@@ -1042,8 +1042,8 @@
 					break
 				search_id = 0
 
-		else if( search_pda && istype(A, /obj/item/modular_computer/tablet/role) )
-			var/obj/item/modular_computer/tablet/role/PDA = A
+		else if( search_pda && istype(A, /obj/item/modular_computer/tablet/pda) )
+			var/obj/item/modular_computer/tablet/pda/PDA = A
 			if(PDA.saved_identification == oldname)
 				PDA.saved_identification = newname
 				if(!search_id)

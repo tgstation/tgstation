@@ -46,7 +46,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	belt = /obj/item/storage/belt/utility/atmostech
 	ears = /obj/item/radio/headset/headset_eng
-	l_pocket = /obj/item/modular_computer/tablet/role/atmos
+	l_pocket = /obj/item/modular_computer/tablet/pda/atmos
 	r_pocket = /obj/item/analyzer
 
 	backpack = /obj/item/storage/backpack/industrial

@@ -139,8 +139,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		id.update_icon()
 
 		if(worn)
-			if(istype(worn, /obj/item/modular_computer/tablet/role))
-				var/obj/item/modular_computer/tablet/role/PDA = worn
+			if(istype(worn, /obj/item/modular_computer/tablet/pda))
+				var/obj/item/modular_computer/tablet/pda/PDA = worn
 				var/obj/item/computer_hardware/card_slot/card = PDA.all_components[MC_CARD]
 
 				if(card)
