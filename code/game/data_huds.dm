@@ -61,6 +61,8 @@
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, DIAG_PATH_HUD)
 
 /datum/atom_hud/data/bot_path
+	// This hud exists so the bot can see itself, that's all
+	uses_global_hud_category = FALSE
 	hud_icons = list(DIAG_PATH_HUD)
 
 /datum/atom_hud/abductor

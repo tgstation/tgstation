@@ -76,7 +76,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(transfer_overlays)
 		I.copy_overlays(target)
 
-	hud_icons = list(appearance_key)
 	add_atom_to_hud(target)
 	target.set_hud_image_active(appearance_key, exclusive_hud = src)
 

@@ -104,7 +104,7 @@
 	var/beacon_freq = FREQ_NAV_BEACON
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
-	var/datum/atom_hud/data/bot_path/path_hud = new /datum/atom_hud/data/bot_path()
+	var/datum/atom_hud/data/bot_path/path_hud
 	var/path_image_icon = 'icons/mob/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
 	var/path_image_color = "#FFFFFF"
@@ -164,6 +164,11 @@
 /mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
 	GLOB.bots_list += src
+	
+	path_hud = new /datum/atom_hud/data/bot_path()
+	for(var/hud in path_hud.hud_icons) // You get to see your own path
+		set_hud_image_active(hud, exclusive_hud = path_hud)
+
 	// Give bots a fancy new ID card that can hold any access.
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
 	// This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
