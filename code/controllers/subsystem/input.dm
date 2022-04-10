@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(input)
 
 		clicked_atom.Click(location, control, params)//this is why it works via usr and not a passed in mob arg. atom/Click() assumes usr is correct
 		current_clicks++
-		average_click_delay = MC_AVERAGE(average_click_delay, 0)//non delayed clicks count as a 0
+		average_click_delay = MC_AVG_FAST_UP_SLOW_DOWN(average_click_delay, 0)//non delayed clicks count as a 0
 		return TRUE
 
 	queued_clicks += VERB_CALLBACK(src, .proc/wrap_Click, clicked_atom, location, control, params)
@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(input)
 	var/deferred_clicks_this_run = 0 //acts like current_clicks but doesnt count clicks that dont get processed by SSinput
 
 	for(var/datum/callback/verb_callback/queued_click as anything in queued_clicks)
-		average_click_delay = MC_AVERAGE(average_click_delay, (REALTIMEOFDAY - queued_click.creation_time) SECONDS)
+		average_click_delay = MC_AVG_FAST_UP_SLOW_DOWN(average_click_delay, (REALTIMEOFDAY - queued_click.creation_time) SECONDS)
 		queued_click.InvokeAsync()
 
 		current_clicks++
