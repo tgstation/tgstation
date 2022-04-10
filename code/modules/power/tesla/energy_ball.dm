@@ -50,7 +50,7 @@
 
 		var/turf/spawned_turf = get_turf(src)
 		message_admins("A tesla has been created at [ADMIN_VERBOSEJMP(spawned_turf)].")
-		investigate_log("(tesla) was created at [AREACOORD(spawned_turf)].", INVESTIGATE_SINGULO)
+		investigate_log("was created at [AREACOORD(spawned_turf)].", INVESTIGATE_ENGINE)
 
 /obj/energy_ball/Destroy()
 	if(orbiting && istype(orbiting.parent, /obj/energy_ball))

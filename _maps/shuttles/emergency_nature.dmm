@@ -181,7 +181,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/machinery/door/window/westleft{
+/obj/machinery/door/window/left/directional/west{
 	name = "Infirmary"
 	},
 /turf/open/floor/iron{
@@ -463,7 +463,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/door/window/westleft{
+/obj/machinery/door/window/left/directional/west{
 	name = "Nature pen"
 	},
 /turf/open/floor/iron/white,
@@ -473,7 +473,7 @@
 	dir = 5
 	},
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -617,7 +617,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/door/window/northleft,
+/obj/machinery/door/window/left/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "wX" = (
@@ -695,9 +695,9 @@
 /area/shuttle/escape)
 "zE" = (
 /obj/machinery/door/airlock/security{
-	name = "Brig";
-	req_access_txt = "63; 42"
+	name = "Brig"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/brig)
 "Ai" = (
@@ -722,9 +722,9 @@
 /area/shuttle/escape)
 "Bm" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Cockpit";
-	req_access_txt = "19"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Bo" = (
@@ -946,11 +946,11 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = -3
 	},
 /turf/open/floor/iron{
@@ -1047,7 +1047,7 @@
 "Ob" = (
 /obj/effect/turf_decal/trimline/green/filled/end,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	name = "Nature pen"
 	},
 /turf/open/floor/iron/white,
@@ -1312,7 +1312,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/door/window/eastleft{
+/obj/machinery/door/window/left/directional/east{
 	name = "Nature pen"
 	},
 /turf/open/floor/iron/white,

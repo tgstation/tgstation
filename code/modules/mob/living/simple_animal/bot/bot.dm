@@ -104,28 +104,6 @@
 	var/beacon_freq = FREQ_NAV_BEACON
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
-	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
-	var/list/mode_name = list(
-		"In Pursuit",
-		"Preparing to Arrest",
-		"Arresting",
-		"Beginning Patrol",
-		"Patrolling",
-		"Summoned by PDA",
-		"Cleaning",
-		"Repairing",
-		"Proceeding to work site",
-		"Healing",
-		"Proceeding to AI waypoint",
-		"Navigating to Delivery Location",
-		"Navigating to Home",
-		"Waiting for clear path",
-		"Calculating navigation path",
-		"Pinging beacon network",
-		"Unable to reach destination",
-		"Chasing filth",
-		"No Route",
-	)
 	var/datum/atom_hud/data/bot_path/path_hud = new /datum/atom_hud/data/bot_path()
 	var/path_image_icon = 'icons/mob/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
@@ -141,10 +119,8 @@
 			return "<b>Autonomous</b>"
 	else if(!(bot_mode_flags & BOT_MODE_ON))
 		return "<span class='bad'>Inactive</span>"
-	else if(!mode)
-		return "<span class='good'>Idle</span>"
 	else
-		return "<span class='average'>[mode_name[mode]]</span>"
+		return "<span class='average'>[mode]</span>"
 
 /**
  * Returns a status string about the bot's current status, if it's moving, manually controlled, or idle.
@@ -154,10 +130,8 @@
 		return paicard ? "pAI Controlled" : "Autonomous"
 	else if(!(bot_mode_flags & BOT_MODE_ON))
 		return "Inactive"
-	else if(!mode)
-		return "Idle"
 	else
-		return "[mode_name[mode]]"
+		return "[mode]"
 
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
@@ -229,7 +203,7 @@
 	QDEL_NULL(access_card)
 	return ..()
 
-/mob/living/simple_animal/bot/proc/check_access(mob/living/user)
+/mob/living/simple_animal/bot/proc/check_access(mob/living/user, obj/item/card/id)
 	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
 		return TRUE
 	if(!maints_access_required) // No requirements to access it.
@@ -237,13 +211,13 @@
 	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
 		return TRUE
 
-	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-	if(!id_card || !id_card.access)
+	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
+
+	if(!used_id || !used_id.access)
 		return FALSE
-	id_card = id_card.GetID()
 
 	for(var/requested_access in maints_access_required)
-		if(requested_access in id_card.access)
+		if(requested_access in used_id.access)
 			return TRUE
 	return FALSE
 
@@ -255,10 +229,12 @@
 	..()
 
 /mob/living/simple_animal/bot/proc/explode()
-	qdel(src)
+	visible_message(span_boldnotice("[src] blows apart!"))
+	do_sparks(3, TRUE, src)
 	var/atom/location_destroyed = drop_location()
 	if(prob(50))
 		drop_part(robot_arm, location_destroyed)
+	qdel(src)
 
 /mob/living/simple_animal/bot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -342,7 +318,7 @@
 			call_mode()
 			return FALSE
 		if(BOT_SUMMON) //Called to a location
-			bot_summon()
+			summon_step()
 			return FALSE
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
@@ -809,8 +785,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 			mode = BOT_SUMMON
 			speak("Responding.", radio_channel)
 
-			calc_summon_path()
-
 		if("ejectpai")
 			ejectpairemote(user)
 	return
@@ -836,9 +810,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return
 		else
 			to_chat(src, span_warning("Unidentified control sequence received:[command]"))
-
-/mob/living/simple_animal/bot/proc/bot_summon() // summoned to PDA
-	summon_step()
 
 // calculates a path to the current destination
 // given an optional turf to avoid

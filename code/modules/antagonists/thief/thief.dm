@@ -84,6 +84,7 @@
 	data["objectives"] = get_objectives()
 	data["goal"] = thief_flavor["goal"]
 	data["intro"] = thief_flavor["introduction"]
+	data["policy"] = get_policy(ROLE_THIEF)
 	return data
 
 /datum/outfit/thief
@@ -92,14 +93,14 @@
 	glasses = /obj/item/clothing/glasses/night
 	gloves = /obj/item/clothing/gloves/color/latex
 	back = /obj/item/storage/backpack/duffelbag/syndie
-	mask = /obj/item/clothing/mask/bandana/red
+	mask = /obj/item/clothing/mask/bandana/color/red
 
 /datum/outfit/thief/post_equip(mob/living/carbon/human/thief, visualsOnly=FALSE)
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		thief.w_uniform?.update_greyscale()
 		thief.update_inv_w_uniform()
-	thief.body_type = FEMALE //update_body() and gender block or something
+	thief.physique = FEMALE //update_body() and gender block or something
 	thief.hair_color = "#2A71DC" //hair color dna block
 	thief.skin_tone = "caucasian2" //skin tone dna block
 	thief.hairstyle = "Bun Head 2" //update_hair()

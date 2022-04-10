@@ -1,7 +1,7 @@
 /obj/structure/punching_bag
 	name = "punching bag"
 	desc = "A punching bag. Can you get to speed level 4???"
-	icon = 'goon/icons/obj/fitness.dmi'
+	icon = 'icons/obj/gym_equipment.dmi'
 	icon_state = "punchingbag"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
@@ -13,7 +13,7 @@
 	. = ..()
 	if(.)
 		return
-	flick("[icon_state]2", src)
+	flick("[icon_state]-punch", src)
 	playsound(loc, pick(hit_sounds), 25, TRUE, -1)
 	if(isliving(user))
 		var/mob/living/L = user
@@ -25,7 +25,7 @@
 	density = TRUE
 	anchored = TRUE
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	icon = 'icons/obj/weightmachine.dmi'
+	icon = 'icons/obj/gym_equipment.dmi'
 
 /obj/structure/weightmachine/proc/AnimateMachine(mob/living/user)
 	return

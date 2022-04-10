@@ -133,7 +133,7 @@
 	turf_type = /turf/open/floor/bamboo
 	merge_type = /obj/item/stack/tile/bamboo
 	resistance_flags = FLAMMABLE
-	
+
 
 //Basalt
 /obj/item/stack/tile/basalt
@@ -142,7 +142,7 @@
 	desc = "Artificially made ashy soil themed on a hostile environment."
 	icon_state = "tile_basalt"
 	inhand_icon_state = "tile-basalt"
-	turf_type = /turf/open/floor/grass/fakebasalt
+	turf_type = /turf/open/floor/fakebasalt
 	merge_type = /obj/item/stack/tile/basalt
 
 //Carpets

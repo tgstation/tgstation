@@ -53,7 +53,6 @@
 	flags_inv = NONE
 	icon_state = "cage"
 	inhand_icon_state = "cage"
-	dynamic_hair_suffix = ""
 	worn_y_offset = 7
 
 /obj/item/clothing/head/helmet/chaplain/ancient
@@ -150,7 +149,7 @@
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
 		success_forcesay = "BEGONE FOUL MAGIKS!!", \

@@ -41,19 +41,27 @@
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/board/power_compressor
-	name = "Machine Design (Power Compressor Board)"
-	desc = "The circuit board for a power compressor."
-	id = "power_compressor"
-	build_path = /obj/item/circuitboard/machine/power_compressor
+/datum/design/board/turbine_compressor
+	name = "Machine Design (Turbine Compressor Board)"
+	desc = "The circuit board for a turbine compressor."
+	id = "turbine_compressor"
+	build_path = /obj/item/circuitboard/machine/turbine_compressor
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/power_turbine
-	name = "Machine Design (Power Turbine Board)"
-	desc = "The circuit board for a power turbine."
-	id = "power_turbine"
-	build_path = /obj/item/circuitboard/machine/power_turbine
+/datum/design/board/turbine_rotor
+	name = "Machine Design (Turbine Rotor Board)"
+	desc = "The circuit board for a turbine rotor."
+	id = "turbine_rotor"
+	build_path = /obj/item/circuitboard/machine/turbine_rotor
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/turbine_stator
+	name = "Machine Design (Turbine Stator Board)"
+	desc = "The circuit board for a turbine stator."
+	id = "turbine_stator"
+	build_path = /obj/item/circuitboard/machine/turbine_stator
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
@@ -327,6 +335,22 @@
 	desc = "The circuit board for a tachyon-doppler research array"
 	id = "doppler_array"
 	build_path = /obj/item/circuitboard/machine/doppler_array
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/anomaly_refinery
+	name = "Machine Design (Anomaly Refinery Board)"
+	desc = "The circuit board for an anomaly refinery"
+	id = "anomaly_refinery"
+	build_path = /obj/item/circuitboard/machine/anomaly_refinery
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/tank_compressor
+	name = "Machine Design (Tank Compressor Board)"
+	desc = "The circuit board for a tank compressor"
+	id = "tank_compressor"
+	build_path = /obj/item/circuitboard/machine/tank_compressor
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -658,14 +682,6 @@
 	build_path = /obj/item/circuitboard/machine/skill_station
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
-
-/datum/design/board/accounting
-	name = "Machine Design (Account Registration Device)"
-	desc = "The circuit board for a Account Registration Device."
-	id = "accounting"
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SERVICE
-	build_path = /obj/item/circuitboard/machine/accounting
-	category = list ("Misc. Machinery")
 
 //Hypertorus fusion reactor designs
 

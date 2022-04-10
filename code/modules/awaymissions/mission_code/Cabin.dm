@@ -10,6 +10,7 @@
 	name = "Snow Forest"
 	icon_state = "away"
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 /area/awaymission/cabin/snowforest/sovietsurface
 	name = "Snow Forest"
@@ -21,6 +22,7 @@
 	icon_state = "away3"
 	requires_power = FALSE
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 /area/awaymission/cabin/caves/sovietcave
 	name = "Soviet Bunker"
@@ -111,12 +113,12 @@
 	/datum/map_generator_module/snow/bunnies)
 
 /datum/map_generator_module/snow/checkPlaceAtom(turf/T)
-	if(istype(T, /turf/open/floor/plating/asteroid/snow))
+	if(istype(T, /turf/open/misc/asteroid/snow))
 		return ..()
 	return FALSE
 
 /datum/map_generator_module/bottomlayer/snow
-	spawnableTurfs = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)
+	spawnableTurfs = list(/turf/open/misc/asteroid/snow/atmosphere = 100)
 
 /datum/map_generator_module/snow/pine_trees
 	spawnableAtoms = list(/obj/structure/flora/tree/pine = 30)

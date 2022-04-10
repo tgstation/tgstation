@@ -32,11 +32,11 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/o2{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/crowbar,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -327,9 +327,9 @@
 "aJ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/security/glass{
-	name = "Holding Area";
-	req_one_access_txt = "19"
+	name = "Holding Area"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "aK" = (
@@ -375,9 +375,9 @@
 "aN" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/airlock/command{
-	name = "Shuttle Control";
-	req_one_access_txt = "19"
+	name = "Shuttle Control"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "aO" = (
@@ -547,8 +547,7 @@
 /area/shuttle/escape)
 "bb" = (
 /obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Airlock";
-	req_one_access_txt = "63"
+	name = "Emergency Shuttle Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -556,6 +555,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "bc" = (
@@ -657,9 +657,9 @@
 "bm" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/security/glass{
-	name = "Holding Area";
-	req_access_txt = "2"
+	name = "Holding Area"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "bn" = (
@@ -1136,7 +1136,7 @@
 /area/shuttle/escape)
 "cg" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/item/tank/internals/emergency_oxygen,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
@@ -1273,12 +1273,12 @@
 /area/shuttle/escape)
 "ct" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = -4;
 	pixel_y = 3
 	},
@@ -1533,15 +1533,15 @@
 /area/shuttle/escape)
 "cW" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "cX" = (

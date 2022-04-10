@@ -82,11 +82,11 @@
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
-	send_item_attack_message(I, user, affecting.name, affecting)
+	send_item_attack_message(I, user, parse_zone(affecting.body_zone), affecting)
 	if(I.force)
 		var/attack_direction = get_dir(user, src)
 		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction)
-		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
+		if(I.damtype == BRUTE && IS_ORGANIC_LIMB(affecting))
 			if(prob(33))
 				I.add_mob_blood(src)
 				var/turf/location = get_turf(src)
@@ -365,6 +365,8 @@
 		return
 	//Propagation through pulling, fireman carry
 	if(!(flags & SHOCK_ILLUSION))
+		if(undergoing_cardiac_arrest())
+			set_heartattack(FALSE)
 		var/list/shocking_queue = list()
 		if(iscarbon(pulling) && source != pulling)
 			shocking_queue += pulling
@@ -412,8 +414,7 @@
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, span_notice("You shake [src] trying to pick [p_them()] up!"))
 		to_chat(src, span_notice("[M] shakes you to get you up!"))
-
-	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
+	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
 		SEND_SIGNAL(src, COMSIG_CARBON_HEADPAT, M)
 		M.visible_message(span_notice("[M] gives [src] a pat on the head to make [p_them()] feel better!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(M, src))
@@ -642,7 +643,7 @@
 	. = health
 	for (var/_limb in bodyparts)
 		var/obj/item/bodypart/limb = _limb
-		if (limb.status != BODYPART_ORGANIC)
+		if (!IS_ORGANIC_LIMB(limb))
 			. += (limb.brute_dam * limb.body_damage_coeff) + (limb.burn_dam * limb.body_damage_coeff)
 
 /mob/living/carbon/grabbedby(mob/living/carbon/user, supress_message = FALSE)
@@ -650,7 +651,7 @@
 		return ..()
 
 	var/obj/item/bodypart/grasped_part = get_bodypart(zone_selected)
-	if(!grasped_part?.get_bleed_rate())
+	if(!grasped_part?.get_part_bleed_rate())
 		return
 	var/starting_hand_index = active_hand_index
 	if(starting_hand_index == grasped_part.held_index)
@@ -658,7 +659,7 @@
 		return
 
 	to_chat(src, span_warning("You try grasping at your [grasped_part.name], trying to stop the bleeding..."))
-	if(!do_after(src, 1.5 SECONDS))
+	if(!do_after(src, 0.75 SECONDS))
 		to_chat(src, span_danger("You fail to grasp your [grasped_part.name]."))
 		return
 
@@ -675,7 +676,7 @@
 	desc = "Sometimes all you can do is slow the bleeding."
 	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
-	slowdown = 1
+	slowdown = 0.5
 	item_flags = DROPDEL | ABSTRACT | NOBLUDGEON | SLOWS_WHILE_IN_HAND | HAND_ITEM
 	/// The bodypart we're staunching bleeding on, which also has a reference to us in [/obj/item/bodypart/var/grasped_by]
 	var/obj/item/bodypart/grasped_part

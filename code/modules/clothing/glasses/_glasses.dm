@@ -152,6 +152,19 @@
 	if(slot == ITEM_SLOT_EYES)
 		return 1
 
+/obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
+	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return OXYLOSS
+
+/obj/item/clothing/glasses/science/night
+	name = "night vision science goggles"
+	desc = "Lets the user see in the dark and recognize chemical compounds at a glance."
+	icon_state = "scihudnight"
+	darkness_view = 8
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	glass_colour_type = /datum/client_colour/glass_colour/green
+
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
@@ -161,10 +174,6 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
-
-/obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return OXYLOSS
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -304,6 +313,7 @@
 	icon_state = "sunhudsci"
 	desc = "A pair of tacky purple sunglasses that allow the wearer to recognize various chemical compounds with only a glance."
 	clothing_traits = list(TRAIT_REAGENT_SCANNER)
+	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "black gar glasses"
