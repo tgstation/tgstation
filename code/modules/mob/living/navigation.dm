@@ -94,10 +94,9 @@
 	balloon_alert(src, "navigation path created")
 
 /mob/living/proc/shine_navigation()
-	if(!length(client.navigation_images))
-		return
-
 	for(var/i in 1 to length(client.navigation_images))
+		if(!length(client.navigation_images))
+			return
 		animate(client.navigation_images[i], time = 1 SECONDS, loop = -1, alpha = 200, color = "#bbffff", easing = BACK_EASING | EASE_OUT)
 		animate(time = 2 SECONDS, loop = -1, alpha = 150, color = "#00ffff", easing = CUBIC_EASING | EASE_OUT)
 		stoplag(0.1 SECONDS)
