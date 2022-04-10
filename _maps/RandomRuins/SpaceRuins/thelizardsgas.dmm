@@ -397,6 +397,9 @@
 	pixel_y = 32
 	},
 /obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "Mw" = (
@@ -548,10 +551,6 @@
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=35000;TEMP=293.15"
 	},
-/area/ruin/space/has_grav/thelizardsgas)
-"XB" = (
-/obj/machinery/power/terminal,
-/turf/closed/wall,
 /area/ruin/space/has_grav/thelizardsgas)
 "Ys" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -988,7 +987,7 @@ CA
 CA
 CA
 Qg
-XB
+mR
 Io
 cm
 Mw
