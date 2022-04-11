@@ -471,7 +471,7 @@
 	desc = "This system essentially forms an atmosphere of its own, within the suit, \
 		efficiently and quickly preventing oxygen from causing the user's head to burst into flame. \
 		This allows plasmamen to safely remove their helmet, allowing for easier \
-		equipping of any MODsuit related equipment, or otherwise. \
+		equipping of any MODsuit-related equipment, or otherwise. \
 		The purple glass of the visor seems to be constructed for nostalgic purposes."
 	icon_state = "plasma_stabilizer"
 	complexity = 1
