@@ -1,7 +1,3 @@
-FLUID_SUBSYSTEM_DEF(smoke)
-	name = "Smoke"
-	effect_processing_wait = 2 SECONDS
-
 /**
  * A fluid which spreads through the air affecting every mob it engulfs.
  */
@@ -23,23 +19,13 @@ FLUID_SUBSYSTEM_DEF(smoke)
 /obj/effect/particle_effect/fluid/smoke/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
 	create_reagents(1000)
-	start_processing(SSsmoke)
 	setDir(pick(GLOB.cardinals))
+	SSsmoke_effect.start_processing(src)
 
 /obj/effect/particle_effect/fluid/smoke/Destroy()
-	stop_processing(SSsmoke)
-	return ..()
-
-/obj/effect/particle_effect/fluid/smoke/start_processing(datum/controller/subsystem/processing/subsystem = SSsmoke)
-	return ..()
-
-/obj/effect/particle_effect/fluid/smoke/stop_processing(datum/controller/subsystem/processing/subsystem = SSsmoke)
-	return ..()
-
-/obj/effect/particle_effect/fluid/smoke/queue_spread(delay = 0.1 SECONDS, datum/controller/subsystem/processing/subsystem = SSsmoke)
-	return ..()
-
-/obj/effect/particle_effect/fluid/smoke/cancel_spread(datum/controller/subsystem/processing/subsystem = SSsmoke)
+	SSsmoke_effect.stop_processing(src)
+	if (spread_bucket)
+		SSsmoke_spread.cancel_spread(src)
 	return ..()
 
 
@@ -47,7 +33,9 @@ FLUID_SUBSYSTEM_DEF(smoke)
  * Makes the smoke fade out and then deletes it.
  */
 /obj/effect/particle_effect/fluid/smoke/proc/kill_smoke()
-	stop_processing(SSsmoke)
+	SSsmoke_effect.stop_processing(src)
+	if (spread_bucket)
+		SSsmoke_spread.cancel_spread(src)
 	INVOKE_ASYNC(src, .proc/fade_out)
 	QDEL_IN(src, 1 SECONDS)
 
@@ -98,7 +86,7 @@ FLUID_SUBSYSTEM_DEF(smoke)
 		spread_smoke.lifetime = lifetime
 
 		// the smoke spreads rapidly, but not instantly
-		spread_smoke.queue_spread(0.1 SECONDS)
+		SSsmoke_spread.queue_spread(spread_smoke)
 
 
 /obj/effect/particle_effect/fluid/smoke/process(delta_time)

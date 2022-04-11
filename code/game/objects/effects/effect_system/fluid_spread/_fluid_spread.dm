@@ -84,49 +84,20 @@
 	name = "fluid"
 	///	The fluid group that this particle effect belongs to.
 	var/datum/fluid_group/group
-	///
-	var/last_process
-	var/last_spread
-	var/next_spread
+	/// What SSfluid bucket this particle effect is currently in.
+	var/tmp/process_bucket
+	/// The index of the fluid spread bucket this is being spread in.
+	var/tmp/spread_bucket
 
 /obj/effect/particle_effect/fluid/Initialize(mapload, datum/fluid_group/group, obj/effect/particle_effect/fluid/source)
 	. = ..()
 	if(!group)
 		group = source?.group || new
 	group.add_node(src)
-	start_processing()
 
 /obj/effect/particle_effect/fluid/Destroy()
-	stop_processing()
-	cancel_spread()
 	group.remove_node(src)
 	return ..()
-
-/**
- *
- */
-/obj/effect/particle_effect/fluid/proc/start_processing(datum/controller/subsystem/fluids/subsystem = SSfluids)
-	last_process = world.time
-	START_PROCESSING(subsystem, src)
-
-/**
- *
- */
-/obj/effect/particle_effect/fluid/proc/stop_processing(datum/controller/subsystem/fluids/subsystem = SSfluids)
-	STOP_PROCESSING(subsystem, src)
-
-/**
- *
- */
-/obj/effect/particle_effect/fluid/proc/queue_spread(delay, datum/controller/subsystem/fluids/subsystem = SSfluids)
-	subsystem.queue_spread(src, world.time + delay)
-
-/**
- *
- */
-/obj/effect/particle_effect/fluid/proc/cancel_spread(datum/controller/subsystem/fluids/subsystem = SSfluids)
-	if(!isnull(next_spread))
-		subsystem.cancel_spread(src, next_spread)
 
 /**
  * Attempts to spread this fluid node to wherever it can spread.
