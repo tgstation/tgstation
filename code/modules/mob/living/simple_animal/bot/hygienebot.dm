@@ -11,7 +11,6 @@
 	anchored = FALSE
 	health = 100
 	maxHealth = 100
-	flags_1 = MOB_PAINTABLE_1
 
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
@@ -50,6 +49,8 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+	ADD_TRAIT(src, TRAIT_SPRAY_PAINTABLE, INNATE_TRAIT)
 
 /mob/living/simple_animal/bot/hygienebot/explode()
 	new /obj/effect/particle_effect/foam(loc)

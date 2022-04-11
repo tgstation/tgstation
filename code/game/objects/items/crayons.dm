@@ -749,7 +749,7 @@
 
 		return
 
-	if(ismob(target) && (target.flags_1 & MOB_PAINTABLE_1))
+	if(ismob(target) && (target.flags_1 & HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
@@ -759,7 +759,7 @@
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
-		return
+		return .
 
 
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
