@@ -34,6 +34,7 @@
 	..()
 
 /obj/item/bodypart/chest/monkey
+	icon = 'icons/mob/animal_parts.dmi'
 	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_chest"
 	limb_id = SPECIES_MONKEY
@@ -137,6 +138,7 @@
 
 
 /obj/item/bodypart/l_arm/monkey
+	icon = 'icons/mob/animal_parts.dmi'
 	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
@@ -235,6 +237,7 @@
 
 
 /obj/item/bodypart/r_arm/monkey
+	icon = 'icons/mob/animal_parts.dmi'
 	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
@@ -243,7 +246,6 @@
 	wound_resistance = -10
 	px_x = 5
 	px_y = -3
-
 /obj/item/bodypart/r_arm/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_r_arm"
@@ -253,7 +255,6 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
-
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
@@ -323,6 +324,7 @@
 		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/l_leg/monkey
+	icon = 'icons/mob/animal_parts.dmi'
 	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY

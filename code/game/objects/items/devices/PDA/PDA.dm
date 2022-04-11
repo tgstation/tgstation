@@ -342,25 +342,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if (cartridge)
 					if(!isnull(cartridge.bot_access))
 						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_BOTS_ACCESS]'>[PDAIMG(medbot)]Bots Access</a></li>"
-					if (cartridge.access & CART_JANITOR)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_JANNIE_LOCATOR]'>[PDAIMG(bucket)]Custodial Locator</a></li>"
 					if(cartridge.access & CART_MIME)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_EMOJI_GUIDE]'>[PDAIMG(emoji)]Emoji Guidebook</a></li>"
 					if (istype(cartridge.radio))
 						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_SIGNALER]'>[PDAIMG(signaler)]Signaler System</a></li>"
-					if (cartridge.access & CART_NEWSCASTER)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_NEWSCASTER]'>[PDAIMG(notes)]Newscaster Access </a></li>"
 					if (cartridge.access & CART_REAGENT_SCANNER)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Reagent Scan'>[PDAIMG(reagent)][scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
 					if (cartridge.access & CART_ATMOS)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Gas Scan'>[PDAIMG(reagent)][scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
-					if (cartridge.access & CART_REMOTE_DOOR)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Toggle Door'>[PDAIMG(rdoor)]Toggle Remote Door</a></li>"
-					if (cartridge.access & CART_DRONEPHONE)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Drone Phone'>[PDAIMG(dronephone)]Drone Phone</a></li>"
-					if (cartridge.access & CART_DRONEACCESS)
-						var/blacklist_state = GLOB.drone_machine_blacklist_enabled
-						dat += "<li><a href='byond://?src=[REF(src)];drone_blacklist=[!blacklist_state];choice=Drone Access'>[PDAIMG(droneblacklist)][blacklist_state ? "Disable" : "Enable"] Drone Blacklist</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=[PDA_UI_ATMOS_SCAN]'>[PDAIMG(atmos)]Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=Light'>[PDAIMG(flashlight)][light_on ? "Disable" : "Enable"] Flashlight</a></li>"
 				if (pai)
@@ -607,26 +596,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 					scanmode = PDA_SCANNER_GAS
 				if(!silent)
 					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
-			if("Drone Phone")
-				var/alert_s = tgui_input_list(U, "Alert severity level", "Ping Drones", list("Low","Medium","High","Critical"))
-				if(isnull(alert_s))
-					return
-				var/area/A = get_area(U)
-				if(A && !QDELETED(U))
-					var/msg = span_boldnotice("NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!")
-					_alert_drones(msg, TRUE, U)
-					to_chat(U, msg)
-					if(!silent)
-						playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
-			if("Drone Access")
-				var/mob/living/simple_animal/drone/drone_user = U
-				if(isdrone(U) && drone_user.shy)
-					to_chat(U, span_warning("Your laws prevent this action."))
-					return
-				var/new_state = text2num(href_list["drone_blacklist"])
-				GLOB.drone_machine_blacklist_enabled = new_state
-				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 
 
 //NOTEKEEPER FUNCTIONS===================================
@@ -681,17 +650,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 				else
 					U << browse(null, "window=pda")
 					return
-
-//SYNDICATE FUNCTIONS===================================
-
-			if("Toggle Door")
-				if(cartridge && cartridge.access & CART_REMOTE_DOOR)
-					for(var/obj/machinery/door/poddoor/M in GLOB.machines)
-						if(M.id == cartridge.remote_door_id)
-							if(M.density)
-								M.open()
-							else
-								M.close()
 
 //pAI FUNCTIONS===================================
 

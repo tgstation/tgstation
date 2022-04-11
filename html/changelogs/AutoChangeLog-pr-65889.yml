@@ -1,6 +1,0 @@
-author: "kawoppi"
-delete-after: True
-changes: 
-  - expansion: "Frogs can now be picked up. You can fit them in your pockets too!"
-  - expansion: "Frogs can now be put on your head."
-  - imageadd: "Added sprites for (rare) frogs placed on heads"

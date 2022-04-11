@@ -1163,12 +1163,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
-"fe" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/carpet,
-/area/mine/living_quarters)
 "fj" = (
 /obj/machinery/vending/snack,
 /obj/effect/turf_decal/tile/bar,
@@ -3947,6 +3941,16 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"QE" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/carpet,
+/area/mine/living_quarters)
 "QJ" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
@@ -4502,11 +4506,6 @@
 	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
-"Yc" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/closet/crate,
-/turf/open/floor/plating,
-/area/mine/production)
 "Yd" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningbathroom";
@@ -13580,13 +13579,13 @@ dZ
 eq
 fp
 cM
-fe
+QE
 fr
 cM
-fe
+QE
 fr
 cM
-fe
+QE
 fr
 cM
 pU
@@ -18202,7 +18201,7 @@ pU
 pU
 aj
 aj
-Yc
+br
 eC
 br
 aj

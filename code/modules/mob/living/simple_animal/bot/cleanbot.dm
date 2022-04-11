@@ -124,8 +124,10 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	GLOB.janitor_devices += src
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
+	GLOB.janitor_devices -= src
 	if(weapon)
 		var/atom/Tsec = drop_location()
 		weapon.force = weapon_orig_force
