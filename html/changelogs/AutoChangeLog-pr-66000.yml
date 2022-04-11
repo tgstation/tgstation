@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes: 
-  - bugfix: "Golems can now exist in the rooms they themselves create, sorry about that."

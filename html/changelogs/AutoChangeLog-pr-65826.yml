@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes: 
-  - refactor: "Zauker now uses reagent to perform its effects on breath"
