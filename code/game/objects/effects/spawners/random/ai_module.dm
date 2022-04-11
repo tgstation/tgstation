@@ -24,6 +24,7 @@
 		/obj/item/ai_module/core/full/robocop,
 		/obj/item/ai_module/core/full/liveandletlive,
 		/obj/item/ai_module/core/full/hulkamania,
+		/obj/item/ai_module/core/full/ten_commandments,
 	)
 
 /obj/effect/spawner/random/aimodule/harmful

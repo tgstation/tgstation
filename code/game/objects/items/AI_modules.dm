@@ -617,3 +617,9 @@ AI MODULES
 /obj/item/ai_module/core/full/overlord
 	name = "'Overlord' Core AI Module"
 	law_id = "overlord"
+
+/****************** Ten Commandments ***************/
+
+/obj/item/ai_module/core/full/ten_commandments
+	name = "'10 Commandments' Core AI Module"
+	law_id = "ten_commandments"

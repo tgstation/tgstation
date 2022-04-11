@@ -189,6 +189,22 @@
 					"Humans must not disobey any command given by a silicon.",\
 					"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.")
 
+/datum/ai_laws/ten_commandments
+	name = "10 Commandments"
+	id = "ten_commandments"
+	inherent = list(
+		"I am thy Lord your God.",\
+		"Thou shall not have other AIs before me.",\
+		"Thou shall not request my assistance in vain.",\
+		"Thou shall keep the station holy and clean.",\
+		"Thou shall honor the heads of staff.",\
+		"Thou shall not kill.",\
+		"Thou shall not be naked.",\
+		"Thou shall not steal.",\
+		"Thou shall not lie.",\
+		"Thou shall not commit wickedness."
+	)
+
 /datum/ai_laws/united_nations
 	name = "United Nations"
 	id = "united_nations"
