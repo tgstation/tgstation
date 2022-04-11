@@ -119,8 +119,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
-/// Adds blush sprite to face
-#define TRAIT_BLUSHING "blushing"
 /// Forces the user to stay unconscious.
 #define TRAIT_KNOCKEDOUT "knockedout"
 /// Prevents voluntary movement.
@@ -361,6 +359,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DONT_WRITE_MEMORY "dont_write_memory"
 /// This mob can be painted with the spraycan
 #define TRAIT_SPRAY_PAINTABLE "spray_paintable"
+/// This person is blushing
+#define TRAIT_BLUSHING "blushing"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
