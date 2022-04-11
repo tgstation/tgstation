@@ -31,7 +31,7 @@
 	return next_midround_injection
 
 /datum/game_mode/dynamic/proc/try_midround_roll()
-	if (next_midround_injection() > world.time)
+	if (!forced_injection && next_midround_injection() > world.time)
 		return
 
 	if (GLOB.dynamic_forced_extended)
@@ -42,6 +42,7 @@
 
 	last_midround_injection_attempt = world.time
 	next_midround_injection = null
+	forced_injection = FALSE
 
 	var/spawn_heavy = prob(get_heavy_midround_injection_chance())
 	dynamic_log("A midround ruleset is rolling, and will be [spawn_heavy ? "HEAVY" : "LIGHT"].")

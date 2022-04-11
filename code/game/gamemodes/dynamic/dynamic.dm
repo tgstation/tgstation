@@ -210,9 +210,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if (next_injection == INFINITY)
 		dat += "All midrounds have been exhausted."
 	else
-		// MOTHBLOCKS TODO: Midround injection
-		// dat += "Midround: [DisplayTimeText(next_injection - world.time)] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
-		dat += "Midround: [DisplayTimeText(next_injection - world.time)]<BR>"
+		dat += "Midround: [DisplayTimeText(next_injection - world.time)] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
@@ -240,9 +238,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a latejoin injection.")
 	else if (href_list["injectmid"])
-		// MOTHBLOCKS TODO: Forced midround injection
-		// forced_injection = TRUE
+		forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a midround injection.")
+		try_midround_roll()
 	else if (href_list["threatlog"])
 		show_threatlog(usr)
 	else if (href_list["stacking_limit"])
