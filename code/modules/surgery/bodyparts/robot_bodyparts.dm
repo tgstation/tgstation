@@ -346,7 +346,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	brute_reduction = 0
 	burn_reduction = 0
-	max_damage = 2026
+	max_damage = 20
 
 /obj/item/bodypart/r_leg/robot/surplus
 	name = "surplus prosthetic right leg"
