@@ -15,16 +15,8 @@
 		var/mob/living/L = user
 		ADD_TRAIT(L, TRAIT_BLUSHING, SPECIES_TRAIT)
 		L.update_body()
-		addtimer(CALLBACK(L, /datum/emote/living/blush.proc/end, L), 3 SECONDS)
-	//TODO REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
-	//addtimer(CALLBACK(H.dna.species, /datum/species.proc/stop_wagging_tail, H), 3 SECONDS)
-
-/datum/emote/living/blush/proc/end(mob/user)
-	. = ..()
-	if(. && isliving(user))
-		var/mob/living/L = user
-		TRAIT_CALLBACK_REMOVE(L, TRAIT_BLUSHING, SPECIES_TRAIT)
-		L.update_body()
+		addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_BLUSHING, SPECIES_TRAIT), 5 SECONDS)
+		addtimer(CALLBACK(L, /mob.proc/update_body), 5.1 SECONDS)
 
 /datum/emote/living/bow
 	key = "bow"
