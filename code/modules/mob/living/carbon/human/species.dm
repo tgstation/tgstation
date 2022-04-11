@@ -538,6 +538,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
 
+	//permablush test
+	var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/human_face.dmi', "blush", -BODY_LAYER)
+	blush_overlay.color = "#F699CD" //pink
+	standing += blush_overlay
+	//TODO only apply for a while after blushing
+	//TODO get it to look better
+
 	if(noggin && !(HAS_TRAIT(species_human, TRAIT_HUSK)))
 		// lipstick
 		if(species_human.lip_style && (LIPS in species_traits))

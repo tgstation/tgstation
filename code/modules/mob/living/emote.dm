@@ -9,6 +9,9 @@
 	key_third_person = "blushes"
 	message = "blushes."
 
+/datum/emote/living/blush/run_emote(mob/user, params, type_override, intentional)
+	//TODO add blush trait or whatever
+
 /datum/emote/living/bow
 	key = "bow"
 	key_third_person = "bows"
