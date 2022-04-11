@@ -147,7 +147,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/midround_light_upper_bound = 25 MINUTES
 
 	/// Any midround after this point is guaranteed to be heavy
-	var/midround_heavy_lower_bound = 75 MINUTES
+	var/midround_heavy_lower_bound = 55 MINUTES
 
 	/// The chance for latejoins to roll when ready
 	var/latejoin_roll_chance = 50

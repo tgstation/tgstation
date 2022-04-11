@@ -22,6 +22,9 @@
 	var/list/dead_players = list()
 	var/list/list_observers = list()
 
+	/// The minimum round time before this ruleset will show up
+	var/minimum_round_time = 0
+
 /datum/dynamic_ruleset/midround/from_ghosts
 	weight = 0
 	required_type = /mob/dead/observer
@@ -429,7 +432,8 @@
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
 	weight = 5
-	cost = 35 // MOTHBLOCKS TODO: Change this to be much lower ONLY once we get minimum round time stuff
+	cost = 7
+	minimum_round_time = 70 MINUTES
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
@@ -476,7 +480,8 @@
 	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 2
+	minimum_round_time = 35 MINUTES
+	weight = 3
 	cost = 8
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
@@ -513,7 +518,8 @@
 	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 2
+	minimum_round_time = 35 MINUTES
+	weight = 3
 	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
@@ -557,7 +563,8 @@
 	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
-	weight = 3
+	minimum_round_time = 40 MINUTES
+	weight = 5
 	cost = 10
 	requirements = list(101,101,101,70,50,40,20,15,10,10)
 	repeatable = TRUE

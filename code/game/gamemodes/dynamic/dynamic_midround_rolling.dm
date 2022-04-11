@@ -61,6 +61,9 @@
 		if (mid_round_budget < ruleset.cost)
 			continue
 
+		if (minimum_round_time < world.time - SSticker.round_start_time)
+			continue
+
 		// If admins have disabled dynamic from picking from the ghost pool
 		if(istype(ruleset, /datum/dynamic_ruleset/midround/from_ghosts) && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
 			continue
