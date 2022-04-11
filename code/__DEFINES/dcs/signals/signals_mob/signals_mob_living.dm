@@ -89,3 +89,6 @@
 
 /// From mob/living/treat_message(): (list/message_args)
 #define COMSIG_LIVING_TREAT_MESSAGE "living_treat_message"
+
+///From obj/item/toy/crayon/spraycan
+#define COMSIG_LIVING_MOB_PAINTED "living_mob_painted"

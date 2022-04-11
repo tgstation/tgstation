@@ -105,7 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Newscaster", name)
+		ui = new(user, src, "PhysicalNewscaster", name)
 		ui.open()
 	alert = FALSE //We're checking our messages!
 	update_icon()

@@ -1,0 +1,7 @@
+author: "MacBlaze1"
+delete-after: True
+changes: 
+  - qol: "firelocks now automatically reset upon the air temperature being returned to normal thresholds"
+  - bugfix: "fire alarms now automatically update on atmos monitoring programs/consoles to show their real status. No more false positives!"
+  - code_imp: "air alarms now have a variable referencing their area that is used"
+  - code_imp: "added a new signal for when atmos adjacent turfs are calculated"

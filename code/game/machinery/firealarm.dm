@@ -77,12 +77,16 @@
  * the alarm sound based on the state of an area variable.
  */
 /obj/machinery/firealarm/proc/set_status()
-	if( (my_area.fire || LAZYLEN(my_area.active_firelocks)) && !(obj_flags & EMAGGED) )
+	if(!(my_area.fire || LAZYLEN(my_area.active_firelocks)) || (obj_flags & EMAGGED))
+		soundloop.stop()
+	update_appearance()
+
+/obj/machinery/firealarm/update_appearance(updates)
+	. = ..()
+	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)) && !(obj_flags & EMAGGED) && !(machine_stat & (BROKEN|NOPOWER)))
 		set_light(l_power = 0.8)
 	else
-		soundloop.stop()
 		set_light(l_power = 0)
-	update_icon()
 
 /obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
