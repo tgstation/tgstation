@@ -380,3 +380,118 @@
       squashed!
   - bugfix: You can actually move the Syndicate Infiltrator's docking position on
       icebox again. Yeah. I know.
+2022-04-10:
+  ArcaneMusic:
+  - qol: All ID cards have been given a basic, standalone bank account. Not just for
+      crew, new and old, but also for IDs fresh out of the box.
+  - rscdel: The accounting machine has been retired from station use, as accounts
+      come with a default bank account now.
+  Ghilker:
+  - rscadd: reworked turbine to be a 3x1 machine, with flow and pressure based calculations.
+      A paper explaining how to use will spawn when building it and on the roundstart
+      one.
+  - bugfix: fixes an issue with the old turbine where you could generate infinite
+      power with cold gases
+  - balance: SM consumes items and gain power based on their size
+  Ghommie:
+  - bugfix: The screentip context no longer lies about what happens when you left
+      click another carbon mob with combat mode on.
+  KazooBard:
+  - balance: Regular mansus grasp now inflicts cultslur on the target for 4 seconds.
+  - balance: Increased void mark and void grasp silence duration from 8 seconds each
+      to 10 seconds each.
+  Melbert:
+  - imageadd: Cigars have sprites when held in hand
+  Mothblocks:
+  - balance: Free golems can no longer use shuttle consoles, other than to go home.
+  OneAsianTortoise:
+  - bugfix: removes the crate in window in lavaland base
+  Rhials:
+  - bugfix: The note in the Sloth ruin is fixed! Head on down to Lavaland and reap
+      the rewards!
+  SmArtKar:
+  - expansion: Evangelion jumpsuits have been added to robotics vendor's contraband
+      section
+  - imageadd: Ports new evangelion jumpsuit sprites
+  Son-of-Space:
+  - bugfix: TramStation atmos is more effectively separated into areas
+  - qol: It is easier to isolate and fix atmos issues in the Tramstation tunnel
+  TheBonded:
+  - bugfix: You can no longer create infinite snow with a crowbar
+  TiviPlus:
+  - bugfix: mech armor modules give armor properly now
+  - bugfix: Fix being unable to reload nukie missiles
+  ZephyrTFA:
+  - bugfix: SSUs no longer use power when doing nothing
+  thgvr:
+  - bugfix: Deltastation should once more have wrestling masks and athletic shorts.
+  timothymtorres:
+  - refactor: Refactor antimagic component to be more robust.
+  - soundadd: Add different sound effects for when magic is blocked
+  - bugfix: Equipping or dropping antimagic items now properly updates the magic buttons
+  - bugfix: Any magic being blocked or restricting casting now displays a message
+  - bugfix: Any mind antimagic now properly blocks telepathy effects
+  - bugfix: Remove bloodsplatter when fireball is blocked by antimagic
+  - bugfix: Remove lockers when staff of locker projectiles blocked by antimagic
+  - bugfix: Fire breath is no longer blocked by antimagic
+  - bugfix: Spellcards are now blocked by antimagic
+  - qol: Add antimagic chat notification and animation effects. Mobs will now glow
+      when they successfully block magic.
+  - balance: Foilhats prevent someone from casting mind magic (telepathy, mindswap,
+      etc.)
+  - balance: Bibles, ritual totems, nullrods, holymelons, and `TRAIT_HOLY` prevent
+      someone from casting unholy magic (cult spells, etc.)
+  - balance: Nullrods, ritual totems, and holymelons prevent someone from casting
+      wizard magic (fireball, magic missile, etc.)
+  - balance: Immorality talismans, berserker suits, and `TRAIT_ANTIMAGIC` prevents
+      all types of magic (except stuff like mime abilities)
+  - balance: Touch of Madness and Mindswap is now blocked with `MAGIC_RESISTANCE`
+      and `MAGIC_RESISTANCE_MIND`
+  - balance: Voice of god is now blocked with `MAGIC_RESISTANCE_HOLY` and `MAGIC_RESISTANCE_MIND`
+  - rscdel: Cult blink and cult summon creature spells were never used in the code
+      and have been removed.
+  - bugfix: Fix moonicorns not falling through openspace properly.
+2022-04-11:
+  Ebb-Real:
+  - bugfix: You can no longer fly by spamming ollie onto an empty space and not moving.
+  JohnFulpWillard:
+  - qol: Monkeys can now wear headsets.
+  - balance: Monkeys can now wear glasses.
+  - refactor: Drone PDA apps have been refactored and is now part of Botkeeper, such
+      as granting access to dangerous machinery and sending pings.
+  - refactor: The Curators newscaster PDA app has been moved into a new Newscaster
+      tablet app, with a full new UI.
+  - rscdel: The Detomatix cartridge's ability to open the nuclear operative pod doors
+      has been removed.
+  Son-of-Space:
+  - bugfix: NT Risk Audits have replaced fraudulent posters calling the ice moon environment
+      "space."
+  Tastyfish:
+  - bugfix: Fire alarms no longer magically emit light when they lose power.
+  TheBoondock:
+  - refactor: Zauker now uses reagent to perform its effects on breath
+  ZephyrTFA:
+  - bugfix: Golems can now exist in the rooms they themselves create, sorry about
+      that.
+  Zytolg:
+  - bugfix: relocates the SMES terminal to not be in a wall in the lizard gas space
+      ruin
+  cacogen:
+  - rscdel: Navigate verb uses landmarks now, which means that underfloor wayfinding
+      beacons (which could be used to change the names of destinations) are gone
+  - qol: Adds Nearest Way Up and Nearest Way Down to the navigate list, which point
+      to the nearest ladder or staircase up or down
+  - bugfix: Fixes runtime with navigation verb paths where deleted paths were still
+      attempting to animate
+  san7890:
+  - bugfix: On DeltaStation, Nanotrasen will no longer place a Gas Vendor and an Intercom
+      in such a position on one of the walls on the Clown's bedroom where they overlap.
+  techno0:
+  - bugfix: Debug Glasses have SM protection
+  tralezab:
+  - expansion: New Festival God sect! Sooth or serrate your friends and foes with
+      the beat.
+  unit0016:
+  - expansion: The syndicate infiltrator has been tuned up, coming with a fresh coat
+      of paint, insurance, and the new shuttle smell. Sadly, no complimentary taco
+      in the glovebox.
