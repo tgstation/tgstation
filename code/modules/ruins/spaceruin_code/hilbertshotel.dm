@@ -463,7 +463,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	name = "Hilbert Research Facility"
 
 /area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA
 
 /obj/item/analyzer/hilbertsanalyzer
 	name = "custom rigged analyzer"
@@ -493,14 +493,17 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/effect/landmark/tram/left_part/hilbert
 	destination_id = "left_part_hilbert"
+	tram_id = "tram_hilbert"
 	tgui_icons = list("Reception" = "briefcase", "Botany" = "leaf", "Chemistry" = "flask")
 
 /obj/effect/landmark/tram/middle_part/hilbert
 	destination_id = "middle_part_hilbert"
+	tram_id = "tram_hilbert"
 	tgui_icons = list("Processing" = "cogs", "Xenobiology" = "paw")
 
 /obj/effect/landmark/tram/right_part/hilbert
 	destination_id = "right_part_hilbert"
+	tram_id = "tram_hilbert"
 	tgui_icons = list("Ordnance" = "bullseye", "Office" = "user", "Dormitories" = "bed")
 
 /obj/item/keycard/hilbert

@@ -491,7 +491,8 @@ GLOBAL_LIST_EMPTY_TYPED(central_trams, /obj/structure/industrial_lift/tram/centr
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
+/obj/structure/industrial_lift/tram/central
+	var/tram_id = "tram_station"
 
 /obj/structure/industrial_lift/tram/central/Initialize(mapload)
 	. = ..()
@@ -590,6 +591,8 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	icon_state = "tram"
 	/// The ID of that particular destination.
 	var/destination_id
+	/// The ID of the tram that can travel to use
+	var/tram_id = "tram_station"
 	/// Icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()
 

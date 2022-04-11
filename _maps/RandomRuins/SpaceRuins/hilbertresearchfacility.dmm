@@ -197,8 +197,8 @@
 "eE" = (
 /obj/structure/grille/broken,
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 1;
-	anchored = 0
+	anchored = 0;
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -245,8 +245,8 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "gU" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 8;
-	anchored = 0
+	anchored = 0;
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -301,15 +301,17 @@
 /obj/effect/landmark/tram/middle_part/hilbert,
 /obj/structure/industrial_lift/tram/central{
 	icon_state = "titanium_white";
-	initial_id = "middle_part_hilbert"
+	initial_id = "middle_part_hilbert";
+	tram_id = "tram_hilbert"
 	},
 /obj/machinery/computer/tram_controls{
-	dir = 8
+	dir = 8;
+	tram_id = "tram_hilbert"
 	},
 /obj/machinery/light/floor{
-	bulb_power = 0.6;
+	brightness = 2;
 	bulb_colour = "#deefff";
-	brightness = 2
+	bulb_power = 0.6
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -531,8 +533,8 @@
 	pixel_y = 7
 	},
 /obj/item/stock_parts/matter_bin/bluespace{
-	pixel_y = 7;
-	pixel_x = -16
+	pixel_x = -16;
+	pixel_y = 7
 	},
 /obj/machinery/light/red/directional/south,
 /turf/open/floor/mineral/plastitanium,
@@ -640,8 +642,8 @@
 	pixel_y = 7
 	},
 /obj/item/stock_parts/matter_bin/bluespace{
-	pixel_y = 7;
-	pixel_x = 16
+	pixel_x = 16;
+	pixel_y = 7
 	},
 /obj/machinery/light/red/directional/south,
 /turf/open/floor/mineral/plastitanium,
@@ -979,12 +981,12 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/structure/table/reinforced/rglass,
 /obj/item/reagent_containers/glass/bottle/nutrient/l4z{
-	pixel_y = 6;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/glass/bottle/nutrient/rh{
-	pixel_y = 6;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/glass/bottle/mutagen,
 /turf/open/floor/wood,
@@ -1036,10 +1038,10 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "xU" = (
 /obj/structure/closet{
-	icon_state = "eng";
+	desc = "It's a storage unit for mining.";
 	icon_door = "eng_tool";
-	name = "mining closet";
-	desc = "It's a storage unit for mining."
+	icon_state = "eng";
+	name = "mining closet"
 	},
 /obj/item/storage/bag/ore/holding,
 /obj/item/clothing/shoes/workboots,
@@ -1415,9 +1417,9 @@
 	start_showpiece_type = /obj/item/hilbertshotel
 	},
 /obj/machinery/light/floor{
-	bulb_power = 0.6;
+	brightness = 2;
 	bulb_colour = "#deefff";
-	brightness = 2
+	bulb_power = 0.6
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
@@ -1965,9 +1967,9 @@
 /area/ruin/unpowered/no_grav)
 "PR" = (
 /obj/machinery/light/floor{
-	bulb_power = 0.6;
+	brightness = 2;
 	bulb_colour = "#deefff";
-	brightness = 2
+	bulb_power = 0.6
 	},
 /turf/closed/mineral/asteroid,
 /area/ruin/unpowered/no_grav)
@@ -2045,10 +2047,10 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "RN" = (
 /obj/structure/spawner/nether{
-	max_mobs = 2;
 	light_color = "#FF0000";
 	light_power = 2;
-	light_range = 2
+	light_range = 2;
+	max_mobs = 2
 	},
 /obj/effect/gibspawner/human,
 /obj/effect/rune/raise_dead,
@@ -2224,10 +2226,10 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "UL" = (
 /obj/structure/closet{
-	icon_state = "eng";
+	desc = "It's a storage unit for mining.";
 	icon_door = "eng_tool";
-	name = "mining closet";
-	desc = "It's a storage unit for mining."
+	icon_state = "eng";
+	name = "mining closet"
 	},
 /obj/item/storage/bag/ore/holding,
 /obj/item/clothing/shoes/workboots,
