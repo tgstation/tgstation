@@ -49,7 +49,6 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "bin"
 	equipment_slot = MECHA_UTILITY
-	selectable = FALSE
 	detachable = FALSE
 	/// Var to avoid istype checking every time the topic button is pressed. This will only work inside Clarke mechs.
 	var/obj/vehicle/sealed/mecha/working/clarke/hostmech

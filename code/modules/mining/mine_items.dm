@@ -85,6 +85,10 @@
 		dumb_rev_heads += user.mind
 		return
 
+	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z))
+		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
+		return
+
 	if(HAS_TRAIT(user, TRAIT_ILLITERATE))
 		to_chat(user, span_warning("You start mashing buttons at random!"))
 		if(do_after(user, 10 SECONDS, target = src))
@@ -108,7 +112,8 @@
 					to_chat(usr, span_warning("Unable to comply."))
 
 		return
-	. = ..()
+
+	return ..()
 
 /obj/machinery/computer/shuttle/mining/common
 	name = "lavaland shuttle console"

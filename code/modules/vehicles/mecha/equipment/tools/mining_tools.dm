@@ -164,7 +164,6 @@
 	name = "exosuit mining scanner"
 	desc = "Equipment for working exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
-	selectable = 0
 	equip_cooldown = 15
 	equipment_slot = MECHA_UTILITY
 	var/scanning_time = 0
