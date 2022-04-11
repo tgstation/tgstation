@@ -1,0 +1,5 @@
+author: "TheSmallBlue"
+delete-after: True
+changes: 
+  - expansion: "The Hygienebot can now be colored with a spraycan."
+  - code_imp: "Added a flag that allows mobs to be colored with the spraycan."
