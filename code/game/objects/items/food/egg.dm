@@ -17,7 +17,7 @@
 	icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4)
 	microwaved_type = /obj/item/food/boiledegg
-	foodtypes = MEAT
+	foodtypes = MEAT | RAW
 	w_class = WEIGHT_CLASS_TINY
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/egg/rotten
@@ -85,6 +85,24 @@
 	else
 		..()
 
+/obj/item/food/egg/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+
+	if(istype(target,/obj/machinery/griddle))
+
+		var/atom/broken_egg = new /obj/item/food/rawegg(target.loc)
+		broken_egg.pixel_x = src.pixel_x
+		broken_egg.pixel_y = src.pixel_y
+		playsound(get_turf(user), 'sound/items/sheath.ogg', 40, TRUE)
+
+		var/obj/machinery/griddle/hit_griddle = target
+		hit_griddle.AddToGrill(broken_egg,user)
+		to_chat(user, "You crack [src] open onto [target].")
+
+		qdel(src)
+
+
+
 /obj/item/food/egg/blue
 	icon_state = "egg-blue"
 
@@ -111,13 +129,28 @@
 
 /obj/item/food/friedegg
 	name = "fried egg"
-	desc = "A fried egg, with a touch of salt and pepper."
+	desc = "A fried egg, would go well with a touch of salt and pepper."
 	icon_state = "friedegg"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	bite_consumption = 1
-	tastes = list("egg" = 4, "salt" = 1, "pepper" = 1)
+	tastes = list("egg" = 4)
 	foodtypes = MEAT | FRIED | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
+
+/obj/item/food/rawegg
+	name = "raw egg"
+	desc = "Supposedly good for you, if you can stomach it. Better fried."
+	icon_state = "rawegg"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	bite_consumption = 1
+	tastes = list("raw egg" = 6, "sliminess" = 1)
+	eatverbs = list("gulp down")
+	foodtypes = MEAT | RAW
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/rawegg/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/friedegg, rand(35 SECONDS, 50 SECONDS), TRUE, FALSE)
 
 /obj/item/food/boiledegg
 	name = "boiled egg"
