@@ -684,7 +684,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 		return
 	if(conductivity && thermal_conductivities[priority] != conductivity)
 		return
-	LAZYSET(thermal_conductivities, priority, null)
+	LAZYNULL(thermal_conductivities) //realistically we should only have one source
 	update_thermal_conductivity()
 
 /**
@@ -696,7 +696,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 	if(!thermal_conductivities)
 		return
 	for(var/checked_conductivity in thermal_conductivities)
-		if(checked_conductivity)
+		if(isnum(checked_conductivity))
 			thermal_conductivity = checked_conductivity
 			return
 	LAZYNULL(thermal_conductivities)
