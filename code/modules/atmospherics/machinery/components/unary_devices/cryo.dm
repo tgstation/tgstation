@@ -79,8 +79,8 @@
 	processing_flags = NONE
 
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 150
-	active_power_usage = 2500
+	idle_power_usage = 75
+	active_power_usage = 1500
 
 	showpipe = FALSE
 
