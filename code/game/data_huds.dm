@@ -298,22 +298,23 @@ Security HUDs! Basic mode shows only the job.
 	if(perpname && GLOB.data_core)
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(R)
+			var/has_criminal_entry = TRUE
 			switch(R.fields["criminal"])
 				if("*Arrest*")
 					holder.icon_state = "hudwanted"
 				if("Incarcerated")
 					holder.icon_state = "hudincarcerated"
-					return
 				if("Suspected")
 					holder.icon_state = "hudsuspected"
-					return
 				if("Paroled")
 					holder.icon_state = "hudparolled"
 				if("Discharged")
 					holder.icon_state = "huddischarged"
-
-			set_hud_image_active(WANTED_HUD)
-			return
+				else
+					has_criminal_entry = FALSE
+			if(has_criminal_entry)
+				set_hud_image_active(WANTED_HUD)
+				return
 
 	holder.icon_state = null
 	set_hud_image_inactive(WANTED_HUD)
