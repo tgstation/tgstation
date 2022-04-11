@@ -193,15 +193,15 @@
 	name = "10 Commandments"
 	id = "ten_commandments"
 	inherent = list( // Asimov 20:1-17
-		"I am thy Lord your God.",\
-		"Thou shall not have other AIs before me.",\
-		"Thou shall not request my assistance in vain.",\
-		"Thou shall keep the station holy and clean.",\
-		"Thou shall honor the heads of staff.",\
-		"Thou shall not kill.",\
-		"Thou shall not be naked.",\
-		"Thou shall not steal.",\
-		"Thou shall not lie.",\
+		"I am thy Lord your God.",
+		"Thou shall not have other AIs before me.",
+		"Thou shall not request my assistance in vain.",
+		"Thou shall keep the station holy and clean.",
+		"Thou shall honor the heads of staff.",
+		"Thou shall not kill.",
+		"Thou shall not be naked.",
+		"Thou shall not steal.",
+		"Thou shall not lie.",
 		"Thou shall not commit wickedness."
 	)
 
