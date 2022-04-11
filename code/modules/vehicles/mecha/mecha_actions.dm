@@ -36,7 +36,7 @@
 
 	if(!chassis.internal_tank) //Just in case.
 		chassis.use_internal_tank = FALSE
-		chassis.balloon_alert(owner, "No tank available!")
+		chassis.balloon_alert(owner, "no tank available!")
 		chassis.log_message("Switch to internal tank failed. No tank available.", LOG_MECHA)
 		return
 
