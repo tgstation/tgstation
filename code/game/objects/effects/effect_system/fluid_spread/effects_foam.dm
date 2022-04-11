@@ -41,7 +41,7 @@
 	create_reagents(1000)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	SSfoam_effect.start_processing(src)
+	SSfoam.start_processing(src)
 
 /obj/effect/particle_effect/fluid/foam/ComponentInitialize()
 	. = ..()
@@ -49,18 +49,18 @@
 		AddComponent(/datum/component/slippery, 100)
 
 /obj/effect/particle_effect/fluid/foam/Destroy()
-	SSfoam_effect.stop_processing(src)
+	SSfoam.stop_processing(src)
 	if (spread_bucket)
-		SSfoam_spread.cancel_spread(src)
+		SSfoam.cancel_spread(src)
 	return ..()
 
 /**
  * Makes the foam dissipate and create whatever remnants it must.
  */
 /obj/effect/particle_effect/fluid/foam/proc/kill_foam()
-	SSfoam_effect.stop_processing(src)
+	SSfoam.stop_processing(src)
 	if (spread_bucket)
-		SSfoam_spread.cancel_spread(src)
+		SSfoam.cancel_spread(src)
 	make_result()
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 0.5 SECONDS)
@@ -143,7 +143,7 @@
 		reagents.copy_to(spread_foam, (reagents.total_volume))
 		spread_foam.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		spread_foam.result_type = result_type
-		SSfoam_spread.queue_spread(spread_foam)
+		SSfoam.queue_spread(spread_foam)
 
 /obj/effect/particle_effect/fluid/foam/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 475
@@ -186,7 +186,7 @@
 	foam.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 	if(!isnull(result_type))
 		foam.result_type = result_type
-	SSfoam_spread.queue_spread(foam)
+	SSfoam.queue_spread(foam)
 
 
 // Long lasting foam

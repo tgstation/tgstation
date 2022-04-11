@@ -20,12 +20,12 @@
 	. = ..()
 	create_reagents(1000)
 	setDir(pick(GLOB.cardinals))
-	SSsmoke_effect.start_processing(src)
+	SSsmoke.start_processing(src)
 
 /obj/effect/particle_effect/fluid/smoke/Destroy()
-	SSsmoke_effect.stop_processing(src)
+	SSsmoke.stop_processing(src)
 	if (spread_bucket)
-		SSsmoke_spread.cancel_spread(src)
+		SSsmoke.cancel_spread(src)
 	return ..()
 
 
@@ -33,9 +33,9 @@
  * Makes the smoke fade out and then deletes it.
  */
 /obj/effect/particle_effect/fluid/smoke/proc/kill_smoke()
-	SSsmoke_effect.stop_processing(src)
+	SSsmoke.stop_processing(src)
 	if (spread_bucket)
-		SSsmoke_spread.cancel_spread(src)
+		SSsmoke.cancel_spread(src)
 	INVOKE_ASYNC(src, .proc/fade_out)
 	QDEL_IN(src, 1 SECONDS)
 
@@ -86,7 +86,7 @@
 		spread_smoke.lifetime = lifetime
 
 		// the smoke spreads rapidly, but not instantly
-		SSsmoke_spread.queue_spread(spread_smoke)
+		SSfoam.queue_spread(spread_smoke)
 
 
 /obj/effect/particle_effect/fluid/smoke/process(delta_time)

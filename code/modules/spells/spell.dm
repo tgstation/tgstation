@@ -146,8 +146,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	var/sparks_spread = 0
 	var/sparks_amt = 0 //cropped at 10
-	var/smoke_spread = null //1 - harmless, 2 - harmful
-	var/smoke_amt = 0 //cropped at 10
+	/// The typepath of the smoke to create on cast.
+	var/smoke_spread = null
+	/// The amount of smoke to create on case. This is a range so a value of 5 will create enough smoke to cover everything within 5 steps.
+	var/smoke_amt = 0
 
 	var/centcom_cancast = TRUE //Whether or not the spell should be allowed on z2
 

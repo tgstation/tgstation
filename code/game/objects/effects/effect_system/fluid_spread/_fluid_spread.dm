@@ -85,7 +85,7 @@
 	///	The fluid group that this particle effect belongs to.
 	var/datum/fluid_group/group
 	/// What SSfluid bucket this particle effect is currently in.
-	var/tmp/process_bucket
+	var/tmp/effect_bucket
 	/// The index of the fluid spread bucket this is being spread in.
 	var/tmp/spread_bucket
 

@@ -94,18 +94,10 @@
 /datum/controller/subsystem/processing/##X/fire() {..() /*just so it shows up on the profiler*/} \
 /datum/controller/subsystem/processing/##X
 
-#define FLUID_EFFECT_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/fluid_effect/##X);\
-/datum/controller/subsystem/fluid_effect/##X/New(){\
+#define FLUID_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/fluids/##X);\
+/datum/controller/subsystem/fluids/##X/New(){\
 	NEW_SS_GLOBAL(SS##X);\
 	PreInit();\
 }\
-/datum/controller/subsystem/fluid_effect/##X/fire() {..() /*just so it shows up on the profiler*/} \
-/datum/controller/subsystem/fluid_effect/##X
-
-#define FLUID_SPREAD_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/fluid_spread/##X);\
-/datum/controller/subsystem/fluid_spread/##X/New(){\
-	NEW_SS_GLOBAL(SS##X);\
-	PreInit();\
-}\
-/datum/controller/subsystem/fluid_spread/##X/fire() {..() /*just so it shows up on the profiler*/} \
-/datum/controller/subsystem/fluid_spread/##X
+/datum/controller/subsystem/fluids/##X/fire() {..() /*just so it shows up on the profiler*/} \
+/datum/controller/subsystem/fluids/##X
