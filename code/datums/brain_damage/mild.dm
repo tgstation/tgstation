@@ -27,7 +27,7 @@
 	lose_text = "<span class='notice'>You feel in control of your speech.</span>"
 
 /datum/brain_trauma/mild/stuttering/on_life(delta_time, times_fired)
-	owner.add_timed_status_effect(5 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 50 SECONDS)
+	owner.adjust_timed_status_effect(5 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 50 SECONDS)
 
 /datum/brain_trauma/mild/stuttering/on_lose()
 	owner.remove_status_effect(/datum/status_effect/speech/stutter)
@@ -46,7 +46,7 @@
 	return ..()
 
 /datum/brain_trauma/mild/dumbness/on_life(delta_time, times_fired)
-	owner.add_timed_status_effect(5 SECONDS * delta_time, /datum/status_effect/speech/stutter/derpspeech, max_duration = 50 SECONDS)
+	owner.adjust_timed_status_effect(5 SECONDS * delta_time, /datum/status_effect/speech/stutter/derpspeech, max_duration = 50 SECONDS)
 	if(DT_PROB(1.5, delta_time))
 		owner.emote("drool")
 	else if(owner.stat == CONSCIOUS && DT_PROB(1.5, delta_time))
@@ -91,7 +91,7 @@
 				owner.add_confusion(10)
 				owner.blur_eyes(10)
 			if(6 to 9)
-				owner.add_timed_status_effect(1 MINUTES, /datum/status_effect/speech/slurring/drunk)
+				owner.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/slurring/drunk)
 			if(10)
 				to_chat(owner, span_notice("You forget for a moment what you were doing."))
 				owner.Stun(20)
