@@ -55684,8 +55684,8 @@
 /obj/item/clipboard,
 /obj/item/wrench,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/airalarm/directional/west,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/science/server)
 "nXk" = (
@@ -58998,7 +58998,6 @@
 /turf/open/floor/wood,
 /area/service/library)
 "oXI" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Server Access";
 	req_access_txt = "30"

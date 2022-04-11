@@ -15118,9 +15118,9 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/wrench,
-/obj/machinery/airalarm/directional/west,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/science/server)
 "ehn" = (
@@ -50014,7 +50014,6 @@
 /area/engineering/break_room)
 "qZE" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Server Access";
 	req_access_txt = "30"

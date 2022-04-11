@@ -4222,7 +4222,6 @@
 /turf/open/floor/iron/dark,
 /area/science/server)
 "bAB" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Server Room";
 	req_access_txt = "30"
@@ -8506,13 +8505,13 @@
 /area/service/hydroponics)
 "dby" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/directional/north{
 	c_tag = "Server Room";
 	network = list("ss13","rd");
 	pixel_x = 22
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/science/server)
 "dbF" = (
