@@ -63,7 +63,7 @@
 	name = "pack of omega weed seeds"
 	desc = "These seeds grow into omega weed."
 	icon_state = "seed-ocannabis"
-	icon_grow = "0cannabis-grow"
+	icon_grow = "ocannabis-grow"
 	species = "ocannabis"
 	plantname = "Omega Weed"
 	product = /obj/item/food/grown/cannabis/ultimate
