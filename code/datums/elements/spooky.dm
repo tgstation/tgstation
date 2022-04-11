@@ -44,7 +44,7 @@
 
 	else //the sound will spook monkeys.
 		C.Jitter(15)
-		C.set_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter)
+		C.set_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
 
 /datum/element/spooky/proc/spectral_change(mob/living/carbon/human/H, mob/user)
 	if((H.getStaminaLoss() > 95) && (!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))

@@ -1629,8 +1629,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.add_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/cult, max_duration = 3 SECONDS)
-	drinker.add_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 3 SECONDS)
+	drinker.add_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/cult, max_duration = 6 SECONDS)
+	drinker.add_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 6 SECONDS)
 	return ..()
 
 /datum/reagent/consumable/ethanol/triple_sec
