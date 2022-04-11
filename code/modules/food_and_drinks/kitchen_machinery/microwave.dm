@@ -1,5 +1,14 @@
 //Microwaving doesn't use recipes, instead it calls the microwave_act of the objects. For food, this creates something based on the food's cooked_type
 
+#define WZHZHZH() \
+	do { \
+		visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))\
+		operating = TRUE\
+		set_light(1.5)\
+		soundloop.start()\
+		update_appearance()\
+	} while(FALSE);
+
 /obj/machinery/microwave
 	name = "microwave oven"
 	desc = "Cooks and boils stuff."
@@ -272,14 +281,6 @@
 		break
 	start()
 
-/obj/machinery/microwave/proc/wzhzhzh()
-	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))
-	operating = TRUE
-
-	set_light(1.5)
-	soundloop.start()
-	update_appearance()
-
 /obj/machinery/microwave/proc/spark()
 	visible_message(span_warning("Sparks fly around [src]!"))
 	var/datum/effect_system/spark_spread/s = new
@@ -291,15 +292,15 @@
 #define MICROWAVE_PRE 2
 
 /obj/machinery/microwave/proc/start()
-	wzhzhzh()
+	WZHZHZH()
 	loop(MICROWAVE_NORMAL, 10)
 
 /obj/machinery/microwave/proc/start_can_fail()
-	wzhzhzh()
+	WZHZHZH()
 	loop(MICROWAVE_PRE, 4)
 
 /obj/machinery/microwave/proc/muck()
-	wzhzhzh()
+	WZHZHZH()
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	dirty_anim_playing = TRUE
 	update_appearance()
