@@ -19,7 +19,6 @@ SUBSYSTEM_DEF(fluid_effect)
 	var/tmp/processing_bucket_index
 
 /datum/controller/subsystem/fluid_effect/Initialize(start_timeofday)
-	. = ..()
 	if (effect_wait < wait)
 		if (effect_wait > 0)
 			wait = effect_wait
@@ -35,6 +34,7 @@ SUBSYSTEM_DEF(fluid_effect)
 		processing[i] = list()
 
 	processing_bucket_index = rand(1, effect_wait)
+	return ..()
 
 /datum/controller/subsystem/fluid_effect/fire(resumed)
 	if(!resumed)

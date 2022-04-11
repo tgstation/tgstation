@@ -36,6 +36,7 @@ SUBSYSTEM_DEF(fluid_spread)
 		processing[i] = list()
 
 	processing_bucket_index = rand(1, spread_wait)
+	return ..()
 
 /datum/controller/subsystem/fluid_spread/fire(resumed)
 	if(!resumed)
