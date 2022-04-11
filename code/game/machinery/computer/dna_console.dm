@@ -172,7 +172,7 @@
 	// Swap data disk if there is one already a disk in the console
 	if (istype(item, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		// Insert disk into DNA Console
-		if (!user.transferitemToLoc(item,src))
+		if (!user.transferItemToLoc(item,src))
 			return
 		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(diskette)
