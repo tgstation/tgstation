@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes: 
+  - bugfix: "Fixes brimdemon lasers never disappearing if the demon was deleted while firing."
