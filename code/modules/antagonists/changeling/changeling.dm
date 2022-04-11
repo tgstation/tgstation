@@ -130,6 +130,7 @@
 	handle_clown_mutation(living_mob, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, .proc/on_login)
 	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, .proc/on_life)
+	RegisterSignal(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_click_sting)
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
@@ -143,18 +144,32 @@
 		hud_used.infodisplay += lingstingdisplay
 
 		hud_used.show_hud(hud_used.hud_version)
+	else
+		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, .proc/on_hud_created)
 
-	if(!iscarbon(mob_to_tweak))
+	if(!iscarbon(living_mob))
 		return
-
 	var/mob/living/carbon/carbon_mob = mob_to_tweak
-	RegisterSignal(carbon_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_click_sting)
-
 	// Brains are optional for lings.
 	var/obj/item/organ/brain/our_ling_brain = carbon_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	if(our_ling_brain)
 		our_ling_brain.organ_flags &= ~ORGAN_VITAL
 		our_ling_brain.decoy_override = TRUE
+
+/datum/antagonist/changeling/proc/on_hud_created(datum/source)
+	SIGNAL_HANDLER
+
+	var/datum/hud/ling_hud = owner.current.hud_used
+
+	lingchemdisplay = new
+	lingchemdisplay.hud = ling_hud
+	ling_hud.infodisplay += lingchemdisplay
+
+	lingstingdisplay = new
+	lingstingdisplay.hud = ling_hud
+	ling_hud.infodisplay += lingstingdisplay
+
+	ling_hud.show_hud(ling_hud.hud_version)
 
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/living_mob = mob_override || owner.current
@@ -226,9 +241,6 @@
 /datum/antagonist/changeling/proc/on_life(datum/source, delta_time, times_fired)
 	SIGNAL_HANDLER
 
-	if(!iscarbon(owner.current))
-		return
-
 	// If dead, we only regenerate up to half chem storage.
 	if(owner.current.stat == DEAD)
 		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time, total_chem_storage * 0.5)
@@ -241,7 +253,7 @@
  * Signal proc for [COMSIG_MOB_MIDDLECLICKON] and [COMSIG_MOB_ALTCLICKON].
  * Allows the changeling to sting people with a click.
  */
-/datum/antagonist/changeling/proc/on_click_sting(mob/living/carbon/ling, atom/clicked)
+/datum/antagonist/changeling/proc/on_click_sting(mob/living/ling, atom/clicked)
 	SIGNAL_HANDLER
 
 	if(!chosen_sting || clicked == ling || !istype(ling) || ling.stat != CONSCIOUS)
