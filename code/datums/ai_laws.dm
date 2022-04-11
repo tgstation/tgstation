@@ -192,7 +192,7 @@
 /datum/ai_laws/ten_commandments
 	name = "10 Commandments"
 	id = "ten_commandments"
-	inherent = list(
+	inherent = list( // Asimov 20:1-17
 		"I am thy Lord your God.",\
 		"Thou shall not have other AIs before me.",\
 		"Thou shall not request my assistance in vain.",\
