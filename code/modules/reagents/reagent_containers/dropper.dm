@@ -90,3 +90,11 @@
 	var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "dropper")
 	filling.color = mix_color_from_reagents(reagents.reagent_list)
 	. += filling
+
+/obj/item/reagent_containers/dropper/oculine
+	name = "\improper VISILINE® Single-Use Eye Dropper"
+	desc = "A 5u single-use eye dropper containing vasoconstricting eye drops. These ones are oddly good for your eyes. ACTIVE INGREDIENTS: OCULINE 100%w/v"
+
+/obj/item/reagent_containers/dropper/oculine/Initialize()
+	. = ..()
+	reagents.add_reagent(/datum/reagent/medicine/oculine, 5)

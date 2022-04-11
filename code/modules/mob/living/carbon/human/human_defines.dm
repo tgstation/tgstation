@@ -29,6 +29,9 @@
 	//Eye colour
 	var/eye_color = "#000000"
 
+	///Eye colours assigned by things like cannabis or the occult, that do not modify the eye color of the organ itself
+	var/list/temporary_eye_colours
+
 	var/skin_tone = "caucasian1" //Skin tone
 
 	var/lip_style = null //no lipstick by default- arguably misleading, as it could be used for general makeup

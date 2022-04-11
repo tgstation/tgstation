@@ -575,6 +575,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				eye_overlay.pixel_x += add_pixel_x
 				eye_overlay.pixel_y += add_pixel_y
 				if((EYECOLOR in species_traits) && eye_organ)
+					species_human.eye_color = species_human.get_current_eye_colour()
 					eye_overlay.color = species_human.eye_color
 				standing += eye_overlay
 

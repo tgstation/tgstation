@@ -857,7 +857,8 @@ generate/load female uniform sprites matching all previously decided variables
 			else
 				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)
 			if((EYECOLOR in dna.species.species_traits) && E)
-				eye_overlay.color = "#" + eye_color
+				eye_color = get_current_eye_colour()
+				eye_overlay.color = eye_color
 			if(OFFSET_FACE in dna.species.offset_features)
 				eye_overlay.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
 				eye_overlay.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
@@ -866,5 +867,73 @@ generate/load female uniform sprites matching all previously decided variables
 
 	update_inv_head()
 	update_inv_wear_mask()
+
+/mob/living/carbon/human/proc/add_temporary_eye_colour(colouration, colour_priority)
+	if(!temporary_eye_colours)
+		temporary_eye_colours = list()
+		temporary_eye_colours.len = EYE_COLOUR_PRIORITY_AMOUNT
+	if(!temporary_eye_colours[colour_priority])
+		temporary_eye_colours[colour_priority] = list()
+	if(!colouration)
+		return
+	if(colour_priority > temporary_eye_colours.len)
+		return
+	temporary_eye_colours[colour_priority]["colour"] = colouration
+	update_body()
+
+/mob/living/carbon/human/proc/remove_temporary_eye_colour(colouration, colour_priority)
+	if(!temporary_eye_colours || !length(temporary_eye_colours))
+		return
+	if(colour_priority > temporary_eye_colours.len)
+		return
+	if(colouration && temporary_eye_colours[colour_priority]["colour"] != colouration)
+		return //if we don't have the expected color (for a specific priority) to remove, do nothing
+	temporary_eye_colours[colour_priority]["colour"] = null
+	update_body()
+
+/mob/living/carbon/human/proc/suppress_temporary_eye_colour(colour_priority)
+	if(!temporary_eye_colours || !length(temporary_eye_colours))
+		return
+	if(colour_priority > temporary_eye_colours.len)
+		return
+	if(!temporary_eye_colours[colour_priority])
+		temporary_eye_colours[colour_priority] = list()
+	temporary_eye_colours[colour_priority]["suppressed"] = TRUE
+	update_body()
+
+/mob/living/carbon/human/proc/unsuppress_temporary_eye_colour(colour_priority)
+	if(!temporary_eye_colours || !length(temporary_eye_colours))
+		return
+	if(colour_priority > temporary_eye_colours.len)
+		return
+	temporary_eye_colours[colour_priority]["suppressed"] = FALSE
+	update_body()
+
+/mob/living/carbon/human/proc/get_real_eye_colour()
+	var/obj/item/organ/eyes/my_eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(!my_eyes)
+		return
+	return my_eyes.eye_color
+
+/mob/living/carbon/human/proc/set_real_eye_colour(colouration)
+	if(!colouration)
+		return
+	var/obj/item/organ/eyes/my_eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(!my_eyes)
+		return
+	if(my_eyes.eye_color)
+		my_eyes.old_eye_color = my_eyes.eye_color
+	my_eyes.eye_color = colouration
+
+/mob/living/carbon/human/proc/get_current_eye_colour()
+	if(!temporary_eye_colours)
+		return get_real_eye_colour()
+	for(var/list/checked_colour in temporary_eye_colours)
+		if(checked_colour["suppressed"] == TRUE)
+			continue
+		if(!checked_colour["colour"])
+			continue
+		return checked_colour["colour"]
+	return get_real_eye_colour()
 
 #undef RESOLVE_ICON_STATE

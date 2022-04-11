@@ -12,6 +12,15 @@
 ///how many colour priority levels there are.
 #define COLOUR_PRIORITY_AMOUNT 4
 
+/// Use this for highest priority changes to eye colour, e.g. bloodcult eye.
+#define FIRST_EYE_COLOUR_PRIORITY 1
+/// Use this for medium priority changes to eye colour, e.g. while stoned. Suppressed by oculine.
+#define SECOND_EYE_COLOUR_PRIORITY 2
+/// Use this for lowest priority changes to eye colour, e.g. when a species changes eye colour while it's applied.
+#define THIRD_EYE_COLOUR_PRIORITY 3
+///how many colour priority levels there are.
+#define EYE_COLOUR_PRIORITY_AMOUNT 3
+
 #define COLOR_INPUT_DISABLED "#F0F0F0"
 #define COLOR_INPUT_ENABLED "#D3B5B5"
 

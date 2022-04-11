@@ -86,7 +86,7 @@
 			. += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes."
 		else if(HAS_TRAIT(src, TRAIT_UNNATURAL_RED_GLOWY_EYES))
 			. += "<span class='warning'><B>[t_His] eyes are glowing with an unnatural red aura!</B></span>"
-		else if(HAS_TRAIT(src, TRAIT_BLOODSHOT_EYES))
+		else if(HAS_TRAIT(src, TRAIT_BLOODSHOT_EYES) && eye_color == BLOODCULT_EYE)
 			. += "<span class='warning'><B>[t_His] eyes are bloodshot!</B></span>"
 
 	//ears

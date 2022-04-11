@@ -34,7 +34,7 @@
 	if(visualsOnly)
 		return
 	equipped_on.fully_replace_character_name(null,"Waldo")
-	equipped_on.eye_color = "#000000"
+	equipped_on.set_real_eye_colour("#000000")
 	equipped_on.gender = MALE
 	equipped_on.skin_tone = "caucasian3"
 	equipped_on.hairstyle = "Business Hair 3"

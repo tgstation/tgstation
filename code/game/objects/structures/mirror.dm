@@ -259,7 +259,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return TRUE
 			if(new_eye_color)
-				amazed_human.eye_color = sanitize_hexcolor(new_eye_color)
+				amazed_human.set_real_eye_colour(sanitize_hexcolor(new_eye_color))
 				amazed_human.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 				amazed_human.update_body()
 

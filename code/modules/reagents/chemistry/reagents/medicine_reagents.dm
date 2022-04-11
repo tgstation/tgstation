@@ -658,6 +658,10 @@
 	if(!eyes)
 		return
 	improve_eyesight(owner, eyes)
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.suppress_temporary_eye_colour(SECOND_EYE_COLOUR_PRIORITY) //will affect red eyes from cannabis, but not bloodcult eyes
 
 /datum/reagent/medicine/oculine/proc/improve_eyesight(mob/living/carbon/owner, obj/item/organ/eyes/eyes)
 	delta_light = creation_purity*30
@@ -672,6 +676,10 @@
 	eyes.lighting_alpha += delta_light
 	eyes.see_in_dark -= 3
 	owner.update_sight()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.unsuppress_temporary_eye_colour(SECOND_EYE_COLOUR_PRIORITY)
 
 /datum/reagent/medicine/oculine/proc/on_gained_organ(mob/owner, obj/item/organ/organ)
 	SIGNAL_HANDLER

@@ -497,8 +497,7 @@
 	r_hand = /obj/item/melee/blood_magic/stun
 
 /datum/outfit/cultist/post_equip(mob/living/carbon/human/H, visualsOnly)
-	H.eye_color = BLOODCULT_EYE
-	H.update_body()
+	H.add_temporary_eye_colour(BLOODCULT_EYE, FIRST_EYE_COLOUR_PRIORITY)
 
 	var/obj/item/clothing/suit/hooded/hooded = locate() in H
 	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms

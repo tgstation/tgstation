@@ -26,9 +26,7 @@
 	ADD_TRAIT(target, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
-		human_parent.eye_color = BLOODCULT_EYE
-		human_parent.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		human_parent.update_body()
+		human_parent.add_temporary_eye_colour(BLOODCULT_EYE, FIRST_EYE_COLOUR_PRIORITY)
 
 /**
  * Detach proc
@@ -39,8 +37,6 @@
 	REMOVE_TRAIT(target, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
-		human_parent.eye_color = initial(human_parent.eye_color)
-		human_parent.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		human_parent.update_body()
+		human_parent.remove_temporary_eye_colour(BLOODCULT_EYE, FIRST_EYE_COLOUR_PRIORITY)
 	UnregisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_HUMAN_MONKEYIZE, COMSIG_MONKEY_HUMANIZE))
 	return ..()
