@@ -94,7 +94,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// and when it can actually roll.
 	/// Basically, if this is set to 5 minutes, and a midround roll point is decided to be at 20 minutes,
 	/// then it can roll anywhere between 15 and 25 minutes.
-	var/midround_roll_distance = 5 MINUTES
+	var/midround_roll_distance = 3 MINUTES
 
 	/// The amount of threat per midround roll.
 	/// Basically, if this is set to 5, then for every 5 threat, one midround roll will be added.
