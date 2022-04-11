@@ -7,7 +7,7 @@
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
-
+	active_power_usage = 2000
 	///input dir
 	var/eat_dir = SOUTH
 

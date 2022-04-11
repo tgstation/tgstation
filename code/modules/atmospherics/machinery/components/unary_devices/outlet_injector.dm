@@ -12,6 +12,8 @@
 	pipe_state = "injector"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
+	idle_power_usage = 500
+
 	///Rate of operation of the device
 	var/volume_rate = 50
 

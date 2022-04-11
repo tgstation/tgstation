@@ -7,7 +7,7 @@
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 100
-
+	active_power_usage = 2000
 	///how much do we fill
 	var/wanted_amount = 10
 	///where things are sent

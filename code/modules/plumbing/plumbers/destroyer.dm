@@ -3,6 +3,7 @@
 	desc = "Breaks down chemicals and annihilates them."
 	icon_state = "disposal"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
+	active_power_usage = 2000
 	///we remove 5 reagents per second
 	var/disposal_rate = 5
 

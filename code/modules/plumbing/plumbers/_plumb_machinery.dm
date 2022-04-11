@@ -8,7 +8,8 @@
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	icon_state = "pump"
 	density = TRUE
-	use_power = ACTIVE_POWER_USE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 750
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
 	var/buffer = 50

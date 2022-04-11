@@ -78,6 +78,10 @@
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 	processing_flags = NONE
 
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 150
+	active_power_usage = 2500
+
 	showpipe = FALSE
 
 	var/autoeject = TRUE

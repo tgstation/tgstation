@@ -7,8 +7,8 @@
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 60
+	idle_power_usage = 50
+	active_power_usage = 1000
 	can_unwrench = TRUE
 	welded = FALSE
 	layer = GAS_SCRUBBER_LAYER

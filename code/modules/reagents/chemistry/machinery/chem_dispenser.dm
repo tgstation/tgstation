@@ -18,8 +18,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	base_icon_state = "dispenser"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 40
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
@@ -125,7 +123,7 @@
 	if (recharge_counter >= 8)
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
-			use_power(active_power_usage * recharge_amount)
+			use_power(active_power_usage + recharge_amount)
 		recharge_counter = 0
 		return
 	recharge_counter += delta_time
@@ -639,6 +637,7 @@
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/abductor
 	working_state = null
 	nopower_state = null
+	use_power = NO_POWER_USE
 	dispensable_reagents = list(
 		/datum/reagent/aluminium,
 		/datum/reagent/bromine,

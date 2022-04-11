@@ -7,7 +7,7 @@
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
-
+	active_power_usage = 2000
 	var/eat_dir = SOUTH
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
