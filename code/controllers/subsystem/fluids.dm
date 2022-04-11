@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(fluids)
 	var/spread_bucket_index
 	/// The set of fluid nodes we are currently processing spreading for.
 	var/list/currently_spreading
+	/// Whether the subsystem has resumed spreading fluid.
+	var/resumed_spreading
 
 	// Fluid effect processing:
 	/// The amount of time between effect processing ticks for each fluid node.
@@ -49,6 +51,8 @@ SUBSYSTEM_DEF(fluids)
 	var/effect_bucket_index
 	/// The set of fluid nodes we are currently processing effects for.
 	var/list/currently_processing
+	/// Whether the subsystem has resumed processing fluid effects.
+	var/resumed_effect_processing
 
 /datum/controller/subsystem/fluids/Initialize(start_timeofday)
 	initialize_waits()
@@ -124,18 +128,15 @@ SUBSYSTEM_DEF(fluids)
 	var/delta_time
 	var/cached_bucket_index
 	var/list/obj/effect/particle_effect/fluid/currentrun
-	if(!resumed)
+	MC_SPLIT_TICK_INIT(2)
+
+	MC_SPLIT_TICK // Start processing fluid spread:
+	if(!resumed_spreading)
 		spread_bucket_index = (spread_bucket_index % num_spread_buckets) + 1
 		currently_spreading = spread_carousel[spread_bucket_index]
 		spread_carousel[spread_bucket_index] = list() // Reset the bucket so we don't process an _entire station's worth of foam_ spreading every 2 ticks when the foam flood event happens.
+		resumed_spreading = TRUE
 
-		effect_bucket_index = (effect_bucket_index % num_effect_buckets) + 1
-		currently_processing = effect_carousel[effect_bucket_index].Copy()
-
-	var/needs_effect_processing = (case & SS_PROCESSES_EFFECTS) && currently_processing.len
-	MC_SPLIT_TICK_INIT(needs_effect_processing ? 2 : 1)
-
-	MC_SPLIT_TICK // Start processing fluid spread:
 	delta_time = spread_wait / (1 SECONDS)
 	currentrun = currently_spreading
 	while(currentrun.len)
@@ -149,10 +150,16 @@ SUBSYSTEM_DEF(fluids)
 		if (MC_TICK_CHECK)
 			break
 
-	if(!needs_effect_processing)
-		return
+	if(!currentrun.len)
+		resumed_spreading = FALSE
 
 	MC_SPLIT_TICK // Start processing fluid effects:
+	if(!resumed_effect_processing)
+		effect_bucket_index = (effect_bucket_index % num_effect_buckets) + 1
+		var/list/tmp_list = effect_carousel[effect_bucket_index]
+		currently_processing = tmp_list.Copy()
+		resumed_effect_processing = TRUE
+
 	delta_time = effect_wait / (1 SECONDS)
 	cached_bucket_index = effect_bucket_index
 	currentrun = currently_processing
@@ -167,6 +174,9 @@ SUBSYSTEM_DEF(fluids)
 
 		if (MC_TICK_CHECK)
 			break
+
+	if(!currentrun.len)
+		resumed_effect_processing = FALSE
 
 
 /**
