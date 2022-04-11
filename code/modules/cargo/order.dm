@@ -27,7 +27,7 @@
 		investigate_log("Supply order #[order_id] generated a manifest missing listed contents.", INVESTIGATE_CARGO)
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_ITEM
-		investigate_log("Supply order #[order_id] generated with incorrect contents", INVESTIGATE_CARGO)
+		investigate_log("Supply order #[order_id] generated with incorrect contents shipped.", INVESTIGATE_CARGO)
 
 /obj/item/paper/fluff/jobs/cargo/manifest/proc/is_approved()
 	return stamped?.len && !is_denied()
