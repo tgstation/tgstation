@@ -119,6 +119,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
+/// Adds blush sprite to face
+#define TRAIT_BLUSHING "blushing"
 /// Forces the user to stay unconscious.
 #define TRAIT_KNOCKEDOUT "knockedout"
 /// Prevents voluntary movement.

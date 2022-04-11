@@ -10,7 +10,12 @@
 	message = "blushes."
 
 /datum/emote/living/blush/run_emote(mob/user, params, type_override, intentional)
-	//TODO add blush trait or whatever
+	. = ..()
+	if(. && isliving(user))
+		var/mob/living/L = user
+		ADD_TRAIT(L, TRAIT_BLUSHING, TRAIT_BLUSHING)
+		L.update_body()
+	//TODO REMOVE_TRAITS_IN(src, LIPSTICK_TRAIT)
 
 /datum/emote/living/bow
 	key = "bow"
