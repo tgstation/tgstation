@@ -161,6 +161,7 @@
 	equipment_slot = MECHA_UTILITY
 	range = MECHA_MELEE|MECHA_RANGED
 	mech_flags = EXOSUIT_MODULE_WORKING
+	///Minimum amount of reagent needed to activate.
 	var/required_amount = 80
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize(mapload)
@@ -172,12 +173,7 @@
 	if(reagents.total_volume < required_amount)
 		return
 
-	var/list/turflist = list()
-	for(var/carddir in GLOB.cardinals)
-		turflist += get_step(chassis, carddir)
-		turflist += get_step(get_step(chassis, carddir), turn(carddir, 90))
-
-	for(var/turf/targetturf in turflist)
+	for(var/turf/targetturf in RANGE_TURFS(1, chassis))
 		var/obj/effect/particle_effect/water/extinguisher/water = new /obj/effect/particle_effect/water/extinguisher(targetturf)
 		var/datum/reagents/water_reagents = new /datum/reagents(required_amount/8) //required_amount/8, because the water usage is split between eight sprays. As of this comment, required_amount/8 = 10u each.
 		water.reagents = water_reagents
@@ -187,21 +183,27 @@
 
 	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/attempt_refill(mob/usr)
+
+/**
+ * Handles attemted refills of the extinguisher.
+ *
+ * The mech can only refill an extinguisher that is in front of it.
+ * Only water tank objects can be used.
+ */
+/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/attempt_refill(mob/user)
 	if(reagents.maximum_volume == reagents.total_volume)
 		return
 	var/turf/in_front = get_step(chassis, chassis.dir)
 	var/obj/structure/reagent_dispensers/watertank/refill_source = locate(/obj/structure/reagent_dispensers/watertank) in in_front
 	if(!refill_source)
-		to_chat(usr, span_notice("Refill failed. No compatible tank found."))
+		to_chat(user, span_notice("Refill failed. No compatible tank found."))
 		return
 	if(!refill_source.reagents?.total_volume)
-		to_chat(usr, span_notice("Refill failed. Source tank empty."))
+		to_chat(user, span_notice("Refill failed. Source tank empty."))
 		return
 
 	refill_source.reagents.trans_to(src, reagents.maximum_volume)
 	playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_snowflake_data()
 	return list(
