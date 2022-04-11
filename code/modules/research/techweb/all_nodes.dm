@@ -61,6 +61,9 @@
 		"titaniumglass",
 		"toner",
 		"toner_large",
+		"turbine_part_compressor",
+		"turbine_part_rotor",
+		"turbine_part_stator",
 	)
 
 /datum/techweb_node/mmi
@@ -576,13 +579,14 @@
 	prereq_ids = list("engineering")
 	design_ids = list(
 		"hyper_cell",
-		"power_compressor",
-		"power_turbine",
 		"power_turbine_console",
 		"smes",
 		"super_capacitor",
 		"super_cell",
 		"superpacman",
+		"turbine_compressor",
+		"turbine_rotor",
+		"turbine_stator",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = 2500)
@@ -1049,7 +1053,6 @@
 	description = "Organized record databases and how they're used."
 	prereq_ids = list("comptech")
 	design_ids = list(
-		"accounting",
 		"automated_announcement",
 		"med_data",
 		"prisonmanage",
@@ -1108,6 +1111,7 @@
 		"health_hud_night",
 		"night_visision_goggles",
 		"nvgmesons",
+		"nv_scigoggles",
 		"security_hud_night",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)

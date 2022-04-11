@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "thermal conductivity can be properly set so the turbine turfs will not leak heat"

@@ -1,4 +1,4 @@
-#define TANK_PLATING_SHEETS 20
+#define TANK_PLATING_SHEETS 12
 
 /obj/machinery/atmospherics/components/tank
 	icon = 'icons/obj/atmospherics/stationary_canisters.dmi'
@@ -34,7 +34,7 @@
 	/// The volume of the gas mixture
 	var/volume = 2500 //in liters
 	/// The max pressure of the gas mixture before damaging the tank
-	var/max_pressure = 20000
+	var/max_pressure = 46000
 	/// The typepath of the gas this tank should be filled with.
 	var/gas_type = null
 
