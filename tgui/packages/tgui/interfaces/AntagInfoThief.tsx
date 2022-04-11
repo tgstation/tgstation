@@ -29,7 +29,7 @@ export const AntagInfoThief = (props, context) => {
   return (
     <Window
       width={620}
-      height={300}>
+      height={340}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>

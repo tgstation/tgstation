@@ -244,6 +244,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PRESENT_VISION "present-vision"
 #define TRAIT_DISK_VERIFIER "disk-verifier"
 #define TRAIT_NOMOBSWAP "no-mob-swap"
+/// Can examine IDs to see if they are roundstart.
+#define TRAIT_ID_APPRAISER "id_appraiser"
 /// Gives us turf, mob and object vision through walls
 #define TRAIT_XRAY_VISION "xray_vision"
 /// Gives us mob vision through walls and slight night vision

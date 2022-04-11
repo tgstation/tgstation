@@ -13,6 +13,8 @@
 	var/list/thief_flavor
 	///if added by an admin, they can choose a thief flavor
 	var/admin_choice_flavor
+	///if a special trait needs to be added from the flavor, here it is
+	var/special_trait
 	///an area marked as the thieves guild- makes thieves happier to be in, and all thieves of the round know of it. only has a 20% chance of existing in a round.
 	var/static/area/thieves_guild
 	///bool checked for the first thief in a round to decide if there should be one this round
@@ -28,7 +30,17 @@
 
 /datum/antagonist/thief/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	ADD_TRAIT(mob_override, TRAIT_GUILD_MEMBER, THIEF_TRAIT)
+	var/mob/living/thief = mob_override || owner.current
+	ADD_TRAIT(thief, TRAIT_GUILD_MEMBER, THIEF_TRAIT)
+	if(special_trait)
+		ADD_TRAIT(thief, special_trait, THIEF_TRAIT)
+
+/datum/antagonist/thief/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/thief = mob_override || owner.current
+	REMOVE_TRAIT(thief, TRAIT_GUILD_MEMBER, THIEF_TRAIT)
+	if(special_trait)
+		REMOVE_TRAIT(thief, special_trait, THIEF_TRAIT)
+	return ..()
 
 /datum/antagonist/thief/admin_add(datum/mind/new_owner, mob/admin)
 	load_strings_file(THIEF_FLAVOR_FILE)
@@ -93,9 +105,6 @@
 		if("Thief")
 			chosen_objective = /datum/objective/steal
 			objective_needs_target = TRUE
-		if("Hoarder")
-			chosen_objective = /datum/objective/hoarder
-			objective_needs_target = TRUE
 		if("Black Market Outfitter")
 			chosen_objective = /datum/objective/steal_n_of_type/summon_guns/thief
 			objective_needs_target = FALSE
@@ -105,11 +114,15 @@
 		if("All Access Fan")
 			chosen_objective = /datum/objective/all_access
 			objective_needs_target = TRUE
+			special_trait = TRAIT_ID_APPRAISER
 		if("Chronicler")
 			chosen_objective = /datum/objective/chronicle
 			objective_needs_target = FALSE
 		if("Deranged")
 			chosen_objective = /datum/objective/hoarder/bodies
+			objective_needs_target = TRUE
+		if("Hoarder")
+			chosen_objective = /datum/objective/hoarder
 			objective_needs_target = TRUE
 	thief_flavor = strings(THIEF_FLAVOR_FILE, chosen_flavor)
 
