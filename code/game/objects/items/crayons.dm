@@ -749,7 +749,7 @@
 
 		return
 
-	if(ismob(target) && (target.flags_1 & HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
+	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
 		if(actually_paints)
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
