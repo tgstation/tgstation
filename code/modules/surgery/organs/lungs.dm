@@ -324,7 +324,7 @@
 		gas_breathed = breath_gases[/datum/gas/freon][MOLES]
 		if (gas_breathed > gas_stimulation_min)
 			if(prob(freon_pp))
-					to_chat(breather, span_alert("Your lungs feel ice cold!"))
+				to_chat(breather, span_alert("Your lungs feel ice cold!"))
 			if (freon_pp > 40)
 				var/existing = breather.reagents.get_reagent_amount(/datum/reagent/freon)
 				breather.reagents.add_reagent(/datum/reagent/freon, max(0, 2 - existing))
