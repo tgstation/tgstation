@@ -15,8 +15,14 @@
 		var/mob/living/L = user
 		ADD_TRAIT(L, TRAIT_BLUSHING, SPECIES_TRAIT)
 		L.update_body()
-		addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_BLUSHING, SPECIES_TRAIT), 5 SECONDS)
-		addtimer(CALLBACK(L, /mob.proc/update_body), 5.1 SECONDS)
+		addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_BLUSHING, SPECIES_TRAIT), 15 SECONDS)
+		addtimer(CALLBACK(L, /mob.proc/update_body), 15.1 SECONDS)
+		//TODO replace the two timers with just one
+		//addtimer(CALLBACK(L, /datum/emote/living/blush.proc/end, L), 3 SECONDS)
+
+///datum/emote/living/blush/proc/end(mob/living)
+	//REMOVE_TRAIT(living, TRAIT_BLUSHING, SPECIES_TRAIT)
+	//living.update_body()
 
 /datum/emote/living/bow
 	key = "bow"
