@@ -22,10 +22,14 @@
 
 	var/mapped = TRUE
 
+	///Our overlay when active
 	var/active_overlay = ""
+	///Our overlay when off
 	var/off_overlay = ""
-
+	///Our overlay when open
 	var/open_overlay = ""
+	///Should we use emissive appearance?
+	var/emissive = FALSE
 
 /obj/machinery/power/turbine/Initialize(mapload)
 	. = ..()
@@ -71,6 +75,8 @@
 
 	if(active)
 		. += active_overlay
+		if(emissive)
+			. += emissive_appearance(icon, active_overlay)
 	else
 		. += off_overlay
 
@@ -242,6 +248,8 @@
 
 	active_overlay = "core_light"
 	open_overlay = "core_open"
+
+	emissive = TRUE
 
 	///ID to easily connect the main part of the turbine to the computer
 	var/mapping_id
