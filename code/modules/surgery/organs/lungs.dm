@@ -321,20 +321,20 @@
 
 	// Freon
 		var/freon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/freon][MOLES])
-		if (prob(freon_pp))
-			to_chat(breather, span_alert("Your mouth feels like it's burning!"))
-		if (freon_pp >40)
-			breather.emote("gasp")
-			breather.adjustFireLoss(15)
-			if (prob(freon_pp/2))
-				to_chat(breather, span_alert("Your throat closes up!"))
-				breather.silent = max(breather.silent, 3)
-		else
-			breather.adjustFireLoss(freon_pp/4)
 		gas_breathed = breath_gases[/datum/gas/freon][MOLES]
 		if (gas_breathed > gas_stimulation_min)
-			breather.reagents.add_reagent(/datum/reagent/freon,1)
-
+			if(prob(freon_pp))
+					to_chat(breather, span_alert("Your lungs feel ice cold!"))
+			if (freon_pp > 40)
+				var/existing = breather.reagents.get_reagent_amount(/datum/reagent/freon)
+				breather.reagents.add_reagent(/datum/reagent/freon, max(0, 2 - existing))
+				if(prob(freon_pp/2))
+					to_chat(breather, span_alert("Your throat closes up!"))
+					breather.silent = 3
+			else	
+				var/existing = breather.reagents.get_reagent_amount(/datum/reagent/freon)
+				breather.reagents.add_reagent(/datum/reagent/freon, max(0, 1 - existing))
+		
 		breath_gases[/datum/gas/freon][MOLES]-=gas_breathed
 
 	// Healium

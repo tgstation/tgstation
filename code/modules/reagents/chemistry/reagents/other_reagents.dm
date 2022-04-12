@@ -1455,6 +1455,15 @@
 	taste_description = "burning"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
+/datum/reagent/freon/on_mob_life(mob/living/carbon/breather, delta_time, times_fired)
+	var/freon_presence = breather.reagents.get_reagent_amount(/datum/reagent/freon)
+	if(freon_presence > 1)
+		breather.adjustFireLoss(4 * REM * delta_time, FALSE)
+	else
+		breather.adjustFireLoss(1 * REM * delta_time, FALSE)
+	..()
+	return TRUE
+
 /datum/reagent/freon/on_mob_metabolize(mob/living/L)
 	. = ..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
