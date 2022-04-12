@@ -323,7 +323,7 @@
 /area/hilbertshotel)
 "bl" = (
 /obj/structure/table/reinforced,
-/obj/item/paper/crumpled/bloody/docsdeathnote,
+/obj/item/paper/crumpled/hotel_note,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "Mn" = (

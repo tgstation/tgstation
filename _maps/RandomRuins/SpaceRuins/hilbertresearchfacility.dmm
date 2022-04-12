@@ -118,7 +118,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "dD" = (
 /obj/structure/lattice/catwalk,
-/obj/item/paper/crumpled/docslogs,
+/obj/item/paper/crumpled/ruins/note_institute,
 /obj/item/pen,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
@@ -1301,6 +1301,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
 "BL" = (
 /obj/structure/closet/crate/bin,
+/obj/item/paper/crumpled/ruins/postdocs_memo,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BM" = (
@@ -1312,7 +1313,6 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BO" = (
 /obj/structure/filingcabinet,
-/obj/item/paper/crumpled/robertsworkjournal,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BQ" = (
@@ -1796,6 +1796,18 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"LE" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out old messages.";
+	dir = 8;
+	name = "broken terminal"
+	},
+/obj/item/paper/fluff/ruins/romans_emails{
+	pixel_x = -10;
+	pixel_y = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "LS" = (
 /obj/effect/turf_decal/trimline/purple/arrow_cw,
 /obj/effect/turf_decal/trimline/purple/mid_joiner,
@@ -1830,7 +1842,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Mf" = (
 /obj/structure/filingcabinet,
-/obj/item/paper/crumpled/docshideout,
+/obj/item/paper/fluff/ruins/docslabnotes,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Mh" = (
@@ -3252,7 +3264,7 @@ Bo
 Bo
 Bo
 Ok
-FF
+LE
 Mh
 zz
 uJ
