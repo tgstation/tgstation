@@ -551,6 +551,17 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	Take care of the lab during my vacation. See you all in June.<br>
 	- David"}
 
+/obj/item/paper/crumpled/ruins/hotel_note
+	name = "hotel note"
+	info = {"Hotel Note<br>
+	Well, you figured out the puzzle. Looks like someone's done their homework on my research.<br>
+	I suppose you deserve to know some more about our situation. Our research has attracted some undue attention and so, for our own safety, we've taken to the Bluespace.<br>
+	Yes, you did read that correctly. I'm sure the physics and maths would bore you, but in layman's terms, the manifested link to the Bluespace the crystals provide can be exploited. With the correct technology, one can "surf" the Bluespace, as Jen likes to call it.<br>
+	What's more, the space-time continuum is in full effect here. By correctly manipulating the bluespace, one can go <i>anywhere</i>: time or space. I'll confess to not having figured that one out myself. Check the closet- consider it a prize for solving the puzzle. Just be careful with its use- you might find yourself dealing with the same pursuers we've picked up.<br>
+	They deal in "time crimes", whatever their definition of those are.<br>
+	Anyway, I'm beginning to ramble. We must be going now. Make sure any posthumous Nobel prizes are made out to the department.<br>
+	- David"}
+
 /obj/item/paper/fluff/ruins/docslabnotes
 	name = "lab notebook page"
 	info = {"Laboratory Notebook<br>
