@@ -393,7 +393,6 @@
 		else if(helium_pp <= helium_speech_min && helium_speech)
 			helium_speech = FALSE
 			UnregisterSignal(owner, COMSIG_MOB_SAY)
-
 		gas_breathed = breath_gases[/datum/gas/helium][MOLES]
 		breath_gases[/datum/gas/helium][MOLES]-=gas_breathed
 
