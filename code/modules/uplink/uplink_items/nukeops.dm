@@ -785,7 +785,7 @@
 	name = "Syndicate Bio-Weapon Laboratory Access Card"
 	desc = "In the right hands, even vile corpo technology can be turned into a vast arsenal of liberation and justice. From \
 			micro-organism symbiosis to slime-core weaponization, this special Authorization Key can let you push past the boundaries \
-			of bio-terrorism at breakneck speeds. As a bonus, these labs even come equipped with nautural life support! *Plants not included."
+			of bio-terrorism at breakneck speeds. As a bonus, these labs even come equipped with natural life support! *Plants not included."
 	item = /obj/item/keycard/syndicate_bio
 	cost = 17
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
