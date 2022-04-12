@@ -5524,7 +5524,6 @@
 	pixel_y = -34;
 	req_access_txt = "55"
 	},
-/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/cafeteria,
 /area/command/heads_quarters/rd)
 "aNK" = (
@@ -31488,9 +31487,9 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "jVC" = (
+/obj/structure/table/glass,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "jVJ" = (
@@ -43816,10 +43815,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
-"otV" = (
-/obj/machinery/pdapainter/security,
-/turf/open/floor/carpet,
-/area/command/heads_quarters/hos)
 "ouy" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/chem_dispenser,
@@ -57031,10 +57026,10 @@
 	network = list("ss13","minisat")
 	},
 /obj/machinery/button/door/directional/south{
-	id = "teledoor";
-	name = "MiniSat Shutter Control";
 	pixel_x = 8;
-	req_access_txt = "17;65"
+	req_access_txt = "17;65";
+	id = "teledoor";
+	name = "MiniSat Shutter Control"
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
@@ -67905,7 +67900,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
-/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
 "xnD" = (
@@ -157197,10 +157191,10 @@ aYr
 dDG
 dDG
 dhe
-ogH
-ogH
-ogH
-ogH
+dhe
+dhe
+dhe
+dhe
 hNf
 hNf
 hOb
@@ -157455,9 +157449,9 @@ dDG
 dDG
 dDG
 ogH
-hYU
-aoz
-mNh
+ogH
+ogH
+ogH
 ogH
 hNf
 hNf
@@ -157712,9 +157706,9 @@ dDG
 dDG
 dDG
 ogH
-vZz
-inb
-avg
+hYU
+aoz
+mNh
 bbw
 dyY
 xPy
@@ -157969,9 +157963,9 @@ aYr
 dDG
 dhe
 ogH
-wBH
-vWh
-pXw
+vZz
+inb
+avg
 jSG
 cso
 aLd
@@ -158226,9 +158220,9 @@ aYr
 aYr
 dhe
 ogH
-otV
+wBH
 vWh
-vWh
+pXw
 tUe
 suv
 xPC

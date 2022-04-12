@@ -26067,7 +26067,6 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
-/obj/item/kirbyplants/dead,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "fpQ" = (
@@ -31669,6 +31668,9 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
 "gVd" = (
+/obj/structure/table/glass,
+/obj/item/clipboard,
+/obj/item/toy/figure/cmo,
 /obj/machinery/computer/security/telescreen/cmo{
 	dir = 4;
 	pixel_x = -30
@@ -31676,7 +31678,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "gVf" = (
@@ -41652,9 +41653,6 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/structure/table/glass,
-/obj/item/clipboard,
-/obj/item/toy/figure/cmo,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "jNJ" = (
@@ -42988,13 +42986,11 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "khe" = (
+/obj/structure/disposalpipe/segment,
+/obj/item/kirbyplants/dead,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "khl" = (
@@ -44257,9 +44253,11 @@
 	},
 /area/hallway/primary/port)
 "kBh" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/bot,
-/obj/machinery/pdapainter/research,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "kBl" = (
@@ -53324,8 +53322,10 @@
 /turf/closed/wall,
 /area/security/checkpoint/customs/aft)
 "nlI" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/pdapainter/security,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "nlJ" = (
@@ -59306,7 +59306,6 @@
 	pixel_y = -6;
 	req_access_txt = "58"
 	},
-/obj/item/paper_bin,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "pbs" = (
@@ -67576,7 +67575,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "rAn" = (

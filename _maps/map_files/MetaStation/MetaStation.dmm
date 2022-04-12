@@ -19701,12 +19701,14 @@
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
 "fSY" = (
+/obj/structure/rack,
+/obj/item/storage/secure/briefcase,
+/obj/item/clothing/mask/cigarette/cigar,
 /obj/machinery/computer/security/telescreen/ce{
 	dir = 1;
 	pixel_y = -30
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "fTb" = (
@@ -24349,7 +24351,6 @@
 	id = "ceprivacy";
 	name = "Privacy Shutters Control"
 	},
-/obj/item/storage/secure/briefcase,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "hEE" = (
@@ -29028,6 +29029,7 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "jum" = (
+/obj/item/kirbyplants/dead,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -29039,7 +29041,6 @@
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 4
 	},
-/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "jun" = (
@@ -41057,8 +41058,8 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "nEs" = (
+/obj/machinery/photocopier,
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/pdapainter/security,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "nED" = (
@@ -41524,7 +41525,6 @@
 /obj/item/clipboard,
 /obj/item/paper/monitorkey,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/item/clothing/mask/cigarette/cigar,
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
 "nMs" = (
@@ -43143,8 +43143,8 @@
 /obj/machinery/light/directional/south,
 /obj/structure/bed/pod{
 	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	dir = 4;
-	name = "medical bed"
+	name = "medical bed";
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
@@ -44390,7 +44390,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/photocopier,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "oRD" = (
@@ -49843,9 +49842,6 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
-/obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
-/obj/item/toy/cattoy,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "qWi" = (
@@ -53393,14 +53389,14 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "sqc" = (
+/obj/structure/bed/dogbed/runtime,
+/obj/item/toy/cattoy,
+/obj/structure/disposalpipe/segment,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "sqj" = (
@@ -59782,11 +59778,14 @@
 /turf/open/floor/iron/dark,
 /area/science/mixing/launch)
 "uTG" = (
+/obj/machinery/disposal/bin,
 /obj/machinery/status_display/ai/directional/east,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "uTI" = (
@@ -60769,7 +60768,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "vmJ" = (

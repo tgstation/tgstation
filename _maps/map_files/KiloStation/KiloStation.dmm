@@ -21310,7 +21310,6 @@
 "cHE" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cHF" = (
@@ -33911,19 +33910,6 @@
 /obj/item/clothing/mask/cigarette/cigar,
 /obj/machinery/light/directional/west,
 /obj/machinery/airalarm/directional/west,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
-	desc = "A bottle of whiskey. There's a label that reads 'tears' taped to the front.";
-	name = "Bottle of Tears";
-	pixel_x = 3;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
-	pixel_y = 2
-	},
 /turf/open/floor/wood,
 /area/command/heads_quarters/hos)
 "gTf" = (
@@ -47253,10 +47239,10 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/machinery/rnd/bepis,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "lkg" = (
@@ -48943,7 +48929,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "lML" = (
@@ -55025,14 +55010,11 @@
 	},
 /area/service/chapel/dock)
 "nOk" = (
+/obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
-/obj/item/storage/box/seccarts{
-	pixel_y = 5
-	},
-/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "nOz" = (
@@ -55753,6 +55735,13 @@
 "oav" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-05"
+	},
+/obj/structure/noticeboard/directional/east,
+/obj/item/paper/monitorkey,
+/obj/machinery/camera/directional/east{
+	c_tag = "Chief Engineer's Office";
+	name = "engineering camera";
+	network = list("ss13","engine")
 	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
@@ -59532,19 +59521,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/security/checkpoint/customs)
-"pnp" = (
-/obj/machinery/pdapainter/engineering,
-/obj/structure/noticeboard/directional/east{
-	dir = 8
-	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Chief Engineer's Office";
-	name = "engineering camera";
-	network = list("ss13","engine")
-	},
-/obj/item/paper/monitorkey,
-/turf/open/floor/iron/dark,
-/area/maintenance/starboard/aft)
 "pnt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -60282,7 +60258,10 @@
 /area/security/lockers)
 "pxx" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/maintenance/starboard/aft)
 "pyi" = (
 /obj/effect/turf_decal/tile/brown{
@@ -85878,6 +85857,23 @@
 /turf/open/floor/iron/chapel,
 /area/service/chapel/monastery)
 "xTb" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/seccarts{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	desc = "A bottle of whiskey. There's a label that reads 'tears' taped to the front.";
+	name = "Bottle of Tears";
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+	pixel_y = 2
+	},
 /obj/machinery/keycard_auth/directional/south{
 	pixel_x = -6
 	},
@@ -85887,7 +85883,6 @@
 	name = "Space Blast Door Toggle";
 	pixel_x = 8
 	},
-/obj/machinery/pdapainter/security,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hos)
 "xTe" = (
@@ -124072,7 +124067,7 @@ lSn
 poh
 efC
 efC
-pnp
+efC
 oNQ
 bPO
 jZl
