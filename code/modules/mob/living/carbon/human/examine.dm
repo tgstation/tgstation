@@ -100,7 +100,7 @@
 		. += wear_id.get_id_examine_strings(user)
 
 	//Status effects
-	var/list/status_examines = status_effect_examines()
+	var/list/status_examines = get_status_effect_examinations(appears_dead = appears_dead)
 	if (length(status_examines))
 		. += status_examines
 
@@ -433,18 +433,34 @@
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
-/mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
-	var/list/dat = list()
-	if(!pronoun_replacement)
-		pronoun_replacement = p_they(TRUE)
-	for(var/V in status_effects)
-		var/datum/status_effect/E = V
-		if(E.examine_text)
-			var/new_text = replacetext(E.examine_text, "SUBJECTPRONOUN", pronoun_replacement)
-			new_text = replacetext(new_text, "[pronoun_replacement] is", "[pronoun_replacement] [p_are()]") //To make sure something become "They are" or "She is", not "They are" and "She are"
-			dat += "[new_text]\n" //dat.Join("\n") doesn't work here, for some reason
-	if(dat.len)
-		return dat.Join()
+/**
+ * Shows any and all examine text related to any status effects the user has.
+ *
+ * * appears_dead - whether the mob appears to be dead to the examiner or not.
+ * This is passed to take into account fakedeath and similar from examine().
+ * If no value is passed, they are assumed to appear dead based on their current stat.
+ */
+/mob/living/proc/get_status_effect_examinations(appears_dead)
+	var/list/data = list()
+
+	// If we weren't explicitly passed a value, assume based on their stat
+	if(isnull(appears_dead))
+		appears_dead = (stat == DEAD)
+
+	for(var/datum/status_effect/effect as anything in status_effects)
+		if(effect.examine_requires_alive && appears_dead)
+			continue
+
+		var/effect_text = effect.get_examine_text()
+		if(!effect_text)
+			continue
+
+		data += "[effect_text]\n"
+
+	if(!length(data))
+		return
+
+	return data.Join()
 
 /mob/living/carbon/human/examine_more(mob/user)
 	. = ..()

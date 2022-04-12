@@ -1109,6 +1109,7 @@
 #include "code\datums\status_effects\status_effect.dm"
 #include "code\datums\status_effects\wound_effects.dm"
 #include "code\datums\status_effects\debuffs\dizziness.dm"
+#include "code\datums\status_effects\debuffs\drunk.dm"
 #include "code\datums\weather\weather.dm"
 #include "code\datums\weather\weather_types\ash_storm.dm"
 #include "code\datums\weather\weather_types\floor_is_lava.dm"
