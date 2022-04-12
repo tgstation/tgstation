@@ -87,7 +87,6 @@ Things you **CAN** do:
 
 Things you **CAN'T** do:
 * [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
-* Label PRs if you are goofball.
 
 </details>
 
