@@ -190,7 +190,7 @@
 
 		if(chambered)
 			var/obj/item/ammo_casing/AC = chambered
-			if(AC.fire_casing(user, user))
+			if(AC.fire_casing(user, user, params, 0, 0, null, 0, src))
 				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 				var/zone = check_zone(user.zone_selected)
 				var/obj/item/bodypart/affecting = H.get_bodypart(zone)
