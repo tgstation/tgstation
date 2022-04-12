@@ -164,3 +164,28 @@
       We fixed the, erm, posters, there.
   timothymtorres:
   - bugfix: Fix Cryo areas to have CO2 filtering from the gas loops.
+2022-04-04:
+  Ebb-Real:
+  - expansion: Bandanas are now craftable from 2 pieces of cloth.
+  - expansion: Adds the striped bandana and adds various preset colored bandanas to
+      clothing vendors and lockers.
+  - expansion: You can now dye bandanas with washing machines and customize bandanas
+      from inside the clothesmate.
+  - bugfix: You can no longer reset all the values of a bandana just by adjusting
+      it, this included integrity.
+  - imageadd: Adds bandana GAGS sprites.
+  - imagedel: Removes old non GAGS sprites.
+  - refactor: Refractors bandana neckerchief code.
+  Fikou:
+  - rscadd: Adds the Navigate verb, creates a holographic path to an area of your
+      choosing.
+  - rscdel: Removed wayfinding pinpointers.
+  Ghommie:
+  - bugfix: Fixed large persistent paintings being shown off the wall
+  Wallem:
+  - imageadd: Resprites the mass driver
+  azizonkg:
+  - bugfix: fixed typo in filename that cause build fail
+  wesoda25:
+  - admin: admin messages now appear every time you connect until you click a link
+      confirming that you read them
