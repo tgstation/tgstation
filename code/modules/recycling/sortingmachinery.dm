@@ -29,8 +29,13 @@
  * Effects after completing unwrapping
  */
 /obj/item/delivery/proc/post_unwrap_contents(mob/user)
+	var/turf/turf_loc = get_turf(user || src)
 	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
-	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+	new /obj/effect/decal/cleanable/wrapping(turf_loc)
+
+	for(var/atom/movable/movable_content as anything in contents)
+		movable_content.forceMove(turf_loc)
+
 	qdel(src)
 
 /obj/item/delivery/contents_explosion(severity, target)
@@ -42,10 +47,9 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += contents
 
-/obj/item/delivery/Destroy()
-	var/turf/turf_loc = get_turf(src)
-	for(var/atom/movable/movable_content as anything in contents)
-		movable_content.forceMove(turf_loc)
+/obj/item/delivery/deconstruct()
+	unwrap_contents()
+	post_unwrap_contents()
 	return ..()
 
 /obj/item/delivery/examine(mob/user)
