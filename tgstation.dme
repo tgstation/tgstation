@@ -1452,6 +1452,8 @@
 #include "code\game\objects\items\hourglass.dm"
 #include "code\game\objects\items\inducer.dm"
 #include "code\game\objects\items\inspector.dm"
+#include "code\game\objects\items\keycard.dm"
+#include "code\game\objects\items\keycard_doors.dm"
 #include "code\game\objects\items\kitchen.dm"
 #include "code\game\objects\items\knives.dm"
 #include "code\game\objects\items\latexballoon.dm"
