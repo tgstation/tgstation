@@ -83,7 +83,7 @@ The `SS13` package contains various helper functions that use code specific to t
 A reference to the state datum handling this lua state.
 
 ### SS13.global_proc
-A wrapper for the magic string used to tell `WrapAdminProcCall` to call a global proc
+A wrapper for the magic string used to tell `WrapAdminProcCall` to call a global proc.
 
 ### SS13.new(type, ...)
 Instantiates a datum of type `type` with `...` as the arguments passed to `/proc/_new`
@@ -112,15 +112,23 @@ Auxlua defines several globals for internal use. These are read-only.
 ### __sleep_flag
 This flag is used to designate that a yielding task should be put in the sleep queue instead of the yield table.
 
-### __sleep_queue
-A sequence of threads, each corresponding to a task that has slept. When calling `__lua_awaken` from DM, auxlua will dequeue the first thread from the sequence and resume it. Threads in this queue can be resumed from lua code, but doing so is heavily advised against.
+### \_\_set_sleep_flag(value)
 
-### __yield_table
-A table of threads, each corresponding to a coroutine that has yielded. When calling `__lua_resume` from DM, auxlua will look for a thread at the index specified in the `index` argument, and resume it with the arguments specified in the `arguments` argument. Threads in this table can be resumed from lua code, but doing so is heavily advised against.
+A function that sets `__sleep_flag` to `value`. Calling this directly is not recommended, as doing so muddies the distinction between sleeps and yields.
 
-### __task_info
+### \_\_sleep_queue
+
+A sequence of threads, each corresponding to a task that has slept. When calling `/proc/__lua_awaken`, auxlua will dequeue the first thread from the sequence and resume it. Threads in this queue can be resumed from lua code, but doing so is heavily advised against.
+
+### \_\_yield_table
+
+A table of threads, each corresponding to a coroutine that has yielded. When calling `/proc/__lua_resume`, auxlua will look for a thread at the index specified in the `index` argument, and resume it with the arguments specified in the `arguments` argument. Threads in this table can be resumed from lua code, but doing so is heavily advised against.
+
+### \_\_task_info
+
 A table of key-value-pairs, where the keys are threads, and the values are tables consisting of the following fields:
+
 - name: A string containing the name of the task
 - status: A string, either "sleep" or "yield"
 - index: The task's index in `__sleep_queue` or `__yield_table`
-The threads constituting this table's keys can be resumed from lua code, but doing so is heavily advised against.
+  The threads constituting this table's keys can be resumed from lua code, but doing so is heavily advised against.

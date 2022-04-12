@@ -24,6 +24,8 @@ SUBSYSTEM_DEF(lua)
 	/// Protects return values from getting GCed before getting converted to lua values
 	var/gc_guard
 
+	/// Auxtools runs procs as usr = null. We use this to proxy `usr` whenever its relevant.
+	var/mob/lua_usr
 /datum/controller/subsystem/lua/Initialize(start_timeofday)
 	try
 		AUXTOOLS_CHECK(AUXLUA)
