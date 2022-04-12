@@ -336,6 +336,8 @@
 /datum/action/vehicle/sealed/noise
 	var/sound_path = 'sound/items/carhorn.ogg'
 	var/sound_message = "makes a sound."
+	///Signal fired by the action, whenever it's triggered. Used by the Vim circuit component.
+	var/signal_fired
 
 /datum/action/vehicle/sealed/noise/Trigger(trigger_flags)
 	var/obj/vehicle/sealed/car/vim/vim_mecha = vehicle_entered_target
@@ -345,6 +347,7 @@
 	COOLDOWN_START(vim_mecha, sound_cooldown, VIM_SOUND_COOLDOWN)
 	vehicle_entered_target.visible_message(span_notice("[vehicle_entered_target] [sound_message]"))
 	playsound(vim_mecha, sound_path, 75)
+	SEND_SIGNAL(vim_mecha, signal_fired)
 
 /datum/action/vehicle/sealed/noise/chime
 	name = "Chime!"
@@ -352,6 +355,7 @@
 	button_icon_state = "vim_chime"
 	sound_path = 'sound/machines/chime.ogg'
 	sound_message = "chimes!"
+	signal_fired = COMSIG_VIM_CHIME_USED
 
 /datum/action/vehicle/sealed/noise/buzz
 	name = "Buzz."
@@ -359,6 +363,11 @@
 	button_icon_state = "vim_buzz"
 	sound_path = 'sound/machines/buzz-sigh.ogg'
 	sound_message = "buzzes."
+	signal_fired = COMSIG_VIM_BUZZ_USED
 
 /datum/action/vehicle/sealed/headlights/vim
 	button_icon_state = "vim_headlights"
+
+/datum/action/vehicle/sealed/headlights/vim/Trigger(trigger_flags)
+	. = ..()
+	SEND_SIGNAL(vehicle_entered_target, COMSIG_VIM_HEADLIGHTS_TOGGLED, vehicle_entered_target.headlights_toggle)
