@@ -1459,6 +1459,8 @@
 	var/freon_presence = breather.reagents.get_reagent_amount(/datum/reagent/freon)
 	if(freon_presence > 1)
 		breather.adjustFireLoss(4 * REM * delta_time, FALSE)
+		if(prob(30))
+			breather.silent = 3
 	else
 		breather.adjustFireLoss(1 * REM * delta_time, FALSE)
 	..()

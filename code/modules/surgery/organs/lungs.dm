@@ -328,9 +328,6 @@
 			if (freon_pp > 40)
 				var/existing = breather.reagents.get_reagent_amount(/datum/reagent/freon)
 				breather.reagents.add_reagent(/datum/reagent/freon, max(0, 2 - existing))
-				if(prob(freon_pp/2))
-					to_chat(breather, span_alert("Your throat closes up!"))
-					breather.silent = 3
 			else	
 				var/existing = breather.reagents.get_reagent_amount(/datum/reagent/freon)
 				breather.reagents.add_reagent(/datum/reagent/freon, max(0, 1 - existing))
