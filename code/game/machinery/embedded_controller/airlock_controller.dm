@@ -219,6 +219,13 @@
 		ui = new(user, src, "AirlockController", src)
 		ui.open()
 
+/obj/machinery/embedded_controller/radio/airlock_controller/process(delta_time)
+	if(program)
+		program.process(delta_time)
+
+	update_appearance()
+	SStgui.update_uis(src)
+
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_data(mob/user)
 	var/list/data = list()
 	data["airlockState"] = program.state
