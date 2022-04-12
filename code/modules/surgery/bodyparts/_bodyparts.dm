@@ -771,12 +771,14 @@
 			continue
 		//Some externals have multiple layers for background, foreground and between
 		for(var/external_layer in external_organ.all_layers)
-			if(istype(external_organ, /obj/item/organ/external/pod_hair))
-				var/rgb_list = rgb2num(draw_color, COLORSPACE_RGB)
-				// Invert the colour of the pod hair's flower
-				draw_color = rgb(255 - rgb_list[1], 255 - rgb_list[2], 255 - rgb_list[3])
 			if(external_organ.layers & external_layer)
-				external_organ.get_overlays(., image_dir, external_organ.bitflag_to_layer(external_layer), limb_gender, draw_color)
+				external_organ.get_overlays(
+					.,
+					image_dir,
+					external_organ.bitflag_to_layer(external_layer),
+					limb_gender,
+					external_organ.overrides_color ? external_organ.override_color(draw_color) : draw_color
+				)
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
