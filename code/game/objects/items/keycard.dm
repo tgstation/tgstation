@@ -39,7 +39,7 @@
 
 /obj/item/keycard/syndicate_chem
 	name = "Syndicate Chemical Plant Access Card"
-	desc = "A red keycard with an image of a beaker. Using this will allow you to gain access to the Chemical Manufacturing Plan in Firebase Balthazord."
+	desc = "A red keycard with an image of a beaker. Using this will allow you to gain access to the Chemical Manufacturing Plant in Firebase Balthazord."
 	color = "#9c0e26"
 	puzzle_id = "syndicate_chem"
 
