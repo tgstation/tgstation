@@ -75,7 +75,7 @@ export const ThermoMachine = (props, context) => {
                 selected={data.on}
                 onClick={() => act('power')} />
               <Button
-                icon={'power-off'}
+                icon={'times'}
                 content={'Dump'}
                 onClick={() => act('dump')} />
             </>
