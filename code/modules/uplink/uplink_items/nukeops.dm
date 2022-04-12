@@ -806,7 +806,7 @@
 	name = "Lopez's Access Card"
 	desc = "Hungry? So is everyone in Firebase Balthazord. Lopez is a great cook, don't get me wrong, but he's stubborn when it \
 			comes to the meal plans. Sometimes you just want to pig out. Listen, don't tell anyone, ok? I picked this out of his \
-			pocked during this mornings breifing. He's been looking for it since. Take it, get into the fridge, and cook up whatever \
+			pocket during this morning's briefing. He's been looking for it since. Take it, get into the fridge, and cook up whatever \
 			you need before he gets back. And remember: DON'T TELL ANYONE! -M.T"
 	item = /obj/item/keycard/syndicate_fridge
 	cost = 5
