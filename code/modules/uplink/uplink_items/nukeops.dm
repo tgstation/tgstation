@@ -775,7 +775,7 @@
 	name = "Syndicate Ordnance Laboratory Access Card"
 	desc = "Do you fancy yourself an explosives expert? If so, then consider yourself lucky! With this special Authorization Key, \
 			you can blow those corpo suits away with your very own home-made explosive devices. Made in your local firebase's \
-			very own Ordinance Laboratory! *The Syndicate is not responsible for injuries or deaths sustained while utilizing the lab."
+			very own Ordnance Laboratory! *The Syndicate is not responsible for injuries or deaths sustained while utilizing the lab."
 	item = /obj/item/keycard/syndicate_bomb
 	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS
