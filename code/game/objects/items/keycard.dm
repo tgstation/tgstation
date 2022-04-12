@@ -27,7 +27,7 @@
 //Keycards Below
 /obj/item/keycard/syndicate_bomb
 	name = "Syndicate Ordnance Laboratory Access Card"
-	desc = "A red keycard with an image of a bomb. Using this will allow you to gain access to the Ordinance Lab in Firebase Balthazord."
+	desc = "A red keycard with an image of a bomb. Using this will allow you to gain access to the Ordnance Lab in Firebase Balthazord."
 	color = "#9c0e26"
 	puzzle_id = "syndicate_bomb"
 
