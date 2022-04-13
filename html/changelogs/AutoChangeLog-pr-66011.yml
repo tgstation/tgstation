@@ -1,0 +1,4 @@
+author: "SmoSmoSmoSmok"
+delete-after: True
+changes: 
+  - bugfix: "Ghosts can now correctly jump to C4's planted on walls/floors when they get the notification"
