@@ -99,7 +99,7 @@
 
 	call_reactions(env)
 
-	air_update_turf(FALSE, FALSE)
+	//air_update_turf(FALSE, FALSE)
 
 	if(anchored)
 		return

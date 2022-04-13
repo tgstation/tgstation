@@ -177,6 +177,7 @@
 #define FIRE_PRIORITY_AMBIENCE 10
 #define FIRE_PRIORITY_GARBAGE 15
 #define FIRE_PRIORITY_DATABASE 16
+#define FIRE_PRIORITY_AIRFLOW 17
 #define FIRE_PRIORITY_WET_FLOORS 20
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20
@@ -284,6 +285,10 @@
 #define SSZAS_FIRES 6
 #define SSZAS_HOTSPOTS 7
 #define SSZAS_ZONES 8
+#define SSZAS_ATOMS 9
+
+#define SSZAS_REBUILD_PIPELINE 1
+#define SSZAS_REBUILD_QUEUE 2
 
 //Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
 #define SSAIR_REBUILD_PIPELINE 1

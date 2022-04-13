@@ -194,7 +194,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
 		var/datum/gas_mixture/air = return_air()
-		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+		if(!air || !air.has_gas(GAS_OXYGEN, 1)) //or oxygen on a tile to burn
 			to_chat(user, span_notice("Your [name] needs a source of oxygen to burn."))
 			return ..()
 
@@ -315,7 +315,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user?.IgniteMob()
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
 		var/datum/gas_mixture/air = return_air()
-		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+		if(!air || !air.has_gas(GAS_OXYGEN, 1)) //or oxygen on a tile to burn
 			extinguish()
 			return
 

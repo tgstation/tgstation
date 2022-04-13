@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=60)
-	pressure_resistance = 2
+	//pressure_resistance = 2
 	attack_verb_continuous = list("stamps")
 	attack_verb_simple = list("stamp")
 

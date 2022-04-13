@@ -68,9 +68,10 @@ SUBSYSTEM_DEF(zas)
 	flags = SS_POST_FIRE_TIMING
 
 	//The variable setting controller
-	var/zas_controller/settings
+	var/datum/zas_controller/settings
 	//XGM gas data
 	var/datum/xgm_gas_data/gas_data
+
 	//Geometry lists
 	var/list/zones = list()
 	var/list/edges = list()
@@ -82,6 +83,8 @@ SUBSYSTEM_DEF(zas)
 
 	//Atmos Machines
 	var/list/atmos_machinery = list()
+	//Atoms to be processed
+	var/list/atom_process = list()
 
 	//Geometry updates lists
 	var/list/tiles_to_update = list()
@@ -104,6 +107,7 @@ SUBSYSTEM_DEF(zas)
 	var/list/curr_hotspot
 	var/list/curr_zones
 	var/list/curr_machines
+	var/list/curr_atoms
 
 
 	var/current_process = SSZAS_TILES
@@ -116,7 +120,7 @@ SUBSYSTEM_DEF(zas)
 
 	// Make sure we don't rebuild mid-tick.
 	if (state != SS_IDLE)
-		to_chat(world, bold_announce("ZAS Rebuild initiated. Waiting for current air tick to complete before continuing."))
+		to_chat(world, span_boldannounce("ZAS Rebuild initiated. Waiting for current air tick to complete before continuing."))
 		while (state != SS_IDLE)
 			stoplag()
 
@@ -155,9 +159,9 @@ SUBSYSTEM_DEF(zas)
 
 	var/starttime = REALTIMEOFDAY
 	settings = new
-	gas_data = new /datum/xgm_gas_data
+	gas_data = new
 
-	to_chat(world, bold_announce("Processing Geometry..."))
+	to_chat(world, span_boldannounce("Processing Geometry..."))
 
 	var/simulated_turf_count = 0
 	for(var/turf/simulated/S)
@@ -166,7 +170,7 @@ SUBSYSTEM_DEF(zas)
 
 		CHECK_TICK
 
-	to_chat(world, bold_announce(
+	to_chat(world, span_boldannounce(
 		{"Total Simulated Turfs: [simulated_turf_count]
 		Total Zones: [zones.len]
 		Total Edges: [edges.len]
@@ -174,15 +178,15 @@ SUBSYSTEM_DEF(zas)
 		Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]"}
 	))
 
-	to_chat(world, bold_announce("Geometry processing completed in [(REALTIMEOFDAY - starttime)/10] seconds!"))
+	to_chat(world, span_boldannounce("Geometry processing completed in [(REALTIMEOFDAY - starttime)/10] seconds!"))
 
 	if (simulate)
-		to_chat(world, bold_announce("Settling air..."))
+		to_chat(world, span_boldannounce("Settling air..."))
 
 		starttime = REALTIMEOFDAY
 		fire(FALSE, TRUE)
 
-		to_chat(world, bold_announce("Air settling completed in [(REALTIMEOFDAY - starttime)/10] seconds!"))
+		to_chat(world, span_boldannounce("Air settling completed in [(REALTIMEOFDAY - starttime)/10] seconds!"))
 
 	..(timeofday)
 
@@ -309,6 +313,18 @@ SUBSYSTEM_DEF(zas)
 
 			if (MC_TICK_CHECK)
 				return
+
+	current_process = SSZAS_ATOMS
+	curr_atoms = atom_process
+	if(current_process == SSZAS_ATOMS)
+		while(curr_atoms.len)
+		var/atom/talk_to = curr_atoms[curr_atoms.len]
+		curr_atoms.len--
+		if(!talk_to)
+			return
+		talk_to.process_exposure()
+		if(MC_TICK_CHECK)
+			return
 
 	current_process = SSZAS_MACHINES
 
@@ -519,3 +535,18 @@ SUBSYSTEM_DEF(zas)
 		active_edges -= E
 	if(processing_edges)
 		processing_edges -= E
+
+/datum/controller/subsystem/zas/proc/get_init_dirs(type, dir, init_dir)
+
+	if(!pipe_init_dirs_cache[type])
+		pipe_init_dirs_cache[type] = list()
+
+	if(!pipe_init_dirs_cache[type]["[init_dir]"])
+		pipe_init_dirs_cache[type]["[init_dir]"] = list()
+
+	if(!pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"])
+		var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir, init_dir)
+		pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"] = temp.get_init_directions()
+		qdel(temp)
+
+	return pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"]

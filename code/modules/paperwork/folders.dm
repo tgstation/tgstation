@@ -4,7 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
-	pressure_resistance = 2
+	//pressure_resistance = 2
 	resistance_flags = FLAMMABLE
 	/// The background color for tgui in hex (with a `#`)
 	var/bg_color = "#7f7f7f"

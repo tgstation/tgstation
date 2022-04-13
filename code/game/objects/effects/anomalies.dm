@@ -326,7 +326,8 @@
 		ticks -= releasedelay
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
-		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
+		T.atmos_spawn_air(GAS_OXYGEN, 5, 1000)
+		T.atmos_spawn_air(GAS_PLASMA, 5, 1000)
 
 /obj/effect/anomaly/pyro/detonate()
 	INVOKE_ASYNC(src, .proc/makepyroslime)
@@ -334,7 +335,9 @@
 /obj/effect/anomaly/pyro/proc/makepyroslime()
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
-		T.atmos_spawn_air("o2=500;plasma=500;TEMP=1000") //Make it hot and burny for the new slime
+		T.atmos_spawn_air(GAS_OXYGEN, 5, 1000)
+		T.atmos_spawn_air(GAS_PLASMA, 5, 1000)
+
 	var/new_colour = pick("red", "orange")
 	var/mob/living/simple_animal/slime/S = new(T, new_colour)
 	S.rabid = TRUE

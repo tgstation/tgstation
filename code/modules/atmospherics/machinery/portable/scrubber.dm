@@ -99,7 +99,7 @@
 	air_contents.merge(filtered) // Store filtered out gasses.
 	mixture.merge(filtering) // Returned the cleaned gas.
 	if(!holding)
-		air_update_turf(FALSE, FALSE)
+		//air_update_turf(FALSE, FALSE)
 
 /obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
 	. = ..()

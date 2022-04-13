@@ -11,7 +11,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 /turf/var/obj/fire/fire = null
 
 //Some legacy definitions so fires can be started.
-atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return null
 
 /atom/movable/proc/is_burnable()
@@ -20,7 +20,7 @@ atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed
 /mob/is_burnable()
 	return simulated
 
-turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
+/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 
 
 /turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
@@ -42,7 +42,7 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 	return igniting
 
 /zone/proc/process_fire()
-	var/datum/gas_mixture/burn_gas = air.remove_ratio(vsc.fire_consuption_rate, fire_tiles.len)
+	var/datum/gas_mixture/burn_gas = air.remove_ratio(SSzas.settings.fire_consuption_rate, fire_tiles.len)
 
 	var/firelevel = burn_gas.react(src, fire_tiles, force_burn = 1, no_check = 1)
 
@@ -64,7 +64,7 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		fuel_objs.Cut()
 
 	if(!fire_tiles.len)
-		SSair.active_fire_zones.Remove(src)
+		SSzas.active_fire_zones.Remove(src)
 
 /zone/proc/remove_liquidfuel(var/used_liquid_fuel, var/remove_fire=0)
 	if(!fuel_objs.len)
@@ -105,7 +105,7 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		return 1
 
 	fire = new(src, fl)
-	SSair.active_fire_zones |= zone
+	SSzas.active_fire_zones |= zone
 
 	var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in src
 	zone.fire_tiles |= src
@@ -158,7 +158,7 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.volume)
 
 	//spread
-	for(var/direction in GLOB.cardinal)
+	for(var/direction in GLOB.cardinals)
 		var/turf/simulated/enemy_tile = get_step(my_tile, direction)
 
 		if(istype(enemy_tile))
@@ -179,7 +179,7 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 					continue
 
 				//Spread the fire.
-				if(prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && my_tile.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, my_tile, 0,0))
+				if(prob( 50 + 50 * (firelevel/SSzas.settings.fire_firelevel_multiplier) ) && my_tile.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, my_tile, 0,0))
 					enemy_tile.create_fire(firelevel)
 
 			else
@@ -195,17 +195,17 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		qdel(src)
 		return
 
-	set_dir(pick(GLOB.cardinal))
+	setDir(pick(GLOB.cardinal))
 
 	var/datum/gas_mixture/air_contents = loc.return_air()
 	color = fire_color(air_contents.temperature)
 	set_light(0.5, 1, 3, l_color = color)
 
 	firelevel = fl
-	SSair.active_hotspots.Add(src)
+	SSzas.active_hotspots.Add(src)
 
 /obj/fire/proc/fire_color(var/env_temperature)
-	var/temperature = max(4000*sqrt(firelevel/vsc.fire_firelevel_multiplier), env_temperature)
+	var/temperature = max(4000*sqrt(firelevel/SSzas.settings.fire_firelevel_multiplier), env_temperature)
 	return heat2color(temperature)
 
 /obj/fire/Destroy()
@@ -213,7 +213,7 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 	if (istype(T))
 		set_light(0)
 		T.fire = null
-	SSair.active_hotspots.Remove(src)
+	SSzas.active_hotspots.Remove(src)
 	. = ..()
 
 /turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
@@ -238,9 +238,9 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 
 		//*** Get the fuel and oxidizer amounts
 		for(var/g in gas)
-			if(gas_data.flags[g] & XGM_GAS_FUEL)
+			if(SSzas.gas_data.flags[g] & XGM_GAS_FUEL)
 				gas_fuel += gas[g]
-			if(gas_data.flags[g] & XGM_GAS_OXIDIZER)
+			if(SSzas.gas_data.flags[g] & XGM_GAS_OXIDIZER)
 				total_oxidizers += gas[g]
 		gas_fuel *= group_multiplier
 		total_oxidizers *= group_multiplier
@@ -266,12 +266,12 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		var/reaction_limit = min(total_oxidizers*(FIRE_REACTION_FUEL_AMOUNT/FIRE_REACTION_OXIDIZER_AMOUNT), total_fuel) //stoichiometric limit
 
 		//vapour fuels are extremely volatile! The reaction progress is a percentage of the total fuel (similar to old zburn).)
-		var/gas_firelevel = calculate_firelevel(gas_fuel, total_oxidizers, reaction_limit, volume*group_multiplier) / vsc.fire_firelevel_multiplier
+		var/gas_firelevel = calculate_firelevel(gas_fuel, total_oxidizers, reaction_limit, volume*group_multiplier) / SSzas.settings.fire_firelevel_multiplier
 		var/min_burn = 0.30*volume*group_multiplier/CELL_VOLUME //in moles - so that fires with very small gas concentrations burn out fast
 		var/gas_reaction_progress = min(max(min_burn, gas_firelevel*gas_fuel)*FIRE_GAS_BURNRATE_MULT, gas_fuel)
 
 		//liquid fuels are not as volatile, and the reaction progress depends on the size of the area that is burning. Limit the burn rate to a certain amount per area.
-		var/liquid_firelevel = calculate_firelevel(liquid_fuel, total_oxidizers, reaction_limit, 0) / vsc.fire_firelevel_multiplier
+		var/liquid_firelevel = calculate_firelevel(liquid_fuel, total_oxidizers, reaction_limit, 0) / SSzas.settings.fire_firelevel_multiplier
 		var/liquid_reaction_progress = min((liquid_firelevel*0.2 + 0.05)*fuel_area*FIRE_LIQUID_BURNRATE_MULT, liquid_fuel)
 
 		var/firelevel = (gas_fuel*gas_firelevel + liquid_fuel*liquid_firelevel)/total_fuel
@@ -306,13 +306,13 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		remove_by_flag(XGM_GAS_OXIDIZER, used_oxidizers)
 		var/datum/gas_mixture/burned_fuel = remove_by_flag(XGM_GAS_FUEL, used_gas_fuel)
 		for(var/g in burned_fuel.gas)
-			adjust_gas(gas_data.burn_product[g], burned_fuel.gas[g])
+			adjust_gas(SSzas.gas_data.burn_product[g], burned_fuel.gas[g])
 
 		if(zone)
 			zone.remove_liquidfuel(used_liquid_fuel, !check_combustability())
 
 		//calculate the energy produced by the reaction and then set the new temperature of the mix
-		temperature = (starting_energy + vsc.fire_fuel_energy_release * (used_gas_fuel + used_liquid_fuel)) / heat_capacity()
+		temperature = (starting_energy + SSzas.settings.fire_fuel_energy_release * (used_gas_fuel + used_liquid_fuel)) / heat_capacity()
 		update_values()
 
 		#ifdef FIREDBG
@@ -325,10 +325,10 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 
 		return firelevel
 
-datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
+/datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 	. = 0
 	for(var/g in gas)
-		if(gas_data.flags[g] & XGM_GAS_OXIDIZER && gas[g] >= 0.1)
+		if(SSzas.gas_data.flags[g] & XGM_GAS_OXIDIZER && gas[g] >= 0.1)
 			. = 1
 			break
 
@@ -340,14 +340,14 @@ datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 
 	. = 0
 	for(var/g in gas)
-		if(gas_data.flags[g] & XGM_GAS_FUEL && gas[g] >= 0.1)
+		if(SSzas.gas_data.flags[g] & XGM_GAS_FUEL && gas[g] >= 0.1)
 			. = 1
 			break
 
 /datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid=null)
 	. = 0
 	for(var/g in gas)
-		if(gas_data.flags[g] & XGM_GAS_OXIDIZER && QUANTIZE(gas[g] * vsc.fire_consuption_rate) >= 0.1)
+		if(SSzas.gas_data.flags[g] & XGM_GAS_OXIDIZER && QUANTIZE(gas[g] * SSzas.settings.fire_consuption_rate) >= 0.1)
 			. = 1
 			break
 
@@ -359,11 +359,11 @@ datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 
 	. = 0
 	for(var/g in gas)
-		if(gas_data.flags[g] & XGM_GAS_FUEL && QUANTIZE(gas[g] * vsc.fire_consuption_rate) >= 0.1)
+		if(SSzas.gas_data.flags[g] & XGM_GAS_FUEL && QUANTIZE(gas[g] * SSzas.settings.fire_consuption_rate) >= 0.1)
 			. = 1
 			break
 
-//returns a value between 0 and vsc.fire_firelevel_multiplier
+//returns a value between 0 and SSzas.settings.fire_firelevel_multiplier
 /datum/gas_mixture/proc/calculate_firelevel(total_fuel, total_oxidizers, reaction_limit, gas_volume)
 	//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
 	var/firelevel = 0
@@ -388,13 +388,13 @@ datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 		#endif
 
 		//toss everything together -- should produce a value between 0 and fire_firelevel_multiplier
-		firelevel = vsc.fire_firelevel_multiplier * mix_multiplier * damping_multiplier
+		firelevel = SSzas.settings.fire_firelevel_multiplier * mix_multiplier * damping_multiplier
 
 	return max( 0, firelevel)
 
 
 /mob/living/proc/FireBurn(var/firelevel, var/last_temperature, var/pressure)
-	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
+	var/mx = 5 * firelevel/SSzas.settings.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
 	apply_damage(2.5*mx, BURN)
 	return mx
 
@@ -411,33 +411,27 @@ datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 
 	//Get heat transfer coefficients for clothing.
 
-	for(var/obj/item/clothing/C in src)
-		if(l_hand == C || r_hand == C)
-			continue
-
+	for(var/obj/item/clothing/C in get_equipped_items())
 		if( C.max_heat_protection_temperature >= last_temperature )
 			if(C.body_parts_covered & HEAD)
 				head_exposure = 0
-			if(C.body_parts_covered & UPPER_TORSO)
+			if(C.body_parts_covered & CHEST)
 				chest_exposure = 0
-			if(C.body_parts_covered & LOWER_TORSO)
-				groin_exposure = 0
 			if(C.body_parts_covered & LEGS)
 				legs_exposure = 0
 			if(C.body_parts_covered & ARMS)
 				arms_exposure = 0
 	//minimize this for low-pressure environments
-	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
+	var/mx = 5 * firelevel/SSzas.settings.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
 
 	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 
-	apply_damage(0.9*mx*head_exposure,  BURN, BP_HEAD,  used_weapon =  "Fire")
-	apply_damage(2.5*mx*chest_exposure, BURN, BP_CHEST, used_weapon =  "Fire")
-	apply_damage(2.0*mx*groin_exposure, BURN, BP_GROIN, used_weapon =  "Fire")
-	apply_damage(0.6*mx*legs_exposure,  BURN, BP_L_LEG, used_weapon =  "Fire")
-	apply_damage(0.6*mx*legs_exposure,  BURN, BP_R_LEG, used_weapon =  "Fire")
-	apply_damage(0.4*mx*arms_exposure,  BURN, BP_L_ARM, used_weapon =  "Fire")
-	apply_damage(0.4*mx*arms_exposure,  BURN, BP_R_ARM, used_weapon =  "Fire")
+	apply_damage(0.9*mx*head_exposure,  BURN, BODY_ZONE_HEAD,  used_weapon =  "Fire")
+	apply_damage(2.5*mx*chest_exposure, BURN, BODY_ZONE_CHEST, used_weapon =  "Fire")
+	apply_damage(0.6*mx*legs_exposure,  BURN, BODY_ZONE_L_LEG, used_weapon =  "Fire")
+	apply_damage(0.6*mx*legs_exposure,  BURN, BODY_ZONE_R_LEG, used_weapon =  "Fire")
+	apply_damage(0.4*mx*arms_exposure,  BURN, BODY_ZONE_L_ARM, used_weapon =  "Fire")
+	apply_damage(0.4*mx*arms_exposure,  BURN, BODY_ZONE_R_ARM, used_weapon =  "Fire")
 
 	//return a truthy value of whether burning actually happened
 	return mx * (head_exposure + chest_exposure + groin_exposure + legs_exposure + arms_exposure)

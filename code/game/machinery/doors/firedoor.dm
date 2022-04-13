@@ -270,7 +270,7 @@
 	var/turf/checked_turf = source
 	var/result = check_atmos(checked_turf)
 
-	if(result && TURF_SHARES(checked_turf))
+	if(result && Adjacent(checked_turf))
 		issue_turfs |= checked_turf
 		if(!alarm_type)
 			start_activation_process(result)

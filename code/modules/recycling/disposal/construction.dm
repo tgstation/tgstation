@@ -8,7 +8,7 @@
 	icon_state = "conpipe"
 	anchored = FALSE
 	density = FALSE
-	pressure_resistance = 5*ONE_ATMOSPHERE
+	//pressure_resistance = 5*ONE_ATMOSPHERE
 	max_integrity = 200
 	var/obj/pipe_type = /obj/structure/disposalpipe/segment
 	var/pipename

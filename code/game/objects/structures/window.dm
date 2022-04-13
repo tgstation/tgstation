@@ -4,7 +4,7 @@
 	icon_state = "window"
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER //Just above doors
-	pressure_resistance = 4*ONE_ATMOSPHERE
+	//pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
 	flags_1 = ON_BORDER_1
 	max_integrity = 25
@@ -58,7 +58,7 @@
 	if(reinf && anchored)
 		state = RWINDOW_SECURE
 
-	air_update_turf(TRUE, TRUE)
+	//air_update_turf(TRUE, TRUE)
 
 	if(fulltile)
 		setDir()
@@ -248,7 +248,7 @@
 
 /obj/structure/window/set_anchored(anchorvalue)
 	..()
-	air_update_turf(TRUE, anchorvalue)
+	//air_update_turf(TRUE, anchorvalue)
 	update_nearby_icons()
 
 /obj/structure/window/proc/check_state(checked_state)
@@ -313,7 +313,7 @@
 		. += new /obj/item/shard(location)
 
 /obj/structure/window/proc/AfterRotation(mob/user, degrees)
-	air_update_turf(TRUE, FALSE)
+	//air_update_turf(TRUE, FALSE)
 
 /obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
@@ -324,7 +324,7 @@
 
 /obj/structure/window/Destroy()
 	set_density(FALSE)
-	air_update_turf(TRUE, FALSE)
+	//air_update_turf(TRUE, FALSE)
 	update_nearby_icons()
 	return ..()
 

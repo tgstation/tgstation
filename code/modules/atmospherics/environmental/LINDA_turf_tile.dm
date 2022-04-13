@@ -80,14 +80,14 @@
 		return FALSE
 	air.merge(giver)
 	update_visuals()
-	air_update_turf(FALSE, FALSE)
+	//air_update_turf(FALSE, FALSE)
 	return TRUE
 
 /turf/open/remove_air(amount)
 	var/datum/gas_mixture/ours = return_air()
 	var/datum/gas_mixture/removed = ours.remove(amount)
 	update_visuals()
-	air_update_turf(FALSE, FALSE)
+	//air_update_turf(FALSE, FALSE)
 	return removed
 
 /turf/open/proc/copy_air_with_tile(turf/open/target_turf)
@@ -374,7 +374,7 @@
 
 /atom/movable
 	///How much delta pressure is needed for us to move
-	var/pressure_resistance = 10
+	var///pressure_resistance = 10
 	var/last_high_pressure_movement_air_cycle = 0
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)

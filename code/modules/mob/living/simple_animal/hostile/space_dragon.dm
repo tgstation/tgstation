@@ -66,7 +66,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("carp")
-	pressure_resistance = 200
+	//pressure_resistance = 200
 	/// Current time since the the last rift was activated.  If set to -1, does not increment.
 	var/riftTimer = 0
 	/// Maximum amount of time which can pass without a rift before Space Dragon despawns.

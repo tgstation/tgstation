@@ -3,7 +3,7 @@
 	sight = 0
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
-	pressure_resistance = 10
+	//pressure_resistance = 10
 
 	hud_type = /datum/hud/living
 

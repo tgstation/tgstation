@@ -127,8 +127,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
 		add_overlay(GLOB.fullbright_overlay)
 
+	/*
 	if(requires_activation)
 		CALCULATE_ADJACENT_TURFS(src, KILL_EXCITED)
+	*/
 
 	if (light_power && light_range)
 		update_light()
@@ -158,9 +160,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return INITIALIZE_HINT_NORMAL
 
+/*
 /turf/proc/Initalize_Atmos(times_fired)
 	CALCULATE_ADJACENT_TURFS(src, NORMAL_TURF)
-
+*/
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
 	if(!changing_turf)

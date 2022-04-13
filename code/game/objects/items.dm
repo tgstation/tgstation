@@ -86,7 +86,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	///This is used to determine on which slots an item can fit.
 	var/slot_flags = 0
 	pass_flags = PASSTABLE
-	pressure_resistance = 4
+	//pressure_resistance = 4
 	/// This var exists as a weird proxy "owner" ref
 	/// It's used in a few places. Stop using it, and optimially replace all uses please
 	var/obj/item/master = null

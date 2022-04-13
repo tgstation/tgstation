@@ -5,13 +5,13 @@
  * Add this component after gasmixes has been initialized.
  */
 /datum/component/atmos_reaction_recorder
-	/// The list we write append each reaction tick to. 
+	/// The list we write append each reaction tick to.
 	/// This is often a list initialized by something else (passed as a reference under Initialize).
 	var/list/copied_reaction_results
 	/// Signals we have been listening to.
 	var/list/registered_signals
 
-/** 
+/**
  * Verify that parent is indeed an atom, and then register signals.
  * Args:
  * - target_list (list): The list we are writing the captured reaction_results to.
@@ -46,8 +46,7 @@
 /// Fetches reaction_results and updates the list.
 /datum/component/atmos_reaction_recorder/proc/update_data(datum/gas_mixture/recorded_gasmix)
 	SIGNAL_HANDLER
-	for (var/reaction in recorded_gasmix.reaction_results)
-		copied_reaction_results[reaction] += recorded_gasmix.reaction_results[reaction]
+	//copied_reaction_results[reaction] += "UNIMPLIMENTED: ATMOS REACTION RECORDER"
 
 /datum/component/atmos_reaction_recorder/proc/reset_data()
 	SIGNAL_HANDLER

@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 80, ACID = 50)
 	max_integrity = 300
 	integrity_failure = 0.4
-	pressure_resistance = 7 * ONE_ATMOSPHERE
+	//pressure_resistance = 7 * ONE_ATMOSPHERE
 	req_access = list()
 
 	var/icon/canister_overlay_file = 'icons/obj/atmospherics/canisters.dmi'
@@ -594,7 +594,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		excited = TRUE
 
 		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
-			air_update_turf(FALSE, FALSE)
+			//air_update_turf(FALSE, FALSE)
 
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()

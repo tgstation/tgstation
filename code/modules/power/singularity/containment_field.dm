@@ -21,7 +21,7 @@
 
 /obj/machinery/field/containment/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE, TRUE)
+	//air_update_turf(TRUE, TRUE)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -36,7 +36,7 @@
 		field_gen_2.fields -= src
 		field_gen_2 = null
 	can_atmos_pass = ATMOS_PASS_YES
-	air_update_turf(TRUE, FALSE)
+	//air_update_turf(TRUE, FALSE)
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

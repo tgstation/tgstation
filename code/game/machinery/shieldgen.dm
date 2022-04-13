@@ -14,16 +14,16 @@
 /obj/structure/emergency_shield/Initialize(mapload)
 	. = ..()
 	setDir(pick(GLOB.cardinals))
-	air_update_turf(TRUE, TRUE)
+	//air_update_turf(TRUE, TRUE)
 
 /obj/structure/emergency_shield/Destroy()
-	air_update_turf(TRUE, FALSE)
+	//air_update_turf(TRUE, FALSE)
 	. = ..()
 
 /obj/structure/emergency_shield/Move()
 	var/turf/T = loc
-	. = ..()
-	move_update_air(T)
+	/*. = ..()
+	move_update_air(T)*/
 
 /obj/structure/emergency_shield/emp_act(severity)
 	. = ..()
@@ -101,7 +101,7 @@
 */
 /obj/structure/emergency_shield/cult/barrier/proc/Toggle()
 	set_density(!density)
-	air_update_turf(TRUE, !density)
+	//air_update_turf(TRUE, !density)
 	invisibility = initial(invisibility)
 	if(!density)
 		invisibility = INVISIBILITY_OBSERVER
@@ -114,7 +114,7 @@
 	density = TRUE
 	opacity = FALSE
 	anchored = FALSE
-	pressure_resistance = 2*ONE_ATMOSPHERE
+	//pressure_resistance = 2*ONE_ATMOSPHERE
 	req_access = list(ACCESS_ENGINE)
 	max_integrity = 100
 	var/active = FALSE

@@ -45,14 +45,13 @@
 	if(hotspot && istype(T) && T.air)
 		qdel(hotspot)
 		var/datum/gas_mixture/G = T.air
-		if(G.gases[/datum/gas/plasma])
-			var/plas_amt = min(30,G.gases[/datum/gas/plasma][MOLES]) //Absorb some plasma
-			G.gases[/datum/gas/plasma][MOLES] -= plas_amt
+		if(G.get_gas(GAS_PLASMA))
+			var/plas_amt = min(30, G.get_gas(GAS_PLASMA)) //Absorb some plasma
+			G.remove_gas(GAS_PLASMA, plas_amt)
 			absorbed_plasma += plas_amt
 		if(G.temperature > T20C)
 			G.temperature = max(G.temperature/2,T20C)
-		G.garbage_collect()
-		T.air_update_turf(FALSE, FALSE)
+		//T.air_update_turf(FALSE, FALSE)
 
 /obj/effect/particle_effect/foam/firefighting/kill_foam()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -284,16 +283,16 @@
 
 /obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE, TRUE)
+	//air_update_turf(TRUE, TRUE)
 
 /obj/structure/foamedmetal/Destroy()
-	air_update_turf(TRUE, FALSE)
+	//air_update_turf(TRUE, FALSE)
 	. = ..()
 
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
 	. = ..()
-	move_update_air(T)
+	//move_update_air(T)
 
 /obj/structure/foamedmetal/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -365,12 +364,12 @@
 			G.temperature = 293.15
 			for(var/obj/effect/hotspot/H in O)
 				qdel(H)
-			var/list/G_gases = G.gases
+			var/list/G_gases = G.gas
 			for(var/I in G_gases)
-				if(I == /datum/gas/oxygen || I == /datum/gas/nitrogen)
+				if(I == GAS_OXYGEN || I == GAS_NITROGEN)
 					continue
-				G_gases[I][MOLES] = 0
-			G.garbage_collect()
+				G_gases[I] = 0
+			G.update_values()
 		for(var/obj/machinery/atmospherics/components/unary/U in O)
 			if(!U.welded)
 				U.welded = TRUE

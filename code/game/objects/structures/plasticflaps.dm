@@ -35,7 +35,7 @@
 		return TRUE
 	set_anchored(!anchored)
 	update_atmos_behaviour()
-	air_update_turf(TRUE)
+	//air_update_turf(TRUE)
 	to_chat(user, span_notice("You [uraction] the floor."))
 	return TRUE
 
@@ -113,10 +113,10 @@
 
 /obj/structure/plasticflaps/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE, TRUE)
+	//air_update_turf(TRUE, TRUE)
 
 /obj/structure/plasticflaps/Destroy()
 	var/atom/oldloc = loc
 	. = ..()
 	if (oldloc)
-		oldloc.air_update_turf(TRUE, FALSE)
+		oldloc.//air_update_turf(TRUE, FALSE)

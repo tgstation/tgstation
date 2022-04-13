@@ -202,9 +202,9 @@
 	for(var/turf/T in turflist)
 		if(T == previousturf)
 			continue //so we don't burn the tile we be standin on
-		var/list/turfs_sharing_with_prev = previousturf.get_atmos_adjacent_turfs(alldir=1)
+		/*var/list/turfs_sharing_with_prev = previousturf.TryGetNonDenseNeighbour()
 		if(!(T in turfs_sharing_with_prev))
-			break
+			break*/
 		if(igniter)
 			igniter.ignite_turf(src,T)
 		else

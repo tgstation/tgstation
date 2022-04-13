@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(minor_mapping)
 				mouse.forceMove(proposed_turf)
 		else
 			mouse = new /mob/living/simple_animal/hostile/regalrat/controlled(proposed_turf)
-		if(proposed_turf.air.has_gas(/datum/gas/oxygen, 5))
+		if(proposed_turf.air.has_gas(GAS_OXYGEN, 5))
 			num_mice -= 1
 			mouse = null
 

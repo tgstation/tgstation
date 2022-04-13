@@ -24,7 +24,7 @@
 		return
 	//Get environment info
 	var/datum/gas_mixture/environment = location.return_air()
-	var/total_moles = environment.total_moles()
+	var/total_moles = environment.total_moles
 	var/pressure = environment.return_pressure()
 	if(total_moles)
 		//If there's atmos, return pressure

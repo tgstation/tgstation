@@ -44,13 +44,13 @@
 /// The internal temperature in kelvins at which a handheld gas tank begins to take damage.
 #define TANK_MELT_TEMPERATURE 1000000
 /// The internal pressure in kPa at which a handheld gas tank begins to take damage.
-#define TANK_LEAK_PRESSURE (30.*ONE_ATMOSPHERE)
+//#define TANK_LEAK_PRESSURE (30.*ONE_ATMOSPHERE)
 /// The internal pressure in kPa at which a handheld gas tank almost immediately ruptures.
-#define TANK_RUPTURE_PRESSURE (35.*ONE_ATMOSPHERE)
+//#define TANK_RUPTURE_PRESSURE (35.*ONE_ATMOSPHERE)
 /// The internal pressure in kPa at which an gas tank that breaks will cause an explosion.
-#define TANK_FRAGMENT_PRESSURE (40.*ONE_ATMOSPHERE)
+//#define TANK_FRAGMENT_PRESSURE (40.*ONE_ATMOSPHERE)
 /// Range scaling constant for tank explosions. Calibrated so that a TTV assembled using two 70L tanks will hit the maxcap at at least 160atm.
-#define TANK_FRAGMENT_SCALE (84.*ONE_ATMOSPHERE)
+//#define TANK_FRAGMENT_SCALE (84.*ONE_ATMOSPHERE)
 /// Denotes that our tank is overpressurized simply from gas merging.
 #define TANK_MERGE_OVERPRESSURE "tank_overpressure"
 // Indices for the reaction_results returned by explosion_information()

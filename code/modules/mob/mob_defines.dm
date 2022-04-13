@@ -13,7 +13,7 @@
 	plane = GAME_PLANE_FOV_HIDDEN
 	animate_movement = SLIDE_STEPS
 	hud_possible = list(ANTAG_HUD)
-	pressure_resistance = 8
+	//pressure_resistance = 8
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	throwforce = 10
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC

@@ -28,7 +28,7 @@
 	var/datum/gas_mixture/internal = airs[1]
 
 	if(internal.equalize(external))
-		air_update_turf(FALSE, FALSE)
+		//air_update_turf(FALSE, FALSE)
 		update_parents()
 
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2

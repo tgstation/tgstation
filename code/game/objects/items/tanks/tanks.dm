@@ -17,7 +17,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	worn_icon = 'icons/mob/clothing/back.dmi' //since these can also get thrown into suit storage slots. if something goes on the belt, set this to null.
 	hitsound = 'sound/weapons/smash.ogg'
-	pressure_resistance = ONE_ATMOSPHERE * 5
+	//pressure_resistance = ONE_ATMOSPHERE * 5
 	force = 5
 	throwforce = 10
 	throw_speed = 1
@@ -89,7 +89,7 @@
 
 	AddComponent(/datum/component/atmos_reaction_recorder, reset_criteria = list(COMSIG_GASMIX_MERGING = air_contents, COMSIG_GASMIX_REMOVING = air_contents), target_list = reaction_info)
 
-	// This is separate from the reaction recorder. 
+	// This is separate from the reaction recorder.
 	// In this case we are only listening to determine if the tank is overpressurized but not destroyed.
 	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, .proc/merging_information)
 

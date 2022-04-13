@@ -54,7 +54,7 @@ Class Procs:
 	var/last_air_temperature = TCMB
 
 /zone/New()
-	SSair.add_zone(src)
+	SSzas.add_zone(src)
 	air.temperature = TCMB
 	air.group_multiplier = 1
 	air.volume = CELL_VOLUME
@@ -63,7 +63,7 @@ Class Procs:
 #ifdef ZASDBG
 	ASSERT(!invalid)
 	ASSERT(istype(T))
-	ASSERT(!SSair.has_valid_zone(T))
+	ASSERT(!SSzas.has_valid_zone(T))
 #endif
 
 	var/datum/gas_mixture/turf_air = T.return_air()
@@ -73,7 +73,7 @@ Class Procs:
 	if(T.fire)
 		var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in T
 		fire_tiles.Add(T)
-		SSair.active_fire_zones |= src
+		SSzas.active_fire_zones |= src
 		if(fuel) fuel_objs += fuel
 	T.update_graphic(air.graphic)
 
@@ -116,11 +116,11 @@ Class Procs:
 		if(E.contains_zone(into))
 			continue //don't need to rebuild this edge
 		for(var/turf/T in E.connecting_turfs)
-			SSair.mark_for_update(T)
+			SSzas.mark_for_update(T)
 
 /zone/proc/c_invalidate()
 	invalid = 1
-	SSair.remove_zone(src)
+	SSzas.remove_zone(src)
 	#ifdef ZASDBG
 	for(var/turf/simulated/T in contents)
 		T.dbg(invalid_zone)
@@ -133,7 +133,7 @@ Class Procs:
 		T.update_graphic(graphic_remove = air.graphic) //we need to remove the overlays so they're not doubled when the zone is rebuilt
 		//T.dbg(invalid_zone)
 		T.needs_air_update = 0 //Reset the marker so that it will be added to the list.
-		SSair.mark_for_update(T)
+		SSzas.mark_for_update(T)
 
 /zone/proc/add_tile_air(datum/gas_mixture/tile_air)
 	//air.volume += CELL_VOLUME
@@ -146,10 +146,10 @@ Class Procs:
 /zone/proc/tick()
 
 	// Update fires.
-	if(air.temperature >= PHORON_FLASHPOINT && !(src in SSair.active_fire_zones) && air.check_combustability() && contents.len)
+	if(air.temperature >= PHORON_FLASHPOINT && !(src in SSzas.active_fire_zones) && air.check_combustability() && contents.len)
 		var/turf/T = pick(contents)
 		if(istype(T))
-			T.create_fire(vsc.fire_firelevel_multiplier)
+			T.create_fire(SSzas.settings.fire_firelevel_multiplier)
 
 	// Update gas overlays.
 	if(air.check_tile_graphic(graphic_add, graphic_remove))
@@ -165,8 +165,8 @@ Class Procs:
 
 	// Handle condensation from the air.
 	for(var/g in air.gas)
-		var/product = gas_data.condensation_products[g]
-		if(product && air.temperature <= gas_data.condensation_points[g])
+		var/product = SSzas.gas_data.condensation_products[g]
+		if(product && air.temperature <= SSzas.gas_data.condensation_points[g])
 			var/condensation_area = air.group_multiplier
 			while(condensation_area > 0)
 				condensation_area--
@@ -190,7 +190,7 @@ Class Procs:
 /zone/proc/dbg_data(mob/M)
 	to_chat(M, name)
 	for(var/g in air.gas)
-		to_chat(M, "[gas_data.name[g]]: [air.gas[g]]")
+		to_chat(M, "[SSzas.gas_data.name[g]]: [air.gas[g]]")
 	to_chat(M, "P: [air.return_pressure()] kPa V: [air.volume]L T: [air.temperature]°K ([air.temperature - T0C]°C)")
 	to_chat(M, "O2 per N2: [(air.gas[GAS_NITROGEN] ? air.gas[GAS_OXYGEN]/air.gas[GAS_NITROGEN] : "N/A")] Moles: [air.total_moles]")
 	to_chat(M, "Simulated: [contents.len] ([air.group_multiplier])")

@@ -26,7 +26,7 @@
 	maxbodytemp = INFINITY
 	healable = FALSE
 	movement_type = GROUND
-	pressure_resistance = 100
+	//pressure_resistance = 100
 	del_on_death = TRUE
 	deathmessage = "implodes into itself."
 	loot = list(/obj/effect/gibspawner/human)

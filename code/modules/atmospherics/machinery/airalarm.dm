@@ -216,10 +216,10 @@
 			continue
 		cur_tlv = TLV[gas_id]
 		data["environment_data"] += list(list(
-								"name" = environment.gases[gas_id][GAS_META][META_GAS_NAME],
-								"value" = environment.gases[gas_id][MOLES] / total_moles * 100,
+								"name" = environment.gas[gas_id],
+								"value" = environment.get_gas(gas_id) / total_moles * 100,
 								"unit" = "%",
-								"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id][MOLES] * partial_pressure)
+								"danger_level" = cur_tlv.get_danger_level(environment.get_gas(gas_id)* partial_pressure)
 		))
 
 	if(!locked || user.has_unlimited_silicon_privilege)
@@ -450,26 +450,7 @@
 			for(var/device_id in my_area.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(
-						/datum/gas/carbon_dioxide,
-						/datum/gas/miasma,
-						/datum/gas/plasma,
-						/datum/gas/water_vapor,
-						/datum/gas/hypernoblium,
-						/datum/gas/nitrous_oxide,
-						/datum/gas/nitrium,
-						/datum/gas/tritium,
-						/datum/gas/bz,
-						/datum/gas/pluoxium,
-						/datum/gas/freon,
-						/datum/gas/hydrogen,
-						/datum/gas/healium,
-						/datum/gas/proto_nitrate,
-						/datum/gas/zauker,
-						/datum/gas/helium,
-						/datum/gas/antinoblium,
-						/datum/gas/halon,
-					),
+					"set_filters" = ALL_GASES,
 					"scrubbing" = 1,
 					"widenet" = 1
 				), signal_source)

@@ -22,12 +22,12 @@
 	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	SSair.start_processing_machine(src)
+	SSzas.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/Destroy()
 	disconnect()
 	air_contents = null
-	SSair.stop_processing_machine(src)
+	SSzas.stop_processing_machine(src)
 
 	return ..()
 
@@ -50,7 +50,7 @@
 	excited = FALSE
 
 /obj/machinery/portable_atmospherics/return_air()
-	SSair.start_processing_machine(src)
+	SSzas.start_processing_machine(src)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/return_analyzable_air()
@@ -80,7 +80,7 @@
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
 
-	SSair.start_processing_machine(src)
+	SSzas.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -101,7 +101,7 @@
 	pixel_x = 0
 	pixel_y = 0
 
-	SSair.start_processing_machine(src)
+	SSzas.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -139,7 +139,7 @@
 		holding = new_tank
 		RegisterSignal(holding, COMSIG_PARENT_QDELETING, .proc/unregister_holding)
 
-	SSair.start_processing_machine(src)
+	SSzas.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -193,10 +193,10 @@
 	add_fingerprint(user)
 	return ..()
 
-/// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change. 
+/// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change.
 /// This checks for that case and removes our reference to it.
 /obj/machinery/portable_atmospherics/proc/unregister_holding()
 	SIGNAL_HANDLER
-	
+
 	UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
 	holding = null

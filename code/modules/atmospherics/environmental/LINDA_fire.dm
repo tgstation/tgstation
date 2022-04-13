@@ -104,7 +104,7 @@
 		temperature = starting_temperature
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
-	air_update_turf(FALSE, FALSE)
+	//air_update_turf(FALSE, FALSE)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)

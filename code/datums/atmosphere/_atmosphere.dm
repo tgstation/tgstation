@@ -1,5 +1,5 @@
 /datum/atmosphere
-	var/gas_string
+	//var/gas_string
 	var/id
 
 	var/list/base_gases // A list of gases to always have
@@ -14,8 +14,9 @@
 	var/maximum_temp
 
 /datum/atmosphere/New()
-	generate_gas_string()
+	//generate_gas_string()
 
+/*
 /datum/atmosphere/proc/generate_gas_string()
 	var/list/spicy_gas = restricted_gases.Copy()
 	var/target_pressure = rand(minimum_pressure, maximum_pressure)
@@ -65,3 +66,4 @@
 		gas_string_builder += "[gas[GAS_META][META_GAS_ID]]=[gas[MOLES]]"
 	gas_string_builder += "TEMP=[gasmix.temperature]"
 	gas_string = gas_string_builder.Join(";")
+*/

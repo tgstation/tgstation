@@ -1,6 +1,6 @@
 GLOBAL_DATUM_INIT(contamination_overlay, /image, image('icons/effects/contamination.dmi'))
 
-/pl_control
+/datum/pl_control
 	var/plasma_dmg = 3
 	var/plasma_dmg_name = "Plasma Damage Amount"
 	var/plasma_dmg_desc = "Self Descriptive"
@@ -91,7 +91,7 @@ GLOBAL_DATUM_INIT(contamination_overlay, /image, image('icons/effects/contaminat
 	//Burn skin if exposed.
 	if(SSzas.settings.plc.skin_burns)
 		if(!pl_head_protected() || !pl_suit_protected())
-			burn_skin(0.75)
+			//burn_skin(0.75)
 			if(prob(20))
 				to_chat(src, "<span class='danger'>Your skin burns!</span>")
 			updatehealth()
@@ -126,7 +126,7 @@ GLOBAL_DATUM_INIT(contamination_overlay, /image, image('icons/effects/contaminat
 	//Checks if the head is adequately sealed.
 	if(head)
 		if(SSzas.settings.plc.plasmaguard_only)
-			if(head.item_flags & PLASMAGUARD)
+			if(head.obj_flags & PLASMAGUARD)
 				return TRUE
 		else if(is_eyes_covered())
 			return TRUE

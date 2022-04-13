@@ -8,11 +8,11 @@
 	return (((a + epsilon) > b) && ((a - epsilon) < b))
 
 /** A simple rudimentary gasmix to information list converter. Can be used for UIs.
- * Args: 
+ * Args:
  * - gasmix: [/datum/gas_mixture]
  * - name: String used to name the list, optional.
  * Returns: A list parsed_gasmixes with the following structure:
- * - parsed_gasmixes    Value: Assoc List     Desc: The thing we return	
+ * - parsed_gasmixes    Value: Assoc List     Desc: The thing we return
  * -- Key: name         Value: String         Desc: Gasmix Name
  * -- Key: temperature  Value: Number         Desc: Temperature in kelvins
  * -- Key: volume       Value: Number         Desc: Volume in liters
@@ -41,18 +41,18 @@
 	)
 	if(!gasmix)
 		return
-	for(var/gas_path in gasmix.gases)
+	for(var/gas_path in gasmix.gas)
 		.["gases"] += list(list(
-			gasmix.gases[gas_path][GAS_META][META_GAS_ID], 
-			gasmix.gases[gas_path][GAS_META][META_GAS_NAME], 
-			gasmix.gases[gas_path][MOLES],
+			"[gas_path]",
+			"[gas_path]",
+			gasmix.get_gas(gas_path),
 		))
-	for(var/datum/gas_reaction/reaction_result as anything in gasmix.reaction_results)
-		.["reactions"] += list(list(
-			initial(reaction_result.id),
-			initial(reaction_result.name),
-			gasmix.reaction_results[reaction_result],
-		))
+	//.for(var/datum/gas_reaction/reaction_result as anything in gasmix.reaction_results)
+	.["reactions"] += list(list(
+		"UNIMPLIMENTED",
+		"UNIMPLIMENTED",
+		"UNIMPLIMENTED",
+	))
 	.["total_moles"] = gasmix.total_moles()
 	.["temperature"] = gasmix.temperature
 	.["volume"] = gasmix.volume
@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 
 /// Automatically populates gas_handbook and reaction_handbook. They are formatted lists containing information regarding gases and reactions they participate in.
 /// Structure can be found in TS form at AtmosHandbook.tsx
-/proc/atmos_handbooks_init()
+/*/proc/atmos_handbooks_init()
 	if(length(GLOB.reaction_handbook))
 		GLOB.reaction_handbook = list()
 	if(length(GLOB.gas_handbook))
@@ -84,8 +84,8 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 		gas_info["specific_heat"] = meta_information[META_GAS_SPECIFIC_HEAT]
 		gas_info["reactions"] = list()
 		momentary_gas_list[gas_path] = gas_info
-	
-	for (var/datum/gas_reaction/reaction_path as anything in subtypesof(/datum/gas_reaction)) 
+
+	for (var/datum/gas_reaction/reaction_path as anything in subtypesof(/datum/gas_reaction))
 		var/datum/gas_reaction/reaction = new reaction_path
 		var/list/reaction_info = list()
 		reaction_info["id"] = reaction.id
@@ -117,7 +117,7 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 			reaction_info["factors"] += list(factor_info)
 		GLOB.reaction_handbook += list(reaction_info)
 		qdel(reaction)
-	
+
 	for (var/gas_info_index in momentary_gas_list)
 		GLOB.gas_handbook += list(momentary_gas_list[gas_info_index])
 
@@ -125,3 +125,4 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 /// For UIs, simply do data += return_atmos_handbooks() to use.
 /proc/return_atmos_handbooks()
 	return list("gasInfo" = GLOB.gas_handbook, "reactionInfo" = GLOB.reaction_handbook)
+*/

@@ -74,8 +74,8 @@
 			SSzas.gas_data.condensation_points[gas.id] = gas.condensation_point
 			SSzas.gas_data.condensation_products[gas.id] = gas.condensation_product
 
-		gas_data.breathed_product[gas.id] = gas.breathed_product
-		gas_data.hidden_from_codex[gas.id] = gas.hidden_from_codex
+		SSzas.gas_data.breathed_product[gas.id] = gas.breathed_product
+		SSzas.gas_data.hidden_from_codex[gas.id] = gas.hidden_from_codex
 
 	return 1
 
@@ -85,7 +85,7 @@
 	icon = 'icons/effects/tile_effects.dmi'
 	icon_state = "generic"
 	layer = FIRE_LAYER
-	appearance_flags = DEFAULT_APPEARANCE_FLAGS | RESET_COLOR
+	appearance_flags = RESET_COLOR|PIXEL_SCALE|TILE_BOUND
 	mouse_opacity = 0
 	var/gas_id
 

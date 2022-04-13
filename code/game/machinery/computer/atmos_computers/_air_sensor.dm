@@ -16,13 +16,13 @@
 
 /obj/machinery/air_sensor/Initialize(mapload)
 	id_tag = chamber_id + "_sensor"
-	SSair.start_processing_machine(src)
+	SSzas.start_processing_machine(src)
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 	return ..()
 
 /obj/machinery/air_sensor/Destroy()
 	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
-	SSair.stop_processing_machine(src)
+	SSzas.stop_processing_machine(src)
 	SSradio.remove_object(src, frequency)
 	return ..()
 

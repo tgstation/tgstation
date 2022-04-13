@@ -16,5 +16,5 @@ var/image/mark = image('icons/Testing/Zone.dmi', icon_state = "mark")
 	overlays += img
 	dbg_img = img
 
-proc/soft_assert(thing,fail)
+/proc/soft_assert(thing,fail)
 	if(!thing) message_admins(fail)

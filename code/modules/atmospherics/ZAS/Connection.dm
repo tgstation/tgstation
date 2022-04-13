@@ -5,7 +5,7 @@
 /*
 
 Overview:
-	Connections are made between turfs by SSair.connect(). They represent a single point where two zones converge.
+	Connections are made between turfs by SSzas.connect(). They represent a single point where two zones converge.
 
 Class Vars:
 	A - Always a simulated turf.
@@ -60,19 +60,19 @@ Class Procs:
 
 /connection/New(turf/simulated/A, turf/simulated/B)
 	#ifdef ZASDBG
-	ASSERT(SSair.has_valid_zone(A))
-	//ASSERT(SSair.has_valid_zone(B))
+	ASSERT(SSzas.has_valid_zone(A))
+	//ASSERT(SSzas.has_valid_zone(B))
 	#endif
 	src.A = A
 	src.B = B
 	zoneA = A.zone
 	if(!istype(B))
 		mark_space()
-		edge = SSair.get_edge(A.zone,B)
+		edge = SSzas.get_edge(A.zone,B)
 		edge.add_connection(src)
 	else
 		zoneB = B.zone
-		edge = SSair.get_edge(A.zone,B.zone)
+		edge = SSzas.get_edge(A.zone,B.zone)
 		edge.add_connection(src)
 
 /connection/proc/mark_direct()
@@ -108,7 +108,7 @@ Class Procs:
 		erase()
 		return
 
-	var/block_status = SSair.air_blocked(A,B)
+	var/block_status = SSzas.air_blocked(A,B)
 	if(block_status & AIR_BLOCKED)
 //		log_debug("Blocked connection.")
 		erase()
@@ -133,7 +133,7 @@ Class Procs:
 				return
 			else
 				edge.remove_connection(src)
-				edge = SSair.get_edge(A.zone, B)
+				edge = SSzas.get_edge(A.zone, B)
 				edge.add_connection(src)
 				zoneA = A.zone
 
@@ -155,7 +155,7 @@ Class Procs:
 //		log_debug("Zones changed, \...")
 		if(A.zone && B.zone)
 			edge.remove_connection(src)
-			edge = SSair.get_edge(A.zone, B.zone)
+			edge = SSzas.get_edge(A.zone, B.zone)
 			edge.add_connection(src)
 			zoneA = A.zone
 			zoneB = B.zone

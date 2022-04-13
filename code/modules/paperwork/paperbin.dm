@@ -12,7 +12,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
-	pressure_resistance = 8
+	//pressure_resistance = 8
 	var/papertype = /obj/item/paper
 	var/total_paper = 30
 	var/list/papers = list()

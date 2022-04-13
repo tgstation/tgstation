@@ -39,7 +39,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("carp")
-	pressure_resistance = 200
+	//pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
 	/// If the carp uses random coloring
 	var/random_color = TRUE

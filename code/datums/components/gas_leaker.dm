@@ -31,7 +31,7 @@
 	src.leak_rate = leak_rate
 
 /datum/component/gas_leaker/Destroy(force, silent)
-	SSair.stop_processing_machine(src)
+	SSzas.stop_processing_machine(src)
 	return ..()
 
 /datum/component/gas_leaker/RegisterWithParent()
@@ -56,7 +56,7 @@
 	SIGNAL_HANDLER
 	// Hello fellow atmospherics machines, I too am definitely an atmos machine like you!
 	// This component needs to tick at the same rate as the atmos system
-	SSair.start_processing_machine(src)
+	SSzas.start_processing_machine(src)
 
 /datum/component/gas_leaker/proc/process_obj(obj/master, list/airs=list())
 	airs += master.return_air()
@@ -78,9 +78,7 @@
 	var/turf/location = get_turf(master)
 	var/true_rate = (1 - (current_integrity / master.max_integrity)) * leak_rate
 	for(var/datum/gas_mixture/mix as anything in airs)
-		var/pressure = mix.return_pressure()
-		if(mix.release_gas_to(location.return_air(), pressure, true_rate))
-			location.air_update_turf(FALSE, FALSE)
+		mix.mingle_with_turf(get_turf(parent), true_rate)//Not sure this is the best way to do this buuuuuut, ZASSED!
 
 #undef PROCESS_OBJ
 #undef PROCESS_MACHINE

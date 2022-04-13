@@ -129,3 +129,8 @@
 
 /datum/movespeed_modifier/auto_wash
 	multiplicative_slowdown = 3
+
+/datum/movespeed_modifier/atmos_pressure
+	multiplicative_slowdown = 3
+	id = MOVESPEED_ID_MOB_ATMOS_AFFLICTION
+	variable = TRUE

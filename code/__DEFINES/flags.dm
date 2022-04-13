@@ -58,6 +58,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IS_PLAYER_COLORABLE_1 (1<<21)
 /// Whether or not this atom has contextual screentips when hovered OVER
 #define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<22)
+///Plasma Contamination
+#define CONTAMINATED_1 (1<<23)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name

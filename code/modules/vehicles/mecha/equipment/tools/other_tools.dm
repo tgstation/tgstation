@@ -447,7 +447,7 @@
 	if(!chassis || !chassis.internal_tank)
 		return FALSE
 	var/datum/gas_mixture/our_mix = chassis.internal_tank.return_air()
-	var/moles = our_mix.total_moles()
+	var/moles = our_mix.total_moles
 	if(moles < move_cost)
 		our_mix.remove(moles)
 		return FALSE

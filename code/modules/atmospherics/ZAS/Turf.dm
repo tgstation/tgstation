@@ -1,8 +1,12 @@
-/turf/simulated/var/zone/zone
-/turf/simulated/var/open_directions
+/turf/simulated
+	var/zone/zone
+	var/open_directions
 
-/turf/var/needs_air_update = 0
-/turf/var/datum/gas_mixture/air
+/turf
+	var/needs_air_update = 0
+	var/datum/gas_mixture/air
+	var/list/initial_gas
+	var/heat_capacity = 1
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
@@ -43,7 +47,7 @@
 
 			var/turf/simulated/sim = unsim
 			if(TURF_HAS_VALID_ZONE(sim))
-				SSair.connect(sim, src)
+				SSzas.connect(sim, src)
 
 // Helper for can_safely_remove_from_zone().
 #define GET_ZONE_NEIGHBOURS(T, ret) \
@@ -199,7 +203,7 @@
 					if(verbose) log_debug("Connecting to [sim.zone]")
 					#endif
 
-					SSair.connect(src, sim)
+					SSzas.connect(src, sim)
 
 
 			#ifdef ZASDBG
@@ -227,7 +231,7 @@
 	//At this point, a zone should have happened. If it hasn't, don't add more checks, fix the bug.
 
 	for(var/turf/T in postponed)
-		SSair.connect(src, T)
+		SSzas.connect(src, T)
 
 /turf/proc/post_update_air_properties()
 	if(connections) connections.update_all()
@@ -270,7 +274,7 @@
 /turf/simulated/return_air()
 	if(zone)
 		if(!zone.invalid)
-			SSair.mark_zone_update(zone)
+			SSzas.mark_zone_update(zone)
 			return zone.air
 		else
 			if(!air)
@@ -293,3 +297,27 @@
 	if(!air) air = new/datum/gas_mixture
 	air.copy_from(zone.air)
 	air.group_multiplier = 1
+
+/turf/simulated/atmos_spawn_air(gas_id, amount, initial_temperature)
+	var/datum/gas_mixture/new_gas = new
+	var/datum/gas_mixture/existing_gas = return_air()
+
+	new_gas.adjust_gas_temp(gas_id, amount, initial_temperature)
+	existing_gas.merge(new_gas)
+
+/proc/turf_contains_dense_objects(var/turf/T)
+	return T.contains_dense_objects()
+
+/turf/proc/contains_dense_objects()
+	if(density)
+		return 1
+	for(var/atom/movable/A as anything in src)
+		if(A.density && !(A.atom_flags & ON_BORDER_1))
+			return 1
+	return 0
+
+/turf/proc/TryGetNonDenseNeighbour()
+  for(var/d in GLOB.cardinals)
+    var/turf/T = get_step(src, d)
+    if (T && !turf_contains_dense_objects(T))
+      return T

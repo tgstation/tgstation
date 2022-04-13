@@ -11,3 +11,4 @@
 
 #define MOVESPEED_ID_MOB_GRAB_STATE "mob_grab_state"
 #define MOVESPEED_ID_MOB_WALK_RUN "mob_walk_run"
+#define MOVESPEED_ID_MOB_ATMOS_AFFLICTION "mob_atmos_pressured"

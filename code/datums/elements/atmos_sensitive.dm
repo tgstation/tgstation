@@ -24,7 +24,7 @@
 	us.RemoveElement(/datum/element/connect_loc, pass_on)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
 		us.atmos_end()
-		SSair.atom_process -= us
+		SSzas.atom_process -= us
 		us.flags_1 &= ~ATMOS_IS_PROCESSING_1
 	return ..()
 
@@ -40,11 +40,11 @@
 	if(should_atmos_process(air, exposed_temperature))
 		if(flags_1 & ATMOS_IS_PROCESSING_1)
 			return
-		SSair.atom_process += src
+		SSzas.atom_process += src
 		flags_1 |= ATMOS_IS_PROCESSING_1
 	else if(flags_1 & ATMOS_IS_PROCESSING_1)
 		atmos_end()
-		SSair.atom_process -= src
+		SSzas.atom_process -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 
 /atom/proc/process_exposure()
@@ -52,12 +52,12 @@
 	if(!istype(loc, /turf/open))
 		//If you end up in a locker or a wall reconsider your life decisions
 		atmos_end()
-		SSair.atom_process -= src
+		SSzas.atom_process -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
 	if(!should_atmos_process(spot.air, spot.air.temperature)) //Things can change without a tile becoming active
 		atmos_end()
-		SSair.atom_process -= src
+		SSzas.atom_process -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
 	atmos_expose(spot.air, spot.air.temperature)
@@ -65,7 +65,7 @@
 /turf/open/process_exposure()
 	if(!should_atmos_process(air, air.temperature))
 		atmos_end()
-		SSair.atom_process -= src
+		SSzas.atom_process -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
 	atmos_expose(air, air.temperature)

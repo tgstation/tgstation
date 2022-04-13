@@ -101,7 +101,7 @@
 		ui.open()
 
 /obj/item/analyzer/ui_static_data(mob/user)
-	return return_atmos_handbooks()
+	return //return_atmos_handbooks()
 
 /obj/item/analyzer/ui_data(mob/user)
 	LAZYINITLIST(last_gasmix_data)
@@ -125,7 +125,7 @@
 
 /**
  * Outputs a message to the user describing the target's gasmixes.
- * 
+ *
  * Gets called by analyzer_act, which in turn is called by tool_act.
  * Also used in other chat-based gas scans.
  */
@@ -133,7 +133,7 @@
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
-	
+
 	var/icon = target
 	var/message = list()
 	if(!silent && isliving(user))
@@ -157,17 +157,17 @@
 
 		if(total_moles > 0)
 			message += span_notice("Moles: [round(total_moles, 0.01)] mol")
-				
-			var/list/cached_gases = air.gases
+
+			var/list/cached_gases = air.gas
 			for(var/id in cached_gases)
-				var/gas_concentration = cached_gases[id][MOLES]/total_moles
-				message += span_notice("[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(cached_gases[id][MOLES], 0.01)] mol ([round(gas_concentration*100, 0.01)] %)")
+				var/gas_concentration = air.get_total_moles(gas_id)/total_moles
+				message += span_notice("[id]: [round(air.get_gas(id), 0.01)] mol ([round(gas_concentration*100, 0.01)] %)")
 			message += span_notice("Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)")
 			message += span_notice("Volume: [volume] L")
 			message += span_notice("Pressure: [round(pressure, 0.01)] kPa")
 		else
 			message += airs.len > 1 ? span_notice("This node is empty!") : span_notice("[target] is empty!")
-		
+
 		gasmix_data += list(gas_mixture_parser(air, mix_name))
 
 	if(istype(tool))

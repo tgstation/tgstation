@@ -51,7 +51,7 @@
 			removed.gases[/datum/gas/oxygen][MOLES] = max(((device_energy + TCMB) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 			removed.garbage_collect()
 			env.merge(removed)
-			air_update_turf(FALSE, FALSE)
+			//air_update_turf(FALSE, FALSE)
 	else
 		if(takes_damage)
 			//causing damage
@@ -302,7 +302,7 @@
 	if(produces_gas)
 		removed.garbage_collect()
 		env.merge(removed)
-		air_update_turf(FALSE, FALSE)
+		//air_update_turf(FALSE, FALSE)
 
 /obj/machinery/power/supermatter_crystal/proc/psychological_examination()
 	// Defaults to a value less than 1. Over time the psyCoeff goes to 0 if

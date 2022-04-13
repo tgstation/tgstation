@@ -129,7 +129,7 @@ SUBSYSTEM_DEF(time_track)
 			time_dilation_avg_slow,
 			MAPTICK_LAST_INTERNAL_TICK_USAGE,
 			length(SStimer.timer_id_dict),
-			SSair.cost_turfs,
+			/*SSair.cost_turfs,
 			SSair.cost_groups,
 			SSair.cost_highpressure,
 			SSair.cost_hotspots,
@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(time_track)
 			length(SSair.hotspots),
 			length(SSair.networks),
 			length(SSair.high_pressure_delta),
-			length(SSair.active_super_conductivity),
+			length(SSair.active_super_conductivity),*/
 			SSdbcore.all_queries_num,
 			SSdbcore.queries_active_num,
 			SSdbcore.queries_standby_num

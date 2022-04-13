@@ -5,7 +5,7 @@
 	icon_state = "barrel"
 	density = TRUE
 	anchored = FALSE
-	pressure_resistance = 2 * ONE_ATMOSPHERE
+	//pressure_resistance = 2 * ONE_ATMOSPHERE
 	max_integrity = 300
 	var/open = FALSE
 	var/can_open = TRUE

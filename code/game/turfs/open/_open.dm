@@ -183,7 +183,7 @@
 
 /turf/open/TakeTemperature(temp)
 	air.temperature += temp
-	air_update_turf(FALSE, FALSE)
+	//air_update_turf(FALSE, FALSE)
 
 /turf/open/proc/freeze_turf()
 	for(var/obj/I in contents)

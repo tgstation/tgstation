@@ -16,7 +16,6 @@
 
 /turf/cordon/AfterChange()
 	. = ..()
-	SSair.high_pressure_delta -= src
 
 /turf/cordon/attack_ghost(mob/dead/observer/user)
 	return FALSE

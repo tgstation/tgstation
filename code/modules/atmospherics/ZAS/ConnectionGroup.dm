@@ -2,7 +2,7 @@
 
 Overview:
 	These are what handle gas transfers between zones and into space.
-	They are found in a zone's edges list and in SSair.edges.
+	They are found in a zone's edges list and in SSzas.edges.
 	Each edge updates every air tick due to their role in gas transfer.
 	They come in two flavors, /connection_edge/zone and /connection_edge/unsimulated.
 	As the type names might suggest, they handle inter-zone and spacelike connections respectively.
@@ -49,7 +49,7 @@ Class Procs:
 	flow(list/movable, differential, repelled)
 		Airflow proc causing all objects in movable to be checked against a pressure differential.
 		If repelled is true, the objects move away from any turf in connecting_turfs, otherwise they approach.
-		A check against vsc.lightest_airflow_pressure should generally be performed before calling this.
+		A check against SSzas.settings.lightest_airflow_pressure should generally be performed before calling this.
 
 	get_connected_zone(zone/from)
 		Helper proc that allows getting the other zone of an edge given one of them.
@@ -86,7 +86,7 @@ Class Procs:
 /connection_edge/proc/contains_zone(zone/Z)
 
 /connection_edge/proc/erase()
-	SSair.remove_edge(src)
+	SSzas.remove_edge(src)
 //	log_debug("[type] Erased.")
 
 
@@ -99,11 +99,11 @@ Class Procs:
 		var/atom/movable/M = movable[i]
 
 		//If they're already being tossed, don't do it again.
-		if(M.last_airflow > world.time - vsc.airflow_delay) continue
+		if(M.last_airflow > world.time - SSzas.settings.airflow_delay) continue
 		if(M.airflow_speed) continue
 
 		//Check for knocking people over
-		if(ismob(M) && differential > vsc.airflow_stun_pressure)
+		if(ismob(M) && differential > SSzas.settings.airflow_stun_pressure)
 			if(M:status_flags & GODMODE) continue
 			M:airflow_stun()
 
@@ -158,7 +158,7 @@ Class Procs:
 	var/equiv = A.air.share_ratio(B.air, coefficient)
 
 	var/differential = A.air.return_pressure() - B.air.return_pressure()
-	if(abs(differential) >= vsc.airflow_lightest_pressure)
+	if(abs(differential) >= SSzas.settings.airflow_lightest_pressure)
 		var/list/attracted
 		var/list/repelled
 		if(differential > 0)
@@ -174,19 +174,19 @@ Class Procs:
 	if(equiv)
 		if(direct)
 			erase()
-			SSair.merge(A, B)
+			SSzas.merge(A, B)
 			return
 		else
 			A.air.equalize(B.air)
-			SSair.mark_edge_sleeping(src)
+			SSzas.mark_edge_sleeping(src)
 
-	SSair.mark_zone_update(A)
-	SSair.mark_zone_update(B)
+	SSzas.mark_zone_update(A)
+	SSzas.mark_zone_update(B)
 
 /connection_edge/zone/recheck()
 	if(!A.air.compare(B.air, vacuum_exception = 1))
 	// Edges with only one side being vacuum need processing no matter how close.
-		SSair.mark_edge_active(src)
+		SSzas.mark_edge_active(src)
 
 //Helper proc to get connections for a zone.
 /connection_edge/zone/proc/get_connected_zone(zone/from)
@@ -230,24 +230,24 @@ Class Procs:
 	var/equiv = A.air.share_space(air)
 
 	var/differential = A.air.return_pressure() - air.return_pressure()
-	if(abs(differential) >= vsc.airflow_lightest_pressure)
+	if(abs(differential) >= SSzas.settings.airflow_lightest_pressure)
 		var/list/attracted = A.movables()
 		flow(attracted, abs(differential), differential < 0)
 
 	if(equiv)
 		A.air.copy_from(air)
-		SSair.mark_edge_sleeping(src)
+		SSzas.mark_edge_sleeping(src)
 
-	SSair.mark_zone_update(A)
+	SSzas.mark_zone_update(A)
 
 /connection_edge/unsimulated/recheck()
 	// Edges with only one side being vacuum need processing no matter how close.
 	// Note: This handles the glaring flaw of a room holding pressure while exposed to space, but
 	// does not specially handle the less common case of a simulated room exposed to an unsimulated pressurized turf.
 	if(!A.air.compare(air, vacuum_exception = 1))
-		SSair.mark_edge_active(src)
+		SSzas.mark_edge_active(src)
 
-proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
+/proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 	//This implements a simplistic version of the Stefan-Boltzmann law.
 	var/energy_delta = ((A.temperature - B.temperature) ** 4) * STEFAN_BOLTZMANN_CONSTANT * connecting_tiles * 2.5
 	var/maximum_energy_delta = max(0, min(A.temperature * A.heat_capacity() * A.group_multiplier, B.temperature * B.heat_capacity() * B.group_multiplier))

@@ -75,6 +75,45 @@
 		return TRUE
 	return FALSE
 
+/turf/proc/Adjacent_free_dir(atom/destination, path_dir = 0)
+	var/turf/dest_T = get_turf(destination)
+	if(dest_T == src)
+		return TRUE
+	if(!dest_T || dest_T.z != z)
+		return FALSE
+	if(get_dist(src,dest_T) > 1)
+		return FALSE
+	if(!path_dir)
+		return FALSE
+
+	if(dest_T.x == x || dest_T.y == y) //orthogonal
+		return dest_T.ClickCross(get_dir(dest_T, src), border_only = 1)
+
+	var/turf/intermediate_T = get_step(src, path_dir) //diagonal
+	if(!intermediate_T || intermediate_T.density \
+	|| !intermediate_T.ClickCross(get_dir(intermediate_T, src) | get_dir(intermediate_T, dest_T), border_only = 0))
+		return FALSE
+
+	if(!dest_T.ClickCross(get_dir(dest_T, intermediate_T), border_only = 1))
+		return FALSE
+
+	return TRUE
+
+/**
+* Quick adjacency (to turf):
+* If you are in the same turf, always true
+* If you are not adjacent, then false
+*/
+/turf/proc/AdjacentQuick(var/atom/neighbor, var/atom/target = null)
+	var/turf/T0 = get_turf(neighbor)
+	if(T0 == src)
+		return 1
+
+	if(get_dist(src,T0) > 1)
+		return 0
+
+	return 1
+
 // This is necessary for storage items not on your person.
 /obj/item/Adjacent(atom/neighbor, atom/target, atom/movable/mover, recurse = 1)
 	if(neighbor == loc)

@@ -46,15 +46,13 @@
 	if(!open_turf.air && (atmos_requirements["min_oxy"] || atmos_requirements["min_tox"] || atmos_requirements["min_n2"] || atmos_requirements["min_co2"]))
 		return FALSE
 
-	var/open_turf_gases = open_turf.air.gases
-	open_turf.air.assert_gases(arglist(GLOB.hardcoded_gases))
+	var/datum/gas_mixture/open_turf_gases = open_turf.return_air()
 
-	var/plas = open_turf_gases[/datum/gas/plasma][MOLES]
-	var/oxy = open_turf_gases[/datum/gas/oxygen][MOLES]
-	var/n2 = open_turf_gases[/datum/gas/nitrogen][MOLES]
-	var/co2 = open_turf_gases[/datum/gas/carbon_dioxide][MOLES]
 
-	open_turf.air.garbage_collect()
+	var/plas = open_turf_gases.get_gas(GAS_PLASMA)
+	var/oxy = open_turf_gases.get_gas(GAS_OXYGEN)
+	var/n2 = open_turf_gases.get_gas(GAS_NITROGEN)
+	var/co2 = open_turf_gases.get_gas(GAS_CO2)
 
 	. = TRUE
 	if(atmos_requirements["min_oxy"] && oxy < atmos_requirements["min_oxy"])

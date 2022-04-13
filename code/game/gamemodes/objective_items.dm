@@ -298,7 +298,7 @@
 	var/target_amount = text2num(name)
 	var/found_amount = 0
 	var/datum/gas_mixture/mix = T.return_air()
-	found_amount += mix.gases[/datum/gas/plasma] ? mix.gases[/datum/gas/plasma][MOLES] : 0
+	found_amount += mix.get_gas(GAS_PLASMA)
 	return found_amount>=target_amount
 
 

@@ -16,7 +16,7 @@
 	if(!owner)
 		return
 	owner.visible_message(span_danger("[owner] vomits a cloud of plasma!"))
-	var/turf/open/T = get_turf(owner)
+	var/turf/simulated/open/T = get_turf(owner)
 	if(istype(T))
-		T.atmos_spawn_air("plasma=50;TEMP=[T20C]")
+		T.atmos_spawn_air(GAS_PLASMA, 20, T20C)
 	owner.vomit()

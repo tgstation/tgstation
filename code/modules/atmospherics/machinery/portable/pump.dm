@@ -68,7 +68,7 @@
 		receiving = (holding ? holding.return_air() : air_contents)
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
-		air_update_turf(FALSE, FALSE) // Update the environment if needed.
+		//air_update_turf(FALSE, FALSE) // Update the environment if needed.
 
 	return ..()
 

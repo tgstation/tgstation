@@ -55,7 +55,7 @@ Buildable meters
 	update()
 	pixel_x += rand(-5, 5)
 	pixel_y += rand(-5, 5)
-	
+
 	//Flipping handled manually due to custom handling for trinary pipes
 	AddComponent(/datum/component/simple_rotation, ROTATION_NO_FLIPPING)
 	return ..()
@@ -171,7 +171,7 @@ Buildable meters
 	// See if we would conflict with any of the potentially interacting machines
 	for(var/obj/machinery/atmospherics/machine as anything in potentially_conflicting_machines)
 		// if the pipes have any directions in common, we can't place it that way.
-		var/our_init_dirs = SSair.get_init_dirs(pipe_type, fixed_dir(), p_init_dir)
+		var/our_init_dirs = SSzas.get_init_dirs(pipe_type, fixed_dir(), p_init_dir)
 		if(machine.get_init_directions() & our_init_dirs)
 			// We have a conflict!
 			if (length(potentially_conflicting_machines) != 1 || !try_smart_reconfiguration(machine, our_init_dirs, user))
