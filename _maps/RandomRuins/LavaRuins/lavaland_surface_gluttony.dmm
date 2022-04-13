@@ -156,6 +156,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/spear/bonespear,
+/obj/item/slime_extract/silver,
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 "ls" = (
@@ -353,7 +354,8 @@
 /obj/structure/stone_tile/slab/cracked{
 	dir = 1
 	},
-/obj/effect/mob_spawn/corpse/human/miner/mod,
+/obj/effect/mob_spawn/corpse/human/miner,
+/obj/item/clothing/gloves/butchering,
 /turf/open/indestructible/necropolis,
 /area/ruin/powered/gluttony)
 "IM" = (
