@@ -64,6 +64,7 @@
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [picked_crate]")
 		drain_power(use_power_cost)
+		mod.wearer.update_inv_back()
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
@@ -78,6 +79,7 @@
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		drain_power(use_power_cost)
+		mod.wearer.update_inv_back()
 	else
 		balloon_alert(mod.wearer, "invalid target!")
 
@@ -90,12 +92,14 @@
 	. = ..()
 	if(!length(stored_crates))
 		return
-	for(var/iteration in 1 to length(stored_crates))
+	for(var/iteration in 0 to length(stored_crates) - 1)
 		var/mutable_appearance/crate_icon_front = mutable_appearance('icons/mob/clothing/modsuit/mod_modules.dmi', "module_clamp_crate_front", layer = BODY_FRONT_LAYER)
 		crate_icon_front.appearance_flags = RESET_COLOR
+		crate_icon_front.pixel_y = 7 * iteration
 		. += crate_icon_front
 		var/mutable_appearance/crate_icon_back = mutable_appearance('icons/mob/clothing/modsuit/mod_modules.dmi', "module_clamp_crate_back", layer = BODY_BEHIND_LAYER)
 		crate_icon_back.appearance_flags = RESET_COLOR
+		crate_icon_back.pixel_y = 7 * iteration
 		. += crate_icon_back
 
 /obj/item/mod/module/clamp/proc/check_crate_pickup(atom/movable/target)

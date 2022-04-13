@@ -112,7 +112,7 @@
 	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/mod(src)
 	chestplate.mod = src
-	chestplate.allowed = theme.allowed_suit_storage.Copy()
+	chestplate.allowed = typecacheof(theme.allowed_suit_storage)
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)
 	gauntlets.mod = src

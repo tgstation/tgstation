@@ -369,5 +369,12 @@
 	lifetime = 1
 	opaque = FALSE
 
-/datum/effect_system/smoke_spread/quick
+/datum/effect_system/smoke_spread/quicks
 	effect_type = /obj/effect/particle_effect/smoke/quick
+
+/obj/effect/particle_effect/smoke/chem/quick
+	lifetime = 2 //under lifetime 1, this kills itself the first time it processes, not working. i hate smoke code
+	opaque = FALSE
+
+/datum/effect_system/smoke_spread/chem/quick
+	effect_type = /obj/effect/particle_effect/smoke/chem/quick
