@@ -171,7 +171,6 @@
 /area/space/nearstation)
 "acn" = (
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/bot{
 	dir = 1
@@ -1889,7 +1888,6 @@
 "awd" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/two,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awf" = (
@@ -3836,7 +3834,6 @@
 /area/security/courtroom)
 "aUG" = (
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/dark,
@@ -11388,7 +11385,6 @@
 "cXN" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen_counter";
 	name = "Kitchen Counter Shutters"
@@ -18353,7 +18349,6 @@
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/maintenance/starboard/lesser)
 "fsc" = (
@@ -18401,14 +18396,7 @@
 /area/maintenance/starboard/greater)
 "ftE" = (
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box{
-	pixel_x = 4
-	},
 /obj/structure/cable,
-/obj/effect/spawner/random/food_or_drink/donkpockets{
-	pixel_x = -14;
-	pixel_y = 6
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/security/office)
@@ -18527,7 +18515,6 @@
 /area/medical/surgery/aft)
 "fwO" = (
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -21672,7 +21659,6 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/trimline/brown/warning{
 	dir = 5
@@ -25812,7 +25798,6 @@
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "ilb" = (
@@ -34139,10 +34124,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/security/prison)
-"lqi" = (
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/turf/open/floor/plating,
-/area/maintenance/starboard/lesser)
 "lqn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
@@ -37174,7 +37155,6 @@
 /area/commons/lounge)
 "msj" = (
 /obj/machinery/firealarm/directional/east,
-/obj/item/storage/fancy/donut_box,
 /obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
@@ -39884,7 +39864,6 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "njd" = (
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/maintenance/starboard/lesser)
@@ -48338,7 +48317,6 @@
 /area/science/xenobiology)
 "qpG" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
@@ -52179,7 +52157,6 @@
 /area/commons/dorms)
 "rRe" = (
 /obj/machinery/light/small/directional/south,
-/obj/item/storage/box/donkpockets,
 /obj/structure/table/wood,
 /turf/open/floor/iron/grimy,
 /area/tcommsat/computer)
@@ -104428,7 +104405,7 @@ hCo
 hCo
 tta
 hCo
-lqi
+rah
 vNF
 lpg
 vRa
@@ -105193,7 +105170,7 @@ odO
 hrc
 dee
 hCo
-lqi
+rah
 pgH
 hqm
 hCo
