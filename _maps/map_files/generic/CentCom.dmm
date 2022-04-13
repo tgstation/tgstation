@@ -4828,6 +4828,7 @@
 	pixel_x = 11;
 	pixel_y = 8
 	},
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/syndicate_mothership/control)
 "nQ" = (
@@ -11637,6 +11638,16 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/expansion_bombthreat)
+"Il" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bioterrorism)
 "In" = (
 /obj/structure/flora/grass/both,
 /obj/structure/railing{
@@ -11788,7 +11799,12 @@
 	pixel_y = -6
 	},
 /obj/item/storage/box/monkeycubes{
+	pixel_x = -6;
 	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/bottle/formaldehyde{
+	pixel_x = 8;
+	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
@@ -16399,6 +16415,7 @@
 	pixel_y = 9
 	},
 /obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "VW" = (
@@ -16883,11 +16900,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 10
 	},
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
+/obj/machinery/smartfridge/chemistry/virology/preloaded{
+	pixel_x = -32
 	},
-/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "Xf" = (
@@ -24266,7 +24281,7 @@ gL
 FD
 Ih
 RK
-qM
+Il
 Na
 Sf
 FM
