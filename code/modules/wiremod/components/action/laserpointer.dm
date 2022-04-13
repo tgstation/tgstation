@@ -50,6 +50,7 @@ pointer_icon_state = lasercolour_option
 	
 /obj/item/circuit_component/laserpointer/input_received(datum/port/input/port)
 	
+	var/atom/movable/shell = parent.shell
 	var/turf/targloc = get_turf(target)
 	var/outmsg
 	var/atom/target = input_port.value
@@ -60,12 +61,12 @@ pointer_icon_state = lasercolour_option
 	/// only will effect silicons so you cant use these to constantly grief felinids or blind people. silicons deserve it though
 	if(iscyborg(target))
 		var/mob/living/silicon/silicon = target
-		log_combat(user, silicon, "shone in the sensors", src)
+		log_combat(shell, silicon, "shone in the sensors", src)
 		if(prob(effectchance))
 			silicon.flash_act(affect_silicon = 1)
 			silicon.Paralyze(rand(10,20)) /// WAYYY less time since ciruits are spammable
-			to_chat(silicon, span_danger("Your sensors were overloaded by a laser!"))
-			outmsg = span_notice("[silicon]'s sensors are overloaded by a weakened circuit-powered laserpointer.") /// wont be able to see where it comes from (especially in the case of within-backpack or brain circuits), might as well let them know what it came from
+			to_chat(silicon, span_danger("Your sensors were overloaded by a laser shone by [shell]!"))
+			outmsg = span_notice("[silicon]'s sensors are overloaded by a weakened laser coming from [shell].") 
 			
 	
 	///laserpointer image
