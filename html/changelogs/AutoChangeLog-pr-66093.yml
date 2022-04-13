@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "fixes exploit where you could duplicate gases with valves"

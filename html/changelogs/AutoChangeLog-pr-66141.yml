@@ -1,0 +1,4 @@
+author: "unv-annihilator"
+delete-after: True
+changes: 
+  - bugfix: "held mice are no longer edible by moths"

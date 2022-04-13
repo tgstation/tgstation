@@ -94,6 +94,7 @@
 	overlay_state_active = "module_clamp_loader"
 	load_time = 1 SECONDS
 	max_crates = 5
+	use_mod_colors = TRUE
 
 ///Drill - Lets you dig through rock and basalt.
 /obj/item/mod/module/drill
@@ -204,6 +205,7 @@
 	cooldown_time = 4 SECONDS
 	overlay_state_inactive = "module_hydraulic"
 	overlay_state_active = "module_hydraulic_active"
+	use_mod_colors = TRUE
 	/// Time it takes to launch
 	var/launch_time = 2 SECONDS
 	/// User overlay
@@ -291,6 +293,7 @@
 	incompatible_modules = list(/obj/item/mod/module/magnet)
 	cooldown_time = 1.5 SECONDS
 	overlay_state_active = "module_magnet"
+	use_mod_colors = TRUE
 
 /obj/item/mod/module/magnet/on_select_use(atom/target)
 	. = ..()
@@ -344,6 +347,7 @@
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/ash_accretion)
 	overlay_state_inactive = "module_ash"
+	use_mod_colors = TRUE
 	/// How many tiles we can travel to max out the armor.
 	var/max_traveled_tiles = 10
 	/// How many tiles we traveled through.
@@ -464,7 +468,7 @@
 	if(!.)
 		return
 	playsound(src, 'sound/items/modsuit/ballin.ogg', 100)
-	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/mod.dmi', "ball_mask"), flags = MASK_INVERSE))
+	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
 	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
 	mod.wearer.add_filter("mod_outline", 3, outline_filter(color = "#000000AA"))
 	mod.wearer.base_pixel_y -= 4

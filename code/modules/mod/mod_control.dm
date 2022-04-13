@@ -3,7 +3,7 @@
 	name = "Base MOD"
 	desc = "You should not see this, yell at a coder!"
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
-	worn_icon = 'icons/mob/clothing/mod.dmi'
+	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 
 /obj/item/mod/control
 	name = "MOD control unit"
