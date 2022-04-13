@@ -275,6 +275,16 @@
 #define SSAIR_SUPERCONDUCTIVITY 7
 #define SSAIR_PROCESS_ATOMS 8
 
+//ZAS subsystem subtasks
+#define SSZAS_PIPENETS 1
+#define SSZAS_MACHINES 2
+#define SSZAS_TILES 3
+#define SSZAS_DEFERED_TILES 4
+#define SSZAS_EDGES 5
+#define SSZAS_FIRES 6
+#define SSZAS_HOTSPOTS 7
+#define SSZAS_ZONES 8
+
 //Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
 #define SSAIR_REBUILD_PIPELINE 1
 #define SSAIR_REBUILD_QUEUE 2
