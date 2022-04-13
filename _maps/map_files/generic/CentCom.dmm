@@ -11480,13 +11480,6 @@
 	},
 /turf/open/floor/stone,
 /area/centcom/holding)
-"FW" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/syndicate_mothership/control)
 "FX" = (
 /obj/machinery/computer/auxiliary_base/directional/north,
 /obj/structure/table/reinforced,
@@ -37177,7 +37170,7 @@ Tx
 HN
 ng
 Yk
-FW
+zv
 zv
 HS
 JR
