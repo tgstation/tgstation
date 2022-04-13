@@ -9122,12 +9122,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "AP" = (
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
 /obj/structure/sign/poster/contraband/masked_men{
 	pixel_x = 32
 	},
+/obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_chemicalwarfare)
 "AQ" = (
@@ -11523,12 +11521,10 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 6
 	},
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
 /obj/machinery/camera/autoname/directional/east{
 	network = list("nukie")
 	},
+/obj/machinery/chem_dispenser/mutagensaltpeter,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "HW" = (
@@ -16381,7 +16377,6 @@
 	pixel_x = 4;
 	pixel_y = -3
 	},
-/obj/item/stack/sheet/mineral/plasma,
 /obj/item/reagent_containers/syringe{
 	pixel_x = -5;
 	pixel_y = 12
@@ -16399,6 +16394,11 @@
 	pixel_y = 15
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/item/reagent_containers/glass/bottle/radium{
+	pixel_x = -8;
+	pixel_y = 9
+	},
+/obj/item/stack/sheet/mineral/plasma,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "VW" = (
