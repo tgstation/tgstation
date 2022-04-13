@@ -59,7 +59,7 @@
 	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
 	return src
 
-/mob/proc/AIize(transfer_after = TRUE, client/preference_source, move = TRUE)
+/mob/proc/AIize(client/preference_source, move = TRUE)
 	var/list/turf/landmark_loc = list()
 
 	if(!move)
@@ -84,9 +84,6 @@
 
 	if(client)
 		stop_sound_channel(CHANNEL_LOBBYMUSIC)
-
-	if(!transfer_after)
-		mind.active = FALSE
 
 	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 	. = our_AI
