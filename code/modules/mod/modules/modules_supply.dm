@@ -52,12 +52,13 @@
 		return
 	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/structure/big_delivery))
 		var/atom/movable/picked_crate = target
-		if(length(stored_crates) >= max_crates)
-			balloon_alert(mod.wearer, "too many crates!")
+		if(!check_crate_pickup(picked_crate))
 			return
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		if(!do_after(mod.wearer, load_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
+			return
+		if(!check_crate_pickup(picked_crate))
 			return
 		stored_crates += picked_crate
 		picked_crate.forceMove(src)
@@ -84,6 +85,29 @@
 	for(var/atom/movable/crate as anything in stored_crates)
 		crate.forceMove(drop_location())
 		stored_crates -= crate
+
+/obj/item/mod/module/clamp/generate_worn_overlay(mutable_appearance/standing)
+	. = ..()
+	if(!length(stored_crates))
+		return
+	for(var/iteration in 1 to length(stored_crates))
+		var/mutable_appearance/crate_icon_front = mutable_appearance('icons/mob/clothing/modsuit/mod_modules.dmi', "module_clamp_crate_front", layer = BODY_FRONT_LAYER)
+		crate_icon_front.appearance_flags = RESET_COLOR
+		. += crate_icon_front
+		var/mutable_appearance/crate_icon_back = mutable_appearance('icons/mob/clothing/modsuit/mod_modules.dmi', "module_clamp_crate_back", layer = BODY_BEHIND_LAYER)
+		crate_icon_back.appearance_flags = RESET_COLOR
+		. += crate_icon_back
+
+/obj/item/mod/module/clamp/proc/check_crate_pickup(atom/movable/target)
+	if(length(stored_crates) >= max_crates)
+		balloon_alert(mod.wearer, "too many crates!")
+		return FALSE
+	for(var/mob/living/mob in target.get_all_contents())
+		if(mob.mob_size < MOB_SIZE_HUMAN)
+			continue
+		balloon_alert(mod.wearer, "crate too heavy!")
+		return FALSE
+	return TRUE
 
 /obj/item/mod/module/clamp/loader
 	name = "MOD loader hydraulic clamp module"
