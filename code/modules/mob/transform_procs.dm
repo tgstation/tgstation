@@ -85,6 +85,9 @@
 	if(client)
 		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
+	if(!transfer_after)
+		mind.active = FALSE
+
 	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 	. = our_AI
 
