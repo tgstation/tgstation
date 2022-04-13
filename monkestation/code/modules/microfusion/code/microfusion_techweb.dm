@@ -5,7 +5,6 @@
 	description = "Basic microfusion technology allowing for basic microfusion designs."
 	design_ids = list(
 		"basic_microfusion_cell",
-		"microfusion_phase_emitter_undercharger",
 	)
 
 //Enhanced microfusion

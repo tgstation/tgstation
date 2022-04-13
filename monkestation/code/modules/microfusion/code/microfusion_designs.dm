@@ -123,14 +123,6 @@
 	build_path = /obj/item/microfusion_gun_attachment/rail
 
 // BARREL MODS
-/datum/design/microfusion/phase_emitter_undercharger
-	name = "Microfusion Phase Emitter Undercharger"
-	desc = "Inverts the output beam of the phase emitter, popular amongst law enforcement as a non-lethal upgrade."
-	id = "microfusion_phase_emitter_undercharger"
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 200)
-	build_path = /obj/item/microfusion_gun_attachment/undercharger
-	category = list("Weapons", "initial")
-
 /datum/design/microfusion/gun_attachment_grip
 	name = "Microfusion Weapon Grip"
 	desc = "A grip... for microfusion weapon platforms."
