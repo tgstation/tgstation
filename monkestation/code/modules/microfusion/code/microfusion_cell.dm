@@ -12,7 +12,7 @@ These are basically advanced cells.
 	name = "microfusion cell"
 	desc = "A standard-issue microfusion cell, produced by Micron Control Systems. Smaller than a can of soda, these fulfill the need for a power source where plugging into a recharger is inconvenient or unavailable; although they will eventually run dry due to being shipped without a fuel source."
 	icon = 'modular_skyrat/modules/microfusion/icons/microfusion_cells.dmi'
-	charge_overlay_icon = 'modular_skyrat/modules/microfusion/icons/microfusion_cells.dmi'
+	charging_icon = "mf_in" //This is stored in cell.dmi in the aesthetics module
 	icon_state = "microfusion"
 	w_class = WEIGHT_CLASS_NORMAL
 	maxcharge = 1200 //12 shots
