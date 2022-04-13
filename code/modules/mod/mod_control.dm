@@ -96,6 +96,7 @@
 	if(new_theme)
 		theme = new_theme
 	theme = GLOB.mod_themes[theme]
+	slot_flags = theme.slot_flags
 	extended_desc = theme.extended_desc
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
@@ -236,7 +237,7 @@
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()
-	if(slot == ITEM_SLOT_BACK)
+	if(slot == slot_flags)
 		set_wearer(user)
 	else if(wearer)
 		unset_wearer()
@@ -247,7 +248,7 @@
 		unset_wearer()
 
 /obj/item/mod/control/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_BACK)
+	if(slot == slot_flags)
 		return TRUE
 
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
