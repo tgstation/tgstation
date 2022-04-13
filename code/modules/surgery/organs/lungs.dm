@@ -44,6 +44,8 @@
 	var/healium_sleep_min = 6
 	///Minimum amount of helium to affect speech
 	var/helium_speech_min = 5
+	//Whether helium speech effects are currently active
+	var/helium_speech = FALSE
 	///Whether these lungs react negatively to miasma
 	var/suffers_miasma = TRUE
 
@@ -130,8 +132,6 @@
 	//Vars for n2o and healium induced euphorias.
 	var/n2o_euphoria = EUPHORIA_LAST_FLAG
 	var/healium_euphoria = EUPHORIA_LAST_FLAG
-	//Var for helium speech effects
-	var/helium_speech = FALSE
 	//Handle subtypes' breath processing
 	handle_gas_override(breather,breath_gases, gas_breathed)
 
