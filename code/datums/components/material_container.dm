@@ -171,6 +171,15 @@
 	else if(held_item == active_held)
 		user.put_in_active_hand(held_item)
 
+/// Proc used for when material is inserted by something other than a mob (like a conveyor)
+/datum/component/material_container/proc/userless_insert(obj/item/inserted_item, breakdown_flags = mat_container_flags)
+	set waitfor = FALSE
+	var/inserted = insert_item(inserted_item, breakdown_flags = mat_container_flags)
+	if(inserted)
+		qdel(inserted_item)
+		if(after_insert)
+			after_insert.Invoke(inserted_item, last_inserted_id, inserted)
+
 /// Proc specifically for inserting items, returns the amount of materials entered.
 /datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt, breakdown_flags = mat_container_flags)
 	if(QDELETED(I))

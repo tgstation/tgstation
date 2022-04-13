@@ -10,11 +10,29 @@
 	circuit = /obj/item/circuitboard/machine/sheetifier
 	layer = BELOW_OBJ_LAYER
 	var/busy_processing = FALSE
+	var/datum/component/material_container/materials_comp
+
+	var/eat_dir = WEST
 
 /obj/machinery/sheetifier/Initialize(mapload)
 	. = ..()
 
-	AddComponent(/datum/component/material_container, list(/datum/material/meat, /datum/material/hauntium), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_SHEETIFIER, typesof(/datum/material/meat) + /datum/material/hauntium, list(/obj/item/food/meat, /obj/item/photo), null, CALLBACK(src, .proc/CanInsertMaterials), CALLBACK(src, .proc/AfterInsertMaterials))
+	materials_comp = AddComponent(/datum/component/material_container, list(/datum/material/meat, /datum/material/hauntium), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_SHEETIFIER, typesof(/datum/material/meat) + /datum/material/hauntium, list(/obj/item/food/meat, /obj/item/photo), null, CALLBACK(src, .proc/CanInsertMaterials), CALLBACK(src, .proc/AfterInsertMaterials))
+
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/machinery/sheetifier/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(!anchored)
+		return
+	if(border_dir == eat_dir)
+		return !busy_processing && materials_comp.get_item_material_amount(mover)
+
+/obj/machinery/sheetifier/proc/on_entered(datum/source, atom/movable/enterer)
+	materials_comp.userless_insert(enterer)
 
 /obj/machinery/sheetifier/update_overlays()
 	. = ..()
@@ -42,8 +60,7 @@
 /obj/machinery/sheetifier/proc/finish_processing()
 	busy_processing = FALSE
 	update_appearance()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.retrieve_all() //Returns all as sheets
+	materials_comp.retrieve_all() //Returns all as sheets
 
 /obj/machinery/sheetifier/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
