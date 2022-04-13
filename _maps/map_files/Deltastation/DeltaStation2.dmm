@@ -10297,7 +10297,6 @@
 /area/hallway/secondary/command)
 "cuh" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -23371,7 +23370,6 @@
 /area/security/warden)
 "eyO" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/item/holosign_creator/robot_seat/restaurant{
 	pixel_y = -5
 	},
@@ -24752,7 +24750,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/science/breakroom)
 "eUn" = (
@@ -26598,7 +26595,6 @@
 /area/maintenance/disposal)
 "fwR" = (
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "fxb" = (
@@ -27607,7 +27603,6 @@
 /area/service/library)
 "fMQ" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/wood,
 /area/engineering/break_room)
@@ -57232,7 +57227,6 @@
 "otC" = (
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
 "otN" = (
@@ -82053,7 +82047,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/item/reagent_containers/food/drinks/britcup,
 /turf/open/floor/iron,
 /area/medical/medbay/lobby)
@@ -84366,9 +84359,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "wFj" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/box/donkpockets{
-	pixel_x = -6
-	},
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/south,

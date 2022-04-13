@@ -41698,9 +41698,6 @@
 /area/security/brig)
 "jrC" = (
 /obj/structure/table,
-/obj/item/storage/box/donkpockets{
-	pixel_y = 5
-	},
 /obj/machinery/firealarm/directional/north,
 /obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
@@ -63173,9 +63170,6 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/box/donkpockets{
-	pixel_y = 5
-	},
 /turf/open/floor/iron/dark,
 /area/cargo/sorting)
 "quK" = (
@@ -71752,10 +71746,6 @@
 /obj/structure/mirror/directional/south,
 /obj/item/mod/module/plasma_stabilizer,
 /obj/item/mod/module/thermal_regulator,
-/obj/item/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 5
-	},
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "tgh" = (

@@ -11530,7 +11530,6 @@
 "cXN" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen_counter";
 	name = "Kitchen Counter Shutters"
@@ -18573,10 +18572,6 @@
 "ftE" = (
 /obj/structure/table,
 /obj/structure/cable,
-/obj/effect/spawner/random/food_or_drink/donkpockets{
-	pixel_x = -14;
-	pixel_y = 6
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/security/office)
@@ -34255,10 +34250,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/security/prison)
-"lqi" = (
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/turf/open/floor/plating,
-/area/maintenance/starboard/lesser)
 "lqn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
@@ -37336,7 +37327,6 @@
 /area/commons/lounge)
 "msj" = (
 /obj/machinery/firealarm/directional/east,
-/obj/item/storage/fancy/donut_box,
 /obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
@@ -104443,7 +104433,7 @@ hCo
 hCo
 tta
 hCo
-lqi
+rah
 vNF
 lpg
 vRa

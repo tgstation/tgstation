@@ -12276,16 +12276,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/commons/dorms)
-"deq" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kitchencounter";
-	name = "Kitchen Counter Shutters"
-	},
-/obj/item/storage/fancy/donut_box,
-/turf/open/floor/iron/cafeteria,
-/area/service/kitchen)
 "der" = (
 /turf/closed/wall/r_wall,
 /area/science/research)
@@ -32980,7 +32970,6 @@
 	dir = 8
 	},
 /obj/machinery/recharger,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "kzi" = (
@@ -63917,7 +63906,6 @@
 /obj/machinery/firealarm/directional/west,
 /obj/structure/cable,
 /obj/structure/table/glass,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "vUA" = (
@@ -168720,7 +168708,7 @@ nFh
 cpO
 bsd
 gSy
-deq
+abq
 meK
 gul
 tqq

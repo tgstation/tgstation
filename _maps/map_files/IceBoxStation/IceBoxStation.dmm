@@ -25203,7 +25203,6 @@
 	pixel_y = 12
 	},
 /obj/item/food/candy_trash,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/science/mixing/hallway)
 "lry" = (
@@ -29035,7 +29034,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/white,
 /area/medical/break_room)
 "ntF" = (
@@ -31844,7 +31842,6 @@
 /area/maintenance/department/medical/central)
 "oMm" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
 /obj/item/storage/secure/safe/caps_spare/directional/east,
 /turf/open/floor/iron,
 /area/command/bridge)
@@ -44310,7 +44307,6 @@
 /obj/structure/table,
 /obj/effect/spawner/random/trash/food_packaging,
 /obj/effect/spawner/random/trash/cigbutt,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/engineering/lobby)
 "uNS" = (
