@@ -102,7 +102,7 @@
 	AddComponent(/datum/component/bakeable, /obj/item/food/pie/plain, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 /obj/item/food/piedough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rawpastrybase, 3, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rawpastrybase, 6, 30)
 
 /obj/item/food/rawpastrybase
 	name = "raw pastry base"
@@ -122,7 +122,7 @@
 	desc = "A base for any self-respecting pastry."
 	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "pastrybase"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY
