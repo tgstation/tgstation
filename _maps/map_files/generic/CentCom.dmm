@@ -447,6 +447,7 @@
 	id = "FBBZ1";
 	name = "Security Shutters"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
 "bu" = (
@@ -1001,7 +1002,7 @@
 	dir = 5
 	},
 /turf/open/space/basic,
-/area/syndicate_mothership/expansion_bioterrorism)
+/area/space/nearstation)
 "cS" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -4982,6 +4983,11 @@
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/item/toy/plush/nukeplushie{
+	name = "Sir Flash Nukedon";
+	pixel_x = -2;
+	pixel_y = 14
+	},
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
 "oc" = (
@@ -6370,6 +6376,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
 "rS" = (
@@ -8824,7 +8831,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 /turf/open/space/basic,
-/area/syndicate_mothership/expansion_bioterrorism)
+/area/space/nearstation)
 "yO" = (
 /obj/machinery/computer/communications,
 /obj/machinery/status_display/evac/directional/north,
@@ -10669,6 +10676,7 @@
 	dir = 1
 	},
 /obj/machinery/door/keycard/syndicate_bio,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
@@ -11012,6 +11020,7 @@
 	dir = 1
 	},
 /obj/machinery/door/keycard/syndicate_bomb,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
@@ -11395,6 +11404,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
@@ -11619,6 +11629,7 @@
 /obj/machinery/door/airlock/hatch{
 	name = "Gangway"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "Gr" = (
@@ -12027,6 +12038,7 @@
 	id = "FBBZ1";
 	name = "Secuirty Shutters"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
 "HN" = (
@@ -12060,6 +12072,7 @@
 	dir = 1
 	},
 /obj/machinery/door/keycard/syndicate_chem,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
@@ -13389,6 +13402,12 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
+"Mj" = (
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Spots-The-Operative"
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/syndicate_mothership/control)
 "Ml" = (
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/carpet/black,
@@ -13415,7 +13434,7 @@
 	dir = 9
 	},
 /turf/open/space/basic,
-/area/syndicate_mothership/expansion_bioterrorism)
+/area/space/nearstation)
 "Mr" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -13940,7 +13959,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/space/basic,
-/area/syndicate_mothership/expansion_bioterrorism)
+/area/space/nearstation)
 "NR" = (
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/mineral/titanium,
@@ -14317,7 +14336,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
 /turf/open/space/basic,
-/area/syndicate_mothership/expansion_bioterrorism)
+/area/space/nearstation)
 "OO" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -15067,7 +15086,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/syndicate_mothership/expansion_bombthreat)
+/area/space/nearstation)
 "QT" = (
 /obj/structure/chair/stool/directional/south,
 /obj/structure/sign/map/right{
@@ -16257,7 +16276,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/tank/nitrogen,
 /turf/open/space/basic,
-/area/syndicate_mothership/expansion_bioterrorism)
+/area/space/nearstation)
 "Uh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -37699,7 +37718,7 @@ nt
 HJ
 VJ
 yw
-Oa
+Mj
 ng
 kb
 OL
