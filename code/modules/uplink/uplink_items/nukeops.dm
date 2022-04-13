@@ -796,7 +796,7 @@
 	desc = "For some of our best Operatives, watching corpo space stations blow up with a flash of retribution just isn't enough. \
 			Folks like those prefer a more personal touch to their artistry. For those interested, a special Authorization Key \
 			can be instantly delivered to your location. Create groundbreaking chemical agents, cook up, sell the best of drugs, \
-			 and listen to the best classic music today!"
+			and listen to the best classic music today!"
 	item = /obj/item/keycard/syndicate_chem
 	cost = 12
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
