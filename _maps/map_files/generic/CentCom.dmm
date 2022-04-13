@@ -310,6 +310,7 @@
 /obj/structure/sign/poster/contraband/soviet_propaganda{
 	pixel_x = -32
 	},
+/obj/item/stack/sheet/cardboard/fifty,
 /turf/open/floor/mineral/titanium/yellow,
 /area/syndicate_mothership/control)
 "bc" = (
@@ -2143,7 +2144,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "War Room"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/textured_large,
 /area/syndicate_mothership/control)
 "gd" = (
 /obj/structure/bed,
@@ -5513,6 +5514,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
+"pt" = (
+/obj/machinery/button/door/directional/south{
+	desc = "Looks like the elevator is under maintenance..";
+	name = "Elevator Button"
+	},
+/turf/open/floor/iron/smooth_half{
+	dir = 1
+	},
+/area/syndicate_mothership/control)
 "pv" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -7011,7 +7021,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Sky Bridge"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/textured_large,
 /area/syndicate_mothership/control)
 "tC" = (
 /obj/effect/turf_decal/stripes/corner,
@@ -10362,7 +10372,7 @@
 	name = "Sky Bridge"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/iron/textured_large,
 /area/syndicate_mothership/control)
 "CH" = (
 /obj/effect/turf_decal/tile/bar,
@@ -11792,6 +11802,7 @@
 /obj/machinery/camera/autoname/directional/east{
 	network = list("nukie")
 	},
+/obj/structure/closet/crate/cardboard/mothic,
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
 "GQ" = (
@@ -13073,7 +13084,7 @@
 	name = "Sky Bridge"
 	},
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/iron/textured_large,
 /area/syndicate_mothership/control)
 "KZ" = (
 /obj/machinery/light/small/directional/west,
@@ -17999,6 +18010,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/control)
+"YB" = (
+/obj/structure/closet/cardboard,
+/turf/open/floor/plating,
+/area/syndicate_mothership/control)
 "YC" = (
 /turf/open/floor/wood/large,
 /area/centcom/holding)
@@ -18427,6 +18442,7 @@
 /area/centcom/holding)
 "ZJ" = (
 /obj/machinery/light/cold/directional/west,
+/obj/structure/closet/crate/cardboard,
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
 "ZM" = (
@@ -34633,7 +34649,7 @@ HN
 HF
 pH
 QN
-QN
+pt
 ng
 hq
 hq
@@ -35904,7 +35920,7 @@ Ff
 Ff
 Ff
 Zb
-ll
+YB
 ll
 HK
 ng
@@ -36961,7 +36977,7 @@ pb
 kb
 pb
 kb
-pb
+kb
 kb
 OL
 pJ
@@ -37219,7 +37235,7 @@ kb
 kb
 kb
 kb
-kb
+OL
 OL
 pJ
 aU
