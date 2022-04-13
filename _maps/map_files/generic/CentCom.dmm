@@ -439,7 +439,6 @@
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
@@ -11766,6 +11765,10 @@
 	},
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
+"GI" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/syndicate,
+/area/syndicate_mothership/expansion_bioterrorism)
 "GJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
@@ -17863,6 +17866,10 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/syndicate_mothership/control)
+"Yg" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/syndicate,
+/area/syndicate_mothership/expansion_bombthreat)
 "Yj" = (
 /obj/structure/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -23583,7 +23590,7 @@ CN
 CN
 CN
 CN
-CN
+GI
 jW
 xA
 CN
@@ -26926,7 +26933,7 @@ BD
 Us
 Ks
 Mc
-kv
+Yg
 kv
 uU
 uU
