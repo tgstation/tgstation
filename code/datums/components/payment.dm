@@ -19,6 +19,10 @@
 	var/datum/bank_account/target_acc
 	///Does this payment component respect same-department-discount?
 	var/department_discount = FALSE
+	var/static/list/allowed_money = typecacheof(list(
+		/obj/item/stack/spacecash,
+		/obj/item/holochip,
+		/obj/item/coin))
 
 /datum/component/payment/Initialize(_cost, _target, _style)
 	target_acc = _target
@@ -91,38 +95,16 @@
 	//Here is all the possible non-ID payment methods.
 	var/list/counted_money = list()
 	var/physical_cash_total = 0
-	for(var/obj/item/coin/counted_coin in user.get_all_contents()) //Coins.
+	for(var/obj/item/credit in typecache_filter_list(user.get_all_contents(), allowed_money)) //Coins, cash, and credits.
 		if(physical_cash_total > total_cost)
 			break
-		physical_cash_total += counted_coin.value
-		counted_money += counted_coin
+		physical_cash_total += credit.get_item_credit_value()
+		counted_money += credit
 
-	for(var/obj/item/stack/spacecash/counted_cash in user.get_all_contents()) //Paper Cash
-		if(physical_cash_total > total_cost)
-			break
-		physical_cash_total += counted_cash.value * counted_cash.amount
-		counted_money += counted_cash
-
-	for(var/obj/item/holochip/counted_credits in user.get_all_contents()) //Holocredits
-		if(physical_cash_total > total_cost)
-			break
-		physical_cash_total += counted_credits.credits
-		counted_money += counted_credits
-
-	if(istype(user.pulling, /obj/item/coin) && (physical_cash_total < total_cost)) //Coins(Pulled).
-		var/obj/item/coin/counted_coin = user.pulling
-		physical_cash_total += counted_coin.value
-		counted_money += counted_coin
-
-	else if(istype(user.pulling, /obj/item/stack/spacecash) && (physical_cash_total < total_cost)) //Cash(Pulled).
-		var/obj/item/stack/spacecash/counted_cash = user.pulling
-		physical_cash_total += counted_cash.value * counted_cash.amount
-		counted_money += counted_cash
-
-	else if(istype(user.pulling, /obj/item/holochip) && (physical_cash_total < total_cost)) //Holocredits(pulled).
-		var/obj/item/holochip/counted_credits = user.pulling
-		physical_cash_total += counted_credits.credits
-		counted_money += counted_credits
+	if(is_type_in_typecache(user.pulling, allowed_money) && (physical_cash_total < total_cost)) //Coins(Pulled).
+		var/obj/item/counted_credit = user.pulling
+		physical_cash_total += counted_credit.get_item_credit_value()
+		counted_money += counted_credit.get_item_credit_value()
 
 	if(physical_cash_total < total_cost) //Suggestions for those with no arms/simple animals.
 		var/armless
