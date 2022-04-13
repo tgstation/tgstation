@@ -552,12 +552,12 @@
 		new /obj/item/modular_computer/tablet/pda(src)
 	new /obj/item/computer_hardware/hard_drive/role/head(src)
 
-	var/newcart = pick( /obj/item/computer_hardware/hard_drive/role/engineering,
+	var/new_disk = pick( /obj/item/computer_hardware/hard_drive/role/engineering,
 						/obj/item/computer_hardware/hard_drive/role/security,
 						/obj/item/computer_hardware/hard_drive/role/medical,
 						/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
 						/obj/item/computer_hardware/hard_drive/role/quartermaster)
-	new newcart(src)
+	new new_disk(src)
 
 /obj/item/storage/box/silver_ids
 	name = "box of spare silver IDs"

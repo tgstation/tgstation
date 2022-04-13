@@ -10,8 +10,4 @@
 	var/name = holder.saved_identification
 	var/job = holder.saved_job
 
-	if(name && job)
-		holder.name = "[name] ([job])"
-		return TRUE
-
-	return FALSE
+	holder.name = "[name] ([job])"
