@@ -31169,9 +31169,9 @@
 	dir = 1
 	},
 /obj/effect/landmark/event_spawn,
-/mob/living/simple_animal/bot/medbot/autopatrol,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/mob/living/simple_animal/bot/medbot/autopatrol,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/lobby)
 "fSQ" = (
@@ -39871,6 +39871,7 @@
 	name = "Justice Door Lock";
 	normaldoorcontrol = 1;
 	req_access_txt = "3";
+	silicon_access_disabled = 1;
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark,
@@ -44884,6 +44885,7 @@
 	name = "Justice Door Lock";
 	normaldoorcontrol = 1;
 	req_access_txt = "3";
+	silicon_access_disabled = 1;
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark,
