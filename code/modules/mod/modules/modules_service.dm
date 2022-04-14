@@ -58,7 +58,7 @@
 //Waddle - Makes you waddle and squeak.
 /obj/item/mod/module/waddle
 	name = "MOD waddle module"
-	desc = "Some of the most primitive technology in use by HonkCo. This module works off an automatic intention system, \
+	desc = "Some of the most primitive technology in use by Honk Co. This module works off an automatic intention system, \
 		utilizing its' sensitivity to the pilot's often-limited brainwaves to directly read their next step, \
 		affecting the boots they're installed in. Employing a twin-linked gravitonic drive to create \
 		miniaturized etheric blasts of space-time beneath the user's feet, this enables them to... \

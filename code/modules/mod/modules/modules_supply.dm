@@ -93,13 +93,13 @@
 	if(!length(stored_crates))
 		return
 	for(var/iteration in 0 to length(stored_crates) - 1)
-		var/mutable_appearance/crate_icon_front = mutable_appearance('icons/mob/clothing/modsuit/mod_modules.dmi', "module_clamp_crate_front", layer = BODY_FRONT_LAYER)
+		var/mutable_appearance/crate_icon_front = mutable_appearance('icons/mob/clothing/modsuit/mod_modules.dmi', "module_clamp_crate_front", layer = -BODY_FRONT_LAYER)
 		crate_icon_front.appearance_flags = RESET_COLOR
-		crate_icon_front.pixel_y = 7 * iteration
+		crate_icon_front.pixel_y = 5 * iteration
 		. += crate_icon_front
-		var/mutable_appearance/crate_icon_back = mutable_appearance('icons/mob/clothing/modsuit/mod_modules.dmi', "module_clamp_crate_back", layer = BODY_BEHIND_LAYER)
+		var/mutable_appearance/crate_icon_back = mutable_appearance('icons/mob/clothing/modsuit/mod_modules.dmi', "module_clamp_crate_back", layer = -BODY_BEHIND_LAYER)
 		crate_icon_back.appearance_flags = RESET_COLOR
-		crate_icon_back.pixel_y = 7 * iteration
+		crate_icon_back.pixel_y = 5 * iteration
 		. += crate_icon_back
 
 /obj/item/mod/module/clamp/proc/check_crate_pickup(atom/movable/target)
