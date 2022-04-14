@@ -107,6 +107,14 @@
 	icon_state = "mw"
 	return ..()
 
+/obj/machinery/microwave/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(dirty >= 100)
+		return FALSE
+	if(default_unfasten_wrench(user, tool))
+		update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/microwave/attackby(obj/item/O, mob/living/user, params)
 	if(operating)
 		return
@@ -114,7 +122,7 @@
 		return
 
 	if(dirty < 100)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, O) || default_unfasten_wrench(user, O))
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
 			update_appearance()
 			return
 

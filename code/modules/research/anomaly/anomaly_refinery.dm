@@ -31,7 +31,7 @@
 	var/test_status = null
 	/// Determines which tank will be the merge_gases target (destroyed upon testing).
 	var/obj/item/tank/tank_to_target
-	
+
 	// These vars are used for the explosion simulation and doesn't affect the core detonation.
 	/// Combined result of the first two tanks. Exists only in our machine.
 	var/datum/gas_mixture/combined_gasmix
@@ -101,9 +101,9 @@
 	return ..()
 
 /obj/machinery/research/anomaly_refinery/wrench_act(mob/living/user, obj/item/tool)
-	if(!default_unfasten_wrench(user, tool))
-		return FALSE
-	return TRUE
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/research/anomaly_refinery/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!default_deconstruction_screwdriver(user, "[base_icon_state]-off", "[base_icon_state]", tool))
@@ -212,7 +212,7 @@
 		combined_gasmix.merge(second_gasmix.copy())
 	else
 		combined_gasmix.react()
-	
+
 	reaction_increment += 1
 
 /// We dont allow incomplete valves to go in but do code in checks for incomplete valves. Just in case.
@@ -289,7 +289,7 @@
 	var/list/data = list()
 	var/list/parsed_gasmixes = list()
 	var/obj/item/tank/other_tank
-	
+
 	if(inserted_bomb?.tank_one && inserted_bomb?.tank_two)
 		other_tank = inserted_bomb.tank_one == tank_to_target ? inserted_bomb.tank_two : inserted_bomb.tank_one
 

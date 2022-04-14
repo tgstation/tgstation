@@ -47,6 +47,11 @@
 	playsound(src, 'sound/items/pshoom.ogg', 50, TRUE)
 	flick("synthesizer_beam", src)
 
+/obj/machinery/dish_drive/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/dish_drive/attackby(obj/item/I, mob/living/user, params)
 	if(is_type_in_list(I, collectable_items) && !user.combat_mode)
 		if(!user.transferItemToLoc(I, src))
@@ -57,8 +62,6 @@
 		flick("synthesizer_beam", src)
 		return
 	else if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-		return
-	else if(default_unfasten_wrench(user, I))
 		return
 	else if(default_deconstruction_crowbar(I, FALSE))
 		return
