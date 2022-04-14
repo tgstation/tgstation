@@ -565,7 +565,6 @@
 	var/mob/living/carbon/human/H = owner
 	H.visible_message(span_warning("[H] starts vibrating!"), span_danger("You start charging your bluespace core..."))
 	is_charging = TRUE
-	UpdateButtonIcon() //action icon looks unavailable
 	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, TRUE)
 	addtimer(CALLBACK(src, .proc/teleport, H), 15)
 
@@ -578,6 +577,7 @@
 	do_teleport(H, get_turf(H), 12, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
 	is_charging = FALSE
+	UpdateButtonIcon() //action icon looks unavailable.
 	addtimer(CALLBACK(src, .proc/UpdateButtons), cooldown + 5) //action icon looks available again
 
 
