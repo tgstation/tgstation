@@ -88,20 +88,6 @@
 		crate.forceMove(drop_location())
 		stored_crates -= crate
 
-/obj/item/mod/module/clamp/generate_worn_overlay(mutable_appearance/standing)
-	. = ..()
-	if(!length(stored_crates))
-		return
-	for(var/iteration in 0 to length(stored_crates) - 1)
-		var/mutable_appearance/crate_icon_front = mutable_appearance('icons/mob/clothing/modsuit/mod_modules.dmi', "module_clamp_crate_front", layer = -BODY_FRONT_LAYER)
-		crate_icon_front.appearance_flags = RESET_COLOR
-		crate_icon_front.pixel_y = 5 * iteration
-		. += crate_icon_front
-		var/mutable_appearance/crate_icon_back = mutable_appearance('icons/mob/clothing/modsuit/mod_modules.dmi', "module_clamp_crate_back", layer = -BODY_BEHIND_LAYER)
-		crate_icon_back.appearance_flags = RESET_COLOR
-		crate_icon_back.pixel_y = 5 * iteration
-		. += crate_icon_back
-
 /obj/item/mod/module/clamp/proc/check_crate_pickup(atom/movable/target)
 	if(length(stored_crates) >= max_crates)
 		balloon_alert(mod.wearer, "too many crates!")
