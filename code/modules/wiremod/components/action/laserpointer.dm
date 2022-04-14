@@ -57,22 +57,13 @@
 	if(get_dist(current_turf, target) > max_range || current_turf.z != target.z)
 		return
 
-	/// the only reason this is even still here is because you have to set the cyborg as the target first which usually requires being next to them
+	/// only has cyborg flashing since felinid moving spikes time dilation when spammed
 	if(iscyborg(target))
 		var/mob/living/silicon/silicon = target
 		log_combat(shell, silicon, "shone in the sensors", src)
-		silicon.flash_act(affect_silicon = 1)
-		silicon.Paralyze(rand(1,5))
+		silicon.flash_act(affect_silicon = 1) /// no stunning, just a blind
 		to_chat(silicon, span_danger("Your sensors were overloaded by a laser shone by [shell]!"))
 
-	for(var/mob/living/carbon/human/Victim in view(1,targloc))
-		if(!isfelinid(Victim) || Victim.incapacitated() || Victim.is_blind())
-			continue
-		else
-			Victim.setDir(get_dir(Victim,targloc))
-			Victim.visible_message(span_warning("[Victim] makes a grab for the light!"),span_userdanger("LIGHT!"))
-			Victim.Move(targloc)
-			log_combat(shell, Victim, "moved with a laser pointer",src)
 
 	///laserpointer image
 	var/image/laser_location = image('icons/obj/guns/projectiles.dmi',targloc,"[pointer_icon_state]_laser",10)
