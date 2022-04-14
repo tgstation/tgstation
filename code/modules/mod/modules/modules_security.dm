@@ -84,7 +84,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/magnetic_harness)
 	/// Time before we activate the magnet.
-	var/magnet_delay = 1 SECONDS
+	var/magnet_delay = 0.8 SECONDS
 	/// The typecache of all guns we allow.
 	var/static/list/guns_typecache
 	/// A list of our allowed gun types.
