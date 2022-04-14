@@ -1,20 +1,3 @@
-/// Returns the time at which the next midround will spawn, given the current midround threat, and the current time
-/datum/game_mode/dynamic/proc/get_next_midround_roll_point(midround_threat, current_time)
-	var/rolls = CEILING(midround_threat / threat_per_midround_roll, 1)
-
-	// If we're at 0 midround threat, then there's no midrounds
-	var/last_point = INFINITY
-
-	// Finds equidistant points on a line from lower bound to upper bound
-	for (var/count in rolls to 1 step -1)
-		var/roll_point = ((count / (rolls + 1)) * midround_upper_bound) + midround_lower_bound
-		if (roll_point < current_time)
-			return last_point
-
-		last_point = roll_point
-
-	return last_point
-
 /// Returns the world.time of the next midround injection.
 /// Will return a cached result from `next_midround_injection`, the variable.
 /// If that variable is null, will generate a new one.
@@ -25,10 +8,13 @@
 	// Admins can futz around with the midround threat, and we want to be able to react to that
 	var/midround_threat = threat_level - round_start_budget
 
-	var/next_midround_roll_point = get_next_midround_roll_point(midround_threat, world.time - SSticker.round_start_time)
-	next_midround_injection = SSticker.round_start_time + next_midround_roll_point
+	var/rolls = CEILING(midround_threat / threat_per_midround_roll, 1)
+	var/distance = ((1 / (rolls + 1)) * midround_upper_bound) + midround_lower_bound
 
-	return next_midround_injection
+	if (last_midround_injection_attempt == 0)
+		last_midround_injection_attempt = SSticker.round_start_time
+
+	return last_midround_injection_attempt + distance
 
 /datum/game_mode/dynamic/proc/try_midround_roll()
 	if (!forced_injection && next_midround_injection() > world.time)
