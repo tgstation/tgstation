@@ -147,11 +147,8 @@
 	else
 		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, .proc/on_hud_created)
 
-	if(!iscarbon(living_mob))
-		return
-	var/mob/living/carbon/carbon_mob = mob_to_tweak
 	// Brains are optional for lings.
-	var/obj/item/organ/brain/our_ling_brain = carbon_mob.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/our_ling_brain = living_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	if(our_ling_brain)
 		our_ling_brain.organ_flags &= ~ORGAN_VITAL
 		our_ling_brain.decoy_override = TRUE
