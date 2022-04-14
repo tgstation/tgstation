@@ -13,7 +13,6 @@
 /// The Laser Pointer Variables
 	var/turf/pointer_loc
 
-	var/effectchance = 100 /// same as a tier 4 laser pointer (technically thats 120), which is offset by the large time investment and difficulty in using circuits.
 	/// The input port
 	var/datum/port/input/target_input
 	var/datum/port/input/image_pixel_x = 0
