@@ -24,33 +24,22 @@
 	puzzle_id = "syndicate_fridge"
 
 //keycard doors
-/obj/machinery/door/keycard/yellow_required
-	name = "blue airlock"
-	desc = "It looks like it requires a yellow keycard."
-	puzzle_id = "yellow"
-
-/obj/machinery/door/keycard/blue_required
-	name = "blue airlock"
-	desc = "It looks like it requires a blue keycard."
-	puzzle_id = "blue"
-
-//Doors Below
-/obj/machinery/door/keycard/syndicate_bomb
+/obj/machinery/door/puzzle/keycard/syndicate_bomb
 	name = "Syndicate Ordinance Laboratory"
 	desc = "Locked. Looks like you'll need a special access key to get in."
 	puzzle_id = "syndicate_bomb"
 
-/obj/machinery/door/keycard/syndicate_bio
+/obj/machinery/door/puzzle/keycard/syndicate_bio
 	name = "Syndicate Bio-Weapon Laboratory"
 	desc = "Locked. Looks like you'll need a special access key to get in."
 	puzzle_id = "syndicate_bio"
 
-/obj/machinery/door/keycard/syndicate_chem
+/obj/machinery/door/puzzle/keycard/syndicate_chem
 	name = "Syndicate Chemical Manufacturing Plant"
 	desc = "Locked. Looks like you'll need a special access key to get in"
 	puzzle_id = "syndicate_chem"
 
-/obj/machinery/door/keycard/syndicate_fridge
+/obj/machinery/door/puzzle/keycard/syndicate_fridge
 	name = "The Walk-In Fridge"
 	desc = "Locked. Lopez sure runs a tight galley."
 	puzzle_id = "syndicate_fridge"
