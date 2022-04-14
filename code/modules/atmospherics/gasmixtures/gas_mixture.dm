@@ -8,6 +8,11 @@ This prevents race conditions that arise based on the order of tile processing.
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
+#define ATMOS_GARBAGE_COLLECT(gaslist, tocheck)\
+	for(var/datum/gas/id as anything in (tocheck || gaslist)){\
+		if(QUANTIZE(gaslist[id][MOLES]) <= 0) gaslist -= id;\
+	}
+
 /proc/init_gaslist_cache()
 	var/list/gases = list()
 	for(var/id in GLOB.meta_gas_info)
@@ -103,7 +108,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/has_gas(gas_id, amount=0)
 	ASSERT_GAS(gas_id, src)
 	var/is_there_gas = amount < gases[gas_id][MOLES]
-	garbage_collect()
+	ATMOS_GARBAGE_COLLECT(gases, null)
 	return is_there_gas
 
 /// Calculate pressure in kilopascals
@@ -184,7 +189,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
-	garbage_collect()
+	ATMOS_GARBAGE_COLLECT(gases, null)
 
 	SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED)
 	return removed
@@ -207,7 +212,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 
-	garbage_collect()
+	ATMOS_GARBAGE_COLLECT(gases, null)
 
 	SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED)
 	return removed
@@ -226,7 +231,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed_gases[gas_id][MOLES] = amount
 	cached_gases[gas_id][MOLES] -= amount
 
-	garbage_collect(list(gas_id))
+	ATMOS_GARBAGE_COLLECT(gases, list(gas_id))
 	return removed
 
 /datum/gas_mixture/proc/remove_specific_ratio(gas_id, ratio)
@@ -243,7 +248,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed_gases[gas_id][MOLES] = QUANTIZE(cached_gases[gas_id][MOLES] * ratio)
 	cached_gases[gas_id][MOLES] -= removed_gases[gas_id][MOLES]
 
-	garbage_collect(list(gas_id))
+	ATMOS_GARBAGE_COLLECT(gases, list(gas_id))
 
 	return removed
 
@@ -263,16 +268,16 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/total_volume = volume + other.volume
 	var/list/gas_list = gases | other.gases
 	for(var/gas_id in gas_list)
-		assert_gas(gas_id)
-		other.assert_gas(gas_id)
+		ASSERT_GAS(gas_id, src)
+		ASSERT_GAS(gas_id, other)
 		//math is under the assumption temperatures are equal
 		if(abs(gases[gas_id][MOLES] / volume - other.gases[gas_id][MOLES] / other.volume) > min_p_delta / (R_IDEAL_GAS_EQUATION * temperature))
 			. = TRUE
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
 			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
 			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
-	garbage_collect()
-	other.garbage_collect()
+	ATMOS_GARBAGE_COLLECT(gases, null)
+	ATMOS_GARBAGE_COLLECT(other.gases, null)
 
 ///Creates new, identical gas mixture
 ///Returns: duplicate gas mixture
@@ -367,12 +372,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//GAS TRANSFER
 
 	//Prep
-	for(var/id in only_in_sharer) //create gases not in our cache
+	for(var/datum/gas/id in only_in_sharer) //create gases not in our cache
 		ADD_GAS(id, cached_gases)
-	for(var/id in only_in_cached) //create gases not in the sharing mix
+	for(var/datum/gas/id in only_in_cached) //create gases not in the sharing mix
 		ADD_GAS(id, sharer_gases)
 
-	for(var/id in cached_gases) //transfer gases
+	for(var/datum/gas/id in cached_gases) //transfer gases
 		var/gas = cached_gases[id]
 		var/sharergas = sharer_gases[id]
 		var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE]) //the amount of gas that gets moved between the mixtures
@@ -419,10 +424,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
 	if(length(only_in_sharer + only_in_cached)) //if all gases were present in both mixtures, we know that no gases are 0
-		garbage_collect(only_in_cached) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
-		sharer.garbage_collect(only_in_sharer) //the reverse is equally true
+		ATMOS_GARBAGE_COLLECT(cached_gases, only_in_cached) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
+		ATMOS_GARBAGE_COLLECT(sharer_gases, only_in_sharer) //the reverse is equally true
 	else if (initial(sharer.gc_share))
-		sharer.garbage_collect()
+		ATMOS_GARBAGE_COLLECT(sharer_gases, null)
 
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
@@ -496,7 +501,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/post_formation = list()
 	var/list/fires = list()
 	var/list/gas_reactions = SSair.gas_reactions
-	for(var/gas_id in cached_gases)
+	for(var/datum/gas/gas_id as anything in cached_gases)
 		var/list/reaction_set = gas_reactions[gas_id]
 		if(!reaction_set)
 			continue
@@ -535,7 +540,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 
 	if(.) //If we changed the mix to any degree
-		garbage_collect()
+		ATMOS_GARBAGE_COLLECT(gases, null)
 		SEND_SIGNAL(src, COMSIG_GASMIX_REACTED)
 
 
