@@ -48,7 +48,11 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	var/to_remove_string
 	var/list/candidates = get_hearers_in_view(8, user) - (include_speaker ? null : user)
 	for(var/mob/living/candidate in candidates)
-		if(candidate.stat != DEAD && candidate.can_hear() && !candidate.anti_magic_check(magic = FALSE, holy = TRUE))
+		if(candidate.stat != DEAD && candidate.can_hear())
+			if(candidate.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND, charge_cost = 0))
+				to_chat(span_userdanger("Something's wrong! [candidate] seems to be resisting your commands."))
+				continue
+
 			listeners += candidate
 
 			//Let's ensure the listener's name is not matched within another word or command (and viceversa). e.g. "Saul" in "somersault"

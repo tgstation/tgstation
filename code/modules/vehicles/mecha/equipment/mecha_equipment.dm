@@ -24,8 +24,6 @@
 	var/mech_flags = NONE
 	///boolean: FALSE if this equipment can not be removed/salvaged
 	var/detachable = TRUE
-	///Boolean: whether we can equip this equipment through the mech UI or the cycling ability
-	var/selectable = TRUE
 	///Boolean: whether a pacifist can use this equipment
 	var/harmful = FALSE
 	///Sound file: Sound to play when this equipment is destroyed while still attached to the mech
@@ -108,19 +106,17 @@
  */
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target, mob/user, interaction_key)
 	if(!chassis)
-		return
-	chassis.use_power(energy_drain)
-	. = do_after(user, equip_cooldown, target=target, interaction_key = interaction_key)
-	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
 		return FALSE
+	chassis.use_power(energy_drain)
+	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target), interaction_key = interaction_key)
 
 ///Do after wrapper for mecha equipment
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay)
-	if(!chassis)
-		return
-	. = do_after(user, delay, target=target)
-	if(!chassis || !(get_dir(chassis, target)&chassis.dir))
-		return FALSE
+	return do_after(user, delay, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target))
+
+/// do after checks for the mecha equipment do afters
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_checks(atom/target)
+	return chassis && (get_dir(chassis, target) & chassis.dir)
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	return default_can_attach(M, attach_right)
