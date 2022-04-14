@@ -40,6 +40,10 @@ Stabilized extracts:
 			if(ishuman(storage_loc_storage_loc))
 				humanfound = storage_loc_storage_loc
 				break
+	for(var/atom/loc_storage_loc in get_storage_locs(loc))
+		if(ishuman(loc_storage_loc))
+			humanfound = loc_storage_loc
+			break
 	if(!humanfound)
 		return
 	var/mob/living/carbon/human/H = humanfound
