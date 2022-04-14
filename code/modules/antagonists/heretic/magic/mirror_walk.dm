@@ -12,7 +12,7 @@
 	charge_max = 6 SECONDS
 	cooldown_min = 0
 	clothes_req = FALSE
-	antimagic_allowed = TRUE
+	antimagic_flags = NONE
 	phase_allowed = TRUE
 	range = -1
 	include_user = TRUE
