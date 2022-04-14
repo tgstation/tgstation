@@ -122,6 +122,7 @@
 #include "code\__DEFINES\obj_flags.dm"
 #include "code\__DEFINES\paintings.dm"
 #include "code\__DEFINES\paper.dm"
+#include "code\__DEFINES\perf_test.dm"
 #include "code\__DEFINES\pinpointers.dm"
 #include "code\__DEFINES\pipe_construction.dm"
 #include "code\__DEFINES\plumbing.dm"
