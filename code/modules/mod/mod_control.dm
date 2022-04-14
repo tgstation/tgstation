@@ -203,7 +203,7 @@
 		. += span_notice("You could close the cover with a <b>screwdriver</b>.")
 		. += span_notice("You could use <b>modules</b> on it to install them.")
 		. += span_notice("You could remove modules with a <b>crowbar</b>.")
-		. += span_notice("You could update the access with an <b>ID</b>.")
+		. += span_notice("You could update the access lock with an <b>ID</b>.")
 		. += span_notice("You could access the wire panel with a <b>wire tool</b>.")
 		if(core)
 			. += span_notice("You could remove [core] with a <b>wrench</b>.")
@@ -390,7 +390,7 @@
 
 /obj/item/mod/control/emag_act(mob/user)
 	locked = !locked
-	balloon_alert(user, "[locked ? "locked" : "unlocked"]")
+	balloon_alert(user, "suit access [locked ? "locked" : "unlocked"]")
 
 /obj/item/mod/control/emp_act(severity)
 	. = ..()
