@@ -23,7 +23,7 @@
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
 	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, .proc/on_mod_removal)
 
-/obj/item/mod/module/eradication_lock/on_uninstall()
+/obj/item/mod/module/eradication_lock/on_uninstall(deleting = FALSE)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
 
@@ -230,7 +230,7 @@
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	INVOKE_ASYNC(chrono_beam, /obj/projectile.proc/fire)
 
-/obj/item/mod/module/tem/on_uninstall()
+/obj/item/mod/module/tem/on_uninstall(deleting = FALSE)
 	if(!field)
 		return
 	field_disconnect(field)

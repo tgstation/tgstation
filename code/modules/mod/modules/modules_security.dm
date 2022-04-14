@@ -30,7 +30,7 @@
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_power_cost)
 
-/obj/item/mod/module/stealth/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/stealth/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -45,7 +45,7 @@
 	to_chat(mod.wearer, span_warning("[src] gets discharged from contact!"))
 	do_sparks(2, TRUE, src)
 	drain_power(use_power_cost)
-	on_deactivation(display_message = TRUE)
+	on_deactivation(display_message = TRUE, deleting = FALSE)
 
 /obj/item/mod/module/stealth/proc/on_unarmed_attack(datum/source, atom/target)
 	SIGNAL_HANDLER
@@ -101,13 +101,13 @@
 	already_allowed_guns = guns_typecache & mod.chestplate.allowed
 	mod.chestplate.allowed |= guns_typecache
 
-/obj/item/mod/module/magnetic_harness/on_uninstall()
+/obj/item/mod/module/magnetic_harness/on_uninstall(deleting = FALSE)
 	mod.chestplate.allowed -= (guns_typecache - already_allowed_guns)
 
 /obj/item/mod/module/magnetic_harness/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM, .proc/check_dropped_item)
 
-/obj/item/mod/module/magnetic_harness/on_suit_deactivation()
+/obj/item/mod/module/magnetic_harness/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM)
 
 /obj/item/mod/module/magnetic_harness/proc/check_dropped_item(datum/source, obj/item/dropped_item, force, new_location)
@@ -144,7 +144,7 @@
 /obj/item/mod/module/pepper_shoulders/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_check_shields)
 
-/obj/item/mod/module/pepper_shoulders/on_suit_deactivation()
+/obj/item/mod/module/pepper_shoulders/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
 
 /obj/item/mod/module/pepper_shoulders/on_use()

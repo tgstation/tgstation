@@ -25,7 +25,7 @@
 /obj/item/mod/module/circuit/on_install()
 	RegisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, .proc/override_power_usage)
 
-/obj/item/mod/module/circuit/on_uninstall()
+/obj/item/mod/module/circuit/on_uninstall(deleting = FALSE)
 	UnregisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
 /obj/item/mod/module/circuit/on_use()

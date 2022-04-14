@@ -34,14 +34,14 @@
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
 
-/obj/item/mod/module/storage/on_uninstall()
+/obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
 	var/datum/component/storage/modstorage = mod.GetComponent(/datum/component/storage)
 	storage.slaves -= modstorage
 	qdel(modstorage)
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
-	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
-
+	if(!deleting)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || newloc == mod.wearer || !mod.wearer.s_store)
 		return
@@ -119,7 +119,7 @@
 	if(full_speed)
 		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
-/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -202,7 +202,7 @@
 	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
 	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH|PEPPERPROOF
 
-/obj/item/mod/module/mouthhole/on_uninstall()
+/obj/item/mod/module/mouthhole/on_uninstall(deleting = FALSE)
 	mod.helmet.flags_cover |= former_flags
 	mod.helmet.visor_flags_cover |= former_visor_flags
 
@@ -220,7 +220,7 @@
 /obj/item/mod/module/emp_shield/on_install()
 	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
 
-/obj/item/mod/module/emp_shield/on_uninstall()
+/obj/item/mod/module/emp_shield/on_uninstall(deleting = FALSE)
 	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
 
 ///Flashlight - Gives the suit a customizable flashlight.
@@ -256,7 +256,7 @@
 	set_light_on(active)
 	active_power_cost = base_power * light_range
 
-/obj/item/mod/module/flashlight/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/flashlight/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -343,7 +343,7 @@
 /obj/item/mod/module/longfall/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT, .proc/z_impact_react)
 
-/obj/item/mod/module/longfall/on_suit_deactivation()
+/obj/item/mod/module/longfall/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
 
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
@@ -406,7 +406,7 @@
 	RegisterSignal(mod, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 	RegisterSignal(mod, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
 
-/obj/item/mod/module/dna_lock/on_uninstall()
+/obj/item/mod/module/dna_lock/on_uninstall(deleting = FALSE)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
 	UnregisterSignal(mod, COMSIG_ATOM_EMP_ACT)
@@ -531,7 +531,7 @@
 	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
 	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/remove_hat)
 
-/obj/item/mod/module/hat_stabilizer/on_suit_deactivation()
+/obj/item/mod/module/hat_stabilizer/on_suit_deactivation(deleting = FALSE)
 	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
 		remove_hat(src, mod.wearer)
 	UnregisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE)
@@ -595,5 +595,5 @@
 /obj/item/mod/module/signlang_radio/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
 
-/obj/item/mod/module/signlang_radio/on_suit_deactivation()
+/obj/item/mod/module/signlang_radio/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)

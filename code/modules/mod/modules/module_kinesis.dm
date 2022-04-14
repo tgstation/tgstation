@@ -66,11 +66,11 @@
 	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
 	soundloop.start()
 
-/obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
-	clear_grab()
+	clear_grab(playsound = !deleting)
 
 /obj/item/mod/module/anomaly_locked/kinesis/process(delta_time)
 	if(!mod.wearer.client || mod.wearer.incapacitated(IGNORE_GRAB))
