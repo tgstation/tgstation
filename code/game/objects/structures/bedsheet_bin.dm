@@ -56,9 +56,9 @@ LINEN BINS
 	if(user.body_position == LYING_DOWN)    //The player isn't laying down currently
 		dir = user.dir
 	else
-		if(user.dir |= WEST)    //The player is rotated to the right, lay the sheet left!
+		if(user.dir & WEST)    //The player is rotated to the right, lay the sheet left!
 			dir = WEST
-		else    //The player is rotated to the left, lay the sheet right! 
+		else    //The player is rotated to the left, lay the sheet right!
 			dir = EAST
 	add_fingerprint(user)
 	return
