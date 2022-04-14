@@ -1,0 +1,4 @@
+author: "UnderARock"
+delete-after: True
+changes: 
+  - bugfix: "Fixes spraytan not tanning skin color."
