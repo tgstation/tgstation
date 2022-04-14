@@ -115,7 +115,7 @@
 
 /datum/looping_sound/computer
 	start_sound = 'sound/machines/computer/computer_start.ogg'
-	start_length = 0.8 SECONDS
+	start_length = 7.2 SECONDS
 	start_volume = 10
 	mid_sounds = list('sound/machines/computer/computer_mid1.ogg'=1, 'sound/machines/computer/computer_mid2.ogg'=1)
 	mid_length = 1.8 SECONDS
