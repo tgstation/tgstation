@@ -29,6 +29,13 @@ Stabilized extracts:
 		humanfound = loc
 	if(ishuman(loc.loc)) //Check if in backpack.
 		humanfound = (loc.loc)
+	for(var/atom/storage_loc in get_storage_locs(src))
+		if(ishuman(storage_loc))
+			humanfound = storage_loc
+			break
+		if(ishuman(storage_loc.loc))
+			humanfound = storage_loc.loc
+			break
 	if(!humanfound)
 		return
 	var/mob/living/carbon/human/H = humanfound
