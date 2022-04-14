@@ -369,7 +369,7 @@
 	lifetime = 1
 	opaque = FALSE
 
-/datum/effect_system/smoke_spread/quicks
+/datum/effect_system/smoke_spread/quick
 	effect_type = /obj/effect/particle_effect/smoke/quick
 
 /obj/effect/particle_effect/smoke/chem/quick
