@@ -551,7 +551,7 @@
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	var/cooldown = 150
 	var/last_teleport = 0
-	var/is_charging = FALSE //Fixes bug 65900 preventing spam activation.
+	var/is_charging = FALSE //Set to true upon action activation to prevent spamming teleport callbacks while the first is still occurring.
 
 /datum/action/innate/unstable_teleport/IsAvailable()
 	. = ..()
@@ -565,7 +565,7 @@
 	var/mob/living/carbon/human/H = owner
 	H.visible_message(span_warning("[H] starts vibrating!"), span_danger("You start charging your bluespace core..."))
 	is_charging = TRUE
-	UpdateButtons() //action icon looks unavilable
+	UpdateButtons() //action icon looks unavailable
 	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, TRUE)
 	addtimer(CALLBACK(src, .proc/teleport, H), 15)
 
