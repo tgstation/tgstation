@@ -118,6 +118,7 @@
 		if(armless)
 			if(!user.pulling || !iscash(user.pulling) && !istype(user.pulling, /obj/item/card/id))
 				to_chat(user, span_notice("Try pulling a valid ID, space cash, holochip or coin while using \the [parent]!"))
+				return
 
 	if(physical_cash_total >= total_cost)
 		for(var/obj/cash_object in counted_money)

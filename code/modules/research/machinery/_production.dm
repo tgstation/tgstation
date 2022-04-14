@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(production_machines)
+
 /obj/machinery/rnd/production
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
@@ -29,6 +31,7 @@
 	update_designs()
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
 	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_CLINICAL, TRUE)
+	GLOB.production_machines += src
 	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
 
@@ -36,6 +39,7 @@
 	materials = null
 	cached_designs = null
 	matching_designs = null
+	GLOB.production_machines -= src
 	return ..()
 
 /obj/machinery/rnd/production/proc/update_designs()
