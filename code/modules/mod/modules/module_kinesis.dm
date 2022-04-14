@@ -97,6 +97,7 @@
 	if(grabbed_atom.Move(next_turf))
 		if(isitem(grabbed_atom) && (mod.wearer in next_turf))
 			var/obj/item/grabbed_item = grabbed_atom
+			clear_grab()
 			grabbed_item.pickup(mod.wearer)
 			mod.wearer.put_in_hands(grabbed_item)
 		return
