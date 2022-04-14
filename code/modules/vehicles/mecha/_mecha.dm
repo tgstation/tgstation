@@ -576,7 +576,8 @@
 	SIGNAL_HANDLER
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		weapons_safety = !weapons_safety
-		SEND_SOUND(user, sound('sound/machines/beep.ogg', volume=50))
+		SEND_SOUND(user, sound('sound/machines/beep.ogg', volume=25))
+		balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 		set_mouse_pointer()
 		return
 	if(weapons_safety)
