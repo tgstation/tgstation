@@ -66974,8 +66974,6 @@
 	},
 /obj/item/storage/secure/briefcase,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/newscaster/directional/east,
-/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/dark,
 /area/service/library)
 "rqM" = (
