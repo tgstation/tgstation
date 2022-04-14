@@ -156,7 +156,7 @@
 	start_sound = 'sound/machines/pump/pump_start.ogg'
 	start_length = 0.8 SECONDS
 	mid_sounds = 'sound/machines/pump/pump_mid.ogg'
-	mid_length = 1.3 SECONDS
+	mid_length = 0.25 SECONDS
 	end_sound = 'sound/machines/pump/pump_end.ogg'
 	falloff_distance = 2
 	falloff_exponent = 5
