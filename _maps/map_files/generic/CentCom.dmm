@@ -10125,7 +10125,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
 	},
-/obj/machinery/door/keycard/syndicate_bio,
+/obj/machinery/door/puzzle/keycard/syndicate_bio,
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
@@ -10462,7 +10462,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
 	},
-/obj/machinery/door/keycard/syndicate_bomb,
+/obj/machinery/door/puzzle/keycard/syndicate_bomb,
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
@@ -11512,7 +11512,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
 	},
-/obj/machinery/door/keycard/syndicate_chem,
+/obj/machinery/door/puzzle/keycard/syndicate_chem,
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
@@ -11884,7 +11884,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wideplating,
-/obj/machinery/door/keycard/syndicate_fridge,
+/obj/machinery/door/puzzle/keycard/syndicate_fridge,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},

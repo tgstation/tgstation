@@ -669,7 +669,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 /turf/proc/add_thermal_conductivity_source(conductivity, priority)
 	if(!thermal_conductivities || !LAZYLEN(thermal_conductivities))
 		LAZYSETLEN(thermal_conductivities, MAX_TEMPORARY_THERMAL_CONDUCTIVITY)
-	if(!isnull(conductivity))//0 conductivity is valid
+	if(!isnum(conductivity))//0 conductivity is valid
 		return
 	if(priority > LAZYLEN(thermal_conductivities))
 		return

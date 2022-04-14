@@ -749,6 +749,19 @@
 
 		return
 
+	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
+		if(actually_paints)
+			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
+		. = use_charges(user, 2, requires_full = FALSE)
+		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
+
+		if(pre_noise || post_noise)
+			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
+		return .
+
+
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		if(actually_paints)
 			var/color_is_dark = is_color_dark(paint_color)
