@@ -129,7 +129,7 @@
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(2)
-					var/obj/structure/tramwall/tram_wall = new sheets.tram_wall_type(loc)
+					var/obj/structure/tramwall/tram_wall = new(loc)
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
@@ -199,9 +199,6 @@
 			var/M = sheets.sheettype
 			var/amount = construction_cost["exotic_material"]
 			if(state == GIRDER_TRAM)
-				if(!sheets.tram_wall_type)
-					balloon_alert(user, "need titanium, plastitanium, or iron!")
-					return
 				if(sheets.get_amount() < amount)
 					balloon_alert(user, "need [amount] sheets!")
 					return
@@ -210,15 +207,22 @@
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
-					var/obj/structure/tramwall/tram_wall = new sheets.tram_wall_type(loc)
+					var/obj/structure/tramwall/tram_wall
+					var/tram_wall_type = text2path("/obj/structure/tramwall/[M]")
+					if(tram_wall_type)
+						tram_wall = new tram_wall_type(loc)
+					else
+						var/obj/structure/tramwall/material/mat_tram_wall = new(loc)
+						var/list/material_list = list()
+						material_list[GET_MATERIAL_REF(sheets.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						if(material_list)
+							mat_tram_wall.set_custom_materials(material_list)
+						tram_wall = mat_tram_wall
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
 			if(state == GIRDER_DISPLACED)
 				var/falsewall_type = text2path("/obj/structure/falsewall/[M]")
-				if(!falsewall_type)
-					balloon_alert(user, "need comptatiable sheets!")
-					return
 				if(sheets.get_amount() < amount)
 					balloon_alert(user, "need [amount] sheets!")
 					return
@@ -227,8 +231,17 @@
 					if(sheets.get_amount() < amount)
 						return
 					sheets.use(amount)
-					var/obj/structure/falsewall/FW = new falsewall_type (loc)
-					transfer_fingerprints_to(FW)
+					var/obj/structure/falsewall/falsewall
+					if(falsewall_type)
+						falsewall = new falsewall_type (loc)
+					else
+						var/obj/structure/falsewall/material/mat_falsewall = new(loc)
+						var/list/material_list = list()
+						material_list[GET_MATERIAL_REF(sheets.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						if(material_list)
+							mat_falsewall.set_custom_materials(material_list)
+						falsewall = mat_falsewall
+					transfer_fingerprints_to(falsewall)
 					qdel(src)
 					return
 			else

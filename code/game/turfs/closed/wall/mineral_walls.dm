@@ -99,8 +99,12 @@
 				chance = URANIUM_IRRADIATION_CHANCE,
 				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
 			)
-			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
-				T.radiate()
+			for(var/turf/closed/wall/mineral/uranium/wall in orange(1,src))
+				wall.radiate()
+			for(var/obj/structure/falsewall/uranium/falsewall in orange(1,src))
+				falsewall.radiate()
+			for(var/obj/structure/tramwall/uranium/tramwall in orange(1,src))
+				tramwall.radiate()
 			last_event = world.time
 			active = null
 			return

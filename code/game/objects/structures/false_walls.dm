@@ -201,8 +201,12 @@
 				chance = URANIUM_IRRADIATION_CHANCE,
 				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
 			)
-			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
-				T.radiate()
+			for(var/turf/closed/wall/mineral/uranium/wall in orange(1,src))
+				wall.radiate()
+			for(var/obj/structure/falsewall/uranium/falsewall in orange(1,src))
+				falsewall.radiate()
+			for(var/obj/structure/tramwall/uranium/tramwall in orange(1,src))
+				tramwall.radiate()
 			last_event = world.time
 			active = null
 			return
@@ -357,3 +361,66 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
+
+/obj/structure/falsewall/material
+	name = "wall"
+	desc = "A huge chunk of material used to separate rooms."
+	icon = 'icons/turf/walls/materialwall.dmi'
+	icon_state = "materialwall-0"
+	base_icon_state = "materialwall"
+	walltype = /turf/closed/wall/material
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_MATERIAL_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_MATERIAL_WALLS)
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/obj/structure/falsewall/material/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(disassembled)
+			new girder_type(loc)
+		for(var/material in custom_materials)
+			var/datum/material/material_datum = material
+			new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / MINERAL_MATERIAL_AMOUNT, 1))
+	qdel(src)
+
+/obj/structure/falsewall/material/mat_update_desc(mat)
+	desc = "A huge chunk of [mat] used to separate rooms."
+
+/obj/structure/falsewall/material/toggle_open()
+	if(!QDELETED(src))
+		set_density(!density)
+		var/mat_opacity = TRUE
+		for(var/datum/material/mat in custom_materials)
+			if(mat.alpha < 255)
+				mat_opacity = FALSE
+				break
+		set_opacity(density && mat_opacity)
+		opening = FALSE
+		update_appearance()
+		air_update_turf(TRUE, !density)
+
+/obj/structure/falsewall/material/ChangeToWall(delete = 1)
+	var/turf/current_turf = get_turf(src)
+	var/turf/closed/wall/material/new_wall = current_turf.PlaceOnTop(/turf/closed/wall/material)
+	new_wall.set_custom_materials(custom_materials)
+	if(delete)
+		qdel(src)
+	return current_turf
+
+/obj/structure/falsewall/material/update_icon(updates)
+	. = ..()
+	for(var/datum/material/mat in custom_materials)
+		if(mat.alpha < 255)
+			update_trans_underlays()
+			return
+
+/obj/structure/falsewall/material/proc/update_trans_underlays()
+	underlays.Cut()
+	var/girder_icon_state = "displaced"
+	if(opening)
+		girder_icon_state += "_[density ? "opening" : "closing"]"
+	else if(!density)
+		girder_icon_state += "_open"
+	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', girder_icon_state, layer = LOW_OBJ_LAYER-0.01)
+	girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR
+	underlays += girder_underlay
