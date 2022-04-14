@@ -495,3 +495,61 @@
   - expansion: The syndicate infiltrator has been tuned up, coming with a fresh coat
       of paint, insurance, and the new shuttle smell. Sadly, no complimentary taco
       in the glovebox.
+2022-04-12:
+  Fikou:
+  - expansion: Maintenance has a new set of special glasses...
+  Fikou, Azlan, PositiveEntropy, Capsaicin:
+  - imageadd: new sprites for the syndicate modsuit (and honkerative)
+  Ghilker:
+  - bugfix: fixes exploit where you could duplicate gases with valves
+  - bugfix: thermal conductivity can be properly set so the turbine turfs will not
+      leak heat
+  GoblinBackwards:
+  - bugfix: Fixes brimdemon lasers never disappearing if the demon was deleted while
+      firing.
+  MacBlaze1:
+  - qol: firelocks now automatically reset upon the air temperature being returned
+      to normal thresholds
+  - bugfix: fire alarms now automatically update on atmos monitoring programs/consoles
+      to show their real status. No more false positives!
+  - code_imp: air alarms now have a variable referencing their area that is used
+  - code_imp: added a new signal for when atmos adjacent turfs are calculated
+  TheSmallBlue:
+  - expansion: The Hygienebot can now be colored with a spraycan.
+  - code_imp: Added a flag that allows mobs to be colored with the spraycan.
+  capsaicinz:
+  - spellcheck: fixed an error in the chilling black extract's description.
+  - code_imp: the 'random' subtype of golems no longer exists, and is now effectively
+      replaced by picking from all subtypes of the golem species.
+  timothymtorres:
+  - bugfix: Fix girder construction runtimes
+2022-04-13:
+  Iamgoofball:
+  - server: Adds Ukraine's Independence Day as a holiday, since the child attacking
+      our hosting requested goofball PRs.
+  necromanceranne:
+  - bugfix: Plasmamen no longer have a stray white pixel.
+2022-04-14:
+  Ghommie:
+  - bugfix: Fixed supply pods not being displayed below their contents when opened
+      or the rubbles effect caused by the impact.
+  GoblinBackwards:
+  - bugfix: Fixes facial hair using main hair colour instead of facial hair colour
+  Rhials:
+  - bugfix: Cleaning strange objects no longer leave behind empty grenade casings.
+      No littering!
+  SmArtKar:
+  - bugfix: Monkeys now can interact with misc(environmental) turfs. Also removed
+      two unused broken turf types.
+  - bugfix: You can no longer dupe ants(or any other chemicals) as a janiborg
+  SmoSmoSmoSmok:
+  - bugfix: Ghosts can now correctly jump to C4's planted on walls/floors when they
+      get the notification
+  Tastyfish:
+  - imageadd: Wrapped parcels now have an overlay when tagged with a destination.
+  - refactor: Refactored wrapped parcels to have a common base type.
+  san7890:
+  - bugfix: After a few mishaps, Nanotrasen fixed a few small area definition errors
+      on MetaStation.
+  unv-annihilator:
+  - bugfix: held mice are no longer edible by moths

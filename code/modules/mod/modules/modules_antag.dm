@@ -15,6 +15,7 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
+	use_mod_colors = TRUE
 	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
 	/// Slowdown added to the suit.
