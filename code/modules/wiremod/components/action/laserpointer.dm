@@ -57,12 +57,12 @@
 	if(get_dist(current_turf, target) > max_range || current_turf.z != target.z)
 		return
 
-	/// only has cyborg flashing since felinid moving spikes time dilation when spammed
+	/// only has cyborg flashing since felinid moving spikes time dilation when spammed and the other two features of laserpointers would be unbalanced when spammed
 	if(iscyborg(target))
 		var/mob/living/silicon/silicon = target
 		log_combat(shell, silicon, "shone in the sensors", src)
 		silicon.flash_act(affect_silicon = 1) /// no stunning, just a blind
-		to_chat(silicon, span_danger("Your sensors were overloaded by a laser shone by [shell]!"))
+		to_chat(silicon, span_danger("Your sensors were overloaded by a weakened laser shone by [shell]!"))
 
 
 	///laserpointer image
