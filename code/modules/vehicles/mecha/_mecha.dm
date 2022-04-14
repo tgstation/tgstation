@@ -587,8 +587,6 @@
 		return
 	if(completely_disabled || is_currently_ejecting || (mecha_flags & CANNOT_INTERACT))
 		return
-//	if(isAI(user) == !LAZYACCESS(modifiers, MIDDLE_CLICK))//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
-//		return //DEBUG lmao
 	if(phasing)
 		balloon_alert(user, "not while [phasing]!")
 		return
@@ -652,15 +650,6 @@
 	if(force)
 		target.mech_melee_attack(src, user)
 		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
-
-/obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)
-	return
-	SIGNAL_HANDLER
-	weapons_safety = !weapons_safety
-	set_mouse_pointer()
-//	if(isAI(user))
-//		on_mouseclick(user, target, params)
-
 
 //////////////////////////////////
 ////////  Movement procs  ////////
@@ -1183,7 +1172,6 @@
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
 	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
-//	RegisterSignal(M, COMSIG_MOB_MIDDLECLICKON, .proc/on_mouseclick) //For weapon safety
 	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
 	. = ..()
 	update_appearance()
@@ -1191,7 +1179,6 @@
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
 	UnregisterSignal(M, COMSIG_LIVING_DEATH)
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)
-//	UnregisterSignal(M, COMSIG_MOB_MIDDLECLICKON)
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 	M.clear_alert(ALERT_CHARGE)
 	M.clear_alert(ALERT_MECH_DAMAGE)

@@ -24,7 +24,7 @@
 
 	var/obj/vehicle/sealed/mecha/mech = loc //I know. Shaddup.
 	if(istype(mech) && (!mech.weapons_safety || LAZYACCESS(modifiers, MIDDLE_CLICK))) //mech and (safeties off or middle click)
-		SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) //& COMSIG_MOB_CANCEL_CLICKON
+		SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers)
 		return
 
 	if(!can_interact_with(A))
