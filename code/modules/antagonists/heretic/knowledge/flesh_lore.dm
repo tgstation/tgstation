@@ -101,6 +101,7 @@
 
 	make_ghoul(source, target)
 
+/// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
 	log_game("[key_name(user)] created a ghoul, controlled by [key_name(victim)].")
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a ghoul, [ADMIN_LOOKUPFLW(victim)].")
@@ -113,9 +114,11 @@
 		CALLBACK(src, .proc/remove_from_ghoul),
 	)
 
+/// Callback for the ghoul status effect - Tracking all of our ghouls
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/apply_to_ghoul(mob/living/ghoul)
 	LAZYADD(created_items, WEAKREF(ghoul))
 
+/// Callback for the ghoul status effect - Tracking all of our ghouls
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/remove_from_ghoul(mob/living/ghoul)
 	LAZYREMOVE(created_items, WEAKREF(ghoul))
 
@@ -178,6 +181,7 @@
 	selected_atoms -= soon_to_be_ghoul
 	make_ghoul(user, soon_to_be_ghoul)
 
+/// Makes [victim] into a ghoul.
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
 	log_game("[key_name(user)] created a voiceless dead, controlled by [key_name(victim)].")
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a voiceless dead, [ADMIN_LOOKUPFLW(victim)].")
@@ -190,10 +194,12 @@
 		CALLBACK(src, .proc/remove_from_ghoul),
 	)
 
+/// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/apply_to_ghoul(mob/living/ghoul)
 	LAZYADD(created_items, WEAKREF(ghoul))
 	ADD_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
 
+/// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/remove_from_ghoul(mob/living/ghoul)
 	LAZYREMOVE(created_items, WEAKREF(ghoul))
 	REMOVE_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
