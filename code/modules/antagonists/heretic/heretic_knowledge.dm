@@ -37,12 +37,13 @@
 	var/route
 
 /datum/heretic_knowledge/New()
-	. = ..()
-	if(mutually_exclusive)
-		for(var/knowledge_type in subtypesof(abstract_parent_type))
-			if(knowledge_type == type)
-				continue
-			banned_knowledge += knowledge_type
+	if(!mutually_exclusive)
+		return
+
+	for(var/knowledge_type in subtypesof(abstract_parent_type))
+		if(knowledge_type == type)
+			continue
+		banned_knowledge += knowledge_type
 
 /**
  * Called when the knowledge is first researched.
@@ -348,12 +349,14 @@
  * whenever the heretic attacks someone in melee with their heretic blade.
  */
 /datum/heretic_knowledge/blade_upgrade/proc/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	return
 
 /**
  * Overridable proc that invokes special effects
  * whenever the heretic clicks on someone at range with their heretic blade.
  */
 /datum/heretic_knowledge/blade_upgrade/proc/do_ranged_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	return
 
 /*
  * A knowledge subtype lets the heretic curse someone with a ritual.

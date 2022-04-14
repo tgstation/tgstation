@@ -59,7 +59,7 @@
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/fire_projectile(mob/living/user, atom/target)
 	. = ..()
-	blade_effect.remove_blade(blade_effect.blades[1])
+	qdel(blade_effect.blades[1])
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/proc/on_status_effect_deleted(datum/source)
 	SIGNAL_HANDLER

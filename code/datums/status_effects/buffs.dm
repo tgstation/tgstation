@@ -493,7 +493,7 @@
 		if(time_until_created <= 0)
 			create_blade()
 		else
-			addtimer(CALLBACK(src, .proc/create_blade), time_until_created)
+			addtimer(CALLBACK(src, .proc/create_blade), time_until_created, TIMER_DELETE_ME)
 
 	return TRUE
 
@@ -508,6 +508,7 @@
 	var/obj/effect/floating_blade/blade = new(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
+	RegisterSignal(blade, COMSIG_PARENT_QDELETING, .proc/remove_blade)
 	playsound(get_turf(owner), 'sound/items/unsheath.ogg', 33, TRUE)
 
 /// Signal proc for [COMSIG_HUMAN_CHECK_SHIELDS].
@@ -534,20 +535,19 @@
 		span_hear("You hear a clink."),
 	)
 
-	remove_blade(to_remove)
+	qdel(to_remove)
 
 	return SHIELD_BLOCK
 
-/// Remove the passed blade from our blades list properly
+/// Remove deleted blades from our blades list properly.
 /datum/status_effect/protective_blades/proc/remove_blade(obj/effect/floating_blade/to_remove)
-	if(QDELETED(to_remove))
-		CRASH("[type] called remove_blade() with a blade that was QDELETED or null.")
+	SIGNAL_HANDLER
+
 	if(!(to_remove in blades))
 		CRASH("[type] called remove_blade() with a blade that was not in its blades list.")
 
 	to_remove.stop_orbit(owner.orbiters)
 	blades -= to_remove
-	qdel(to_remove)
 
 	if(!length(blades) && delete_on_blades_gone)
 		qdel(src)
