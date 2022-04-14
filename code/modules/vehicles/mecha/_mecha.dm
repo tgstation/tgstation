@@ -145,6 +145,10 @@
 	var/silicon_icon_state = null
 	///Currently ejecting, and unable to do things
 	var/is_currently_ejecting = FALSE
+	///Safety for weapons. Won't fire if enabled, and toggled by middle click.
+	var/weapons_safety = FALSE
+	///Mouse pointer. Disables with safety, and turns red if the mech's equipment has been interrupted by EMP
+	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 
 	var/datum/effect_system/smoke_spread/smoke_system = new
 
@@ -292,6 +296,15 @@
 	icon_state = get_mecha_occupancy_state()
 	return ..()
 
+/obj/vehicle/sealed/mecha/proc/set_mouse_pointer()
+	if(weapons_safety)
+		mouse_pointer = ""
+	else if(equipment_disabled)
+		mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
+	else mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
+	for(var/mob/mob_occupant in occupants)
+		mob_occupant.update_mouse_pointer()
+
 //override this proc if you need to split up mecha control between multiple people (see savannah_ivanov.dm)
 /obj/vehicle/sealed/mecha/auto_assign_occupant_flags(mob/M)
 	if(driver_amount() < max_drivers)
@@ -334,7 +347,7 @@
 		var/mob/mob_occupant = occupant
 		SEND_SOUND(mob_occupant, sound('sound/items/timer.ogg', volume=50))
 		to_chat(mob_occupant, span_notice("Equipment control unit has been rebooted successfully."))
-		mob_occupant.update_mouse_pointer()
+	set_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/CheckParts(list/parts_list)
 	. = ..()
@@ -561,14 +574,21 @@
 ///Called when a driver clicks somewhere. Handles everything like equipment, punches, etc.
 /obj/vehicle/sealed/mecha/proc/on_mouseclick(mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+		weapons_safety = !weapons_safety
+		SEND_SOUND(user, sound('sound/machines/beep.ogg', volume=50))
+		set_mouse_pointer()
+		return
+	if(weapons_safety)
+		return
 	if(modifiers[SHIFT_CLICK]) //Allows things to be examined.
 		return
 	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled
 		return
 	if(completely_disabled || is_currently_ejecting || (mecha_flags & CANNOT_INTERACT))
 		return
-	if(isAI(user) == !LAZYACCESS(modifiers, MIDDLE_CLICK))//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
-		return
+//	if(isAI(user) == !LAZYACCESS(modifiers, MIDDLE_CLICK))//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
+//		return //DEBUG lmao
 	if(phasing)
 		balloon_alert(user, "not while [phasing]!")
 		return
@@ -634,9 +654,13 @@
 		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
 /obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)
+	return
 	SIGNAL_HANDLER
-	if(isAI(user))
-		on_mouseclick(user, target, params)
+	weapons_safety = !weapons_safety
+	set_mouse_pointer()
+//	if(isAI(user))
+//		on_mouseclick(user, target, params)
+
 
 //////////////////////////////////
 ////////  Movement procs  ////////
@@ -970,7 +994,7 @@
 	AI.remote_control = src
 	to_chat(AI, AI.can_dominate_mechs ? span_greenannounce("Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!") :\
 		span_notice("You have been uploaded to a mech's onboard computer."))
-	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
+	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to toggle equipment safety. Clicks with safety enabled will pass AI commands.</span>")
 
 
 ///Handles an actual AI (simple_animal mecha pilot) entering the mech
@@ -1040,6 +1064,7 @@
 	log_message("[newoccupant] moved in as pilot.", LOG_MECHA)
 	setDir(dir_in)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
+	set_mouse_pointer()
 	if(!internal_damage)
 		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
 	return TRUE
@@ -1158,7 +1183,7 @@
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
 	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit)
 	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
-	RegisterSignal(M, COMSIG_MOB_MIDDLECLICKON, .proc/on_middlemouseclick) //For AIs
+//	RegisterSignal(M, COMSIG_MOB_MIDDLECLICKON, .proc/on_mouseclick) //For weapon safety
 	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
 	. = ..()
 	update_appearance()
@@ -1166,7 +1191,7 @@
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
 	UnregisterSignal(M, COMSIG_LIVING_DEATH)
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)
-	UnregisterSignal(M, COMSIG_MOB_MIDDLECLICKON)
+//	UnregisterSignal(M, COMSIG_MOB_MIDDLECLICKON)
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 	M.clear_alert(ALERT_CHARGE)
 	M.clear_alert(ALERT_MECH_DAMAGE)
