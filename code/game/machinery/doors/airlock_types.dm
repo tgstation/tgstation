@@ -613,6 +613,10 @@
 			set_opacity(FALSE)
 			break
 
+/obj/machinery/door/airlock/material/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
+	assembly.set_custom_materials(custom_materials)
+	..()
+
 /obj/machinery/door/airlock/material/glass
 	opacity = FALSE
 	glass = TRUE
