@@ -73,9 +73,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///By removing empty gases, processing speed is increased.
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
-	for(var/id in (tocheck || cached_gases))
-		if(QUANTIZE(cached_gases[id][MOLES]) <= 0)
-			cached_gases -= id
+	ATMOS_GARBAGE_COLLECT(cached_gases, tocheck)
 
 //PV = nRT
 
