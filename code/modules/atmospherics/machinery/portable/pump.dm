@@ -24,11 +24,18 @@
 	var/direction = PUMP_OUT
 	///Player configurable, sets what's the release pressure
 	var/target_pressure = ONE_ATMOSPHERE
+	///Associated sound loop, plays when the pump is on
+	var/datum/looping_sound/pump/soundloop
 
 	volume = 1000
 
+/obj/machinery/portable_atmospherics/pump/Initialize(mapload)
+	. = ..()
+	soundloop = new(src)
+
 /obj/machinery/portable_atmospherics/pump/Destroy()
 	var/turf/local_turf = get_turf(src)
+	QDEL_NULL(soundloop)
 	local_turf.assume_air(air_contents)
 	return ..()
 
@@ -133,6 +140,9 @@
 			on = !on
 			if(on)
 				SSair.start_processing_machine(src)
+				soundloop.start()
+			else
+				soundloop.stop()
 			if(on && !holding)
 				var/plasma = air_contents.gases[/datum/gas/plasma]
 				var/n2o = air_contents.gases[/datum/gas/nitrous_oxide]
@@ -175,4 +185,5 @@
 
 /obj/machinery/portable_atmospherics/pump/unregister_holding()
 	on = FALSE
+	soundloop.stop()
 	return ..()
