@@ -452,6 +452,9 @@
 			return TRUE
 		if(storage_loc.loc == owner)
 			return TRUE
+		for(var/atom/storage_loc_storage_loc in get_storage_locs(storage_loc))
+			if(storage_loc_storage_loc == owner)
+				return TRUE
 	return FALSE
 
 /datum/status_effect/stabilized/tick()
