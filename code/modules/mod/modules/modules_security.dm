@@ -102,6 +102,8 @@
 	mod.chestplate.allowed |= guns_typecache
 
 /obj/item/mod/module/magnetic_harness/on_uninstall(deleting = FALSE)
+	if(deleting)
+		return
 	mod.chestplate.allowed -= (guns_typecache - already_allowed_guns)
 
 /obj/item/mod/module/magnetic_harness/on_suit_activation()
@@ -120,7 +122,7 @@
 	addtimer(CALLBACK(src, .proc/pick_up_item, dropped_item), magnet_delay)
 
 /obj/item/mod/module/magnetic_harness/proc/pick_up_item(obj/item/item)
-	if(!item.Adjacent(mod.wearer))
+	if(!isturf(item.loc) || !item.Adjacent(mod.wearer))
 		return
 	if(!mod.wearer.equip_to_slot_if_possible(item, ITEM_SLOT_SUITSTORE, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
