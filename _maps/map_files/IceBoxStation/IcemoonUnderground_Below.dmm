@@ -1132,7 +1132,6 @@
 /area/mine/laborcamp)
 "sP" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/stone,
@@ -1153,6 +1152,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"ti" = (
+/obj/item/storage/box/donkpockets{
+	pixel_y = 5
+	},
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers/deep)
 "tl" = (
 /obj/structure/girder,
 /obj/structure/lattice/catwalk,
@@ -2565,7 +2570,6 @@
 /area/mine/laborcamp)
 "QL" = (
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -4156,7 +4160,7 @@ qI
 qI
 qI
 qI
-qI
+ti
 qI
 qI
 qI

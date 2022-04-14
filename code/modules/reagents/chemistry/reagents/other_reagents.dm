@@ -653,9 +653,19 @@
 	name = "Golem Mutation Toxin"
 	description = "A crystal toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/golem/random
+	race = /datum/species/golem
 	taste_description = "rocks"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/mutationtoxin/golem/on_mob_metabolize()
+	var/static/list/random_golem_types
+	random_golem_types = subtypesof(/datum/species/golem) - type
+	for(var/i in random_golem_types)
+		var/datum/species/golem/golem = i
+		if(!initial(golem.random_eligible))
+			random_golem_types -= golem
+	race = pick(random_golem_types)
+	..()
 
 /datum/reagent/mutationtoxin/abductor
 	name = "Abductor Mutation Toxin"
@@ -1524,6 +1534,22 @@
 	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
 	return ..()
 
+/datum/reagent/zauker
+	name = "Zauker"
+	description = "An unstable gas that is toxic to all living beings."
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "bitter"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/zauker/on_mob_life(mob/living/breather, delta_time, times_fired)
+	breather.adjustBruteLoss(6 * REM * delta_time, FALSE)
+	breather.adjustOxyLoss(1 * REM * delta_time, FALSE)
+	breather.adjustFireLoss(2 * REM * delta_time, FALSE)
+	breather.adjustToxLoss(2 * REM * delta_time, FALSE)
+	..()
+	return TRUE
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 

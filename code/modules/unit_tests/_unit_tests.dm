@@ -108,6 +108,7 @@
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
 #include "species_config_sanity.dm"
+#include "species_unique_id.dm"
 #include "species_whitelists.dm"
 #include "stomach.dm"
 #include "strippable.dm"
