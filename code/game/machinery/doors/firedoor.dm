@@ -46,7 +46,7 @@
 	///The merger_id and merger_typecache variables are used to make rows of firelocks activate at the same time.
 	var/merger_id = "firelocks"
 	var/static/list/merger_typecache
-	
+
 	///Overlay object for the warning lights. This and some plane settings allows the lights to glow in the dark.
 	var/mutable_appearance/warn_lights
 
@@ -176,28 +176,13 @@
 	affecting_areas = new_affecting_areas
 	for(var/area/place in affecting_areas)
 		LAZYADD(place.firedoors, src)
-		if(alarm_type)
-			if(place == get_area(src))
-				LAZYADD(place.active_firelocks, src) //We only add ourselves to our own area's active firelocks...
-			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
-				fire_panel.set_status() //...but all adjacent fire alarms are notified
+	if(alarm_type)
+		add_as_source()
 
-/**
- * Removes us from any lists of areas in the affecting_areas list, then clears affecting_areas
- *
- * Undoes everything done in the CalculateAffectingAreas() proc, to clean up prior to deletion.
- * Calls reset() first, in case any alarms need to be cleared first.
- */
 /obj/machinery/door/firedoor/proc/remove_from_areas()
-	if(!affecting_areas)
-		return
+	remove_as_source()
 	for(var/area/place in affecting_areas)
 		LAZYREMOVE(place.firedoors, src)
-		LAZYREMOVE(place.active_firelocks, src)
-		if(LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
-			continue
-		for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
-			fire_panel.set_status()
 
 /obj/machinery/door/firedoor/proc/merger_adding(obj/machinery/door/firedoor/us, datum/merger/new_merger)
 	SIGNAL_HANDLER
@@ -239,7 +224,7 @@
 /obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/loc)
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(loc), dir)
-	
+
 		if(!checked_turf)
 			continue
 
@@ -278,7 +263,7 @@
 		issue_turfs -= checked_turf
 		if(!length(issue_turfs))
 			start_deactivation_process()
-	
+
 
 /**
  * Begins activation process of us and our neighbors.
@@ -326,17 +311,21 @@
 	if(alarm_type)
 		return //Already active
 	alarm_type = code
-	for(var/area/place in affecting_areas)
-		LAZYADD(place.active_firelocks, src)
-		if(LAZYLEN(place.active_firelocks) == 1) //if we're the first to activate in this particular area
-			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
-				fire_panel.set_status()
-			if(alarm_type != FIRELOCK_ALARM_TYPE_GENERIC) //Generic alarms tend to activate all firelocks in an area, which otherwise makes the red lighting spread like a virus. Anyway, fire alarms already do this for manual pulls.
-				place.set_fire_alarm_effect() //bathe in red
-			if(place == my_area)
-				place.alarm_manager.send_alarm(ALARM_FIRE, place) //We'll limit our reporting to just the area we're on. If the issue affects bordering areas, they can report it themselves
+	add_as_source()
 	update_icon() //Sets the door lights even if the door doesn't move.
 	correct_state()
+
+/// Adds this fire door as a source of trouble to all of its areas
+/obj/machinery/door/firedoor/proc/add_as_source()
+	for(var/area/place in affecting_areas)
+		LAZYADD(place.active_firelocks, src)
+		if(LAZYLEN(place.active_firelocks) != 1)
+			continue
+		//if we're the first to activate in this particular area
+		place.set_fire_effect(TRUE) //bathe in red
+		if(place == my_area)
+			// We'll limit our reporting to just the area we're on. If the issue affects bordering areas, they can report it themselves
+			place.alarm_manager.send_alarm(ALARM_FIRE, place)
 
 /**
  * Proc that handles reset steps
@@ -346,19 +335,24 @@
 /obj/machinery/door/firedoor/proc/reset()
 	SIGNAL_HANDLER
 	alarm_type = null
-	for(var/area/place in affecting_areas)
-		LAZYREMOVE(place.active_firelocks, src)
-		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
-			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
-				fire_panel.set_status()
-			if(place == my_area)
-				place.alarm_manager.clear_alarm(ALARM_FIRE, place)
-			place.unset_fire_alarm_effects()
+	remove_as_source()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop.stop()
 	is_playing_alarm = FALSE
 	update_icon() //Sets the door lights even if the door doesn't move.
 	correct_state()
+
+/// Removes this firedoor from all areas it's serving as a source of problems for
+/obj/machinery/door/firedoor/proc/remove_as_source()
+	for(var/area/place in affecting_areas)
+		if(!LAZYLEN(place.active_firelocks)) // If it has no active firelocks, do nothing
+			continue
+		LAZYREMOVE(place.active_firelocks, src)
+		if(LAZYLEN(place.active_firelocks)) // If we were the last firelock still active, clear the area effects
+			continue
+		place.set_fire_effect(FALSE)
+		if(place == my_area)
+			place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 
 /obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/doorjack/digital_crowbar)
 	if(obj_flags & EMAGGED)
