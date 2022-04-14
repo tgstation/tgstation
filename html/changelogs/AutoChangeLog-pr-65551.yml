@@ -1,5 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - imageadd: "Wrapped parcels now have an overlay when tagged with a destination."
-  - refactor: "Refactored wrapped parcels to have a common base type."

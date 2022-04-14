@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - bugfix: "Cleaning strange objects no longer leave behind empty grenade casings. No littering!"

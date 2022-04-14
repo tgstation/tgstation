@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "Monkeys now can interact with misc(environmental) turfs. Also removed two unused broken turf types."
