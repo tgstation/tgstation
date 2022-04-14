@@ -122,7 +122,7 @@
 	desc = "A base for any self-respecting pastry."
 	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "pastrybase"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY
