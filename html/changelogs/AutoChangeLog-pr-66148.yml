@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "traitor logging has its own config flag"

@@ -1,0 +1,4 @@
+author: "apynnonen"
+delete-after: True
+changes: 
+  - qol: "Screentips are no longer hidden by action buttons."
