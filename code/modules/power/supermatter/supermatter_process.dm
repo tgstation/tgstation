@@ -226,7 +226,7 @@
 		consumed_helium = min(consumed_helium * gas_comp[/datum/gas/helium] * combined_gas, removed.gases[/datum/gas/helium][MOLES])
 		if(consumed_helium)
 			removed.gases[/datum/gas/helium][MOLES] -= consumed_helium
-			removed.gases[/datum/gas/tritium][MOLES] += consumed_helium
+			removed.gases[/datum/gas/tritium][MOLES] += consumed_helium * 0.5
 
 	if(prob(gas_comp[/datum/gas/zauker]))
 		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
