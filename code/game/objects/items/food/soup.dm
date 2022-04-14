@@ -81,7 +81,7 @@
 	name = "nettle soup"
 	desc = "To think, the botanist would've beat you to death with one of these."
 	icon_state = "nettlesoup"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 9, /datum/reagent/medicine/omnizine = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 9)
 	tastes = list("nettles" = 1)
 	foodtypes = VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
@@ -211,7 +211,7 @@
 	name = "stew"
 	desc = "A nice and warm stew. Healthy and strong."
 	icon_state = "stew"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/medicine/oculine = 5, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
 	bite_consumption = 7
 	max_volume = 100
 	tastes = list("tomato" = 1, "carrot" = 1)
@@ -239,7 +239,7 @@
 	name = "french onion soup"
 	desc = "Good enough to make a grown mime cry."
 	icon_state = "onionsoup"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/medicine/oculine = 5, /datum/reagent/consumable/tomatojuice = 8, /datum/reagent/consumable/nutriment/vitamin = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 8, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("caramelized onions" = 1)
 	foodtypes = VEGETABLES | DAIRY
 
@@ -278,7 +278,7 @@
 	name = "pea soup"
 	desc = "A humble split pea soup."
 	icon_state = "peasoup"
-	food_reagents = list (/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/oculine = 2)
+	food_reagents = list (/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("creamy peas"= 2, "parsnip" = 1)
 	foodtypes = VEGETABLES
 
