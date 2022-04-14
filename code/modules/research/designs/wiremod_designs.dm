@@ -132,7 +132,7 @@
 	name = "Speech Component"
 	id = "comp_speech"
 	build_path = /obj/item/circuit_component/speech
-	
+
 /datum/design/component/laserpointer
 	name = "Laser Pointer Component"
 	id = "comp_laserpointer"

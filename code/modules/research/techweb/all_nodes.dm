@@ -254,6 +254,7 @@
 		"comp_index_assoc",
 		"comp_index_table",
 		"comp_length",
+		"comp_laserpointer",
 		"comp_light",
 		"comp_list_add",
 		"comp_list_assoc_literal",
