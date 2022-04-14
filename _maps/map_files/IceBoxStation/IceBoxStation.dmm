@@ -22365,10 +22365,6 @@
 	},
 /turf/open/floor/iron,
 /area/service/hydroponics)
-"jPS" = (
-/obj/structure/flora/grass/green,
-/turf/closed/wall,
-/area/hallway/secondary/exit/departure_lounge)
 "jPY" = (
 /obj/structure/table/glass,
 /obj/structure/window/reinforced{
@@ -99400,7 +99396,7 @@ sdJ
 sdJ
 sdJ
 sdJ
-jPS
+eHY
 eHY
 eHY
 mLJ
