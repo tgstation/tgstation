@@ -102,9 +102,9 @@
 /// Bit shift for the environment channel status of the APC.
 #define UPOVERLAY_ENVIRON_SHIFT (8)
 
-#define ACP_AI_NO_MALF 0
-#define ACP_AI_NO_HACK 1
-#define ACP_AI_HACK_NO_SHUNT 2
-#define ACP_AI_HACK_SHUNT_HERE 3
-#define ACP_AI_HACK_SHUNT_ANOTHER 4
+#define APC_AI_NO_MALF 0
+#define APC_AI_NO_HACK 1
+#define APC_AI_HACK_NO_SHUNT 2
+#define APC_AI_HACK_SHUNT_HERE 3
+#define APC_AI_HACK_SHUNT_ANOTHER 4
 

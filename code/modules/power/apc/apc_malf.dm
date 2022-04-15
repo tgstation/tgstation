@@ -1,13 +1,13 @@
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
 	if(!istype(malf) || !malf.malf_picker)
-		return ACP_AI_NO_MALF
+		return APC_AI_NO_MALF
 	if(malfai != (malf.parent || malf))
-		return ACP_AI_NO_HACK
+		return APC_AI_NO_HACK
 	if(occupier == malf)
-		return ACP_AI_HACK_SHUNT_HERE
+		return APC_AI_HACK_SHUNT_HERE
 	if(istype(malf.loc, /obj/machinery/power/apc))
-		return ACP_AI_HACK_SHUNT_ANOTHER
-	return ACP_AI_HACK_NO_SHUNT
+		return APC_AI_HACK_SHUNT_ANOTHER
+	return APC_AI_HACK_NO_SHUNT
 
 /obj/machinery/power/apc/proc/malfhack(mob/living/silicon/ai/malf)
 	if(!istype(malf))
