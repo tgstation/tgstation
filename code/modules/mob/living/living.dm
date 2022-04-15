@@ -1400,7 +1400,7 @@
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(fire_stacks <= 0 || on_fire)
-		return
+		return FALSE
 	on_fire = TRUE
 	src.visible_message(span_warning("[src] catches fire!"), \
 					span_userdanger("You're set on fire!"))
