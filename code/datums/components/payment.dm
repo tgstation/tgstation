@@ -48,41 +48,11 @@
 		card = user.get_idcard(TRUE)
 	if(!card && istype(user.pulling, /obj/item/card/id))
 		card = user.pulling
-	if(!card)
-		if(handle_cardless(user, total_cost)) //Here we attempt to handle the purchase physically, with held money first. Otherwise we default to below.
-			return
-		switch(transaction_style)
-			if(PAYMENT_FRIENDLY)
-				to_chat(user, span_warning("ID not detected, sorry [user]!"))
-			if(PAYMENT_ANGRY)
-				to_chat(user, span_warning("WHERE IS YOUR GOD DAMN CARD! GOD DAMNIT!"))
-			if(PAYMENT_CLINICAL)
-				to_chat(user, span_warning("ID card not present. Aborting."))
-		return COMPONENT_OBJ_CANCEL_CHARGE
-	if(!card.registered_account)
-		switch(transaction_style)
-			if(PAYMENT_FRIENDLY)
-				to_chat(user, span_warning("There's no account detected on your ID, how mysterious!"))
-			if(PAYMENT_ANGRY)
-				to_chat(user, span_warning("ARE YOU JOKING. YOU DON'T HAVE A BANK ACCOUNT ON YOUR ID YOU IDIOT."))
-			if(PAYMENT_CLINICAL)
-				to_chat(user, span_warning("ID Card lacks a bank account. Aborting."))
-		return COMPONENT_OBJ_CANCEL_CHARGE
-
-	if(!(card.registered_account.has_money(total_cost)))
-		switch(transaction_style)
-			if(PAYMENT_FRIENDLY)
-				to_chat(user, span_warning("I'm so sorry... You don't seem to have enough money."))
-			if(PAYMENT_ANGRY)
-				to_chat(user, span_warning("YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR."))
-			if(PAYMENT_CLINICAL)
-				to_chat(user, span_warning("ID Card lacks funds. Aborting."))
-		user.balloon_alert(user, "Cost: [total_cost] credits.")
-		return COMPONENT_OBJ_CANCEL_CHARGE
-	target_acc.transfer_money(card.registered_account, total_cost)
-	log_econ("[total_cost] credits were spent on [parent] by [user] via [card.registered_account.account_holder]'s card.")
-	card.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
-	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
+	if(handle_card(user, card, total_cost))
+		return //Only breaks here if the card can handle the cost of purchasing with someone's ID.
+	if(handle_cardless(user, total_cost)) //Here we attempt to handle the purchase physically, with held money first. Otherwise we default to below.
+		return
+	return COMPONENT_OBJ_CANCEL_CHARGE
 
 /datum/component/payment/proc/change_cost(datum/source, new_cost)
 	SIGNAL_HANDLER
@@ -104,10 +74,10 @@
 	if(is_type_in_typecache(user.pulling, allowed_money) && (physical_cash_total < total_cost)) //Coins(Pulled).
 		var/obj/item/counted_credit = user.pulling
 		physical_cash_total += counted_credit.get_item_credit_value()
-		counted_money += counted_credit.get_item_credit_value()
+		counted_money += counted_credit
 
-	if(physical_cash_total < total_cost) //Suggestions for those with no arms/simple animals.
-		var/armless
+	if(physical_cash_total < total_cost)
+		var/armless //Suggestions for those with no arms/simple animals.
 		if(!ishuman(user) && !istype(user, /mob/living/simple_animal/slime))
 			armless = TRUE
 		else
@@ -118,7 +88,8 @@
 		if(armless)
 			if(!user.pulling || !iscash(user.pulling) && !istype(user.pulling, /obj/item/card/id))
 				to_chat(user, span_notice("Try pulling a valid ID, space cash, holochip or coin while using \the [parent]!"))
-				return
+				return FALSE
+		return FALSE
 
 	if(physical_cash_total >= total_cost)
 		for(var/obj/cash_object in counted_money)
@@ -140,3 +111,33 @@
 		playsound(user, 'sound/effects/cashregister.ogg', 20, TRUE)
 		return TRUE
 	return FALSE
+
+
+/datum/component/payment/proc/handle_card(mob/living/user, obj/item/card/id/idcard, total_cost)
+	if(!idcard)
+		return FALSE
+	if(!idcard?.registered_account)
+		switch(transaction_style)
+			if(PAYMENT_FRIENDLY)
+				to_chat(user, span_warning("There's no account detected on your ID, how mysterious!"))
+			if(PAYMENT_ANGRY)
+				to_chat(user, span_warning("ARE YOU JOKING. YOU DON'T HAVE A BANK ACCOUNT ON YOUR ID YOU IDIOT."))
+			if(PAYMENT_CLINICAL)
+				to_chat(user, span_warning("ID Card lacks a bank account. Advancing."))
+		return FALSE
+
+	if(!(idcard.registered_account.has_money(total_cost)))
+		switch(transaction_style)
+			if(PAYMENT_FRIENDLY)
+				to_chat(user, span_warning("I'm so sorry... You don't seem to have enough money."))
+			if(PAYMENT_ANGRY)
+				to_chat(user, span_warning("YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR."))
+			if(PAYMENT_CLINICAL)
+				to_chat(user, span_warning("ID Card lacks funds. Aborting."))
+		user.balloon_alert(user, "Cost: [total_cost] credits.")
+		return FALSE
+	target_acc.transfer_money(idcard.registered_account, total_cost)
+	log_econ("[total_cost] credits were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")
+	idcard.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
+	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
+	return TRUE
