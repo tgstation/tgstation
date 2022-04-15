@@ -51,6 +51,11 @@ export const Canister = (props, context) => {
                       onClick={() => act('restricted')} />
                   )}
                   <Button
+                    icon={data.shielding ? 'power-off' : 'times'}
+                    content={data.shielding ? 'Shielding-ON' : 'Shielding-OFF'}
+                    selected={data.shielding}
+                    onClick={() => act('shielding')} />
+                  <Button
                     icon="pencil-alt"
                     content="Relabel"
                     onClick={() => act('relabel')} />
