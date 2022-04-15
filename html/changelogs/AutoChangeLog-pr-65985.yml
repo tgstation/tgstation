@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen will now stop placing reinforced window spawners right on top of snow at IceBox Departures."

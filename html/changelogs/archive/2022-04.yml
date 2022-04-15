@@ -553,3 +553,32 @@
       on MetaStation.
   unv-annihilator:
   - bugfix: held mice are no longer edible by moths
+2022-04-15:
+  ArcaneMusic:
+  - soundadd: A new round-end sound is in rotation.
+  Fikou, EOBGames:
+  - rscadd: Redesign of Hilbert Research Facility
+  Ghilker:
+  - qol: mixers now have better indicators for nodes
+  JohnFulpWillard:
+  - bugfix: Changeling HUDs now properly carry over through bodies.
+  - code_imp: Non carbon Changelings now respectively regenerate/lose/spend their
+      chems.
+  - bugfix: Grilling food now makes said food, grilled.
+  LemonInTheDark:
+  - rscdel: The on human examine species readout has been removed
+  OneAsianTortoise:
+  - qol: you can take out PDA/ID from trimmer with right click
+  SmArtKar:
+  - bugfix: Water slime cookie no longer tastes like /datum/reagent/water
+  UnderARock:
+  - bugfix: Fixes spraytan not tanning skin color.
+  Wallem:
+  - imageadd: Updates airlock cycling & mass driver buttons.
+  apynnonen:
+  - qol: Screentips are no longer hidden by action buttons.
+  dragomagol:
+  - bugfix: traitor logging has its own config flag
+  san7890:
+  - bugfix: Nanotrasen will now stop placing reinforced window spawners right on top
+      of snow at IceBox Departures.

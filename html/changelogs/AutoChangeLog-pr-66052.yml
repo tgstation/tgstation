@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Changeling HUDs now properly carry over through bodies."
-  - code_imp: "Non carbon Changelings now respectively regenerate/lose/spend their chems."
