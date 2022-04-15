@@ -25315,11 +25315,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
-"dUe" = (
-/obj/machinery/status_display/evac/directional/south,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "dUi" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -62117,11 +62112,6 @@
 	dir = 4
 	},
 /area/service/chapel/monastery)
-"qdY" = (
-/obj/machinery/status_display/ai/directional/south,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "qea" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/table_frame,
@@ -115547,7 +115537,7 @@ qWH
 vMF
 oXO
 fqJ
-dUe
+acm
 nTA
 xet
 nTA
@@ -118631,7 +118621,7 @@ vcP
 vtT
 wDN
 fqJ
-qdY
+acm
 mlQ
 sSI
 mlQ
