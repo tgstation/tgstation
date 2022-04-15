@@ -851,15 +851,14 @@ generate/load female uniform sprites matching all previously decided variables
 		// eyes
 		if(!(NOEYESPRITES in dna.species.species_traits))
 			var/obj/item/organ/eyes/parent_eyes = getorganslot(ORGAN_SLOT_EYES)
-			if(!parent_eyes)
+			if(parent_eyes)
+				add_overlay(parent_eyes.generate_body_overlay(src))
+			else
 				var/mutable_appearance/missing_eyes = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
 				if(OFFSET_FACE in dna.species.offset_features)
 					missing_eyes.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
 					missing_eyes.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
 				add_overlay(missing_eyes)
-				break
-
-			add_overlay(parent_eyes.generate_body_overlay(src))
 
 	update_inv_head()
 	update_inv_wear_mask()
