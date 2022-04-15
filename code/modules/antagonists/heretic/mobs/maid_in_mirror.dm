@@ -2,8 +2,7 @@
 /mob/living/simple_animal/hostile/heretic_summon/maid_in_the_mirror
 	name = "Maid in the Mirror"
 	real_name = "Maid in the Mirror"
-	desc = "An abomination made from several limbs and organs. \
-		Every moment you stare at it, it appears to shift and change unnaturally."
+	desc = "A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "stand"
 	icon_living = "stand" // Placeholder sprite
@@ -17,7 +16,12 @@
 	melee_damage_upper = 16
 	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS
 	deathmessage = "shatters and vanishes, releasing a gust of cold air."
-	loot = list(/obj/item/shard, /obj/effect/decal/cleanable/ash)
+	loot = list(
+		/obj/item/shard,
+		/obj/effect/decal/cleanable/ash,
+		/obj/item/clothing/suit/armor,
+		/obj/item/organ/lungs,
+	)
 	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/mirror_walk)
 
 	/// Whether we take damage when we're examined
@@ -48,7 +52,7 @@
 	// If we have health, we take some damage
 	if(health > (maxHealth * 0.125))
 		visible_message(
-				span_danger("[src] seems to fade in and out slightly."),
+				span_warning("[src] seems to fade in and out slightly."),
 				span_userdanger("[user]'s gaze pierces your every being!"),
 		)
 

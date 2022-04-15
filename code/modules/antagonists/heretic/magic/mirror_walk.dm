@@ -80,10 +80,14 @@
 	var/atom/nearby_reflection = is_reflection_nearby(phase)
 	if(!nearby_reflection)
 		to_chat(user, span_warning("There are no reflective surfaces nearby to exit from the mirror's realm!"))
-		return
+		return FALSE
 
 	var/turf/phase_turf = get_turf(phase)
-	if(phase_turf.is_blocked_turf(exclude_mobs = TRUE))
+
+	// It would likely be a bad idea to teleport into an ai monitored area (ai sat)
+	var/area/phase_area = get_area(phase_turf)
+	if(istype(phase_area, /area/ai_monitored))
+		to_chat(user, span_warning("It's probably not a very wise idea to exit the mirror's realm here."))
 		return FALSE
 
 	nearby_reflection.Beam(phase_turf, icon_state = "light_beam", time = phase_in_time)
