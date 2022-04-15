@@ -9,7 +9,8 @@
 	/// Typepath list of what to ignore smashing through, controls all lifts
 	var/list/ignored_smashthroughs = list(
 		/obj/machinery/power/supermatter_crystal,
-		/obj/structure/holosign
+		/obj/structure/holosign,
+		/obj/machinery/field,
 	)
 
 /datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
@@ -323,13 +324,52 @@ GLOBAL_LIST_EMPTY(lifts)
 			collided.throw_at(throw_target, 200, 4, callback = land_slam)
 
 	undo_movement_registrations()
-	set_glide_size(gliding_amount)
-	forceMove(destination)
-	for(var/atom/movable/thing as anything in things_to_move)
-		thing.set_glide_size(gliding_amount) //matches the glide size of the moving platform to stop them from jittering on it.
-		thing.forceMove(destination)
-
+	group_move(things_to_move, destination, gliding_amount)
 	set_movement_registrations()
+
+/obj/structure/industrial_lift/proc/group_move(list/atom/movable/movers, turf/destination, glide_override)
+	var/turf/our_turf = loc
+
+	if(loc == destination)
+		stack_trace("an industrial lift was told to move to somewhere it already is!")
+		return FALSE
+
+	var/movement_direction = get_dir(our_turf, destination)
+
+	var/area/our_area = get_area(src)
+	var/area/their_area = get_area(destination)
+	var/different_areas = our_area != their_area
+
+	set_glide_size(glide_override)
+	forceMove(destination)
+	if(loc != destination || QDELETED(src))//check if our movement succeeded, if it didnt then the movers cant be moved
+		return FALSE
+
+	for(var/atom/movable/mover as anything in movers)
+		if(mover.loc != our_turf || QDELETED(mover))
+			movers -= mover
+			continue
+
+		mover.move_stacks++
+		mover.set_glide_size(glide_override)
+
+		//we dont need to call Entered() and Exited() for origin and destination here for each mover because
+		//all of them are considered to be on top of us, so the turfs and anything on them can only perceive us,
+		//which is why the platform itself uses forceMove()
+		if(different_areas)
+			our_area.Exited(mover, movement_direction)
+			mover.loc = destination
+			their_area.Entered(mover, movement_direction)
+
+		else
+			mover.loc = destination
+
+	for(var/atom/movable/mover as anything in movers)
+		mover.Moved(our_turf, movement_direction)
+		//tell the movers they moved only after all of them have been moved so they cant react to eachother moving
+
+	return TRUE
+
 
 /obj/structure/industrial_lift/proc/use(mob/living/user)
 	if(!isliving(user) || !in_range(src, user) || user.combat_mode)
