@@ -46,7 +46,7 @@
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
 	var/list/dictionary = list()
 
-	for(var/obj/item/modular_computer/messenger in GetViewableDevices(sort))
+	for(var/obj/item/modular_computer/messenger in GetViewableDevices(sort_by_job))
 		if(messenger.saved_identification && messenger.saved_job && !(messenger == computer))
 			var/list/data = list()
 			data["name"] = messenger.saved_identification
@@ -106,25 +106,25 @@
 				if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, usr_mob, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 					return
 				else
-					tTone = t
+					ringtone = t
 					return(UI_UPDATE)
-		if("PDA_ringerStatus")
-			ringerStatus = !ringerStatus
+		if("PDA_ringer_status")
+			ringer_status = !ringer_status
 			return(UI_UPDATE)
 		if("PDA_sAndR")
-			sAndR = !sAndR
+			sending_and_receiving = !sending_and_receiving
 			return(UI_UPDATE)
 		if("PDA_viewMessages")
-			viewingMessages = !viewingMessages
+			viewing_messages = !viewing_messages
 			return(UI_UPDATE)
 		if("PDA_clearMessages")
 			messages = list()
 			return(UI_UPDATE)
 		if("PDA_changeSortStyle")
-			sort = !sort
+			sort_by_job = !sort_by_job
 			return(UI_UPDATE)
 		if("PDA_sendEveryone")
-			if(!sAndR)
+			if(!sending_and_receiving)
 				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
 				return
 
@@ -138,7 +138,7 @@
 
 			return(UI_UPDATE)
 		if("PDA_sendMessage")
-			if(!sAndR)
+			if(!sending_and_receiving)
 				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
 				return
 			var/obj/item/modular_computer/target = locate(params["ref"])
@@ -151,7 +151,7 @@
 			var/obj/item/computer_hardware/hard_drive/drive = target.all_components[MC_HDD]
 
 			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
-				if(!app.sAndR && !sending_virus)
+				if(!app.sending_and_receiving && !sending_virus)
 					to_chat(usr, span_notice("ERROR: Device has receiving disabled."))
 					return
 				if(sending_virus)
@@ -177,11 +177,11 @@
 
 	data["owner"] = computer.saved_identification
 	data["messages"] = messages
-	data["ringerStatus"] = ringerStatus
-	data["sAndR"] = sAndR
+	data["ringer_status"] = ringer_status
+	data["sending_and_receiving"] = sending_and_receiving
 	data["messengers"] = ScrubMessengerList()
-	data["viewingMessages"] = viewingMessages
-	data["sortByJob"] = sort
+	data["viewing_messages"] = viewing_messages
+	data["sortByJob"] = sort_by_job
 	data["isSilicon"] = is_silicon
 	data["photo"] = photo_path
 
@@ -202,7 +202,7 @@
 
 /datum/computer_file/program/messenger/proc/msg_input(mob/living/U = usr, rigged = FALSE)
 	var/t = tgui_input_text(U, "Enter a message", "NT Messaging")
-	if (!t || !sAndR)
+	if (!t || !sending_and_receiving)
 		return
 	if(computer.loc != U)
 		return
@@ -292,7 +292,7 @@
 		log_bomber(user, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
 	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [message_data["contents"]]"))
 
-	if (ringerStatus)
+	if (ringer_status)
 		computer.send_sound()
 
 	last_text = world.time
@@ -337,12 +337,12 @@
 		if(signal.data["emojis"] == TRUE)//so will not parse emojis as such from pdas that don't send emojis
 			inbound_message = emoji_parse(inbound_message)
 
-		if(ringerStatus)
+		if(ringer_status)
 			to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")
 
 
-	if (ringerStatus)
-		computer.ring(tTone)
+	if (ringer_status)
+		computer.ring(ringtone)
 
 /datum/computer_file/program/messenger/Topic(href, href_list)
 	..()

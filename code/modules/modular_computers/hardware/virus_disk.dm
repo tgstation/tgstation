@@ -36,8 +36,8 @@
 		var/obj/item/computer_hardware/hard_drive/drive = target.all_components[MC_HDD]
 
 		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
-			app.ringerStatus = FALSE
-			app.tTone = ""
+			app.ringer_status = FALSE
+			app.ringtone = ""
 	else
 		to_chat(user, span_notice("ERROR: Could not find device."))
 

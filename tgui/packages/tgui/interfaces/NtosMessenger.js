@@ -37,10 +37,10 @@ export const NtosMessenger = (props, context) => {
   const {
     owner,
     messages = [],
-    ringerStatus,
-    sAndR,
+    ringer_status,
+    sending_and_receiving,
     messengers = [],
-    viewingMessages,
+    viewing_messages,
     sortByJob,
     canSpam,
     isSilicon,
@@ -48,7 +48,7 @@ export const NtosMessenger = (props, context) => {
     virus_attach,
     sending_virus,
   } = data;
-  if (viewingMessages) {
+  if (viewing_messages) {
     return (
       <NtosWindow width={600} height={800}>
         <NtosWindow.Content>
@@ -127,12 +127,12 @@ export const NtosMessenger = (props, context) => {
             <Box>
               <Button
                 icon="bell"
-                content={ringerStatus ? 'Ringer: On' : 'Ringer: Off'}
-                onClick={() => act('PDA_ringerStatus')}
+                content={ringer_status ? 'Ringer: On' : 'Ringer: Off'}
+                onClick={() => act('PDA_ringer_status')}
               />
               <Button
                 icon="address-card"
-                content={sAndR ? "Send / Receive: On" : "Send / Receive: Off"}
+                content={sending_and_receiving ? "Send / Receive: On" : "Send / Receive: Off"}
                 onClick={() => act('PDA_sAndR')}
               />
               <Button
