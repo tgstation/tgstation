@@ -118,6 +118,11 @@
 		eye_left.pixel_y += offset[OFFSET_Y]
 		eye_right.pixel_y += offset[OFFSET_Y]
 
+	var/obscured = parent.check_obscured_slots(TRUE)
+	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
+		eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, alpha = eye_left.alpha)
+		eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, alpha = eye_right.alpha)
+
 	return list(eye_left, eye_right)
 
 #undef OFFSET_X
