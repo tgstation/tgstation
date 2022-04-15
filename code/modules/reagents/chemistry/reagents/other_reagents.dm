@@ -291,9 +291,7 @@
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
 	if(data["misc"] >= (25 SECONDS)) // 10 units
-		if(!M.stuttering)
-			M.stuttering = 1
-		M.stuttering = min(M.stuttering + (2 * delta_time), 10)
+		M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
 		M.Dizzy(5)
 		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
 			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
@@ -307,7 +305,7 @@
 			M.mind.remove_antag_datum(/datum/antagonist/cult)
 			M.Unconscious(100)
 		M.jitteriness = 0
-		M.stuttering = 0
+		M.remove_status_effect(/datum/status_effect/speech/stutter)
 		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
 		return
 	holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * delta_time) //fixed consumption to prevent balancing going out of whack
