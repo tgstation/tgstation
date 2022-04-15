@@ -46,12 +46,12 @@
 	set_density(FALSE)
 	//air_update_turf(TRUE, FALSE)
 	return ..()
-
+/*
 /obj/structure/windoor_assembly/Move()
 	var/turf/T = loc
 	. = ..()
 	move_update_air(T)
-
+*/
 /obj/structure/windoor_assembly/update_icon_state()
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 	return ..()

@@ -110,10 +110,10 @@
 
 	for(var/gasID in gases_to_check)
 		if(canister_mix.get_gas(gasID) > 0)
-			worth += get_gas_value(gasID, canister_gas.get_gas(gasID))
+			worth += get_gas_value(gasID, canister_mix.get_gas(gasID))
 
 	return worth
 
-/datum/export/large/gas_canister/proc/get_gas_value(datum/gas/gasType, moles)
-	var/baseValue = initial(gasType.base_value)
+/datum/export/large/gas_canister/proc/get_gas_value(gastype, moles)
+	var/baseValue = xgm_gas_data.base_value[gastype]
 	return round((baseValue/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * moles)))

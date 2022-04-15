@@ -73,12 +73,12 @@
 /obj/structure/alien/resin/Destroy()
 	//air_update_turf(TRUE, FALSE)
 	. = ..()
-
+/*
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
 	. = ..()
 	move_update_air(T)
-
+*/
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
@@ -202,7 +202,7 @@
 		qdel(src)
 		return
 	//lets try to grow in a direction
-	for(var/turf/check_turf in src_turf.get_atmos_adjacent_turfs())
+	for(var/turf/check_turf in src_turf.get_adjacent_open_turfs())
 		//we cannot grow on blacklisted turfs
 		if(is_type_in_list(check_turf, blacklisted_turfs))
 			continue

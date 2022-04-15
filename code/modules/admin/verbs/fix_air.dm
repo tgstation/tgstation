@@ -9,19 +9,18 @@
 		return
 
 	log_admin("Full atmosphere reset initiated by [usr].")
-	to_world("<span class = 'danger'>Initiating restart of atmosphere. The server may lag a bit.</span>")
+	to_chat(world, "<span class = 'danger'>Initiating restart of atmosphere. The server may lag a bit.</span>")
 	sleep(10)
 	var/current_time = world.timeofday
 
 	// Depower the supermatter, as it would quickly blow up once we remove all gases from the pipes.
-	for(var/obj/machinery/power/supermatter/S in SSmachines.machinery)
+	for(var/obj/machinery/power/supermatter_crystal/S in GLOB.machines)
 		S.power = 0
 	to_chat(usr, "\[1/5\] - Supermatter depowered")
 
 	// Remove all gases from all pipenets
-	for(var/net in SSmachines.pipenets)
-		var/datum/pipe_network/PN = net
-		for(var/datum/gas_mixture/G in PN.gases)
+	for(var/datum/pipeline/PN as anything in SSzas.networks)
+		for(var/datum/gas_mixture/G in PN.air & PN.other_airs)
 			G.gas = list()
 			G.update_values()
 
@@ -34,8 +33,8 @@
 	to_chat(usr, "\[3/5\] - All ZAS Zones removed.")
 
 	var/list/unsorted_overlays = list()
-	for(var/id in gas_data.tile_overlay)
-		unsorted_overlays |= gas_data.tile_overlay[id]
+	for(var/id in xgm_gas_data.tile_overlay)
+		unsorted_overlays |= xgm_gas_data.tile_overlay[id]
 
 	for(var/turf/simulated/T in world)
 		T.air = null
@@ -44,7 +43,7 @@
 
 	to_chat(usr, "\[4/5\] - All turfs reset to roundstart values.")
 
-	SSair.reboot()
+	SSzas.Reboot()
 
 	to_chat(usr, "\[5/5\] - ZAS Rebooted")
-	to_world("<span class = 'danger'>Atmosphere restart completed in <b>[(world.timeofday - current_time)/10]</b> seconds.</span>")
+	to_chat(world, "<span class = 'danger'>Atmosphere restart completed in <b>[(world.timeofday - current_time)/10]</b> seconds.</span>")

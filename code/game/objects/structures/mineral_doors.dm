@@ -43,8 +43,10 @@
 /obj/structure/mineral_door/Move()
 	var/turf/T = loc
 	. = ..()
+	/*
 	if(!door_opened)
 		move_update_air(T)
+	*/
 
 /obj/structure/mineral_door/Bumped(atom/movable/AM)
 	..()

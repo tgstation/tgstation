@@ -31,6 +31,11 @@ GLOBAL_REAL(xgm_gas_data, /datum/xgm_gas_data)
 	var/list/symbol_html = list()
 	var/list/symbol = list()
 
+	//Base sell values
+	var/list/base_value = list()
+	//Purchasable?
+	var/list/purchaseable = list()
+
 /datum/xgm_gas
 	var/id = ""
 	var/name = "Unnamed Gas"
@@ -49,6 +54,8 @@ GLOBAL_REAL(xgm_gas_data, /datum/xgm_gas_data)
 	var/hidden_from_codex
 	var/symbol_html = "X"
 	var/symbol = "X"
+	var/base_value = 1
+	var/purchaseable = FALSE
 
 /datum/xgm_gas_data/New()
 	for(var/p in subtypesof(/datum/xgm_gas))
@@ -77,6 +84,9 @@ GLOBAL_REAL(xgm_gas_data, /datum/xgm_gas_data)
 
 		xgm_gas_data.breathed_product[gas.id] = gas.breathed_product
 		xgm_gas_data.hidden_from_codex[gas.id] = gas.hidden_from_codex
+
+		xgm_gas_data.base_value[gas.id] = gas.base_value
+		xgm_gas_data.purchaseable[gas.id] = gas.purchaseable
 
 	return 1
 

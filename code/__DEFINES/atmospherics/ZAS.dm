@@ -198,6 +198,19 @@ var/list/gzn_check = list(NORTH, SOUTH, EAST, WEST)
 #define ZONE_ACTIVE   1
 #define ZONE_SLEEPING 0
 
+//OPEN TURF ATMOS
+/// the default air mix that open turfs spawn
+#define OPENTURF_DEFAULT_ATMOS list(GAS_OXYGEN=MOLESO2ATMOS, GAS_NITROGEN=MOLESN2ATMOS)
+//#define OPENTURF_LOW_PRESSURE "o2=14;n2=30;TEMP=293.15"
+/// -193,15°C telecommunications. also used for xenobiology slime killrooms
+//#define TCOMMS_ATMOS "n2=100;TEMP=80"
+/// space
+#define AIRLESS_ATMOS list()
+/// -93.15°C snow and ice turfs
+//#define FROZEN_ATMOS "o2=22;n2=82;TEMP=180"
+/// -14°C kitchen coldroom, just might loss your tail; higher amount of mol to reach about 101.3 kpA
+//#define KITCHEN_COLDROOM_ATMOS "o2=26;n2=97;TEMP=[COLD_ROOM_TEMP]"
+
 // Defines how much of certain gas do the Atmospherics tanks start with. Values are in kpa per tile (assuming 20C)
 #define ATMOSTANK_NITROGEN      90000 // A lot of N2 is needed to produce air mix, that's why we keep 90MPa of it
 #define ATMOSTANK_OXYGEN        50000 // O2 is also important for airmix, but not as much as N2 as it's only 21% of it.

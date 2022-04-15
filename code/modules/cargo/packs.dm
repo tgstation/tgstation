@@ -1111,25 +1111,24 @@
 	// This is the amount of moles in a default canister
 	var/moleCount = (initial(fakeCanister.maximum_pressure) * initial(fakeCanister.filled)) * initial(fakeCanister.volume) / (R_IDEAL_GAS_EQUATION * T20C)
 
-	for(var/gasType in GLOB.meta_gas_info)
-		var/datum/gas/gas = gasType
-		var/name = initial(gas.name)
-		if(!initial(gas.purchaseable))
+	for(var/gasType in xgm_gas_data.gases)
+		var/name = xgm_gas_data.name[gasType]
+		if(!xgm_gas_data.purchaseable[gasType])
 			continue
 		var/datum/supply_pack/materials/pack = new
 		pack.name = "[name] Canister"
 		pack.desc = "Contains a canister of [name]."
-		if(initial(gas.dangerous))
+		if(xgm_gas_data.flags[gasType] & XGM_GAS_FUEL)
 			pack.desc = "[pack.desc] Requires Atmospherics access to open."
 			pack.access = ACCESS_ATMOSPHERICS
 			pack.access_view = ACCESS_ATMOSPHERICS
 		pack.crate_name = "[name] canister crate"
 		pack.id = "[type]([name])"
 
-		pack.cost = cost + moleCount * initial(gas.base_value) * 1.6
+		pack.cost = cost + moleCount * xgm_gas_data.base_value[gasType] * 1.6
 		pack.cost = CEILING(pack.cost, 10)
 
-		pack.contains = list(GLOB.gas_id_to_canister[initial(gas.id)])
+		pack.contains = list(GLOB.gas_id_to_canister[gasType])
 
 		pack.crate_type = crate_type
 

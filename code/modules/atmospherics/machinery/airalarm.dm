@@ -915,7 +915,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	var/datum/port/input/request_data
 
 	var/datum/port/output/pressure
-	var/datum/port/output/temperature
 	var/datum/port/output/gas_amount
 
 	var/obj/machinery/airalarm/connected_alarm

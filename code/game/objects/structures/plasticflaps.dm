@@ -115,8 +115,10 @@
 	. = ..()
 	//air_update_turf(TRUE, TRUE)
 
+/*
 /obj/structure/plasticflaps/Destroy()
 	var/atom/oldloc = loc
 	. = ..()
 	if (oldloc)
-		oldloc.//air_update_turf(TRUE, FALSE)
+		oldloc./air_update_turf(TRUE, FALSE)
+*/
