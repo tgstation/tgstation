@@ -173,6 +173,12 @@
 	species.disliked_food = initial(species.disliked_food)
 	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
 
+/datum/quirk/heterochromatic
+	name = "Heterochromatic"
+	desc = "One of your eyes is a different color than the other!"
+	icon = "eye"
+	value = 0
+
 /datum/quirk/monochromatic
 	name = "Monochromacy"
 	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."
