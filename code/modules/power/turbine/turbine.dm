@@ -32,12 +32,7 @@
 	if(part_path && mapped)
 		installed_part = new part_path(src)
 
-	var/turf/our_turf = get_turf(src)
-	our_turf.add_thermal_conductivity_source(0, TEMPORARY_THERMAL_CONDUCTIVITY)
-
 /obj/machinery/power/turbine/Destroy()
-	var/turf/our_turf = get_turf(src)
-	our_turf.remove_thermal_conductivity_source(0, TEMPORARY_THERMAL_CONDUCTIVITY)
 
 	if(installed_part)
 		QDEL_NULL(installed_part)
@@ -46,6 +41,9 @@
 		machine_gasmix = null
 
 	return ..()
+
+/obj/machinery/power/turbine/block_superconductivity()
+	return TRUE
 
 /obj/machinery/power/turbine/examine(mob/user)
 	. = ..()
