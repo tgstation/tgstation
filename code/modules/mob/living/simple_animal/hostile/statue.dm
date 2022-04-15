@@ -183,10 +183,17 @@
 
 	cooldown_time = 30 SECONDS
 	spell_requirements = NONE
-	outer_radius = 14
+	aoe_radius = 14
 
-/datum/action/cooldown/spell/aoe/flicker_lights/is_affected_by_aoe(atom/center, atom/thing)
-	return istype(thing, /obj/machinery/light)
+/datum/action/cooldown/spell/aoe/flicker_lights/get_things_to_cast_on(atom/center)
+	var/list/things = list()
+	for(var/obj/machinery/light/nearby_light in range(aoe_radius, center))
+		if(!nearby_light.on)
+			continue
+
+		things += nearby_light
+
+	return things
 
 /datum/action/cooldown/spell/aoe/flicker_lights/cast_on_thing_in_aoe(obj/machinery/light/victim, atom/caster)
 	victim.flicker()
@@ -198,17 +205,21 @@
 
 	cooldown_time = 1 MINUTES
 	spell_requirements = NONE
-	outer_radius = 14
+	aoe_radius = 14
 
 /datum/action/cooldown/spell/aoe/blindness/cast(atom/cast_on)
 	cast_on.visible_message(span_danger("[cast_on] glares their eyes."))
 	return ..()
 
-/datum/action/cooldown/spell/aoe/blindness/is_affected_by_aoe(atom/center, atom/thing)
-	if(thing == owner)
-		return FALSE
+/datum/action/cooldown/spell/aoe/blindness/get_things_to_cast_on(atom/center)
+	var/list/things = list()
+	for(var/mob/living/nearby_mob in range(aoe_radius, center))
+		if(nearby_mob == owner || nearby_mob == center)
+			continue
 
-	return isliving(thing)
+		things += nearby_mob
+
+	return things
 
 /datum/action/cooldown/spell/aoe/blindness/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
 	victim.blind_eyes(4)

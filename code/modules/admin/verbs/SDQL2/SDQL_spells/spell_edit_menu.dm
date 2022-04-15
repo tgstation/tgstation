@@ -62,8 +62,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /datum/action/cooldown/spell, list())
 
 		// AoE
 		"max_targets",
-		"inner_radius",
-		"outer_radius",
+		"aoe_radius",
 
 		//"requires_human",
 		//"requires_non_abstract",
@@ -213,8 +212,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /datum/action/cooldown/spell, list())
 
 			// Aoe spell vars
 			"max_targets" = "The maximum number of mobs the spell can target.",
-			"outer_radius" = "The radius around the user affected by the spell.",
-			"inner_radius" = "The radius around the user not affected by the spell.",
+			"aoe_radius" = "The radius around the user affected by the spell.",
 
 			// Pointed spell vars
 			"ranged_mousepointer" = "The icon used for the mouse when aiming the spell.",

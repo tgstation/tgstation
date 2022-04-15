@@ -180,6 +180,13 @@
 
 	return TRUE
 
+/datum/action/cooldown/spell/aoe/revenant/get_things_to_cast_on(atom/center)
+	var/list/things = list()
+	for(var/turf/nearby_turf in range(aoe_radius, center))
+		things += nearby_turf
+
+	return things
+
 /datum/action/cooldown/spell/aoe/revenant/before_cast(mob/living/simple_animal/revenant/cast_on)
 	. = ..()
 	if(!.)
@@ -205,9 +212,9 @@
 
 /datum/action/cooldown/spell/aoe/revenant/after_cast(mob/living/simple_animal/revenant/cast_on)
 	. = ..()
-	if(reveal_duration)
+	if(reveal_duration > 0 SECONDS)
 		cast_on.reveal(reveal_duration)
-	if(stun_duration)
+	if(stun_duration > 0 SECONDS)
 		cast_on.stun(stun_duration)
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.
@@ -217,7 +224,7 @@
 	button_icon_state = "overload_lights"
 	cooldown_time = 20 SECONDS
 
-	outer_radius = 5
+	aoe_radius = 5
 	unlock_amount = 25
 	cast_amount = 40
 	stun_duration = 3 SECONDS
@@ -226,9 +233,6 @@
 	var/shock_range = 2
 	/// The damage the shcoskf rom the lgihts do
 	var/shock_damage = 15
-
-/datum/action/cooldown/spell/aoe/revenant/overload/is_affected_by_aoe(atom/center, atom/thing)
-	return isturf(thing)
 
 /datum/action/cooldown/spell/aoe/revenant/overload/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
 	for(var/obj/machinery/light/light in victim)
@@ -261,14 +265,11 @@
 	button_icon_state = "defile"
 	cooldown_time = 15 SECONDS
 
-	outer_radius = 4
+	aoe_radius = 4
 	unlock_amount = 10
 	cast_amount = 30
 	reveal_duration = 4 SECONDS
 	stun_duration = 2 SECONDS
-
-/datum/action/cooldown/spell/aoe/revenant/defile/is_affected_by_aoe(atom/center, atom/thing)
-	return isturf(thing)
 
 /datum/action/cooldown/spell/aoe/revenant/defile/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
 	for(var/obj/effect/blessing/blessing in victim)
@@ -313,12 +314,9 @@
 	button_icon_state = "malfunction"
 	cooldown_time = 20 SECONDS
 
-	outer_radius = 4
+	aoe_radius = 4
 	cast_amount = 60
 	unlock_amount = 125
-
-/datum/action/cooldown/spell/aoe/revenant/malfunction/is_affected_by_aoe(atom/center, atom/thing)
-	return isturf(thing)
 
 // A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
 /datum/action/cooldown/spell/aoe/revenant/malfunction/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
@@ -358,12 +356,9 @@
 	button_icon_state = "blight"
 	cooldown_time = 20 SECONDS
 
-	outer_radius = 3
+	aoe_radius = 3
 	cast_amount = 50
 	unlock_amount = 75
-
-/datum/action/cooldown/spell/aoe/revenant/blight/is_affected_by_aoe(atom/center, atom/thing)
-	return isturf(thing)
 
 /datum/action/cooldown/spell/aoe/revenant/blight/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
 	for(var/mob/living/mob in victim)

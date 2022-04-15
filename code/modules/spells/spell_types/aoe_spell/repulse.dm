@@ -6,18 +6,17 @@
 	/// The moveforce of the throw done by the repulsion.
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
-/datum/action/cooldown/spell/aoe/repulse/is_affected_by_aoe(atom/center, atom/thing)
-	if(thing == owner || thing == center)
-		return FALSE
+/datum/action/cooldown/spell/aoe/magic_missile/get_things_to_cast_on(atom/center)
+	var/list/things = list()
+	for(var/atom/movable/nearby_movable in view(aoe_radius, center))
+		if(nearby_movable == owner || nearby_movable == center)
+			continue
+		if(nearby_movable.anchored)
+			continue
 
-	if(!ismovable(thing))
-		return FALSE
+		things += nearby_movable
 
-	var/atom/movable/movable_thing = thing
-	return !movable_thing.anchored
-
-/datum/action/cooldown/spell/aoe/repulse/get_things_to_cast_on(atom/center)
-	return view(outer_radius, center)
+	return things
 
 /datum/action/cooldown/spell/aoe/repulse/cast_on_thing_in_aoe(atom/movable/victim, atom/caster)
 	if(ismob(victim))
@@ -56,7 +55,7 @@
 	school = SCHOOL_EVOCATION
 	invocation = "GITTAH WEIGH"
 	invocation_type = INVOCATION_SHOUT
-	outer_radius = 5
+	aoe_radius = 5
 
 	cooldown_time = 40 SECONDS
 	cooldown_reduction_per_rank = 6.25 SECONDS
@@ -74,7 +73,7 @@
 
 	invocation_type = INVOCATION_NONE
 	antimagic_flags = NONE
-	outer_radius = 2
+	aoe_radius = 2
 
 	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep
 

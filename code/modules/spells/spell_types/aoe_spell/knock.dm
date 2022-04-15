@@ -11,15 +11,23 @@
 	invocation = "AULIE OXIN FIERA"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
-	outer_radius = 3
+	aoe_radius = 3
 
+	/// Typecache of everything we can knock.
 	var/static/list/knockable_things = typecacheof(list(
 		/obj/machinery/door/airlock,
 		/obj/structure/closet,
 	))
 
-/datum/action/cooldown/spell/aoe/knock/is_affected_by_aoe(atom/center, atom/thing)
-	return is_type_in_typecache(thing, knockable_things)
+/datum/action/cooldown/spell/aoe/knock/get_things_to_cast_on(atom/center)
+	var/list/things = list()
+	for(var/obj/nearby_obj in range(aoe_radius, center))
+		if(!is_type_in_typecache(nearby_obj, knockable_things))
+			continue
+
+		things += nearby_obj
+
+	return things
 
 /datum/action/cooldown/spell/aoe/knock/cast_on_thing_in_aoe(atom/victim, atom/caster)
 	if(istype(victim, /obj/machinery/door))
@@ -27,12 +35,14 @@
 	if(istype(victim, /obj/structure/closet))
 		INVOKE_ASYNC(src, .proc/open_closet, victim)
 
+/// Any doors knocked are opened, even bolted ones.
 /datum/action/cooldown/spell/aoe/knock/proc/open_door(obj/machinery/door/door)
 	if(istype(door, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/airlock_door = door
 		airlock_door.locked = FALSE
 	door.open()
 
+/// Any closets knocked are alos opened up, including locked ones.
 /datum/action/cooldown/spell/aoe/knock/proc/open_closet(obj/structure/closet/closet)
 	closet.locked = FALSE
 	closet.open()

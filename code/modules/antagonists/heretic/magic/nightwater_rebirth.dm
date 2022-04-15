@@ -18,19 +18,21 @@
 	cast_on.extinguish_mob()
 	return ..()
 
-/datum/action/cooldown/spell/aoe/fiery_rebirth/is_affected_by_aoe(atom/center, atom/thing)
-	if(!iscarbon(thing))
-		return FALSE
+/datum/action/cooldown/spell/aoe/fiery_rebirth/get_things_to_cast_on(atom/center)
+	var/list/things = list()
+	for(var/mob/living/carbon/nearby_mob in range(aoe_radius, center))
+		if(nearby_mob == owner || nearby_mob == center)
+			continue
+		if(!nearby_mob.mind || !nearby_mob.client)
+			continue
+		if(IS_HERETIC_OR_MONSTER(nearby_mob))
+			continue
+		if(nearby_mob.stat == DEAD || !nearby_mob.on_fire)
+			continue
 
-	var/mob/living/carbon/carbon_thing = thing
-	if(!carbon_thing.mind || !carbon_thing.client)
-		return FALSE
-	if(IS_HERETIC_OR_MONSTER(carbon_thing))
-		return FALSE
-	if(carbon_thing.stat == DEAD || !carbon_thing.on_fire)
-		return FALSE
+		things += nearby_mob
 
-	return TRUE
+	return things
 
 /datum/action/cooldown/spell/aoe/fiery_rebirth/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/carbon/human/caster)
 	new /obj/effect/temp_visual/eldritch_smoke(victim.drop_location())
@@ -40,6 +42,7 @@
 		victim.death()
 	victim.apply_damage(20, BURN)
 
+	// Heal the caster for every victim damaged
 	caster.adjustBruteLoss(-10, FALSE)
 	caster.adjustFireLoss(-10, FALSE)
 	caster.adjustToxLoss(-10, FALSE)

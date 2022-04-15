@@ -402,7 +402,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		return FALSE
 
 	spell_level++
-	cooldown_time -= cooldown_reduction_per_rank
+	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0)
 	update_spell_name()
 	return TRUE
 
@@ -418,7 +418,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		return FALSE
 
 	spell_level--
-	cooldown_time += cooldown_reduction_per_rank
+	cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
 	update_spell_name()
 	return TRUE
 

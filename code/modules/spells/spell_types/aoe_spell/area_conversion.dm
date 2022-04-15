@@ -11,10 +11,14 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 
-	outer_radius = 2
+	aoe_radius = 2
 
-/datum/action/cooldown/spell/aoe/area_conversion/is_affected_by_aoe(atom/center, atom/thing)
-	return isturf(thing)
+/datum/action/cooldown/spell/aoe/area_conversion/get_things_to_cast_on(atom/center)
+	var/list/things = list()
+	for(var/turf/nearby_turf in range(aoe_radius, center))
+		things += nearby_turf
+
+	return things
 
 /datum/action/cooldown/spell/aoe/area_conversion/cast_on_thing_in_aoe(turf/victim, atom/caster)
 	playsound(victim, 'sound/items/welder.ogg', 75, TRUE)

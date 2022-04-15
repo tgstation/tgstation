@@ -170,8 +170,7 @@ const typevars = (type) => {
       break;
     case 'aoe_turf':
       ret.push(
-        { name: 'outer_radius', type: 'int', options: null, default_value: -1 },
-        { name: 'inner_radius', type: 'int', options: null, default_value: -1 },
+        { name: 'aoe_radius', type: 'int', options: null, default_value: -1 },
         { name: 'overlay', type: 'bool', options: null, default_value: false },
         {
           name: 'overlay_icon',
