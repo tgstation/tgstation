@@ -217,7 +217,6 @@
 	icon_alert = "pda-r-library"
 	icon_pai = "pai_overlay_library"
 	icon_inactive_pai = "pai_off_overlay_library"
-	default_cartridge = /obj/item/cartridge/curator
 	insert_type = /obj/item/pen/fountain
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"

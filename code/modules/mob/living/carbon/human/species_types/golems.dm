@@ -83,24 +83,6 @@
 
 	return to_add
 
-/datum/species/golem/random
-	name = "Random Golem"
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
-	var/static/list/random_golem_types
-
-/datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	if(!random_golem_types)
-		random_golem_types = subtypesof(/datum/species/golem) - type
-		for(var/V in random_golem_types)
-			var/datum/species/golem/G = V
-			if(!initial(G.random_eligible))
-				random_golem_types -= G
-	var/datum/species/golem/golem_type = pick(random_golem_types)
-	var/mob/living/carbon/human/H = C
-	H.set_species(golem_type)
-	to_chat(H, "[initial(golem_type.info_text)]")
-
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
 	id = SPECIES_GOLEM_ADAMANTINE

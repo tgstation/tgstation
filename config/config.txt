@@ -132,6 +132,9 @@ LOG_SILICON
 ## log economy actions
 LOG_ECON
 
+## log traitor objectives
+LOG_TRAITOR
+
 ## log crew manifest to separate file
 LOG_MANIFEST
 
