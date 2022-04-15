@@ -928,20 +928,18 @@
 		if (heart.organ_flags & ORGAN_FAILING)
 			return DEFIB_FAIL_FAILING_HEART
 
-	// Carbons with HARS do not need a brain
-	if (!dna?.check_mutation(/datum/mutation/human/headless))
-		var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
+	var/obj/item/organ/brain/current_brain = getorgan(/obj/item/organ/brain)
 
-		if (QDELETED(BR))
-			return DEFIB_FAIL_NO_BRAIN
+	if (QDELETED(current_brain))
+		return DEFIB_FAIL_NO_BRAIN
 
-		if (BR.organ_flags & ORGAN_FAILING)
-			return DEFIB_FAIL_FAILING_BRAIN
+	if (current_brain.organ_flags & ORGAN_FAILING)
+		return DEFIB_FAIL_FAILING_BRAIN
 
-		if (BR.suicided || BR.brainmob?.suiciding)
-			return DEFIB_FAIL_NO_INTELLIGENCE
+	if (current_brain.suicided || current_brain.brainmob?.suiciding)
+		return DEFIB_FAIL_NO_INTELLIGENCE
 
-	if(key && key[1] == "@") // Adminghosts (#61870)
+	if(key && key[1] == "@") // Adminghosts
 		return DEFIB_NOGRAB_AGHOST
 
 	return DEFIB_POSSIBLE
