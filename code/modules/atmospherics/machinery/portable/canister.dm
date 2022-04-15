@@ -538,8 +538,11 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
+	. = ..()
+
 	if(machine_stat & BROKEN)
 		return PROCESS_KILL
+
 	if(timing && valve_timer < world.time)
 		valve_open = !valve_open
 		timing = FALSE
@@ -548,7 +551,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(valve_open)
 		var/turf/location = get_turf(src)
 		var/datum/gas_mixture/target_air = holding?.return_air() || location.return_air()
-		excited = TRUE
 
 		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
 			air_update_turf(FALSE, FALSE)
@@ -559,10 +561,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	///function used to check the limit of the canisters and also set the amount of damage that the canister can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(our_temperature > heat_limit || our_pressure > pressure_limit)
 		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
-		excited = TRUE
 	update_appearance()
-
-	return ..()
 
 /obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
 	return GLOB.physical_state

@@ -54,24 +54,19 @@
 		. += "scrubber-connector"
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
+	. = ..()
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 	///function used to check the limit of the scrubbers and also set the amount of damage that the scrubber can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(temperature > heat_limit || pressure > pressure_limit)
 		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
-		excited = TRUE
-		return ..()
+		return
 
 	if(!on)
-		return ..()
-
-	excited = TRUE
+		return
 
 	var/atom/target = holding || get_turf(src)
 	scrub(target.return_air())
-
-
-	return ..()
 
 /**
  * Called in process_atmos(), handles the scrubbing of the given gas_mixture
@@ -203,16 +198,14 @@
 		update_appearance()
 	update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	if(!on)
-		return ..()
-
-	excited = TRUE
+		return
 
 	if(!holding)
 		var/turf/T = get_turf(src)
 		for(var/turf/AT in T.get_atmos_adjacent_turfs(alldir = TRUE))
 			scrub(AT.return_air())
 
-	return ..()
+	return
 
 /obj/machinery/portable_atmospherics/scrubber/huge/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

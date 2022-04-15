@@ -44,18 +44,16 @@
 		. += "siphon-connector"
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
+	. = ..()
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 	///function used to check the limit of the pumps and also set the amount of damage that the pump can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(temperature > heat_limit || pressure > pressure_limit)
 		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
-		excited = TRUE
-		return ..()
+		return
 
 	if(!on)
-		return ..()
-
-	excited = TRUE
+		return
 
 	var/turf/local_turf = get_turf(src)
 	var/datum/gas_mixture/sending
@@ -69,8 +67,6 @@
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
 		air_update_turf(FALSE, FALSE) // Update the environment if needed.
-
-	return ..()
 
 /obj/machinery/portable_atmospherics/pump/emp_act(severity)
 	. = ..()

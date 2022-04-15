@@ -14,8 +14,6 @@
 	var/obj/item/tank/holding
 	///Volume (in L) of the inside of the machine
 	var/volume = 0
-	///Used to track if anything of note has happen while running process_atmos()
-	var/excited = TRUE
 
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
@@ -43,14 +41,9 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
-	if(!connected_port) // Pipe network handles reactions if connected, and we can't stop processing if there's a port effecting our mix
-		excited = (excited | air_contents.react(src))
-		if(!excited)
-			return PROCESS_KILL
-	excited = FALSE
+	air_contents.react(src)
 
 /obj/machinery/portable_atmospherics/return_air()
-	SSair.start_processing_machine(src)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/return_analyzable_air()
@@ -80,7 +73,6 @@
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
 
-	SSair.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -101,7 +93,6 @@
 	pixel_x = 0
 	pixel_y = 0
 
-	SSair.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -193,10 +184,10 @@
 	add_fingerprint(user)
 	return ..()
 
-/// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change. 
+/// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change.
 /// This checks for that case and removes our reference to it.
 /obj/machinery/portable_atmospherics/proc/unregister_holding()
 	SIGNAL_HANDLER
-	
+
 	UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
 	holding = null
