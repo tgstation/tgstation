@@ -177,7 +177,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time+world.tick_lag)
+	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
 	mod.wearer.update_inv_back()
 	SEND_SIGNAL(src, COMSIG_MODULE_USED)
 	return TRUE
