@@ -11486,7 +11486,9 @@
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
 "HO" = (
-/turf/open/floor/mineral/titanium/tiled/yellow,
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/expansion_bombthreat)
 "HQ" = (
 /obj/structure/flora/rock/pile,
