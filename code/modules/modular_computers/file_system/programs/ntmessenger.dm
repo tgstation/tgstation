@@ -12,21 +12,35 @@
 	program_icon = "comment-alt"
 	alert_able = TRUE
 
-	var/tTone = "beep" // the current ringtone
-	var/ringerStatus = TRUE // whether or not the ringtone is currently on
-	var/sAndR = TRUE // whether or not we're sending and receiving messages
-	var/messages = list() // the messages currently saved
-	var/last_text // great wisdom from PDA.dm - "no spamming"
-	var/last_text_everyone // even more wisdom from PDA.dm - "no everyone spamming"
-	var/datum/picture/picture // scanned photo
-	var/allow_emojis = FALSE // whether or not we allow emojis
-	var/viewingMessages = FALSE // whether or not we're looking at messages atm
-	var/monitor_hidden = FALSE // whether or not this device is currently hidden from the message monitor
-	var/sort = TRUE // whether or not we're sorting by job
-	var/sending_virus = FALSE // whether or not we're sending a virus
+	/// The current ringtone (displayed in the chat when a message is received).
+	var/ringtone = "beep"
+	/// Whether or not the ringtone is currently on.
+	var/ringer_status = TRUE
+	/// Whether or not we're sending and receiving messages.
+	var/sending_and_receiving = TRUE
+	/// The messages currently saved in the app.
+	var/messages = list()
+	/// great wisdom from PDA.dm - "no spamming" (prevents people from spamming the same message over and over)
+	var/last_text
+	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
+	var/last_text_everyone
+	/// Scanned photo for sending purposes.
+	var/datum/picture/picture
+	/// Whether or not we allow emojis to be sent by the user.
+	var/allow_emojis = FALSE
+	/// Whether or not we're currently looking at the message list.
+	var/viewing_messages = FALSE
+	// Whether or not this device is currently hidden from the message monitor.
+	var/monitor_hidden = FALSE
+	// Whether or not we're sorting by job.
+	var/sort_by_job = TRUE
+	// Whether or not we're sending (or trying to send) a virus.
+	var/sending_virus = FALSE
 
-	var/photo_path // the path for the current loaded image in rsc
+	/// The path for the current loaded image in rsc
+	var/photo_path
 
+	/// Whether or not this app is loaded on a silicon's tablet.
 	var/is_silicon = FALSE
 
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
