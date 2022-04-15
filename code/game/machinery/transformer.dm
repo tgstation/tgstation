@@ -8,7 +8,7 @@
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	plane = ABOVE_GAME_PLANE
 	density = FALSE
-	active_power_usage = 5000
+	active_power_usage = MIN_ACTIVE_POWER_USAGE * 5
 	var/transform_dead = 0
 	var/transform_standing = 0
 	var/cooldown_duration = 600 // 1 minute

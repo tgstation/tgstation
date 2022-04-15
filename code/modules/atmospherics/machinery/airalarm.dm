@@ -68,9 +68,8 @@
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarmp"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 20
+	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.05
+	active_power_usage = MIN_ACTIVE_POWER_USAGE * 0.02
 	power_channel = AREA_USAGE_ENVIRON
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250

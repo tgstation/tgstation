@@ -14,8 +14,7 @@
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
 	telecomms_type = /obj/machinery/telecomms/bus
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 1
+	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.01
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/bus
 	var/change_frequency = 0

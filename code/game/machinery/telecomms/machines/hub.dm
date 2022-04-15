@@ -14,8 +14,7 @@
 	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
 	telecomms_type = /obj/machinery/telecomms/hub
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 1
+	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.01
 	long_range_link = TRUE
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/hub

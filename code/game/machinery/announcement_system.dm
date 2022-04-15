@@ -12,7 +12,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	verb_ask = "queries"
 	verb_exclaim = "alarms"
 
-	active_power_usage = 50
+	active_power_usage = MIN_ACTIVE_POWER_USAGE * 0.05
 
 	circuit = /obj/item/circuitboard/machine/announcement_system
 

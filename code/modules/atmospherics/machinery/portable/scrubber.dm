@@ -177,7 +177,7 @@
 	name = "huge air scrubber"
 	icon_state = "hugescrubber"
 	anchored = TRUE
-	active_power_usage = 500
+	active_power_usage = MIN_ACTIVE_POWER_USAGE * 0.5
 
 	overpressure_m = 200
 	volume_rate = 1500

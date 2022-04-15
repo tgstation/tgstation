@@ -11,8 +11,8 @@
 	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 80, ACID = 70)
 	use_power = IDLE_POWER_USE
 	power_channel = AREA_USAGE_EQUIP
-	idle_power_usage = 5
-	active_power_usage = 30
+	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.05
+	active_power_usage = MIN_ACTIVE_POWER_USAGE * 0.03
 	anchored = TRUE
 	/// dictates whether the gate barrier is up or not
 	var/gate_active = TRUE

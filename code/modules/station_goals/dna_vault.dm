@@ -66,7 +66,7 @@
 	icon_state = "vault"
 	density = TRUE
 	anchored = TRUE
-	active_power_usage = 5000
+	active_power_usage = MIN_ACTIVE_POWER_USAGE * 5
 	pixel_x = -32
 	pixel_y = -64
 	light_range = 3

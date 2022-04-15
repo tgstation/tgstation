@@ -3,7 +3,7 @@
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 25
+	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.25
 	device_type = BINARY
 	layer = GAS_PUMP_LAYER
 	pipe_flags = PIPING_BRIDGE

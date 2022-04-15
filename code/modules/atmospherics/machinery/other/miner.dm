@@ -26,8 +26,8 @@
 	var/power_draw_dynamic_kpa_coeff = 0.5
 	var/broken = FALSE
 	var/broken_message = "ERROR"
-	idle_power_usage = 150
-	active_power_usage = 2000
+	idle_power_usage = MIN_IDLE_POWER_USAGE * 1.5
+	active_power_usage = MIN_ACTIVE_POWER_USAGE * 2
 
 /obj/machinery/atmospherics/miner/Initialize(mapload)
 	. = ..()

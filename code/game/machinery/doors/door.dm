@@ -21,8 +21,8 @@
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
-	idle_power_usage = 10
-	active_power_usage = 150
+	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.1
+	active_power_usage = MIN_ACTIVE_POWER_USAGE * 0.2
 
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 	var/shockedby

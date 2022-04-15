@@ -9,8 +9,6 @@
 	icon_state = "pandemic0"
 	icon_keyboard = null
 	base_icon_state = "pandemic"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
 

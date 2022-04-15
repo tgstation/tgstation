@@ -11,8 +11,7 @@
 	desc = "A machine used to store data and network statistics."
 	telecomms_type = /obj/machinery/telecomms/server
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 1
+	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.01
 	circuit = /obj/item/circuitboard/machine/telecomms/server
 	var/list/log_entries = list()
 	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
