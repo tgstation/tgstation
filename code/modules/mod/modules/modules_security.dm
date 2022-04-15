@@ -154,8 +154,8 @@
 	if(!.)
 		return
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
-	var/datum/reagents/capsaicin_holder = new(50)
-	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 50)
+	var/datum/reagents/capsaicin_holder = new(10)
+	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
 	var/datum/effect_system/smoke_spread/chem/quick/smoke = new
 	smoke.set_up(capsaicin_holder, 1, get_turf(src))
 	smoke.start()
