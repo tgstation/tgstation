@@ -32,7 +32,13 @@
 	if(part_path && mapped)
 		installed_part = new part_path(src)
 
+	var/turf/our_turf = get_turf(src)
+	our_turf.air_update_turf(TRUE)
+
 /obj/machinery/power/turbine/Destroy()
+
+	var/turf/our_turf = get_turf(src)
+	our_turf.air_update_turf(TRUE)
 
 	if(installed_part)
 		QDEL_NULL(installed_part)
@@ -109,12 +115,8 @@
 /obj/machinery/power/turbine/Moved(atom/OldLoc, Dir)
 	. = ..()
 	disable_parts()
-	var/turf/old_turf = get_turf(OldLoc)
-	old_turf.thermal_conductivity = our_turf_thermal_conductivity
-	var/turf/new_turf = get_turf(src)
-	if(new_turf)
-		our_turf_thermal_conductivity = new_turf.thermal_conductivity
-		new_turf.thermal_conductivity = 0
+	var/turf/our_turf = get_turf(src)
+	our_turf.air_update_turf(TRUE)
 
 /obj/machinery/power/turbine/Exited(atom/movable/gone, direction)
 	. = ..()
