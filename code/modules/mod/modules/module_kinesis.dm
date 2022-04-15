@@ -220,6 +220,8 @@
 	COOLDOWN_DECLARE(coordinate_cooldown)
 
 /atom/movable/screen/fullscreen/kinesis/proc/on_move(atom/source, atom/oldloc, dir, forced)
+	SIGNAL_HANDLER
+
 	if(given_turf)
 		var/x_offset = source.loc.x - oldloc.x
 		var/y_offset = source.loc.y - oldloc.y
