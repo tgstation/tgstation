@@ -551,7 +551,8 @@
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	var/cooldown = 150
 	var/last_teleport = 0
-	var/is_charging = FALSE //Set to true upon action activation to prevent spamming teleport callbacks while the first is still occurring.
+	///Set to true upon action activation to prevent spamming teleport callbacks while the first is still occurring.
+	var/is_charging = FALSE 
 
 /datum/action/innate/unstable_teleport/IsAvailable()
 	. = ..()
