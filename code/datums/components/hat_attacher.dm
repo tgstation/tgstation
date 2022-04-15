@@ -38,12 +38,6 @@
 	else
 		base_examine += span_notice("There's nothing placed on the helmet. Yet.")
 
-//component should be:
-// hold hat attached to helmet:
-// // put it on (player uses hat on helmet on head) DONE
-// // take it off (player right clicks helmet with empty hand) DONE
-// show on examine that the hat is attached DONE
-// update the sprite to show hat on top DONE
 // DO ALL OF THIS TO FUCKING MODSUITS
 
 /datum/component/hat_attacher/proc/attach_hat(datum/source, obj/item/attach_item, mob/living/user, params)
