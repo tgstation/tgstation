@@ -4741,12 +4741,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
-"aFn" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/hallway/primary/tram/center)
 "aFt" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -6617,10 +6611,13 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/tramwall/titanium,
+/obj/structure/tramwall/titanium{
+	opacity = 0
+	},
 /obj/structure/shuttle/engine/propulsion/in_wall{
 	dir = 4;
-	pixel_x = 32
+	pixel_x = 32;
+	opacity = 0
 	},
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
@@ -36635,7 +36632,9 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/tramwall/titanium,
+/obj/structure/tramwall/titanium{
+	opacity = 0
+	},
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "lIz" = (
@@ -38348,10 +38347,13 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/tramwall/titanium,
+/obj/structure/tramwall/titanium{
+	opacity = 0
+	},
 /obj/structure/shuttle/engine/propulsion/in_wall{
 	dir = 8;
-	pixel_x = -32
+	pixel_x = -32;
+	opacity = 0
 	},
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
@@ -169682,7 +169684,7 @@ bgI
 ayd
 aCl
 vqB
-aFn
+avK
 avK
 aGT
 ayd
