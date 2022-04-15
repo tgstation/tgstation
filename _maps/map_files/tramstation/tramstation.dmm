@@ -17747,7 +17747,7 @@
 /turf/open/floor/catwalk_floor,
 /area/hallway/primary/tram/center)
 "fak" = (
-/obj/machinery/portable_atmospherics/canister/tier_1,
+/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot,
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/white/line,
@@ -18257,8 +18257,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	name = "tunnel access blast door";
-	id = "right_tram_lower"
+	id = "right_tram_lower";
+	name = "tunnel access blast door"
 	},
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating,
@@ -18907,7 +18907,7 @@
 /area/ai_monitored/command/storage/eva)
 "fuW" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/tier_1,
+/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/science/storage)
@@ -30393,8 +30393,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	name = "tunnel access blast door";
-	id = "right_tram_lower"
+	id = "right_tram_lower";
+	name = "tunnel access blast door"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -35154,8 +35154,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	name = "tunnel access blast door";
-	id = "right_tram_lower"
+	id = "right_tram_lower";
+	name = "tunnel access blast door"
 	},
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating,
@@ -43378,7 +43378,7 @@
 "omE" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/tier_1,
+/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/science/storage)
@@ -44897,10 +44897,10 @@
 	network = list("ss13","minisat")
 	},
 /obj/machinery/button/door/directional/south{
-	pixel_x = 8;
-	req_access_txt = "17;65";
 	id = "teledoor";
-	name = "MiniSat Shutter Control"
+	name = "MiniSat Shutter Control";
+	pixel_x = 8;
+	req_access_txt = "17;65"
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
@@ -48045,8 +48045,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	name = "tunnel access blast door";
-	id = "right_tram_lower"
+	id = "right_tram_lower";
+	name = "tunnel access blast door"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
