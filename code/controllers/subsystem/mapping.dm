@@ -47,6 +47,10 @@ SUBSYSTEM_DEF(mapping)
 	/// True when in the process of adding a new Z-level, global locking
 	var/adding_new_zlevel = FALSE
 
+	///shows the default gravity value for each z level. recalculated when gravity generators change.
+	///associative list of the form: list("[z level num]" = max generator gravity in that z level OR the gravity level trait)
+	var/list/gravity_by_z_level = list()
+
 /datum/controller/subsystem/mapping/New()
 	..()
 #ifdef FORCE_MAP
@@ -106,6 +110,20 @@ SUBSYSTEM_DEF(mapping)
 	initialize_reserved_level(transit.z_value)
 	SSticker.OnRoundstart(CALLBACK(src, .proc/spawn_maintenance_loot))
 	return ..()
+
+/datum/controller/subsystem/mapping/proc/calculate_z_level_gravity(z_level_number)
+	if(!isnum(z_level_number) || z_level_number < 1)
+		return FALSE
+
+	var/max_gravity = 0
+
+	for(var/obj/machinery/gravity_generator/main/grav_gen as anything in GLOB.gravity_generators["[z_level_number]"])
+		max_gravity = max(grav_gen.setting, max_gravity)
+
+	max_gravity = max_gravity || level_trait(z_level_number, ZTRAIT_GRAVITY) || 0//just to make sure no nulls
+	gravity_by_z_level["[z_level_number]"] = max_gravity
+	return max_gravity
+
 
 /**
  * ##setup_ruins

@@ -937,7 +937,7 @@
  * Called whenever an object moves and by mobs when they attempt to move themselves through space
  * And when an object or action applies a force on src, see [newtonian_move][/atom/movable/proc/newtonian_move]
  *
- * Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
+ * Return FALSE to have src start/keep drifting in a no-grav area and TRUE to stop/not start drifting
  *
  * Mobs should return 1 if they should be able to move of their own volition, see [/client/proc/Move]
  *
@@ -966,10 +966,10 @@
 	return FALSE
 
 
-/// Only moves the object if it's under no gravity
+/// Only moves the object if it's under no gravity.
 /// Accepts the direction to move, and if the push should be instant
 /atom/movable/proc/newtonian_move(direction, instant = FALSE)
-	if(!isturf(loc) || Process_Spacemove(0))
+	if(Process_Spacemove(0))
 		return FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)

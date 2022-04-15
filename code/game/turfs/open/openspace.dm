@@ -32,6 +32,9 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	. = ..()
 	overlays += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
 	RegisterSignal(src, COMSIG_ATOM_CREATED, .proc/on_atom_created)
+	var/area/our_area = loc
+	if(istype(our_area, /area/space))
+		force_no_gravity = TRUE
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()

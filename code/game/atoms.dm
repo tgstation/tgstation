@@ -1920,6 +1920,14 @@
 
 	pixel_y = pixel_y + base_pixel_y - .
 
+/turf
+	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
+	var/force_no_gravity = FALSE
+
+/turf/open/space
+	force_no_gravity = TRUE
+
+
 /**
  * Returns true if this atom has gravity for the passed in turf
  *
@@ -1935,39 +1943,28 @@
  * * otherwise no gravity
  */
 /atom/proc/has_gravity(turf/gravity_turf)
-	if(!gravity_turf || !isturf(gravity_turf))
+	if(!isturf(gravity_turf))
 		gravity_turf = get_turf(src)
 
 	if(!gravity_turf)
 		return 0
 
-	var/list/forced_gravity = list()
-	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity)
-	if(!forced_gravity.len)
-		SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
-	if(forced_gravity.len)
-		var/max_grav = forced_gravity[1]
+	var/list/forced_gravity
+	if(!isnull(SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity = list())) && length(forced_gravity))
+		SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)//only gets turned into a list if the signal exists
+
+	if(length(forced_gravity))
+		var/max_grav = 0
 		for(var/i in forced_gravity)
 			max_grav = max(max_grav, i)
 		return max_grav
 
-	if(isspaceturf(gravity_turf)) // Turf never has gravity
+	if(gravity_turf.force_no_gravity)
 		return 0
-	if(istype(gravity_turf, /turf/open/openspace)) //openspace in a space area doesn't get gravity
-		if(istype(get_area(gravity_turf), /area/space))
-			return 0
 
-	var/area/turf_area = get_area(gravity_turf)
-	if(turf_area.has_gravity) // Areas which always has gravity
-		return turf_area.has_gravity
-	else
-		// There's a gravity generator on our z level
-		if(GLOB.gravity_generators["[gravity_turf.z]"])
-			var/max_grav = 0
-			for(var/obj/machinery/gravity_generator/main/main_grav_gen as anything in GLOB.gravity_generators["[gravity_turf.z]"])
-				max_grav = max(main_grav_gen.setting,max_grav)
-			return max_grav
-	return SSmapping.level_trait(gravity_turf.z, ZTRAIT_GRAVITY)
+	var/area/turf_area = gravity_turf.loc
+
+	return turf_area.has_gravity || SSmapping.gravity_by_z_level["[gravity_turf.z]"]
 
 /**
  * Causes effects when the atom gets hit by a rust effect from heretics

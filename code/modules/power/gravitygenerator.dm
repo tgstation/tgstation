@@ -3,7 +3,8 @@
 // Gravity Generator
 //
 
-GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
+/// We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
+GLOBAL_LIST_EMPTY(gravity_generators)
 
 #define POWER_IDLE 0
 #define POWER_UP 1
@@ -37,6 +38,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, TRUE)
+
 
 /obj/machinery/gravity_generator/main/Destroy()
 	QDEL_NULL(gravity_field)
@@ -146,7 +148,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/charge_count = 100
 	var/current_overlay = null
 	var/broken_state = 0
-	var/setting = 1 //Gravity value when on
+	///Gravity value when on
+	var/setting = 1
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
@@ -430,6 +433,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				GLOB.gravity_generators["[z]"] |= src
 			else
 				GLOB.gravity_generators["[z]"] -= src
+			SSmapping.calculate_z_level_gravity(z)
 
 /obj/machinery/gravity_generator/main/proc/change_setting(value)
 	if(value != setting)
