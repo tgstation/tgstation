@@ -983,7 +983,6 @@
 /obj/item/food/pie/cream,
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/light/directional/north,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "dd" = (
@@ -5155,7 +5154,6 @@
 	},
 /obj/effect/turf_decal/tile/dark,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -12458,7 +12456,6 @@
 "Jn" = (
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
@@ -15894,7 +15891,12 @@
 /area/mine/storage)
 "SS" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling{
+	pixel_y = 9
+	},
+/obj/item/storage/fancy/donut_box{
+	pixel_x = -6
+	},
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
 "ST" = (
