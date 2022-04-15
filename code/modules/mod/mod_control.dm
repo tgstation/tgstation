@@ -446,7 +446,7 @@
 
 /obj/item/mod/control/update_icon_state()
 	icon_state = "[skin]-control[active ? "-sealed" : ""]"
-	return ..(
+	return ..()
 
 /obj/item/mod/control/proc/set_wearer(mob/user)
 	wearer = user
