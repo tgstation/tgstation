@@ -176,7 +176,7 @@
 /datum/quirk/heterochromatic
 	name = "Heterochromatic"
 	desc = "One of your eyes is a different color than the other!"
-	icon = "eye"
+	icon = "eye-low-vision" // Ignore the icon name, its actually a fairly good representation of different color eyes
 	value = 0
 
 /datum/quirk/monochromatic
