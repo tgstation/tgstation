@@ -94,13 +94,13 @@
 		broken_egg.pixel_x = src.pixel_x
 		broken_egg.pixel_y = src.pixel_y
 		playsound(get_turf(user), 'sound/items/sheath.ogg', 40, TRUE)
+		reagents.copy_to(broken_egg,reagents.total_volume)
 
 		var/obj/machinery/griddle/hit_griddle = target
 		hit_griddle.AddToGrill(broken_egg,user)
 		to_chat(user, "You crack [src] open onto [target].")
 
 		qdel(src)
-
 
 
 /obj/item/food/egg/blue
@@ -131,7 +131,7 @@
 	name = "fried egg"
 	desc = "A fried egg, would go well with a touch of salt and pepper."
 	icon_state = "friedegg"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/eggyolk = 2 , /datum/reagent/consumable/nutriment/vitamin = 2)
 	bite_consumption = 1
 	tastes = list("egg" = 4)
 	foodtypes = MEAT | FRIED | BREAKFAST
@@ -142,7 +142,7 @@
 	name = "raw egg"
 	desc = "Supposedly good for you, if you can stomach it. Better fried."
 	icon_state = "rawegg"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list() //Recieves all reagents from its whole egg counterpart
 	bite_consumption = 1
 	tastes = list("raw egg" = 6, "sliminess" = 1)
 	eatverbs = list("gulp down")
@@ -150,7 +150,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/rawegg/MakeGrillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/friedegg, rand(35 SECONDS, 50 SECONDS), TRUE, FALSE)
+	AddComponent(/datum/component/grillable, /obj/item/food/friedegg, rand(20 SECONDS, 35 SECONDS), TRUE, FALSE)
 
 /obj/item/food/boiledegg
 	name = "boiled egg"
