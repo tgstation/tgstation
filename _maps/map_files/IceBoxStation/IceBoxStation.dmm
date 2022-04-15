@@ -36218,7 +36218,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/command/heads_quarters/rd)
 "qSi" = (
-/obj/machinery/portable_atmospherics/canister/tier_1,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
 /area/science/mixing)
 "qSr" = (
@@ -42795,8 +42795,8 @@
 /obj/machinery/cell_charger,
 /obj/item/radio/intercom/directional/north,
 /obj/item/storage/fancy/donut_box{
-	pixel_y = 9;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 9
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
