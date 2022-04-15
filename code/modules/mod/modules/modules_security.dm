@@ -87,15 +87,13 @@
 	var/magnet_delay = 0.8 SECONDS
 	/// The typecache of all guns we allow.
 	var/static/list/guns_typecache
-	/// A list of our allowed gun types.
-	var/list/allowed_guns = list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/grenadelauncher, /obj/item/gun/chem, /obj/item/gun/syringe)
 	/// The guns already allowed by the modsuit chestplate.
 	var/list/already_allowed_guns = list()
 
 /obj/item/mod/module/magnetic_harness/Initialize(mapload)
 	. = ..()
 	if(!guns_typecache)
-		guns_typecache = typecacheof(allowed_guns)
+		guns_typecache = typecacheof(list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/grenadelauncher, /obj/item/gun/chem, /obj/item/gun/syringe))
 
 /obj/item/mod/module/magnetic_harness/on_install()
 	already_allowed_guns = guns_typecache & mod.chestplate.allowed
@@ -115,7 +113,7 @@
 /obj/item/mod/module/magnetic_harness/proc/check_dropped_item(datum/source, obj/item/dropped_item, force, new_location)
 	SIGNAL_HANDLER
 
-	if(!is_type_in_list(dropped_item, allowed_guns))
+	if(!is_type_in_typecache(dropped_item, guns_typecache))
 		return
 	if(new_location != get_turf(src))
 		return
