@@ -63,11 +63,9 @@
 			else
 				drafted_lights[ruleset] = ruleset.get_weight()
 
-	if (spawn_heavy && drafted_heavies.len > 0)
-		pick_midround_rule(drafted_heavies)
-	else if (drafted_lights.len > 0)
-		pick_midround_rule(drafted_lights)
-
+	if (spawn_heavy && drafted_heavies.len > 0 && pick_midround_rule(drafted_heavies))
+		return
+	else if (drafted_lights.len > 0 && pick_midround_rule(drafted_lights))
 		if (spawn_heavy)
 			dynamic_log("A heavy ruleset was intended to roll, but there weren't any available.")
 	else
