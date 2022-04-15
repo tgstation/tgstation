@@ -447,15 +447,15 @@
 		return TRUE
 	if(linked_extract.loc.loc == owner)
 		return TRUE
-	for(var/atom/storage_loc in get_storage_locs(linked_extract))
+	for(var/atom/storage_loc as anything in get_storage_locs(linked_extract))
 		if(storage_loc == owner)
 			return TRUE
 		if(storage_loc.loc == owner)
 			return TRUE
-		for(var/atom/storage_loc_storage_loc in get_storage_locs(storage_loc))
+		for(var/atom/storage_loc_storage_loc as anything in get_storage_locs(storage_loc))
 			if(storage_loc_storage_loc == owner)
 				return TRUE
-	for(var/atom/loc_storage_loc in get_storage_locs(linked_extract.loc))
+	for(var/atom/loc_storage_loc as anything in get_storage_locs(linked_extract.loc))
 		if(loc_storage_loc == owner)
 			return TRUE
 	return FALSE
