@@ -228,6 +228,7 @@
 
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
+		SEND_SIGNAL(loc, COMSIG_ATOM_ENTERED, src)
 
 	if(greyscale_config && greyscale_colors)
 		update_greyscale()

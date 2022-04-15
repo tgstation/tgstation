@@ -161,25 +161,42 @@ GLOBAL_LIST_EMPTY(lifts)
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 
 	var/id = null //ONLY SET THIS TO ONE OF THE LIFT'S PARTS. THEY'RE CONNECTED! ONLY ONE NEEDS THE SIGNAL!
-	var/pass_through_floors = FALSE //if true, the elevator works through floors
-	var/controls_locked = FALSE //if true, the lift cannot be manually moved.
-	var/list/atom/movable/lift_load //things to move
-	var/datum/lift_master/lift_master_datum    //control from
+	///if true, the elevator works through floors
+	var/pass_through_floors = FALSE
+	///if true, the lift cannot be manually moved.
+	var/controls_locked = FALSE
+	///things to move
+	var/list/atom/movable/lift_load
+	///control from
+	var/datum/lift_master/lift_master_datum
 
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
 	GLOB.lifts.Add(src)
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXITED =.proc/UncrossedRemoveItemFromLift,
-		COMSIG_ATOM_ENTERED = .proc/AddItemOnLift,
-		COMSIG_ATOM_CREATED = .proc/AddItemOnLift,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+
+	//AddElement(/datum/element/connect_loc, loc_connections)
 	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
+	set_movement_registrations()
 
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
 
+/obj/structure/industrial_lift/proc/set_movement_registrations()
+	var/turf/our_turf = loc
+	if(!isturf(our_turf))
+		return FALSE
+
+	RegisterSignal(our_turf, COMSIG_ATOM_EXITED, .proc/UncrossedRemoveItemFromLift)
+	RegisterSignal(our_turf, COMSIG_ATOM_ENTERED, .proc/AddItemOnLift)
+	return TRUE
+
+/obj/structure/industrial_lift/proc/undo_movement_registrations()
+	var/turf/our_turf = loc
+	if(!isturf(our_turf))
+		return FALSE
+
+	UnregisterSignal(our_turf, COMSIG_ATOM_EXITED)
+	UnregisterSignal(our_turf, COMSIG_ATOM_ENTERED)
 
 /obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
@@ -233,7 +250,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			continue
 		. += neighbor
 
-/obj/structure/industrial_lift/proc/travel(going, gliding_amount = 8)
+/obj/structure/industrial_lift/proc/travel(going, gliding_amount = 8, is_border_platform = FALSE)
 	var/list/things_to_move = LAZYCOPY(lift_load)
 	var/turf/destination
 	if(!isturf(going))
@@ -305,11 +322,14 @@ GLOBAL_LIST_EMPTY(lifts)
 			var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
 			collided.throw_at(throw_target, 200, 4, callback = land_slam)
 
+	undo_movement_registrations()
 	set_glide_size(gliding_amount)
 	forceMove(destination)
 	for(var/atom/movable/thing as anything in things_to_move)
 		thing.set_glide_size(gliding_amount) //matches the glide size of the moving platform to stop them from jittering on it.
 		thing.forceMove(destination)
+
+	set_movement_registrations()
 
 /obj/structure/industrial_lift/proc/use(mob/living/user)
 	if(!isliving(user) || !in_range(src, user) || user.combat_mode)
