@@ -2290,7 +2290,7 @@
 */
 #include "code\modules\atmospherics\machinery\airalarm.dm"
 #include "code\modules\atmospherics\machinery\atmosmachinery.dm"
-#include "code\modules\atmospherics\machinery\bluespace_vendor.dm"
+//#include "code\modules\atmospherics\machinery\bluespace_vendor.dm"
 #include "code\modules\atmospherics\machinery\datum_pipeline.dm"
 #include "code\modules\atmospherics\machinery\components\components_base.dm"
 #include "code\modules\atmospherics\machinery\components\tank.dm"
@@ -2304,8 +2304,10 @@
 #include "code\modules\atmospherics\machinery\components\binary_devices\temperature_pump.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\valve.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\volume_pump.dm"
+/*
 #include "code\modules\atmospherics\machinery\components\electrolyzer\electrolyzer.dm"
 #include "code\modules\atmospherics\machinery\components\electrolyzer\electrolyzer_reactions.dm"
+*/
 /*
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_core.dm"
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_defines.dm"
@@ -2337,6 +2339,7 @@
 #include "code\modules\atmospherics\machinery\pipes\layermanifold.dm"
 #include "code\modules\atmospherics\machinery\pipes\mapping.dm"
 #include "code\modules\atmospherics\machinery\pipes\multiz.dm"
+#include "code\modules\atmospherics\ZAS\atmos_primitives.dm"
 #include "code\modules\atmospherics\machinery\pipes\pipes.dm"
 #include "code\modules\atmospherics\machinery\pipes\smart.dm"
 #include "code\modules\atmospherics\machinery\pipes\heat_exchange\he_pipes.dm"
