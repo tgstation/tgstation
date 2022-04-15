@@ -153,7 +153,7 @@
 		temperature = reference.temperature
 
 	// Handles the burning of atoms.
-	if(temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(cold_fire)
 		return
 	for(var/A in location)
 		var/atom/AT = A
@@ -181,7 +181,7 @@
 		heat_g = LERP(255, temperature, 1.2)
 		heat_b = LERP(255, temperature, 0.9)
 		heat_a = 100
-	if(temperature < 5000 && temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //This is where fire is very orange, we turn it into the normal fire texture here.
+	else if(temperature < 5000) //This is where fire is very orange, we turn it into the normal fire texture here.
 		var/normal_amt = gauss_lerp(temperature, 1000, 3000)
 		heat_r = LERP(heat_r,255,normal_amt)
 		heat_g = LERP(heat_g,255,normal_amt)
@@ -264,13 +264,13 @@
 
 	if(bypassing)
 		icon_state = "3"
-		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(!cold_fire)
 			location.burn_tile()
 
 		//Possible spread due to radiated heat.
-		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || location.air.temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
+		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || cold_fire)
 			var/radiated_temperature = location.air.temperature*FIRE_SPREAD_RADIOSITY_SCALE
-			if(location.air.temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
+			if(cold_fire)
 				radiated_temperature = location.air.temperature * COLD_FIRE_SPREAD_RADIOSITY_SCALE
 			for(var/t in location.atmos_adjacent_turfs)
 				var/turf/open/T = t
@@ -297,7 +297,7 @@
 
 /obj/effect/hotspot/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
-	if(isliving(arrived) && temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(isliving(arrived) && !cold_fire)
 		var/mob/living/immolated = arrived
 		immolated.fire_act(temperature, volume)
 
