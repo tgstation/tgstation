@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "There is no longer a commented out line in IceBoxStation.dmm, which means that random parts of the library will no longer go completely missing. Enjoy."

@@ -699,7 +699,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/commons/storage/mining
 	name = "\improper Public Mining Storage"
-	icon_state = "mining"
+	icon_state = "mining_storage"
 
 //Service
 
@@ -1218,6 +1218,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Brig"
 	icon_state = "brig"
 
+/area/security/holding_cell
+	name = "\improper Holding Cell"
+	icon_state = "holding_cell"
+
 /area/security/medical
 	name = "\improper Security Medical"
 	icon_state = "security_medical"
@@ -1419,7 +1423,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/cargo/miningdock
 	name = "\improper Mining Dock"
-	icon_state = "mining"
+	icon_state = "mining_dock"
+
+/area/cargo/miningdock/cafeteria
+	name = "\improper Mining Cafeteria"
+	icon_state = "mining_cafe"
+
+/area/cargo/miningdock/oresilo
+	name = "\improper Mining Ore Silo Storage"
+	icon_state = "mining_silo"
 
 /area/cargo/miningoffice
 	name = "\improper Mining Office"
@@ -1452,6 +1464,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/xenobiology
 	name = "\improper Xenobiology Lab"
 	icon_state = "xenobio"
+
+/area/science/xenobiology/hallway
+	name = "\improper Xenobiology Hallway"
+	icon_state = "xenobio_hall"
 
 /area/science/cytology
 	name = "\improper Cytology Lab"

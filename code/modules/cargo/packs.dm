@@ -76,8 +76,8 @@
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
 					/obj/item/clothing/head/soft,
-					/obj/item/clothing/mask/bandana/skull)//so you can properly #cargoniabikergang
-	crate_name = "Biker Kit"
+					/obj/item/clothing/mask/bandana/color/skull/black)//so you can properly #cargoniabikergang
+	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/emergency/bio
@@ -681,7 +681,7 @@
 					/obj/item/circuitboard/mecha/ripley/peripherals,
 					/obj/item/mecha_parts/mecha_equipment/drill,
 					/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp)
-	crate_name= "APLU MK-I kit"
+	crate_name= "\improper APLU MK-I kit"
 
 /datum/supply_pack/engineering/conveyor
 	name = "Conveyor Assembly Crate"
@@ -738,7 +738,7 @@
 	cost = CARGO_CRATE_VALUE * 5
 	access_view = ACCESS_ENGINE
 	contains = list(/obj/machinery/power/port_gen/pacman)
-	crate_name = "PACMAN generator crate"
+	crate_name = "\improper PACMAN generator crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engineering/power
@@ -1464,7 +1464,7 @@
 	contains = list(/obj/item/mod/core/standard,
 		/obj/item/mod/core/standard,
 		/obj/item/mod/core/standard)
-	crate_name = "MOD core crate"
+	crate_name = "\improper MOD core crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
 //////////////////////////////////////////////////////////////////////////////
@@ -2343,11 +2343,12 @@
 
 /datum/supply_pack/costumes_toys/mech_suits
 	name = "Mech Pilot's Suit Crate"
-	desc = "Suits for piloting big robots. Contains all three colors!"
+	desc = "Suits for piloting big robots. Contains four of those!"
 	cost = CARGO_CRATE_VALUE * 3 //state-of-the-art technology doesn't come cheap
 	contains = list(/obj/item/clothing/under/costume/mech_suit,
-					/obj/item/clothing/under/costume/mech_suit/white,
-					/obj/item/clothing/under/costume/mech_suit/blue)
+					/obj/item/clothing/under/costume/mech_suit,
+					/obj/item/clothing/under/costume/mech_suit,
+					/obj/item/clothing/under/costume/mech_suit)
 	crate_name = "mech pilot's suit crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
@@ -2545,7 +2546,7 @@
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."
 	cost = 1000000 //Special case, we don't want to make this in terms of crates because having bikes be a million credits is the whole meme.
 	contains = list(/obj/vehicle/ridden/bicycle)
-	crate_name = "Bicycle Crate"
+	crate_name = "bicycle crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/bigband
@@ -2843,7 +2844,7 @@
 	desc = "Not enough cartridges after half the crew lost their PDA to explosions? This may fix it."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/vending_refill/cart)
-	crate_name = "ptech supply crate"
+	crate_name = "\improper PTech supply crate"
 
 /datum/supply_pack/vending/sectech
 	name = "SecTech Supply Crate"
@@ -2851,7 +2852,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	access = ACCESS_SECURITY
 	contains = list(/obj/item/vending_refill/security)
-	crate_name = "SecTech supply crate"
+	crate_name = "\improper SecTech supply crate"
 	crate_type = /obj/structure/closet/crate/secure/gear
 
 /datum/supply_pack/vending/snack
@@ -2874,14 +2875,14 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/assist,
 					/obj/item/vending_refill/youtool)
-	crate_name = "Part-Mart & YouTool supply crate"
+	crate_name = "\improper Part-Mart & YouTool supply crate"
 
 /datum/supply_pack/vending/clothesmate
 	name = "ClothesMate Supply Crate"
 	desc = "Out of cowboy boots? Buy this crate."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/vending_refill/clothing)
-	crate_name = "ClothesMate supply crate"
+	crate_name = "\improper ClothesMate supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Clothing Vending Restocks ////////////////////////////
@@ -2953,7 +2954,6 @@
 					/obj/item/vending_refill/wardrobe/det_wardrobe,
 					/obj/item/vending_refill/wardrobe/law_wardrobe)
 	crate_name = "security department supply crate"
-
 
 /// Exploration drone unlockables ///
 

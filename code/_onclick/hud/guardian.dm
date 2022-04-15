@@ -51,20 +51,20 @@
 		inv_box.name = "internal storage"
 		inv_box.icon = ui_style
 		inv_box.icon_state = "suit_storage"
-		inv_box.screen_loc = ui_id(0,0)
+		inv_box.screen_loc = ui_id(0, 0)
 		inv_box.slot_id = ITEM_SLOT_DEX_STORAGE
 		inv_box.hud = src
 		static_inventory += inv_box
 
 		using = new /atom/movable/screen/guardian/communicate()
-		using.screen_loc = ui_sstore1
+		using.screen_loc = ui_sstore1(0, 0)
 		using.hud = src
 		static_inventory += using
 
 	else
 
 		using = new /atom/movable/screen/guardian/communicate()
-		using.screen_loc = ui_id(0,0)
+		using.screen_loc = ui_id(0, 0)
 		using.hud = src
 		static_inventory += using
 

@@ -52,7 +52,7 @@
 				freak_out(O)
 				return
 		for(var/mob/living/carbon/human/HU in seen_atoms) //check equipment for trigger items
-			for(var/X in HU.get_all_slots() | HU.held_items)
+			for(var/X in HU.get_all_worn_items() | HU.held_items)
 				var/obj/I = X
 				if(!QDELETED(I) && (is_type_in_typecache(I, trigger_objs) || (phobia_type == "blood" && HAS_BLOOD_DNA(I))))
 					freak_out(I)
@@ -126,7 +126,7 @@
 			owner.dizziness += 10
 			owner.add_confusion(10)
 			owner.Jitter(10)
-			owner.stuttering += 10
+			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter)
 
 // Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.
 
@@ -213,7 +213,7 @@
 /datum/brain_trauma/mild/phobia/guns
 	phobia_type = "guns"
 	random_gain = FALSE
-	
+
 /datum/brain_trauma/mild/phobia/blood
 	phobia_type = "blood"
 	random_gain = FALSE

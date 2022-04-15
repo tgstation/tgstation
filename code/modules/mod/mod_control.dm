@@ -3,7 +3,7 @@
 	name = "Base MOD"
 	desc = "You should not see this, yell at a coder!"
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
-	worn_icon = 'icons/mob/clothing/mod.dmi'
+	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 
 /obj/item/mod/control
 	name = "MOD control unit"
@@ -100,7 +100,6 @@
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
 	complexity_max = theme.complexity_max
-	skin = new_skin || theme.default_skin
 	ui_theme = theme.ui_theme
 	charge_drain = theme.charge_drain
 	initial_modules += theme.inbuilt_modules
@@ -134,8 +133,7 @@
 		piece.min_cold_protection_temperature = theme.min_cold_protection_temperature
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
-		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-	update_flags()
+	set_mod_skin(new_skin || theme.default_skin)
 	update_speed()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
@@ -618,7 +616,12 @@
 /obj/item/mod/control/proc/set_mod_skin(new_skin)
 	skin = new_skin
 	var/list/skin_updating = mod_parts.Copy() + src
+	var/list/selected_skin = theme.skins[new_skin]
 	for(var/obj/item/piece as anything in skin_updating)
+		if(selected_skin[MOD_ICON_OVERRIDE])
+			piece.icon = selected_skin[MOD_ICON_OVERRIDE]
+		if(selected_skin[MOD_WORN_ICON_OVERRIDE])
+			piece.worn_icon = selected_skin[MOD_WORN_ICON_OVERRIDE]
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 	update_flags()
 	wearer?.regenerate_icons()

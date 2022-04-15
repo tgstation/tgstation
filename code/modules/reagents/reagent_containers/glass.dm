@@ -221,7 +221,7 @@
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 
-/obj/item/reagent_containers/glass/beaker/sulphuric
+/obj/item/reagent_containers/glass/beaker/sulfuric
 	list_reagents = list(/datum/reagent/toxin/acid = 50)
 
 /obj/item/reagent_containers/glass/beaker/slime

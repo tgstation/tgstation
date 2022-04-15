@@ -360,10 +360,8 @@
 	// Zauker
 		var/zauker_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/zauker][MOLES])
 		if(zauker_pp > gas_stimulation_min)
-			breather.adjustBruteLoss(25)
-			breather.adjustOxyLoss(5)
-			breather.adjustFireLoss(8)
-			breather.adjustToxLoss(8)
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/zauker)
+			breather.reagents.add_reagent(/datum/reagent/zauker, max(0, 1 - existing))
 		gas_breathed = breath_gases[/datum/gas/zauker][MOLES]
 		breath_gases[/datum/gas/zauker][MOLES]-=gas_breathed
 

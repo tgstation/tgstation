@@ -35,22 +35,22 @@
 
 /atom/movable/screen/ling
 	icon = 'icons/hud/screen_changeling.dmi'
-	invisibility = INVISIBILITY_ABSTRACT
-
-/atom/movable/screen/ling/sting
-	name = "current sting"
-	screen_loc = ui_lingstingdisplay
-
-/atom/movable/screen/ling/sting/Click()
-	if(isobserver(usr))
-		return
-	var/mob/living/carbon/U = usr
-	U.unset_sting()
 
 /atom/movable/screen/ling/chems
 	name = "chemical storage"
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
+
+/atom/movable/screen/ling/sting
+	name = "current sting"
+	screen_loc = ui_lingstingdisplay
+	invisibility = INVISIBILITY_ABSTRACT
+
+/atom/movable/screen/ling/sting/Click()
+	if(isobserver(usr))
+		return
+	var/mob/living/carbon/carbon_user = usr
+	carbon_user.unset_sting()
 
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
@@ -63,7 +63,7 @@
 	using.hud = src
 	static_inventory += using
 
-	using = new/atom/movable/screen/skills
+	using = new/atom/movable/screen/navigate
 	using.icon = ui_style
 	using.hud = src
 	static_inventory += using
@@ -185,7 +185,7 @@
 	inv_box.name = "suit storage"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suit_storage"
-	inv_box.screen_loc = ui_sstore1
+	inv_box.screen_loc = ui_sstore1(0, 0)
 	inv_box.slot_id = ITEM_SLOT_SUITSTORE
 	inv_box.hud = src
 	static_inventory += inv_box
@@ -302,14 +302,6 @@
 	pull_icon.hud = src
 	static_inventory += pull_icon
 
-	lingchemdisplay = new /atom/movable/screen/ling/chems()
-	lingchemdisplay.hud = src
-	infodisplay += lingchemdisplay
-
-	lingstingdisplay = new /atom/movable/screen/ling/sting()
-	lingstingdisplay.hud = src
-	infodisplay += lingstingdisplay
-
 	zone_select = new /atom/movable/screen/zone_sel()
 	zone_select.icon = ui_style
 	zone_select.hud = src
@@ -409,7 +401,7 @@
 	if(screenmob.hud_used)
 		if(screenmob.hud_used.hud_shown)
 			if(H.s_store)
-				H.s_store.screen_loc = ui_sstore1
+				H.s_store.screen_loc = ui_sstore1(H.s_store.base_pixel_x, H.s_store.base_pixel_y)
 				screenmob.client.screen += H.s_store
 			if(H.wear_id)
 				H.wear_id.screen_loc = ui_id(H.wear_id.base_pixel_x, H.wear_id.base_pixel_y)
