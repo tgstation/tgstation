@@ -10,6 +10,7 @@
 	return "Heterochromatic" in preferences.all_quirks
 
 /datum/preference/color/heterochromatic/apply_to_human(mob/living/carbon/human/target, value)
+	target.eye_color_heterochromatic = TRUE
 	var/obj/item/organ/eyes/human_eyes = target.getorgan(/obj/item/organ/eyes)
 	if(!human_eyes)
 		return

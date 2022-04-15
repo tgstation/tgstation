@@ -29,7 +29,7 @@
 	relevant_species_trait = EYECOLOR
 
 /datum/preference/color/eye_color/apply_to_human(mob/living/carbon/human/target, value)
-	var/hetero = ("Heterochromatic" in usr.client?.prefs.all_quirks)
+	var/hetero = target.eye_color_heterochromatic
 	target.eye_color_left = value
 	if(!hetero)
 		target.eye_color_right = value
