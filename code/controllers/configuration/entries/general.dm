@@ -118,6 +118,9 @@
 /// log economy actions
 /datum/config_entry/flag/log_econ
 
+/// log traitor objectives
+/datum/config_entry/flag/log_traitor
+
 /// log admin chat messages
 /datum/config_entry/flag/log_adminchat
 	protection = CONFIG_ENTRY_LOCKED

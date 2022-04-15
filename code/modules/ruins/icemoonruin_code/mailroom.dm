@@ -1,4 +1,4 @@
-/obj/machinery/door/keycard/icebox/office
+/obj/machinery/door/puzzle/keycard/icebox/office
 	name = "secure airlock"
 	desc = "Be aware, dear crew, find my lost key. You'll find it in a direction that's wheast."
 	puzzle_id = "Puzzle1"
@@ -9,7 +9,7 @@
 	color = "#f01249"
 	puzzle_id = "Puzzle1"
 
-/obj/machinery/door/keycard/icebox/processing
+/obj/machinery/door/puzzle/keycard/icebox/processing
 	name = "secure airlock"
 	desc = "There's a note attached, 'Which one of you dumbasses shipped out my fucking office key?'."
 	puzzle_id = "Puzzle2"
