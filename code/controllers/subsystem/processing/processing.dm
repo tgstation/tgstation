@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(processing)
 	var/stat_tag = "P" //Used for logging
 	var/list/processing = list()
 	var/list/currentrun = list()
+	var/const/process_proc = /datum/proc/Process //Francinum is going to KILL ME
 
 /datum/controller/subsystem/processing/stat_entry(msg)
 	msg = "[stat_tag]:[length(processing)]"
@@ -25,7 +26,7 @@ SUBSYSTEM_DEF(processing)
 		current_run.len--
 		if(QDELETED(thing))
 			processing -= thing
-		else if(thing.process(wait * 0.1) == PROCESS_KILL)
+		else if(call(thing, process_proc)(wait * 0.1) == PROCESS_KILL) //Fran is REALLY going to kill me
 			// fully stop so that a future START_PROCESSING will work
 			STOP_PROCESSING(src, thing)
 		if (MC_TICK_CHECK)

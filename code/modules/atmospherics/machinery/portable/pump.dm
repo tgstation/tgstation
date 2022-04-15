@@ -57,18 +57,33 @@
 
 	excited = TRUE
 
+	var/pressure_delta
+	var/output_volume
+	var/air_temperature
 	var/turf/local_turf = get_turf(src)
-	var/datum/gas_mixture/sending
-	var/datum/gas_mixture/receiving
-	if(direction == PUMP_OUT) // Hook up the internal pump.
-		sending = (holding ? holding.return_air() : air_contents)
-		receiving = (holding ? air_contents : local_turf.return_air())
+	var/datum/gas_mixture/environment
+	if(holding)
+		environment = holding.air_contents
 	else
-		sending = (holding ? air_contents : local_turf.return_air())
-		receiving = (holding ? holding.return_air() : air_contents)
+		environment = loc.return_air()
 
-	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
-		//air_update_turf(FALSE, FALSE) // Update the environment if needed.
+	if(direction == PUMP_OUT)
+		pressure_delta = target_pressure - environment.return_pressure()
+		output_volume = environment.volume * environment.group_multiplier
+		air_temperature = environment.temperature? environment.temperature : air_contents.temperature
+	else
+		pressure_delta = environment.return_pressure() - target_pressure
+		output_volume = air_contents.volume * air_contents.group_multiplier
+		air_temperature = air_contents.temperature? air_contents.temperature : environment.temperature
+
+	var/transfer_moles = pressure_delta*output_volume/(air_temperature * R_IDEAL_GAS_EQUATION)
+
+	if (pressure_delta > 0.01)
+		if (direction == PUMP_OUT)
+			pump_gas(src, air_contents, environment, transfer_moles)
+		else
+			pump_gas(src, environment, air_contents, transfer_moles)
+	//air_update_turf(FALSE, FALSE) // Update the environment if needed.
 
 	return ..()
 
@@ -81,7 +96,7 @@
 	if(prob(50 / severity))
 		on = !on
 		if(on)
-			SSair.start_processing_machine(src)
+			SSzas.start_processing_machine(src)
 	if(prob(100 / severity))
 		direction = PUMP_OUT
 	target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
@@ -132,10 +147,10 @@
 		if("power")
 			on = !on
 			if(on)
-				SSair.start_processing_machine(src)
+				SSzas.start_processing_machine(src)
 			if(on && !holding)
-				var/plasma = air_contents.gases[/datum/gas/plasma]
-				var/n2o = air_contents.gases[/datum/gas/nitrous_oxide]
+				var/plasma = air_contents.get_gas(GAS_PLASMA)
+				var/n2o = air_contents.get_gas(GAS_N2O)
 				if(n2o || plasma)
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [ADMIN_VERBOSEJMP(src)]")
 					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [AREACOORD(src)]")

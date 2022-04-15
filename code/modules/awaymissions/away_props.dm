@@ -10,24 +10,6 @@
 	. = ..()
 	return . && (REVERSE_DIR(border_dir) == dir || get_turf(mover) == get_turf(src))
 
-
-/obj/effect/wind
-	name = "wind effect"
-	desc = "Creates pressure effect in it's direction. Use sparingly."
-	icon = 'icons/effects/mapping_helpers.dmi'
-	icon_state = "field_dir"
-	invisibility = INVISIBILITY_MAXIMUM
-	var/strength = 30
-
-/obj/effect/wind/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSobj,src)
-
-/obj/effect/wind/process()
-	var/turf/open/T = get_turf(src)
-	if(istype(T))
-		T.consider_pressure_difference(get_step(T,dir),strength)
-
 //Keep these rare due to cost of doing these checks
 /obj/effect/path_blocker
 	name = "magic barrier"

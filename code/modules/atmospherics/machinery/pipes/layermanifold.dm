@@ -34,7 +34,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/nullify_all_nodes()
 	for(var/obj/machinery/atmospherics/node in nodes)
 		node.disconnect(src)
-		SSair.add_to_rebuild_queue(node)
+		SSzas.add_to_rebuild_queue(node)
 	front_nodes = null
 	back_nodes = null
 	nodes = list()

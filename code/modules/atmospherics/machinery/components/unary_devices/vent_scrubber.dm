@@ -21,7 +21,7 @@
 	///The mode of the scrubber (SCRUBBING or SIPHONING)
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 	///The list of gases we are filtering
-	var/list/filter_types = list(/datum/gas/carbon_dioxide)
+	var/list/filter_types = list(GAS_CO2)
 	///Rate of the scrubber to remove gases from the air
 	var/volume_rate = 200
 	///is this scrubber acting on the 3x3 area around it.
@@ -47,7 +47,7 @@
 	for(var/to_filter in filter_types)
 		if(istext(to_filter))
 			filter_types -= to_filter
-			filter_types += gas_id2path(to_filter)
+			filter_types += to_filter
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
 	. = ..()
@@ -69,13 +69,6 @@
 	if(!islist(filter_or_filters))
 		filter_or_filters = list(filter_or_filters)
 
-	for(var/gas_to_filter in filter_or_filters)
-		var/translated_gas = istext(gas_to_filter) ? gas_id2path(gas_to_filter) : gas_to_filter
-
-		if(ispath(translated_gas, /datum/gas))
-			filter_types |= translated_gas
-			continue
-
 	var/turf/open/our_turf = get_turf(src)
 
 	if(!isopenturf(our_turf))
@@ -93,12 +86,6 @@
 	if(!islist(filter_or_filters))
 		filter_or_filters = list(filter_or_filters)
 
-	for(var/gas_to_filter in filter_or_filters)
-		var/translated_gas = istext(gas_to_filter) ? gas_id2path(gas_to_filter) : gas_to_filter
-
-		if(ispath(translated_gas, /datum/gas))
-			filter_types -= translated_gas
-			continue
 
 	var/turf/open/our_turf = get_turf(src)
 	var/datum/gas_mixture/turf_gas
@@ -117,13 +104,6 @@
 		filter_or_filters = list(filter_or_filters)
 
 	for(var/gas_to_filter in filter_or_filters)
-		var/translated_gas = istext(gas_to_filter) ? gas_id2path(gas_to_filter) : gas_to_filter
-
-		if(ispath(translated_gas, /datum/gas))
-			if(translated_gas in filter_types)
-				filter_types -= translated_gas
-			else
-				filter_types |= translated_gas
 
 	var/turf/open/our_turf = get_turf(src)
 
@@ -172,9 +152,8 @@
 		return FALSE
 
 	var/list/f_types = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in filter_types)))
+	for(var/gas_id in GLOB.common_gases)
+		f_types += list(list("gas_id" = gas_id, "gas_name" = gas_id, "enabled" = (gas_id in filter_types)))
 
 	var/datum/signal/signal = new(list(
 		"tag" = id_tag,
@@ -223,7 +202,7 @@
 		on = FALSE
 		return FALSE
 
-	var/list/changed_gas = air.gases
+	var/list/changed_gas = air.gas
 
 	if(!changed_gas)
 		return FALSE
@@ -260,38 +239,30 @@
 		return FALSE
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = airs[1]
-	var/list/env_gases = environment.gases
 
 	if(air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE)
 		return FALSE
 
 	if(scrubbing == SCRUBBING)
-		if(length(env_gases & filter_types))
+		if(length(environment.gas & filter_types))
 			///contains all of the gas we're sucking out of the tile, gets put into our parent pipenet
 			var/datum/gas_mixture/filtered_out = new
-			var/list/filtered_gases = filtered_out.gases
 			filtered_out.temperature = environment.temperature
 
 			///maximum percentage of the turfs gas we can filter
 			var/removal_ratio =  min(1, volume_rate / environment.volume)
 
 			var/total_moles_to_remove = 0
-			for(var/gas in filter_types & env_gases)
-				total_moles_to_remove += env_gases[gas][MOLES]
+			for(var/gas in filter_types & environment.get_gases())
+				total_moles_to_remove += environment.get_gas(gas)
 
 			if(total_moles_to_remove == 0)//sometimes this gets non gc'd values
-				environment.garbage_collect()
 				return FALSE
 
-			for(var/gas in filter_types & env_gases)
-				filtered_out.add_gas(gas)
-				//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
-				var/transfered_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
+			//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
+			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
+			scrub_gas(filter_types, environment, filtered_out, transfer_moles, INFINITY)
 
-				filtered_gases[gas][MOLES] = transfered_moles
-				env_gases[gas][MOLES] -= transfered_moles
-
-			environment.garbage_collect()
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
@@ -315,7 +286,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/check_turfs()
 	adjacent_turfs.Cut()
 	var/turf/local_turf = get_turf(src)
-	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
+	adjacent_turfs = get_adjacent_open_turfs(local_turf)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))

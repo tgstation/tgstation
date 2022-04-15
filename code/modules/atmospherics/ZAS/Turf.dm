@@ -301,8 +301,10 @@
 /turf/simulated/atmos_spawn_air(gas_id, amount, initial_temperature)
 	var/datum/gas_mixture/new_gas = new
 	var/datum/gas_mixture/existing_gas = return_air()
-
-	new_gas.adjust_gas_temp(gas_id, amount, initial_temperature)
+	if(isnull(initial_temperature))
+		new_gas.adjust_gas(gas_id, amount)
+	else
+		new_gas.adjust_gas_temp(gas_id, amount, initial_temperature)
 	existing_gas.merge(new_gas)
 
 /proc/turf_contains_dense_objects(var/turf/T)
@@ -312,7 +314,7 @@
 	if(density)
 		return 1
 	for(var/atom/movable/A as anything in src)
-		if(A.density && !(A.atom_flags & ON_BORDER_1))
+		if(A.density && !(A.flags_1 & ON_BORDER_1))
 			return 1
 	return 0
 

@@ -331,8 +331,9 @@
 /obj/structure/window/Move()
 	var/turf/T = loc
 	. = ..()
+	/*
 	if(anchored)
-		move_update_air(T)
+		move_update_air(T)*/
 
 /obj/structure/window/can_atmos_pass(turf/T, vertical = FALSE)
 	if(!anchored || !density)

@@ -205,10 +205,7 @@
 		/*var/list/turfs_sharing_with_prev = previousturf.TryGetNonDenseNeighbour()
 		if(!(T in turfs_sharing_with_prev))
 			break*/
-		if(igniter)
-			igniter.ignite_turf(src,T)
-		else
-			default_ignite(T)
+		ignite_turf(src,T)
 		sleep(1)
 		previousturf = T
 	operating = FALSE
@@ -217,17 +214,17 @@
 			attack_self(M)
 
 
-/obj/item/flamethrower/proc/default_ignite(turf/target, release_amount = 0.05)
+/obj/item/flamethrower/proc/ignite_turf(turf/target, release_amount = 5)
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
-	var/datum/gas_mixture/tank_mix = ptank.return_air()
-	var/datum/gas_mixture/air_transfer = tank_mix.remove_ratio(release_amount)
-
-	if(air_transfer.gases[/datum/gas/plasma])
-		air_transfer.gases[/datum/gas/plasma][MOLES] *= 5 //Suffering
+	var/datum/gas_mixture/air_transfer = ptank.return_air().remove_ratio(release_amount)
+	//air_transfer.toxins = air_transfer.toxins * 5 // This is me not comprehending the air system. I realize this is retarded and I could probably make it work without fucking it up like this, but there you have it. -- TLE
+	new/obj/effect/decal/cleanable/oil(target,air_transfer.get_by_flag(XGM_GAS_FUEL),get_dir(loc,target))
+	air_transfer.remove_by_flag(XGM_GAS_FUEL, 0)
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
-	target.hotspot_expose((tank_mix.temperature*2) + 380,500)
+	//target.hotspot_expose(part4.air_contents.temperature*2,300)
+	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500) // -- More of my "how do I shot fire?" dickery. -- TLE
 	//location.hotspot_expose(1000,500,1)
 
 /obj/item/flamethrower/Initialize(mapload)
@@ -257,7 +254,7 @@
 		owner.visible_message(span_danger("\The [attack_text] hits the fuel tank on [owner]'s [name], rupturing it! What a shot!"))
 		var/turf/target_turf = get_turf(owner)
 		log_game("A projectile ([hitby]) detonated a flamethrower tank held by [key_name(owner)] at [COORD(target_turf)]")
-		igniter.ignite_turf(src,target_turf, release_amount = 100)
+		ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)
 		return 1 //It hit the flamethrower, not them
 
@@ -265,15 +262,11 @@
 /obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(heat,2)
 
-/obj/item/assembly/igniter/proc/ignite_turf(obj/item/flamethrower/F,turf/open/location,release_amount = 0.05)
-	F.default_ignite(location,release_amount)
-
 /obj/item/flamethrower/proc/instant_refill()
 	SIGNAL_HANDLER
 	if(ptank)
 		var/datum/gas_mixture/tank_mix = ptank.return_air()
-		tank_mix.assert_gas(/datum/gas/plasma)
-		tank_mix.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*ptank.volume/(R_IDEAL_GAS_EQUATION*T20C)
+		tank_mix.gas[GAS_PLASMA] = (10*ONE_ATMOSPHERE)*ptank.volume/(R_IDEAL_GAS_EQUATION*T20C)
 	else
 		ptank = new /obj/item/tank/internals/plasma/full(src)
 	update_appearance()

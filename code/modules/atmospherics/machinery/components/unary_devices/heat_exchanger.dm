@@ -53,11 +53,11 @@
 	if(!partner)
 		partner_ref = null
 		return
-	if(SSair.times_fired <= update_cycle)
+	if(SSzas.times_fired <= update_cycle)
 		return
 
-	update_cycle = SSair.times_fired
-	partner.update_cycle = SSair.times_fired
+	update_cycle = SSzas.times_fired
+	partner.update_cycle = SSzas.times_fired
 
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/datum/gas_mixture/partnerair_contents = partner.airs[1]

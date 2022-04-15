@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/log_atmos(text, datum/gas_mixture/mix)
 	var/message = text
 	message += "TEMP=[mix.return_temperature()],MOL=[mix.total_moles()],VOL=[mix.volume]"
-	for(var/key in mix.gas)
+	for(var/key in mix.get_gases())
 		message += "[key]=[mix.get_gas(key)];"
 	log_game(message)
 

@@ -69,8 +69,8 @@ SUBSYSTEM_DEF(zas)
 
 	//The variable setting controller
 	var/datum/zas_controller/settings
-	//XGM gas data
-	var/datum/xgm_gas_data/gas_data
+	//A reference to the global var
+	var/datum/xgm_gas_data/gas_data = xgm_gas_data
 
 	//Geometry lists
 	var/list/zones = list()
@@ -80,6 +80,7 @@ SUBSYSTEM_DEF(zas)
 	var/list/networks = list()
 	var/list/rebuild_queue = list()
 	var/list/expansion_queue = list()
+	var/list/pipe_init_dirs_cache = list()
 
 	//Atmos Machines
 	var/list/atmos_machinery = list()
@@ -170,13 +171,7 @@ SUBSYSTEM_DEF(zas)
 
 		CHECK_TICK
 
-	to_chat(world, span_boldannounce(
-		{"Total Simulated Turfs: [simulated_turf_count]
-		Total Zones: [zones.len]
-		Total Edges: [edges.len]
-		Total Active Edges: [active_edges.len ? "<span class='danger'>[active_edges.len]</span>" : "None"]
-		Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]"}
-	))
+	to_chat(world, span_boldannounce("Total Simulated Turfs: [simulated_turf_count]\nTotal Zones: [zones.len]\nTotal Edges: [edges.len]\nTotal Active Edges: [active_edges.len ? "<span class='danger'>[active_edges.len]</span>" : "None"]\nTotal Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]"))
 
 	to_chat(world, span_boldannounce("Geometry processing completed in [(REALTIMEOFDAY - starttime)/10] seconds!"))
 
@@ -293,7 +288,7 @@ SUBSYSTEM_DEF(zas)
 	curr_hotspot = processing_hotspots
 	if(current_process == SSZAS_HOTSPOTS)
 		while (curr_hotspot.len)
-			var/obj/fire/F = curr_hotspot[curr_hotspot.len]
+			var/obj/effect/hotspot/F = curr_hotspot[curr_hotspot.len]
 			curr_hotspot.len--
 
 			F.Process()
@@ -371,6 +366,12 @@ SUBSYSTEM_DEF(zas)
 	new_packet[SSZAS_REBUILD_PIPELINE] = line
 	new_packet[SSZAS_REBUILD_QUEUE] = list(starting_point)
 	expansion_queue += list(new_packet)
+
+/datum/controller/subsystem/zas/proc/remove_from_expansion(datum/pipeline/line)
+	for(var/list/packet in expansion_queue)
+		if(packet[SSZAS_REBUILD_PIPELINE] == line)
+			expansion_queue -= packet
+			return
 
 /datum/controller/subsystem/zas/proc/add_zone(zone/z)
 	zones += z

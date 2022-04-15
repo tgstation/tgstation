@@ -136,7 +136,8 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 /obj/structure/glowshroom/proc/Spread()
 	var/turf/ownturf = get_turf(src)
-	if(!TURF_SHARES(ownturf)) //If we are in a 1x1 room
+	var/list/turf/shares = ownturf.get_adjacent_open_turfs()
+	if(!length(shares)) //If we are in a 1x1 room
 		return //Deal with it not now
 
 	var/list/possible_locs = list()
@@ -146,7 +147,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	for(var/turf/open/floor/earth in oview(2,src))
 		if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
 			continue
-		if(!TURF_SHARES(earth))
+		if(!length(earth.get_adjacent_open_turfs()))
 			continue
 		possible_locs += earth
 

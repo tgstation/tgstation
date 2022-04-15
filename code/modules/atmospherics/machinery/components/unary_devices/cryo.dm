@@ -287,11 +287,13 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 	var/datum/gas_mixture/air1 = airs[1]
 
-	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+	/* PARIAH EDIT REMOVAL - HUGBOX BARGAGE
+	if(!nodes[1] || !airs[1] || !air1.gas.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		var/msg = "Insufficient cryogenic gas, shutting down."
 		radio.talk_into(src, msg, radio_channel)
 		set_on(FALSE)
 		return
+	*/
 
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
@@ -314,9 +316,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			if(ishuman(mob_occupant))
 				var/mob/living/carbon/human/humi = mob_occupant
 				humi.adjust_coretemperature(humi.bodytemperature - humi.coretemperature)
-
-
-		air1.garbage_collect()
 
 		if(air1.temperature > 2000)
 			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
@@ -564,7 +563,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		if(node)
 			node.atmos_init()
 			node.add_member(src)
-		SSair.add_to_rebuild_queue(src)
+		SSzas.add_to_rebuild_queue(src)
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR

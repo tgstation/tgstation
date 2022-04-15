@@ -136,9 +136,7 @@
 	var/pressure_limit = max_pressure * safety_margin
 
 	var/moles_to_add = (pressure_limit * air_contents.volume) / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
-	air_contents.assert_gas(gastype)
-	air_contents.gases[gastype][MOLES] += moles_to_add
-	air_contents.archive()
+	air_contents.adjust_gas(gastype, moles_to_add)
 
 /obj/machinery/atmospherics/components/tank/process_atmos()
 	if(air_contents.react(src))
@@ -365,8 +363,8 @@
 
 /obj/machinery/atmospherics/components/tank/air/Initialize(mapload)
 	. = ..()
-	fill_to_pressure(/datum/gas/oxygen, safety_margin = (O2STANDARD * 0.5))
-	fill_to_pressure(/datum/gas/nitrogen, safety_margin = (N2STANDARD * 0.5))
+	fill_to_pressure(GAS_OXYGEN, safety_margin = (O2STANDARD * 0.5))
+	fill_to_pressure(GAS_NITROGEN, safety_margin = (N2STANDARD * 0.5))
 
 /obj/machinery/atmospherics/components/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide

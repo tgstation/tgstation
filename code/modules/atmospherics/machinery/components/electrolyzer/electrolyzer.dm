@@ -32,7 +32,7 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
-	SSair.start_processing_machine(src)
+	SSzas.start_processing_machine(src)
 	update_appearance()
 
 /obj/machinery/electrolyzer/Destroy()
@@ -114,8 +114,6 @@
 			continue
 
 		current_reaction.react(loc, env, working_power)
-
-	env.garbage_collect()
 
 /obj/machinery/electrolyzer/RefreshParts()
 	. = ..()

@@ -99,11 +99,7 @@
 	// If no filter is set, we just try to forward everything to air3 to avoid gas being outright lost.
 	if(filtering)
 		var/datum/gas_mixture/filtered_out = new
-
-		for(var/gas in removed.gases & filter_type)
-			var/datum/gas_mixture/removing = removed.remove_specific_ratio(gas, 1)
-			if(removing)
-				filtered_out.merge(removing)
+		filter_gas(filtering, removed, filtered_out, removed, null, INFINITY)
 		// Send things to the side output if we can, return them to the input if we can't.
 		// This means that other gases continue to flow to the main output if the side output is blocked.
 		if (side_output_full)
@@ -111,7 +107,6 @@
 		else
 			air2.merge(filtered_out)
 		// Make sure we don't send any now-empty gas entries to the main output
-		removed.garbage_collect()
 
 	// Send things to the main output if we can, return them to the input if we can't.
 	// This lets filtered gases continue to flow to the side output in a manner consistent with the main output behavior.
@@ -134,14 +129,14 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_data()
 	var/data = list()
+	var/static/all_gases = GLOB.all_gases
 	data["on"] = on
 	data["rate"] = round(transfer_rate)
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 
 	data["filter_types"] = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "gas_id" = gas[META_GAS_ID], "enabled" = (path in filter_type)))
+	for(var/gas in GLOB.all_gases)
+		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "enabled" = (path in filter_type)))
 
 	return data
 

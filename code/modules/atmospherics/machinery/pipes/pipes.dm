@@ -33,7 +33,7 @@
 	var/obj/machinery/atmospherics/old_node = nodes[i]
 	. = ..()
 	if(old_node)
-		SSair.add_to_rebuild_queue(old_node)
+		SSzas.add_to_rebuild_queue(old_node)
 
 /obj/machinery/atmospherics/pipe/destroy_network()
 	QDEL_NULL(parent)

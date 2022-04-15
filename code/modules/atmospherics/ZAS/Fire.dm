@@ -8,7 +8,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 //#define FIREDBG
 
-/turf/var/obj/fire/fire = null
+/turf/var/obj/effect/hotspot/fire = null
 
 //Some legacy definitions so fires can be started.
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -26,14 +26,14 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 /turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 	if(fire_protection > world.time-300)
 		return 0
-	if(locate(/obj/fire) in src)
+	if(locate(/obj/effect/hotspot) in src)
 		return 1
 	var/datum/gas_mixture/air_contents = return_air()
 	if(!air_contents || exposed_temperature < PHORON_MINIMUM_BURN_TEMPERATURE)
 		return 0
 
 	var/igniting = 0
-	var/obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in src
+	var/obj/effect/decal/cleanable/oil/liquid = locate() in src
 
 	if(air_contents.check_combustability(liquid))
 		igniting = 1
@@ -53,7 +53,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 			if(T.fire)
 				T.fire.firelevel = firelevel
 			else
-				var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in T
+				var/obj/effect/decal/cleanable/oil/fuel = locate() in T
 				fire_tiles -= T
 				fuel_objs -= fuel
 	else
@@ -76,13 +76,13 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	var/fuel_to_remove = used_liquid_fuel/(fuel_objs.len*LIQUIDFUEL_AMOUNT_TO_MOL) //convert back to liquid volume units
 
 	for(var/O in fuel_objs)
-		var/obj/effect/decal/cleanable/liquid_fuel/fuel = O
+		var/obj/effect/decal/cleanable/oil/fuel = O
 		if(!istype(fuel))
 			fuel_objs -= fuel
 			continue
 
-		fuel.amount -= fuel_to_remove
-		if(fuel.amount <= 0)
+		fuel.reagent_amount -= fuel_to_remove
+		if(fuel.reagent_amount <= 0)
 			fuel_objs -= fuel
 			if(remove_fire)
 				var/turf/T = fuel.loc
@@ -93,10 +93,6 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	return 0
 
 /turf/simulated/create_fire(fl)
-
-	if(submerged())
-		return 1
-
 	if(fire)
 		fire.firelevel = max(fl, fire.firelevel)
 		return 1
@@ -107,32 +103,32 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	fire = new(src, fl)
 	SSzas.active_fire_zones |= zone
 
-	var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in src
+	var/obj/effect/decal/cleanable/oil/fuel = locate() in src
 	zone.fire_tiles |= src
 	if(fuel) zone.fuel_objs += fuel
 
 	return 0
 
-/obj/fire
-	//Icon for fire on turfs.
-
+/obj/effect/hotspot
 	anchored = TRUE
-	mouse_opacity = 0
-
-	blend_mode = BLEND_ADD
-
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
-	light_color = "#ed9200"
-	layer = FIRE_LAYER
+	layer = GASFIRE_LAYER
+	plane = ABOVE_GAME_PLANE
+	blend_mode = BLEND_ADD
+	light_system = MOVABLE_LIGHT
+	light_range = LIGHT_RANGE_FIRE
+	light_power = 1
+	light_color = LIGHT_COLOR_FIRE
 
 	var/firelevel = 1 //Calculated by gas_mixture.calculate_firelevel()
 
-/obj/fire/Process()
+/obj/effect/hotspot/Process()
 	. = 1
 
 	var/turf/simulated/my_tile = loc
-	if(!istype(my_tile) || !my_tile.zone || my_tile.submerged())
+	if(!istype(my_tile) || !my_tile.zone)
 		if(my_tile && my_tile.fire == src)
 			my_tile.fire = null
 		qdel(src)
@@ -168,7 +164,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 				//if(!enemy_tile.zone.fire_tiles.len) TODO - optimize
 				var/datum/gas_mixture/acs = enemy_tile.return_air()
-				var/obj/effect/decal/cleanable/liquid_fuel/liquid = locate() in enemy_tile
+				var/obj/effect/decal/cleanable/oil/liquid = locate() in enemy_tile
 				if(!acs || !acs.check_combustability(liquid))
 					continue
 
@@ -188,14 +184,14 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	animate(src, color = fire_color(air_contents.temperature), 5)
 	set_light(l_color = color)
 
-/obj/fire/New(newLoc,fl)
+/obj/effect/hotspot/New(newLoc,fl)
 	..()
 
 	if(!istype(loc, /turf))
 		qdel(src)
 		return
 
-	setDir(pick(GLOB.cardinal))
+	setDir(pick(GLOB.cardinals))
 
 	var/datum/gas_mixture/air_contents = loc.return_air()
 	color = fire_color(air_contents.temperature)
@@ -204,11 +200,11 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	firelevel = fl
 	SSzas.active_hotspots.Add(src)
 
-/obj/fire/proc/fire_color(var/env_temperature)
+/obj/effect/hotspot/proc/fire_color(var/env_temperature)
 	var/temperature = max(4000*sqrt(firelevel/SSzas.settings.fire_firelevel_multiplier), env_temperature)
 	return heat2color(temperature)
 
-/obj/fire/Destroy()
+/obj/effect/hotspot/Destroy()
 	var/turf/T = loc
 	if (istype(T))
 		set_light(0)
@@ -238,9 +234,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 		//*** Get the fuel and oxidizer amounts
 		for(var/g in gas)
-			if(SSzas.gas_data.flags[g] & XGM_GAS_FUEL)
+			if(xgm_gas_data.flags[g] & XGM_GAS_FUEL)
 				gas_fuel += gas[g]
-			if(SSzas.gas_data.flags[g] & XGM_GAS_OXIDIZER)
+			if(xgm_gas_data.flags[g] & XGM_GAS_OXIDIZER)
 				total_oxidizers += gas[g]
 		gas_fuel *= group_multiplier
 		total_oxidizers *= group_multiplier
@@ -248,8 +244,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		//Liquid Fuel
 		var/fuel_area = 0
 		if(zone)
-			for(var/obj/effect/decal/cleanable/liquid_fuel/fuel in zone.fuel_objs)
-				liquid_fuel += fuel.amount*LIQUIDFUEL_AMOUNT_TO_MOL
+			for(var/obj/effect/decal/cleanable/oil/fuel in zone.fuel_objs)
+				liquid_fuel += fuel.reagent_amount*LIQUIDFUEL_AMOUNT_TO_MOL
 				fuel_area++
 
 		total_fuel = gas_fuel + liquid_fuel
@@ -306,7 +302,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		remove_by_flag(XGM_GAS_OXIDIZER, used_oxidizers)
 		var/datum/gas_mixture/burned_fuel = remove_by_flag(XGM_GAS_FUEL, used_gas_fuel)
 		for(var/g in burned_fuel.gas)
-			adjust_gas(SSzas.gas_data.burn_product[g], burned_fuel.gas[g])
+			adjust_gas(xgm_gas_data.burn_product[g], burned_fuel.gas[g])
 
 		if(zone)
 			zone.remove_liquidfuel(used_liquid_fuel, !check_combustability())
@@ -328,7 +324,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 /datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 	. = 0
 	for(var/g in gas)
-		if(SSzas.gas_data.flags[g] & XGM_GAS_OXIDIZER && gas[g] >= 0.1)
+		if(xgm_gas_data.flags[g] & XGM_GAS_OXIDIZER && gas[g] >= 0.1)
 			. = 1
 			break
 
@@ -340,14 +336,14 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	. = 0
 	for(var/g in gas)
-		if(SSzas.gas_data.flags[g] & XGM_GAS_FUEL && gas[g] >= 0.1)
+		if(xgm_gas_data.flags[g] & XGM_GAS_FUEL && gas[g] >= 0.1)
 			. = 1
 			break
 
-/datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/liquid_fuel/liquid=null)
+/datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/oil/liquid)
 	. = 0
 	for(var/g in gas)
-		if(SSzas.gas_data.flags[g] & XGM_GAS_OXIDIZER && QUANTIZE(gas[g] * SSzas.settings.fire_consuption_rate) >= 0.1)
+		if(xgm_gas_data.flags[g] & XGM_GAS_OXIDIZER && QUANTIZE(gas[g] * SSzas.settings.fire_consuption_rate) >= 0.1)
 			. = 1
 			break
 
@@ -359,7 +355,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	. = 0
 	for(var/g in gas)
-		if(SSzas.gas_data.flags[g] & XGM_GAS_FUEL && QUANTIZE(gas[g] * SSzas.settings.fire_consuption_rate) >= 0.1)
+		if(xgm_gas_data.flags[g] & XGM_GAS_FUEL && QUANTIZE(gas[g] * SSzas.settings.fire_consuption_rate) >= 0.1)
 			. = 1
 			break
 
@@ -417,6 +413,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 				head_exposure = 0
 			if(C.body_parts_covered & CHEST)
 				chest_exposure = 0
+			if(C.body_parts_covered & GROIN)
+				groin_exposure = 0
 			if(C.body_parts_covered & LEGS)
 				legs_exposure = 0
 			if(C.body_parts_covered & ARMS)
@@ -426,12 +424,30 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 
-	apply_damage(0.9*mx*head_exposure,  BURN, BODY_ZONE_HEAD,  used_weapon =  "Fire")
-	apply_damage(2.5*mx*chest_exposure, BURN, BODY_ZONE_CHEST, used_weapon =  "Fire")
-	apply_damage(0.6*mx*legs_exposure,  BURN, BODY_ZONE_L_LEG, used_weapon =  "Fire")
-	apply_damage(0.6*mx*legs_exposure,  BURN, BODY_ZONE_R_LEG, used_weapon =  "Fire")
-	apply_damage(0.4*mx*arms_exposure,  BURN, BODY_ZONE_L_ARM, used_weapon =  "Fire")
-	apply_damage(0.4*mx*arms_exposure,  BURN, BODY_ZONE_R_ARM, used_weapon =  "Fire")
+	apply_damage(0.9*mx*head_exposure,  BURN, BODY_ZONE_HEAD)
+	apply_damage(2.5*mx*chest_exposure, BURN, BODY_ZONE_CHEST)
+	apply_damage(2,0*mx*groin_exposure, BURN, BODY_ZONE_PRECISE_GROIN)
+	apply_damage(0.6*mx*legs_exposure,  BURN, BODY_ZONE_L_LEG)
+	apply_damage(0.6*mx*legs_exposure,  BURN, BODY_ZONE_R_LEG)
+	apply_damage(0.4*mx*arms_exposure,  BURN, BODY_ZONE_L_ARM)
+	apply_damage(0.4*mx*arms_exposure,  BURN, BODY_ZONE_R_ARM)
 
 	//return a truthy value of whether burning actually happened
 	return mx * (head_exposure + chest_exposure + groin_exposure + legs_exposure + arms_exposure)
+
+/turf/proc/adjacent_fire_act(turf/simulated/floor/source, exposed_temperature, exposed_volume)
+	return
+
+/turf/simulated/floor/adjacent_fire_act(turf/simulated/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume)
+	var/dir_to = get_dir(src, adj_turf)
+
+	for(var/obj/structure/window/W in src)
+		if(W.dir == dir_to || W.fulltile) //Same direction or diagonal (full tile)
+			W.fire_act(adj_air, adj_temp, adj_volume)
+
+/*/turf/simulated/wall/adjacent_fire_act(turf/simulated/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume)
+	burn(adj_temp)
+	if(adj_temp > material.melting_point)
+		take_damage(log(Frand(0.9, 1.1) * (adj_temp - material.melting_point)), BURN)
+
+	return ..()*/

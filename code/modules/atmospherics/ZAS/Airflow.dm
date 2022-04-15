@@ -131,7 +131,6 @@ Contains helper procs for airflow, handled in /connection_group.
 	for(var/mob/M in hearers(src))
 		M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>",1,"<span class='danger'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
-	var/weak_amt = istype(A,/obj/item) ? A:w_class : rand(1,5) //Heheheh
 	. = ..()
 
 /mob/living/airflow_hit(atom/A)
@@ -154,7 +153,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		M.show_message("<span class='danger'>[src] slams into [A]!</span>",1,"<span class='danger'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "punch", 25, 1, -1)
 	if (prob(33))
-		var/obj/effect/decal/cleanable/blood/new_splatter = new(loc)
+		loc.add_blood_DNA(return_blood_DNA())
 
 	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * SSzas.settings.airflow_damage
 

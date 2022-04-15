@@ -14,19 +14,19 @@
 	other_airs = list()
 	members = list()
 	other_atmos_machines = list()
-	SSair.networks += src
+	SSzas.networks += src
 
 /datum/pipeline/Destroy()
-	SSair.networks -= src
+	SSzas.networks -= src
 	if(building)
-		SSair.remove_from_expansion(src)
+		SSzas.remove_from_expansion(src)
 	if(air?.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/considered_pipe in members)
 		considered_pipe.parent = null
 		if(QDELETED(considered_pipe))
 			continue
-		SSair.add_to_rebuild_queue(considered_pipe)
+		SSzas.add_to_rebuild_queue(considered_pipe)
 	for(var/obj/machinery/atmospherics/components/considered_component in other_atmos_machines)
 		considered_component.nullify_pipenet(src)
 	return ..()
@@ -56,7 +56,7 @@
 		air = new
 
 	air.volume = volume
-	SSair.add_to_expansion(src, base)
+	SSzas.add_to_expansion(src, base)
 
 ///Has the same effect as build_pipeline(), but this doesn't queue its work, so overrun abounds. It's useful for the pregame
 /datum/pipeline/proc/build_pipeline_blocking(obj/machinery/atmospherics/base)
@@ -238,33 +238,44 @@
 			pipeline_list |= atmos_machine.return_pipenets_for_reconcilation(src)
 			gas_mixture_list |= atmos_machine.return_airs_for_reconcilation(src)
 
+	equalize_gases(gas_mixture_list)
+
+
+/proc/equalize_gases(list/datum/gas_mixture/gases)
+	//Calculate totals from individual components
+	var/total_volume = 0
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
-	var/datum/gas_mixture/total_gas_mixture = new(0)
 
-	var/list/total_gases = total_gas_mixture.gases
+	var/list/total_gas = list()
+	for(var/datum/gas_mixture/gasmix in gases)
+		total_volume += gasmix.volume
+		var/temp_heatcap = gasmix.heat_capacity()
+		total_thermal_energy += gasmix.temperature * temp_heatcap
+		total_heat_capacity += temp_heatcap
+		for(var/g in gasmix.get_gases())
+			total_gas[g] += gasmix.gas[g]
 
-	for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
-		total_gas_mixture.volume += gas_mixture.volume
+	if(total_volume > 0)
+		var/datum/gas_mixture/combined = new(total_volume)
+		combined.gas = total_gas
 
-		// This is sort of a combined merge + heat_capacity calculation
+		//Calculate temperature
+		if(total_heat_capacity > 0)
+			combined.temperature = total_thermal_energy / total_heat_capacity
+		combined.update_values()
 
-		var/list/giver_gases = gas_mixture.gases
-		//gas transfer
-		for(var/giver_id in giver_gases)
-			var/giver_gas_data = giver_gases[giver_id]
-			ASSERT_GAS(giver_id, total_gas_mixture)
-			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
-			total_heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
+		//Allow for reactions
+		combined.react()
 
-		total_thermal_energy += THERMAL_ENERGY(gas_mixture)
+		//Average out the gases
+		for(var/g in combined.get_gases())
+			combined.gas[g] /= total_volume
 
-	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
+		//Update individual gas_mixtures
+		for(var/datum/gas_mixture/gasmix in gases)
+			gasmix.gas = combined.gas.Copy()
+			gasmix.temperature = combined.temperature
+			gasmix.multiply(gasmix.volume)
 
-	total_gas_mixture.garbage_collect()
-
-	if(total_gas_mixture.volume > 0)
-		//Update individual gas_mixtures by volume ratio
-		for(var/mixture in gas_mixture_list)
-			var/datum/gas_mixture/gas_mixture = mixture
-			gas_mixture.copy_from(total_gas_mixture, gas_mixture.volume / total_gas_mixture.volume)
+	return 1

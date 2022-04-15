@@ -17,6 +17,7 @@
 	var/overpressure_m = 80
 	///Should the machine use overlay in update_overlays() when open/close?
 	var/use_overlays = TRUE
+	var/power_rating = 7500
 	///List of gases that can be scrubbed
 	var/list/scrubbing = list(
 		/datum/gas/plasma,
@@ -82,24 +83,18 @@
 	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
 		return
 
-	var/transfer_moles = min(1, volume_rate / mixture.volume) * mixture.total_moles()
+	var/transfer_moles = min(1, volume_rate/mixture.volume)*mixture.total_moles
 
-	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
+	var/datum/gas_mixture/gas2scrub = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
 	var/datum/gas_mixture/filtered = new
-	if(!filtering)
+	if(!scrubbing)
 		return
 
-	filtered.temperature = filtering.temperature
-	for(var/gas in filtering.gases & scrubbing)
-		filtered.add_gas(gas)
-		filtered.gases[gas][MOLES] = filtering.gases[gas][MOLES] // Shuffle the "bad" gasses to the filtered mixture.
-		filtering.gases[gas][MOLES] = 0
-	filtering.garbage_collect() // Now that the gasses are set to 0, clean up the mixture.
-
-	air_contents.merge(filtered) // Store filtered out gasses.
-	mixture.merge(filtering) // Returned the cleaned gas.
+	scrub_gas(scrubbing, gas2scrub, air_contents, transfer_moles, power_rating)
+	/*
 	if(!holding)
-		//air_update_turf(FALSE, FALSE)
+		air_update_turf(FALSE, FALSE)
+	*/
 
 /obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
 	. = ..()
@@ -109,7 +104,7 @@
 		if(prob(50 / severity))
 			on = !on
 			if(on)
-				SSair.start_processing_machine(src)
+				SSzas.start_processing_machine(src)
 		update_appearance()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, datum/tgui/ui)
@@ -126,9 +121,8 @@
 
 	data["id_tag"] = -1 //must be defined in order to reuse code between portable and vent scrubbers
 	data["filter_types"] = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in scrubbing)))
+	for(var/gas_id in GLOB.common_gases)
+		data["filter_types"] += list(list("gas_id" = gas_id, "gas_name" = gas_id, "enabled" = (gas_id in scrubbing)))
 
 	if(holding)
 		data["holding"] = list()
@@ -158,14 +152,14 @@
 		if("power")
 			on = !on
 			if(on)
-				SSair.start_processing_machine(src)
+				SSzas.start_processing_machine(src)
 			. = TRUE
 		if("eject")
 			if(holding)
 				replace_tank(usr, FALSE)
 				. = TRUE
 		if("toggle_filter")
-			scrubbing ^= gas_id2path(params["val"])
+			scrubbing ^= params["val"]
 			. = TRUE
 	update_appearance()
 
@@ -207,9 +201,7 @@
 	excited = TRUE
 
 	if(!holding)
-		var/turf/T = get_turf(src)
-		for(var/turf/AT in T.get_atmos_adjacent_turfs(alldir = TRUE))
-			scrub(AT.return_air())
+		scrub(get_turf(src).return_air())
 
 	return ..()
 

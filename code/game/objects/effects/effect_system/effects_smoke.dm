@@ -77,7 +77,7 @@
 	if(!t_loc)
 		return
 	var/list/newsmokes = list()
-	for(var/turf/T in t_loc.get_atmos_adjacent_turfs())
+	for(var/turf/T in t_loc.get_adjacent_open_turfs())
 		var/obj/effect/particle_effect/smoke/foundsmoke = locate() in T //Don't spread smoke where there's already smoke!
 		if(foundsmoke)
 			continue
@@ -177,8 +177,8 @@
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
 			if(G.get_gas(GAS_PLASMA))
-				G.add_gas(GAS_NITROGEN, G.get_gas(GAS_PLASMA))
-				G.remove_gas(GAS_PLASMA, G.gas[GAS_PLASMA])
+				G.adjust_gas(GAS_NITROGEN, G.get_gas(GAS_PLASMA))
+				G.adjust_gas(GAS_PLASMA, -G.gas[GAS_PLASMA])
 		if (weldvents)
 			for(var/obj/machinery/atmospherics/components/unary/U in T)
 				if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.

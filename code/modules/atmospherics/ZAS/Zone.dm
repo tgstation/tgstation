@@ -71,7 +71,7 @@ Class Procs:
 	T.zone = src
 	contents.Add(T)
 	if(T.fire)
-		var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in T
+		var/obj/effect/decal/cleanable/oil/fuel = locate() in T
 		fire_tiles.Add(T)
 		SSzas.active_fire_zones |= src
 		if(fuel) fuel_objs += fuel
@@ -87,7 +87,7 @@ Class Procs:
 	contents.Remove(T)
 	fire_tiles.Remove(T)
 	if(T.fire)
-		var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in T
+		var/obj/effect/decal/cleanable/oil/fuel = locate() in T
 		fuel_objs -= fuel
 	T.zone = null
 	T.update_graphic(graphic_remove = air.graphic)
@@ -164,9 +164,10 @@ Class Procs:
 			E.recheck()
 
 	// Handle condensation from the air.
+	/*
 	for(var/g in air.gas)
-		var/product = SSzas.gas_data.condensation_products[g]
-		if(product && air.temperature <= SSzas.gas_data.condensation_points[g])
+		var/product = xgm_gas_data.condensation_products[g]
+		if(product && air.temperature <= xgm_gas_data.condensation_points[g])
 			var/condensation_area = air.group_multiplier
 			while(condensation_area > 0)
 				condensation_area--
@@ -176,6 +177,7 @@ Class Procs:
 					break
 				air.adjust_gas(g, -condense_amt)
 				flooding.add_fluid(condense_amt, product)
+	*/
 
 	// Update atom temperature.
 	if(abs(air.temperature - last_air_temperature) >= ATOM_TEMPERATURE_EQUILIBRIUM_THRESHOLD)
@@ -190,12 +192,11 @@ Class Procs:
 /zone/proc/dbg_data(mob/M)
 	to_chat(M, name)
 	for(var/g in air.gas)
-		to_chat(M, "[SSzas.gas_data.name[g]]: [air.gas[g]]")
+		to_chat(M, "[xgm_gas_data.name[g]]: [air.gas[g]]")
 	to_chat(M, "P: [air.return_pressure()] kPa V: [air.volume]L T: [air.temperature]°K ([air.temperature - T0C]°C)")
 	to_chat(M, "O2 per N2: [(air.gas[GAS_NITROGEN] ? air.gas[GAS_OXYGEN]/air.gas[GAS_NITROGEN] : "N/A")] Moles: [air.total_moles]")
 	to_chat(M, "Simulated: [contents.len] ([air.group_multiplier])")
-//	to_chat(M, "Unsimulated: [unsimulated_contents.len]")
-//	to_chat(M, "Edges: [edges.len]")
+	to_chat(M, "Edges: [edges.len]")
 	if(invalid) to_chat(M, "Invalid!")
 	var/zone_edges = 0
 	var/space_edges = 0

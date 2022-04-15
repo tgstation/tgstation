@@ -51,12 +51,12 @@ GLOBAL_DATUM_INIT(contamination_overlay, /image, image('icons/effects/contaminat
 
 /obj/item/contaminate()
 	//Do a contamination overlay? Temporary measure to keep contamination less deadly than it was.
-	if(!(flags_1 & CONTAMINATED_1))
-		flags_1 |= CONTAMINATED_1
+	if(!(flags_2 & CONTAMINATED_2))
+		flags_2 |= CONTAMINATED_2
 		add_overlay(GLOB.contamination_overlay)
 
 /obj/item/decontaminate()
-	flags_1 ~= CONTAMINATED_1
+	flags_2 ~= CONTAMINATED_2
 	cut_overlay(GLOB.contamination_overlay)
 
 
@@ -171,6 +171,6 @@ GLOBAL_DATUM_INIT(contamination_overlay, /image, image('icons/effects/contaminat
 		if(!env)
 			return
 		for(var/g in env.gas)
-			if(SSzas.gas_data.flags[g] & XGM_GAS_CONTAMINANT && env.gas[g] > SSzas.gas_data.overlay_limit[g] + 1)
+			if(xgm_gas_data.flags[g] & XGM_GAS_CONTAMINANT && env.gas[g] > xgm_gas_data.overlay_limit[g] + 1)
 				I.contaminate()
 				break

@@ -106,30 +106,12 @@
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = cost
 	var/datum/gas_mixture/canister_mix = C.return_air()
-	var/canister_gas = canister_mix.gases
-	var/list/gases_to_check = list(
-								/datum/gas/bz,
-								/datum/gas/nitrium,
-								/datum/gas/hypernoblium,
-								/datum/gas/miasma,
-								/datum/gas/tritium,
-								/datum/gas/pluoxium,
-								/datum/gas/freon,
-								/datum/gas/hydrogen,
-								/datum/gas/healium,
-								/datum/gas/proto_nitrate,
-								/datum/gas/zauker,
-								/datum/gas/helium,
-								/datum/gas/antinoblium,
-								/datum/gas/halon,
-								)
+	var/list/gases_to_check = GLOB.all_gases
 
 	for(var/gasID in gases_to_check)
-		canister_mix.assert_gas(gasID)
-		if(canister_gas[gasID][MOLES] > 0)
-			worth += get_gas_value(gasID, canister_gas[gasID][MOLES])
+		if(canister_mix.get_gas(gasID) > 0)
+			worth += get_gas_value(gasID, canister_gas.get_gas(gasID))
 
-	canister_mix.garbage_collect()
 	return worth
 
 /datum/export/large/gas_canister/proc/get_gas_value(datum/gas/gasType, moles)

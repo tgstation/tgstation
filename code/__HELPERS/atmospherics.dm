@@ -41,7 +41,7 @@
 	)
 	if(!gasmix)
 		return
-	for(var/gas_path in gasmix.gas)
+	for(var/gas_path in gasmix.get_gases())
 		.["gases"] += list(list(
 			"[gas_path]",
 			"[gas_path]",

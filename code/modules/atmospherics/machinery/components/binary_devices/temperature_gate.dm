@@ -59,14 +59,16 @@
 
 	if(!inverted)
 		if(air1.temperature < target_temperature)
-			if(air1.release_gas_to(air2, air1.return_pressure()))
+			var/transfer_moles = (ATMOS_DEFAULT_VOLUME_PUMP/air1.volume)*air1.total_moles
+			if(pump_gas_passive(air1, air2, calculate_transfer_moles(air1, air2, transfer_moles)))
 				update_parents()
 				is_gas_flowing = TRUE
 		else
 			is_gas_flowing = FALSE
 	else
 		if(air1.temperature > target_temperature)
-			if(air1.release_gas_to(air2, air1.return_pressure()))
+			var/transfer_moles = (ATMOS_DEFAULT_VOLUME_PUMP/air1.volume)*air1.total_moles
+			if(pump_gas_passive(air1, air2, calculate_transfer_moles(air1, air2, transfer_moles)))
 				update_parents()
 				is_gas_flowing = TRUE
 		else

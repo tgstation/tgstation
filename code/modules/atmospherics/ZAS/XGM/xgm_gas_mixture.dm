@@ -51,7 +51,7 @@
 
 	if(moles > 0 && abs(temperature - temp) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()
-		var/giver_heat_capacity = SSzas.gas_data.specific_heat[gasid] * moles
+		var/giver_heat_capacity = xgm_gas_data.specific_heat[gasid] * moles
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity != 0)
 			temperature = (temp * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
@@ -137,7 +137,7 @@
 /datum/gas_mixture/proc/heat_capacity()
 	. = 0
 	for(var/g in gas)
-		. += SSzas.gas_data.specific_heat[g] * gas[g]
+		. += xgm_gas_data.specific_heat[g] * gas[g]
 	. *= group_multiplier
 
 
@@ -192,8 +192,8 @@
 		return SPECIFIC_ENTROPY_VACUUM	//that gas isn't here
 
 	//group_multiplier gets divided out in volume/gas[gasid] - also, V/(m*T) = R/(partial pressure)
-	var/molar_mass = SSzas.gas_data.molar_mass[gasid]
-	var/specific_heat = SSzas.gas_data.specific_heat[gasid]
+	var/molar_mass = xgm_gas_data.molar_mass[gasid]
+	var/specific_heat = xgm_gas_data.specific_heat[gasid]
 	var/safe_temp = max(temperature, TCMB) // We're about to divide by this.
 	return R_IDEAL_GAS_EQUATION * ( log( (IDEAL_GAS_ENTROPY_CONSTANT*volume/(gas[gasid] * safe_temp)) * (molar_mass*specific_heat*safe_temp)**(2/3) + 1 ) +  15 )
 
@@ -221,6 +221,8 @@
 
 //Removes moles from the gas mixture and returns a gas_mixture containing the removed air.
 /datum/gas_mixture/proc/remove(amount)
+	RETURN_TYPE(/datum/gas_mixture)
+
 	amount = min(amount, total_moles * group_multiplier) //Can not take more air than the gas mixture has!
 	if(amount <= 0)
 		return null
@@ -275,11 +277,11 @@
 
 	var/sum = 0
 	for(var/g in gas)
-		if(SSzas.gas_data.flags[g] & flag)
+		if(xgm_gas_data.flags[g] & flag)
 			sum += gas[g]
 
 	for(var/g in gas)
-		if(SSzas.gas_data.flags[g] & flag)
+		if(xgm_gas_data.flags[g] & flag)
 			removed.gas[g] = QUANTIZE((gas[g] / sum) * amount)
 			gas[g] -= removed.gas[g] / group_multiplier
 
@@ -293,7 +295,7 @@
 /datum/gas_mixture/proc/get_by_flag(flag)
 	. = 0
 	for(var/g in gas)
-		if(SSzas.gas_data.flags[g] & flag)
+		if(xgm_gas_data.flags[g] & flag)
 			. += gas[g]
 
 //Copies gas and temperature from another gas_mixture.
@@ -347,11 +349,11 @@
 //Two lists can be passed by reference if you need know specifically which graphics were added and removed.
 /datum/gas_mixture/proc/check_tile_graphic(list/graphic_add = null, list/graphic_remove = null)
 	for(var/obj/effect/gas_overlay/O in graphic)
-		if(gas[O.gas_id] <= SSzas.gas_data.overlay_limit[O.gas_id])
+		if(gas[O.gas_id] <= xgm_gas_data.overlay_limit[O.gas_id])
 			LAZYADD(graphic_remove, O)
-	for(var/g in SSzas.gas_data.overlay_limit)
+	for(var/g in xgm_gas_data.overlay_limit)
 		//Overlay isn't applied for this gas, check if it's valid and needs to be added.
-		if(gas[g] > SSzas.gas_data.overlay_limit[g])
+		if(gas[g] > xgm_gas_data.overlay_limit[g])
 			var/tile_overlay = get_tile_overlay(g)
 			if(!(tile_overlay in graphic))
 				LAZYADD(graphic_add, tile_overlay)
@@ -463,49 +465,9 @@
 /datum/gas_mixture/proc/share_space(datum/gas_mixture/unsim_air)
 	return share_ratio(unsim_air, unsim_air.group_multiplier, max(1, max(group_multiplier + 3, 1) + unsim_air.group_multiplier), one_way = 1)
 
-//Equalizes a list of gas mixtures.  Used for pipe networks.
-/proc/equalize_gases(list/datum/gas_mixture/gases)
-	//Calculate totals from individual components
-	var/total_volume = 0
-	var/total_thermal_energy = 0
-	var/total_heat_capacity = 0
-
-	var/list/total_gas = list()
-	for(var/datum/gas_mixture/gasmix in gases)
-		total_volume += gasmix.volume
-		var/temp_heatcap = gasmix.heat_capacity()
-		total_thermal_energy += gasmix.temperature * temp_heatcap
-		total_heat_capacity += temp_heatcap
-		for(var/g in gasmix.gas)
-			total_gas[g] += gasmix.gas[g]
-
-	if(total_volume > 0)
-		var/datum/gas_mixture/combined = new(total_volume)
-		combined.gas = total_gas
-
-		//Calculate temperature
-		if(total_heat_capacity > 0)
-			combined.temperature = total_thermal_energy / total_heat_capacity
-		combined.update_values()
-
-		//Allow for reactions
-		combined.react()
-
-		//Average out the gases
-		for(var/g in combined.gas)
-			combined.gas[g] /= total_volume
-
-		//Update individual gas_mixtures
-		for(var/datum/gas_mixture/gasmix in gases)
-			gasmix.gas = combined.gas.Copy()
-			gasmix.temperature = combined.temperature
-			gasmix.multiply(gasmix.volume)
-
-	return 1
-
 /datum/gas_mixture/proc/get_mass()
 	for(var/g in gas)
-		. += gas[g] * SSzas.gas_data.molar_mass[g] * group_multiplier
+		. += gas[g] * xgm_gas_data.molar_mass[g] * group_multiplier
 
 /datum/gas_mixture/proc/specific_mass()
 	var/M = get_total_moles()
@@ -526,28 +488,10 @@
 	var/amt = get_gas(gas_id)
 	return (amt >= required_amount)
 
-///THIS PROBABLY WILL NOT BE USED BUUUUT-
-/datum/gas_mixture/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
-	var/datum/gas_mixture/air_sample = remove_ratio(mingle_volume/volume)
-	air_sample.volume = mingle_volume
+/datum/gas_mixture/proc/get_gases()
+	RETURN_TYPE(/list)
+	update_values()
+	return gas
 
-	if(istype(target) && target.zone)
-		//Have to consider preservation of group statuses
-		var/datum/gas_mixture/turf_copy = new
-
-		turf_copy.copy_from(target.zone.air)
-		turf_copy.volume = target.zone.air.volume //Copy a good representation of the turf from parent group
-
-		equalize_gases(list(air_sample, turf_copy))
-		merge(air_sample)
-
-		turf_copy.subtract(target.zone.air)
-
-		target.zone.air.merge(turf_copy)
-
-	else
-		var/datum/gas_mixture/turf_air = target.return_air()
-
-		equalize_gases(list(air_sample, turf_air))
-		merge(air_sample)
-		//turf_air already modified by equalize_gases()
+/datum/gas_mixture/proc/leak_to_enviroment(datum/gas_mixture/environment)
+	pump_gas_passive(src, environment, calculate_transfer_moles(src, environment, src.return_pressure() - environment.return_pressure()))

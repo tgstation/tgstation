@@ -95,7 +95,16 @@
 
 	var/static/list/atmos_connections = list(COMSIG_TURF_EXPOSE = .proc/check_air_dangerlevel)
 
-	var/list/TLV = list( // Breathable air.
+	var/list/TLV = list(
+		"pressure" = new/datum/tlv(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE),
+		"temperature" = new/datum/tlv(BODYTEMP_COLD_WARNING_1, BODYTEMP_COLD_WARNING_1+10, BODYTEMP_HEAT_WARNING_1-27, BODYTEMP_HEAT_WARNING_1),
+		GAS_OXYGEN = new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
+		GAS_NITROGEN = new/datum/tlv(-1, -1, 1000, 1000),
+		GAS_CO2 = new/datum/tlv(-1, -1, 5, 10),
+		GAS_PLASMA = new/datum/tlv/dangerous,
+		GAS_N2O = new/datum/tlv/dangerous,
+	)
+	/* // Breathable air.
 		"pressure" = new/datum/tlv(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are hazard_min, warning_min, warning_max, hazard_max
 		"temperature" = new/datum/tlv(BODYTEMP_COLD_WARNING_1, BODYTEMP_COLD_WARNING_1+10, BODYTEMP_HEAT_WARNING_1-27, BODYTEMP_HEAT_WARNING_1),
 		/datum/gas/oxygen = new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
@@ -118,7 +127,7 @@
 		/datum/gas/helium = new/datum/tlv/dangerous,
 		/datum/gas/antinoblium = new/datum/tlv/dangerous,
 		/datum/gas/halon = new/datum/tlv/dangerous
-	)
+		)*/
 
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
@@ -211,7 +220,7 @@
 	))
 	var/total_moles = environment.total_moles()
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
-	for(var/gas_id in environment.gases)
+	for(var/gas_id in environment.get_gases())
 		if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 			continue
 		cur_tlv = TLV[gas_id]
@@ -286,11 +295,11 @@
 		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "warning_max", "selected" = selected.warning_max))
 		thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = "hazard_max", "selected" = selected.hazard_max))
 
-		for(var/gas_id in GLOB.meta_gas_info)
+		for(var/gas_id in GLOB.all_gases)
 			if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 				continue
 			selected = TLV[gas_id]
-			thresholds += list(list("name" = GLOB.meta_gas_info[gas_id][META_GAS_NAME], "settings" = list()))
+			thresholds += list(list("name" = gas_id, "settings" = list()))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "hazard_min", "selected" = selected.hazard_min))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "warning_min", "selected" = selected.warning_min))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "warning_max", "selected" = selected.warning_max))
@@ -436,7 +445,7 @@
 			for(var/device_id in my_area.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(/datum/gas/carbon_dioxide),
+					"set_filters" = list(GAS_CO2),
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
@@ -450,7 +459,7 @@
 			for(var/device_id in my_area.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = ALL_GASES,
+					"set_filters" = GLOB.all_gases,
 					"scrubbing" = 1,
 					"widenet" = 1
 				), signal_source)
@@ -477,7 +486,7 @@
 			for(var/device_id in my_area.air_scrub_info)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(/datum/gas/carbon_dioxide),
+					"set_filters" = list(GAS_CO2),
 					"scrubbing" = 1,
 					"widenet" = 0
 				), signal_source)
@@ -598,7 +607,7 @@
 	//cache for sanic speed (lists are references anyways)
 	var/list/cached_tlv = TLV
 
-	var/list/env_gases = environment.gases
+	var/list/env_gases = environment.get_gases()
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * exposed_temperature / environment.volume
 
 	current_tlv = cached_tlv["pressure"]
@@ -613,9 +622,7 @@
 		if(!(gas_id in cached_tlv)) // We're not interested in this gas, it seems.
 			continue
 		current_tlv = cached_tlv[gas_id]
-		gas_dangerlevel = max(gas_dangerlevel, current_tlv.get_danger_level(env_gases[gas_id][MOLES] * partial_pressure))
-
-	environment.garbage_collect()
+		gas_dangerlevel = max(gas_dangerlevel, current_tlv.get_danger_level(env_gases[gas_id] * partial_pressure))
 
 	var/old_danger_level = danger_level
 	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)
@@ -934,9 +941,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 			"Temperature" = "temperature"
 		)
 
-		for(var/gas_id in GLOB.meta_gas_info)
-			component_options[GLOB.meta_gas_info[gas_id][META_GAS_NAME]] = gas_id2path(gas_id)
-
+		for(var/gas_id in GLOB.common_gases)
+			//component_options[GLOB.meta_gas_info[gas_id][META_GAS_NAME]] = gas_id2path(gas_id)
+			component_options |= gas_id
 	air_alarm_options = add_option_port("Air Alarm Options", component_options)
 	options_map = component_options
 
@@ -961,7 +968,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 		pressure.set_output(round(environment.return_pressure()))
 		temperature.set_output(round(environment.temperature))
 		if(ispath(options_map[current_option]))
-			gas_amount.set_output(round(environment.gases[options_map[current_option]][MOLES]))
+			gas_amount.set_output(round(environment.get_gases()[options_map[current_option]]))
 		return
 
 	var/datum/tlv/settings = connected_alarm.TLV[options_map[current_option]]

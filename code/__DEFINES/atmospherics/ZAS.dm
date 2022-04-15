@@ -202,8 +202,8 @@ var/list/gzn_check = list(NORTH, SOUTH, EAST, WEST)
 #define ATMOSTANK_NITROGEN      90000 // A lot of N2 is needed to produce air mix, that's why we keep 90MPa of it
 #define ATMOSTANK_OXYGEN        50000 // O2 is also important for airmix, but not as much as N2 as it's only 21% of it.
 #define ATMOSTANK_CO2           60000 // CO2 is used for the GUP, Charon, and Torch as the primary fuel propellant, and we need lots to stick around.
-#define ATMOSTANK_PHORON        25000
-#define ATMOSTANK_PHORON_FUEL	15000
+#define ATMOSTANK_PLASMA        25000
+#define ATMOSTANK_PLASMA_FUEL	15000
 #define ATMOSTANK_HYDROGEN      50000
 #define ATMOSTANK_HYDROGEN_FUEL 25000
 #define ATMOSTANK_NITROUSOXIDE  10000 // N2O doesn't have a real useful use, i guess it's on station just to allow refilling of sec's riot control canisters?
@@ -235,7 +235,8 @@ var/list/gzn_check = list(NORTH, SOUTH, EAST, WEST)
 #define GAS_STEAM				"water"
 #define GAS_PLASMA				"phoron"
 
-#define ALL_GASES list(GAS_OXYGEN, GAS_CO2, GAS_CO, GAS_METHYL_BROMIDE, GAS_N2O, GAS_NITROGEN, GAS_NO, GAS_METHANE, GAS_ALIEN, GAS_HYDROGEN, GAS_DEUTERIUM, GAS_TRITIUM, GAS_HELIUM, GAS_ARGON, GAS_KRYPTON, GAS_NEON, GAS_XENON, GAS_AMMONIA, GAS_CHLORINE, GAS_SULFUR, GAS_STEAM, GAS_PLASMA)
+GLOBAL_LIST_INIT(all_gases, list(GAS_OXYGEN, GAS_CO2, GAS_CO, GAS_METHYL_BROMIDE, GAS_N2O, GAS_NITROGEN, GAS_NO, GAS_METHANE, GAS_ALIEN, GAS_HYDROGEN, GAS_DEUTERIUM, GAS_TRITIUM, GAS_HELIUM, GAS_ARGON, GAS_KRYPTON, GAS_NEON, GAS_XENON, GAS_AMMONIA, GAS_CHLORINE, GAS_SULFUR, GAS_STEAM, GAS_PLASMA))
+GLOBAL_LIST_INIT(common_gases, list(GAS_OXYGEN, GAS_CO2, GAS_N2O, GAS_PLASMA, GAS_NITROGEN))
 
 GLOBAL_LIST_INIT(reverse_dir, list( // reverse_dir[dir] = reverse of dir
 	     2,  1,  3,  8, 10,  9, 11,  4,  6,  5,  7, 12, 14, 13, 15,
@@ -244,25 +245,37 @@ GLOBAL_LIST_INIT(reverse_dir, list( // reverse_dir[dir] = reverse of dir
 	48, 50, 49, 51, 56, 58, 57, 59, 52, 54, 53, 55, 60, 62, 61, 63
 ))
 
-#define ATOM_IS_TEMPERATURE_SENSITIVE(A) (A && !QDELETED(A) && !(A.atom_flags & ATOM_FLAG_NO_TEMP_CHANGE))
-#define ATOM_TEMPERATURE_EQUILIBRIUM_THRESHOLD 5
-#define ATOM_TEMPERATURE_EQUILIBRIUM_CONSTANT 0.25
+// The flow rate/effectiveness of various atmos devices is limited by their internal volume,
+// so for many atmos devices these will control maximum flow rates in L/s.
+#define ATMOS_DEFAULT_VOLUME_PUMP   200 // Liters.
+#define ATMOS_DEFAULT_VOLUME_FILTER 500 // L.
+#define ATMOS_DEFAULT_VOLUME_MIXER  500 // L.
+#define ATMOS_DEFAULT_VOLUME_PIPE   70  // L.
 
-#define ADJUST_ATOM_TEMPERATURE(_atom, _temp) \
-	_atom.temperature = _temp; \
-	if(_atom.reagents) { \
-		HANDLE_REACTIONS(_atom.reagents); \
-	} \
-	QUEUE_TEMPERATURE_ATOMS(_atom);
+// heat2color functions. Adapted from: http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
+/proc/heat2color(temp)
+	return rgb(heat2color_r(temp), heat2color_g(temp), heat2color_b(temp))
 
-#define QUEUE_TEMPERATURE_ATOMS(_atoms) \
-	if(islist(_atoms)) { \
-		for(var/thing in _atoms) { \
-			var/atom/A = thing; \
-			if(ATOM_IS_TEMPERATURE_SENSITIVE(A)) { \
-				SStemperature.processing[A] = TRUE; \
-			} \
-		} \
-	} else if(ATOM_IS_TEMPERATURE_SENSITIVE(_atoms)) { \
-		SStemperature.processing[_atoms] = TRUE; \
-	}
+/proc/heat2color_r(temp)
+	temp /= 100
+	if(temp <= 66)
+		. = 255
+	else
+		. = max(0, min(255, 329.698727446 * (temp - 60) ** -0.1332047592))
+
+/proc/heat2color_g(temp)
+	temp /= 100
+	if(temp <= 66)
+		. = max(0, min(255, 99.4708025861 * log(temp) - 161.1195681661))
+	else
+		. = max(0, min(255, 288.1221695283 * ((temp - 60) ** -0.0755148492)))
+
+/proc/heat2color_b(temp)
+	temp /= 100
+	if(temp >= 66)
+		. = 255
+	else
+		if(temp <= 16)
+			. = 0
+		else
+			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
