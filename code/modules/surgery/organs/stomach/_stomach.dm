@@ -220,7 +220,7 @@
 				disgusted.add_confusion(2.5)
 				disgusted.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/speech/stutter)
 				disgusted.vomit(10, 0, 1, 0, 1, 0)
-			disgusted.add_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness)
+			disgusted.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 
 		if(disgusted.disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(DT_PROB(13, delta_time))

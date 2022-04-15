@@ -121,7 +121,7 @@
 		return
 	if(prob(BEYBLADE_DIZZINESS_PROBABILITY))
 		to_chat(user, span_warning("You feel woozy from spinning."))
-		user.add_timed_status_effect(BEYBLADE_DIZZINESS_DURATION, /datum/status_effect/dizziness)
+		user.set_timed_status_effect(BEYBLADE_DIZZINESS_DURATION, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		if(current_confusion < BEYBLADE_CONFUSION_LIMIT)
 			user.add_confusion(BEYBLADE_CONFUSION_INCREMENT)
 

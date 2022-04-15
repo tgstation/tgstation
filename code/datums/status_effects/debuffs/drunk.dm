@@ -102,14 +102,14 @@
 	if(drunk_value >= 41)
 		if(prob(30))
 			owner.add_confusion(2)
-		owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
+		owner.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 
 	// Over 51, we have a 3% chance to gain a lot of confusion and vomit, and we will always have 50 seconds of dizziness
 	if(drunk_value >= 51)
 		if(prob(3))
 			owner.add_confusion(15)
 			owner.vomit() // Vomiting clears toxloss - consider this a blessing
-		owner.set_timed_status_effect(50 SECONDS, /datum/status_effect/dizziness)
+		owner.set_timed_status_effect(50 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 
 	// Over 71, we will constantly have blurry eyes
 	if(drunk_value >= 71)

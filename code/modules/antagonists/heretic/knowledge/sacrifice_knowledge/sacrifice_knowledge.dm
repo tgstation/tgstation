@@ -312,7 +312,7 @@
 	sac_target.flash_act()
 	sac_target.blur_eyes(15)
 	sac_target.Jitter(10)
-	sac_target.add_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
+	sac_target.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 	sac_target.hallucination += 12
 	sac_target.emote("scream")
 

@@ -376,7 +376,7 @@
 			if(prob(10))
 				victim.blur_eyes(1)
 			if(prob(10))
-				victim.add_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness)
+				victim.set_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			if(prob(5))
 				victim.vomit()
 
