@@ -27,7 +27,8 @@
 	var/facial_hairstyle = "Shaved"
 
 	//Eye colour
-	var/eye_color = "#000000"
+	var/eye_color_left = "#000000"
+	var/eye_color_right = "#000000"
 
 	var/skin_tone = "caucasian1" //Skin tone
 
