@@ -552,7 +552,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(!(NOEYESPRITES in species_traits))
 			var/obj/item/organ/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
 			var/mutable_appearance/no_eyeslay
-			var/obscured = species_human.check_obscured_slots(TRUE) //eyes that shine in the dark shouldn't show when you have glasses
 			var/add_pixel_x = 0
 			var/add_pixel_y = 0
 			//cut any possible vis overlays
