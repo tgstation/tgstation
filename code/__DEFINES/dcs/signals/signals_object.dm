@@ -90,7 +90,10 @@
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
 ///from /obj/machinery/door/airlock/set_bolt():
 #define COMSIG_AIRLOCK_SET_BOLT "airlock_set_bolt"
+
+
 // /obj/item signals
+
 
 ///from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
@@ -164,6 +167,8 @@
 	#define COMPONENT_OFFER_TAKE_INTERRUPT (1<<0)
 /// sent from obj/effect/attackby(): (/obj/effect/hit_effect, /mob/living/attacker, params)
 #define COMSIG_ITEM_ATTACK_EFFECT "item_effect_attacked"
+/// sent from obj/item/worn_overlay(): (list/worn_overlays)
+#define COMSIG_ITEM_WORN_OVERLAYS "item_worn_overlays"
 
 ///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
 #define COMSIG_TOOL_IN_USE "tool_in_use"

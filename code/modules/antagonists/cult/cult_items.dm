@@ -414,7 +414,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "cult_helmet"
 	inhand_icon_state = "cult_helmet"
 	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 30, FIRE = 100, ACID = 100)
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
@@ -1077,12 +1077,12 @@ Striking a noncultist, however, will tear their flesh."}
 
 		if(target.can_block_magic() || IS_CULTIST(target))
 			target.visible_message(span_warning("[src] bounces off of [target], as if repelled by an unseen force!"))
-			return 
+			return
 		if(IS_CULTIST(target) && target.put_in_active_hand(src))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
 			target.visible_message(span_warning("[target] catches [src] out of the air!"))
 			return
-		if(!..())			
+		if(!..())
 			target.Paralyze(30)
 			if(D?.thrower)
 				for(var/mob/living/Next in orange(2, T))

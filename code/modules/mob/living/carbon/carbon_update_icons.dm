@@ -223,6 +223,7 @@
 	RETURN_TYPE(/list)
 
 	. = list()
+	SEND_SIGNAL(src, COMSIG_ITEM_WORN_OVERLAYS, .)
 	if(!blocks_emissive)
 		return
 
