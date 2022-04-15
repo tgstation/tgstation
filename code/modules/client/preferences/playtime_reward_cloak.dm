@@ -6,7 +6,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "playtime_reward_cloak"
 
-/datum/preference/toggle/playtime_reward_cloak/is_accessible(datum/preferences/preferences)
+/datum/preference/toggle/playtime_reward_cloak/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 

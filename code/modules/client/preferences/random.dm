@@ -27,7 +27,7 @@
 /datum/preference/toggle/random_hardcore/apply_to_human(mob/living/carbon/human/target, value)
 	return
 
-/datum/preference/toggle/random_hardcore/is_accessible(datum/preferences/preferences)
+/datum/preference/toggle/random_hardcore/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 

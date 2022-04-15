@@ -6,7 +6,7 @@
 /datum/preference/choiced/phobia/init_possible_values()
 	return GLOB.phobia_types
 
-/datum/preference/choiced/phobia/is_accessible(datum/preferences/preferences)
+/datum/preference/choiced/phobia/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 

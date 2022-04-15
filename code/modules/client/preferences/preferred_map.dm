@@ -45,7 +45,7 @@
 
 	return data
 
-/datum/preference/choiced/preferred_map/is_accessible(datum/preferences/preferences)
+/datum/preference/choiced/preferred_map/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 

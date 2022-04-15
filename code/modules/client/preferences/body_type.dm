@@ -18,7 +18,7 @@
 	else
 		target.physique = value
 
-/datum/preference/choiced/body_type/is_accessible(datum/preferences/preferences)
+/datum/preference/choiced/body_type/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 

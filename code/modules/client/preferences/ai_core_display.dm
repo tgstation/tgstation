@@ -15,7 +15,7 @@
 
 	return values
 
-/datum/preference/choiced/ai_core_display/is_accessible(datum/preferences/preferences)
+/datum/preference/choiced/ai_core_display/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 

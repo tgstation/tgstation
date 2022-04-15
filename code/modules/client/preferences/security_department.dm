@@ -20,7 +20,7 @@
 /datum/preference/choiced/security_department/create_default_value()
 	return SEC_DEPT_NONE
 
-/datum/preference/choiced/security_department/is_accessible(datum/preferences/preferences)
+/datum/preference/choiced/security_department/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 

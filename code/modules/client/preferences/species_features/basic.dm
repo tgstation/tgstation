@@ -108,7 +108,7 @@
 	target.grad_color[GRADIENT_FACIAL_HAIR_KEY] = value
 	target.update_hair(is_creating = TRUE)
 
-/datum/preference/color/facial_hair_gradient/is_accessible(datum/preferences/preferences)
+/datum/preference/color/facial_hair_gradient/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 	return preferences.read_preference(/datum/preference/choiced/facial_hair_gradient) != "None"
@@ -171,7 +171,7 @@
 	target.grad_color[GRADIENT_HAIR_KEY] = value
 	target.update_hair(is_creating = TRUE)
 
-/datum/preference/color/hair_gradient/is_accessible(datum/preferences/preferences)
+/datum/preference/color/hair_gradient/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 	return preferences.read_preference(/datum/preference/choiced/hair_gradient) != "None"

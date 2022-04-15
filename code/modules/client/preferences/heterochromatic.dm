@@ -3,7 +3,7 @@
 	savefile_key = "heterochromatic"
 	savefile_identifier = PREFERENCE_CHARACTER
 
-/datum/preference/color/heterochromatic/is_accessible(datum/preferences/preferences)
+/datum/preference/color/heterochromatic/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 

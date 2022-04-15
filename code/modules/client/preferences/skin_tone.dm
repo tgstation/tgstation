@@ -28,7 +28,7 @@
 /datum/preference/choiced/skin_tone/apply_to_human(mob/living/carbon/human/target, value)
 	target.skin_tone = value
 
-/datum/preference/choiced/skin_tone/is_accessible(datum/preferences/preferences)
+/datum/preference/choiced/skin_tone/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 

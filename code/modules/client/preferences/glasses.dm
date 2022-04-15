@@ -6,7 +6,7 @@
 /datum/preference/choiced/glasses/init_possible_values()
 	return GLOB.nearsighted_glasses
 
-/datum/preference/choiced/glasses/is_accessible(datum/preferences/preferences)
+/datum/preference/choiced/glasses/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
 	if (!..(preferences))
 		return FALSE
 
