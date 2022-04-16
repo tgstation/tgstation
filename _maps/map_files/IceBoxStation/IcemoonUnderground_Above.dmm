@@ -15629,9 +15629,6 @@
 "Sf" = (
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/caution{
-	pixel_y = 9
-	},
 /turf/open/floor/iron/dark/textured,
 /area/hallway/secondary/service)
 "Sg" = (
