@@ -202,7 +202,9 @@
 			to_chat(user,span_notice("Recycled [item]."))
 			return
 		else
-			to_chat(user,span_notice("Cannot recycle unused activators."))
+			//recycle unused activators
+			qdel(item)
+			to_chat(user,span_notice("Recycled unused [item]."))
 			return
 	return ..()
 
