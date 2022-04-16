@@ -134,9 +134,7 @@ export const backendMiddleware = store => {
     }
 
     if (type === 'ping') {
-      sendMessage({
-        type: 'pingReply',
-      });
+      Byond.sendMessage('pingReply');
       return;
     }
 
@@ -144,9 +142,7 @@ export const backendMiddleware = store => {
       logger.log(`suspending (${window.__windowId__})`);
       // Keep sending suspend messages until it succeeds.
       // It may fail multiple times due to topic rate limiting.
-      const suspendFn = () => sendMessage({
-        type: 'suspend',
-      });
+      const suspendFn = () => Byond.sendMessage('suspend');
       suspendFn();
       suspendInterval = setInterval(suspendFn, 2000);
     }
@@ -211,25 +207,6 @@ export const backendMiddleware = store => {
 };
 
 /**
- * Sends a message to /datum/tgui_window.
- */
-export const sendMessage = (message: any = {}) => {
-  const { payload, ...rest } = message;
-  const data: any = {
-    // Message identifying header
-    tgui: 1,
-    window_id: window.__windowId__,
-    // Message body
-    ...rest,
-  };
-  // JSON-encode the payload
-  if (payload !== null && payload !== undefined) {
-    data.payload = JSON.stringify(payload);
-  }
-  Byond.topic(data);
-};
-
-/**
  * Sends an action to `ui_act` on `src_object` that this tgui window
  * is associated with.
  */
@@ -242,10 +219,7 @@ export const sendAct = (action: string, payload: object = {}) => {
     logger.error(`Payload for act() must be an object, got this:`, payload);
     return;
   }
-  sendMessage({
-    type: 'act/' + action,
-    payload,
-  });
+  Byond.sendMessage('act/' + action, payload);
 };
 
 type BackendState<TData> = {
@@ -372,7 +346,7 @@ export const useSharedState = <T>(
   return [
     sharedState,
     nextState => {
-      sendMessage({
+      Byond.sendMessage({
         type: 'setSharedState',
         key,
         value: JSON.stringify(

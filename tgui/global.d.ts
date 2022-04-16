@@ -21,6 +21,12 @@ declare module '*.svg' {
   export default content;
 }
 
+type TguiMessage = {
+  type: string;
+  payload?: any;
+  [key: string]: any;
+};
+
 type ByondType = {
   /**
    * True if javascript is running in BYOND.
@@ -105,7 +111,7 @@ type ByondType = {
   winget(id: string, propNames: string[]): Promise<object>;
 
   /**
-   * Assigns properties to BYOND skin elements.
+   * Assigns properties to BYOND skin elements in bulk.
    */
   winset(props: object): void;
 
@@ -122,9 +128,26 @@ type ByondType = {
   /**
    * Parses BYOND JSON.
    *
-   * Uses a special encoding to preverse Infinity and NaN.
+   * Uses a special encoding to preserve `Infinity` and `NaN`.
    */
   parseJson(text: string): any;
+
+  /**
+   * Sends a message to `/datum/tgui_window` which hosts this window instance.
+   */
+  sendMessage(type: string, payload?: any): void;
+  sendMessage(message: TguiMessage): void;
+
+  /**
+   * Subscribe to incoming messages that were sent from `/datum/tgui_window`.
+   */
+  subscribe(listener: (type: string, payload: any) => void): void;
+
+  /**
+   * Subscribe to incoming messages *of some specific type*
+   * that were sent from `/datum/tgui_window`.
+   */
+  subscribeTo(type: string, listener: (payload: any) => void): void;
 
   /**
    * Loads a stylesheet into the document.
@@ -149,7 +172,6 @@ interface Window {
    * Should be used as a parameter to winget/winset.
    */
   __windowId__: string;
-  __updateQueue__: unknown[];
   update: (msg: unknown) => unknown;
   Byond: ByondType;
 }

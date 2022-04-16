@@ -181,6 +181,41 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
     }
   };
 
+  Byond.sendMessage = function (type, payload) {
+    var message = typeof type === 'string'
+      ? { type: type, payload: payload }
+      : type;
+    // JSON-encode the payload
+    if (message.payload !== null && message.payload !== undefined) {
+      message.payload = JSON.stringify(message.payload);
+    }
+    // Append an identifying header
+    assign(message, {
+      tgui: 1,
+      window_id: window.__windowId__,
+    });
+    Byond.topic(message);
+  };
+
+  Byond.subscribe = function (listener) {
+    window.update.flushQueue(listener);
+    window.update.listeners.push(listener);
+  };
+
+  Byond.subscribeTo = function (type, listener) {
+    listener = function (_type, payload) {
+      if (_type === type) {
+        listener(payload);
+      }
+    };
+    window.update.listeners.push(listener);
+    window.update.flushQueue(listener);
+  };
+
+  // This function exists solely for debugging, do not use it in code!
+  Byond.injectMessage = function (type, payload) {
+    window.update(JSON.stringify({ type: type, payload: payload }));
+  };
 
   // Asset loaders
   // ------------------------------------------------------
@@ -312,7 +347,9 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   };
 })();
 
-// Global error handling
+// Error handling
+// ------------------------------------------------------
+
 window.onerror = function (msg, url, line, col, error) {
   // Proper stacktrace
   var stack = error && error.stack;
@@ -351,9 +388,7 @@ window.onerror = function (msg, url, line, col, error) {
   setFatalErrorGeometry();
   setInterval(setFatalErrorGeometry, 1000);
   // Send logs to the game server
-  Byond.topic({
-    tgui: 1,
-    window_id: window.__windowId__,
+  Byond.sendMessage({
     type: 'log',
     fatal: 1,
     message: stack,
@@ -382,61 +417,49 @@ window.__augmentStack__ = function (stack, error) {
   return stack + '\nUser Agent: ' + navigator.userAgent;
 };
 
-// Early initialization
-window.__updateQueue__ = [];
-window.update = function (message) {
-  window.__updateQueue__.push(message);
+// Incoming message handling
+// ------------------------------------------------------
+
+// Message handler
+window.update = function (rawMessage) {
+  // Push onto the queue (active during initialization)
+  if (window.update.queueActive) {
+    window.update.queue.push(rawMessage);
+    return;
+  }
+  // Parse the message
+  var message = Byond.parseJson(rawMessage);
+  // Notify listeners
+  var listeners = window.update.listeners;
+  for (var i = 0; i < listeners.length; i++) {
+    listeners[i](message.type, message.payload);
+  }
 };
-Byond.topic({
-  tgui: 1,
-  window_id: window.__windowId__,
-  type: 'ready',
-});
 
-// Necessary polyfill to make Webpack code splitting work on IE8
-if (!Function.prototype.bind) (function () {
-  var slice = Array.prototype.slice;
-  Function.prototype.bind = function () {
-    var thatFunc = this, thatArg = arguments[0];
-    var args = slice.call(arguments, 1);
-    if (typeof thatFunc !== 'function') {
-      // closest thing possible to the ECMAScript 5
-      // internal IsCallable function
-      throw new TypeError('Function.prototype.bind - ' +
-        'what is trying to be bound is not callable');
+// Properties and variables of this specific handler
+window.update.listeners = [];
+window.update.queue = [];
+window.update.queueActive = true;
+window.update.flushQueue = function (listener) {
+  // Disable and clear the queue permanently on short delay
+  if (window.update.queueActive) {
+    window.update.queueActive = false;
+    if (window.setTimeout) {
+      window.setTimeout(function () {
+        window.update.queue = [];
+      }, 0);
     }
-    return function () {
-      var funcArgs = args.concat(slice.call(arguments))
-      return thatFunc.apply(thatArg, funcArgs);
-    };
-  };
-})();
+  }
+  // Process queued messages on provided listener
+  var queue = window.update.queue;
+  for (var i = 0; i < queue.length; i++) {
+    var message = Byond.parseJson(queue[i]);
+    listener(message.type, message.payload);
+  }
+};
 
-if (!Array.prototype['forEach']) {
-  Array.prototype.forEach = function (callback, thisArg) {
-    if (this == null) {
-      throw new TypeError('Array.prototype.forEach called on null or undefined');
-    }
-    var T, k;
-    var O = Object(this);
-    var len = O.length >>> 0;
-    if (typeof callback !== "function") {
-      throw new TypeError(callback + ' is not a function');
-    }
-    if (arguments.length > 1) {
-      T = thisArg;
-    }
-    k = 0;
-    while (k < len) {
-      var kValue;
-      if (k in O) {
-        kValue = O[k];
-        callback.call(T, kValue, k, O);
-      }
-      k++;
-    }
-  };
-}
+// Signal tgui that we're ready to receive updates
+Byond.sendMessage('ready');
 </script>
 
 <style>
@@ -524,16 +547,17 @@ if (!Array.prototype['forEach']) {
   100% { top: -15px; }
 }
 </style>
+
+<!-- tgui:inline-css -->
 </head>
 <body>
 
-<!-- Inline assets -->
+<!-- tgui:inline-polyfill -->
 <!-- tgui:assets -->
+<!-- tgui:inline-html -->
+<!-- tgui:inline-js -->
 
-<!-- Inline HTML -->
-<!-- tgui:html -->
-
-<!-- tgui container -->
+<!-- Root element for tgui interfaces -->
 <div id="react-root"></div>
 
 <!-- Fatal error container -->
