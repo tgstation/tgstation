@@ -1,5 +1,5 @@
 // Approved manifest.
-// +50 credits flat.
+// +80 credits flat.
 /datum/export/manifest_correct
 	cost = CARGO_CRATE_VALUE * 0.25
 	k_elasticity = 0
