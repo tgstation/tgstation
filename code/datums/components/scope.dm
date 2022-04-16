@@ -2,7 +2,7 @@
 	/// How far we can extend, with modifier of 1, up to our vision edge, higher numbers multiply.
 	var/range_modifier = 1
 	/// Fullscreen object we use for tracking the shots.
-	var/atom/movable/screen/fullscreen/sniper/tracker
+	var/atom/movable/screen/fullscreen/scope/tracker
 
 /datum/component/scope/Initialize(range_modifier)
 	if(!isgun(parent))
@@ -86,13 +86,13 @@
 /datum/component/scope/proc/start_zooming(mob/user)
 	if(!user.client)
 		return
-	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/sniper_hide.dmi'
+	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/scope_hide.dmi'
 	user.update_mouse_pointer()
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE)
-	tracker = user.overlay_fullscreen("sniper", /atom/movable/screen/fullscreen/sniper, 0)
+	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/scope, 0)
 	tracker.range_modifier = range_modifier
 	tracker.marksman = user
-	tracker.RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/sniper.proc/on_move)
+	tracker.RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/scope.proc/on_move)
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/on_hand_swap)
 	START_PROCESSING(SSfastprocess, src)
 
@@ -105,15 +105,15 @@
 		user.update_mouse_pointer()
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE, frequency = -1)
 	tracker = null
-	user.clear_fullscreen("sniper")
+	user.clear_fullscreen("scope")
 
 /datum/component/scope/proc/on_hand_swap(mob/source, obj/item)
 	SIGNAL_HANDLER
 
 	stop_zooming(source)
 
-/atom/movable/screen/fullscreen/sniper
-	icon_state = "sniper"
+/atom/movable/screen/fullscreen/scope
+	icon_state = "scope"
 	plane = HUD_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	var/range_modifier = 1
@@ -123,7 +123,7 @@
 	var/turf/given_turf
 	COOLDOWN_DECLARE(coordinate_cooldown)
 
-/atom/movable/screen/fullscreen/sniper/proc/on_move(atom/source, atom/oldloc, dir, forced)
+/atom/movable/screen/fullscreen/scope/proc/on_move(atom/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
 
 	if(!given_turf)
@@ -132,11 +132,11 @@
 	var/y_offset = source.loc.y - oldloc.y
 	given_turf = locate(given_turf.x+x_offset, given_turf.y+y_offset, given_turf.z)
 
-/atom/movable/screen/fullscreen/sniper/MouseEntered(location, control, params)
+/atom/movable/screen/fullscreen/scope/MouseEntered(location, control, params)
 	. = ..()
 	MouseMove(location, control, params)
 
-/atom/movable/screen/fullscreen/sniper/MouseMove(location, control, params)
+/atom/movable/screen/fullscreen/scope/MouseMove(location, control, params)
 	if(!marksman?.client || usr != marksman)
 		return
 	if(!COOLDOWN_FINISHED(src, coordinate_cooldown))

@@ -51,7 +51,7 @@
 /obj/projectile/bullet/p50/marksman
 	name = ".50 marksman round"
 	damage = 50
-	paralyze = 5 SECONDS
+	paralyze = 0
 	tracer_type = /obj/effect/projectile/tracer/sniper
 	impact_type = /obj/effect/projectile/impact/sniper
 	muzzle_type = /obj/effect/projectile/muzzle/sniper
