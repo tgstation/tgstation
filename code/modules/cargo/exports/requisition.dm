@@ -9,11 +9,6 @@
 	if(!..() || !istype(paperwork))
 		return FALSE
 
-	var/crate_not_ordered = !SSshuttle.order_history[paperwork.order_id]
-	// we don't want to give points unless the crate order was approved
-	if(crate_not_ordered)
-		return FALSE
-
 	for(var/stamp_icon in paperwork.authorization_stamps)
 		if(paperwork.is_approved(stamp_icon))
 			return TRUE
