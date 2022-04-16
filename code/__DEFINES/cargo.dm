@@ -40,17 +40,6 @@
 /// The baseline unit for cargo crates. Adjusting this will change the cost of all in-game shuttles, crate export values, bounty rewards, and all supply pack import values, as they use this as their unit of measurement.
 #define CARGO_CRATE_VALUE 200
 
-#define QM_STAMP_SET list(/obj/item/stamp/qm, /obj/item/stamp/hop, /obj/item/stamp/captain, /obj/item/stamp/centcom)
-#define HOP_STAMP_SET list(/obj/item/stamp/hop, /obj/item/stamp/captain, /obj/item/stamp/centcom)
-#define HOS_STAMP_SET list(/obj/item/stamp/hos, /obj/item/stamp/captain, /obj/item/stamp/centcom)
-#define CE_STAMP_SET list(/obj/item/stamp/ce, /obj/item/stamp/captain, /obj/item/stamp/centcom)
-#define RD_STAMP_SET list(/obj/item/stamp/rd, /obj/item/stamp/captain, /obj/item/stamp/centcom)
-#define CMO_STAMP_SET list(/obj/item/stamp/cmo, /obj/item/stamp/captain, /obj/item/stamp/centcom)
-#define CAP_STAMP_SET list(/obj/item/stamp/captain, /obj/item/stamp/centcom)
-#define HONK_STAMP_SET list(/obj/item/stamp/clown, /obj/item/stamp/mime)
-#define NOTARY_STAMP_SET list(/obj/item/stamp/law, /obj/item/stamp/chap)
-#define ILLEGAL_STAMP_SET list(/obj/item/stamp/syndicate, /obj/item/stamp/centcom)
-
 GLOBAL_LIST_EMPTY(supplypod_loading_bays)
 
 GLOBAL_LIST_INIT(podstyles, list(\

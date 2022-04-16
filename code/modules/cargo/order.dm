@@ -1,4 +1,4 @@
-/// The chance for a manifest or crate to be created with errors
+/// The chance for a manifest or crate to be created with errors 
 #define MANIFEST_ERROR_CHANCE 5
 
 // MANIFEST BITFLAGS
@@ -6,7 +6,7 @@
 #define MANIFEST_ERROR_NAME (1 << 0)
 /// Determines if contents will be deleted from the manifest but still be present in the crate
 #define MANIFEST_ERROR_CONTENTS (1 << 1)
-/// Determines if contents will be deleted from the crate but still be present in the manifest
+/// Determines if contents will be deleted from the crate but still be present in the manifest 
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
@@ -29,13 +29,11 @@
 		errors |= MANIFEST_ERROR_ITEM
 		investigate_log("Supply order #[order_id] generated with incorrect contents shipped.", INVESTIGATE_CARGO)
 
-/obj/item/paper/fluff/jobs/cargo/requisition
-	var/authorization_stamps
+/obj/item/paper/fluff/jobs/cargo/manifest/proc/is_approved()
+	return stamped?.len && !is_denied()
 
-/obj/item/paper/fluff/jobs/cargo/requisition/Initialize(mapload, authorization_stamps)
-	. = ..()
-	src.authorization_stamps = authorization_stamps
-
+/obj/item/paper/fluff/jobs/cargo/manifest/proc/is_denied()
+	return stamped && ("stamp-deny" in stamped)
 
 /datum/supply_order
 	var/id
@@ -49,7 +47,6 @@
 	var/datum/supply_pack/pack
 	var/datum/bank_account/paying_account
 	var/obj/item/coupon/applied_coupon
-	var/authorization_stamps // list of stamps that can approve this requisition for bonus credits
 
 /datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason, paying_account, department_destination, coupon)
 	id = SSshuttle.order_number++
@@ -63,12 +60,7 @@
 	src.applied_coupon = coupon
 
 /datum/supply_order/proc/generateRequisition(turf/T)
-	var/obj/item/paper/fluff/jobs/cargo/requisition/P = new(T, pack.authorization_stamps)
-
-	var/jobs_that_can_approve = list()
-	for(var/obj/item/stamp/stamp in pack.authorization_stamps)
-		jobs_that_can_approve += stamp.job_title
-	jobs_that_can_approve = english_list(jobs_that_can_approve, and_text = " or")
+	var/obj/item/paper/P = new(T)
 
 	P.name = "requisition form - #[id] ([pack.name])"
 	P.info += "<h2>[station_name()] Supply Requisition</h2>"
@@ -77,7 +69,6 @@
 	P.info += "Time of Order: [station_time_timestamp()]<br/>"
 	P.info += "Item: [pack.name]<br/>"
 	P.info += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
-	P.info += "Authorization Required: [jobs_that_can_approve]<br/>"
 	P.info += "Requested by: [orderer]<br/>"
 	if(paying_account)
 		P.info += "Paid by: [paying_account.account_holder]<br/>"
