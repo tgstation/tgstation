@@ -775,6 +775,13 @@
 	result = /obj/item/paper_bin/bundlenatural
 	category = CAT_MISC
 
+/datum/crafting_recipe/sillycup
+	name = "Paper Cup"
+	result =  /obj/item/reagent_containers/food/drinks/sillycup
+	time = 1 SECONDS
+	reqs = list(/obj/item/paper = 2)
+	category = CAT_MISC
+
 /datum/crafting_recipe/toysword
 	name = "Toy Sword"
 	reqs = list(/obj/item/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)

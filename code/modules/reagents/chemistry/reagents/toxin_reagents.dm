@@ -254,7 +254,7 @@
 		if(1 to 5)
 			M.add_confusion(1 * REM * delta_time)
 			M.adjust_drowsyness(1 * REM * delta_time)
-			M.slurring += 3 * REM * delta_time
+			M.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
 		if(9 to INFINITY)
@@ -583,7 +583,7 @@
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustOxyLoss(2 * REM * delta_time, FALSE)
-	M.adjustBruteLoss(2 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustBruteLoss(2 * REM * delta_time, FALSE, FALSE, BODYTYPE_ORGANIC)
 	M.adjustToxLoss(2 * REM * delta_time, FALSE)
 	..()
 	. = TRUE
@@ -998,7 +998,7 @@
 
 
 /datum/reagent/toxin/acid
-	name = "Sulphuric Acid"
+	name = "Sulfuric Acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1

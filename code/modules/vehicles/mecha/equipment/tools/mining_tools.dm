@@ -102,11 +102,11 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
-	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment && istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
+	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.flat_equipment && istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
 		var/obj/vehicle/sealed/mecha/working/ripley/R = chassis //we could assume that it's a ripley because it has a clamp, but that's ~unsafe~ and ~bad practice~
 		R.collect_ore()
 
-/obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/vehicle/sealed/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(..())
 		if(istype(M, /obj/vehicle/sealed/mecha/working) || istype(M, /obj/vehicle/sealed/mecha/combat))
 			return TRUE
@@ -164,8 +164,8 @@
 	name = "exosuit mining scanner"
 	desc = "Equipment for working exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
-	selectable = 0
 	equip_cooldown = 15
+	equipment_slot = MECHA_UTILITY
 	var/scanning_time = 0
 	mech_flags = EXOSUIT_MODULE_WORKING
 
@@ -173,7 +173,7 @@
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/can_attach(obj/vehicle/sealed/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(..())
 		if(istype(M, /obj/vehicle/sealed/mecha/working))
 			return TRUE

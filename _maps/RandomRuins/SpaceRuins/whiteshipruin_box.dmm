@@ -171,8 +171,12 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "BG" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -188,10 +192,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "Db" = (
-/obj/item/stock_parts/cell{
-	charge = 100;
-	maxcharge = 15000
-	},
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Gj" = (

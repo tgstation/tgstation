@@ -124,8 +124,10 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	GLOB.janitor_devices += src
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
+	GLOB.janitor_devices -= src
 	if(weapon)
 		var/atom/Tsec = drop_location()
 		weapon.force = weapon_orig_force
@@ -359,16 +361,10 @@
 		..()
 
 /mob/living/simple_animal/bot/cleanbot/explode()
-	bot_mode_flags &= ~BOT_MODE_ON
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
-
 	new /obj/item/reagent_containers/glass/bucket(Tsec)
-
 	new /obj/item/assembly/prox_sensor(Tsec)
-
-	do_sparks(3, TRUE, src)
-	..()
+	return ..()
 
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/cleanbot/ui_data(mob/user)

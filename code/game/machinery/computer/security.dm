@@ -3,7 +3,7 @@
 	desc = "Used to view and edit personnel's security records."
 	icon_screen = "security"
 	icon_keyboard = "security_key"
-	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS, ACCESS_HOP)
+	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS, ACCESS_HOP)
 	circuit = /obj/item/circuitboard/computer/secure_data
 	light_color = COLOR_SOFT_RED
 	var/rank = null
@@ -200,6 +200,10 @@
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
+
+/obj/machinery/computer/secure_data/laptop/syndie
+	desc = "A cheap, jailbroken security laptop. It functions as a security records console. It's bolted to the table."
+	req_one_access = list(ACCESS_SYNDICATE)
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/ui_interact(mob/user)

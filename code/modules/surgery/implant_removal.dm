@@ -65,7 +65,7 @@
 
 /datum/surgery/implant_removal/mechanic
 	name = "implant removal"
-	requires_bodypart_type = BODYPART_ROBOTIC
+	requires_bodypart_type = BODYTYPE_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,

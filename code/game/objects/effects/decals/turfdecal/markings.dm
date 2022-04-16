@@ -151,6 +151,8 @@
 /obj/effect/turf_decal/plaque
 	icon_state = "plaque"
 
+/// NTSS RAVEN EMERGENCY SHUTTLE LOGO ///
+
 /obj/effect/turf_decal/raven_ship_sign
 	icon_state = "RAVEN2"
 
@@ -180,6 +182,42 @@
 
 /obj/effect/turf_decal/raven/nine
 	icon_state = "RAVEN9"
+
+/// SYNDICATE EMBLEM ///
+
+//Bottom
+
+/obj/effect/turf_decal/syndicateemblem/bottom/left
+	icon_state = "synd1,1"
+
+/obj/effect/turf_decal/syndicateemblem/bottom/middle
+	icon_state = "synd1,2"
+
+/obj/effect/turf_decal/syndicateemblem/bottom/right
+	icon_state = "synd1,3"
+
+//Middle
+
+/obj/effect/turf_decal/syndicateemblem/middle/left
+	icon_state = "synd2,1"
+
+/obj/effect/turf_decal/syndicateemblem/middle/middle
+	icon_state = "synd2,2"
+
+/obj/effect/turf_decal/syndicateemblem/middle/right
+	icon_state = "synd2,3"
+
+//Top
+
+/obj/effect/turf_decal/syndicateemblem/top/left
+	icon_state = "synd3,1"
+
+/obj/effect/turf_decal/syndicateemblem/top/middle
+	icon_state = "synd3,2"
+
+/obj/effect/turf_decal/syndicateemblem/top/right
+	icon_state = "synd3,3"
+
 
 /obj/effect/turf_decal/mining
 	icon_state = "mining"

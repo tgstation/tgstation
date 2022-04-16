@@ -572,6 +572,10 @@
 	suffix = "box"
 	name = "labour shuttle (Box)"
 
+/datum/map_template/shuttle/labour/generic
+	suffix = "generic"
+	name = "labour shuttle (Generic)"
+
 /datum/map_template/shuttle/arrival/donut
 	suffix = "donut"
 	name = "arrival shuttle (Donut)"

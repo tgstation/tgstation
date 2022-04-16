@@ -149,6 +149,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/list/attack_verb_simple
 	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 	var/list/species_exception = null
+	///This is a bitfield that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
+	var/supports_variations_flags = NONE
 
 	///A weakref to the mob who threw the item
 	var/datum/weakref/thrownby = null //I cannot verbally describe how much I hate this var
@@ -1225,7 +1227,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
  */
 /obj/item/proc/update_action_buttons(status_only = FALSE, force = FALSE)
 	for(var/datum/action/current_action as anything in actions)
-		current_action.UpdateButtonIcon(status_only, force)
+		current_action.UpdateButtons(status_only, force)
 
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
@@ -1340,6 +1342,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	alpha = 0
 	transform = animation_matrix
 
+	SEND_SIGNAL(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, 3)
 	// This is instant on byond's end, but to our clients this looks like a quick drop
 	animate(src, alpha = old_alpha, pixel_x = old_x, pixel_y = old_y, transform = old_transform, time = 3, easing = CUBIC_EASING)
 

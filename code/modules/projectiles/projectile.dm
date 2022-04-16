@@ -143,18 +143,22 @@
 	var/decayedRange //stores original range
 	var/reflect_range_decrease = 5 //amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
-		//Effects
+	// Status effects applied on hit
 	var/stun = 0
 	var/knockdown = 0
 	var/paralyze = 0
 	var/immobilize = 0
 	var/unconscious = 0
-	var/stutter = 0
-	var/slur = 0
 	var/eyeblur = 0
 	var/drowsy = 0
-	var/stamina = 0
 	var/jitter = 0
+	/// Extra stamina damage applied on projectile hit (in addition to the main damage)
+	var/stamina = 0
+	/// Stuttering applied on projectile hit
+	var/stutter = 0 SECONDS
+	/// Slurring applied on projectile hit
+	var/slur = 0 SECONDS
+
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
@@ -949,12 +953,10 @@
 	var/ty = (text2num(screen_loc_Y[1]) - 1) * world.icon_size + text2num(screen_loc_Y[2])
 
 	//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-	var/list/screenview = getviewsize(user.client.view)
-	var/screenviewX = screenview[1] * world.icon_size
-	var/screenviewY = screenview[2] * world.icon_size
+	var/list/screenview = view_to_pixels(user.client.view)
 
-	var/ox = round(screenviewX/2) - user.client.pixel_x //"origin" x
-	var/oy = round(screenviewY/2) - user.client.pixel_y //"origin" y
+	var/ox = round(screenview[1] / 2) - user.client.pixel_x //"origin" x
+	var/oy = round(screenview[2] / 2) - user.client.pixel_y //"origin" y
 	angle = ATAN2(tx - oy, ty - ox)
 	return list(angle, p_x, p_y)
 

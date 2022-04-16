@@ -105,7 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Newscaster", name)
+		ui = new(user, src, "PhysicalNewscaster", name)
 		ui.open()
 	alert = FALSE //We're checking our messages!
 	update_icon()
@@ -432,6 +432,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			bounty_value = text2num(params["bountyval"])
 			if(!bounty_value)
 				bounty_value = 1
+			bounty_value = clamp(bounty_value, 1, 1000)
 
 		if("bountyText")
 			var/pre_bounty_text = params["bountytext"]

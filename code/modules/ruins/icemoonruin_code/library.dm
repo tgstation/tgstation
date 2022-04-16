@@ -1,4 +1,4 @@
-/obj/machinery/door/keycard/library
+/obj/machinery/door/puzzle/keycard/library
 	name = "wooden door"
 	desc = "A dusty, scratched door with a thick lock attached."
 	icon = 'icons/obj/doors/puzzledoor/wood.dmi'

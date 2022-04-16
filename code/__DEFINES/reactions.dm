@@ -83,7 +83,7 @@
 /// The minimum number of moles of trit that must be burnt for a tritium fire reaction to produce a radiation pulse. (0.01 moles trit or 10 moles oxygen to start producing rads.)
 #define TRITIUM_RADIATION_MINIMUM_MOLES 0.1
 /// The minimum released energy necessary for tritium to release radiation during combustion. (at a mix volume of [CELL_VOLUME]).
-#define TRITIUM_RADIATION_RELEASE_THRESHOLD (FIRE_TRITIUM_ENERGY_RELEASED * TRITIUM_BURN_OXY_FACTOR)
+#define TRITIUM_RADIATION_RELEASE_THRESHOLD (FIRE_TRITIUM_ENERGY_RELEASED * TRITIUM_OXYBURN_MULTIPLIER)
 /// A scaling factor for the range of radiation pulses produced by tritium fires.
 #define TRITIUM_RADIATION_RANGE_DIVISOR 4
 /// A scaling factor for the irradiation threshold of radiation pulses produced by tritium fires.
@@ -96,8 +96,10 @@
 // - Freon:
 /// The maximum temperature freon can combust at.
 #define FREON_MAXIMUM_BURN_TEMPERATURE 283
-/// The minimum temperature freon can combust at.
+///Minimum temperature allowed for the burn to go at max speed, we would have negative pressure otherwise
 #define FREON_LOWER_TEMPERATURE 60
+///Terminal temperature after wich we stop the reaction
+#define FREON_TERMINAL_TEMPERATURE 20
 /// Multiplier for freonfire with O2 moles * FREON_OXYGEN_FULLBURN for the maximum fuel consumption
 #define FREON_OXYGEN_FULLBURN 10
 /// The maximum fraction of the freon in a mix that can combust each reaction tick.

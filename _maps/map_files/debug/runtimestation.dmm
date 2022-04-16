@@ -1132,7 +1132,7 @@
 	height = 5;
 	id = "laborcamp_home";
 	name = "fore bay 1";
-	roundstart_template = /datum/map_template/shuttle/labour/box;
+	roundstart_template = /datum/map_template/shuttle/labour/generic;
 	width = 9
 	},
 /turf/open/space/basic,
@@ -2046,10 +2046,6 @@
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
-"nU" = (
-/obj/machinery/newscaster,
-/turf/closed/wall/r_wall,
-/area/engineering/main)
 "od" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2108,8 +2104,8 @@
 /turf/open/floor/iron/dark,
 /area/construction)
 "sE" = (
-/obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
+/obj/machinery/power/rtg/debug,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "sH" = (
@@ -2557,6 +2553,10 @@
 "VA" = (
 /obj/structure/fans/tiny,
 /obj/structure/cable,
+/turf/open/floor/iron,
+/area/engineering/main)
+"We" = (
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/engineering/main)
 "Wh" = (
@@ -7189,7 +7189,7 @@ aa
 aj
 al
 aA
-nU
+aj
 WT
 aj
 aj
@@ -7281,7 +7281,7 @@ aa
 aj
 ap
 aA
-aA
+We
 Vy
 aS
 bd

@@ -59,8 +59,7 @@
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
-				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
-				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_INVISIBILITY =  HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
 			CHESTPLATE_FLAGS = list(
@@ -361,7 +360,7 @@
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
 		/obj/item/mail,
-		/obj/item/small_delivery,
+		/obj/item/delivery/small,
 		/obj/item/paper,
 		/obj/item/storage/bag/mail,
 	)
@@ -948,6 +947,7 @@
 		/obj/item/tank/internals,
 		/obj/item/teleportation_scroll,
 		/obj/item/highfrequencyblade/wizard,
+		/obj/item/gun/magic,
 	)
 	skins = list(
 		"enchanted" = list(
