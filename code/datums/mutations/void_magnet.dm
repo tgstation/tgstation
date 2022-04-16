@@ -9,10 +9,18 @@
 	synchronizer_coeff = 1
 
 /datum/mutation/human/void/on_life(delta_time, times_fired)
-	if(!isturf(owner.loc))
+	// Move this onto the spell itself at some point?
+	var/datum/action/cooldown/spell/void/curse = locate(power_path) in owner
+	if(!curse)
+		remove()
 		return
-	if(DT_PROB((0.25+((100-dna.stability)/40)) * GET_MUTATION_SYNCHRONIZER(src), delta_time)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
-		new /obj/effect/immortality_talisman/void(get_turf(owner), owner)
+
+	if(!curse.is_valid_target(owner))
+		return
+
+	//very rare, but enough to annoy you hopefully. + 0.5 probability for every 10 points lost in stability
+	if(DT_PROB((0.25 + ((100 - dna.stability) / 40)) * GET_MUTATION_SYNCHRONIZER(src), delta_time))
+		curse.cast(owner)
 
 /datum/action/cooldown/spell/void
 	name = "Convoke Void" //magic the gathering joke here

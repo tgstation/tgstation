@@ -17,11 +17,7 @@
 	var/cleave_radius = 1
 
 /datum/action/cooldown/spell/pointed/cleave/is_valid_target(atom/cast_on)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	return ishuman(cast_on)
+	return ..() && ishuman(cast_on)
 
 /datum/action/cooldown/spell/pointed/cleave/cast(mob/living/carbon/human/cast_on)
 	. = ..()

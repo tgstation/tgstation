@@ -23,11 +23,7 @@
 	return isliving(owner)
 
 /datum/action/cooldown/spell/pointed/blood_siphon/is_valid_target(atom/cast_on)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	return isliving(cast_on)
+	return ..() && isliving(cast_on)
 
 /datum/action/cooldown/spell/pointed/blood_siphon/cast(mob/living/cast_on)
 	. = ..()

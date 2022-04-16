@@ -39,7 +39,7 @@
 
 	var/mob/living/living_cast_on = cast_on
 	if(ishuman(living_cast_on) && !living_cast_on.get_bodypart(BODY_ZONE_HEAD)) // melbert cl todo
-		to_chat(living_cast_on, span_warning("You have no nose!"))
+		to_chat(owner, span_warning("You have no nose!"))
 		return FALSE
 
 	return TRUE
@@ -120,6 +120,7 @@
 	if(!current_target)
 		to_chat(caster, span_warning("You're not tracking a scent, but the game thought you were. \
 			Something's gone wrong! Report this as a bug."))
+		stack_trace("[type] - on_the_trail was called when no tracking target was set.")
 		tracking_ref = null
 		return
 
@@ -130,6 +131,7 @@
 	if(caster.z < current_target.z)
 		to_chat(caster, span_warning("The trail leads... way up above you? Huh. They must be really, really far away."))
 		return
+
 	else if(caster.z > current_target.z)
 		to_chat(caster, span_warning("The trail leads... way down below you? Huh. They must be really, really far away."))
 		return

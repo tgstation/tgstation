@@ -15,12 +15,21 @@
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_OFF_CENTCOM|SPELL_REQUIRES_MIND
 	spell_max_level = 1
 
-/datum/action/cooldown/spell/lichdom/is_valid_target(atom/cast_on)
-	if(HAS_TRAIT(cast_on, TRAIT_NO_SOUL))
-		to_chat(cast_on, span_warning("You don't have a soul to bind!"))
+/datum/action/cooldown/spell/lichdom/can_cast_spell(feedback = TRUE)
+	. = ..()
+	if(!.)
 		return FALSE
 
-	return isliving(cast_on)
+	// We call this here so we can get feedback if they try to cast it when they shouldn't.
+	if(!is_valid_target(owner))
+		if(feedback)
+			to_chat(owner, span_warning("You don't have a soul to bind!"))
+		return FALSE
+
+	return TRUE
+
+/datum/action/cooldown/spell/lichdom/is_valid_target(atom/cast_on)
+	return isliving(cast_on) && !HAS_TRAIT(owner, TRAIT_NO_SOUL)
 
 /datum/action/cooldown/spell/lichdom/cast(mob/living/cast_on)
 	. = ..()

@@ -127,11 +127,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	if(!is_valid_target(target))
 		return FALSE
 
-	// Calling parent here is the same as calling Activate(),
-	// but with two added action related signals before and after.
-	// If, at some point, the ability start and finish signals cause issues,
-	// this can probably be safely changed to not call parent (call Actiavte() directly)
-	return ..()
+	return Activate(target)
 
 /// Checks if the owner of the spell can currently cast it.
 /// Does not check anything involving potential targets.
@@ -195,7 +191,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
  * Check if the target we're casting on is a valid target.
  *
  * For spells with click_to_activate = TRUE, cast_on will be whatever is clicked
- * For all other spells, cast_on will be the caster of the spell
+ * For all other spells, cast_on will be the caster of the spell unless passed otherwise
  *
  * Return TRUE if cast_on is valid, FALSE otherwise
  */

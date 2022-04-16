@@ -187,7 +187,7 @@
 	new_power.panel = "Genetic"
 	new_power.Grant(owner)
 
-	return TRUE
+	return new_power
 
 // Runs through all the coefficients and uses this to determine which chromosomes the
 // mutation can take. Stores these as text strings in a list.

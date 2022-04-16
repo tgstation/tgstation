@@ -56,20 +56,22 @@
 
 	return TRUE
 
-/datum/action/cooldown/spell/cone/staggered/fire_breath/cast(mob/cast_on)
+/datum/action/cooldown/spell/cone/staggered/fire_breath/after_cast(atom/cast_on)
 	. = ..()
-	if(isliving(cast_on))
-		var/mob/living/living_cast_on = cast_on
-		// When casting, throw the caster backwards a few tiles.
-		var/original_dir = living_cast_on.dir
-		living_cast_on.throw_at(
-			get_edge_target_turf(living_cast_on, turn(living_cast_on.dir, 180)),
-			range = self_throw_range,
-			speed = 2,
-			gentle = TRUE,
-		)
-		// Try to set us to our original direction after, so we don't end up backwards.
-		living_cast_on.setDir(original_dir)
+	if(!isliving(cast_on))
+		return
+
+	var/mob/living/living_cast_on = cast_on
+	// When casting, throw the caster backwards a few tiles.
+	var/original_dir = living_cast_on.dir
+	living_cast_on.throw_at(
+		get_edge_target_turf(living_cast_on, turn(living_cast_on.dir, 180)),
+		range = self_throw_range,
+		speed = 2,
+		gentle = TRUE,
+	)
+	// Try to set us to our original direction after, so we don't end up backwards.
+	living_cast_on.setDir(original_dir)
 
 // Makes the cone shoot out into a 3 wide column of flames.
 /datum/action/cooldown/spell/cone/staggered/fire_breath/calculate_cone_shape(current_level)
