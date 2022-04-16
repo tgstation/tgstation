@@ -6,13 +6,13 @@
 
 /obj/item/book/granter/action/spell/mime/attack_self(mob/user)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	// Gives the user a vow ability if they don't have one
 	var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in user.actions
-	if(!vow)
-		vow = new(user.mind || user)
+	if(!vow && user.mind)
+		vow = new(user.mind)
 		vow.Grant(user)
 
 	return TRUE

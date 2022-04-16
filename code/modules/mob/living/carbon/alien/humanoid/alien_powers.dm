@@ -48,6 +48,7 @@ Doesn't work on other aliens/AI.*/
 	.[PANEL_DISPLAY_COOLDOWN] = "[plasma_cost]"
 
 /datum/action/cooldown/alien/make_structure
+	/// The type of structure the action makes on use
 	var/obj/structure/made_structure_type
 
 /datum/action/cooldown/alien/make_structure/IsAvailable()
@@ -72,6 +73,7 @@ Doesn't work on other aliens/AI.*/
 	new made_structure_type(owner.loc)
 	return TRUE
 
+/// Checks if there's a duplicate structure in the owner's turf
 /datum/action/cooldown/alien/make_structure/proc/check_for_duplicate()
 	var/obj/structure/existing_thing = locate(made_structure_type) in owner.loc
 	if(existing_thing)
@@ -80,6 +82,7 @@ Doesn't work on other aliens/AI.*/
 
 	return TRUE
 
+/// Checks if there's an atmos machine (vent) in the owner's turf
 /datum/action/cooldown/alien/make_structure/proc/check_for_vents()
 	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in owner.loc
 	if(atmos_thing)

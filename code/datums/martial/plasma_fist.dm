@@ -6,16 +6,11 @@
 	name = "Plasma Fist"
 	id = MARTIALART_PLASMAFIST
 	help_verb = /mob/living/proc/plasma_fist_help
-	var/datum/action/cooldown/spell/aoe/repulse/tornado_spell
 	var/nobomb = FALSE
 	var/plasma_power = 1 //starts at a 1, 2, 4 explosion.
 	var/plasma_increment = 1 //how much explosion power gets added per kill (1 = 1, 2, 4. 2 = 2, 4, 8 and so on)
 	var/plasma_cap = 12 //max size explosion level
 	display_combos = TRUE
-
-/datum/martial_art/plasma_fist/Destroy(force, ...)
-	QDEL_NULL(tornado_spell)
-	return ..()
 
 /datum/martial_art/plasma_fist/proc/check_streak(mob/living/A, mob/living/D)
 	if(findtext(streak,TORNADO_COMBO))
@@ -42,9 +37,10 @@
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/A, mob/living/D)
 	A.say("TORNADO SWEEP!", forced="plasma fist")
 	dance_rotate(A, CALLBACK(GLOBAL_PROC, .proc/playsound, A.loc, 'sound/weapons/punch1.ogg', 15, TRUE, -1))
-	if(!tornado_spell)
-		tornado_spell = new(A)
+
+	var/datum/action/cooldown/spell/aoe/repulse/tornado_spell = new(src)
 	tornado_spell.cast(A)
+	qdel(tornado_spell)
 
 	log_combat(A, D, "tornado sweeped(Plasma Fist)")
 	return

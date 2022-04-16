@@ -83975,7 +83975,7 @@
 /turf/open/floor/iron,
 /area/command/bridge)
 "xmT" = (
-/obj/item/book/granter/spell/smoke/lesser,
+/obj/item/book/granter/action/spell/smoke/lesser,
 /obj/structure/table/wood,
 /turf/open/floor/cult,
 /area/service/chapel/office)

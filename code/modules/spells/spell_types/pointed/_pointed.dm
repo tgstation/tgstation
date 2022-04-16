@@ -13,9 +13,9 @@
 	/// The base icon state of the spell's button icon, used for editing the icon "on" and "off"
 	var/base_icon_state
 	/// Message showing to the spell owner upon activating pointed spell.
-	var/active_msg = "You prepare to use the spell on a target..."
+	var/active_msg
 	/// Message showing to the spell owner upon deactivating pointed spell.
-	var/deactive_msg = "You dispel the magic..."
+	var/deactive_msg
 	/// The casting range of our spell
 	var/cast_range = 7
 	/// Variable dictating if the spell will use turf based aim assist
@@ -23,8 +23,10 @@
 
 /datum/action/cooldown/spell/pointed/New(Target)
 	. = ..()
-	active_msg = "You prepare to use [src] on a target..."
-	deactive_msg = "You dispel [src]."
+	if(!active_msg)
+		active_msg = "You prepare to use [src] on a target..."
+	if(!deactive_msg)
+		deactive_msg = "You dispel [src]."
 
 /datum/action/cooldown/spell/pointed/set_click_ability(mob/on_who)
 	if(!can_cast_spell(feedback = FALSE))
@@ -87,9 +89,9 @@
 /datum/action/cooldown/spell/pointed/projectile
 	/// What projectile we create when we shoot our spell.
 	var/obj/projectile/magic/projectile_type = /obj/projectile/magic/teleport
-	/// How many projectiles we can fire per cast. Not all at once, per click
+	/// How many projectiles we can fire per cast. Not all at once, per click, kinda like charges
 	var/projectile_amount = 1
-	/// How many projectiles we have yet to fire
+	/// How many projectiles we have yet to fire, based on projectile_amount
 	var/current_amount = 0
 	/// How many projectiles we fire every fire_projectile() call.
 	/// Unwise to change without overriding or extending ready_projectile.
@@ -97,7 +99,7 @@
 
 /datum/action/cooldown/spell/pointed/projectile/New(Target)
 	. = ..()
-	if(projectiles_per_fire > 1)
+	if(projectile_amount > 1)
 		unset_after_click = FALSE
 
 /datum/action/cooldown/spell/pointed/projectile/is_valid_target(atom/cast_on)
@@ -110,7 +112,8 @@
 /datum/action/cooldown/spell/pointed/projectile/on_deactivation(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(projectile_amount > 1 && current_amount)
-		StartCooldown(cooldown_time * (current_amount / projectile_amount))
+		StartCooldown(cooldown_time * ((projectile_amount - current_amount) / projectile_amount))
+		current_amount = 0
 
 // cast_on is a turf, or atom target, that we clicked on to fire at.
 /datum/action/cooldown/spell/pointed/projectile/cast(atom/cast_on)

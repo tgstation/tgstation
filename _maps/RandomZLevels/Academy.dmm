@@ -2483,7 +2483,7 @@
 /area/awaymission/academy/academyengine)
 "mj" = (
 /obj/structure/rack,
-/obj/item/book/granter/spell/summonitem,
+/obj/item/book/granter/action/spell/summonitem,
 /obj/item/pen/fourcolor,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)

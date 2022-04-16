@@ -43,7 +43,7 @@
 		if(IS_HERETIC_OR_MONSTER(nearby_mob))
 			continue
 
-		things += nearby_thing
+		things += nearby_mob
 
 	return things
 

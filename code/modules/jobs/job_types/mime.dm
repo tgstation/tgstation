@@ -72,6 +72,7 @@
 	if(visualsOnly)
 		return
 
+	// Start our mime out with a vow of silence and the ability to break (or make) it
 	if(H.mind)
 		var/datum/action/cooldown/spell/vow_of_silence/vow = new(H.mind)
 		vow.Grant(H)
@@ -86,29 +87,41 @@
 	icon_state = "bookmime"
 
 /obj/item/book/mimery/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	var/list/spell_icons = list(
 		"Invisible Wall" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_wall"),
 		"Invisible Chair" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_chair"),
 		"Invisible Box" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_box")
 		)
 	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+	var/datum/action/cooldown/spell/picked_spell_type
 	switch(picked_spell)
 		if("Invisible Wall")
-			var/datum/action/cooldown/spell/conjure/mime/invisible_wall/wall = new(user.mind || user)
-			wall.Grant(user)
+			picked_spell_type = /datum/action/cooldown/spell/conjure/invisible_wall
 
 		if("Invisible Chair")
-			var/datum/action/cooldown/spell/conjure/mime/invisible_chair/chair = new(user.mind || user)
-			chair.Grant(user)
+			picked_spell_type = /datum/action/cooldown/spell/conjure/invisible_chair
 
 		if("Invisible Box")
-			var/datum/action/cooldown/spell/conjure/mime/invisible_chair/box = new(user.mind || user)
-			box.Grant(user)
+			picked_spell_type = /datum/action/cooldown/spell/conjure_item/invisible_box
 
-		else
-			return
-	to_chat(user, span_warning("The book disappears into thin air."))
-	qdel(src)
+	if(ispath(picked_spell_type))
+		// Gives the user a vow ability too, if they don't already have one
+		var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in user.actions
+		if(!vow && user.mind)
+			vow = new(user.mind) // melbert todo cl
+			vow.Grant(user)
+
+		picked_spell_type = new picked_spell_type(user.mind || user)
+		picked_spell_type.Grant(user)
+
+		to_chat(user, span_warning("The book disappears into thin air."))
+		qdel(src)
+
+	return TRUE
 
 /**
  * Checks if we are allowed to interact with a radial menu
