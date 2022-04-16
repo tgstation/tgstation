@@ -15,20 +15,21 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=200)
+
 	var/list/discovered = list() //hit a dna console to update the scanners database
 	var/list/buffer
 	var/ready = TRUE
 	var/cooldown = 200
 
-/obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
+/obj/item/sequence_scanner/attack(mob/living/mob, mob/living/carbon/human/user)
 	add_fingerprint(user)
-	if (!HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
-		user.visible_message(span_notice("[user] analyzes [M]'s genetic sequence."), \
-							span_notice("You analyze [M]'s genetic sequence."))
-		gene_scan(M, user)
-
+	//no scanning if its a husk or DNA-less Species
+	if (!HAS_TRAIT(mob, TRAIT_GENELESS) && !HAS_TRAIT(mob, TRAIT_BADDNA))
+		user.visible_message(span_notice("[user] analyzes [mob]'s genetic sequence."), \
+							span_notice("You analyze [mob]'s genetic sequence."))
+		gene_scan(mob, user)
 	else
-		user.visible_message(span_notice("[user] fails to analyze [M]'s genetic sequence."), span_warning("[M] has no readable genetic sequence!"))
+		user.visible_message(span_notice("[user] fails to analyze [mob]'s genetic sequence."), span_warning("[mob] has no readable genetic sequence!"))
 
 /obj/item/sequence_scanner/attack_self(mob/user)
 	display_sequence(user)
@@ -36,44 +37,43 @@
 /obj/item/sequence_scanner/attack_self_tk(mob/user)
 	return
 
-/obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
+/obj/item/sequence_scanner/afterattack(obj/object, mob/user, proximity)
 	. = ..()
-	if(!istype(O) || !proximity)
+	if(!istype(object) || !proximity)
 		return
 
-	if(istype(O, /obj/machinery/computer/scan_consolenew))
-		var/obj/machinery/computer/scan_consolenew/C = O
-		if(C.stored_research)
+	if(istype(object, /obj/machinery/computer/scan_consolenew))
+		var/obj/machinery/computer/scan_consolenew/console = object
+		if(console.stored_research)
 			to_chat(user, span_notice("[name] linked to central research database."))
-			discovered = C.stored_research.discovered_mutations
+			discovered = console.stored_research.discovered_mutations
 		else
 			to_chat(user,span_warning("No database to update from."))
 
-/obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/C, mob/living/user)
-	if(!iscarbon(C) || !C.has_dna())
+/obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/mob, mob/living/user)
+	if(!iscarbon(mob) || !mob.has_dna())
 		return
-	buffer = C.dna.mutation_index
-	to_chat(user, span_notice("Subject [C.name]'s DNA sequence has been saved to buffer."))
+	buffer = mob.dna.mutation_index
+	to_chat(user, span_notice("Subject [mob.name]'s DNA sequence has been saved to buffer."))
 	if(LAZYLEN(buffer))
-		for(var/A in buffer)
-			to_chat(user, span_notice("[get_display_name(A)]"))
-
+		for(var/index in buffer)
+			to_chat(user, span_notice("[get_display_name(index)]"))
 
 /obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
 	if(!LAZYLEN(buffer) || !ready)
 		return
 	var/list/options = list()
-	for(var/A in buffer)
-		options += get_display_name(A)
+	for(var/index in buffer)
+		options += get_display_name(index)
 
 	var/answer = tgui_input_list(user, "Analyze Potential", "Sequence Analyzer", sort_list(options))
 	if(isnull(answer))
 		return
 	if(ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		var/sequence
-		for(var/A in buffer) //this physically hurts but i dont know what anything else short of an assoc list
-			if(get_display_name(A) == answer)
-				sequence = buffer[A]
+		for(var/index in buffer) //this physically hurts but i dont know what anything else short of an assoc list
+			if(get_display_name(index) == answer)
+				sequence = buffer[index]
 				break
 
 		if(sequence)
@@ -94,10 +94,10 @@
 	ready = TRUE
 
 /obj/item/sequence_scanner/proc/get_display_name(mutation)
-	var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation)
-	if(!HM)
+	var/datum/mutation/human/human_mutation = GET_INITIALIZED_MUTATION(mutation)
+	if(!human_mutation)
 		return "ERROR"
 	if(mutation in discovered)
-		return  "[HM.name] ([HM.alias])"
+		return  "[human_mutation.name] ([human_mutation.alias])"
 	else
-		return HM.alias
+		return human_mutation.alias
