@@ -18,13 +18,23 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK_SECONDARY, .proc/on_secondary_afterattack)
 	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, .proc/on_gun_fire)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/scope/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ITEM_AFTERATTACK_SECONDARY,
 		COMSIG_GUN_TRY_FIRE,
+		COMSIG_PARENT_EXAMINE,
 	))
+
+/datum/component/scope/process(delta_time)
+	if(!tracker.marksman.client)
+		stop_zooming(tracker.marksman)
+		return
+	if(!length(tracker.marksman.client.keys_held & tracker.marksman.client.movement_keys))
+		tracker.marksman.face_atom(tracker.given_turf)
+	animate(tracker.marksman.client, 0.2 SECONDS, easing = SINE_EASING, flags = EASE_OUT, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
 
 /datum/component/scope/proc/on_move(atom/movable/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
@@ -32,14 +42,6 @@
 	if(!tracker)
 		return
 	stop_zooming(tracker.marksman)
-
-/datum/component/scope/proc/on_gun_fire(obj/item/gun/source, mob/living/user, atom/target, flag, params)
-	SIGNAL_HANDLER
-
-	if(!tracker?.given_turf || target == get_target(tracker.given_turf))
-		return NONE
-	INVOKE_ASYNC(source, /obj/item/gun.proc/fire_gun, get_target(tracker?.given_turf), user)
-	return COMPONENT_CANCEL_GUN_FIRE
 
 /datum/component/scope/proc/on_secondary_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
@@ -50,13 +52,18 @@
 		start_zooming(user)
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
-/datum/component/scope/process(delta_time)
-	if(!tracker.marksman.client)
-		stop_zooming(tracker.marksman)
-		return
-	if(!length(tracker.marksman.client.keys_held & tracker.marksman.client.movement_keys))
-		tracker.marksman.face_atom(tracker.given_turf)
-	animate(tracker.marksman.client, 0.2 SECONDS, easing = SINE_EASING, flags = EASE_OUT, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
+/datum/component/scope/proc/on_gun_fire(obj/item/gun/source, mob/living/user, atom/target, flag, params)
+	SIGNAL_HANDLER
+
+	if(!tracker?.given_turf || target == get_target(tracker.given_turf))
+		return NONE
+	INVOKE_ASYNC(source, /obj/item/gun.proc/fire_gun, get_target(tracker?.given_turf), user)
+	return COMPONENT_CANCEL_GUN_FIRE
+
+/datum/component/scope/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_notice("You can scope in with <b>right-click</b>.")
 
 /datum/component/scope/proc/get_target(turf/turf)
 	var/list/object_targets = list()

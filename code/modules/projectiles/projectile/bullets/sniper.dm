@@ -69,7 +69,7 @@
 	ricochets_max = 1
 	ricochet_chance = 100
 	ricochet_auto_aim_angle = 45
-	ricochet_auto_aim_range = 7
+	ricochet_auto_aim_range = 15
 	ricochet_incidence_leeway = 90
 	ricochet_decay_damage = 1
 	ricochet_shoots_firer = FALSE
