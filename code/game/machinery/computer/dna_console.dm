@@ -49,7 +49,7 @@
 
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Console"
-	desc = "Scan DNA."
+	desc = "From here you can esearch mysteries of the DNA!"
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	density = TRUE
