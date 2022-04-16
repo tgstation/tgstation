@@ -139,7 +139,7 @@ export const backendMiddleware = store => {
     }
 
     if (type === 'backend/suspendStart' && !suspendInterval) {
-      logger.log(`suspending (${window.__windowId__})`);
+      logger.log(`suspending (${Byond.windowId})`);
       // Keep sending suspend messages until it succeeds.
       // It may fail multiple times due to topic rate limiting.
       const suspendFn = () => Byond.sendMessage('suspend');
@@ -151,7 +151,7 @@ export const backendMiddleware = store => {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
-      Byond.winset(window.__windowId__, {
+      Byond.winset(Byond.windowId, {
         'is-visible': false,
       });
       setImmediate(() => focusMap());
@@ -167,7 +167,7 @@ export const backendMiddleware = store => {
       else if (fancyState !== fancy) {
         logger.log('changing fancy mode to', fancy);
         fancyState = fancy;
-        Byond.winset(window.__windowId__, {
+        Byond.winset(Byond.windowId, {
           titlebar: !fancy,
           'can-resize': !fancy,
         });
@@ -191,7 +191,7 @@ export const backendMiddleware = store => {
         if (suspended) {
           return;
         }
-        Byond.winset(window.__windowId__, {
+        Byond.winset(Byond.windowId, {
           'is-visible': true,
         });
         perf.mark('resume/finish');
