@@ -1,8 +1,8 @@
 /obj/item/food/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
 	desc = "If you can see this description the code for the deep fryer fucked up."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = ""
+	icon = 'icons/blanks/32x32.dmi'
+	icon_state = "nothing"
 	bite_consumption = 2
 
 /obj/item/food/deepfryholder/MakeEdible()
