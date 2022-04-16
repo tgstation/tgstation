@@ -1,21 +1,5 @@
 #define FEVER_CHANGE "fever"
-
-/*
-//////////////////////////////////////
-
-Fever
-
-	No change to hidden.
-	Increases resistance.
-	Increases stage speed.
-	Little transmittable.
-	Low level.
-
-Bonus
-	Heats up your body.
-
-//////////////////////////////////////
-*/
+//Fever: Heats up your body.
 
 /datum/symptom/fever
 	name = "Fever"

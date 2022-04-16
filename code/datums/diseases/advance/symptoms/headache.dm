@@ -1,23 +1,6 @@
-/*
-//////////////////////////////////////
-
-Headache
-
-	Noticable.
-	Highly resistant.
-	Increases stage speed.
-	Not transmittable.
-	Low Level.
-
-BONUS
-	Displays an annoying message!
-	Should be used for buffing your disease.
-
-//////////////////////////////////////
-*/
+//Headache: Displays an annoying message! Should be used for buffing your disease.
 
 /datum/symptom/headache
-
 	name = "Headache"
 	desc = "The virus causes inflammation inside the brain, causing constant headaches."
 	stealth = -1

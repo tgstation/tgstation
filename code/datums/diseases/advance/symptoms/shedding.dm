@@ -1,18 +1,4 @@
-/*
-//////////////////////////////////////
-Alopecia
-
-	Not Noticeable.
-	Increases resistance slightly.
-	Increases stage speed.
-	Transmittable.
-	Intense Level.
-
-BONUS
-	Makes the mob lose hair.
-
-//////////////////////////////////////
-*/
+// Alopecia: Makes the mob lose hair.
 
 /datum/symptom/shedding
 	name = "Alopecia"

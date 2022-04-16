@@ -1,22 +1,6 @@
-/*
-//////////////////////////////////////
-
-Hyphema (Eye bleeding)
-
-	Slightly noticable.
-	Lowers resistance tremendously.
-	Decreases stage speed tremendously.
-	Decreases transmittablity.
-	Critical Level.
-
-Bonus
-	Causes blindness.
-
-//////////////////////////////////////
-*/
+//Hyphema (Eye bleeding): Causes blindness.
 
 /datum/symptom/visionloss
-
 	name = "Hyphema"
 	desc = "The virus causes inflammation of the retina, leading to eye damage and eventually blindness."
 	stealth = -1

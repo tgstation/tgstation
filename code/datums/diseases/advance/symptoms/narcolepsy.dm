@@ -1,17 +1,5 @@
+//Narcolepsy: Causes drowsiness and sleep.
 
-/*
-//////////////////////////////////////
-Narcolepsy
-	Noticeable.
-	Lowers resistance
-	Decreases stage speed tremendously.
-	Decreases transmittablity tremendously.
-
-Bonus
-	Causes drowsiness and sleep.
-
-//////////////////////////////////////
-*/
 /datum/symptom/narcolepsy
 	name = "Narcolepsy"
 	desc = "The virus causes a hormone imbalance, making the host sleepy and narcoleptic."

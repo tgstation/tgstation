@@ -1,21 +1,6 @@
-/*
-//////////////////////////////////////
-Facial Hypertrichosis
-
-	No change to stealth.
-	Increases resistance.
-	Increases speed.
-	Slighlty increases transmittability
-	Intense Level.
-
-BONUS
-	Makes the mob grow a massive beard, regardless of gender.
-
-//////////////////////////////////////
-*/
+//Facial Hypertrichosis: Makes the mob grow a massive beard, regardless of gender.
 
 /datum/symptom/beard
-
 	name = "Facial Hypertrichosis"
 	desc = "The virus increases hair production significantly, causing rapid beard growth."
 	stealth = 0

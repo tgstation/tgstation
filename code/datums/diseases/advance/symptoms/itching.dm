@@ -1,23 +1,6 @@
-/*
-//////////////////////////////////////
-
-Itching
-
-	Not noticable or unnoticable.
-	Resistant.
-	Increases stage speed.
-	Little transmissibility.
-	Low Level.
-
-BONUS
-	Displays an annoying message!
-	Should be used for buffing your disease.
-
-//////////////////////////////////////
-*/
+//Itching: 	Displays an annoying message! Should be used for buffing your disease.
 
 /datum/symptom/itching
-
 	name = "Itching"
 	desc = "The virus irritates the skin, causing itching."
 	stealth = 0

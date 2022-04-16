@@ -1,19 +1,4 @@
-/*
-//////////////////////////////////////
-
-Confusion
-
-	Little bit hidden.
-	Lowers resistance.
-	Decreases stage speed.
-	Not very transmissibile.
-	Intense Level.
-
-Bonus
-	Makes the affected mob be confused for short periods of time.
-
-//////////////////////////////////////
-*/
+//Confusion: Makes the affected mob be confused for short periods of time.
 
 /datum/symptom/confusion
 	name = "Confusion"

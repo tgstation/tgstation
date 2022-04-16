@@ -1,22 +1,6 @@
-/*
-//////////////////////////////////////
-
-Spontaneous Combustion
-
-	Slightly hidden.
-	Lowers resistance tremendously.
-	Decreases stage tremendously.
-	Decreases transmittablity tremendously.
-	Fatal Level.
-
-Bonus
-	Ignites infected mob.
-
-//////////////////////////////////////
-*/
+//Spontaneous Combustion: Ignites infected mob.
 
 /datum/symptom/fire
-
 	name = "Spontaneous Combustion"
 	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
 	stealth = -1

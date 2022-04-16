@@ -1,19 +1,4 @@
-/*
-//////////////////////////////////////
-
-Dizziness
-
-	Hidden.
-	Lowers resistance considerably.
-	Decreases stage speed.
-	Reduced transmittability
-	Intense Level.
-
-Bonus
-	Shakes the affected mob's screen for short periods.
-
-//////////////////////////////////////
-*/
+// Dizziness: Shakes the affected mob's screen for short periods.
 
 /datum/symptom/dizzy // Not the egg
 

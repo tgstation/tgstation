@@ -1,20 +1,4 @@
-/*
-//////////////////////////////////////
-
-Sneezing
-
-	Very Noticable.
-	Increases resistance.
-	Doesn't increase stage speed.
-	Very transmissible.
-	Low Level.
-
-Bonus
-	Forces a spread type of AIRBORNE
-	with extra range!
-
-//////////////////////////////////////
-*/
+//Sneezing: Forces a spread type of AIRBORNE with extra range!
 
 /datum/symptom/sneeze
 	name = "Sneezing"
