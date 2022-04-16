@@ -40,3 +40,4 @@
 
 	H.update_body(is_creating = TRUE)
 	H.update_hair(is_creating = TRUE)
+	H.dna.species.spec_updatehealth(H)

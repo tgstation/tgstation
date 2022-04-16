@@ -102,7 +102,11 @@
 	. = ..()
 	if(!ethereal_light)
 		return
-
+	if(default_color != H.dna.features["ethcolor"])
+		var/new_color = H.dna.features["ethcolor"] //can I just replace the default color here?
+		r1 = GETREDPART(new_color)
+		g1 = GETGREENPART(new_color)
+		b1 = GETBLUEPART(new_color)
 	if(H.stat != DEAD && !EMPeffect)
 		var/healthpercent = max(H.health, 0) / 100
 		if(!emageffect)
