@@ -1218,6 +1218,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Brig"
 	icon_state = "brig"
 
+/area/security/holding_cell
+	name = "\improper Holding Cell"
+	icon_state = "holding_cell"
+
 /area/security/medical
 	name = "\improper Security Medical"
 	icon_state = "security_medical"

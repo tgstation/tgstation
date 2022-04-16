@@ -83,8 +83,9 @@
 	M.dizziness = 0
 	M.disgust = 0
 	M.drowsyness = 0
-	M.stuttering = 0
-	M.slurring = 0
+	// Remove all speech related status effects
+	for(var/effect in typesof(/datum/status_effect/speech))
+		M.remove_status_effect(effect)
 	M.jitteriness = 0
 	M.hallucination = 0
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
@@ -986,13 +987,13 @@
 	ph = 4
 	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	inverse_chem_val 	= 0.35
-	inverse_chem		= /datum/reagent/inverse/antihol
+	inverse_chem_val = 0.35
+	inverse_chem = /datum/reagent/inverse/antihol
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = 0
 	M.set_drowsyness(0)
-	M.slurring = 0
+	M.remove_status_effect(/datum/status_effect/speech/slurring/drunk)
 	M.set_confusion(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	M.adjustToxLoss(-0.2 * REM * delta_time, 0)
@@ -1340,7 +1341,7 @@
 	switch(overdose_progress)
 		if(1 to 40)
 			M.jitteriness = min(M.jitteriness + (1 * REM * delta_time), 10)
-			M.stuttering = min(M.stuttering + (1 * REM * delta_time), 10)
+			M.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
 			M.Dizzy(5 * REM * delta_time)
 			if(DT_PROB(30, delta_time))
 				M.losebreath++
@@ -1348,7 +1349,7 @@
 			M.adjustOxyLoss(0.1 * REM * delta_time, 0)
 			M.adjustStaminaLoss(0.1 * REM * delta_time, 0)
 			M.jitteriness = min(M.jitteriness + (1 * REM * delta_time), 20)
-			M.stuttering = min(M.stuttering + (1 * REM * delta_time), 20)
+			M.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 40 SECONDS)
 			M.Dizzy(10 * REM * delta_time)
 			if(DT_PROB(30, delta_time))
 				M.losebreath++

@@ -73,7 +73,7 @@
 /obj/item/mod/module/quick_carry/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
 
-/obj/item/mod/module/quick_carry/on_suit_deactivation()
+/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/advanced
@@ -85,7 +85,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
-/obj/item/mod/module/quick_carry/on_suit_deactivation()
+/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
