@@ -51,7 +51,7 @@
 	school = SCHOOL_MIME
 	cooldown_time = 1 MINUTES
 	cooldown_reduction_per_rank = 0 SECONDS
-	spell_requirements = SPELL_REQUIRES_HUMAN
+	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIME_VOW
 	antimagic_flags = NONE
 
 	invocation = "" // Set via get_invocation_content().
@@ -60,10 +60,6 @@
 	spell_max_level = 1
 
 	wall_type = /obj/effect/forcefield/mime/advanced
-
-/datum/action/cooldown/spell/forcewall/mime/New()
-	. = ..()
-	AddElement(/datum/element/mime_spell)
 
 /datum/action/cooldown/spell/forcewall/mime/before_cast(atom/cast_on)
 	. = ..()

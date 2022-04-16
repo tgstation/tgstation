@@ -149,6 +149,11 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	if((spell_requirements & SPELL_REQUIRES_MIND) && !owner.mind)
 		return FALSE
 
+	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !owner.mind?.miming)
+		if(feedback)
+			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
+		return FALSE
+
 	if((spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC) && !owner.can_cast_magic(antimagic_flags))
 		if(feedback)
 			to_chat(owner, span_warning("Some form of antimagic is preventing you from casting [src]!"))
@@ -331,9 +336,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
 /datum/action/cooldown/spell/proc/can_invoke(feedback = TRUE)
-	if(SEND_SIGNAL(src, COMSIG_SPELL_CAN_INVOKE, feedback) & COMPONENT_CANCEL_INVOKE)
-		return FALSE
-
 	if(invocation_type == INVOCATION_NONE)
 		return TRUE
 

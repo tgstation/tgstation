@@ -5,9 +5,9 @@
 
 	invocation_type = INVOCATION_NONE
 
-	// Enchanted guns tend to self delete anyways.
-	delete_old = FALSE
 	item_type = /obj/item/gun/ballistic/rifle
+	// Enchanted guns self delete / do wacky stuff, anyways
+	delete_old = FALSE
 
 /datum/action/cooldown/spell/conjure_item/infinite_guns/Remove(mob/living/remove_from)
 	var/obj/item/existing = remove_from.is_holding_item_of_type(item_type)
@@ -17,7 +17,7 @@
 	return ..()
 
 // Because enchanted guns self-delete and regenerate themselves,
-// let's not bother with tracking their weakrefs.
+// override make_item here and let's not bother with tracking their weakrefs.
 /datum/action/cooldown/spell/conjure_item/infinite_guns/make_item()
 	return new item_type()
 

@@ -15,7 +15,7 @@
 	invocation_type = INVOCATION_EMOTE
 	invocation_self_message = span_danger("You fire your finger gun!")
 
-	spell_requirements = SPELL_REQUIRES_HUMAN
+	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIME_VOW
 	antimagic_flags = NONE
 	spell_max_level = 1
 
@@ -25,10 +25,6 @@
 	cast_range = 20
 	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3
-
-/datum/action/cooldown/spell/pointed/projectile/finger_guns/New()
-	. = ..()
-	AddElement(/datum/element/mime_spell)
 
 /datum/action/cooldown/spell/pointed/projectile/finger_guns/can_invoke(feedback = TRUE)
 	if(invocation_type == INVOCATION_EMOTE)

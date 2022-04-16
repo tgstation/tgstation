@@ -19,7 +19,6 @@
 
 	school = SCHOOL_HOLY
 	cooldown_time = 36 SECONDS
-
 	spell_requirements = NONE
 
 	smoke_type = SMOKE_HARMFUL
@@ -31,10 +30,5 @@
 	background_icon_state = "bg_cult"
 
 	cooldown_time = 20 SECONDS
-	invocation_type = INVOCATION_NONE
-	spell_requirements = NONE
-
-	cooldown_reduction_per_rank = 2.5 SECONDS //25 deciseconds reduction per rank
 
 	smoke_type = SMOKE_SLEEPING
-	smoke_amt = 4

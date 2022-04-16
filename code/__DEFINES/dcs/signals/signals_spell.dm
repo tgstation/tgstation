@@ -16,10 +16,6 @@
 #define COMSIG_MOB_AFTER_SPELL_CAST "mob_after_spell_cast"
 /// Sent from /datum/action/cooldown/spell/after_cast() to the spell: (atom/cast_on)
 #define COMSIG_SPELL_AFTER_CAST "spell_after_cast"
-/// Sent from /datum/action/cooldown/spell/can_invoke() to the spell: ()
-#define COMSIG_SPELL_CAN_INVOKE "spell_can_invoke"
-	/// Return to stop and return FALSE from can_invoke(), which prevents the user from invoking / casting the spell
-	#define COMPONENT_CANCEL_INVOKE (1<<0)
 /// Sent from /datum/action/cooldown/spell/reset_spell_cooldown() to the spell: ()
 #define COMSIG_SPELL_CAST_RESET "spell_cast_reset"
 
