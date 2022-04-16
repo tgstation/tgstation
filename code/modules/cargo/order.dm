@@ -50,8 +50,7 @@
 	var/datum/supply_pack/pack
 	var/datum/bank_account/paying_account
 	var/obj/item/coupon/applied_coupon
-	/// list of stamps that can approve this requisition for bonus credits
-	var/authorization_stamps
+	var/authorization_stamps // list of stamps that can approve this requisition for bonus credits
 
 /datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason, paying_account, department_destination, coupon)
 	id = SSshuttle.order_number++
