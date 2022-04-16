@@ -331,6 +331,12 @@
 	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
 	cost = 6
 
+/datum/uplink_item/ammo/sniper/marksman
+	name = ".50 Marksman Magazine"
+	desc = "A 5-round magazine of marksman ammo designed for use with .50 sniper rifles. Blast your enemies with instant shots!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
+	cost = 5
+
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"
 	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \

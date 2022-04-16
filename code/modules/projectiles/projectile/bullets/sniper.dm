@@ -47,3 +47,21 @@
 	damage = 25
 	speed = 0.3
 	range = 16
+
+/obj/projectile/bullet/p50/marksman
+	damage = 50
+	paralyze = 5 SECONDS
+	tracer_type = /obj/effect/projectile/tracer/sniper
+	impact_type = /obj/effect/projectile/impact/sniper
+	muzzle_type = /obj/effect/projectile/muzzle/sniper
+	hitscan = TRUE
+	impact_effect_type = null
+	hitscan_light_intensity = 3
+	hitscan_light_range = 0.5
+	hitscan_light_color_override = LIGHT_COLOR_YELLOW
+	muzzle_flash_intensity = 5
+	muzzle_flash_range = 1
+	muzzle_flash_color_override = LIGHT_COLOR_YELLOW
+	impact_light_intensity = 5
+	impact_light_range = 1
+	impact_light_color_override = LIGHT_COLOR_YELLOW
