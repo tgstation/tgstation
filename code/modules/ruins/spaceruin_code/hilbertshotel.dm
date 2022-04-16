@@ -26,7 +26,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	hotelRoomTempEmpty = new()
 	hotelRoomTempLore = new()
 	var/area/currentArea = get_area(src)
-	if(currentArea.type == /area/ruin/space/has_grav/hilbertresearchfacility)
+	if(currentArea.type == /area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
 		ruinSpawned = TRUE
 
 /obj/item/hilbertshotel/Destroy()
@@ -459,8 +459,11 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		M.notransform = FALSE
 
 //Space Ruin stuff
-/area/ruin/space/has_grav/hilbertresearchfacility
+/area/ruin/space/has_grav/powered/hilbertresearchfacility
 	name = "Hilbert Research Facility"
+
+/area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom
+	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA
 
 /obj/item/analyzer/hilbertsanalyzer
 	name = "custom rigged analyzer"
@@ -488,12 +491,30 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		else
 			to_chat(user, "No vacated rooms.")
 
-/obj/effect/mob_spawn/corpse/human/doctorhilbert
-	name = "Doctor Hilbert"
-	mob_name = "Doctor Hilbert"
-	oxy_damage = 500
-	mob_species = /datum/species/skeleton
-	outfit = /datum/outfit/doctorhilbert
+/obj/effect/landmark/tram/left_part/hilbert
+	destination_id = "left_part_hilbert"
+	tram_id = "tram_hilbert"
+	tgui_icons = list("Reception" = "briefcase", "Botany" = "leaf", "Chemistry" = "flask")
+
+/obj/effect/landmark/tram/middle_part/hilbert
+	destination_id = "middle_part_hilbert"
+	tram_id = "tram_hilbert"
+	tgui_icons = list("Processing" = "cogs", "Xenobiology" = "paw")
+
+/obj/effect/landmark/tram/right_part/hilbert
+	destination_id = "right_part_hilbert"
+	tram_id = "tram_hilbert"
+	tgui_icons = list("Ordnance" = "bullseye", "Office" = "user", "Dormitories" = "bed")
+
+/obj/item/keycard/hilbert
+	name = "Hilbert's office keycard"
+	desc = "A keycard with an engraving on it. The engraving reads: \"Hilbert\"."
+	color = "#aa00cc"
+	puzzle_id = "hilbert_office"
+
+/obj/machinery/door/puzzle/keycard/hilbert
+	name = "secure airlock"
+	puzzle_id = "hilbert_office"
 
 /datum/outfit/doctorhilbert
 	id = /obj/item/card/id/advanced/silver
@@ -509,73 +530,108 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		hilbert.gender = MALE
 		hilbert.update_body()
 
-/obj/item/paper/crumpled/docslogs
-	name = "Research Logs"
+/obj/item/paper/crumpled/ruins/note_institute
+	name = "note to the institute"
 
-/obj/item/paper/crumpled/docslogs/Initialize(mapload)
+/obj/item/paper/crumpled/ruins/note_institute/Initialize(mapload)
 	. = ..()
-	info = {"<h4><center>Research Logs</center></h4>
-	I might just be onto something here!<br>
-	The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.<br>
-	It's too soon to say for sure, but this might be the start of something quite important!<br>
-	I'll be sure to log any major future breakthroughs. This might be a lot more than I can manage on my own, perhaps I should hire that secretary after all...<br>
-	<h4>Breakthrough!</h4>
-	I can't believe it, but I did it! Just when I was certain it couldn't be done, I made the final necessary breakthrough.<br>
-	Exploiting the effects of space dilation caused by specific bluespace structures combined with a precise use of geometric calculus, I've discovered a way to correlate an infinite amount of space within a finite area!<br>
-	While the potential applications are endless, I utilized it in quite a nifty way so far by designing a system that recursively constructs subspace rooms and spatially links them to any of the infinite infinitesimally distinct points on the spheres surface.<br>
-	I call it: Hilbert's Hotel!<br>
-	<h4>Goodbye</h4>
-	I can't take this anymore. I know what happens next, and the fear of what is coming leaves me unable to continue working.<br>
-	Any fool in my field has heard the stories. It's not that I didn't believe them, it's just... I guess I underestimated the importance of my own research...<br>
-	Robert has reported a further increase in frequency of the strange, prying visitors who ask questions they have no business asking. I've requested him to keep everything on strict lockdown and have permanently dismissed all other assistants.<br>
-	I've also instructed him to use the encryption method we discussed for any important quantitative data. The poor lad... I don't think he truly understands what he's gotten himself into...<br>
-	It's clear what happens now. One day they'll show up uninvited, and claim my research as their own, leaving me as nothing more than a bullet ridden corpse floating in space.<br>
-	I can't stick around to the let that happen.<br>
-	I'm escaping into the very thing that brought all this trouble to my doorstep in the first place - my hotel.<br>
-	I'll be in <u>[uppertext(num2hex(GLOB.hhMysteryRoomNumber, 0))]</u> (That will make sense to anyone who should know)<br>
-	I'm sorry that I must go like this. Maybe one day things will be different and it will be safe to return... maybe...<br>
-	Goodbye<br>
-	<br>
-	<i>Doctor Hilbert</i>"}
+	info = {"Note to the Institute<br>
+	If you're reading this, I hope you're from the Institute. First things first, I should apologise. I won't be coming back to teach in the new semester.<br>
+	We've made some powerful enemies. Very powerful. More powerful than any of you can imagine, and so we can't come back.<br>
+	So, we've made the decision to vanish. Perhaps more literally than you might think. Do not try to find us- for your own safety.<br>
+	I've left some of our effects in the Hotel. Room number <u>[uppertext(num2hex(GLOB.hhMysteryRoomNumber, 0))]</u>. To anyone who should know, that should make sense.<br>
+	Best of luck with the research. From all of us in the Hilbert Group, it's been a pleasure working with you.<br>
+	- David, Phil, Fiona and Jen"}
 
-/obj/item/paper/crumpled/robertsworkjournal
-	name = "Work Journal"
-	info = {"<h4>First Week!</h4>
-	First week on the new job. It's a secretarial position, but hey, whatever pays the bills. Plus it seems like some interesting stuff goes on here.<br>
-	Doc says its best that I don't openly talk about his research with others, I guess he doesn't want it getting out or something. I've caught myself slipping a few times when talking to others, it's hard not to brag about something this cool!<br>
-	I'm not really sure why I'm choosing to journal this. Doc seems to log everything. He says it's incase he discovers anything important.<br>
-	I guess that's why I'm doing it too, I've always wanted to be a part of something important.<br>
-	Here's to a new job and to becoming a part of something important!<br>
-	<h4>Weird times...</h4>
-	Things are starting to get a little strange around here. Just weeks after Doc's amazing breakthrough, weird visitors have began showing up unannounced, asking strange things about Doc's work.<br>
-	I knew Doc wasn't a big fan of company, but even he seemed strangely unnerved when I told him about the visitors.<br>
-	He said it's important that from here on out we keep tight security on everything, even other staff members.<br>
-	He also said something about securing data, something about hexes. What's that mean? Some sort of curse? Doc never struck me as the magic type...<br>
-	He often uses a lot of big sciencey words that I don't really understand, but I kinda dig it, it makes me feel like I'm witnessing something big.<br>
-	I hope things go back to normal soon, but I guess that's the price you pay for being a part of something important.<br>
-	<h4>Last day I guess?</h4>
-	Things are officially starting to get too strange for me.<br>
-	The visitors have been coming a lot more often, and they all seem increasingly aggressive and nosey. I'm starting to see why they made Doc so nervous, they're certainly starting to creep me out too.<br>
-	Awhile ago Doc started having me keep the place on strict lockdown and requested I refuse entry to anyone else, including previous staff.<br>
-	But the weirdest part?<br>
-	I haven't seen Doc in days. It's not unusual for him to work continuously for long periods of time in the lab, but when I took a peak in their yesterday - he was nowhere to be seen! I didn't risk prying much further, Doc had a habit of leaving the defense systems on these last few weeks.<br>
-	I'm thinking it might be time to call it quits. Can't work much without a boss, plus things are starting to get kind of shady. I wanted to be a part of something important, but you gotta know when to play it safe.<br>
-	As my dad always said, "The smart get famous, but the wise survive..."<br>
-	<br>
-	<i>Robert P.</i>"}
+/obj/item/paper/crumpled/ruins/postdocs_memo
+	name = "memo to the postdocs"
+	info = {"Memo to the Postdocs
+	Remember, if you're going in to retrieve the prototype for any reason (not that you should be without my supervision), that the security systems are always live- they have no shutoff.<br>
+	Instead, remember: what you can't see can't hurt you.<br>
+	Take care of the lab during my vacation. See you all in June.<br>
+	- David"}
 
-/obj/item/paper/crumpled/bloody/docsdeathnote
-	name = "note"
-	info = {"This is it isn't it?<br>
-	No one's coming to help, that much has become clear.<br>
-	Sure, it's lonely, but do I have much choice? At least I brought the analyzer with me, they shouldn't be able to find me without it.<br>
-	Who knows who's waiting for me out there. Its either die out there in their hands, or die a slower, slightly more comfortable death in here.<br>
-	Everyday I can feel myself slipping away more and more, both physically and mentally. Who knows what happens now...<br>
-	Heh, so it's true then, this must be the inescapable path of all great minds... so be it then.<br>
+/obj/item/paper/crumpled/ruins/hotel_note
+	name = "hotel note"
+	info = {"Hotel Note<br>
+	Well, you figured out the puzzle. Looks like someone's done their homework on my research.<br>
+	I suppose you deserve to know some more about our situation. Our research has attracted some undue attention and so, for our own safety, we've taken to the Bluespace.<br>
+	Yes, you did read that correctly. I'm sure the physics and maths would bore you, but in layman's terms, the manifested link to the Bluespace the crystals provide can be exploited. With the correct technology, one can "surf" the Bluespace, as Jen likes to call it.<br>
+	What's more, the space-time continuum is in full effect here. By correctly manipulating the bluespace, one can go <i>anywhere</i>: time or space. I'll confess to not having figured that one out myself. Check the closet- consider it a prize for solving the puzzle. Just be careful with its use- you might find yourself dealing with the same pursuers we've picked up.<br>
+	They deal in "time crimes", whatever their definition of those are.<br>
+	Anyway, I'm beginning to ramble. We must be going now. Make sure any posthumous Nobel prizes are made out to the department.<br>
+	- David"}
+
+/obj/item/paper/fluff/ruins/docslabnotes
+	name = "lab notebook page"
+	info = {"Laboratory Notebook<br>
+	PROPERTY OF DOCTOR D. HILBERT<br>
+	May 10th, 2555<br>
+	Finally, my new facility is complete, and not a moment too soon!<br>
+	My disagreements with Greenham have become too much to bear, so some time away from the campus will do me well. It's not like my students understand my work, anyway. Teaching never was my passion.<br>
+	Anyway, I'm getting off track. It is quite amazing what a few million in grants will buy you. This station is state of the art, perfect for my studies.<br>
+	Since the Zhang Incident of 2459, we have been quite aware of the properties of bluespace crystals. Their space-warping properties are well-documented, but poorly understood. However, I theorise that it may be possible to harness them in new ways.<br>
+	To this end, I've procured a small team of postdoctorate students from the institute to assist with my research. Some administrative help wouldn't go amiss, either- perhaps I should hire a secretary...<br>
+	*Following this is a long series of pages detailing failures, grievances with the institute, and more scientific equations than anyone can reasonably chew through.*<br>
+	<h4>Breakthrough<h4>
+	January 8th, 2557<br>
+	My theories have held up adequately. Today, we had our first successful test of the "Hilbert Pocket", as we've taken to calling it. By exploiting the ability of bluespace crystals to create a localised dilation in space, with precise application of force according to geometric calculus, we have successfully "folded" space into a pocket. We had Phil throw one of his analysers into it from across the room, and what we saw was incredible.<br>
+	A pocket of infinite space, within a finite area. Simply revolutionary!<br>
+	I've set the postdocs to paper writing while I work out the specifics. The technology is successful, but we have no way to harness it. Unless...<br>
+	*Many more pages dedicated to equations, engineering drawings, and ramblings continue. Hilbert clearly loves the sight of his own handwriting.*<br>
+	<h4>A New Device<h4>
+	September 21st, 2557<br>
+	We've submitted the first draft of the paper on Hilbert Pockets to the journals. Now, I suppose, we wait.<br>
+	In the meantime, I've taken to assembling the first prototype of the device. By exploiting the pocket's ability to create an infinite region of space within a finite area, I've made... well, I suppose it could be called a "Pocket Dimension". Within, I've created a nifty system that recursively produces subspace rooms, spatially linking them to any of the infinite points on the pocket's surface. Fiona says it's akin to a hotel, and I'm inclined to agree.<br>
+	Hilbert's Hotel. I like the sound of that.<br>"}
+
+/obj/item/paper/fluff/ruins/romans_emails
+	name = "e-mail readout - 14.05.2558"
+	info = {"Logs of Roman P.<br>
+	<h4>New Job</h4><br>
+	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
+	Hello sis! Figured I should update you on what's going on with the career change.<br>
+	First day on the new job. It's a pretty boring position, but hey- it's not like I was finding anything in New Vladimir. I'm just glad to have something to pay the bills.<br>
+	Suppose I should say what's involved: I'm essentially playing housekeeper for some scientist and his cohort of student assistants. Far above my pay grade to understand what they do, but they seem excited enough. Talking about "pockets", for whatever reason. Maybe they're designing the next innovation in clothes?<br>
+	Anyway, that's pretty much it. I'm living on their station for pretty much the duration, so I'm not sure if I'll be able to make it to Mama's birthday. Sorry about that- I'll do my best to make it up to her (and you) when I get some leave.<br>
+	Hope to see you soon,<br>
+	Little Brother Roman<br>
 	<br>
+	<h4>Visitors</h4><br>
+	<i>Sent to: david_hilbert@physics.mit.edu</i><br>
+	Morning Doctor. Sorry to email you when you're on holiday, but you did tell me to update you on anything suspicious.<br>
+	There's been a ship that's been hanging around the facility for a few days. Figured that was odd enough, given how far from anything important we are, but it got stranger when one of them finally came over to talk.<br>
+	I know I'm not a native speaker, but I couldn't make out his accent. Wasn't like anything I've heard before, anyway.<br>
+	He kept asking where you were, and if he could come in to speak to you. Of course, I turned him away- even if you had been around I'd have been hesitant to let him in.<br>
+	As an aside, the postdocs told me to pass on a message. Apparently they've made a breakthrough, which sounds good and all.<br>
+	Regards,<br>
+	Roman<br>
 	<br>
+	<h4>Weird Times</h4><br>
+	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
+	Hi sis! How was Christmas? Are Mama and Papa doing well? I'm really sorry I couldn't be there, but I've been working my fingers to the bone at work.<br>
+	I figure I should tell you a bit about how it's been going here. I know, I know, you keep calling me a workaholic, but it's really... strange, I guess?<br>
+	I keep getting little glimpses into the research that's happening. They're messing around with bluespace- you know, the tech that makes FTL engines work? I'm not sure what exactly they're doing with it, but they're talking more and more about pockets every day now.<br>
+	Not only that, but I'm starting to hear strange noises from the labs I'm not allowed into. Nothing super terrifying, you know, we're not talking xenomorphs, but more like industrial sounds. Crashes, bangs, occasional high-pitched whining, you know the sort. Like a broken vacuum cleaner.<br>
+	I know it's not the instruments or I'd have heard it before, so it must be something new they've been working on. Exciting, I suppose, but I'm starting to wonder if I'm in over my head working here. Maybe I should start looking for a new job, somewhere closer to home.<br>
+	Hope to see you at Papa's birthday. I've requested leave for it, and I'm just waiting on the Doc's response.<br>
+	See you soon,<br>
+	Little Brother Roman<br>
 	<br>
-	<i>Choose a room, and enter the sphere<br>
-	Lay your head to rest, it soon becomes clear<br>
-	There's always more room around every bend<br>
-	Not all that's countable has an end...</i>"}
+	<h4>End of Leave</h4><br>
+	<i>Sent to: david_hilbert@physics.mit.edu</i><br>
+	Morning Doctor. Where is everyone? I got back from leave and the station was empty. Have you all went on holiday without telling me?<br>
+	And what the hell happened to the ordnance lab? I couldn't even open the door to get in, it was fused shut!<br>
+	Look, I don't feel safe staying on the station with it in this state, so I'm calling an engineer and heading home until I hear back from you.<br>
+	Regards,<br>
+	Roman<br>
+	<br>
+	<h4>Looking for a New Job</h4><br>
+	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
+	Hi sis. First things first, sorry for missing your engagement party. There's been a... situation at work.<br>
+	In fact, that's most of why I'm writing this. I have absolutely no idea what happened, but the Doctor and the students are gone. Just up and left. The facility's abandoned.<br>
+	But like, it's clear they left in a hurry. Hell, there's still coffee in the cups. I'd question it further, but they were always kinda... odd, I guess? The whole thing gives me chills and I don't think I want to dig any deeper.<br>
+	I dropped his university an email and called in the authorities. All that's left now, I guess, is to find a new job. Would your boss happen to be hiring?<br>
+	See you soon,<br>
+	Little Brother Roman
+	"}

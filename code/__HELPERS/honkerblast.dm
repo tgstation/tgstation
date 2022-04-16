@@ -21,7 +21,7 @@
 	for(var/mob/living/carbon/victim in severely_honked)
 		victim.Unconscious(40)
 		victim.Stun(100)
-		victim.stuttering += 15
+		victim.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/stutter)
 		victim.Jitter(500)
 		var/obj/item/organ/ears/ears = victim.getorganslot(ORGAN_SLOT_EARS)
 		ears?.adjustEarDamage(10, 15)

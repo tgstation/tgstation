@@ -112,7 +112,7 @@
 	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/mod(src)
 	chestplate.mod = src
-	chestplate.allowed = theme.allowed_suit_storage.Copy()
+	chestplate.allowed = typecacheof(theme.allowed_suit_storage)
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)
 	gauntlets.mod = src
@@ -146,8 +146,7 @@
 	if(active)
 		STOP_PROCESSING(SSobj, src)
 	for(var/obj/item/mod/module/module as anything in modules)
-		module.mod = null
-		modules -= module
+		uninstall(module, deleting = TRUE)
 	var/atom/deleting_atom
 	if(!QDELETED(helmet))
 		deleting_atom = helmet
@@ -180,8 +179,7 @@
 
 /obj/item/mod/control/atom_destruction(damage_flag)
 	for(var/obj/item/mod/module/module as anything in modules)
-		for(var/obj/item/item in module)
-			item.forceMove(drop_location())
+		uninstall(module)
 	if(ai)
 		ai.controlled_equipment = null
 		ai.remote_control = null
@@ -512,15 +510,14 @@
 	var/check_range = TRUE
 	return electrocute_mob(user, get_charge_source(), src, 0.7, check_range)
 
-/obj/item/mod/control/proc/install(module, mob/user)
-	var/obj/item/mod/module/new_module = module
+/obj/item/mod/control/proc/install(obj/item/mod/module/new_module, mob/user)
 	for(var/obj/item/mod/module/old_module as anything in modules)
 		if(is_type_in_list(new_module, old_module.incompatible_modules) || is_type_in_list(old_module, new_module.incompatible_modules))
 			if(user)
 				balloon_alert(user, "[new_module] incompatible with [old_module]!")
 				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return
-	if(is_type_in_list(module, theme.module_blacklist))
+	if(is_type_in_list(new_module, theme.module_blacklist))
 		if(user)
 			balloon_alert(user, "[src] doesn't accept [new_module]!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -550,16 +547,15 @@
 		balloon_alert(user, "[new_module] added")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 
-/obj/item/mod/control/proc/uninstall(module)
-	var/obj/item/mod/module/old_module = module
+/obj/item/mod/control/proc/uninstall(obj/item/mod/module/old_module, deleting = FALSE)
 	modules -= old_module
 	complexity -= old_module.complexity
 	if(active)
-		old_module.on_suit_deactivation()
+		old_module.on_suit_deactivation(deleting = deleting)
 		if(old_module.active)
-			old_module.on_deactivation(display_message = TRUE)
+			old_module.on_deactivation(display_message = !deleting, deleting = deleting)
+	old_module.on_uninstall(deleting = deleting)
 	QDEL_LIST(old_module.pinned_to)
-	old_module.on_uninstall()
 	old_module.mod = null
 
 /obj/item/mod/control/proc/update_access(mob/user, obj/item/card/id/card)
