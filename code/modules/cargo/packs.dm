@@ -2589,7 +2589,7 @@
 					/obj/item/encryptionkey/headset_com,
 					/obj/item/encryptionkey/headset_com)
 	crate_type = /obj/structure/closet/crate/secure
-	crate_name = "command encryption key crate"
+	crate_name = "command encryption key crate" // revert this
 
 /datum/supply_pack/misc/exploration_drone
 	name = "Exploration Drone"
