@@ -36,7 +36,7 @@
 /datum/component/scope/proc/on_gun_fire(obj/item/gun/source, mob/living/user, atom/target, flag, params)
 	SIGNAL_HANDLER
 
-	if(!tracker?.given_turf || target == tracker.given_turf)
+	if(!tracker?.given_turf || target == get_target(tracker.given_turf))
 		return NONE
 	INVOKE_ASYNC(source, /obj/item/gun.proc/fire_gun, get_target(tracker?.given_turf), user)
 	return COMPONENT_CANCEL_GUN_FIRE

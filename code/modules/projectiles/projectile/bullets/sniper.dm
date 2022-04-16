@@ -49,6 +49,7 @@
 	range = 16
 
 /obj/projectile/bullet/p50/marksman
+	name = ".50 marksman round"
 	damage = 50
 	paralyze = 5 SECONDS
 	tracer_type = /obj/effect/projectile/tracer/sniper
@@ -57,7 +58,7 @@
 	hitscan = TRUE
 	impact_effect_type = null
 	hitscan_light_intensity = 3
-	hitscan_light_range = 0.5
+	hitscan_light_range = 0.75
 	hitscan_light_color_override = LIGHT_COLOR_YELLOW
 	muzzle_flash_intensity = 5
 	muzzle_flash_range = 1
@@ -65,3 +66,10 @@
 	impact_light_intensity = 5
 	impact_light_range = 1
 	impact_light_color_override = LIGHT_COLOR_YELLOW
+	ricochets_max = 1
+	ricochet_chance = 100
+	ricochet_auto_aim_angle = 45
+	ricochet_auto_aim_range = 7
+	ricochet_incidence_leeway = 90
+	ricochet_decay_damage = 1
+	ricochet_shoots_firer = FALSE
