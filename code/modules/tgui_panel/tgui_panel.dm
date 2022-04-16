@@ -50,6 +50,7 @@
 	window.send_asset(get_asset_datum(/datum/asset/spritesheet/chat))
 	// Other setup
 	request_telemetry()
+	send_url()
 	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 5 SECONDS)
 
 /**
@@ -97,3 +98,10 @@
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
+
+/// Sends the URL of the server to the client.
+/// Used for reconnect.
+/datum/tgui_panel/proc/send_url()
+	window.send_message("reconnect/sendServerUrl", list(
+		"url" = winget(client, null, "url"),
+	))
