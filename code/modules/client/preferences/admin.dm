@@ -7,7 +7,7 @@
 	return DEFAULT_ASAY_COLOR
 
 /datum/preference/color/asay_color/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences))
+	if (!..(preferences, applying_preference=applying_preference))
 		return FALSE
 
 	return is_admin(preferences.parent) && CONFIG_GET(flag/allow_admin_asaycolor)
@@ -35,7 +35,7 @@
 	return subtypesof(/datum/outfit)
 
 /datum/preference/choiced/brief_outfit/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences))
+	if (!..(preferences, applying_preference=applying_preference))
 		return FALSE
 
 	return is_admin(preferences.parent)
@@ -46,7 +46,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/bypass_deadmin_in_centcom/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences))
+	if (!..(preferences, applying_preference=applying_preference))
 		return FALSE
 
 	return is_admin(preferences.parent)

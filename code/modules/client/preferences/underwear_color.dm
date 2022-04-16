@@ -7,7 +7,7 @@
 	target.underwear_color = value
 
 /datum/preference/color/underwear_color/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences))
+	if (!..(preferences, applying_preference=applying_preference))
 		return FALSE
 
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)

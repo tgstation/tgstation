@@ -28,7 +28,7 @@
 	return
 
 /datum/preference/toggle/random_hardcore/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences))
+	if (!..(preferences, applying_preference=applying_preference))
 		return FALSE
 
 	return preferences.parent && (preferences.parent.get_exp_living(pure_numeric = TRUE) >= PLAYTIME_HARDCORE_RANDOM)

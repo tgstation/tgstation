@@ -29,7 +29,7 @@
 	target.skin_tone = value
 
 /datum/preference/choiced/skin_tone/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences))
+	if (!..(preferences, applying_preference=applying_preference))
 		return FALSE
 
 	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)

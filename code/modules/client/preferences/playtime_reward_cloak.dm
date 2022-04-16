@@ -7,7 +7,7 @@
 	savefile_key = "playtime_reward_cloak"
 
 /datum/preference/toggle/playtime_reward_cloak/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences))
+	if (!..(preferences, applying_preference=applying_preference))
 		return FALSE
 
 	return preferences.parent?.is_veteran()

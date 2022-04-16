@@ -4,7 +4,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 
 /datum/preference/color/heterochromatic/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences))
+	if (!..(preferences, applying_preference=applying_preference))
 		return FALSE
 
 	return "Heterochromatic" in preferences.all_quirks

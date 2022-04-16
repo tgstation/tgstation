@@ -7,7 +7,7 @@
 	return GLOB.nearsighted_glasses
 
 /datum/preference/choiced/glasses/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences))
+	if (!..(preferences, applying_preference=applying_preference))
 		return FALSE
 
 	return "Nearsighted" in preferences.all_quirks

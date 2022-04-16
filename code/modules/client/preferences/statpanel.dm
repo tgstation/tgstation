@@ -5,7 +5,7 @@
 	default_value = FALSE
 
 /datum/preference/toggle/fast_mc_refresh/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences))
+	if (!..(preferences, applying_preference=applying_preference))
 		return FALSE
 
 	return is_admin(preferences.parent)
