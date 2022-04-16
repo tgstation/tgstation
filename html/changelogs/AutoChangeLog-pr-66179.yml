@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Cyborgs can no longer unbolt the door to the execution chamber on Kilostation."
