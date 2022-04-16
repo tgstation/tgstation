@@ -13,7 +13,7 @@
 "af" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/railing/corner,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/syndicate_mothership/control)
 "ai" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -3653,7 +3653,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/syndicate_mothership/control)
 "ko" = (
 /turf/closed/indestructible/abductor{
@@ -5347,7 +5347,7 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/syndicate_mothership/control)
 "pf" = (
 /obj/structure/table/reinforced,
@@ -6296,7 +6296,7 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "sk" = (
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/syndicate_mothership/control)
 "sm" = (
 /obj/structure/window/paperframe{
@@ -6411,7 +6411,7 @@
 	roundstart_template = /datum/map_template/shuttle/assault_pod/default;
 	width = 7
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/syndicate_mothership/control)
 "sH" = (
 /obj/machinery/computer/security/telescreen,
@@ -7925,7 +7925,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/icemoon,
 /area/syndicate_mothership/control)
 "xo" = (
 /obj/effect/turf_decal/tile/green,
@@ -9584,6 +9584,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/closet/emcloset,
+/obj/item/stack/spacecash/c100,
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "BW" = (
@@ -10428,6 +10429,13 @@
 "EA" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light/cold/directional/west,
+/obj/item/seeds/cannabis{
+	pixel_y = 8
+	},
+/obj/item/cultivator{
+	pixel_x = -6;
+	pixel_y = 11
+	},
 /turf/open/floor/mineral/titanium/tiled,
 /area/syndicate_mothership/expansion_bioterrorism)
 "EB" = (
@@ -10763,6 +10771,7 @@
 /obj/item/taperecorder{
 	pixel_y = 15
 	},
+/obj/item/stack/spacecash/c50,
 /turf/open/floor/carpet,
 /area/syndicate_mothership/control)
 "Fv" = (
@@ -11254,7 +11263,10 @@
 "GU" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/siding/red,
-/obj/item/toy/nuke,
+/obj/item/toy/nuke{
+	pixel_x = -5;
+	pixel_y = 1
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/syndicate_mothership/control)
 "GW" = (
@@ -11452,6 +11464,10 @@
 /obj/effect/turf_decal/siding/red,
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
+/obj/item/stack/spacecash/c10{
+	pixel_x = -19;
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/syndicate_mothership/control)
 "HJ" = (
@@ -11545,36 +11561,40 @@
 /area/syndicate_mothership/control)
 "HY" = (
 /obj/structure/table/glass/plasmaglass,
-/obj/item/assembly/timer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/obj/item/assembly/timer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/assembly/timer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 3;
-	pixel_y = -7
-	},
 /obj/item/pen{
 	pixel_x = 9;
-	pixel_y = 15
+	pixel_y = 18
 	},
 /obj/structure/sign/poster/contraband/syndiemoth{
 	pixel_x = -32
+	},
+/obj/item/storage/box/beakers{
+	pixel_x = -4;
+	pixel_y = 17
+	},
+/obj/item/assembly/igniter{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/assembly/igniter{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/obj/item/assembly/igniter{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/assembly/timer{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/assembly/timer{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/assembly/timer{
+	pixel_x = -6;
+	pixel_y = -5
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_chemicalwarfare)
@@ -11646,6 +11666,9 @@
 	},
 /obj/structure/sink{
 	pixel_y = 20
+	},
+/obj/item/shovel/spade{
+	pixel_x = -4
 	},
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/mineral/plastitanium/red,
@@ -12804,6 +12827,9 @@
 /obj/effect/turf_decal/siding/red/corner{
 	dir = 4
 	},
+/obj/item/stack/spacecash/c1{
+	pixel_y = 12
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/syndicate_mothership/control)
 "Mc" = (
@@ -13154,6 +13180,9 @@
 	pixel_y = 5
 	},
 /obj/machinery/light/cold/directional/west,
+/obj/item/stack/spacecash/c200{
+	pixel_y = 17
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "Na" = (
@@ -13795,9 +13824,10 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/structure/chair/greyscale{
-	dir = 1
-	},
+/obj/structure/rack,
+/obj/item/storage/bag/plants,
+/obj/item/clothing/suit/apron,
+/obj/item/hatchet,
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "OP" = (
@@ -14435,6 +14465,9 @@
 /area/centcom/holding)
 "QB" = (
 /obj/machinery/light/small/directional/south,
+/obj/item/watertank{
+	pixel_x = -10
+	},
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/syndicate_mothership/control)
 "QC" = (
@@ -14569,6 +14602,10 @@
 	},
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
+"QX" = (
+/obj/item/stack/spacecash/c20,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/syndicate_mothership/control)
 "QY" = (
 /obj/item/storage/box/handcuffs,
 /obj/item/ammo_box/a357,
@@ -15307,7 +15344,7 @@
 	},
 /obj/item/assembly/prox_sensor{
 	pixel_x = -6;
-	pixel_y = -4
+	pixel_y = 4
 	},
 /obj/item/assembly/prox_sensor{
 	pixel_x = -2;
@@ -15327,6 +15364,18 @@
 	},
 /obj/item/assembly/timer{
 	pixel_x = 15
+	},
+/obj/item/assembly/prox_sensor{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/assembly/signaler{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/assembly/timer{
+	pixel_x = 18;
+	pixel_y = 5
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -15963,6 +16012,7 @@
 /obj/machinery/camera/autoname/directional/west{
 	network = list("nukie")
 	},
+/obj/item/stack/spacecash/c20,
 /turf/open/floor/iron/dark/textured_half,
 /area/syndicate_mothership/control)
 "UL" = (
@@ -16074,11 +16124,18 @@
 /obj/structure/table/glass/plasmaglass,
 /obj/structure/reagent_dispensers/wall/virusfood/directional/north,
 /obj/item/clothing/gloves/color/latex,
-/obj/item/healthanalyzer,
-/obj/item/clothing/glasses/science,
+/obj/item/healthanalyzer{
+	pixel_y = 3
+	},
 /obj/item/gun/syringe{
 	pixel_x = -11;
 	pixel_y = 11
+	},
+/obj/item/plant_analyzer,
+/obj/item/clothing/glasses/science,
+/obj/item/reagent_containers/spray/plantbgone{
+	pixel_x = -21;
+	pixel_y = 5
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
@@ -16476,6 +16533,9 @@
 	},
 /obj/structure/noticeboard/directional/east,
 /obj/item/folder/red,
+/obj/item/stack/spacecash/c20{
+	pixel_y = 9
+	},
 /obj/item/assembly/flash/handheld,
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
@@ -33556,7 +33616,7 @@ kb
 ao
 QH
 ao
-ao
+QX
 kb
 kb
 aa
@@ -36368,7 +36428,7 @@ VJ
 eX
 ng
 kb
-kb
+pb
 pb
 kb
 pb
@@ -37652,7 +37712,7 @@ nz
 ng
 ng
 kb
-pb
+kb
 kb
 OL
 pJ
