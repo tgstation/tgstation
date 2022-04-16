@@ -1856,7 +1856,7 @@
 			//  the mutation has been discovered. Prevents people being able to cheese
 			//  or "hack" their way to figuring out what undiscovered mutations are
 			if(discovered)
-				mutation_data["Name"] = HM.name
+				mutation_data["Name"] = "[HM.name] ([HM.alias])"
 				mutation_data["Description"] = HM.desc
 				mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
 				mutation_data["Quality"] = HM.quality
