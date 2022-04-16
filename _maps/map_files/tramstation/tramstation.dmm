@@ -1511,7 +1511,9 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/commons/dorms)
 "ame" = (
@@ -20746,10 +20748,10 @@
 /turf/open/floor/grass,
 /area/medical/virology)
 "gaG" = (
-/obj/structure/bed/double{
+/obj/item/bedsheet/dorms_double{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms_double{
+/obj/structure/bed/double{
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -24019,7 +24021,9 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/commons/dorms)
 "hkC" = (
@@ -36414,7 +36418,9 @@
 /obj/structure/bed{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms,
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/carpet,
 /area/commons/dorms)
