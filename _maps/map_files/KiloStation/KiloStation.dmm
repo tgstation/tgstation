@@ -14349,6 +14349,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bSI" = (
@@ -27025,10 +27026,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/service/janitor)
 "exS" = (
@@ -27226,6 +27227,7 @@
 	name = "Janitorial Requests Console"
 	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/service/janitor)
 "eBE" = (
@@ -27826,7 +27828,6 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/structure/disposalpipe/segment,
-/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "eMc" = (
@@ -28211,11 +28212,10 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/service/janitor)
 "eRV" = (
@@ -29563,12 +29563,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/light_switch/directional/south,
-/obj/item/stack/package_wrap,
-/obj/item/storage/secure/briefcase{
-	pixel_y = 4
-	},
-/obj/item/hand_labeler,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/iron/dark,
 /area/commons/vacant_room/commissary)
 "fqI" = (
@@ -30200,6 +30197,7 @@
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/landmark/event_spawn,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/service/janitor)
 "fBW" = (
@@ -34140,7 +34138,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/west,
 /obj/item/grenade/clusterbuster/cleaner,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
@@ -38793,7 +38790,6 @@
 "izw" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/delivery,
-/obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -38803,6 +38799,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/service/janitor)
 "izy" = (
@@ -44695,10 +44692,10 @@
 	req_access_txt = "26"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/service/janitor)
 "kpK" = (
@@ -51201,30 +51198,17 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/pen,
-/obj/item/toy/figure/assistant{
-	pixel_x = 8;
-	pixel_y = 6
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/button/door/directional/east{
-	id = "commissaryshutter";
-	name = "Commissary Shutter Toggle";
-	pixel_y = 6
+/obj/item/clipboard{
+	pixel_x = 8;
+	pixel_y = 2
 	},
-/obj/machinery/button/door/directional/east{
-	id = "commissarydoor";
-	name = "Commissary Door Lock";
-	normaldoorcontrol = 1;
-	pixel_y = -6;
-	specialfunctions = 4
+/obj/item/toy/figure/assistant{
+	pixel_x = 8;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/dark,
 /area/commons/vacant_room/commissary)
@@ -55317,6 +55301,7 @@
 	machinedir = 2;
 	pixel_x = 64
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/service/janitor)
 "nTA" = (
@@ -58823,10 +58808,12 @@
 /obj/item/flashlight,
 /obj/item/flashlight,
 /obj/machinery/light/directional/east,
-/obj/machinery/light_switch/directional/east,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/structure/sign/warning/fire{
+	pixel_x = 32
 	},
 /turf/open/floor/iron/dark,
 /area/commons/storage/primary)
@@ -62497,6 +62484,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/service/janitor)
 "qiu" = (
@@ -64603,7 +64591,11 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/newscaster/directional/south,
-/obj/item/clipboard,
+/obj/item/stack/package_wrap,
+/obj/item/storage/secure/briefcase{
+	pixel_y = 4
+	},
+/obj/item/hand_labeler,
 /turf/open/floor/iron/dark,
 /area/commons/vacant_room/commissary)
 "qUk" = (
@@ -68347,7 +68339,6 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/east,
 /obj/machinery/airalarm/directional/south,
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/item/storage/toolbox/emergency{
 	pixel_y = 4
 	},
@@ -68358,6 +68349,7 @@
 	name = "cargo camera";
 	network = list("ss13","qm")
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/dark,
 /area/commons/vacant_room/commissary)
 "sbb" = (
@@ -70307,6 +70299,20 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/button/door/directional/east{
+	id = "commissaryshutter";
+	name = "Commissary Shutter Toggle";
+	pixel_y = 7;
+	pixel_x = 26
+	},
+/obj/machinery/button/door/directional/east{
+	id = "commissarydoor";
+	name = "Commissary Door Lock";
+	normaldoorcontrol = 1;
+	pixel_y = -2;
+	specialfunctions = 4;
+	pixel_x = 26
 	},
 /turf/open/floor/iron,
 /area/commons/vacant_room/commissary)
@@ -73647,9 +73653,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
-	},
-/obj/structure/sign/warning/fire{
-	pixel_x = 32
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -78655,7 +78658,8 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/status_display/evac/directional/south,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/service/janitor)
 "vyw" = (
@@ -82848,6 +82852,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/service/janitor)
 "wSA" = (
@@ -84044,6 +84049,9 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/item/storage/belt/utility,
 /obj/item/crowbar/red,
+/obj/machinery/light_switch/directional/west{
+	pixel_x = -25
+	},
 /turf/open/floor/iron/dark,
 /area/commons/storage/primary)
 "xof" = (
