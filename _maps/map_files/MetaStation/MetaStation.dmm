@@ -11007,6 +11007,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/structure/sign/departments/security{
+	pixel_y = -32;
+	color = "#DE3A3A"
+	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "cRi" = (
@@ -23574,6 +23578,10 @@
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 2
+	},
+/obj/structure/sign/departments/examroom{
+	pixel_y = -32;
+	color = "#52B4E9"
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -41099,6 +41107,10 @@
 	name = "Science Deliveries"
 	},
 /obj/structure/disposalpipe/trunk,
+/obj/structure/sign/departments/science{
+	pixel_y = -32;
+	color = "#D381C9"
+	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "nGF" = (
@@ -42197,6 +42209,10 @@
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 2
+	},
+/obj/structure/sign/departments/botany{
+	pixel_y = -32;
+	color = "#9FED58"
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -52372,6 +52388,10 @@
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/structure/sign/departments/engineering{
+	pixel_y = -32;
+	color = "#EFB341"
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
