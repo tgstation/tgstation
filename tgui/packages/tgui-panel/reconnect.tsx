@@ -23,11 +23,19 @@ export const ReconnectButton = (props, context) => {
   const { url } = useSelector(context, state => state.reconnect);
 
   return url && (
-    <Button color="white" onClick={() => {
-      location.href = `byond://${url}`;
-      Byond.command('.quit');
-    }}>
-      Reconnect
-    </Button>
+    <>
+      <Button color="white" onClick={() => {
+        Byond.command('.reconnect');
+      }}>
+        Reconnect
+      </Button>
+
+      <Button color="white" onClick={() => {
+        location.href = `byond://${url}`;
+        Byond.command('.quit');
+      }}>
+        Relaunch game
+      </Button>
+    </>
   );
 };
