@@ -39868,6 +39868,7 @@
 	name = "Justice Door Lock";
 	normaldoorcontrol = 1;
 	req_access_txt = "3";
+	silicon_access_disabled = 1;
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark,
@@ -44881,6 +44882,7 @@
 	name = "Justice Door Lock";
 	normaldoorcontrol = 1;
 	req_access_txt = "3";
+	silicon_access_disabled = 1;
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark,
