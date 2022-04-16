@@ -174,6 +174,7 @@
 
 /obj/machinery/jukebox/proc/activate_music()
 	active = TRUE
+	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 	START_PROCESSING(SSobj, src)
 	stop = world.time + selection.song_length
@@ -464,9 +465,9 @@
 				if(!L || !L.client)
 					continue
 				L.stop_sound_channel(CHANNEL_JUKEBOX)
-		use_power(active_power_usage)
 	else if(active)
 		active = FALSE
+		update_use_power(IDLE_POWER_USE)
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
 		playsound(src,'sound/machines/terminal_off.ogg',50,TRUE)
