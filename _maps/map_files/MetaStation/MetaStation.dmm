@@ -2509,7 +2509,6 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "aBS" = (
-/obj/machinery/firealarm/directional/east,
 /obj/machinery/light/directional/east,
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -2530,6 +2529,13 @@
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching Prison Wing holding areas.";
+	dir = 8;
+	name = "Prison Monitor";
+	network = list("prison");
+	pixel_x = 30
 	},
 /turf/open/floor/iron,
 /area/security/warden)
@@ -2863,13 +2869,6 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	dir = 4;
-	name = "Prison Monitor";
-	network = list("prison");
-	pixel_x = -30
-	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
@@ -19867,14 +19866,6 @@
 	},
 /turf/open/floor/grass,
 /area/science/research)
-"fWg" = (
-/obj/structure/chair,
-/obj/machinery/computer/security/telescreen/interrogation{
-	dir = 1;
-	pixel_y = -30
-	},
-/turf/open/floor/iron/grimy,
-/area/security/interrogation)
 "fWk" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -30404,14 +30395,11 @@
 	pixel_y = 7
 	},
 /obj/structure/table/wood,
-/obj/item/radio/intercom/directional/south{
-	frequency = 1423;
-	name = "Interrogation Intercom"
-	},
 /obj/item/taperecorder{
 	pixel_x = 8;
 	pixel_y = -1
 	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/grimy,
 /area/security/interrogation)
 "jXw" = (
@@ -31852,9 +31840,6 @@
 	dir = 8
 	},
 /obj/machinery/syndicatebomb/training,
-/obj/machinery/newscaster/directional/south{
-	pixel_x = -28
-	},
 /turf/open/floor/iron,
 /area/security/office)
 "kzp" = (
@@ -40080,6 +40065,15 @@
 /obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/plating,
 /area/maintenance/starboard/greater)
+"nmK" = (
+/obj/structure/chair,
+/obj/machinery/computer/security/telescreen/interrogation{
+	dir = 4;
+	pixel_x = -30;
+	pixel_y = sssssssssss
+	},
+/turf/open/floor/iron/grimy,
+/area/security/interrogation)
 "nmY" = (
 /obj/structure/noticeboard/directional/north{
 	desc = "A memorial wall for pinning mementos upon.";
@@ -44096,6 +44090,9 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /mob/living/simple_animal/pet/dog/pug/mcgriff,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 26
+	},
 /turf/open/floor/iron,
 /area/security/warden)
 "oOc" = (
@@ -59622,6 +59619,19 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/dark,
 /area/engineering/storage_shared)
+"uQX" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching Prison Wing holding areas.";
+	dir = 4;
+	name = "Prison Monitor";
+	network = list("prison");
+	pixel_x = -30
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/fore)
 "uQY" = (
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
@@ -95900,7 +95910,7 @@ oTM
 llf
 pvK
 aBc
-aDw
+uQX
 aHA
 tdk
 dgy
@@ -101031,7 +101041,7 @@ vGk
 oSb
 vGk
 tsl
-pLc
+nmK
 rdE
 djw
 hgy
@@ -101288,7 +101298,7 @@ xyl
 sQj
 agq
 jvt
-fWg
+pLc
 rdE
 djw
 kAP
