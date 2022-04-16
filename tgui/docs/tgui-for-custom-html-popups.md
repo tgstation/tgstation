@@ -250,12 +250,6 @@ Byond.winset(Byond.windowId, {
 
 Id of the main SS13 window is `'mainwindow'`, as defined in [skin.dmf](../../interface/skin.dmf).
 
-```js
-Byond.winset(Byond.windowId, {
-  size: '1280x640',
-});
-```
-
 Little known feature, but you can also get non-UI parameters on the client by using a `null` id.
 
 ```js
