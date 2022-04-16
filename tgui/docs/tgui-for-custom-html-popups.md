@@ -234,7 +234,7 @@ Here's the summary of what it has.
 - `Byond.topic()` - Makes a Topic call to the server. Similar to `sendMessage`, but all topic calls are native to BYOND, string typed and processed in `/client/Topic()` proc.
 - `Byond.command()` - Runs a command on the client, as if you typed it into the command bar yourself. Can be any verb, or a special client-side command, such as `.output`.
 
-> As of now, `Byond.winget()` requires a Promise polyfill, which is only available in compiled TGUI, but not in plain popups, and if you'll try using it, you'll get a bluescreen error. If you'd like to have winget in non-compiled contexts, then ping maintainers on Discord to request this feature.
+> As of now, `Byond.winget()` requires a Promise polyfill, which is only available in compiled TGUI, but not in plain popups, and if you try using it, you'll get a bluescreen error. If you'd like to have winget in non-compiled contexts, then ping maintainers on Discord to request this feature.
 
 When working with `winset` and `winget`, it can be very useful to consult [BYOND 5.0 controls and parameters guide](https://secure.byond.com/docs/ref/skinparams.html) to figure out what you can control in the BYOND client. Via these controls and parameters, you can do many interesting things, such as dynamically define BYOND macros, or show/hide and reposition various skin elements.
 
