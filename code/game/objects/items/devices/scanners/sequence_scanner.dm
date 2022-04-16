@@ -53,27 +53,40 @@
 /obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/mob, mob/living/user)
 	if(!iscarbon(mob) || !mob.has_dna())
 		return
-	buffer = mob.dna.mutation_index
+
+	//add mob mutations to list as well as extra mutations.
+	//dupe list as scanner could modify mob data
+	buffer = LAZYLISTDUPLICATE(mob.dna.mutation_index)
+	var/list/active_mutations = list()
+	for(var/datum/mutation/human/M in mob.dna.mutations)
+		LAZYOR(buffer, M.type)
+		active_mutations.Add(M.type)
+
 	to_chat(user, span_notice("Subject [mob.name]'s DNA sequence has been saved to buffer."))
 	if(LAZYLEN(buffer))
-		for(var/index in buffer)
-			to_chat(user, span_notice("[get_display_name(index)]"))
+		for(var/M in buffer)
+			//highlight activated mutations
+			//if(mob.dna.is_gene_active(M)) //doesnt work on extra mutations, might have to modify the proc itself
+			if(LAZYFIND(active_mutations, M))
+				to_chat(user, span_boldnotice("[get_display_name(M)]"))
+			else
+				to_chat(user, span_notice("[get_display_name(M)]"))	
 
 /obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
 	if(!LAZYLEN(buffer) || !ready)
 		return
 	var/list/options = list()
-	for(var/index in buffer)
-		options += get_display_name(index)
+	for(var/M in buffer)
+		options += get_display_name(M)
 
 	var/answer = tgui_input_list(user, "Analyze Potential", "Sequence Analyzer", sort_list(options))
 	if(isnull(answer))
 		return
 	if(ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		var/sequence
-		for(var/index in buffer) //this physically hurts but i dont know what anything else short of an assoc list
-			if(get_display_name(index) == answer)
-				sequence = buffer[index]
+		for(var/M in buffer) //this physically hurts but i dont know what anything else short of an assoc list
+			if(get_display_name(M) == answer)
+				sequence = buffer[M]
 				break
 
 		if(sequence)
