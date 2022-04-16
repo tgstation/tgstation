@@ -39,7 +39,7 @@
  * If item arg is set, its base_pixel_x and base_pixel_y will be added to the pixel offsets of the return value.
  */
 /proc/ui_hand_position(index, obj/item/item)
-	var/x_off = -(!(index % 2))
+	var/x_off = index % 2 ? 0 : -1
 	var/y_off = round((index-1) / 2)
 	var/x_px_off = 16
 	var/y_px_off = 5
