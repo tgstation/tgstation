@@ -632,7 +632,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/large,
-/obj/structure/canister_frame/machine/frame_tier_1,
+/obj/structure/canister_frame/machine/finished_canister_frame,
 /turf/open/floor/iron/dark,
 /area/awaymission/bmpship/aft)
 "xF" = (
