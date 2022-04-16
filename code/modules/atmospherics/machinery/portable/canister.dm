@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#ffff00#000000"
 	density = TRUE
-	volume = 1000
+	volume = 2000
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 80, ACID = 50)
 	max_integrity = 300
 	integrity_failure = 0.4
@@ -61,11 +61,11 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	///Maximum pressure allowed for release_pressure var
 	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
 	///Minimum pressure allower for release_pressure var
-	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
+	var/can_min_release_pressure = (ONE_ATMOSPHERE * 0.1)
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
 	var/heat_limit = 50000
 	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
-	var/pressure_limit = 460000
+	var/pressure_limit = 500000
 	///Maximum amount of heat that the canister can handle before taking damage
 	var/temperature_resistance = 1000 + T0C
 	///Initial temperature gas mixture
@@ -87,8 +87,15 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	var/shielding_powered = FALSE
 
+	var/obj/item/stock_parts/cell/internal_cell
+
+	var/cell_container_opened = FALSE
+
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
+
+	if(mapload)
+		internal_cell = new /obj/item/stock_parts/cell/high(src)
 
 	if(existing_mixture)
 		air_contents.copy_from(existing_mixture)
@@ -118,6 +125,12 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	. += span_notice("A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(heat_limit, "K", 0)]</b>.")
+	if(internal_cell)
+		. += span_notice("The internal cell has [internal_cell.percent()]% of its total charge.")
+	else
+		. += span_notice("Warning, no cell installed, use a screwdriver to open the hatch and insert one.")
+	if(cell_container_opened)
+		. += span_notice("Cell hatch open, close it with a screwdriver.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
@@ -355,6 +368,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(shielding_powered)
 		. += mutable_appearance(canister_overlay_file, "shielding")
 
+	if(cell_container_opened)
+		. += mutable_appearance(canister_overlay_file, "cell_hatch")
+
 	var/isBroken = machine_stat & BROKEN
 	///Function is used to actually set the overlays
 	if(isBroken)
@@ -419,7 +435,46 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		qdel(src)
 		return
 	new /obj/item/stack/sheet/iron (drop_location(), 10)
+	if(internal_cell)
+		internal_cell.forceMove(drop_location())
 	qdel(src)
+
+/obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/active_cell = item
+		if(!cell_container_opened)
+			balloon_alert(user, "open the hatch first")
+			return
+		if(internal_cell)
+			if(!user.transferItemToLoc(active_cell, src))
+				return
+			user.put_in_hands(internal_cell)
+			internal_cell = active_cell
+			balloon_alert(user, "you successfully replace the cell")
+			return
+		if(!user.transferItemToLoc(active_cell, src))
+			return
+		internal_cell = active_cell
+		balloon_alert(user, "you successfully install the cell")
+		return
+	return ..()
+
+/obj/machinery/portable_atmospherics/canister/screwdriver_act(mob/living/user, obj/item/screwdriver)
+	if(screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
+		return
+	screwdriver.play_tool_sound(src, 50)
+	cell_container_opened = !cell_container_opened
+	to_chat(user, span_notice("You [cell_container_opened ? "open" : "close"] the cell container hatch of [src]."))
+	update_appearance()
+	return TRUE
+
+/obj/machinery/portable_atmospherics/canister/crowbar_act(mob/living/user, obj/item/tool)
+	if(!cell_container_opened || !internal_cell)
+		return
+	internal_cell.forceMove(drop_location())
+	internal_cell = null
+	balloon_alert(user, "you successfully remove the cell")
+	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
 	. = ..()
@@ -523,8 +578,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(shielding_powered)
 		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - heat_limit, 1)))
 		var/power_consumed = power_factor * 500
-		if(powered(AREA_USAGE_EQUIP))
+		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
 			use_power(power_consumed, AREA_USAGE_EQUIP)
+			protected_contents = TRUE
+		else if(internal_cell?.use(power_consumed * 0.05))
 			protected_contents = TRUE
 		else
 			shielding_powered = FALSE
@@ -583,7 +640,11 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				"tankPressure" = round(holding_mix.return_pressure())
 			)
 		)
-	. += list("shielding" = shielding_powered)
+	. += list(
+		"shielding" = shielding_powered,
+		"has_cell" = (internal_cell ? TRUE : FALSE),
+		"cell_charge" = internal_cell?.percent()
+	)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
 	. = ..()
