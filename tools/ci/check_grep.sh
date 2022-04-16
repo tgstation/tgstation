@@ -102,7 +102,7 @@ if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
     echo "changed files contains proc argument starting with 'var'"
     st=1
 fi;
-if grep -P 'balloon_alert\(".+"\)' code/**/*.dm; then
+if grep 'balloon_alert\(".+"\)' code/**/*.dm; then
 	echo "ERROR: Balloon alert with improper arguments."
 	st=1
 fi;
