@@ -106,7 +106,7 @@
 	// the projectile's been channel fired. It has full effects and homes in.
 	if(distance > min_distance && isliving(target) && iscarbon(user))
 		loaded_projectile.damage *= 1.33
-		loaded_projectile.stamina = *= 2
+		loaded_projectile.stamina *= 2
 		loaded_projectile.knockdown = 0.5 SECONDS
 		loaded_projectile.stutter = 6 SECONDS
 		loaded_projectile.projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
