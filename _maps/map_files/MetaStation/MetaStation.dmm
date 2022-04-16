@@ -40070,7 +40070,7 @@
 /obj/machinery/computer/security/telescreen/interrogation{
 	dir = 4;
 	pixel_x = -30;
-	pixel_y = sssssssssss
+	
 	},
 /turf/open/floor/iron/grimy,
 /area/security/interrogation)
