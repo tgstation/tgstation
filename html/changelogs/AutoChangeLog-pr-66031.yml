@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - expansion: "People who survive the heretic realm now have a unique \"slurring\" mode, instead of borrowing regular cult slurring"
-  - refactor: "Stuttering, Derpspeech, Slurring and Cult Slurring and handled by a status effect now instead of variables on mobs"
-  - admin: "You can now directly give anyone any of the above mentioned speech impediments directly via an option in the VV dropdown"

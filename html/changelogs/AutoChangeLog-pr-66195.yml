@@ -1,4 +1,0 @@
-author: "apynnonen"
-delete-after: True
-changes: 
-  - bugfix: "Bluespace golems can no longer spam teleport"
