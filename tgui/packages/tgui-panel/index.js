@@ -21,7 +21,6 @@ import { gameMiddleware, gameReducer } from './game';
 import { setupPanelFocusHacks } from './panelFocus';
 import { pingMiddleware, pingReducer } from './ping';
 import { settingsMiddleware, settingsReducer } from './settings';
-import { reconnectReducer } from './reconnect';
 import { telemetryMiddleware } from './telemetry';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
@@ -33,7 +32,6 @@ const store = configureStore({
     chat: chatReducer,
     game: gameReducer,
     ping: pingReducer,
-    reconnect: reconnectReducer,
     settings: settingsReducer,
   }),
   middleware: {

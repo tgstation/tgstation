@@ -1,27 +1,16 @@
-import { useSelector } from 'common/redux';
 import { Button } from 'tgui/components';
 
-const initialState: {
-  url?: string,
-} = {
-  url: undefined,
-};
+let url: string | null = null;
 
-export const reconnectReducer = (state = initialState, action) => {
-  const { type, payload } = action;
-
-  if (type === 'reconnect/sendServerUrl') {
-    return {
-      url: payload.url,
-    };
-  }
-
-  return state;
-};
+setInterval(() => {
+  Byond.winget('', 'url').then(currentUrl => {
+    if (currentUrl) {
+      url = currentUrl;
+    }
+  });
+}, 5000);
 
 export const ReconnectButton = (props, context) => {
-  const { url } = useSelector(context, state => state.reconnect);
-
   return url && (
     <>
       <Button color="white" onClick={() => {
