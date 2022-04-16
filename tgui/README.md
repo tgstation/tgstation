@@ -26,7 +26,7 @@ If you were already familiar with an older, Ractive-based tgui, and want to tran
 ### Other Documentation
 
 - [Component Reference](docs/component-reference.md) - UI building blocks
-- [Using TGUI for custom HTML popups](docs/tgui-for-custom-html-popups.md)
+- [Using TGUI and Byond API for custom HTML popups](docs/tgui-for-custom-html-popups.md)
 - [Chat Embedded Components](docs/chat-embedded-components.md)
 - [Writing Tests](docs/writing-tests.md)
 

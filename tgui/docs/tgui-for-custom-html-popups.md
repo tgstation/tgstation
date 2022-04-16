@@ -1,4 +1,4 @@
-# Using TGUI for custom HTML popups
+# Using TGUI and Byond API for custom HTML popups
 
 TGUI in its current form would not exist without a very robust underlying layer that interfaces TGUI code with the BYOND browser component. This very layer can also be used to write simple and robust HTML popups, with access to many convenient APIs. In this article, you'll learn how to make a TGUI powered HTML popup and leverage all APIs that it provides.
 
