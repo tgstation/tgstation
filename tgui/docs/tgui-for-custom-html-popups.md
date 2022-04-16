@@ -234,6 +234,36 @@ Here's the summary of what it has.
 - `Byond.topic()` - Makes a Topic call to the server. Similar to `sendMessage`, but all topic calls are native to BYOND, string typed and processed in `/client/Topic()` proc.
 - `Byond.command()` - Runs a command on the client, as if you typed it into the command bar yourself. Can be any verb, or a special client-side command, such as `.output`.
 
+> As of now, `Byond.winget()` requires a Promise polyfill, which is only available in compiled TGUI, but not in plain popups, and if you'll try using it, you'll get a bluescreen error. If you'd like to have winget in non-compiled contexts, then ping maintainers on Discord to request this feature.
+
 When working with `winset` and `winget`, it can be very useful to consult [BYOND 5.0 controls and parameters guide](https://secure.byond.com/docs/ref/skinparams.html) to figure out what you can control in the BYOND client. Via these controls and parameters, you can do many interesting things, such as dynamically define BYOND macros, or show/hide and reposition various skin elements.
 
 Another source of information is the official [BYOND Reference](https://secure.byond.com/docs/ref/info.html#/{skin}), which is a much larger, but a more comprehensive doc.
+
+Id of the current tgui window can be accessed via `Byond.windowId`, and below in an example of changing its `size`.
+
+```js
+Byond.winset(Byond.windowId, {
+  size: '1280x640',
+});
+```
+
+Id of the main SS13 window is `'mainwindow'`, as defined in [skin.dmf](../../interface/skin.dmf).
+
+```js
+Byond.winset(Byond.windowId, {
+  size: '1280x640',
+});
+```
+
+Little known feature, but you can also get non-UI parameters on the client by using a `null` id.
+
+```js
+// Fetch URL of a server client is currently connected to
+Byond.winget(null, 'url').then((serverUrl) => {
+  // Connect to this server
+  Byond.call(serverUrl);
+  // Close our client because it is now connecting in background
+  Byond.command('.quit');
+});
+```

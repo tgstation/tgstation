@@ -39,8 +39,8 @@
   // Expose inlined metadata
   Byond.windowId = parseMetaTag('tgui:windowId');
 
-  // For backwards compatibility
-  // window.__windowId__ = Byond.windowId;
+  // Backwards compatibility
+  window.__windowId__ = Byond.windowId;
 
   // Trident engine version
   Byond.TRIDENT = (function () {
