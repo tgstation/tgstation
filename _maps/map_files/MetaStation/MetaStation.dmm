@@ -5119,6 +5119,7 @@
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
+/obj/item/storage/secure/briefcase,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "bno" = (
@@ -15836,8 +15837,8 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /obj/structure/sign/departments/science{
-	pixel_y = -32;
-	color = "#D381C9"
+	color = "#D381C9";
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -24593,8 +24594,8 @@
 	dir = 2
 	},
 /obj/structure/sign/departments/examroom{
-	pixel_y = -32;
-	color = "#52B4E9"
+	color = "#52B4E9";
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -24842,14 +24843,12 @@
 /turf/open/floor/iron,
 /area/science/mixing)
 "hSc" = (
-/obj/structure/bed/dogbed/runtime,
-/obj/item/toy/cattoy,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/mob/living/simple_animal/pet/cat/runtime,
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "hSw" = (
@@ -28616,8 +28615,8 @@
 	dir = 2
 	},
 /obj/structure/sign/departments/botany{
-	pixel_y = -32;
-	color = "#9FED58"
+	color = "#9FED58";
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -41872,6 +41871,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/photocopier,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "nYJ" = (
@@ -48069,8 +48069,8 @@
 	dir = 1
 	},
 /obj/structure/sign/departments/engineering{
-	pixel_y = -32;
-	color = "#EFB341"
+	color = "#EFB341";
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -49234,6 +49234,9 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/bed/dogbed/runtime,
+/mob/living/simple_animal/pet/cat/runtime,
+/obj/item/toy/cattoy,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "qJt" = (
@@ -49622,8 +49625,8 @@
 	},
 /area/cargo/qm)
 "qST" = (
-/obj/machinery/photocopier,
 /obj/machinery/firealarm/directional/east,
+/obj/machinery/pdapainter/security,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "qTb" = (
@@ -49965,7 +49968,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/obj/item/kirbyplants/random,
+/obj/item/kirbyplants/dead,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "raB" = (
@@ -53228,8 +53231,8 @@
 	dir = 1
 	},
 /obj/structure/sign/departments/security{
-	pixel_y = -32;
-	color = "#DE3A3A"
+	color = "#DE3A3A";
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -66334,14 +66337,12 @@
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
 "xrs" = (
-/obj/structure/rack,
-/obj/item/storage/secure/briefcase,
-/obj/item/clothing/mask/cigarette/cigar,
 /obj/machinery/computer/security/telescreen/ce{
 	dir = 1;
 	pixel_y = -30
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "xrQ" = (
@@ -67665,7 +67666,6 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "xQH" = (
-/obj/item/kirbyplants/dead,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -67677,6 +67677,7 @@
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 4
 	},
+/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "xQJ" = (
