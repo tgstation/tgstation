@@ -1412,16 +1412,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-/datum/techweb_node/adv_beam_weapons
-	id = "adv_beam_weapons"
-	display_name = "Advanced Beam Weaponry"
-	description = "Various advanced beam weapons"
-	prereq_ids = list("beam_weapons")
-	design_ids = list(
-		"beamrifle",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
 /datum/techweb_node/explosive_weapons
 	id = "explosive_weapons"
 	display_name = "Explosive & Pyrotechnical Weaponry"
@@ -1788,11 +1778,11 @@
 	id = "mech_laser_heavy"
 	display_name = "Exosuit Weapon (CH-LC \"Solaris\" Laser Cannon)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("adv_beam_weapons")
+	prereq_ids = list("beam_weapons")
 	design_ids = list(
 		"mech_laser_heavy",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 /datum/techweb_node/mech_disabler
 	id = "mech_disabler"
