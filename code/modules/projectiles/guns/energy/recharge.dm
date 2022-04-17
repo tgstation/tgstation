@@ -48,15 +48,15 @@
 		cell.use(cell.charge)
 	update_appearance()
 
-/obj/item/gun/energy/recharge/proc/attempt_reload(recharge_time)
+/obj/item/gun/energy/recharge/proc/attempt_reload(set_recharge_time)
 	if(!cell)
 		return
-	if(charged)
+	if(!charged)
 		return
-	if(!recharge_time)
-		recharge_time = fire_delay
+	if(!set_recharge_time)
+		set_recharge_time = recharge_time
 	charged = TRUE
-	var/carried = 1
+	var/carried = 0
 	if(!unique_frequency)
 		for(var/obj/item/gun/energy/recharge/recharging_gun in loc.get_all_contents())
 			if(recharging_gun.type != type || recharging_gun.unique_frequency)
@@ -64,7 +64,7 @@
 			carried++
 		carried = max(carried, 1)
 	deltimer(recharge_timerid)
-	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried, TIMER_STOPPABLE)
+	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), set_recharge_time * carried, TIMER_STOPPABLE)
 
 /obj/item/gun/energy/recharge/emp_act(severity)
 	return
@@ -76,7 +76,7 @@
 	else
 		to_chat(loc, span_warning("[src] silently charges up."))
 	update_appearance()
-	charged = FALSE
+	charged = TRUE
 
 /obj/item/gun/energy/recharge/update_overlays()
 	. = ..()
