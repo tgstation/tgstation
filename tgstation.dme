@@ -1,3 +1,35 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@timothymtorres 
+tgstation
+/
+tgstation
+Public
+Code
+Issues
+1.5k
+Pull requests
+113
+Actions
+Projects
+5
+Security
+Insights
+tgstation/tgstation.dme
+This commit does not belong to any branch on this repository, and may belong to a fork outside of the repository.
+@timothymtorres
+timothymtorres Revert requisition form stamp commits
+Latest commit e0f24fb 17 hours ago
+ History
+ 432 contributors
+@Cheridan@Mothblocks@Cyberboss@AnturK@coiax@RemieRichards@ChangelingRain@tralezab@phil235@optimumtact@silicons@ninjanomnom
+4390 lines (4387 sloc)  237 KB
+   
 // DM Environment file for tgstation.dme.
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
 // New source code should be placed in .dm files: choose File/New --> Code File.
@@ -34,7 +66,6 @@
 #include "code\__DEFINES\alarm.dm"
 #include "code\__DEFINES\alerts.dm"
 #include "code\__DEFINES\antagonists.dm"
-#include "code\__DEFINES\apc_defines.dm"
 #include "code\__DEFINES\aquarium.dm"
 #include "code\__DEFINES\art.dm"
 #include "code\__DEFINES\atom_hud.dm"
@@ -3016,8 +3047,10 @@
 #include "code\modules\language\uncommon.dm"
 #include "code\modules\language\voltaic.dm"
 #include "code\modules\language\xenocommon.dm"
+#include "code\modules\library\barcode_scanner.dm"
+#include "code\modules\library\book.dm"
+#include "code\modules\library\bookcase.dm"
 #include "code\modules\library\lib_codex_gigas.dm"
-#include "code\modules\library\lib_items.dm"
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\random_books.dm"
 #include "code\modules\library\skill_learning\skill_station.dm"
@@ -3616,6 +3649,7 @@
 #include "code\modules\plumbing\plumbers\splitters.dm"
 #include "code\modules\plumbing\plumbers\synthesizer.dm"
 #include "code\modules\plumbing\plumbers\teleporter.dm"
+#include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"
 #include "code\modules\power\cell.dm"
 #include "code\modules\power\energy_accumulator.dm"
@@ -3633,13 +3667,6 @@
 #include "code\modules\power\solar.dm"
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\tracker.dm"
-#include "code\modules\power\apc\apc_appearance.dm"
-#include "code\modules\power\apc\apc_attack.dm"
-#include "code\modules\power\apc\apc_main.dm"
-#include "code\modules\power\apc\apc_malf.dm"
-#include "code\modules\power\apc\apc_mapping.dm"
-#include "code\modules\power\apc\apc_power_proc.dm"
-#include "code\modules\power\apc\apc_tool_act.dm"
 #include "code\modules\power\lighting\_light_defines.dm"
 #include "code\modules\power\lighting\light.dm"
 #include "code\modules\power\lighting\light_construct.dm"
@@ -4393,3 +4420,15 @@
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
 // END_INCLUDE
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
