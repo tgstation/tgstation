@@ -8,7 +8,7 @@
 	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/necropolis/megafauna
-	var/required_keys = 7
+	var/required_keys = 3
 	desc = "It's watching you suspiciously. There are 7 keyholes."
 	var/list/loot = list()
 	integrity_failure = 0
