@@ -42,6 +42,8 @@
 
 	/// Whether or not this app is loaded on a silicon's tablet.
 	var/is_silicon = FALSE
+	/// Whether or not we're in a mime PDA.
+	var/mime_mode = FALSE
 
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
 	var/list/dictionary = list()
@@ -201,12 +203,18 @@
 // Gets the input for a message being sent.
 
 /datum/computer_file/program/messenger/proc/msg_input(mob/living/U = usr, rigged = FALSE)
-	var/t = tgui_input_text(U, "Enter a message", "NT Messaging")
+	var/t = null
+
+	if(mime_mode)
+		t = emoji_sanitize(tgui_input_text(U, "Enter emojis", "NT Messaging"))
+	else
+		t = tgui_input_text(U, "Enter a message", "NT Messaging")
+
 	if (!t || !sending_and_receiving)
 		return
-	if(computer.loc != U)
+	if(!U.canUseTopic(computer, BE_CLOSE))
 		return
-	return t
+	return sanitize(t)
 
 /datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/obj/item/modular_computer/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	var/message = msg_input(user, rigged)
@@ -245,7 +253,7 @@
 	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
 		"name" = fake_name || computer.saved_identification,
 		"job" = fake_job || computer.saved_job,
-		"message" = message,
+		"message" = html_decode(message),
 		"ref" = REF(computer),
 		"targets" = targets,
 		"emojis" = allow_emojis,
@@ -275,13 +283,13 @@
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]
-	message_data["contents"] = html_decode(signal.format_message())
+	message_data["contents"] = html_decode(signal.data["message"])
 	message_data["outgoing"] = TRUE
 	message_data["ref"] = signal.data["ref"]
 	message_data["photo"] = signal.data["photo"]
 
 	// Show it to ghosts
-	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[message_data["contents"]]")
+	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.data["message"]]")
 	for(var/mob/M in GLOB.player_list)
 		if(isobserver(M) && (M.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
@@ -290,7 +298,7 @@
 	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [initial(message_data["name"])] to [signal.format_target()]")
 	if(rigged)
 		log_bomber(user, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
-	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [message_data["contents"]]"))
+	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [signal.data["message"]]"))
 
 	if (ringer_status)
 		computer.send_sound()
@@ -308,7 +316,7 @@
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]
-	message_data["contents"] = html_decode(signal.format_message())
+	message_data["contents"] = html_decode(signal.data["message"])
 	message_data["outgoing"] = FALSE
 	message_data["ref"] = signal.data["ref"]
 	message_data["automated"] = signal.data["automated"]

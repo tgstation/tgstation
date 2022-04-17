@@ -196,6 +196,7 @@
 
 	if(hdd)
 		for(var/datum/computer_file/program/messenger/msg in hdd.stored_files)
+			msg.mime_mode = TRUE
 			msg.allow_emojis = TRUE
 
 /obj/item/modular_computer/tablet/pda/curator
