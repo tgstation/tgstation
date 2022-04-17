@@ -146,7 +146,7 @@
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
-/_maps/ @EOBGames @ShizCalev @Maurukas
+/_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
 /tools/build/ @MrStonedOne @stylemistake
 /tools/LinuxOneShot/ @Cyberboss @MrStonedOne
 /tools/tgs4_scripts/ @Cyberboss @MrStonedOne
