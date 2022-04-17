@@ -321,8 +321,8 @@ icon_assets
 		list("Bar Burgundy", "#791500"),
 		list("Sec Red", "#DE3A3A"),
 		list("Cargo Brown", "#A46106"),
-		list("Engy Yellow", "#EFB341"),
-		list("Botany Green", "#9FED58"),
+		list("Engi Yellow", "#EFB341"),
+		list("Service Green", "#9FED58"),
 		list("Med Blue", "#52B4E9"),
 		list("R&D Purple", "#D381C9"),
 	)
