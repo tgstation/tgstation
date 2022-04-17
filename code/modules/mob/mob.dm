@@ -1101,7 +1101,7 @@
  * this does NOT check if the mob is missing it's eyeballs. Also see_in_dark is a BYOND mob var (that defaults to 2)
 **/
 /mob/proc/has_nightvision()
-	return see_in_dark >= NIGHTVISION_FOV_RANGE
+	return see_in_dark >= 8 // the 8 should probably not be hardcoded
 
 /* Checks if there is enough light where the mob is located
  *
