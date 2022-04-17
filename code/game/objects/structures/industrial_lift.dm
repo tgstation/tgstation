@@ -679,3 +679,18 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	name = "East Wing"
 	destination_id = "right_part"
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
+
+/obj/structure/grille/tram
+
+/obj/structure/grille/tram/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/window/reinforced/shuttle/tram
+
+/obj/structure/window/reinforced/shuttle/tram/Initialize(mapload, direct)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/structure/shuttle/engine/propulsion/in_wall/tram
+	opacity = FALSE

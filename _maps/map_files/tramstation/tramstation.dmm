@@ -6614,10 +6614,9 @@
 /obj/structure/tramwall/titanium{
 	opacity = 0
 	},
-/obj/structure/shuttle/engine/propulsion/in_wall{
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
 	dir = 4;
-	pixel_x = 32;
-	opacity = 0
+	pixel_x = 32
 	},
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
@@ -9325,9 +9324,9 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
 /obj/structure/fluff/tram_rail,
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "bWr" = (
@@ -9706,11 +9705,11 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "cdC" = (
@@ -23752,8 +23751,6 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -23761,6 +23758,8 @@
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 8
 	},
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/floor/vault,
 /area/hallway/primary/tram/center)
 "hef" = (
@@ -38350,10 +38349,9 @@
 /obj/structure/tramwall/titanium{
 	opacity = 0
 	},
-/obj/structure/shuttle/engine/propulsion/in_wall{
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
 	dir = 8;
-	pixel_x = -32;
-	opacity = 0
+	pixel_x = -32
 	},
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
@@ -50155,8 +50153,6 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -50164,6 +50160,8 @@
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 4
 	},
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/floor/vault,
 /area/hallway/primary/tram/center)
 "qLg" = (
@@ -56864,8 +56862,8 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "tlH" = (
