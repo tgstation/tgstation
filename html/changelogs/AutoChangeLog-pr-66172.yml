@@ -1,5 +1,0 @@
-author: "Onule"
-delete-after: True
-changes: 
-  - imageadd: "Resprited all slimes and slime cores"
-  - imagedel: "Removed unused slime and slime core icons"
