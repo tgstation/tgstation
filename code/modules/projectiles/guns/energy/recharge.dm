@@ -1,10 +1,7 @@
 //Recharge subtype - used by stuff like protokinetic accelerators and ebows, one shot at a time, recharges.
 /obj/item/gun/energy/recharge
-	icon_state = "kineticgun"
-	base_icon_state = "kineticgun"
 	desc = "A self recharging gun. Holds one shot at a time."
 	automatic_charge_overlays = FALSE
-	cell_type = /obj/item/stock_parts/cell/emproof
 	/// If set to something, instead of an overlay, sets the icon_state directly.
 	var/no_charge_state
 	/// Does it hold charge when not put away?
@@ -14,7 +11,7 @@
 	/// Sound we use when recharged
 	var/recharge_sound = 'sound/weapons/kenetic_reload.ogg'
 	/// Are we charged to do the next shot?
-	var/charged = TRUE
+	var/charged = FALSE
 	/// An ID for our recharging timer.
 	var/recharge_timerid
 	/// Do we recharge slower with more of our type?
@@ -41,10 +38,6 @@
 		// calls dropped().
 		addtimer(CALLBACK(src, .proc/empty_if_not_held), 0.1 SECONDS)
 
-/obj/item/gun/energy/recharge/handle_chamber()
-	. = ..()
-	attempt_reload()
-
 /obj/item/gun/energy/recharge/proc/empty_if_not_held()
 	if(!ismob(loc))
 		empty()
@@ -58,10 +51,11 @@
 /obj/item/gun/energy/recharge/proc/attempt_reload(set_recharge_time)
 	if(!cell)
 		return
-	if(cell.charge == cell.maxcharge)
+	if(charged)
 		return
 	if(!set_recharge_time)
 		set_recharge_time = recharge_time
+	charged = FALSE
 	var/carried = 0
 	if(!unique_frequency)
 		for(var/obj/item/gun/energy/recharge/recharging_gun in loc.get_all_contents())
@@ -82,6 +76,7 @@
 	else
 		to_chat(loc, span_warning("[src] silently charges up."))
 	update_appearance()
+	charged = TRUE
 
 /obj/item/gun/energy/recharge/update_overlays()
 	. = ..()
