@@ -137,6 +137,7 @@
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 90
+	/// Overlay we apply when impaling a mob.
 	var/mutable_appearance/stab_overlay
 
 /obj/structure/punji_sticks/Initialize(mapload)
@@ -162,13 +163,13 @@
 /obj/structure/punji_sticks/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
 	if(force)
 		return ..()
-	to_chat(buckled_mob, span_warning("You begin climbing out of [src].</span>"))
+	to_chat(buckled_mob, span_warning("You begin climbing out of [src]."))
 	buckled_mob.apply_damage(5, BRUTE, sharpness = SHARP_POINTY)
-	if(do_after(buckled_mob, 5 SECONDS, target = src))
-		cut_overlay(stab_overlay)
-		return ..()
-	else
+	if(!do_after(buckled_mob, 5 SECONDS, target = src))
 		to_chat(buckled_mob, span_userdanger("You fail to detach yourself from [src]."))
+		return
+	cut_overlay(stab_overlay)
+	return ..()
 
 /obj/structure/punji_sticks/spikes
 	name = "wooden spikes"
