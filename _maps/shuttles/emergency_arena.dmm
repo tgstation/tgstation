@@ -11,7 +11,7 @@
 	},
 /area/shuttle/escape/arena)
 "i" = (
-/obj/structure/closet/crate/necropolis/dragon,
+/obj/structure/closet/crate/necropolis/megafauna/dragon,
 /turf/open/indestructible{
 	icon_state = "cult"
 	},
