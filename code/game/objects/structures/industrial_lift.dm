@@ -46,14 +46,12 @@
 	add_lift_platforms(base_lift_platform)
 	var/list/possible_expansions = list(base_lift_platform)
 	while(possible_expansions.len)
-		for(var/b in possible_expansions)
-			var/obj/structure/industrial_lift/borderline = b
+		for(var/obj/structure/industrial_lift/borderline as anything in possible_expansions)
 			var/list/result = borderline.lift_platform_expansion(src)
 			if(length(result))
-				for(var/p in result)
-					if(lift_platforms.Find(p))
+				for(var/obj/structure/industrial_lift/lift_platform as anything in result)
+					if(lift_platforms.Find(lift_platform))
 						continue
-					var/obj/structure/industrial_lift/lift_platform = p
 					add_lift_platforms(lift_platform)
 					possible_expansions |= lift_platform
 			possible_expansions -= borderline
@@ -68,8 +66,7 @@
  */
 /datum/lift_master/proc/MoveLift(going, mob/user)
 	set_controls(LOCKED)
-	for(var/p in lift_platforms)
-		var/obj/structure/industrial_lift/lift_platform = p
+	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 		lift_platform.travel(going)
 	set_controls(UNLOCKED)
 
@@ -86,8 +83,7 @@
 
 
 	set_controls(LOCKED)
-	for(var/p in lift_platforms)
-		var/obj/structure/industrial_lift/lift_platform = p
+	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 		max_x = max(max_x, lift_platform.x)
 		max_y = max(max_y, lift_platform.y)
 		min_x = min(min_x, lift_platform.x)
@@ -101,12 +97,16 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, gliding_amount)
-			else
+					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == min_x || y == max_y))
+			else if (going & SOUTH)
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, gliding_amount)
+					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == min_x || y == min_y))
+			else
+				for(var/y in min_y to max_y)
+					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
+					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == min_x))
 	else
 		//Go along the X axis from max to min, from right to left
 		for(var/x in max_x to min_x step -1)
@@ -114,18 +114,24 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, gliding_amount)
+					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == max_x || y == max_y))
+
+			else if (going & SOUTH)
+				for(var/y in min_y to max_y)
+					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
+					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == max_x || y == min_y))
+
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, gliding_amount)
+					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == max_x))
+
 	set_controls(UNLOCKED)
 
 ///Check destination turfs
 /datum/lift_master/proc/Check_lift_move(check_dir)
-	for(var/l in lift_platforms)
-		var/obj/structure/industrial_lift/lift_platform = l
+	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 		var/turf/T = get_step_multiz(lift_platform, check_dir)
 		if(!T)//the edges of multi-z maps
 			return FALSE
@@ -139,11 +145,11 @@
  * Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.
  */
 /datum/lift_master/proc/set_controls(state)
-	for(var/l in lift_platforms)
-		var/obj/structure/industrial_lift/lift_platform = l
+	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 		lift_platform.controls_locked = state
 
 GLOBAL_LIST_EMPTY(lifts)
+
 /obj/structure/industrial_lift
 	name = "lift platform"
 	desc = "A lightweight lift platform. It moves up and down."
@@ -175,29 +181,21 @@ GLOBAL_LIST_EMPTY(lifts)
 	. = ..()
 	GLOB.lifts.Add(src)
 
-	//AddElement(/datum/element/connect_loc, loc_connections)
 	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
 	set_movement_registrations()
 
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
 
+///set the movement registrations to our current turf so contents moving out of our tile are removed from our movement lists
 /obj/structure/industrial_lift/proc/set_movement_registrations()
-	var/turf/our_turf = loc
-	if(!isturf(our_turf))
-		return FALSE
+	RegisterSignal(loc, COMSIG_ATOM_EXITED, .proc/UncrossedRemoveItemFromLift)
+	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/AddItemOnLift)
 
-	RegisterSignal(our_turf, COMSIG_ATOM_EXITED, .proc/UncrossedRemoveItemFromLift)
-	RegisterSignal(our_turf, COMSIG_ATOM_ENTERED, .proc/AddItemOnLift)
-	return TRUE
-
+///unset our movement registrations from our tile so we dont register to the contents being moved from us
 /obj/structure/industrial_lift/proc/undo_movement_registrations()
-	var/turf/our_turf = loc
-	if(!isturf(our_turf))
-		return FALSE
-
-	UnregisterSignal(our_turf, COMSIG_ATOM_EXITED)
-	UnregisterSignal(our_turf, COMSIG_ATOM_ENTERED)
+	var/static/list/registrations = list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED)
+	UnregisterSignal(loc, registrations)
 
 /obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
@@ -214,7 +212,8 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(istype(AM, /obj/structure/fluff/tram_rail) || AM.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
+	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable))
+	if(is_type_in_typecache(AM, blacklisted_types) || AM.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
 		return
 	if(AM in lift_load)
 		return
@@ -274,7 +273,8 @@ GLOBAL_LIST_EMPTY(lifts)
 			to_chat(crushed, span_userdanger("You are crushed by [src]!"))
 			crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
 
-	else if(going != UP) //can't really crush something upwards
+	// no reason to check contents if we arent a leading platform in the direction of movement
+	else if(going != UP && is_border_platform)
 		var/atom/throw_target = get_edge_target_turf(src, turn(going, pick(45, -45))) //finds a spot to throw the victim at for daring to be hit by a tram
 		for(var/obj/structure/victim_structure in destination.contents)
 			if(QDELETED(victim_structure))
@@ -327,6 +327,12 @@ GLOBAL_LIST_EMPTY(lifts)
 	group_move(things_to_move, destination, gliding_amount)
 	set_movement_registrations()
 
+///move the movers list of movables on our tile to destination if we successfully move there first.
+///this is like calling forceMove() on everything in movers and ourselves, except nothing in movers
+///has destination.Entered() and origin.Exited() called on them, as only our movement can be perceived.
+///none of the movers are able to react to the movement of any other mover, saving a lot of needless processing cost
+///and is more sensible. without this, if you and a banana are on the same platform, when that platform moves you will slip
+///on the banana even if youre not moving relative to it.
 /obj/structure/industrial_lift/proc/group_move(list/atom/movable/movers, turf/destination, glide_override)
 	var/turf/our_turf = loc
 
@@ -603,6 +609,9 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	else
 		travel_distance--
 		lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(SStramprocess.wait))
+
+/obj/structure/industrial_lift/tram/set_currently_z_moving()
+	return FALSE //trams can never z fall and shouldnt waste any processing time trying to do so
 
 /**
  * Handles moving the tram
