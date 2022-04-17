@@ -13,8 +13,6 @@
 	var/recharge_time = 1.6 SECONDS
 	/// Sound we use when recharged
 	var/recharge_sound = 'sound/weapons/kenetic_reload.ogg'
-	/// Are we charged to do the next shot?
-	var/charged = TRUE
 	/// An ID for our recharging timer.
 	var/recharge_timerid
 	/// Do we recharge slower with more of our type?
