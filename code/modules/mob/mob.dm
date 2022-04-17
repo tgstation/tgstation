@@ -1087,11 +1087,6 @@
 	if(client.mouse_override_icon)
 		client.mouse_pointer_icon = client.mouse_override_icon
 
-
-///This mob is abile to read books
-/mob/proc/is_literate()
-	return FALSE
-
 /** Can this mob see in the dark
   *
   * This checks all traits, glasses, and robotic eyeball implants to see if the mob can see in the dark
@@ -1099,6 +1094,10 @@
 **/
 /mob/proc/has_nightvision()
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
+
+///This mob is abile to read books
+/mob/proc/is_literate()
+	return FALSE
 
 /// Can this mob read
 /mob/proc/can_read(obj/O)
