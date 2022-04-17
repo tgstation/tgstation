@@ -2360,6 +2360,7 @@
 #include "code\modules\atmospherics\machinery\pipes\heat_exchange\simple.dm"
 #include "code\modules\atmospherics\ZAS\Turf.dm"
 #include "code\modules\atmospherics\ZAS\XGM\gases.dm"
+#include "code\modules\atmospherics\ZAS\XGM\xgm_immutable_gas_mixture.dm"
 #include "code\modules\atmospherics\ZAS\Zone.dm"
 #include "code\modules\atmospherics\ZAS\_docs.dm"
 #include "code\modules\atmospherics\ZAS\Airflow.dm"
