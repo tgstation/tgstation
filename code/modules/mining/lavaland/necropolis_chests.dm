@@ -7,6 +7,41 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	can_install_electronics = FALSE
 
+/obj/structure/closet/crate/necropolis/megafauna
+	var/required_keys = 7
+	desc = "It's watching you suspiciously. There are 7 keyholes."
+	var/list/loot = list()
+	integrity_failure = 0
+
+/obj/structure/closet/crate/necropolis/megafauna/proc/spawn_loot()
+	return
+
+/obj/structure/closet/crate/necropolis/megafauna/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
+
+/obj/structure/closet/crate/necropolis/megafauna/proc/try_spawn_loot(datum/source, obj/item/item, mob/user)
+	SIGNAL_HANDLER
+
+	if(!istype(item, /obj/item/skeleton_key) || !required_keys)
+		return FALSE
+
+	required_keys -= 1
+	qdel(item)
+	if(!required_keys && loot)
+		to_chat(user, span_notice("You disable the magic lock, revealing the loot."))
+		desc = "It's watching you suspiciously."
+		spawn_loot()
+		return TRUE
+	else
+		to_chat(user, span_notice("You insert the key into the [src]. There are [required_keys] empty keyholes left."))
+		desc = "It's watching you suspiciously. There are [required_keys] keyholes."
+
+/obj/structure/closet/crate/necropolis/megafauna/can_open(mob/living/user, force = FALSE)
+	if(required_keys)
+		return FALSE
+	return ..()
+
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously. You need a skeleton key to open it."
 	integrity_failure = 0 //prevents bust_open from firing
@@ -86,10 +121,10 @@
 
 //Megafauna chests
 
-/obj/structure/closet/crate/necropolis/dragon
+/obj/structure/closet/crate/necropolis/megafauna/dragon
 	name = "dragon chest"
 
-/obj/structure/closet/crate/necropolis/dragon/PopulateContents()
+/obj/structure/closet/crate/necropolis/megafauna/dragon/spawn_loot()
 	var/loot = rand(1,4)
 	switch(loot)
 		if(1)
@@ -101,17 +136,17 @@
 		if(4)
 			new /obj/item/dragons_blood(src)
 
-/obj/structure/closet/crate/necropolis/dragon/crusher
+/obj/structure/closet/crate/necropolis/megafauna/dragon/crusher
 	name = "firey dragon chest"
 
-/obj/structure/closet/crate/necropolis/dragon/crusher/PopulateContents()
+/obj/structure/closet/crate/necropolis/megafauna/dragon/crusher/spawn_loot()
 	..()
 	new /obj/item/crusher_trophy/tail_spike(src)
 
-/obj/structure/closet/crate/necropolis/bubblegum
+/obj/structure/closet/crate/necropolis/megafauna/bubblegum
 	name = "bubblegum chest"
 
-/obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
+/obj/structure/closet/crate/necropolis/megafauna/bubblegum/spawn_loot()
 	new /obj/item/clothing/suit/hooded/hostile_environment(src)
 	var/loot = rand(1,2)
 	switch(loot)
@@ -120,33 +155,46 @@
 		if(2)
 			new /obj/item/soulscythe(src)
 
-/obj/structure/closet/crate/necropolis/bubblegum/crusher
+/obj/structure/closet/crate/necropolis/megafauna/bubblegum/crusher
 	name = "bloody bubblegum chest"
 
-/obj/structure/closet/crate/necropolis/bubblegum/crusher/PopulateContents()
+/obj/structure/closet/crate/necropolis/megafauna/bubblegum/crusher/spawn_loot()
 	..()
 	new /obj/item/crusher_trophy/demon_claws(src)
 
-/obj/structure/closet/crate/necropolis/colossus
+/obj/structure/closet/crate/necropolis/megafauna/colossus
 	name = "colossus chest"
 
-/obj/structure/closet/crate/necropolis/colossus/bullet_act(obj/projectile/P)
+/obj/structure/closet/crate/necropolis/megafauna/colossus/bullet_act(obj/projectile/P)
 	if(istype(P, /obj/projectile/colossus))
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
-/obj/structure/closet/crate/necropolis/colossus/PopulateContents()
+/obj/structure/closet/crate/necropolis/megafauna/colossus/spawn_loot()
 	var/list/choices = subtypesof(/obj/machinery/anomalous_crystal)
 	var/random_crystal = pick(choices)
 	new random_crystal(src)
 	new /obj/item/organ/vocal_cords/colossus(src)
 
-/obj/structure/closet/crate/necropolis/colossus/crusher
+/obj/structure/closet/crate/necropolis/megafauna/colossus/crusher
 	name = "angelic colossus chest"
 
-/obj/structure/closet/crate/necropolis/colossus/crusher/PopulateContents()
+/obj/structure/closet/crate/necropolis/megafauna/colossus/crusher/spawn_loot()
 	..()
 	new /obj/item/crusher_trophy/blaster_tubes(src)
+
+/obj/structure/closet/crate/necropolis/megafauna/hierophant
+	name = "hierophant chest"
+
+/obj/structure/closet/crate/necropolis/megafauna/hierophant/spawn_loot()
+	new /obj/item/hierophant_club(src)
+
+/obj/structure/closet/crate/necropolis/megafauna/hierophant/crusher
+	name = "zealous hierophant chest"
+
+/obj/structure/closet/crate/necropolis/megafauna/hierophant/crusher/spawn_loot()
+	new /obj/item/hierophant_club(src)
+	new /obj/item/crusher_trophy/vortex_talisman(src)
 
 //Other chests and minor stuff
 

@@ -60,8 +60,8 @@
 	base_pixel_x = -16
 	maptext_height = 64
 	maptext_width = 64
-	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
-	loot = list(/obj/structure/closet/crate/necropolis/dragon)
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/megafauna/dragon/crusher)
+	loot = list(/obj/structure/closet/crate/necropolis/megafauna/dragon)
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	var/swooping = NONE

@@ -58,8 +58,8 @@ Difficulty: Hard
 	maptext_height = 96
 	maptext_width = 96
 	del_on_death = TRUE
-	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
-	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/megafauna/bubblegum/crusher)
+	loot = list(/obj/structure/closet/crate/necropolis/megafauna/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	gps_name = "Bloody Signal"
 	achievement_type = /datum/award/achievement/boss/bubblegum_kill
