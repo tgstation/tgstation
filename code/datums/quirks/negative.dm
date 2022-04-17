@@ -794,6 +794,9 @@
 	if(IS_IN_STASIS(quirk_holder))
 		return
 
+	if(quirk_holder.stat == DEAD)
+		return
+
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
 	for(var/allergy in allergies)
 		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(allergy)
