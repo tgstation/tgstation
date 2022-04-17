@@ -15,8 +15,8 @@
 
 	return values
 
-/datum/preference/choiced/ai_core_display/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences, applying_preference=applying_preference))
+/datum/preference/choiced/ai_core_display/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
 		return FALSE
 
 	return istype(preferences.get_highest_priority_job(), /datum/job/ai)

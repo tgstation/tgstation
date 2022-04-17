@@ -18,8 +18,8 @@
 	else
 		target.physique = value
 
-/datum/preference/choiced/body_type/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences, applying_preference=applying_preference))
+/datum/preference/choiced/body_type/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
 		return FALSE
 
 	var/datum/species/species = preferences.read_preference(/datum/preference/choiced/species)

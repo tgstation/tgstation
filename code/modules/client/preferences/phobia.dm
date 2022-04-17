@@ -6,8 +6,8 @@
 /datum/preference/choiced/phobia/init_possible_values()
 	return GLOB.phobia_types
 
-/datum/preference/choiced/phobia/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences, applying_preference=applying_preference))
+/datum/preference/choiced/phobia/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
 		return FALSE
 
 	return "Phobia" in preferences.all_quirks

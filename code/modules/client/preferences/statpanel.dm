@@ -4,8 +4,8 @@
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = FALSE
 
-/datum/preference/toggle/fast_mc_refresh/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences, applying_preference=applying_preference))
+/datum/preference/toggle/fast_mc_refresh/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
 		return FALSE
 
 	return is_admin(preferences.parent)

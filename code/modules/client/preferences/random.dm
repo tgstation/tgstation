@@ -27,8 +27,8 @@
 /datum/preference/toggle/random_hardcore/apply_to_human(mob/living/carbon/human/target, value)
 	return
 
-/datum/preference/toggle/random_hardcore/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences, applying_preference=applying_preference))
+/datum/preference/toggle/random_hardcore/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
 		return FALSE
 
 	return preferences.parent && (preferences.parent.get_exp_living(pure_numeric = TRUE) >= PLAYTIME_HARDCORE_RANDOM)

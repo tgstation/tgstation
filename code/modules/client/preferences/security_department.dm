@@ -20,8 +20,8 @@
 /datum/preference/choiced/security_department/create_default_value()
 	return SEC_DEPT_NONE
 
-/datum/preference/choiced/security_department/is_accessible(datum/preferences/preferences, applying_preference=FALSE)
-	if (!..(preferences, applying_preference=applying_preference))
+/datum/preference/choiced/security_department/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
 		return FALSE
 
 	return !CONFIG_GET(flag/sec_start_brig)
