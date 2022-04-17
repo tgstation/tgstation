@@ -21,18 +21,20 @@
 		if(slot_flags & ITEM_SLOT_HEAD)
 			to_chat(user, span_warning("You must undo [src] before you can tie it into a neckerchief!"))
 			return
-		if(slot_flags & ITEM_SLOT_NECK)
-			name = initial(name)
-			desc = initial(desc)
-			slot_flags = initial(slot_flags)
-			worn_y_offset = initial(worn_y_offset)
-			user.visible_message(span_notice("[user] unties the neckercheif back into a [name]."), span_notice("You untie the neckercheif back into a [name]."))
-		else
+		if(slot_flags & ITEM_SLOT_MASK)
 			name = "[name] neckerchief"
 			desc = "[desc] It's tied up like a neckerchief."
+			undyeable = TRUE
 			slot_flags = ITEM_SLOT_NECK
 			worn_y_offset = -3
 			user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
+		else
+			name =
+			desc =
+			undyeable = initial(undyeable)
+			slot_flags = initial(slot_flags)
+			worn_y_offset = initial(worn_y_offset)
+			user.visible_message(span_notice("[user] unties the neckercheif back into a [name]."), span_notice("You untie the neckercheif back into a [name]."))
 	else
 		to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
 
@@ -56,12 +58,14 @@
 	adjustmask(user)
 	if(greyscale_config == initial(greyscale_config) && greyscale_config_worn == initial(greyscale_config_worn))
 		worn_icon_state += "_up"
+		undyeable = TRUE
 		set_greyscale(
 			new_config = greyscale_config_up,
 			new_worn_config = greyscale_config_worn_up
 		)
 	else
 		worn_icon_state = initial(worn_icon_state)
+		undyeable = initial(undyeable)
 		set_greyscale(
 			new_config = initial(greyscale_config),
 			new_worn_config = initial(greyscale_config_worn)
