@@ -45,10 +45,6 @@
 	name = "temperature gun parts kit"
 	desc = "A suitcase containing the necessary gun parts to tranform a standard energy gun into a temperature gun. Fantastic at birthday parties and killing indigenious populations of lizardpeople."
 
-/obj/item/weaponcrafting/gunkit/beam_rifle
-	name = "particle acceleration rifle part kit"
-	desc = "The coup de grace of guncrafting. This suitcase contains the highly experimental rig for a particle acceleration rifle. Requires an energy gun, a stabilized flux anomaly and a stabilized gravity anomaly."
-
 /obj/item/weaponcrafting/gunkit/decloner
 	name = "decloner part kit"
 	desc = "An uttery baffling array of gun parts and technology that somehow turns a laser gun into a decloner. Haircut not included."

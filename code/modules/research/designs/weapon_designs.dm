@@ -140,17 +140,6 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 	autolathe_exportable = FALSE
 
-/datum/design/beamrifle
-	name = "Beam Marksman Rifle Part Kit"
-	desc = "The gunkit for a powerful long ranged anti-material rifle that fires charged particle beams to obliterate targets."
-	id = "beamrifle"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000, /datum/material/diamond = 5000, /datum/material/uranium = 8000, /datum/material/silver = 4500, /datum/material/gold = 5000)
-	build_path = /obj/item/weaponcrafting/gunkit/beam_rifle
-	category = list("Weapons")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	autolathe_exportable = FALSE
-
 /datum/design/decloner
 	name = "Decloner Part Kit"
 	desc = "Your opponent will bubble into a messy pile of goop."

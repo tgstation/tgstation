@@ -59,14 +59,6 @@
 	name = "solar beam"
 	icon_state = "solar"
 
-//BEAM RIFLE
-/obj/effect/projectile/tracer/tracer/beam_rifle
-	icon_state = "tracer_beam"
-
-/obj/effect/projectile/tracer/tracer/aiming
-	icon_state = "pixelbeam_greyscale"
-	plane = ABOVE_LIGHTING_PLANE
-
 /obj/effect/projectile/tracer/wormhole
 	icon_state = "wormhole_g"
 
