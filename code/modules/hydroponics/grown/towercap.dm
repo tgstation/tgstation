@@ -136,10 +136,39 @@
 	max_integrity = 30
 	density = FALSE
 	anchored = TRUE
+	buckle_lying = 90
+	var/mutable_appearance/stab_overlay
 
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
+	stab_overlay = mutable_appearance(icon, "[icon_state]_stab", layer = ABOVE_MOB_LAYER, plane = GAME_PLANE_FOV_HIDDEN)
+
+/obj/structure/punji_sticks/intercept_zImpact(list/falling_movables, levels)
+	. = ..()
+	for(var/mob/living/fallen_mob in falling_movables)
+		if(LAZYLEN(buckled_mobs))
+			return
+		if(buckle_mob(fallen_mob, TRUE))
+			to_chat(fallen_mob, span_userdanger("You are impaled by [src]!"))
+			fallen_mob.apply_damage(25 * levels, BRUTE, sharpness = SHARP_POINTY)
+			if(iscarbon(fallen_mob))
+				var/mob/living/carbon/fallen_carbon = fallen_mob
+				fallen_carbon.emote("scream")
+				fallen_carbon.bleed(30)
+			add_overlay(stab_overlay)
+	. |= FALL_INTERCEPTED | FALL_NO_MESSAGE
+
+/obj/structure/punji_sticks/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
+	if(force)
+		return ..()
+	to_chat(buckled_mob, span_warning("You begin climbing out of [src].</span>"))
+	buckled_mob.apply_damage(5, BRUTE, sharpness = SHARP_POINTY)
+	if(do_after(buckled_mob, 5 SECONDS, target = src))
+		cut_overlay(stab_overlay)
+		return ..()
+	else
+		to_chat(buckled_mob, span_userdanger("You fail to detach yourself from [src]."))
 
 /obj/structure/punji_sticks/spikes
 	name = "wooden spikes"
