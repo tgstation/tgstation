@@ -336,6 +336,8 @@ effective or pretty fucking useless.
 		var/atom/movable/old_toolbox = toolbox
 		toolbox = null
 		old_toolbox.forceMove(drop_location())
+	else
+		new /obj/effect/gibspawner/robot(drop_location())
 	return ..()
 
 /obj/machinery/porta_turret/syndicate/toolbox/Destroy()
