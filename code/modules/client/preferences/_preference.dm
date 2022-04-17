@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		if (!(savefile_key in species.get_features()))
 			return FALSE
 
-	if (!should_show_on_page(preferences.current_window) && !applying_preference)
+	if (!should_show_on_page(preferences.current_window))
 		return FALSE
 
 	return TRUE
