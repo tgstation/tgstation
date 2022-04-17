@@ -720,7 +720,7 @@
 			return
 		message_admins(span_danger("Admin [key_name_admin(usr)] AIized [key_name_admin(our_mob)]!"))
 		log_admin("[key_name(usr)] AIized [key_name(our_mob)].")
-		our_mob.AIize(TRUE, our_mob.client, move)
+		our_mob.AIize(our_mob.client, move)
 
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))
