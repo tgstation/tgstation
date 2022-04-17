@@ -220,9 +220,10 @@
 	if(!is_operational)
 		return
 	my_area.alarm_manager.clear_alarm(ALARM_FIRE, my_area)
-	// This'll clear the visual effects for us
+	// Clears all fire doors and their effects for now
+	// They'll reclose if there's a problem
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-		firelock.reset()
+		firelock.crack_open()
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 	soundloop.stop()
