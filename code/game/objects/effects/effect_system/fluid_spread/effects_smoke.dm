@@ -414,3 +414,14 @@
 	if(mixcolor)
 		smoke.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
 	smoke.spread() // Making the smoke spread immediately.
+
+/**
+ * A version of chemical smoke with a very short lifespan.
+ */
+/obj/effect/particle_effect/smoke/chem/quick
+	lifetime = 4 SECONDS
+	opaque = FALSE
+	alpha = 100
+
+/datum/effect_system/smoke_spread/chem/quick
+	effect_type = /obj/effect/particle_effect/smoke/chem/quick

@@ -81,7 +81,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/turf/real_destination = get_turf(target_atom)
 	destination_turf = real_destination
 	special_target = specific_target
-	loopy_rod = force_looping
+	loopy_rod ||= force_looping
 
 	SSpoints_of_interest.make_point_of_interest(src)
 

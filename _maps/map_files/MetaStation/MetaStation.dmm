@@ -1692,6 +1692,10 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hos)
+"atw" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plating,
+/area/maintenance/department/science/xenobiology)
 "atB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/junction/yjunction{
@@ -11002,6 +11006,10 @@
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/structure/sign/departments/security{
+	pixel_y = -32;
+	color = "#DE3A3A"
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -23571,6 +23579,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
+/obj/structure/sign/departments/examroom{
+	pixel_y = -32;
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "hqv" = (
@@ -26890,6 +26902,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
+"iIb" = (
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/science/xenobiology)
 "iIf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -26939,8 +26955,8 @@
 /obj/machinery/light/directional/south,
 /obj/structure/bed/pod{
 	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "medical bed";
-	dir = 4
+	dir = 4;
+	name = "medical bed"
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
@@ -29360,6 +29376,10 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/medical/break_room)
+"jDi" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plating,
+/area/maintenance/department/science/xenobiology)
 "jDl" = (
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen,
@@ -32200,12 +32220,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen{
-	dir = 1;
-	name = "Test Chamber Monitor";
-	network = list("xeno");
-	pixel_y = -27
-	},
+/obj/structure/rack,
+/obj/item/wrench,
+/obj/item/crowbar/red,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "kGj" = (
@@ -38470,6 +38488,15 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
+"mNH" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/science/xenobiology)
 "mNW" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral,
@@ -41080,6 +41107,10 @@
 	name = "Science Deliveries"
 	},
 /obj/structure/disposalpipe/trunk,
+/obj/structure/sign/departments/science{
+	pixel_y = -32;
+	color = "#D381C9"
+	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "nGF" = (
@@ -42178,6 +42209,10 @@
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 2
+	},
+/obj/structure/sign/departments/botany{
+	pixel_y = -32;
+	color = "#9FED58"
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -46414,12 +46449,6 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/storage)
-"pHe" = (
-/obj/effect/turf_decal/delivery,
-/obj/item/crowbar/red,
-/obj/item/wrench,
-/turf/open/floor/iron,
-/area/science/xenobiology)
 "pHF" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -52360,6 +52389,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/structure/sign/departments/engineering{
+	pixel_y = -32;
+	color = "#EFB341"
+	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "rTW" = (
@@ -52767,6 +52800,11 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/port/fore)
+"sdt" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/open/space/basic,
+/area/space)
 "sdF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -68073,20 +68111,25 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/north{
-	pixel_y = 34
-	},
 /obj/machinery/button/ignition{
 	id = "Xenobio";
-	pixel_x = -6;
-	pixel_y = 24
+	pixel_x = -4;
+	pixel_y = -3
 	},
 /obj/machinery/button/door/directional/north{
 	id = "Xenolab";
 	name = "Test Chamber Blast Doors";
 	pixel_x = 6;
+	pixel_y = -2;
 	req_access_txt = "55"
 	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/computer/security/telescreen{
+	name = "Test Chamber Monitor";
+	network = list("xeno");
+	pixel_y = 9
+	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "yaC" = (
@@ -110316,7 +110359,7 @@ aaa
 aaa
 aaa
 aaa
-lMJ
+aaa
 aaa
 aaa
 aaa
@@ -110574,8 +110617,8 @@ aaa
 aaa
 aaa
 lMJ
-aaa
-aaa
+lMJ
+lMJ
 vqh
 sQv
 mci
@@ -116234,7 +116277,7 @@ dlV
 kJL
 cSn
 uvn
-pHe
+ujh
 dbt
 cSn
 qVz
@@ -116490,7 +116533,7 @@ mfg
 dlV
 cRi
 yaz
-kpA
+mNH
 ujh
 kpA
 kGb
@@ -116740,11 +116783,11 @@ aaa
 aaa
 aaa
 rhT
-rhT
+cTA
 cTA
 cTA
 vKp
-cTA
+atw
 cRi
 oRj
 vuB
@@ -116752,7 +116795,7 @@ jFo
 qQD
 hqx
 cRi
-cTA
+jDi
 fmT
 cTA
 cTA
@@ -116996,7 +117039,7 @@ rrt
 rrt
 rrt
 lMJ
-lMJ
+rhT
 rhT
 fWI
 cTA
@@ -117254,7 +117297,7 @@ aaa
 aaa
 aaa
 lMJ
-aaa
+rhT
 rhT
 rhT
 xJT
@@ -117517,7 +117560,7 @@ osq
 dxp
 kJe
 cRi
-cSn
+sQe
 cSn
 faz
 cSn
@@ -117774,11 +117817,11 @@ eoW
 cTA
 tms
 cRi
-sQe
+hpO
 cSn
-faz
-cSn
+pLh
 mgL
+kHd
 cRi
 qic
 xSK
@@ -118031,11 +118074,11 @@ rhT
 dbv
 dbv
 cRi
-hpO
 cSn
-pLh
 cSn
-kHd
+cSn
+cSn
+cSn
 cRi
 dbv
 dbv
@@ -118288,11 +118331,11 @@ aaa
 aaa
 lMJ
 cRi
-cSn
-cSn
-cSn
-cSn
-cSn
+cRi
+jur
+mfD
+rvv
+cRi
 cRi
 lMJ
 aaa
@@ -118546,11 +118589,11 @@ lMJ
 lMJ
 lMJ
 cRi
-jur
-mfD
-rvv
 cRi
 cRi
+cRi
+cRi
+iIb
 aaa
 aaa
 aaa
@@ -118801,13 +118844,13 @@ aaa
 aaa
 aaa
 aaa
+aaa
 lMJ
-cRi
-cRi
-cRi
-cRi
-cRi
 lMJ
+lMJ
+lMJ
+lMJ
+aaa
 aaa
 aaa
 aaa
@@ -119060,9 +119103,9 @@ lKu
 aaa
 aaa
 lMJ
+lAu
 lMJ
-lMJ
-lMJ
+lAu
 lMJ
 aaa
 aaa
@@ -119315,13 +119358,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
+sdt
 lMJ
 aaa
 lMJ
 aaa
 lMJ
-aaa
+rrt
 aaa
 aaa
 aaa
@@ -119572,13 +119615,13 @@ aaa
 aaa
 aaa
 aaa
-rrt
-lMJ
+aaa
+jLw
 aaa
 lMJ
 aaa
-lMJ
-rrt
+jLw
+aaa
 aaa
 aaa
 aaa
@@ -119830,11 +119873,11 @@ aaa
 aaa
 aaa
 aaa
-jLw
+aaa
 aaa
 lMJ
 aaa
-jLw
+aaa
 aaa
 aaa
 aaa
@@ -120089,7 +120132,7 @@ aaa
 aaa
 aaa
 aaa
-lMJ
+yib
 aaa
 aaa
 aaa
@@ -120346,7 +120389,7 @@ aaa
 aaa
 aaa
 aaa
-yib
+aaa
 aaa
 aaa
 aaa

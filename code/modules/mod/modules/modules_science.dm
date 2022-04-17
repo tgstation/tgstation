@@ -19,7 +19,7 @@
 		return
 	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 
-/obj/item/mod/module/reagent_scanner/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/reagent_scanner/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -38,7 +38,7 @@
 	mod.wearer.research_scanner++
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 
-/obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -77,12 +77,14 @@
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	playsound(src, 'sound/effects/gravhit.ogg', 50)
 
-/obj/item/mod/module/anomaly_locked/antigrav/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/anomaly_locked/antigrav/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
 	mod.wearer.RemoveElement(/datum/element/forced_gravity, 0)
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
+	if(deleting)
+		return
 	if(mod.wearer.has_gravity())
 		new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	playsound(src, 'sound/effects/gravhit.ogg', 50)

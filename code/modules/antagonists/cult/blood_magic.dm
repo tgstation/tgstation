@@ -442,8 +442,8 @@
 			else if(iscarbon(target))
 				var/mob/living/carbon/carbon_target = target
 				carbon_target.silent += 6
-				carbon_target.stuttering += 15
-				carbon_target.cultslurring += 15
+				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/stutter)
+				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
 				carbon_target.Jitter(1.5 SECONDS)
 		uses--
 	..()
@@ -740,7 +740,7 @@
 				if(H.stat == DEAD)
 					to_chat(user,span_warning("[H.p_their(TRUE)] blood has stopped flowing, you'll have to find another way to extract it."))
 					return
-				if(H.cultslurring)
+				if(H.has_status_effect(/datum/status_effect/speech/slurring/cult))
 					to_chat(user,span_danger("[H.p_their(TRUE)] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!"))
 					return
 				if(H.blood_volume > BLOOD_VOLUME_SAFE)

@@ -1,0 +1,4 @@
+author: "robbertapir"
+delete-after: True
+changes: 
+  - bugfix: "The Russian revolver now works again"

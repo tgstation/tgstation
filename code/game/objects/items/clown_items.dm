@@ -148,11 +148,11 @@
 			decreaseUses(user)
 
 	else if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		var/mob/living/carbon/human/human_user = user
+		var/mob/living/carbon/human/human_target = target
 		user.visible_message(span_warning("\the [user] washes \the [target]'s mouth out with [src.name]!"), span_notice("You wash \the [target]'s mouth out with [src.name]!")) //washes mouth out with soap sounds better than 'the soap' here if(user.zone_selected == "mouth")
-		if(human_user.lip_style)
+		if(human_target.lip_style)
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
-			human_user.update_lips(null)
+			human_target.update_lips(null)
 		decreaseUses(user)
 		return
 	else if(istype(target, /obj/structure/window))
