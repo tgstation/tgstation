@@ -39,7 +39,7 @@
 	light_range = 6
 	light_on = FALSE
 	var/mode = MINEDRONE_COLLECT
-	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
+	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
 
 /mob/living/simple_animal/hostile/mining_drone/Initialize(mapload)
 	. = ..()
