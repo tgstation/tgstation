@@ -66,7 +66,7 @@
 			if(recharging_gun.type != type || recharging_gun.unique_frequency)
 				continue
 			carried++
-		carried = max(carried, 1)
+	carried = max(carried, 1)
 	deltimer(recharge_timerid)
 	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), set_recharge_time * carried, TIMER_STOPPABLE)
 
