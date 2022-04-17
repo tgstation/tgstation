@@ -248,6 +248,23 @@
 	if(slot == ITEM_SLOT_BACK)
 		return TRUE
 
+/obj/item/mod/control/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs)
+	. = ..()
+	if(!wearer || old_loc != wearer || loc == wearer)
+		return
+	if(active || activating)
+		for(var/obj/item/mod/module/module as anything in modules)
+			if(!module.active)
+				continue
+			module.on_deactivation(display_message = FALSE)
+		for(var/obj/item/part as anything in mod_parts)
+			seal_part(part, seal = FALSE)
+	for(var/obj/item/part as anything in mod_parts)
+		conceal(null, part)
+	if(active)
+		finish_activation(on = FALSE)
+	unset_wearer()
+
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
 	if(user != wearer)
 		return ..()
@@ -425,11 +442,14 @@
 			continue
 		. += module_icons
 
+/obj/item/mod/control/update_icon_state()
+	icon_state = "[skin]-control[active ? "-sealed" : ""]"
+	return ..()
+
 /obj/item/mod/control/proc/set_wearer(mob/user)
 	wearer = user
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_SET, wearer)
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
-	RegisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_unequip)
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_equip()
@@ -438,17 +458,9 @@
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
-	UnregisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP)
 	wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null
-
-/obj/item/mod/control/proc/on_unequip()
-	SIGNAL_HANDLER
-
-	for(var/obj/item/part as anything in mod_parts)
-		if(part.loc != src)
-			return COMPONENT_ITEM_BLOCK_UNEQUIP
 
 /obj/item/mod/control/proc/update_flags()
 	var/list/used_skin = theme.skins[skin]
