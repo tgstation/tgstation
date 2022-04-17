@@ -424,4 +424,4 @@
 	alpha = 100
 
 /datum/effect_system/fluid_spread/smoke/chem/quick
-	effect_type = /obj/effect/particle_effect/smoke/chem/quick
+	effect_type = /obj/effect/particle_effect/fluid/smoke/chem/quick
