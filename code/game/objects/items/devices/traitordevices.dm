@@ -308,8 +308,16 @@ effective or pretty fucking useless.
 	stun_projectile = /obj/projectile/bullet/toolbox_turret
 	lethal_projectile = /obj/projectile/bullet/toolbox_turret
 	subsystem_type = /datum/controller/subsystem/processing/projectiles
+	ignore_faction = TRUE
 	/// The toolbox we store.
 	var/obj/item/toolbox
+
+/obj/machinery/porta_turret/syndicate/toolbox/target(atom/movable/target)
+	if(!target)
+		return
+	if(shootAt(target))
+		setDir(get_dir(base, target))
+	return TRUE
 
 /obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/wrench/combat))
@@ -340,11 +348,6 @@ effective or pretty fucking useless.
 	if(gone == toolbox)
 		toolbox = null
 		qdel(src)
-
-/obj/machinery/porta_turret/syndicate/toolbox/shootAt(target)
-	var/obj/projectile/shot_bullet = ..()
-	shot_bullet.ignored_factions = faction
-	return shot_bullet
 
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
