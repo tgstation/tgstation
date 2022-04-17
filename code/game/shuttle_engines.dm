@@ -109,6 +109,7 @@
 	name = "in-wall propulsion engine"
 	icon_state = "propulsion_w"
 	density = FALSE
+	opacity = FALSE
 	smoothing_groups = list()
 
 /obj/structure/shuttle/engine/propulsion/left
@@ -154,6 +155,7 @@
 	name = "in-wall engine"
 	icon_state = "large_engine_w"
 	density = FALSE
+	opacity = FALSE
 	smoothing_groups = list()
 
 /obj/structure/shuttle/engine/huge
@@ -170,6 +172,7 @@
 	name = "in-wall engine"
 	icon_state = "huge_engine_w"
 	density = FALSE
+	opacity = FALSE
 	smoothing_groups = list()
 
 #undef ENGINE_UNWRENCHED

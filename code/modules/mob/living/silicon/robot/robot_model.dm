@@ -489,7 +489,7 @@
 /// Start the process of disabling the buffer. Plays some effects, waits a bit, then finishes
 /datum/action/toggle_buffer/proc/deactivate_wash()
 	var/mob/living/silicon/robot/robot_owner = owner
-	var/time_left = timeleft(wash_audio.timerid) // We delay by the timer of our wash cause well, we want to hear the ramp down
+	var/time_left = timeleft(wash_audio.timer_id) // We delay by the timer of our wash cause well, we want to hear the ramp down
 	var/finished_by = time_left + 2.6 SECONDS
 	// Need to ensure that people don't spawn the deactivate button
 	COOLDOWN_START(src, toggle_cooldown, finished_by)
@@ -547,7 +547,7 @@
 	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
 		our_turf.wash(CLEAN_SCRUB)
 
-	reagents.expose(our_turf, TOUCH, 10)
+	reagents.expose(our_turf, TOUCH, min(1, 10 / reagents.total_volume))
 	// We use more water doing this then mopping
 	reagents.remove_any(2) //reaction() doesn't use up the reagents
 
