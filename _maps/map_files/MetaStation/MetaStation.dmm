@@ -24842,12 +24842,14 @@
 /turf/open/floor/iron,
 /area/science/mixing)
 "hSc" = (
+/obj/structure/bed/dogbed/runtime,
+/obj/item/toy/cattoy,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
-/obj/machinery/pdapainter/medbay,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "hSw" = (
@@ -41870,7 +41872,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/photocopier,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "nYJ" = (
@@ -48774,7 +48775,6 @@
 	id = "ceprivacy";
 	name = "Privacy Shutters Control"
 	},
-/obj/item/storage/secure/briefcase,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "qzL" = (
@@ -49234,9 +49234,6 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
-/obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
-/obj/item/toy/cattoy,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "qJt" = (
@@ -49625,8 +49622,8 @@
 	},
 /area/cargo/qm)
 "qST" = (
+/obj/machinery/photocopier,
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/pdapainter/security,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "qTb" = (
@@ -49968,7 +49965,7 @@
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/obj/item/kirbyplants/dead,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "raB" = (
@@ -66337,12 +66334,14 @@
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
 "xrs" = (
+/obj/structure/rack,
+/obj/item/storage/secure/briefcase,
+/obj/item/clothing/mask/cigarette/cigar,
 /obj/machinery/computer/security/telescreen/ce{
 	dir = 1;
 	pixel_y = -30
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "xrQ" = (
@@ -66723,7 +66722,6 @@
 /obj/item/stamp/ce,
 /obj/item/reagent_containers/pill/patch/aiuri,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/item/clothing/mask/cigarette/cigar,
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
 "xxh" = (
@@ -67667,6 +67665,7 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "xQH" = (
+/obj/item/kirbyplants/dead,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -67678,7 +67677,6 @@
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 4
 	},
-/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "xQJ" = (

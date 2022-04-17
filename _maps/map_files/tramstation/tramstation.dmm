@@ -402,10 +402,6 @@
 	},
 /turf/open/floor/iron,
 /area/service/theater)
-"adz" = (
-/obj/machinery/pdapainter/security,
-/turf/open/floor/carpet,
-/area/command/heads_quarters/hos)
 "adC" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -8706,8 +8702,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	id = "right_tram_lower";
-	name = "tunnel access blast door"
+	name = "tunnel access blast door";
+	id = "right_tram_lower"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -16519,8 +16515,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	id = "right_tram_lower";
-	name = "tunnel access blast door"
+	name = "tunnel access blast door";
+	id = "right_tram_lower"
 	},
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating,
@@ -18573,7 +18569,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
-/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
 "fpr" = (
@@ -25947,6 +25942,9 @@
 /turf/open/floor/iron/white,
 /area/science/genetics)
 "hWz" = (
+/obj/structure/chair{
+	dir = 1
+	},
 /obj/machinery/firealarm/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31551,11 +31549,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/hallway/secondary/construction/engineering)
-"jYB" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/command/heads_quarters/hos)
 "jYE" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -32859,8 +32852,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	id = "right_tram_lower";
-	name = "tunnel access blast door"
+	name = "tunnel access blast door";
+	id = "right_tram_lower"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -32968,13 +32961,11 @@
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "kyF" = (
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/chair{
-	dir = 1
-	},
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
 "kyN" = (
@@ -53618,7 +53609,6 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "rZT" = (
@@ -53972,8 +53962,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	id = "right_tram_lower";
-	name = "tunnel access blast door"
+	name = "tunnel access blast door";
+	id = "right_tram_lower"
 	},
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating,
@@ -63269,7 +63259,6 @@
 	pixel_y = -34;
 	req_access_txt = "55"
 	},
-/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/cafeteria,
 /area/command/heads_quarters/rd)
 "vEY" = (
@@ -67070,10 +67059,10 @@
 	network = list("ss13","minisat")
 	},
 /obj/machinery/button/door/directional/south{
-	id = "teledoor";
-	name = "MiniSat Shutter Control";
 	pixel_x = 8;
-	req_access_txt = "17;65"
+	req_access_txt = "17;65";
+	id = "teledoor";
+	name = "MiniSat Shutter Control"
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
@@ -157257,12 +157246,12 @@ aYr
 dDG
 dDG
 dhe
-ogH
-ogH
-ogH
-ogH
-ogH
-ogH
+dhe
+dhe
+dhe
+dhe
+hNf
+hNf
 hOb
 cou
 uXH
@@ -157515,11 +157504,11 @@ dDG
 dDG
 dDG
 ogH
-hYU
-aoz
-mNh
-jYB
 ogH
+ogH
+ogH
+ogH
+hNf
 hNf
 pLA
 aVq
@@ -157772,9 +157761,9 @@ dDG
 dDG
 dDG
 ogH
-vZz
-inb
-avg
+hYU
+aoz
+mNh
 kyF
 dyY
 xPy
@@ -158029,9 +158018,9 @@ aYr
 dDG
 dhe
 ogH
-wBH
-vWh
-pXw
+vZz
+inb
+avg
 hWz
 cso
 aLd
@@ -158286,9 +158275,9 @@ aYr
 aYr
 dhe
 ogH
-adz
+wBH
 vWh
-vWh
+pXw
 tUe
 suv
 xPC

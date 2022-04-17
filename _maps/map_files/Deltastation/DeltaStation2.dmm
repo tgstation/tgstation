@@ -14525,7 +14525,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/machinery/pdapainter/engineering,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "deq" = (
@@ -39297,8 +39296,10 @@
 /turf/open/space,
 /area/solars/port/aft)
 "jgg" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/pdapainter/security,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "jgi" = (
@@ -50407,7 +50408,6 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "mmL" = (
@@ -63006,13 +63006,6 @@
 "qik" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/table/wood,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "qio" = (
@@ -63870,7 +63863,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/hos)
 "qvA" = (
@@ -70088,7 +70080,6 @@
 "skH" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple,
-/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/rd)
 "skJ" = (

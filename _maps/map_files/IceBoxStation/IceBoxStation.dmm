@@ -9669,6 +9669,10 @@
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "dDm" = (
+/obj/item/storage/box/seccarts{
+	pixel_x = 9;
+	pixel_y = 9
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood/large,
 /area/command/heads_quarters/hos)
@@ -9824,10 +9828,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
-"dHf" = (
-/obj/machinery/pdapainter/security,
-/turf/open/floor/wood/large,
-/area/command/heads_quarters/hos)
 "dHD" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -13661,7 +13661,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "fLH" = (
@@ -19332,7 +19331,6 @@
 	name = "Research Director's Requests Console";
 	receive_ore_updates = 1
 	},
-/obj/machinery/pdapainter/research,
 /turf/open/floor/iron/cafeteria,
 /area/command/heads_quarters/rd)
 "ixD" = (
@@ -25719,28 +25717,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
-"lGG" = (
-/obj/effect/turf_decal/tile/neutral/full,
-/obj/machinery/button/door/directional/west{
-	id = "atmos";
-	name = "Atmospherics Lockdown";
-	pixel_y = 10;
-	req_access_txt = "10"
-	},
-/obj/machinery/button/door/directional/west{
-	id = "Secure Storage";
-	name = "Engineering Secure Storage";
-	req_access_txt = "11"
-	},
-/obj/machinery/button/door/directional/west{
-	id = "Engineering";
-	name = "Engineering Lockdown";
-	pixel_y = -10;
-	req_access_txt = "10"
-	},
-/obj/machinery/pdapainter/engineering,
-/turf/open/floor/iron/dark/smooth_large,
-/area/command/heads_quarters/ce)
 "lGJ" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
@@ -28010,6 +27986,23 @@
 "mQg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
+	},
+/obj/machinery/button/door/directional/west{
+	id = "atmos";
+	name = "Atmospherics Lockdown";
+	pixel_y = 10;
+	req_access_txt = "10"
+	},
+/obj/machinery/button/door/directional/west{
+	id = "Secure Storage";
+	name = "Engineering Secure Storage";
+	req_access_txt = "11"
+	},
+/obj/machinery/button/door/directional/west{
+	id = "Engineering";
+	name = "Engineering Lockdown";
+	pixel_y = -10;
+	req_access_txt = "10"
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /turf/open/floor/iron/dark/smooth_large,
@@ -48943,15 +48936,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/dorms)
-"xef" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "hosspace";
-	name = "space shutters"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/icemoon/surface/outdoors/nospawn)
 "xei" = (
 /obj/machinery/modular_computer/console/preset/id{
 	dir = 4
@@ -50561,10 +50545,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/storage/box/deputy,
-/obj/item/storage/box/seccarts{
-	pixel_x = 9;
-	pixel_y = 9
-	},
 /turf/open/floor/wood/large,
 /area/command/heads_quarters/hos)
 "xTb" = (
@@ -80608,7 +80588,7 @@ cOi
 vFK
 vFK
 gLf
-dHf
+gLf
 dDm
 jVn
 prI
@@ -80708,7 +80688,7 @@ jBb
 eqL
 hSM
 fuT
-lGG
+hSM
 gWp
 xei
 sGu
@@ -80864,7 +80844,7 @@ jnk
 cgW
 jnk
 jnk
-xef
+jnk
 gLf
 gLf
 gLf
