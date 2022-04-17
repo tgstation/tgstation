@@ -357,7 +357,7 @@ effective or pretty fucking useless.
 		qdel(src)
 
 /obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user)
-	if(faction_check(user.faction, faction)
+	if(faction_check(user.faction, faction))
 		return ..()
 	return UI_CLOSE
 
