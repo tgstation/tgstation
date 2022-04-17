@@ -36,12 +36,16 @@
 	if(disk_flags & DISK_JANI)
 		progs_to_store += new /datum/computer_file/program/radar/custodial_locator(src)
 
-	if(disk_flags & DISK_CHEM)
-		progs_to_store += new /datum/computer_file/program/phys_scanner/reagent(src)
+	if((disk_flags & DISK_CHEM) || (disk_flags & DISK_MED))
+		var/datum/computer_file/program/phys_scanner/scanner = new(src)
 
-	if(disk_flags & DISK_MED)
-		progs_to_store += new /datum/computer_file/program/phys_scanner/medical(src)
-		progs_to_store += new /datum/computer_file/program/records/medical(src)
+		if(disk_flags & DISK_CHEM)
+			scanner.available_modes += DISK_CHEM
+
+		if(disk_flags & DISK_MED)
+			scanner.available_modes += DISK_MED
+
+		progs_to_store += scanner
 
 	if(disk_flags & DISK_ROBOS)
 		var/datum/computer_file/program/robocontrol/robo = new(src)
