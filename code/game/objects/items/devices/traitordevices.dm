@@ -341,8 +341,7 @@ effective or pretty fucking useless.
 	return ..()
 
 /obj/machinery/porta_turret/syndicate/toolbox/Destroy()
-	if(toolbox)
-		QDEL_NULL(toolbox)
+	toolbox = null
 	return ..()
 
 /obj/machinery/porta_turret/syndicate/toolbox/Exited(atom/movable/gone, direction)
