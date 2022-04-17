@@ -1,4 +1,4 @@
-/turf/simulated
+/turf
 	var/zone/zone
 	var/open_directions
 
@@ -11,10 +11,8 @@
 	var/list/initial_gas_mix
 	var/planetary_atmos //Let's just let this exist for now.
 
-#warn !!TEMPORARY PROCDEF!!
-/turf/open/proc/atmos_spawn_air(...)
-
-/turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
+///turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null) ZASTURF
+/turf/open/proc/update_graphic(list/graphic_add = null, list/graphic_null = null)
 	if(graphic_add && graphic_add.len)
 		vis_contents += graphic_add
 	if(graphic_remove && graphic_remove.len)
@@ -49,19 +47,20 @@
 		if(r_block & AIR_BLOCKED)
 			continue
 
-		if(istype(unsim, /turf/simulated))
-
-			var/turf/simulated/sim = unsim
+		//if(istype(unsim, /turf/simulated)) ZASTURF
+		if(unsim.simulated)
+			//var/turf/simulated/sim = unsim
 			if(TURF_HAS_VALID_ZONE(sim))
 				SSzas.connect(sim, src)
 
 // Helper for can_safely_remove_from_zone().
+//ZASTURF - MACRO IM NOT COMMENTING THIS SHIT OUT
 #define GET_ZONE_NEIGHBOURS(T, ret) \
 	ret = 0; \
 	if (T.zone) { \
 		for (var/_gzn_dir in gzn_check) { \
-			var/turf/simulated/other = get_step(T, _gzn_dir); \
-			if (istype(other) && other.zone == T.zone) { \
+			var/turf/other = get_step(T, _gzn_dir); \
+			if (!istype(other, /turf/open/space) && other.zone == T.zone) { \
 				var/block; \
 				ATMOS_CANPASS_TURF(block, other, T); \
 				if (!(block & AIR_BLOCKED)) { \
@@ -77,7 +76,8 @@
 	This implementation may produce false negatives but it (hopefully) will not produce any false postiives.
 */
 
-/turf/simulated/proc/can_safely_remove_from_zone()
+///turf/simulated/proc/can_safely_remove_from_zone() ZASTURF
+/turf/proc/can_safely_remove_from_zone()
 	if(!zone)
 		return 1
 
@@ -88,8 +88,10 @@
 		//for each pair of "adjacent" cardinals (e.g. NORTH and WEST, but not NORTH and SOUTH)
 		if((dir & check_dirs) == dir)
 			//check that they are connected by the corner turf
-			var/turf/simulated/T = get_step(src, dir)
-			if (!istype(T))
+			//var/turf/simulated/T = get_step(src, dir) ZASTURF
+			var/turf/T = get_step(src, dir)
+			//if (!istype(T)) ZASTURF
+			if (istype(T, /turf/open/space))
 				. &= ~dir
 				continue
 
@@ -101,7 +103,8 @@
 	//it is safe to remove src from the zone if all cardinals are connected by corner turfs
 	. = !.
 
-/turf/simulated/update_air_properties()
+//turf/simulated/update_air_properties() ZAS
+/turf/open/update_air_properties()
 
 	if(zone && zone.invalid) //this turf's zone is in the process of being rebuilt
 		c_copy_air() //not very efficient :(
@@ -160,8 +163,9 @@
 
 			//Check that our zone hasn't been cut off recently.
 			//This happens when windows move or are constructed. We need to rebuild.
-			if((previously_open & d) && istype(unsim, /turf/simulated))
-				var/turf/simulated/sim = unsim
+			//if((previously_open & d) && istype(unsim, /turf/simulated)) ZAS
+			if((previously_open & d) && !istype(unsim, /turf/open/space))
+				var/turf/sim = unsim
 				if(zone && sim.zone == zone)
 					zone.rebuild()
 					return
@@ -170,9 +174,10 @@
 
 		open_directions |= d
 
-		if(istype(unsim, /turf/simulated))
+		//if(istype(unsim, /turf/simulated)) ZASTURF
+		if(!istype(unsim, /turf/open/space))
 
-			var/turf/simulated/sim = unsim
+			var/turf/sim = unsim
 			sim.open_directions |= GLOB.reverse_dir[d]
 
 			if(TURF_HAS_VALID_ZONE(sim))
@@ -263,11 +268,13 @@
 	var/datum/gas_mixture/GM = return_air()
 	return GM.remove(amount)
 
-/turf/simulated/assume_air(datum/gas_mixture/giver)
+///turf/simulated/assume_air(datum/gas_mixture/giver) ZASTURF
+/turf/proc/assume_air(datum/gas_mixture/giver)
 	var/datum/gas_mixture/my_air = return_air()
 	my_air.merge(giver)
 
-/turf/simulated/assume_gas(gasid, moles, temp = null)
+//turf/simulated/assume_gas(gasid, moles, temp = null) ZASTURF
+/turf/proc/assume_gas(gasid, moles, temp = null)
 	var/datum/gas_mixture/my_air = return_air()
 
 	if(isnull(temp))
@@ -277,7 +284,8 @@
 
 	return 1
 
-/turf/simulated/return_air()
+//turf/simulated/return_air() ZASTURF
+/turf/proc/return_air()
 	if(zone)
 		if(!zone.invalid)
 			SSzas.mark_zone_update(zone)
@@ -299,12 +307,18 @@
 		air.gas = initial_gas.Copy()
 	air.update_values()
 
-/turf/simulated/proc/c_copy_air()
+//turf/simulated/proc/c_copy_air() ZASTURF
+/turf/proc/c_copy_air()
 	if(!air) air = new/datum/gas_mixture
 	air.copy_from(zone.air)
 	air.group_multiplier = 1
 
-/turf/simulated/proc/atmos_spawn_air(gas_id, amount, initial_temperature)
+/*/turf/open/space/c_copy_air()
+	return
+*/
+
+//turf/simulated/proc/atmos_spawn_air(gas_id, amount, initial_temperature) ZASTURF
+/turf/proc/atmos_spawn_air(gas_id, amount, initial_temperature)
 	var/datum/gas_mixture/new_gas = new
 	var/datum/gas_mixture/existing_gas = return_air()
 	if(isnull(initial_temperature))
@@ -312,6 +326,9 @@
 	else
 		new_gas.adjust_gas_temp(gas_id, amount, initial_temperature)
 	existing_gas.merge(new_gas)
+
+/turf/open/space/atmos_spawn_air()
+	return
 
 /proc/turf_contains_dense_objects(var/turf/T)
 	return T.contains_dense_objects()

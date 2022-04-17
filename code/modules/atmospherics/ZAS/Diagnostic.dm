@@ -17,9 +17,9 @@
 
 /client/var/list/zone_debug_images
 
-/client/proc/Test_ZAS_Connection(var/turf/simulated/T as turf)
+/client/proc/Test_ZAS_Connection(var/turf/T as turf) //ZASTURF
 	set category = "Debug"
-	if(!istype(T))
+	if(istype(T, /turf/open/space)) //ZASTURF
 		return
 
 	var/direction_list = list(\
@@ -43,8 +43,9 @@
 			to_chat(mob, "No air passage :x")
 		return
 
-	var/turf/simulated/other_turf = get_step(T, direction_list[direction])
-	if(!istype(other_turf))
+	//var/turf/simulated/other_turf = get_step(T, direction_list[direction]) ZASTURF
+	var/turf/other_turf = get_step(T, direction_list[direction])
+	if(istype(other_turf, /turf/open/space))
 		return
 
 	var/t_block = T.c_airblock(other_turf)

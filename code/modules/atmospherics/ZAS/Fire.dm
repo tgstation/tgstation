@@ -57,7 +57,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 				fire_tiles -= T
 				fuel_objs -= fuel
 	else
-		for(var/turf/simulated/T in fire_tiles)
+		//for(var/turf/simulated/T in fire_tiles) ZASTURF
+		for(var/turf/T in fire_tiles)
 			if(istype(T.fire))
 				qdel(T.fire)
 		fire_tiles.Cut()
@@ -92,7 +93,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 /turf/proc/create_fire(fl)
 	return 0
 
-/turf/simulated/create_fire(fl)
+//turf/simulated/create_fire(fl) ZASTURF
+/turf/create_fire(fl)
 	if(fire)
 		fire.firelevel = max(fl, fire.firelevel)
 		return 1
@@ -108,6 +110,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	if(fuel) zone.fuel_objs += fuel
 
 	return 0
+
+/turf/open/space/create_fire()
+	return
 
 /obj/effect/hotspot
 	anchored = TRUE
@@ -127,8 +132,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 /obj/effect/hotspot/Process()
 	. = 1
 
-	var/turf/simulated/my_tile = loc
-	if(!istype(my_tile) || !my_tile.zone)
+	//var/turf/simulated/my_tile = loc ZASTURF
+	var/turf/my_tile = loc
+	if(istype(my_tile, /turf/open/space) || !my_tile.zone)
 		if(my_tile && my_tile.fire == src)
 			my_tile.fire = null
 		qdel(src)
@@ -155,9 +161,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	//spread
 	for(var/direction in GLOB.cardinals)
-		var/turf/simulated/enemy_tile = get_step(my_tile, direction)
-
-		if(istype(enemy_tile))
+		//var/turf/simulated/enemy_tile = get_step(my_tile, direction) ZASTURF
+		var/turf/enemy_tile = get_step(my_tile, direction)
+		if(!istype(enemy_tile, /turf/open/space))
 			if(my_tile.open_directions & direction) //Grab all valid bordering tiles
 				if(!enemy_tile.zone || enemy_tile.fire)
 					continue
@@ -212,10 +218,15 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	SSzas.active_hotspots.Remove(src)
 	. = ..()
 
-/turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
+//turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again. ZASTURF
+/turf/var/fire_protection = 0
 /turf/proc/apply_fire_protection()
-/turf/simulated/apply_fire_protection()
 	fire_protection = world.time
+/*/turf/simulated/apply_fire_protection() ZASTURF
+	fire_protection = world.time*/
+
+/turf/open/space/apply_fire_protection()
+	return
 
 //Returns the firelevel
 /datum/gas_mixture/proc/react(zone/zone, force_burn, no_check = 0)
@@ -438,16 +449,17 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 /turf/proc/adjacent_fire_act(turf/simulated/floor/source, exposed_temperature, exposed_volume)
 	return
 
-/turf/simulated/floor/adjacent_fire_act(turf/simulated/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume)
+//turf/simulated/floor/adjacent_fire_act(turf/simulated/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume) ZASTURF
+/turf/open/floor/adjacent_fire_act(turf/open/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume)
 	var/dir_to = get_dir(src, adj_turf)
 
 	for(var/obj/structure/window/W in src)
 		if(W.dir == dir_to || W.fulltile) //Same direction or diagonal (full tile)
 			W.fire_act(adj_air, adj_temp, adj_volume)
 
-/*/turf/simulated/wall/adjacent_fire_act(turf/simulated/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume)
+/turf/closed/wall/adjacent_fire_act(turf/open/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume)
 	burn(adj_temp)
-	if(adj_temp > material.melting_point)
-		take_damage(log(Frand(0.9, 1.1) * (adj_temp - material.melting_point)), BURN)
+	if(adj_temp > heat_capacity)
+		take_damage(log(Frand(0.9, 1.1) * (adj_temp - heat_capacity)), BURN)
 
-	return ..()*/
+	return ..()

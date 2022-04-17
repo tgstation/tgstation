@@ -104,7 +104,10 @@ Class Procs:
 	ASSERT(!into.invalid)
 #endif
 	c_invalidate()
-	for(var/turf/simulated/T in contents)
+	//for(var/turf/simulated/T in contents) ZASTURF
+	for(var/turf/T in contents)
+		if(istype(T, /turf/open/space))
+			continue
 		into.add(T)
 		T.update_graphic(graphic_remove = air.graphic)
 		#ifdef ZASDBG
@@ -122,14 +125,19 @@ Class Procs:
 	invalid = 1
 	SSzas.remove_zone(src)
 	#ifdef ZASDBG
-	for(var/turf/simulated/T in contents)
-		T.dbg(invalid_zone)
+	//for(var/turf/simulated/T in contents) ZASTURF
+	for(var/turf/T in contents)
+		if(!istype(T, /turf/open/space))
+			T.dbg(invalid_zone)
 	#endif
 
 /zone/proc/rebuild()
 	if(invalid) return //Short circuit for explosions where rebuild is called many times over.
 	c_invalidate()
-	for(var/turf/simulated/T in contents)
+	//for(var/turf/simulated/T in contents) ZASTURF
+	for(var/turf/T in contents)
+		if(istype(T, /turf/open/space))
+			continue
 		T.update_graphic(graphic_remove = air.graphic) //we need to remove the overlays so they're not doubled when the zone is rebuilt
 		//T.dbg(invalid_zone)
 		T.needs_air_update = 0 //Reset the marker so that it will be added to the list.
@@ -153,7 +161,8 @@ Class Procs:
 
 	// Update gas overlays.
 	if(air.check_tile_graphic(graphic_add, graphic_remove))
-		for(var/turf/simulated/T in contents)
+		//for(var/turf/simulated/T in contents)
+		for(var/turf/T in contents)
 			T.update_graphic(graphic_add, graphic_remove)
 		graphic_add.len = 0
 		graphic_remove.len = 0
@@ -182,7 +191,8 @@ Class Procs:
 	// Update atom temperature.
 	if(abs(air.temperature - last_air_temperature) >= ATOM_TEMPERATURE_EQUILIBRIUM_THRESHOLD)
 		last_air_temperature = air.temperature
-		for(var/turf/simulated/T in contents)
+		//for(var/turf/simulated/T in contents) ZASTURF
+		for(var/turf/T in contents)
 			for(var/check_atom in T.contents)
 				var/atom/checking = check_atom
 				if(checking.simulated)

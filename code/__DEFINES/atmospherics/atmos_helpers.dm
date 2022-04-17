@@ -31,8 +31,10 @@
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
 
 ///Directly adds a gas to a gas mixture without checking for its presence beforehand, use only if is certain the absence of said gas
-//#define ADD_GAS(gas_id, out_list)\
-	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
+/*
+#define ADD_GAS(gas_id, out_list)\
+	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id];out_list[gas_id] = tmp_gaslist.Copy();
+*/
 
 ///Adds a gas to a gas mixture but checks if is already present, faster than the same proc
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };

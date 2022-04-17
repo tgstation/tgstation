@@ -133,3 +133,6 @@
 			return "centuple"
 		else //It gets too tedious to use latin prefixes from here.
 			return "[number]-tuple"
+
+/// A random real number between low and high inclusive
+#define Frand(low, high) ( rand() * ((high) - (low)) + (low) )

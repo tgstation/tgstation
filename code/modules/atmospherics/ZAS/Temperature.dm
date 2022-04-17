@@ -35,10 +35,11 @@
 	// Nullspace is room temperature, clearly.
 	var/adjust_temp
 	if(loc)
-		if(!istype(loc, /turf/simulated))
+		if(!loc.simulated)
 			adjust_temp = loc.temperature
 		else
-			var/turf/simulated/T = loc
+			//var/turf/simulated/T = loc
+			var/turf/T = loc
 			if(T.zone && T.zone.air)
 				adjust_temp = T.zone.air.temperature
 			else

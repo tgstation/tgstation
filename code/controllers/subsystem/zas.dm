@@ -165,7 +165,10 @@ SUBSYSTEM_DEF(zas)
 	to_chat(world, span_boldannounce("Processing Geometry..."))
 
 	var/simulated_turf_count = 0
-	for(var/turf/simulated/S)
+	//for(var/turf/simulated/S) ZASTURF
+	for(var/turf/S)
+		if(istype(S, /turf/open/space))
+			continue
 		simulated_turf_count++
 		S.update_air_properties()
 
@@ -411,7 +414,8 @@ SUBSYSTEM_DEF(zas)
 		B.c_merge(A)
 		mark_zone_update(A)
 
-/datum/controller/subsystem/zas/proc/connect(turf/simulated/A, turf/simulated/B)
+//datum/controller/subsystem/zas/proc/connect(turf/simulated/A, turf/simulated/B) //ZASTURF
+/datum/controller/subsystem/zas/proc/connect(turf/A, turf/B)
 	#ifdef ZASDBG
 	ASSERT(istype(A))
 	ASSERT(isturf(B))
@@ -425,7 +429,7 @@ SUBSYSTEM_DEF(zas)
 	if(block & AIR_BLOCKED) return
 
 	var/direct = !(block & ZONE_BLOCKED)
-	var/space = !istype(B)
+	var/space = istype(B, /turf/open/space)
 
 	if(!space)
 		if(min(A.zone.contents.len, B.zone.contents.len) < ZONE_MIN_SIZE || (direct && (equivalent_pressure(A.zone,B.zone) || times_fired == 0)))

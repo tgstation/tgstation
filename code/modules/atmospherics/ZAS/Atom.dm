@@ -14,7 +14,10 @@
 
 //Convenience function for atoms to update turfs they occupy
 /atom/movable/proc/update_nearby_tiles(need_rebuild)
-	for(var/turf/simulated/turf in locs)
+	//for(var/turf/simulated/turf in locs) ZASTURF
+	for(var/turf/turf in locs)
+		if(istype(turf, /turf/open/space))
+			continue
 		SSzas.mark_for_update(turf)
 
 	return 1

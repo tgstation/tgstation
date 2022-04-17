@@ -48,9 +48,12 @@ Class Procs:
 		Makes numerous checks to decide whether the connection is still valid. Erases it automatically if not.
 
 */
-
+/* ZASTURF
 /connection/var/turf/simulated/A
 /connection/var/turf/simulated/B
+*/
+/connection/var/turf/A
+/connection/var/turf/B
 /connection/var/zone/zoneA
 /connection/var/zone/zoneB
 
@@ -58,7 +61,8 @@ Class Procs:
 
 /connection/var/state = 0
 
-/connection/New(turf/simulated/A, turf/simulated/B)
+//connection/New(turf/simulated/A, turf/simulated/B) ZASTURF
+/connection/New(turf/A, turf/B)
 	#ifdef ZASDBG
 	ASSERT(SSzas.has_valid_zone(A))
 	//ASSERT(SSzas.has_valid_zone(B))
@@ -66,7 +70,7 @@ Class Procs:
 	src.A = A
 	src.B = B
 	zoneA = A.zone
-	if(!istype(B))
+	if(istype(B /turf/open/space))
 		mark_space()
 		edge = SSzas.get_edge(A.zone,B)
 		edge.add_connection(src)
@@ -103,7 +107,7 @@ Class Procs:
 
 /connection/proc/update()
 //	log_debug("Updated, \...")
-	if(!istype(A,/turf/simulated))
+	if(istype(A,/turf/open/space))
 //		log_debug("Invalid A.")
 		erase()
 		return
@@ -118,7 +122,7 @@ Class Procs:
 	else
 		mark_direct()
 
-	var/b_is_space = !istype(B,/turf/simulated)
+	var/b_is_space = istype(B,/turf/open/space)
 
 	if(state & CONNECTION_SPACE)
 		if(!b_is_space)
