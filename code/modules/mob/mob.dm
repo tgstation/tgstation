@@ -1095,14 +1095,6 @@
 /mob/proc/is_halfsighted()
 	return FALSE
 
-/* Can this mob see in the dark
- *
- * This checks all traits, glasses, and robotic eyeball implants to see if the mob can see in the dark
- * this does NOT check if the mob is missing it's eyeballs. Also see_in_dark is a BYOND mob var (that defaults to 2)
-**/
-/mob/proc/has_nightvision()
-	return see_in_dark >= 8 // the 8 should probably not be hardcoded
-
 /* Checks if there is enough light where the mob is located
  *
  * Args:
