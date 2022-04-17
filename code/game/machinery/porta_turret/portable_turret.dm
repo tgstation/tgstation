@@ -783,9 +783,6 @@ DEFINE_BITFIELD(turret_flags, list(
 		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
 		return TRUE
 
-/obj/machinery/porta_turret/syndicate/pod/toolbox
-	max_integrity = 100
-
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
 	turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS | TURRET_FLAG_SHOOT_HEADS
