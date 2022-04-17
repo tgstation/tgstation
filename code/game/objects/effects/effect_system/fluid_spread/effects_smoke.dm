@@ -418,10 +418,10 @@
 /**
  * A version of chemical smoke with a very short lifespan.
  */
-/obj/effect/particle_effect/smoke/chem/quick
+/obj/effect/particle_effect/fluid/smoke/chem/quick
 	lifetime = 4 SECONDS
-	opaque = FALSE
+	opacity = FALSE
 	alpha = 100
 
-/datum/effect_system/smoke_spread/chem/quick
+/datum/effect_system/fluid_spread/smoke/chem/quick
 	effect_type = /obj/effect/particle_effect/smoke/chem/quick
