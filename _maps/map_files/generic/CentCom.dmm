@@ -182,7 +182,9 @@
 /obj/structure/railing{
 	dir = 6
 	},
-/turf/open/floor/catwalk_floor/iron_smooth,
+/turf/open/floor/catwalk_floor/iron_smooth{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/syndicate_mothership)
 "aJ" = (
 /obj/structure/chair/stool/directional/north,
@@ -11244,7 +11246,8 @@
 "GQ" = (
 /obj/structure/railing,
 /turf/open/floor/iron/stairs/old{
-	dir = 8
+	dir = 8;
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/syndicate_mothership)
 "GS" = (
@@ -14266,7 +14269,9 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/catwalk_floor/iron_smooth,
+/turf/open/floor/catwalk_floor/iron_smooth{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/syndicate_mothership)
 "PV" = (
 /obj/effect/turf_decal/stripes/line{
@@ -17497,7 +17502,9 @@
 /area/centcom/holding)
 "YG" = (
 /obj/structure/railing,
-/turf/open/floor/catwalk_floor/iron_smooth,
+/turf/open/floor/catwalk_floor/iron_smooth{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/syndicate_mothership)
 "YI" = (
 /obj/structure/sign/warning/nosmoking,
