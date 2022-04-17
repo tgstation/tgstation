@@ -4,7 +4,7 @@
 	automatic_charge_overlays = FALSE
 	/// If set to something, instead of an overlay, sets the icon_state directly.
 	var/no_charge_state
-	/// Does it hold charge when not shooting?
+	/// Does it hold charge when not put away?
 	var/holds_charge = FALSE
 	/// How much time we need to recharge
 	var/recharge_time = 1.6 SECONDS
@@ -51,11 +51,11 @@
 /obj/item/gun/energy/recharge/proc/attempt_reload(set_recharge_time)
 	if(!cell)
 		return
-	if(!charged)
+	if(charged)
 		return
 	if(!set_recharge_time)
 		set_recharge_time = recharge_time
-	charged = TRUE
+	charged = FALSE
 	var/carried = 0
 	if(!unique_frequency)
 		for(var/obj/item/gun/energy/recharge/recharging_gun in loc.get_all_contents())
