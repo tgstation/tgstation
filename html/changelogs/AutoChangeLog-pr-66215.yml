@@ -1,0 +1,5 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - qol: "Telecomms and the gravity generator are no longer ear-deafening when you don't have a direct line of sight with them, meaning that you can now peacefully build things in maintenance around them, without having to turn off the sound of your game."
+  - code_imp: "Added complete documentation and extra configurability to looping sounds, allowing them to be stopped by walls, to ignore pressure or to be unaffected by reverb!"

@@ -1529,7 +1529,7 @@
 		"mod_plating_security",
 		"mod_visor_sechud",
 		"mod_stealth",
-		"mod_holster",
+		"mod_mag_harness",
 		"mod_pathfinder",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
