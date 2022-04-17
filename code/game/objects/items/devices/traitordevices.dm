@@ -276,7 +276,7 @@ effective or pretty fucking useless.
 	new /obj/item/wirecutters(src)
 
 /obj/item/storage/toolbox/emergency/turret/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(istype(attacking_item, /obj/item/wrench/combat) && attacking_item.toolspeed && user.combat_mode && attacking_item.use_tool(src, user, 2 SECONDS, volume = 50))
+	if(attacking_item.tool_behaviour == TOOL_WRENCH && user.combat_mode && attacking_item.use_tool(src, user, 2 SECONDS, volume = 50))
 		user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
 			span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
 		playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
@@ -355,6 +355,11 @@ effective or pretty fucking useless.
 	if(gone == toolbox)
 		toolbox = null
 		qdel(src)
+
+/obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user)
+	if(faction_check(user.faction, faction)
+		return ..()
+	return UI_CLOSE
 
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
