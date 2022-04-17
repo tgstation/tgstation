@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
 
-	var/pai = null
+	var/obj/item/paicard/pai = null
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
@@ -97,6 +97,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	Remove_Messenger()
+
+	if(istype(pai))
+		QDEL_NULL(pai)
+
 	physical = null
 	return ..()
 
@@ -575,6 +579,16 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(istype(W, /obj/item/card/id) && InsertID(W))
 		return
 
+	// Insert a PAI.
+	if(istype(W, /obj/item/paicard) && !pai)
+		if(!user.transferItemToLoc(W, src))
+			return
+		pai = W
+		pai.slotted = TRUE
+		to_chat(user, span_notice("You slot \the [W] into [src]."))
+		return
+
+	// Scan a photo.
 	if(istype(W, /obj/item/photo))
 		var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
 		var/obj/item/photo/pic = W

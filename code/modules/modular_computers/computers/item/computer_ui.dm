@@ -114,6 +114,7 @@
 	data["has_light"] = has_light
 	data["light_on"] = light_on
 	data["comp_light_color"] = comp_light_color
+	data["pai"] = pai
 	return data
 
 
@@ -245,12 +246,14 @@
 					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
 					if(!cardholder)
 						return
-					cardholder.try_eject(user)
+					if(cardholder.try_eject(user))
+						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("secondary RFID card")
 					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD2]
 					if(!cardholder)
 						return
-					cardholder.try_eject(user)
+					if(cardholder.try_eject(user))
+						playsound(src, 'sound/machines/card_slide.ogg', 50)
 		if("PC_Imprint_ID")
 			var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
 			var/obj/item/computer_hardware/identifier/id_hardware = all_components[MC_IDENTIFY]
@@ -264,7 +267,16 @@
 				id_hardware.UpdateDisplay()
 
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
-
+		if("PC_Pai_Interact")
+			switch(params["option"])
+				if("eject")
+					usr.put_in_hands(pai)
+					pai.slotted = FALSE
+					pai = null
+					to_chat(usr, span_notice("You remove the pAI from the [name]."))
+				if("interact")
+					pai.attack_self(usr)
+			return UI_UPDATE
 		else
 			return
 
