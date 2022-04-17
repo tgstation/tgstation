@@ -1,0 +1,4 @@
+author: "iprice"
+delete-after: True
+changes: 
+  - bugfix: "Corrected an error in the spicy donk pocket recipe which would permit infinite donk pocket creation."
