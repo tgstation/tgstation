@@ -44,7 +44,7 @@
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snowplating"
 	base_icon_state = "snowplating"
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	temperature = 180
 	attachment_holes = FALSE
 	planetary_atmos = TRUE

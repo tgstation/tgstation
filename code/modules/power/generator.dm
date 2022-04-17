@@ -20,12 +20,12 @@
 	AddComponent(/datum/component/simple_rotation)
 	find_circs()
 	connect_to_network()
-	SSair.start_processing_machine(src)
+	SSzas.start_processing_machine(src)
 	update_appearance()
 
 /obj/machinery/power/generator/Destroy()
 	kill_circs()
-	SSair.stop_processing_machine(src)
+	SSzas.stop_processing_machine(src)
 	return ..()
 
 /obj/machinery/power/generator/update_overlays()

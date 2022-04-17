@@ -51,8 +51,8 @@
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
-	initial_gas_mix = BURNMIX_ATMOS
-
+	// initial_gas_mix = BURNMIX_ATMOS
+	//TODO: cause warcrimes later
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
 	name = "lush grass"

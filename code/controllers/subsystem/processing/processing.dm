@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(processing)
 	var/stat_tag = "P" //Used for logging
 	var/list/processing = list()
 	var/list/currentrun = list()
-	var/const/process_proc = /datum/proc/Process //Francinum is going to KILL ME
+	var/const/process_proc = /datum/proc/process //Francinum is going to FUCK ME (Of course I will~)
 
 /datum/controller/subsystem/processing/stat_entry(msg)
 	msg = "[stat_tag]:[length(processing)]"

@@ -1,4 +1,4 @@
-//OPEN TURF ATMOS
+/*//OPEN TURF ATMOS
 /// the default air mix that open turfs spawn
 #define OPENTURF_DEFAULT_ATMOS "o2=22;n2=82;TEMP=293.15"
 #define OPENTURF_LOW_PRESSURE "o2=14;n2=30;TEMP=293.15"
@@ -35,7 +35,7 @@
 #define ATMOS_TANK_HELIUM "helium=100000;TEMP=293.15"
 #define ATMOS_TANK_ANTINOBLIUM "antinoblium=100000;TEMP=293.15"
 #define ATMOS_TANK_AIRMIX "o2=2644;n2=10580;TEMP=293.15"
-
+*/
 //LAVALAND
 /// what pressure you have to be under to increase the effect of equipment meant for lavaland
 #define LAVALAND_EQUIPMENT_EFFECT_PRESSURE 50

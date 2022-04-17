@@ -5,7 +5,7 @@
 	desc = "Looks cold."
 	icon_state = "snow"
 	planetary_atmos = TRUE
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	slowdown = 2
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND

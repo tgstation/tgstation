@@ -39,7 +39,7 @@
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
 	var/list/connected_turfs = detect_room(origin = get_turf(src), max_size = fix_range)
 	var/datum/gas_mixture/base_mix = new
-	base_mix.parse_gas_string(OPENTURF_DEFAULT_ATMOS)
+	base_mix.gas = OPENTURF_DEFAULT_ATMOS
 	for(var/turf/open/turf_fix in connected_turfs)
 		if(turf_fix.blocks_air)
 			continue
@@ -69,7 +69,7 @@
 			continue
 		var/distance_from_center = max(get_dist(turf_loc, loc), 1)
 		var/turf/open/floor_loc = turf_loc
-		floor_loc.atmos_spawn_air("n2=[n2_gas_amount / distance_from_center];o2=[o2_gas_amount / distance_from_center];TEMP=273")
+		//floor_loc.atmos_spawn_air("n2=[n2_gas_amount / distance_from_center];o2=[o2_gas_amount / distance_from_center];TEMP=273")
 		floor_loc.atmos_spawn_air(GAS_NITROGEN, n2_gas_amount/distance_from_center, 273)
 		floor_loc.atmos_spawn_air(GAS_OXYGEN, o2_gas_amount/distance_from_center, 273)
 	qdel(src)
@@ -95,7 +95,8 @@
 			continue
 		var/distance_from_center = max(get_dist(turf_loc, loc), 1)
 		var/turf/open/floor_loc = turf_loc
-		floor_loc.atmos_spawn_air("n2o=[n2o_gas_amount / distance_from_center];TEMP=273")
+		//floor_loc.atmos_spawn_air("n2o=[n2o_gas_amount / distance_from_center];TEMP=273")
+		floor_loc.atmos_spawn_air(GAS_N2O, n2o_gas_amount/distance_from_center, 273)
 	qdel(src)
 
 /obj/item/grenade/gas_crystal/crystal_foam

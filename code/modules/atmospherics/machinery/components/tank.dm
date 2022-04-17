@@ -190,7 +190,7 @@
 			continue
 		node.atmos_init()
 		node.add_member(src)
-	SSair.add_to_rebuild_queue(src)
+	SSzas.add_to_rebuild_queue(src)
 
 	update_parents()
 

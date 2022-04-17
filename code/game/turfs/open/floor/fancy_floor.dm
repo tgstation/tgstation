@@ -157,7 +157,7 @@
 	icon_state = "snow"
 	flags_1 = NONE
 	floor_tile = null
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
 

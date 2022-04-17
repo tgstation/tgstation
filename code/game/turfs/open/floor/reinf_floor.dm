@@ -100,26 +100,27 @@
 /turf/open/floor/engine/n2o
 	article = "an"
 	name = "\improper N2O floor"
-	initial_gas_mix = ATMOS_TANK_N2O
+	initial_gas_mix = ATMOSTANK_NITROUSOXIDE
 
 /turf/open/floor/engine/co2
 	name = "\improper CO2 floor"
-	initial_gas_mix = ATMOS_TANK_CO2
+	initial_gas_mix = ATMOSTANK_CO2
 
 /turf/open/floor/engine/plasma
 	name = "plasma floor"
-	initial_gas_mix = ATMOS_TANK_PLASMA
+	initial_gas_mix = ATMOSTANK_PLASMA
 
 /turf/open/floor/engine/o2
 	name = "\improper O2 floor"
-	initial_gas_mix = ATMOS_TANK_O2
+	initial_gas_mix = ATMOSTANK_OXYGEN
 
 /turf/open/floor/engine/n2
 	article = "an"
 	name = "\improper N2 floor"
-	initial_gas_mix = ATMOS_TANK_N2
+	initial_gas_mix = ATMOSTANK_NITROGEN
 
-/turf/open/floor/engine/bz
+
+/*/turf/open/floor/engine/bz
 	name = "\improper BZ floor"
 	initial_gas_mix = ATMOS_TANK_BZ
 
@@ -134,12 +135,13 @@
 /turf/open/floor/engine/healium
 	name = "\improper Healium floor"
 	initial_gas_mix = ATMOS_TANK_HEALIUM
-
+*/
 /turf/open/floor/engine/h2
 	article = "an"
 	name = "\improper H2 floor"
-	initial_gas_mix = ATMOS_TANK_H2
+	initial_gas_mix = ATMOSTANK_HYDROGEN
 
+/*
 /turf/open/floor/engine/hypernoblium
 	name = "\improper Hypernoblium floor"
 	initial_gas_mix = ATMOS_TANK_HYPERNOBLIUM
@@ -180,10 +182,10 @@
 /turf/open/floor/engine/antinoblium
 	name = "\improper Antinoblium floor"
 	initial_gas_mix = ATMOS_TANK_ANTINOBLIUM
-
+*/
 /turf/open/floor/engine/air
 	name = "air floor"
-	initial_gas_mix = ATMOS_TANK_AIRMIX
+	initial_gas_mix = ATMOSTANK_AIRMIX
 
 
 
@@ -223,3 +225,4 @@
 
 /turf/open/floor/engine/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+	temperature = 80

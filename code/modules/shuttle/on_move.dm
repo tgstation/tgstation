@@ -58,7 +58,7 @@ All ShuttleMove procs go here
 	var/depth = baseturfs.len - shuttle_boundary + 1
 	newT.CopyOnTop(src, 1, depth, TRUE)
 	newT.blocks_air = TRUE
-	newT.//air_update_turf(TRUE, FALSE)
+	//newT.air_update_turf(TRUE, FALSE)
 	blocks_air = TRUE
 	//air_update_turf(TRUE, TRUE)
 	if(isopenturf(newT))

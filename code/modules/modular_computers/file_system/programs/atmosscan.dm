@@ -16,7 +16,7 @@
 		to_chat(user, span_warning("\The [computer] flashes an error: \"hardware\\sensorpackage\\startup.bin -- file not found\"."))
 
 /datum/computer_file/program/atmosscan/ui_static_data(mob/user)
-	return return_atmos_handbooks()
+	return //return_atmos_handbooks()
 
 /datum/computer_file/program/atmosscan/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -27,7 +27,7 @@
 	if(!air_sensor)
 		data["gasmixes"] = list(gas_mixture_parser(null, "No Sensors Detected!"))
 		return data
-	
+
 	data["gasmixes"] = list(gas_mixture_parser(air, "Sensor Reading")) //Null air wont cause errors, don't worry.
 	return data
 

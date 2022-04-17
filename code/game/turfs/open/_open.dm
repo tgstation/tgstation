@@ -35,7 +35,7 @@
 
 /turf/open/update_icon()
 	. = ..()
-	update_visuals()
+	//update_visuals()
 
 /turf/open/indestructible
 	name = "floor"
@@ -160,7 +160,7 @@
 	icon_state = "bluespace"
 	blocks_air = TRUE
 	baseturfs = /turf/open/indestructible/airblock
-
+/*
 /turf/open/Initalize_Atmos(times_fired)
 	excited = FALSE
 	update_visuals()
@@ -174,6 +174,7 @@
 			//testing("Active turf found. Return value of compare(): [is_active]")
 			excited = TRUE
 			SSair.active_turfs += src
+*/
 
 /turf/open/GetHeatCapacity()
 	. = air.heat_capacity()

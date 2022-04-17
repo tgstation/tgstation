@@ -14,7 +14,7 @@
 	var/destination_y
 
 	var/static/datum/gas_mixture/immutable/space/space_gas = new
-	run_later = TRUE
+	// run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.25
@@ -55,8 +55,10 @@
 	if(our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
 		add_overlay(GLOB.fullbright_overlay)
 
+	/*
 	if(requires_activation)
 		SSair.add_to_active(src, TRUE)
+	*/
 
 	if (light_system == STATIC_LIGHT && light_power && light_range)
 		update_light()

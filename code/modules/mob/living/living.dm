@@ -957,7 +957,7 @@
 		return pick("ltrails_1", "ltrails_2")
 	else
 		return pick("trails_1", "trails_2")
-
+/*
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
 	if(buckled || mob_negates_gravity())
@@ -987,7 +987,7 @@
 					pressure_resistance_prob_delta -= 20
 					break
 	..(pressure_difference, direction, pressure_resistance_prob_delta)
-
+*/
 /mob/living/can_resist()
 	if(next_move > world.time)
 		return FALSE

@@ -200,9 +200,11 @@ var/list/gzn_check = list(NORTH, SOUTH, EAST, WEST)
 
 //OPEN TURF ATMOS
 /// the default air mix that open turfs spawn
-#define OPENTURF_DEFAULT_ATMOS list(GAS_OXYGEN=MOLESO2ATMOS, GAS_NITROGEN=MOLESN2ATMOS)
+#define OPENTURF_DEFAULT_ATMOS list(GAS_OXYGEN = MOLES_O2ATMOS, GAS_NITROGEN=MOLES_N2ATMOS)
+#define OPENTURF_LOW_PRESSURE list(GAS_OXYGEN = 14, GAS_NITROGEB = 30)
 //#define OPENTURF_LOW_PRESSURE "o2=14;n2=30;TEMP=293.15"
 /// -193,15°C telecommunications. also used for xenobiology slime killrooms
+#define TCOMMS_ATMOS list(GAS_NITROGEN = 100)
 //#define TCOMMS_ATMOS "n2=100;TEMP=80"
 /// space
 #define AIRLESS_ATMOS list()
@@ -212,14 +214,15 @@ var/list/gzn_check = list(NORTH, SOUTH, EAST, WEST)
 //#define KITCHEN_COLDROOM_ATMOS "o2=26;n2=97;TEMP=[COLD_ROOM_TEMP]"
 
 // Defines how much of certain gas do the Atmospherics tanks start with. Values are in kpa per tile (assuming 20C)
-#define ATMOSTANK_NITROGEN      90000 // A lot of N2 is needed to produce air mix, that's why we keep 90MPa of it
-#define ATMOSTANK_OXYGEN        50000 // O2 is also important for airmix, but not as much as N2 as it's only 21% of it.
-#define ATMOSTANK_CO2           60000 // CO2 is used for the GUP, Charon, and Torch as the primary fuel propellant, and we need lots to stick around.
-#define ATMOSTANK_PLASMA        25000
-#define ATMOSTANK_PLASMA_FUEL	15000
-#define ATMOSTANK_HYDROGEN      50000
-#define ATMOSTANK_HYDROGEN_FUEL 25000
-#define ATMOSTANK_NITROUSOXIDE  10000 // N2O doesn't have a real useful use, i guess it's on station just to allow refilling of sec's riot control canisters?
+#define ATMOSTANK_NITROGEN      list(GAS_NITROGEN = 90000) // A lot of N2 is needed to produce air mix, that's why we keep 90MPa of it
+#define ATMOSTANK_OXYGEN        list(GAS_OXYGEN = 50000) // O2 is also important for airmix, but not as much as N2 as it's only 21% of it.
+#define ATMOSTANK_CO2           list(GAS_CO2 = 60000) // CO2 is used for the GUP, Charon, and Torch as the primary fuel propellant, and we need lots to stick around.
+#define ATMOSTANK_PLASMA        list(GAS_PHORON = 25000)
+#define ATMOSTANK_PLASMA_FUEL	list(GAS_PHORON = 15000)
+#define ATMOSTANK_HYDROGEN      list(GAS_HYDROGEN = 50000)
+#define ATMOSTANK_HYDROGEN_FUEL list(GAS_HYDROGEN = 25000)
+#define ATMOSTANK_NITROUSOXIDE  list(GAS_N2O = 10000) // N2O doesn't have a real useful use, i guess it's on station just to allow refilling of sec's riot control canisters?
+#define ATMOSTANK_AIRMIX		list(GAS_OXYGEN = 2644, GAS_NITROGEN = 10580)
 
 #define MAX_PUMP_PRESSURE		15000	// Maximal pressure setting for pumps and vents
 #define MAX_OMNI_PRESSURE		15000	// Maximal output(s) pressure for omni devices (filters/mixers)
@@ -264,31 +267,3 @@ GLOBAL_LIST_INIT(reverse_dir, list( // reverse_dir[dir] = reverse of dir
 #define ATMOS_DEFAULT_VOLUME_FILTER 500 // L.
 #define ATMOS_DEFAULT_VOLUME_MIXER  500 // L.
 #define ATMOS_DEFAULT_VOLUME_PIPE   70  // L.
-
-// heat2color functions. Adapted from: http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
-/proc/heat2color(temp)
-	return rgb(heat2color_r(temp), heat2color_g(temp), heat2color_b(temp))
-
-/proc/heat2color_r(temp)
-	temp /= 100
-	if(temp <= 66)
-		. = 255
-	else
-		. = max(0, min(255, 329.698727446 * (temp - 60) ** -0.1332047592))
-
-/proc/heat2color_g(temp)
-	temp /= 100
-	if(temp <= 66)
-		. = max(0, min(255, 99.4708025861 * log(temp) - 161.1195681661))
-	else
-		. = max(0, min(255, 288.1221695283 * ((temp - 60) ** -0.0755148492)))
-
-/proc/heat2color_b(temp)
-	temp /= 100
-	if(temp >= 66)
-		. = 255
-	else
-		if(temp <= 16)
-			. = 0
-		else
-			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))

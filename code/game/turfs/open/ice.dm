@@ -4,7 +4,7 @@
 	icon = 'icons/turf/floors/ice_turf.dmi'
 	icon_state = "ice_turf-0"
 	base_icon_state = "ice_turf-0"
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	temperature = 180
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/misc/ice

@@ -38,6 +38,7 @@
 
 /turf/open/floor/circuit/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+	temperature = 80
 
 /turf/open/floor/circuit/telecomms/mainframe
 	name = "mainframe base"
@@ -65,6 +66,7 @@
 
 /turf/open/floor/circuit/green/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+	temperature = 80
 
 /turf/open/floor/circuit/green/telecomms/mainframe
 	name = "mainframe base"
@@ -89,6 +91,7 @@
 
 /turf/open/floor/circuit/red/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+	temperature = 80
 
 /turf/open/floor/pod
 	name = "pod floor"
@@ -213,7 +216,7 @@
 	AddElement(/datum/element/rust)
 
 /turf/open/floor/plating/plasma
-	initial_gas_mix = ATMOS_TANK_PLASMA
+	initial_gas_mix = ATMOSTANK_PLASMA
 
 /turf/open/floor/plating/plasma/rust/Initialize(mapload)
 	. = ..()

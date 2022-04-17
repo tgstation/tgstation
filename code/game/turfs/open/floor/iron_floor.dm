@@ -31,10 +31,11 @@
 
 /turf/open/floor/iron/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+	temperature = 80
 
 /turf/open/floor/iron/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-
+	temperature = 80
 /turf/open/floor/iron/edge
 	icon_state = "floor_edge"
 	base_icon_state = "floor_edge"
@@ -150,7 +151,7 @@
 
 /turf/open/floor/iron/dark/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
-
+	temperature = 80
 /turf/open/floor/iron/dark/side/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -230,7 +231,7 @@
 
 /turf/open/floor/iron/white/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
-
+	temperature = 80
 /turf/open/floor/iron/white/side/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -306,10 +307,7 @@
 
 /turf/open/floor/iron/kitchen_coldroom
 	name = "cold room floor"
-
-/turf/open/floor/iron/kitchen_coldroom/Initialize(mapload)
-	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
-	return ..()
+	temperature = COLD_ROOM_TEMP
 
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor
 	icon_state = "freezerfloor"

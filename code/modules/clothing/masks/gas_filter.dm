@@ -29,25 +29,14 @@
 
 	///List of gases with high filter priority
 	var/list/high_filtering_gases = list(
-		/datum/gas/plasma,
-		/datum/gas/carbon_dioxide,
-		/datum/gas/nitrous_oxide
-		)
+		GAS_PLASMA,
+		GAS_CO2,
+		GAS_N2O
+	)
 	///List of gases with medium filter priority
-	var/list/mid_filtering_gases = list(
-		/datum/gas/nitrium,
-		/datum/gas/freon,
-		/datum/gas/hypernoblium,
-		/datum/gas/bz
-		)
+	var/list/mid_filtering_gases = list()
 	///List of gases with low filter priority
-	var/list/low_filtering_gases = list(
-		/datum/gas/healium,
-		/datum/gas/proto_nitrate,
-		/datum/gas/halon,
-		/datum/gas/tritium,
-		/datum/gas/zauker
-		)
+	var/list/low_filtering_gases = list()
 
 /obj/item/gas_filter/examine(mob/user)
 	. = ..()
@@ -65,29 +54,29 @@
 
 	var/danger_points = 0
 
-	for(var/gas_id in breath.gases)
+	for(var/gas_id in breath.gas)
 		if(gas_id in high_filtering_gases)
-			if(breath.gases[gas_id][MOLES] > HIGH_FILTERING_MOLES)
-				breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_high * filter_efficiency * HIGH_FILTERING_RATIO, 0)
+			if(breath.get_gas(gas_id) > HIGH_FILTERING_MOLES)
+				breath.get_gas(gas_id) = max(breath.get_gas(gas_id) - filter_strength_high * filter_efficiency * HIGH_FILTERING_RATIO, 0)
 				danger_points += 0.5
 				continue
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_high * filter_efficiency * LOW_FILTERING_RATIO, 0)
+			breath.get_gas(gas_id) = max(breath.get_gas(gas_id) - filter_strength_high * filter_efficiency * LOW_FILTERING_RATIO, 0)
 			danger_points += 0.05
 			continue
 		if(gas_id in mid_filtering_gases)
-			if(breath.gases[gas_id][MOLES] > MID_FILTERING_MOLES)
-				breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_mid * filter_efficiency * HIGH_FILTERING_RATIO, 0)
+			if(breath.get_gas(gas_id) > MID_FILTERING_MOLES)
+				breath.get_gas(gas_id) = max(breath.get_gas(gas_id)- filter_strength_mid * filter_efficiency * HIGH_FILTERING_RATIO, 0)
 				danger_points += 0.75
 				continue
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_mid * filter_efficiency * LOW_FILTERING_RATIO, 0)
+			breath.get_gas(gas_id) = max(breath.get_gas(gas_id) - filter_strength_mid * filter_efficiency * LOW_FILTERING_RATIO, 0)
 			danger_points += 0.15
 			continue
 		if(gas_id in low_filtering_gases)
-			if(breath.gases[gas_id][MOLES] > LOW_FILTERING_MOLES)
-				breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_low * filter_efficiency * HIGH_FILTERING_RATIO, 0)
+			if(breath.get_gas(gas_id)> LOW_FILTERING_MOLES)
+				breath.get_gas(gas_id) = max(breath.get_gas(gas_id) - filter_strength_low * filter_efficiency * HIGH_FILTERING_RATIO, 0)
 				danger_points += 1
 				continue
-			breath.gases[gas_id][MOLES] = max(breath.gases[gas_id][MOLES] - filter_strength_low * filter_efficiency * LOW_FILTERING_RATIO, 0)
+			breath.get_gas(gas_id) = max(breath.get_gas(gas_id) - filter_strength_low * filter_efficiency * LOW_FILTERING_RATIO, 0)
 			danger_points += 0.5
 			continue
 
@@ -106,7 +95,7 @@
 /obj/item/gas_filter/plasmaman
 	name = "plasmaman atmospheric gas filter"
 	high_filtering_gases = list(
-		/datum/gas/oxygen,
-		/datum/gas/carbon_dioxide,
-		/datum/gas/nitrous_oxide
+		GAS_OXYGEN,
+		GAS_CO2,
+		GAS_N2O
 		)

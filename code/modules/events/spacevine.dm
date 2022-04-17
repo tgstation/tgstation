@@ -265,10 +265,9 @@
 	var/turf/open/floor/turf = holder.loc
 	if(istype(turf))
 		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/oxygen])
+		if(!gas_mix.get_gas(GAS_OXYGEN))
 			return
-		gas_mix.gases[/datum/gas/oxygen][MOLES] = max(gas_mix.gases[/datum/gas/oxygen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
-		gas_mix.garbage_collect()
+		gas_mix.gas[GAS_OXYGEN] = max(gas_mix.get_gas(GAS_OXYGEN) - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
 
 /datum/spacevine_mutation/nitro_eater
 	name = "Nitrogen consuming"
@@ -280,10 +279,9 @@
 	var/turf/open/floor/turf = holder.loc
 	if(istype(turf))
 		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/nitrogen])
+		if(!gas_mix.get_gas(GAS_NITROGEN))
 			return
-		gas_mix.gases[/datum/gas/nitrogen][MOLES] = max(gas_mix.gases[/datum/gas/nitrogen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
-		gas_mix.garbage_collect()
+		gas_mix.gas[GAS_NITROGEN] = max(gas_mix.get_gas(GAS_NITROGEN) - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
 
 /datum/spacevine_mutation/carbondioxide_eater
 	name = "CO2 consuming"
@@ -295,10 +293,9 @@
 	var/turf/open/floor/turf = holder.loc
 	if(istype(turf))
 		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/carbon_dioxide])
+		if(!gas_mix.get_gas(GAS_OXYGEN))
 			return
-		gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] = max(gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
-		gas_mix.garbage_collect()
+		gas_mix.gas[GAS_CO2] = max(gas_mix.get_gas(GAS_CO2) - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
 
 /datum/spacevine_mutation/plasma_eater
 	name = "Plasma consuming"
@@ -310,10 +307,9 @@
 	var/turf/open/floor/turf = holder.loc
 	if(istype(turf))
 		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/plasma])
+		if(!gas_mix.get_gas(GAS_PLASMA))
 			return
-		gas_mix.gases[/datum/gas/plasma][MOLES] = max(gas_mix.gases[/datum/gas/plasma][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
-		gas_mix.garbage_collect()
+		gas_mix.gas[GAS_PLASMA] = max(gas_mix.get_gas(GAS_PLASMA) - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
 
 /datum/spacevine_mutation/thorns
 	name = "Thorny"

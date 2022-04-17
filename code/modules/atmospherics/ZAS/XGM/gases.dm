@@ -50,7 +50,7 @@
 	tile_color = "#ff9940"
 	overlay_limit = 0.7
 	flags = XGM_GAS_FUEL | XGM_GAS_CONTAMINANT | XGM_GAS_FUSION_FUEL
-	breathed_product = /datum/reagent/toxin/phoron
+	breathed_product = /datum/reagent/toxin/plasma
 	symbol_html = "Ph"
 	symbol = "Ph"
 

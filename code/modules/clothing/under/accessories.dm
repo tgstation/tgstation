@@ -266,7 +266,8 @@
 	return exposed_temperature > 300
 
 /obj/item/clothing/accessory/medal/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
+	var/open/turf/turfloc = get_turf(src)
+	turfloc.atmos_spawn_air(GAS_PLASMA, 20, exposed_temperature)
 	visible_message(span_danger("\The [src] bursts into flame!"), span_userdanger("Your [src] bursts into flame!"))
 	qdel(src)
 

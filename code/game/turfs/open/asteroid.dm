@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	icon_state = "snow"
 	base_icon_state = "snow"
 	broken_state = "snow_dug"
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	slowdown = 2
 	flags_1 = NONE
 	planetary_atmos = TRUE
@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	temperature = 180
 
 /turf/open/misc/asteroid/snow/atmosphere
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	planetary_atmos = FALSE
 
 /turf/open/misc/asteroid/snow/standard_air

@@ -201,7 +201,8 @@
 	excited = TRUE
 
 	if(!holding)
-		scrub(get_turf(src).return_air())
+		var/turf/muhturf = get_turf(src)
+		scrub(muhturf.return_air())
 
 	return ..()
 

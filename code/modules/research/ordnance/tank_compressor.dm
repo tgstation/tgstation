@@ -86,7 +86,7 @@
 		return FALSE
 	update_appearance()
 	return TRUE
-	
+
 /obj/machinery/atmospherics/components/binary/tank_compressor/crowbar_act(mob/living/user, obj/item/tool)
 	if(active || inserted_tank)
 		return FALSE
@@ -119,7 +119,7 @@
 	if(nodes[2])
 		nodes[2].atmos_init()
 		nodes[2].add_member(src)
-	SSair.add_to_rebuild_queue(src)
+	SSzas.add_to_rebuild_queue(src)
 	update_appearance()
 
 /// Glorified volume pump.
@@ -172,7 +172,7 @@
 	return COMSIG_CANCEL_EXPLOSION
 
 /**
- * Everytime a tank is destroyed or a new tank is inserted, our buffer is flushed. 
+ * Everytime a tank is destroyed or a new tank is inserted, our buffer is flushed.
  * Mole requirements in experiments are tracked by buffer data.
  */
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/flush_buffer()
@@ -194,7 +194,7 @@
 	new_record.timestamp = station_time_timestamp()
 	for(var/gas_path in leaked_gas_buffer.gases)
 		new_record.gas_data[gas_path] = leaked_gas_buffer.gases[gas_path][MOLES]
-	
+
 	compressor_record += new_record
 	record_number += 1
 	say("Buffer data stored.")
@@ -207,7 +207,7 @@
 		if(experiment.required_gas in gas_data)
 			if(gas_data[experiment.required_gas] > MINIMUM_MOLE_COUNT)
 				passed_experiments += list(experiment.type = gas_data[experiment.required_gas])
-	
+
 	return passed_experiments
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/print(mob/user, datum/data/compressor_record/record)

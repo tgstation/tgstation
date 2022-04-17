@@ -118,7 +118,7 @@
 	var/turf/local_turf = get_turf(loc)
 	if(!local_turf)
 		return
-	local_turf./air_update_turf(update, remove)
+	//local_turf.air_update_turf(update, remove)
 
 /**
  * A helper proc for dealing with atmos changes

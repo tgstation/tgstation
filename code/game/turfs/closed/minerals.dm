@@ -134,7 +134,7 @@
 	var/turf/open/mined = ScrapeAway(null, flags)
 	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
-	mined.update_visuals()
+	//mined.update_visuals()
 
 /turf/closed/mineral/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
@@ -357,7 +357,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	defer_change = TRUE
 
 /turf/closed/mineral/uranium
@@ -375,7 +375,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	defer_change = TRUE
 
 /turf/closed/mineral/gold
@@ -412,7 +412,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	defer_change = TRUE
 
 /turf/closed/mineral/bananium
@@ -463,7 +463,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	baseturfs = /turf/open/misc/asteroid/snow
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	turf_type = /turf/open/misc/asteroid/snow
 	defer_change = TRUE
 
@@ -601,7 +601,7 @@
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
 	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
-	mined.update_visuals()
+	//mined.update_visuals()
 
 /turf/closed/mineral/gibtonite/volcanic
 	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
@@ -616,7 +616,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas_mix = FROZEN_ATMOS
+	temperature = 180
 	defer_change = TRUE
 
 /turf/closed/mineral/gibtonite/ice/icemoon
@@ -660,7 +660,7 @@
 	var/turf/open/mined = ScrapeAway(null, flags)
 	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
-	mined.update_visuals()
+	//mined.update_visuals()
 	H.mind?.adjust_experience(/datum/skill/mining, 100) //yay!
 
 /turf/closed/mineral/strong/proc/drop_ores()

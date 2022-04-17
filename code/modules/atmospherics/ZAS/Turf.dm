@@ -9,6 +9,10 @@
 	var/heat_capacity = 1
 	var/thermal_conductivity = 0.05
 	var/list/initial_gas_mix
+	var/planetary_atmos //Let's just let this exist for now.
+
+#warn !!TEMPORARY PROCDEF!!
+/turf/open/proc/atmos_spawn_air(...)
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
@@ -300,7 +304,7 @@
 	air.copy_from(zone.air)
 	air.group_multiplier = 1
 
-/turf/simulated/atmos_spawn_air(gas_id, amount, initial_temperature)
+/turf/simulated/proc/atmos_spawn_air(gas_id, amount, initial_temperature)
 	var/datum/gas_mixture/new_gas = new
 	var/datum/gas_mixture/existing_gas = return_air()
 	if(isnull(initial_temperature))
