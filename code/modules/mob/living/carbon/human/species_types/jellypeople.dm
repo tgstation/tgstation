@@ -1,6 +1,7 @@
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
-	name = "Jellyperson"
+	name = "\improper Jellyperson"
+	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
 	default_color = "00FF90"
 	say_mod = "chirps"
@@ -26,16 +27,27 @@
 	species_language_holder = /datum/language_holder/jelly
 	ass_image = 'icons/ass/assslime.png'
 
-/datum/species/jelly/on_species_loss(mob/living/carbon/C)
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/jelly,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/jelly,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/jelly,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/jelly,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/jelly,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly,
+	)
+
+/datum/species/jelly/on_species_loss(mob/living/carbon/old_jellyperson)
 	if(regenerate_limbs)
-		regenerate_limbs.Remove(C)
+		regenerate_limbs.Remove(old_jellyperson)
+	old_jellyperson.RemoveElement(/datum/element/soft_landing)
 	..()
 
-/datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/jelly/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species)
 	..()
-	if(ishuman(C))
+	if(ishuman(new_jellyperson))
 		regenerate_limbs = new
-		regenerate_limbs.Grant(C)
+		regenerate_limbs.Grant(new_jellyperson)
+	new_jellyperson.AddElement(/datum/element/soft_landing)
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
@@ -59,7 +71,7 @@
 		Cannibalize_Body(H)
 
 	if(regenerate_limbs)
-		regenerate_limbs.UpdateButtonIcon()
+		regenerate_limbs.UpdateButtons()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
@@ -74,6 +86,21 @@
 	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
 	H.blood_volume += 20
+
+// Slimes have both NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
+// They may not be roundstart but in the unlikely event they become one might as well not leave a glaring issue open.
+/datum/species/jelly/create_pref_blood_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = "tint",
+		SPECIES_PERK_NAME = "Jelly Blood",
+		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have toxic [initial(exotic_blood.name)]! \
+			Jelly is extremely important, as losing it will cause you to lose limbs. Having low jelly will make medical treatment very difficult.",
+	))
+
+	return to_add
 
 /datum/action/innate/regenerate_limbs
 	name = "Regenerate Limbs"
@@ -120,7 +147,8 @@
 //Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
 
 /datum/species/jelly/slime
-	name = "Slimeperson"
+	name = "\improper Slimeperson"
+	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
@@ -130,6 +158,15 @@
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
+
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/slime,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/slime,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/slime,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/slime,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/slime,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/slime,
+	)
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
@@ -406,7 +443,9 @@
 
 /datum/species/jelly/luminescent
 	name = "Luminescent"
+	plural_form = null
 	id = SPECIES_LUMINESCENT
+	examine_limb_id = SPECIES_JELLYPERSON
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
 	var/obj/item/slime_extract/current_extract
@@ -414,6 +453,7 @@
 	var/datum/action/innate/use_extract/extract_minor
 	var/datum/action/innate/use_extract/major/extract_major
 	var/extract_cooldown = 0
+
 
 //Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
 /datum/species/jelly/luminescent/Destroy(force, ...)
@@ -448,9 +488,9 @@
 
 /datum/species/jelly/luminescent/proc/update_slime_actions()
 	integrate_extract.update_name()
-	integrate_extract.UpdateButtonIcon()
-	extract_minor.UpdateButtonIcon()
-	extract_major.UpdateButtonIcon()
+	integrate_extract.UpdateButtons()
+	extract_minor.UpdateButtons()
+	extract_major.UpdateButtons()
 
 /datum/species/jelly/luminescent/proc/update_glow(mob/living/carbon/C, intensity)
 	if(intensity)
@@ -489,7 +529,7 @@
 		name = "Eject Extract"
 		desc = "Eject your current slime extract."
 
-/datum/action/innate/integrate_extract/UpdateButtonIcon(status_only, force)
+/datum/action/innate/integrate_extract/UpdateButtons(status_only, force)
 	var/datum/species/jelly/luminescent/species = target
 	if(!species || !species.current_extract)
 		button_icon_state = "slimeconsume"
@@ -587,8 +627,10 @@
 //Stargazers are the telepathic branch of jellypeople, able to project psychic messages and to link minds with willing participants.
 
 /datum/species/jelly/stargazer
-	name = "Stargazer"
+	name = "\improper Stargazer"
+	plural_form = null
 	id = SPECIES_STARGAZER
+	examine_limb_id = SPECIES_JELLYPERSON
 	/// Special "project thought" telepathy action for stargazers.
 	var/datum/action/innate/project_thought/project_action
 
@@ -637,8 +679,8 @@
 	var/msg = tgui_input_text(telepath, title = "Telepathy")
 	if(isnull(msg))
 		return
-	if(recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(telepath, span_notice("As you try to communicate with [recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+	if(recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+		to_chat(telepath, span_warning("As you reach into [recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
 		return
 	log_directed_talk(telepath, recipient, msg, LOG_SAY, "slime telepathy")
 	to_chat(recipient, "[span_notice("You hear an alien voice in your head... ")]<font color=#008CA2>[msg]</font>")

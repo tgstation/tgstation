@@ -60,16 +60,15 @@
 		var/turf/open/floor/plating/target_plating = exposed_turf
 		if(prob(10 + target_plating.burnt + 5*target_plating.broken)) //broken or burnt plating is more susceptible to being destroyed
 			target_plating.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-	if(isfloorturf(exposed_turf))
+	if(isfloorturf(exposed_turf) && prob(reac_volume))
 		var/turf/open/floor/target_floor = exposed_turf
-		if(prob(reac_volume))
-			target_floor.make_plating()
-		else if(prob(reac_volume))
-			target_floor.burn_tile()
-		if(isfloorturf(target_floor))
-			for(var/turf/nearby_turf in RANGE_TURFS(1, target_floor))
-				if(!locate(/obj/effect/hotspot) in nearby_turf)
-					new /obj/effect/hotspot(nearby_turf)
+		target_floor.make_plating()
+	else if(prob(reac_volume))
+		exposed_turf.burn_tile()
+	if(isfloorturf(exposed_turf))
+		for(var/turf/nearby_turf in RANGE_TURFS(1, exposed_turf))
+			if(!locate(/obj/effect/hotspot) in nearby_turf)
+				new /obj/effect/hotspot(nearby_turf)
 
 /datum/reagent/clf3/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -324,7 +323,7 @@
 	if(shock_timer >= rand(5, 30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
 		M.electrocute_act(rand(5, 20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(M, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	..()
 
 /datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/L)

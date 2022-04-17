@@ -10,6 +10,7 @@
 	var/device_type = null
 	var/id = null
 	var/initialized_button = 0
+	var/silicon_access_disabled = FALSE
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 100, FIRE = 90, ACID = 70)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -111,11 +112,11 @@
 		return
 	req_access = list()
 	req_one_access = list()
-	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
-	if(!panel_open)
+	if(!silicon_access_disabled && !panel_open)
 		return attack_hand(user)
 
 /obj/machinery/button/attack_robot(mob/user)

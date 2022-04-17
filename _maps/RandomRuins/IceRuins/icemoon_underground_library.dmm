@@ -45,7 +45,7 @@
 /area/ruin/unpowered/buried_library)
 "aj" = (
 /obj/item/paper/fluff/ruins/oldstation/protosupermatter,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "ak" = (
 /turf/closed/mineral/random/snow,
@@ -59,7 +59,7 @@
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)
 "an" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "ao" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -92,7 +92,7 @@
 /area/ruin/unpowered/buried_library)
 "au" = (
 /obj/structure/fluff/paper/stack,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "av" = (
 /obj/structure/bookcase/random,
@@ -102,7 +102,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
 "ay" = (
-/obj/machinery/door/keycard/library,
+/obj/machinery/door/puzzle/keycard/library,
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)
 "az" = (
@@ -123,7 +123,7 @@
 /area/ruin/unpowered/buried_library)
 "aC" = (
 /obj/item/feather,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "aD" = (
 /turf/open/floor/carpet/black{
@@ -175,7 +175,7 @@
 "aM" = (
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/book/manual/random,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "aN" = (
 /obj/structure/statue/sandstone/venus,
@@ -224,7 +224,7 @@
 /area/ruin/unpowered/buried_library)
 "aU" = (
 /obj/item/stack/sheet/mineral/wood,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "aV" = (
 /obj/item/stack/sheet/mineral/wood,
@@ -255,11 +255,11 @@
 /area/ruin/unpowered/buried_library)
 "ba" = (
 /obj/structure/barricade/wooden/snowed,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bb" = (
 /obj/item/book/manual/random,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bc" = (
 /obj/item/feather,
@@ -300,7 +300,7 @@
 /area/ruin/unpowered/buried_library)
 "bg" = (
 /obj/item/paper/fluff/ruins/oldstation/protogun,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bh" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -311,7 +311,7 @@
 /area/ruin/unpowered/buried_library)
 "bi" = (
 /obj/structure/fluff/paper,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bj" = (
 /obj/item/book/manual/random,
@@ -335,7 +335,7 @@
 "bn" = (
 /obj/item/book/manual/random,
 /obj/item/stack/sheet/mineral/wood,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bo" = (
 /obj/item/stack/sheet/mineral/wood,
@@ -354,7 +354,7 @@
 /area/ruin/unpowered/buried_library)
 "bs" = (
 /obj/structure/girder,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bt" = (
 /obj/effect/decal/cleanable/dirt/dust,

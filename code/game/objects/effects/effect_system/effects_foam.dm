@@ -93,7 +93,7 @@
 
 /obj/effect/particle_effect/foam/Initialize(mapload)
 	. = ..()
-	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //limited by the size of the reagent holder anyway. Works without instant possibly edit in future
+	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -226,7 +226,7 @@
 /datum/effect_system/foam_spread/New()
 	..()
 	chemholder = new()
-	chemholder.create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
+	chemholder.create_reagents(1000, NO_REACT)
 
 /datum/effect_system/foam_spread/Destroy()
 	QDEL_NULL(chemholder)
@@ -278,6 +278,7 @@
 	gender = PLURAL
 	max_integrity = 20
 	can_atmos_pass = ATMOS_PASS_DENSITY
+	obj_flags = CAN_BE_HIT | BLOCK_Z_IN_DOWN | BLOCK_Z_IN_UP
 	///Var used to prevent spamming of the construction sound
 	var/next_beep = 0
 

@@ -132,6 +132,9 @@ LOG_SILICON
 ## log economy actions
 LOG_ECON
 
+## log traitor objectives
+LOG_TRAITOR
+
 ## log crew manifest to separate file
 LOG_MANIFEST
 
@@ -564,13 +567,19 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## The URL to the webhook for adminhelps to relay the urgent ahelp message to
 ## If not set, will disable urgent ahelps.
-#ADMINHELP_WEBHOOK_URL
+#URGENT_ADMINHELP_WEBHOOK_URL
+
+## See above, but for non-urgent ahelps
+#REGULAR_ADMINHELP_WEBHOOK_URL
 
 ## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
 URGENT_AHELP_COOLDOWN 300
 
 ## The message that is sent to the discord if an urgent ahelp is sent. Useful for sending a role ping.
-#URGENT_AHELP_MESSAGE Ban ban ban ban
+#URGENT_AHELP_MESSAGE
+
+## See above, but for non-urgent ahelps.
+#AHELP_MESSAGE
 
 ## The message that the player receives whenever prompted whether they want to send an urgent ahelp or not.
 #URGENT_AHELP_USER_PROMPT This'll ping the admins!

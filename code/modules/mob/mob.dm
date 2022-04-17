@@ -220,7 +220,7 @@
 			if(M != loc) // Only give the blind message to hearers that aren't the location
 				msg = blind_message
 				msg_type = MSG_AUDIBLE
-		else if(M.lighting_alpha > LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
+		else if(!HAS_TRAIT(M, TRAIT_HEAR_THROUGH_DARKNESS) && M.lighting_alpha > LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
 			msg = blind_message
 			msg_type = MSG_AUDIBLE
 		if(!msg)
@@ -797,77 +797,6 @@
 					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, REF(S))
 	return L
 
-#define MOB_FACE_DIRECTION_DELAY 1
-
-// facing verbs
-/**
- * Returns true if a mob can turn to face things
- *
- * Conditions:
- * * client.last_turn > world.time
- * * not dead or unconcious
- * * not anchored
- * * no transform not set
- * * we are not restrained
- */
-/mob/proc/canface()
-	if(world.time < client.last_turn)
-		return FALSE
-	if(stat >= UNCONSCIOUS)
-		return FALSE
-	if(anchored)
-		return FALSE
-	if(notransform)
-		return FALSE
-	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
-		return FALSE
-	return TRUE
-
-///Checks mobility move as well as parent checks
-/mob/living/canface()
-	if(!(mobility_flags & MOBILITY_MOVE))
-		return FALSE
-	return ..()
-
-/mob/dead/observer/canface()
-	return TRUE
-
-///Hidden verb to turn east
-/mob/verb/eastface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	setDir(EAST)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
-///Hidden verb to turn west
-/mob/verb/westface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	setDir(WEST)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
-///Hidden verb to turn north
-/mob/verb/northface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	setDir(NORTH)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
-///Hidden verb to turn south
-/mob/verb/southface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	setDir(SOUTH)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
 /mob/proc/swap_hand()
 	var/obj/item/held_item = get_active_held_item()
 	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
@@ -924,18 +853,39 @@
 	if(client)
 		client << output(null, "statbrowser:check_spells")
 
-///Return any anti magic atom on this mob that matches the magic type
-/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
-	if(!magic && !holy && !tinfoil)
-		return
-	var/list/protection_sources = list()
-	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, magic, holy, tinfoil, chargecost, self, protection_sources) & COMPONENT_BLOCK_MAGIC)
-		if(protection_sources.len)
-			return pick(protection_sources)
-		else
-			return src
-	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (!self && magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
-		return src
+/**
+ * Checks to see if the mob can cast normal magic spells.
+ *
+ * args:
+ * * magic_flags (optional) A bitfield with the type of magic being cast (see flags at: /datum/component/anti_magic)
+**/
+/mob/proc/can_cast_magic(magic_flags = MAGIC_RESISTANCE)
+	if(magic_flags == NONE) // magic with the NONE flag can always be cast
+		return TRUE
+
+	var/restrict_magic_flags = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, magic_flags)
+	return restrict_magic_flags == NONE
+
+/**
+ * Checks to see if the mob can block magic
+ *
+ * args:
+ * * casted_magic_flags (optional) A bitfield with the types of magic resistance being checked (see flags at: /datum/component/anti_magic)
+ * * charge_cost (optional) The cost of charge to block a spell that will be subtracted from the protection used
+**/
+/mob/proc/can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
+	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
+		return FALSE
+
+	var/list/protection_was_used = list() // this is a janky way of interrupting signals using lists
+	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost, protection_was_used) & COMPONENT_MAGIC_BLOCKED
+
+	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
+		is_magic_blocked = TRUE
+	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
+		is_magic_blocked = TRUE
+
+	return is_magic_blocked
 
 /**
  * Buckle a living mob to this mob. Also turns you to face the other mob
@@ -975,8 +925,8 @@
 		return TRUE
 
 	//range check
-	if(!interaction_range)
-		return TRUE
+	if(!interaction_range) // If you don't have extra length, GO AWAY
+		return FALSE
 	var/turf/our_turf = get_turf(src)
 	var/turf/their_turf = get_turf(A)
 	if (!our_turf || !their_turf)
@@ -1230,7 +1180,7 @@
  */
 /mob/vv_get_var(var_name)
 	switch(var_name)
-		if("logging")
+		if(NAMEOF(src, logging))
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
 
@@ -1400,3 +1350,9 @@
 
 	data["memories"] = memories
 	return data
+
+/mob/verb/view_skills()
+	set category = "IC"
+	set name = "View Skills"
+
+	mind?.print_levels(src)

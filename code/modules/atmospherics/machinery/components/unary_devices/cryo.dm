@@ -121,6 +121,8 @@
 
 	occupant_vis = new(null, src)
 	vis_contents += occupant_vis
+	if(airs[1])
+		airs[1].volume = CELL_VOLUME * 0.5
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/set_occupant(atom/movable/new_occupant)
 	. = ..()
@@ -207,12 +209,12 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	open_machine()
 
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/set_on(new_value)
-	if(on == new_value)
+/obj/machinery/atmospherics/components/unary/cryo_cell/set_on(active)
+	if(on == active)
 		return
-	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, new_value)
+	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, active)
 	. = on
-	on = new_value
+	on = active
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
@@ -262,10 +264,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 	var/datum/gas_mixture/air1 = airs[1]
 
-	if(air1.gases[/datum/gas/oxygen][MOLES] > CRYO_MIN_GAS_MOLES)
-		if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-			mob_occupant.Sleeping((mob_occupant.bodytemperature * sleep_factor) * 1000 * delta_time)
-			mob_occupant.Unconscious((mob_occupant.bodytemperature * unconscious_factor) * 1000 * delta_time)
+	if(air1.total_moles() > CRYO_MIN_GAS_MOLES)
 		if(beaker)
 			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
 			consume_gas = TRUE
@@ -279,7 +278,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 	var/datum/gas_mixture/air1 = airs[1]
 
-	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.gases[/datum/gas/oxygen][MOLES] < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+	if(!nodes[1] || !airs[1] || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		var/msg = "Insufficient cryogenic gas, shutting down."
 		radio.talk_into(src, msg, radio_channel)
 		set_on(FALSE)
@@ -307,17 +306,24 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 				var/mob/living/carbon/human/humi = mob_occupant
 				humi.adjust_coretemperature(humi.bodytemperature - humi.coretemperature)
 
-		if(consume_gas) // Transferring reagent costs us extra gas
-			air1.gases[/datum/gas/oxygen][MOLES] -= max(0, 2 / efficiency + 1 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
-			consume_gas = FALSE
-		if(!consume_gas)
-			air1.gases[/datum/gas/oxygen][MOLES] -= max(0, 2 / efficiency)
+
 		air1.garbage_collect()
 
 		if(air1.temperature > 2000)
 			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
 
 		update_parents()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+
+	if(breath_request <= 0)
+		return null
+	var/datum/gas_mixture/air1 = airs[1]
+	var/breath_percentage = breath_request / air1.volume
+	return air1.remove(air1.total_moles() * breath_percentage)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/assume_air(datum/gas_mixture/giver)
+	airs[1].merge(giver)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
@@ -375,6 +381,28 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		if (do_after(user, 2.5 SECONDS, target=target))
 			close_machine(target)
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)
+
+	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", tool)))
+		update_appearance()
+	else
+		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
+		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
+	if(on || occupant || state_open)
+		return FALSE
+	if(default_pry_open(tool) || default_deconstruction_crowbar(tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/wrench_act(mob/living/user, obj/item/tool)
+	if(on || occupant || state_open)
+		return FALSE
+	if(default_change_direction_wrench(user, tool))
+		update_appearance()
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))
 		. = 1 //no afterattack
@@ -388,16 +416,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 							span_notice("You place [I] in [src]."))
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
-		return
-	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I)) \
-		|| default_change_direction_wrench(user, I) \
-		|| default_pry_open(I) \
-		|| default_deconstruction_crowbar(I))
-		update_appearance()
-		return
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
-		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
 		return
 	return ..()
 

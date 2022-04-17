@@ -64,7 +64,7 @@
 	name = "clown's tears"
 	desc = "Not very funny."
 	icon_state = "clownstears"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/banana = 10, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 16, /datum/reagent/consumable/clownstears = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/banana = 10, /datum/reagent/lube = 5, /datum/reagent/consumable/nutriment/vitamin = 16, /datum/reagent/consumable/clownstears = 10)
 	tastes = list("a bad joke" = 1)
 	foodtypes = FRUIT | SUGAR
 
@@ -298,3 +298,12 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("oats" = 1, "milk" = 1)
 	foodtypes = DAIRY | GRAIN | BREAKFAST
+
+/obj/item/food/soup/zurek
+	name = "zurek"
+	desc = "A traditional Polish soup composed of vegetables, meat, and an egg. Goes great with bread."
+	icon_state = "zurek"
+	food_reagents = list (/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2)
+	tastes = list("creamy vegetables"= 2, "sausage" = 1)
+	foodtypes = VEGETABLES | MEAT | GRAIN | BREAKFAST
+	

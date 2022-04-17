@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "On TramStation, the Ordnance Burning Room (for your Tritium) no longer owns that bit of space where noxious gases are meant to vent out into."

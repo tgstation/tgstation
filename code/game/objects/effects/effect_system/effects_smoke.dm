@@ -33,7 +33,7 @@
 
 /obj/effect/particle_effect/smoke/Initialize(mapload)
 	. = ..()
-	create_reagents(500)
+	create_reagents(1000)
 	START_PROCESSING(SSobj, src)
 
 
@@ -272,8 +272,7 @@
 /datum/effect_system/smoke_spread/chem/New()
 	..()
 	chemholder = new()
-	//This is a safety for now to prevent smoke generating more smoke as the smoke reagents react in the smoke. This is prevented naturally from happening even if this is off, but I want to be sure that any edge cases are prevented before I get a chance to rework smoke reactions (specifically adding water or reacting away stabilizing agent in the middle of it).
-	chemholder.create_reagents(500, REAGENT_HOLDER_INSTANT_REACT)
+	chemholder.create_reagents(1000, NO_REACT)
 
 /datum/effect_system/smoke_spread/chem/Destroy()
 	QDEL_NULL(chemholder)
@@ -372,3 +371,11 @@
 
 /datum/effect_system/smoke_spread/quick
 	effect_type = /obj/effect/particle_effect/smoke/quick
+
+/obj/effect/particle_effect/smoke/chem/quick
+	lifetime = 2 //under lifetime 1, this kills itself the first time it processes, not working. i hate smoke code
+	opaque = FALSE
+	alpha = 100
+
+/datum/effect_system/smoke_spread/chem/quick
+	effect_type = /obj/effect/particle_effect/smoke/chem/quick

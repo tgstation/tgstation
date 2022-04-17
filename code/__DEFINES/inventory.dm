@@ -111,22 +111,27 @@
 #define RIGHT_HANDS 2
 
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
+/// For when there's simply no need for a female version of this uniform.
 #define NO_FEMALE_UNIFORM 0
-#define FEMALE_UNIFORM_FULL 1
-#define FEMALE_UNIFORM_TOP 2
+/// For the game to take off everything, disregards other flags.
+#define FEMALE_UNIFORM_FULL (1<<0)
+/// For when you really need to avoid the game cutting off that one pixel between the legs, to avoid the comeback of the infamous "dixel".
+#define FEMALE_UNIFORM_TOP_ONLY (1<<1)
+/// For when you don't want the "breast" effect to be applied (the one that cuts two pixels in the middle of the front of the uniform when facing east or west).
+#define FEMALE_UNIFORM_NO_BREASTS (1<<2)
 
 //flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
 #define NORMAL_STYLE 0
 #define ALT_STYLE 1
 #define DIGITIGRADE_STYLE 2
 
-//flags for outfits that have mutantrace variants (try not to use this): Currently only needed if you're trying to add tight fitting bootyshorts
-#define NO_MUTANTRACE_VARIATION 0
-#define MUTANTRACE_VARIATION 1
-
-#define NOT_DIGITIGRADE 0
-#define FULL_DIGITIGRADE 1
-#define SQUISHED_DIGITIGRADE 2
+//Flags (actual flags, fucker ^) for /obj/item/var/supports_variations_flags
+///No alternative sprites based on bodytype
+#define CLOTHING_NO_VARIATION (1<<0)
+///Has a sprite for digitigrade legs specifically.
+#define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
+///The sprite works fine for digitigrade legs as-is.
+#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)

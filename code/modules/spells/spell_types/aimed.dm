@@ -46,7 +46,7 @@
 
 	. = ..()
 	action.button_icon_state = "[base_icon_state][active]"
-	action.UpdateButtonIcon()
+	action.UpdateButtons()
 
 /obj/effect/proc_holder/spell/aimed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
@@ -144,7 +144,7 @@
 	cooldown_min = 10
 	projectile_amount = 5
 	projectiles_per_fire = 7
-	projectile_type = /obj/projectile/spellcard
+	projectile_type = /obj/projectile/magic/spellcard
 	base_icon_state = "spellcard"
 	action_icon_state = "spellcard0"
 	var/datum/weakref/current_target_weakref

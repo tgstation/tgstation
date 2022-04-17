@@ -202,10 +202,10 @@
 	. = ..()
 	if(!.)
 		return
-	var/kiss_type = /obj/item/kisser
+	var/kiss_type = /obj/item/hand_item/kisser
 
 	if(HAS_TRAIT(user, TRAIT_KISS_OF_DEATH))
-		kiss_type = /obj/item/kisser/death
+		kiss_type = /obj/item/hand_item/kisser/death
 
 	var/obj/item/kiss_blower = new kiss_type(user)
 	if(user.put_in_hands(kiss_blower))

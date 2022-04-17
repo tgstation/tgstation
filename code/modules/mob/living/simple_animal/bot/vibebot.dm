@@ -7,38 +7,30 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 	light_system = MOVABLE_LIGHT
 	light_range = 7
 	light_power = 3
 
 	hackables = "vibing scanners"
-	bot_mode_flags = ~BOT_MODE_PAI_CONTROLLABLE
-	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
-	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
+	radio_key = /obj/item/encryptionkey/headset_service
+	radio_channel = RADIO_CHANNEL_SERVICE
 	bot_type = VIBE_BOT
-	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC // show jobs
+	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	path_image_color = "#2cac12"
 
+	///The vibe ability given to vibebots, so sentient ones can still change their color.
+	var/datum/action/innate/vibe/vibe_ability
 
 /mob/living/simple_animal/bot/vibebot/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	vibe_ability = new(src)
+	vibe_ability.Grant(src)
 
-/mob/living/simple_animal/bot/vibebot/turn_off()
-	. = ..()
-	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	update_appearance()
-
-/mob/living/simple_animal/bot/vibebot/proc/Vibe()
-	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	add_atom_colour("#[random_color()]", TEMPORARY_COLOUR_PRIORITY)
-	set_light_color(color)
-	update_appearance()
-
-/mob/living/simple_animal/bot/vibebot/proc/retaliate(mob/living/carbon/human/H)
-
+/mob/living/simple_animal/bot/vibebot/Destroy()
+	QDEL_NULL(vibe_ability)
+	return ..()
 
 /mob/living/simple_animal/bot/vibebot/handle_automated_action()
 	. = ..()
@@ -46,12 +38,58 @@
 		return
 
 	if(bot_mode_flags & BOT_MODE_ON)
-		Vibe()
+		vibe_ability.Trigger()
 
 	if(!(bot_mode_flags & BOT_MODE_AUTOPATROL))
 		return
 
-	if(mode == BOT_IDLE || mode == BOT_START_PATROL)
-		start_patrol()
-	if(mode == BOT_PATROL)
-		bot_patrol()
+	switch(mode)
+		if(BOT_IDLE, BOT_START_PATROL)
+			start_patrol()
+		if(BOT_PATROL)
+			bot_patrol()
+
+/mob/living/simple_animal/bot/vibebot/turn_off()
+	vibe_ability.remove_colors()
+	return ..()
+
+/**
+ * Vibebot's vibe ability
+ *
+ * Given to vibebots so sentient ones can change/reset thier colors at will.
+ */
+/datum/action/innate/vibe
+	name = "Vibe"
+	desc = "LMB: Change vibe color. RMB: Reset vibe color."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "funk"
+
+/datum/action/innate/vibe/IsAvailable()
+	. = ..()
+	if(!.)
+		return FALSE
+	if(isbot(owner))
+		var/mob/living/simple_animal/bot/bot_mob = owner
+		if(!(bot_mob.bot_mode_flags & BOT_MODE_ON))
+			return FALSE
+	return TRUE
+
+/datum/action/innate/vibe/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+	if(trigger_flags & TRIGGER_SECONDARY_ACTION)
+		remove_colors()
+	else
+		vibe()
+
+///Gives a random color
+/datum/action/innate/vibe/proc/vibe()
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	owner.add_atom_colour("#[random_color()]", TEMPORARY_COLOUR_PRIORITY)
+	owner.set_light_color(owner.color)
+
+///Removes all colors
+/datum/action/innate/vibe/proc/remove_colors()
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	owner.set_light_color(null)

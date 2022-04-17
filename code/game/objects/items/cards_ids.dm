@@ -105,12 +105,19 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
+	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
+	registered_account = blank_bank_account
+	blank_bank_account.account_job = new /datum/job/unassigned
+	registered_account.replaceable = TRUE
+
 	// Applying the trim updates the label and icon, so don't do this twice.
 	if(ispath(trim))
 		SSid_access.apply_trim_to_card(src, trim)
 	else
 		update_label()
 		update_icon()
+
+	register_context()
 
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 
@@ -406,39 +413,61 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name][minor]."), span_notice("You show \the [src.name][minor]."))
 	add_fingerprint(user)
 
-/obj/item/card/id/attack_hand_secondary(mob/user, list/modifiers)
+/obj/item/card/id/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(my_store)
-		my_store.dissapate()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!proximity_flag || !check_allowed_items(target) || !isfloorturf(target))
+		return
+	try_project_paystand(user, target)
+
+/obj/item/card/id/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	try_project_paystand(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/card/id/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item != src)
+		return
+
+	context[SCREENTIP_CONTEXT_LMB] = "Show ID"
+	context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 	if(!registered_account || !registered_account.account_job)
 		balloon_alert(user, "no account")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 	/// Determines where the holopay will be placed based on tile contents
 	var/turf/projection
 	var/turf/step_ahead = get_step(user, user.dir)
 	var/turf/user_loc = user.loc
-	if(can_proj_holopay(step_ahead))
+	if(target && can_proj_holopay(target))
+		projection = target
+	else if(can_proj_holopay(step_ahead))
 		projection = step_ahead
 	else if(can_proj_holopay(user_loc))
 		projection = user_loc
 	if(!projection)
 		balloon_alert(user, "no space")
 		to_chat(user, span_warning("You need to be standing on or near an open tile to do this."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 	/// Success: Valid tile for holopay placement
+	if(my_store)
+		my_store.dissipate()
 	var/obj/structure/holopay/new_store = new(projection)
 	if(new_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
 		playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
 		my_store = new_store
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * Determines whether a new holopay can be placed on the given turf.
@@ -616,15 +645,16 @@
 		return FALSE
 	if(old_account)
 		old_account.bank_cards -= src
+		account.account_balance += old_account.account_balance
 	account.bank_cards += src
 	registered_account = account
-	to_chat(user, span_notice("The provided account has been linked to this ID card."))
+	to_chat(user, span_notice("The provided account has been linked to this ID card. It contains [account.account_balance] credits."))
 	return TRUE
 
 /obj/item/card/id/AltClick(mob/living/user)
 	if(!alt_click_can_use_id(user))
 		return
-	if(!registered_account)
+	if(!registered_account || registered_account.replaceable)
 		set_new_account(user)
 		return
 	if (registered_account.being_dumped)
@@ -656,31 +686,32 @@
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
 
 /obj/item/card/id/examine_more(mob/user)
-	var/list/msg = list(span_notice("<i>You examine [src] closer, and note the following...</i>"))
+	. = ..()
+	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
 	if(registered_age)
-		msg += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[span_danger("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""]"
+		. += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[span_danger("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""]"
 	if(mining_points)
-		msg += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
-		msg += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				msg += "The [D.account_holder] reports a balance of [D.account_balance] cr."
-		msg += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
-		msg += span_info("You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.")
+				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
+		. += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
+		. += span_info("You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.")
 		if(registered_account.civilian_bounty)
-			msg += "<span class='info'><b>There is an active civilian bounty.</b>"
-			msg += span_info("<i>[registered_account.bounty_text()]</i>")
-			msg += span_info("Quantity: [registered_account.bounty_num()]")
-			msg += span_info("Reward: [registered_account.bounty_value()]")
+			. += "<span class='info'><b>There is an active civilian bounty.</b>"
+			. += span_info("<i>[registered_account.bounty_text()]</i>")
+			. += span_info("Quantity: [registered_account.bounty_num()]")
+			. += span_info("Reward: [registered_account.bounty_value()]")
 		if(registered_account.account_holder == user.real_name)
-			msg += span_boldnotice("If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.")
+			. += span_boldnotice("If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.")
 	else
-		msg += span_info("There is no registered account linked to this card. Alt-Click to add one.")
+		. += span_info("There is no registered account linked to this card. Alt-Click to add one.")
 
-	return msg
+	return .
 
 /obj/item/card/id/GetAccess()
 	return access.Copy()

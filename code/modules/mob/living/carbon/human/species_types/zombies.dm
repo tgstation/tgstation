@@ -3,7 +3,7 @@
 /datum/species/zombie
 	// 1spooky
 	name = "High-Functioning Zombie"
-	id = SPECIES_ZOMBIE_HALLOWEEN
+	id = SPECIES_ZOMBIE
 	say_mod = "moans"
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
@@ -36,15 +36,50 @@
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
 	bodytemp_cold_damage_limit = MINIMUM_TEMPERATURE_TO_MOVE // take damage below minimum movement temp
 
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/zombie,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/zombie,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/zombie,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/zombie,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/zombie,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/zombie
+	)
+
+/// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
+/datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
+	return
+
 /datum/species/zombie/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()
 
+/datum/species/zombie/get_species_description()
+	return "A rotting zombie! They descend upon Space Station Thirteen Every year to spook the crew! \"Sincerely, the Zombies!\""
+
+/datum/species/zombie/get_species_lore()
+	return list("Zombies have long lasting beef with Botanists. Their last incident involving a lawn with defensive plants has left them very unhinged.")
+
+// Override for the default temperature perks, so we can establish that they don't care about temperature very much
+/datum/species/zombie/create_pref_temperature_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = "thermometer-half",
+		SPECIES_PERK_NAME = "No Body Temperature",
+		SPECIES_PERK_DESC = "Having long since departed, Zombies do not have anything \
+			regulating their body temperature anymore. This means that \
+			the environment decides their body temperature - which they don't mind at \
+			all, until it gets a bit too hot.",
+	))
+
+	return to_add
+
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
-	id = SPECIES_ZOMBIE
-	limbs_id = "zombie"
+	id = SPECIES_ZOMBIE_INFECTIOUS
+	examine_limb_id = SPECIES_ZOMBIE
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6
@@ -54,10 +89,6 @@
 	var/heal_rate = 0.5
 	/// The cooldown before the zombie can start regenerating
 	COOLDOWN_DECLARE(regen_cooldown)
-
-/// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
-/datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
-	return
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
@@ -110,19 +141,38 @@
 		infection.Insert(C)
 
 // Your skin falls off
-/datum/species/krokodil_addict
-	name = "Human"
-	id = SPECIES_ADDICT
-	limbs_id = "zombie" //They look like zombies
+/datum/species/human/krokodil_addict
+	name = "\improper Human"
+	id = SPECIES_ZOMBIE_KROKODIL
+	examine_limb_id = SPECIES_HUMAN
 	sexes = 0
-	meat = /obj/item/food/meat/slab/human/mutant/zombie
 	mutanttongue = /obj/item/organ/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
-	species_traits = list(HAS_FLESH, HAS_BONE)
-	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_EASILY_WOUNDED,
+
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/zombie,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/zombie,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/zombie,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/zombie,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/zombie,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/zombie
 	)
+
+/datum/species/human/krokodil_addict/replace_body(mob/living/carbon/target, datum/species/new_species)
+	..()
+	var/skintone
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		skintone = human_target.skin_tone
+
+	for(var/obj/item/bodypart/limb as anything in target.bodyparts)
+		if(IS_ORGANIC_LIMB(limb))
+			if(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST)
+				limb.is_dimorphic = TRUE
+			limb.skin_tone ||= skintone
+			limb.limb_id = SPECIES_HUMAN
+			limb.should_draw_greyscale = TRUE
+			limb.name = "human [parse_zone(limb.body_zone)]"
+			limb.update_limb()
 
 #undef REGENERATION_DELAY

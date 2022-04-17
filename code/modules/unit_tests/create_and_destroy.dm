@@ -25,6 +25,8 @@
 		/mob/dview,
 		//Requires a circuit url
 		/obj/effect/mapping_helpers/circuit_spawner,
+		//Template type
+		/obj/item/bodypart,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers/atom_injector)
@@ -37,8 +39,6 @@
 	ignore += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier
 	ignore += typesof(/obj/item/poster/wanted)
-	//We can't pass a mind into this
-	ignore += typesof(/obj/item/phylactery)
 	//This expects a seed, we can't pass it
 	ignore += typesof(/obj/item/food/grown)
 	//Nothing to hallucinate if there's nothing to hallicinate
@@ -52,6 +52,8 @@
 	ignore += typesof(/obj/effect/pod_landingzone)
 	//It's a trapdoor to nowhere
 	ignore += typesof(/obj/effect/mapping_helpers/trapdoor_placer)
+	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
+	ignore += typesof(/obj/effect/baseturf_helper)
 	//There's no shapeshift to hold
 	ignore += typesof(/obj/shapeshift_holder)
 	//No tauma to pass in

@@ -371,7 +371,7 @@
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.Jitter(20)
-	target.stuttering += 20
+	target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
 
 /obj/item/melee/baton/security
 	name = "stun baton"
@@ -506,7 +506,7 @@
 	if(cell?.charge >= cell_hit_cost)
 		active = !active
 		balloon_alert(user, "turned [active ? "on" : "off"]")
-		playsound(src, "sparks", 75, TRUE, -1)
+		playsound(src, SFX_SPARKS, 75, TRUE, -1)
 	else
 		active = FALSE
 		if(!cell)
@@ -526,7 +526,7 @@
 		//we're below minimum, turn off
 		active = FALSE
 		update_appearance()
-		playsound(src, "sparks", 75, TRUE, -1)
+		playsound(src, SFX_SPARKS, 75, TRUE, -1)
 
 /obj/item/melee/baton/security/clumsy_check(mob/living/carbon/human/user)
 	. = ..()
@@ -564,7 +564,7 @@
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.Jitter(20)
 	target.set_confusion(max(10, target.get_confusion()))
-	target.stuttering = max(8, target.stuttering)
+	target.set_timed_status_effect(16 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 2 SECONDS)
@@ -599,6 +599,8 @@
 
 /obj/item/melee/baton/security/emp_act(severity)
 	. = ..()
+	if (!cell)
+		return
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
 	if (cell.charge >= cell_hit_cost)
@@ -609,8 +611,10 @@
 			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
 
 /obj/item/melee/baton/security/proc/scramble_mode()
+	if (!cell || cell.charge < cell_hit_cost)
+		return
 	active = !active
-	playsound(src, "sparks", 75, TRUE, -1)
+	playsound(src, SFX_SPARKS, 75, TRUE, -1)
 	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.

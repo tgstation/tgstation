@@ -246,7 +246,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, span_warning("You short out the access controller."))
 
 /obj/machinery/shieldgen/update_icon_state()
@@ -393,9 +393,9 @@
 	return ..()
 
 
-/obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	. |= default_unfasten_wrench(user, I, 0)
+	. |= default_unfasten_wrench(user, tool, time = 0)
 	var/turf/T = get_turf(src)
 	update_cable_icons_on_turf(T)
 	if(. == SUCCESSFUL_UNFASTEN && anchored)
@@ -450,7 +450,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, span_warning("You short out the access controller."))
 
 //////////////Containment Field START

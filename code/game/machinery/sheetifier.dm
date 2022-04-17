@@ -45,9 +45,12 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all() //Returns all as sheets
 
+/obj/machinery/sheetifier/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/sheetifier/attackby(obj/item/I, mob/user, params)
-	if(default_unfasten_wrench(user, I))
-		return
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		update_appearance()
 		return

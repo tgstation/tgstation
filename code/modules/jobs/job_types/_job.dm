@@ -188,7 +188,7 @@
 	var/datum/bank_account/bank_account = new(real_name, equipping, dna.species.payday_modifier)
 	bank_account.payday(STARTING_PAYCHECKS, TRUE)
 	account_id = bank_account.account_id
-
+	bank_account.replaceable = FALSE
 	dress_up_as_job(equipping)
 
 
@@ -436,6 +436,7 @@
 
 		if (require_human)
 			set_species(/datum/species/human)
+			dna.species.roundstart_changed = TRUE
 
 		if(GLOB.current_anonymous_theme)
 			fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src))
@@ -444,8 +445,9 @@
 		if(require_human)
 			player_client.prefs.randomise["species"] = FALSE
 		player_client.prefs.safe_transfer_prefs_to(src, TRUE, is_antag)
-		if (require_human && !ishumanbasic(src))
+		if(require_human && !ishumanbasic(src))
 			set_species(/datum/species/human)
+			dna.species.roundstart_changed = TRUE
 			apply_pref_name(/datum/preference/name/backup_human, player_client)
 		if(CONFIG_GET(flag/force_random_names))
 			var/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)

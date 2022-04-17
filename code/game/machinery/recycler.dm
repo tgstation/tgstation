@@ -68,15 +68,16 @@
 	The safety-mode light is [safety_mode ? "on" : "off"].
 	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
+/obj/machinery/recycler/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 
 	if(default_pry_open(I))
-		return
-
-	if(default_unfasten_wrench(user, I))
 		return
 
 	if(default_deconstruction_crowbar(I))
@@ -90,7 +91,7 @@
 	if(safety_mode)
 		safety_mode = FALSE
 		update_appearance()
-	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	to_chat(user, span_notice("You use the cryptographic sequencer on [src]."))
 
 /obj/machinery/recycler/update_icon_state()
@@ -211,6 +212,9 @@
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
+
+/obj/machinery/recycler/on_deconstruction()
+	safety_mode = TRUE
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"

@@ -821,7 +821,7 @@
 /obj/item/storage/box/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, "rustle", 50, TRUE, -5)
+	playsound(loc, SFX_RUSTLE, 50, TRUE, -5)
 	user.visible_message(span_notice("[user] hugs \the [src]."),span_notice("You hug \the [src]."))
 
 /////clown box & honkbot assembly
@@ -1097,6 +1097,11 @@
 		/obj/item/stock_parts/micro_laser/quadultra = 3,
 		/obj/item/stock_parts/matter_bin/bluespace = 3)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/syndie_kit/space_dragon/PopulateContents()
+	new /obj/item/dna_probe/carp_scanner(src)
+	new /obj/item/clothing/suit/hooded/carp_costume/spaceproof/old(src)
+	new /obj/item/clothing/mask/gas/carp(src)
 
 /obj/item/storage/box/dishdrive
 	name = "DIY Dish Drive Kit"

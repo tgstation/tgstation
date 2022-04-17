@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(persistence)
 
 	var/successfully_loaded_engravings = 0
 
-	var/list/viable_turfs = get_area_turfs(/area/maintenance) + get_area_turfs(/area/security/prison)
+	var/list/viable_turfs = get_area_turfs(/area/maintenance, subtypes = TRUE) + get_area_turfs(/area/security/prison, subtypes = TRUE)
 	var/list/turfs_to_pick_from = list()
 
 	for(var/turf/T as anything in viable_turfs)
@@ -423,7 +423,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/SaveScars()
 	for(var/i in GLOB.joined_player_list)
 		var/mob/living/carbon/human/ending_human = get_mob_by_ckey(i)
-		if(!istype(ending_human) || !ending_human.mind?.original_character_slot_index || !ending_human.client || !ending_human.client.prefs || !ending_human.client.prefs.persistent_scars)
+		if(!istype(ending_human) || !ending_human.mind?.original_character_slot_index || !ending_human.client?.prefs.read_preference(/datum/preference/toggle/persistent_scars))
 			continue
 
 		var/mob/living/carbon/human/original_human = ending_human.mind.original_character.resolve()

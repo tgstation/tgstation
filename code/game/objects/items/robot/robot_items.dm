@@ -23,7 +23,7 @@
 
 	user.do_attack_animation(M)
 	M.Paralyze(100)
-	M.apply_effect(EFFECT_STUTTER, 5)
+	M.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
 
 	M.visible_message(span_danger("[user] prods [M] with [src]!"), \
 					span_userdanger("[user] prods you with [src]!"))
@@ -327,12 +327,12 @@
 			switch(bang_effect)
 				if(1)
 					C.add_confusion(5)
-					C.stuttering += 10
+					C.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter)
 					C.Jitter(10)
 				if(2)
 					C.Paralyze(40)
 					C.add_confusion(10)
-					C.stuttering += 15
+					C.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/stutter)
 					C.Jitter(25)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
@@ -355,8 +355,6 @@
 
 	var/firedelay = 0
 	var/hitspeed = 2
-
-/obj/item/borg/lollipop/clown
 
 /obj/item/borg/lollipop/equipped()
 	. = ..()
@@ -391,7 +389,7 @@
 	var/obj/item/food_item
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE)
-			food_item = new /obj/item/food/lollipop(T)
+			food_item = new /obj/item/food/lollipop/cyborg(T)
 		if(DISPENSE_ICECREAM_MODE)
 			food_item = new /obj/item/food/icecream(T, list(ICE_CREAM_VANILLA))
 			food_item.desc = "Eat the ice cream."

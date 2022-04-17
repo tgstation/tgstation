@@ -1,4 +1,0 @@
-author: "unit0016"
-delete-after: True
-changes: 
-  - bugfix: "The AI no longer can start a full OSI investigation when the tips of your combat boots hit Kilostation, thanks to the fact the firedoors that formerly automatically triggered the fire alarm whenever you use the external airlocks are gone."

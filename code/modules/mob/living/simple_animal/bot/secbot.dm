@@ -64,7 +64,7 @@
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
 	health = 45
-	bot_mode_flags = ~BOT_MODE_AUTOPATROL
+	bot_mode_flags = ~(BOT_MODE_PAI_CONTROLLABLE|BOT_MODE_AUTOPATROL)
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
@@ -81,7 +81,7 @@
 	name = "Officer Pingsky"
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = RADIO_CHANNEL_AI_PRIVATE
-	bot_mode_flags = ~BOT_MODE_AUTOPATROL
+	bot_mode_flags = ~(BOT_MODE_PAI_CONTROLLABLE|BOT_MODE_AUTOPATROL)
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/genesky
@@ -97,7 +97,7 @@
 	new /obj/item/stock_parts/cell/potato(Tsec)
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/drinking_oil = new(Tsec)
 	drinking_oil.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/secbot/Initialize(mapload)
 	. = ..()
@@ -290,7 +290,7 @@
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new cuff_type(current_target))
 		current_target.update_handcuffed()
-		playsound(src, "law", 50, FALSE)
+		playsound(src, SFX_LAW, 50, FALSE)
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
@@ -303,13 +303,13 @@
 	if(harm)
 		weapon.attack(current_target, src)
 	if(ishuman(current_target))
-		current_target.stuttering = 5
+		current_target.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
 		current_target.Paralyze(100)
 		var/mob/living/carbon/human/human_target = current_target
 		threat = human_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 	else
 		current_target.Paralyze(100)
-		current_target.stuttering = 5
+		current_target.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
 		threat = current_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 
 	log_combat(src, target, "stunned")
@@ -464,7 +464,6 @@
 	return FALSE
 
 /mob/living/simple_animal/bot/secbot/explode()
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 	switch(bot_type)
 		if(ADVANCED_SEC_BOT)
@@ -499,10 +498,8 @@
 			new /obj/item/assembly/prox_sensor(Tsec)
 			drop_part(baton_type, Tsec)
 
-	do_sparks(3, TRUE, src)
-
 	new /obj/effect/decal/cleanable/oil(loc)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	..()

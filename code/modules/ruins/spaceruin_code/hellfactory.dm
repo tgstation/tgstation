@@ -1,4 +1,4 @@
-/obj/machinery/door/keycard/office
+/obj/machinery/door/puzzle/keycard/office
 	name = "management airlock"
 	desc = "The boss man gets the best stuff. Always and forever."
 	puzzle_id = "factory1"
@@ -9,7 +9,7 @@
 	color = "#f05812"
 	puzzle_id = "factory1"
 
-/obj/machinery/door/keycard/stockroom
+/obj/machinery/door/puzzle/keycard/stockroom
 	name = "stockroom airlock"
 	desc = "The boss man gets the best stuff. Always and forever."
 	puzzle_id = "factory2"
@@ -20,7 +20,7 @@
 	color = "#1272f0"
 	puzzle_id = "factory2"
 
-/obj/machinery/door/keycard/entry
+/obj/machinery/door/puzzle/keycard/entry
 	name = "secure airlock"
 	desc = "The boss man gets the best stuff. Always and forever."
 	puzzle_id = "factory3"

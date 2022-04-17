@@ -71,7 +71,7 @@
 		/obj/item/food/cheese_curds = 1,
 		/obj/item/food/soup/vegetarian_chili = 1,
 		/obj/item/food/onion_slice = 1,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/fries = 1
 	)
 	result = /obj/item/food/loaded_curds
@@ -92,7 +92,7 @@
 		/obj/item/food/pesto = 1,
 		/obj/item/food/spaghetti/boiledspaghetti = 2,
 		/obj/item/food/bechamel_sauce = 1,
-		/obj/item/food/firm_cheese = 1
+		/obj/item/food/firm_cheese_slice = 1
 	)
 	result = /obj/item/food/raw_green_lasagne
 	subcategory = CAT_MOTH
@@ -126,7 +126,7 @@
 		/obj/item/food/grown/chili = 2,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/onion_slice = 2,
-		/obj/item/food/cheese = 1
+		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/fiesta_corn_skillet
 	subcategory = CAT_MOTH
@@ -146,7 +146,7 @@
 	name = "Mozzarella sticks"
 	reqs = list(
 		/obj/item/food/mozzarella = 1,
-		/obj/item/food/breadslice = 2,
+		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/tomato_sauce = 1
 	)
 	result = /obj/item/food/mozzarella_sticks
@@ -201,7 +201,7 @@
 /datum/crafting_recipe/food/moth_cheese_soup
 	name = "Ælosterrmæsch (Cheese soup)"
 	reqs = list(
-		/obj/item/food/cheese = 2,
+		/obj/item/food/cheese/wedge = 2,
 		/obj/item/food/butter = 1,
 		/obj/item/food/grown/potato/sweet = 1,
 		/datum/reagent/consumable/flour = 5,
@@ -309,7 +309,7 @@
 	reqs = list(
 		/obj/item/food/soup/cornmeal_porridge = 1,
 		/datum/reagent/consumable/milk = 5,
-		/obj/item/food/firm_cheese = 1,
+		/obj/item/food/firm_cheese_slice = 1,
 		/obj/item/food/curd_cheese = 1,
 		/obj/item/food/butter = 1
 	)
@@ -321,7 +321,7 @@
 	reqs = list(
 		/obj/item/food/soup/cheesy_porridge = 1,
 		/obj/item/food/grown/eggplant = 1,
-		/obj/item/food/breadslice = 2,
+		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/tomato_sauce = 1,
 		/obj/item/food/mozzarella = 1
 	)
@@ -345,7 +345,7 @@
 	reqs = list(
 		/obj/item/food/mothic_salad = 1,
 		/obj/item/food/grilled_cheese = 1,
-		/obj/item/food/breadslice = 1,
+		/obj/item/food/breadslice/plain = 1,
 		/obj/item/food/grown/carrot = 1,
 		/datum/reagent/consumable/quality_oil = 2,
 		/datum/reagent/consumable/vinegar = 2
@@ -384,7 +384,7 @@
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/tomato_sauce = 1,
 		/obj/item/food/mozzarella = 1,
-		/obj/item/food/firm_cheese = 1,
+		/obj/item/food/firm_cheese_slice = 1,
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_margherita
@@ -395,7 +395,7 @@
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/datum/reagent/consumable/bbqsauce = 10,
-		/obj/item/food/firm_cheese = 1,
+		/obj/item/food/firm_cheese_slice = 1,
 		/obj/item/food/oven_baked_corn = 1,
 		/obj/item/food/grown/ghost_chili = 1
 	)
@@ -407,8 +407,8 @@
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/tomato_sauce = 1,
-		/obj/item/food/firm_cheese = 1,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/firm_cheese_slice = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/mozzarella = 1,
 		/obj/item/food/herby_cheese = 1,
 		/obj/item/food/cheese_curds = 1
@@ -421,7 +421,7 @@
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/bechamel_sauce = 1,
-		/obj/item/food/firm_cheese = 1,
+		/obj/item/food/firm_cheese_slice = 1,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/mozzarella = 1,
 		/obj/item/food/grown/herbs = 1
@@ -483,4 +483,26 @@
 		/datum/reagent/consumable/sugar = 5
 	)
 	result = /obj/item/food/soup/red_porridge
+	subcategory = CAT_MOTH
+
+/datum/crafting_recipe/food/chili_sin_carne
+	name = "Chili sin carne (vegetarian chili)"
+	reqs = list(
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/salt = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/tomato = 1
+	)
+	result = /obj/item/food/soup/vegetarian_chili
+	subcategory = CAT_MOTH
+
+/datum/crafting_recipe/food/moffin
+	name = "Moffin"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/food/pastrybase = 1,
+		/obj/item/stack/sheet/cloth = 1,
+	)
+	result = /obj/item/food/muffin/moffin
 	subcategory = CAT_MOTH

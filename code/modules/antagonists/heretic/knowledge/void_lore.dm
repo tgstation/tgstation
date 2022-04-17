@@ -44,6 +44,7 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	limit = 2
 	cost = 1
+	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_VOID
 
 /datum/heretic_knowledge/limited_amount/base_void/on_research(mob/user)
@@ -53,10 +54,12 @@
 
 /datum/heretic_knowledge/limited_amount/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
+		loc.balloon_alert(user, "ritual failed, invalid location!")
 		return FALSE
 
 	var/turf/open/our_turf = loc
 	if(our_turf.GetTemperature() > T0C)
+		loc.balloon_alert(user, "ritual failed, not cold enough!")
 		return FALSE
 
 	return ..()
@@ -86,7 +89,7 @@
 	var/turf/open/target_turf = get_turf(carbon_target)
 	target_turf.TakeTemperature(-20)
 	carbon_target.adjust_bodytemperature(-40)
-	carbon_target.silent += 4
+	carbon_target.silent += 5
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
@@ -239,10 +242,12 @@
 
 /datum/heretic_knowledge/final/void_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
+		loc.balloon_alert(user, "ritual failed, invalid location!")
 		return FALSE
 
 	var/turf/open/our_turf = loc
 	if(our_turf.GetTemperature() > T0C)
+		loc.balloon_alert(user, "ritual failed, not cold enough!")
 		return FALSE
 
 	return ..()
