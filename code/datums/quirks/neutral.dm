@@ -178,6 +178,52 @@
 	desc = "One of your eyes is a different color than the other!"
 	icon = "eye-low-vision" // Ignore the icon name, its actually a fairly good representation of different color eyes
 	value = 0
+	var/color
+	var/datum/weakref/original_eyes
+
+/datum/quirk/heterochromatic/add()
+	color = color || quirk_holder.client?.prefs?.read_preference(/datum/preference/color/heterochromatic)
+	if(!color)
+		return
+
+	link_to_holder()
+
+/datum/quirk/heterochromatic/post_add()
+	if(color)
+		return
+
+	color = quirk_holder.client?.prefs?.read_preference(/datum/preference/color/heterochromatic)
+	if(!color)
+		return
+
+	link_to_holder()
+
+/datum/quirk/heterochromatic/proc/link_to_holder()
+	RegisterSignal(quirk_holder, COMSIG_ATOM_UPDATE_APPEARANCE, .proc/check_eye_color)
+	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal)
+	var/obj/item/organ/eyes/eyes_of_the_beholder = quirk_holder.getorganslot(ORGAN_SLOT_EYES)
+	original_eyes = WEAKREF(eyes_of_the_beholder)
+
+/datum/quirk/heterochromatic/proc/unlink_from_holder()
+	UnregisterSignal(quirk_holder, list(COMSIG_ATOM_UPDATE_APPEARANCE, COMSIG_CARBON_LOSE_ORGAN))
+	original_eyes = null
+
+/datum/quirk/heterochromatic/proc/check_eye_color()
+	var/obj/item/organ/eyes/eyes = original_eyes?.resolve()
+	if(!eyes)
+		return
+
+	eyes.eye_color_right = color
+	var/mob/living/carbon/human/holder = quirk_holder
+	holder.eye_color_right = color
+	eyes.refresh()
+
+/datum/quirk/heterochromatic/proc/check_eye_removal()
+	var/obj/item/organ/eyes/eyes = original_eyes?.resolve()
+	if(eyes && eyes.loc == quirk_holder)
+		return
+
+	unlink_from_holder() // Our special eyes have been removed, oh what a tragic day
 
 /datum/quirk/monochromatic
 	name = "Monochromacy"
