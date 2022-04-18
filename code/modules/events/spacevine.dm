@@ -146,7 +146,7 @@
 	name = "Explosive"
 	hue = "#D83A56"
 	quality = NEGATIVE
-	severity = SEVERITY_ABOVE_AVERAGE
+	severity = SEVERITY_MAJOR
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
 	if(explosion_severity < 3)
