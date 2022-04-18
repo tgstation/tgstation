@@ -25,14 +25,18 @@
 #define MUTATIVENESS_SCALE_FACTOR 0.1
 
 /// Kudzu maximum mutation severity is a linear function of potency
-#define MAX_SEVERITY_LINEAR_COEFF 0.1
+#define MAX_SEVERITY_LINEAR_COEFF 0.15
 #define MAX_SEVERITY_CONSTANT_TERM 10
+
+/// Additional maximum mutation severity given to kudzu spawned by a random event
+#define MAX_SEVERITY_EVENT_BONUS 10
 
 /// The maximum possible productivity value of a (normal) kudzu plant, used for calculating a plant's spread cap and multiplier
 #define MAX_POSSIBLE_PRODUCTIVITY_VALUE 10
 
 /// Kudzu spread cap is a scaled version of production speed, such that the better the production speed, ie. the lower the speed value is, the faster is spreads
-#define SPREAD_CAP_SCALE_FACTOR 4
+#define SPREAD_CAP_LINEAR_COEFF 4
+#define SPREAD_CAP_CONSTANT_TERM 20
 /// Kudzu spread multiplier is a reciporal function of production speed, such that the better the production speed, ie. the lower the speed value is, the faster it spreads
 #define SPREAD_MULTIPLIER_MAX 50
 
@@ -505,10 +509,12 @@
 		vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
 	if(potency != null)
 		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 10 mutativeness; if 1: 0.1 mutativeness
-		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 20 max mutation severity; if 1, 10 max mutation severity
+		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 25 max mutation severity; if 1, 10 max mutation severity
 	if(production != null && production <= MAX_POSSIBLE_PRODUCTIVITY_VALUE) //Prevents runtime in case production is set to 11.
-		spread_cap = SPREAD_CAP_SCALE_FACTOR * (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) //Best production speed of 1 increases spread_cap to 40, worst production speed of 10 lowers it to 4, even distribution
+		spread_cap = SPREAD_CAP_LINEAR_COEFF * (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) + SPREAD_CAP_CONSTANT_TERM //Best production speed of 1 increases spread_cap to 60, worst production speed of 10 lowers it to 24, even distribution
 		spread_multiplier = SPREAD_MULTIPLIER_MAX / (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) // Best production speed of 1: 10% of total vines will spread per second, worst production speed of 10: 1% of total vines (with minimum of 1) will spread per second
+	if(event != null) // spawned by space vine event
+		max_mutation_severity += MAX_SEVERITY_EVENT_BONUS;
 
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
@@ -702,3 +708,11 @@
 #undef SEVERITY_AVERAGE
 #undef SEVERITY_ABOVE_AVERAGE
 #undef SEVERITY_MAJOR
+#undef MUTATIVENESS_SCALE_FACTOR
+#undef MAX_SEVERITY_LINEAR_COEFF
+#undef MAX_SEVERITY_CONSTANT_TERM
+#undef MAX_SEVERITY_EVENT_BONUS
+#undef MAX_POSSIBLE_PRODUCTIVITY_VALUE
+#undef SPREAD_CAP_LINEAR_COEFF
+#undef SPREAD_CAP_CONSTANT_TERM
+#undef SPREAD_MULTIPLIER_MAX
