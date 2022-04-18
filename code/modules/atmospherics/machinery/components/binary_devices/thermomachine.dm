@@ -73,12 +73,16 @@
 			new /obj/item/stack/sheet/mineral/metal_hydrogen(loc)
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/sheet/mineral/metal_hydrogen) && panel_open)
-		var/obj/item/stack/sheet/mineral/metal_hydrogen/metalh2 = W
+/obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/used_item, mob/user, params)
+	if(istype(used_item, /obj/item/stack/sheet/mineral/metal_hydrogen) && panel_open)
+		if(has_metalh2)
+			balloon_alert(user, "already upgraded!")
+			return
+		var/obj/item/stack/sheet/mineral/metal_hydrogen/metalh2 = used_item
 		if(!metalh2.use(3))
 			balloon_alert(user, "3 sheets are needed to upgrade")
 			return
+		to_chat(user, span_notice("You upgrade [src] with [used_item]."))
 		has_metalh2 = TRUE
 		return
 	return ..()
