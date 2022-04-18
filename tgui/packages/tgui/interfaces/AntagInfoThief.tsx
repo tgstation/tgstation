@@ -14,7 +14,7 @@ type Info = {
   goal: string;
   intro: string;
   honor: BooleanLike;
-  guild: string;
+  hideout: string;
   policy: string;
 };
 
@@ -23,7 +23,7 @@ export const AntagInfoThief = (props, context) => {
   const {
     intro,
     goal,
-    guild,
+    hideout,
     policy,
   } = data;
   return (
@@ -47,13 +47,13 @@ export const AntagInfoThief = (props, context) => {
               </Stack>
             </Section>
           </Stack.Item>
-          {!!guild && (
+          {!!hideout && (
             <Stack.Item>
               <Section textAlign="center" textColor="green">
-                This station has an established Thieves Guild, of which you
-                have been invited to join. It is at the {guild}. Use it as
-                a space to plan heists with other thieves, and store stolen
-                goods!
+                This station has an established criminal hideout, which your
+                connections to Val Corrin has granted you access to. It is at
+                the {hideout}. Use it as a space to plan heists with other
+                thieves, and store stolen goods!
               </Section>
             </Stack.Item>
           )}

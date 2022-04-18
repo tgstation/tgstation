@@ -15,29 +15,29 @@
 	var/admin_choice_flavor
 	///if a special trait needs to be added from the flavor, here it is
 	var/special_trait
-	///an area marked as the thieves guild- makes thieves happier to be in, and all thieves of the round know of it. only has a 20% chance of existing in a round.
-	var/static/area/thieves_guild
+	///an area marked as the hideout- makes thieves happier to be in, and all thieves of the round know of it. only has a 20% chance of existing in a round.
+	var/static/area/hideout
 	///bool checked for the first thief in a round to decide if there should be one this round
-	var/static/decided_on_guild = FALSE
+	var/static/decided_on_hideout = FALSE
 
 /datum/antagonist/thief/on_gain()
-	if(!decided_on_guild)
-		decided_on_guild = TRUE
+	if(!decided_on_hideout)
+		decided_on_hideout = TRUE
 		if(prob(20))
-			create_thieves_guild()
+			create_hideout()
 	flavor_and_objectives()
 	. = ..() //ui opens here, objectives must exist beforehand
 
 /datum/antagonist/thief/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/thief = mob_override || owner.current
-	ADD_TRAIT(thief, TRAIT_GUILD_MEMBER, THIEF_TRAIT)
+	ADD_TRAIT(thief, TRAIT_VAL_CORRIN_MEMBER, THIEF_TRAIT)
 	if(special_trait)
 		ADD_TRAIT(thief, special_trait, THIEF_TRAIT)
 
 /datum/antagonist/thief/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/thief = mob_override || owner.current
-	REMOVE_TRAIT(thief, TRAIT_GUILD_MEMBER, THIEF_TRAIT)
+	REMOVE_TRAIT(thief, TRAIT_VAL_CORRIN_MEMBER, THIEF_TRAIT)
 	if(special_trait)
 		REMOVE_TRAIT(thief, special_trait, THIEF_TRAIT)
 	return ..()
@@ -53,8 +53,8 @@
 		admin_choice_flavor = choice
 	. = ..()
 
-/datum/antagonist/thief/proc/create_thieves_guild()
-	var/list/possible_guild_locations = list(
+/datum/antagonist/thief/proc/create_hideout()
+	var/list/possible_hideout_locations = list(
 		/area/maintenance/space_hut/cabin,
 		/area/maintenance/space_hut/observatory,
 		/area/service/kitchen/abandoned,
@@ -68,16 +68,16 @@
 		/area/science/research/abandoned,
 		/area/maintenance/department/crew_quarters/bar,
 	)
-	//remove every guild location that isn't on this map
-	possible_guild_locations = special_list_filter(possible_guild_locations, CALLBACK(src, .proc/filter_nonexistent_areas))
+	//remove every hideout location that isn't on this map
+	possible_hideout_locations = special_list_filter(possible_hideout_locations, CALLBACK(src, .proc/filter_nonexistent_areas))
 	//for custom maps without any abandoned locations
-	if(!possible_guild_locations.len)
+	if(!possible_hideout_locations.len)
 		return
-	var/chosen_type = pick(possible_guild_locations)
-	thieves_guild = GLOB.areas_by_type[chosen_type]
-	thieves_guild.mood_trait = TRAIT_GUILD_MEMBER
-	thieves_guild.mood_bonus = 5
-	thieves_guild.mood_message = "I love being in the Thieves Guild!"
+	var/chosen_type = pick(possible_hideout_locations)
+	hideout = GLOB.areas_by_type[chosen_type]
+	hideout.mood_trait = TRAIT_VAL_CORRIN_MEMBER
+	hideout.mood_bonus = 5
+	hideout.mood_message = "Feels good, having Val Corrin connections."
 
 ///checks if an area exists in the global areas, obviously comes up null (falsey) if say, abandoned cabin is checked on metastation.
 /datum/antagonist/thief/proc/filter_nonexistent_areas(area_type)
@@ -145,7 +145,7 @@
 	data["goal"] = thief_flavor["goal"]
 	data["intro"] = thief_flavor["introduction"]
 	data["policy"] = get_policy(ROLE_THIEF)
-	data["guild"] = thieves_guild ? thieves_guild.name : ""
+	data["hideout"] = hideout ? hideout.name : ""
 	return data
 
 /datum/outfit/thief
