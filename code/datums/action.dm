@@ -46,7 +46,8 @@
 	owner = M
 	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
-	GiveAction(M)
+	if(owner_has_control)
+		GiveAction(M)
 
 /datum/action/proc/clear_ref(datum/ref)
 	SIGNAL_HANDLER
@@ -139,9 +140,8 @@
 	if(viewers[our_hud]) // Already have a copy of us? go away
 		return
 
-	if(owner_has_control)
-		LAZYOR(viewer.actions, src) // Move this in
-		ShowTo(viewer)
+	LAZYOR(viewer.actions, src) // Move this in
+	ShowTo(viewer)
 
 //Adds our action button to the screen of a player
 /datum/action/proc/ShowTo(mob/viewer)
@@ -706,13 +706,13 @@
 	// Shares cooldowns with other abiliies, bitflag
 	var/shared_cooldown
 	// List of prerequisite actions that are used in this sequenced ability, you cannot put other sequenced abilities in this
-	var/list/sequence_actions = list()
+	var/list/sequence_actions
 	// List of prerequisite actions that have been initialized
-	var/list/initialized_actions = list()
+	var/list/initialized_actions
 
 /datum/action/cooldown/New(Target, original = TRUE)
 	..()
-	if(melee_cooldown_time == null)
+	if(isnull(melee_cooldown_time))
 		melee_cooldown_time = cooldown_time
 	if(original)
 		CreateSequenceActions()
@@ -727,27 +727,25 @@
 	return button
 
 /datum/action/cooldown/Destroy()
-	. = ..()
 	sequence_actions.Cut()
-	for(var/datum/action/cooldown/ability in initialized_actions)
-		QDEL_NULL(ability)
-	initialized_actions.Cut()
+	QDEL_LIST(initialized_actions)
+	return ..()
 
 /datum/action/cooldown/Grant(mob/M)
-	..()
+	. = ..()
 	if(!owner)
 		return
 	UpdateButtons()
 	if(next_use_time > world.time)
 		START_PROCESSING(SSfastprocess, src)
 	RegisterSignal(owner, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/handle_melee_attack)
-	for(var/datum/action/cooldown/ability in initialized_actions)
+	for(var/datum/action/cooldown/ability as anything in initialized_actions)
 		ability.Grant(owner)
 
 /datum/action/cooldown/Remove(mob/M)
-	..()
+	. = ..()
 	UnregisterSignal(M, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
-	for(var/datum/action/cooldown/ability in initialized_actions)
+	for(var/datum/action/cooldown/ability as anything in initialized_actions)
 		ability.Remove(M)
 
 /datum/action/cooldown/IsAvailable()
@@ -755,6 +753,11 @@
 
 /// Initializes any sequence actions
 /datum/action/cooldown/proc/CreateSequenceActions()
+	if(isnull(sequence_actions) || sequence_actions.len == 0)
+		return
+	// remove existing actions if any
+	QDEL_LIST(initialized_actions)
+	initialized_actions = list()
 	for(var/type_path in sequence_actions)
 		var/datum/action/cooldown/ability = new type_path(target, original = FALSE)
 		// prevents clients from using the individual abilities in sequences (this stops it from being added to mob actions when granted as well)
@@ -827,7 +830,7 @@
 /// To be implemented by subtypes (if not generic)
 /datum/action/cooldown/proc/Activate(atom/target)
 	var/total_delay = 0
-	for(var/datum/action/cooldown/ability in initialized_actions)
+	for(var/datum/action/cooldown/ability as anything in initialized_actions)
 		if(ability.initialized_actions.len > 0)
 			ability.initialized_actions = list()
 		addtimer(CALLBACK(ability, .proc/Activate, target), total_delay)
