@@ -1100,27 +1100,6 @@
 /mob/proc/is_literate()
 	return FALSE
 
-///Is this mob affected by nearsight effects
-/mob/proc/has_nearsight_blindness()
-	return FALSE
-
-/* Can this mob see in the dark
- *
- * This checks all traits, glasses, and robotic eyeball implants to see if the mob can see in the dark
- * this does NOT check if the mob is missing it's eyeballs. Also see_in_dark is a BYOND mob var (that defaults to 2)
-**/
-/mob/proc/has_nightvision()
-	return see_in_dark >= NIGHTVISION_FOV_RANGE
-
-/* Checks if there is enough light where the mob is located
- *
- * Args:
- *  light_amount (optional) - A decimal amount between 1.0 through 0.0 (default is 0.2)
-**/
-/mob/proc/has_light_nearby(light_amount = LIGHTING_TILE_IS_DARK)
-	var/turf/mob_location = get_turf(src)
-	return mob_location.get_lumcount() > light_amount
-
 /// Can this mob write
 /mob/proc/can_write(obj/writing_instrument)
 	if(!istype(writing_instrument, /obj/item/pen) && !istype(writing_instrument, /obj/item/toy/crayon))
@@ -1130,31 +1109,8 @@
 		to_chat(src, span_warning("You are blind and can't write anything!"))
 		return FALSE
 
-	if(is_nearsighted())
-		to_chat(src, span_warning("Your vision is too blurry to write anything!"))
-		return FALSE
-
 	if(!is_literate())
 		to_chat(src, span_warning("You don't know how to write."))
-		return FALSE
-
-	var/turf/writing_spot = get_turf(src)
-	var/has_light_to_write = writing_spot.get_lumcount() > LIGHTING_TILE_IS_DARK
-
-	var/can_see_in_darkness = HAS_TRAIT(TRAIT_XRAY_VISION) || HAS_TRAIT(TRAIT_TRUE_NIGHT_VISION)
-	// we need to check for x-ray implants in eyeballs sight flags and other vision flags since the trait isn't always granted
-
-	var/has_nightvision_glasses = FALSE
-	var/mob/living/carbon/human/reader = src
-	if(ishuman(reader))
-		var/obj/item/clothing/glasses/eyewear = reader.glasses
-		if(istype(eyewear, /obj/item/clothing/glasses/meson/night) ||
-		istype(eyewear, /obj/item/clothing/glasses/night) ||
-		istype(eyewear, /obj/item/clothing/glasses/thermal/xray))
-			has_nightvision_glasses = TRUE
-
-	if(!has_light_to_read && !can_see_in_darkness && !has_nightvision_glasses)
-		to_chat(M, span_warning("It's too dark in here to read!"))
 		return FALSE
 
 	var/obj/item/pen/pen = writing_instrument
@@ -1177,16 +1133,8 @@
 		to_chat(src, span_warning("You are blind and can't read anything!"))
 		return FALSE
 
-	if(is_nearsighted())
-		to_chat(src, span_warning("Your vision is too blurry to read anything!"))
-		return FALSE
-
 	if(!is_literate())
 		to_chat(src, span_warning("You try to read [O], but can't comprehend anything!"))
-		return FALSE
-
-	if(!has_light_nearby() && !has_nightvision())
-		to_chat(src, span_warning("It's too dark in here to read anything!"))
 		return FALSE
 
 	return TRUE
