@@ -21,6 +21,8 @@
 	var/list/tile_reskin_types
 	/// Cached associative lazy list to hold the radial options for tile dirs. See tile_reskinning.dm for more information.
 	var/list/tile_rotate_dirs
+	/// Allows us to replace the tile we are attacking if our baseturfs are the same.
+	var/enforce_baseturf = FALSE
 
 /obj/item/stack/tile/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
@@ -57,12 +59,32 @@
 		. += span_notice("Those could work as a [verb] throwing weapon.")
 
 
-/obj/item/stack/tile/proc/place_tile(turf/open/T)
-	if(!turf_type || !use(1))
+/obj/item/stack/tile/proc/place_tile(turf/open/target_turf, mob/user)
+	var/turf/placed_turf_path = turf_type
+	if(!ispath(placed_turf_path))
 		return
-	var/turf/placed_turf = T.PlaceOnTop(turf_type, flags = CHANGETURF_INHERIT_AIR)
-	placed_turf.setDir(turf_dir)
-	return placed_turf
+
+	if(!enforce_baseturf)
+		if(!use(1))
+			return
+		target_turf = target_turf.PlaceOnTop(placed_turf_path)
+		target_turf.setDir(turf_dir)
+		playsound(target_turf, 'sound/weapons/genhit.ogg', 50, TRUE)
+		return target_turf // Most executions should end here.
+
+	// If we and the target tile share the same baseturf, replace em.
+	if(!target_turf.replaceable || initial(target_turf.baseturfs) != initial(placed_turf_path.baseturfs))
+		to_chat(user, span_notice("You cannot place this tile here directly!"))
+		return
+	to_chat(user, span_notice("You begin replacing the floor with the tile..."))
+	if(!do_after(user, 3 SECONDS, target_turf))
+		return
+	if(!use(1))
+		return
+	target_turf = target_turf.ChangeTurf(placed_turf_path, target_turf.baseturfs, CHANGETURF_INHERIT_AIR)
+	target_turf.setDir(turf_dir)
+	playsound(target_turf, 'sound/weapons/genhit.ogg', 50, TRUE)
+	return target_turf
 
 //Grass
 /obj/item/stack/tile/grass
@@ -1031,10 +1053,10 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	merge_type = /obj/item/stack/tile/material
 
-/obj/item/stack/tile/material/place_tile(turf/open/T)
+/obj/item/stack/tile/material/place_tile(turf/open/target_turf, mob/user)
 	. = ..()
-	var/turf/open/floor/material/F = .
-	F?.set_custom_materials(mats_per_unit)
+	var/turf/open/floor/material/floor = .
+	floor?.set_custom_materials(mats_per_unit)
 
 /obj/item/stack/tile/eighties
 	name = "retro tile"

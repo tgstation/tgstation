@@ -68,8 +68,7 @@
 					to_chat(user, span_warning("Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way."))
 					return
 			var/obj/item/stack/tile/tile = C
-			tile.place_tile(src)
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			tile.place_tile(src, user)
 		else
 			if(!iscyborg(user))
 				to_chat(user, span_warning("This section is too damaged to support a tile! Use a welding tool to fix the damage."))
