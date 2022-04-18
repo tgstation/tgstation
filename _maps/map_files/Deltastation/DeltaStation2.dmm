@@ -18161,9 +18161,9 @@
 /obj/machinery/status_display/ai/directional/north,
 /obj/structure/table/wood/fancy/red,
 /obj/machinery/door/window/brigdoor/left/directional/south{
+	dir = 4;
 	name = "High-Risk Modules";
-	req_access_txt = "20";
-	dir = 4
+	req_access_txt = "20"
 	},
 /obj/effect/spawner/random/aimodule/harmful{
 	pixel_y = -16
@@ -22574,7 +22574,6 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/south,
-/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "ent" = (
@@ -33930,9 +33929,9 @@
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/red,
 /obj/machinery/door/window/brigdoor/left/directional/south{
+	dir = 4;
 	name = "High-Risk Modules";
-	req_access_txt = "20";
-	dir = 4
+	req_access_txt = "20"
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -53428,12 +53427,11 @@
 /turf/open/floor/iron,
 /area/maintenance/fore)
 "noY" = (
-/obj/machinery/computer/med_data/laptop,
-/obj/structure/table/glass,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/pdapainter/medbay,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "npo" = (

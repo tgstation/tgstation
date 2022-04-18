@@ -13084,7 +13084,7 @@
 "fuT" = (
 /obj/machinery/suit_storage_unit/ce,
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
+	dir = 6
 	},
 /turf/open/floor/iron/white/textured,
 /area/command/heads_quarters/ce)
@@ -36438,9 +36438,9 @@
 /obj/structure/table/wood/fancy/red,
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/door/window/brigdoor/left/directional/south{
+	dir = 4;
 	name = "High-Risk Modules";
-	req_access_txt = "20";
-	dir = 4
+	req_access_txt = "20"
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
