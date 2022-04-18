@@ -1087,14 +1087,6 @@
 	if(client.mouse_override_icon)
 		client.mouse_pointer_icon = client.mouse_override_icon
 
-/// This mob is abile to read books
-/mob/proc/is_literate()
-	return FALSE
-
-/// Is this mob affected by nearsight
-/mob/proc/is_nearsighted()
-	return FALSE
-
 /** Can this mob see in the dark
   *
   * This checks all traits, glasses, and robotic eyeball implants to see if the mob can see in the dark
@@ -1102,6 +1094,10 @@
 **/
 /mob/proc/has_nightvision()
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
+
+/// This mob is abile to read books
+/mob/proc/is_literate()
+	return FALSE
 
 /** Checks if there is enough light where the mob is located
   *
@@ -1112,34 +1108,10 @@
 	var/turf/mob_location = get_turf(src)
 	return mob_location.get_lumcount() > light_amount
 
-///Can this mob write (is literate and not blind)
-/mob/proc/can_write(obj/O)
-	if(is_blind())
-		to_chat(src, span_warning("You are blind and can't write anything!"))
-		return FALSE
-
-	if(is_nearsighted())
-		to_chat(src, span_warning("Your vision is too blurry to write anything!"))
-		return FALSE
-
-	if(!is_literate())
-		to_chat(src, span_warning("You don't know how to write."))
-		return FALSE
-
-	if(!has_light_nearby() && !has_nightvision())
-		to_chat(src, span_warning("It's too dark in here to write!"))
-		return FALSE
-
-	return TRUE
-
 /// Can this mob read
 /mob/proc/can_read(obj/O)
 	if(is_blind())
 		to_chat(src, span_warning("You are blind and can't read anything!"))
-		return FALSE
-
-	if(is_nearsighted())
-		to_chat(src, span_warning("Your vision is too blurry to read anything!"))
 		return FALSE
 
 	if(!is_literate())
