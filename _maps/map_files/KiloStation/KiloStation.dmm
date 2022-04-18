@@ -1804,6 +1804,8 @@
 "aiN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aiO" = (
@@ -5254,7 +5256,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
 "aBi" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/table/wood,
 /obj/item/folder/white{
 	pixel_y = 3
@@ -7094,9 +7095,6 @@
 /turf/open/floor/iron/dark,
 /area/medical/exam_room)
 "aOx" = (
-/obj/item/toy/figure/psychologist{
-	pixel_y = 18
-	},
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/carpet,
 /area/medical/psychology)
@@ -7204,6 +7202,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/psychology)
 "aPf" = (
@@ -33855,6 +33854,9 @@
 /area/commons/fitness/recreation)
 "gRh" = (
 /obj/structure/bookcase/random/reference,
+/obj/item/toy/figure/psychologist{
+	pixel_y = 18
+	},
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "gRl" = (
