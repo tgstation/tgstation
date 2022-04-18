@@ -238,7 +238,7 @@
 
 	//Makes the user passive, it's in their oath not to harm!
 	ADD_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
-	ADD_TRAIT(owner, TRAIT_SURGEON, HIPPOCRATIC_OATH_TRAIT)
+	ADD_TRAIT(owner, TRAIT_SURGEON, HIPPOCRATIC_OATH_TRAIT)//No base fail chance for surgeries with hippocratic oath
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.add_hud_to(owner)
 	return ..()
@@ -246,6 +246,7 @@
 /datum/status_effect/hippocratic_oath/on_remove()
 	QDEL_NULL(aura_healing)
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_SURGEON, HIPPOCRATIC_OATH_TRAIT)
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.remove_hud_from(owner)
 
