@@ -91,27 +91,26 @@
 				return FALSE
 		return FALSE
 
-	if(physical_cash_total >= total_cost)
-		for(var/obj/cash_object in counted_money)
-			qdel(cash_object)
-		physical_cash_total -= total_cost
+	if(physical_cash_total < total_cost)
+		return FALSE
+	for(var/obj/cash_object in counted_money)
+		qdel(cash_object)
+	physical_cash_total -= total_cost
 
-		if(physical_cash_total > 0)
-			var/obj/item/holochip/holochange = new /obj/item/holochip(user.loc) //Change is made in holocredits exclusively.
-			holochange.credits = physical_cash_total
-			holochange.name = "[holochange.credits] credit holochip"
-			if(istype(user, /mob/living/carbon/human))
-				var/mob/living/carbon/human/paying_customer = user
-				if(!INVOKE_ASYNC(paying_customer, /mob.proc/put_in_hands, holochange))
-					user.pulling = holochange
-			else
+	if(physical_cash_total > 0)
+		var/obj/item/holochip/holochange = new /obj/item/holochip(user.loc) //Change is made in holocredits exclusively.
+		holochange.credits = physical_cash_total
+		holochange.name = "[holochange.credits] credit holochip"
+		if(istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/paying_customer = user
+			if(!INVOKE_ASYNC(paying_customer, /mob.proc/put_in_hands, holochange))
 				user.pulling = holochange
-		log_econ("[total_cost] credits were spent on [parent] by [user].")
-		to_chat(user, span_notice("Purchase completed with held credits."))
-		playsound(user, 'sound/effects/cashregister.ogg', 20, TRUE)
-		return TRUE
-	return FALSE
-
+		else
+			user.pulling = holochange
+	log_econ("[total_cost] credits were spent on [parent] by [user].")
+	to_chat(user, span_notice("Purchase completed with held credits."))
+	playsound(user, 'sound/effects/cashregister.ogg', 20, TRUE)
+	return TRUE
 
 /datum/component/payment/proc/handle_card(mob/living/user, obj/item/card/id/idcard, total_cost)
 	if(!idcard)
