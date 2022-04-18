@@ -1087,10 +1087,11 @@
 	if(client.mouse_override_icon)
 		client.mouse_pointer_icon = client.mouse_override_icon
 
-/** Can this mob see in the dark
-  *
-  * This checks all traits, glasses, and robotic eyeball implants to see if the mob can see in the dark
-  * this does NOT check if the mob is missing it's eyeballs. Also see_in_dark is a BYOND mob var (that defaults to 2)
+/**
+ * Can this mob see in the dark
+ *
+ * This checks all traits, glasses, and robotic eyeball implants to see if the mob can see in the dark
+ * this does NOT check if the mob is missing it's eyeballs. Also see_in_dark is a BYOND mob var (that defaults to 2)
 **/
 /mob/proc/has_nightvision()
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
@@ -1099,10 +1100,11 @@
 /mob/proc/is_literate()
 	return FALSE
 
-/** Checks if there is enough light where the mob is located
-  *
-  * Args:
-  *  light_amount (optional) - A decimal amount between 1.0 through 0.0 (default is 0.2)
+/**
+ * Checks if there is enough light where the mob is located
+ *
+ * Args:
+ *  light_amount (optional) - A decimal amount between 1.0 through 0.0 (default is 0.2)
 **/
 /mob/proc/has_light_nearby(light_amount = LIGHTING_TILE_IS_DARK)
 	var/turf/mob_location = get_turf(src)
