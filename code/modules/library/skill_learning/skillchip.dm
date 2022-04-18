@@ -458,7 +458,7 @@
 	skill_description = "Advanced knowledge of surgical procedure, and enhanced dexterity when utilizing surgical tools"
 	skill_icon = "scalpel"
 	activate_message = "<span class='notice'>You suddenly feel more proficent when performing surgery and utilizing surgical tools.</span>"
-	deactivate_message = "<span class='notice'>Yor knowledge of surgery seems to fade along with the dexterity in your hands.</span>"
+	deactivate_message = "<span class='notice'>Your knowledge of surgery seems to fade along with the dexterity in your hands.</span>"
 
 
 /obj/item/skillchip/brainwashing/examine(mob/user)
