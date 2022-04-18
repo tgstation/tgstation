@@ -547,7 +547,7 @@
 	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
 		our_turf.wash(CLEAN_SCRUB)
 
-	reagents.expose(our_turf, TOUCH, 10)
+	reagents.expose(our_turf, TOUCH, min(1, 10 / reagents.total_volume))
 	// We use more water doing this then mopping
 	reagents.remove_any(2) //reaction() doesn't use up the reagents
 

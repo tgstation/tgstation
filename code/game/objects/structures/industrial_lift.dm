@@ -485,25 +485,23 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/obj/effect/landmark/tram/from_where
 	var/travel_direction
 
-GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
+GLOBAL_LIST_EMPTY_TYPED(central_trams, /obj/structure/industrial_lift/tram/central)
 
 /obj/structure/industrial_lift/tram/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
+/obj/structure/industrial_lift/tram/central
+	var/tram_id = "tram_station"
 
 /obj/structure/industrial_lift/tram/central/Initialize(mapload)
-	if(GLOB.central_tram)
-		return INITIALIZE_HINT_QDEL
-
 	. = ..()
-
-	SStramprocess.can_fire = TRUE
-	GLOB.central_tram = src
+	if(!SStramprocess.can_fire)
+		SStramprocess.can_fire = TRUE
+	GLOB.central_trams += src
 
 /obj/structure/industrial_lift/tram/central/Destroy()
-	GLOB.central_tram = null
+	GLOB.central_trams -= src
 	return ..()
 
 /obj/structure/industrial_lift/tram/LateInitialize()
@@ -593,6 +591,8 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	icon_state = "tram"
 	/// The ID of that particular destination.
 	var/destination_id
+	/// The ID of the tram that can travel to use
+	var/tram_id = "tram_station"
 	/// Icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()
 

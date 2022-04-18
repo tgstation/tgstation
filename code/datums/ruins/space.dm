@@ -292,7 +292,7 @@
 
 /datum/map_template/ruin/space/hilbertresearchfacility
 	id = "hilbert_facility"
-	suffix = "hilbertshoteltestingsite.dmm"
+	suffix = "hilbertresearchfacility.dmm"
 	name = "Hilbert Research Facility"
 	description = "A research facility of great bluespace discoveries. Long since abandoned, willingly or not..."
 

@@ -277,7 +277,7 @@
 	storage.display_numerical_stacking = FALSE
 	storage.set_holdable(list(
 		/obj/item/mail,
-		/obj/item/small_delivery,
+		/obj/item/delivery/small,
 		/obj/item/paper
 	))
 
