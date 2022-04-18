@@ -264,9 +264,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 			tank_filling_amount = clamp(params["rate"], 0, 100)
 			. = TRUE
 		if("tank_prepare")
-			inserted_tank = TRUE
-			internal_tank = new(src)
-			empty_tanks = max(empty_tanks - 1, 0)
+			if(empty_tanks)
+				inserted_tank = TRUE
+				internal_tank = new(src)
+				empty_tanks = max(empty_tanks - 1, 0)
 			. = TRUE
 		if("tank_expel")
 			check_price(usr)
