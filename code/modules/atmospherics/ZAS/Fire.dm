@@ -129,7 +129,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	var/firelevel = 1 //Calculated by gas_mixture.calculate_firelevel()
 
-/obj/effect/hotspot/Process()
+/obj/effect/hotspot/process()
 	. = 1
 
 	//var/turf/simulated/my_tile = loc ZASTURF

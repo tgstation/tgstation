@@ -202,7 +202,7 @@
 		qdel(src)
 		return
 	//lets try to grow in a direction
-	for(var/turf/check_turf in src_turf.get_adjacent_open_turfs())
+	for(var/turf/check_turf in get_adjacent_open_turfs(src_turf))
 		//we cannot grow on blacklisted turfs
 		if(is_type_in_list(check_turf, blacklisted_turfs))
 			continue

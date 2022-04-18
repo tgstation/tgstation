@@ -34,6 +34,9 @@ Contains helper procs for airflow, handled in /connection_group.
 		return 0
 	..()
 
+/atom/movable/proc/experience_pressure_difference()
+	return
+
 /mob/proc/slip_chance()
 	return
 
@@ -43,8 +46,8 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(buckled)
 		return FALSE
 	if(shoes)
-		var/obj/item/clothing/shoes = shoes
-		if(shoes.clothing_flags & NOSLIP|NOSLIP_ICE)
+		var/obj/item/clothing/myshoes = shoes
+		if(myshoes.clothing_flags & NOSLIP|NOSLIP_ICE)
 			return FALSE
 
 	if(m_intent == MOVE_INTENT_RUN) //No running in the halls!

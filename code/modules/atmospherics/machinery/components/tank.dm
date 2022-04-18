@@ -367,21 +367,21 @@
 	fill_to_pressure(GAS_NITROGEN, safety_margin = (N2STANDARD * 0.5))
 
 /obj/machinery/atmospherics/components/tank/carbon_dioxide
-	gas_type = /datum/gas/carbon_dioxide
+	gas_type = GAS_CO2
 
 /obj/machinery/atmospherics/components/tank/plasma
-	gas_type = /datum/gas/plasma
+	gas_type = GAS_PLASMA
 
 /obj/machinery/atmospherics/components/tank/nitrogen
-	gas_type = /datum/gas/nitrogen
+	gas_type = GAS_NITROGEN
 
 /obj/machinery/atmospherics/components/tank/oxygen
-	gas_type = /datum/gas/oxygen
+	gas_type = GAS_OXYGEN
 
 /obj/machinery/atmospherics/components/tank/nitrous
-	gas_type = /datum/gas/nitrous_oxide
+	gas_type = GAS_N2O
 
-/obj/machinery/atmospherics/components/tank/bz
+/*ics/components/tank/bz
 	gas_type = /datum/gas/bz
 
 /obj/machinery/atmospherics/components/tank/freon
@@ -425,6 +425,7 @@
 
 /obj/machinery/atmospherics/components/tank/antinoblium
 	gas_type = /datum/gas/antinoblium
+*/
 
 ///////////////////////////////////////////////////////////////////
 // Tank Frame Structure

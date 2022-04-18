@@ -51,7 +51,7 @@
  *
  */
 /obj/item/gas_filter/proc/reduce_filter_status(datum/gas_mixture/breath)
-
+/*
 	var/danger_points = 0
 
 	for(var/gas_id in breath.gas)
@@ -82,6 +82,7 @@
 
 	filter_status = max(filter_status - danger_points - FILTERS_CONSTANT_WEAR, 0)
 	return breath
+*/
 
 /obj/item/gas_filter/damaged
 	name = "damaged gas filter"

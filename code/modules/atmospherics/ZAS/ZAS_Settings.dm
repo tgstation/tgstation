@@ -1,5 +1,5 @@
 /datum/zas_controller
-	var/datum/pl_control/plc
+	var/datum/pl_control/plc = new
 
 	var/fire_consuption_rate = 0.25
 	var/fire_consuption_rate_NAME = "Fire - Air Consumption Ratio"
@@ -73,6 +73,3 @@
 	var/connection_temperature_delta = 10
 	var/connection_temperature_delta_NAME = "Connections - Temperature Difference"
 	var/connection_temperature_delta_DESC = "The smallest temperature difference which will cause heat to travel through doors."
-
-/datum/zas_controller/Initalize()
-	plc = new

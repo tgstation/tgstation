@@ -823,13 +823,13 @@
 	TLV = list(
 		"pressure" = new/datum/tlv/no_checks,
 		"temperature" = new/datum/tlv/no_checks,
-		/datum/gas/oxygen = new/datum/tlv/no_checks,
-		/datum/gas/nitrogen = new/datum/tlv/no_checks,
-		/datum/gas/carbon_dioxide = new/datum/tlv/no_checks,
-		/datum/gas/miasma = new/datum/tlv/no_checks,
-		/datum/gas/plasma = new/datum/tlv/no_checks,
-		/datum/gas/nitrous_oxide = new/datum/tlv/no_checks,
-		/datum/gas/bz = new/datum/tlv/no_checks,
+		GAS_OXYGEN = new/datum/tlv/no_checks,
+		GAS_NITROGEN = new/datum/tlv/no_checks,
+		GAS_CO2 = new/datum/tlv/no_checks,
+		//datum/gas/miasma = new/datum/tlv/no_checks,
+		GAS_PLASMA = new/datum/tlv/no_checks,
+		GAS_N2O = new/datum/tlv/no_checks,
+		/*/datum/gas/bz = new/datum/tlv/no_checks,
 		/datum/gas/hypernoblium = new/datum/tlv/no_checks,
 		/datum/gas/water_vapor = new/datum/tlv/no_checks,
 		/datum/gas/tritium = new/datum/tlv/no_checks,
@@ -842,19 +842,19 @@
 		/datum/gas/zauker = new/datum/tlv/dangerous,
 		/datum/gas/helium = new/datum/tlv/dangerous,
 		/datum/gas/antinoblium = new/datum/tlv/dangerous,
-		/datum/gas/halon = new/datum/tlv/dangerous,
+		/datum/gas/halon = new/datum/tlv/dangerous,*/
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -14°C or 259.15K.
 	TLV = list(
 		"pressure" = new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE *  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature" = new/datum/tlv(COLD_ROOM_TEMP-40, COLD_ROOM_TEMP-20, COLD_ROOM_TEMP+20, COLD_ROOM_TEMP+40),
-		/datum/gas/oxygen = new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
-		/datum/gas/nitrogen = new/datum/tlv(-1, -1, 1000, 1000),
-		/datum/gas/carbon_dioxide = new/datum/tlv(-1, -1, 5, 10),
-		/datum/gas/miasma = new/datum/tlv/(-1, -1, 2, 5),
-		/datum/gas/plasma = new/datum/tlv/dangerous,
-		/datum/gas/nitrous_oxide = new/datum/tlv/dangerous,
+		GAS_OXYGEN = new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
+		GAS_NITROGEN = new/datum/tlv(-1, -1, 1000, 1000),
+		GAS_CO2 = new/datum/tlv(-1, -1, 5, 10),
+		//datum/gas/miasma = new/datum/tlv/(-1, -1, 2, 5),
+		GAS_PLASMA = new/datum/tlv/dangerous,
+		/*/datum/gas/nitrous_oxide = new/datum/tlv/dangerous,
 		/datum/gas/bz = new/datum/tlv/dangerous,
 		/datum/gas/hypernoblium = new/datum/tlv(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
 		/datum/gas/water_vapor = new/datum/tlv/dangerous,
@@ -868,7 +868,7 @@
 		/datum/gas/zauker = new/datum/tlv/dangerous,
 		/datum/gas/helium = new/datum/tlv/dangerous,
 		/datum/gas/antinoblium = new/datum/tlv/dangerous,
-		/datum/gas/halon = new/datum/tlv/dangerous,
+		/datum/gas/halon = new/datum/tlv/dangerous,*/
 	)
 
 /obj/machinery/airalarm/unlocked

@@ -98,7 +98,7 @@
 /obj/structure/blob/block_superconductivity()
 	return atmosblock
 
-/obj/structure/blob/can_atmos_pass(turf/T, vertical = FALSE)
+/obj/structure/blob/c_block(turf/T, vertical = FALSE)
 	return !atmosblock
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.

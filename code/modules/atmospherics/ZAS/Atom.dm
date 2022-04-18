@@ -1,4 +1,4 @@
-/turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
+/*/turf/CanPass(atom/movable/mover, , height=1.5,air_group=0)
 	if(target.blocks_air||blocks_air)
 		return 0
 
@@ -11,6 +11,7 @@
 				return 0
 
 	return ..()
+*/
 
 //Convenience function for atoms to update turfs they occupy
 /atom/movable/proc/update_nearby_tiles(need_rebuild)
@@ -52,3 +53,6 @@
 /atom
 	var/simulated = TRUE
 	var/can_atmos_pass = ATMOS_PASS_YES
+
+/atom/proc/c_block(turf/target_turf, vertical = FALSE)
+	return

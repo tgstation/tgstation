@@ -689,7 +689,7 @@
 	name = "Machine Design (HFR Core)"
 	desc = "The circuit board for an HFR Core."
 	id = "HFR_core"
-	build_path = /obj/item/circuitboard/machine/HFR_core
+	//build_path = /obj/item/circuitboard/machine/HFR_core
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -697,7 +697,7 @@
 	name = "Machine Design (HFR fuel input)"
 	desc = "The circuit board for an HFR fuel input."
 	id = "HFR_fuel_input"
-	build_path = /obj/item/circuitboard/machine/HFR_fuel_input
+	//build_path = /obj/item/circuitboard/machine/HFR_fuel_input
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -705,7 +705,7 @@
 	name = "Machine Design (HFR waste output)"
 	desc = "The circuit board for an HFR waste output."
 	id = "HFR_waste_output"
-	build_path = /obj/item/circuitboard/machine/HFR_waste_output
+	//build_path = /obj/item/circuitboard/machine/HFR_waste_output
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -713,7 +713,7 @@
 	name = "Machine Design (HFR moderator input)"
 	desc = "The circuit board for an HFR moderator input."
 	id = "HFR_moderator_input"
-	build_path = /obj/item/circuitboard/machine/HFR_moderator_input
+	//build_path = /obj/item/circuitboard/machine/HFR_moderator_input
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -721,7 +721,7 @@
 	name = "Machine Design (HFR corner)"
 	desc = "The circuit board for an HFR corner."
 	id = "HFR_corner"
-	build_path = /obj/item/circuitboard/machine/HFR_corner
+	//build_path = /obj/item/circuitboard/machine/HFR_corner
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -729,7 +729,7 @@
 	name = "Machine Design (HFR interface)"
 	desc = "The circuit board for an HFR interface."
 	id = "HFR_interface"
-	build_path = /obj/item/circuitboard/machine/HFR_interface
+	//build_path = /obj/item/circuitboard/machine/HFR_interface
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -737,7 +737,7 @@
 	name = "Machine Design (Crystallizer)"
 	desc = "The circuit board for a crystallizer."
 	id = "crystallizer"
-	build_path = /obj/item/circuitboard/machine/crystallizer
+	//build_path = /obj/item/circuitboard/machine/crystallizer
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 

@@ -84,9 +84,10 @@
 		var/turf/T = locate(destination_x, destination_y, destination_z)
 		user.forceMove(T)
 
+/*
 /turf/open/space/Initalize_Atmos(times_fired)
 	return
-
+*/
 /turf/open/space/TakeTemperature(temp)
 
 /turf/open/space/RemoveLattice()

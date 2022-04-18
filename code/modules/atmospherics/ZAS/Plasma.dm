@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(contamination_overlay, /image, image('icons/effects/contamination.dmi'))
+GLOBAL_DATUM_INIT(contamination_overlay, /image, image('modular_pariah/master_files/icons/effects/contamination.dmi'))
 
 /datum/pl_control
 	var/plasma_dmg = 3
@@ -56,7 +56,7 @@ GLOBAL_DATUM_INIT(contamination_overlay, /image, image('icons/effects/contaminat
 		add_overlay(GLOB.contamination_overlay)
 
 /obj/item/decontaminate()
-	flags_2 ~= CONTAMINATED_2
+	flags_2 &= ~CONTAMINATED_2
 	cut_overlay(GLOB.contamination_overlay)
 
 
@@ -166,7 +166,7 @@ GLOBAL_DATUM_INIT(contamination_overlay, /image, image('icons/effects/contaminat
 /turf/Entered(obj/item/I)
 	. = ..()
 	//Items that are in plasma, but not on a mob, can still be contaminated.
-	if(istype(I) && SSzas && SSzas.settings.plc.cloth_contamination && I.can_contaminate())
+	if(istype(I) && SSzas && SSzas.settings?.plc.cloth_contamination && I.can_contaminate())
 		var/datum/gas_mixture/env = return_air(1)
 		if(!env)
 			return

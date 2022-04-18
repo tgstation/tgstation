@@ -173,7 +173,7 @@
 
 	return TRUE
 
-/obj/machinery/door/window/can_atmos_pass(turf/T, vertical = FALSE)
+/obj/machinery/door/window/c_block(turf/T, vertical = FALSE)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else

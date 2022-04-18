@@ -8,7 +8,7 @@
 	var/list/lift_platforms
 	/// Typepath list of what to ignore smashing through, controls all lifts
 	var/list/ignored_smashthroughs = list(
-		/obj/machinery/power/supermatter_crystal,
+		//obj/machinery/power/supermatter_crystal,
 		/obj/structure/holosign
 	)
 

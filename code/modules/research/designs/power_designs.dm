@@ -88,7 +88,7 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 500)
 	construction_time = 100
-	build_path = /obj/item/turbine_parts/compressor
+	//build_path = /obj/item/turbine_parts/compressor
 	category = list("Misc","Power Designs","Machinery","initial")
 
 /datum/design/turbine_part_rotor
@@ -98,7 +98,7 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 500)
 	construction_time = 100
-	build_path = /obj/item/turbine_parts/rotor
+	//build_path = /obj/item/turbine_parts/rotor
 	category = list("Misc","Power Designs","Machinery","initial")
 
 /datum/design/turbine_part_stator
@@ -108,5 +108,5 @@
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 500)
 	construction_time = 100
-	build_path = /obj/item/turbine_parts/stator
+	//build_path = /obj/item/turbine_parts/stator
 	category = list("Misc","Power Designs","Machinery","initial")

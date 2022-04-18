@@ -20,20 +20,9 @@
 	var/power_rating = 7500
 	///List of gases that can be scrubbed
 	var/list/scrubbing = list(
-		/datum/gas/plasma,
-		/datum/gas/carbon_dioxide,
-		/datum/gas/nitrous_oxide,
-		/datum/gas/bz,
-		/datum/gas/nitrium,
-		/datum/gas/tritium,
-		/datum/gas/hypernoblium,
-		/datum/gas/water_vapor,
-		/datum/gas/freon,
-		/datum/gas/hydrogen,
-		/datum/gas/healium,
-		/datum/gas/proto_nitrate,
-		/datum/gas/zauker,
-		/datum/gas/halon,
+		GAS_PLASMA,
+		GAS_CO2,
+		GAS_N2O,
 	)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
@@ -86,7 +75,7 @@
 	var/transfer_moles = min(1, volume_rate/mixture.volume)*mixture.total_moles
 
 	var/datum/gas_mixture/gas2scrub = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
-	var/datum/gas_mixture/filtered = new
+	//var/datum/gas_mixture/filtered = new
 	if(!scrubbing)
 		return
 

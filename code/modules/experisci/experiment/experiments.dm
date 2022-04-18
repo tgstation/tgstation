@@ -82,7 +82,7 @@
 	sanitized_misc = TRUE
 	sanitized_reactions = TRUE
 	require_all = FALSE
-	required_reactions = list(/datum/gas_reaction/h2fire, /datum/gas_reaction/tritfire)
+	//required_reactions = list(/datum/gas_reaction/h2fire, /datum/gas_reaction/tritfire)
 
 /datum/experiment/ordnance/explosive/nobliumbomb
 	name = "Noblium Explosives"
@@ -92,7 +92,7 @@
 	experiment_proper = TRUE
 	sanitized_misc = TRUE
 	sanitized_reactions = TRUE
-	required_reactions = list(/datum/gas_reaction/nobliumformation)
+	//required_reactions = list(/datum/gas_reaction/nobliumformation)
 
 /datum/experiment/ordnance/explosive/pressurebomb
 	name = "Reactionless Explosives"
@@ -109,7 +109,7 @@
 	gain = list(20,60,120)
 	target_amount = list(20,120,500)
 	experiment_proper = TRUE
-	required_gas = /datum/gas/nitrium
+	//required_gas = /datum/gas/nitrium
 
 /datum/experiment/ordnance/gaseous/bz
 	name = "BZ Gas Shells"
@@ -117,7 +117,7 @@
 	gain = list(25,50)
 	target_amount = list(200,600)
 	experiment_proper = TRUE
-	required_gas = /datum/gas/bz
+	//required_gas = /datum/gas/bz
 
 /datum/experiment/ordnance/gaseous/noblium
 	name = "Noblium Gas Shells"
@@ -125,7 +125,7 @@
 	gain = list(10,40,80)
 	target_amount = list(15,55,250)
 	experiment_proper = TRUE
-	required_gas = /datum/gas/hypernoblium
+	//required_gas = /datum/gas/hypernoblium
 
 /datum/experiment/ordnance/gaseous/halon
 	name = "Halon Gas Shells"
@@ -133,7 +133,7 @@
 	gain = list(10,30,60)
 	target_amount = list(15,55,250)
 	experiment_proper = TRUE
-	required_gas = /datum/gas/halon
+	//required_gas = /datum/gas/halon
 
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"

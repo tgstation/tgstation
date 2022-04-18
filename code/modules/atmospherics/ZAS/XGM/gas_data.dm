@@ -1,4 +1,4 @@
-GLOBAL_REAL(xgm_gas_data, /datum/xgm_gas_data)
+GLOBAL_REAL(xgm_gas_data, /datum/xgm_gas_data) = new
 /datum/xgm_gas_data
 	//Simple list of all the gas IDs.
 	var/list/gases = list()
@@ -93,7 +93,7 @@ GLOBAL_REAL(xgm_gas_data, /datum/xgm_gas_data)
 /obj/effect/gas_overlay
 	name = "gas"
 	desc = "You shouldn't be clicking this."
-	icon = 'icons/effects/tile_effects.dmi'
+	icon = 'modular_pariah/master_files/icons/effects/tile_effects.dmi'
 	icon_state = "generic"
 	layer = FIRE_LAYER
 	appearance_flags = RESET_COLOR|PIXEL_SCALE|TILE_BOUND

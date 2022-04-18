@@ -79,7 +79,7 @@
 /datum/export/large/supermatter
 	cost = CARGO_CRATE_VALUE * 16
 	unit_name = "supermatter shard"
-	export_types = list(/obj/machinery/power/supermatter_crystal/shard)
+	//export_types = list(/obj/machinery/power/supermatter_crystal/shard)
 
 /datum/export/large/grounding_rod
 	cost = CARGO_CRATE_VALUE * 1.2

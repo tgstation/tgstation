@@ -77,7 +77,7 @@
 		return PROCESS_KILL
 	var/turf/location = get_turf(master)
 	var/datum/gas_mixture/open_air = location.return_air()
-	var/true_rate = (1 - (current_integrity / master.max_integrity)) * leak_rate
+	//var/true_rate = (1 - (current_integrity / master.max_integrity)) * leak_rate
 	for(var/datum/gas_mixture/mix as anything in airs)
 		mix.leak_to_enviroment(open_air)
 

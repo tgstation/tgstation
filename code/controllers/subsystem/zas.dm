@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(zas)
 	//The variable setting controller
 	var/datum/zas_controller/settings
 	//A reference to the global var
-	var/datum/xgm_gas_data/gas_data = xgm_gas_data
+	var/datum/xgm_gas_data/gas_data
 
 	//Geometry lists
 	var/list/zones = list()
@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(zas)
 
 	var/starttime = REALTIMEOFDAY
 	settings = new
-	gas_data = new
+	gas_data = xgm_gas_data
 
 	to_chat(world, span_boldannounce("Processing Geometry..."))
 
@@ -294,7 +294,7 @@ SUBSYSTEM_DEF(zas)
 			var/obj/effect/hotspot/F = curr_hotspot[curr_hotspot.len]
 			curr_hotspot.len--
 
-			F.Process()
+			F.process()
 
 			if (MC_TICK_CHECK)
 				return

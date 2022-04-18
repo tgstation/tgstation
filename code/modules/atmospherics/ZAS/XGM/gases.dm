@@ -30,7 +30,7 @@
 	name = "Methyl Bromide"
 	specific_heat = 42.59 // J/(mol*K)
 	molar_mass = 0.095	  // kg/mol
-	breathed_product = /datum/reagent/toxin/methyl_bromide
+	//breathed_product = /datum/reagent/toxin/methyl_bromide
 	symbol_html = "CH<sub>3</sub>Br"
 	symbol = "CH3Br"
 
@@ -128,7 +128,7 @@
 	specific_heat = 80	// J/(mol*K)
 	molar_mass = 0.004	// kg/mol
 	flags = XGM_GAS_FUSION_FUEL
-	breathed_product = /datum/reagent/helium
+	//breathed_product = /datum/reagent/helium
 	symbol_html = "He"
 	symbol = "He"
 
@@ -162,7 +162,7 @@
 	name = "Xenon"
 	specific_heat = 3	// J/(mol*K)
 	molar_mass = 0.054	// kg/mol
-	breathed_product = /datum/reagent/nitrous_oxide/xenon
+	//breathed_product = /datum/reagent/nitrous_oxide/xenon
 	symbol_html = "Xe"
 	symbol = "Xe"
 
@@ -195,7 +195,7 @@
 	specific_heat = 5	// J/(mol*K)
 	molar_mass = 0.017	// kg/mol
 	flags = XGM_GAS_CONTAMINANT
-	breathed_product = /datum/reagent/toxin/chlorine
+	//breathed_product = /datum/reagent/toxin/chlorine
 	symbol_html = "Cl"
 	symbol = "Cl"
 
@@ -236,6 +236,6 @@
 	name = "Carbon Monoxide"
 	specific_heat = 30	// J/(mol*K)
 	molar_mass = 0.028	// kg/mol
-	breathed_product = /datum/reagent/carbon_monoxide
+	//breathed_product = /datum/reagent/carbon_monoxide
 	symbol_html = "CO"
 	symbol = "CO"

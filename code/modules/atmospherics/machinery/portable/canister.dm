@@ -5,12 +5,12 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /proc/init_gas_id_to_canister()
 	return sort_list(list(
-		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
-		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
-		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-		"plasma" = /obj/machinery/portable_atmospherics/canister/plasma,
-		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-		"nitrium" = /obj/machinery/portable_atmospherics/canister/nitrium,
+		GAS_NITROGEN = /obj/machinery/portable_atmospherics/canister/nitrogen,
+		GAS_OXYGEN = /obj/machinery/portable_atmospherics/canister/oxygen,
+		GAS_CO2 = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+		GAS_PLASMA = /obj/machinery/portable_atmospherics/canister/plasma,
+		GAS_N2O = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		/*"nitrium" = /obj/machinery/portable_atmospherics/canister/nitrium,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
 		"water_vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
@@ -26,8 +26,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"zauker" = /obj/machinery/portable_atmospherics/canister/zauker,
 		"helium" = /obj/machinery/portable_atmospherics/canister/helium,
 		"antinoblium" = /obj/machinery/portable_atmospherics/canister/antinoblium,
-		"halon" = /obj/machinery/portable_atmospherics/canister/halon
+		"halon" = /obj/machinery/portable_atmospherics/canister/halon*/
 	))
+
 
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
@@ -141,7 +142,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	desc = "Pre-mixed air."
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#c6c0b5"
-
+/*
 /obj/machinery/portable_atmospherics/canister/antinoblium
 	name = "Antinoblium canister"
 	gas_type = /datum/gas/antinoblium
@@ -154,13 +155,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	gas_type = /datum/gas/bz
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#d0d2a0"
-
+*/
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Carbon dioxide canister"
-	gas_type = /datum/gas/carbon_dioxide
+	gas_type = GAS_CO2
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#4e4c48"
-
+/*
 /obj/machinery/portable_atmospherics/canister/freon
 	name = "Freon canister"
 	gas_type = /datum/gas/freon
@@ -188,10 +189,11 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#368bff"
-
+*/
+/*
 /obj/machinery/portable_atmospherics/canister/hydrogen
 	name = "Hydrogen canister"
-	gas_type = /datum/gas/hydrogen
+	gas_type = GAS_HYDROGEN
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/stripe
 	greyscale_colors = "#bdc2c0#ffffff"
@@ -202,19 +204,19 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009823#f7d5d3"
-
+*/
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
-	gas_type = /datum/gas/nitrogen
+	gas_type = GAS_NITROGEN
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#d41010"
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "Nitrous oxide canister"
-	gas_type = /datum/gas/nitrous_oxide
+	gas_type = GAS_N2O
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#c63e3b#f7d5d3"
-
+/*
 /obj/machinery/portable_atmospherics/canister/nitrium
 	name = "Nitrium canister"
 	gas_type = /datum/gas/nitrium
@@ -226,13 +228,14 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	gas_type = /datum/gas/hypernoblium
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#6399fc#b2b2b2"
+*/
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Oxygen canister"
-	gas_type = /datum/gas/oxygen
+	gas_type = GAS_OXYGEN
 	greyscale_config = /datum/greyscale_config/canister/stripe
 	greyscale_colors = "#2786e5#e8fefe"
-
+/*
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "Pluoxium canister"
 	gas_type = /datum/gas/pluoxium
@@ -245,13 +248,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#008200#33cc33"
-
+*/
 /obj/machinery/portable_atmospherics/canister/plasma
 	name = "Plasma canister"
-	gas_type = /datum/gas/plasma
+	gas_type = GAS_PLASMA
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#f62800#000000"
-
+/*
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "Tritium canister"
 	gas_type = /datum/gas/tritium
@@ -271,7 +274,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#009a00#006600"
-
+*/
 // Special canisters below here
 
 /obj/machinery/portable_atmospherics/canister/fusion_test
@@ -293,8 +296,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_colors = "#9fba6c#3d4680"
 */
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix/create_gas()
-	air_contents.add(GAS_OXYGEN, (O2_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
-	air_contents.add(GAS_N2O, (N2O_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(GAS_OXYGEN, (O2_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(GAS_N2O, (N2O_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	SSzas.start_processing_machine(src)
 
 /**
@@ -333,7 +336,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/proto/default/oxygen
 	name = "prototype canister"
 	desc = "A prototype canister for a prototype bike, what could go wrong?"
-	gas_type = /datum/gas/oxygen
+	gas_type = GAS_OXYGEN
 	filled = 1
 	release_pressure = ONE_ATMOSPHERE*2
 
@@ -346,12 +349,12 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return
 	if(starter_temp)
 		air_contents.temperature = starter_temp
-	air_contents.add(gas_type,(maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(gas_type,(maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	SSzas.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
-	air_contents.add(GAS_OXYGEN, (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
-	air_contents.add(GAS_NITROGEN, (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(GAS_OXYGEN, (O2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
+	air_contents.adjust_gas(GAS_NITROGEN, (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 	SSzas.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
@@ -598,7 +601,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			var/transfer_moles = calculate_transfer_moles(air_contents, environment, pressure_delta)
 			transfer_moles = min(transfer_moles, (ATMOS_DEFAULT_VOLUME_PUMP/air_contents.volume)*air_contents.total_moles) //flow rate limit
 
-			var/returnval = pump_gas_passive(air_contents, environment, transfer_moles)
+			pump_gas_passive(air_contents, environment, transfer_moles)
 			//air_update_turf(FALSE, FALSE)
 
 	var/our_pressure = air_contents.return_pressure()

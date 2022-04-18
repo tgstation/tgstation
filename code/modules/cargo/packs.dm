@@ -953,7 +953,7 @@
 	desc = "The power of the heavens condensed into a single crystal. Requires CE access to open."
 	cost = CARGO_CRATE_VALUE * 20
 	access = ACCESS_CE
-	contains = list(/obj/machinery/power/supermatter_crystal/shard)
+	//contains = list(/obj/machinery/power/supermatter_crystal/shard)
 	crate_name = "supermatter shard crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
@@ -974,7 +974,7 @@
 	desc = "The new and improved fusion reactor. Requires CE access to open."
 	cost = CARGO_CRATE_VALUE * 23
 	access = ACCESS_CE
-	contains = list(/obj/item/hfr_box/corner,
+	/*contains = list(/obj/item/hfr_box/corner,
 					/obj/item/hfr_box/corner,
 					/obj/item/hfr_box/corner,
 					/obj/item/hfr_box/corner,
@@ -982,7 +982,7 @@
 					/obj/item/hfr_box/body/moderator_input,
 					/obj/item/hfr_box/body/waste_output,
 					/obj/item/hfr_box/body/interface,
-					/obj/item/hfr_box/core)
+					/obj/item/hfr_box/core)*/
 	crate_name = "HFR crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE

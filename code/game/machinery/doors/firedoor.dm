@@ -659,7 +659,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/firedoor/border_only/can_atmos_pass(turf/T, vertical = FALSE)
+/obj/machinery/door/firedoor/border_only/c_block(turf/T, vertical = FALSE)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else

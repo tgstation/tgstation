@@ -252,6 +252,8 @@
 
 /*/turf/proc/assume_gas(gasid, moles, temp = 0)
 	return 0*/
+/atom/movable/proc/block_superconductivity()
+	return
 
 /turf/return_air()
 	RETURN_TYPE(/datum/gas_mixture)
@@ -270,7 +272,7 @@
 	return GM.remove(amount)
 
 ///turf/simulated/assume_air(datum/gas_mixture/giver) ZASTURF
-/turf/proc/assume_air(datum/gas_mixture/giver)
+/turf/assume_air(datum/gas_mixture/giver)
 	var/datum/gas_mixture/my_air = return_air()
 	my_air.merge(giver)
 
@@ -286,7 +288,8 @@
 	return 1
 
 //turf/simulated/return_air() ZASTURF
-/turf/proc/return_air()
+/turf/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	if(zone)
 		if(!zone.invalid)
 			SSzas.mark_zone_update(zone)

@@ -329,13 +329,13 @@
 	return ..()
 
 /obj/structure/window/Move()
-	var/turf/T = loc
+	//var/turf/T = loc
 	. = ..()
 	/*
 	if(anchored)
 		move_update_air(T)*/
 
-/obj/structure/window/can_atmos_pass(turf/T, vertical = FALSE)
+/obj/structure/window/c_block(turf/T, vertical = FALSE)
 	if(!anchored || !density)
 		return TRUE
 	return !(fulltile || dir == get_dir(loc, T))
