@@ -47,7 +47,7 @@ export const AccountingConsole = (props, context) => {
                   </LabeledList.Item>
                   <LabeledList.Item
                     label="Pay Modifier">
-                    {account.modifier}
+                    {account.modifier*100}%
                   </LabeledList.Item>
                 </LabeledList>
               </Collapsible>
