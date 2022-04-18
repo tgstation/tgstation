@@ -192,8 +192,8 @@
 	new_record.name = "Log Recording #[record_number]"
 	new_record.experiment_source = inserted_tank.name
 	new_record.timestamp = station_time_timestamp()
-	for(var/gas_path in leaked_gas_buffer.gases)
-		new_record.gas_data[gas_path] = leaked_gas_buffer.gases[gas_path][MOLES]
+	for(var/gas_path in leaked_gas_buffer.gas)
+		new_record.gas_data[gas_path] = leaked_gas_buffer.gas[gas_path]
 
 	compressor_record += new_record
 	record_number += 1
@@ -358,7 +358,6 @@
 			"gases" = list()
 		)
 		for (var/path in record.gas_data)
-			var/datum/gas/gas_path = path
-			single_record_data["gases"] += list(initial(gas_path.name) = record.gas_data[gas_path])
+			single_record_data["gases"] += list(path = record.gas_data[path])
 		data["records"] += list(single_record_data)
 	return data

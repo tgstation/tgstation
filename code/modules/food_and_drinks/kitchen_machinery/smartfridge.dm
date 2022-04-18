@@ -366,7 +366,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	atmos_spawn_air("TEMP=1000")
+	var/turf/T = get_turf(src)
+	T.atmos_spawn_air(GAS_OXYGEN, 1, 1000)
 
 
 // ----------------------------

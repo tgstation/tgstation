@@ -726,7 +726,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					var/list/gaseslog = list() //list for logging all gases in canister
 					for(var/gas in air_contents.gas)
 						gaseslog[xgm_gas_data.name[gas]] = air_contents.get_gas(gas)	//adds gases to gaseslog
-						if(!xgm_gas_data.flags[gas] & XGM_GAS_CONTAMINANT|XGM_GAS_FUEL)
+						if(!(xgm_gas_data.flags[gas] & XGM_GAS_CONTAMINANT|XGM_GAS_FUEL))
 							continue
 						danger = TRUE //at least 1 danger gas
 					logmsg = "[key_name(usr)] <b>opened</b> a canister that contains the following:"

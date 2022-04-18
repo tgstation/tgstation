@@ -6,7 +6,7 @@
 	temperature = initial_temperature
 	return ..()
 
-/datum/gas_mixture/immutable/adjust_gas()
+/datum/gas_mixture/immutable/adjust_gas(gasid, moles, update = 1)
 	return
 
 /datum/gas_mixture/immutable/remove()
@@ -24,7 +24,7 @@
 /datum/gas_mixture/immutable/multiply()
 	return TRUE
 
-/datum/gas_mixture/immutable/adjust_gas_temp()
+/datum/gas_mixture/immutable/adjust_gas_temp(gasid, moles, temp, update = 1)
 	return
 
 /datum/gas_mixture/immutable/adjust_multi()

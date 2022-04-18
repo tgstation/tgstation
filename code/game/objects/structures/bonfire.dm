@@ -61,6 +61,7 @@
 				return ..()
 	if(used_item.get_temperature())
 		start_burning()
+	/*
 	if(grill)
 		if(istype(used_item, /obj/item/melee/roastingstick))
 			return FALSE
@@ -75,7 +76,8 @@
 				used_item.pixel_x = used_item.base_pixel_x + clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)
 				used_item.pixel_y = used_item.base_pixel_y + clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 		else
-			return ..()
+			return ..()*/
+	return ..()
 
 
 /obj/structure/bonfire/attack_hand(mob/user, list/modifiers)

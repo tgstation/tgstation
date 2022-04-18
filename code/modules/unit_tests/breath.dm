@@ -26,7 +26,7 @@
 	//Prep the floor
 	to_fill.initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	to_fill.air = new
-	to_fill.air.copy_from_turf(to_fill)
+	to_fill.air.copy_from(to_fill.return_air())
 
 	lab_rat.breathe()
 
@@ -66,7 +66,7 @@
 	//Prep the floor
 	to_fill.initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	to_fill.air = new
-	to_fill.air.copy_from_turf(to_fill)
+	to_fill.air.copy_from(to_fill.return_air())
 
 	lab_rat.breathe()
 

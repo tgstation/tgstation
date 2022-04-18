@@ -555,3 +555,17 @@ SUBSYSTEM_DEF(zas)
 		qdel(temp)
 
 	return pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"]
+
+/datum/controller/subsystem/zas/proc/setup_template_machinery(list/atmos_machines)
+	var/obj/machinery/atmospherics/AM
+	for(var/A in 1 to atmos_machines.len)
+		AM = atmos_machines[A]
+		AM.atmos_init()
+		CHECK_TICK
+
+	for(var/A in 1 to atmos_machines.len)
+		AM = atmos_machines[A]
+		var/list/targets = AM.get_rebuild_targets()
+		for(var/datum/pipeline/build_off as anything in targets)
+			build_off.build_pipeline_blocking(AM)
+		CHECK_TICK

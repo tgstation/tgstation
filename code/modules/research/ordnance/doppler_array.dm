@@ -284,8 +284,8 @@
 		// Make sure the list is indexed first.
 		if(reaction_data.len)
 			for (var/path in reaction_data[TANK_RESULTS_REACTION])
-				var/datum/gas_reaction/reaction_path = path
-				record_data["reaction_results"] += initial(reaction_path.name)
+				//var/datum/gas_reaction/reaction_path = path
+				record_data["reaction_results"] += "UNIMPLIMENTED - GAS REACTIONS"
 			if(TANK_MERGE_OVERPRESSURE in reaction_data[TANK_RESULTS_MISC])
 				record_data["reaction_results"] += "Tank overpressurized before reaction"
 

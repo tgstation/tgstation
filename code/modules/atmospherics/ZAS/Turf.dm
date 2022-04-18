@@ -12,7 +12,7 @@
 	var/planetary_atmos //Let's just let this exist for now.
 
 ///turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null) ZASTURF
-/turf/open/proc/update_graphic(list/graphic_add = null, list/graphic_null = null)
+/turf/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
 		vis_contents += graphic_add
 	if(graphic_remove && graphic_remove.len)
@@ -50,8 +50,8 @@
 		//if(istype(unsim, /turf/simulated)) ZASTURF
 		if(unsim.simulated)
 			//var/turf/simulated/sim = unsim
-			if(TURF_HAS_VALID_ZONE(sim))
-				SSzas.connect(sim, src)
+			if(TURF_HAS_VALID_ZONE(unsim))
+				SSzas.connect(unsim, src)
 
 // Helper for can_safely_remove_from_zone().
 //ZASTURF - MACRO IM NOT COMMENTING THIS SHIT OUT
@@ -246,14 +246,15 @@
 
 /turf/proc/post_update_air_properties()
 	if(connections) connections.update_all()
-
+/*
 /turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-	return 0
+	return 0*/
 
-/turf/proc/assume_gas(gasid, moles, temp = 0)
-	return 0
+/*/turf/proc/assume_gas(gasid, moles, temp = 0)
+	return 0*/
 
 /turf/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	//Create gas mixture to hold data for passing
 	var/datum/gas_mixture/GM = new
 

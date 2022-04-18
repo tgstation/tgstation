@@ -110,34 +110,35 @@
 			breather.throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
 		return FALSE
 
-	for(var/gas_id in GLOB.meta_gas_info)
-		breath.assert_gas(gas_id)
-
 	if(istype(breather.wear_mask) && (breather.wear_mask.clothing_flags & GAS_FILTERING) && breather.wear_mask.has_filter)
 		breath = breather.wear_mask.consume_filter(breath)
 
 	var/gas_breathed = 0
 
-	var/list/breath_gases = breath.gases
+	//var/list/breath_gases = breath.gases
+	//Handle subtypes' breath processing
+	handle_gas_override(breather, breath, gas_breathed)
 
 	//Partial pressures in our breath
-	var/O2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
-	var/N2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
-	var/Plasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
-	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
+	var/O2_moles = breath.get_gas(GAS_OXYGEN)
+	var/N2_moles = breath.get_gas(GAS_NITROGEN)
+	var/plasma_moles = breath.get_gas(GAS_PLASMA)
+	var/CO2_moles = breath.get_gas(GAS_CO2)
+
+	var/O2_pp = breath.get_breath_partial_pressure(O2_moles)//+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
+	var/N2_pp = breath.get_breath_partial_pressure(N2_moles)
+	var/Plasma_pp = breath.get_breath_partial_pressure(plasma_moles)
+	var/CO2_pp = breath.get_breath_partial_pressure(CO2_moles)
 	//Vars for n2o and healium induced euphorias.
 	var/n2o_euphoria = EUPHORIA_LAST_FLAG
 	var/healium_euphoria = EUPHORIA_LAST_FLAG
-
-	//Handle subtypes' breath processing
-	handle_gas_override(breather,breath_gases, gas_breathed)
 
 	//-- OXY --//
 
 	//Too much oxygen! //Yes, some species may not like it.
 	if(safe_oxygen_max)
 		if(O2_pp > safe_oxygen_max)
-			var/ratio = (breath_gases[/datum/gas/oxygen][MOLES]/safe_oxygen_max) * 10
+			var/ratio = (O2_moles/safe_oxygen_max) * 10
 			breather.apply_damage_type(clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type)
 			breather.throw_alert(ALERT_TOO_MUCH_OXYGEN, /atom/movable/screen/alert/too_much_oxy)
 		else
@@ -146,18 +147,18 @@
 	//Too little oxygen!
 	if(safe_oxygen_min)
 		if(O2_pp < safe_oxygen_min)
-			gas_breathed = handle_too_little_breath(breather, O2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
+			gas_breathed = handle_too_little_breath(breather, O2_pp, safe_oxygen_min, O2_moles)
 			breather.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
-			gas_breathed = breath_gases[/datum/gas/oxygen][MOLES]
+			gas_breathed = O2_moles
 			breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 
 	//Exhale
-	breath_gases[/datum/gas/oxygen][MOLES] -= gas_breathed
-	breath_gases[/datum/gas/carbon_dioxide][MOLES] += gas_breathed
+	breath.adjust_gas(GAS_OXYGEN, -gas_breathed)
+	breath.adjust_gas(GAS_CO2, gas_breathed)
 	gas_breathed = 0
 
 	//-- Nitrogen --//
@@ -165,7 +166,7 @@
 	//Too much nitrogen!
 	if(safe_nitro_max)
 		if(N2_pp > safe_nitro_max)
-			var/ratio = (breath_gases[/datum/gas/nitrogen][MOLES]/safe_nitro_max) * 10
+			var/ratio = (N2_moles/safe_nitro_max) * 10
 			breather.apply_damage_type(clamp(ratio, nitro_breath_dam_min, nitro_breath_dam_max), nitro_damage_type)
 			breather.throw_alert(ALERT_TOO_MUCH_NITRO, /atom/movable/screen/alert/too_much_nitro)
 		else
@@ -174,18 +175,18 @@
 	//Too little nitrogen!
 	if(safe_nitro_min)
 		if(N2_pp < safe_nitro_min)
-			gas_breathed = handle_too_little_breath(breather, N2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
+			gas_breathed = handle_too_little_breath(breather, N2_pp, safe_nitro_min, N2_moles)
 			breather.throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
-			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
+			gas_breathed = N2_moles
 			breather.clear_alert(ALERT_NOT_ENOUGH_NITRO)
 
 	//Exhale
-	breath_gases[/datum/gas/nitrogen][MOLES] -= gas_breathed
-	breath_gases[/datum/gas/carbon_dioxide][MOLES] += gas_breathed
+	breath.adjust_gas(GAS_NITROGEN, -gas_breathed)
+	breath.adjust_gas(GAS_CO2, gas_breathed)
 	gas_breathed = 0
 
 	//-- CO2 --//
@@ -211,18 +212,18 @@
 	//Too little CO2!
 	if(safe_co2_min)
 		if(CO2_pp < safe_co2_min)
-			gas_breathed = handle_too_little_breath(breather, CO2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
+			gas_breathed = handle_too_little_breath(breather, CO2_pp, safe_co2_min, CO2_moles)
 			breather.throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
-			gas_breathed = breath_gases[/datum/gas/carbon_dioxide][MOLES]
+			gas_breathed = CO2_moles
 			breather.clear_alert(ALERT_NOT_ENOUGH_CO2)
 
 	//Exhale
-	breath_gases[/datum/gas/carbon_dioxide][MOLES] -= gas_breathed
-	breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
+	breath.adjust_gas(GAS_CO2, -gas_breathed)
+	breath.adjust_gas(GAS_OXYGEN, gas_breathed)
 	gas_breathed = 0
 
 
@@ -231,7 +232,7 @@
 	//Too much plasma!
 	if(safe_plasma_max)
 		if(Plasma_pp > safe_plasma_max)
-			var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_plasma_max) * 10
+			var/ratio = (plasma_moles/safe_plasma_max) * 10
 			breather.apply_damage_type(clamp(ratio, plas_breath_dam_min, plas_breath_dam_max), plas_damage_type)
 			breather.throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
 		else
@@ -241,18 +242,18 @@
 	//Too little plasma!
 	if(safe_plasma_min)
 		if(Plasma_pp < safe_plasma_min)
-			gas_breathed = handle_too_little_breath(breather, Plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
+			gas_breathed = handle_too_little_breath(breather, Plasma_pp, safe_plasma_min, plasma_moles)
 			breather.throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
-			gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
+			gas_breathed = plasma_moles
 			breather.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
 
 	//Exhale
-	breath_gases[/datum/gas/plasma][MOLES] -= gas_breathed
-	breath_gases[/datum/gas/carbon_dioxide][MOLES] += gas_breathed
+	breath.adjust_gas(GAS_PLASMA, -gas_breathed)
+	breath.adjust_gas(GAS_CO2, gas_breathed)
 	gas_breathed = 0
 
 
@@ -261,8 +262,8 @@
 	if(breath) // If there's some other shit in the air lets deal with it here.
 
 	// N2O
-
-		var/SA_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
+		var/n2o_moles = breath.get_gas(GAS_N2O)
+		var/SA_pp = breath.get_breath_partial_pressure(n2o_moles)
 		if(SA_pp > SA_para_min) // Enough to make us stunned for a bit
 			breather.throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 			breather.Unconscious(60) // 60 gives them one second to wake up and run away a bit!
@@ -277,7 +278,7 @@
 			n2o_euphoria = EUPHORIA_INACTIVE
 			breather.clear_alert(ALERT_TOO_MUCH_N2O)
 
-
+	/*
 	// BZ
 
 		var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
@@ -428,6 +429,7 @@
 		// Clear out moods when no miasma at all
 		else
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
+		*/
 
 		if (n2o_euphoria == EUPHORIA_ACTIVE || healium_euphoria == EUPHORIA_ACTIVE)
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
@@ -436,12 +438,12 @@
 		// Activate mood on first flag, remove on second, do nothing on third.
 
 		handle_breath_temperature(breath, breather)
-		breath.garbage_collect()
+		breath.update_values()
 
 	return TRUE
 
 ///override this for breath handling unique to lung subtypes, breath_gas is the list of gas in the breath while gas breathed is just what is being added or removed from that list, just as they are when this is called in check_breath()
-/obj/item/organ/lungs/proc/handle_gas_override(mob/living/carbon/human/breather, list/breath_gas, gas_breathed)
+/obj/item/organ/lungs/proc/handle_gas_override(mob/living/carbon/human/breather, datum/gas_mixture/breath, gas_breathed)
 	return
 
 /obj/item/organ/lungs/proc/handle_too_little_breath(mob/living/carbon/human/suffocator = null, breath_pp = 0, safe_breath_min = 0, true_pp = 0)
@@ -524,8 +526,8 @@
 
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather_slime)
 	. = ..()
-	if (breath?.gases[/datum/gas/plasma])
-		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
+	if (breath.get_gas(GAS_PLASMA))
+		var/plasma_pp = breath.get_breath_partial_pressure(breath.get_gas(GAS_PLASMA))
 		owner.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
 /obj/item/organ/lungs/cybernetic
@@ -578,7 +580,7 @@
 // Normal oxygen is 21 kPa partial pressure, but SS13 humans can tolerate down
 // to 16 kPa. So it follows that ashwalkers, as humanoids, follow the same rules.
 #define GAS_TOLERANCE 5
-
+/*
 /obj/item/organ/lungs/ashwalker/Initialize(mapload)
 	. = ..()
 
@@ -590,23 +592,14 @@
 	// Take a "breath" of the air
 	var/datum/gas_mixture/breath = mix.remove(mix.total_moles() * BREATH_PERCENTAGE)
 
-	var/list/breath_gases = breath.gases
-
-	breath.assert_gases(
-		/datum/gas/oxygen,
-		/datum/gas/plasma,
-		/datum/gas/carbon_dioxide,
-		/datum/gas/nitrogen,
-		/datum/gas/bz,
-		/datum/gas/miasma,
-	)
-
 	var/oxygen_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/oxygen][MOLES])
 	var/nitrogen_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrogen][MOLES])
 	var/plasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/plasma][MOLES])
 	var/carbon_dioxide_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/carbon_dioxide][MOLES])
+	/*
 	var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
 	var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
+	*/
 
 	safe_oxygen_min = max(0, oxygen_pp - GAS_TOLERANCE)
 	safe_nitro_min = max(0, nitrogen_pp - GAS_TOLERANCE)
@@ -621,13 +614,16 @@
 	safe_co2_max = carbon_dioxide_pp + GAS_TOLERANCE * 2
 
 	// The lung tolerance against BZ is also increased the amount of BZ in the base air
+	/*
 	BZ_trip_balls_min += bz_pp
 	BZ_brain_damage_min += bz_pp
+	*/
 
 	// Lungs adapted to a high miasma atmosphere do not process it, and breathe it back out
-	if(miasma_pp)
-		suffers_miasma = FALSE
 
+	//if(miasma_pp)
+		//suffers_miasma = FALSE
+*/
 #undef GAS_TOLERANCE
 
 /obj/item/organ/lungs/ethereal
@@ -638,10 +634,11 @@
 	heat_level_2_threshold = 473
 	heat_level_3_threshold = 1073
 
-
+/*
 /obj/item/organ/lungs/ethereal/handle_gas_override(mob/living/carbon/human/breather, list/breath_gases, gas_breathed)
 	// H2O electrolysis
 	gas_breathed = breath_gases[/datum/gas/water_vapor][MOLES]
 	breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_gases[/datum/gas/hydrogen][MOLES] += gas_breathed*2
 	breath_gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
+*/

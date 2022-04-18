@@ -153,7 +153,7 @@
 	///Pressure of the pipenet
 	var/datum/port/output/pressure
 	///Temperature of the pipenet
-	var/datum/port/output/temperature
+	var/datum/port/output/net_temperature
 
 	///The component parent object
 	var/obj/machinery/meter/connected_meter
@@ -162,7 +162,7 @@
 	request_data = add_input_port("Request Meter Data", PORT_TYPE_SIGNAL, trigger = .proc/request_meter_data)
 
 	pressure = add_output_port("Pressure", PORT_TYPE_NUMBER)
-	temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)
+	net_temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/atmos_meter/register_usb_parent(atom/movable/shell)
 	. = ..()
@@ -179,7 +179,7 @@
 		return
 	var/datum/gas_mixture/environment = connected_meter.target.return_air()
 	pressure.set_output(environment.return_pressure())
-	temperature.set_output(environment.temperature)
+	net_temperature.set_output(environment.temperature)
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 // why are you yelling?

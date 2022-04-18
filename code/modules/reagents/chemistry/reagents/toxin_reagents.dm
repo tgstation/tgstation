@@ -107,8 +107,8 @@
 	if(!holder.my_atom)
 		return
 
-	var/atom/A = holder.my_atom
-	A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
+	var/turf/T = get_turf(holder.my_atom)
+	T.atmos_spawn_air(GAS_PLASMA, volume, holder.chem_temp)
 	holder.del_reagent(type)
 
 /datum/reagent/toxin/plasma/expose_turf(turf/open/exposed_turf, reac_volume)

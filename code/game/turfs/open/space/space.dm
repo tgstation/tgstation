@@ -14,7 +14,7 @@
 	var/destination_x
 	var/destination_y
 
-	var/static/datum/gas_mixture/immutable/space/space_gas = new
+	var/static/datum/gas_mixture/immutable/space_gas = new
 	// run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
@@ -94,7 +94,7 @@
 
 /turf/open/space/AfterChange()
 	..()
-	atmos_overlay_types = null
+	//atmos_overlay_types = null
 
 /turf/open/space/Assimilate_Air()
 	return

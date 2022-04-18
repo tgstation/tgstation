@@ -88,7 +88,7 @@ All ShuttleMove procs go here
 	blocks_air = initial(blocks_air)
 	//air_update_turf(TRUE, blocks_air)
 	oldT.blocks_air = initial(oldT.blocks_air)
-	oldT.//air_update_turf(TRUE, oldT.blocks_air)
+	//oldT.air_update_turf(TRUE, oldT.blocks_air)
 
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -254,7 +254,7 @@ All ShuttleMove procs go here
 			A.atmos_init()
 			if(A.return_pipenet())
 				A.add_member(src)
-		SSair.add_to_rebuild_queue(src)
+		SSzas.add_to_rebuild_queue(src)
 	else
 		// atmos_init() calls update_appearance(), so we don't need to call it
 		update_appearance()

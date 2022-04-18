@@ -70,7 +70,7 @@ Class Procs:
 	src.A = A
 	src.B = B
 	zoneA = A.zone
-	if(istype(B /turf/open/space))
+	if(istype(B, /turf/open/space))
 		mark_space()
 		edge = SSzas.get_edge(A.zone,B)
 		edge.add_connection(src)

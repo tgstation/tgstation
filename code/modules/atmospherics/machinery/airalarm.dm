@@ -916,6 +916,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	var/datum/port/output/pressure
 	var/datum/port/output/gas_amount
+	var/datum/port/output/my_temperature
 
 	var/obj/machinery/airalarm/connected_alarm
 	var/list/options_map
@@ -928,7 +929,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	request_data = add_input_port("Request Atmosphere Data", PORT_TYPE_SIGNAL)
 
 	pressure = add_output_port("Pressure", PORT_TYPE_NUMBER)
-	temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)
+	my_temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)
 	gas_amount = add_output_port("Chosen Gas Amount", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/air_alarm/populate_options()
@@ -965,7 +966,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 		var/turf/alarm_turf = get_turf(connected_alarm)
 		var/datum/gas_mixture/environment = alarm_turf.return_air()
 		pressure.set_output(round(environment.return_pressure()))
-		temperature.set_output(round(environment.temperature))
+		my_temperature.set_output(round(environment.temperature))
 		if(ispath(options_map[current_option]))
 			gas_amount.set_output(round(environment.get_gases()[options_map[current_option]]))
 		return

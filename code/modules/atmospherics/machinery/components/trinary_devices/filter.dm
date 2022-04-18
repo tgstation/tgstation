@@ -136,7 +136,7 @@
 
 	data["filter_types"] = list()
 	for(var/gas in GLOB.all_gases)
-		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "enabled" = (path in filter_type)))
+		data["filter_types"] += list(list("name" = xgm_gas_data[gas], "enabled" = (gas in filter_type)))
 
 	return data
 
@@ -161,15 +161,15 @@
 				transfer_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("toggle_filter")
-			if(!gas_id2path(params["val"]))
+			if(!params["val"])
 				return TRUE
-			filter_type ^= gas_id2path(params["val"])
+			filter_type ^= params["val"]
 			var/change
-			if(gas_id2path(params["val"]) in filter_type)
+			if(params["val"] in filter_type)
 				change = "added"
 			else
 				change = "removed"
-			var/gas_name = GLOB.meta_gas_info[gas_id2path(params["val"])][META_GAS_NAME]
+			var/gas_name = xgm_gas_data.name[params["val"]]
 			investigate_log("[key_name(usr)] [change] [gas_name] from the filter type.", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_appearance()
@@ -227,19 +227,20 @@
 	icon_state = "filter_on-0"
 /obj/machinery/atmospherics/components/trinary/filter/atmos/n2
 	name = "nitrogen filter"
-	filter_type = list(/datum/gas/nitrogen)
+	filter_type = list(GAS_N2O)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/o2
 	name = "oxygen filter"
-	filter_type = list(/datum/gas/oxygen)
+	filter_type = list(GAS_OXYGEN)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/co2
 	name = "carbon dioxide filter"
-	filter_type = list(/datum/gas/carbon_dioxide)
+	filter_type = list(GAS_CO2)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/n2o
 	name = "nitrous oxide filter"
-	filter_type = list(/datum/gas/nitrous_oxide)
+	filter_type = list(GAS_N2O)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/plasma
 	name = "plasma filter"
-	filter_type = list(/datum/gas/plasma)
+	filter_type = list(GAS_PLASMA)
+/*
 /obj/machinery/atmospherics/components/trinary/filter/atmos/bz
 	name = "bz filter"
 	filter_type = list(/datum/gas/bz)
@@ -252,9 +253,11 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/healium
 	name = "healium filter"
 	filter_type = list(/datum/gas/healium)
+*/
 /obj/machinery/atmospherics/components/trinary/filter/atmos/h2
 	name = "hydrogen filter"
-	filter_type = list(/datum/gas/hydrogen)
+	filter_type = list(GAS_HYDROGEN)
+/*
 /obj/machinery/atmospherics/components/trinary/filter/atmos/hypernoblium
 	name = "hypernoblium filter"
 	filter_type = list(/datum/gas/hypernoblium)
@@ -287,25 +290,26 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/antinoblium
 	name = "antinoblium filter"
 	filter_type = list(/datum/gas/antinoblium)
-
+*/
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped //This feels wrong, I know
 	icon_state = "filter_on-0_f"
 	flipped = TRUE
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2
 	name = "nitrogen filter"
-	filter_type = list(/datum/gas/nitrogen)
+	filter_type = list(GAS_NITROGEN)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/o2
 	name = "oxygen filter"
-	filter_type = list(/datum/gas/oxygen)
+	filter_type = list(GAS_OXYGEN)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2
 	name = "carbon dioxide filter"
-	filter_type = list(/datum/gas/carbon_dioxide)
+	filter_type = list(GAS_CO2)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/n2o
 	name = "nitrous oxide filter"
-	filter_type = list(/datum/gas/nitrous_oxide)
+	filter_type = list(GAS_N2O)
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/plasma
 	name = "plasma filter"
-	filter_type = list(/datum/gas/plasma)
+	filter_type = list(GAS_PLASMA)
+	/*
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/bz
 	name = "bz filter"
 	filter_type = list(/datum/gas/bz)
@@ -318,9 +322,11 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/healium
 	name = "healium filter"
 	filter_type = list(/datum/gas/healium)
+*/
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/h2
 	name = "hydrogen filter"
-	filter_type = list(/datum/gas/hydrogen)
+	filter_type = list(GAS_HYDROGEN)
+/*
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/hypernoblium
 	name = "hypernoblium filter"
 	filter_type = list(/datum/gas/hypernoblium)
@@ -351,6 +357,7 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/antinoblium
 	name = "antinoblium filter"
 	filter_type = list(/datum/gas/antinoblium)
+*/
 
 // These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
 

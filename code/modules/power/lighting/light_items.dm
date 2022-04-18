@@ -135,5 +135,6 @@
 		force = 5
 		playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(rigged)
-			atmos_spawn_air("plasma=5") //5u of plasma are required to rig a light bulb/tube
+			var/turf/T = get_turf(src)
+			T.atmos_spawn_air(GAS_PLASMA, 5) //5u of plasma are required to rig a light bulb/tube
 		update()

@@ -282,7 +282,7 @@
 	..()
 
 /datum/objective_item/steal/supermatter/TargetExists()
-	return GLOB.main_supermatter_engine != null
+	return //GLOB.main_supermatter_engine != null
 
 //Items with special checks!
 /datum/objective_item/steal/plasma
