@@ -73,7 +73,7 @@
 		return target_turf // Most executions should end here.
 
 	// If we and the target tile share the same baseturf, replace em.
-	if(!target_turf.replaceable || initial(target_turf.baseturfs) != initial(placed_turf_path.baseturfs))
+	if(initial(target_turf.baseturfs) != initial(placed_turf_path.baseturfs))
 		to_chat(user, span_notice("You cannot place this tile here directly!"))
 		return
 	to_chat(user, span_notice("You begin replacing the floor with the tile..."))
