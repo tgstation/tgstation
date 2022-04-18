@@ -94,10 +94,10 @@
 	if (target.stat != DEAD)
 		to_chat(target, span_danger("Your eyes start to bleed profusely!"))
 
-	if (!target.is_blind() && !HAS_TRAIT(target, TRAIT_HALFSIGHT))
-		to_chat(target, span_danger("You become halfsighted!"))
+	if (!target.is_blind() && !HAS_TRAIT(target, TRAIT_NEARSIGHT))
+		to_chat(target, span_danger("You become nearsighted!"))
 
-	target.become_halfsighted(EYE_DAMAGE)
+	target.become_nearsighted(EYE_DAMAGE)
 
 	if (prob(50))
 		if (target.stat != DEAD && target.drop_all_held_items())

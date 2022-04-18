@@ -543,9 +543,9 @@
 
 			if(eyes.damage > 20)
 				if(prob(eyes.damage - 20))
-					if(!HAS_TRAIT(src, TRAIT_HALFSIGHT))
+					if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
 						to_chat(src, span_warning("Your eyes start to burn badly!"))
-					become_halfsighted(EYE_DAMAGE)
+					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.damage - 25))
 					if(!is_blind())

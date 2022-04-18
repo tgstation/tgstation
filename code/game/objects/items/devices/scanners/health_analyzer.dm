@@ -215,8 +215,8 @@
 		if(istype(eyes))
 			if(carbontarget.is_blind())
 				render_list += "<span class='alert ml-2'>Subject is blind.\n</span>"
-			else if(HAS_TRAIT(carbontarget, TRAIT_HALFSIGHT))
-				render_list += "<span class='alert ml-2'>Subject is halfsighted.\n</span>"
+			else if(HAS_TRAIT(carbontarget, TRAIT_NEARSIGHT))
+				render_list += "<span class='alert ml-2'>Subject is nearsighted.\n</span>"
 
 	// Body part damage report
 	if(iscarbon(target))

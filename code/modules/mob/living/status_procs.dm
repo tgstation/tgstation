@@ -1,6 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness,
-// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_HALFSIGHT trait.
+// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
 #define IS_STUN_IMMUNE(source, ignore_canstun) ((source.status_flags & GODMODE) || (!ignore_canstun && (!(source.status_flags & CANKNOCKDOWN) || HAS_TRAIT(source, TRAIT_STUNIMMUNE))))
 
@@ -525,15 +525,15 @@
 	else
 		ADD_TRAIT(src, TRAIT_BLIND, source)
 
-/mob/living/proc/cure_halfsighted(source)
-	REMOVE_TRAIT(src, TRAIT_HALFSIGHT, source)
-	if(!HAS_TRAIT(src, TRAIT_HALFSIGHT))
-		clear_fullscreen("halfsighted")
+/mob/living/proc/cure_nearsighted(source)
+	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+		clear_fullscreen("nearsighted")
 
-/mob/living/proc/become_halfsighted(source)
-	if(!HAS_TRAIT(src, TRAIT_HALFSIGHT))
-		overlay_fullscreen("halfsighted", /atom/movable/screen/fullscreen/impaired, 1)
-	ADD_TRAIT(src, TRAIT_HALFSIGHT, source)
+/mob/living/proc/become_nearsighted(source)
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
+	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
 
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)

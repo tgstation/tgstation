@@ -833,7 +833,7 @@
 	set_blindness(0)
 	set_blurriness(0)
 	set_dizziness(0)
-	cure_halfsighted()
+	cure_nearsighted()
 	cure_blind()
 	cure_husk()
 	hallucination = 0

@@ -18,7 +18,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 	/// A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
 	var/static/list/quirk_blacklist = list(
-		list("Blind","Halfsighted"),
+		list("Blind","Nearsighted"),
 		list("Jolly","Depression","Apathetic","Hypersensitive"),
 		list("Ageusia","Vegetarian","Deviant Tastes", "Gamer"),
 		list("Ananas Affinity","Ananas Aversion", "Gamer"),

@@ -75,7 +75,7 @@
 		human_owner.eye_color = old_eye_color
 		human_owner.update_body()
 	eye_owner.cure_blind(EYE_DAMAGE)
-	eye_owner.cure_halfsighted(EYE_DAMAGE)
+	eye_owner.cure_nearsighted(EYE_DAMAGE)
 	eye_owner.set_blindness(0)
 	eye_owner.set_blurriness(0)
 	eye_owner.clear_fullscreen("eye_damage", 0)

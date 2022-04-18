@@ -7,8 +7,8 @@
 #define BASE_FOV_MASK_X_DIMENSION 15
 #define BASE_FOV_MASK_Y_DIMENSION 15
 
-/// Range at which FOV effects treat halfsightness as blind and play
-#define HALFSIGHTNESS_FOV_BLINDNESS 2
+/// Range at which FOV effects treat nearsightness as blind and play
+#define NEARSIGHTNESS_FOV_BLINDNESS 2
 
 //Fullscreen overlay resolution in tiles for the clients view.
 /// The fullscreen overlay in tiles for x axis

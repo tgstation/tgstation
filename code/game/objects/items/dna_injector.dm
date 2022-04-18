@@ -107,12 +107,12 @@
 /obj/item/dnainjector/antiglasses
 	name = "\improper DNA injector (Anti-Glasses)"
 	desc = "Toss away those glasses!"
-	remove_mutations = list(/datum/mutation/human/halfsight)
+	remove_mutations = list(/datum/mutation/human/nearsight)
 
 /obj/item/dnainjector/glassesmut
 	name = "\improper DNA injector (Glasses)"
 	desc = "Will make you need dorkish glasses."
-	add_mutations = list(/datum/mutation/human/halfsight)
+	add_mutations = list(/datum/mutation/human/nearsight)
 
 /obj/item/dnainjector/epimut
 	name = "\improper DNA injector (Epi.)"

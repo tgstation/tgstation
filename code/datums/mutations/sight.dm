@@ -1,19 +1,19 @@
-//Halfsightedness restricts your vision by several tiles.
-/datum/mutation/human/halfsight
+//Nearsightedness restricts your vision by several tiles.
+/datum/mutation/human/nearsight
 	name = "Near Sightness"
 	desc = "The holder of this mutation has poor eyesight."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't see very well.</span>"
 
-/datum/mutation/human/halfsight/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.become_halfsighted(GENETIC_MUTATION)
+	owner.become_nearsighted(GENETIC_MUTATION)
 
-/datum/mutation/human/halfsight/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/human/nearsight/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.cure_halfsighted(GENETIC_MUTATION)
+	owner.cure_nearsighted(GENETIC_MUTATION)
 
 
 ///Blind makes you blind. Who knew?

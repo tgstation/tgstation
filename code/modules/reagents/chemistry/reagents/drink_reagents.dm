@@ -72,9 +72,9 @@
 			//nothing
 		if(21 to 110)
 			if(DT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), delta_time))
-				M.cure_halfsighted(list(EYE_DAMAGE))
+				M.cure_nearsighted(list(EYE_DAMAGE))
 		if(110 to INFINITY)
-			M.cure_halfsighted(list(EYE_DAMAGE))
+			M.cure_nearsighted(list(EYE_DAMAGE))
 	..()
 	return
 
