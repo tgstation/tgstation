@@ -159,6 +159,8 @@
 	var/stored_decal = "warningline"
 	var/stored_decal_total = "warningline"
 	var/spritesheet_type = /datum/asset/spritesheet/decals // spritesheet containing previews
+	var/supports_custom_color = FALSE // Add a custom color option
+	var/stored_custom_color
 	var/color_list = list(
 		list("Yellow", "yellow"),
 		list("Red", "red"),
@@ -186,6 +188,10 @@
 		"delivery",
 		"warn_full"
 	)
+
+/obj/item/airlock_painter/decal/Initialize(mapload)
+	. = ..()
+	stored_custom_color = stored_color
 
 /obj/item/airlock_painter/decal/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -226,6 +232,7 @@ icon_assets
 	var/datum/asset/spritesheet/icon_assets = get_asset_datum(spritesheet_type)
 
 	.["icon_prefix"] = "[icon_assets.name]32x32"
+	.["supports_custom_color"] = supports_custom_color
 	.["decal_list"] = list()
 	.["color_list"] = list()
 	.["dir_list"] = list()
@@ -252,8 +259,9 @@ icon_assets
 	.["current_decal"] = stored_decal
 	.["current_color"] = stored_color
 	.["current_dir"] = stored_dir
+	.["current_custom_color"] = stored_custom_color
 
-/obj/item/airlock_painter/decal/ui_act(action,list/params)
+/obj/item/airlock_painter/decal/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
@@ -262,14 +270,22 @@ icon_assets
 		//Lists of decals and designs
 		if("select decal")
 			var/selected_decal = params["decal"]
-			var/selected_direction = text2num(params["dir"])
+			var/selected_dir = text2num(params["dir"])
 			stored_decal = selected_decal
-			stored_dir = selected_direction
+			stored_dir = selected_dir
 		if("select color")
 			var/selected_color = params["color"]
 			stored_color = selected_color
+		if("pick custom color")
+			if(supports_custom_color)
+				pick_painting_tool_color(usr, stored_custom_color)
 	update_decal_path()
 	. = TRUE
+
+/obj/item/airlock_painter/decal/set_painting_tool_color(chosen_color)
+	. = ..()
+	stored_custom_color = chosen_color
+	stored_color = chosen_color
 
 /datum/asset/spritesheet/decals
 	name = "floor_decals"
@@ -299,6 +315,8 @@ icon_assets
 		for(var/list/dir in painter.dir_list)
 			for(var/list/color in painter.color_list)
 				insert_state(decal[2], dir[2], color[2])
+			if(painter.supports_custom_color)
+				insert_state(decal[2], dir[2], "custom")
 
 	qdel(painter)
 
@@ -315,6 +333,7 @@ icon_assets
 	stored_color = "#D4D4D4"
 	stored_decal = "tile_corner"
 	spritesheet_type = /datum/asset/spritesheet/decals/tiles
+	supports_custom_color = TRUE
 	color_list = list(
 		list("White", "#D4D4D4"),
 		list("Black", "#0e0f0f"),
@@ -369,7 +388,11 @@ icon_assets
 
 	var/icon/colored_icon = icon('icons/turf/decals.dmi', source_decal, dir=source_dir)
 	colored_icon.ChangeOpacity(110)
-	colored_icon.Blend(color, ICON_MULTIPLY)
+	if(color == "custom")
+		// Do a fun rainbow pattern to stand out while still being static.
+		colored_icon.Blend(icon('icons/effects/random_spawners.dmi', "rainbow"), ICON_MULTIPLY)
+	else
+		colored_icon.Blend(color, ICON_MULTIPLY)
 
 	colored_icon = blend_preview_floor(colored_icon)
 	Insert("[decal]_[dir]_[replacetext(color, "#", "")]", colored_icon)
