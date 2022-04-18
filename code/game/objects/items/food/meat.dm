@@ -68,7 +68,6 @@
 /obj/item/food/fishmeat/donkfish
 	name = "donkfillet"
 	desc = "The dreaded donkfish fillet. No sane spaceman would eat this, and it does not get better when cooked."
-	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "donkfillet"
 	food_reagents = list(/datum/reagent/yuck = 3)
 

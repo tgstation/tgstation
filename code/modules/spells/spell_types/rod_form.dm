@@ -45,6 +45,7 @@
 /// Wizard Version of the Immovable Rod.
 /obj/effect/immovablerod/wizard
 	notify = FALSE
+	loopy_rod = TRUE
 	dnd_style_level_up = FALSE
 	/// The wizard who's piloting our rod.
 	var/datum/weakref/our_wizard

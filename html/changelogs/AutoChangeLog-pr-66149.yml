@@ -1,0 +1,9 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - rscadd: "Firebase Balthazor has received much needed upgrades. Operatives now have an adequate workspace for their radioactive activities."
+  - rscadd: "The Syndicate Uplink has received Special Authorization Cards for use by authorized personnel."
+  - rscdel: "These expansions came at the cost of the old Nukeops Base."
+  - qol: "Nukeops get a bigger and better looking base. Escapees on hijacked shuttles may not be as lucky..."
+  - code_imp: "Added keycards and keycard_doors for use in the Nukeops Base."
+  - code_imp: "Moves /modules/ruins into /modules/mapfluff/ruins and creates /modules/mapfluff/centcom"
