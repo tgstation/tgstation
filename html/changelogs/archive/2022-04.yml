@@ -665,3 +665,37 @@
       delivery chutes.
   wesoda25:
   - bugfix: easter baskets can now hold easter eggs
+2022-04-18:
+  Fikou:
+  - qol: modsuit locks are a bit more clear, nukie/centcom/prototype suits start with
+      them
+  - bugfix: modsuits now retract if summoned through summon items or some other hijinx
+  GoldenAlpharex:
+  - qol: Telecomms and the gravity generator are no longer ear-deafening when you
+      don't have a direct line of sight with them, meaning that you can now peacefully
+      build things in maintenance around them, without having to turn off the sound
+      of your game.
+  - code_imp: Added complete documentation and extra configurability to looping sounds,
+      allowing them to be stopped by walls, to ignore pressure or to be unaffected
+      by reverb!
+  Melbert:
+  - bugfix: Healium healing should be a little more responsive, now
+  - bugfix: Maintenance will now have wall engravings
+  MidoriWroth:
+  - rscadd: Added 3 new Polish foods
+  - imageadd: Added sprites for the 3 new foods
+  OrionTheFox:
+  - bugfix: The Volaju hairstyle is now symmetrical on both facing sides
+  SnoopCooper#7310, Ghilker (for some minor parts):
+  - imageadd: better turbine sprites
+  cat348 for sprites, TheBonded for not being gitbanned:
+  - imageadd: Disposals Junctions have visible arrows
+  iprice:
+  - bugfix: Corrected an error in the spicy donk pocket recipe which would permit
+      infinite donk pocket creation.
+  robbertapir:
+  - bugfix: The Russian revolver now works again
+  vincentiusvin:
+  - balance: atmos holofans are now fireproof
+  zxaber:
+  - bugfix: Ripley MK2 mechs no longer have two cargo utility equipment items.
