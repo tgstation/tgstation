@@ -353,10 +353,11 @@
 				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_HYPERTORUS)
 				message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 				has_reached_emergency = TRUE
+			send_radio_explanation()
 		else if(critical_threshold_proximity >= critical_threshold_proximity_archived) // The damage is still going up
 			radio.talk_into(src, "[warning_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY - (WARNING_TIME_DELAY * 5)
-
+			send_radio_explanation()
 		else // Phew, we're safe
 			radio.talk_into(src, "[safe_alert] Integrity: [get_integrity_percent()]%", engineering_channel)
 			lastwarning = REALTIMEOFDAY
@@ -364,6 +365,21 @@
 	//Melt
 	if(critical_threshold_proximity > melting_point)
 		countdown()
+
+/**
+ * Called by check_alert() in this file
+ * Called to explain in radio what the issues are with the HFR
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/send_radio_explanation()
+
+	if(high_power_damage)
+		radio.talk_into(src, "Warning! Shield destabilizing due to excessive power!", engineering_channel)
+	if(iron_content_damage)
+		radio.talk_into(src, "Warning! Iron shards are damaging the internal core shielding!", engineering_channel)
+	if(high_fuel_mix_mole)
+		radio.talk_into(src, "Warning! Fuel mix moles reaching critical levels!", engineering_channel)
+	if(iron_content_increasing)
+		radio.talk_into(src, "Warning! Iron amount inside the core is increasing!", engineering_channel)
 
 /**
  * Called by check_alert() in this file

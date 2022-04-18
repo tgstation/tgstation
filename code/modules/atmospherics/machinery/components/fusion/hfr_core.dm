@@ -159,6 +159,11 @@
 	///Var used in the meltdown phase
 	var/final_countdown = FALSE
 
+	var/high_power_damage = FALSE
+	var/high_fuel_mix_mole = FALSE
+	var/iron_content_damage = FALSE
+	var/iron_content_increasing = FALSE
+
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Initialize(mapload)
 	. = ..()
 	internal_fusion = new
@@ -171,7 +176,7 @@
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
-	
+
 	RegisterSignal(src.loc, COMSIG_ATOM_ENTERED, .proc/on_entered)
 
 	for(var/atom/movable/movable_object in src.loc)
