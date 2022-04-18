@@ -1,0 +1,4 @@
+author: "B4CKU"
+delete-after: True
+changes: 
+  - bugfix: "slimepeople's state will no longer be listed as \"error\" in the \"swap body\" menu if their body is in crit"

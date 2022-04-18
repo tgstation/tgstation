@@ -1,0 +1,4 @@
+author: "Spessman500"
+delete-after: True
+changes: 
+  - bugfix: "fixed beepsky and ed209s not patroling"
