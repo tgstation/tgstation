@@ -13,17 +13,17 @@
 		/obj/machinery/field,
 	)
 
+	var/multitile_tram = FALSE
+
 /datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
 	Rebuild_lift_plaform(lift_platform)
 	ignored_smashthroughs = typecacheof(ignored_smashthroughs)
 
 /datum/lift_master/Destroy()
-	for(var/l in lift_platforms)
-		var/obj/structure/industrial_lift/lift_platform = l
+	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 		lift_platform.lift_master_datum = null
 	lift_platforms = null
 	return ..()
-
 
 /datum/lift_master/proc/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
 	if(new_lift_platform in lift_platforms)
@@ -41,10 +41,11 @@
 	LAZYREMOVE(lift_platforms, old_lift_platform)
 	UnregisterSignal(old_lift_platform, COMSIG_PARENT_QDELETING)
 
-///Collect all bordered platforms
+///Collect all bordered platforms via a simple floodfill algorithm. allows multiz trams because its funny
 /datum/lift_master/proc/Rebuild_lift_plaform(obj/structure/industrial_lift/base_lift_platform)
 	add_lift_platforms(base_lift_platform)
 	var/list/possible_expansions = list(base_lift_platform)
+
 	while(possible_expansions.len)
 		for(var/obj/structure/industrial_lift/borderline as anything in possible_expansions)
 			var/list/result = borderline.lift_platform_expansion(src)
@@ -54,7 +55,11 @@
 						continue
 					add_lift_platforms(lift_platform)
 					possible_expansions |= lift_platform
+
 			possible_expansions -= borderline
+
+//datum/lift_master/proc/create_multitile_platform(z)
+//	var/obj/structure/industrial_lift/middle_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
 
 /**
  * Moves the lift UP or DOWN, this is what users invoke with their hand.
@@ -81,8 +86,15 @@
 	var/min_x = world.maxx
 	var/min_y = world.maxy
 
-
 	set_controls(LOCKED)
+
+	if(multitile_tram)
+		var/obj/structure/industrial_lift/tram/central/tram_platform = lift_platforms[1]
+		if(!tram_platform)
+			return FALSE
+
+		tram_platform.travel(going, gliding_amount)
+
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 		max_x = max(max_x, lift_platform.x)
 		max_y = max(max_y, lift_platform.y)
@@ -188,18 +200,21 @@ GLOBAL_LIST_EMPTY(lifts)
 		lift_master_datum = new(src)
 
 ///set the movement registrations to our current turf so contents moving out of our tile are removed from our movement lists
-/obj/structure/industrial_lift/proc/set_movement_registrations()
-	RegisterSignal(loc, COMSIG_ATOM_EXITED, .proc/UncrossedRemoveItemFromLift)
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/AddItemOnLift)
+/obj/structure/industrial_lift/proc/set_movement_registrations(list/turfs_to_set)
+	for(var/turf/turf_loc as anything in turfs_to_set || locs)
+		RegisterSignal(turf_loc, COMSIG_ATOM_EXITED, .proc/UncrossedRemoveItemFromLift)
+		RegisterSignal(turf_loc, COMSIG_ATOM_ENTERED, .proc/AddItemOnLift)
 
 ///unset our movement registrations from our tile so we dont register to the contents being moved from us
-/obj/structure/industrial_lift/proc/undo_movement_registrations()
+/obj/structure/industrial_lift/proc/undo_movement_registrations(list/turfs_to_unset)
 	var/static/list/registrations = list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED)
-	UnregisterSignal(loc, registrations)
+	for(var/turf/turf_loc as anything in turfs_to_unset || locs)
+		UnregisterSignal(turf_loc, registrations)
 
 /obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
-	RemoveItemFromLift(gone)
+	if(!(gone.loc in locs))
+		RemoveItemFromLift(gone)
 
 /obj/structure/industrial_lift/proc/RemoveItemFromLift(atom/movable/potential_rider)
 	SIGNAL_HANDLER
@@ -244,8 +259,8 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/lift_master_datum)
 	. = list()
-	for(var/direction in GLOB.cardinals)
-		var/obj/structure/industrial_lift/neighbor = locate() in get_step(src, direction)
+	for(var/direction in GLOB.cardinals_multiz)
+		var/obj/structure/industrial_lift/neighbor = locate() in get_step_multiz(src, direction)
 		if(!neighbor)
 			continue
 		. += neighbor
@@ -257,75 +272,90 @@ GLOBAL_LIST_EMPTY(lifts)
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
-	///handles any special interactions objects could have with the lift/tram, handled on the item itself
-	SEND_SIGNAL(destination, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER, things_to_move)
 
-	if(istype(destination, /turf/closed/wall))
-		var/turf/closed/wall/C = destination
-		do_sparks(2, FALSE, C)
-		C.dismantle_wall(devastated = TRUE)
-		for(var/mob/M in urange(8, src))
-			shake_camera(M, 2, 3)
-		playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	var/list/dest_locs = block(
+		destination,
+		locate(
+			min(world.maxx, destination.x + ROUND_UP(bound_width / 32)),
+			min(world.maxy, destination.y + ROUND_UP(bound_height / 32)),
+			destination.z
+		)
+	)
 
-	if(going == DOWN)
-		for(var/mob/living/crushed in destination.contents)
-			to_chat(crushed, span_userdanger("You are crushed by [src]!"))
-			crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
+	var/list/entering_locs = dest_locs - locs
+	var/list/exited_locs = locs - dest_locs
 
-	// no reason to check contents if we arent a leading platform in the direction of movement
-	else if(going != UP && is_border_platform)
-		var/atom/throw_target = get_edge_target_turf(src, turn(going, pick(45, -45))) //finds a spot to throw the victim at for daring to be hit by a tram
-		for(var/obj/structure/victim_structure in destination.contents)
-			if(QDELETED(victim_structure))
-				continue
-			if(!is_type_in_typecache(victim_structure, lift_master_datum.ignored_smashthroughs) && victim_structure.layer >= LOW_OBJ_LAYER)
-				if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
-					visible_message(span_danger("[src] smashes through [victim_structure]!"))
-					victim_structure.deconstruct(FALSE)
-				else
-					visible_message(span_danger("[src] violently rams [victim_structure] out of the way!"))
-					victim_structure.anchored = FALSE
-					victim_structure.take_damage(rand(20, 25))
-					victim_structure.throw_at(throw_target, 200, 4)
-		for(var/obj/machinery/victim_machine in destination.contents)
-			if(QDELETED(victim_machine))
-				continue
-			if(is_type_in_typecache(victim_machine, lift_master_datum.ignored_smashthroughs))
-				continue
-			if(istype(victim_machine, /obj/machinery/field)) //graceful break handles this scenario
-				continue
-			if(victim_machine.layer >= LOW_OBJ_LAYER) //avoids stuff that is probably flush with the ground
-				playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-				visible_message(span_danger("[src] smashes through [victim_machine]!"))
-				qdel(victim_machine)
+	for(var/turf/dest_turf as anything in entering_locs)
 
-		for(var/mob/living/collided in destination.contents)
-			if(is_type_in_typecache(collided, lift_master_datum.ignored_smashthroughs))
-				continue
-			to_chat(collided, span_userdanger("[src] collides into you!"))
-			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-			var/damage = rand(5, 10)
-			collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
-			collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
-			collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
-			collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG)
-			collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM)
-			collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM)
+		///handles any special interactions objects could have with the lift/tram, handled on the item itself
+		SEND_SIGNAL(dest_turf, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER, things_to_move)
 
-			if(QDELETED(collided)) //in case it was a mob that dels on death
-				continue
-			var/turf/T = get_turf(src)
-			T.add_mob_blood(collided)
+		if(istype(dest_turf, /turf/closed/wall))
+			var/turf/closed/wall/C = dest_turf
+			do_sparks(2, FALSE, C)
+			C.dismantle_wall(devastated = TRUE)
+			for(var/mob/M in urange(8, src))
+				shake_camera(M, 2, 3)
+			playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
-			collided.throw_at()
-			//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
-			var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
-			collided.throw_at(throw_target, 200, 4, callback = land_slam)
+		if(going == DOWN)
+			for(var/mob/living/crushed in dest_turf.contents)
+				to_chat(crushed, span_userdanger("You are crushed by [src]!"))
+				crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
 
-	undo_movement_registrations()
-	group_move(things_to_move, destination, gliding_amount)
-	set_movement_registrations()
+		// no reason to check contents if we arent a leading platform in the direction of movement
+		else if(going != UP && is_border_platform)
+			var/atom/throw_target = get_edge_target_turf(src, turn(going, pick(45, -45))) //finds a spot to throw the victim at for daring to be hit by a tram
+			for(var/obj/structure/victim_structure in dest_turf.contents)
+				if(QDELETED(victim_structure))
+					continue
+				if(!is_type_in_typecache(victim_structure, lift_master_datum.ignored_smashthroughs) && victim_structure.layer >= LOW_OBJ_LAYER)
+					if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
+						visible_message(span_danger("[src] smashes through [victim_structure]!"))
+						victim_structure.deconstruct(FALSE)
+					else
+						visible_message(span_danger("[src] violently rams [victim_structure] out of the way!"))
+						victim_structure.anchored = FALSE
+						victim_structure.take_damage(rand(20, 25))
+						victim_structure.throw_at(throw_target, 200, 4)
+			for(var/obj/machinery/victim_machine in dest_turf.contents)
+				if(QDELETED(victim_machine))
+					continue
+				if(is_type_in_typecache(victim_machine, lift_master_datum.ignored_smashthroughs))
+					continue
+				if(istype(victim_machine, /obj/machinery/field)) //graceful break handles this scenario
+					continue
+				if(victim_machine.layer >= LOW_OBJ_LAYER) //avoids stuff that is probably flush with the ground
+					playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+					visible_message(span_danger("[src] smashes through [victim_machine]!"))
+					qdel(victim_machine)
+
+			for(var/mob/living/collided in dest_turf.contents)
+				if(is_type_in_typecache(collided, lift_master_datum.ignored_smashthroughs))
+					continue
+				to_chat(collided, span_userdanger("[src] collides into you!"))
+				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
+				var/damage = rand(5, 10)
+				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
+				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM)
+				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM)
+
+				if(QDELETED(collided)) //in case it was a mob that dels on death
+					continue
+				var/turf/T = get_turf(src)
+				T.add_mob_blood(collided)
+
+				collided.throw_at()
+				//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
+				var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
+				collided.throw_at(throw_target, 200, 4, callback = land_slam)
+
+	undo_movement_registrations(exited_locs)
+	group_move(things_to_move, going, gliding_amount)
+	set_movement_registrations(entering_locs)
 
 ///move the movers list of movables on our tile to destination if we successfully move there first.
 ///this is like calling forceMove() on everything in movers and ourselves, except nothing in movers
@@ -333,28 +363,35 @@ GLOBAL_LIST_EMPTY(lifts)
 ///none of the movers are able to react to the movement of any other mover, saving a lot of needless processing cost
 ///and is more sensible. without this, if you and a banana are on the same platform, when that platform moves you will slip
 ///on the banana even if youre not moving relative to it.
-/obj/structure/industrial_lift/proc/group_move(list/atom/movable/movers, turf/destination, glide_override)
-	var/turf/our_turf = loc
+/obj/structure/industrial_lift/proc/group_move(list/atom/movable/movers, movement_direction, glide_override)
 
-	if(loc == destination)
+
+	if(movement_direction == NONE)
 		stack_trace("an industrial lift was told to move to somewhere it already is!")
 		return FALSE
 
-	var/movement_direction = get_dir(our_turf, destination)
+	var/list/old_locs = list()
+
+	var/turf/our_dest = get_step(src, movement_direction)
 
 	var/area/our_area = get_area(src)
-	var/area/their_area = get_area(destination)
+	var/area/their_area = get_area(our_dest)
 	var/different_areas = our_area != their_area
 
+
 	set_glide_size(glide_override)
-	forceMove(destination)
-	if(loc != destination || QDELETED(src))//check if our movement succeeded, if it didnt then the movers cant be moved
+	forceMove(our_dest)
+	if(loc != our_dest || QDELETED(src))//check if our movement succeeded, if it didnt then the movers cant be moved
 		return FALSE
 
 	for(var/atom/movable/mover as anything in movers)
-		if(mover.loc != our_turf || QDELETED(mover))
+		if(QDELETED(mover))
 			movers -= mover
 			continue
+
+		var/turf/old_loc = get_turf(mover)
+		var/turf/destination = get_step(old_loc, movement_direction)
+		old_locs[mover] = old_loc
 
 		mover.move_stacks++
 		mover.set_glide_size(glide_override)
@@ -371,7 +408,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			mover.loc = destination
 
 	for(var/atom/movable/mover as anything in movers)
-		mover.Moved(our_turf, movement_direction)
+		mover.Moved(old_locs[mover], movement_direction)
 		//tell the movers they moved only after all of them have been moved so they cant react to eachother moving
 
 	return TRUE
@@ -553,11 +590,22 @@ GLOBAL_LIST_EMPTY(lifts)
 
 GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
+
 /obj/structure/industrial_lift/tram/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
+
+/obj/structure/industrial_lift/tram/central
+	appearance_flags = PIXEL_SCALE //no TILE_BOUND since we're multitile
+	var/width = 0
+	var/height = 0
+
+	var/min_x = INFINITY
+	var/max_x = 0
+
+	var/min_y = INFINITY
+	var/max_y = 0
 
 /obj/structure/industrial_lift/tram/central/Initialize(mapload)
 	if(GLOB.central_tram)
@@ -568,14 +616,44 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	SStramprocess.can_fire = TRUE
 	GLOB.central_tram = src
 
-/obj/structure/industrial_lift/tram/central/Destroy()
-	GLOB.central_tram = null
-	return ..()
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/industrial_lift/tram/LateInitialize()
+/obj/structure/industrial_lift/tram/central/LateInitialize()
 	. = ..()
 	find_our_location()
 
+	for(var/obj/structure/industrial_lift/tram/other_lift as anything in lift_master_datum.lift_platforms)
+		min_x = min(min_x, other_lift.x)
+		max_x = max(max_x, other_lift.x)
+
+		min_y = min(min_y, other_lift.y)
+		max_y = max(max_y, other_lift.y)
+
+	width = (max_x - min_x) + 1
+	height = (max_y - min_y) + 1
+
+	var/half_bound_height = bound_height / 2
+	var/half_bound_width = bound_width / 2
+
+	bound_width = half_bound_width * (width + 1)
+	bound_height = half_bound_height * (height + 1)
+
+	var/matrix/new_transform = new()
+	new_transform.Scale(width, height)
+	transform = new_transform
+
+	for(var/obj/structure/industrial_lift/other_lift in lift_master_datum.lift_platforms)
+		if(other_lift == src)
+			continue
+
+		lift_master_datum.lift_platforms -= other_lift
+		qdel(other_lift)
+
+	lift_master_datum.multitile_tram = TRUE
+
+/obj/structure/industrial_lift/tram/central/Destroy()
+	GLOB.central_tram = null
+	return ..()
 
 /**
  * Finds the location of the tram
