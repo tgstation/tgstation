@@ -13,7 +13,7 @@
 			ui.close()
 		return
 
-	if(!user.can_read(src, check_for_light = FALSE))
+	if(!user.can_read(src))
 		return
 
 	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
