@@ -32,7 +32,7 @@
 
 	return(TOXLOSS)
 
-/obj/item/newspaper/attack_self(mob/user)
+/obj/item/newspaper/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user.can_read(src))
 		return
 	var/dat
