@@ -19854,6 +19854,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
+/obj/machinery/newscaster/directional/west,
 /obj/item/pen/invisible,
 /turf/open/floor/engine/cult,
 /area/service/library)
@@ -68533,7 +68534,6 @@
 /obj/item/clothing/under/suit/red,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/book/codex_gigas,
-/obj/machinery/newscaster/directional/west,
 /turf/open/floor/engine/cult,
 /area/service/library)
 "yiv" = (

@@ -37861,7 +37861,6 @@
 	c_tag = "Art Gallery";
 	name = "library camera"
 	},
-/obj/structure/extinguisher_cabinet/directional/north,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
