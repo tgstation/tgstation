@@ -39,7 +39,7 @@ export const DecalPainter = (props, context) => {
   const supports_custom_color = !!data.supports_custom_color;
 
   // Handle custom color icon correctly
-  const preview_color = custom_color_selected ? "custom" : data.current_color;
+  const preview_color = custom_color_selected ? 'custom' : data.current_color;
 
   return (
     <Window width={550} height={400}>
@@ -131,10 +131,7 @@ const IconButton = (props: IconButtonParams, context) => {
   const { act, data } = useBackend<DecalPainterData>(context);
 
   const generateIconKey = (decal: string, dir: number, color: string) =>
-    `${data.icon_prefix} ${decal}_${dir}_${color.replace(
-      '#',
-      ''
-    )}`;
+    `${data.icon_prefix} ${decal}_${dir}_${color.replace('#', '')}`;
 
   const icon = generateIconKey(props.decal, props.dir, props.color);
 
