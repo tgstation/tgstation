@@ -111,7 +111,6 @@
 		damaged = FALSE
 		eye_owner.clear_fullscreen("eye_damage")
 		eye_owner.cure_blind(EYE_DAMAGE)
-		return
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
