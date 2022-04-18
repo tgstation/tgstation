@@ -115,7 +115,7 @@ export class ByondUi extends Component {
     const box = getBoundingBox(this.containerRef.current);
     logger.debug('bounding box', box);
     this.byondUiElement.render({
-      parent: window.__windowId__,
+      parent: Byond.windowId,
       ...params,
       pos: box.pos[0] + ',' + box.pos[1],
       size: box.size[0] + 'x' + box.size[1],
