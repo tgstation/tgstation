@@ -70,7 +70,7 @@
 		if(H.internal)
 			to_chat(H, span_notice("You switch your internals to [src]."))
 		to_chat(H, span_notice("You fumble with the connector."))
-		if(!do_after(H, 2 SECONDS, H.internal, IGNORE_USER_LOC_CHANGE))
+		if(!do_after(H, 4 SECONDS, H.internal, IGNORE_USER_LOC_CHANGE))
 			return TRUE
 		else
 			to_chat(H, span_notice("You open [src] valve."))
