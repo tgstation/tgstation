@@ -86,7 +86,6 @@
 /code/modules/tgui_panel @stylemistake
 /tgui @stylemistake
 
-
 # Watermelon914
 
 /code/modules/wiremod/ @Watermelon914
@@ -142,7 +141,7 @@
 
 # MULTIPLE OWNERS
 
-/icons/ @Imaginos16 @Krysonism @Twaticus 
+/icons/ @Imaginos16 @Krysonism @Twaticus
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
