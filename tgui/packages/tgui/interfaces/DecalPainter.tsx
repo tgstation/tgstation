@@ -140,13 +140,14 @@ const IconButton = (props: IconButtonParams, context) => {
       tooltip={props.label}
       selected={props.selected}
       verticalAlignContent="middle"
-      className="DecalPainter__CellButton"
+      m={'2px'}
+      p={1}
       onClick={() =>
         act('select decal', {
           decal: props.decal,
           dir: props.dir,
         })}>
-      <span className={`${icon} DecalPainter__CellIcon`} />
+      <div className={icon} style={{ display: 'block' }} />
     </Button>
   );
 };
