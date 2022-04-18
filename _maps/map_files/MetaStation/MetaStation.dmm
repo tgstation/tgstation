@@ -46791,7 +46791,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "pPF" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/effect/spawner/random/engineering/tank,
 /turf/open/floor/plating,
 /area/maintenance/starboard/lesser)
 "pPW" = (
