@@ -10,6 +10,8 @@
 #define THORN_MUTATION_CUT_PROB 10
 /// Determines the probability that a kudzu plant with the flowering mutation will spawn a venus flower bud
 #define FLOWERING_MUTATION_SPAWN_PROB 10
+/// Maximum energy used per atmos tick that the temperature stabilisation mutation will use to bring the temperature to T20C
+#define TEMP_STABILISATION_MUTATION_MAXIMUM_ENERGY 40000
 
 /// Temperature below which the kudzu can't spread
 #define VINE_FREEZING_POINT 100
@@ -112,6 +114,9 @@
 /datum/spacevine_mutation/proc/on_explosion(severity, target, obj/structure/spacevine/holder)
 	return
 
+/datum/spacevine_mutation/proc/additional_atmos_processes(datum/gas_mixture/air)
+	return
+
 /datum/spacevine_mutation/aggressive_spread/proc/aggrospread_act(obj/structure/spacevine/vine, mob/living/M)
 	return
 
@@ -183,6 +188,29 @@
 /datum/spacevine_mutation/cold_proof/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
 	. = ..()
 	holder.trait_flags |= SPACEVINE_COLD_RESISTANT
+
+/datum/spacevine_mutation/temp_stabilisation
+	name = "Temperature stabilisation"
+	hue = "#B09856"
+	quality = POSITIVE
+	severity = SEVERITY_AVERAGE
+
+/datum/spacevine_mutation/temp_stabilisation/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
+	. = ..()
+	holder.always_atmos_process = TRUE
+
+/datum/spacevine_mutation/temp_stabilisation/additional_atmos_processes(datum/gas_mixture/air)
+	var/heat_capacity = air.heat_capacity()
+	if(!heat_capacity) // No heating up space or vacuums
+		return
+	var/energy_used = min(abs(air.temperature - T20C) * heat_capacity, TEMP_STABILISATION_MUTATION_MAXIMUM_ENERGY)
+	var/delta_temperature = energy_used / heat_capacity
+	if(delta_temperature < 0.1)
+		return
+	if(air.temperature > T20C){
+		delta_temperature *= -1
+	air.temperature += delta_temperature
+	air_update_turf(FALSE, FALSE)
 
 /datum/spacevine_mutation/vine_eating
 	name = "Vine eating"
@@ -389,6 +417,8 @@
 	/// List of mutations for a specific vine
 	var/list/mutations = list()
 	var/trait_flags = 0
+	/// Should atmos always process this tile
+	var/always_atmos_process = FALSE
 
 /obj/structure/spacevine/Initialize(mapload)
 	. = ..()
@@ -514,7 +544,7 @@
 		spread_cap = SPREAD_CAP_LINEAR_COEFF * (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) + SPREAD_CAP_CONSTANT_TERM //Best production speed of 1 increases spread_cap to 60, worst production speed of 10 lowers it to 24, even distribution
 		spread_multiplier = SPREAD_MULTIPLIER_MAX / (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) // Best production speed of 1: 10% of total vines will spread per second, worst production speed of 10: 1% of total vines (with minimum of 1) will spread per second
 	if(event != null) // spawned by space vine event
-		max_mutation_severity += MAX_SEVERITY_EVENT_BONUS;
+		max_mutation_severity += MAX_SEVERITY_EVENT_BONUS
 
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
@@ -670,9 +700,11 @@
 		qdel(src)
 
 /obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)//if you're room temperature you're safe
+	return (always_atmos_process || exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)//if you're room temperature you're safe
 
 /obj/structure/spacevine/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	for(var/datum/spacevine_mutation/mutation in mutations)
+		mutation.additional_atmos_processes(air)
 	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (trait_flags & SPACEVINE_COLD_RESISTANT)))
 		can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
 	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(trait_flags & SPACEVINE_HEAT_RESISTANT))
