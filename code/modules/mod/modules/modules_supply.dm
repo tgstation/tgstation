@@ -52,17 +52,19 @@
 		return
 	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/item/delivery/big))
 		var/atom/movable/picked_crate = target
-		if(length(stored_crates) >= max_crates)
-			balloon_alert(mod.wearer, "too many crates!")
+		if(!check_crate_pickup(picked_crate))
 			return
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		if(!do_after(mod.wearer, load_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
+		if(!check_crate_pickup(picked_crate))
+			return
 		stored_crates += picked_crate
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [picked_crate]")
 		drain_power(use_power_cost)
+		mod.wearer.update_inv_back()
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
@@ -77,13 +79,27 @@
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		drain_power(use_power_cost)
+		mod.wearer.update_inv_back()
 	else
 		balloon_alert(mod.wearer, "invalid target!")
 
-/obj/item/mod/module/clamp/on_suit_deactivation()
+/obj/item/mod/module/clamp/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
 	for(var/atom/movable/crate as anything in stored_crates)
 		crate.forceMove(drop_location())
 		stored_crates -= crate
+
+/obj/item/mod/module/clamp/proc/check_crate_pickup(atom/movable/target)
+	if(length(stored_crates) >= max_crates)
+		balloon_alert(mod.wearer, "too many crates!")
+		return FALSE
+	for(var/mob/living/mob in target.get_all_contents())
+		if(mob.mob_size < MOB_SIZE_HUMAN)
+			continue
+		balloon_alert(mod.wearer, "crate too heavy!")
+		return FALSE
+	return TRUE
 
 /obj/item/mod/module/clamp/loader
 	name = "MOD loader hydraulic clamp module"
@@ -115,7 +131,7 @@
 		return
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP, .proc/bump_mine)
 
-/obj/item/mod/module/drill/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/drill/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -263,7 +279,7 @@
 /obj/item/mod/module/disposal_connector/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
-/obj/item/mod/module/disposal_connector/on_suit_deactivation()
+/obj/item/mod/module/disposal_connector/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING)
 
 /obj/item/mod/module/disposal_connector/get_configuration()
@@ -317,7 +333,7 @@
 	locker.throw_at(mod.wearer, range = 7, speed = 3, force = MOVE_FORCE_WEAK, \
 		callback = CALLBACK(src, .proc/check_locker, locker))
 
-/obj/item/mod/module/magnet/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/magnet/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -388,7 +404,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
-/obj/item/mod/module/ash_accretion/on_suit_deactivation()
+/obj/item/mod/module/ash_accretion/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_ASHSTORM_IMMUNE, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
@@ -484,11 +500,12 @@
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, .proc/on_statchange)
 
-/obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/items/modsuit/ballout.ogg', 100)
+	if(!deleting)
+		playsound(src, 'sound/items/modsuit/ballout.ogg', 100)
 	mod.wearer.base_pixel_y = 0
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
 	addtimer(CALLBACK(mod.wearer, /atom.proc/remove_filter, list("mod_ball", "mod_blur", "mod_outline")), animate_time)

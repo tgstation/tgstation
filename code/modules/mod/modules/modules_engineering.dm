@@ -14,7 +14,9 @@
 /obj/item/mod/module/welding/on_suit_activation()
 	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
-/obj/item/mod/module/welding/on_suit_deactivation()
+/obj/item/mod/module/welding/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
 ///T-Ray Scan - Scans the terrain for undertile objects.
@@ -61,7 +63,7 @@
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
-/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -156,7 +158,7 @@
 	for(var/obj/item/part in mod.mod_parts)
 		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
 
-/obj/item/mod/module/rad_protection/on_suit_deactivation()
+/obj/item/mod/module/rad_protection/on_suit_deactivation(deleting = FALSE)
 	qdel(GetComponent(/datum/component/geiger_sound))
 	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION)
@@ -194,7 +196,7 @@
 /obj/item/mod/module/constructor/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
-/obj/item/mod/module/constructor/on_suit_deactivation()
+/obj/item/mod/module/constructor/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
 /obj/item/mod/module/constructor/on_use()

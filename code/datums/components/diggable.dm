@@ -18,7 +18,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/handle_attack)
 
 /datum/component/diggable/proc/handle_attack(datum/source, obj/item/hit_by, mob/living/bastard, params)
-	if(!hit_by.tool_behaviour == TOOL_SHOVEL || !params)
+	if(hit_by.tool_behaviour != TOOL_SHOVEL || !params)
 		return
 	var/turf/parent_turf = parent
 	for(var/i in 1 to amount)

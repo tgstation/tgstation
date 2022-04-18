@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Removed a fire extinguisher cabinet that was overlapping a large painting frame on Delta. Moved a newscaster that was also overlapping the large painting frame in the curator's backroom two tiles down on Meta."

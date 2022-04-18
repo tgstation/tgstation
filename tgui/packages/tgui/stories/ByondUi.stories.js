@@ -16,7 +16,7 @@ export const meta = {
 const Story = (props, context) => {
   const [code, setCode] = useLocalState(context,
     'byondUiEvalCode',
-    `Byond.winset('${window.__windowId__}', {\n  'is-visible': true,\n})`);
+    `Byond.winset('${Byond.windowId}', {\n  'is-visible': true,\n})`);
   return (
     <>
       <Section title="Button">
