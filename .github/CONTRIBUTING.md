@@ -130,13 +130,23 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 * If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to support or object to any changes being made, which will likely hold more weight, as you're the one who added the feature. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
 
-* Please explain why you are submitting the pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting the PR.
-
 * If your pull request is not finished, you may open it as a draft for potential review. If you open it as a full-fledged PR make sure it is at least testable in a live environment. Pull requests that do not at least meet this requirement will be closed. You may request a maintainer reopen the pull request when you're ready, or make a new one.
 
 * While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality *before* you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
 
 * After leaving reviews on an open pull request, maintainers may convert it to a draft. Once you have addressed all their comments to the best of your ability, feel free to mark the pull as `Ready for Review` again.
+
+## Justifying Your Changes
+You must explain why you are submitting the pull request in the "Why It's Good For The Game" section of your pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting your PR wholesale, or requiring that you fix it before it is merged. A reasonable justification for your changes is a requirement. 
+
+Your "Why It's Good For The Game" section must make a good faith and reasonable attempt to:
+* Convince the community that the current state of affairs in the game is not good, and needs changing.
+* Convince the community that your pull request will either fix or help fix the problems you described.
+* Convince the community that any downsides introduced by your solution as a matter of design, are worth it, and why they are worth it.
+
+More controversial changes have higher standards for justification to be considered reasonable. A bugfix does not typically require any effort at all in justification as its worth is usually self evident, however a major feature overhaul or balance change may require paragraphs to adequately justify itself.
+
+This does not change if your pull request is supported and/or requested by maintainers before it is opened. This does not change if your pull request is supported and/or requested by head coders before it is opened. This does not change if your pull request has a design document that justifies your changes inside it. You must always justify changes that need justification within the pull request, even if you also do it elsewhere.
 
 ## Good Boy Points
 
