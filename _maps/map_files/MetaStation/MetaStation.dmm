@@ -473,16 +473,12 @@
 /turf/closed/wall/r_wall,
 /area/security/prison/safe)
 "aeN" = (
-/obj/item/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/structure/table/wood,
 /obj/machinery/button/door/directional/north{
 	id = "hop";
 	name = "Privacy Shutters Control";
 	req_access_txt = "28"
 	},
+/obj/machinery/computer/accounting,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "aeO" = (
@@ -17779,9 +17775,15 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "fdu" = (
-/obj/machinery/recharger,
+/obj/machinery/recharger{
+	pixel_x = 11
+	},
 /obj/item/storage/secure/safe/directional/east,
 /obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_x = -5;
+	pixel_y = 5
+	},
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "fdB" = (

@@ -3,7 +3,7 @@
 	desc = "Used to view crewmember accounts and purchases."
 	icon_screen = "accounts"
 	icon_keyboard = "id_key"
-	circuit = null
+	circuit = /obj/item/circuitboard/computer/accounting
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/accounting/ui_interact(mob/user, datum/tgui/ui)

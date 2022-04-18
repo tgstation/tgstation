@@ -3694,9 +3694,9 @@
 /obj/machinery/button/door/directional/east{
 	id = "armory";
 	name = "Armory Shutters";
-	req_access_txt = "3";
 	pixel_x = -9;
-	pixel_y = 30
+	pixel_y = 30;
+	req_access_txt = "3"
 	},
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun{
@@ -4173,8 +4173,8 @@
 /area/science/research)
 "byI" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Security Checkpoint";
-	id_tag = "outerbrig"
+	id_tag = "outerbrig";
+	name = "Security Checkpoint"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -5959,12 +5959,12 @@
 	pixel_y = 3
 	},
 /obj/item/stamp/hos{
-	pixel_y = 6;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 6
 	},
 /obj/machinery/recharger{
-	pixel_y = -1;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood/large,
@@ -10298,9 +10298,9 @@
 "dQT" = (
 /obj/machinery/flasher/portable,
 /obj/machinery/door/window/brigdoor{
-	req_access_txt = "2";
 	dir = 1;
-	name = "Flash Storage"
+	name = "Flash Storage";
+	req_access_txt = "2"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -12388,9 +12388,9 @@
 /area/service/library)
 "eZf" = (
 /obj/machinery/door/window/brigdoor{
-	req_access_txt = "2";
 	dir = 1;
-	name = "Security Delivery"
+	name = "Security Delivery";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
 /area/security/processing)
@@ -18835,8 +18835,8 @@
 /obj/item/radio/off,
 /obj/structure/cable,
 /obj/machinery/door/window/brigdoor/left/directional/west{
-	req_one_access_txt = "1";
-	name = "Brig Reception"
+	name = "Brig Reception";
+	req_one_access_txt = "1"
 	},
 /obj/machinery/door/window/right/directional/east{
 	name = "Brig Reception"
@@ -20553,8 +20553,8 @@
 /obj/machinery/button/door/directional/west{
 	id = "briggate";
 	name = "Brig Shutters";
-	pixel_y = -2;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -2
 	},
 /obj/machinery/button/flasher{
 	id = "brigentry";
@@ -20565,17 +20565,17 @@
 	id = "innerbrig";
 	name = "Brig Interior Doors Control";
 	normaldoorcontrol = 1;
-	req_access_txt = "63";
 	pixel_x = 6;
-	pixel_y = 9
+	pixel_y = 9;
+	req_access_txt = "63"
 	},
 /obj/machinery/button/door/directional/west{
 	id = "outerbrig";
 	name = "Brig Exterior Doors Control";
 	normaldoorcontrol = 1;
+	pixel_x = 6;
 	pixel_y = -2;
-	req_access_txt = "63";
-	pixel_x = 6
+	req_access_txt = "63"
 	},
 /obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/dark/textured_large,
@@ -21103,8 +21103,8 @@
 /area/engineering/storage)
 "jlN" = (
 /mob/living/simple_animal/hostile/asteroid/polarbear{
-	name = "Louie";
-	move_force = 999
+	move_force = 999;
+	name = "Louie"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -22415,8 +22415,8 @@
 /area/security/checkpoint/engineering)
 "jTS" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Security Checkpoint";
-	id_tag = "outerbrig"
+	id_tag = "outerbrig";
+	name = "Security Checkpoint"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -22457,8 +22457,8 @@
 /obj/machinery/button/door{
 	id = "BrigLock";
 	name = "Cell Shutters";
-	pixel_y = 9;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
@@ -22592,8 +22592,8 @@
 "jXz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/brigdoor{
-	req_access_txt = "2";
-	dir = 1
+	dir = 1;
+	req_access_txt = "2"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -22898,14 +22898,14 @@
 /obj/machinery/button/door{
 	id = "Secure Gate";
 	name = "Cell Shutters";
-	pixel_y = 9;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /obj/machinery/button/door{
 	id = "Prison Gate";
 	name = "Prison Wing Lockdown";
-	req_access_txt = "2";
-	pixel_x = 7
+	pixel_x = 7;
+	req_access_txt = "2"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
@@ -23791,8 +23791,8 @@
 	pixel_y = -1
 	},
 /obj/item/book/manual/wiki/ordnance{
-	pixel_y = 3;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 3
 	},
 /obj/item/book/manual/wiki/experimentor{
 	pixel_x = 10;
@@ -24680,8 +24680,8 @@
 "kZv" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka{
-	pixel_y = 20;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 20
 	},
 /obj/item/taperecorder{
 	pixel_x = -5;
@@ -25387,6 +25387,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/computer/accounting{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)
@@ -26267,8 +26270,8 @@
 /area/ai_monitored/command/storage/eva)
 "lUS" = (
 /mob/living/simple_animal/hostile/asteroid/polarbear{
-	name = "Dewey";
-	move_force = 999
+	move_force = 999;
+	name = "Dewey"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
@@ -27608,8 +27611,8 @@
 /area/security/office)
 "mIs" = (
 /obj/machinery/door/window/brigdoor{
-	req_access_txt = "2";
-	dir = 1
+	dir = 1;
+	req_access_txt = "2"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -29897,8 +29900,8 @@
 /area/hallway/secondary/entry)
 "nQE" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Brig Walkway";
-	id_tag = "innerbrig"
+	id_tag = "innerbrig";
+	name = "Brig Walkway"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -31822,11 +31825,11 @@
 "oLn" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used to access the various cameras on the station.";
+	dir = 1;
 	layer = 3.1;
 	name = "Security Camera Monitor";
 	network = list("ss13");
-	pixel_y = 2;
-	dir = 1
+	pixel_y = 2
 	},
 /obj/structure/table,
 /turf/open/floor/iron/dark/textured_edge{
@@ -36382,8 +36385,8 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/glass/rag,
 /obj/item/clothing/head/collectable/tophat{
-	pixel_y = 5;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 5
 	},
 /obj/effect/spawner/random/entertainment/gambling{
 	pixel_x = -13
@@ -38090,8 +38093,8 @@
 /area/command/heads_quarters/hop)
 "rQo" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Brig Walkway";
-	id_tag = "innerbrig"
+	id_tag = "innerbrig";
+	name = "Brig Walkway"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -42678,8 +42681,8 @@
 /area/hallway/primary/starboard)
 "ubH" = (
 /mob/living/simple_animal/mouse/white{
-	name = "Mik";
-	desc = "This mouse smells faintly of alcohol."
+	desc = "This mouse smells faintly of alcohol.";
+	name = "Mik"
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
@@ -45064,8 +45067,8 @@
 	pixel_y = 7
 	},
 /obj/item/radio/off{
-	pixel_y = 7;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 7
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50347,9 +50350,9 @@
 "xQO" = (
 /obj/structure/table/glass,
 /obj/structure/sign/barsign{
-	pixel_y = 32;
+	chosen_sign = "thecavern";
 	icon_state = "thecavern";
-	chosen_sign = "thecavern"
+	pixel_y = 32
 	},
 /obj/item/reagent_containers/food/drinks/bottle/vermouth{
 	pixel_x = 10;
@@ -50399,8 +50402,8 @@
 /area/engineering/engine_smes)
 "xSW" = (
 /mob/living/simple_animal/hostile/asteroid/polarbear{
-	name = "Huey";
-	move_force = 999
+	move_force = 999;
+	name = "Huey"
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)

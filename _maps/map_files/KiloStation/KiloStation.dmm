@@ -26770,6 +26770,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/item/hand_labeler,
+/obj/item/storage/lockbox/loyalty,
+/obj/item/stack/package_wrap,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hop)
 "esY" = (
@@ -32170,16 +32173,11 @@
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/central)
 "goc" = (
-/obj/structure/table/wood,
-/obj/machinery/recharger,
-/obj/item/toy/figure/hop{
-	pixel_x = -8
-	},
-/obj/item/toy/figure/ian{
-	pixel_x = 8
-	},
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/computer/accounting{
+	dir = 4
+	},
 /turf/open/floor/carpet/blue,
 /area/command/heads_quarters/hop)
 "goy" = (
@@ -60075,11 +60073,15 @@
 /turf/open/floor/cult,
 /area/service/chapel/office)
 "puG" = (
-/obj/structure/table/wood,
-/obj/item/stack/package_wrap,
-/obj/item/storage/lockbox/loyalty,
-/obj/item/hand_labeler,
 /obj/machinery/keycard_auth/directional/north,
+/obj/item/toy/figure/ian{
+	pixel_x = 8
+	},
+/obj/item/toy/figure/hop{
+	pixel_x = -8
+	},
+/obj/machinery/recharger,
+/obj/structure/table/wood,
 /turf/open/floor/carpet/blue,
 /area/command/heads_quarters/hop)
 "puH" = (

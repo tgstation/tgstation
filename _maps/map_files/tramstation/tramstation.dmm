@@ -33636,12 +33636,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 4
+/obj/machinery/computer/accounting{
+	dir = 8
 	},
-/obj/item/pen,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hop)
 "kJx" = (
@@ -36987,8 +36984,16 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/machinery/recharger,
 /obj/machinery/newscaster/directional/north,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/pen,
+/obj/machinery/recharger{
+	pixel_x = 4;
+	pixel_y = 9
+	},
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hop)
 "lQz" = (
