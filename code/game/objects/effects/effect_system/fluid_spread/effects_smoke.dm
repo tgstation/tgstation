@@ -104,6 +104,8 @@
  * Arguments:
  * - [smoker][/mob/living/carbon]: The mob that is being exposed to this smoke.
  * - delta_time: A scaling factor for the effects this has. Primarily based off of tick rate to normalize effects to units of rate/sec.
+ *
+ * Returns whether the smoke effect was applied to the mob.
  */
 /obj/effect/particle_effect/fluid/smoke/proc/smoke_mob(mob/living/carbon/smoker, delta_time)
 	if(!istype(smoker))
@@ -135,6 +137,15 @@
 /obj/effect/particle_effect/fluid/smoke/transparent
 	opacity = FALSE
 
+/**
+ * A helper proc used to spawn small puffs of smoke.
+ *
+ * Arguments:
+ * - range: The amount of smoke to produce as number of steps from origin covered.
+ * - amount: The amount of smoke to produce as the total desired coverage area. Autofilled from the range arg if not set.
+ * - location: Where to produce the smoke cloud.
+ * - smoke_type: The smoke typepath to spawn.
+ */
 /proc/do_smoke(range = 0, amount = DIAMOND_AREA(range), location = null, smoke_type = /obj/effect/particle_effect/fluid/smoke)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.effect_type = smoke_type

@@ -67,6 +67,8 @@
 
 /**
  * Makes the foam leave behind something when it dissipates.
+ *
+ * Returns the thing the foam leaves behind for further modification by subtypes.
  */
 /obj/effect/particle_effect/fluid/foam/proc/make_result()
 	if(isnull(result_type))
