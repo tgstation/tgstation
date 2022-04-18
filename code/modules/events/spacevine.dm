@@ -24,7 +24,7 @@
 #define SEVERITY_MAJOR 10
 
 /// Kudzu mutativeness is based on a scale factor * potency
-#define MUTATIVENESS_SCALE_FACTOR 0.1
+#define MUTATIVENESS_SCALE_FACTOR 0.2
 
 /// Kudzu maximum mutation severity is a linear function of potency
 #define MAX_SEVERITY_LINEAR_COEFF 0.15
@@ -538,7 +538,7 @@
 	for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
 		vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
 	if(potency != null)
-		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 10 mutativeness; if 1: 0.1 mutativeness
+		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 20 mutativeness; if 1: 0.2 mutativeness
 		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 25 max mutation severity; if 1, 10 max mutation severity
 	if(production != null && production <= MAX_POSSIBLE_PRODUCTIVITY_VALUE) //Prevents runtime in case production is set to 11.
 		spread_cap = SPREAD_CAP_LINEAR_COEFF * (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) + SPREAD_CAP_CONSTANT_TERM //Best production speed of 1 increases spread_cap to 60, worst production speed of 10 lowers it to 24, even distribution
