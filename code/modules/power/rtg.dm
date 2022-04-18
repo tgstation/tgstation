@@ -103,14 +103,12 @@
 	power_gen = 20000
 	circuit = null
 
-/obj/machinery/power/rtg/debug/RefreshParts()
-	return ..()
-
 /obj/machinery/power/rtg/lavaland
 	name = "Lava powered RTG"
 	desc = "This device only works when exposed to the toxic fumes of Lavaland"
 	circuit = null
 	power_gen = 1500
+	anchored = TRUE
 
 /obj/machinery/power/rtg/lavaland/Initialize(mapload)
 	. = ..()
@@ -120,11 +118,23 @@
 	if(!is_mining_level(z))
 		power_gen = 0
 
+/obj/machinery/power/rtg/lavaland/Moved(atom/OldLoc, Dir)
+	. = ..()
+	var/turf/our_turf = get_turf(src)
+	if(!islava(our_turf))
+		power_gen = 0
+		return
+	if(!is_mining_level(z))
+		power_gen = 0
+		return
+	power_gen = initial(power_gen)
+
 /obj/machinery/power/rtg/old_station
 	name = "Old RTG"
 	desc = "A very old RTG, it seems on the verge of being destroyed"
 	circuit = null
 	power_gen = 750
+	anchored = TRUE
 
 /obj/machinery/power/rtg/old_station/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
