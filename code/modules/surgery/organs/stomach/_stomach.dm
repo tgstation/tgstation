@@ -210,7 +210,7 @@
 		var/pukeprob = 2.5 + (0.025 * disgusted.disgust)
 		if(disgusted.disgust >= DISGUST_LEVEL_GROSS)
 			if(DT_PROB(5, delta_time))
-				disgusted.stuttering += 1
+				disgusted.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/speech/stutter)
 				disgusted.add_confusion(2)
 			if(DT_PROB(5, delta_time) && !disgusted.stat)
 				to_chat(disgusted, span_warning("You feel kind of iffy..."))
@@ -218,7 +218,7 @@
 		if(disgusted.disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
 				disgusted.add_confusion(2.5)
-				disgusted.stuttering += 1
+				disgusted.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/speech/stutter)
 				disgusted.vomit(10, 0, 1, 0, 1, 0)
 			disgusted.Dizzy(5)
 		if(disgusted.disgust >= DISGUST_LEVEL_DISGUSTED)

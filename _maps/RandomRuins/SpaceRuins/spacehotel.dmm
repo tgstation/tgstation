@@ -386,6 +386,14 @@
 	},
 /turf/template_noop,
 /area/template_noop)
+"dK" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/turf/open/floor/circuit/green,
+/area/ruin/space/has_grav/hotel)
 "dM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark/side{
@@ -401,15 +409,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel)
-"dY" = (
-/obj/structure/frame/computer{
-	dir = 1
-	},
-/obj/item/circuitboard/computer/turbine_computer,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/turf/open/floor/circuit/green,
 /area/ruin/space/has_grav/hotel)
 "eb" = (
 /obj/machinery/light/directional/south,
@@ -465,11 +464,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
-"eD" = (
-/obj/structure/bed/pod,
-/obj/item/bedsheet/purple,
-/turf/open/floor/wood/parquet,
-/area/ruin/space/has_grav/hotel/guestroom/room_1)
 "eF" = (
 /obj/machinery/power/solar,
 /obj/structure/cable,
@@ -647,6 +641,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
+"gt" = (
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/green{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/space/has_grav/hotel/guestroom/room_5)
 "gu" = (
 /obj/structure/chair/wood{
 	dir = 1
@@ -1416,11 +1419,6 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/carpet/royalblue,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
-"mm" = (
-/obj/structure/bed/pod,
-/obj/item/bedsheet/blue,
-/turf/open/floor/wood/parquet,
-/area/ruin/space/has_grav/hotel/guestroom/room_6)
 "mq" = (
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 8
@@ -3145,6 +3143,15 @@
 "Gp" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/workroom)
+"Gs" = (
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/blue{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/space/has_grav/hotel/guestroom/room_6)
 "Gz" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/reagent_containers/food/drinks/mug/tea,
@@ -3180,6 +3187,15 @@
 "Hm" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
+"Hn" = (
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/purple{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/space/has_grav/hotel/guestroom/room_1)
 "Ho" = (
 /obj/structure/chair/sofa/right{
 	dir = 4
@@ -3489,11 +3505,6 @@
 /obj/item/bedsheet/red,
 /turf/open/floor/carpet/green,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
-"LN" = (
-/obj/structure/bed/pod,
-/obj/item/bedsheet/green,
-/turf/open/floor/wood/parquet,
-/area/ruin/space/has_grav/hotel/guestroom/room_5)
 "LS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -5126,7 +5137,7 @@ BU
 lR
 lR
 BU
-dY
+dK
 WD
 Cl
 Cl
@@ -5623,8 +5634,8 @@ Cl
 yV
 xI
 IS
-mm
-mm
+Gs
+Gs
 xh
 xI
 bV
@@ -5634,8 +5645,8 @@ cf
 XW
 LD
 zy
-LN
-LN
+gt
+gt
 Bl
 LD
 JQ
@@ -7459,8 +7470,8 @@ cf
 zC
 BK
 by
-eD
-eD
+Hn
+Hn
 LA
 BK
 YZ

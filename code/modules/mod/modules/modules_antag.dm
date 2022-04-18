@@ -15,6 +15,7 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
+	use_mod_colors = TRUE
 	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
 	/// Slowdown added to the suit.
@@ -27,7 +28,9 @@
 /obj/item/mod/module/armor_booster/on_suit_activation()
 	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
-/obj/item/mod/module/armor_booster/on_suit_deactivation()
+/obj/item/mod/module/armor_booster/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
 /obj/item/mod/module/armor_booster/on_activation()
@@ -47,11 +50,12 @@
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			spaceproofed[clothing_part] = TRUE
 
-/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if(!deleting)
+		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	mod.slowdown -= added_slowdown
 	mod.wearer.update_equipment_speed_mods()
 	var/list/parts = mod.mod_parts + mod
@@ -112,7 +116,7 @@
 	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/shield_reaction)
 
-/obj/item/mod/module/energy_shield/on_suit_deactivation()
+/obj/item/mod/module/energy_shield/on_suit_deactivation(deleting = FALSE)
 	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
 	charges = shield.current_charges
 	qdel(shield)
@@ -156,7 +160,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_HOLY, MOD_TRAIT)
 
-/obj/item/mod/module/anti_magic/on_suit_deactivation()
+/obj/item/mod/module/anti_magic/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_HOLY, MOD_TRAIT)
 
@@ -171,7 +175,7 @@
 /obj/item/mod/module/anti_magic/wizard/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
 
-/obj/item/mod/module/anti_magic/wizard/on_suit_deactivation()
+/obj/item/mod/module/anti_magic/wizard/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
 
 ///Insignia - Gives you a skin specific stripe.
@@ -229,7 +233,7 @@
 /obj/item/mod/module/noslip/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
 
-/obj/item/mod/module/noslip/on_suit_deactivation()
+/obj/item/mod/module/noslip/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
 
 /obj/item/mod/module/springlock/bite_of_87
@@ -246,16 +250,13 @@
 /obj/item/mod/module/springlock/bite_of_87/on_install()
 	mod.activation_step_time *= 0.1
 
-/obj/item/mod/module/springlock/bite_of_87/on_uninstall()
+/obj/item/mod/module/springlock/bite_of_87/on_uninstall(deleting = FALSE)
 	mod.activation_step_time *= 10
 
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] || prob(1))
-		var/list/all_parts = mod.mod_parts.Copy() + mod
-		for(var/obj/item/part in all_parts) // turns the suit yellow
-			part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			part.add_atom_colour("#b17f00", FIXED_COLOUR_PRIORITY)
+		mod.set_mod_color("#b17f00")
 		mod.wearer.remove_atom_colour(WASHABLE_COLOUR_PRIORITY) // turns purple guy purple
 		mod.wearer.add_atom_colour("#704b96", FIXED_COLOUR_PRIORITY)
 

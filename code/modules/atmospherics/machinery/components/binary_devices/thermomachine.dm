@@ -497,6 +497,13 @@
 			investigate_log("[key_name(usr)] turned off the [src] safeties", INVESTIGATE_ATMOS)
 			. = TRUE
 
+		if("dump")
+			if(airs[1].return_pressure() >= MAX_OUTPUT_PRESSURE)
+				return TRUE
+			var/datum/gas_mixture/to_remove = airs[2].remove_ratio(1)
+			airs[1].merge(to_remove)
+			. = TRUE
+
 	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/CtrlClick(mob/living/user)

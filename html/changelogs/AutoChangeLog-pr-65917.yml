@@ -1,4 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - bugfix: "paper logs once again include the paper's contents"
