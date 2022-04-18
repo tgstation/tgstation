@@ -367,6 +367,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 	if(shielding_powered)
 		. += mutable_appearance(canister_overlay_file, "shielding")
+		. += emissive_appearance(canister_overlay_file, "shielding")
 
 	if(cell_container_opened)
 		. += mutable_appearance(canister_overlay_file, "cell_hatch")
