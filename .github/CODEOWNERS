@@ -70,6 +70,11 @@
 /code/datums/status_effects/wound_effects.dm @Ryll-Ryll
 /code/__DEFINES/wounds.dm @Ryll-Ryll
 
+# san7890
+
+/code/game/area/ @san7890
+/icons/turf/areas.dmi @san7890
+
 # stylemistake
 
 /code/__DEFINES/chat.dm @stylemistake
