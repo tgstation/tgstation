@@ -92,7 +92,7 @@
 
 	var/fail_modifier = 0
 	if(!HAS_TRAIT(user, TRAIT_SURGEON))
-		fail_modifier += 25 //20% base chance to fail surgery without the trait
+		fail_modifier += 25 //25% base chance to fail surgery without the trait
 	if(!HAS_TRAIT(user, TRAIT_TRUE_SURGEON) && HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
 		fail_modifier += 35 //further nerfs insuls and golems without nerfing abductors
 
