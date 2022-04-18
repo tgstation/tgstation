@@ -7,7 +7,10 @@
 
 	if(alert("WARNING: Executing this command will perform a full reset of atmosphere. All pipelines will lose any gas that may be in them, and all zones will be reset to contain air mix as on roundstart. The supermatter engine will also be stopped (to prevent overheat due to removal of coolant). Do not use unless the map is suffering serious atmospheric issues due to grief or bug.", "Full Atmosphere Reboot", "No", "Yes") == "No")
 		return
+	if(!fix_atmos_grief())
+		to_chat(world, span_danger("Atmospherics reboot failed!"))
 
+/proc/fix_atmos_grief()
 	log_admin("Full atmosphere reset initiated by [usr].")
 	to_chat(world, "<span class = 'danger'>Initiating restart of atmosphere. The server may lag a bit.</span>")
 	sleep(10)
@@ -50,3 +53,4 @@
 
 	to_chat(usr, "\[5/5\] - ZAS Rebooted")
 	to_chat(world, "<span class = 'danger'>Atmosphere restart completed in <b>[(world.timeofday - current_time)/10]</b> seconds.</span>")
+	return TRUE
