@@ -1055,6 +1055,7 @@
 		"prisonmanage",
 		"secdata",
 		"vendor",
+		"account_console"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 

@@ -46,6 +46,11 @@ SUBSYSTEM_DEF(economy)
 	var/bounty_modifier = 1
 	///The modifier multiplied to the value of cargo pack prices.
 	var/pack_price_modifier = 1
+	/**
+	 * A list of strings containing a basic transaction history of purchases on the station.
+	 * Added to any time when player accounts purchase something.
+	 */
+	var/list/audit_log = list()
 
 	/// Total value of exported materials.
 	var/export_total = 0
@@ -136,3 +141,12 @@ SUBSYSTEM_DEF(economy)
 		return 1
 	inflation_value = max(round(((station_total / bank_accounts_by_id.len) / station_target), 0.1), 1.0)
 	return inflation_value
+
+/datum/controller/subsystem/economy/proc/track_purchase(datum/bank_account/account, price_to_use, vendor)
+	if(!account || !price_to_use || !vendor)
+		return FALSE
+	SSeconomy.audit_log += list(list(
+		"account" = account.account_holder,
+		"cost" = price_to_use,
+		"vendor" = vendor,
+	))
