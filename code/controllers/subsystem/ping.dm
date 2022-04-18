@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(ping)
 	if (!resumed)
 		src.currentrun = GLOB.clients.Copy()
 
-	// De-reference list for sanic speeds
+	// De-reference the list for sanic speeds
 	var/list/currentrun = src.currentrun
 
 	while (currentrun.len)
