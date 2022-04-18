@@ -35621,12 +35621,13 @@
 	},
 /area/service/chapel/dock)
 "hyB" = (
-/obj/structure/table,
 /obj/machinery/computer/security/telescreen/cmo{
 	dir = 1;
 	name = "Chief Medical Officer's telescreen";
-	network = list("medical")
+	network = list("medical");
+	pixel_y = 2
 	},
+/obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/showroomfloor,
 /area/command/heads_quarters/cmo)
 "hyK" = (
@@ -46506,7 +46507,6 @@
 /turf/open/floor/plating,
 /area/cargo/warehouse)
 "kWc" = (
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -46529,6 +46529,7 @@
 /obj/item/clothing/neck/stethoscope{
 	pixel_y = 5
 	},
+/obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/showroomfloor,
 /area/command/heads_quarters/cmo)
 "kWh" = (
@@ -68907,7 +68908,6 @@
 /turf/open/floor/iron/dark,
 /area/engineering/atmos/pumproom)
 "sjL" = (
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -68923,7 +68923,7 @@
 /obj/item/pen,
 /obj/item/stamp/cmo{
 	pixel_x = 8;
-	pixel_y = 6
+	pixel_y = 20
 	},
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -8
@@ -68931,6 +68931,7 @@
 /obj/machinery/keycard_auth/directional/south{
 	pixel_x = 8
 	},
+/obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/showroomfloor,
 /area/command/heads_quarters/cmo)
 "sjS" = (
@@ -69199,18 +69200,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/obj/machinery/button/door{
-	id = "cmoprivacy";
-	name = "Privacy Shutters Toggle";
-	pixel_x = -24;
-	pixel_y = -24
-	},
-/obj/machinery/button/door{
-	id = "emmd";
-	name = "Medical Lockdown Toggle";
-	pixel_x = -40;
-	pixel_y = -24
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
@@ -70254,16 +70243,16 @@
 /obj/machinery/button/door/directional/east{
 	id = "commissaryshutter";
 	name = "Commissary Shutter Toggle";
-	pixel_y = 7;
-	pixel_x = 26
+	pixel_x = 26;
+	pixel_y = 7
 	},
 /obj/machinery/button/door/directional/east{
 	id = "commissarydoor";
 	name = "Commissary Door Lock";
 	normaldoorcontrol = 1;
+	pixel_x = 26;
 	pixel_y = -2;
-	specialfunctions = 4;
-	pixel_x = 26
+	specialfunctions = 4
 	},
 /turf/open/floor/iron,
 /area/commons/vacant_room/commissary)
@@ -75139,7 +75128,6 @@
 /turf/open/floor/iron/dark,
 /area/commons/storage/primary)
 "uox" = (
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue,
 /obj/item/clipboard,
 /obj/item/folder/white{
@@ -75148,6 +75136,7 @@
 	},
 /obj/item/folder/blue,
 /obj/item/clothing/glasses/hud/health,
+/obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/showroomfloor,
 /area/command/heads_quarters/cmo)
 "uoT" = (
@@ -83727,6 +83716,18 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/chief_medical_officer,
+/obj/machinery/button/door{
+	id = "emmd";
+	name = "Medical Lockdown Toggle";
+	pixel_x = -18;
+	pixel_y = -25
+	},
+/obj/machinery/button/door{
+	id = "cmoprivacy";
+	name = "Privacy Shutters Toggle";
+	pixel_x = -18;
+	pixel_y = -34
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/command/heads_quarters/cmo)
 "xko" = (
