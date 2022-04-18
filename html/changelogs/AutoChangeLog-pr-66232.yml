@@ -1,0 +1,4 @@
+author: "Quill-Weave"
+delete-after: True
+changes: 
+  - bugfix: "fixes a stray pixel in library.dmi"

@@ -388,6 +388,8 @@
 		markone.capacitor = null
 	marktwo.update_part_values()
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
+		if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))
+			continue //the MK2 already has one.
 		var/righthandgun = markone.equip_by_category[MECHA_R_ARM] == equipment
 		equipment.detach(marktwo)
 		equipment.attach(marktwo, righthandgun)
