@@ -1797,18 +1797,13 @@
 /area/maintenance/fore)
 "aiM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/obj/structure/closet{
-	name = "chapel locker"
-	},
-/obj/item/clothing/shoes/sandal,
+/obj/item/storage/fancy/candle_box,
+/obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aiN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/structure/rack,
-/obj/item/storage/fancy/candle_box,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aiO" = (
@@ -6177,6 +6172,8 @@
 /area/hallway/primary/central/fore)
 "aIp" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/item/clothing/shoes/sandal,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aIr" = (
@@ -7055,10 +7052,6 @@
 	dir = 1
 	},
 /obj/structure/closet/secure_closet/psychology,
-/obj/machinery/computer/med_data/laptop{
-	dir = 1;
-	pixel_y = 4
-	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/psychology)
 "aOm" = (
@@ -7101,22 +7094,11 @@
 /turf/open/floor/iron/dark,
 /area/medical/exam_room)
 "aOx" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/bookcase/random/reference,
 /obj/item/toy/figure/psychologist{
 	pixel_y = 18
 	},
-/turf/open/floor/iron/showroomfloor,
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/carpet,
 /area/medical/psychology)
 "aOz" = (
 /obj/structure/table/glass,
@@ -33871,6 +33853,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
+"gRh" = (
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/carpet,
+/area/medical/psychology)
 "gRl" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -70208,6 +70194,41 @@
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/paramedic)
+<<<<<<< master
+=======
+"sGl" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/button/door/directional/east{
+	id = "commissaryshutter";
+	name = "Commissary Shutter Toggle";
+	pixel_x = 26;
+	pixel_y = 7
+	},
+/obj/machinery/button/door/directional/east{
+	id = "commissarydoor";
+	name = "Commissary Door Lock";
+	normaldoorcontrol = 1;
+	pixel_x = 26;
+	pixel_y = -2;
+	specialfunctions = 4
+	},
+/turf/open/floor/iron,
+/area/commons/vacant_room/commissary)
+>>>>>>> remaps psych
 "sGq" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
@@ -82927,8 +82948,11 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/light/directional/east,
+/obj/structure/table/wood,
+/obj/machinery/computer/med_data/laptop{
+	dir = 8
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/psychology)
 "wVQ" = (
@@ -107425,7 +107449,7 @@ beM
 cwp
 fEB
 cwp
-cwp
+gRh
 aOx
 wVJ
 rHL
@@ -107681,7 +107705,7 @@ czu
 cwp
 cwq
 usm
-aiM
+cwp
 cwp
 aNC
 aNu
@@ -108451,7 +108475,7 @@ cwq
 dWw
 cwp
 aIp
-aIp
+aiM
 cwp
 cwq
 arI
