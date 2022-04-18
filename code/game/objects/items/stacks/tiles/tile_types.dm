@@ -21,7 +21,7 @@
 	var/list/tile_reskin_types
 	/// Cached associative lazy list to hold the radial options for tile dirs. See tile_reskinning.dm for more information.
 	var/list/tile_rotate_dirs
-	/// Allows us to replace the tile we are attacking if our baseturfs are the same.
+	/// Allows us to replace the turf we are attacking if our baseturfs are the same.
 	var/enforce_baseturf = FALSE
 
 /obj/item/stack/tile/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
@@ -1215,6 +1215,7 @@
 	inhand_icon_state = "tile-glass"
 	merge_type = /obj/item/stack/tile/glass
 	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+	enforce_baseturf = TRUE
 
 /obj/item/stack/tile/glass/sixty
 	amount = 60
@@ -1228,6 +1229,7 @@
 	turf_type = /turf/open/floor/glass/reinforced
 	merge_type = /obj/item/stack/tile/rglass
 	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.125, /datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+	enforce_baseturf = TRUE
 
 /obj/item/stack/tile/rglass/sixty
 	amount = 60
