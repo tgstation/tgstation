@@ -158,8 +158,6 @@
 		return
 
 	if(istype(W, /obj/item/pen))
-		if(!user.can_write(W))
-			return
 		if(scribble_page == curr_page)
 			to_chat(user, span_warning("There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?"))
 		else
