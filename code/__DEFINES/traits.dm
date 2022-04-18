@@ -258,7 +258,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WEB_WEAVER "web_weaver"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
-#define TRAIT_SURGEON "surgeon"
+#define TRAIT_TRUESURGEON "truesurgeon"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
 #define TRAIT_MAGIC_CHOKE "magic_choke"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
@@ -439,7 +439,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
-#define TRAIT_DEXTEROUS "dexterous"
+#define TRAIT_SURGEON "surgeon"
 /// this skillchip trait lets you wash brains in washing machines to heal them
 #define TRAIT_BRAINWASHING "brainwashing"
 

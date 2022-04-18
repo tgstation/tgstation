@@ -450,6 +450,17 @@
 	activate_message = span_notice("...But all at once it comes to you... something involving putting a brain in a washing machine?")
 	deactivate_message = span_warning("All knowledge of the secret brainwashing technique is GONE.")
 
+/obj/item/skillchip/surgery
+	name = "MEDNET skillchip"
+	desc = "Perform surgeries and utilize surgical tools with advanced precision."
+	auto_traits = list(TRAIT_ENTRAILS_READER, TRAIT_SURGEON)
+	skill_name = "Surgical Knowledge"
+	skill_description = "Advanced knowledge of surgical procedure, and enhanced dexterity when utilizing surgical tools"
+	skill_icon = "scalpel"
+	activate_message = "<span class='notice'>You suddenly feel more proficent when performing surgery and utilizing surgical tools.</span>"
+	deactivate_message = "<span class='notice'>Yor knowledge of surgery seems to fade along with the dexterity in your hands.</span>"
+
+
 /obj/item/skillchip/brainwashing/examine(mob/user)
 	. = ..()
 	. += span_warning("It seems to have been corroded over time, putting this in your head may not be the best idea...")

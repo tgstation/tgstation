@@ -58,7 +58,7 @@
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
-	skillchips = list(/obj/item/skillchip/job/medical_doctor)
+	skillchips = list(/obj/item/skillchip/surgery)
 
 /datum/outfit/job/doctor/mod
 	name = "Medical Doctor (MODsuit)"
