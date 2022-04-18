@@ -1516,15 +1516,7 @@
 
 /datum/reagent/pluoxium/on_mob_life(mob/living/L, delta_time, times_fired)
 	. = ..()
-	L.adjustOxyLoss(-4 * REM * delta_time, FALSE)
-
-/datum/reagent/pluoxium/on_mob_metabolize(mob/living/L)
-	. = ..()
-	ADD_TRAIT(L, TRAIT_NOCRITDAMAGE, type)
-
-/datum/reagent/pluoxium/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_NOCRITDAMAGE, type)
-	return ..()
+	L.adjustOxyLoss(-2 * REM * delta_time, FALSE)
 
 /datum/reagent/halon
 	name = "Halon"
