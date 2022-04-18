@@ -92,11 +92,14 @@
 
 	var/fail_modifier = 0
 	if(!HAS_TRAIT(user, TRAIT_SURGEON))
-		fail_modifier += 20 //20% base chance to fail surgery without the trait
+		fail_modifier += 25 //20% base chance to fail surgery without the trait
 	if(!HAS_TRAIT(user, TRAIT_TRUE_SURGEON) && HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
-		fail_modifier += 30 //further nerfs insuls and golems without nerfing abductors
+		fail_modifier += 35 //further nerfs insuls and golems without nerfing abductors
 
-	fail_prob = min(fail_modifier + max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
+	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
+	if(fail_prob <= fail_modifier)
+		fail_prob = fail_modifier//surgeries without the trait always have a chance to fail, but they won't stack if the conditions are bad
+
 	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
