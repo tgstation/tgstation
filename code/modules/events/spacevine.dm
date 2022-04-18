@@ -207,7 +207,7 @@
 	var/delta_temperature = energy_used / heat_capacity
 	if(delta_temperature < 0.1)
 		return
-	if(air.temperature > T20C){
+	if(air.temperature > T20C)
 		delta_temperature *= -1
 	air.temperature += delta_temperature
 	air_update_turf(FALSE, FALSE)
