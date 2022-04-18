@@ -7,7 +7,7 @@
 
 ## Why It's Good For The Game
 
-<!-- Please add a short description of why you think these changes would benefit the game. If you can't justify it in words, it might not be worth adding. -->
+<!-- Argue why these changes would benefit the game to the community, especially if they are controversial and/or far reaching. If you can't justify it in words, it might not be worth adding. -->
 
 ## Changelog
 
