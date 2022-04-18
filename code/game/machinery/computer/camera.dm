@@ -7,6 +7,8 @@
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/security
 	light_color = COLOR_SOFT_RED
+	// We don't need to be literate to watch cameras
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_SIGHT
 
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/active_camera
@@ -20,8 +22,6 @@
 	/// All the plane masters that need to be applied.
 	var/list/cam_plane_masters
 	var/atom/movable/screen/background/cam_background
-
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/security/Initialize(mapload)
 	. = ..()
