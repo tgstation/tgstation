@@ -29,7 +29,7 @@
 			radioactive_object,
 			max_range = 3,
 			threshold = RAD_LIGHT_INSULATION,
-			chance = URANIUM_IRRADIATION_CHANCE,
+			intensity = URANIUM_IRRADIATION_INTENSITY,
 			minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
 		)
 

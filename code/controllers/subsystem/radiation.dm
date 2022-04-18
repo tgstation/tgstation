@@ -34,6 +34,8 @@ SUBSYSTEM_DEF(radiation)
 			continue
 
 		var/current_insulation = 1
+		var/percieved_intensity
+		var/chance
 
 		for (var/turf/turf_in_between in get_line(source, target) - get_turf(source))
 			var/insulation = cached_rad_insulations[turf_in_between]
@@ -57,6 +59,12 @@ SUBSYSTEM_DEF(radiation)
 		if (current_insulation <= pulse_information.threshold)
 			continue
 
+		if(pulse_information.intensity)
+			percieved_intensity = pulse_information.intensity
+		else
+			percieved_intensity = ((1 + pulse_information.max_range) / 2) ** 2 // Sets a reasonable intensity for the given range if intensity wasn't set.
+		chance = 100 * (1 - RADIATION_INTENSITY_BASE ** (percieved_intensity * (current_insulation - pulse_information.threshold) * INVERSE(1 - pulse_information.threshold) * INVERSE((1 + get_dist_euclidian(source, target)) ** 2)))
+
 		var/irradiation_result = SEND_SIGNAL(target, COMSIG_IN_THRESHOLD_OF_IRRADIATION, pulse_information)
 		if (irradiation_result & CANCEL_IRRADIATION)
 			continue
@@ -65,7 +73,7 @@ SUBSYSTEM_DEF(radiation)
 			target.AddComponent(/datum/component/radiation_countdown, pulse_information.minimum_exposure_time)
 			continue
 
-		if (!prob(pulse_information.chance))
+		if (!prob(chance))
 			continue
 
 		if (irradiate_after_basic_checks(target))

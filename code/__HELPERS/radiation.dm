@@ -19,7 +19,7 @@
 	atom/source,
 	max_range,
 	threshold,
-	chance = DEFAULT_RADIATION_CHANCE,
+	intensity = 0,
 	minimum_exposure_time = 0,
 )
 	if(!SSradiation.can_fire)
@@ -29,7 +29,7 @@
 	pulse_information.source_ref = WEAKREF(source)
 	pulse_information.max_range = max_range
 	pulse_information.threshold = threshold
-	pulse_information.chance = chance
+	pulse_information.intensity = intensity
 	pulse_information.minimum_exposure_time = minimum_exposure_time
 
 	SSradiation.processing += pulse_information
@@ -40,18 +40,18 @@
 	var/datum/weakref/source_ref
 	var/max_range
 	var/threshold
-	var/chance
+	var/intensity
 	var/minimum_exposure_time
 
 #define MEDIUM_RADIATION_THRESHOLD_RANGE 0.5
-#define EXTREME_RADIATION_CHANCE 30
+#define EXTREME_RADIATION_INTENSITY 10
 
 /// Gets the perceived "danger" of radiation pulse, given the threshold to the target.
 /// Returns a RADIATION_DANGER_* define, see [code/__DEFINES/radiation.dm]
 /proc/get_perceived_radiation_danger(datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	if (insulation_to_target > pulse_information.threshold)
 		// We could get irradiated! The only thing stopping us now is chance, so scale based on that.
-		if (pulse_information.chance >= EXTREME_RADIATION_CHANCE)
+		if (pulse_information.intensity >= EXTREME_RADIATION_INTENSITY)
 			return PERCEIVED_RADIATION_DANGER_EXTREME
 		else
 			return PERCEIVED_RADIATION_DANGER_HIGH
@@ -63,4 +63,4 @@
 			return PERCEIVED_RADIATION_DANGER_LOW
 
 #undef MEDIUM_RADIATION_THRESHOLD_RANGE
-#undef EXTREME_RADIATION_CHANCE
+#undef EXTREME_RADIATION_INTENSITY

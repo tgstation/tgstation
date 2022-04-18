@@ -510,6 +510,7 @@
 			source = loc,
 			max_range = rad_pulse_size,
 			threshold = 0.05,
+			intensity = (rad_pulse_size / 2) ** 2
 		)
 
 	if(em_pulse)
@@ -543,6 +544,7 @@
 		src,
 		max_range = 6,
 		threshold = 0.3,
+		intensity = 10
 	)
 
 /*

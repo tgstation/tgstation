@@ -188,7 +188,7 @@
 		return
 	else
 		to_chat(user, span_notice("As it touches \the [src], both \the [src] and \the [W] burst into dust!"))
-		radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
+		radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, intensity = 3)
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 		qdel(W)
 		qdel(src)
@@ -211,7 +211,7 @@
 		span_userdanger("You're hit by [src] and everything suddenly goes silent.\n[src] flashes into dust, and soon as you can register this, you do as well."),\
 		span_hear("Everything suddenly goes silent."))
 	victim.dust()
-	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
+	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, intensity = 3)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	qdel(src)
 
@@ -222,7 +222,7 @@
 	user.visible_message(span_danger("[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!"),\
 			span_userdanger("You reach for [src] with your hands. That was dumb."),\
 			span_hear("Everything suddenly goes silent."))
-	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
+	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, intensity = 3)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	user.dust()
 
@@ -333,7 +333,7 @@
 			span_userdanger("You touch [AM] with [src], and everything suddenly goes silent.\n[AM] and [sliver] flash into dust, and soon as you can register this, you do as well."),\
 			span_hear("Everything suddenly goes silent."))
 		user.dust()
-	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
+	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, intensity = 3)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	QDEL_NULL(sliver)
 	update_appearance()
