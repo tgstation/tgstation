@@ -34,7 +34,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	desc = "A covered turret that shoots at its enemies."
 	req_access = list(ACCESS_SECURITY) /// Only people with Security access
 	power_channel = AREA_USAGE_EQUIP //drains power from the EQUIPMENT channel
-	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.15
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	max_integrity = 160 //the turret's health
 	integrity_failure = 0.5
 	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, FIRE = 90, ACID = 90)

@@ -3,7 +3,7 @@
 	name = "chemical press"
 	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
-	active_power_usage = MIN_ACTIVE_POWER_USAGE * 2
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	///maximum size of a pill
 	var/max_pill_volume = 50
 	///maximum size of a patch

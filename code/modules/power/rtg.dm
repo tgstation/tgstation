@@ -105,3 +105,39 @@
 
 /obj/machinery/power/rtg/debug/RefreshParts()
 	return ..()
+
+/obj/machinery/power/rtg/lavaland
+	name = "Lava powered RTG"
+	desc = "This device only works when exposed to the toxic fumes of Lavaland"
+	circuit = null
+	power_gen = 1500
+
+/obj/machinery/power/rtg/lavaland/Initialize(mapload)
+	. = ..()
+	var/turf/our_turf = get_turf(src)
+	if(!islava(our_turf))
+		power_gen = 0
+	if(!is_mining_level(z))
+		power_gen = 0
+
+/obj/machinery/power/rtg/old_station
+	name = "Old RTG"
+	desc = "A very old RTG, it seems on the verge of being destroyed"
+	circuit = null
+	power_gen = 750
+
+/obj/machinery/power/rtg/old_station/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
+		balloon_alert(user,"you feel it crumbling")
+		return
+	else if(default_deconstruction_crowbar(I, user = user))
+		return
+	return ..()
+
+/obj/machinery/power/rtg/old_station/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct, mob/user)
+	balloon_alert(user, "it's starting to crumble")
+	if(!do_after(user, 3 SECONDS, src))
+		return TRUE
+	balloon_alert(user, "you feel like you made a mistake")
+	new /obj/effect/decal/cleanable/ash/large(loc)
+	qdel(src)

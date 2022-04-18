@@ -8,7 +8,7 @@
 	icon_state = "core_off"
 	circuit = /obj/item/circuitboard/machine/HFR_core
 	use_power = IDLE_POWER_USE
-	idle_power_usage = MIN_IDLE_POWER_USAGE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	///Vars for the state of the icon of the object (open, off, active)
 	icon_state_open = "core_open"
 	icon_state_off = "core_off"

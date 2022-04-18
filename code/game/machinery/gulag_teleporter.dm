@@ -15,7 +15,7 @@ The console is located at computer/gulag_teleporter.dm
 	state_open = FALSE
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the door is open
-	active_power_usage = MIN_ACTIVE_POWER_USAGE * 5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	circuit = /obj/item/circuitboard/machine/gulag_teleporter
 	var/locked = FALSE
 	var/message_cooldown

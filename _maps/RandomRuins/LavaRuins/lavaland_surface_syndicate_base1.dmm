@@ -134,6 +134,7 @@
 	anchored = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/circuit/red,
 /area/ruin/syndicate_lava_base/main)
 "bC" = (
@@ -1573,6 +1574,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "iM" = (
@@ -1611,6 +1613,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/circuit/red,
 /area/ruin/syndicate_lava_base/main)
 "iZ" = (
@@ -1622,6 +1625,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "jb" = (
@@ -1953,6 +1957,12 @@
 /obj/machinery/portable_atmospherics/canister/tier_3,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
+"lc" = (
+/obj/machinery/power/rtg/lavaland,
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/open/lava/smooth/lava_land_surface,
+/area/ruin/syndicate_lava_base/main)
 "ld" = (
 /turf/open/floor/engine/co2,
 /area/ruin/syndicate_lava_base/engineering)
@@ -2506,6 +2516,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/circuit/red,
 /area/ruin/syndicate_lava_base/main)
 "ox" = (
@@ -2909,6 +2920,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "vA" = (
@@ -3560,6 +3572,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer2,
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/dormitories)
+"FP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/main)
 "FW" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -4382,6 +4399,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/main)
 "Uk" = (
@@ -6679,7 +6697,7 @@ gQ
 hV
 ha
 Dx
-Dx
+FP
 ha
 ha
 ju
@@ -6729,8 +6747,8 @@ hD
 dy
 dy
 wi
-si
-si
+lc
+lc
 ju
 ld
 JV
@@ -6777,8 +6795,8 @@ dy
 eF
 eF
 dy
-ab
-ab
+si
+si
 ab
 ab
 ju
@@ -6824,10 +6842,10 @@ ab
 dy
 gg
 dy
-ab
-ab
-ab
-ab
+si
+si
+si
+si
 ab
 ab
 ab
@@ -6874,7 +6892,7 @@ ab
 fx
 gh
 fx
-ab
+si
 ab
 ab
 ab
@@ -6922,9 +6940,9 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+si
+si
+si
 ab
 ab
 ab

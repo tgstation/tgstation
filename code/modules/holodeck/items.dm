@@ -118,8 +118,8 @@
 	var/area/currentarea = null
 	var/eventstarted = FALSE
 
-	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.02
-	active_power_usage = MIN_ACTIVE_POWER_USAGE * 0.006
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.006
 	power_channel = AREA_USAGE_ENVIRON
 
 /obj/machinery/readybutton/attack_ai(mob/user)

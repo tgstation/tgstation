@@ -82,8 +82,8 @@
 	anchored = TRUE
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the door is open
-	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.5
-	active_power_usage = MIN_ACTIVE_POWER_USAGE * 0.3
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.3
 
 	var/busy = FALSE
 	var/busy_icon_state
