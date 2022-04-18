@@ -881,10 +881,12 @@
 	. = FALSE
 	move_stacks++
 	var/atom/oldloc = loc
+	var/is_multi_tile = bound_width > 32 || bound_height > 32
 	if(destination)
 		///zMove already handles whether a pull from another movable should be broken.
 		if(pulledby && !currently_z_moving)
 			pulledby.stop_pulling()
+
 		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
@@ -895,23 +897,49 @@
 		loc = destination
 
 		if(!same_loc)
-			if(oldloc)
-				oldloc.Exited(src, movement_dir)
+			if(is_multi_tile && isturf(destination))
+				var/list/new_locs = block(
+					destination,
+					locate(
+						min(world.maxx, destination.x + ROUND_UP(bound_width / 32)),
+						min(world.maxy, destination.y + ROUND_UP(bound_height / 32)),
+						destination.z
+					)
+				)
 				if(old_area && old_area != destarea)
 					old_area.Exited(src, movement_dir)
-			destination.Entered(src, oldloc)
-			if(destarea && old_area != destarea)
-				destarea.Entered(src, old_area)
+				for(var/atom/left_loc as anything in locs - new_locs)
+					left_loc.Exited(src, movement_dir)
+
+				for(var/atom/entering_loc as anything in new_locs - locs)
+					entering_loc.Entered(src, movement_dir)
+
+				if(old_area && old_area != destarea)
+					destarea.Entered(src, movement_dir)
+			else
+				if(oldloc)
+					oldloc.Exited(src, movement_dir)
+					if(old_area && old_area != destarea)
+						old_area.Exited(src, movement_dir)
+				destination.Entered(src, oldloc)
+				if(destarea && old_area != destarea)
+					destarea.Entered(src, old_area)
 
 		. = TRUE
 
 	//If no destination, move the atom into nullspace (don't do this unless you know what you're doing)
 	else
 		. = TRUE
-		loc = null
+
 		if (oldloc)
+			loc = null
 			var/area/old_area = get_area(oldloc)
-			oldloc.Exited(src, NONE)
+			if(is_multi_tile && isturf(oldloc))
+				for(var/atom/old_loc as anything in locs)
+					old_loc.Exited(src, NONE)
+			else
+				oldloc.Exited(src, NONE)
+
 			if(old_area)
 				old_area.Exited(src, NONE)
 
