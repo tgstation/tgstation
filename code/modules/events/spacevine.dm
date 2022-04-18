@@ -114,7 +114,7 @@
 /datum/spacevine_mutation/proc/on_explosion(severity, target, obj/structure/spacevine/holder)
 	return
 
-/datum/spacevine_mutation/proc/additional_atmos_processes(datum/gas_mixture/air)
+/datum/spacevine_mutation/proc/additional_atmos_processes(obj/structure/spacevine/holder, datum/gas_mixture/air)
 	return
 
 /datum/spacevine_mutation/aggressive_spread/proc/aggrospread_act(obj/structure/spacevine/vine, mob/living/M)
@@ -199,7 +199,7 @@
 	. = ..()
 	holder.always_atmos_process = TRUE
 
-/datum/spacevine_mutation/temp_stabilisation/additional_atmos_processes(datum/gas_mixture/air)
+/datum/spacevine_mutation/temp_stabilisation/additional_atmos_processes(obj/structure/spacevine/holder, datum/gas_mixture/air)
 	var/heat_capacity = air.heat_capacity()
 	if(!heat_capacity) // No heating up space or vacuums
 		return
@@ -210,7 +210,7 @@
 	if(air.temperature > T20C)
 		delta_temperature *= -1
 	air.temperature += delta_temperature
-	air_update_turf(FALSE, FALSE)
+	holder.air_update_turf(FALSE, FALSE)
 
 /datum/spacevine_mutation/vine_eating
 	name = "Vine eating"
@@ -704,7 +704,7 @@
 
 /obj/structure/spacevine/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	for(var/datum/spacevine_mutation/mutation in mutations)
-		mutation.additional_atmos_processes(air)
+		mutation.additional_atmos_processes(src, air)
 	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (trait_flags & SPACEVINE_COLD_RESISTANT)))
 		can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
 	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(trait_flags & SPACEVINE_HEAT_RESISTANT))
