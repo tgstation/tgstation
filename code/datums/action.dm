@@ -727,7 +727,8 @@
 	return button
 
 /datum/action/cooldown/Destroy()
-	sequence_actions.Cut()
+	if(!isnull(sequence_actions))
+		sequence_actions.Cut()
 	QDEL_LIST(initialized_actions)
 	return ..()
 
