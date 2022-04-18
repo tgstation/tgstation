@@ -27,12 +27,7 @@ SUBSYSTEM_DEF(ping)
 		var/client/client = currentrun[currentrun.len]
 		currentrun.len--
 
-		if (!client)
-			if (MC_TICK_CHECK)
-				return
-			continue
-
-		if (client.tgui_panel?.is_ready())
+		if (client?.tgui_panel?.is_ready())
 			// Send a soft ping
 			client.tgui_panel.window.send_message("ping/soft", list(
 				// Slightly less than the subsystem timer (somewhat arbitrary)
