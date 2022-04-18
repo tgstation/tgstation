@@ -10,6 +10,7 @@
 	var/device_type = null
 	var/id = null
 	var/initialized_button = 0
+	var/silicon_access_disabled = FALSE
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 100, FIRE = 90, ACID = 70)
 	idle_power_usage = MIN_IDLE_POWER_USAGE * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
@@ -114,7 +115,7 @@
 	obj_flags |= EMAGGED
 
 /obj/machinery/button/attack_ai(mob/user)
-	if(!panel_open)
+	if(!silicon_access_disabled && !panel_open)
 		return attack_hand(user)
 
 /obj/machinery/button/attack_robot(mob/user)

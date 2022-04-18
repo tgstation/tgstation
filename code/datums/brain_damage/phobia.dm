@@ -126,7 +126,7 @@
 			owner.dizziness += 10
 			owner.add_confusion(10)
 			owner.Jitter(10)
-			owner.stuttering += 10
+			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter)
 
 // Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.
 
