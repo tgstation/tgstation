@@ -125,7 +125,11 @@
 		return
 
 /obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
 	update_use_power(ACTIVE_POWER_USE)
 
 /obj/machinery/computer/ui_close(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
 	update_use_power(IDLE_POWER_USE)

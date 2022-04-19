@@ -57,6 +57,7 @@
 	INVOKE_ASYNC(src, .proc/update_db_info)
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LibraryVisitor")
@@ -308,6 +309,7 @@
 		dynamic_inv_load = TRUE //Only load in stuff if we were placed during mapload
 
 /obj/machinery/computer/libraryconsole/bookmanagement/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LibraryConsole")

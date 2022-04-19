@@ -94,6 +94,7 @@
 		))
 
 /obj/machinery/computer/cargo/express/ui_interact(mob/living/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CargoExpress", name)

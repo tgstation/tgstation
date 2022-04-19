@@ -144,6 +144,7 @@
 	id_eject(user, inserted_scan_id)
 
 /obj/machinery/computer/piratepad_control/civilian/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CivCargoHoldTerminal", name)
