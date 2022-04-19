@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, ColorBox, Section, Table, Box } from '../components';
+import { Button, ColorBox, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosMain = (props, context) => {
@@ -50,7 +50,7 @@ export const NtosMain = (props, context) => {
           <Section
             title="User Login"
             buttons={(
-              <Box>
+              <>
                 <Button
                   icon="eject"
                   content="Eject ID"
@@ -60,11 +60,13 @@ export const NtosMain = (props, context) => {
                 <Button
                   icon="dna"
                   content="Imprint ID"
-                  // eslint-disable-next-line max-len
-                  disabled={!proposed_login.IDName || ((proposed_login.IDName === login.IDName) && (proposed_login.IDJob === login.IDJob))}
+                  disabled={!proposed_login.IDName || (
+                    proposed_login.IDName === login.IDName
+                    && proposed_login.IDJob === login.IDJob
+                  )}
                   onClick={() => act('PC_Imprint_ID', { name: "ID" })}
                 />
-              </Box>
+              </>
             )}>
             <Table>
               <Table.Row>
@@ -160,7 +162,10 @@ export const NtosMain = (props, context) => {
         </Section>
         {!!disk && (
           <Section
-            title={disk_name ? (disk_name.substring(0, disk_name.length-5)) : "No Job Disk Inserted"} // pain
+            // pain
+            title={disk_name
+              ? disk_name.substring(0, disk_name.length - 5)
+              : "No Job Disk Inserted"}
             buttons={(
               <Button
                 icon="eject"
