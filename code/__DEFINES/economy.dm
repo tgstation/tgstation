@@ -6,10 +6,14 @@
 #define FULL_CRATE_LETTER_ODDS 70
 
 //Current Paycheck values. Altering these changes both the cost of items meant for each paygrade, as well as the passive/starting income of each job.
-#define PAYCHECK_LOWER 25
-#define PAYCHECK_CREW 50
-#define PAYCHECK_COMMAND 100
+///Default paygrade for the Unassigned Job/Unpaid job assignments.
 #define PAYCHECK_ZERO 0
+///Paygrade for Prisoners and Assistants.
+#define PAYCHECK_LOWER 25
+///Paygrade for all regular crew not belonging to PAYGRADE_LOWER or PAYGRADE_COMMAND.
+#define PAYCHECK_CREW 50
+///Paygrade for Heads of Staff.
+#define PAYCHECK_COMMAND 100
 
 //How many credits a player is charged if they print something from a departmental lathe they shouldn't have access to.
 #define LATHE_TAX 10
