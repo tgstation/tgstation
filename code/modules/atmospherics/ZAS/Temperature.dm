@@ -39,7 +39,9 @@
 			adjust_temp = loc.temperature
 		else
 			//var/turf/simulated/T = loc
-			var/turf/T = loc
+			var/turf/T = get_turf(loc)
+			if(!istype(T))
+				return
 			if(T.zone && T.zone.air)
 				adjust_temp = T.zone.air.temperature
 			else

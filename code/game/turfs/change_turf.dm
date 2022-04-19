@@ -40,8 +40,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			var/datum/component/wet_floor/WF = T.AddComponent(/datum/component/wet_floor)
 			WF.InheritComponent(slip)
 		if (copy_air)
-			var/turf/open/openTurf = T
-			openTurf.air.copy_from(air)
+			var/turf/openTurf = T
+			T.air.copy_from(air)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
 /turf/proc/TerraformTurf(path, new_baseturf, flags)
@@ -83,17 +83,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	blueprint_data = null
 
 	if(connections) connections.erase_all()
-	/* ZASTURF
 	if(istype(src,/turf/simulated))
 		//Yeah, we're just going to rebuild the whole thing.
 		//Despite this being called a bunch during explosions,
 		//the zone will only really do heavy lifting once.
 		var/turf/simulated/S = src
 		if(S.zone) S.zone.rebuild()
-	*/
-
-	if(simulated && zone)
-		zone.rebuild()
 
 	var/list/old_baseturfs = baseturfs
 	var/old_type = type
@@ -324,7 +319,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 //////Assimilate Air//////
 /turf/open/proc/Assimilate_Air()
-	var/list/turf/turf_list = get_adjacent_open_turfs()
+	var/list/turf/turf_list = get_adjacent_open_turfs(src)
 	var/turf_count = LAZYLEN(turf_list)
 	if(blocks_air || !turf_count)
 		return

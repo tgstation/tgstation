@@ -148,7 +148,7 @@
 
 /turf/open/indestructible/binary
 	name = "tear in the fabric of reality"
-	can_atmos_pass = ATMOS_PASS_NO
+	can_atmos_pass = CANPASS_NEVER
 	baseturfs = /turf/open/indestructible/binary
 	icon_state = "binary"
 	footstep = null

@@ -1,7 +1,7 @@
 /obj/machinery/power/turbine
 	density = TRUE
 	resistance_flags = FIRE_PROOF
-	can_atmos_pass = ATMOS_PASS_DENSITY
+	can_atmos_pass = CANPASS_DENSITY
 
 	///Theoretical volume of gas that's moving through the turbine, it expands the further it goes
 	var/gas_theoretical_volume = 0

@@ -63,7 +63,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_RESIN)
 	max_integrity = 200
 	var/resintype = null
-	can_atmos_pass = ATMOS_PASS_DENSITY
+	can_atmos_pass = CANPASS_DENSITY
 
 
 /obj/structure/alien/resin/Initialize(mapload)

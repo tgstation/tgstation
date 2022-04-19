@@ -1,4 +1,4 @@
-/*/turf/CanPass(atom/movable/mover, , height=1.5,air_group=0)
+/*/turf/CanPass(atom/movable/mover, border_dir, height=1.5,air_group=0)
 	if(target.blocks_air||blocks_air)
 		return 0
 
@@ -33,7 +33,12 @@
 	#ifdef ZASDBG
 	ASSERT(isturf(other))
 	#endif
-	return (AIR_BLOCKED*!CanPass(null, other, 0, 0))|(ZONE_BLOCKED*!CanPass(null, other, 1.5, 1))
+	if(can_atmos_pass == CANPASS_PROC)
+		CRASH("Atmos pass assigned proc when proc doesn't exist.")
+	//var/direction = get_dir(src, other)
+	//return (AIR_BLOCKED*!CanPass(null, other, 0, 0))|(ZONE_BLOCKED*!CanPass(null, other, 1.5, 1))
+	//return (AIR_BLOCKED*!CanPass(other, direction, 0))|(ZONE_BLOCKED*!CanPass(other, direction, 1))
+	return (AIR_BLOCKED*!ATMOS_CANPASS_NOTTURF(src))
 
 // This is a legacy proc only here for compatibility - you probably should just use ATMOS_CANPASS_TURF directly.
 /turf/c_airblock(turf/other)
@@ -52,7 +57,7 @@
 
 /atom
 	var/simulated = TRUE
-	var/can_atmos_pass = ATMOS_PASS_YES
-
-/atom/proc/c_block(turf/target_turf, vertical = FALSE)
-	return
+	var/can_atmos_pass = CANPASS_ALWAYS
+#ifdef ZASDBG
+	var/verbose = FALSE
+#endif

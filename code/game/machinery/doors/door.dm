@@ -13,7 +13,7 @@
 	pass_flags_self = PASSDOORS
 	max_integrity = 350
 	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 80, ACID = 70)
-	can_atmos_pass = ATMOS_PASS_DENSITY
+	can_atmos_pass = CANPASS_PROC
 	flags_1 = PREVENT_CLICK_UNDER_1
 	receive_ricochet_chance_mod = 0.8
 	damage_deflection = 10
@@ -45,6 +45,8 @@
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 	var/can_open_with_hands = TRUE /// Whether or not the door can be opened by hand (used for blast doors and shutters)
+	///If set, air zones cannot merge across the door even when it is opened.
+	var/block_air_zones = TRUE
 
 /obj/machinery/door/Initialize(mapload)
 	. = ..()
@@ -60,6 +62,7 @@
 	else
 		flags_1 &= ~PREVENT_CLICK_UNDER_1
 
+	update_nearby_tiles(TRUE)
 	//doors only block while dense though so we have to use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
@@ -104,8 +107,13 @@
 	if(spark_system)
 		qdel(spark_system)
 		spark_system = null
-	//air_update_turf(TRUE, FALSE)
+	update_nearby_tiles()
 	return ..()
+
+/obj/machinery/door/c_airblock(turf/other)
+	if(block_air_zones)
+		return density ? AIR_BLOCKED : ZONE_BLOCKED
+	return density ? AIR_BLOCKED : AIR_ALLOWED
 
 /**
  * Signal handler for checking if we notify our surrounding that access requirements are lifted accordingly to a newly set security level
@@ -170,13 +178,13 @@
 		return
 
 /obj/machinery/door/Move()
-	//var/turf/T = loc
+	update_nearby_tiles(TRUE)
 	. = ..()
-	/*if(density) //Gotta be closed my friend
-		move_update_air(T)*/
 
-/obj/machinery/door/CanAllowThrough(atom/movable/mover, border_dir)
+
+/obj/machinery/door/CanAllowThrough(atom/movable/mover, border_dir, air_group)
 	. = ..()
+	if(air_group) return !block_air_zones
 	if(.)
 		return
 	// Snowflake handling for PASSGLASS.
@@ -357,7 +365,7 @@
 	update_appearance()
 	set_opacity(0)
 	operating = FALSE
-	//air_update_turf(TRUE, FALSE)
+	update_nearby_tiles(TRUE)
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
@@ -387,7 +395,7 @@
 	if(visible && !glass)
 		set_opacity(1)
 	operating = FALSE
-	//air_update_turf(TRUE, TRUE)
+	update_nearby_tiles(TRUE)
 	update_freelook_sight()
 
 	if(!can_crush)

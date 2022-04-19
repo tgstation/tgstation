@@ -23,7 +23,7 @@
 
 	// Remove all gases from all pipenets
 	for(var/datum/pipeline/PN as anything in SSzas.networks)
-		for(var/datum/gas_mixture/G in PN.air & PN.other_airs)
+		for(var/datum/gas_mixture/G in list(PN.air) & PN.other_airs)
 			G.gas = list()
 			G.update_values()
 

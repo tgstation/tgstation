@@ -61,32 +61,32 @@ GLOBAL_REAL(xgm_gas_data, /datum/xgm_gas_data) = new
 	for(var/p in subtypesof(/datum/xgm_gas))
 		var/datum/xgm_gas/gas = new p //avoid initial() because of potential New() actions
 
-		if(gas.id in xgm_gas_data.gases)
-			stack_trace("Duplicate gas id `[gas.id]` in `[p]`")
+		//if(gas.id in xgm_gas_data.gases)
+			//stack_trace("Duplicate gas id `[gas.id]` in `[p]`")
 
-		xgm_gas_data.gases += gas.id
-		xgm_gas_data.name[gas.id] = gas.name
-		xgm_gas_data.specific_heat[gas.id] = gas.specific_heat
-		xgm_gas_data.molar_mass[gas.id] = gas.molar_mass
+		gases += gas.id
+		name[gas.id] = gas.name
+		specific_heat[gas.id] = gas.specific_heat
+		molar_mass[gas.id] = gas.molar_mass
 		if(gas.overlay_limit)
-			xgm_gas_data.overlay_limit[gas.id] = gas.overlay_limit
-			xgm_gas_data.tile_overlay[gas.id] = gas.tile_overlay
-			xgm_gas_data.tile_overlay_color[gas.id] = gas.tile_color
-		xgm_gas_data.flags[gas.id] = gas.flags
-		xgm_gas_data.burn_product[gas.id] = gas.burn_product
+			overlay_limit[gas.id] = gas.overlay_limit
+			tile_overlay[gas.id] = gas.tile_overlay
+			tile_overlay_color[gas.id] = gas.tile_color
+		flags[gas.id] = gas.flags
+		burn_product[gas.id] = gas.burn_product
 
-		xgm_gas_data.symbol_html[gas.id] = gas.symbol_html
-		xgm_gas_data.symbol[gas.id] = gas.symbol
+		symbol_html[gas.id] = gas.symbol_html
+		symbol[gas.id] = gas.symbol
 
 		if(!isnull(gas.condensation_product) && !isnull(gas.condensation_point))
-			xgm_gas_data.condensation_points[gas.id] = gas.condensation_point
-			xgm_gas_data.condensation_products[gas.id] = gas.condensation_product
+			condensation_points[gas.id] = gas.condensation_point
+			condensation_products[gas.id] = gas.condensation_product
 
-		xgm_gas_data.breathed_product[gas.id] = gas.breathed_product
-		xgm_gas_data.hidden_from_codex[gas.id] = gas.hidden_from_codex
+		breathed_product[gas.id] = gas.breathed_product
+		hidden_from_codex[gas.id] = gas.hidden_from_codex
 
-		xgm_gas_data.base_value[gas.id] = gas.base_value
-		xgm_gas_data.purchaseable[gas.id] = gas.purchaseable
+		base_value[gas.id] = gas.base_value
+		purchaseable[gas.id] = gas.purchaseable
 
 	return 1
 

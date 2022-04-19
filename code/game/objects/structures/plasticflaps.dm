@@ -7,7 +7,7 @@
 	armor = list(MELEE = 100, BULLET = 80, LASER = 80, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 50, ACID = 50)
 	density = FALSE
 	anchored = TRUE
-	can_atmos_pass = ATMOS_PASS_NO
+	can_atmos_pass = CANPASS_NEVER
 
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE
@@ -41,7 +41,7 @@
 
 ///Update the flaps behaviour to gases, if not anchored will let air pass through
 /obj/structure/plasticflaps/proc/update_atmos_behaviour()
-	can_atmos_pass = anchored ? ATMOS_PASS_YES : ATMOS_PASS_NO
+	can_atmos_pass = anchored ? CANPASS_ALWAYS : CANPASS_NEVER
 
 /obj/structure/plasticflaps/wirecutter_act(mob/living/user, obj/item/W)
 	. = ..()

@@ -72,11 +72,11 @@ Class Procs:
 /connection_edge/proc/add_connection(connection/c)
 	coefficient++
 	if(c.direct()) direct++
-//	log_debug("Connection added: [type] Coefficient: [coefficient]")
+//	log_admin("Connection added: [type] Coefficient: [coefficient]")
 
 
 /connection_edge/proc/remove_connection(connection/c)
-//	log_debug("Connection removed: [type] Coefficient: [coefficient-1]")
+//	log_admin("Connection removed: [type] Coefficient: [coefficient-1]")
 
 	coefficient--
 	if(coefficient <= 0)
@@ -87,7 +87,7 @@ Class Procs:
 
 /connection_edge/proc/erase()
 	SSzas.remove_edge(src)
-//	log_debug("[type] Erased.")
+//	log_admin("[type] Erased.")
 
 
 /connection_edge/proc/tick()
@@ -131,7 +131,7 @@ Class Procs:
 	A.edges.Add(src)
 	B.edges.Add(src)
 	//id = edge_id(A,B)
-//	log_debug("New edge between [A] and [B]")
+//	log_admin("New edge between [A] and [B]")
 
 
 /connection_edge/zone/add_connection(connection/c)
@@ -202,7 +202,7 @@ Class Procs:
 	A.edges.Add(src)
 	air = B.return_air()
 	//id = 52*A.id
-//	log_debug("New edge from [A] to [B].")
+//	log_admin("New edge from [A] to [B].")
 
 
 /connection_edge/unsimulated/add_connection(connection/c)

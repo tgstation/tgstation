@@ -234,8 +234,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	if((temperature > PHORON_MINIMUM_BURN_TEMPERATURE || force_burn) && (no_check ||check_recombustability(zone? zone.fuel_objs : null)))
 
 		#ifdef FIREDBG
-		log_debug("***************** FIREDBG *****************")
-		log_debug("Burning [zone? zone.name : "zoneless gas_mixture"]!")
+		log_admin("***************** FIREDBG *****************")
+		log_admin("Burning [zone? zone.name : "zoneless gas_mixture"]!")
 		#endif
 
 		var/gas_fuel = 0
@@ -288,13 +288,13 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		var/used_oxidizers = used_fuel*(FIRE_REACTION_OXIDIZER_AMOUNT/FIRE_REACTION_FUEL_AMOUNT)
 
 		#ifdef FIREDBG
-		log_debug("gas_fuel = [gas_fuel], liquid_fuel = [liquid_fuel], total_oxidizers = [total_oxidizers]")
-		log_debug("fuel_area = [fuel_area], total_fuel = [total_fuel], reaction_limit = [reaction_limit]")
-		log_debug("firelevel -> [firelevel] (gas: [gas_firelevel], liquid: [liquid_firelevel])")
-		log_debug("liquid_reaction_progress = [liquid_reaction_progress]")
-		log_debug("gas_reaction_progress = [gas_reaction_progress]")
-		log_debug("total_reaction_progress = [total_reaction_progress]")
-		log_debug("used_fuel = [used_fuel], used_oxidizers = [used_oxidizers]; ")
+		log_admin("gas_fuel = [gas_fuel], liquid_fuel = [liquid_fuel], total_oxidizers = [total_oxidizers]")
+		log_admin("fuel_area = [fuel_area], total_fuel = [total_fuel], reaction_limit = [reaction_limit]")
+		log_admin("firelevel -> [firelevel] (gas: [gas_firelevel], liquid: [liquid_firelevel])")
+		log_admin("liquid_reaction_progress = [liquid_reaction_progress]")
+		log_admin("gas_reaction_progress = [gas_reaction_progress]")
+		log_admin("total_reaction_progress = [total_reaction_progress]")
+		log_admin("used_fuel = [used_fuel], used_oxidizers = [used_oxidizers]; ")
 		#endif
 
 		//if the reaction is progressing too slow then it isn't self-sustaining anymore and burns out
@@ -323,8 +323,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		update_values()
 
 		#ifdef FIREDBG
-		log_debug("used_gas_fuel = [used_gas_fuel]; used_liquid_fuel = [used_liquid_fuel]; total = [used_fuel]")
-		log_debug("new temperature = [temperature]; new pressure = [return_pressure()]")
+		log_admin("used_gas_fuel = [used_gas_fuel]; used_liquid_fuel = [used_liquid_fuel]; total = [used_fuel]")
+		log_admin("new temperature = [temperature]; new pressure = [return_pressure()]")
 		#endif
 
 		if (temperature<220)

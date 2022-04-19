@@ -276,17 +276,18 @@
 	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."
 	gender = PLURAL
 	max_integrity = 20
-	can_atmos_pass = ATMOS_PASS_DENSITY
 	obj_flags = CAN_BE_HIT | BLOCK_Z_IN_DOWN | BLOCK_Z_IN_UP
+	can_atmos_pass = CANPASS_NEVER
 	///Var used to prevent spamming of the construction sound
 	var/next_beep = 0
 
 /obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
-	//air_update_turf(TRUE, TRUE)
+	update_nearby_tiles(TRUE)
 
 /obj/structure/foamedmetal/Destroy()
-	//air_update_turf(TRUE, FALSE)
+	set_density(0)
+	update_nearby_tiles(TRUE)
 	. = ..()
 
 /obj/structure/foamedmetal/Move()

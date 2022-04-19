@@ -11,7 +11,7 @@
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
-	can_atmos_pass = ATMOS_PASS_PROC
+	can_atmos_pass = CANPASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
 	set_dir_on_move = FALSE
@@ -313,7 +313,7 @@
 		. += new /obj/item/shard(location)
 
 /obj/structure/window/proc/AfterRotation(mob/user, degrees)
-	//air_update_turf(TRUE, FALSE)
+	update_nearby_tiles(TRUE)
 
 /obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
@@ -329,16 +329,16 @@
 	return ..()
 
 /obj/structure/window/Move()
-	//var/turf/T = loc
+	update_nearby_tiles()
 	. = ..()
 	/*
 	if(anchored)
 		move_update_air(T)*/
 
-/obj/structure/window/c_block(turf/T, vertical = FALSE)
+/obj/structure/window/c_airblock(turf/T, vertical = FALSE)
 	if(!anchored || !density)
-		return TRUE
-	return !(fulltile || dir == get_dir(loc, T))
+		return ZONE_BLOCKED
+	return (fulltile || dir == get_dir(loc, T)) ? AIR_BLOCKED : ZONE_BLOCKED
 
 //This proc is used to update the icons of nearby windows.
 /obj/structure/window/proc/update_nearby_icons()
@@ -740,7 +740,7 @@
 	glass_type = /obj/item/stack/sheet/paperframes
 	heat_resistance = 233
 	decon_speed = 10
-	can_atmos_pass = ATMOS_PASS_YES
+	can_atmos_pass = CANPASS_ALWAYS
 	resistance_flags = FLAMMABLE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	knock_sound = SFX_PAGE_TURN

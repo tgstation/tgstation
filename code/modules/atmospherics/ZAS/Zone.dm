@@ -59,11 +59,11 @@ Class Procs:
 	air.group_multiplier = 1
 	air.volume = CELL_VOLUME
 
-/zone/proc/add(turf/simulated/T)
+/zone/proc/add(turf/T)
 #ifdef ZASDBG
 	ASSERT(!invalid)
 	ASSERT(istype(T))
-	ASSERT(!SSzas.has_valid_zone(T))
+	ASSERT(!TURF_HAS_VALID_ZONE(T))
 #endif
 
 	var/datum/gas_mixture/turf_air = T.return_air()
@@ -77,7 +77,7 @@ Class Procs:
 		if(fuel) fuel_objs += fuel
 	T.update_graphic(air.graphic)
 
-/zone/proc/remove(turf/simulated/T)
+/zone/proc/remove(turf/T)
 #ifdef ZASDBG
 	ASSERT(!invalid)
 	ASSERT(istype(T))

@@ -235,7 +235,7 @@ SUBSYSTEM_DEF(zas)
 			T.needs_air_update = 0
 			#ifdef ZASDBG
 			T.overlays -= mark
-			updated++
+			//updated++
 			#endif
 
 			if (MC_TICK_CHECK)
@@ -253,7 +253,7 @@ SUBSYSTEM_DEF(zas)
 			T.needs_air_update = 0
 			#ifdef ZASDBG
 			T.overlays -= mark
-			updated++
+			//updated++
 			#endif
 
 			if (MC_TICK_CHECK)

@@ -304,7 +304,6 @@
 	temperature = sample.temperature
 
 	update_values()
-
 	return 1
 
 

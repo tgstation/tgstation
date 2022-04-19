@@ -134,7 +134,7 @@ Slimecrossing Items
 	desc = "A mass of solidified slime gel - completely impenetrable, but it's melting away!"
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "slimebarrier_thick"
-	can_atmos_pass = ATMOS_PASS_NO
+	can_atmos_pass = CANPASS_NEVER
 	opacity = TRUE
 	timeleft = 100
 

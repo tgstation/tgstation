@@ -6328,7 +6328,7 @@
 /area/syndicate_mothership/control)
 "sm" = (
 /obj/structure/window/paperframe{
-	can_atmos_pass = 0
+	can_atmos_pass = 4
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -14470,7 +14470,7 @@
 /area/syndicate_mothership/control)
 "Qu" = (
 /obj/structure/window/paperframe{
-	can_atmos_pass = 0
+	can_atmos_pass = 4
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -14865,7 +14865,7 @@
 /area/centcom/supplypod)
 "Rv" = (
 /obj/structure/window/paperframe{
-	can_atmos_pass = 0
+	can_atmos_pass = 4
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
@@ -17933,7 +17933,7 @@
 	dir = 4
 	},
 /obj/structure/window/paperframe{
-	can_atmos_pass = 0
+	can_atmos_pass = 4
 	},
 /turf/open/floor/sepia,
 /area/centcom/holding)

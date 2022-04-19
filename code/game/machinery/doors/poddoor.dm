@@ -14,6 +14,7 @@
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 70
 	can_open_with_hands = FALSE
+	block_air_zones = FALSE
 	var/datum/crafting_recipe/recipe_type = /datum/crafting_recipe/blast_doors
 	var/deconstruction = BLASTDOOR_FINISHED // deconstruction step
 	var/id = 1

@@ -94,7 +94,7 @@
 	icon_state = "holo_firelock"
 	density = FALSE
 	anchored = TRUE
-	can_atmos_pass = ATMOS_PASS_NO
+	can_atmos_pass = CANPASS_NEVER
 	alpha = 150
 	rad_insulation = RAD_LIGHT_INSULATION
 	resistance_flags = FIRE_PROOF

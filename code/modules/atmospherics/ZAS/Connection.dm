@@ -64,7 +64,7 @@ Class Procs:
 //connection/New(turf/simulated/A, turf/simulated/B) ZASTURF
 /connection/New(turf/A, turf/B)
 	#ifdef ZASDBG
-	ASSERT(SSzas.has_valid_zone(A))
+	//ASSERT(TURF_HAS_VALID_ZONE(A))
 	//ASSERT(SSzas.has_valid_zone(B))
 	#endif
 	src.A = A
@@ -83,13 +83,13 @@ Class Procs:
 	if(!direct())
 		state |= CONNECTION_DIRECT
 		edge.direct++
-//	log_debug("Marked direct.")
+//	log_admin("Marked direct.")
 
 /connection/proc/mark_indirect()
 	if(direct())
 		state &= ~CONNECTION_DIRECT
 		edge.direct--
-//	log_debug("Marked indirect.")
+//	log_admin("Marked indirect.")
 
 /connection/proc/mark_space()
 	state |= CONNECTION_SPACE
@@ -103,18 +103,18 @@ Class Procs:
 /connection/proc/erase()
 	edge.remove_connection(src)
 	state |= CONNECTION_INVALID
-//	log_debug("Connection Erased: [state]")
+//	log_admin("Connection Erased: [state]")
 
 /connection/proc/update()
-//	log_debug("Updated, \...")
+//	log_admin("Updated, \...")
 	if(istype(A,/turf/open/space))
-//		log_debug("Invalid A.")
+//		log_admin("Invalid A.")
 		erase()
 		return
 
 	var/block_status = SSzas.air_blocked(A,B)
 	if(block_status & AIR_BLOCKED)
-//		log_debug("Blocked connection.")
+//		log_admin("Blocked connection.")
 		erase()
 		return
 	else if(block_status & ZONE_BLOCKED)
@@ -126,14 +126,14 @@ Class Procs:
 
 	if(state & CONNECTION_SPACE)
 		if(!b_is_space)
-//			log_debug("Invalid B.")
+//			log_admin("Invalid B.")
 			erase()
 			return
 		if(A.zone != zoneA)
-//			log_debug("Zone changed, \...")
+//			log_admin("Zone changed, \...")
 			if(!A.zone)
 				erase()
-//				log_debug("erased.")
+//				log_admin("erased.")
 				return
 			else
 				edge.remove_connection(src)
@@ -141,22 +141,22 @@ Class Procs:
 				edge.add_connection(src)
 				zoneA = A.zone
 
-//		log_debug("valid.")
+//		log_admin("valid.")
 		return
 
 	else if(b_is_space)
-//		log_debug("Invalid B.")
+//		log_admin("Invalid B.")
 		erase()
 		return
 
 	if(A.zone == B.zone)
-//		log_debug("A == B")
+//		log_admin("A == B")
 		erase()
 		return
 
 	if(A.zone != zoneA || (zoneB && (B.zone != zoneB)))
 
-//		log_debug("Zones changed, \...")
+//		log_admin("Zones changed, \...")
 		if(A.zone && B.zone)
 			edge.remove_connection(src)
 			edge = SSzas.get_edge(A.zone, B.zone)
@@ -164,9 +164,9 @@ Class Procs:
 			zoneA = A.zone
 			zoneB = B.zone
 		else
-//			log_debug("erased.")
+//			log_admin("erased.")
 			erase()
 			return
 
 
-//	log_debug("valid.")
+//	log_admin("valid.")

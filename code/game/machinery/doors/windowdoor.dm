@@ -14,7 +14,7 @@
 	flags_1 = ON_BORDER_1
 	opacity = FALSE
 	pass_flags_self = PASSGLASS
-	can_atmos_pass = ATMOS_PASS_PROC
+	can_atmos_pass = CANPASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	network_id = NETWORK_DOOR_AIRLOCKS
 	set_dir_on_move = FALSE
@@ -61,6 +61,7 @@
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	update_nearby_tiles(TRUE)
 
 /obj/machinery/door/window/ComponentInitialize()
 	. = ..()
@@ -173,11 +174,11 @@
 
 	return TRUE
 
-/obj/machinery/door/window/c_block(turf/T, vertical = FALSE)
+/obj/machinery/door/window/c_airblock(turf/T, vertical = FALSE)
 	if(get_dir(loc, T) == dir)
-		return !density
+		return density ? AIR_BLOCKED : ZONE_BLOCKED
 	else
-		return TRUE
+		return ZONE_BLOCKED
 
 //used in the AStar algorithm to determinate if the turf the door is on is passable
 /obj/machinery/door/window/CanAStarPass(obj/item/card/id/ID, to_dir)

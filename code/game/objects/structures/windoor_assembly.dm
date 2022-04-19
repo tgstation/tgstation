@@ -27,7 +27,7 @@
 	var/facing = "l" //Does the windoor open to the left or right?
 	var/secure = FALSE //Whether or not this creates a secure windoor
 	var/state = "01" //How far the door assembly has progressed
-	can_atmos_pass = ATMOS_PASS_PROC
+	can_atmos_pass = CANPASS_PROC
 
 /obj/structure/windoor_assembly/Initialize(mapload, loc, set_dir)
 	. = ..()
@@ -41,10 +41,11 @@
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+	update_nearby_tiles(TRUE)
 
 /obj/structure/windoor_assembly/Destroy()
 	set_density(FALSE)
-	//air_update_turf(TRUE, FALSE)
+	update_nearby_tiles()
 	return ..()
 /*
 /obj/structure/windoor_assembly/Move()
@@ -69,11 +70,11 @@
 	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
 		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
 
-/obj/structure/windoor_assembly/c_block(turf/T, vertical = FALSE)
+/obj/structure/windoor_assembly/c_airblock(turf/T, vertical = FALSE)
 	if(get_dir(loc, T) == dir)
-		return !density
+		return density ? AIR_BLOCKED : ZONE_BLOCKED
 	else
-		return TRUE
+		return ZONE_BLOCKED
 
 /obj/structure/windoor_assembly/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER

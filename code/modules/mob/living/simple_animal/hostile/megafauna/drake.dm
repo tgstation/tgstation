@@ -285,7 +285,7 @@
 	anchored = TRUE
 	opacity = FALSE
 	density = TRUE
-	can_atmos_pass = ATMOS_PASS_DENSITY
+	can_atmos_pass = CANPASS_DENSITY
 	duration = 82
 	color = COLOR_DARK_ORANGE
 

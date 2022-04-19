@@ -114,8 +114,8 @@
 
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
-		if(((can_atmos_pass == ATMOS_PASS_DENSITY && density) || can_atmos_pass == ATMOS_PASS_NO) && isturf(loc))
-			can_atmos_pass = ATMOS_PASS_YES
+		if(((can_atmos_pass == CANPASS_DENSITY && density) || can_atmos_pass == CANPASS_NEVER) && isturf(loc))
+			can_atmos_pass = CANPASS_ALWAYS
 			//air_update_turf(TRUE, FALSE)
 		loc.handle_atom_del(src)
 

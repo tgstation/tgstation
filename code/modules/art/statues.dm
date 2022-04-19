@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 100
-	can_atmos_pass = ATMOS_PASS_DENSITY
+	can_atmos_pass = CANPASS_DENSITY
 	material_modifier = 0.5
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE

@@ -1,6 +1,7 @@
-//#define ZASDBG
+#define ZASDBG
 //#define MULTIZAS
 
+#define AIR_ALLOWED 0
 #define AIR_BLOCKED 1
 #define ZONE_BLOCKED 2
 #define BLOCKED 3
@@ -109,7 +110,8 @@ var/list/gzn_check = list(NORTH, SOUTH, EAST, WEST)
 
 #endif
 
-
+//#define ATMOS_CANPASS(A, O) ( A.can_atmos_pass == CANPASS_PROC ? A.c_airblock(O) : ( A.can_atmos_pass == CANPASS_DENSITY? !A.density : A.can_atmos_pass))
+#define ATMOS_CANPASS_NOTTURF(A) (A.can_atmos_pass == CANPASS_DENSITY ? !A.density : A.can_atmos_pass)
 #define CELL_VOLUME        2500 // Liters in a cell.
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION)) // Moles in a 2.5 m^3 cell at 101.325 kPa and 20 C.
 

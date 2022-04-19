@@ -77,7 +77,7 @@
 	desc = "A solid thick wall of web, airtight enough to block air flow."
 	icon_state = "sealedweb"
 	sealed = TRUE
-	can_atmos_pass = ATMOS_PASS_NO
+	can_atmos_pass = CANPASS_NEVER
 
 /obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
 	genetic = TRUE

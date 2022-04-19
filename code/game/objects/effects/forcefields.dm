@@ -5,7 +5,7 @@
 	anchored = TRUE
 	opacity = FALSE
 	density = TRUE
-	can_atmos_pass = ATMOS_PASS_DENSITY
+	can_atmos_pass = CANPASS_DENSITY
 	var/timeleft = 300 //Set to 0 for permanent forcefields (ugh)
 
 /obj/effect/forcefield/Initialize(mapload)
@@ -21,7 +21,7 @@
 	name = "glowing wall"
 	icon = 'icons/effects/cult/effects.dmi'
 	icon_state = "cultshield"
-	can_atmos_pass = ATMOS_PASS_NO
+	can_atmos_pass = CANPASS_NEVER
 	timeleft = 200
 
 /// A form of the cult forcefield that lasts permanently.

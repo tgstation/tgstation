@@ -611,7 +611,7 @@
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
 	can_crush = FALSE
 	flags_1 = ON_BORDER_1
-	can_atmos_pass = ATMOS_PASS_PROC
+	can_atmos_pass = CANPASS_PROC
 
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
@@ -659,11 +659,11 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/firedoor/border_only/c_block(turf/T, vertical = FALSE)
+/obj/machinery/door/firedoor/border_only/c_airblock(turf/T, vertical = FALSE)
 	if(get_dir(loc, T) == dir)
-		return !density
+		return density ? AIR_BLOCKED : ZONE_BLOCKED
 	else
-		return TRUE
+		return  AIR_ALLOWED
 
 /obj/machinery/door/firedoor/heavy
 	name = "heavy firelock"

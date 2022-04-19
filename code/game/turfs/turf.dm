@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///The max temperature of the fire which it was subjected to
 	var/max_fire_temperature_sustained = 0
 
-	var/blocks_air = FALSE
+	var/blocks_air = AIR_ALLOWED
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
@@ -98,6 +98,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	if(!blocks_air || !simulated)
+		air = new
+		air.copy_from(src.return_air())
 
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()
