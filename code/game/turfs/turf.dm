@@ -99,9 +99,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
-	if(!blocks_air || !simulated)
-		air = new
-		air.copy_from(src.return_air())
+	// if(!blocks_air || !simulated)
+		// air = new
+		// air.copy_from(src.return_air())
 
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()
