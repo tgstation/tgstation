@@ -9,7 +9,7 @@
 /obj/machinery/computer/accounting/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "AccountingConsole")
+		ui = new(user, src, "AccountingConsole", name)
 		ui.open()
 
 /obj/machinery/computer/accounting/ui_data(mob/user)
