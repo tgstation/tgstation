@@ -518,12 +518,16 @@
 	var/list/growth_queue
 	//List of currently processed vines, on this level to prevent runtime tomfoolery
 	var/list/obj/structure/spacevine/queue_end
-	var/spread_multiplier = 5 // corresponds to artifical kudzu with production speed of 1, 10% of total vines will spread per second
+	///Spread multiplier, depends on productivity, affects how often kudzu spreads
+	var/spread_multiplier = 5 // corresponds to artifical kudzu with production speed of 1, approaches 10% of total vines will spread per second
+	///Maximum spreading limit (ie. how many kudzu can there be) for this controller
 	var/spread_cap = 30 // corresponds to artifical kudzu with production speed of 3.5
 	var/list/vine_mutations_list
 	var/mutativeness = 1
 	///Maximum sum of mutation severities
 	var/max_mutation_severity = 20
+	///Minimum spread rate per second
+	var/minimum_spread_rate = 1
 
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production, datum/round_event/event = null)
 	vines = list()
@@ -545,6 +549,7 @@
 		spread_multiplier = SPREAD_MULTIPLIER_MAX / (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) // Best production speed of 1: 10% of total vines will spread per second, worst production speed of 10: 1% of total vines (with minimum of 1) will spread per second
 	if(event != null) // spawned by space vine event
 		max_mutation_severity += MAX_SEVERITY_EVENT_BONUS
+		minimum_spread_rate = 3
 
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
@@ -615,7 +620,12 @@
 		qdel(src) //space vines exterminated. Remove the controller
 		return
 
-	var/spread_max = round(clamp(delta_time * 0.5 * vine_count / spread_multiplier, 1, spread_cap))
+	/// Bonus spread for kudzu that has just started out (ie. with low vine count)
+	var/start_spread_bonus = max(5 - spread_multiplier * (vine_count ** 2) / 400, 0)
+	/// Base spread rate, depends solely on spread multiplier and vine count
+	var/spread_base = 0.5 * vine_count / spread_multiplier
+	/// Actual maximum spread rate for this process tick
+	var/spread_max = round(clamp(delta_time * (spread_base + start_spread_bonus), max(delta_time * minimum_spread_rate, 1), spread_cap))
 	var/amount_processed = 0
 	for(var/obj/structure/spacevine/vine as anything in growth_queue)
 		if(!vine.can_spread)
