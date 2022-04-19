@@ -1128,15 +1128,13 @@
 	return TRUE
 
 /// Can this mob read
-/mob/proc/can_read(obj/O, check_for_light = TRUE)
+/mob/proc/can_read(obj/O)
 	if(is_blind())
-		to_chat(src, span_warning("You are blind and can't read anything!"))
-		return FALSE
-
+		to_chat(src, span_warning("As you are trying to read [O], you suddenly feel very stupid!"))
+		return
 	if(!is_literate())
-		to_chat(src, span_warning("You try to read [O], but can't comprehend anything!"))
-		return FALSE
-
+		to_chat(src, span_notice("You try to read [O], but can't comprehend any of it."))
+		return
 	return TRUE
 
 /**
