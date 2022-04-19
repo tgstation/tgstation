@@ -459,6 +459,7 @@
 				stomach.drain_time = world.time + LIGHT_DRAIN_TIME
 				if(istype(stomach))
 					to_chat(electrician, span_notice("You receive some charge from the [fitting]."))
+					playsound(src, 'sound/effects/sparks2.ogg', 75, TRUE)
 					stomach.adjust_charge(LIGHT_POWER_GAIN)
 				else
 					to_chat(electrician, span_warning("You can't receive charge from the [fitting]!"))

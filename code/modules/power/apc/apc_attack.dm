@@ -212,6 +212,7 @@
 			if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > charge_limit))
 				return
 			to_chat(ethereal, span_notice("You receive some charge from the APC."))
+			playsound(src, 'sound/effects/sparks4.ogg', 75, TRUE)
 			stomach.adjust_charge(APC_POWER_GAIN)
 			cell.charge -= APC_POWER_GAIN
 		return
@@ -231,6 +232,7 @@
 		return
 	if(istype(stomach))
 		to_chat(ethereal, span_notice("You transfer some power to the APC."))
+		playsound(src, 'sound/effects/sparks4.ogg', 75, TRUE)
 		stomach.adjust_charge(-APC_POWER_GAIN)
 		cell.charge += APC_POWER_GAIN
 	else
