@@ -179,7 +179,6 @@
 	icon = "eye-low-vision" // Ignore the icon name, its actually a fairly good representation of different color eyes
 	value = 0
 	var/color
-	var/datum/weakref/original_eyes
 
 /datum/quirk/heterochromatic/add()
 	color = color || quirk_holder.client?.prefs?.read_preference(/datum/preference/color/heterochromatic)
@@ -199,31 +198,30 @@
 	link_to_holder()
 
 /datum/quirk/heterochromatic/proc/link_to_holder()
-	RegisterSignal(quirk_holder, COMSIG_ATOM_UPDATE_APPEARANCE, .proc/check_eye_color)
-	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal)
-	var/obj/item/organ/eyes/eyes_of_the_beholder = quirk_holder.getorganslot(ORGAN_SLOT_EYES)
-	original_eyes = WEAKREF(eyes_of_the_beholder)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.eye_color_heterochromatic = TRUE
+	human_holder.eye_color_right = color
+	RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal)
 
-/datum/quirk/heterochromatic/proc/unlink_from_holder()
-	UnregisterSignal(quirk_holder, list(COMSIG_ATOM_UPDATE_APPEARANCE, COMSIG_CARBON_LOSE_ORGAN))
-	original_eyes = null
-
-/datum/quirk/heterochromatic/proc/check_eye_color()
-	var/obj/item/organ/eyes/eyes = original_eyes?.resolve()
-	if(!eyes)
+	var/obj/item/organ/eyes/eyes_of_the_holder = quirk_holder.getorgan(/obj/item/organ/eyes)
+	if(!eyes_of_the_holder)
 		return
 
-	eyes.eye_color_right = color
-	var/mob/living/carbon/human/holder = quirk_holder
-	holder.eye_color_right = color
-	eyes.refresh()
+	eyes_of_the_holder.eye_color_right = color
+	eyes_of_the_holder.old_eye_color_right = color
+	eyes_of_the_holder.refresh()
 
-/datum/quirk/heterochromatic/proc/check_eye_removal()
-	var/obj/item/organ/eyes/eyes = original_eyes?.resolve()
-	if(eyes && eyes.loc == quirk_holder)
+/datum/quirk/heterochromatic/proc/check_eye_removal(datum/source, obj/item/organ/eyes/removed)
+	SIGNAL_HANDLER
+
+	if(!istype(removed))
 		return
 
-	unlink_from_holder() // Our special eyes have been removed, oh what a tragic day
+	// Eyes were removed, remove heterochromia from the human holder and bid them adiou
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.eye_color_heterochromatic = FALSE
+	human_holder.eye_color_right = initial(human_holder.eye_color_right)
+	UnregisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN)
 
 /datum/quirk/monochromatic
 	name = "Monochromacy"
