@@ -323,6 +323,20 @@
 	else
 		to_chat(user, span_notice("This book is completely blank!"))
 
+/obj/item/book/proc/on_read(mob/user)
+	if(book_data?.content)
+		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+
+		if(ishuman(user))
+			var/mob/living/carbon/human/reader = user
+			var/is_book_manual = istype(src, /obj/item/book/manual)
+			if(is_book_manual && reader.drowsyness) // manuals are so boring they put us to sleep if we are already drowsy
+				to_chat(user, span_warning("As you are reading the boring [src], you suddenly doze off!"))
+				reader.AdjustSleeping(100)
+		onclose(user, "book")
+	else
+		to_chat(user, span_notice("This book is completely blank!"))
+
 /// Generates a random icon state for the book
 /obj/item/book/proc/gen_random_icon_state()
 	icon_state = "book[rand(1, maximum_book_state)]"
