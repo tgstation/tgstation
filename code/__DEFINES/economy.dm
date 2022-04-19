@@ -15,7 +15,7 @@
 //How much POWER a borg's cell is taxed if they print something from a departmental lathe.
 #define SILICON_LATHE_TAX 2000
 
-#define STATION_TARGET_BUFFER 40
+#define STATION_TARGET_BUFFER 25
 
 #define MAX_GRANT_DPT 500
 
