@@ -144,10 +144,10 @@ SUBSYSTEM_DEF(zas)
 	if(!can_fire)
 		msg += "REBOOTING..."
 	else
-		msg += "TtU: [length(tiles_to_update)]"
-		msg += "ZtU: [length(zones_to_update)]"
-		msg += "AFZ: [length(active_fire_zones)]"
-		msg += "AH: [length(active_hotspots)]"
+		msg += "TtU: [length(tiles_to_update)] "
+		msg += "ZtU: [length(zones_to_update)] "
+		msg += "AFZ: [length(active_fire_zones)] "
+		msg += "AH: [length(active_hotspots)] "
 		msg += "AE: [length(active_edges)]"
 	return ..()
 
@@ -407,7 +407,7 @@ SUBSYSTEM_DEF(zas)
 
 /datum/controller/subsystem/zas/proc/process_tiles(resumed = FALSE)
 	if(!resumed)
-		src.currentrun = tiles_to_update.Copy()
+		src.currentrun = tiles_to_update
 
 	var/list/currentrun = src.currentrun
 	while (currentrun.len)
@@ -441,7 +441,7 @@ SUBSYSTEM_DEF(zas)
 
 /datum/controller/subsystem/zas/proc/process_deferred_tiles(resumed)
 	if(!resumed)
-		src.currentrun = deferred.Copy()
+		src.currentrun = deferred
 	var/list/currentrun = src.currentrun
 
 	if(current_process == SSZAS_DEFERED_TILES)
@@ -511,7 +511,7 @@ SUBSYSTEM_DEF(zas)
 
 /datum/controller/subsystem/zas/proc/process_zones(resumed)
 	if(!resumed)
-		src.currentrun = zones_to_update.Copy()
+		src.currentrun = zones_to_update
 	var/list/currentrun = src.currentrun
 
 	if(current_process == SSZAS_ZONES)
@@ -527,19 +527,19 @@ SUBSYSTEM_DEF(zas)
 
 /datum/controller/subsystem/zas/proc/process_atoms(resumed)
 	if(!resumed)
-		src.currentrun = atom_process.Copy()
+		src.currentrun = atom_process
 
 	var/list/currentrun = src.currentrun
 
 	if(current_process == SSZAS_ATOMS)
 		while(currentrun.len)
-		var/atom/talk_to = currentrun[currentrun.len]
-		currentrun.len--
-		if(!talk_to)
-			return
-		talk_to.process_exposure()
-		if(MC_TICK_CHECK)
-			return
+			var/atom/talk_to = currentrun[currentrun.len]
+			currentrun.len--
+			if(!talk_to)
+				return
+			talk_to.process_exposure()
+			if(MC_TICK_CHECK)
+				return
 
 /**
  * Adds a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.

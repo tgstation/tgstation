@@ -2,11 +2,15 @@
 #define ATOM_TEMPERATURE_EQUILIBRIUM_THRESHOLD 5
 #define ATOM_TEMPERATURE_EQUILIBRIUM_CONSTANT 0.25
 
-#define ADJUST_ATOM_TEMPERATURE(_atom, _temp) \
+/*#define ADJUST_ATOM_TEMPERATURE(_atom, _temp) \
 	_atom.temperature = _temp; \
 	if(_atom.reagents) { \
 		START_PROCESSING(SSreagents, _atom.reagents); \
 	} \
+	QUEUE_TEMPERATURE_ATOMS(_atom);*/
+
+#define ADJUST_ATOM_TEMPERATURE(_atom, _temp) \
+	_atom.temperature = _temp; \
 	QUEUE_TEMPERATURE_ATOMS(_atom);
 
 #define QUEUE_TEMPERATURE_ATOMS(_atoms) \

@@ -168,6 +168,7 @@ Class Procs:
 			attracted = B.movables()
 			repelled = A.movables()
 
+		playsound(pick(connecting_turfs), 'modular_pariah/master_files/sound/effects/space_wind_big.ogg', 100, TRUE, null, pressure_affected = FALSE)
 		flow(attracted, abs(differential), 0)
 		flow(repelled, abs(differential), 1)
 

@@ -257,14 +257,22 @@
 /turf/return_air()
 	RETURN_TYPE(/datum/gas_mixture)
 	//Create gas mixture to hold data for passing
-	var/datum/gas_mixture/GM = new
+	if(zone)
+		if(!zone.invalid)
+			SSzas.mark_zone_update(zone)
+			return zone.air
+		else
+			if(!air)
+				make_air()
+			c_copy_air()
+			return air
+	else
+		if(!air)
+			make_air()
+		return air
 
-	if(initial_gas)
-		GM.gas = initial_gas.Copy()
-	GM.temperature = temperature
-	GM.update_values()
-
-	return GM
+/turf/open/space/return_air()
+	return air
 
 /turf/remove_air(amount as num)
 	var/datum/gas_mixture/GM = return_air()
