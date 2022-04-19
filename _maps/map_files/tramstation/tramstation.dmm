@@ -10684,9 +10684,6 @@
 /area/maintenance/tram/right)
 "cCL" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/science/storage)
 "cCU" = (
@@ -45854,7 +45851,6 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "pfO" = (
-/obj/machinery/firealarm/directional/north,
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/white,
 /area/science/mixing)
@@ -48190,6 +48186,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "pVN" = (
@@ -67257,6 +67254,11 @@
 	id = "ordnancestorage";
 	name = "Ordnance Storage Shutters";
 	req_access_txt = "8"
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Science - Ordnance Office";
+	name = "science camera";
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/white,
 /area/science/mixing/hallway)
@@ -117910,9 +117912,9 @@ jTS
 sCv
 lMe
 ixF
-iGQ
-xgS
 mft
+xgS
+jaG
 iCf
 cCL
 txf
