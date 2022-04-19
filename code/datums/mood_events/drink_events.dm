@@ -2,6 +2,12 @@
 	mood_change = 3
 	description = "Everything just feels better after a drink or two."
 
+/datum/mood_event/drunk/add_effects(param)
+	owner.update_body() // Update the body so that the blush visual is displayed
+
+/datum/mood_event/drunk/remove_effects()
+	owner.update_body() // Update the body so that the blush visual is no longer displayed
+
 /datum/mood_event/quality_nice
 	description = "That drink wasn't bad at all."
 	mood_change = 2
