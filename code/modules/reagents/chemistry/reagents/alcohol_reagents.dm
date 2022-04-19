@@ -1466,7 +1466,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_price = DRINK_PRICE_HIGH
 
 /datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_timed_status_effect(50 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
+	drinker.set_timed_status_effect(100 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_confusion(max(drinker.get_confusion() + (2 * REM * delta_time),0))
 		drinker.Dizzy(10 * REM * delta_time)
@@ -1503,7 +1503,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(DT_PROB(30, delta_time))
 				drinker.set_confusion(max(drinker.get_confusion() + 3, 0))
 		if(55 to 200)
-			drinker.set_timed_status_effect(55 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
+			drinker.set_timed_status_effect(110 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 		if(200 to INFINITY)
 			drinker.adjustToxLoss(2 * REM * delta_time, 0)
 			. = TRUE
@@ -1526,7 +1526,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_timed_status_effect(50 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
+	drinker.set_timed_status_effect(100 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	drinker.dizziness += 2 * REM * delta_time
 	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time, 150)
 	if(DT_PROB(10, delta_time))
