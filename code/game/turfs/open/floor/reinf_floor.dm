@@ -19,7 +19,7 @@
 	. += span_notice("The reinforcement rods are <b>wrenched</b> firmly in place.")
 
 /turf/open/floor/engine/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/floor/engine/break_tile()
 	return //unbreakable
@@ -100,92 +100,92 @@
 /turf/open/floor/engine/n2o
 	article = "an"
 	name = "\improper N2O floor"
-	initial_gas_mix = ATMOSTANK_NITROUSOXIDE
+	initial_gas = ATMOSTANK_NITROUSOXIDE
 
 /turf/open/floor/engine/co2
 	name = "\improper CO2 floor"
-	initial_gas_mix = ATMOSTANK_CO2
+	initial_gas = ATMOSTANK_CO2
 
 /turf/open/floor/engine/plasma
 	name = "plasma floor"
-	initial_gas_mix = ATMOSTANK_PLASMA
+	initial_gas = ATMOSTANK_PLASMA
 
 /turf/open/floor/engine/o2
 	name = "\improper O2 floor"
-	initial_gas_mix = ATMOSTANK_OXYGEN
+	initial_gas = ATMOSTANK_OXYGEN
 
 /turf/open/floor/engine/n2
 	article = "an"
 	name = "\improper N2 floor"
-	initial_gas_mix = ATMOSTANK_NITROGEN
+	initial_gas = ATMOSTANK_NITROGEN
 
 
 /*/turf/open/floor/engine/bz
 	name = "\improper BZ floor"
-	initial_gas_mix = ATMOS_TANK_BZ
+	initial_gas = ATMOS_TANK_BZ
 
 /turf/open/floor/engine/freon
 	name = "\improper Freon floor"
-	initial_gas_mix = ATMOS_TANK_FREON
+	initial_gas = ATMOS_TANK_FREON
 
 /turf/open/floor/engine/halon
 	name = "\improper Halon floor"
-	initial_gas_mix = ATMOS_TANK_HALON
+	initial_gas = ATMOS_TANK_HALON
 
 /turf/open/floor/engine/healium
 	name = "\improper Healium floor"
-	initial_gas_mix = ATMOS_TANK_HEALIUM
+	initial_gas = ATMOS_TANK_HEALIUM
 */
 /turf/open/floor/engine/h2
 	article = "an"
 	name = "\improper H2 floor"
-	initial_gas_mix = ATMOSTANK_HYDROGEN
+	initial_gas = ATMOSTANK_HYDROGEN
 
 /*
 /turf/open/floor/engine/hypernoblium
 	name = "\improper Hypernoblium floor"
-	initial_gas_mix = ATMOS_TANK_HYPERNOBLIUM
+	initial_gas = ATMOS_TANK_HYPERNOBLIUM
 
 /turf/open/floor/engine/miasma
 	name = "\improper Miasma floor"
-	initial_gas_mix = ATMOS_TANK_MIASMA
+	initial_gas = ATMOS_TANK_MIASMA
 
 /turf/open/floor/engine/nitrium
 	name = "\improper nitrium floor"
-	initial_gas_mix = ATMOS_TANK_NITRIUM
+	initial_gas = ATMOS_TANK_NITRIUM
 
 /turf/open/floor/engine/pluoxium
 	name = "\improper Pluoxium floor"
-	initial_gas_mix = ATMOS_TANK_PLUOXIUM
+	initial_gas = ATMOS_TANK_PLUOXIUM
 
 /turf/open/floor/engine/proto_nitrate
 	name = "\improper Proto-Nitrate floor"
-	initial_gas_mix = ATMOS_TANK_PROTO_NITRATE
+	initial_gas = ATMOS_TANK_PROTO_NITRATE
 
 /turf/open/floor/engine/tritium
 	name = "\improper Tritium floor"
-	initial_gas_mix = ATMOS_TANK_TRITIUM
+	initial_gas = ATMOS_TANK_TRITIUM
 
 /turf/open/floor/engine/h2o
 	article = "an"
 	name = "\improper H2O floor"
-	initial_gas_mix = ATMOS_TANK_H2O
+	initial_gas = ATMOS_TANK_H2O
 
 /turf/open/floor/engine/zauker
 	name = "\improper Zauker floor"
-	initial_gas_mix = ATMOS_TANK_ZAUKER
+	initial_gas = ATMOS_TANK_ZAUKER
 
 /turf/open/floor/engine/helium
 	name = "\improper Helium floor"
-	initial_gas_mix = ATMOS_TANK_HELIUM
+	initial_gas = ATMOS_TANK_HELIUM
 
 /turf/open/floor/engine/antinoblium
 	name = "\improper Antinoblium floor"
-	initial_gas_mix = ATMOS_TANK_ANTINOBLIUM
+	initial_gas = ATMOS_TANK_ANTINOBLIUM
 */
 /turf/open/floor/engine/air
 	name = "air floor"
-	initial_gas_mix = ATMOSTANK_AIRMIX
+	initial_gas = ATMOSTANK_AIRMIX
 
 
 
@@ -217,12 +217,12 @@
 	QDEL_NULL(realappearance)
 
 /turf/open/floor/engine/cult/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/floor/engine/telecomms
-	initial_gas_mix = TCOMMS_ATMOS
+	initial_gas = TCOMMS_ATMOS
 	temperature = 80

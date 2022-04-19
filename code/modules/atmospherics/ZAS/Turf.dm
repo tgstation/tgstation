@@ -5,10 +5,9 @@
 /turf
 	var/needs_air_update = 0
 	var/datum/gas_mixture/air
-	var/list/initial_gas
 	var/heat_capacity = 1
 	var/thermal_conductivity = 0.05
-	var/list/initial_gas_mix
+	var/list/initial_gas
 	var/planetary_atmos //Let's just let this exist for now.
 
 ///turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null) ZASTURF

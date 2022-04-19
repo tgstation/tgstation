@@ -1,14 +1,14 @@
 
 /turf/open/floor/plating/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/floor/plating/lowpressure
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	initial_gas = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/floor/plating/lowpressure
 
 /turf/open/floor/plating/icemoon
 	icon_state = "plating"
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	initial_gas = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/plating/abductor
 	name = "alien floor"
@@ -54,10 +54,10 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/snowed/cavern
-	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
+	initial_gas = "n2=82;plasma=24;TEMP=120"
 
 /turf/open/floor/plating/snowed/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	initial_gas = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/plating/snowed/smoothed
 	icon = 'icons/turf/floors/snow_turf.dmi'
@@ -76,12 +76,12 @@
 	temperature = 180
 
 /turf/open/floor/plating/snowed/smoothed/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	initial_gas = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/plating/lavaland_atmos
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	initial_gas = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/plating/elevatorshaft
 	name = "elevator shaft"

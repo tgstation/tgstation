@@ -66,6 +66,10 @@ SUBSYSTEM_DEF(zas)
 	priority = FIRE_PRIORITY_AIR
 	init_order = INIT_ORDER_AIR
 	flags = SS_POST_FIRE_TIMING
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	wait = 0.5 SECONDS
+
+	var/cached_cost = 0
 
 	//The variable setting controller
 	var/datum/zas_controller/settings
@@ -101,17 +105,8 @@ SUBSYSTEM_DEF(zas)
 	var/tmp/list/processing_zones
 
 	//Currently processing
-	var/list/curr_tiles
-	var/list/curr_defer
-	var/list/curr_edges
-	var/list/curr_fire
-	var/list/curr_hotspot
-	var/list/curr_zones
-	var/list/curr_machines
-	var/list/curr_atoms
-
-
-	var/current_process = SSZAS_TILES
+	var/list/currentrun = list()
+	var/current_process = SSZAS_PIPENETS
 	var/active_zones = 0
 	var/next_id = 1
 
@@ -189,64 +184,270 @@ SUBSYSTEM_DEF(zas)
 	..(timeofday)
 
 /datum/controller/subsystem/zas/fire(resumed = FALSE)
+	var/timer = TICK_USAGE_REAL
 	if (!resumed)
 		processing_edges = active_edges.Copy()
 		processing_fires = active_fire_zones.Copy()
 		processing_hotspots = active_hotspots.Copy()
 
+		// Every time we fire, we want to make sure pipenets are rebuilt. The game state could have changed between each fire() proc call
+	// and anything missing a pipenet can lead to unintended behaviour at worse and various runtimes at best.
+	if(length(rebuild_queue) || length(expansion_queue))
+		timer = TICK_USAGE_REAL
+		process_rebuilds()
+		//This does mean that the apperent rebuild costs fluctuate very quickly, this is just the cost of having them always process, no matter what
+		if(state != SS_RUNNING)
+			return
 
-	curr_machines = atmos_machinery
+	if(current_process == SSZAS_PIPENETS || !resumed)
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_pipenets(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		//cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+		current_process = SSZAS_MACHINES
+
 	if(current_process == SSZAS_MACHINES)
-		while (curr_machines.len)
-			var/obj/machinery/atmospherics/current_machine = curr_machines[curr_machines.len]
-			curr_machines.len--
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_atmos_machinery(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+		current_process = SSZAS_TILES
 
-			if(!current_machine)
-				atmos_machinery -= current_machine
-			if(current_machine.process_atmos() == PROCESS_KILL)
-				stop_processing_machine(current_machine)
+	if(current_process == SSZAS_TILES)
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_tiles(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+		current_process = SSZAS_DEFERED_TILES
 
-			if(MC_TICK_CHECK)
-				return
-
-	current_process = SSZAS_TILES
-	curr_tiles = tiles_to_update
-	if(current_process == SSZAS_TILES || !resumed)
-		while (curr_tiles.len)
-			var/turf/T = curr_tiles[curr_tiles.len]
-			curr_tiles.len--
-
-			if (!T)
-				if (MC_TICK_CHECK)
-					return
-				continue
-
-			//check if the turf is self-zone-blocked
-			var/c_airblock
-			ATMOS_CANPASS_TURF(c_airblock, T, T)
-			if(c_airblock & ZONE_BLOCKED)
-				deferred += T
-				if (MC_TICK_CHECK)
-					return
-				continue
-
-			T.update_air_properties()
-			T.post_update_air_properties()
-			T.needs_air_update = 0
-			#ifdef ZASDBG
-			T.overlays -= mark
-			//updated++
-			#endif
-
-			if (MC_TICK_CHECK)
-				return
-
-	current_process = SSZAS_DEFERED_TILES
-	curr_defer = deferred
 	if(current_process == SSZAS_DEFERED_TILES)
-		while (curr_defer.len)
-			var/turf/T = curr_defer[curr_defer.len]
-			curr_defer.len--
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_deferred_tiles(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+		current_process = SSZAS_EDGES
+
+	if(current_process == SSZAS_EDGES)
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_edges(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+		current_process = SSZAS_FIRES
+
+	if(current_process == SSZAS_FIRES)
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_fires(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+		current_process = SSZAS_HOTSPOTS
+
+	if(current_process == SSZAS_HOTSPOTS)
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_hotspots(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+		current_process = SSZAS_ZONES
+
+	if(current_process == SSZAS_ZONES)
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_zones(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+		current_process = SSZAS_ATOMS
+
+	if(current_process == SSZAS_ATOMS)
+		timer = TICK_USAGE_REAL
+		if(!resumed)
+			cached_cost = 0
+		process_atoms(resumed)
+		cached_cost += TICK_USAGE_REAL - timer
+		if(state != SS_RUNNING)
+			return
+		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
+		resumed = FALSE
+
+
+	current_process = SSZAS_PIPENETS
+
+/datum/controller/subsystem/zas/proc/process_rebuilds()
+	//Yes this does mean rebuilding pipenets can freeze up the subsystem forever, but if we're in that situation something else is very wrong
+	var/list/currentrun = rebuild_queue
+	while(currentrun.len || length(expansion_queue))
+		while(currentrun.len && !length(expansion_queue)) //If we found anything, process that first
+			var/obj/machinery/atmospherics/remake = currentrun[currentrun.len]
+			currentrun.len--
+			if (!remake)
+				continue
+			remake.rebuild_pipes()
+			if (MC_TICK_CHECK)
+				return
+
+		var/list/queue = expansion_queue
+		while(queue.len)
+			var/list/pack = queue[queue.len]
+			//We operate directly with the pipeline like this because we can trust any rebuilds to remake it properly
+			var/datum/pipeline/linepipe = pack[SSAIR_REBUILD_PIPELINE]
+			var/list/border = pack[SSAIR_REBUILD_QUEUE]
+			expand_pipeline(linepipe, border)
+			if(state != SS_RUNNING) //expand_pipeline can fail a tick check, we shouldn't let things get too fucky here
+				return
+
+			linepipe.building = FALSE
+			queue.len--
+			if (MC_TICK_CHECK)
+				return
+
+///Rebuilds a pipeline by expanding outwards, while yielding when sane
+/datum/controller/subsystem/zas/proc/expand_pipeline(datum/pipeline/net, list/border)
+	while(border.len)
+		var/obj/machinery/atmospherics/borderline = border[border.len]
+		border.len--
+
+		var/list/result = borderline.pipeline_expansion(net)
+		if(!length(result))
+			continue
+		for(var/obj/machinery/atmospherics/considered_device in result)
+			if(!istype(considered_device, /obj/machinery/atmospherics/pipe))
+				considered_device.set_pipenet(net, borderline)
+				net.add_machinery_member(considered_device)
+				continue
+			var/obj/machinery/atmospherics/pipe/item = considered_device
+			if(net.members.Find(item))
+				continue
+			if(item.parent)
+				var/static/pipenetwarnings = 10
+				if(pipenetwarnings > 0)
+					log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
+					pipenetwarnings--
+				if(pipenetwarnings == 0)
+					log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
+
+			net.members += item
+			border += item
+
+			net.air.volume += item.volume
+			item.parent = net
+
+			if(item.air_temporary)
+				net.air.merge(item.air_temporary)
+				item.air_temporary = null
+
+		if (MC_TICK_CHECK)
+			return
+
+/datum/controller/subsystem/zas/proc/process_pipenets(resumed = FALSE)
+	if (!resumed)
+		src.currentrun = networks.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/datum/thing = currentrun[currentrun.len]
+		currentrun.len--
+		if(thing)
+			thing.process()
+		else
+			networks.Remove(thing)
+		if(MC_TICK_CHECK)
+			return
+
+/datum/controller/subsystem/zas/proc/process_atmos_machinery(resumed = FALSE)
+	if (!resumed)
+		src.currentrun = atmos_machinery.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/obj/machinery/M = currentrun[currentrun.len]
+		currentrun.len--
+		if(!M)
+			atmos_machinery -= M
+		if(M.process_atmos() == PROCESS_KILL)
+			stop_processing_machine(M)
+		if(MC_TICK_CHECK)
+			return
+
+/datum/controller/subsystem/zas/proc/process_tiles(resumed = FALSE)
+	if(!resumed)
+		src.currentrun = tiles_to_update.Copy()
+
+	var/list/currentrun = src.currentrun
+	while (currentrun.len)
+		var/turf/T = currentrun[currentrun.len]
+		currentrun.len--
+
+		if (!T)
+			if (MC_TICK_CHECK)
+				return
+			continue
+
+		//check if the turf is self-zone-blocked
+		var/c_airblock
+		ATMOS_CANPASS_TURF(c_airblock, T, T)
+		if(c_airblock & ZONE_BLOCKED)
+			deferred += T
+			if (MC_TICK_CHECK)
+				return
+			continue
+
+		T.update_air_properties()
+		T.post_update_air_properties()
+		T.needs_air_update = 0
+		#ifdef ZASDBG
+		T.overlays -= mark
+		//updated++
+		#endif
+
+		if (MC_TICK_CHECK)
+			return
+
+/datum/controller/subsystem/zas/proc/process_deferred_tiles(resumed)
+	if(!resumed)
+		src.currentrun = deferred.Copy()
+	var/list/currentrun = src.currentrun
+
+	if(current_process == SSZAS_DEFERED_TILES)
+		while (currentrun.len)
+			var/turf/T = currentrun[currentrun.len]
+			currentrun.len--
 
 			T.update_air_properties()
 			T.post_update_air_properties()
@@ -259,12 +460,15 @@ SUBSYSTEM_DEF(zas)
 			if (MC_TICK_CHECK)
 				return
 
-	current_process = SSZAS_EDGES
-	curr_edges = processing_edges
+/datum/controller/subsystem/zas/proc/process_edges(resumed)
+	if(!resumed)
+		src.currentrun = active_edges.Copy()
+	var/list/currentrun = src.currentrun
+
 	if(current_process == SSZAS_EDGES)
-		while (curr_edges.len)
-			var/connection_edge/edge = curr_edges[curr_edges.len]
-			curr_edges.len--
+		while (currentrun.len)
+			var/connection_edge/edge = currentrun[currentrun.len]
+			currentrun.len--
 
 			if (!edge)
 				if (MC_TICK_CHECK)
@@ -275,36 +479,45 @@ SUBSYSTEM_DEF(zas)
 			if (MC_TICK_CHECK)
 				return
 
-	current_process = SSZAS_FIRES
-	curr_fire = processing_fires
+/datum/controller/subsystem/zas/proc/process_fires(resumed)
+	if(!resumed)
+		src.currentrun = active_fire_zones.Copy()
+	var/list/currentrun = src.currentrun
+
 	if(current_process == SSZAS_FIRES)
-		while (curr_fire.len)
-			var/zone/Z = curr_fire[curr_fire.len]
-			curr_fire.len--
+		while (currentrun.len)
+			var/zone/Z = currentrun[currentrun.len]
+			currentrun.len--
 
 			Z.process_fire()
 
 			if (MC_TICK_CHECK)
 				return
 
-	current_process = SSZAS_HOTSPOTS
-	curr_hotspot = processing_hotspots
+/datum/controller/subsystem/zas/proc/process_hotspots(resumed)
+	if(!resumed)
+		src.currentrun = active_hotspots.Copy()
+	var/list/currentrun = src.currentrun
+
 	if(current_process == SSZAS_HOTSPOTS)
-		while (curr_hotspot.len)
-			var/obj/effect/hotspot/F = curr_hotspot[curr_hotspot.len]
-			curr_hotspot.len--
+		while (currentrun.len)
+			var/obj/effect/hotspot/F = currentrun[currentrun.len]
+			currentrun.len--
 
 			F.process()
 
 			if (MC_TICK_CHECK)
 				return
 
-	current_process = SSZAS_ZONES
-	curr_zones = processing_zones
+/datum/controller/subsystem/zas/proc/process_zones(resumed)
+	if(!resumed)
+		src.currentrun = zones_to_update.Copy()
+	var/list/currentrun = src.currentrun
+
 	if(current_process == SSZAS_ZONES)
-		while (curr_zones.len)
-			var/zone/Z = curr_zones[curr_zones.len]
-			curr_zones.len--
+		while (currentrun.len)
+			var/zone/Z = currentrun[currentrun.len]
+			currentrun.len--
 
 			Z.tick()
 			Z.needs_update = FALSE
@@ -312,19 +525,21 @@ SUBSYSTEM_DEF(zas)
 			if (MC_TICK_CHECK)
 				return
 
-	current_process = SSZAS_ATOMS
-	curr_atoms = atom_process
+/datum/controller/subsystem/zas/proc/process_atoms(resumed)
+	if(!resumed)
+		src.currentrun = atom_process.Copy()
+
+	var/list/currentrun = src.currentrun
+
 	if(current_process == SSZAS_ATOMS)
-		while(curr_atoms.len)
-		var/atom/talk_to = curr_atoms[curr_atoms.len]
-		curr_atoms.len--
+		while(currentrun.len)
+		var/atom/talk_to = currentrun[currentrun.len]
+		currentrun.len--
 		if(!talk_to)
 			return
 		talk_to.process_exposure()
 		if(MC_TICK_CHECK)
 			return
-
-	current_process = SSZAS_MACHINES
 
 /**
  * Adds a given machine to the processing system for SSAIR_ATMOSMACHINERY processing.
@@ -357,7 +572,7 @@ SUBSYSTEM_DEF(zas)
 	// the currentrun list, which is a cache of atmos_machinery. Remove it from that list
 	// as well to prevent processing qdeleted objects in the cache.
 	if(current_process == SSZAS_MACHINES)
-		curr_machines -= machine
+		currentrun -= machine
 
 /datum/controller/subsystem/zas/proc/add_to_rebuild_queue(obj/machinery/atmospherics/atmos_machine)
 	if(istype(atmos_machine, /obj/machinery/atmospherics) && !atmos_machine.rebuilding)

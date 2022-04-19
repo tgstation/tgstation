@@ -19,7 +19,7 @@
 /obj/structure/table/reinforced/rglass,
 /obj/item/radio/intercom,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "cO" = (
@@ -40,7 +40,7 @@
 	},
 /obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "gz" = (
@@ -57,7 +57,7 @@
 /area/icemoon/underground/unexplored/rivers)
 "kr" = (
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "oj" = (
@@ -65,18 +65,18 @@
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
 /turf/open/floor/iron/grimy{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "oD" = (
 /mob/living/simple_animal/hostile/asteroid/wolf,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "oT" = (
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "qS" = (
@@ -89,13 +89,13 @@
 	pixel_y = 7
 	},
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "rm" = (
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "rn" = (
@@ -110,7 +110,7 @@
 "st" = (
 /obj/machinery/door/airlock/public,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "sM" = (
@@ -132,13 +132,13 @@
 "uz" = (
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "vh" = (
 /obj/item/chair/plastic,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "wg" = (
@@ -152,7 +152,7 @@
 	pixel_y = 20
 	},
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "wP" = (
@@ -166,7 +166,7 @@
 /obj/structure/closet/wardrobe/grey,
 /obj/item/clothing/gloves/color/plasmaman,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "yW" = (
@@ -185,7 +185,7 @@
 /obj/item/clothing/head/helmet/space/plasmaman,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "zk" = (
@@ -220,7 +220,7 @@
 /obj/item/toy/crayon/spraycan,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Cu" = (
@@ -265,7 +265,7 @@
 /obj/structure/dresser,
 /obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/iron/grimy{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "GH" = (
@@ -286,7 +286,7 @@
 /obj/structure/closet/wardrobe/grey,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Jh" = (
@@ -330,13 +330,13 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/door/airlock/shuttle,
 /turf/open/floor/iron/grimy{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "NO" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/grimy{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Oi" = (
@@ -379,7 +379,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "SR" = (
@@ -412,14 +412,14 @@
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Ws" = (
 /obj/structure/closet/wardrobe/grey,
 /obj/item/clothing/under/plasmaman,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Zd" = (

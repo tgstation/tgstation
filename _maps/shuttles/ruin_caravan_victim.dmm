@@ -79,7 +79,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "ct" = (
@@ -98,7 +98,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "cX" = (
@@ -108,7 +108,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "ec" = (
@@ -170,7 +170,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "gw" = (
@@ -182,7 +182,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "gH" = (
@@ -207,7 +207,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/showroomfloor{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "kv" = (
@@ -282,7 +282,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "mZ" = (
@@ -300,7 +300,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "od" = (
@@ -355,7 +355,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "qp" = (
@@ -366,7 +366,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "qM" = (
@@ -504,7 +504,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "zd" = (
@@ -596,7 +596,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "DQ" = (
@@ -625,7 +625,7 @@
 	},
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "EQ" = (
@@ -640,7 +640,7 @@
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "EW" = (
@@ -657,7 +657,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "Fv" = (
@@ -727,7 +727,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "Ko" = (
@@ -739,7 +739,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "KC" = (
@@ -817,7 +817,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "Ov" = (
@@ -839,7 +839,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter1)
 "OK" = (

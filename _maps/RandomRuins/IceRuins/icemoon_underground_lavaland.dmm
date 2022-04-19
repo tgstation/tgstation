@@ -12,7 +12,7 @@
 	},
 /obj/item/pen,
 /turf/open/misc/asteroid{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/icemoon/underground)
 "q" = (
@@ -34,7 +34,7 @@
 "A" = (
 /obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/misc/asteroid{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/icemoon/underground)
 "E" = (
@@ -56,12 +56,12 @@
 "V" = (
 /obj/item/storage/toolbox/mechanical/old/clean,
 /turf/open/misc/asteroid{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/icemoon/underground)
 "Z" = (
 /turf/open/misc/asteroid{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/icemoon/underground)
 

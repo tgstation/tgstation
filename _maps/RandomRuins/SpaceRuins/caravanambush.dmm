@@ -112,7 +112,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "aD" = (
@@ -132,7 +132,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "aI" = (
@@ -148,14 +148,14 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "aM" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "aN" = (
@@ -193,7 +193,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "aR" = (
@@ -486,7 +486,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "gY" = (
@@ -513,7 +513,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "hm" = (
@@ -610,7 +610,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "hB" = (
@@ -813,7 +813,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter2)
 "ix" = (
@@ -883,7 +883,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter3)
 "iT" = (
@@ -923,7 +923,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/shuttle/caravan/freighter2)
 "ja" = (

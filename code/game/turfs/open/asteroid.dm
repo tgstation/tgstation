@@ -119,7 +119,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	baseturfs = /turf/open/lava/smooth
 
 /turf/open/misc/asteroid/basalt/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/misc/asteroid/basalt/Initialize(mapload)
 	. = ..()
@@ -135,17 +135,17 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 ///////Surface. The surface is warm, but survivable without a suit. Internals are required. The floors break to chasms, which drop you into the underground.
 
 /turf/open/misc/asteroid/basalt/lava_land_surface
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	initial_gas = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 /turf/open/misc/asteroid/lowpressure
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	initial_gas = OPENTURF_LOW_PRESSURE
 	baseturfs = /turf/open/misc/asteroid/lowpressure
 	turf_type = /turf/open/misc/asteroid/lowpressure
 
 /turf/open/misc/asteroid/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 	baseturfs = /turf/open/misc/asteroid/airless
 	turf_type = /turf/open/misc/asteroid/airless
 
@@ -178,11 +178,11 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/snow/icemoon
 	baseturfs = /turf/open/openspace/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	initial_gas = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
 
 /turf/open/lava/plasma/ice_moon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	initial_gas = ICEMOON_DEFAULT_ATMOS
 	baseturfs = /turf/open/lava/plasma/ice_moon
 	planetary_atmos = TRUE
 
@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	name = "icy snow"
 	desc = "Looks colder."
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
+	initial_gas = "n2=82;plasma=24;TEMP=120"
 	floor_variance = 0
 	icon_state = "snow-ice"
 	base_icon_state = "snow-ice"
@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/misc/asteroid/snow/ice/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	initial_gas = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	slowdown = 0
 
@@ -212,10 +212,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	return FALSE
 
 /turf/open/misc/asteroid/snow/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/misc/asteroid/snow/temperatre
-	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"
+	initial_gas = "o2=22;n2=82;TEMP=255.37"
 
 //Used in SnowCabin.dm
 /turf/open/misc/asteroid/snow/snow_cabin
@@ -226,5 +226,5 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	planetary_atmos = FALSE
 
 /turf/open/misc/asteroid/snow/standard_air
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	initial_gas = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = FALSE

@@ -25,7 +25,7 @@
 "dX" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -63,7 +63,7 @@
 "lz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -106,7 +106,7 @@
 	dir = 10
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -141,7 +141,7 @@
 	},
 /obj/effect/decal/cleanable/oil,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -153,7 +153,7 @@
 "qu" = (
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -165,7 +165,7 @@
 	dir = 5
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -178,7 +178,7 @@
 "sb" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -188,7 +188,7 @@
 	dir = 9
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -220,7 +220,7 @@
 	dir = 4
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -262,7 +262,7 @@
 /obj/structure/stone_tile/slab,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -294,7 +294,7 @@
 /area/heretic_sacrifice/rust)
 "Bw" = (
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -351,7 +351,7 @@
 	dir = 1
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -378,7 +378,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -388,7 +388,7 @@
 	dir = 5
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -402,7 +402,7 @@
 	dir = 1
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -440,7 +440,7 @@
 "KP" = (
 /obj/structure/stone_tile/surrounding_tile,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -476,7 +476,7 @@
 "NA" = (
 /obj/structure/stone_tile/burnt,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -486,7 +486,7 @@
 	dir = 1
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -503,7 +503,7 @@
 	dir = 10
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},
@@ -513,7 +513,7 @@
 	dir = 6
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
 	slowdown = 0
 	},

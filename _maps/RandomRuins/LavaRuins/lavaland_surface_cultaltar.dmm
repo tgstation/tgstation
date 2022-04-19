@@ -4,7 +4,7 @@
 /area/template_noop)
 "b" = (
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered/cultaltar)
 "c" = (
@@ -24,21 +24,21 @@
 "g" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered/cultaltar)
 "i" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered/cultaltar)
 "k" = (
 /obj/effect/decal/remains/human,
 /obj/item/melee/cultblade,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered/cultaltar)
 "l" = (
@@ -46,13 +46,13 @@
 /obj/item/clothing/shoes/cult,
 /obj/item/clothing/suit/hooded/cultrobes,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered/cultaltar)
 "m" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered/cultaltar)
 "o" = (
@@ -74,7 +74,7 @@
 	name = "ohfuck"
 	},
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered/cultaltar)
 "q" = (
@@ -83,7 +83,7 @@
 /obj/item/clothing/suit/hooded/cultrobes,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/ruin/unpowered/cultaltar)
 "s" = (

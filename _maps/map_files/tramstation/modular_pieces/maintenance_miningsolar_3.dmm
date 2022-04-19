@@ -35,7 +35,7 @@
 "z" = (
 /obj/structure/mecha_wreckage/ripley,
 /turf/open/floor/iron/recharge_floor/asteroid{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/mine/explored)
 "B" = (

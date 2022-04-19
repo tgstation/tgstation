@@ -307,7 +307,7 @@
 /obj/item/storage/toolbox/electrical,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/commons)
 "dY" = (
@@ -450,7 +450,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "gD" = (
@@ -501,7 +501,7 @@
 /obj/item/pickaxe,
 /obj/item/clothing/head/hardhat/weldhat/orange,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "hd" = (
@@ -509,7 +509,7 @@
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "hr" = (
@@ -651,7 +651,7 @@
 	},
 /obj/structure/plasticflaps,
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "ja" = (
@@ -679,7 +679,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "jN" = (
@@ -719,7 +719,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "ku" = (
@@ -801,7 +801,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/caution,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "lG" = (
@@ -851,7 +851,7 @@
 /obj/item/flashlight/lantern,
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "ms" = (
@@ -876,7 +876,7 @@
 "mA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "mG" = (
@@ -969,7 +969,7 @@
 	name = "Interior Access"
 	},
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/commons)
 "oc" = (
@@ -1005,7 +1005,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "oE" = (
@@ -1141,7 +1141,7 @@
 /obj/machinery/atmospherics/components/tank/plasma,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "qP" = (
@@ -1226,7 +1226,7 @@
 	},
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "sq" = (
@@ -1376,7 +1376,7 @@
 	},
 /mob/living/simple_animal/hostile/asteroid/wolf,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "uq" = (
@@ -1414,7 +1414,7 @@
 /obj/item/tank/internals/emergency_oxygen/empty,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/commons)
 "ve" = (
@@ -1447,7 +1447,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/commons)
 "wc" = (
@@ -1469,7 +1469,7 @@
 /obj/machinery/atmospherics/components/tank/air,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "wu" = (
@@ -1615,7 +1615,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/smooth_large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "Ae" = (
@@ -1698,7 +1698,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "BJ" = (
@@ -1781,14 +1781,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "CJ" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "CU" = (
@@ -2034,7 +2034,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "Id" = (
@@ -2101,7 +2101,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/commons)
 "Jp" = (
@@ -2138,7 +2138,7 @@
 /mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "Jy" = (
@@ -2360,7 +2360,7 @@
 /obj/machinery/power/smes/engineering,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "MU" = (
@@ -2442,7 +2442,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/smooth_large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "Ny" = (
@@ -2516,7 +2516,7 @@
 "OF" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/commons)
 "OJ" = (
@@ -2526,7 +2526,7 @@
 	},
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "OM" = (
@@ -2564,7 +2564,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "Px" = (
@@ -2648,7 +2648,7 @@
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/commons)
 "Qn" = (
@@ -2696,7 +2696,7 @@
 /obj/structure/rack,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "Rf" = (
@@ -2970,7 +2970,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_half{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "Xj" = (
@@ -2984,7 +2984,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/operations)
 "XC" = (
@@ -2992,7 +2992,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/iron/smooth{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/plasma_facility/commons)
 "XI" = (

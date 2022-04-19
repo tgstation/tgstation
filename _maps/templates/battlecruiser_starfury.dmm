@@ -34,7 +34,7 @@
 	},
 /obj/machinery/computer/med_data/syndie,
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "n2=100;TEMP=80";
+	initial_gas = "n2=100;TEMP=80";
 	temperature = 80
 	},
 /area/shuttle/sbc_starfury)
@@ -158,7 +158,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "n2=100;TEMP=80";
+	initial_gas = "n2=100;TEMP=80";
 	temperature = 80
 	},
 /area/shuttle/sbc_starfury)
@@ -2054,7 +2054,7 @@
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark{
-	initial_gas_mix = "n2=100;TEMP=80";
+	initial_gas = "n2=100;TEMP=80";
 	temperature = 80
 	},
 /area/shuttle/sbc_starfury)

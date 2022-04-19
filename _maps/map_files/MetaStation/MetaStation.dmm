@@ -17646,7 +17646,7 @@
 "ffP" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating/foam{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/space/nearstation)
 "ffR" = (
@@ -30909,7 +30909,7 @@
 "kiE" = (
 /obj/item/book/manual/nuclear,
 /turf/open/floor/plating/foam{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/space/nearstation)
 "kiM" = (
@@ -51443,7 +51443,7 @@
 /area/security/checkpoint/supply)
 "rLv" = (
 /turf/open/floor/plating/foam{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/space/nearstation)
 "rLz" = (

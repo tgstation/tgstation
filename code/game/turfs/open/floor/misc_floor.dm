@@ -34,10 +34,10 @@
 	on = FALSE
 
 /turf/open/floor/circuit/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/telecomms
-	initial_gas_mix = TCOMMS_ATMOS
+	initial_gas = TCOMMS_ATMOS
 	temperature = 80
 
 /turf/open/floor/circuit/telecomms/mainframe
@@ -62,10 +62,10 @@
 	floor_tile = /obj/item/stack/tile/circuit/green/anim
 
 /turf/open/floor/circuit/green/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/green/telecomms
-	initial_gas_mix = TCOMMS_ATMOS
+	initial_gas = TCOMMS_ATMOS
 	temperature = 80
 
 /turf/open/floor/circuit/green/telecomms/mainframe
@@ -87,10 +87,10 @@
 	floor_tile = /obj/item/stack/tile/circuit/red/anim
 
 /turf/open/floor/circuit/red/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/red/telecomms
-	initial_gas_mix = TCOMMS_ATMOS
+	initial_gas = TCOMMS_ATMOS
 	temperature = 80
 
 /turf/open/floor/pod
@@ -157,11 +157,11 @@
 
 /turf/open/floor/bronze/filled/lavaland
 	planetary_atmos = TRUE
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	initial_gas = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/bronze/filled/icemoon
 	planetary_atmos = TRUE
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	initial_gas = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/white
 	name = "white floor"
@@ -216,7 +216,7 @@
 	AddElement(/datum/element/rust)
 
 /turf/open/floor/plating/plasma
-	initial_gas_mix = ATMOSTANK_PLASMA
+	initial_gas = ATMOSTANK_PLASMA
 
 /turf/open/floor/plating/plasma/rust/Initialize(mapload)
 	. = ..()
@@ -266,4 +266,4 @@
 	return
 
 /turf/open/floor/cult/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS

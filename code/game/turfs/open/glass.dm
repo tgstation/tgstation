@@ -42,7 +42,7 @@
 	icon_state = "reinf_glass-0"
 	base_icon_state = "reinf_glass"
 	floor_tile = /obj/item/stack/tile/rglass
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 
 /turf/open/floor/glass/reinforced/setup_broken_states()
 	return list("reinf_glass-damaged1", "reinf_glass-damaged2", "reinf_glass-damaged3")

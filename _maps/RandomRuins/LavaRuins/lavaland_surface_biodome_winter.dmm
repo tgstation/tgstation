@@ -204,7 +204,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180";
+	initial_gas = "o2=22;n2=82;TEMP=180";
 	name = "bridge"
 	},
 /area/ruin/powered/snow_biodome)
@@ -276,7 +276,7 @@
 /obj/machinery/light/built/directional/north,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/pod/dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
+	initial_gas = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/snow_biodome)
 "og" = (
@@ -423,7 +423,7 @@
 "PM" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood{
-	initial_gas_mix = "o2=22;n2=82;TEMP=180";
+	initial_gas = "o2=22;n2=82;TEMP=180";
 	name = "bridge"
 	},
 /area/ruin/powered/snow_biodome)

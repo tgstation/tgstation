@@ -6,7 +6,7 @@
 "cP" = (
 /mob/living/simple_animal/hostile/asteroid/polarbear,
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "dy" = (
@@ -27,7 +27,7 @@
 	},
 /obj/item/plate,
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "ht" = (
@@ -38,7 +38,7 @@
 /obj/structure/barricade/wooden/crude/snow,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7";
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "kj" = (
@@ -58,7 +58,7 @@
 /area/icemoon/underground/explored)
 "ng" = (
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "nq" = (
@@ -78,7 +78,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "qd" = (
@@ -103,14 +103,14 @@
 	pixel_y = 11
 	},
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "uA" = (
 /obj/structure/barricade/wooden/snowed,
 /turf/open/floor/wood{
 	icon_state = "wood-broken6";
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "uG" = (
@@ -128,7 +128,7 @@
 /obj/item/ammo_casing/shotgun/buckshot,
 /obj/item/ammo_casing/shotgun/buckshot,
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "vk" = (
@@ -153,7 +153,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "wl" = (
@@ -163,7 +163,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/mineral_door/wood,
 /turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "wN" = (
@@ -174,7 +174,7 @@
 	dir = 4
 	},
 /turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "yO" = (
@@ -190,13 +190,13 @@
 "zT" = (
 /obj/structure/bed/dogbed,
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Cv" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Ea" = (
@@ -212,7 +212,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "El" = (
@@ -221,7 +221,7 @@
 	},
 /obj/item/flashlight/lantern,
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Ez" = (
@@ -249,14 +249,14 @@
 	dir = 8
 	},
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Hy" = (
 /obj/structure/barricade/wooden/crude/snow,
 /turf/open/floor/wood{
 	icon_state = "wood-broken";
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "HF" = (
@@ -268,7 +268,7 @@
 	pixel_y = -8
 	},
 /turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Iz" = (
@@ -280,7 +280,7 @@
 	pixel_y = -7
 	},
 /turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Mf" = (
@@ -294,7 +294,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/patriot,
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "NP" = (
@@ -312,12 +312,12 @@
 /obj/item/seeds/coffee,
 /obj/item/seeds/coffee,
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "QI" = (
 /turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Rf" = (
@@ -336,7 +336,7 @@
 /obj/structure/mineral_door/wood,
 /obj/item/assembly/mousetrap/armed,
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Sv" = (
@@ -365,14 +365,14 @@
 /obj/structure/barricade/wooden/snowed,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3";
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Vf" = (
 /obj/structure/barricade/wooden/snowed,
 /turf/open/floor/wood{
 	icon_state = "wood-broken";
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "VV" = (
@@ -384,7 +384,7 @@
 	dir = 8
 	},
 /turf/open/floor/stone{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 "Zg" = (
@@ -394,7 +394,7 @@
 	},
 /obj/structure/mineral_door/wood,
 /turf/open/floor/wood/large{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	initial_gas = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
 

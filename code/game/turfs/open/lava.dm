@@ -44,7 +44,7 @@
 	return
 
 /turf/open/lava/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/lava/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(burn_stuff(arrived))
@@ -233,9 +233,9 @@
 	canSmoothWith = list(SMOOTH_GROUP_FLOOR_LAVA)
 
 /turf/open/lava/smooth/lava_land_surface
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	initial_gas = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 /turf/open/lava/smooth/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS

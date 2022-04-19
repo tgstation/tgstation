@@ -281,7 +281,7 @@
 "aU" = (
 /obj/structure/flora/tree/dead,
 /turf/open/misc/asteroid/basalt/wasteland{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/centcom/holding)
 "aV" = (
@@ -1956,7 +1956,7 @@
 	invisibility = 100
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
 	},
 /area/awaymission/errorroom)
@@ -2550,7 +2550,7 @@
 /area/syndicate_mothership/control)
 "hs" = (
 /turf/open/misc/asteroid/basalt/wasteland{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/centcom/holding)
 "ht" = (
@@ -2898,7 +2898,7 @@
 /area/syndicate_mothership/control)
 "ik" = (
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
 	},
 /area/awaymission/errorroom)
@@ -5395,7 +5395,7 @@
 	pixel_y = 4
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
 "pi" = (
@@ -5704,7 +5704,7 @@
 /area/tdome/administration)
 "qe" = (
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
 "qf" = (
@@ -8549,7 +8549,7 @@
 "zi" = (
 /obj/item/rupee,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
 	},
 /area/awaymission/errorroom)
@@ -8952,7 +8952,7 @@
 	pixel_y = -4
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
 "Ak" = (
@@ -11394,7 +11394,7 @@
 	dir = 8
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
 "Hj" = (
@@ -12290,7 +12290,7 @@
 /obj/item/flashlight/lantern,
 /turf/open/misc/ironsand{
 	color = "#525252";
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/centcom/holding)
 "JZ" = (
@@ -12568,7 +12568,7 @@
 	pixel_y = -3
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
 "KU" = (
@@ -13512,7 +13512,7 @@
 "NS" = (
 /turf/open/misc/ironsand{
 	color = "#525252";
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/centcom/holding)
 "NU" = (
@@ -13797,7 +13797,7 @@
 "OC" = (
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/basalt/wasteland{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/centcom/holding)
 "OD" = (
@@ -14092,7 +14092,7 @@
 	pixel_y = -4
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
 "Pq" = (
@@ -14853,7 +14853,7 @@
 /area/centcom/evacuation)
 "Rt" = (
 /turf/open/water{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
 "Ru" = (
@@ -16092,7 +16092,7 @@
 	pixel_y = 4
 	},
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
 "UM" = (
@@ -16247,7 +16247,7 @@
 /obj/structure/flora/rock/pile,
 /turf/open/misc/ironsand{
 	color = "#525252";
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/centcom/holding)
 "Vg" = (
@@ -17948,7 +17948,7 @@
 "ZE" = (
 /obj/effect/landmark/error,
 /turf/open/misc/ashplanet/wateryrock{
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
 	},
 /area/awaymission/errorroom)

@@ -2240,7 +2240,7 @@
 "lw" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	initial_gas = "o2=20000;n2=80000;TEMP=293.15"
 	},
 /area/ruin/space/derelict/atmospherics)
 "lx" = (
@@ -2309,7 +2309,7 @@
 	chamber_id = "ks13"
 	},
 /turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	initial_gas = "o2=20000;n2=80000;TEMP=293.15"
 	},
 /area/ruin/space/derelict/atmospherics)
 "lO" = (
@@ -2317,7 +2317,7 @@
 	chamber_id = "ks13"
 	},
 /turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	initial_gas = "o2=20000;n2=80000;TEMP=293.15"
 	},
 /area/ruin/space/derelict/atmospherics)
 "lP" = (
@@ -2429,7 +2429,7 @@
 "mq" = (
 /turf/open/floor/iron{
 	icon_state = "damaged2";
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas = "TEMP=2.7"
 	},
 /area/ruin/space/derelict/atmospherics)
 "mr" = (
@@ -2923,7 +2923,7 @@
 	chamber_id = "ks13"
 	},
 /turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	initial_gas = "o2=20000;n2=80000;TEMP=293.15"
 	},
 /area/ruin/space/derelict/atmospherics)
 "rc" = (

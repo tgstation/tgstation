@@ -24,7 +24,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	var/can_build_on = TRUE
 
 /turf/open/openspace/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	initial_gas = AIRLESS_ATMOS
 
 /turf/open/openspace/airless/planetary
 	planetary_atmos = TRUE
@@ -166,7 +166,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace/icemoon
 	name = "ice chasm"
 	baseturfs = /turf/open/openspace/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	initial_gas = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	var/replacement_turf = /turf/open/misc/asteroid/snow/icemoon
 	/// Replaces itself with replacement_turf if the turf below this one is in a no ruins allowed area (usually ruins themselves)

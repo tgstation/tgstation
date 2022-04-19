@@ -4,7 +4,7 @@
 	desc = "Rough volcanic floor that can be dug up for basalt."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	initial_gas = OPENTURF_LOW_PRESSURE
 
 /turf/open/misc/basalt/Initialize(mapload)
 	. = ..()

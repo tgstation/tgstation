@@ -23,7 +23,7 @@
 	 * approximation of MOLES_O2STANDARD and MOLES_N2STANDARD pending byond allowing constant expressions to be embedded in constant strings
 	 * If someone will place 0 of some gas there, SHIT WILL BREAK. Do not do that.
 	**/
-	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	var/initial_gas = OPENTURF_DEFAULT_ATMOS
 
 /turf/open
 	//used for spacewind
@@ -41,7 +41,7 @@
 
 	///If there is an active hotspot on us store a reference to it here
 	var/obj/effect/hotspot/active_hotspot
-	/// air will slowly revert to initial_gas_mix
+	/// air will slowly revert to initial_gas
 	var/planetary_atmos = FALSE
 	/// once our paired turfs are finished with all other shares, do one 100% share
 	/// exists so things like space can ask to take 100% of a tile's gas
@@ -59,10 +59,10 @@
 		air = new
 		air.copy_from_turf(src)
 		if(planetary_atmos)
-			if(!SSair.planetary[initial_gas_mix])
+			if(!SSair.planetary[initial_gas])
 				var/datum/gas_mixture/immutable/planetary/mix = new
-				mix.parse_string_immutable(initial_gas_mix)
-				SSair.planetary[initial_gas_mix] = mix
+				mix.parse_string_immutable(initial_gas)
+				SSair.planetary[initial_gas] = mix
 	. = ..()
 
 /turf/open/Destroy()
@@ -317,7 +317,7 @@
 	/******************* GROUP HANDLING FINISH *********************************************************************/
 
 	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
-		var/datum/gas_mixture/planetary_mix = SSair.planetary[initial_gas_mix]
+		var/datum/gas_mixture/planetary_mix = SSair.planetary[initial_gas]
 		// archive ourself again so we don't accidentally share more gas than we currently have
 		LINDA_CYCLE_ARCHIVE(src)
 		if(our_air.compare(planetary_mix))
@@ -484,7 +484,7 @@
 
 	for(var/turf/open/group_member as anything in turf_list)
 		if(group_member.planetary_atmos) //We do this as a hack to try and minimize unneeded excited group spread over planetary turfs
-			group_member.air.copy_from(SSair.planetary[group_member.initial_gas_mix]) //Comes with a cost of "slower" drains, but it's worth it
+			group_member.air.copy_from(SSair.planetary[group_member.initial_gas]) //Comes with a cost of "slower" drains, but it's worth it
 		else
 			group_member.air.copy_from(shared_mix) //Otherwise just set the mix to a copy of our equalized mix
 		group_member.update_visuals()

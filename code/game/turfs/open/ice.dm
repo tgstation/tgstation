@@ -34,7 +34,7 @@
 
 /turf/open/misc/ice/icemoon
 	baseturfs = /turf/open/openspace/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	initial_gas = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
 
 /turf/open/misc/ice/icemoon/no_planet_atmos

@@ -481,6 +481,7 @@
 	return temperature
 
 /datum/gas_mixture/proc/total_moles()
+	update_values()
 	return total_moles
 
 /datum/gas_mixture/proc/has_gas(gas_id, required_amount)
