@@ -109,7 +109,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			for(var/global_var in global.vars)
 				if (istype(global.vars[global_var], /datum/controller/subsystem))
 					existing_subsystems += global.vars[global_var]
-					
+
 			//Either init a new SS or if an existing one was found use that
 			for(var/I in subsystem_types)
 				var/ss_idx = existing_subsystems.Find(I)
@@ -436,6 +436,20 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		if (skip_ticks)
 			skip_ticks--
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
+
+// Force any verbs into overtime, to test how they perfrom under load
+// For local ONLY
+#ifdef VERB_STRESS_TEST
+		/// Target enough tick usage to only allow time for our maptick estimate and verb processing, and nothing else
+		var/overtime_target = TICK_LIMIT_RUNNING
+// This will leave just enough cpu time for maptick, forcing verbs to run into overtime
+// Use this for testing the worst case scenario, when maptick is spiking and usage is otherwise completely consumed
+#ifdef FORCE_VERB_OVERTIME
+		overtime_target += TICK_BYOND_RESERVE
+#endif
+		CONSUME_UNTIL(overtime_target)
+#endif
+
 		current_ticklimit = TICK_LIMIT_RUNNING
 		if (processing * sleep_delta <= world.tick_lag)
 			current_ticklimit -= (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc if we plan on running next tick

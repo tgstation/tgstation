@@ -1087,11 +1087,20 @@
 	if(client.mouse_override_icon)
 		client.mouse_pointer_icon = client.mouse_override_icon
 
+/**
+ * Can this mob see in the dark
+ *
+ * This checks all traits, glasses, and robotic eyeball implants to see if the mob can see in the dark
+ * this does NOT check if the mob is missing it's eyeballs. Also see_in_dark is a BYOND mob var (that defaults to 2)
+**/
+/mob/proc/has_nightvision()
+	return see_in_dark >= NIGHTVISION_FOV_RANGE
 
 ///This mob is abile to read books
 /mob/proc/is_literate()
 	return FALSE
-///Can this mob read (is literate and not blind)
+
+/// Can this mob read
 /mob/proc/can_read(obj/O)
 	if(is_blind())
 		to_chat(src, span_warning("As you are trying to read [O], you suddenly feel very stupid!"))
