@@ -14,22 +14,14 @@
 	///Amount the gasmix will affect the explosion size
 	var/supermatter_gasmix_power_ratio = 0
 
-/datum/supermatter_delamination/New(power, combined_gas, turf/local_turf, explosion_power, gasmix_power_ratio, can_spawn_anomalies)
+/datum/supermatter_delamination/New(supermatter_power, supermatter_gas_amount, turf/supermatter_turf, supermatter_explosion_power, supermatter_gasmix_power_ratio, can_spawn_anomalies)
 	. = ..()
-	if(power)
-		supermatter_power = power
 
-	if(combined_gas)
-		supermatter_gas_amount = combined_gas
-
-	if(local_turf)
-		supermatter_turf = local_turf
-
-	if(explosion_power)
-		supermatter_explosion_power = explosion_power
-
-	if(gasmix_power_ratio)
-		supermatter_gasmix_power_ratio = gasmix_power_ratio
+	src.supermatter_power = supermatter_power
+	src.supermatter_gas_amount = supermatter_gas_amount
+	src.supermatter_turf = supermatter_turf
+	src.supermatter_explosion_power = supermatter_explosion_power
+	src.supermatter_gasmix_power_ratio = supermatter_gasmix_power_ratio
 
 	setup_mob_interaction()
 	setup_delamination_type()
