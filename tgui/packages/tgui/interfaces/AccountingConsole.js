@@ -61,7 +61,7 @@ export const AccountingConsole = (props, context) => {
                 key={purchase.index}
                 p={1}>
                 <b>{purchase.account}</b> spent <b>{purchase.cost}</b>
-                CR on <i>{purchase.vendor}.</i>
+                {' '}cr at <i>{purchase.vendor}.</i>
               </BlockQuote>
             ))}
           </Section>
