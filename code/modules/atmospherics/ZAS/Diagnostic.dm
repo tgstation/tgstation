@@ -1,14 +1,14 @@
 /client/proc/Zone_Info(turf/T as null|turf)
 	set category = "Debug"
 	if(T)
-		if(istype(T,/turf/simulated) && T:zone)
+		if(!istype(T,/turf/open/space) && T:zone) //ZASTURF
 			T:zone:dbg_data(src)
 		else
-			to_chat(mob, "No zone here.")
+			to_chat(mob, span_admin("ZASDBG:No zone here."))
 			var/datum/gas_mixture/mix = T.return_air()
-			to_chat(mob, "[mix.return_pressure()] kPa [mix.temperature]C")
+			to_chat(mob,span_admin( "ZASDBG_MAIN:[mix.return_pressure()] kPa [mix.temperature]C"))
 			for(var/g in mix.gas)
-				to_chat(mob, "[g]: [mix.gas[g]]\n")
+				to_chat(mob, span_admin("ZASDBG_GAS:[g]: [mix.gas[g]]\n"))
 	else
 		if(zone_debug_images)
 			for(var/zone in  zone_debug_images)
