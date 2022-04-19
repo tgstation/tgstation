@@ -9,19 +9,16 @@
 #define PAYCHECK_LOWER 25
 #define PAYCHECK_CREW 50
 #define PAYCHECK_COMMAND 100
+#define PAYCHECK_ZERO 0
 
-<<<<<<< HEAD
 //How many credits a player is charged if they print something from a departmental lathe they shouldn't have access to.
 #define LATHE_TAX 10
 //How much POWER a borg's cell is taxed if they print something from a departmental lathe.
 #define SILICON_LATHE_TAX 2000
 
 #define STATION_TARGET_BUFFER 25
-=======
-#define PAYCHECK_ZERO 0
 
-#define STATION_TARGET_BUFFER 40
->>>>>>> upstream/master
+
 
 #define MAX_GRANT_DPT 500
 
