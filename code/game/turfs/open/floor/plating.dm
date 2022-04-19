@@ -19,6 +19,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+
 	var/attachment_holes = TRUE
 
 /turf/open/floor/plating/setup_broken_states()

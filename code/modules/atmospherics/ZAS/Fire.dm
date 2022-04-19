@@ -183,9 +183,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 					continue
 
 				//Spread the fire.
-				var/canpassturf
-				ATMOS_CANPASS_TURF(canpassturf, my_tile, enemy_tile)
-				if(prob( 50 + 50 * (firelevel/SSzas.settings.fire_firelevel_multiplier) ) && canpassturf)
+				//Atmos Canpass probably needs to be checked here
+				if(prob(50 + 50 * (firelevel/SSzas.settings.fire_firelevel_multiplier)))
 					enemy_tile.create_fire(firelevel)
 
 			else
