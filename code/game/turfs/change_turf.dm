@@ -82,13 +82,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_bp = blueprint_data
 	blueprint_data = null
 
-	if(connections) connections.erase_all()
-	if(istype(src,/turf/simulated))
-		//Yeah, we're just going to rebuild the whole thing.
-		//Despite this being called a bunch during explosions,
-		//the zone will only really do heavy lifting once.
-		var/turf/simulated/S = src
-		if(S.zone) S.zone.rebuild()
+
 
 	var/list/old_baseturfs = baseturfs
 	var/old_type = type
@@ -97,6 +91,15 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, post_change_callbacks)
 
 	changing_turf = TRUE
+
+	if(connections) connections.erase_all()
+	if(!istype(src, /turf/open/space))
+		//Yeah, we're just going to rebuild the whole thing.
+		//Despite this being called a bunch during explosions,
+		//the zone will only really do heavy lifting once.
+		var/turf/S = src
+		if(S.zone) S.zone.rebuild()
+
 	qdel(src) //Just get the side effects and call Destroy
 	//We do this here so anything that doesn't want to persist can clear itself
 	var/list/old_comp_lookup = comp_lookup?.Copy()

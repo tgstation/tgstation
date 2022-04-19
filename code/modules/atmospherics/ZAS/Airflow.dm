@@ -55,7 +55,8 @@ Contains helper procs for airflow, handled in /connection_group.
 
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
 		return
-	return prob_slip
+
+	return prob(prob_slip)
 
 /atom/movable/proc/check_airflow_movable(n)
 

@@ -324,7 +324,7 @@
 
 /obj/structure/window/Destroy()
 	set_density(FALSE)
-	//air_update_turf(TRUE, FALSE)
+	update_nearby_tiles()
 	update_nearby_icons()
 	return ..()
 
