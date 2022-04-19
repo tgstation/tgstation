@@ -1,6 +1,7 @@
+import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
+import { Box, Icon, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
-import { Input, Section, Box, Icon } from '../components';
 
 export const NtosRecords = (props, context) => {
   const { act, data } = useBackend(context);
@@ -9,6 +10,8 @@ export const NtosRecords = (props, context) => {
     mode,
     records,
   } = data;
+
+  const isMatchingSearchTerms = createSearch(searchTerm);
 
   return (
     <NtosWindow
@@ -31,14 +34,14 @@ export const NtosRecords = (props, context) => {
           <Section
             key={record.id}
             hidden={!(
-              filterTerm && (
+              searchTerm && isMatchingSearchTerms(
                 record.name
                   + " " + record.rank
                   + " " + record.species
                   + " " + record.gender
                   + " " + record.age
                   + " " + record.fingerprint
-              ).match(filterTerm)
+              )
             )}>
             <Box bold>
               <Icon name="user" mr={1} />
@@ -58,12 +61,12 @@ export const NtosRecords = (props, context) => {
           <Section
             key={record.id}
             hidden={!(
-              filterTerm && (
+              searchTerm && isMatchingSearchTerms(
                 record.name
                   + " " + record.bloodtype
                   + " " + record.m_stat
                   + " " + record.p_stat
-              ).match(filterTerm)
+              )
             )}>
             <Box bold>
               <Icon name="user" mr={1} />
