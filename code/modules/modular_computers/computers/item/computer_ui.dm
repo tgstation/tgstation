@@ -50,12 +50,20 @@
 		if(ui.open())
 			ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
+/obj/item/modular_computer/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+
+	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet/)
+
+	return data
+
+
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["device_theme"] = device_theme
 	data["login"] = list()
-	data["show_imprint"] = istype(src, /obj/item/modular_computer/tablet/)
 
 	data["disk"] = null
 
@@ -66,15 +74,15 @@
 	if(cardholder)
 		data["cardholder"] = TRUE
 
-		var/stored_name = src.saved_identification
-		var/stored_title = src.saved_job
+		var/stored_name = saved_identification
+		var/stored_title = saved_job
 		if(!stored_name)
 			stored_name = "Unknown"
 		if(!stored_title)
 			stored_title = "Unknown"
 		data["login"] = list(
-			IDName = src.saved_identification,
-			IDJob = src.saved_job,
+			IDName = saved_identification,
+			IDJob = saved_job,
 		)
 		data["proposed_login"] = list(
 			IDName = cardholder.current_identification,
@@ -260,8 +268,8 @@
 			if(!cardholder)
 				return
 
-			src.saved_identification = cardholder.current_identification
-			src.saved_job = cardholder.current_job
+			saved_identification = cardholder.current_identification
+			saved_job = cardholder.current_job
 
 			if(id_hardware)
 				id_hardware.UpdateDisplay()

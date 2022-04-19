@@ -267,8 +267,6 @@
 			. += mutable_appearance(init_icon, "id_overlay")
 	if(light_on)
 		. += mutable_appearance(init_icon, "light_overlay")
-	if(istype(src, /obj/item/modular_computer/tablet/pda/clown))
-		. += mutable_appearance(init_icon, "pda_stripe_clown") // clowns have eyes that go over their screen, so it needs to be compiled last
 
 /obj/item/modular_computer/tablet/pda/attack_ai(mob/user)
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))

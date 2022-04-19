@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { NtosWindow } from '../layouts';
 import { Input, Section, Box, Icon } from '../components';
 
@@ -11,6 +11,7 @@ const setFilterTerm = function (term) {
 
 export const NtosRecords = (props, context) => {
   const { act, data } = useBackend(context);
+  const { searchTerm, setSearchTerm } = useLocalState(context, "search", "");
   const {
     mode,
     records,
@@ -27,11 +28,10 @@ export const NtosRecords = (props, context) => {
         <Section>
           <Input
             placeholder={"Filter results..."}
+            value={searchTerm}
             fluid
             textAlign="center"
-            // we're disabling no-return-assign because we're knowingly NOT using a comparator
-            // eslint-disable-next-line no-return-assign
-            onInput={(e, value) => setFilterTerm(value)}
+            onInput={(e, value) => setSearchTerm(value)}
           />
         </Section>
         {(mode==="security") && (

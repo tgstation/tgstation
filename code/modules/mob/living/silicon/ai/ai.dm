@@ -107,7 +107,7 @@
 	var/atom/lastloc
 	interaction_range = null
 
-	var/atom/movable/screen/ai/modPC/interfaceButton
+	var/atom/movable/screen/ai/modpc/interfaceButton
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()

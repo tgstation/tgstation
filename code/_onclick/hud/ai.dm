@@ -48,12 +48,12 @@
 	var/mob/living/silicon/ai/AI = usr
 	AI.toggle_camera_light()
 
-/atom/movable/screen/ai/modPC
+/atom/movable/screen/ai/modpc
 	name = "Messenger"
 	icon_state = "pda_send"
 	var/mob/living/silicon/ai/robot
 
-/atom/movable/screen/ai/modPC/Click()
+/atom/movable/screen/ai/modpc/Click()
 	. = ..()
 	if(.)
 		return
@@ -250,12 +250,12 @@
 	static_inventory += using
 
 // Modular Interface
-	using = new /atom/movable/screen/ai/modPC()
+	using = new /atom/movable/screen/ai/modpc()
 	using.screen_loc = ui_ai_mod_int
 	using.hud = src
 	static_inventory += using
 	myai.interfaceButton = using
-	var/atom/movable/screen/ai/modPC/tabletbutton = using
+	var/atom/movable/screen/ai/modpc/tabletbutton = using
 	tabletbutton.robot = myai
 
 //Take image

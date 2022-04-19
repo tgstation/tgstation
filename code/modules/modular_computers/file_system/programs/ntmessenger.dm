@@ -356,8 +356,7 @@
 	..()
 
 	if(!href_list["close"] && usr.canUseTopic(computer, BE_CLOSE, FALSE, NO_TK))
-		var/choice = text2num(href_list["choice"]) || href_list["choice"]
-		switch(choice)
+		switch(href_list["choice"])
 			if("Message")
 				send_message(usr, list(locate(href_list["target"])))
 			if("Mess_us_up")

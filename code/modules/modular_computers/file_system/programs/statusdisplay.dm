@@ -23,8 +23,8 @@
 
 	var/datum/signal/status_signal = new(list("command" = "message"))
 
-	status_signal.data["msg1"] = upper_text
-	status_signal.data["msg2"] = lower_text
+	status_signal.data["msg1"] = reject_bad_text(upper_text || "", MAX_STATUS_LINE_LENGTH)
+	status_signal.data["msg2"] = reject_bad_text(lower_text || "", MAX_STATUS_LINE_LENGTH)
 
 	frequency.post_signal(computer, status_signal)
 
@@ -44,7 +44,7 @@
 		if("stat_send")
 			SendSignal()
 		if("stat_update")
-			SetText(params["position"], params["text"])
+			SetText(params["position"], params["text"]) // i hate the player i hate the player
 
 /datum/computer_file/program/status/ui_data(mob/user)
 	var/list/data = get_header_data()

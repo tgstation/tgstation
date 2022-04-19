@@ -119,12 +119,12 @@
 	var/mob/living/silicon/pai/pAI = usr
 	pAI.checklaws()
 
-/atom/movable/screen/pai/modPC
+/atom/movable/screen/pai/modpc
 	name = "Messenger"
 	icon_state = "pda_send"
 	var/mob/living/silicon/pai/pAI
 
-/atom/movable/screen/pai/modPC/Click()
+/atom/movable/screen/pai/modpc/Click()
 	. = ..()
 	if(!.) // this works for some reason.
 		return
@@ -238,11 +238,11 @@
 	static_inventory += using
 
 // Modular Interface
-	using = new /atom/movable/screen/pai/modPC()
+	using = new /atom/movable/screen/pai/modpc()
 	using.screen_loc = ui_pai_mod_int
 	static_inventory += using
 	mypai.interfaceButton = using
-	var/atom/movable/screen/pai/modPC/tabletbutton = using
+	var/atom/movable/screen/pai/modpc/tabletbutton = using
 	tabletbutton.pAI = mypai
 
 // Internal GPS

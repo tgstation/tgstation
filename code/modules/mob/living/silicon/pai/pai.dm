@@ -127,7 +127,7 @@
 		"universal translator" = 35,
 	)
 
-	var/atom/movable/screen/ai/modPC/interfaceButton
+	var/atom/movable/screen/ai/modpc/interfaceButton
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
