@@ -113,7 +113,9 @@
 	if(user.Adjacent(src))
 		attack_hand(user)
 
-/turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
+/turf/closed/mineral/proc/gets_drilled(mob/user, give_exp = FALSE)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
 	if (mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
