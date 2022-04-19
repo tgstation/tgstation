@@ -3,12 +3,6 @@ import { useBackend, useLocalState } from '../backend';
 import { NtosWindow } from '../layouts';
 import { Input, Section, Box, Icon } from '../components';
 
-let filterTerm;
-
-const setFilterTerm = function (term) {
-  filterTerm = term;
-};
-
 export const NtosRecords = (props, context) => {
   const { act, data } = useBackend(context);
   const { searchTerm, setSearchTerm } = useLocalState(context, "search", "");
