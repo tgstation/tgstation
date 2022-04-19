@@ -319,13 +319,6 @@
 /obj/item/book/proc/on_read(mob/user)
 	if(book_data?.content)
 		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-		onclose(user, "book")
-	else
-		to_chat(user, span_notice("This book is completely blank!"))
-
-/obj/item/book/proc/on_read(mob/user)
-	if(book_data?.content)
-		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/reader = user
