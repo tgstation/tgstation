@@ -616,13 +616,7 @@
 
 /mob/living/carbon/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(isnull(.))
-		return
-	if(. <= 50)
-		if(getOxyLoss() > 50)
-			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
-	else if(getOxyLoss() <= 50)
-		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
+	check_passout(.)
 
 /mob/living/carbon/proc/get_interaction_efficiency(zone)
 	var/obj/item/bodypart/limb = get_bodypart(zone)
@@ -631,9 +625,12 @@
 
 /mob/living/carbon/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(isnull(.))
+	check_passout(.)
+
+/mob/living/carbon/proc/check_passout(oxyloss)
+	if(isnull(oxyloss))
 		return
-	if(. <= 50)
+	if(oxyloss <= 50)
 		if(getOxyLoss() > 50)
 			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	else if(getOxyLoss() <= 50)
