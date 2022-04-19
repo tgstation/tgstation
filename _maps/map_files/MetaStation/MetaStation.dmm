@@ -3871,8 +3871,7 @@
 /obj/structure/chair,
 /obj/machinery/computer/security/telescreen/interrogation{
 	dir = 4;
-	pixel_x = -30;
-	
+	pixel_x = -30
 	},
 /turf/open/floor/iron/grimy,
 /area/security/interrogation)
@@ -26427,12 +26426,13 @@
 /area/engineering/atmos)
 "izj" = (
 /obj/machinery/recharger{
-	pixel_x = 11
+	pixel_x = 2;
+	pixel_y = 3
 	},
 /obj/item/storage/secure/safe/directional/east,
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
-	pixel_x = -5;
+	pixel_x = -12;
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
@@ -52412,9 +52412,9 @@
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/structure/table/wood/fancy/red,
 /obj/machinery/door/window/brigdoor/left/directional/south{
+	dir = 8;
 	name = "High-Risk Modules";
-	req_access_txt = "20";
-	dir = 8
+	req_access_txt = "20"
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)

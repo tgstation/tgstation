@@ -19917,15 +19917,7 @@
 	},
 /obj/structure/table/wood,
 /obj/machinery/newscaster/directional/north,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/pen,
-/obj/machinery/recharger{
-	pixel_x = 4;
-	pixel_y = 9
-	},
+/obj/machinery/recharger,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hop)
 "fML" = (
@@ -33137,8 +33129,13 @@
 /turf/open/floor/iron,
 /area/cargo/drone_bay)
 "kBI" = (
-/obj/item/kirbyplants/random,
 /obj/machinery/status_display/evac/directional/north,
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "kBN" = (
@@ -37210,9 +37207,9 @@
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor/left/directional/south{
+	dir = 1;
 	name = "High-Risk Modules";
-	req_access_txt = "20";
-	dir = 1
+	req_access_txt = "20"
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -53906,6 +53903,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "sco" = (
