@@ -324,9 +324,10 @@
 
 /obj/structure/window/Destroy()
 	set_density(FALSE)
-	update_nearby_tiles()
 	update_nearby_icons()
-	return ..()
+	can_atmos_pass = CANPASS_ALWAYS //hacky-sacky
+	update_nearby_tiles()
+	. = ..()
 
 /obj/structure/window/Move()
 	update_nearby_tiles()
@@ -336,6 +337,8 @@
 		move_update_air(T)*/
 
 /obj/structure/window/c_airblock(turf/T, vertical = FALSE)
+	if(QDELETED(src))
+		return AIR_ALLOWED
 	if(!anchored || !density)
 		return ZONE_BLOCKED
 	return (fulltile || dir == get_dir(loc, T)) ? AIR_BLOCKED : ZONE_BLOCKED

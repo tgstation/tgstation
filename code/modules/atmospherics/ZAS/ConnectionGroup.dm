@@ -123,6 +123,7 @@ Class Procs:
 
 
 /connection_edge/zone/var/zone/B
+/connection_edge/zone/var/last_woosh
 
 /connection_edge/zone/New(zone/A, zone/B)
 
@@ -168,7 +169,10 @@ Class Procs:
 			attracted = B.movables()
 			repelled = A.movables()
 
-		playsound(pick(connecting_turfs), 'modular_pariah/master_files/sound/effects/space_wind_big.ogg', 100, TRUE, null, pressure_affected = FALSE)
+		if(REALTIMEOFDAY > last_woosh + 2 SECONDS)
+			playsound(pick(connecting_turfs), 'modular_pariah/master_files/sound/effects/space_wind_big.ogg', 100, TRUE, null, pressure_affected = FALSE)
+			last_woosh = REALTIMEOFDAY
+
 		flow(attracted, abs(differential), 0)
 		flow(repelled, abs(differential), 1)
 

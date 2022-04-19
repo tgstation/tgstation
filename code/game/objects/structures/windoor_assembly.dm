@@ -71,6 +71,8 @@
 		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
 
 /obj/structure/windoor_assembly/c_airblock(turf/T, vertical = FALSE)
+	if(QDELETED(src))
+		return AIR_ALLOWED
 	if(get_dir(loc, T) == dir)
 		return density ? AIR_BLOCKED : ZONE_BLOCKED
 	else

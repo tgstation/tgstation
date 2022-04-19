@@ -99,7 +99,9 @@
 	return atmosblock
 
 /obj/structure/blob/c_airblock(turf/T, vertical = FALSE)
-	return !atmosblock
+	if(QDELETED(src))
+		return AIR_ALLOWED
+	return atmosblock ? AIR_BLOCKED : AIR_ALLOWED
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	. = ..()

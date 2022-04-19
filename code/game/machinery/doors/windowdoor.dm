@@ -175,6 +175,8 @@
 	return TRUE
 
 /obj/machinery/door/window/c_airblock(turf/T, vertical = FALSE)
+	if(QDELETED(src))
+		return AIR_ALLOWED
 	if(get_dir(loc, T) == dir)
 		return density ? AIR_BLOCKED : ZONE_BLOCKED
 	else

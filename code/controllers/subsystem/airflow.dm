@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(airflow)
 		if (ismob(target))
 			var/mob/M = target
 			M.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/atmos_pressure, TRUE, SSzas.settings.airflow_mob_slowdown)
-			addtimer(CALLBACK(M, /mob/proc/remove_movespeed_modifier, /datum/movespeed_modifier/atmos_pressure, TRUE))
+			addtimer(CALLBACK(M, /mob/proc/remove_movespeed_modifier, /datum/movespeed_modifier/atmos_pressure, TRUE), 3 SECONDS, flags = TIMER_DELETE_ME)
 		if (MC_TICK_CHECK)
 			current.Cut(i)
 			return

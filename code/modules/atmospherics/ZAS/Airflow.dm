@@ -19,7 +19,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(!body_position == LYING_DOWN)
 		to_chat(src, "<span class='warning'>The sudden rush of air knocks you over!</span>")
 
-	slip(5, null, GALOSHES_DONT_HELP|SLIDE, 0, TRUE)
+	Knockdown(5)
 	last_airflow_stun = world.time
 
 /mob/living/silicon/airflow_stun()
@@ -40,7 +40,7 @@ Contains helper procs for airflow, handled in /connection_group.
 /mob/proc/slip_chance()
 	return
 
-/mob/living/carbon/human/slip_chance(prob_slip = 10)
+/mob/living/carbon/human/slip_chance(prob_slip = 50)
 	if(stat)
 		return FALSE
 	if(buckled)
