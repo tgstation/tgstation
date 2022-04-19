@@ -80,6 +80,7 @@
 /code/__DEFINES/chat.dm @stylemistake
 /code/__DEFINES/tgui.dm @stylemistake
 /code/controllers/subsystem/chat.dm @stylemistake
+/code/controllers/subsystem/ping.dm @stylemistake
 /code/controllers/subsystem/tgui.dm @stylemistake
 /code/modules/tgchat @stylemistake
 /code/modules/tgui @stylemistake
