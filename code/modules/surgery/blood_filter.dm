@@ -24,7 +24,7 @@
 			break
 
 /datum/surgery_step/filter_blood/proc/has_whitelisted_chems(mob/living/carbon/target, obj/item/blood_filter/bf)
-	if(!target.reagents || !target.reagents.reagent_list.len)
+	if(!target.reagents?.reagent_list.len)
 		return FALSE
 
 	if(!bf.whitelist_ids.len)
