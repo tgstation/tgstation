@@ -42,6 +42,11 @@
 		"Sad Trombone" = 'sound/misc/sadtrombone.ogg',
 		"Warn" = 'sound/machines/warning-buzzer.ogg',
 		"Slow Clap" = 'sound/machines/slowclap.ogg',
+		"Moth Buzz" = 'sound/voice/moth/scream_moth.ogg',
+		"Squeak" = 'sound/items/toysqueak1.ogg',
+		"Rip" = 'sound/items/poster_ripped.ogg',
+		"Coinflip" = 'sound/items/coinflip.ogg',
+		"Megaphone" = 'sound/items/megaphone.ogg',
 	)
 	sound_file = add_option_port("Sound Option", component_options)
 	options_map = component_options
