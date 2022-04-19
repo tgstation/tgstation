@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "On IceBoxStation, to the northeastern airlock (in relation to the bar), Nanotrasen will no longer paint the word \"Caution\" over text that says \"STAND CLEAR\"."
