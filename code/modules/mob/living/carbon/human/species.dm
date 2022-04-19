@@ -583,7 +583,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		// blush
 		#define BLUSH_COLOR "#DE5D83"
-		if (HAS_TRAIT(species_human, TRAIT_BLUSHING) || species_human.drunkenness >= 6) // Drunkenness coincides with the "drunk" mood event
+		if (HAS_TRAIT(species_human, TRAIT_BLUSHING) || HAS_TRAIT(species_human, TRAIT_DRUNK_BLUSHING)) // Caused by either the *blush emote or the "drunk" mood event
 			var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/human_face.dmi', "blush", -BODY_ADJ_LAYER) //should appear behind the eyes
 			blush_overlay.color = BLUSH_COLOR
 			standing += blush_overlay

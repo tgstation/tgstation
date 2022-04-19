@@ -361,6 +361,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPRAY_PAINTABLE "spray_paintable"
 /// This person is blushing
 #define TRAIT_BLUSHING "blushing"
+/// This person is blushing due to being drunk
+#define TRAIT_DRUNK_BLUSHING "drunk_blushing"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met

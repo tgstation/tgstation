@@ -3,10 +3,14 @@
 	description = "Everything just feels better after a drink or two."
 
 /datum/mood_event/drunk/add_effects(param)
-	owner.update_body() // Update the body so that the blush visual is displayed
+	// Display blush visual
+	ADD_TRAIT(owner, TRAIT_DRUNK_BLUSHING, SPECIES_TRAIT)
+	owner.update_body()
 
 /datum/mood_event/drunk/remove_effects()
-	owner.update_body() // Update the body so that the blush visual is no longer displayed
+	// Stop displaying blush visual
+	REMOVE_TRAIT(owner, TRAIT_DRUNK_BLUSHING, SPECIES_TRAIT)
+	owner.update_body()
 
 /datum/mood_event/quality_nice
 	description = "That drink wasn't bad at all."
