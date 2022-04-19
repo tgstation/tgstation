@@ -1,0 +1,7 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - refactor: "Ping system of tgui-panel has been reworked, which fixes things mentioned below."
+  - bugfix: "AFK players now get properly detected and kicked"
+  - bugfix: "Automatic reconnect should now work 100% of the time"
+  - bugfix: "Manual reconnect should now work 100% of the time"
