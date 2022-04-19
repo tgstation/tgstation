@@ -201,7 +201,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.eye_color_heterochromatic = TRUE
 	human_holder.eye_color_right = color
-	RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal)
+	RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal, override=TRUE)
 
 	var/obj/item/organ/eyes/eyes_of_the_holder = quirk_holder.getorgan(/obj/item/organ/eyes)
 	if(!eyes_of_the_holder)
