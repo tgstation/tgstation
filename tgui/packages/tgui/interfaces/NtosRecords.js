@@ -27,40 +27,56 @@ export const NtosRecords = (props, context) => {
             onInput={(e, value) => setSearchTerm(value)}
           />
         </Section>
-        {(mode==="security") && (
-          records.map(record => (
-            <Section hidden={!((record.name + " " + record.rank + " "+record.species + " " + record.gender + " " + record.age + " " + record.fingerprint).match(filterTerm)) && filterTerm} key={record.id}>
-              <Box bold>
-                <Icon name="user" mr={1} />
-                {record.name}
-              </Box>
-              <br />
-              Rank: {record.rank}<br />
-              Species: {record.species}<br />
-              Gender: {record.gender}<br />
-              Age: {record.age}<br />
-              Fingerprint Hash: {record.fingerprint}
-              <br /><br />
-              Criminal Status: {record.wanted ? record.wanted : "DELETED"}
-            </Section>
-          ))
-        )}
-        {(mode==="medical") && (
-          records.map(record => (
-            <Section hidden={!((record.name + " " + record.bloodtype + " " + record.m_stat + " " + record.p_stat).match(filterTerm)) && filterTerm} key={record.id}>
-              <Box bold>
-                <Icon name="user" mr={1} />
-                {record.name}
-              </Box>
-              <br />
-              Bloodtype: {record.bloodtype}<br />
-              Minor Disabilities: {record.mi_dis}<br />
-              Major Disabilities: {record.ma_dis}<br /><br />
-              Notes: {record.notes}<br />
-              Notes Contd: {record.cnotes}
-            </Section>
-          ))
-        )}
+        {mode === "security" && records.map(record => (
+          <Section
+            key={record.id}
+            hidden={!(
+              filterTerm && (
+                record.name
+                  + " " + record.rank
+                  + " " + record.species
+                  + " " + record.gender
+                  + " " + record.age
+                  + " " + record.fingerprint
+              ).match(filterTerm)
+            )}>
+            <Box bold>
+              <Icon name="user" mr={1} />
+              {record.name}
+            </Box>
+            <br />
+            Rank: {record.rank}<br />
+            Species: {record.species}<br />
+            Gender: {record.gender}<br />
+            Age: {record.age}<br />
+            Fingerprint Hash: {record.fingerprint}
+            <br /><br />
+            Criminal Status: {record.wanted || "DELETED"}
+          </Section>
+        ))}
+        {mode === "medical" && records.map(record => (
+          <Section
+            key={record.id}
+            hidden={!(
+              filterTerm && (
+                record.name
+                  + " " + record.bloodtype
+                  + " " + record.m_stat
+                  + " " + record.p_stat
+              ).match(filterTerm)
+            )}>
+            <Box bold>
+              <Icon name="user" mr={1} />
+              {record.name}
+            </Box>
+            <br />
+            Bloodtype: {record.bloodtype}<br />
+            Minor Disabilities: {record.mi_dis}<br />
+            Major Disabilities: {record.ma_dis}<br /><br />
+            Notes: {record.notes}<br />
+            Notes Contd: {record.cnotes}
+          </Section>
+        ))}
       </NtosWindow.Content>
     </NtosWindow>
   );
