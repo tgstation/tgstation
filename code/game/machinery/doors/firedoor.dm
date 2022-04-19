@@ -598,7 +598,7 @@
  * changes during the timer, the door doesn't close or open incorrectly.
  */
 /obj/machinery/door/firedoor/proc/correct_state()
-	if(obj_flags & EMAGGED || being_held_open)
+	if(obj_flags & EMAGGED || being_held_open || QDELETED(src))
 		return //Unmotivated, indifferent, we have no real care what state we're in anymore.
 	if(active && !density) //We should be closed but we're not
 		INVOKE_ASYNC(src, .proc/close)
