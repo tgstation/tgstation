@@ -1,0 +1,4 @@
+author: "TheBonded"
+delete-after: True
+changes: 
+  - expansion: "Laserpointer circuit modules now available. they had to be toned down for circuit implementation, so dont expect them to do anything other than shine light."
