@@ -6,7 +6,7 @@ The more pressure, the more boom.
 If it gains pressure too slowly, it may leak or just rupture instead of exploding.
 */
 
-//#define FIREDBG
+#define FIREDBG
 
 /turf/var/obj/effect/hotspot/fire = null
 
@@ -23,7 +23,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 
 
-/turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
+/turf/hotspot_expose(exposed_temperature, exposed_volume, soh)
+	if(!simulated)
+		return 0
 	if(fire_protection > world.time-300)
 		return 0
 	if(locate(/obj/effect/hotspot) in src)
@@ -181,7 +183,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 					continue
 
 				//Spread the fire.
-				if(prob( 50 + 50 * (firelevel/SSzas.settings.fire_firelevel_multiplier) ) && my_tile.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, my_tile, 0,0))
+				var/canpassturf
+				ATMOS_CANPASS_TURF(canpassturf, my_tile, enemy_tile)
+				if(prob( 50 + 50 * (firelevel/SSzas.settings.fire_firelevel_multiplier) ) && canpassturf)
 					enemy_tile.create_fire(firelevel)
 
 			else
@@ -447,7 +451,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	return mx * (head_exposure + chest_exposure + groin_exposure + legs_exposure + arms_exposure)
 
 //turf/proc/adjacent_fire_act(turf/simulated/floor/source, exposed_temperature, exposed_volume)
-/turf/proc/adjacent_fire_act(turf/source, exposed_temperature, exposed_volume)
+/turf/proc/adjacent_fire_act(turf/open/floor/source, datum/gas_mixture/adj_air, adjt_temp)
 	return
 
 //turf/simulated/floor/adjacent_fire_act(turf/simulated/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume) ZASTURF

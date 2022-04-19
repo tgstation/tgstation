@@ -357,3 +357,10 @@
     var/turf/T = get_step(src, d)
     if (T && !turf_contains_dense_objects(T))
       return T
+
+/turf/proc/get_atmos_adjacent_turfs()
+	var/list/adjacent_turfs = list()
+	for(var/dir in GLOB.cardinals)
+		if(open_directions & dir)
+			adjacent_turfs += get_step(src, dir)
+	return length(adjacent_turfs) ? adjacent_turfs : null

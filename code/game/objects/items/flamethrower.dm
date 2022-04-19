@@ -205,7 +205,7 @@
 		/*var/list/turfs_sharing_with_prev = previousturf.TryGetNonDenseNeighbour()
 		if(!(T in turfs_sharing_with_prev))
 			break*/
-		ignite_turf(src,T)
+		ignite_turf(T)
 		sleep(1)
 		previousturf = T
 	operating = FALSE
@@ -217,7 +217,8 @@
 /obj/item/flamethrower/proc/ignite_turf(turf/target, release_amount = 5)
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
-	var/datum/gas_mixture/air_transfer = ptank.return_air().remove_ratio(release_amount)
+	var/datum/gas_mixture/ptank_mix = ptank.return_air()
+	var/datum/gas_mixture/air_transfer = ptank_mix.remove_ratio(release_amount)
 	//air_transfer.toxins = air_transfer.toxins * 5 // This is me not comprehending the air system. I realize this is retarded and I could probably make it work without fucking it up like this, but there you have it. -- TLE
 	new/obj/effect/decal/cleanable/oil(target,air_transfer.get_by_flag(XGM_GAS_FUEL),get_dir(loc,target))
 	air_transfer.remove_by_flag(XGM_GAS_FUEL, 0)
@@ -254,7 +255,7 @@
 		owner.visible_message(span_danger("\The [attack_text] hits the fuel tank on [owner]'s [name], rupturing it! What a shot!"))
 		var/turf/target_turf = get_turf(owner)
 		log_game("A projectile ([hitby]) detonated a flamethrower tank held by [key_name(owner)] at [COORD(target_turf)]")
-		ignite_turf(src,target_turf, release_amount = 100)
+		ignite_turf(target_turf, release_amount = 100)
 		qdel(ptank)
 		return 1 //It hit the flamethrower, not them
 

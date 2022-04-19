@@ -82,6 +82,7 @@
  * alldir includes adjacent diagonal tiles that can share
  * air with both of the related adjacent cardinal tiles
 **/
+/*
 /turf/proc/get_atmos_adjacent_turfs(alldir = 0)
 	var/adjacent_turfs
 	if (atmos_adjacent_turfs)
@@ -113,7 +114,7 @@
 				break
 
 	return adjacent_turfs
-
+*/
 /atom/proc/air_update_turf(update = FALSE, remove = FALSE)
 	var/turf/local_turf = get_turf(loc)
 	if(!local_turf)

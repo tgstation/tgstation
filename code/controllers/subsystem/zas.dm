@@ -157,7 +157,7 @@ SUBSYSTEM_DEF(zas)
 	settings = new
 	gas_data = xgm_gas_data
 
-	to_chat(world, span_boldannounce("Processing Geometry..."))
+	to_chat(world, span_boldannounce("ZAS: Processing Geometry..."))
 
 	var/simulated_turf_count = 0
 	//for(var/turf/simulated/S) ZASTURF
@@ -169,17 +169,17 @@ SUBSYSTEM_DEF(zas)
 
 		CHECK_TICK
 
-	to_chat(world, span_boldannounce("Total Simulated Turfs: [simulated_turf_count]\nTotal Zones: [zones.len]\nTotal Edges: [edges.len]\nTotal Active Edges: [active_edges.len ? "<span class='danger'>[active_edges.len]</span>" : "None"]\nTotal Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]"))
+	to_chat(world, span_boldannounce("ZAS: Total Simulated Turfs: [simulated_turf_count]\nTotal Zones: [zones.len]\nTotal Edges: [edges.len]\nTotal Active Edges: [active_edges.len ? "<span class='danger'>[active_edges.len]</span>" : "None"]\nTotal Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]"))
 
-	to_chat(world, span_boldannounce("Geometry processing completed in [(REALTIMEOFDAY - starttime)/10] seconds!"))
+	to_chat(world, span_boldannounce("ZAS: Geometry processing completed in [(REALTIMEOFDAY - starttime)/10] seconds!"))
 
 	if (simulate)
-		to_chat(world, span_boldannounce("Settling air..."))
+		to_chat(world, span_boldannounce("ZAS: Firing once..."))
 
 		starttime = REALTIMEOFDAY
 		fire(FALSE, TRUE)
 
-		to_chat(world, span_boldannounce("Air settling completed in [(REALTIMEOFDAY - starttime)/10] seconds!"))
+		to_chat(world, span_boldannounce("ZAS: Air settling completed in [(REALTIMEOFDAY - starttime)/10] seconds!"))
 
 	..(timeofday)
 

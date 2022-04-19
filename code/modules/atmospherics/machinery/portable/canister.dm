@@ -599,10 +599,12 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 		if((air_contents.temperature > 0) && (pressure_delta > 0))
 			var/transfer_moles = calculate_transfer_moles(air_contents, environment, pressure_delta)
-			transfer_moles = min(transfer_moles, (ATMOS_DEFAULT_VOLUME_PUMP/air_contents.volume)*air_contents.total_moles) //flow rate limit
+			transfer_moles = min(transfer_moles, (release_pressure/air_contents.volume)*air_contents.total_moles) //flow rate limit
 
 			pump_gas_passive(air_contents, environment, transfer_moles)
 			//air_update_turf(FALSE, FALSE)
+
+	air_contents.react()
 
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()
