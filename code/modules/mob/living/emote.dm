@@ -4,25 +4,34 @@
 	mob_type_allowed_typecache = /mob/living
 	mob_type_blacklist_typecache = list(/mob/living/brain)
 
+/// The time it takes for the blush visual to be removed
+#define BLUSH_DURATION 15 SECONDS
+
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
 	message = "blushes."
+	/// Timer for the blush visual to wear off
+	var/blush_timer = TIMER_ID_NULL
 
 /datum/emote/living/blush/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(. && isliving(user))
-		var/mob/living/L = user
-		ADD_TRAIT(L, TRAIT_BLUSHING, SPECIES_TRAIT)
-		L.update_body()
-		addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_BLUSHING, SPECIES_TRAIT), 15 SECONDS)
-		addtimer(CALLBACK(L, /mob.proc/update_body), 15.1 SECONDS)
-		//TODO replace the two timers with just one
-		//addtimer(CALLBACK(L, /datum/emote/living/blush.proc/end, L), 3 SECONDS)
+		var/mob/living/living_user = user
+		ADD_TRAIT(living_user, TRAIT_BLUSHING, SPECIES_TRAIT)
+		living_user.update_body()
 
-///datum/emote/living/blush/proc/end(mob/living)
-	//REMOVE_TRAIT(living, TRAIT_BLUSHING, SPECIES_TRAIT)
-	//living.update_body()
+		// Use a timer to remove the blush effect after the BLUSH_DURATION has passed
+		var/list/key_emotes = GLOB.emote_list["blush"]
+		for(var/datum/emote/living/blush/living_emote in key_emotes)
+			// The existing timer restarts if it's already running
+			blush_timer = addtimer(CALLBACK(living_emote, /datum/emote/living/blush.proc/end_blush, living_user), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+datum/emote/living/blush/proc/end_blush(mob/living_user)
+	REMOVE_TRAIT(living_user, TRAIT_BLUSHING, SPECIES_TRAIT)
+	living_user.update_body()
+
+#undef BLUSH_DURATION
 
 /datum/emote/living/bow
 	key = "bow"
