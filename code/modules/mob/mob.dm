@@ -1112,7 +1112,6 @@
 	if(!is_literate())
 		to_chat(src, span_notice("You try to read [O], but can't comprehend any of it."))
 		return
-
 	return TRUE
 
 /**
