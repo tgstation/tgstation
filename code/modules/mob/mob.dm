@@ -1096,7 +1096,7 @@
 /mob/proc/has_nightvision()
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
 
-/// This mob is abile to read books
+/// This mob is able to read books
 /mob/proc/is_literate()
 	return FALSE
 
