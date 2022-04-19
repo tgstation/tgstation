@@ -1,6 +1,5 @@
-/* eslint-disable unused-imports/no-unused-imports */
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, Input, Section, Stack } from '../components';
+import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
 const NoIDDimmer = (props, context) => {
@@ -193,13 +192,13 @@ export const NtosMessenger = (props, context) => {
                 <Button
                   key={messenger.ref}
                   fluid
-                  content={messenger.name + " (" + messenger.job + ")"}
                   onClick={() => act('PDA_sendMessage', {
                     name: messenger.name,
                     job: messenger.job,
                     ref: messenger.ref,
-                  })}
-                />
+                  })}>
+                  {messenger.name} ({messenger.job})
+                </Button>
               ))}
             </Stack>
             {!!canSpam && (
