@@ -453,3 +453,39 @@
 	attack_verb_simple = list("pump", "siphon")
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
+	var/list/whitelist_ids = list()
+	var/list/whitelist_english = list()
+
+/obj/item/blood_filter/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BloodFilter", name)
+		ui.open()
+
+/obj/item/blood_filter/ui_data(mob/user)
+	var/list/data = list()
+	data["whitelist"] = whitelist_english
+	return data
+
+/obj/item/blood_filter/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	. = TRUE
+	switch(action)
+		if("add")
+			var/new_chem_name = params["name"]
+			var/chem_id = get_chem_id(new_chem_name)
+			if(!chem_id)
+				to_chat(usr, span_warning("No such known reagent exists!"))
+				return
+			if(!whitelist_ids.Find(chem_id))
+				whitelist_english += new_chem_name
+				whitelist_ids += chem_id
+
+		if("remove")
+			var/chem_name = params["reagent"]
+			var/chem_id = get_chem_id(chem_name)
+			if(whitelist_english.Find(chem_name))
+				whitelist_english -= chem_name
+				whitelist_ids -= chem_id
