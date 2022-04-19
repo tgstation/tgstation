@@ -19,9 +19,22 @@
 /datum/surgery_step/filter_blood/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(!..())
 		return
-	while(target.reagents?.total_volume)
+	while(has_whitelisted_chems(target, tool))
 		if(!..())
 			break
+
+/datum/surgery_step/filter_blood/proc/has_whitelisted_chems(mob/living/carbon/target, obj/item/blood_filter/bf)
+	if(!target.reagents || !target.reagents.reagent_list.len)
+		return FALSE
+
+	if(!bf.whitelist_ids.len)
+		return TRUE
+
+	for(var/datum/reagent/chem in target.reagents.reagent_list)
+		if(bf.whitelist_ids.Find(chem.type))
+			return TRUE
+
+	return FALSE
 
 /datum/surgery_step/filter_blood
 	name = "Filter blood"
