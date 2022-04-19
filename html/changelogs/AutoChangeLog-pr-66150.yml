@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - qol: "Adds a button to the thermomachine to dump residual gases from the main port into the waste port"

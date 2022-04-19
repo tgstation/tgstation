@@ -23,7 +23,7 @@
 	AddElement(/datum/element/beauty, impressiveness * 75)
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/structure/cannon/wrench_act(mob/living/user, obj/item/tool)
+/obj/structure/statue/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return FALSE
