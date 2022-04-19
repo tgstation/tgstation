@@ -37,8 +37,15 @@ Ask Mothblocks if they're around
 /// The base for the chance of getting irradiated based on intensity. Gives you (1 - base) chance to get irradiated if intensity is 1.
 #define RADIATION_INTENSITY_BASE 0.5
 
+/// A scalar used to automatically set the intensity of a radiation pulse from a given max range if intensity is undefined.
+/// It is set so that a radiation pulse from a distance of the max range of the pulse has a 5% chance to irradiate, if nothing blocks the trajectory.
+#define DEFAULT_AUTO_RADIATION_INTENSITY_CONSTANT 0.074
+
+/// Maximum possible automatic set range if range wasn't set.
+#define AUTO_RADIATION_MAXIMUM_RANGE 20
+
 /// The default radiation pulse intensity.
-#define DEFAULT_RADIATION_INTENSITY 0.608
+#define DEFAULT_RADIATION_INTENSITY 0.296
 
 /// The default chance for uranium structures to irradiate
 #define URANIUM_IRRADIATION_INTENSITY DEFAULT_RADIATION_INTENSITY

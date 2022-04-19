@@ -13,7 +13,7 @@
 #define INTEGRITY_MAX_POWER_NUDGE 1500
 #define INTEGRITY_MIN_NUDGABLE_AMOUNT 0.7
 
-#define RADIATION_INTENSITY_AT_FULL_INTEGRITY 1.5
+#define RADIATION_INTENSITY_AT_FULL_INTEGRITY 3
 #define RADIATION_INTENSITY_AT_ZERO_INTEGRITY 20
 #define INTENSITY_EQUATION_SLOPE (RADIATION_INTENSITY_AT_ZERO_INTEGRITY - RADIATION_INTENSITY_AT_FULL_INTEGRITY)
 
@@ -44,7 +44,7 @@
 		else
 			threshold = (THRESHOLD_EQUATION_SLOPE * power_factor + 1) ** ((1 / integrity) ** INTEGRITY_EXPONENTIAL_DEGREE)
 
-	// Calculating chance is done entirely on integrity, so that actively delaminating SMs feel more dangerous
+	// Calculating intensity is done entirely on integrity, so that actively delaminating SMs feel more dangerous
 	var/intensity = (INTENSITY_EQUATION_SLOPE * (1 - integrity)) + RADIATION_INTENSITY_AT_FULL_INTEGRITY
 
 	radiation_pulse(

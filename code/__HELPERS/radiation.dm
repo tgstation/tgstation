@@ -17,9 +17,9 @@
 /// period of time.
 /proc/radiation_pulse(
 	atom/source,
-	max_range,
+	max_range = null,
 	threshold,
-	intensity = 0,
+	intensity = null,
 	minimum_exposure_time = 0,
 )
 	if(!SSradiation.can_fire)

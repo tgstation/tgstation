@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(radiation)
 			continue
 
 		var/current_insulation = 1
-		var/percieved_intensity
+		var/perceived_intensity
 		var/chance
 
 		for (var/turf/turf_in_between in get_line(source, target) - get_turf(source))
@@ -59,11 +59,17 @@ SUBSYSTEM_DEF(radiation)
 		if (current_insulation <= pulse_information.threshold)
 			continue
 
+		if(isnull(pulse_information.max_range) && pulse_information.intensity) // If max range is undefined, then set it to the distance where the intensity drops to the constant.
+			pulse_information.max_range = INVERSE(sqrt(DEFAULT_AUTO_RADIATION_INTENSITY_CONSTANT / pulse_information.intensity)) - 1
+
 		if(pulse_information.intensity)
-			percieved_intensity = pulse_information.intensity
-		else
-			percieved_intensity = ((1 + pulse_information.max_range) / 2) ** 2 // Sets a reasonable intensity for the given range if intensity wasn't set.
-		chance = 100 * (1 - RADIATION_INTENSITY_BASE ** (percieved_intensity * (current_insulation - pulse_information.threshold) * INVERSE(1 - pulse_information.threshold) * INVERSE((1 + get_dist_euclidian(source, target)) ** 2)))
+			perceived_intensity = pulse_information.intensity
+		else // If intensity is undefined, set it so that there will be a 5% chance to irradiate an object if that object is at the maximum range.
+			perceived_intensity = DEFAULT_AUTO_RADIATION_INTENSITY_CONSTANT * (1 + pulse_information.max_range) ** 2
+
+		perceived_intensity *= INVERSE((1 + get_dist_euclidian(source, target)) ** 2) // The further the target it, the lower the perceived intensity is.
+		perceived_intensity *= (current_insulation - pulse_information.threshold) * INVERSE(1 - pulse_information.threshold) // Perceived intensity decreases as objects that absorb radiation block its trajectory.
+		chance = 100 * (1 - RADIATION_INTENSITY_BASE ** perceived_intensity) // The target has a 50% of getting irradiated per perceived_intensity. Converges to 100%.
 
 		var/irradiation_result = SEND_SIGNAL(target, COMSIG_IN_THRESHOLD_OF_IRRADIATION, pulse_information)
 		if (irradiation_result & CANCEL_IRRADIATION)

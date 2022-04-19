@@ -89,7 +89,7 @@
 /// A scaling factor for the irradiation threshold of radiation pulses produced by tritium fires.
 #define TRITIUM_RADIATION_THRESHOLD_BASE 15
 /// A scaling factor for the irradiation intensity from energy released. This is the energy release required to achieve an irradiation intensity of 1.
-#define TRITIUM_RADIATION_INTENSITY_ENERGY_THRESHOLD_BASE 7e6
+#define TRITIUM_RADIATION_INTENSITY_ENERGY_THRESHOLD_BASE 8.4e7
 /// The minimum radiation pulse range from tritium fires.
 #define TRITIUM_MINIMUM_RADIATION_RANGE 6
 
@@ -250,7 +250,7 @@
 /// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate converts tritium to hydrogen.
 #define PN_TRITIUM_RAD_THRESHOLD_BASE 15
 /// A scaling factor for the intensity of the radiaion pulses generated when proto-nitrate converts tritium to hydrogen.
-#define PN_TRITIUM_RAD_INTENSITY_DIVISOR 4
+#define PN_TRITIUM_RAD_INTENSITY_DIVISOR 30
 
 /// The minimum temperature proto-nitrate can break BZ down at.
 #define PN_BZASE_MIN_TEMP 260
@@ -265,4 +265,4 @@
 /// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate breaks down BZ.
 #define PN_BZASE_RAD_THRESHOLD_BASE 15
 /// A scaling factor for the intensity of the radiaion pulses generated when proto-nitrate breaks down BZ.
-#define PN_BZASE_RAD_INTENSITY_DIVISOR 4
+#define PN_BZASE_RAD_INTENSITY_DIVISOR 30
