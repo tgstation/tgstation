@@ -35,6 +35,7 @@
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
+	faction = list("clowns")
 	var/attack_reagent
 
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
@@ -97,7 +98,7 @@
 	banana_rustle.Grant(src)
 	banana_bunch = new()
 	banana_bunch.Grant(src)
-	
+
 /mob/living/simple_animal/hostile/retaliate/clown/banana/Destroy()
 	. = ..()
 	QDEL_NULL(banana_rustle)
