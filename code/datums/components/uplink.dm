@@ -322,7 +322,6 @@
 /datum/component/uplink/proc/new_implant(datum/source, datum/component/uplink/uplink)
 	SIGNAL_HANDLER
 
-	uplink.add_telecrystals(uplink_handler.telecrystals)
 	return COMPONENT_DELETE_NEW_IMPLANT
 
 // PDA signal responses
