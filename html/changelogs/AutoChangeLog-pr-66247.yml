@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "ebows no longer inherit not needing a gun permit from pkas"

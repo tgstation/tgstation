@@ -422,7 +422,7 @@
 	icon_state = "coatminer"
 	inhand_icon_state = "coatminer"
 	allowed = list(
-		/obj/item/gun/energy/kinetic_accelerator,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
 		/obj/item/mining_scanner,
 		/obj/item/pickaxe,
 		/obj/item/resonator,

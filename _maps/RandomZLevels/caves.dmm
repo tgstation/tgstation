@@ -739,7 +739,7 @@
 /area/awaymission/caves/northblock)
 "dA" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dB" = (
@@ -989,8 +989,8 @@
 /area/awaymission/caves/listeningpost)
 "eK" = (
 /obj/structure/table,
-/obj/item/gun/energy/kinetic_accelerator,
-/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)

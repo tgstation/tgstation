@@ -160,35 +160,34 @@
 		genetic_damage_pulse()
 		return
 
-/obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
+/obj/machinery/computer/scan_consolenew/attackby(obj/item/item, mob/user, params)
 	// Store chromosomes in the console if there's room
-	if (istype(I, /obj/item/chromosome))
-		I.forceMove(src)
-		stored_chromosomes += I
-		to_chat(user, span_notice("You insert [I]."))
+	if (istype(item, /obj/item/chromosome))
+		item.forceMove(src)
+		stored_chromosomes += item
+		to_chat(user, span_notice("You insert [item]."))
 		return
 
 	// Insert data disk if console disk slot is empty
 	// Swap data disk if there is one already a disk in the console
-	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
+	if (istype(item, /obj/item/disk/data)) //INSERT SOME DISKETTES
 		// Insert disk into DNA Console
-		if (!user.transferItemToLoc(I,src))
+		if (!user.transferItemToLoc(item,src))
 			return
 		// If insertion was successful and there's already a diskette in the console, eject the old one.
 		if(diskette)
 			eject_disk(user)
 		// Set the new diskette.
-		diskette = I
-		to_chat(user, span_notice("You insert [I]."))
+		diskette = item
+		to_chat(user, span_notice("You insert [item]."))
 		return
 
 	// Recycle non-activator used injectors
 	// Turn activator used injectors (aka research injectors) to chromosomes
-	if(istype(I, /obj/item/dnainjector/activator))
-		var/obj/item/dnainjector/activator/A = I
-		if(A.used)
-			to_chat(user,span_notice("Recycled [I]."))
-			if(A.research && A.filled)
+	if(istype(item, /obj/item/dnainjector/activator))
+		var/obj/item/dnainjector/activator/activator = item
+		if(activator.used)
+			if(activator.research && activator.filled)
 				if(prob(60))
 					var/c_typepath = generate_chromosome()
 					var/obj/item/chromosome/CM = new c_typepath (src)
@@ -196,13 +195,16 @@
 					to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
 				else
 					to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
-				if(A.crispr_charge)
-					crispr_charges++
-			qdel(I)
+			if(activator.crispr_charge)
+				crispr_charges++
+				to_chat(user, span_notice("CRISPR charge added."))
+			qdel(item)
+			to_chat(user,span_notice("Recycled [item]."))
 			return
-
+		else
+			to_chat(user,span_notice("Cannot recycle unused activators."))
+			return
 	return ..()
-
 
 /obj/machinery/computer/scan_consolenew/AltClick(mob/user)
 	// Make sure the user can interact with the machine.

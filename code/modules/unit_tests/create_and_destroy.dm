@@ -52,6 +52,8 @@
 	ignore += typesof(/obj/effect/pod_landingzone)
 	//It's a trapdoor to nowhere
 	ignore += typesof(/obj/effect/mapping_helpers/trapdoor_placer)
+	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
+	ignore += typesof(/obj/effect/baseturf_helper)
 	//There's no shapeshift to hold
 	ignore += typesof(/obj/shapeshift_holder)
 	//No tauma to pass in

@@ -236,7 +236,7 @@
 
 			hair_alpha = owner_species.hair_alpha
 			hair_color = human_head_owner.hair_color
-			facial_hair_color = human_head_owner.hair_color
+			facial_hair_color = human_head_owner.facial_hair_color
 			fixed_hair_color = owner_species.fixed_mut_color //Can be null
 			hair_style = human_head_owner.hairstyle
 			facial_hairstyle = human_head_owner.facial_hairstyle
@@ -278,7 +278,7 @@
 					SET_OVERLAY_VALUE(facial_overlay, color, hair_color_source)
 					SET_OVERLAY_VALUE(hair_overlay, color, hair_color_source)
 			else
-				SET_OVERLAY_VALUE(facial_overlay, color, hair_color)
+				SET_OVERLAY_VALUE(facial_overlay, color, facial_hair_color)
 				SET_OVERLAY_VALUE(hair_overlay, color, hair_color)
 		else
 			SET_OVERLAY_VALUE(facial_overlay, color, override_hair_color)
