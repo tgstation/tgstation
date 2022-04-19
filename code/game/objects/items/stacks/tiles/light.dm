@@ -20,7 +20,7 @@
 	else
 		return ..()
 
-/obj/item/stack/tile/light/place_tile(turf/open/target_turf, mob/user)
+/obj/item/stack/tile/light/place_tile(turf/open/target_plating, mob/user)
 	. = ..()
 	var/turf/open/floor/light/floor = .
 	floor?.state = state

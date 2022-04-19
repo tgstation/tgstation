@@ -1,3 +1,8 @@
+/**
+ * TILE STACKS
+ * 
+ * Allows us to place a turf on a plating.
+ */
 /obj/item/stack/tile
 	name = "broken tile"
 	singular_name = "broken tile"
@@ -21,8 +26,8 @@
 	var/list/tile_reskin_types
 	/// Cached associative lazy list to hold the radial options for tile dirs. See tile_reskinning.dm for more information.
 	var/list/tile_rotate_dirs
-	/// Allows us to replace the turf we are attacking if our baseturfs are the same.
-	var/enforce_baseturf = FALSE
+	/// Allows us to replace the plating we are attacking if our baseturfs are the same.
+	var/replace_plating = FALSE
 
 /obj/item/stack/tile/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
@@ -58,33 +63,41 @@
 			return
 		. += span_notice("Those could work as a [verb] throwing weapon.")
 
-
-/obj/item/stack/tile/proc/place_tile(turf/open/target_turf, mob/user)
+/**
+ * Place our tile on a plating, or replace it.
+ * 
+ * Arguments:
+ * * target_plating - Instance of the plating we want to place on. Replaced during sucessful executions.
+ * * user - The mob doing the placing.
+ */
+/obj/item/stack/tile/proc/place_tile(turf/open/floor/plating/target_plating, mob/user)
 	var/turf/placed_turf_path = turf_type
 	if(!ispath(placed_turf_path))
 		return
+	if(!istype(target_plating))
+		return
 
-	if(!enforce_baseturf)
+	if(!replace_plating)
 		if(!use(1))
 			return
-		target_turf = target_turf.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR)
-		target_turf.setDir(turf_dir)
-		playsound(target_turf, 'sound/weapons/genhit.ogg', 50, TRUE)
-		return target_turf // Most executions should end here.
+		target_plating = target_plating.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR)
+		target_plating.setDir(turf_dir)
+		playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
+		return target_plating // Most executions should end here.
 
-	// If we and the target tile share the same initial baseturf, replace em.
-	if(initial(target_turf.baseturfs) != initial(placed_turf_path.baseturfs))
+	// If we and the target tile share the same initial baseturf and they consent, replace em.
+	if(!target_plating.allow_replacement || initial(target_plating.baseturfs) != initial(placed_turf_path.baseturfs))
 		to_chat(user, span_notice("You cannot place this tile here directly!"))
 		return
 	to_chat(user, span_notice("You begin replacing the floor with the tile..."))
-	if(!do_after(user, 3 SECONDS, target_turf))
+	if(!do_after(user, 3 SECONDS, target_plating))
 		return
 	if(!use(1))
 		return
-	target_turf = target_turf.ChangeTurf(placed_turf_path, target_turf.baseturfs, CHANGETURF_INHERIT_AIR)
-	target_turf.setDir(turf_dir)
-	playsound(target_turf, 'sound/weapons/genhit.ogg', 50, TRUE)
-	return target_turf
+	target_plating = target_plating.ChangeTurf(placed_turf_path, target_plating.baseturfs, CHANGETURF_INHERIT_AIR)
+	target_plating.setDir(turf_dir)
+	playsound(target_plating, 'sound/weapons/genhit.ogg', 50, TRUE)
+	return target_plating
 
 //Grass
 /obj/item/stack/tile/grass
@@ -1053,7 +1066,7 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	merge_type = /obj/item/stack/tile/material
 
-/obj/item/stack/tile/material/place_tile(turf/open/target_turf, mob/user)
+/obj/item/stack/tile/material/place_tile(turf/open/target_plating, mob/user)
 	. = ..()
 	var/turf/open/floor/material/floor = .
 	floor?.set_custom_materials(mats_per_unit)
@@ -1215,7 +1228,7 @@
 	inhand_icon_state = "tile-glass"
 	merge_type = /obj/item/stack/tile/glass
 	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
-	enforce_baseturf = TRUE
+	replace_plating = TRUE
 
 /obj/item/stack/tile/glass/sixty
 	amount = 60
@@ -1229,7 +1242,7 @@
 	turf_type = /turf/open/floor/glass/reinforced
 	merge_type = /obj/item/stack/tile/rglass
 	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.125, /datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
-	enforce_baseturf = TRUE
+	replace_plating = TRUE
 
 /obj/item/stack/tile/rglass/sixty
 	amount = 60

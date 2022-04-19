@@ -1,12 +1,8 @@
-/* In this file:
- *
- * Plating
- * Airless
- * Airless plating
- * Engine floor
- * Foam plating
+/**
+ * PLATINGS
+ * 
+ * Handle interaction with tiles and lets you put stuff on top of it.
  */
-
 /turf/open/floor/plating
 	name = "plating"
 	icon_state = "plating"
@@ -20,6 +16,11 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	var/attachment_holes = TRUE
+
+	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
+	/// And if our baseturfs are compatible.
+	/// See [/obj/item/stack/tile/proc/place_tile].
+	var/allow_replacement = TRUE
 
 /turf/open/floor/plating/setup_broken_states()
 	return list("platingdmg1", "platingdmg2", "platingdmg3")
