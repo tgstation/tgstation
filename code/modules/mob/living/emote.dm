@@ -27,7 +27,7 @@
 			// The existing timer restarts if it's already running
 			blush_timer = addtimer(CALLBACK(living_emote, /datum/emote/living/blush.proc/end_blush, living_user), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-datum/emote/living/blush/proc/end_blush(mob/living_user)
+datum/emote/living/blush/proc/end_blush(mob/living/living_user)
 	REMOVE_TRAIT(living_user, TRAIT_BLUSHING, SPECIES_TRAIT)
 	living_user.update_body()
 
