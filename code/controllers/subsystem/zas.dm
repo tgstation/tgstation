@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(zas)
 	init_order = INIT_ORDER_AIR
 	flags = SS_POST_FIRE_TIMING
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait = 0.5 SECONDS
+	wait = 2 SECONDS
 
 	var/cached_cost = 0
 

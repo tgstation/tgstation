@@ -6,7 +6,7 @@ The more pressure, the more boom.
 If it gains pressure too slowly, it may leak or just rupture instead of exploding.
 */
 
-#define FIREDBG
+//#define FIREDBG
 
 /turf/var/obj/effect/hotspot/fire = null
 
