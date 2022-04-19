@@ -51004,6 +51004,11 @@
 "qZP" = (
 /obj/structure/chair/stool/directional/south,
 /obj/machinery/light/directional/west,
+/obj/machinery/camera{
+	c_tag = "Science - Mech Bay";
+	dir = 10;
+	network = list("ss13","rd")
+	},
 /turf/open/floor/circuit,
 /area/science/robotics/mechbay)
 "qZW" = (
