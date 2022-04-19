@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { useBackend, useLocalState } from '../backend';
 import { NtosWindow } from '../layouts';
 import { Input, Section, Box, Icon } from '../components';
