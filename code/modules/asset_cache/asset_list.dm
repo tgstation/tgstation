@@ -12,7 +12,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset
 	var/_abstract = /datum/asset
-	var/cached_url_mappings
+	var/cached_serialized_url_mappings
+	var/cached_serialized_url_mappings_transport_type
 
 	/// Whether or not this asset should be loaded in the "early assets" SS
 	var/early = FALSE
@@ -31,10 +32,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /// Returns a cached tgui message of URL mappings
 /datum/asset/proc/get_serialized_url_mappings()
-	if (isnull(cached_url_mappings))
-		cached_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+	if (isnull(cached_serialized_url_mappings) || cached_serialized_url_mappings_transport_type != SSassets.transport.type)
+		cached_serialized_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+		cached_serialized_url_mappings_transport_type = SSassets.transport.type
 
-	return cached_url_mappings
+	return cached_serialized_url_mappings
 
 /datum/asset/proc/register()
 	return
