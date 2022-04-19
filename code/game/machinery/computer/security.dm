@@ -201,6 +201,10 @@
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
 
+/obj/machinery/computer/secure_data/laptop/syndie
+	desc = "A cheap, jailbroken security laptop. It functions as a security records console. It's bolted to the table."
+	req_one_access = list(ACCESS_SYNDICATE)
+
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/ui_interact(mob/user)
 	. = ..()

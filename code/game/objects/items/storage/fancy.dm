@@ -77,7 +77,7 @@
 	name = "donut box"
 	desc = "Mmm. Donuts."
 	icon = 'icons/obj/food/donuts.dmi'
-	icon_state = "donutbox_inner"
+	icon_state = "donutbox_open" //composite image used for mapping
 	base_icon_state = "donutbox"
 	spawn_type = /obj/item/food/donut/plain
 	is_open = TRUE

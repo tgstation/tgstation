@@ -89,6 +89,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS
 	/// Determines if the turret is on
 	var/on = TRUE
+	/// Determines if our projectiles hit our faction
+	var/ignore_faction = FALSE
 	/// Same faction mobs will never be shot at, no matter the other settings
 	var/list/faction = list("turret")
 	/// The spark system, used for generating... sparks?
@@ -628,6 +630,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	A.preparePixelProjectile(target, T)
 	A.firer = src
 	A.fired_from = src
+	if(ignore_faction)
+		A.ignored_factions = faction
 	A.fire()
 	return A
 
@@ -778,9 +782,6 @@ DEFINE_BITFIELD(turret_flags, list(
 		addtimer(CALLBACK(src, .proc/shootAt, target), 10)
 		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
 		return TRUE
-
-/obj/machinery/porta_turret/syndicate/pod/toolbox
-	max_integrity = 100
 
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")

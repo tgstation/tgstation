@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - admin: "Adds \"Open VV\" to traitor panel antags, which opens that antag's vv panel."
-  - admin: "\"Mark as in/completed\" by objectives in the traitor panel now changes color based on whether the objective is determined to be \"complete\", instead of whether an admin has marked it to be complete. For some objectives, it might not update color (only text) when an admin marks it as completed - this means the objective disregards whether an admin has marked it as complete."

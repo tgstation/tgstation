@@ -63,9 +63,9 @@ SUBSYSTEM_DEF(economy)
 		mail_blocked = TRUE
 	for(var/dep_id in department_accounts)
 		if(dep_id == ACCOUNT_CAR) //cargo starts with NOTHING
-			new /datum/bank_account/department(dep_id, 0)
+			new /datum/bank_account/department(dep_id, 0, player_account = FALSE)
 			continue
-		new /datum/bank_account/department(dep_id, budget_to_hand_out)
+		new /datum/bank_account/department(dep_id, budget_to_hand_out, player_account = FALSE)
 	return ..()
 
 /datum/controller/subsystem/economy/Recover()

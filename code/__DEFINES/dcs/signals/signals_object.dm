@@ -96,6 +96,8 @@
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 /// A mob has just equipped an item. Called on [/mob] from base of [/obj/item/equipped()]: (/obj/item/equipped_item, slot)
 #define COMSIG_MOB_EQUIPPED_ITEM "mob_equipped_item"
+/// A mob has just unequipped an item.
+#define COMSIG_MOB_UNEQUIPPED_ITEM "mob_unequipped_item"
 ///called on [/obj/item] before unequip from base of [mob/proc/doUnEquip]: (force, atom/newloc, no_move, invdrop, silent)
 #define COMSIG_ITEM_PRE_UNEQUIP "item_pre_unequip"
 	///only the pre unequip can be cancelled
@@ -141,6 +143,8 @@
 	#define COMPONENT_HANDLED_GRILLING (1<<0)
 ///Called when an object is turned into another item through grilling ontop of a griddle
 #define COMSIG_GRILL_COMPLETED "item_grill_completed"
+///Called when an object is meant to be grilled through a grill: (atom/fry_object, grill_time)
+#define COMSIG_GRILL_FOOD "item_grill_food"
 //Called when an object is in an oven
 #define COMSIG_ITEM_BAKED "item_baked"
 	#define COMPONENT_HANDLED_BAKING (1<<0)
@@ -213,8 +217,6 @@
 #define COMSIG_ITEM_EXPORTED "item_sold"
 	/// Stops the export from adding the export information to the report, so you can handle it manually.
 	#define COMPONENT_STOP_EXPORT_REPORT (1<<0)
-///called when a wrapped up structure is opened by hand
-#define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"
 ///called when a wrapped up item is opened by hand
 #define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
 ///called when getting the item's exact ratio for cargo's profit.

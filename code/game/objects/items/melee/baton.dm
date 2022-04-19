@@ -371,7 +371,7 @@
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.Jitter(20)
-	target.stuttering += 20
+	target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
 
 /obj/item/melee/baton/security
 	name = "stun baton"
@@ -564,7 +564,7 @@
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
 	target.Jitter(20)
 	target.set_confusion(max(10, target.get_confusion()))
-	target.stuttering = max(8, target.stuttering)
+	target.set_timed_status_effect(16 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 2 SECONDS)

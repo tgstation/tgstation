@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "On Tramstation, the external access airlock to the Supermatter's cooling loop uses a different form of lighting that functions in the outside setting."

@@ -119,7 +119,7 @@
 	name = "clown burger"
 	desc = "This tastes funny..."
 	icon_state = "clownburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/medicine/mannitol = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	foodtypes = GRAIN | FRUIT
 	venue_value = FOOD_PRICE_NORMAL
 

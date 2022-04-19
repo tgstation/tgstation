@@ -129,7 +129,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A roll of tobacco and nicotine."
 	icon_state = "cigoff"
 	throw_speed = 0.5
-	inhand_icon_state = "cigoff"
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	grind_results = list()
@@ -143,6 +142,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_on = "cigon"
 	/// The icon state used when this is extinguished.
 	var/icon_off = "cigoff"
+	/// The inhand icon state used when this is lit.
+	var/inhand_icon_on = "cigon"
+	/// The inhand icon state used when this is extinguished.
+	var/inhand_icon_off = "cigoff"
 	/// How long the cigarette lasts in seconds
 	var/smoketime = 6 MINUTES
 	/// How much time between drags of the cigarette.
@@ -169,6 +172,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(starts_lit)
 		light()
 	AddComponent(/datum/component/knockoff, 90, list(BODY_ZONE_PRECISE_MOUTH), list(ITEM_SLOT_MASK)) //90% to knock off when wearing a mask
+	AddElement(/datum/element/update_icon_updates_onmob)
+	icon_state = icon_off
+	inhand_icon_state = inhand_icon_off
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -214,7 +220,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/update_icon_state()
 	. = ..()
-	icon_state = lit ? icon_on : icon_off
+	if(lit)
+		icon_state = icon_on
+		inhand_icon_state = inhand_icon_on
+	else
+		icon_state = icon_off
+		inhand_icon_state = inhand_icon_off
 
 /// Lights the cigarette with given flavor text.
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
@@ -416,7 +427,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "spliffoff"
 	type_butt = /obj/item/cigbutt/roach
 	throw_speed = 0.5
-	inhand_icon_state = "spliffoff"
 	smoketime = 4 MINUTES
 	chem_volume = 50
 	list_reagents = null
@@ -484,10 +494,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "\improper Little Timmy's candy cigarette"
 	desc = "For all ages*! Doesn't contain any amount of nicotine. Health and safety risks can be read on the tip of the cigarette."
 	smoketime = 2 MINUTES
+	icon_state = "candyoff"
 	icon_on = "candyon"
 	icon_off = "candyoff" //make sure to add positional sprites in icons/obj/cigarettes.dmi if you add more.
-	inhand_icon_state = "candyoff"
-	icon_state = "candyoff"
+	inhand_icon_off = "candyoff"
 	type_butt = /obj/item/food/candy_trash
 	heat = 473.15 // Lowered so that the sugar can be carmalized, but not burnt.
 	lung_harm = 0.5
@@ -519,9 +529,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
 	icon_off = "cigaroff" //make sure to add positional sprites in icons/obj/cigarettes.dmi if you add more.
+	inhand_icon_on = "cigaron"
+	inhand_icon_off = "cigaroff"
 	type_butt = /obj/item/cigbutt/cigarbutt
 	throw_speed = 0.5
-	inhand_icon_state = "cigaroff"
 	smoketime = 11 MINUTES
 	chem_volume = 40
 	list_reagents = list(/datum/reagent/drug/nicotine = 25)
@@ -534,7 +545,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cigar2off"
 	smoketime = 20 MINUTES
 	chem_volume = 80
-	list_reagents =list(/datum/reagent/drug/nicotine = 40)
+	list_reagents = list(/datum/reagent/drug/nicotine = 40)
 
 /obj/item/clothing/mask/cigarette/cigar/havana
 	name = "premium Havanian cigar"
@@ -544,7 +555,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cigar2off"
 	smoketime = 30 MINUTES
 	chem_volume = 60
-	list_reagents =list(/datum/reagent/drug/nicotine = 45)
+	list_reagents = list(/datum/reagent/drug/nicotine = 45)
 
 /obj/item/cigbutt
 	name = "cigarette butt"
@@ -567,9 +578,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "smoking pipe"
 	desc = "A pipe, for smoking. Probably made of meerschaum or something."
 	icon_state = "pipeoff"
-	inhand_icon_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
+	inhand_icon_on = null
+	inhand_icon_off = null
 	smoketime = 0
 	chem_volume = 200 // So we can fit densified chemicals plants
 	list_reagents = null
@@ -636,10 +648,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "corn cob pipe"
 	desc = "A nicotine delivery system popularized by folksy backwoodsmen and kept popular in the modern age and beyond by space hipsters. Can be loaded with objects."
 	icon_state = "cobpipeoff"
-	inhand_icon_state = "cobpipeoff"
 	icon_on = "cobpipeon"  //Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
-
+	inhand_icon_on = null
+	inhand_icon_off = null
 
 /////////
 //ZIPPO//
