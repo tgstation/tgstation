@@ -1844,7 +1844,7 @@ def __put_buttons_in_buttonframe(choices):
 
         # for the commandButton, bind activation events to the activation event handler
         commandButton  = tempButton
-        handler = __buringtonevent
+        handler = __buttonEvent
         for selectionEvent in STANDARD_SELECTION_EVENTS:
             commandButton.bind("<%s>" % selectionEvent, handler)
 
