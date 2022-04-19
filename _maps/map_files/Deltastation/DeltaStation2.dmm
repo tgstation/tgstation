@@ -34137,7 +34137,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/structure/window/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/iron,
 /area/maintenance/port/lesser)
 "hKO" = (
@@ -46855,7 +46855,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/structure/window/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/plating,
 /area/maintenance/port/lesser)
 "lyI" = (
@@ -47861,9 +47861,6 @@
 "lNC" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "lNG" = (
@@ -52907,6 +52904,7 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "npx" = (
@@ -53650,6 +53648,7 @@
 "nAL" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "nAT" = (
@@ -60294,7 +60293,6 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "pAZ" = (
-/obj/machinery/firealarm/directional/south,
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -66711,7 +66709,6 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "rtx" = (
@@ -68086,7 +68083,8 @@
 /area/science/misc_lab/range)
 "rNb" = (
 /obj/machinery/door/airlock{
-	name = "Bathroom"
+	name = "Bathroom";
+	req_access_txt = "8"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/stripes/line{
@@ -68096,6 +68094,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron,
 /area/science/breakroom)
 "rNh" = (
@@ -75018,7 +75017,7 @@
 /area/cargo/storage)
 "tKG" = (
 /obj/machinery/door/poddoor/incinerator_ordmix,
-/turf/open/space/basic,
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "tKS" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -76191,7 +76190,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/structure/window/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/iron,
 /area/maintenance/port/lesser)
 "ugv" = (
@@ -80755,12 +80754,6 @@
 	},
 /turf/open/floor/iron/checker,
 /area/service/hydroponics/garden/abandoned)
-"vzF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/science/mixing)
 "vzG" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -81025,7 +81018,7 @@
 /obj/structure/sign/warning/fire{
 	pixel_x = 32
 	},
-/obj/structure/window/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/iron,
 /area/maintenance/port/lesser)
 "vEY" = (
@@ -84434,7 +84427,9 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "wKA" = (
-/obj/machinery/computer/atmos_control/noreconnect,
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("ordnancegas1" = "Burn Chamber", "ordnancegas2" = "Freezer Chamber")
+	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
@@ -89131,6 +89126,9 @@
 "yfh" = (
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "yfi" = (
@@ -120605,7 +120603,7 @@ lCB
 tKG
 tKG
 tKG
-lCB
+xdD
 xAY
 wWx
 dLY
@@ -121378,7 +121376,7 @@ mub
 nEk
 xdD
 nAL
-vzF
+oEs
 yfh
 oBJ
 dLW
