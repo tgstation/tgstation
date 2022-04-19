@@ -822,6 +822,7 @@
 
 /// Sets our generic bleedstacks
 /obj/item/bodypart/proc/setBleedStacks(set_to)
+	SHOULD_CALL_PARENT(TRUE)
 	adjustBleedStacks(set_to - generic_bleedstacks)
 
 /// Modifies our generic bleedstacks. You must use this to change the variable
