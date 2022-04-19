@@ -45,6 +45,10 @@
 	display_results(user, target, span_notice("\The [tool] pings as it finishes filtering [target]'s blood."),
 		span_notice("\The [tool] pings as it stops pumping [target]'s blood."),
 		"\The [tool] pings as it stops pumping.")
+
+	if(locate(/obj/item/healthanalyzer) in user.held_items)
+		chemscan(user, target)
+
 	return ..()
 
 /datum/surgery_step/filter_blood/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
