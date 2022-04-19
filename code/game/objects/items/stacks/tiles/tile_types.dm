@@ -67,12 +67,12 @@
 	if(!enforce_baseturf)
 		if(!use(1))
 			return
-		target_turf = target_turf.PlaceOnTop(placed_turf_path)
+		target_turf = target_turf.PlaceOnTop(placed_turf_path, flags = CHANGETURF_INHERIT_AIR)
 		target_turf.setDir(turf_dir)
 		playsound(target_turf, 'sound/weapons/genhit.ogg', 50, TRUE)
 		return target_turf // Most executions should end here.
 
-	// If we and the target tile share the same baseturf, replace em.
+	// If we and the target tile share the same initial baseturf, replace em.
 	if(initial(target_turf.baseturfs) != initial(placed_turf_path.baseturfs))
 		to_chat(user, span_notice("You cannot place this tile here directly!"))
 		return
