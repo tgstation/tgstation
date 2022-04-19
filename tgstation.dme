@@ -4271,6 +4271,7 @@
 #include "code\modules\wiremod\components\abstract\list_variable.dm"
 #include "code\modules\wiremod\components\abstract\module.dm"
 #include "code\modules\wiremod\components\abstract\variable.dm"
+#include "code\modules\wiremod\components\action\laserpointer.dm"
 #include "code\modules\wiremod\components\action\light.dm"
 #include "code\modules\wiremod\components\action\mmi.dm"
 #include "code\modules\wiremod\components\action\pathfind.dm"
