@@ -312,7 +312,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Returns whether or not this preference is accessible.
 /// If FALSE, will not show in the UI and will not be editable (by update_preference).
-/// The applying_preference paramter designates whether the preference is being edited or applied
 /datum/preference/proc/is_accessible(datum/preferences/preferences)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
