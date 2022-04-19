@@ -147,14 +147,14 @@ export const NtosMessenger = (props, context) => {
               />
               <Button
                 icon="sort"
-                content={sortByJob ? "Sort by: Job" : "Sort by: Name"}
+                content={`Sort by: ${sortByJob ? "Job" : "Name"}`}
                 onClick={() => act('PDA_changeSortStyle')}
               />
               {!!virus_attach && (
                 <Button
                   icon="bug"
                   color="bad"
-                  content={sending_virus ? "Attach Virus: Yes" : "Attach Virus: No"}
+                  content={`Attach Virus: ${sending_virus ? "Yes" : "No"}`}
                   onClick={() => act('PDA_toggleVirus')}
                 />
               )}
