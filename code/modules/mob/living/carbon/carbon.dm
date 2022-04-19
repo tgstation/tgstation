@@ -1,7 +1,6 @@
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_reagents(1000, REAGENT_HOLDER_ALIVE)
-	assign_bodypart_ownership()
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	register_context()
 
@@ -348,7 +347,7 @@
 		return FALSE
 	visible_message(span_danger("[src] manages to [cuff_break ? "break" : "remove"] [I]!"))
 	to_chat(src, span_notice("You successfully [cuff_break ? "break" : "remove"] [I]."))
-	
+
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
@@ -929,20 +928,18 @@
 		if (heart.organ_flags & ORGAN_FAILING)
 			return DEFIB_FAIL_FAILING_HEART
 
-	// Carbons with HARS do not need a brain
-	if (!dna?.check_mutation(/datum/mutation/human/headless))
-		var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
+	var/obj/item/organ/brain/current_brain = getorgan(/obj/item/organ/brain)
 
-		if (QDELETED(BR))
-			return DEFIB_FAIL_NO_BRAIN
+	if (QDELETED(current_brain))
+		return DEFIB_FAIL_NO_BRAIN
 
-		if (BR.organ_flags & ORGAN_FAILING)
-			return DEFIB_FAIL_FAILING_BRAIN
+	if (current_brain.organ_flags & ORGAN_FAILING)
+		return DEFIB_FAIL_FAILING_BRAIN
 
-		if (BR.suicided || BR.brainmob?.suiciding)
-			return DEFIB_FAIL_NO_INTELLIGENCE
+	if (current_brain.suicided || current_brain.brainmob?.suiciding)
+		return DEFIB_FAIL_NO_INTELLIGENCE
 
-	if(key && key[1] == "@") // Adminghosts (#61870)
+	if(key && key[1] == "@") // Adminghosts
 		return DEFIB_NOGRAB_AGHOST
 
 	return DEFIB_POSSIBLE
@@ -1000,6 +997,7 @@
 ///Proc to hook behavior on bodypart additions.
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	bodyparts += new_bodypart
+	new_bodypart.owner = src
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
@@ -1015,7 +1013,6 @@
 ///Proc to hook behavior on bodypart removals.
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
 	bodyparts -= old_bodypart
-
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs - 1)
@@ -1049,43 +1046,52 @@
 	if(href_list[VV_HK_MODIFY_BODYPART])
 		if(!check_rights(R_SPAWN))
 			return
-		var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
+		var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("replace","remove")
 		if(!edit_action)
 			return
 		var/list/limb_list = list()
-		if(edit_action == "remove" || edit_action == "augment")
-			for(var/obj/item/bodypart/B in bodyparts)
+		if(edit_action == "remove")
+			for(var/obj/item/bodypart/B as anything in bodyparts)
 				limb_list += B.body_zone
-			if(edit_action == "remove")
 				limb_list -= BODY_ZONE_CHEST
 		else
-			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-			for(var/obj/item/bodypart/B in bodyparts)
-				limb_list -= B.body_zone
-		var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in sort_list(limb_list)
+			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
+		var/result = input(usr, "Please choose which bodypart to [edit_action]","[capitalize(edit_action)] Bodypart") as null|anything in sort_list(limb_list)
 		if(result)
 			var/obj/item/bodypart/BP = get_bodypart(result)
+			var/list/limbtypes = list()
+			switch(result)
+				if(BODY_ZONE_CHEST)
+					limbtypes = typesof(/obj/item/bodypart/chest)
+				if(BODY_ZONE_R_ARM)
+					limbtypes = typesof(/obj/item/bodypart/r_arm)
+				if(BODY_ZONE_L_ARM)
+					limbtypes = typesof(/obj/item/bodypart/l_arm)
+				if(BODY_ZONE_HEAD)
+					limbtypes = typesof(/obj/item/bodypart/head)
+				if(BODY_ZONE_L_LEG)
+					limbtypes = typesof(/obj/item/bodypart/l_leg)
+				if(BODY_ZONE_R_LEG)
+					limbtypes = typesof(/obj/item/bodypart/r_leg)
 			switch(edit_action)
 				if("remove")
 					if(BP)
-						BP.drop_limb()
+						BP.drop_limb(special = TRUE)
+						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [parse_zone(BP.body_zone)]")
 					else
 						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
-				if("add")
-					if(BP)
-						to_chat(usr, span_boldwarning("[src] already has such bodypart."))
+						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+				if("replace")
+					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
+					var/obj/item/bodypart/new_bp = new limb2add()
+
+					if(new_bp.replace_limb(src, special = TRUE))
+						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [BP.type] with [new_bp.type]")
+						qdel(BP)
 					else
-						if(!regenerate_limb(result))
-							to_chat(usr, span_boldwarning("[src] cannot have such bodypart."))
-				if("augment")
-					if(ishuman(src))
-						if(BP)
-							BP.change_bodypart_status(BODYPART_ROBOTIC, TRUE, TRUE)
-						else
-							to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
-					else
-						to_chat(usr, span_boldwarning("Only humans can be augmented."))
-		admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src]")
+						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
+						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+
 	if(href_list[VV_HK_MAKE_AI])
 		if(!check_rights(R_SPAWN))
 			return

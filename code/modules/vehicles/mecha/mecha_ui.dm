@@ -203,6 +203,9 @@
 	if(!(usr in occupants))
 		switch(action)
 			if("stopmaint")
+				if(construction_state > MECHA_LOCKED)
+					to_chat(usr, span_warning("You must end Maintenance Procedures first!"))
+					return
 				mecha_flags &= ~ADDING_MAINT_ACCESS_POSSIBLE
 				ui.close()
 				return FALSE

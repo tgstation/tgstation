@@ -224,7 +224,7 @@
 	flush = FALSE
 
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
-	for(var/obj/item/small_delivery/O in src)
+	for(var/obj/item/delivery/O in src)
 		H.tomail = TRUE
 		return
 

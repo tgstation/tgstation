@@ -194,7 +194,7 @@
 			continue
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
-		M.stuttering += 20
+		M.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
 		var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
 		if(ears)
 			ears.adjustEarDamage(0, 30)

@@ -324,15 +324,11 @@
 	return
 
 /mob/living/carbon/proc/handle_bodyparts(delta_time, times_fired)
-	var/stam_regen = FALSE
 	if(stam_regen_start_time <= world.time)
-		stam_regen = TRUE
 		if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
-	for(var/I in bodyparts)
-		var/obj/item/bodypart/BP = I
-		if(BP.needs_processing)
-			. |= BP.on_life(delta_time, times_fired, stam_regen)
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		. |= limb.on_life(delta_time, times_fired)
 
 /mob/living/carbon/proc/handle_organs(delta_time, times_fired)
 	if(stat != DEAD)
@@ -419,7 +415,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 #define BALLMER_POINTS 5
 
-//this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
+// This updates all special effects that really should be status effect datums: Druggy, Hallucinations, Drunkenness, Mute, etc..
 /mob/living/carbon/handle_status_effects(delta_time, times_fired)
 	..()
 
@@ -462,7 +458,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		adjust_drowsyness(-1 * restingpwr * delta_time)
 		blur_eyes(1 * delta_time)
 		if(DT_PROB(2.5, delta_time))
-			AdjustSleeping(100)
+			AdjustSleeping(10 SECONDS)
 
 	//Jitteriness
 	if(jitteriness)
@@ -486,7 +482,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 			if(DT_PROB(16, delta_time))
-				slurring += 2
+				adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk)
 			jitteriness = max(jitteriness - (1.5 * delta_time), 0)
 			throw_alert(ALERT_DRUNK, /atom/movable/screen/alert/drunk)
 			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
@@ -495,8 +491,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			clear_alert(ALERT_DRUNK)
 			sound_environment_override = SOUND_ENVIRONMENT_NONE
 
-		if(drunkenness >= 11 && slurring < 5)
-			slurring += 0.6 * delta_time
+		if(drunkenness >= 11)
+			var/datum/status_effect/speech/slurring/drunk/already_slurring = has_status_effect(/datum/status_effect/speech/slurring/drunk)
+			if(!already_slurring || already_slurring.duration - world.time <= 10 SECONDS)
+				adjust_timed_status_effect(1.2 SECONDS * delta_time, /datum/status_effect/speech/slurring/drunk)
 
 		if(mind && (is_scientist_job(mind.assigned_role) || is_research_director_job(mind.assigned_role)))
 			if(SSresearch.science_tech)
@@ -758,7 +756,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(limb.get_damage() >= limb.max_damage)
 				limb.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
 				if(limb.cremation_progress >= 100)
-					if(limb.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+					if(IS_ORGANIC_LIMB(limb)) //Non-organic limbs don't burn
 						limb.drop_limb()
 						limb.visible_message(span_warning("[src]'s [limb.name] crumbles into ash!"))
 						qdel(limb)
@@ -774,7 +772,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(head.get_damage() >= head.max_damage)
 			head.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
 			if(head.cremation_progress >= 100)
-				if(head.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+				if(IS_ORGANIC_LIMB(head)) //Non-organic limbs don't burn
 					head.drop_limb()
 					head.visible_message(span_warning("[src]'s head crumbles into ash!"))
 					qdel(head)

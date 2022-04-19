@@ -6,15 +6,9 @@
 #define CART_MANIFEST (1<<4)
 #define CART_CLOWN (1<<5)
 #define CART_MIME (1<<6)
-#define CART_JANITOR (1<<7)
-#define CART_REAGENT_SCANNER (1<<8)
-#define CART_NEWSCASTER (1<<9)
-#define CART_REMOTE_DOOR (1<<10)
-#define CART_STATUS_DISPLAY (1<<11)
-#define CART_QUARTERMASTER (1<<12)
-#define CART_HYDROPONICS (1<<13)
-#define CART_DRONEPHONE (1<<14)
-#define CART_DRONEACCESS (1<<15)
+#define CART_REAGENT_SCANNER (1<<7)
+#define CART_STATUS_DISPLAY (1<<10)
+#define CART_QUARTERMASTER (1<<11)
 
 /// PDA ui menu defines
 #define PDA_UI_HUB 0
@@ -39,11 +33,8 @@
 #define PDA_UI_SUPPLY_RECORDS 46
 #define PDA_UI_SILO_LOGS 47
 #define PDA_UI_BOTS_ACCESS 48
-#define PDA_UI_JANNIE_LOCATOR 49
-#define PDA_UI_EMOJI_GUIDE 50
-#define PDA_UI_SIGNALER 51
-#define PDA_UI_NEWSCASTER 52
-#define PDA_UI_NEWSCASTER_ERROR 53
+#define PDA_UI_EMOJI_GUIDE 49
+#define PDA_UI_SIGNALER 50
 
 
 // Used by PDA and cartridge code to reduce repetitiveness of spritesheets

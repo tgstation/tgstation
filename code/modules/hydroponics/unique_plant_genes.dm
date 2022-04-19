@@ -14,28 +14,22 @@
 		return
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	shield_uses = round(our_seed.potency / 20)
-	our_plant.AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_HANDS, shield_uses, TRUE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire)) //deliver us from evil o melon god
+	//deliver us from evil o melon god
+	our_plant.AddComponent(/datum/component/anti_magic, \
+		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
+		inventory_flags = ITEM_SLOT_HANDS, \
+		charges = shield_uses, \
+		drain_antimagic = CALLBACK(src, .proc/drain_antimagic), \
+		expiration = CALLBACK(src, .proc/expire), \
+	)
 
-/*
- * The proc called when the holymelon successfully blocks a spell.
- *
- * user - the mob who's using the melon
- * major - whether the spell was 'major' or not
- * our_plant - our plant, who's eating the magic spell
- */
-/datum/plant_gene/trait/anti_magic/proc/block_magic(mob/user, major, obj/item/our_plant)
-	if(major)
-		to_chat(user, "<span class='warning'>[our_plant] hums slightly, and seems to decay a bit.</span>")
+/// When the plant our gene is hosted in is drained of an anti-magic charge.
+/datum/plant_gene/trait/anti_magic/proc/drain_antimagic(mob/user, obj/item/our_plant)
+	to_chat(user, span_warning("[our_plant] hums slightly, and seems to decay a bit."))
 
-/*
- * The proc called when the holymelon uses up all of its anti-magic charges.
- *
- * user - the mob who's using the melon
- * major - whether the spell was 'major' or not
- * our_plant - our plant, who tragically melted protecting us from magics
- */
+/// When the plant our gene is hosted in is drained of all of its anti-magic charges.
 /datum/plant_gene/trait/anti_magic/proc/expire(mob/user, obj/item/our_plant)
-	to_chat(user, "<span class='warning'>[our_plant] rapidly turns into ash!</span>")
+	to_chat(user, span_warning("[our_plant] rapidly turns into ash!"))
 	new /obj/effect/decal/cleanable/ash(our_plant.drop_location())
 	qdel(our_plant)
 

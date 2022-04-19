@@ -389,7 +389,7 @@
 			SEND_SIGNAL(src, COMSIG_SUPERMATTER_DELAM_ALARM)
 			lastwarning = REALTIMEOFDAY
 			if(!has_reached_emergency)
-				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_SUPERMATTER)
+				investigate_log("has reached the emergency point for the first time.", INVESTIGATE_ENGINE)
 				message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 				has_reached_emergency = TRUE
 		else if(damage >= damage_archived) // The damage is still going up

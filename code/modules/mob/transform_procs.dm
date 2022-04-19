@@ -59,7 +59,7 @@
 	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
 	return src
 
-/mob/proc/AIize(transfer_after = TRUE, client/preference_source, move = TRUE)
+/mob/proc/AIize(client/preference_source, move = TRUE)
 	var/list/turf/landmark_loc = list()
 
 	if(!move)
@@ -87,13 +87,6 @@
 
 	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 	. = our_AI
-
-	if(mind)
-		if(!transfer_after)
-			mind.active = FALSE
-		mind.transfer_to(our_AI)
-	else if(transfer_after)
-		our_AI.key = key
 
 	if(preference_source)
 		apply_pref_name(/datum/preference/name/ai, preference_source)

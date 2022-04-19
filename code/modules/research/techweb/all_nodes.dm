@@ -61,6 +61,9 @@
 		"titaniumglass",
 		"toner",
 		"toner_large",
+		"turbine_part_compressor",
+		"turbine_part_rotor",
+		"turbine_part_stator",
 	)
 
 /datum/techweb_node/mmi
@@ -576,13 +579,14 @@
 	prereq_ids = list("engineering")
 	design_ids = list(
 		"hyper_cell",
-		"power_compressor",
-		"power_turbine",
 		"power_turbine_console",
 		"smes",
 		"super_capacitor",
 		"super_cell",
 		"superpacman",
+		"turbine_compressor",
+		"turbine_rotor",
+		"turbine_stator",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = 2500)
@@ -1049,7 +1053,6 @@
 	description = "Organized record databases and how they're used."
 	prereq_ids = list("comptech")
 	design_ids = list(
-		"accounting",
 		"automated_announcement",
 		"med_data",
 		"prisonmanage",
@@ -1108,6 +1111,7 @@
 		"health_hud_night",
 		"night_visision_goggles",
 		"nvgmesons",
+		"nv_scigoggles",
 		"security_hud_night",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
@@ -1525,7 +1529,7 @@
 		"mod_plating_security",
 		"mod_visor_sechud",
 		"mod_stealth",
-		"mod_holster",
+		"mod_mag_harness",
 		"mod_pathfinder",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -1998,8 +2002,8 @@
 
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
-	if(!SSassets.initialized)
-		RegisterSignal(SSassets, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/register_uplink_items)
+	if(!SSearly_assets.initialized)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/register_uplink_items)
 	else
 		register_uplink_items()
 
@@ -2009,7 +2013,7 @@
  */
 /datum/techweb_node/syndicate_basic/proc/register_uplink_items()
 	SIGNAL_HANDLER
-	UnregisterSignal(SSassets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	boost_item_paths = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]

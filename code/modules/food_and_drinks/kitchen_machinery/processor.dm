@@ -55,9 +55,10 @@
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if(recipe.output && loc && !QDELETED(src))
 		var/list/cached_mats = recipe.preserve_materials && what.custom_materials
-		var/cached_multiplier = recipe.multiplier
+		var/cached_multiplier = (recipe.food_multiplier * rating_amount)
 		for(var/i in 1 to cached_multiplier)
 			var/atom/processed_food = new recipe.output(drop_location())
+			what.reagents.copy_to(processed_food, what.reagents.total_volume, multiplier = 1 / cached_multiplier)
 			if(cached_mats)
 				processed_food.set_custom_materials(cached_mats, 1 / cached_multiplier)
 
@@ -68,6 +69,11 @@
 		qdel(what)
 	LAZYREMOVE(processor_contents, what)
 
+/obj/machinery/processor/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/processor/attackby(obj/item/O, mob/living/user, params)
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
@@ -76,9 +82,6 @@
 		return
 
 	if(default_pry_open(O))
-		return
-
-	if(default_unfasten_wrench(user, O))
 		return
 
 	if(default_deconstruction_crowbar(O))

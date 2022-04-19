@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - bugfix: "When an airlock that is being hacked receives plasteel reinforcement, it will no longer keep the hacking UI open and useable."

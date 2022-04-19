@@ -1012,7 +1012,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bar)
 "bX" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
@@ -1020,7 +1022,9 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/item/bedsheet/brown,
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
