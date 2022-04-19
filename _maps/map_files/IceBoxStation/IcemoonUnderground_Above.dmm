@@ -1897,7 +1897,7 @@
 "fG" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Sec - Permabrig Exercise";
-	network = ssssssssssssss
+	network = list("ss13","prison")
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
