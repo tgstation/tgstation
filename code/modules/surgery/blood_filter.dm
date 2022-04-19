@@ -16,6 +16,13 @@
 		return FALSE
 	return ..()
 
+/datum/surgery_step/filter_blood/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
+	if(!..())
+		return
+	while(target.reagents?.total_volume)
+		if(!..())
+			break
+
 /datum/surgery_step/filter_blood
 	name = "Filter blood"
 	implements = list(/obj/item/blood_filter = 95)
