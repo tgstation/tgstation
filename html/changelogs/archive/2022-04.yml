@@ -619,3 +619,150 @@
   - expansion: Expands pastry output.
   necromanceranne:
   - bugfix: Gives the pheromone receptor power an icon.
+2022-04-17:
+  Cheshify:
+  - rscadd: Remaps the gluttony ruin!
+  - rscdel: Remove the free antag syringe from the gluttony ruin.
+  - rscadd: Remapped the Pride's Mirror ruin
+  Fikou:
+  - balance: the mining gas mask no longer protects against pepper spray
+  Ghilker:
+  - bugfix: turbines don't leak heat. Properly now
+  GoblinBackwards:
+  - expansion: Gloves of the north star's effect is now triggered when slapping people
+  Onule:
+  - imageadd: Resprited all slimes and slime cores
+  - imagedel: Removed unused slime and slime core icons
+  PositiveEntropy:
+  - imageadd: Resprites the soft caps!
+  RandomGamer123:
+  - bugfix: Cyborgs can no longer unbolt the door to the execution chamber on Kilostation.
+  Zytolg:
+  - qol: Xenosat Touchups. Employees may now monitor hazardous life forms at a new
+      and conveniently located desk.
+  - bugfix: The Xenosat should now feature 0 Diagonal Walls, once again becoming a
+      symmetrical Pill shape.
+  carshalash:
+  - bugfix: Uncle Pete remembered to order new rollerskates for his rollerdome. 30
+      Skates will now be stocked for rent on his shuttle.
+  san7890:
+  - rscadd: You should now be able to rotate bedsheets on yourself as you take restful
+      sleeps.
+  - bugfix: Nanotrasen will no longer place bedsheets the wrong way on beds.
+  - bugfix: Nanotrasen has tied down a few unruly lattices on TramStation. It's amazing
+      how they didn't fly off in orbit.
+  - rscadd: The KiloStation Commissary (and the rooms that border it) have had their
+      items be shuffled around a bit.
+  - rscadd: Nanotrasen realized that their holodeck simulation of the photobooth was
+      not properly configured, and was showing up with ugly, grouted tiles. This has
+      been rectified to be a pure white backdrop for all your photograph desires.
+  - bugfix: On KiloStation, Nanotrasen will no longer install screens in the space
+      compartment near the bridge.
+  - bugfix: On MetaStation, Nanotrasen will no longer screw a fire extinguisher right
+      through the screen of a newscaster.
+  timothymtorres:
+  - qol: Add colored department posters to cargo delivery room in Meta to help identify
+      delivery chutes.
+  wesoda25:
+  - bugfix: easter baskets can now hold easter eggs
+2022-04-18:
+  Fikou:
+  - qol: modsuit locks are a bit more clear, nukie/centcom/prototype suits start with
+      them
+  - bugfix: modsuits now retract if summoned through summon items or some other hijinx
+  GoldenAlpharex:
+  - qol: Telecomms and the gravity generator are no longer ear-deafening when you
+      don't have a direct line of sight with them, meaning that you can now peacefully
+      build things in maintenance around them, without having to turn off the sound
+      of your game.
+  - code_imp: Added complete documentation and extra configurability to looping sounds,
+      allowing them to be stopped by walls, to ignore pressure or to be unaffected
+      by reverb!
+  Melbert:
+  - bugfix: Healium healing should be a little more responsive, now
+  - bugfix: Maintenance will now have wall engravings
+  MidoriWroth:
+  - rscadd: Added 3 new Polish foods
+  - imageadd: Added sprites for the 3 new foods
+  OrionTheFox:
+  - bugfix: The Volaju hairstyle is now symmetrical on both facing sides
+  SnoopCooper#7310, Ghilker (for some minor parts):
+  - imageadd: better turbine sprites
+  cat348 for sprites, TheBonded for not being gitbanned:
+  - imageadd: Disposals Junctions have visible arrows
+  iprice:
+  - bugfix: Corrected an error in the spicy donk pocket recipe which would permit
+      infinite donk pocket creation.
+  robbertapir:
+  - bugfix: The Russian revolver now works again
+  vincentiusvin:
+  - balance: atmos holofans are now fireproof
+  zxaber:
+  - bugfix: Ripley MK2 mechs no longer have two cargo utility equipment items.
+2022-04-19:
+  ArcaneDefence:
+  - bugfix: Our finest chefs have further refined the art of cookery so grilling random
+      items that have been deep fried will no longer create grill marks on weird lettering
+      above the dish.
+  B4CKU:
+  - bugfix: slimepeople's state will no longer be listed as "error" in the "swap body"
+      menu if their body is in crit
+  Fikou:
+  - expansion: Falling on punji sticks impales you.
+  Ghilker:
+  - qol: Adds a button to the thermomachine to dump residual gases from the main port
+      into the waste port
+  - expansion: supermatter delamination now spawns anomalies across the station, both
+      instantly and overtime
+  Ghommie:
+  - bugfix: Removed a fire extinguisher cabinet that was overlapping a large painting
+      frame on Delta. Moved a newscaster that was also overlapping the large painting
+      frame in the curator's backroom two tiles down on Meta.
+  JohnFulpWillard:
+  - qol: Departmental ID trimmer/PDA painters have been added to head of staff offices,
+      making it way easier to job change someone into your department.
+  Quill-Weave:
+  - bugfix: fixes a stray pixel in library.dmi
+  RandomGamer123:
+  - bugfix: The minor dark blue luminescent ability now heals you properly instead
+      of killing you.
+  - bugfix: The dark blue burning extract now injects you with regenerative jelly
+      instead of useless cryoxadone, making it not (as) deadly for slimepeople.
+  Spessman500:
+  - bugfix: fixed beepsky and ed209s not patroling
+  Vladoricious:
+  - bugfix: The Paranormal Response team has successfully defeated the demon that
+      was putting medicines in food from nowhere.
+  - bugfix: The food processor no longer strips chemicals from the things you put
+      inside. Finally, meth in my carrot fries.
+  Watermelon914:
+  - bugfix: Fixed traitors being able to duplicate their TC
+  Y0SH1M4S73R:
+  - bugfix: After two failed attempts at rectifying the issue, illegal tech is once
+      again unlockable.
+  Zytolg:
+  - rscadd: Firebase Balthazor has received much needed upgrades. Operatives now have
+      an adequate workspace for their radioactive activities.
+  - rscadd: The Syndicate Uplink has received Special Authorization Cards for use
+      by authorized personnel.
+  - rscdel: These expansions came at the cost of the old Nukeops Base.
+  - qol: Nukeops get a bigger and better looking base. Escapees on hijacked shuttles
+      may not be as lucky...
+  - code_imp: Added keycards and keycard_doors for use in the Nukeops Base.
+  - code_imp: Moves /modules/ruins into /modules/mapfluff/ruins and creates /modules/mapfluff/centcom
+  robbertapir:
+  - bugfix: Learning about lavaland bone architecture no longer causes the "Tribal"
+      tab to undergo mitosis.
+  san7890:
+  - bugfix: On IceBoxStation, to the northeastern airlock (in relation to the bar),
+      Nanotrasen will no longer paint the word "Caution" over text that says "STAND
+      CLEAR".
+  - bugfix: In MetaStation's Brig, Nanotrasen will no longer install Camera Monitors
+      on windows. They also removed an excess newscaster embedded within a wall.
+  tf-4:
+  - bugfix: Statues can now once again be wrenched.
+  timothymtorres:
+  - qol: Change AI upload lawsets to be randomized
+  - code_imp: Reorganize AI lawset code and remove deprecated malfunction code
+  timothymtorres, TheBonded:
+  - code_imp: Improved nightvision code

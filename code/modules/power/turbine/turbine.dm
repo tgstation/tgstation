@@ -22,6 +22,15 @@
 
 	var/mapped = TRUE
 
+	///Our overlay when active
+	var/active_overlay = ""
+	///Our overlay when off
+	var/off_overlay = ""
+	///Our overlay when open
+	var/open_overlay = ""
+	///Should we use emissive appearance?
+	var/emissive = FALSE
+
 /obj/machinery/power/turbine/Initialize(mapload)
 	. = ..()
 
@@ -33,6 +42,8 @@
 		installed_part = new part_path(src)
 
 	air_update_turf(TRUE)
+
+	update_appearance()
 
 /obj/machinery/power/turbine/Destroy()
 
@@ -58,6 +69,18 @@
 		. += "The [installed_part.name] can be removed by right-click with a crowbar tool."
 	else
 		. += "Is missing a [initial(part_path.name)]."
+
+/obj/machinery/power/turbine/update_overlays()
+	. = ..()
+	if(panel_open)
+		. += open_overlay
+
+	if(active)
+		. += active_overlay
+		if(emissive)
+			. += emissive_appearance(icon, active_overlay)
+	else
+		. += off_overlay
 
 /obj/machinery/power/turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)
@@ -178,6 +201,10 @@
 
 	has_gasmix = TRUE
 
+	active_overlay = "inlet_animation"
+	off_overlay = "inlet_off"
+	open_overlay = "inlet_open"
+
 /obj/machinery/power/turbine/inlet_compressor/constructed
 	mapped = FALSE
 
@@ -195,6 +222,10 @@
 
 	has_gasmix = TRUE
 
+	active_overlay = "outlet_animation"
+	off_overlay = "outlet_off"
+	open_overlay = "outlet_open"
+
 /obj/machinery/power/turbine/turbine_outlet/constructed
 	mapped = FALSE
 
@@ -211,6 +242,11 @@
 	part_path = /obj/item/turbine_parts/rotor
 
 	has_gasmix = TRUE
+
+	active_overlay = "core_light"
+	open_overlay = "core_open"
+
+	emissive = TRUE
 
 	///ID to easily connect the main part of the turbine to the computer
 	var/mapping_id
@@ -398,6 +434,7 @@
 	active = TRUE
 	compressor.active = TRUE
 	turbine.active = TRUE
+	call_parts_update_appearance()
 
 /**
  * Deactivate all three parts, not safe, it assumes the machine already connected and properly working
@@ -406,6 +443,15 @@
 	active = FALSE
 	compressor.active = FALSE
 	turbine.active = FALSE
+	call_parts_update_appearance()
+
+/**
+ * Calls all parts update appearance proc.
+ */
+/obj/machinery/power/turbine/core_rotor/proc/call_parts_update_appearance()
+	update_appearance()
+	compressor?.update_appearance()
+	turbine?.update_appearance()
 
 /**
  * Returns true if all parts have their panel closed
