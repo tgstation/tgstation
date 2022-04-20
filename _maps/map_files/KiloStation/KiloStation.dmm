@@ -31873,6 +31873,7 @@
 "gif" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai_upload)
 "gih" = (
@@ -35107,6 +35108,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai_upload)
 "hnt" = (
@@ -45238,8 +45240,9 @@
 /area/service/chapel/dock)
 "kzL" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/status_display/ai/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "kzS" = (
@@ -64346,7 +64349,9 @@
 /area/commons/storage/primary)
 "qNC" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/status_display/ai/directional/west,
+/obj/structure/sign/poster/contraband/self_ai_liberation{
+	pixel_x = -32
+	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "qNE" = (
