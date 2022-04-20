@@ -30,7 +30,7 @@
 				// Only one is allowed of this type - early return
 				if(STATUS_EFFECT_UNIQUE)
 					return
-				// Replace the existing type with the
+				// Replace the existing instance (deletes it).
 				if(STATUS_EFFECT_REPLACE)
 					existing_effect.be_replaced()
 				// Refresh the existing type, then early return
