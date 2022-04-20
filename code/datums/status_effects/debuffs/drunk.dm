@@ -74,6 +74,10 @@
 		qdel(src)
 
 /datum/status_effect/inebriated/tick()
+	// Drunk value does not decrease while dead
+	if(owner.stat == DEAD)
+		return
+
 	// Every tick, the drunk value decrases by
 	// 4% the current drunk_value + 0.01
 	// (until it reaches 0 and terminates)
