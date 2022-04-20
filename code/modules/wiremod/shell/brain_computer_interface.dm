@@ -273,12 +273,9 @@
 	icon_state = "bci_implanter"
 	base_icon_state = "bci_implanter"
 	layer = ABOVE_WINDOW_LAYER
-	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the door is open
-	idle_power_usage = 50
-	active_power_usage = 300
 
 	var/busy = FALSE
 	var/busy_icon_state
@@ -407,6 +404,8 @@
 	if (!occupant || busy)
 		return
 
+	update_use_power(ACTIVE_POWER_USE)
+
 	var/locked_state = locked
 	locked = TRUE
 
@@ -416,6 +415,7 @@
 	addtimer(CALLBACK(src, .proc/complete_process, locked_state), 3 SECONDS)
 
 /obj/machinery/bci_implanter/proc/complete_process(locked_state)
+	update_use_power(IDLE_POWER_USE)
 	locked = locked_state
 	set_busy(FALSE)
 

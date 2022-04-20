@@ -1109,7 +1109,7 @@
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
 /datum/crafting_recipe/rib
-	name = "Collosal Rib"
+	name = "Colossal Rib"
 	always_available = FALSE
 	reqs = list(
 		/obj/item/stack/sheet/bone = 10,

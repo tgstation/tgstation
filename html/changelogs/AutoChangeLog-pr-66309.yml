@@ -1,4 +1,0 @@
-author: "azizonkg"
-delete-after: True
-changes: 
-  - bugfix: "renamed suffix for tgui-polyfill from bundle.js to min.js to prevent CBT failing after target 'clean'"

@@ -11826,15 +11826,9 @@
 "cWa" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/item/cartridge/signal/ordnance{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/obj/item/cartridge/signal/ordnance,
-/obj/item/cartridge/signal/ordnance{
-	pixel_x = 4;
-	pixel_y = 6
-	},
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -51004,6 +50998,11 @@
 "qZP" = (
 /obj/structure/chair/stool/directional/south,
 /obj/machinery/light/directional/west,
+/obj/machinery/camera{
+	c_tag = "Science - Mech Bay";
+	dir = 10;
+	network = list("ss13","rd")
+	},
 /turf/open/floor/circuit,
 /area/science/robotics/mechbay)
 "qZW" = (
@@ -52347,18 +52346,10 @@
 /area/ai_monitored/turret_protected/aisat/hallway)
 "rxV" = (
 /obj/structure/table/reinforced,
-/obj/item/cartridge/engineering{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/item/cartridge/engineering{
-	pixel_x = 3
-	},
-/obj/item/cartridge/engineering{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/cartridge/atmos,
+/obj/item/computer_hardware/hard_drive/role/engineering,
+/obj/item/computer_hardware/hard_drive/role/engineering,
+/obj/item/computer_hardware/hard_drive/role/engineering,
+/obj/item/computer_hardware/hard_drive/role/atmos,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
@@ -60060,15 +60051,9 @@
 /area/security/brig)
 "umv" = (
 /obj/structure/table/glass,
-/obj/item/cartridge/chemistry{
-	pixel_y = 6
-	},
-/obj/item/cartridge/medical{
-	pixel_x = 3
-	},
-/obj/item/cartridge/medical{
-	pixel_x = -3
-	},
+/obj/item/computer_hardware/hard_drive/role/chemistry,
+/obj/item/computer_hardware/hard_drive/role/medical,
+/obj/item/computer_hardware/hard_drive/role/medical,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
@@ -63705,14 +63690,8 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/item/cartridge/quartermaster{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/obj/item/cartridge/quartermaster{
-	pixel_x = -4;
-	pixel_y = 7
-	},
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
 /obj/item/clipboard,
 /turf/open/floor/iron,
 /area/cargo/qm)

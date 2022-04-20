@@ -33,6 +33,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		department_delivery_areas = list(/area/hallway/primary/central) //if this doesn't exist like honestly fuck your map man
 
 /obj/machinery/computer/department_orders/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "DepartmentOrders")

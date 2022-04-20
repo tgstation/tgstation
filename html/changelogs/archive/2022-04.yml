@@ -766,3 +766,33 @@
   - code_imp: Reorganize AI lawset code and remove deprecated malfunction code
   timothymtorres, TheBonded:
   - code_imp: Improved nightvision code
+2022-04-20:
+  Fikou:
+  - bugfix: ebows no longer inherit not needing a gun permit from pkas
+  TheBonded:
+  - expansion: Laserpointer circuit modules now available. they had to be toned down
+      for circuit implementation, so dont expect them to do anything other than shine
+      light.
+  azizonkg:
+  - bugfix: renamed suffix for tgui-polyfill from bundle.js to min.js to prevent CBT
+      failing after target 'clean'
+  magatsuchi:
+  - rscdel: Removes the old PDA code, as well as references to it. (mostly)
+  - refactor: Thinktronic Systems has retired the elegantly aged PDA system, and is
+      now (forcefully) pushing its new patented job disks and SpaceMessenger app!
+      Available on your round-start tablet.
+  robbertapir:
+  - spellcheck: Replaced all occurrences of "collosal" with "colossal"
+  stylemistake:
+  - refactor: Ping system of tgui-panel has been reworked, which fixes things mentioned
+      below.
+  - bugfix: AFK players now get properly detected and kicked
+  - bugfix: Automatic reconnect should now work 100% of the time
+  - bugfix: Manual reconnect should now work 100% of the time
+  timothymtorres:
+  - qol: Fix nearspace areas for Meta
+  timothymtorres, TheBonded:
+  - code_imp: Library items have been refactored to be separate files.
+  vincentiusvin:
+  - bugfix: fixed icebox perma gym camera not working
+  - expansion: Remaps delta's ordnance

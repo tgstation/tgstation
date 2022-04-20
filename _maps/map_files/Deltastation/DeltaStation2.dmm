@@ -35034,15 +35034,9 @@
 "hYe" = (
 /obj/structure/table/glass,
 /obj/item/folder/blue,
-/obj/item/cartridge/medical{
-	pixel_x = -3
-	},
-/obj/item/cartridge/medical{
-	pixel_x = 3
-	},
-/obj/item/cartridge/chemistry{
-	pixel_y = 6
-	},
+/obj/item/computer_hardware/hard_drive/role/medical,
+/obj/item/computer_hardware/hard_drive/role/medical,
+/obj/item/computer_hardware/hard_drive/role/chemistry,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -56416,15 +56410,9 @@
 /area/service/hydroponics)
 "opa" = (
 /obj/structure/table/reinforced,
-/obj/item/cartridge/quartermaster{
-	pixel_x = -6
-	},
-/obj/item/cartridge/quartermaster{
-	pixel_x = 6
-	},
-/obj/item/cartridge/quartermaster{
-	pixel_y = 6
-	},
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
 /obj/item/gps/mining,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -67582,31 +67570,15 @@
 /turf/open/floor/iron,
 /area/medical/medbay/central)
 "rFD" = (
-/obj/item/cartridge/atmos{
-	pixel_x = -2;
-	pixel_y = 8
-	},
-/obj/item/cartridge/atmos{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/cartridge/atmos{
-	pixel_x = -2
-	},
+/obj/item/computer_hardware/hard_drive/role/atmos,
+/obj/item/computer_hardware/hard_drive/role/atmos,
+/obj/item/computer_hardware/hard_drive/role/atmos,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/item/cartridge/engineering{
-	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/cartridge/engineering{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/cartridge/engineering{
-	pixel_x = 6
-	},
+/obj/item/computer_hardware/hard_drive/role/engineering,
+/obj/item/computer_hardware/hard_drive/role/engineering,
+/obj/item/computer_hardware/hard_drive/role/engineering,
 /obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
@@ -71629,15 +71601,9 @@
 /area/command/heads_quarters/hop)
 "sNs" = (
 /obj/structure/table,
-/obj/item/cartridge/signal/ordnance{
-	pixel_x = 6
-	},
-/obj/item/cartridge/signal/ordnance{
-	pixel_x = -6
-	},
-/obj/item/cartridge/signal/ordnance{
-	pixel_y = 6
-	},
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
 /obj/machinery/camera/directional/east{
 	c_tag = "Science - Research Director's Office";
 	name = "science camera";
