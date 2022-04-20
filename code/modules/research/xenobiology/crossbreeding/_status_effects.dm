@@ -594,11 +594,11 @@
 
 /datum/status_effect/stabilized/darkpurple/tick()
 	var/obj/item/item = owner.get_active_held_item()
-	if(IS_EDIBLE(item))
-		if(item.microwave_act())
+	if(item)
+		if(IS_EDIBLE(item) && item.microwave_act())
 			to_chat(owner, span_warning("[linked_extract] flares up brightly, and your hands alone are enough cook [item]!"))
-	else
-		item.attackby(fire, owner)
+		else
+			item.attackby(fire, owner)
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
@@ -909,7 +909,7 @@
 /datum/status_effect/stabilized/black/proc/on_grab(mob/living/source, new_state)
 	SIGNAL_HANDLER
 
-	if(source.grab_state < GRAB_KILL || !isliving(source.pulling))
+	if(new_state < GRAB_KILL || !isliving(source.pulling))
 		draining_ref = null
 		return
 
@@ -918,7 +918,7 @@
 		return
 
 	draining_ref = WEAKREF(draining)
-	to_chat(owner, span_notice("You feel your hands melt around [draining]'s neck as you start to drain [draining.p_them()] of [draining.p_their()] life!"))
+	to_chat(owner, span_boldnotice("You feel your hands melt around [draining]'s neck as you start to drain [draining.p_them()] of [draining.p_their()] life!"))
 	to_chat(draining, span_userdanger("[owner]'s hands melt around your neck as you can feel your life starting to drain away!"))
 
 /datum/status_effect/stabilized/black/get_examine_text(appears_dead)

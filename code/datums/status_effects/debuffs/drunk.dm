@@ -30,7 +30,7 @@
 
 /datum/status_effect/inebriated/get_examine_text(appears_dead)
 	// Dead people don't look drunk
-	if(!appears_dead)
+	if(appears_dead)
 		return null
 
 	// Having your face covered conceals your drunkness

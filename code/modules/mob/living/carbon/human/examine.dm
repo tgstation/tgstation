@@ -433,12 +433,12 @@
 		if(!effect_text)
 			continue
 
-		data += "[effect_text]\n"
+		data += effect_text
 
 	if(!length(data))
 		return
 
-	return data.Join()
+	return data.Join("\n")
 
 /mob/living/carbon/human/examine_more(mob/user)
 	. = ..()
