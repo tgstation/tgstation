@@ -16,7 +16,7 @@ export const ThermoMachine = (props, context) => {
       </Box>
     </Modal>
   );
-  const cooling_efficiency_infos = !!data.cooling &&(
+  const cooling_efficiency_infos = !!data.cooling && (
     <LabeledList.Item label="Cooling Efficiency">
       <ProgressBar
         value={data.efficiency}
@@ -31,7 +31,7 @@ export const ThermoMachine = (props, context) => {
       </ProgressBar>
     </LabeledList.Item>
   );
-  const cooling_enviroment_reservoir = !!data.cooling &&(
+  const cooling_enviroment_reservoir = !!data.cooling && (
     <LabeledList.Item label="Enviroment as heat reservoir">
       <Button
         content={data.use_env_heat ? 'On' : 'Off'}
@@ -60,7 +60,7 @@ export const ThermoMachine = (props, context) => {
               {' kPa'}
             </LabeledList.Item>
             <LabeledList.Item label="Mode">
-              {data.cooling? 'Cooling' : 'Heating'}
+              {data.cooling ? 'Cooling' : 'Heating'}
             </LabeledList.Item>
             {cooling_efficiency_infos}
           </LabeledList>
@@ -68,11 +68,17 @@ export const ThermoMachine = (props, context) => {
         <Section
           title="Controls"
           buttons={(
-            <Button
-              icon={data.on ? 'power-off' : 'times'}
-              content={data.on ? 'On' : 'Off'}
-              selected={data.on}
-              onClick={() => act('power')} />
+            <>
+              <Button
+                icon={data.on ? 'power-off' : 'times'}
+                content={data.on ? 'On' : 'Off'}
+                selected={data.on}
+                onClick={() => act('power')} />
+              <Button
+                icon={'times'}
+                content={'Dump'}
+                onClick={() => act('dump')} />
+            </>
           )}>
           <LabeledList>
             <LabeledList.Item label="Safeties">

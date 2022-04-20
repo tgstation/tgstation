@@ -170,6 +170,13 @@
 		for(var/i in roundstart_experience)
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
+	var/obj/item/modular_computer/tablet/pda/PDA = spawned.get_item_by_slot(ITEM_SLOT_BELT)
+	if(istype(PDA))
+		var/obj/item/computer_hardware/identifier/id = PDA.all_components[MC_IDENTIFY]
+
+		if(id)
+			id.UpdateDisplay()
+
 
 /datum/job/proc/announce_job(mob/living/joining_mob)
 	if(head_announce)
@@ -188,7 +195,7 @@
 	var/datum/bank_account/bank_account = new(real_name, equipping, dna.species.payday_modifier)
 	bank_account.payday(STARTING_PAYCHECKS, TRUE)
 	account_id = bank_account.account_id
-
+	bank_account.replaceable = FALSE
 	dress_up_as_job(equipping)
 
 
@@ -244,7 +251,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/card/id/advanced
 	ears = /obj/item/radio/headset
-	belt = /obj/item/pda
+	belt = /obj/item/modular_computer/tablet/pda
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	box = /obj/item/storage/box/survival
@@ -312,11 +319,10 @@
 			B.bank_cards += C
 		H.sec_hud_set_ID()
 
-	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)
+	var/obj/item/modular_computer/tablet/pda/PDA = H.get_item_by_slot(pda_slot)
 	if(istype(PDA))
-		PDA.owner = H.real_name
-		PDA.ownjob = J.title
-		PDA.update_label()
+		PDA.saved_identification = C.registered_name
+		PDA.saved_job = C.assignment
 
 
 /datum/outfit/job/get_chameleon_disguise_info()

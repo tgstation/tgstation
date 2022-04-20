@@ -45,12 +45,12 @@
 	cant_discount = TRUE
 
 /datum/uplink_item/explosives/detomatix
-	name = "Detomatix PDA Cartridge"
-	desc = "When inserted into a personal digital assistant, this cartridge gives you four opportunities to \
-			detonate PDAs of crewmembers who have their message feature enabled. \
+	name = "Detomatix disk"
+	desc = "When inserted into a tablet, this cartridge gives you four opportunities to \
+			detonate tablets of crewmembers who have their message feature enabled. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
 	progression_minimum = 30 MINUTES
-	item = /obj/item/cartridge/virus/syndicate
+	item = /obj/item/computer_hardware/hard_drive/role/virus/deto
 	cost = 6
 	restricted = TRUE
 
