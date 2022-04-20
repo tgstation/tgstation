@@ -225,8 +225,8 @@
 			continue
 		cur_tlv = TLV[gas_id]
 		data["environment_data"] += list(list(
-								"name" = environment.gas[gas_id],
-								"value" = environment.get_gas(gas_id) / total_moles * 100,
+								"name" = xgm_gas_data.name[gas_id],
+								"value" = environment.gas[gas_id] / total_moles * 100,
 								"unit" = "%",
 								"danger_level" = cur_tlv.get_danger_level(environment.get_gas(gas_id)* partial_pressure)
 		))
@@ -299,7 +299,7 @@
 			if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
 				continue
 			selected = TLV[gas_id]
-			thresholds += list(list("name" = gas_id, "settings" = list()))
+			thresholds += list(list("name" = xgm_gas_data.name[gas_id], "settings" = list()))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "hazard_min", "selected" = selected.hazard_min))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "warning_min", "selected" = selected.warning_min))
 			thresholds[thresholds.len]["settings"] += list(list("env" = gas_id, "val" = "warning_max", "selected" = selected.warning_max))
@@ -608,7 +608,7 @@
 	var/list/cached_tlv = TLV
 
 	var/list/env_gases = environment.get_gases()
-	var/partial_pressure = R_IDEAL_GAS_EQUATION * exposed_temperature / environment.volume
+	//var/partial_pressure = R_IDEAL_GAS_EQUATION * exposed_temperature / environment.volume
 
 	current_tlv = cached_tlv["pressure"]
 	var/environment_pressure = environment.return_pressure()
@@ -622,7 +622,7 @@
 		if(!(gas_id in cached_tlv)) // We're not interested in this gas, it seems.
 			continue
 		current_tlv = cached_tlv[gas_id]
-		gas_dangerlevel = max(gas_dangerlevel, current_tlv.get_danger_level(env_gases[gas_id] * partial_pressure))
+		gas_dangerlevel = max(gas_dangerlevel, current_tlv.get_danger_level(environment.get_gas(gas_id)))
 
 	var/old_danger_level = danger_level
 	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)

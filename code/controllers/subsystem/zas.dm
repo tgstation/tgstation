@@ -105,6 +105,7 @@ SUBSYSTEM_DEF(zas)
 /datum/controller/subsystem/zas/proc/Reboot()
 	// Stop processing while we rebuild.
 	can_fire = FALSE
+	next_id = 0 //Reset atmos zone count.
 
 	// Make sure we don't rebuild mid-tick.
 	if (state != SS_IDLE)

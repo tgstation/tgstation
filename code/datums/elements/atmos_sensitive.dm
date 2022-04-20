@@ -15,7 +15,7 @@
 
 	if(!mapload && isopenturf(to_track.loc))
 		var/turf/open/new_open = to_track.loc
-		to_track.check_atmos_process(new_open, new_open.air, new_open.air.temperature) //Make sure you're properly registered
+		to_track.check_atmos_process(new_open, new_open.return_air(), new_open.return_air().temperature) //Make sure you're properly registered
 
 	return ..()
 
@@ -33,7 +33,7 @@
 	var/atom/atom_source = source
 	if(isopenturf(atom_source.loc))
 		var/turf/open/new_open = atom_source.loc
-		atom_source.check_atmos_process(new_open, new_open.air, new_open.air.temperature) //Make sure you're properly registered
+		atom_source.check_atmos_process(new_open, new_open.return_air(), new_open.return_air().temperature) //Make sure you're properly registered
 
 /atom/proc/check_atmos_process(datum/source, datum/gas_mixture/air, exposed_temperature)
 	SIGNAL_HANDLER

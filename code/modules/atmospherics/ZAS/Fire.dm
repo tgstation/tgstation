@@ -440,7 +440,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	apply_damage(0.9*mx*head_exposure,  BURN, BODY_ZONE_HEAD)
 	apply_damage(2.5*mx*chest_exposure, BURN, BODY_ZONE_CHEST)
-	apply_damage(2,0*mx*groin_exposure, BURN, BODY_ZONE_PRECISE_GROIN)
+	//apply_damage(2,0*mx*groin_exposure, BURN, BODY_ZONE_PRECISE_GROIN)
 	apply_damage(0.6*mx*legs_exposure,  BURN, BODY_ZONE_L_LEG)
 	apply_damage(0.6*mx*legs_exposure,  BURN, BODY_ZONE_R_LEG)
 	apply_damage(0.4*mx*arms_exposure,  BURN, BODY_ZONE_L_ARM)
@@ -448,6 +448,20 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	//return a truthy value of whether burning actually happened
 	return mx * (head_exposure + chest_exposure + groin_exposure + legs_exposure + arms_exposure)
+
+/turf/proc/burn()
+	burn_tile()
+	var/chance_of_deletion
+	if (heat_capacity) //beware of division by zero
+		chance_of_deletion = max_fire_temperature_sustained / heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
+	else
+		chance_of_deletion = 100
+	if(prob(chance_of_deletion))
+		Melt()
+		max_fire_temperature_sustained = 0
+	else
+		to_be_destroyed = FALSE
+
 
 //turf/proc/adjacent_fire_act(turf/simulated/floor/source, exposed_temperature, exposed_volume)
 /turf/proc/adjacent_fire_act(turf/open/floor/source, datum/gas_mixture/adj_air, adjt_temp)
@@ -462,7 +476,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 			W.fire_act(adj_air, adj_temp, adj_volume)
 
 /turf/closed/wall/adjacent_fire_act(turf/open/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume)
-	//burn(adj_temp)
+	burn(adj_temp)
 	if(adj_temp > heat_capacity)
 		take_damage(log(Frand(0.9, 1.1) * (adj_temp - heat_capacity)), BURN)
 

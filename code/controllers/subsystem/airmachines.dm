@@ -22,9 +22,26 @@ SUBSYSTEM_DEF(airmachines)
 	var/cost_atmos_machinery
 
 /datum/controller/subsystem/airmachines/Initialize(timeofday)
+	var/starttime = REALTIMEOFDAY
+	to_chat(world, span_boldannounce("Airmachines: Setting up atmospheric machinery..."))
 	setup_atmos_machinery()
+	to_chat(world, span_boldannounce("Airmachines: Airmachine setup completed in [(REALTIMEOFDAY- starttime) / 10] seconds!"))
+	starttime = REALTIMEOFDAY
+	to_chat(world, span_boldannounce("Airmachines: Creating pipenets..."))
 	setup_pipenets()
+	to_chat(world, span_boldannounce("Airmachines: Pipenet creation completed in [(REALTIMEOFDAY- starttime) / 10] seconds!"))
 	return ..()
+
+/datum/controller/subsystem/airmachines/stat_entry(msg)
+	msg += "CR: [cost_rebuilds ? cost_rebuilds : 0]|"
+	msg += "CPN: [cost_pipenets]|"
+	msg += "CAM: [cost_atmos_machinery]|"
+	msg += "NN: [length(networks)]|"
+	msg += "NAM: [length(atmos_machinery)]|"
+	msg += "RQ: [length(rebuild_queue)]|"
+	msg += "EQ: [length(expansion_queue)]"
+	return ..()
+
 
 /datum/controller/subsystem/airmachines/fire(resumed = FALSE)
 	var/timer = TICK_USAGE_REAL
