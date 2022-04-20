@@ -39,7 +39,7 @@ Ask Mothblocks if they're around
 
 /// A scalar used to automatically set the intensity of a radiation pulse from a given max range if intensity is undefined.
 /// It is set so that a radiation pulse from a distance of the max range of the pulse has a 5% chance to irradiate the target, if nothing blocks the trajectory.
-/// Example: If there was a radiation pulse with range 7 but intensity defined, the intensity would be set to 4.736.
+/// Example: If there was a radiation pulse with range 7 but intensity undefined, the intensity would be set to 4.736.
 /// This pulse would have a 96.25% chance to irradiate the target at the epicenter, 18.55% chance to irradiate 3 turfs away, and 5% chance to irradiate 7 turfs away.
 /// Increasing this value will set the auto intensity to a higher value, and decreasing would set auto intensity to a lower value.
 #define DEFAULT_AUTO_RADIATION_INTENSITY_CONSTANT 0.074
