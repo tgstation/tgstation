@@ -197,6 +197,9 @@
 
 	link_to_holder()
 
+/datum/quirk/heterochromia/remove()
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
+
 /datum/quirk/heterochromatic/proc/link_to_holder()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.eye_color_heterochromatic = TRUE
