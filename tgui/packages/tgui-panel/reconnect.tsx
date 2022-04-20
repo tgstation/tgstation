@@ -4,7 +4,8 @@ let url: string | null = null;
 
 setInterval(() => {
   Byond.winget('', 'url').then(currentUrl => {
-    if (currentUrl) {
+    // Sometimes, for whatever reason, BYOND will give an IP with a :0 port.
+    if (currentUrl && !currentUrl.match(/:0$/)) {
       url = currentUrl;
     }
   });
