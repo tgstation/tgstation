@@ -216,3 +216,6 @@
 #define TLV_OUTSIDE_WARNING_LIMIT 1
 ///the gas is outside the hazard limit, the air alarm will go into hazard mode
 #define TLV_OUTSIDE_HAZARD_LIMIT 2
+
+///the default multiplier for the speed of moving trams
+#define TRAM_DEFAULT_SPEED 3

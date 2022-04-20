@@ -485,7 +485,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/obj/effect/landmark/tram/from_where
 	var/travel_direction
 	/// How many movement steps to take during each process(), this must be an integer
-	var/tram_speed = 1
+	var/tram_speed = TRAM_DEFAULT_SPEED
 
 GLOBAL_LIST_EMPTY_TYPED(central_trams, /obj/structure/industrial_lift/tram/central)
 
