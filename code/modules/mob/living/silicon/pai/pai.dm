@@ -127,6 +127,8 @@
 		"universal translator" = 35,
 	)
 
+	var/atom/movable/screen/ai/modpc/interfaceButton
+
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
 
@@ -171,9 +173,9 @@
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
 		aicamera.flash_enabled = TRUE
 
-	addtimer(CALLBACK(src, .proc/pdaconfig), 5)
-
 	. = ..()
+
+	create_modularInterface()
 
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
@@ -197,13 +199,6 @@
 		card.update_appearance()
 	GLOB.pai_list -= src
 	return ..()
-
-/mob/living/silicon/pai/proc/pdaconfig()
-	//PDA
-	aiPDA = new /obj/item/pda/ai(src)
-	aiPDA.owner = real_name
-	aiPDA.ownjob = "pAI Messenger"
-	aiPDA.name = "[real_name] ([aiPDA.ownjob])"
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -254,6 +249,8 @@
 
 /mob/living/silicon/pai/can_interact_with(atom/A)
 	if(A == signaler) // Bypass for signaler
+		return TRUE
+	if(A == modularInterface)
 		return TRUE
 
 	return ..()
