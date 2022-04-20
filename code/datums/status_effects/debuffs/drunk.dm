@@ -3,38 +3,32 @@
 #define BALLMER_PEAK_HIGH_END 13.8
 #define BALLMER_PEAK_WINDOWS_ME 26
 
+/// The threshld which determine if someone is tipsy vs drunk
+#define TIPSY_THRESHOLD 6
+
 /**
  * The drunk status effect.
- *
- * Slowly decreases in drunk_value over time,
- * causing effects based on that value.
- *
- * Whenever drunk_value is lower than 6, is replaced with "tipsy".
+ * Slowly decreases in drunk_value over time, causing effects based on that value.
  */
-/datum/status_effect/drunk
+/datum/status_effect/inebriated
 	id = "drunk"
 	tick_interval = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
-	alert_type = /atom/movable/screen/alert/status_effect/drunk
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
 
-/datum/status_effect/drunk/on_creation(mob/living/new_owner, drunk_value)
+/datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
-	src.drunk_value = drunk_value
+	set_drunk_value(drunk_value)
 
-/datum/status_effect/drunk/on_apply()
+/datum/status_effect/inebriated/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/clear_drunkenness)
-	owner.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, id, /datum/mood_event/drunk)
 	return TRUE
 
-/datum/status_effect/drunk/on_remove()
+/datum/status_effect/inebriated/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, id)
-	owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
 
-/datum/status_effect/drunk/get_examine_text(appears_dead)
+/datum/status_effect/inebriated/get_examine_text(appears_dead)
 	// Dead people don't look drunk
 	if(!appears_dead)
 		return null
@@ -65,13 +59,13 @@
 	return null
 
 /// Removes all of our drunkenness (self-deletes) on signal.
-/datum/status_effect/drunk/proc/clear_drunkenness(mob/living/source)
+/datum/status_effect/inebriated/proc/clear_drunkenness(mob/living/source)
 	SIGNAL_HANDLER
 
 	qdel(src)
 
 /// Sets the drunk value to set_to, deleting if the value drops to 0 or lower
-/datum/status_effect/drunk/proc/set_drunk_value(set_to)
+/datum/status_effect/inebriated/proc/set_drunk_value(set_to)
 	if(!isnum(set_to))
 		CRASH("[type] - invalid value passed to set_drunk_value. (Got: [set_to])")
 
@@ -79,20 +73,74 @@
 	if(drunk_value <= 0)
 		qdel(src)
 
-/datum/status_effect/drunk/tick()
+/datum/status_effect/inebriated/tick()
+	// Every tick, the drunk value decrases by
+	// 4% the current drunk_value + 0.01
+	// (until it reaches 0 and terminates)
 	set_drunk_value(drunk_value - (0.01 + drunk_value * 0.04))
 	if(QDELETED(src))
 		return
 
 	on_tick_effects()
 
-/// Status effects applied whenever a tick is done for this effect.
-/datum/status_effect/drunk/proc/on_tick_effects()
-	// Return to "tipsyness" when we're below 6.
-	if(drunk_value < 6)
-		owner.apply_status_effect(/datum/status_effect/drunk/tipsy, drunk_value)
+/// Side effects done by this level of drunkness on tick.
+/datum/status_effect/inebriated/proc/on_tick_effects()
+	return
+
+/**
+ * Stage 1 of drunk, applied at drunk values between 0 and 6.
+ * Basically is the "drunk but no side effects" stage.
+ */
+/datum/status_effect/inebriated/tipsy
+	alert_type = null
+
+/datum/status_effect/inebriated/tipsy/set_drunk_value(set_to)
+	. = ..()
+	if(QDELETED(src))
 		return
 
+	// Become fully drunk at over than 6 drunk value
+	if(drunk_value >= TIPSY_THRESHOLD)
+		owner.apply_status_effect(/datum/status_effect/inebriated/drunk, drunk_value)
+
+/**
+ * Stage 2 of being drunk, applied at drunk values between 6 and onward.
+ * Has all the main side effects of being drunk, scaling up as they get more drunk.
+ */
+/datum/status_effect/inebriated/drunk
+	alert_type = /atom/movable/screen/alert/status_effect/drunk
+
+/datum/status_effect/inebriated/drunk/on_apply()
+	. = ..()
+	owner.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, id, /datum/mood_event/drunk)
+
+/datum/status_effect/inebriated/drunk/on_remove()
+	clear_effects()
+	return ..()
+
+// Going from "drunk" to "tipsy" should remove effects like on_remove
+/datum/status_effect/inebriated/drunk/be_replaced()
+	clear_effects()
+	return ..()
+
+/// Clears any side effects we set due to being drunk.
+/datum/status_effect/inebriated/drunk/proc/clear_effects()
+	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, id)
+
+	if(owner.sound_environment_override == SOUND_ENVIRONMENT_PSYCHOTIC)
+		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
+
+/datum/status_effect/inebriated/drunk/set_drunk_value(set_to)
+	. = ..()
+	if(QDELETED(src))
+		return
+
+	// Return to "tipsyness" when we're below 6.
+	if(drunk_value < TIPSY_THRESHOLD)
+		owner.apply_status_effect(/datum/status_effect/inebriated/tipsy, drunk_value)
+
+/datum/status_effect/inebriated/drunk/on_tick_effects()
 	// Handle the Ballmer Peak.
 	// If our owner is a scientist (has the trait "TRAIT_BALLMER_SCIENTIST"), there's a 5% chance
 	// that they'll say one of the special "ballmer message" lines, depending their drunk-ness level.
@@ -158,22 +206,15 @@
 	if(drunk_value >= 101)
 		owner.adjustToxLoss(2)
 
-/**
- * Applied at drunk values between 0 and 6.
- * Basically is the "drunk but no effects" effect.
- */
-/datum/status_effect/drunk/tipsy
-	alert_type = null
-
-/datum/status_effect/drunk/tipsy/on_tick_effects()
-	if(drunk_value < 6)
-		return
-
-	// If we go above 6, we become fully drunk.
-	owner.apply_status_effect(/datum/status_effect/drunk, drunk_value)
-
+/// Status effect for being fully drunk (not tipsy).
 /atom/movable/screen/alert/status_effect/drunk
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, \
 		motor skills, and mental cognition. Make sure to act like it."
 	icon_state = "drunk"
+
+#undef BALLMER_PEAK_LOW_END
+#undef BALLMER_PEAK_HIGH_END
+#undef BALLMER_PEAK_WINDOWS_ME
+
+#undef TIPSY_THRESHOLD

@@ -746,11 +746,11 @@
 	if(!isnum(amount))
 		CRASH("adjust_drunk_effect: called with an invalid amount. (Got: [amount])")
 
-	var/datum/status_effect/drunk/inebriation = has_status_effect(/datum/status_effect/drunk)
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
 	if(inebriation)
 		inebriation.set_drunk_value(clamp(inebriation.drunk_value + amount, down_to, up_to))
-	else
-		apply_status_effect(/datum/status_effect/drunk, amount)
+	else if(amount > 0)
+		apply_status_effect(/datum/status_effect/inebriated/tipsy, amount)
 
 
 /**
@@ -760,16 +760,16 @@
  * set_to - the amount of "drunkness" to set on the mob.
  */
 /mob/living/proc/set_drunk_effect(set_to)
-	if(!isnum(set_to))
+	if(!isnum(set_to) || set_to < 0)
 		CRASH("set_drunk_effect: called with an invalid value. (Got: [set_to])")
 
-	var/datum/status_effect/drunk/inebriation = has_status_effect(/datum/status_effect/drunk)
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
 	if(inebriation)
 		inebriation.set_drunk_value(set_to)
-	else
-		apply_status_effect(/datum/status_effect/drunk, set_to)
+	else if(set_to > 0)
+		apply_status_effect(/datum/status_effect/inebriated/tipsy, set_to)
 
 /// Helper to get the amount of drunkness the mob's currently experiencing.
 /mob/living/proc/get_drunk_amount()
-	var/datum/status_effect/drunk/inebriation = has_status_effect(/datum/status_effect/drunk)
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
 	return inebriation?.drunk_value || 0
