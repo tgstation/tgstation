@@ -63,6 +63,7 @@
 
 /// Called when the stack_threshold is uncrossed / dropped (stacks go under the threshold after being over it)
 /datum/status_effect/stacking/proc/on_threshold_drop()
+	return
 
 /// Whether the owner can have the status effect.
 /// Return FALSE if the owner is not in a valid state (self-deletes the effect), or TRUE otherwise
