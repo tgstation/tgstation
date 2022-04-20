@@ -74,7 +74,10 @@
 		owner = null
 	return ..()
 
-/datum/status_effect/process()
+// Status effect process. Handles adjusting it's duration and ticks.
+// If you're adding processed effects, put them in [proc/tick]
+// instead of extending / overriding ththe process() proc.
+/datum/status_effect/process(delta_time)
 	if(QDELETED(owner))
 		qdel(src)
 		return
@@ -100,7 +103,7 @@
 	return
 
 /// Called instead of on_remove when a status effect
-/// of type STATUS_EFFECT_REPLACE is replaced by itself
+/// of status_type STATUS_EFFECT_REPLACE is replaced by itself,
 /// or when a status effect with on_remove_on_mob_delete
 /// set to FALSE has its mob deleted
 /datum/status_effect/proc/be_replaced()
@@ -114,7 +117,7 @@
 /datum/status_effect/proc/before_remove()
 	return TRUE
 
-/// Called when a status effect of type type STATUS_EFFECT_REFRESH
+/// Called when a status effect of status_type STATUS_EFFECT_REFRESH
 /// has its duration refreshed in apply_status_effect - is passed New() args
 /datum/status_effect/proc/refresh(effect, ...)
 	var/original_duration = initial(duration)
@@ -122,11 +125,11 @@
 		return
 	duration = world.time + original_duration
 
-/// Adds nextmove modifier multiplicatively while applied
+/// Adds nextmove modifier multiplicatively to the owner while applied
 /datum/status_effect/proc/nextmove_modifier()
 	return 1
 
-/// Adds nextmove adjustment additiviely while applied
+/// Adds nextmove adjustment additiviely to the owner while applied
 /datum/status_effect/proc/nextmove_adjust()
 	return 0
 
