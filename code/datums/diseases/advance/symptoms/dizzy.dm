@@ -52,8 +52,6 @@ Bonus
 				to_chat(M, span_warning("[pick("You feel dizzy.", "Your head spins.")]"))
 		else
 			to_chat(M, span_userdanger("A wave of dizziness washes over you!"))
-			var/datum/status_effect/dizziness/existing = M.has_status_effect(/datum/status_effect/dizziness)
-			if(!existing || (existing.duration - world.time) <= 140 SECONDS)
-				M.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness)
+			M.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, max_amount = 140 SECONDS)
 			if(power >= 2)
 				M.set_drugginess(40)
