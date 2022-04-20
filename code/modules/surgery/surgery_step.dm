@@ -132,8 +132,12 @@
 /datum/surgery_step/proc/play_preop_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(!preop_sound)
 		return
-	if(islist(preop_sound))
-		playsound(get_turf(target), preop_sound[tool.type], 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
+	if(islist(preop_sound))	
+		var/sound_file_use
+		for(var/typepath in preop_sound)
+			if(ispath(tool.type, typepath))
+				sound_file_use = preop_sound[typepath]	
+		playsound(get_turf(target), sound_file_use, 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 	else
 		playsound(get_turf(target), preop_sound, 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 
