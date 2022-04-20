@@ -250,6 +250,7 @@
 						else
 							scale = world.icon_size / height
 					alert_overlay.transform = alert_overlay.transform.Scale(scale)
+					alert_overlay.appearance_flags |= TILE_BOUND
 				alert_overlay.layer = FLOAT_LAYER
 				alert_overlay.plane = FLOAT_PLANE
 				A.add_overlay(alert_overlay)
