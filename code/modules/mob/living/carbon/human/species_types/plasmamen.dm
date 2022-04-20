@@ -62,22 +62,30 @@
 	C.set_safe_hunger_level()
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
-	var/atmos_sealed = CanIgniteMob(H) && (isclothing(H.wear_suit) && H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE) && (isclothing(H.head) && H.head.clothing_flags & STOPSPRESSUREDAMAGE)
+	var/atmos_sealed = TRUE
+	if(CanIgniteMob(H))
+		atmos_sealed = FALSE
+	if(!isclothing(H.wear_suit) || !(H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE))
+		atmos_sealed = FALSE
+	if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & STOPSPRESSUREDAMAGE)))
+		atmos_sealed = FALSE
+
 	var/flammable_limb = FALSE
 	for(var/obj/item/bodypart/found_bodypart as anything in H.bodyparts)//If any plasma based limb is found the plasmaman will attempt to autoignite
 		if(IS_ORGANIC_LIMB(found_bodypart) && (found_bodypart.limb_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
 			flammable_limb = TRUE
 			break
+
 	if(!flammable_limb && !H.on_fire) //Allows their suit to attempt to autoextinguish if augged and on fire
 		return
-	if(!atmos_sealed)
-		var/can_burn = FALSE
-		if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves))
-			can_burn = TRUE
-		else if(!istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) && !HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY))
-			can_burn = TRUE
-		if(!can_burn)
-			return
+
+	var/can_burn = FALSE
+	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves))
+		can_burn = TRUE
+	else if(!istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) && !HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY))
+		can_burn = TRUE
+
+	if(!atmos_sealed && can_burn)
 		var/datum/gas_mixture/environment = H.loc.return_air()
 		if(environment?.total_moles())
 			if(environment.gases[/datum/gas/hypernoblium] && (environment.gases[/datum/gas/hypernoblium][MOLES]) >= 5)
@@ -90,6 +98,7 @@
 						H.visible_message(span_danger("[H]'s body reacts with the atmosphere and bursts into flames!"),span_userdanger("Your body reacts with the atmosphere and bursts into flame!"))
 					H.IgniteMob()
 					internal_fire = TRUE
+
 	else if(H.fire_stacks)
 		var/obj/item/clothing/under/plasmaman/P = H.w_uniform
 		if(istype(P))
@@ -97,6 +106,7 @@
 			internal_fire = FALSE
 	else
 		internal_fire = FALSE
+
 	H.update_fire()
 
 /datum/species/plasmaman/handle_fire(mob/living/carbon/human/H, delta_time, times_fired, no_protection = FALSE)
