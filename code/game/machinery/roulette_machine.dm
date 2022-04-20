@@ -24,10 +24,7 @@
 	icon = 'icons/obj/machines/roulette.dmi'
 	icon_state = "idle"
 	density = TRUE
-	use_power = IDLE_POWER_USE
 	anchored = FALSE
-	idle_power_usage = 10
-	active_power_usage = 100
 	max_integrity = 500
 	armor = list(MELEE = 45, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 30, FIRE = 30, ACID = 30)
 	var/static/list/numbers = list("0" = "green", "1" = "red", "3" = "red", "5" = "red", "7" = "red", "9" = "red", "12" = "red", "14" = "red", "16" = "red",\
@@ -209,6 +206,8 @@
 	playsound(src, 'sound/machines/roulettewheel.ogg', 50)
 	addtimer(CALLBACK(src, .proc/finish_play, player_id, bet_type, bet_amount, payout, rolled_number), 34) //4 deciseconds more so the animation can play
 	addtimer(CALLBACK(src, .proc/finish_play_animation), 30)
+
+	use_power(active_power_usage)
 
 /obj/machinery/roulette/proc/finish_play_animation()
 	icon_state = "idle"

@@ -189,7 +189,7 @@
 	name = "poutine"
 	desc = "Fries covered in cheese curds and gravy."
 	icon_state = "poutine"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/medicine/antihol = 4)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7)
 	tastes = list("potato" = 3, "gravy" = 1, "squeaky cheese" = 1)
 	foodtypes = VEGETABLES | FRIED | MEAT
 	w_class = WEIGHT_CLASS_SMALL
@@ -239,7 +239,7 @@
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
 
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/oculine = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL

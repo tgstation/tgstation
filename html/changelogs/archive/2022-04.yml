@@ -699,3 +699,100 @@
   - balance: atmos holofans are now fireproof
   zxaber:
   - bugfix: Ripley MK2 mechs no longer have two cargo utility equipment items.
+2022-04-19:
+  ArcaneDefence:
+  - bugfix: Our finest chefs have further refined the art of cookery so grilling random
+      items that have been deep fried will no longer create grill marks on weird lettering
+      above the dish.
+  B4CKU:
+  - bugfix: slimepeople's state will no longer be listed as "error" in the "swap body"
+      menu if their body is in crit
+  Fikou:
+  - expansion: Falling on punji sticks impales you.
+  Ghilker:
+  - qol: Adds a button to the thermomachine to dump residual gases from the main port
+      into the waste port
+  - expansion: supermatter delamination now spawns anomalies across the station, both
+      instantly and overtime
+  Ghommie:
+  - bugfix: Removed a fire extinguisher cabinet that was overlapping a large painting
+      frame on Delta. Moved a newscaster that was also overlapping the large painting
+      frame in the curator's backroom two tiles down on Meta.
+  JohnFulpWillard:
+  - qol: Departmental ID trimmer/PDA painters have been added to head of staff offices,
+      making it way easier to job change someone into your department.
+  Quill-Weave:
+  - bugfix: fixes a stray pixel in library.dmi
+  RandomGamer123:
+  - bugfix: The minor dark blue luminescent ability now heals you properly instead
+      of killing you.
+  - bugfix: The dark blue burning extract now injects you with regenerative jelly
+      instead of useless cryoxadone, making it not (as) deadly for slimepeople.
+  Spessman500:
+  - bugfix: fixed beepsky and ed209s not patroling
+  Vladoricious:
+  - bugfix: The Paranormal Response team has successfully defeated the demon that
+      was putting medicines in food from nowhere.
+  - bugfix: The food processor no longer strips chemicals from the things you put
+      inside. Finally, meth in my carrot fries.
+  Watermelon914:
+  - bugfix: Fixed traitors being able to duplicate their TC
+  Y0SH1M4S73R:
+  - bugfix: After two failed attempts at rectifying the issue, illegal tech is once
+      again unlockable.
+  Zytolg:
+  - rscadd: Firebase Balthazor has received much needed upgrades. Operatives now have
+      an adequate workspace for their radioactive activities.
+  - rscadd: The Syndicate Uplink has received Special Authorization Cards for use
+      by authorized personnel.
+  - rscdel: These expansions came at the cost of the old Nukeops Base.
+  - qol: Nukeops get a bigger and better looking base. Escapees on hijacked shuttles
+      may not be as lucky...
+  - code_imp: Added keycards and keycard_doors for use in the Nukeops Base.
+  - code_imp: Moves /modules/ruins into /modules/mapfluff/ruins and creates /modules/mapfluff/centcom
+  robbertapir:
+  - bugfix: Learning about lavaland bone architecture no longer causes the "Tribal"
+      tab to undergo mitosis.
+  san7890:
+  - bugfix: On IceBoxStation, to the northeastern airlock (in relation to the bar),
+      Nanotrasen will no longer paint the word "Caution" over text that says "STAND
+      CLEAR".
+  - bugfix: In MetaStation's Brig, Nanotrasen will no longer install Camera Monitors
+      on windows. They also removed an excess newscaster embedded within a wall.
+  tf-4:
+  - bugfix: Statues can now once again be wrenched.
+  timothymtorres:
+  - qol: Change AI upload lawsets to be randomized
+  - code_imp: Reorganize AI lawset code and remove deprecated malfunction code
+  timothymtorres, TheBonded:
+  - code_imp: Improved nightvision code
+2022-04-20:
+  Fikou:
+  - bugfix: ebows no longer inherit not needing a gun permit from pkas
+  TheBonded:
+  - expansion: Laserpointer circuit modules now available. they had to be toned down
+      for circuit implementation, so dont expect them to do anything other than shine
+      light.
+  azizonkg:
+  - bugfix: renamed suffix for tgui-polyfill from bundle.js to min.js to prevent CBT
+      failing after target 'clean'
+  magatsuchi:
+  - rscdel: Removes the old PDA code, as well as references to it. (mostly)
+  - refactor: Thinktronic Systems has retired the elegantly aged PDA system, and is
+      now (forcefully) pushing its new patented job disks and SpaceMessenger app!
+      Available on your round-start tablet.
+  robbertapir:
+  - spellcheck: Replaced all occurrences of "collosal" with "colossal"
+  stylemistake:
+  - refactor: Ping system of tgui-panel has been reworked, which fixes things mentioned
+      below.
+  - bugfix: AFK players now get properly detected and kicked
+  - bugfix: Automatic reconnect should now work 100% of the time
+  - bugfix: Manual reconnect should now work 100% of the time
+  timothymtorres:
+  - qol: Fix nearspace areas for Meta
+  timothymtorres, TheBonded:
+  - code_imp: Library items have been refactored to be separate files.
+  vincentiusvin:
+  - bugfix: fixed icebox perma gym camera not working
+  - expansion: Remaps delta's ordnance
