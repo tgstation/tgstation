@@ -484,6 +484,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/initial_id = "middle_part"
 	var/obj/effect/landmark/tram/from_where
 	var/travel_direction
+	/// How many movement steps to take during each process(), this must be an integer
+	var/tram_speed = 1
 
 GLOBAL_LIST_EMPTY_TYPED(central_trams, /obj/structure/industrial_lift/tram/central)
 
@@ -535,13 +537,20 @@ GLOBAL_LIST_EMPTY_TYPED(central_trams, /obj/structure/industrial_lift/tram/centr
 	return
 
 /obj/structure/industrial_lift/tram/process(delta_time)
+	var/delay_time = SStramprocess.wait/tram_speed
 	if(!travel_distance)
 		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
 		return PROCESS_KILL
-	else
+	else if(travel_distance < tram_speed)
 		travel_distance--
-		lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(SStramprocess.wait))
-
+		lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(delay_time))
+	else
+		travel_distance -= tram_speed
+		var/counter = tram_speed - 1
+		lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(delay_time))
+		while(counter)
+			addtimer(CALLBACK(lift_master_datum, /datum/lift_master/.proc/MoveLiftHorizontal, travel_direction, z, DELAY_TO_GLIDE_SIZE(delay_time)), delay_time*counter)
+			counter--
 /**
  * Handles moving the tram
  *
