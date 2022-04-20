@@ -144,12 +144,12 @@
 	id_eject(user, inserted_scan_id)
 
 /obj/machinery/computer/piratepad_control/civilian/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
+	SHOULD_CALL_PARENT(FALSE)
+	update_use_power(ACTIVE_POWER_USE)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CivCargoHoldTerminal", name)
 		ui.open()
-
 
 /obj/machinery/computer/piratepad_control/civilian/ui_data(mob/user)
 	var/list/data = list()
