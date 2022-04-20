@@ -7,7 +7,7 @@
 /datum/lift_master
 	var/list/lift_platforms
 	/// Typepath list of what to ignore smashing through, controls all lifts
-	var/list/ignored_smashthroughs = list(
+	var/static/list/ignored_smashthroughs = list(
 		/obj/machinery/power/supermatter_crystal,
 		/obj/structure/holosign,
 		/obj/machinery/field,
@@ -93,7 +93,7 @@
 		if(!tram_platform)
 			return FALSE
 
-		tram_platform.travel(going, gliding_amount)
+		tram_platform.travel(going, gliding_amount, TRUE)
 		return
 
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
@@ -200,6 +200,16 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
 
+/obj/structure/industrial_lift/Destroy()
+	GLOB.lifts.Remove(src)
+	//QDEL_NULL(lift_master_datum) //TODOKYLER: holy fuck
+	lift_master_datum = null
+	/*var/list/border_lift_platforms = lift_platform_expansion()
+	moveToNullspace()
+	for(var/border_lift in border_lift_platforms)
+		lift_master_datum = new(border_lift)*/
+	return ..()
+
 ///set the movement registrations to our current turf so contents moving out of our tile are removed from our movement lists
 /obj/structure/industrial_lift/proc/set_movement_registrations(list/turfs_to_set)
 	for(var/turf/turf_loc as anything in turfs_to_set || locs)
@@ -207,7 +217,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		RegisterSignal(turf_loc, COMSIG_ATOM_ENTERED, .proc/AddItemOnLift)
 
 ///unset our movement registrations from our tile so we dont register to the contents being moved from us
-/obj/structure/industrial_lift/proc/undo_movement_registrations(list/turfs_to_unset)
+/obj/structure/industrial_lift/proc/unset_movement_registrations(list/turfs_to_unset)
 	var/static/list/registrations = list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED)
 	for(var/turf/turf_loc as anything in turfs_to_unset || locs)
 		UnregisterSignal(turf_loc, registrations)
@@ -228,7 +238,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable))
+	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/industrial_lift))
 	if(is_type_in_typecache(AM, blacklisted_types) || AM.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
 		return
 	if(AM in lift_load)
@@ -274,16 +284,12 @@ GLOBAL_LIST_EMPTY(lifts)
 	else
 		destination = going
 
-	var/current_x = x
-	var/current_y = y
-
 	var/x_offset = ROUND_UP(bound_width / 32) - 1 //how many tiles our horizontally farthest edge is from us
 	var/y_offset = ROUND_UP(bound_height / 32) - 1 //how many tiles our vertically farthest edge is from us
 
 	var/back_edge_x = destination.x + x_offset//if we arent multitile this should just be destination.x
 	var/top_edge_y = destination.y + y_offset
 
-	var/turf/old_top_right_corner = locate(min(world.maxx, x + x_offset), min(world.maxy, y + y_offset), z)
 	var/turf/top_right_corner = locate(min(world.maxx, back_edge_x), min(world.maxy, top_edge_y), destination.z)
 
 	var/list/dest_locs = block(
@@ -363,7 +369,7 @@ GLOBAL_LIST_EMPTY(lifts)
 				var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
 				collided.throw_at(throw_target, 200, 4, callback = land_slam)
 
-	undo_movement_registrations(exited_locs)
+	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going, gliding_amount)
 	set_movement_registrations(entering_locs)
 
@@ -514,15 +520,6 @@ GLOBAL_LIST_EMPTY(lifts)
 	else
 		user.visible_message(span_notice("[user] moves the lift downwards."), span_notice("You move the lift downwards."))
 
-/obj/structure/industrial_lift/Destroy()
-	GLOB.lifts.Remove(src)
-	QDEL_NULL(lift_master_datum)
-	var/list/border_lift_platforms = lift_platform_expansion()
-	moveToNullspace()
-	for(var/border_lift in border_lift_platforms)
-		lift_master_datum = new(border_lift)
-	return ..()
-
 /obj/structure/industrial_lift/debug
 	name = "transport platform"
 	desc = "A lightweight platform. It moves in any direction, except up and down."
@@ -620,6 +617,47 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/structure/industrial_lift/tram/central/LateInitialize()
+	. = ..()
+	find_our_location()
+
+	for(var/obj/structure/industrial_lift/tram/other_lift as anything in lift_master_datum.lift_platforms)
+		min_x = min(min_x, other_lift.x)
+		max_x = max(max_x, other_lift.x)
+
+		min_y = min(min_y, other_lift.y)
+		max_y = max(max_y, other_lift.y)
+
+	width = (max_x - min_x) + 1
+	height = (max_y - min_y) + 1
+
+	bound_width = bound_width * width
+	bound_height = bound_height * height
+
+	//multitile movement code assumes our loc is on the lower left corner of our bounding box
+
+	var/x_offset = round(width / 2) * world.icon_size
+	var/y_offset = round(height / 2) * world.icon_size
+
+	var/matrix/new_transform = new()
+	new_transform.Scale(width, height)
+	new_transform.Translate(x_offset, y_offset)
+	transform = new_transform
+
+	for(var/obj/structure/industrial_lift/other_lift in lift_master_datum.lift_platforms)
+		if(other_lift == src)
+			continue
+
+		lift_master_datum.lift_platforms -= other_lift
+		if(other_lift.lift_load)
+			LAZYOR(lift_load, other_lift.lift_load)
+
+		qdel(other_lift)
+
+	lift_master_datum.multitile_tram = TRUE
+
+	forceMove(locate(min_x, min_y, z))
+
 /obj/structure/industrial_lift/tram/central/proc/find_dimensions(iterations = 3000)
 	message_admins("num turfs: [length(locs)], lower left corner: ([min_x], [min_y]), upper right corner: ([max_x], [max_y])")
 
@@ -651,51 +689,6 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 	if(iterations)
 		addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
-
-
-/obj/structure/industrial_lift/tram/central/LateInitialize()
-	. = ..()
-	find_our_location()
-
-	for(var/obj/structure/industrial_lift/tram/other_lift as anything in lift_master_datum.lift_platforms)
-		min_x = min(min_x, other_lift.x)
-		max_x = max(max_x, other_lift.x)
-
-		min_y = min(min_y, other_lift.y)
-		max_y = max(max_y, other_lift.y)
-
-	width = (max_x - min_x) + 1
-	height = (max_y - min_y) + 1
-
-	var/half_bound_height = bound_height / 2
-	var/half_bound_width = bound_width / 2
-
-	bound_width = bound_width * width
-	bound_height = bound_height * height
-
-	//multitile movement code assumes our loc is on the lower left corner of our bounding box
-
-	var/x_offset = round(width / 2) * world.icon_size
-	var/y_offset = round(height / 2) * world.icon_size
-
-	var/matrix/new_transform = new()
-	new_transform.Scale(width, height)
-	new_transform.Translate(x_offset, y_offset)
-	transform = new_transform
-
-	for(var/obj/structure/industrial_lift/other_lift in lift_master_datum.lift_platforms)
-		if(other_lift == src)
-			continue
-
-		lift_master_datum.lift_platforms -= other_lift
-		if(other_lift.lift_load)
-			LAZYOR(lift_load, other_lift.lift_load)
-
-		qdel(other_lift)
-
-	lift_master_datum.multitile_tram = TRUE
-
-	forceMove(locate(min_x, min_y, z))
 
 /obj/structure/industrial_lift/tram/central/Destroy()
 	GLOB.central_tram = null
@@ -751,9 +744,10 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 	visible_message(span_notice("[src] has been called to the [to_where]!"))
 
-	lift_master_datum.set_controls(LOCKED)
 	travel_direction = get_dir(from_where, to_where)
 	travel_distance = get_dist(from_where, to_where)
+
+	lift_master_datum.set_controls(LOCKED)
 	//first movement is immediate
 	for(var/obj/structure/industrial_lift/tram/other_tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		if(other_tram_part.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
