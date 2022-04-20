@@ -6742,12 +6742,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
-"tA" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/closed/indestructible/syndicate,
-/area/syndicate_mothership/expansion_bombthreat)
 "tB" = (
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
@@ -6866,6 +6860,12 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
+"tQ" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/closed/indestructible/opsglass,
+/area/syndicate_mothership/expansion_bombthreat)
 "tR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -9699,9 +9699,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
 "Ci" = (
@@ -9998,6 +9996,12 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/control)
+"Db" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden{
+	dir = 1
+	},
+/turf/closed/indestructible/syndicate,
+/area/syndicate_mothership/expansion_bombthreat)
 "Dd" = (
 /obj/machinery/door/window/survival_pod{
 	dir = 8;
@@ -11467,12 +11471,6 @@
 "Hv" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/courtroom)
-"Hw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/turf/closed/indestructible/syndicate,
-/area/syndicate_mothership/expansion_bombthreat)
 "Hy" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/catwalk_floor,
@@ -12000,8 +11998,8 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -12892,9 +12890,7 @@
 /turf/closed/mineral/ash_rock,
 /area/awaymission/errorroom)
 "Ma" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
@@ -14119,15 +14115,6 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
-"Pp" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/syndicate_mothership/expansion_bombthreat)
 "Pq" = (
 /turf/open/floor/iron/grimy,
 /area/centcom/prison)
@@ -15049,7 +15036,7 @@
 /area/centcom/control)
 "RS" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
-	dir = 10
+	dir = 8
 	},
 /turf/closed/indestructible/syndicate,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -25238,8 +25225,8 @@ br
 Bq
 Gm
 RS
-Hw
-tA
+kv
+kv
 kv
 kv
 kv
@@ -25494,7 +25481,7 @@ nH
 ay
 Bq
 Fn
-kv
+Db
 Ma
 IV
 ki
@@ -25751,9 +25738,9 @@ nz
 br
 Bq
 fQ
-of
+tQ
 Ch
-Pp
+BD
 uu
 tk
 rE
