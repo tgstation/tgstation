@@ -9,11 +9,6 @@
 	var/mob/living/owner //The mob affected by the status effect.
 	var/status_type = STATUS_EFFECT_UNIQUE //How many of the effect can be on one mob, and what happens when you try to add another
 	var/on_remove_on_mob_delete = FALSE //if we call on_remove() when the mob is deleted
-	/// Text that appears when the owner is examined.
-	/// To insert a pronoun like "he" or "she", use "SUBJECTPRONOUN" in the text itself.
-	var/examine_text
-	/// If TRUE, examine_text will only show up if the mob (appears to be) alive (their stat is not dead).
-	var/examine_requires_alive = FALSE
 	var/alert_type = /atom/movable/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
 	var/atom/movable/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
 	///Processing speed - used to define if the status effect should be using SSfastprocess or SSprocessing
@@ -96,17 +91,9 @@
 	return 0
 
 /// Gets and formats examine text associated with our status effect.
-/datum/status_effect/proc/get_examine_text()
-	if(!examine_text)
-		return null
-
-	var/pronoun_replacement = owner.p_they(TRUE)
-	// If the examine text uses SUBJECTPRONOUN, replace it with a real pronoun
-	var/formatted_text = replacetext(examine_text, "SUBJECTPRONOUN", pronoun_replacement)
-	// To make sure something become "They are" or "She is", not "They are" and "She are".
-	formatted_text = replacetext(new_text, "[pronoun_replacement] is", "[pronoun_replacement] [p_are()]")
-
-	return formatted_text
+/// Return 'null' to have no examine text appear (default behavior).
+/datum/status_effect/proc/get_examine_text(appears_dead)
+	return null
 
 ////////////////
 // ALERT HOOK //

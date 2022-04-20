@@ -67,4 +67,4 @@
 				to_chat(target, span_hypnophrase("The light is so pretty..."))
 				target.add_confusion(min(target.get_confusion() + 10, 20))
 				target.adjust_drowsyness(min(target.drowsyness + 10, 20))
-				target.add_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, max_duration = 40 SECONDS)
+				target.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, max_duration = 40 SECONDS)

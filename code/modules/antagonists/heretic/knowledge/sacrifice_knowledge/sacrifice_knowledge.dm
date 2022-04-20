@@ -434,7 +434,7 @@
 	sac_target.add_confusion(60)
 	sac_target.Jitter(60)
 	sac_target.blur_eyes(50)
-	sac_target.add_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness)
+	sac_target.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness)
 	sac_target.AdjustKnockdown(80)
 	sac_target.adjustStaminaLoss(120)
 

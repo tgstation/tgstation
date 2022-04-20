@@ -17,8 +17,6 @@
 	. = list("<span class='info'>*---------*\nThis is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
 
 	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-
 
 	//uniform
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
@@ -96,11 +94,6 @@
 		. += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)]."
 
 		. += wear_id.get_id_examine_strings(user)
-
-	//Status effects
-	var/list/status_examines = get_status_effect_examinations(appears_dead = appears_dead)
-	if (length(status_examines))
-		. += status_examines
 
 	//Jitters
 	switch(jitteriness)
@@ -304,22 +297,12 @@
 	if(just_sleeping)
 		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 
-	if(!appears_dead)
-		if(drunkenness && !skipface) //Drunkenness
-			switch(drunkenness)
-				if(11 to 21)
-					msg += "[t_He] [t_is] slightly flushed.\n"
-				if(21.01 to 41) //.01s are used in case drunkenness ends up to be a small decimal
-					msg += "[t_He] [t_is] flushed.\n"
-				if(41.01 to 51)
-					msg += "[t_He] [t_is] quite flushed and [t_his] breath smells of alcohol.\n"
-				if(51.01 to 61)
-					msg += "[t_He] [t_is] very flushed and [t_his] movements jerky, with breath reeking of alcohol.\n"
-				if(61.01 to 91)
-					msg += "[t_He] look[p_s()] like a drunken mess.\n"
-				if(91.01 to INFINITY)
-					msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
+	//Status effects
+	var/list/status_examines = get_status_effect_examinations(appears_dead = appears_dead)
+	if (length(status_examines))
+		. += status_examines
 
+	if(!appears_dead)
 		if(src != user)
 			if(HAS_TRAIT(user, TRAIT_EMPATH))
 				if (combat_mode)
@@ -438,7 +421,7 @@
  * This is passed to take into account fakedeath and similar from examine().
  * If no value is passed, they are assumed to appear dead based on their current stat.
  */
-/mob/living/proc/get_status_effect_examinations(appears_dead)
+/mob/living/proc/get_status_effect_examinations(appears_dead, face_skipped)
 	var/list/data = list()
 
 	// If we weren't explicitly passed a value, assume based on their stat
@@ -446,10 +429,7 @@
 		appears_dead = (stat == DEAD)
 
 	for(var/datum/status_effect/effect as anything in status_effects)
-		if(effect.examine_requires_alive && appears_dead)
-			continue
-
-		var/effect_text = effect.get_examine_text()
+		var/effect_text = effect.get_examine_text(appears_dead)
 		if(!effect_text)
 			continue
 
