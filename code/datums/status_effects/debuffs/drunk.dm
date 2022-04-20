@@ -28,9 +28,9 @@
 /datum/status_effect/inebriated/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
 
-/datum/status_effect/inebriated/get_examine_text(appears_dead)
+/datum/status_effect/inebriated/get_examine_text()
 	// Dead people don't look drunk
-	if(appears_dead)
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_FAKEDEATH))
 		return null
 
 	// Having your face covered conceals your drunkness

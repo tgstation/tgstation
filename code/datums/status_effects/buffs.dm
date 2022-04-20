@@ -247,7 +247,7 @@
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.remove_hud_from(owner)
 
-/datum/status_effect/hippocratic_oath/get_examine_text(appears_dead)
+/datum/status_effect/hippocratic_oath/get_examine_text()
 	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
 
 /datum/status_effect/hippocratic_oath/tick()
@@ -373,7 +373,7 @@
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	owner.visible_message(span_warning("[owner]'s dull aura fades away..."))
 
-/datum/status_effect/antimagic/get_examine_text(appears_dead)
+/datum/status_effect/antimagic/get_examine_text()
 	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to be covered in a dull, grey aura.")
 
 /datum/status_effect/crucible_soul
@@ -397,7 +397,7 @@
 	owner.forceMove(location)
 	location = null
 
-/datum/status_effect/crucible_soul/get_examine_text(appears_dead)
+/datum/status_effect/crucible_soul/get_examine_text()
 	return span_notice("[owner.p_they(TRUE)] [owner.p_do()]n't seem to be all here.")
 
 /datum/status_effect/duskndawn

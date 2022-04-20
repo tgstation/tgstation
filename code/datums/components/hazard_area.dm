@@ -162,7 +162,7 @@
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area, update=TRUE)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area, update=TRUE)
 
-/datum/status_effect/hazard_area/get_examine_text(appears_dead)
+/datum/status_effect/hazard_area/get_examine_text()
 	return span_notice("[owner.p_they(TRUE)] appear[owner.p_s()] to be largely immobilized through unknown means.")
 
 /atom/movable/screen/alert/status_effect/hazard_area

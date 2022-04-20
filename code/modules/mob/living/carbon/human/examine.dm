@@ -95,6 +95,11 @@
 
 		. += wear_id.get_id_examine_strings(user)
 
+	//Status effects
+	var/list/status_examines = get_status_effect_examinations()
+	if (length(status_examines))
+		. += status_examines
+
 	//Jitters
 	switch(jitteriness)
 		if(300 to INFINITY)
@@ -297,11 +302,6 @@
 	if(just_sleeping)
 		msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 
-	//Status effects
-	var/list/status_examines = get_status_effect_examinations(appears_dead = appears_dead)
-	if (length(status_examines))
-		. += status_examines
-
 	if(!appears_dead)
 		if(src != user)
 			if(HAS_TRAIT(user, TRAIT_EMPATH))
@@ -416,20 +416,13 @@
 
 /**
  * Shows any and all examine text related to any status effects the user has.
- *
- * * appears_dead - whether the mob appears to be dead to the examiner or not.
- * This is passed to take into account fakedeath and similar from examine().
- * If no value is passed, they are assumed to appear dead based on their current stat.
  */
-/mob/living/proc/get_status_effect_examinations(appears_dead, face_skipped)
+/mob/living/proc/get_status_effect_examinations()
+	RETURN_TYPE(/list)
 	var/list/data = list()
 
-	// If we weren't explicitly passed a value, assume based on their stat
-	if(isnull(appears_dead))
-		appears_dead = (stat == DEAD)
-
 	for(var/datum/status_effect/effect as anything in status_effects)
-		var/effect_text = effect.get_examine_text(appears_dead)
+		var/effect_text = effect.get_examine_text()
 		if(!effect_text)
 			continue
 

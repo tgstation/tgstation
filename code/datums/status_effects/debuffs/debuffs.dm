@@ -268,7 +268,7 @@
 	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
 	return ..()
 
-/datum/status_effect/strandling/get_examine_text(appears_dead)
+/datum/status_effect/strandling/get_examine_text()
 	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] to be being choked by some durathread strands. You may be able to <b>cut</b> them off.")
 
 /atom/movable/screen/alert/status_effect/strandling
@@ -721,7 +721,7 @@
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
-/datum/status_effect/trance/get_examine_text(appears_dead)
+/datum/status_effect/trance/get_examine_text()
 	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
@@ -1060,7 +1060,7 @@
 	owner.remove_status_effect(/datum/status_effect/ants)
 	return COMPONENT_CLEANED
 
-/datum/status_effect/ants/get_examine_text(appears_dead)
+/datum/status_effect/ants/get_examine_text()
 	return span_warning("[owner.p_they(TRUE)] [owner.p_are()] covered in ants!")
 
 /datum/status_effect/ants/tick()
