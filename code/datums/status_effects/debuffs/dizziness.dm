@@ -10,14 +10,14 @@
 	return ..()
 
 /datum/status_effect/dizziness/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_SET_RESTING, .proc/on_rest)
+	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/on_rest)
 	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/clear_dizziness)
 	return TRUE
 
 /datum/status_effect/dizziness/on_remove()
-	UnregisterSignal(owner, list(COMSIG_LIVING_SET_RESTING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
+	UnregisterSignal(owner, list(COMSIG_LIVING_SET_BODY_POSITION, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
 
-/// Signal proc for [COMSIG_LIVING_SET_RESTING]. Whenever we rest, it depletes faster but is more dizzying
+/// Signal proc for [COMSIG_LIVING_SET_BODY_POSITION]. Whenever we rest, it depletes faster but is more dizzying
 /datum/status_effect/dizziness/proc/on_rest(mob/living/source)
 	SIGNAL_HANDLER
 

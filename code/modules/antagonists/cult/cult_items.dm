@@ -488,7 +488,7 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
 		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
 		user.dropItemToGround(src, TRUE)
-		user.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness)
+		user.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		user.Paralyze(100)
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
@@ -503,7 +503,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(user.stat != DEAD && !IS_CULTIST(user) && slot == ITEM_SLOT_EYES)
 		to_chat(user, span_cultlarge("\"You want to be blind, do you?\""))
 		user.dropItemToGround(src, TRUE)
-		user.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness)
+		user.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		user.Paralyze(100)
 		user.blind_eyes(30)
 
