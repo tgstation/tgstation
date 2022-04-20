@@ -75,7 +75,7 @@
 	return ..()
 
 /datum/status_effect/process()
-	if(!owner)
+	if(QDELETED(owner))
 		qdel(src)
 		return
 	if(tick_interval < world.time)
