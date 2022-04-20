@@ -693,21 +693,16 @@
 			. = rand(-1000, 1000)
 	..() //Called afterwards because getting the mind after getting gibbed is sketchy
 
-/mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
-	if(!istype(M))
+/mob/living/carbon/human/help_shake_act(mob/living/carbon/helper)
+	if(!istype(helper))
 		return
 
-	if(src == M)
-		check_self_for_injuries()
+	if(wear_suit)
+		wear_suit.add_fingerprint(helper)
+	else if(w_uniform)
+		w_uniform.add_fingerprint(helper)
 
-	else
-		if(wear_suit)
-			wear_suit.add_fingerprint(M)
-		else if(w_uniform)
-			w_uniform.add_fingerprint(M)
-
-		..()
-
+	return ..()
 
 /mob/living/carbon/human/check_self_for_injuries()
 	if(stat >= UNCONSCIOUS)

@@ -402,7 +402,11 @@
 		to_chat(M, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
 
-	if(M == src && check_self_for_injuries())
+	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_HELP_ACT, M) & COMPONENT_BLOCK_HELP_ACT)
+		return
+
+	if(M == src)
+		check_self_for_injuries()
 		return
 
 	if(body_position == LYING_DOWN)
@@ -493,9 +497,6 @@
 /// Check ourselves to see if we've got any shrapnel, return true if we do. This is a much simpler version of what humans do, we only indicate we're checking ourselves if there's actually shrapnel
 /mob/living/carbon/proc/check_self_for_injuries()
 	if(stat >= UNCONSCIOUS)
-		return
-
-	if(SEND_SIGNAL(src, COMSIG_CARBON_CHECK_SELF) & COMPONENT_CANCEL_SELF_CHECK)
 		return
 
 	var/embeds = FALSE

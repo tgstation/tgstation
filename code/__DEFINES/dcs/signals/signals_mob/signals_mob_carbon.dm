@@ -1,3 +1,8 @@
+///When a carbon mob is acted upon with help intent, before any hugging or such is done. (mob/living/helper)
+#define COMSIG_CARBON_PRE_HELP_ACT "carbon_check_self"
+	/// Stops the rest of help act (hugging, etc) from occuring
+	#define COMPONENT_BLOCK_HELP_ACT (1<<0)
+
 ///When a carbon mob hugs someone, this is called on the carbon that is hugging. (mob/living/hugger, mob/living/hugged)
 #define COMSIG_CARBON_HUG "carbon_hug"
 ///When a carbon mob is hugged, this is called on the carbon that is hugged. (mob/living/hugger)
@@ -6,10 +11,6 @@
 #define COMSIG_CARBON_HEADPAT "carbon_headpatted"
 ///When a carbon mob has their tail pulled, this is called on the carbon that is the target. (mob/living/tailpuller)
 #define COMSIG_CARBON_TAILPULL "carbon_tailpulled"
-///When a carbon mob checks themself for injuries. ()
-#define COMSIG_CARBON_CHECK_SELF "carbon_check_self"
-	/// Stops the self check before it actually occurs.
-	#define COMPONENT_CANCEL_SELF_CHECK (1<<0)
 
 ///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
 #define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
