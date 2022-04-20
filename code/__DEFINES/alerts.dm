@@ -33,7 +33,6 @@
 #define ALERT_ETHEREAL_CHARGE "ethereal_charge"
 #define ALERT_ETHEREAL_OVERCHARGE "ethereal_overcharge"
 
-//drunk alerts
 #define ALERT_HIGH "high"
 
 /** Alien related */
