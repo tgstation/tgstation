@@ -59,9 +59,6 @@ SUBSYSTEM_DEF(radiation)
 		if (current_insulation <= pulse_information.threshold)
 			continue
 
-		if(isnull(pulse_information.max_range) && pulse_information.intensity) // If max range is undefined, then set it to the distance where the intensity drops to the constant.
-			pulse_information.max_range = INVERSE(sqrt(DEFAULT_AUTO_RADIATION_INTENSITY_CONSTANT / pulse_information.intensity)) - 1
-
 		if(pulse_information.intensity)
 			perceived_intensity = pulse_information.intensity
 		else // If intensity is undefined, set it so that there will be a 5% chance to irradiate an object if that object is at the maximum range.

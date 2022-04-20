@@ -25,7 +25,7 @@
 /// then the intensity will get set to a value that gives a target a 5% chance to get irradiated from the maximum range of the pulse.
 /proc/radiation_pulse(
 	atom/source,
-	max_range = null,
+	max_range,
 	threshold,
 	intensity = null,
 	minimum_exposure_time = 0,
