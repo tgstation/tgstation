@@ -20,6 +20,30 @@
 	var/server = CONFIG_GET(string/server)
 	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]"
 
+/datum/tgs_chat_command/gameversion
+	name = "gameversion"
+	help_text = "Gets the version details from the show-server-revision verb, basically"
+
+/datum/tgs_chat_command/gameversion/Run(datum/tgs_chat_user/sender, params)
+	var/list/msg = list("")
+	msg += "BYOND Server Version: [world.byond_version].[world.byond_build] (Compiled with: [DM_VERSION].[DM_BUILD])\n"
+
+	// Revision information
+	var/datum/getrev/revdata = GLOB.revdata
+	if (!revdata)
+		msg += "No revision information found."
+	else
+		msg += "Revision '[copytext_char(revdata.commit, 1, 11)]' compiled on '[revdata.date]'"
+		
+		if(revdata.originmastercommit)
+			msg += ", from origin commit: <[CONFIG_GET(string/githuburl)]/commit/[revdata.originmastercommit]>"
+
+		if(revdata.testmerge.len)
+			msg += "\n"
+			for(var/datum/tgs_revision_information/test_merge/PR as anything in revdata.testmerge)
+				msg += "PR #[PR.number] [PR.title] at [copytext_char(PR.head_commit, 1, 11)].\n<[PR.url]>\n"
+	return msg.Join("")
+
 /datum/tgs_chat_command/ahelp
 	name = "ahelp"
 	help_text = "<ckey|ticket #> <message|ticket <close|resolve|icissue|reject|reopen <ticket #>|list>>"
