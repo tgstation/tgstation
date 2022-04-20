@@ -146,10 +146,6 @@
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
 
-/obj/item/clothing/suit/armor/vest/capcarapace/syndicate/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/toggle_icon)
-
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
 	name = "captain's parade coat"
 	desc = "For when an armoured vest isn't fashionable enough."
