@@ -1,5 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - rscdel: "Removes the old PDA code, as well as references to it. (mostly)"
-  - refactor: "Thinktronic Systems has retired the elegantly aged PDA system, and is now (forcefully) pushing its new patented job disks and SpaceMessenger app! Available on your round-start tablet."
