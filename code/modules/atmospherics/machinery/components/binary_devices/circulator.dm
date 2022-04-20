@@ -122,7 +122,7 @@
 		if(node2)
 			node2.atmos_init()
 			node2.add_member(src)
-		SSzas.add_to_rebuild_queue(src)
+		SSairmachines.add_to_rebuild_queue(src)
 
 	return TRUE
 

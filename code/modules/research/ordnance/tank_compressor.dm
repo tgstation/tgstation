@@ -119,7 +119,7 @@
 	if(nodes[2])
 		nodes[2].atmos_init()
 		nodes[2].add_member(src)
-	SSzas.add_to_rebuild_queue(src)
+	SSairmachines.add_to_rebuild_queue(src)
 	update_appearance()
 
 /// Glorified volume pump.

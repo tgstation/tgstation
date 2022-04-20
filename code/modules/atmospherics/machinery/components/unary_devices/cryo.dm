@@ -563,7 +563,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		if(node)
 			node.atmos_init()
 			node.add_member(src)
-		SSzas.add_to_rebuild_queue(src)
+		SSairmachines.add_to_rebuild_queue(src)
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR

@@ -510,7 +510,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				for (var/obj/machinery/atmospherics/O in S.nodes)
 					O.atmos_init()
 					O.add_member(src)
-				SSzas.add_to_rebuild_queue(S)
+				SSairmachines.add_to_rebuild_queue(S)
 			// Finally, update our internal state - update_pipe_icon also updates dir and connections
 			S.update_pipe_icon()
 			user.visible_message(span_notice("[user] reprograms the \the [S]."),span_notice("You reprogram \the [S]."))

@@ -146,6 +146,7 @@
 #define INIT_ORDER_ATOMS 30
 #define INIT_ORDER_LANGUAGE 25
 #define INIT_ORDER_MACHINES 20
+#define INIT_ORDER_AIRMACHINES 17
 #define INIT_ORDER_SKILLS 15
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
@@ -193,6 +194,7 @@
 #define FIRE_PRIORITY_OBJ 40
 #define FIRE_PRIORITY_ACID 40
 #define FIRE_PRIOTITY_BURNING 40
+#define FIRE_PRIORITY_AIRMACHINES 45
 #define FIRE_PRIORITY_DEFAULT 50
 #define FIRE_PRIORITY_PARALLAX 65
 #define FIRE_PRIORITY_INSTRUMENTS 80
@@ -277,23 +279,21 @@
 #define SSAIR_SUPERCONDUCTIVITY 7
 #define SSAIR_PROCESS_ATOMS 8
 
-//ZAS subsystem subtasks
-#define SSZAS_PIPENETS 1
-#define SSZAS_MACHINES 2
-#define SSZAS_TILES 3
-#define SSZAS_DEFERED_TILES 4
-#define SSZAS_EDGES 5
-#define SSZAS_FIRES 6
-#define SSZAS_HOTSPOTS 7
-#define SSZAS_ZONES 8
-#define SSZAS_ATOMS 9
+#define SSZAS_TILES 1
+#define SSZAS_DEFERED_TILES 2
+#define SSZAS_EDGES 3
+#define SSZAS_FIRES 4
+#define SSZAS_HOTSPOTS 5
+#define SSZAS_ZONES 6
+#define SSZAS_ATOMS 7
 
-#define SSZAS_REBUILD_PIPELINE 1
-#define SSZAS_REBUILD_QUEUE 2
+//Air Machine subsystem subtasks
+#define SSAIRMACH_PIPENETS 1
+#define SSAIRMACH_MACHINES 2
 
 //Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
-#define SSAIR_REBUILD_PIPELINE 1
-#define SSAIR_REBUILD_QUEUE 2
+#define SSAIRMACH_REBUILD_PIPELINE 1
+#define SSAIRMACH_REBUILD_QUEUE 2
 
 // Explosion Subsystem subtasks
 #define SSEXPLOSIONS_MOVABLES 1

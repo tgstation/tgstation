@@ -32,7 +32,7 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
-	SSzas.start_processing_machine(src)
+	SSairmachines.start_processing_machine(src)
 	update_appearance()
 
 /obj/machinery/electrolyzer/Destroy()

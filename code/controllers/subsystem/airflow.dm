@@ -22,6 +22,10 @@ SUBSYSTEM_DEF(airflow)
 /datum/controller/subsystem/airflow/Recover()
 	current.Cut()
 
+/datum/controller/subsystem/airflow/stat_entry(msg)
+	msg += "P: [length(processing)] "
+	msg += "C: [length(current)]"
+	return ..()
 
 /datum/controller/subsystem/airflow/fire(resumed, no_mc_tick)
 	if (!resumed)
@@ -88,7 +92,14 @@ SUBSYSTEM_DEF(airflow)
 				current.Cut(i)
 				return
 			continue
+		var/olddir = target.dir
+		if(isobj(target))
+			target.SpinAnimation(3, 1, rand(50), parallel = FALSE)
+		//target.set_dir_on_move = FALSE
 		step_towards(target, target.airflow_dest)
+		//target.set_dir_on_move = TRUE
+		target.dir = olddir
+
 		if (ismob(target))
 			var/mob/M = target
 			M.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/atmos_pressure, TRUE, SSzas.settings.airflow_mob_slowdown)

@@ -206,7 +206,7 @@
 		var/datum/pipeline/parent = parents[i]
 		if(!parent)
 			WARNING("Component is missing a pipenet! Rebuilding...")
-			SSzas.add_to_rebuild_queue(src)
+			SSairmachines.add_to_rebuild_queue(src)
 		else
 			parent.update = TRUE
 

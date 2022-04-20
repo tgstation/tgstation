@@ -31,7 +31,7 @@
 	src.leak_rate = leak_rate
 
 /datum/component/gas_leaker/Destroy(force, silent)
-	SSzas.stop_processing_machine(src)
+	SSairmachines.stop_processing_machine(src)
 	return ..()
 
 /datum/component/gas_leaker/RegisterWithParent()
@@ -56,7 +56,7 @@
 	SIGNAL_HANDLER
 	// Hello fellow atmospherics machines, I too am definitely an atmos machine like you!
 	// This component needs to tick at the same rate as the atmos system
-	SSzas.start_processing_machine(src)
+	SSairmachines.start_processing_machine(src)
 
 /datum/component/gas_leaker/proc/process_obj(obj/master, list/airs=list())
 	airs += master.return_air()

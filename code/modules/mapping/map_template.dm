@@ -105,7 +105,7 @@
 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
 	// need these two below?
 	SSmachines.setup_template_powernets(cables)
-	SSzas.setup_template_machinery(atmos_machines)
+	SSairmachines.setup_template_machinery(atmos_machines)
 	SSshuttle.setup_shuttles(ports)
 
 	//calculate all turfs inside the border

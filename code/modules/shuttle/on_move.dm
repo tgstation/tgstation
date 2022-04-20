@@ -254,7 +254,7 @@ All ShuttleMove procs go here
 			A.atmos_init()
 			if(A.return_pipenet())
 				A.add_member(src)
-		SSzas.add_to_rebuild_queue(src)
+		SSairmachines.add_to_rebuild_queue(src)
 	else
 		// atmos_init() calls update_appearance(), so we don't need to call it
 		update_appearance()

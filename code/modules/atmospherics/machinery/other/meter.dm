@@ -17,7 +17,7 @@
 	var/target_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/meter/Destroy()
-	SSzas.stop_processing_machine(src)
+	SSairmachines.stop_processing_machine(src)
 	target = null
 	return ..()
 
@@ -25,7 +25,7 @@
 	if(!isnull(new_piping_layer))
 		target_layer = new_piping_layer
 
-	SSzas.start_processing_machine(src)
+	SSairmachines.start_processing_machine(src)
 
 	if(!target)
 		reattach_to_layer()
@@ -49,10 +49,10 @@
 
 /obj/machinery/meter/on_set_is_operational(old_value)
 	if(is_operational)
-		SSzas.start_processing_machine(src)//dont set icon_state here because it will be reset on next process() if it ever happens
+		SSairmachines.start_processing_machine(src)//dont set icon_state here because it will be reset on next process() if it ever happens
 	else
 		icon_state = "meter"
-		SSzas.stop_processing_machine(src)
+		SSairmachines.stop_processing_machine(src)
 
 /obj/machinery/meter/process_atmos()
 	var/datum/gas_mixture/pipe_air = target.return_air()

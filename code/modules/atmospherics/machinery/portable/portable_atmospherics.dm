@@ -22,12 +22,12 @@
 	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	SSzas.start_processing_machine(src)
+	SSairmachines.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/Destroy()
 	disconnect()
 	air_contents = null
-	SSzas.stop_processing_machine(src)
+	SSairmachines.stop_processing_machine(src)
 
 	return ..()
 
@@ -50,7 +50,7 @@
 	excited = FALSE
 
 /obj/machinery/portable_atmospherics/return_air()
-	SSzas.start_processing_machine(src)
+	SSairmachines.start_processing_machine(src)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/return_analyzable_air()
@@ -80,7 +80,7 @@
 	pixel_x = new_port.pixel_x
 	pixel_y = new_port.pixel_y
 
-	SSzas.start_processing_machine(src)
+	SSairmachines.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -101,7 +101,7 @@
 	pixel_x = 0
 	pixel_y = 0
 
-	SSzas.start_processing_machine(src)
+	SSairmachines.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
@@ -139,7 +139,7 @@
 		holding = new_tank
 		RegisterSignal(holding, COMSIG_PARENT_QDELETING, .proc/unregister_holding)
 
-	SSzas.start_processing_machine(src)
+	SSairmachines.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 

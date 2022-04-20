@@ -14,19 +14,19 @@
 	other_airs = list()
 	members = list()
 	other_atmos_machines = list()
-	SSzas.networks += src
+	SSairmachines.networks += src
 
 /datum/pipeline/Destroy()
-	SSzas.networks -= src
+	SSairmachines.networks -= src
 	if(building)
-		SSzas.remove_from_expansion(src)
+		SSairmachines.remove_from_expansion(src)
 	if(air?.volume)
 		temporarily_store_air()
 	for(var/obj/machinery/atmospherics/pipe/considered_pipe in members)
 		considered_pipe.parent = null
 		if(QDELETED(considered_pipe))
 			continue
-		SSzas.add_to_rebuild_queue(considered_pipe)
+		SSairmachines.add_to_rebuild_queue(considered_pipe)
 	for(var/obj/machinery/atmospherics/components/considered_component in other_atmos_machines)
 		considered_component.nullify_pipenet(src)
 	return ..()
@@ -56,7 +56,7 @@
 		air = new
 
 	air.volume = volume
-	SSzas.add_to_expansion(src, base)
+	SSairmachines.add_to_expansion(src, base)
 
 ///Has the same effect as build_pipeline(), but this doesn't queue its work, so overrun abounds. It's useful for the pregame
 /datum/pipeline/proc/build_pipeline_blocking(obj/machinery/atmospherics/base)

@@ -96,7 +96,7 @@
 	if(prob(50 / severity))
 		on = !on
 		if(on)
-			SSzas.start_processing_machine(src)
+			SSairmachines.start_processing_machine(src)
 	if(prob(100 / severity))
 		direction = PUMP_OUT
 	target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
@@ -147,7 +147,7 @@
 		if("power")
 			on = !on
 			if(on)
-				SSzas.start_processing_machine(src)
+				SSairmachines.start_processing_machine(src)
 			if(on && !holding)
 				var/plasma = air_contents.get_gas(GAS_PLASMA)
 				var/n2o = air_contents.get_gas(GAS_N2O)

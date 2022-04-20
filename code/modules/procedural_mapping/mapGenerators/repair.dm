@@ -51,7 +51,7 @@
 
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
-	SSzas.setup_template_machinery(atmos_machines)
+	SSairmachines.setup_template_machinery(atmos_machines)
 	GLOB.reloading_map = FALSE
 
 /datum/map_generator/repair

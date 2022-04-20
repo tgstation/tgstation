@@ -83,7 +83,7 @@
 		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 100, ACID = 70)
 	..()
 	if(process)
-		SSzas.start_processing_machine(src)
+		SSairmachines.start_processing_machine(src)
 	set_init_directions(init_dir)
 
 /obj/machinery/atmospherics/Initialize(mapload)
@@ -95,8 +95,8 @@
 	for(var/i in 1 to device_type)
 		nullify_node(i)
 
-	SSzas.stop_processing_machine(src)
-	SSzas.rebuild_queue -= src
+	SSairmachines.stop_processing_machine(src)
+	SSairmachines.rebuild_queue -= src
 
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
@@ -470,7 +470,7 @@
 	for(var/obj/machinery/atmospherics/A in nodes)
 		A.atmos_init()
 		A.add_member(src)
-	SSzas.add_to_rebuild_queue(src)
+	SSairmachines.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/update_name()
 	if(!override_naming)
