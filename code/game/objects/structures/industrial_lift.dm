@@ -94,6 +94,7 @@
 			return FALSE
 
 		tram_platform.travel(going, gliding_amount)
+		return
 
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 		max_x = max(max_x, lift_platform.x)
@@ -273,17 +274,26 @@ GLOBAL_LIST_EMPTY(lifts)
 	else
 		destination = going
 
+	var/current_x = x
+	var/current_y = y
+
+	var/x_offset = ROUND_UP(bound_width / 32) - 1 //how many tiles our horizontally farthest edge is from us
+	var/y_offset = ROUND_UP(bound_height / 32) - 1 //how many tiles our vertically farthest edge is from us
+
+	var/back_edge_x = destination.x + x_offset//if we arent multitile this should just be destination.x
+	var/top_edge_y = destination.y + y_offset
+
+	var/turf/old_top_right_corner = locate(min(world.maxx, x + x_offset), min(world.maxy, y + y_offset), z)
+	var/turf/top_right_corner = locate(min(world.maxx, back_edge_x), min(world.maxy, top_edge_y), destination.z)
+
 	var/list/dest_locs = block(
 		destination,
-		locate(
-			min(world.maxx, destination.x + ROUND_UP(bound_width / 32)),
-			min(world.maxy, destination.y + ROUND_UP(bound_height / 32)),
-			destination.z
-		)
+		top_right_corner
 	)
 
-	var/list/entering_locs = dest_locs - locs
-	var/list/exited_locs = locs - dest_locs
+	var/list/locs_copy = locs.Copy()
+	var/list/entering_locs = dest_locs - locs_copy
+	var/list/exited_locs = locs_copy - dest_locs
 
 	for(var/turf/dest_turf as anything in entering_locs)
 
@@ -370,9 +380,8 @@ GLOBAL_LIST_EMPTY(lifts)
 		stack_trace("an industrial lift was told to move to somewhere it already is!")
 		return FALSE
 
-	var/list/old_locs = list()
-
 	var/turf/our_dest = get_step(src, movement_direction)
+	var/opposite_direction = get_dir(our_dest, loc)
 
 	var/area/our_area = get_area(src)
 	var/area/their_area = get_area(our_dest)
@@ -391,7 +400,6 @@ GLOBAL_LIST_EMPTY(lifts)
 
 		var/turf/old_loc = get_turf(mover)
 		var/turf/destination = get_step(old_loc, movement_direction)
-		old_locs[mover] = old_loc
 
 		mover.move_stacks++
 		mover.set_glide_size(glide_override)
@@ -408,7 +416,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			mover.loc = destination
 
 	for(var/atom/movable/mover as anything in movers)
-		mover.Moved(old_locs[mover], movement_direction)
+		mover.Moved(get_step(mover, opposite_direction), movement_direction)
 		//tell the movers they moved only after all of them have been moved so they cant react to eachother moving
 
 	return TRUE
@@ -590,12 +598,6 @@ GLOBAL_LIST_EMPTY(lifts)
 
 GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
-
-/obj/structure/industrial_lift/tram/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
-
-
 /obj/structure/industrial_lift/tram/central
 	appearance_flags = PIXEL_SCALE //no TILE_BOUND since we're multitile
 	var/width = 0
@@ -618,6 +620,39 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/structure/industrial_lift/tram/central/proc/find_dimensions(iterations = 3000)
+	message_admins("num turfs: [length(locs)], lower left corner: ([min_x], [min_y]), upper right corner: ([max_x], [max_y])")
+
+	var/overlay = /obj/effect/overlay/ai_detect_hud
+	var/list/turfs = list()
+
+	for(var/turf/our_turf as anything in locs)
+		new overlay(our_turf)
+		turfs += our_turf
+
+	addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
+
+/obj/structure/industrial_lift/tram/central/proc/clear_turfs(list/turfs_to_clear, iterations)
+	for(var/turf/our_old_turf as anything in turfs_to_clear)
+		var/obj/effect/overlay/ai_detect_hud/hud = locate() in our_old_turf
+		if(hud)
+			qdel(hud)
+
+	var/overlay = /obj/effect/overlay/ai_detect_hud
+
+	for(var/turf/our_turf as anything in locs)
+		new overlay(our_turf)
+
+	iterations--
+
+	var/list/turfs = list()
+	for(var/turf/our_turf as anything in locs)
+		turfs += our_turf
+
+	if(iterations)
+		addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
+
+
 /obj/structure/industrial_lift/tram/central/LateInitialize()
 	. = ..()
 	find_our_location()
@@ -635,11 +670,17 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	var/half_bound_height = bound_height / 2
 	var/half_bound_width = bound_width / 2
 
-	bound_width = half_bound_width * (width + 1)
-	bound_height = half_bound_height * (height + 1)
+	bound_width = bound_width * width
+	bound_height = bound_height * height
+
+	//multitile movement code assumes our loc is on the lower left corner of our bounding box
+
+	var/x_offset = round(width / 2) * world.icon_size
+	var/y_offset = round(height / 2) * world.icon_size
 
 	var/matrix/new_transform = new()
 	new_transform.Scale(width, height)
+	new_transform.Translate(x_offset, y_offset)
 	transform = new_transform
 
 	for(var/obj/structure/industrial_lift/other_lift in lift_master_datum.lift_platforms)
@@ -647,9 +688,14 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 			continue
 
 		lift_master_datum.lift_platforms -= other_lift
+		if(other_lift.lift_load)
+			LAZYOR(lift_load, other_lift.lift_load)
+
 		qdel(other_lift)
 
 	lift_master_datum.multitile_tram = TRUE
+
+	forceMove(locate(min_x, min_y, z))
 
 /obj/structure/industrial_lift/tram/central/Destroy()
 	GLOB.central_tram = null
