@@ -27,7 +27,7 @@
 	///Amount of usable tanks inside the machine
 	var/empty_tanks = 10
 	///Reference to the current in use tank to be filled
-	var/obj/item/tank/internal_tank
+	var/obj/item/tank/internals/generic/internal_tank
 	///Path of the gas selected from the UI to be pumped inside the tanks
 	var/selected_gas
 	///Is the vendor trying to move gases from the network to the tanks?
