@@ -18,8 +18,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	base_icon_state = "dispenser"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 40
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
@@ -125,7 +123,7 @@
 	if (recharge_counter >= 8)
 		var/usedpower = cell.give(recharge_amount)
 		if(usedpower)
-			use_power(250*recharge_amount)
+			use_power(active_power_usage + recharge_amount)
 		recharge_counter = 0
 		return
 	recharge_counter += delta_time
@@ -404,17 +402,22 @@
 	visible_message(span_danger("[src] malfunctions, spraying chemicals everywhere!"))
 
 /obj/machinery/chem_dispenser/RefreshParts()
+	. = ..()
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
+	var/parts_rating = 0
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		newpowereff += 0.0166666666*M.rating
+		parts_rating += M.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_amount *= C.rating
+		parts_rating += C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > 3)
 			dispensable_reagents |= upgrade_reagents
+		parts_rating += M.rating
 	powerefficiency = round(newpowereff, 0.01)
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -640,6 +643,7 @@
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/abductor
 	working_state = null
 	nopower_state = null
+	use_power = NO_POWER_USE
 	dispensable_reagents = list(
 		/datum/reagent/aluminium,
 		/datum/reagent/bromine,
