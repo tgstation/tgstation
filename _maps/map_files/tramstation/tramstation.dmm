@@ -2529,7 +2529,6 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
-/obj/effect/landmark/tram/middle_part,
 /obj/structure/industrial_lift/tram/central{
 	icon_state = "titanium"
 	},
@@ -29202,6 +29201,10 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"jde" = (
+/obj/effect/landmark/tram/left_part,
+/turf/open/openspace,
+/area/hallway/primary/tram/left)
 "jdf" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark,
@@ -51862,12 +51865,8 @@
 /turf/closed/wall/r_wall,
 /area/engineering/supermatter)
 "roW" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes,
 /obj/effect/landmark/tram/right_part,
-/turf/open/floor/vault,
+/turf/open/openspace,
 /area/hallway/primary/tram/right)
 "roY" = (
 /obj/machinery/light/small/directional/north,
@@ -55244,13 +55243,19 @@
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain/private)
 "sFL" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
 	},
-/obj/effect/turf_decal/stripes,
-/obj/effect/landmark/tram/left_part,
-/turf/open/floor/vault,
-/area/hallway/primary/tram/left)
+/obj/structure/tramwall/titanium{
+	opacity = 0
+	},
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+	dir = 8;
+	pixel_x = -32
+	},
+/obj/effect/landmark/tram/middle_part,
+/turf/open/openspace,
+/area/hallway/primary/tram/center)
 "sFM" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/secure_closet/exile,
@@ -154773,7 +154778,7 @@ axX
 vUA
 azB
 qbg
-axX
+jde
 aBy
 auX
 aED
@@ -156056,7 +156061,7 @@ avd
 scg
 axX
 vUA
-sFL
+azB
 qbg
 axX
 scg
@@ -166852,7 +166857,7 @@ mph
 bWo
 hdO
 cdx
-mph
+sFL
 aBR
 mgZ
 aFe
@@ -178931,7 +178936,7 @@ ayt
 omi
 aAQ
 ujT
-ayt
+roW
 aCs
 oBC
 flM
@@ -180214,7 +180219,7 @@ suF
 oDr
 ayt
 omi
-roW
+aAQ
 ujT
 ayt
 oDr
