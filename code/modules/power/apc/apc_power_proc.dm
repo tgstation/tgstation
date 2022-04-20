@@ -114,7 +114,7 @@
 		if(failing_machine.critical_machine)
 			return
 
-	for(var/mob/living/silicon/ai in GLOB.ai_list)
+	for(var/mob/living/silicon/ai as anything in GLOB.ai_list)
 		if(get_area(ai) == area)
 			return
 
