@@ -212,6 +212,14 @@
 	insert_type = /obj/item/pen/fountain
 	display_overlays = FALSE
 
+/obj/item/modular_computer/tablet/pda/curator/Initialize(mapload)
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+
+	if(hdd)
+		for(var/datum/computer_file/program/messenger/msg in hdd.stored_files)
+			msg.allow_emojis = TRUE
+
 /obj/item/modular_computer/tablet/pda/syndicate
 	name = "military PDA"
 	greyscale_colors = "#891417#80FF80"
