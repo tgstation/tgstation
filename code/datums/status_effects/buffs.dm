@@ -318,7 +318,7 @@
 
 /datum/status_effect/good_music/tick()
 	if(owner.can_hear())
-		owner.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/dizziness)
+		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
 		owner.jitteriness = max(0, owner.jitteriness - 2)
 		owner.set_confusion(max(0, owner.get_confusion() - 1))
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
