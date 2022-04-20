@@ -197,7 +197,7 @@
 
 	link_to_holder()
 
-/datum/quirk/heterochromia/remove()
+/datum/quirk/heterochromatic/remove()
 	UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
 
 /datum/quirk/heterochromatic/proc/link_to_holder()
