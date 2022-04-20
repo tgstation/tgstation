@@ -271,14 +271,67 @@
 	examine_text = "SUBJECTPRONOUN seems to be being choked by some durathread strands. You may be able to <b>cut</b> them off."
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/strandling
+	/// How long it takes to remove the status effect via [proc/try_remove_effect]
+	var/time_to_remove = 3.5 SECONDS
 
 /datum/status_effect/strandling/on_apply()
-	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
-	return ..()
+	RegisterSignal(owner, COMSIG_CARBON_PRE_BREATHE, .proc/on_breathe)
+	RegisterSignal(owner, COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER), .proc/on_cut)
+	RegisterSignal(owner, COMSIG_CARBON_CHECK_SELF, .proc/on_self_check)
+	return TRUE
 
 /datum/status_effect/strandling/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
-	return ..()
+	UnregisterSignal(owner, list(COMSIG_CARBON_PRE_BREATHE, COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER), COMSIG_CARBON_CHECK_SELF))
+
+/// Signal proc for [COMSIG_CARBON_PRE_BREATHE], causes losebreath whenever we're trying to breathe
+/datum/status_effect/strandling/proc/on_breathe(mob/living/source)
+	SIGNAL_HANDLER
+
+	source.losebreath++
+
+/// Signal proc for [COMSIG_ATOM_TOOL_ACT] with [TOOL_WIRECUTTER], allowing wirecutters to remove the effect (from others / themself)
+/datum/status_effect/strandling/proc/on_cut(mob/living/source, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, .proc/try_remove_effect, user, tool)
+	return COMPONENT_BLOCK_TOOL_ATTACK
+
+/// Signal proc for [COMSIG_CARBON_CHECK_SELF], allowing someone to remove the effect from themselves with a self-check
+/datum/status_effect/strandling/proc/on_self_check(mob/living/carbon/source)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, .proc/try_remove_effect, source)
+	return COMPONENT_CANCEL_SELF_CHECK
+
+/**
+ * Attempts a do_after to remove the effect and stop the strangling.
+ *
+ * user - the mob attempting to remove the strangle. Can be the same as the owner.
+ * tool - the tool the user's using to remove the strange. Can be null.
+ */
+/datum/status_effect/strandling/proc/try_remove_effect(mob/user, obj/item/tool)
+	user.visible_message(
+		span_notice("[user] attempts to [tool ? "cut":"remove"] the strand from around [owner == user ? "[owner.p_their()]":"[owner]'s"] neck..."),
+		span_notice("You attempt to [tool ? "cut":"remove"] the strand from around [owner == user ? "your":"[owner]'s"] neck..."),
+	)
+
+	// Play a sound if we have a tool
+	tool?.play_tool_sound(owner)
+
+	// If we have a tool, we remove it 60% faster.
+	if(!do_mob(user, owner, time_to_remove * (tool ? 0.4 : 1)))
+		to_chat(user, span_warning("You fail to [tool ? "cut":"remove"] the strand from around [owner == user ? "your":"[owner]'s"] neck!"))
+		return FALSE
+
+	// Play another sound after we're done
+	tool?.play_tool_sound(owner)
+
+	user.visible_message(
+		span_notice("[user] successfully [tool ? "cut":"remove"] the strand from around [owner == user ? "[owner.p_their()]":"[owner]'s"] neck."),
+		span_notice("You successfully [tool ? "cut":"remove"] the strand from around [owner == user ? "your":"[owner]'s"] neck."),
+	)
+	qdel(src)
+	return TRUE
 
 /atom/movable/screen/alert/status_effect/strandling
 	name = "Choking strand"
@@ -291,12 +344,14 @@
 	if(!.)
 		return
 
-	to_chat(owner, span_notice("You attempt to remove the durathread strand from around your neck."))
-	if(do_after(owner, 3.5 SECONDS, owner))
-		if(isliving(owner))
-			var/mob/living/living_owner = owner
-			to_chat(living_owner, span_notice("You succesfuly remove the durathread strand."))
-			living_owner.remove_status_effect(/datum/status_effect/strandling)
+	if(!isliving(owner))
+		return
+
+	var/datum/status_effect/strandling/strangle_effect = attached_effect
+	if(!istype(strangle_effect))
+		return
+
+	strangle_effect.try_remove_effect(owner)
 
 //OTHER DEBUFFS
 /datum/status_effect/pacify

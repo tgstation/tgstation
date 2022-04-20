@@ -495,6 +495,9 @@
 	if(stat >= UNCONSCIOUS)
 		return
 
+	if(SEND_SIGNAL(src, COMSIG_CARBON_CHECK_SELF) & COMPONENT_CANCEL_SELF_CHECK)
+		return
+
 	var/embeds = FALSE
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/LB = X

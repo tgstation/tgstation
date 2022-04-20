@@ -6,6 +6,11 @@
 #define COMSIG_CARBON_HEADPAT "carbon_headpatted"
 ///When a carbon mob has their tail pulled, this is called on the carbon that is the target. (mob/living/tailpuller)
 #define COMSIG_CARBON_TAILPULL "carbon_tailpulled"
+///When a carbon mob checks themself for injuries. ()
+#define COMSIG_CARBON_CHECK_SELF "carbon_check_self"
+	/// Stops the self check before it actually occurs.
+	#define COMPONENT_CANCEL_SELF_CHECK (1<<0)
+
 ///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
 #define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
 	#define COMSIG_CARBON_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
@@ -62,6 +67,9 @@
 #define COMSIG_CARBON_HEALTH_UPDATE "carbon_health_update"
 ///Called when a carbon updates their sanity (source = carbon)
 #define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
+///Called when a carbon breathes, before the breath has actually occured
+#define COMSIG_CARBON_PRE_BREATHE "carbon_pre_breathe"
+
 // /mob/living/carbon/human signals
 
 ///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
