@@ -15,6 +15,14 @@
 /// You can also pass in a minimum exposure time. If this is set, then this radiation pulse
 /// will not irradiate the source unless they have been around *any* radioactive source for that
 /// period of time.
+/// The chance for a target to get irradiated is determined by the perceived intensity.
+/// The perceived intensity is the instensity of the pulse, and decreases over range it takes to travel to the target,
+/// and how much of the radiation got insulated from whatever is in the way.
+/// A perceived intensity of 1 will give a 50% chance to irradiate something, 2 will give 75%, and 3 will give 87.5% chance.
+/// The chance to get irradiated from a pulse where the perceived intensity is 3 is equal to the chance of getting
+/// irradiated from 3 separate radiation pulses with perceived intensity of 1.
+/// If the intensity of the pulse is not defined,
+/// then the intensity will get set to a value that gives a target a 5% chance to get irradiated from the maximum range of the pulse.
 /proc/radiation_pulse(
 	atom/source,
 	max_range = null,
