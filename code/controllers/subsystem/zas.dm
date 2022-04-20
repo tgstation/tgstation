@@ -211,7 +211,7 @@ SUBSYSTEM_DEF(zas)
 		resumed = FALSE
 		current_process = SSZAS_MACHINES
 
-	if(current_process == SSZAS_MACHINES)
+	if(current_process == SSZAS_MACHINES || !resumed)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
@@ -223,7 +223,7 @@ SUBSYSTEM_DEF(zas)
 		resumed = FALSE
 		current_process = SSZAS_TILES
 
-	if(current_process == SSZAS_TILES)
+	if(current_process == SSZAS_TILES || !resumed)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
@@ -235,7 +235,7 @@ SUBSYSTEM_DEF(zas)
 		resumed = FALSE
 		current_process = SSZAS_DEFERED_TILES
 
-	if(current_process == SSZAS_DEFERED_TILES)
+	if(current_process == SSZAS_DEFERED_TILES || !resumed)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
@@ -247,7 +247,7 @@ SUBSYSTEM_DEF(zas)
 		resumed = FALSE
 		current_process = SSZAS_EDGES
 
-	if(current_process == SSZAS_EDGES)
+	if(current_process == SSZAS_EDGES || !resumed)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
@@ -259,7 +259,7 @@ SUBSYSTEM_DEF(zas)
 		resumed = FALSE
 		current_process = SSZAS_FIRES
 
-	if(current_process == SSZAS_FIRES)
+	if(current_process == SSZAS_FIRES || !resumed)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
@@ -271,7 +271,7 @@ SUBSYSTEM_DEF(zas)
 		resumed = FALSE
 		current_process = SSZAS_HOTSPOTS
 
-	if(current_process == SSZAS_HOTSPOTS)
+	if(current_process == SSZAS_HOTSPOTS || !resumed)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
@@ -283,7 +283,7 @@ SUBSYSTEM_DEF(zas)
 		resumed = FALSE
 		current_process = SSZAS_ZONES
 
-	if(current_process == SSZAS_ZONES)
+	if(current_process == SSZAS_ZONES || !resumed)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
@@ -295,7 +295,7 @@ SUBSYSTEM_DEF(zas)
 		resumed = FALSE
 		current_process = SSZAS_ATOMS
 
-	if(current_process == SSZAS_ATOMS)
+	if(current_process == SSZAS_ATOMS || !resumed)
 		timer = TICK_USAGE_REAL
 		if(!resumed)
 			cached_cost = 0
