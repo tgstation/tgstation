@@ -39,7 +39,7 @@
 					return
 
 	// Create the status effect with our mob + our arguments
-	var/datum/status_effect/new_instance = new effect(arguments)
+	var/datum/status_effect/new_instance = new new_effect(arguments)
 	return new_instance
 
 /**
