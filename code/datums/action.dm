@@ -265,6 +265,9 @@
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
 
+/datum/action/item_action/toggle_computer_light
+	name = "Toggle Flashlight"
+
 /datum/action/item_action/toggle_gunlight
 	name = "Toggle Gunlight"
 

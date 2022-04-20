@@ -55,6 +55,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/saved_identification = null // next two values are the currently imprinted id and job values
 	var/saved_job = null
 
+	/// Allow people with chunky fingers to use?
+	var/allow_chunky = FALSE
+
 	var/honkamnt = 0 /// honk honk honk honk honk honkh onk honkhnoohnk
 
 	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
@@ -67,6 +70,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
 
 	var/obj/item/paicard/pai = null
+
+	var/datum/action/item_action/toggle_computer_light/light_butt
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
@@ -81,6 +86,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		soundloop = new(src, enabled)
 	if(id)
 		id.UpdateDisplay()
+	if(has_light)
+		light_butt = new(src)
 	update_appearance()
 	Add_Messenger()
 
@@ -100,9 +107,18 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	if(istype(pai))
 		QDEL_NULL(pai)
+	if(istype(light_butt))
+		QDEL_NULL(light_butt)
 
 	physical = null
 	return ..()
+
+/obj/item/modular_computer/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, light_butt))
+		toggle_flashlight()
+	else
+		..()
+
 
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
 	if(active_program?.tap(A, user, params))
@@ -527,6 +543,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		set_light(comp_light_luminosity, 1, comp_light_color)
 	else
 		set_light(0)
+	update_appearance()
 	return TRUE
 
 /**
