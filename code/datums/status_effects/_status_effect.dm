@@ -16,7 +16,9 @@
 	var/status_type = STATUS_EFFECT_UNIQUE
 	/// If TRUE, we call on_remove() when owner is deleted. Otherwise, we call be_replaced().
 	var/on_remove_on_mob_delete = FALSE
-	var/examine_text //If defined, this text will appear when the mob is examined - to use he, she etc. use "SUBJECTPRONOUN" and replace it in the examines themselves
+	/// If defined, this text will appear when the mob is examined
+	/// To use he, she etc. use "SUBJECTPRONOUN" and replace it in the examines themselves
+	var/examine_text
 	/// The typepath to the alert thrown by the status effect when created.
 	/// Status effect "name"s and "description"s are shown here
 	var/alert_type = /atom/movable/screen/alert/status_effect
