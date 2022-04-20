@@ -16,6 +16,9 @@
 
 /datum/status_effect/dizziness/on_remove()
 	UnregisterSignal(owner, list(COMSIG_LIVING_SET_BODY_POSITION, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
+	// In case our client's offset is somewhere wacky from the dizziness effect
+	owner.client?.pixel_x = initial(owner.client?.pixel_x)
+	owner.client?.pixel_y = initial(owner.client?.pixel_y)
 
 /// Signal proc for [COMSIG_LIVING_SET_BODY_POSITION]. Whenever we rest, it depletes faster but is more dizzying
 /datum/status_effect/dizziness/proc/on_rest(mob/living/source)
@@ -38,18 +41,18 @@
 		return
 
 	// How much time will be left, in seconds, next tick
-	var/next_amount = max((amount - (dizziness_strength * tick_interval)) / 10, 0)
+	var/next_amount = max((amount - (dizziness_strength * initial(tick_interval))) / 10, 0)
 
 	// If we have a high dizziness strength, we subtract from our duration
 	// Meaning if our dizzy effects are stronger, it will also run out faster
 	if(dizziness_strength > 1)
-		duration -= ((dizziness_strength - 1) * tick_interval)
+		duration -= ((dizziness_strength - 1) * initial(tick_interval))
 
 	// Don't bother animating if they're clientless
 	if(!owner.client)
 		return
 
-	//Want to be able to offset things by the time the animation should be "playing" at
+	// Want to be able to offset things by the time the animation should be "playing" at
 	var/time = world.time
 	var/delay = 0
 	var/pixel_x_diff = 0
