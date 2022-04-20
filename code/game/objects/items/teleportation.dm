@@ -244,12 +244,12 @@
 	if (!can_teleport_notifies(user))
 		return
 
-	var/list/obj/effect/portal/projected/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, /obj/effect/portal/projected)
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null)
 	if(LAZYLEN(created) != 2)
 		return
 
-	var/obj/effect/portal/projected/portal1 = created[1]
-	var/obj/effect/portal/projected/portal2 = created[2]
+	var/obj/effect/portal/portal1 = created[1]
+	var/obj/effect/portal/portal2 = created[2]
 
 	RegisterSignal(portal1, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 	RegisterSignal(portal2, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)

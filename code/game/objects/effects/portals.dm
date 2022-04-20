@@ -28,15 +28,10 @@
 	var/last_effect = 0
 	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
-
-/obj/effect/portal/anom
-	name = "wormhole"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "anom"
-	layer = RIPPLE_LAYER
-	plane = ABOVE_GAME_PLANE
-	mech_sized = TRUE
-	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
+	/// Can this portal be passed by mobs who are resting?
+	var/resting_pass = TRUE
+	/// Do you pass through the portal when its not linked?
+	var/nonlinked_pass = TRUE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)
@@ -53,8 +48,12 @@
 		return TRUE
 
 /obj/effect/portal/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
+	var/mob/living/living_mover = mover
 	if(HAS_TRAIT(mover, TRAIT_NO_TELEPORT) && !force_teleport)
+		return TRUE
+	if(living_mover.resting && resting_pass)
+		return TRUE
+	if(!linked && nonlinked_pass)
 		return TRUE
 
 /obj/effect/portal/Bumped(atom/movable/bumper)
@@ -140,22 +139,23 @@
 		real_target = get_turf(linked)
 	return real_target
 
-/obj/effect/portal/projected
-	name = "projected portal"
-	desc = "A manipulated portal projected by some kind of techknowledgy. It looks like you could crawl under it."
-
-/obj/effect/portal/projected/CanAllowThrough(mob/living/mover, border_dir)
-	if(!linked)
-		return TRUE
-	if(mover.resting)
-		return TRUE
-	return ..()
+/obj/effect/portal/anom
+	name = "wormhole"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
+	layer = RIPPLE_LAYER
+	plane = ABOVE_GAME_PLANE
+	mech_sized = TRUE
+	nonlinked_pass = FALSE
+	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 
 /obj/effect/portal/permanent
 	name = "permanent portal"
 	desc = "An unwavering portal that will never fade."
 	hardlinked = FALSE // dont qdel my portal nerd
 	force_teleport = TRUE // force teleports because they're a mapmaker tool
+	nonlinked_pass = FALSE
+	resting_pass = FALSE
 	var/id // var edit or set id in map editor
 
 /obj/effect/portal/permanent/proc/set_linked()
