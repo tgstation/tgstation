@@ -925,6 +925,8 @@
 /// Secondary attack spills the content of the beaker.
 /obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
 	var/obj/item/reagent_containers/stored_beaker = stored
+	if(!stored_beaker)
+		return ..()
 	stored_beaker.SplashReagents(drop_location(user))
 	loc.visible_message(span_notice("[user] spills the contents of [stored_beaker] all over the ground."))
 	. = ..()
