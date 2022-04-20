@@ -160,9 +160,7 @@
 
 	// Over 11, we will constantly gain slurring up to 10 seconds of slurring.
 	if(drunk_value >= 11)
-		var/datum/status_effect/speech/slurring/drunk/already_slurring = owner.has_status_effect(/datum/status_effect/speech/slurring/drunk)
-		if(!already_slurring || (already_slurring.duration - world.time) <= 10 SECONDS)
-			owner.adjust_timed_status_effect(2.4 SECONDS, /datum/status_effect/speech/slurring/drunk)
+		owner.adjust_timed_status_effect(2.4 SECONDS, /datum/status_effect/speech/slurring/drunk, max_duration = 10 SECONDS)
 
 	// Over 41, we have a 30% chance to gain confusion, and we will always have 20 seconds of dizziness.
 	if(drunk_value >= 41)
