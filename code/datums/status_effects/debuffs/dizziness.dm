@@ -26,7 +26,7 @@
 
 	dizziness_strength = initial(dizziness_strength)
 	if(source.resting)
-		dizziness_strength *= 3
+		dizziness_strength *= 5
 
 /// Signal proc that self deletes our dizziness effect
 /datum/status_effect/dizziness/proc/clear_dizziness(datum/source)
