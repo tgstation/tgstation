@@ -11273,7 +11273,6 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "euu" = (
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -23817,6 +23816,7 @@
 	dir = 9
 	},
 /obj/item/radio/off,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/white,
 /area/hallway/secondary/exit/departure_lounge)
 "kCj" = (
@@ -27753,7 +27753,6 @@
 /area/science/server)
 "mIW" = (
 /obj/machinery/light/directional/east,
-/obj/item/radio/intercom/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
@@ -32126,11 +32125,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/security/brig/upper)
-"oPR" = (
-/obj/structure/cable,
-/obj/machinery/firealarm/directional/east,
-/turf/open/floor/iron,
-/area/hallway/secondary/exit/departure_lounge)
 "oPY" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 4
@@ -38832,6 +38826,8 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
+/obj/machinery/firealarm/directional/south,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/hallway/secondary/exit/departure_lounge)
 "seL" = (
@@ -100142,7 +100138,7 @@ eKT
 sef
 euu
 mIW
-oPR
+xze
 rkI
 tnE
 xze
