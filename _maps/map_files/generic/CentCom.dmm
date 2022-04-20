@@ -418,7 +418,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "bq" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_mixing_input{
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "nukiebase";
 	dir = 1
 	},
 /turf/open/floor/engine/vacuum,
@@ -1304,6 +1305,10 @@
 	dir = 8
 	},
 /obj/structure/rack,
+/obj/item/analyzer{
+	pixel_y = -7;
+	pixel_x = 7
+	},
 /obj/item/pipe_dispenser,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -4223,7 +4228,9 @@
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 10
 	},
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/cold/directional/west{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "lV" = (
@@ -8627,6 +8634,9 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/tdome/observation)
+"zy" = (
+/turf/open/misc/asteroid/snow/atmosphere,
+/area/syndicate_mothership/control)
 "zz" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties,
@@ -11437,6 +11447,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/syndicate_mothership/control)
+"Hs" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_mixing_input{
+	dir = 1;
+	chamber_id = "nukielab";
+	id_tag = "nukielab"
+	},
+/turf/closed/indestructible/syndicate,
+/area/syndicate_mothership/control)
 "Ht" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/catwalk_floor/iron_smooth,
@@ -11676,7 +11694,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership/expansion_bombthreat)
 "Ig" = (
 /turf/closed/wall/mineral/diamond,
@@ -12038,7 +12056,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
 	dir = 8
 	},
-/turf/closed/indestructible/rock/snow,
+/turf/open/misc/asteroid/snow/atmosphere,
 /area/syndicate_mothership/control)
 "Jg" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -13312,11 +13330,13 @@
 	},
 /area/tdome/observation)
 "Nm" = (
-/obj/machinery/airalarm/directional/south,
-/obj/machinery/light/small/red/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/airalarm/unlocked{
+	pixel_y = -24
+	},
+/obj/machinery/light/cold/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/expansion_bombthreat)
 "Nn" = (
@@ -14482,11 +14502,6 @@
 /obj/structure/flora/grass/both,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
-"Qt" = (
-/obj/machinery/airalarm/directional/south,
-/obj/machinery/airalarm/directional/south,
-/turf/closed/indestructible/syndicate,
-/area/syndicate_mothership/expansion_bioterrorism)
 "Qu" = (
 /obj/structure/window/paperframe{
 	can_atmos_pass = 0
@@ -16103,7 +16118,7 @@
 	atmos_chambers = list("nukiebase" = "Burn Chamber")
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/light/small/red/directional/east{
+/obj/machinery/light/cold/directional/west{
 	dir = 2
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
@@ -16416,21 +16431,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
-"VA" = (
-/obj/machinery/computer/atmos_control/noreconnect{
-	dir = 4;
-	pixel_x = -5;
-	pixel_y = -2;
-	atmos_chambers = list("nukiebase" = "Burn Chamber")
-	},
-/obj/machinery/computer/atmos_control/noreconnect{
-	dir = 4;
-	pixel_x = -5;
-	pixel_y = -2;
-	atmos_chambers = list("nukiebase" = "Burn Chamber")
-	},
-/turf/closed/indestructible/opsglass,
-/area/syndicate_mothership/expansion_bioterrorism)
 "VB" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -17500,7 +17500,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
-/turf/closed/indestructible/rock/snow,
+/turf/open/misc/asteroid/snow/atmosphere,
 /area/syndicate_mothership/control)
 "Yq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -22915,8 +22915,8 @@ nH
 nH
 nH
 nH
-kb
-kb
+zy
+zy
 Yp
 kb
 kb
@@ -23172,8 +23172,8 @@ Gx
 HY
 zX
 nH
-kb
-kb
+zy
+zy
 Je
 CN
 CN
@@ -23946,7 +23946,7 @@ nH
 nw
 nw
 Cl
-Qt
+CN
 Kw
 pS
 uk
@@ -24460,7 +24460,7 @@ nH
 gL
 FD
 Ih
-VA
+RK
 Il
 Na
 Sf
@@ -27809,7 +27809,7 @@ Yz
 Yz
 Dd
 Dd
-ng
+Hs
 kb
 kb
 kb
