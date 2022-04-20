@@ -5,7 +5,7 @@ import { NtosWindow } from '../layouts';
 
 export const NtosRecords = (props, context) => {
   const { act, data } = useBackend(context);
-  const { searchTerm, setSearchTerm } = useLocalState(context, "search", "");
+  const [searchTerm, setSearchTerm] = useLocalState(context, "search", "");
   const {
     mode,
     records,
@@ -34,7 +34,7 @@ export const NtosRecords = (props, context) => {
           <Section
             key={record.id}
             hidden={!(
-              searchTerm && isMatchingSearchTerms(
+              searchTerm === '' || isMatchingSearchTerms(
                 record.name
                   + " " + record.rank
                   + " " + record.species
@@ -61,7 +61,7 @@ export const NtosRecords = (props, context) => {
           <Section
             key={record.id}
             hidden={!(
-              searchTerm && isMatchingSearchTerms(
+              searchTerm === '' || isMatchingSearchTerms(
                 record.name
                   + " " + record.bloodtype
                   + " " + record.m_stat

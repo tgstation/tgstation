@@ -43,6 +43,7 @@
 			scanner.available_modes += DISK_CHEM
 
 		if(disk_flags & DISK_MED)
+			progs_to_store += new /datum/computer_file/program/records/medical(src)
 			scanner.available_modes += DISK_MED
 
 		progs_to_store += scanner
