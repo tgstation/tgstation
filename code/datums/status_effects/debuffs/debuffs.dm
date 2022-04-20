@@ -212,7 +212,6 @@
 /datum/status_effect/grouped/stasis
 	id = "stasis"
 	duration = -1
-	tick_interval = 10
 	alert_type = /atom/movable/screen/alert/status_effect/stasis
 	var/last_dead_time
 

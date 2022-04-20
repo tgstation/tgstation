@@ -3,7 +3,7 @@
 /datum/status_effect/stacking
 	id = "stacking_base"
 	duration = -1 // Only removed under specific conditions.
-	tick_interval = 10 // Deciseconds between decays, once decay starts
+	tick_interval = 1 SECONDS // Deciseconds between decays, once decay starts
 	alert_type = null
 	/// How many stacks are currently accumulated.
 	/// Also, the default stacks number given on application.
