@@ -28,6 +28,9 @@
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency)
 
+/turf/open/floor/glass/make_plating()
+	return
+
 /turf/open/floor/glass/reinforced
 	name = "reinforced glass floor"
 	desc = "Do jump on it, it can take it."

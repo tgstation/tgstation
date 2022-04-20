@@ -139,6 +139,7 @@
 		icon_state = pick(broken_states)
 	burnt = 1
 
+/// Things seem to rely on this actually returning plating. Override it if you have other baseturfs.
 /turf/open/floor/proc/make_plating(force = FALSE)
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
