@@ -266,6 +266,10 @@
 //GOLEM GANG
 
 //OTHER DEBUFFS
+
+/// A multiplier to the time it takes to remove durathread strangling when using a tool instead of your hands
+#define STRANGLING_TOOL_MULTIPLIER 0.4
+
 /datum/status_effect/strandling //get it, strand as in durathread strand + strangling = strandling hahahahahahahahahahhahahaha i want to die
 	id = "strandling"
 	examine_text = "SUBJECTPRONOUN seems to be being choked by some durathread strands. You may be able to <b>cut</b> them off."
@@ -286,6 +290,9 @@
 /// Signal proc for [COMSIG_CARBON_PRE_BREATHE], causes losebreath whenever we're trying to breathe
 /datum/status_effect/strandling/proc/on_breathe(mob/living/source)
 	SIGNAL_HANDLER
+
+	if(!source.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+		return
 
 	source.losebreath++
 
@@ -319,7 +326,7 @@
 	tool?.play_tool_sound(owner)
 
 	// If we have a tool, we remove it 60% faster.
-	if(!do_mob(user, owner, time_to_remove * (tool ? 0.4 : 1)))
+	if(!do_mob(user, owner, time_to_remove * (tool ? STRANGLING_TOOL_MULTIPLIER : 1)))
 		to_chat(user, span_warning("You fail to [tool ? "cut":"remove"] the strand from around [owner == user ? "your":"[owner]'s"] neck!"))
 		return FALSE
 
@@ -352,6 +359,8 @@
 		return
 
 	strangle_effect.try_remove_effect(owner)
+
+#undef STRANGLING_TOOL_MULTIPLIER
 
 //OTHER DEBUFFS
 /datum/status_effect/pacify

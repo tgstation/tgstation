@@ -70,11 +70,11 @@
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe(delta_time, times_fired)
-	SEND_SIGNAL(src, COMSIG_CARBON_PRE_BREATHE)
-
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
+
+	SEND_SIGNAL(src, COMSIG_CARBON_PRE_BREATHE)
 
 	var/datum/gas_mixture/environment
 	if(loc)
