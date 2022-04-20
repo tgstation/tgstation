@@ -34,7 +34,7 @@
 	)
 	crate_name = "Microfusion Cell Crate"
 
-/datum/supply_pack/security/mcr01_attachments
+/datum/supply_pack/security/mcr01_attachments_A
 	name = "MCR-01 Military Attachments Crate Type A"
 	desc = "Micron Control Systems Incorporated supplied MCR-01 Military spec attachments! This crate comes with two utilitarian repeater loadout."
 	cost = CARGO_CRATE_VALUE * 14
@@ -52,7 +52,7 @@
 	)
 	crate_name = "MCR-01 Military Attachments Crate Type A"
 
-/datum/supply_pack/security/mcr01_attachments
+/datum/supply_pack/security/mcr01_attachments_type_B
 	name = "MCR-01 Military Attachments Crate Type B"
 	desc = "Micron Control Systems Incorporated supplied MCR-01 Military spec attachments! This crate comes in a mixed specialist loadout."
 	cost = CARGO_CRATE_VALUE * 16
@@ -69,7 +69,7 @@
 	crate_name = "MCR-01 Military Attachments Crate Type B"
 
 
-/datum/supply_pack/security/mcr01_attachments
+/datum/supply_pack/security/mcr01_attachments_H
 	name = "HCR-01 Military Attachments Crate Type H"
 	desc = "Honkicron Clownery Systems Inhonkorated supplied HCR-01 Clownery spec attachments! This crate oddly smells of bananas."
 	cost = CARGO_CRATE_VALUE * 20
