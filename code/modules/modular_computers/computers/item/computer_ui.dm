@@ -13,7 +13,7 @@
 			ui.close()
 		return
 
-	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
+	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS) && !allow_chunky)
 		to_chat(user, span_warning("Your fingers are too big to use this right now!"))
 		return
 

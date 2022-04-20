@@ -55,6 +55,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/saved_identification = null // next two values are the currently imprinted id and job values
 	var/saved_job = null
 
+	/// Allow people with chunky fingers to use?
+	var/allow_chunky = FALSE
+
 	var/honkamnt = 0 /// honk honk honk honk honk honkh onk honkhnoohnk
 
 	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.

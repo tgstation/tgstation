@@ -253,6 +253,7 @@
 	greyscale_colors = "#999875#a92323"
 
 	bypass_state = TRUE
+	allow_chunky = TRUE
 
 	var/default_disk = 0
 
