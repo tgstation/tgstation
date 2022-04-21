@@ -1,0 +1,6 @@
+author: "LordVollkorn"
+delete-after: True
+changes: 
+  - bugfix: "The chemical press will now only dispense stored pills/patches/bottles while wrenched to the floor. This means you won't leave a trail of pills behind you anymore when dragging your chemical press to another location."
+  - bugfix: "Plumbing machinery can now be rotated via ALT-click when there is no power."
+  - bugfix: "Plumbing machinery is now programmable without power. It won't produce anything without power of course, but at least you can set it up while waiting for power to come back."
