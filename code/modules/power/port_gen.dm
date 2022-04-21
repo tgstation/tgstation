@@ -109,7 +109,8 @@
 		base_icon = "portgen1"
 		max_sheets = 5
 		time_per_sheet = 20
-		power_gen = 10000
+		power_gen = 15000
+		sheet_path = /obj/item/stack/sheet/mineral/uranium
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	. = ..()
@@ -267,3 +268,11 @@
 			if (power_output < 4 || (obj_flags & EMAGGED))
 				power_output++
 				. = TRUE
+
+/obj/machinery/power/port_gen/pacman/super
+	icon_state = "portgen1_0"
+	base_icon = "portgen1"
+	max_sheets = 5
+	time_per_sheet = 20
+	power_gen = 15000
+	sheet_path = /obj/item/stack/sheet/mineral/uranium
