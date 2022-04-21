@@ -332,8 +332,8 @@
 			to_chat(user, span_notice("You activate [src]. You start feeling colder!"))
 			user.extinguish_mob()
 			user.adjust_fire_stacks(-20)
-			user.reagents.add_reagent(/datum/reagent/consumable/frostoil,4)
-			user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,5)
+			user.reagents.add_reagent(/datum/reagent/consumable/frostoil,6)
+			user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,7)
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)

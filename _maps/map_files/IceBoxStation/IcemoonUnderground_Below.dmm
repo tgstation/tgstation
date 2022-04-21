@@ -30,12 +30,12 @@
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
 "an" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "Lakeview_Bathroom";
 	name = "Privacy Shutters"
+	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/mine/eva)
@@ -725,9 +725,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "lZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/mine/mechbay)
 "md" = (
@@ -929,9 +927,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "pj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
 /area/mine/eva)
 "pm" = (
@@ -1136,7 +1132,6 @@
 /area/mine/laborcamp)
 "sP" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/stone,
@@ -1157,6 +1152,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"ti" = (
+/obj/item/storage/box/donkpockets{
+	pixel_y = 5
+	},
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers/deep)
 "tl" = (
 /obj/structure/girder,
 /obj/structure/lattice/catwalk,
@@ -1374,7 +1375,6 @@
 	},
 /obj/machinery/button/door/directional/north{
 	id = "Lakeview_Bathroom";
-	name = "Mech Bay Door Control";
 	pixel_x = 22;
 	pixel_y = -10;
 	req_access_txt = "29"
@@ -1618,10 +1618,9 @@
 /turf/open/floor/stone,
 /area/mine/eva)
 "BT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/mine/eva)
 "BV" = (
@@ -2571,7 +2570,6 @@
 /area/mine/laborcamp)
 "QL" = (
 /obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -2621,10 +2619,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Rn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner,
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
 /area/mine/eva)
 "Ro" = (
@@ -2965,9 +2960,9 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "Wj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/mine/eva)
 "Wl" = (
@@ -4165,7 +4160,7 @@ qI
 qI
 qI
 qI
-qI
+ti
 qI
 qI
 qI
