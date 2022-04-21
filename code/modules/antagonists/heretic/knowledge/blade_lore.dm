@@ -350,6 +350,7 @@
 		Bring 3 headless corpses to a transmutation rune to complete the ritual. \
 		When completed, you will be surrounded in a constant, regenerating orbit of blades. \
 		These blades will protect you from all attacks, but are consumed on use. \
+		Your Furious Steel spell will also have a shorter cooldown. \
 		Additionally, you become a master of combat, gaining full wound and stun immunity. \
 		Your Darkened Blades deal bonus damage and healing you on attack for a portion of the damage dealt."
 	gain_text = "The Colonel, in all of his expertise, revealed to me the three roots of victory. \
@@ -371,7 +372,10 @@
 	ADD_TRAIT(user, TRAIT_STUNIMMUNE, name)
 	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 9, 30, 0.25 SECONDS, 1 MINUTES)
+	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)
+
+	var/obj/effect/proc_holder/spell/aimed/furious_steel/steel_spell = locate() in user.mind.spell_list
+	steel_spell?.charge_max /= 3
 
 /datum/heretic_knowledge/final/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER

@@ -31,7 +31,8 @@
 		return
 	var/mob/living/living_user = user
 	// Aimed spells snowflake and activate without checking cast_check, very cool
-	if(IS_HERETIC(living_user) && !HAS_TRAIT(living_user, TRAIT_ALLOW_HERETIC_CASTING))
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(living_user)
+	if(our_heretic && !our_heretic.ascended && !HAS_TRAIT(living_user, TRAIT_ALLOW_HERETIC_CASTING))
 		user.balloon_alert(living_user, "you need a focus!")
 		return
 

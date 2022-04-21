@@ -3,7 +3,8 @@
 // releasing a homing, very damaging projectile
 /obj/item/gun/ballistic/rifle/lionhunter
 	name = "\improper Lionhunter's Rifle"
-	desc = ""
+	desc = "An antique looking rifle that looks immaculate despite being clearly very old."
+	slot_flags = ITEM_SLOT_BACK
 	icon_state = "moistprime"
 	inhand_icon_state = "moistprime"
 	worn_icon_state = "moistprime"
