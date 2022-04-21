@@ -3,7 +3,7 @@
 	element_flags = ELEMENT_DETACH
 
 ///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
-/datum/element/turf_z_transparency/Attach(datum/target)
+/datum/element/turf_z_transparency/Attach(datum/target, is_openspace = FALSE)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
