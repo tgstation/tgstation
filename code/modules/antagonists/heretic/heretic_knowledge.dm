@@ -154,7 +154,7 @@
 			var/how_much_to_use = 0
 			for(var/requirement in required_atoms)
 				if(istype(sacrificed, requirement))
-					how_much_to_use = required_atoms[requirement]
+					how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 					break
 
 			sac_stack.use(how_much_to_use)

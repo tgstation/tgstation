@@ -34,7 +34,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
-		/obj/item/stack/sheet/mineral/silver = 1,
+		/obj/item/stack/sheet/mineral/silver = 2,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
 	limit = 5 // It's the blade path, it's a given
