@@ -66,7 +66,7 @@
 		if(DT_PROB(40, delta_time))
 			human_in_range.Jitter(5)
 
-		if(human_in_range.getStaminaLoss() >= 85 && DT_PROB(30, delta_time))
+		if(human_in_range.getStaminaLoss() <= 85 && DT_PROB(30, delta_time))
 			human_in_range.emote(pick("giggle", "laugh"))
 			human_in_range.adjustStaminaLoss(10)
 

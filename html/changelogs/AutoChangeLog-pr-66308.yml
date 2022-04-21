@@ -1,0 +1,4 @@
+author: "timothymtorres, TheBonded"
+delete-after: True
+changes: 
+  - expansion: "Mobs can no longer read in the dark unless they have some type of night vision."

@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes: 
+  - bugfix: "Crew no longer can spy on the prisoners on Meta Station with a floating camera console. Wardens, please pay attention next time."

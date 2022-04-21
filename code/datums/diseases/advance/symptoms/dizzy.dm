@@ -54,4 +54,4 @@ Bonus
 			to_chat(M, span_userdanger("A wave of dizziness washes over you!"))
 			M.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, max_duration = 140 SECONDS)
 			if(power >= 2)
-				M.set_drugginess(40)
+				M.set_timed_status_effect(80 SECONDS, /datum/status_effect/drugginess)

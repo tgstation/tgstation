@@ -1098,18 +1098,34 @@
 /mob/proc/has_nightvision()
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
 
-///This mob is abile to read books
+/// This mob is abile to read books
 /mob/proc/is_literate()
 	return FALSE
+
+/**
+ * Checks if there is enough light where the mob is located
+ *
+ * Args:
+ *  light_amount (optional) - A decimal amount between 1.0 through 0.0 (default is 0.2)
+**/
+/mob/proc/has_light_nearby(light_amount = LIGHTING_TILE_IS_DARK)
+	var/turf/mob_location = get_turf(src)
+	return mob_location.get_lumcount() > light_amount
 
 /// Can this mob read
 /mob/proc/can_read(obj/O)
 	if(is_blind())
-		to_chat(src, span_warning("As you are trying to read [O], you suddenly feel very stupid!"))
-		return
+		to_chat(src, span_warning("You are blind and can't read anything!"))
+		return FALSE
+
 	if(!is_literate())
-		to_chat(src, span_notice("You try to read [O], but can't comprehend any of it."))
-		return
+		to_chat(src, span_warning("You try to read [O], but can't comprehend any of it."))
+		return FALSE
+
+	if(!has_light_nearby() && !has_nightvision())
+		to_chat(src, span_warning("It's too dark in here to read!"))
+		return FALSE
+
 	return TRUE
 
 /**

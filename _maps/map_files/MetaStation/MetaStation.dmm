@@ -59545,19 +59545,6 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/dark,
 /area/engineering/storage_shared)
-"uQX" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	dir = 4;
-	name = "Prison Monitor";
-	network = list("prison");
-	pixel_x = -30
-	},
-/turf/open/floor/iron,
-/area/hallway/primary/fore)
 "uQY" = (
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
@@ -95857,7 +95844,7 @@ oTM
 llf
 pvK
 aBc
-uQX
+aDw
 aHA
 tdk
 dgy
