@@ -847,13 +847,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
-"dR" = (
-/obj/structure/table,
-/obj/item/flashlight{
-	pixel_y = 5
-	},
-/turf/open/floor/iron,
-/area/commons/storage/primary)
 "dS" = (
 /turf/open/floor/iron,
 /area/engineering/storage)
@@ -1226,10 +1219,6 @@
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
-"pi" = (
-/obj/machinery/light/directional/east,
-/turf/open/openspace,
-/area/hallway/secondary/service)
 "qo" = (
 /turf/open/openspace,
 /area/engineering/storage)
@@ -1473,6 +1462,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engineering/storage)
+"DU" = (
+/obj/structure/table,
+/obj/item/flashlight{
+	pixel_y = 5
+	},
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "Eb" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/railing{
@@ -1526,6 +1522,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
+"Ht" = (
+/obj/machinery/light/directional/east,
+/turf/open/openspace,
+/area/hallway/secondary/service)
 "In" = (
 /obj/structure/railing{
 	dir = 4
@@ -3679,7 +3679,7 @@ dB
 dl
 dE
 dJ
-dR
+DU
 cS
 af
 ad
@@ -6640,7 +6640,7 @@ dY
 dY
 TY
 iu
-pi
+Ht
 iu
 eF
 iu

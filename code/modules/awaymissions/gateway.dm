@@ -156,9 +156,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	bound_y = 0
 	density = TRUE
 
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 100
-	active_power_usage = 5000
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 
 	var/calibrated = TRUE
 	/// Type of instanced gateway destination, needs to be subtype of /datum/gateway_destination/gateway
@@ -281,6 +279,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	try_to_linkup()
 
 /obj/machinery/computer/gateway_control/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Gateway", name)

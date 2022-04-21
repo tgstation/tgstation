@@ -40,6 +40,7 @@
 	return ..()
 
 /obj/machinery/rnd/server/RefreshParts()
+	. = ..()
 	var/tot_rating = 0
 	for(var/obj/item/stock_parts/SP in src)
 		tot_rating += SP.rating
@@ -60,8 +61,10 @@
 /obj/machinery/rnd/server/proc/refresh_working()
 	if(machine_stat & EMPED || research_disabled || machine_stat & NOPOWER)
 		working = FALSE
+		update_use_power(NO_POWER_USE)
 	else
 		working = TRUE
+		update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/rnd/server/emp_act()

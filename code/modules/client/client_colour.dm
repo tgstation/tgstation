@@ -185,6 +185,9 @@
 /datum/client_colour/glass_colour/gray
 	colour = "#cccccc"
 
+/datum/client_colour/glass_colour/nightmare
+	colour = list(255,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, -130,0,0,0) //every color is either red or black
+
 /datum/client_colour/monochrome
 	colour = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	priority = PRIORITY_HIGH //we can't see colors anyway!

@@ -29,6 +29,10 @@
 	var/overlay_state_active
 	/// Overlay given to the user when the module is used, lasts until cooldown finishes
 	var/overlay_state_use
+	/// Icon file for the overlay.
+	var/overlay_icon_file = 'icons/mob/clothing/modsuit/mod_modules.dmi'
+	/// Does the overlay use the control unit's colors?
+	var/use_mod_colors = FALSE
 	/// What modules are we incompatible with?
 	var/list/incompatible_modules = list()
 	/// Cooldown after use
@@ -69,7 +73,7 @@
 	return
 
 /// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
-/obj/item/mod/module/proc/on_uninstall()
+/obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is activated
@@ -77,7 +81,7 @@
 	return
 
 /// Called when the MODsuit is deactivated
-/obj/item/mod/module/proc/on_suit_deactivation()
+/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is equipped
@@ -141,7 +145,7 @@
 	return TRUE
 
 /// Called when the module is deactivated
-/obj/item/mod/module/proc/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/proc/on_deactivation(display_message = TRUE, deleting = FALSE)
 	active = FALSE
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
@@ -173,7 +177,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
+	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
 	mod.wearer.update_inv_back()
 	SEND_SIGNAL(src, COMSIG_MODULE_USED)
 	return TRUE
@@ -273,8 +277,9 @@
 		used_overlay = overlay_state_inactive
 	else
 		return
-	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/clothing/mod.dmi', used_overlay, layer = standing.layer + 0.1)
-	module_icon.appearance_flags |= RESET_COLOR
+	var/mutable_appearance/module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
+	if(!use_mod_colors)
+		module_icon.appearance_flags |= RESET_COLOR
 	. += module_icon
 
 /// Updates the signal used by active modules to be activated

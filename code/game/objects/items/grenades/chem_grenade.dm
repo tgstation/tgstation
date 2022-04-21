@@ -113,11 +113,13 @@
 			stage_change(GRENADE_READY)
 			to_chat(user, span_notice("You lock the [initial(name)] assembly."))
 			tool.play_tool_sound(src, 25)
-		if(landminemode)
+		else if(landminemode)
 			landminemode.timing = FALSE
 			if(!landminemode.secured)
 				landminemode.toggle_secure()
 			landminemode.toggle_scan(FALSE)
+			to_chat(user, span_notice("You disarm the [landminemode.name]."))
+			tool.play_tool_sound(src, 25)
 		else
 			to_chat(user, span_warning("You need to add at least one beaker before locking the [initial(name)] assembly!"))
 	else if(stage == GRENADE_READY)
