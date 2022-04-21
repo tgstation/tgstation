@@ -30,13 +30,14 @@
 	antimagic_flags = flags
 
 /obj/effect/forcefield/wizard/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
 	if(WEAKREF(mover) == caster_weakref)
 		return TRUE
 	if(isliving(mover))
 		var/mob/living/living_mover = mover
-		if(living_mover.can_block_magic(antimagic_flags, chargecost = 0))
+		if(living_mover.can_block_magic(antimagic_flags, charge_cost = 0))
 			return TRUE
+
+	return ..()
 
 /// Cult forcefields
 /obj/effect/forcefield/cult

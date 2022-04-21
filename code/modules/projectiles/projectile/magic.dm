@@ -416,8 +416,13 @@
 /obj/projectile/magic/aoe/Range()
 	if(trigger_range >= 1)
 		for(var/mob/living/nearby_guy in range(1, get_turf(src)))
-			if(nearby_guy.stat != DEAD && nearby_guy != firer && !nearby_guy.can_block_magic(antimagic_flags)) // MELBERT TODO
-				return Bump(nearby_guy)
+			if(nearby_guy.stat == DEAD)
+				continue
+			if(nearby_guy == firer)
+				continue
+			//if(nearby_guy.can_block_magic(antimagic_flags, charge_cost = 0))
+			//	continue
+			return Bump(nearby_guy)
 
 	return ..()
 
