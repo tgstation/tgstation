@@ -89,7 +89,7 @@
 	var/turf/open/target_turf = get_turf(carbon_target)
 	target_turf.TakeTemperature(-20)
 	carbon_target.adjust_bodytemperature(-40)
-	carbon_target.silent += 4
+	carbon_target.silent += 5
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"

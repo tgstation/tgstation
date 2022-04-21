@@ -107,40 +107,40 @@
 	icon_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/jumpsuit_prison_inhand.json'
 
-/datum/greyscale_config/pda
+/datum/greyscale_config/tablet
 	name = "PDA"
-	icon_file = 'icons/obj/pda.dmi'
+	icon_file = 'icons/obj/modular_tablet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pda.json'
 
-/datum/greyscale_config/pda/chaplain
+/datum/greyscale_config/tablet/chaplain
 	name = "Chaplain PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_chaplain.json'
 
-/datum/greyscale_config/pda/captain
+/datum/greyscale_config/tablet/captain
 	name = "Captain PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_captain.json'
 
-/datum/greyscale_config/pda/clown
+/datum/greyscale_config/tablet/clown
 	name = "Clown PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_clown.json'
 
-/datum/greyscale_config/pda/head
+/datum/greyscale_config/tablet/head
 	name = "Head PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_head.json'
 
-/datum/greyscale_config/pda/mime
+/datum/greyscale_config/tablet/mime
 	name = "Mime PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_mime.json'
 
-/datum/greyscale_config/pda/stripe_split
+/datum/greyscale_config/tablet/stripe_split
 	name = "Split Stripe PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_stripe_split.json'
 
-/datum/greyscale_config/pda/stripe_thick
+/datum/greyscale_config/tablet/stripe_thick
 	name = "Thick Stripe PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_stripe_thick.json'
 
-/datum/greyscale_config/pda/stripe_thick/head
+/datum/greyscale_config/tablet/stripe_thick/head
 	name = "Head Thick Stripe PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_stripe_thick_head.json'
 

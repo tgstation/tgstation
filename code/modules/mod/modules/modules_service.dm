@@ -58,7 +58,7 @@
 //Waddle - Makes you waddle and squeak.
 /obj/item/mod/module/waddle
 	name = "MOD waddle module"
-	desc = "Some of the most primitive technology in use by HonkCo. This module works off an automatic intention system, \
+	desc = "Some of the most primitive technology in use by Honk Co. This module works off an automatic intention system, \
 		utilizing its' sensitivity to the pilot's often-limited brainwaves to directly read their next step, \
 		affecting the boots they're installed in. Employing a twin-linked gravitonic drive to create \
 		miniaturized etheric blasts of space-time beneath the user's feet, this enables them to... \
@@ -74,8 +74,9 @@
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		SEND_SIGNAL(mod.wearer, COMSIG_ADD_MOOD_EVENT, "clownshoes", /datum/mood_event/clownshoes)
 
-/obj/item/mod/module/waddle/on_suit_deactivation()
-	qdel(mod.boots.GetComponent(/datum/component/squeak))
+/obj/item/mod/module/waddle/on_suit_deactivation(deleting = FALSE)
+	if(!deleting)
+		qdel(mod.boots.GetComponent(/datum/component/squeak))
 	mod.wearer.RemoveElement(/datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		SEND_SIGNAL(mod.wearer, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")

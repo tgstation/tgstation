@@ -55,4 +55,4 @@
 				if(prob(1))
 					affected_mob.emote("snore")
 			if(DT_PROB(7.5, delta_time))
-				affected_mob.stuttering += 3
+				affected_mob.adjust_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter)

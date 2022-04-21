@@ -50,6 +50,8 @@
 	var/sending_request = FALSE
 	///Prevents spamming requests, acts as a second layer of protection against spam
 	COOLDOWN_DECLARE(db_request_cooldown)
+	///Interface name for the ui_interact call for different subtypes.
+	var/interface_type = "LibraryVisitor"
 
 /obj/machinery/computer/libraryconsole/Initialize(mapload)
 	. = ..()
@@ -57,9 +59,10 @@
 	INVOKE_ASYNC(src, .proc/update_db_info)
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "LibraryVisitor")
+		ui = new(user, src, interface_type)
 		ui.open()
 
 /obj/machinery/computer/libraryconsole/ui_data(mob/user)
@@ -273,6 +276,7 @@
 	icon_screen = "library"
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
+	interface_type = "LibraryConsole"
 	///Can spawn secret lore item
 	var/can_spawn_lore = TRUE
 	///The screen we're currently on, sent to the ui
@@ -306,12 +310,6 @@
 	. = ..()
 	if(mapload)
 		dynamic_inv_load = TRUE //Only load in stuff if we were placed during mapload
-
-/obj/machinery/computer/libraryconsole/bookmanagement/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "LibraryConsole")
-		ui.open()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/ui_data(mob/user)
 	var/list/data = list()
