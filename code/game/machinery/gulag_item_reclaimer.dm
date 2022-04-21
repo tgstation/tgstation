@@ -3,11 +3,8 @@
 	desc = "Used to reclaim your items after you finish your sentence at the labor camp."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_taken"
-	req_access = list(ACCESS_SECURITY) //REQACCESS TO ACCESS ALL STORED ITEMS
+	req_access = list(ACCESS_BRIG) //REQACCESS TO ACCESS ALL STORED ITEMS
 	density = FALSE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 100
-	active_power_usage = 2500
 
 	var/list/stored_items = list()
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
@@ -43,8 +40,8 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		I = L.get_idcard(TRUE)
-	if(istype(I, /obj/item/card/id/prisoner))
-		var/obj/item/card/id/prisoner/P = I
+	if(istype(I, /obj/item/card/id/advanced/prisoner))
+		var/obj/item/card/id/advanced/prisoner/P = I
 		if(P.points >= P.goal)
 			can_reclaim = TRUE
 
@@ -74,7 +71,7 @@
 		if("release_items")
 			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
 			if(H != usr && !allowed(usr))
-				to_chat(usr, "<span class='warning'>Access denied.</span>")
+				to_chat(usr, span_warning("Access denied."))
 				return
 			drop_items(H)
 			. = TRUE
@@ -88,3 +85,4 @@
 		stored_items[user] -= W
 		W.forceMove(drop_location)
 	stored_items -= user
+	use_power(active_power_usage)

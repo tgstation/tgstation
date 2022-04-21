@@ -32,7 +32,7 @@
 			"Linkage": null,
 			"Gravity": true,
 			"Ice Ruins Underground": true,
-			"Baseturf": "/turf/open/openspace/icemoon"
+			"Baseturf": "/turf/open/openspace/icemoon/keep_below"
 		},
 		{
 			"Down": -1,
@@ -41,14 +41,16 @@
 			"Gravity": true,
 			"Ice Ruins": true,
 			"Weather_Snowstorm": true,
-			"Baseturf": "/turf/open/openspace/icemoon"
+			"Baseturf": "/turf/open/openspace/icemoon/keep_below"
 		}
 	],
 	"minetype": "none",
 	"job_changes": {
-		"prisoner": {
-			"total_positions": 4,
-			"spawn_positions": 4
+		"cook": {
+			"additional_cqc_areas": ["/area/service/kitchen/diner"]
+		},
+		"captain": {
+			"special_charter": "moon"
 		}
 	}
 }

@@ -45,10 +45,12 @@
 	ammo_x_offset = 3
 	selfcharge = 1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/antique)
 
 /obj/item/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
 	icon_state = "lasercannon"
+	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "laser"
 	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lens to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theoretically infinite use."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
@@ -69,13 +71,14 @@
 
 /obj/item/gun/energy/laser/scatter/shotty
 	name = "energy shotgun"
-	icon = 'icons/obj/guns/projectile.dmi'
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "cshotgun"
 	inhand_icon_state = "shotgun"
 	desc = "A combat shotgun gutted and refitted with an internal laser system. Can switch between taser and scattered disabler shots."
 	shaded_charge = 0
 	pin = /obj/item/firing_pin/implant/mindshield
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/electrode)
+	automatic_charge_overlays = FALSE
 
 ///Laser Cannon
 
@@ -87,7 +90,7 @@
 	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
-	flags_1 =  CONDUCT_1
+	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/accelerator)
 	pin = null
@@ -110,14 +113,14 @@
 	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
 
 ///X-ray gun
+
 /obj/item/gun/energy/xray
 	name = "\improper X-ray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated X-ray blasts that pass through multiple soft targets and heavier materials."
 	icon_state = "xray"
-	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
+	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
-	pin = null
 	ammo_x_offset = 3
 
 ////////Laser Tag////////////////////
@@ -149,3 +152,38 @@
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
+
+//Inferno and Cryo Pistols
+
+/obj/item/gun/energy/laser/thermal //the common parent of these guns, it just shoots hard bullets, somoene might like that?
+	name = "nanite pistol"
+	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit globs of angry robots into the bad guys."
+	icon_state = "infernopistol"
+	inhand_icon_state = null
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite)
+	shaded_charge = TRUE
+	ammo_x_offset = 1
+	can_flashlight = TRUE
+	flight_x_offset = 15
+	flight_y_offset = 9
+	can_bayonet = TRUE
+	knife_x_offset = 19
+	knife_y_offset = 13
+	w_class = WEIGHT_CLASS_NORMAL
+	dual_wield_spread = 10 //as intended by the coders
+
+/obj/item/gun/energy/laser/thermal/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+
+/obj/item/gun/energy/laser/thermal/inferno //the magma gun
+	name = "inferno pistol"
+	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit globs of molten angry robots into the bad guys. While it doesn't manipulate temperature in of itself, it does cause an violent eruption in anyone who is severely cold."
+	icon_state = "infernopistol"
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite/inferno)
+
+/obj/item/gun/energy/laser/thermal/cryo //the ice gun
+	name = "cryo pistol"
+	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit shards of frozen angry robots into the bad guys. While it doesn't manipulate temperature in of itself, it does cause an internal explosion in anyone who is severely hot."
+	icon_state = "cryopistol"
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)

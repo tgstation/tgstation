@@ -1,4 +1,4 @@
-//NEVER USE THIS IT SUX	-PETETHEGOAT
+//NEVER USE THIS IT SUX -PETETHEGOAT
 //IT SUCKS A BIT LESS -GIACOM
 
 /obj/item/paint
@@ -114,7 +114,7 @@
 	target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/paint/paint_remover
-	gender =  PLURAL
+	gender = PLURAL
 	name = "paint remover"
 	desc = "Used to remove color from anything."
 	icon_state = "paint_neutral"

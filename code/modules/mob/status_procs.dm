@@ -1,6 +1,6 @@
 
 //Here are the procs used to modify status effects of a mob.
-//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
+//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, drowsyness, ear damage,
 // eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
 ///Set the jitter of a mob
@@ -18,6 +18,19 @@
 ///FOrce set the dizzyness of a mob
 /mob/proc/set_dizziness(amount)
 	dizziness = max(amount, 0)
+
+/**
+* Set drowsyness of a mob to passed value
+*/
+/mob/proc/set_drowsyness(amount)
+	drowsyness = max(amount, 0)
+
+/**
+ * Adds passed value to the drowsyness of a mob
+ */
+/mob/proc/adjust_drowsyness(amount)
+	drowsyness = max(drowsyness + amount, 0)
+
 
 ///Blind a mobs eyes by amount
 /mob/proc/blind_eyes(amount)
@@ -48,7 +61,7 @@
 	switch(stat)
 		if(CONSCIOUS, SOFT_CRIT)
 			if(HAS_TRAIT(src, TRAIT_BLIND) || eye_blind)
-				throw_alert("blind", /atom/movable/screen/alert/blind)
+				throw_alert(ALERT_BLIND, /atom/movable/screen/alert/blind)
 				do_set_blindness(TRUE)
 			else
 				do_set_blindness(FALSE)
@@ -65,7 +78,7 @@
 		// You are blind why should you be able to make out details like color, only shapes near you
 		add_client_colour(/datum/client_colour/monochrome/blind)
 	else
-		clear_alert("blind")
+		clear_alert(ALERT_BLIND)
 		clear_fullscreen("blind")
 		remove_client_colour(/datum/client_colour/monochrome/blind)
 
@@ -94,10 +107,11 @@
 /mob/proc/update_eye_blur()
 	if(!client)
 		return
-	var/atom/movable/screen/plane_master/floor/OT = locate(/atom/movable/screen/plane_master/floor) in client.screen
-	var/atom/movable/screen/plane_master/game_world/GW = locate(/atom/movable/screen/plane_master/game_world) in client.screen
-	GW.backdrop(src)
-	OT.backdrop(src)
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	if(eye_blurry)
+		game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(clamp(eye_blurry * 0.1, 0.6, 3)))
+	else
+		game_plane_master_controller.remove_filter("eye_blur")
 
 ///Adjust the drugginess of a mob
 /mob/proc/adjust_drugginess(amount)

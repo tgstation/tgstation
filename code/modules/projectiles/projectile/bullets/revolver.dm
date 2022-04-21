@@ -21,7 +21,8 @@
 	ricochet_auto_aim_range = 3
 	wound_bonus = -20
 	bare_wound_bonus = 10
-	embedding = list(embed_chance=15, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=10)
+	embedding = list(embed_chance=25, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=1 SECONDS)
+	embed_falloff_tile = -4
 
 /obj/projectile/bullet/c38/match
 	name = ".38 Match bullet"
@@ -37,25 +38,25 @@
 	name = ".38 Rubber bullet"
 	damage = 10
 	stamina = 30
-	armour_penetration = -30
+	weak_against_armour = TRUE
 	ricochets_max = 6
 	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
 	ricochet_decay_damage = 0.8
 	shrapnel_type = null
-	sharpness = SHARP_NONE
+	sharpness = NONE
 	embedding = null
 
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
 	name = ".38 DumDum bullet"
 	damage = 15
-	armour_penetration = -30
+	weak_against_armour = TRUE
 	ricochets_max = 0
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
 	bare_wound_bonus = 20
-	embedding = list(embed_chance=75, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=10)
+	embedding = list(embed_chance=75, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=1 SECONDS)
 	wound_falloff_tile = -5
 	embed_falloff_tile = -15
 
@@ -106,7 +107,7 @@
 /obj/projectile/bullet/a357
 	name = ".357 bullet"
 	damage = 60
-	wound_bonus = -70
+	wound_bonus = -30
 
 // admin only really, for ocelot memes
 /obj/projectile/bullet/a357/match

@@ -1,0 +1,439 @@
+2016-05-02:
+  Joan:
+  - tweak: Blob spores spawn from factories 2 seconds faster, but the factory goes
+      on cooldown when any of its spores die.
+  - experiment: You can examine tomes, soulstones, and construct shells to see what
+      you can do with them.
+  - rscadd: Releasing a shade from a soulstone now allows you to reuse that soulstone
+      for capturing shades or souls, instead of preventing the stone's use forever
+      if the shade dies.
+  - imageadd: Runes now actually pulse red on failure.
+  - rscadd: The Summon Cultist rune no longer includes the cultists invoking it in
+      the selection menu.
+  - tweak: Imperfect Communication renamed to Emergency Communication.
+  - rscdel: You can no longer hide the Nar-Sie rune with a Talisman of Veiling/Revealing.
+  Kor:
+  - rscadd: Engineering cyborgs now have internal blueprints.
+  Lzimann:
+  - tweak: Automatic nexus placing time changed from 2 to 15 minutes.
+  - tweak: Prophet's gear(hat and staff) prioritizes the backpack instead of automatically
+      equipping.
+  - rscadd: Divine telepathy and prophet to god speak now have a follow button for
+      ghosts.
+  - rscadd: Divine telepathy and prophet to god speak now has the god's color.
+  - bugfix: CTF spawn protection trap is no longer constructable
+  Mercenaryblue:
+  - tweak: Drastically reduced the chances of eye damage when throwing a paper plane.
+  RandomMarine:
+  - tweak: Medical HUDs improved. To better prioritize patients, subjects deep into
+      critical condition have a blinking red outline around the entire HUD icon, and
+      will blink more rapidly when very close to death.
+  TechnoAlchemisto:
+  - tweak: Security uniforms have been made more professional, and more tactical.
+  TrustyGun:
+  - rscadd: By crafting together a legion skull, a goliath steak, ketchup, and capsaicin
+      oil, you can create Stuffed Legion! Be careful, it's hot.
+  coiax:
+  - rscadd: Centcom Department of [REDACTED] have announced a change of supplier of
+      [EXPLETIVE DELETED]. As such, for security reasons, the absinthe [MOVE ALONG
+      CITIZEN] will instead be [NOTHING TO SEE HERE]. We hope that this will not affect
+      the performance of the [INFORMATION ABOVE YOUR SECURITY CLEARANCE].
+  nullbear:
+  - rscadd: A reminder for crew to avoid mopping floors in cold rooms, as the water
+      will freeze and provide a dangerous slipping hazard known as 'ice'. Running
+      on it is not recommended.
+  - rscadd: Frostoil is an effective chemical for rapidly cooling areas in the event
+      of a fire.
+  - rscadd: Added X4, a breaching charge more destructive than C4, it can be purchased
+      from uplinks.
+  - rscadd: C4 can be used with assemblies.
+  - bugfix: Fixes chembomb recipe to use any matter bin. Again.
+  - bugfix: ARG's disappear once finished reacting.
+2016-05-03:
+  coiax, Robustin:
+  - tweak: Changeling Fleshmend is much less effective when used repeatedly in a short
+      time. Changeling Panacea is much more effective at purging reagents, reducing
+      radiation and now reduces braindamage.
+2016-05-04:
+  Fox McCloud:
+  - tweak: shock revolver projectiles are now energy instead of bullets
+  Joan:
+  - rscdel: Cultists no longer communicate via tomes.
+  - rscadd: Cultists now communicate via the 'Communion' action button.
+  - rscadd: Examining the blob with an active research scanner or medical hud will
+      display effects, akin to hitting it with an analyzer.
+  - rscadd: Improved medical HUDs to work on all living creatures.
+  - rscadd: Drones and swarmers, being machines, require a diagnostic HUD for analysis
+      instead.
+  TechnoAlchemist:
+  - rscadd: You can now craft cloaks from the scales of fallen ash drakes, look for
+      the recipe in tablecrafting!
+  coiax:
+  - rscadd: The Service and the Standard cyborg module now have a spraycan built in,
+      for hijinks and passing on important urban messages. The Service cyborg module
+      also has a cyborg-hand labeler, in case anything needs to be labelled.
+  - rscadd: 'Centcom Suicide Prevention wishes to remind the station: Please do not
+      kill yourself with a hand labeler.'
+  xxalpha:
+  - bugfix: Fixed the mk-honk prototype shoes.
+2016-05-05:
+  Joan:
+  - tweak: Revenants are slower while revealed.
+  - rscdel: Revenants can no longer cast inside dense objects.
+  - tweak: Lying down will cure Blight much, much faster.
+  \"Macho Man\" Randy Savage:
+  - rscadd: OOOHHH YEAAAAHHHH
+  - rscadd: SNAP INTO A JLIM SIM WITH THE ALL NEW WRESTLING BELT
+  - rscadd: YOU CAN FREAKOUT YOUR OPPONENTS WITH THE 5 HOT MOVES ON THIS BELT YEAH
+  - rscadd: PRAY TO THE LOCAL SPACE GODS TO EXCHANGE YOUR TELECRYSTALS TO ENSURE THE
+      CREAM RISES TO THE TOP
+2016-05-07:
+  Robustin:
+  - rscadd: A small pantry has been added to SW maintenance.
+  nullbear:
+  - rscadd: Makes Shift+Middleclick the hotkey for pointing.
+  phil235:
+  - rscadd: DISMEMBERMENT! Humans can now lose their bodyparts. Explosions and being
+      attacked with a heavy sharp item on a specific bodypart can cause dismemberment.
+  - rscadd: You can't be handcuffed or legcuffed if you're missing an arm or leg.
+      You can't use items when you have no legs, your arms are too busy helping you
+      crawl, unless your are buckled to a chair. You're slower when missing a leg.
+  - rscadd: You lose organs and items if the bodypart they are inside gets cut off.
+      You can always retrieve them by cutting the dropped bodypart with a sharp object.
+  - rscadd: Medbay can replace your missing limbs with robotic parts via surgery,
+      or amputate you.
+  - rscadd: Changelings do not die when decapitated! They can regrow all their limbs
+      with Fleshmend, or just one arm with Arm Blade or Organic Shield.
+  - rscadd: Your chest cannot be dropped, but it will spill its organs onto the ground
+      when dismembered.
+2016-05-08:
+  CoreOverload:
+  - rscadd: You can now de-power inactive swarmers with a screwdriver to prevent them
+      from activating.
+  - rscadd: Recycle depowered swarmers in autolathe or sell them in cargo!
+  Joan:
+  - rscadd: Cultist constructs, and shades, can now invoke runes by clicking them.
+  - rscdel: This does not include Manifest Ghost, Blood Boil, or Astral Journey runes.
+  - rscadd: Medical huds will now show parasites in dead creatures.
+  KorPhaeron:
+  - rscadd: Burn weapons can now dismember, and they reduce the limb to ash in the
+      process
+  - rscadd: Weapons with high AP values will now dismember limbs much easier. These
+      values are subject to change depending on how things play out over the next
+      week or two.
+  - rscadd: Various weapons with high AP values had them lowered (chaplain scythe,
+      energy sword, dualsaber) to prevent them taking limbs off in a single hit.
+  - rscadd: The chaplain has two new weapons (they are mechanically identical to previous
+      weapons, before anyone gets upset about balance). One is dismemberment themed,
+      the other is related to a new antagonist.
+  Mercenaryblue:
+  - rscadd: Throwing a Banana Cream Pie will now knock down and cream the target's
+      face.
+  - rscadd: You can clean off the cream with the usual methods, such as soap, shower,
+      cleaner spray, etc.
+  - rscadd: The Clown Federation would like to remind the crew that the HoS is worth
+      double points! Honk!
+  Robustin:
+  - experiment: There are rumors that the Cult's 'Talisman of Construction', which
+      turns ordinary metal for construct shells, can be used on plasteel to create
+      structures. If the stories are true, the cult has been producing relics of incredible
+      power through this transmutation.
+  coiax:
+  - rscadd: To save credits, Centcom has subcontracted out emergency shuttle design
+      to third parties. Rest assured, all of these produced shuttles meet our stringent
+      quality control.
+  - tweak: Lavaland ruins spawning chances have been modified. Expect to see more
+      smaller and less round affecting ruins, and no duplicates of major ruins, like
+      ash walkers or golems.
+  lordpidey:
+  - rscadd: Infernal devils have been seen onboard our spacestations, offering great
+      boons in exchange for souls.
+  - rscadd: Employees are reminded that their souls already belong to nanotrasen.  If
+      you have sold your soul in error, a lawyer or head of personnel can help return
+      your soul to Nanotrasen by hitting you with your employment contract.
+  - rscadd: Nanotrasen headquarters will be bluespacing employment contracts into
+      the Lawyer's office filing cabinet when a new arrival reaches the station.  It
+      is recommended that the lawyer create copies of some of these for safe keeping.
+  - rscadd: Due to the recent infernal incursions, the station library has been equipped
+      with a Codex Gigas to help research infernal weaknesses.  Please note that reading
+      this book may have unintended side effects.  Also note, you must spell the devil's
+      name exactly, as there are countless demons with similar names.
+  - rscadd: When a devil dies, if the proper banishment ritual is not performed on
+      it's remains, the devil will revive itself at the cost of some of it's power.  The
+      banishment ritual is described in the Codex Gigas.
+  - rscadd: When a demon gains enough souls, It's form will mutate to a more demonic
+      looking form.  The Arch-demon form is known to be on par with an ascended shadowling
+      in power.
+2016-05-09:
+  Joan:
+  - tweak: Sporing Pods produces spores when expanding slightly more often.
+  - tweak: Replicating Foam now only expands when hit with burn damage, from all damage,
+      but does so at a higher chance. Free expansion from it is, however, more rare.
+  - tweak: Penetrating Spines does slightly more brute damage, and Poisonous Strands
+      does its damage 50% faster.
+  KorPhaeron:
+  - rscadd: The AI no longer has a tracking delay because artificial lag is the most
+      miserable thing in the world.
+  Razharas:
+  - tweak: crafting can now be done everywhere, little button near the intents with
+      hammer on it(its not T) opens the crafting menu, if you are in a locker or mech
+      only things in your hands will be considered for crafting
+  coiax:
+  - tweak: Skeletons now have bone "tongues"
+2016-05-11:
+  Joan:
+  - rscadd: Shades can move in space.
+  - rscadd: Artificers can now heal shades.
+  coiax:
+  - tweak: Added action button to chameleon stamp
+  - rscadd: Added APPROVED and DENIED stamps to Bureaucracy Crate
+  - rscadd: Added the cream pie closet to various maps. Added contraband Cream Pie
+      Crate to Cargo.
+  pudl:
+  - rscadd: The armory has been redesigned.
+2016-05-12:
+  Shadowlight and coiax:
+  - rscdel: Due to numerous reports of teams using human weapons instead of stealth
+      when carrying out their assignments, future teams have been genetically modified
+      to only be able to use their assigned blaster and are unable to use human weapons.
+2016-05-13:
+  Joan:
+  - rscadd: Cultists can now unanchor and reanchor cult structures by hitting them
+      with a tome. Unanchored cult structures don't do anything.
+  KorPhaeron:
+  - rscadd: Drake attacks are now much easier to avoid.
+  - rscadd: Player controlled drakes can now consume bodies to heal, and alt+click
+      targets to divebomb them.
+  TechnoAlchemisto:
+  - rscadd: More items have been added to the mining vendor, check them out!
+2016-05-14:
+  Cruix:
+  - bugfix: Fixed foam darts with the safety cap removed being reset when fired.
+  - rscadd: Added the ability to remove pens from foam darts.
+  - bugfix: Foam darts with pens inside them are no longer destroyed when fired.
+  - bugfix: Foam darts no longer drop two darts when fired at a person on a janicart.
+  Joan:
+  - rscdel: The Raise Dead rune no longer accepts dead cultists as a sacrifice to
+      raise the dead.
+  Metacide:
+  - rscadd: 'A small update for MetaStation, changes include:'
+  - rscadd: Added extra grounding rods to the engine area to stop camera destruction.
+  - rscadd: Added canvases and extra crayons to art storage and some easels to maint.
+  - rscadd: Added formal security uniform crate for parades to the warden's gear area.
+  - rscadd: The armory securitron now starts active.
+  - rscadd: The genetics APC now starts unlocked.
+  - rscadd: Other minor changes and fixes as detailed on the wiki page.
+  coiax, Nienhaus:
+  - rscdel: Unfortunately, the Belowyarn toys have been withdrawn from distribution
+      due to Assistants choking on the batteries. Centcom has sent their condolences
+      to the battery manufacturing plant.
+  - rscadd: We are introducing Oh-cee the original content skeleton figurines. Pull
+      its string, and hear it say a variety of phrases. Not suitable for infants or
+      assistants under 36 months.
+  - tweak: Note that pulling the string of all talking toys is now visible to others.
+  - rscadd: Talking toys produce a lot more chatter than they did before. So do some
+      skeleton "tongues".
+  pudl:
+  - rscadd: Adds normal security headsets to security lockers
+  xxalpha:
+  - bugfix: Fixed drone dispenser multiplying glass or metal.
+2016-05-15:
+  Iamgoofball:
+  - rscadd: Nanotrasen is short on cash, and are now borrowing escape shuttles from
+      other stations, and Space Apartments.
+  Mercenaryblue:
+  - rscadd: Turns out a bike horn made with Bananium is flipping awesome! Honk!
+2016-05-18:
+  Cruix:
+  - bugfix: unwrapping an item with telekinesis no longer teleports the item into
+      your hand.
+  Metacide:
+  - rscadd: 'MetaStation: the library and chapel have had windows removed to make
+      them feel more isolated.'
+  MrStonedOne:
+  - tweak: Tesla has been rebalanced.
+  - tweak: It should now lose balls slower, increase balls faster, and be a bit more
+      aggressive about finding nearby grounding rods.
+  - tweak: additional zaps from it's orbiting balls should be a bit more varied, but
+      a touch less powerful.
+  Robustin:
+  - rscadd: Lings have a new default ability, Hivemind Link. This lets you bring a
+      neck-grabbed victim into hivemind communications after short period of time.
+      You can talk to victims who are in crit/muted and perhaps persuade them to help
+      you, give you intel, or even a PDA code. The link will stabilize crit victims
+      to help ensure they do not die during the link.
+  Shadowlight213:
+  - bugfix: Cleanbot and floorbot scanning has greatly improved. they should prioritize
+      areas next to them, as well as resolve themselves stacking on the same tiles.
+  coiax:
+  - rscadd: Kinetic accelerators only require one hand to be fired, as before
+  - rscdel: Kinetic accelerators recharge time is multiplied by the number of KAs
+      that person is carrying.
+  - rscdel: Kinetic accelerators lose their charge quickly if not equipped or being
+      held
+  - rscadd: Kinetic accelerator modkits (made at R&D or your local Free Golem ship)
+      overcome these flaws
+2016-05-19:
+  Razharas:
+  - rscadd: HE pipes once again work in space and in lava.
+  - rscadd: Space cools down station air again
+2016-05-20:
+  KorPhaeron:
+  - rscadd: The HoS now has a pinpointer, the Warden now has his door remote.
+  bgobandit:
+  - rscadd: Nanotrasen has begun to research BZ, a hallucinogenic gas. We trust you
+      will use it responsibly.
+  - rscadd: BZ causes hallucinations once breathed in and, at high doses, has a chance
+      of doing brain damage.
+  - rscadd: BZ is known to cause unusual stasis-like behavior in the slime species.
+  coiax:
+  - rscadd: Neurotoxin spit can be used as makeshift space propulsion
+2016-05-21:
+  Iamsaltball:
+  - rscadd: Heads of Staff now have basic Maint. access.
+  NicholasM10:
+  - rscadd: The chef can now make Khinkali and Khachapuri
+  coiax:
+  - rscdel: NOBREATH species (golems, skeletons, abductors, ash walkers, zombies)
+      no longer have or require lungs. They no longer take suffocation/oxyloss damage,
+      cannot give CPR and cannot benefit from CPR. Instead of suffocation damage,
+      during crit they take gradual brute damage.
+  - rscdel: NOBLOOD (golems, skeletons, abductors, slimepeople, plasmamen) species
+      no longer have or require hearts.
+  - tweak: NOBREATH species that require hearts still take damage from heart attacks,
+      as their tissues die and the lack of circulation causes toxins to build up.
+  - rscdel: NOHUNGER (plasmamen, skeletons) species no longer have appendixes.
+  coiax, OPDingo:
+  - tweak: Renamed and reskinned legion's heart to legion's soul to avoid confusion;
+      it is not a substitute heart, it is a supplemental chest organ.
+  - rscadd: Legion's souls are now more obviously inert when becoming inert.
+  nullbear:
+  - tweak: Wetness updates less often.
+  - rscadd: Wetness now stacks. Spraying lube over a tile that already has lube, will
+      make the lube take longer to dry. Likewise, dumping 100 units of lube will take
+      longer to dry than if only 10 units were dumped. (lube used to last just as
+      long, regardless of whether it was 1u, or 100u) There is a limit, however, and
+      you can't stack infinite lube.
+  - tweak: Hotter temperatures cause water to evaporate more quickly. At 100C, water
+      will boil away instantly.
+  - rscadd: About 5 seconds of wetness are removed from a tile for each unit of drying
+      agent. Absorbant Galoshes remain the most effective method of drying, and dry
+      tiles instantly regardless of wetness.
+2016-05-22:
+  coiax:
+  - rscdel: Lavaland monsters now give ruins a wide berth.
+  - bugfix: Glass tables now break when people are pushed onto them.
+2016-05-23:
+  CoreOverload:
+  - rscadd: New cyberimplant, "Toolset Arm", is now available in RnD.
+  coiax, OPDingo:
+  - rscadd: Crayons and spraycans are now easier to use.
+  - rscdel: Centcom announce due to budget cuts their supplier of rainbow crayons
+      has been forced to use more... exotic chemicals. Please do not ingest your standard
+      issue crayon.
+  kevinz000:
+  - rscadd: 'Peacekeeper borgs: Security borgs but without any stuns or restraints!
+      Modules: Harm Alarm, Cookie Dispenser, Energy Bola Launcher, Peace Injector
+      that confuses living things, and a weak holobarrier projector! It also comes
+      with the ability to hug.'
+  - rscadd: 'Cookie Synthesizer: Self recharging RCD that prints out cookies!'
+  - tweak: Nanotrasen scientists have added a hugging module to medical and peacekeeper
+      cyborgs to boost emotions during human-cyborg interaction.
+2016-05-24:
+  Joan:
+  - rscdel: You can no longer scribe the Summon Nar-Sie rune under non-valid conditions.
+  Kiazusho:
+  - rscadd: Added three new advanced syringes to R&D
+2016-05-26:
+  Xhuis:
+  - rscadd: Purge all untruths and honor Ratvar.
+  coiax:
+  - bugfix: Fixes bug where bolt of change to the host would kill an attached guardian.
+  - bugfix: Fixes bug where bolt of change to laughter demon would not release its
+      friends.
+  - bugfix: Fixes bug where bolt of change to morphling would not release its contents.
+  - bugfix: Fixes bug where bolt of change transforming someone into a drone would
+      not give them hacked laws and vision.
+  - bugfix: Blobbernauts created by a staff of change are now "independent" and will
+      not decay if separated from a blob or missing a factory.
+  - rscadd: Independent blobbernauts added to gold slime core spawn pool.
+  - rscadd: Medical scanners now inform the user if the dead subject is within the
+      (currently) 120 second defib window.
+  - rscadd: Ghosts now have the "Restore Character Name" verb, which will set their
+      ghost appearance and dead chat name to their character preferences.
+  - bugfix: Mob spawners now give any generated names to the mind of the spawned mob,
+      meaning ghosts will have the name they had in life.
+  - bugfix: Fixes interaction with envy's knife and lavaland spawns.
+  - bugfix: Fixes a bug where swarmers teleporting humans would incorrectly display
+      a visible message about restraints breaking.
+  - rscdel: Emagging the emergency shuttle computer with less than ten seconds until
+      launch no longer gives additional time.
+  - rscadd: The emergency shuttle computer now reads the ID in your ID slot, rather
+      than your hand.
+2016-05-27:
+  coiax:
+  - rscdel: Gatling gun removed from R&D for pressing ceremonial reasons.
+  phil235:
+  - tweak: Pull and Grab are merged together. Pulling stays unchanged. Using an empty
+      hand with grab intent on a mob will pull them. Using an empty hand with grab
+      intent on a mob that you're already pulling will try to upgrade your grip to
+      aggressive grab>neck grab>kill grab. Aggressive grabs no longer stun you, but
+      they act exactly like a handcuff, preventing you from using your hands until
+      you escape the grip. You can break free from the grip by trying to move or using
+      the resist button.
+  - tweak: Someone pulling a restrained mob now swap position with them instead of
+      getting blocked by the mob, unable to even push them.
+2016-05-29:
+  GunHog:
+  - rscadd: The CE, RD, and CMO have been issued megaphones.
+  Paprika, Crystalwarrior, Korphaeron and Bawhoppen:
+  - rscadd: Pixel projectiles. This is easier to see than explain, so go fire a weapon.
+  Xhuis:
+  - rscadd: Ratvar and Nar-Sie now actively seek each other out if they both exist.
+  - tweak: Celestial gateway animations have been twweaked.
+  - tweak: Ratvar now has a new sound and message upon spawning.
+  - tweak: Ratvar now only moves one tile at a time.
+  - bugfix: The celestial gateway now takes an unreasonably long amount of time.
+  - bugfix: God clashing is now much more likely to work properly.
+  - bugfix: Function Call now works as intended.
+  - bugfix: Break Will now works as intended.
+  - bugfix: Holy water now properly deconverts servants of Ratvar.
+  - bugfix: Deconverted servants of Ratvar are no longer considered servants.
+  pudl:
+  - rscadd: Chemicals should now have color, instead of just being pink.
+2016-05-30:
+  coiax:
+  - rscadd: A new Shuttle Manipulator verb has been added for quick access to probably
+      the best and <strike>most</strike> mostly bugfree feature on /tg/.
+  - rscadd: Spectral sword is now a point of interest for ghosts.
+  - bugfix: Clicking the spectral sword action now orbits the sword, instead of just
+      teleporting to its location.
+  - bugfix: Gang tags can again be sprayed over.
+  - bugfix: Fixes bug where the wisp was unable to be recalled to the lantern.
+  xxalpha:
+  - rscdel: Engineering, CE and Atmos hardsuits no longer have in-built jetpacks.
+2016-05-31:
+  CoreOverload:
+  - rscadd: 'Cleanbot software was updated to version 1.2, improving pathfinding and
+      adding two new cleaning options: "Clean Trash" and "Exterminate Pests".'
+  - experiment: New cleaning options are still experimental and disabled by default.
+  Kiazusho:
+  - bugfix: Changeling organic suit and chitin armor can be toggled off once again.
+  Kor:
+  - rscadd: The Japanese Animes button is back,
+  - rscadd: 'The chaplain has three new weapons: The possessed blade, the extra-dimensional
+      blade, and the nautical energy sword. The former has a new power, the latter
+      two are normal sword reskins.'
+  - rscadd: The chapel mass driver has been buffed.
+  coiax:
+  - rscdel: Zombies can no longer be butchered
+  - rscadd: If you encounter an infectious zombie, be cautious, its claws will infect
+      you, and on death you will rise with them. If you manage to kill the beast,
+      you can remove the corruption from its brain via surgery, or just chop off the
+      head to stop it coming back.
+  - rscadd: Adds some stock computers and lavaland to Birdboat Station.
+  - bugfix: Free Golem scientists have proved that as beings made out of stone, golems
+      are immune to all electrical discharges, including the tesla.
+  - rscadd: Nuclear bombs are now points of interest. Never miss a borg steal a nuke
+      from the syndicate shuttle again!
+  - rscadd: Alt-clicking a spraycan toggles the cap.

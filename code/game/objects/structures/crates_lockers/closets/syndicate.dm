@@ -28,7 +28,7 @@
 	new /obj/item/storage/box/flashbangs(src)
 	new /obj/item/storage/box/teargas(src)
 	new /obj/item/storage/backpack/duffelbag/syndie/med(src)
-	new /obj/item/pda/syndicate(src)
+	new /obj/item/modular_computer/tablet/pda/syndicate(src)
 
 /obj/structure/closet/syndicate/resources
 	desc = "An old, dusty locker."
@@ -49,9 +49,9 @@
 		P.name = "\improper IOU"
 		P.info = "Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!"
 
-	//Metal (common ore)
+	//Iron (common ore)
 	if(pickednum >= 2)
-		new /obj/item/stack/sheet/metal(src, rand(common_min, common_max))
+		new /obj/item/stack/sheet/iron(src, rand(common_min, common_max))
 
 	//Glass (common ore)
 	if(pickednum >= 5)
@@ -95,10 +95,11 @@
 
 /obj/structure/closet/syndicate/resources/everything
 	desc = "It's an emergency storage closet for repairs."
+	storage_capacity = 60 // This is gonna be used for debug.
 
 /obj/structure/closet/syndicate/resources/everything/PopulateContents()
 	var/list/resources = list(
-	/obj/item/stack/sheet/metal,
+	/obj/item/stack/sheet/iron,
 	/obj/item/stack/sheet/glass,
 	/obj/item/stack/sheet/mineral/gold,
 	/obj/item/stack/sheet/mineral/silver,
@@ -116,7 +117,7 @@
 	/obj/item/stack/sheet/mineral/wood
 	)
 
-	for(var/i = 0, i<2, i++)
+	for(var/i in 1 to 2)
 		for(var/res in resources)
 			var/obj/item/stack/R = res
 			new res(src, initial(R.max_amount))

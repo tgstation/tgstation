@@ -31,6 +31,7 @@
 
 /datum/holiday/nth_week/thanksgiving
 	name = "Thanksgiving in the United States"
+	timezones = list(TIMEZONE_EST, TIMEZONE_CST, TIMEZONE_MST, TIMEZONE_PST, TIMEZONE_AKST, TIMEZONE_HST)
 	begin_week = 4
 	begin_month = NOVEMBER
 	begin_weekday = THURSDAY
@@ -38,13 +39,6 @@
 
 /datum/holiday/nth_week/thanksgiving/canada
 	name = "Thanksgiving in Canada"
-	begin_week = 2
-	begin_month = OCTOBER
-	begin_weekday = MONDAY
-
-/datum/holiday/nth_week/indigenous
-	// not Columbus day anymore get rekt, Columbus
-	name = "Indigenous Peoples' Day"
 	begin_week = 2
 	begin_month = OCTOBER
 	begin_weekday = MONDAY
@@ -74,7 +68,7 @@
 	return pick("Stout","Porter","Lager","Ale","Malt","Bock","Doppelbock","Hefeweizen","Pilsner","IPA","Lite") //I'm sorry for the last one
 
 /datum/holiday/nth_week/moth
-	name = "Moth Week"
+	name = MOTH_WEEK
 	begin_week = 3
 	end_week = 4
 	begin_month = JULY

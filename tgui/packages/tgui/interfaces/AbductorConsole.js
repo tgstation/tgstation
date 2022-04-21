@@ -1,8 +1,7 @@
-import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
 import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
-import { GenericUplink } from './Uplink';
+import { GenericUplink } from "./Uplink/GenericUplink";
 
 export const AbductorConsole = (props, context) => {
   const [tab, setTab] = useSharedState(context, 'tab', 1);
@@ -10,8 +9,7 @@ export const AbductorConsole = (props, context) => {
     <Window
       theme="abductor"
       width={600}
-      height={532}
-      resizable>
+      height={532}>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
@@ -33,10 +31,10 @@ export const AbductorConsole = (props, context) => {
           <Abductsoft />
         )}
         {tab === 2 && (
-          <Fragment>
+          <>
             <EmergencyTeleporter />
             <VestSettings />
-          </Fragment>
+          </>
         )}
       </Window.Content>
     </Window>
@@ -49,6 +47,7 @@ const Abductsoft = (props, context) => {
     experiment,
     points,
     credits,
+    categories,
   } = data;
 
   if (!experiment) {
@@ -59,8 +58,26 @@ const Abductsoft = (props, context) => {
     );
   }
 
+  const categoriesList = [];
+  const items = [];
+  for (let i = 0; i < categories.length; i++) {
+    const category = categories[i];
+    categoriesList.push(category.name);
+    for (let itemIndex = 0; itemIndex < category.items.length; itemIndex++) {
+      const item = category.items[itemIndex];
+      items.push({
+        id: item.name,
+        name: item.name,
+        category: category.name,
+        cost: `${item.cost} Credits`,
+        desc: item.desc,
+        disabled: credits < item.cost,
+      });
+    }
+  }
+
   return (
-    <Fragment>
+    <>
       <Section>
         <LabeledList>
           <LabeledList.Item label="Collected Samples">
@@ -69,9 +86,12 @@ const Abductsoft = (props, context) => {
         </LabeledList>
       </Section>
       <GenericUplink
-        currencyAmount={credits}
-        currencySymbol="Credits" />
-    </Fragment>
+        currency={`${credits} Credits`}
+        categories={categoriesList}
+        items={items}
+        handleBuy={(item) => act("buy", { name: item.name })}
+      />
+    </>
   );
 };
 

@@ -94,7 +94,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "at" = (
-/turf/open/floor/plasteel/bluespace,
+/turf/open/floor/iron/bluespace,
 /area/ruin/powered/clownplanet)
 "au" = (
 /obj/structure/flora/ausbushes/brflowers,
@@ -111,11 +111,11 @@
 /area/ruin/powered/clownplanet)
 "ax" = (
 /obj/item/assembly/mousetrap/armed,
-/turf/open/floor/plasteel/bluespace,
+/turf/open/floor/iron/bluespace,
 /area/ruin/powered/clownplanet)
 "ay" = (
 /obj/structure/flora/tree/jungle,
-/turf/open/floor/plasteel/bluespace,
+/turf/open/floor/iron/bluespace,
 /area/ruin/powered/clownplanet)
 "az" = (
 /obj/structure/signpost,
@@ -144,7 +144,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aD" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aE" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -156,11 +156,11 @@
 /area/ruin/powered/clownplanet)
 "aF" = (
 /obj/item/shovel,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aG" = (
-/obj/effect/mob_spawn/human/clown/corpse,
-/turf/open/floor/plating/asteroid,
+/obj/effect/mob_spawn/corpse/human/clown,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aH" = (
 /turf/closed/mineral/bananium{
@@ -170,11 +170,11 @@
 "aI" = (
 /obj/item/gps/spaceruin,
 /obj/item/pickaxe,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aJ" = (
 /obj/item/flashlight/lamp/bananalamp,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aK" = (
 /obj/structure/flora/ausbushes/sunnybush,
@@ -347,7 +347,7 @@
 /turf/open/floor/bluespace,
 /area/ruin/powered/clownplanet)
 "bh" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/bluespace,
 /area/ruin/powered/clownplanet)
@@ -361,20 +361,20 @@
 	},
 /area/ruin/powered/clownplanet)
 "bk" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/bluespace,
 /area/ruin/powered/clownplanet)
 "bl" = (
 /obj/item/bedsheet/clown,
 /obj/structure/bed,
-/obj/effect/mob_spawn/human/clown/corpse,
+/obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/floor/wood,
 /area/ruin/powered/clownplanet)
 "bm" = (
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 
 (1,1,1) = {"

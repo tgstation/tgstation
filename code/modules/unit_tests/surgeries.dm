@@ -73,9 +73,23 @@
 	TEST_ASSERT(!surgery_step.initiate(user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one), "Was allowed to start a second surgery without the rod of asclepius")
 	TEST_ASSERT(!surgery_for_one.step_in_progress, "Surgery for patient one is somehow in progress, despite not initiating")
 
-	user.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
+	user.apply_status_effect(/datum/status_effect/hippocratic_oath)
 	INVOKE_ASYNC(surgery_step, /datum/surgery_step/proc/initiate, user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one)
 	TEST_ASSERT(surgery_for_one.step_in_progress, "Surgery on patient one was not initiated, despite having rod of asclepius")
+
+/// Ensures that the tend wounds surgery can be started
+/datum/unit_test/start_tend_wounds
+
+/datum/unit_test/start_tend_wounds/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human)
+
+	var/datum/surgery/surgery = new /datum/surgery/healing/brute/basic
+
+	if (!surgery.can_start(user, patient))
+		Fail("Can't start basic tend wounds!")
+
+	qdel(surgery)
 
 /datum/unit_test/tend_wounds/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)

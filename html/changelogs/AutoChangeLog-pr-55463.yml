@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - tweak: "cargo techs now have ripley/clarke mech internal access"
-  - bugfix: "fixes internal access on clarke not allowing engineers and mining"

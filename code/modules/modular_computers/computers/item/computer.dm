@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
+
 // This is the base type that does all the hardware stuff.
 // Other types expand it - tablets use a direct subtypes, and
 // consoles and laptops use "procssor" item that is held inside machinery piece
@@ -9,15 +11,19 @@
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
-	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
 
-	var/enabled = 0											// Whether the computer is turned on.
-	var/screen_on = 1										// Whether the computer is active/opened/it's screen is on.
-	var/device_theme = "ntos"								// Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
-	var/datum/computer_file/program/active_program = null	// A currently active program running on the computer.
-	var/hardware_flag = 0									// A flag that describes this device type
+	var/bypass_state = FALSE // bypassing the set icon state
+
+	var/enabled = 0 // Whether the computer is turned on.
+	var/upgradable = TRUE // whether or not the computer can be upgraded
+	var/deconstructable = TRUE // whether or not the computer can be deconstructed
+	var/screen_on = 1 // Whether the computer is active/opened/it's screen is on.
+	var/device_theme = "ntos" // Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
+	var/datum/computer_file/program/active_program = null // A currently active program running on the computer.
+	var/hardware_flag = 0 // A flag that describes this device type
 	var/last_power_usage = 0
-	var/last_battery_percent = 0							// Used for deciding if battery percentage has chandged
+	var/last_battery_percent = 0 // Used for deciding if battery percentage has chandged
 	var/last_world_time = "00:00"
 	var/list/last_header_icons
 	///Looping sound for when the computer is on
@@ -25,19 +31,19 @@
 	///Whether or not this modular computer uses the looping sound
 	var/looping_sound = TRUE
 
-	var/base_active_power_usage = 50						// Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
-	var/base_idle_power_usage = 5							// Power usage when the computer is idle and screen is off (currently only applies to laptops)
+	var/base_active_power_usage = 50 // Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
+	var/base_idle_power_usage = 5 // Power usage when the computer is idle and screen is off (currently only applies to laptops)
 
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
 
-	var/icon_state_unpowered = null							// Icon state when the computer is turned off.
-	var/icon_state_powered = null							// Icon state when the computer is turned on.
-	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
-	var/display_overlays = TRUE								// If FALSE, don't draw overlays on this device at all
-	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
-	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
+	var/icon_state_unpowered = null // Icon state when the computer is turned off.
+	var/icon_state_powered = null // Icon state when the computer is turned on.
+	var/icon_state_menu = "menu" // Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
+	var/display_overlays = TRUE // If FALSE, don't draw overlays on this device at all
+	var/max_hardware_size = 0 // Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
+	var/steel_sheet_cost = 5 // Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
 	/// List of "connection ports" in this computer and the components with which they are plugged
 	var/list/all_components = list()
@@ -46,37 +52,100 @@
 	/// Number of total expansion bays this computer has available.
 	var/max_bays = 0
 
-	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.
-	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
-	var/has_light = FALSE						//If the computer has a flashlight/LED light/what-have-you installed
-	var/comp_light_luminosity = 3				//The brightness of that light
-	var/comp_light_color			//The color of that light
+	var/saved_identification = null // next two values are the currently imprinted id and job values
+	var/saved_job = null
 
+	/// Allow people with chunky fingers to use?
+	var/allow_chunky = FALSE
 
-/obj/item/modular_computer/Initialize()
+	var/honkamnt = 0 /// honk honk honk honk honk honkh onk honkhnoohnk
+
+	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
+	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
+	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
+	var/comp_light_luminosity = 3 //The brightness of that light
+	var/comp_light_color //The color of that light
+	var/invisible = FALSE // whether or not the tablet is invisible in messenger and other apps
+
+	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
+
+	var/obj/item/paicard/pai = null
+
+	var/datum/action/item_action/toggle_computer_light/light_butt
+
+/obj/item/modular_computer/Initialize(mapload)
 	. = ..()
+
+	var/obj/item/computer_hardware/identifier/id = all_components[MC_IDENTIFY]
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src
 	comp_light_color = "#FFFFFF"
 	idle_threads = list()
 	if(looping_sound)
-		soundloop = new(list(src), enabled)
-	update_icon()
+		soundloop = new(src, enabled)
+	if(id)
+		id.UpdateDisplay()
+	if(has_light)
+		light_butt = new(src)
+	update_appearance()
+	Add_Messenger()
 
 /obj/item/modular_computer/Destroy()
-	kill_program(forced = TRUE)
+	wipe_program(forced = TRUE)
+	for(var/datum/computer_file/program/idle as anything in idle_threads)
+		idle.kill_program(TRUE)
+	idle_threads?.Cut()
 	STOP_PROCESSING(SSobj, src)
+	for(var/port in all_components)
+		var/obj/item/computer_hardware/component = all_components[port]
+		qdel(component)
+	all_components?.Cut()
+	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
-	for(var/H in all_components)
-		var/obj/item/computer_hardware/CH = all_components[H]
-		if(CH.holder == src)
-			CH.on_remove(src)
-			CH.holder = null
-			all_components.Remove(CH.device_type)
-			qdel(CH)
+	Remove_Messenger()
+
+	if(istype(pai))
+		QDEL_NULL(pai)
+	if(istype(light_butt))
+		QDEL_NULL(light_butt)
+
 	physical = null
 	return ..()
+
+/obj/item/modular_computer/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, light_butt))
+		toggle_flashlight()
+	else
+		..()
+
+
+/obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
+	if(active_program?.tap(A, user, params))
+		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
+		addtimer(CALLBACK(src, .proc/play_ping), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
+
+// shameless copy of newscaster photo saving
+
+/obj/item/modular_computer/proc/save_photo(icon/photo)
+	var/photo_file = copytext_char(md5("\icon[photo]"), 1, 6)
+	if(!fexists("[GLOB.log_directory]/photos/[photo_file].png"))
+		//Clean up repeated frames
+		var/icon/clean = new /icon()
+		clean.Insert(photo, "", SOUTH, 1, 0)
+		fcopy(clean, "[GLOB.log_directory]/photos/[photo_file].png")
+	return photo_file
+
+/**
+ * Plays a ping sound.
+ *
+ * Timers runtime if you try to make them call playsound. Yep.
+ */
+/obj/item/modular_computer/proc/play_ping()
+	playsound(loc, 'sound/machines/ping.ogg', get_clamped_volume(), FALSE, -1)
 
 /obj/item/modular_computer/AltClick(mob/user)
 	..()
@@ -86,7 +155,10 @@
 	if(user.canUseTopic(src, BE_CLOSE))
 		var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-		return (card_slot2?.try_eject(user) || card_slot?.try_eject(user)) //Try the secondary one first.
+		if(card_slot2?.try_eject(user) || card_slot?.try_eject(user))
+			return TRUE
+		if(!istype(src, /obj/item/modular_computer/tablet))
+			return FALSE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/modular_computer/GetAccess()
@@ -97,27 +169,86 @@
 
 /obj/item/modular_computer/GetID()
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(card_slot)
-		return card_slot.GetID()
+	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+
+	var/obj/item/card/id/first_id = card_slot?.GetID()
+	var/obj/item/card/id/second_id = card_slot2?.GetID()
+
+	// We have two IDs, pick the one with the most command accesses, preferring the primary slot.
+	if(first_id && second_id)
+		var/first_id_tally = SSid_access.tally_access(first_id, ACCESS_FLAG_COMMAND)
+		var/second_id_tally = SSid_access.tally_access(second_id, ACCESS_FLAG_COMMAND)
+
+		return (first_id_tally >= second_id_tally) ? first_id : second_id
+
+	// If we don't have both ID slots filled, pick the one that is filled.
+	if(first_id)
+		return first_id
+	if(second_id)
+		return second_id
+
+	// Otherwise, we have no ID at all.
 	return ..()
+
+/obj/item/modular_computer/get_id_examine_strings(mob/user)
+	. = ..()
+
+	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+
+	var/obj/item/card/id/id_card1 = card_slot?.GetID()
+	var/obj/item/card/id/id_card2 = card_slot2?.GetID()
+
+	if(id_card1 || id_card2)
+		if(id_card1 && id_card2)
+			. += "\The [src] is displaying [id_card1] and [id_card2]."
+			var/list/id_icons = list()
+			id_icons += id_card1.get_id_examine_strings(user)
+			id_icons += id_card2.get_id_examine_strings(user)
+			. += id_icons.Join(" ")
+		else if(id_card1)
+			. += "\The [src] is displaying [id_card1]."
+			. += id_card1.get_id_examine_strings(user)
+		else
+			. += "\The [src] is displaying [id_card2]."
+			. += id_card2.get_id_examine_strings(user)
 
 /obj/item/modular_computer/RemoveID()
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	return (card_slot2?.try_eject() || card_slot?.try_eject()) //Try the secondary one first.
+
+	var/removed_id = (card_slot2?.try_eject() || card_slot?.try_eject())
+	if(removed_id)
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			if(human_wearer.wear_id == src)
+				human_wearer.sec_hud_set_ID()
+		update_slot_icon()
+		update_appearance()
+
+		return removed_id
+
+	return ..()
 
 /obj/item/modular_computer/InsertID(obj/item/inserting_item)
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+
 	if(!(card_slot || card_slot2))
 		return FALSE
 
-	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	var/obj/item/card/inserting_id = inserting_item.GetID()
 	if(!inserting_id)
 		return FALSE
 
 	if((card_slot?.try_insert(inserting_id)) || (card_slot2?.try_insert(inserting_id)))
-		return TRUE
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			if(human_wearer.wear_id == src)
+				human_wearer.sec_hud_set_ID()
+		update_appearance()
+		update_slot_icon()
+
 	return FALSE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
@@ -136,13 +267,13 @@
 	if(enabled)
 		ui_interact(user)
 	else if(isAdminGhostAI(user))
-		var/response = alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", "Yes", "No")
+		var/response = tgui_alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", list("Yes", "No"))
 		if(response == "Yes")
 			turn_on(user)
 
 /obj/item/modular_computer/emag_act(mob/user)
 	if(!enabled)
-		to_chat(user, "<span class='warning'>You'd need to turn the [src] on first.</span>")
+		to_chat(user, span_warning("You'd need to turn the [src] on first."))
 		return FALSE
 	obj_flags |= EMAGGED //Mostly for consistancy purposes; the programs will do their own emag handling
 	var/newemag = FALSE
@@ -153,39 +284,39 @@
 		if(app.run_emag())
 			newemag = TRUE
 	if(newemag)
-		to_chat(user, "<span class='notice'>You swipe \the [src]. A console window momentarily fills the screen, with white text rapidly scrolling past.</span>")
+		to_chat(user, span_notice("You swipe \the [src]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
 		return TRUE
-	to_chat(user, "<span class='notice'>You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it.</span>")
+	to_chat(user, span_notice("You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
 	return FALSE
 
 /obj/item/modular_computer/examine(mob/user)
 	. = ..()
-	if(obj_integrity <= integrity_failure * max_integrity)
-		. += "<span class='danger'>It is heavily damaged!</span>"
-	else if(obj_integrity < max_integrity)
-		. += "<span class='warning'>It is damaged.</span>"
+	if(atom_integrity <= integrity_failure * max_integrity)
+		. += span_danger("It is heavily damaged!")
+	else if(atom_integrity < max_integrity)
+		. += span_warning("It is damaged.")
 
 	. += get_modular_computer_parts_examine(user)
 
 /obj/item/modular_computer/update_icon_state()
-	if(!enabled)
-		icon_state = icon_state_unpowered
-	else
-		icon_state = icon_state_powered
+	if(!bypass_state)
+		icon_state = enabled ? icon_state_powered : icon_state_unpowered
+	return ..()
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
+	var/init_icon = initial(icon)
+
+	if(!init_icon)
+		return
 	if(!display_overlays)
 		return
-	if(enabled)
-		if(active_program)
-			. += active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu
-		else
-			. += icon_state_menu
 
-	if(obj_integrity <= integrity_failure * max_integrity)
-		. += "bsod"
-		. += "broken"
+	if(enabled)
+		. += active_program ? mutable_appearance(init_icon, active_program.program_icon_state) : mutable_appearance(init_icon, icon_state_menu)
+	if(atom_integrity <= integrity_failure * max_integrity)
+		. += mutable_appearance(init_icon, "bsod")
+		. += mutable_appearance(init_icon, "broken")
 
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -197,11 +328,11 @@
 
 /obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
-	if(obj_integrity <= integrity_failure * max_integrity)
+	if(atom_integrity <= integrity_failure * max_integrity)
 		if(issynth)
-			to_chat(user, "<span class='warning'>You send an activation signal to \the [src], but it responds with an error code. It must be damaged.</span>")
+			to_chat(user, span_warning("You send an activation signal to \the [src], but it responds with an error code. It must be damaged."))
 		else
-			to_chat(user, "<span class='warning'>You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again.</span>")
+			to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
 	// If we have a recharger, enable it automatically. Lets computer without a battery work.
@@ -211,20 +342,20 @@
 
 	if(all_components[MC_CPU] && use_power()) // use_power() checks if the PC is powered
 		if(issynth)
-			to_chat(user, "<span class='notice'>You send an activation signal to \the [src], turning it on.</span>")
+			to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
 		else
-			to_chat(user, "<span class='notice'>You press the power button and start up \the [src].</span>")
+			to_chat(user, span_notice("You press the power button and start up \the [src]."))
 		if(looping_sound)
 			soundloop.start()
 		enabled = 1
-		update_icon()
+		update_appearance()
 		ui_interact(user)
 		return TRUE
 	else // Unpowered
 		if(issynth)
-			to_chat(user, "<span class='warning'>You send an activation signal to \the [src] but it does not respond.</span>")
+			to_chat(user, span_warning("You send an activation signal to \the [src] but it does not respond."))
 		else
-			to_chat(user, "<span class='warning'>You press the power button but \the [src] does not respond.</span>")
+			to_chat(user, span_warning("You press the power button but \the [src] does not respond."))
 		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
@@ -233,7 +364,7 @@
 		last_power_usage = 0
 		return
 
-	if(obj_integrity <= integrity_failure * max_integrity)
+	if(atom_integrity <= integrity_failure * max_integrity)
 		shutdown_computer()
 		return
 
@@ -280,10 +411,20 @@
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return
 	playsound(src, sound, 50, TRUE)
-	visible_message("<span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
+	visible_message(span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
 	var/mob/living/holder = loc
 	if(istype(holder))
-		to_chat(holder, "[icon2html(src)] <span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
+		to_chat(holder, "[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]")
+
+/obj/item/modular_computer/proc/ring(ringtone) // bring bring
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
+		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+	else
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+	visible_message("*[ringtone]*")
+
+/obj/item/modular_computer/proc/send_sound()
+	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -328,7 +469,7 @@
 		if(3)
 			data["PC_ntneticon"] = "sig_lan.gif"
 
-	if(idle_threads.len)
+	if(length(idle_threads))
 		var/list/program_headers = list()
 		for(var/I in idle_threads)
 			var/datum/computer_file/program/P = I
@@ -345,15 +486,21 @@
 	data["PC_showexitprogram"] = active_program ? 1 : 0 // Hides "Exit Program" button on mainscreen
 	return data
 
+///Wipes the computer's current program. Doesn't handle any of the niceties around doing this
+/obj/item/modular_computer/proc/wipe_program(forced)
+	if(!active_program)
+		return
+	active_program.kill_program(forced)
+	active_program = null
+
 // Relays kill program request to currently active program. Use this to quit current program.
 /obj/item/modular_computer/proc/kill_program(forced = FALSE)
-	if(active_program)
-		active_program.kill_program(forced)
-		active_program = null
+	wipe_program(forced)
 	var/mob/user = usr
 	if(user && istype(user))
-		ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
-	update_icon()
+		//Here to prevent programs sleeping in destroy
+		INVOKE_ASYNC(src, /datum/proc/ui_interact, user) // Re-open the UI on this computer. It should show the main screen now.
+	update_appearance()
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
@@ -367,7 +514,8 @@
 	if(!get_ntnet_status())
 		return FALSE
 	var/obj/item/computer_hardware/network_card/network_card = all_components[MC_NET]
-	return SSnetworks.station_network.add_log(text, network_card)
+
+	return SSnetworks.add_log(text, network_card.network_id, network_card.hardware_id)
 
 /obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)
@@ -377,15 +525,15 @@
 	if(looping_sound)
 		soundloop.stop()
 	if(loud)
-		physical.visible_message("<span class='notice'>\The [src] shuts down.</span>")
+		physical.visible_message(span_notice("\The [src] shuts down."))
 	enabled = 0
-	update_icon()
+	update_appearance()
 
 /**
  * Toggles the computer's flashlight, if it has one.
  *
  * Called from ui_act(), does as the name implies.
- * It is seperated from ui_act() to be overwritten as needed.
+ * It is separated from ui_act() to be overwritten as needed.
 */
 /obj/item/modular_computer/proc/toggle_flashlight()
 	if(!has_light)
@@ -395,13 +543,14 @@
 		set_light(comp_light_luminosity, 1, comp_light_color)
 	else
 		set_light(0)
+	update_appearance()
 	return TRUE
 
 /**
  * Sets the computer's light color, if it has a light.
  *
  * Called from ui_act(), this proc takes a color string and applies it.
- * It is seperated from ui_act() to be overwritten as needed.
+ * It is separated from ui_act() to be overwritten as needed.
  * Arguments:
  ** color is the string that holds the color value that we should use. Proc auto-fails if this is null.
 */
@@ -414,17 +563,19 @@
 	return TRUE
 
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
-	if(!all_components.len)
-		to_chat(user, "<span class='warning'>This device doesn't have any components installed.</span>")
+	if(!deconstructable)
+		return
+	if(!length(all_components))
+		balloon_alert(user, "no components installed!")
 		return
 	var/list/component_names = list()
 	for(var/h in all_components)
 		var/obj/item/computer_hardware/H = all_components[h]
 		component_names.Add(H.name)
 
-	var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in sortList(component_names)
+	var/choice = tgui_input_list(user, "Component to uninstall", "Computer maintenance", sort_list(component_names))
 
-	if(!choice)
+	if(isnull(choice))
 		return
 
 	if(!Adjacent(user))
@@ -435,6 +586,7 @@
 	if(!H)
 		return
 
+	tool.play_tool_sound(src, user, 20, volume=20)
 	uninstall_component(H, user)
 	return
 
@@ -444,6 +596,25 @@
 	if(istype(W, /obj/item/card/id) && InsertID(W))
 		return
 
+	// Insert a PAI.
+	if(istype(W, /obj/item/paicard) && !pai)
+		if(!user.transferItemToLoc(W, src))
+			return
+		pai = W
+		pai.slotted = TRUE
+		to_chat(user, span_notice("You slot \the [W] into [src]."))
+		return
+
+	// Scan a photo.
+	if(istype(W, /obj/item/photo))
+		var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+		var/obj/item/photo/pic = W
+		if(hdd)
+			for(var/datum/computer_file/program/messenger/messenger in hdd.stored_files)
+				saved_image = pic.picture
+				messenger.ProcessPhoto()
+		return
+
 	// Insert items into the components
 	for(var/h in all_components)
 		var/obj/item/computer_hardware/H = all_components[h]
@@ -451,34 +622,42 @@
 			return
 
 	// Insert new hardware
-	if(istype(W, /obj/item/computer_hardware))
+	if(istype(W, /obj/item/computer_hardware) && upgradable)
 		if(install_component(W, user))
 			return
 
 	if(W.tool_behaviour == TOOL_WRENCH)
-		if(all_components.len)
-			to_chat(user, "<span class='warning'>Remove all components from \the [src] before disassembling it.</span>")
+		if(length(all_components))
+			balloon_alert(user, "remove the other components!")
 			return
-		new /obj/item/stack/sheet/metal( get_turf(src.loc), steel_sheet_cost )
-		physical.visible_message("<span class='notice'>\The [src] is disassembled by [user].</span>")
+		W.play_tool_sound(src, user, 20, volume=20)
+		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )
+		user.balloon_alert(user,"disassembled")
 		relay_qdel()
 		qdel(src)
 		return
 
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(obj_integrity == max_integrity)
-			to_chat(user, "<span class='warning'>\The [src] does not require repairs.</span>")
+		if(atom_integrity == max_integrity)
+			to_chat(user, span_warning("\The [src] does not require repairs."))
 			return
 
 		if(!W.tool_start_check(user, amount=1))
 			return
 
-		to_chat(user, "<span class='notice'>You begin repairing damage to \the [src]...</span>")
+		to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
 		if(W.use_tool(src, user, 20, volume=50, amount=1))
-			obj_integrity = max_integrity
-			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
+			atom_integrity = max_integrity
+			to_chat(user, span_notice("You repair \the [src]."))
+			update_appearance()
 		return
 
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	// Check to see if we have an ID inside, and a valid input for money
+	if(card_slot?.GetID() && iscash(W))
+		var/obj/item/card/id/id = card_slot.GetID()
+		id.attackby(W, user) // If we do, try and put that attacking object in
+		return
 	..()
 
 // Used by processor to relay qdel() to machinery type.
@@ -490,3 +669,9 @@
 	if(physical && physical != src)
 		return physical.Adjacent(neighbor)
 	return ..()
+
+/obj/item/modular_computer/proc/Add_Messenger()
+	GLOB.TabletMessengers += src
+
+/obj/item/modular_computer/proc/Remove_Messenger()
+	GLOB.TabletMessengers -= src

@@ -35,57 +35,50 @@
 
 /atom/movable/screen/ling
 	icon = 'icons/hud/screen_changeling.dmi'
-	invisibility = INVISIBILITY_ABSTRACT
-
-/atom/movable/screen/ling/sting
-	name = "current sting"
-	screen_loc = ui_lingstingdisplay
-
-/atom/movable/screen/ling/sting/Click()
-	if(isobserver(usr))
-		return
-	var/mob/living/carbon/U = usr
-	U.unset_sting()
 
 /atom/movable/screen/ling/chems
 	name = "chemical storage"
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
+/atom/movable/screen/ling/sting
+	name = "current sting"
+	screen_loc = ui_lingstingdisplay
+	invisibility = INVISIBILITY_ABSTRACT
+
+/atom/movable/screen/ling/sting/Click()
+	if(isobserver(usr))
+		return
+	var/mob/living/carbon/carbon_user = usr
+	carbon_user.unset_sting()
+
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
-
-	var/widescreen_layout = FALSE
-	if(owner.client?.prefs?.widescreenpref)
-		widescreen_layout = TRUE
 
 	var/atom/movable/screen/using
 	var/atom/movable/screen/inventory/inv_box
 
 	using = new/atom/movable/screen/language_menu
 	using.icon = ui_style
-	if(!widescreen_layout)
-		using.screen_loc = UI_BOXLANG
 	using.hud = src
 	static_inventory += using
 
-	using = new/atom/movable/screen/skills
+	using = new/atom/movable/screen/navigate
 	using.icon = ui_style
-	if(!widescreen_layout)
-		using.screen_loc = UI_BOXLANG
+	using.hud = src
 	static_inventory += using
 
 	using = new /atom/movable/screen/area_creator
 	using.icon = ui_style
-	if(!widescreen_layout)
-		using.screen_loc = UI_BOXAREA
 	using.hud = src
 	static_inventory += using
 
-	action_intent = new /atom/movable/screen/act_intent/segmented
-	action_intent.icon_state = mymob.a_intent
+	action_intent = new /atom/movable/screen/combattoggle/flashy()
 	action_intent.hud = src
+	action_intent.icon = ui_style
+	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
+
 
 	using = new /atom/movable/screen/mov_intent
 	using.icon = ui_style
@@ -264,7 +257,7 @@
 	inv_box.name = "belt"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "belt"
-//	inv_box.icon_full = "template_small"
+// inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_belt
 	inv_box.slot_id = ITEM_SLOT_BELT
 	inv_box.hud = src
@@ -298,32 +291,31 @@
 	healthdoll.hud = src
 	infodisplay += healthdoll
 
+	stamina = new /atom/movable/screen/stamina()
+	stamina.hud = src
+	infodisplay += stamina
+
 	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = ui_style
-	pull_icon.update_icon()
+	pull_icon.update_appearance()
 	pull_icon.screen_loc = ui_above_intent
 	pull_icon.hud = src
 	static_inventory += pull_icon
 
-	lingchemdisplay = new /atom/movable/screen/ling/chems()
-	lingchemdisplay.hud = src
-	infodisplay += lingchemdisplay
-
-	lingstingdisplay = new /atom/movable/screen/ling/sting()
-	lingstingdisplay.hud = src
-	infodisplay += lingstingdisplay
-
-	zone_select =  new /atom/movable/screen/zone_sel()
+	zone_select = new /atom/movable/screen/zone_sel()
 	zone_select.icon = ui_style
 	zone_select.hud = src
-	zone_select.update_icon()
+	zone_select.update_appearance()
 	static_inventory += zone_select
+
+	combo_display = new /atom/movable/screen/combo()
+	infodisplay += combo_display
 
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src
 			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_icon()
+			inv.update_appearance()
 
 	update_locked_slots()
 
@@ -377,15 +369,15 @@
 			H.head.screen_loc = ui_head
 			screenmob.client.screen += H.head
 	else
-		if(H.shoes)		screenmob.client.screen -= H.shoes
-		if(H.gloves)	screenmob.client.screen -= H.gloves
-		if(H.ears)		screenmob.client.screen -= H.ears
-		if(H.glasses)	screenmob.client.screen -= H.glasses
-		if(H.w_uniform)	screenmob.client.screen -= H.w_uniform
-		if(H.wear_suit)	screenmob.client.screen -= H.wear_suit
-		if(H.wear_mask)	screenmob.client.screen -= H.wear_mask
-		if(H.wear_neck)	screenmob.client.screen -= H.wear_neck
-		if(H.head)		screenmob.client.screen -= H.head
+		if(H.shoes) screenmob.client.screen -= H.shoes
+		if(H.gloves) screenmob.client.screen -= H.gloves
+		if(H.ears) screenmob.client.screen -= H.ears
+		if(H.glasses) screenmob.client.screen -= H.glasses
+		if(H.w_uniform) screenmob.client.screen -= H.w_uniform
+		if(H.wear_suit) screenmob.client.screen -= H.wear_suit
+		if(H.wear_mask) screenmob.client.screen -= H.wear_mask
+		if(H.wear_neck) screenmob.client.screen -= H.wear_neck
+		if(H.head) screenmob.client.screen -= H.head
 
 
 

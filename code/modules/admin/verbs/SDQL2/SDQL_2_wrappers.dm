@@ -85,10 +85,22 @@
 	return min(arglist(args))
 
 /proc/_new(type, arguments)
-	return new type (arglist(arguments))
+	var/datum/result
+
+	if(!length(arguments))
+		result = new type()
+	else
+		result = new type(arglist(arguments))
+
+	if(istype(result))
+		result.datum_flags |= DF_VAR_EDITED
+	return result
 
 /proc/_num2text(N, SigFig = 6)
 	return num2text(N, SigFig)
+
+/proc/_text2num(T)
+	return text2num(T)
 
 /proc/_ohearers(Dist, Center = usr)
 	return ohearers(Dist, Center)
@@ -110,6 +122,16 @@
 
 /proc/_pick(...)
 	return pick(arglist(args))
+
+/// Allow me to explain
+/// for some reason, if pick() is passed arglist(args) directly and args contains only one list
+/// it considers it to be a list of lists
+/// this means something like _pick(list) would fail
+/// need to do this instead
+///
+/// I hate this timeline
+/proc/_pick_list(list/pick_from)
+	return pick(pick_from)
 
 /proc/_prob(P)
 	return prob(P)
@@ -178,6 +200,9 @@
 /proc/_list_set(list/L, key, value)
 	L[key] = value
 
+/proc/_list_get(list/L, key)
+	return L[key]
+
 /proc/_list_numerical_add(L, key, num)
 	L[key] += num
 
@@ -214,12 +239,18 @@
 /proc/_step_away(ref, trg, max)
 	step_away(ref, trg, max)
 
-/proc/_has_trait(datum/thing,trait)
-	return HAS_TRAIT(thing,trait)
+/proc/_has_trait(datum/thing, trait)
+	return HAS_TRAIT(thing, trait)
 
-/proc/_add_trait(datum/thing,trait,source)
-	ADD_TRAIT(thing,trait,source)
+/proc/_add_trait(datum/thing, trait, source)
+	ADD_TRAIT(thing, trait, source)
 
-/proc/_remove_trait(datum/thing,trait,source)
-	REMOVE_TRAIT(thing,trait,source)
+/proc/_remove_trait(datum/thing, trait, source)
+	REMOVE_TRAIT(thing, trait, source)
+
+/proc/_winset(player, control_id, params)
+	winset(player, control_id, params)
+	
+/proc/_winget(player, control_id, params)
+	winget(player, control_id, params)
 

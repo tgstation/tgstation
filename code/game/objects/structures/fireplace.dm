@@ -16,8 +16,8 @@
 	var/fuel_added = 0
 	var/flame_expiry_timer
 
-/obj/structure/fireplace/New()
-	..()
+/obj/structure/fireplace/Initialize(mapload)
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/fireplace/Destroy()
@@ -26,10 +26,10 @@
 
 /obj/structure/fireplace/proc/try_light(obj/item/O, mob/user)
 	if(lit)
-		to_chat(user, "<span class='warning'>It's already lit!</span>")
+		to_chat(user, span_warning("It's already lit!"))
 		return FALSE
 	if(!fuel_added)
-		to_chat(user, "<span class='warning'>[src] needs some fuel to burn!</span>")
+		to_chat(user, span_warning("[src] needs some fuel to burn!"))
 		return FALSE
 	var/msg = O.ignition_effect(src, user)
 	if(msg)
@@ -43,7 +43,7 @@
 		var/space_remaining = MAXIMUM_BURN_TIMER - burn_time_remaining()
 		var/space_for_logs = round(space_remaining / LOG_BURN_TIMER)
 		if(space_for_logs < 1)
-			to_chat(user, "<span class='warning'>You can't fit any more of [T] in [src]!</span>")
+			to_chat(user, span_warning("You can't fit any more of [T] in [src]!"))
 			return
 		var/logs_used = min(space_for_logs, wood.amount)
 		wood.use(logs_used)
@@ -71,19 +71,21 @@
 
 /obj/structure/fireplace/update_overlays()
 	. = ..()
-	if(lit)
-		switch(burn_time_remaining())
-			if(0 to 500)
-				. += "fireplace_fire0"
-			if(500 to 1000)
-				. += "fireplace_fire1"
-			if(1000 to 1500)
-				. += "fireplace_fire2"
-			if(1500 to 2000)
-				. += "fireplace_fire3"
-			if(2000 to MAXIMUM_BURN_TIMER)
-				. += "fireplace_fire4"
-		. += "fireplace_glow"
+	if(!lit)
+		return
+
+	switch(burn_time_remaining())
+		if(0 to 500)
+			. += "fireplace_fire0"
+		if(500 to 1000)
+			. += "fireplace_fire1"
+		if(1000 to 1500)
+			. += "fireplace_fire2"
+		if(1500 to 2000)
+			. += "fireplace_fire3"
+		if(2000 to MAXIMUM_BURN_TIMER)
+			. += "fireplace_fire4"
+	. += "fireplace_glow"
 
 /obj/structure/fireplace/proc/adjust_light()
 	if(!lit)
@@ -112,7 +114,7 @@
 	playsound(src, 'sound/effects/comfyfire.ogg',50,FALSE, FALSE, TRUE)
 	var/turf/T = get_turf(src)
 	T.hotspot_expose(700, 2.5 * delta_time)
-	update_icon()
+	update_appearance()
 	adjust_light()
 
 /obj/structure/fireplace/extinguish()
@@ -142,11 +144,11 @@
 	desc = "A large stone brick fireplace, warm and cozy."
 	flame_expiry_timer = world.time + fuel_added
 	fuel_added = 0
-	update_icon()
+	update_appearance()
 	adjust_light()
 
 /obj/structure/fireplace/proc/put_out()
 	lit = FALSE
-	update_icon()
+	update_appearance()
 	adjust_light()
 	desc = initial(desc)

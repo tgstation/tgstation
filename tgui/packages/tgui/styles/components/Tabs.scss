@@ -4,12 +4,16 @@
  */
 
 @use 'sass:color';
+@use 'sass:math';
 @use '../base.scss';
 @use '../colors.scss';
 
 $color-default: color.scale(colors.fg(colors.$primary), $lightness: 75%) !default;
 $text-color: rgba(255, 255, 255, 0.5) !default;
 $text-color-selected: color.scale($color-default, $lightness: 25%) !default;
+$tab-color: transparent !default;
+$tab-color-hovered: rgba(255, 255, 255, 0.075) !default;
+$tab-color-selected: rgba(255, 255, 255, 0.125) !default;
 $border-radius: base.$border-radius !default;
 $fg-map: colors.$fg-map !default;
 
@@ -17,14 +21,34 @@ $fg-map: colors.$fg-map !default;
   display: flex;
   align-items: stretch;
   overflow: hidden;
+  background-color: base.$color-bg-section;
+}
+
+.Tabs--fill {
+  height: 100%;
+}
+
+// Interoperability with sections
+.Section .Tabs {
+  background-color: transparent;
+}
+
+.Section:not(.Section--fitted) .Tabs {
+  margin: 0 -0.5em 0.5em;
+
+  &:first-child {
+    margin-top: -0.5em;
+  }
 }
 
 .Tabs--vertical {
   flex-direction: column;
+  padding: 0.25em 0 0.25em 0.25em;
 }
 
 .Tabs--horizontal {
   margin-bottom: 0.5em;
+  padding: 0.25em 0.25em 0 0.25em;
 
   &:last-child {
     margin-bottom: 0;
@@ -43,12 +67,18 @@ $fg-map: colors.$fg-map !default;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: $tab-color;
   color: $text-color;
   min-height: 2.25em;
   min-width: 4em;
 }
 
+.Tab:not(.Tab--selected):hover {
+  background-color: $tab-color-hovered;
+}
+
 .Tab--selected {
+  background-color: $tab-color-selected;
   color: $text-color-selected;
 }
 
@@ -71,24 +101,28 @@ $fg-map: colors.$fg-map !default;
 
 .Tabs--horizontal {
   .Tab {
-    border-top: (1em / 6) solid transparent;
-    border-bottom: (1em / 6) solid transparent;
+    border-top: math.div(1em, 6) solid transparent;
+    border-bottom: math.div(1em, 6) solid transparent;
+    border-top-left-radius: 0.25em;
+    border-top-right-radius: 0.25em;
   }
 
   .Tab--selected {
-    border-bottom: (1em / 6) solid $color-default;
+    border-bottom: math.div(1em, 6) solid $color-default;
   }
 }
 
 .Tabs--vertical {
   .Tab {
     min-height: 2em;
-    border-left: (1em / 6) solid transparent;
-    border-right: (1em / 6) solid transparent;
+    border-left: math.div(1em, 6) solid transparent;
+    border-right: math.div(1em, 6) solid transparent;
+    border-top-left-radius: 0.25em;
+    border-bottom-left-radius: 0.25em;
   }
 
   .Tab--selected {
-    border-right: (1em / 6) solid $color-default;
+    border-right: math.div(1em, 6) solid $color-default;
   }
 }
 

@@ -2,7 +2,7 @@
 	name = "Magic Missile"
 	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
 
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 200
 	clothes_req = TRUE
 	invocation = "FORTI GY AMA"
@@ -29,19 +29,11 @@
 	trail_lifespan = 5
 	trail_icon_state = "magicmd"
 
-/obj/projectile/magic/spell/magic_missile/on_hit(target)
-	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			return BULLET_ACT_BLOCK
-
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
 	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
 
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 400
 	clothes_req = TRUE
 	invocation = "BIRUZ BENNAR"
@@ -49,7 +41,7 @@
 	range = -1
 	include_user = TRUE
 
-	mutations = list(LASEREYES, HULK)
+	mutations = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/hulk)
 	duration = 300
 	cooldown_min = 300 //25 deciseconds reduction per rank
 
@@ -61,11 +53,11 @@
 	name = "Smoke"
 	desc = "This spell spawns a cloud of choking smoke at your location."
 
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 120
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	include_user = TRUE
 	cooldown_min = 20 //25 deciseconds reduction per rank
@@ -80,13 +72,14 @@
 	name = "Smoke"
 	desc = "This spell spawns a small cloud of choking smoke at your location."
 
-	school = "conjuration"
+	school = SCHOOL_HOLY
 	charge_max = 360
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	include_user = TRUE
+	antimagic_flags = NONE // no cast restrictions
 
 	smoke_spread = 1
 	smoke_amt = 2
@@ -112,11 +105,11 @@
 	name = "Blink"
 	desc = "This spell randomly teleports you a short distance."
 
-	school = "abjuration"
+	school = SCHOOL_FORBIDDEN
 	charge_max = 20
 	clothes_req = TRUE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	include_user = TRUE
 	cooldown_min = 5 //4 deciseconds reduction per rank
@@ -132,17 +125,11 @@
 	sound1 = 'sound/magic/blink.ogg'
 	sound2 = 'sound/magic/blink.ogg'
 
-/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/cult
-	name = "quickstep"
-
-	charge_max = 100
-	clothes_req = TRUE
-
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
 	desc = "This spell teleports you to an area of your selection."
 
-	school = "abjuration"
+	school = SCHOOL_FORBIDDEN
 	charge_max = 600
 	clothes_req = TRUE
 	invocation = "SCYAR NILA"
@@ -157,13 +144,6 @@
 	sound1 = 'sound/magic/teleport_diss.ogg'
 	sound2 = 'sound/magic/teleport_app.ogg'
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/santa
-	name = "Santa Teleport"
-
-	invocation = "HO HO HO"
-	clothes_req = FALSE
-	say_destination = FALSE // Santa moves in mysterious ways
-
 /obj/effect/proc_holder/spell/aoe_turf/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
@@ -171,6 +151,7 @@
 	clothes_req = TRUE
 	invocation = "TOKI YO TOMARE"
 	invocation_type = INVOCATION_SHOUT
+	school = SCHOOL_FORBIDDEN //fucking with time is not appreciated by anyone
 	range = 0
 	cooldown_min = 100
 	action_icon_state = "time"
@@ -184,7 +165,7 @@
 	name = "Summon Carp"
 	desc = "This spell conjures a simple carp."
 
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 1200
 	clothes_req = TRUE
 	invocation = "NOUK FHUNMM SACP RISSKA"
@@ -197,11 +178,11 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
 	name = "Artificer"
 	desc = "This spell conjures a construct which may be controlled by Shades."
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = 0
 	summon_type = list(/obj/structure/constructshell)
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
@@ -212,7 +193,7 @@
 	name = "Summon Creature Swarm"
 	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth."
 
-	school = "conjuration"
+	school = SCHOOL_CONJURATION
 	charge_max = 1200
 	clothes_req = FALSE
 	invocation = "IA IA"
@@ -222,12 +203,6 @@
 
 	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
-	name = "Summon Creatures (DANGEROUS)"
-	clothes_req = TRUE
-	charge_max = 5000
-	summon_amt = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
 	name = "Lesser summon bees"
@@ -239,7 +214,7 @@
 	action_icon_state = "bee"
 	cooldown_min = 20 SECONDS
 
-	summon_type = /mob/living/simple_animal/hostile/poison/bees/toxin
+	summon_type = /mob/living/simple_animal/hostile/bee/toxin
 	cast_sound = 'sound/voice/moth/scream_moth.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse
@@ -249,13 +224,14 @@
 	clothes_req = TRUE
 	invocation = "GITTAH WEIGH"
 	invocation_type = INVOCATION_SHOUT
+	school = SCHOOL_EVOCATION
 	range = 5
 	cooldown_min = 150
 	selection_type = "view"
 	sound = 'sound/magic/repulse.ogg'
+	antimagic_flags = MAGIC_RESISTANCE
 	var/maxthrow = 5
 	var/sparkle_path = /obj/effect/temp_visual/gravpush
-	var/anti_magic_check = TRUE
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	action_icon_state = "repulse"
@@ -276,7 +252,8 @@
 
 		if(ismob(AM))
 			var/mob/M = AM
-			if(M.anti_magic_check(anti_magic_check, FALSE))
+			if(M.can_block_magic(antimagic_flags))
+				to_chat(user, span_warning("The spell can't seem to affect [M]!"))
 				continue
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
@@ -286,37 +263,14 @@
 				var/mob/living/M = AM
 				M.Paralyze(100)
 				M.adjustBruteLoss(5)
-				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
+				to_chat(M, span_userdanger("You're slammed into the floor by [user]!"))
 		else
 			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Paralyze(stun_amt)
-				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
+				to_chat(M, span_userdanger("You're thrown back by [user]!"))
 			AM.safe_throw_at(throwtarget, ((clamp((maxthrow - (clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
-
-/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
-	name = "Tail Sweep"
-	desc = "Throw back attackers with a sweep of your tail."
-	sound = 'sound/magic/tail_swing.ogg'
-	charge_max = 150
-	clothes_req = FALSE
-	antimagic_allowed = TRUE
-	range = 2
-	cooldown_min = 150
-	invocation_type = "none"
-	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep
-	action_icon = 'icons/mob/actions/actions_xeno.dmi'
-	action_icon_state = "tailsweep"
-	action_background_icon_state = "bg_alien"
-	anti_magic_check = FALSE
-
-/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, TRUE, TRUE)
-		C.spin(6,1)
-	..(targets, user, 60)
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame
 	name = "Sacred Flame"
@@ -325,6 +279,7 @@
 	clothes_req = FALSE
 	invocation = "FI'RAN DADISKO"
 	invocation_type = INVOCATION_SHOUT
+	school = SCHOOL_EVOCATION
 	max_targets = 0
 	range = 6
 	include_user = TRUE
@@ -333,14 +288,17 @@
 	sound = 'sound/magic/fireball.ogg'
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
-	for(var/mob/living/L in targets)
-		if(L.anti_magic_check(TRUE, TRUE))
-			continue
-		L.adjust_fire_stacks(20)
 	if(isliving(user))
-		var/mob/living/U = user
-		if(!U.anti_magic_check(TRUE, TRUE))
-			U.IgniteMob()
+		var/mob/living/caster = user
+		if(caster.can_cast_magic(antimagic_flags))
+			caster.IgniteMob()
+		else
+			return 
+	for(var/mob/living/target in targets)
+		if(target.can_block_magic(antimagic_flags))
+			to_chat(user, span_warning("The spell can't seem to affect [target]!"))
+			continue
+		target.adjust_fire_stacks(20)
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	name = "Thrown Lightning"
@@ -353,7 +311,7 @@
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
 	..()
 	for(var/mob/living/carbon/C in targets)
-		C.throw_mode_on()
+		C.throw_mode_on(THROW_MODE_TOGGLE)
 
 /obj/item/spellpacket/lightningbolt
 	name = "\improper Lightning bolt Spell Packet"
@@ -366,7 +324,7 @@
 	if(!..())
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
-			if(!M.anti_magic_check())
+			if(!M.can_block_magic())
 				M.electrocute_act(80, src, flags = SHOCK_ILLUSION)
 		qdel(src)
 

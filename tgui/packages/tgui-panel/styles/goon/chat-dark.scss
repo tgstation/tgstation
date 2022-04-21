@@ -255,7 +255,7 @@ a.popt {
 /* ADD HERE FOR ITALIC */
 
 
-.italic, .italics, .emote {
+.italic, .italics {
   font-style: italic;
 }
 
@@ -311,7 +311,7 @@ em {
   font-weight: bold;
 }
 
-.say {
+.say, .emote, .infoplain, .oocplain, .warningplain {
 }
 
 .deadsay {
@@ -329,6 +329,9 @@ em {
 .binarysay a:active, .binarysay a:visited {
   color: #88ff88;
 }
+
+/* RADIO COLORS */
+/* IF YOU CHANGE THIS KEEP IT IN SYNC WITH TGUI CONSTANTS */
 
 .radio {
   color: #1ecc43;
@@ -366,6 +369,10 @@ em {
   color: #8f4a4b;
 }
 
+.gangradio {
+  color: #ac2ea1;
+}
+
 .centcomradio {
   color: #2681a5;
 }
@@ -382,6 +389,14 @@ em {
   color: #3434fd;
 }
 
+.greenteamradio {
+  color: #34fd34;
+}
+
+.yellowteamradio {
+  color: #fdfd34;
+}
+
 .yell {
   font-weight: bold;
 }
@@ -390,14 +405,15 @@ em {
   color: #d82020;
 }
 
-.emote {
-  font-style: italic;
-}
-
 .userdanger {
   color: #c51e1e;
   font-weight: bold;
   font-size: 185%;
+}
+
+.bolddanger {
+  color: #c51e1e;
+  font-weight: bold;
 }
 
 .danger {
@@ -428,6 +444,11 @@ em {
 .boldannounce {
   color: #c51e1e;
   font-weight: bold;
+}
+
+.minorannounce {
+  font-weight: bold;
+  font-size: 185%;
 }
 
 .greenannounce {
@@ -502,6 +523,10 @@ em {
   color: #059223;
 }
 
+.grey {
+  color: #838383;
+}
+
 .red {
   color: #FF0000;
 }
@@ -512,6 +537,11 @@ em {
 
 .nicegreen {
   color: #059223;
+}
+
+.boldnicegreen {
+  color: #059223;
+  font-weight: bold;
 }
 
 .cult {
@@ -665,6 +695,11 @@ em {
   font-family: "Courier New", cursive, sans-serif;
 }
 
+.tape_recorder {
+  color: #FF0000;
+  font-family: "Courier New", cursive, sans-serif;
+}
+
 .command_headset {
   font-weight: bold;
   font-size: 160%;
@@ -768,6 +803,10 @@ em {
   width: auto;
 }
 
+.bigicon {
+  font-size: 2.5em;
+}
+
 .memo {
   color: #638500;
   text-align: center;
@@ -859,4 +898,9 @@ em {
 
 .ml-3 {
   margin-left: 3em;
+}
+
+.tooltip {
+  font-style: italic;
+  border-bottom: 1px dashed #fff;
 }

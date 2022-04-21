@@ -7,7 +7,7 @@
 
 ///Returns a short description of the cell line
 /datum/micro_organism/proc/get_details(show_details)
-	return "<span class='notice'>[desc]</span>"
+	return span_notice("[desc]")
 
 ///A "mob" cell. Can grow into a mob in a growing vat.
 /datum/micro_organism/cell_line
@@ -63,7 +63,7 @@
 		reagents.remove_reagent(i, REAGENTS_METABOLISM)
 
 	//Handle debuffing growth based on viruses here.
-	for(var/datum/micro_organism/cell_line/virus in biological_sample.micro_organisms)
+	for(var/datum/micro_organism/virus/active_virus in biological_sample.micro_organisms)
 		if(reagents.has_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM))
 			reagents.remove_reagent(/datum/reagent/medicine/spaceacillin, REAGENTS_METABOLISM)
 			continue //This virus is stopped, We have antiviral stuff
@@ -81,16 +81,18 @@
 	playsound(vat, 'sound/effects/splat.ogg', 50, TRUE)
 	if(rand(1, 100) < risk) //Fail roll!
 		fuck_up_growing(vat)
+
 		return FALSE
 	succeed_growing(vat)
 	return TRUE
 
 /datum/micro_organism/cell_line/proc/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
-	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have dissipated!</span>")
-	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
+	vat.visible_message(span_warning("The biological sample in [vat] seems to have dissipated!"))
 	if(prob(50))
 		new /obj/effect/gibspawner/generic(get_turf(vat)) //Spawn some gibs.
-
+	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
+		return
+	QDEL_NULL(vat.biological_sample)
 
 /datum/micro_organism/cell_line/proc/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
 	var/datum/effect_system/smoke_spread/smoke = new
@@ -99,13 +101,15 @@
 	for(var/created_thing in resulting_atoms)
 		for(var/x in 1 to resulting_atoms[created_thing])
 			var/atom/thing = new created_thing(get_turf(vat))
-			vat.visible_message("<span class='nicegreen'>[thing] pops out of [vat]!</span>")
-
-	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
+			ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")
+			vat.visible_message(span_nicegreen("[thing] pops out of [vat]!"))
+	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
+		return
+	QDEL_NULL(vat.biological_sample)
 
 ///Overriden to show more info like needs, supplementary and supressive reagents and also growth.
 /datum/micro_organism/cell_line/get_details(show_details)
-	. += "<span class='notice'>[desc] - growth progress: [growth]%</span>\n"
+	. += "[span_notice("[desc] - growth progress: [growth]%")]\n"
 	if(show_details)
 		. += return_reagent_text("It requires:", required_reagents)
 		. += return_reagent_text("It likes:", supplementary_reagents)
@@ -119,4 +123,4 @@
 	for(var/i in reagentlist)
 		var/datum/reagent/reagent = i
 		all_reagents_text += " - [initial(reagent.name)]\n"
-	return "<span class='notice'>[prefix_text]\n[all_reagents_text]</span>"
+	return span_notice("[prefix_text]\n[all_reagents_text]")

@@ -13,11 +13,20 @@
 	result = /obj/item/food/friedegg
 	subcategory = CAT_EGG
 
+/datum/crafting_recipe/food/sausageegg
+	name = "Egg with sausage"
+	reqs = list(
+		/obj/item/food/sausage = 1,
+		/obj/item/food/egg = 1,
+	)
+	result = /obj/item/food/eggsausage
+	subcategory = CAT_EGG
+
 /datum/crafting_recipe/food/omelette
 	name = "Omelette"
 	reqs = list(
 		/obj/item/food/egg = 2,
-		/obj/item/food/cheesewedge = 2
+		/obj/item/food/cheese/wedge = 2
 	)
 	result = /obj/item/food/omelette
 	subcategory = CAT_EGG
@@ -51,3 +60,24 @@
 	)
 	result = /obj/item/food/salad/eggbowl
 	subcategory = CAT_EGG
+
+/datum/crafting_recipe/food/wrap
+	name = "Egg Wrap"
+	reqs = list(/datum/reagent/consumable/soysauce = 10,
+		/obj/item/food/friedegg = 1,
+		/obj/item/food/grown/cabbage = 1,
+	)
+	result = /obj/item/food/eggwrap
+	subcategory = CAT_EGG
+
+/datum/crafting_recipe/food/chawanmushi
+	name = "Chawanmushi"
+	reqs = list(
+		/datum/reagent/water = 5,
+		/datum/reagent/consumable/soysauce = 5,
+		/obj/item/food/boiledegg = 2,
+		/obj/item/food/grown/mushroom/chanterelle = 1
+	)
+	result = /obj/item/food/chawanmushi
+	subcategory = CAT_EGG
+

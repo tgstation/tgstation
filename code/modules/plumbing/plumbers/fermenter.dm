@@ -3,37 +3,35 @@
 	desc = "Turns plants into various types of booze."
 	icon_state = "fermenter"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
-
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	///input dir
 	var/eat_dir = SOUTH
 
-/obj/machinery/plumbing/fermenter/Initialize(mapload, bolt)
+/obj/machinery/plumbing/fermenter/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt)
-
-/obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
-		return FALSE
-	return TRUE
+	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/plumbing/fermenter/setDir(newdir)
 	. = ..()
 	eat_dir = newdir
 
-/obj/machinery/plumbing/fermenter/CanAllowThrough(atom/movable/AM)
+/obj/machinery/plumbing/fermenter/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!anchored)
 		return
-	var/move_dir = get_dir(loc, AM.loc)
-	if(move_dir == eat_dir)
+	if(border_dir == eat_dir)
 		return TRUE
 
-/obj/machinery/plumbing/fermenter/Crossed(atom/movable/AM)
-	. = ..()
+/obj/machinery/plumbing/fermenter/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	ferment(AM)
 
 /// uses fermentation proc similar to fermentation barrels
@@ -49,4 +47,5 @@
 		if(G.distill_reagent)
 			var/amount = G.seed.potency * 0.25
 			reagents.add_reagent(G.distill_reagent, amount)
+			use_power(active_power_usage * amount)
 			qdel(G)

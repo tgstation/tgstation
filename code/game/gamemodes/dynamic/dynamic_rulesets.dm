@@ -1,11 +1,10 @@
-#define EXTRA_RULESET_PENALTY 20	// Changes how likely a gamemode is to scale based on how many other roundstart rulesets are waiting to be rolled.
-#define POP_SCALING_PENALTY 50		// Discourages scaling up rulesets if ratio of antags to crew is high.
-
 #define REVOLUTION_VICTORY 1
 #define STATION_VICTORY 2
 
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
+	// If you want to change this variable name, the force latejoin/midround rulesets
+	// to not use sort_names.
 	var/name = ""
 	/// For admin logging and round end screen, do not change this unless making a new rule type.
 	var/ruletype = ""
@@ -19,7 +18,7 @@
 	var/list/mob/candidates = list()
 	/// List of players that were selected for this rule
 	var/list/datum/mind/assigned = list()
-	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
+	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag.
 	var/antag_flag = null
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.
 	var/datum/antagonist/antag_datum = null
@@ -29,7 +28,7 @@
 	var/list/protected_roles = list()
 	/// If set, rule will deny candidates from those roles always.
 	var/list/restricted_roles = list()
-	/// If set, rule will only accept candidates from those roles, IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
+	/// If set, rule will only accept candidates from those roles. If on a roundstart ruleset, requires the player to have the correct antag pref enabled and any of the possible roles enabled.
 	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/list/enemy_roles = list()
@@ -47,9 +46,7 @@
 	var/scaled_times = 0
 	/// Used for the roundend report
 	var/total_cost = 0
-	/// A flag that determines how the ruleset is handled
-	/// HIGHLANDER_RULESET are rulesets can end the round.
-	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
+	/// A flag that determines how the ruleset is handled. Check __DEFINES/dynamic.dm for an explanation of the accepted values.
 	var/flags = NONE
 	/// Pop range per requirement. If zero defaults to mode's pop_per_requirement.
 	var/pop_per_requirement = 0
@@ -60,6 +57,8 @@
 	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
 	var/antag_flag_override = null
+	/// If set, will check this preference instead of antag_flag.
+	var/antag_preference = null
 	/// If a ruleset type which is in this list has been executed, then the ruleset will not be executed.
 	var/list/blocking_rules = list()
 	/// The minimum amount of players required for the rule to be considered.
@@ -69,21 +68,27 @@
 	var/maximum_players = 0
 	/// Calculated during acceptable(), used in scaling and team sizes.
 	var/indice_pop = 0
-	/// Population scaling. Used by team antags and scaling for solo antags.
-	var/list/antag_cap = list()
 	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._SendSignal(sigtype, list/arguments)
 	var/base_prob = 60
 	/// Delay for when execute will get called from the time of post_setup (roundstart) or process (midround/latejoin).
 	/// Make sure your ruleset works with execute being called during the game when using this, and that the clean_up proc reverts it properly in case of faliure.
 	var/delay = 0
 
+	/// Judges the amount of antagonists to apply, for both solo and teams.
+	/// Note that some antagonists (such as traitors, lings, heretics, etc) will add more based on how many times they've been scaled.
+	/// Written as a linear equation--ceil(x/denominator) + offset, or as a fixed constant.
+	/// If written as a linear equation, will be in the form of `list("denominator" = denominator, "offset" = offset).
+	var/antag_cap = 0
 
 /datum/dynamic_ruleset/New()
+	// Rulesets can be instantiated more than once, such as when an admin clicks
+	// "Execute Midround Ruleset". Thus, it would be wrong to perform any
+	// side effects here. Dynamic rulesets should be stateless anyway.
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	mode = SSticker.mode
+
 	..()
-	if (istype(SSticker.mode, /datum/game_mode/dynamic))
-		mode = SSticker.mode
-	else if (GLOB.master_mode != "dynamic") // This is here to make roundstart forced ruleset function.
-		qdel(src)
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
 	ruletype = "Roundstart"
@@ -96,9 +101,6 @@
 /// If your rule has extra checks, such as counting security officers, do that in ready() instead
 /datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
 	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-	if(antag_cap.len && requirements.len != antag_cap.len)
-		message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
-		log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 
 	if(minimum_players > population)
@@ -107,28 +109,32 @@
 		return FALSE
 	return (threat_level >= requirements[indice_pop])
 
-/// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the additional threat from scaling up.
-/datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
-	remaining_threat_level -= cost
-	if(scaling_cost && scaling_cost <= remaining_threat_level) // Only attempts to scale the modes with a scaling cost explicitly set.
-		var/antag_fraction = 0
-		var/new_prob = 0
-		for(var/R in (mode.executed_rules + list(src))) // we care about the antags we *will* assign, too
-			var/datum/dynamic_ruleset/ruleset = R
-			antag_fraction += ((1 + ruleset.scaled_times) * ruleset.antag_cap[indice_pop]) / mode.roundstart_pop_ready
+/// When picking rulesets, if dynamic picks the same one multiple times, it will "scale up".
+/// However, doing this blindly would result in lowpop rounds (think under 10 people) where over 80% of the crew is antags!
+/// This function is here to ensure the antag ratio is kept under control while scaling up.
+/// Returns how much threat to actually spend in the end.
+/datum/dynamic_ruleset/proc/scale_up(population, max_scale)
+	if (!scaling_cost)
+		return 0
 
-		log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
-		for(var/i in 1 to 3) //Can scale a max of 3 times
-			if(remaining_threat_level >= scaling_cost && antag_fraction < 0.25)
-				new_prob = base_prob + (remaining_threat_level) - (scaled_times * scaling_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) - (antag_fraction * POP_SCALING_PENALTY)
-				if (!prob(new_prob))
-					break
-				remaining_threat_level -= scaling_cost
-				scaled_times++
-				antag_fraction += antag_cap[indice_pop] / mode.roundstart_pop_ready // we added new antags, gotta update the %
+	var/antag_fraction = 0
+	for(var/_ruleset in (mode.executed_rules + list(src))) // we care about the antags we *will* assign, too
+		var/datum/dynamic_ruleset/ruleset = _ruleset
+		antag_fraction += ((1 + ruleset.scaled_times) * ruleset.get_antag_cap(population)) / mode.roundstart_pop_ready
 
-		log_game("DYNAMIC: [name] roundstart ruleset failed scaling up at [new_prob]% chance after [scaled_times]/3 successful scaleups. [remaining_threat_level] threat remaining, % of players that are antags: [antag_fraction*100]%.")
-		return scaled_times * scaling_cost
+	for(var/i in 1 to max_scale)
+		if(antag_fraction < 0.25)
+			scaled_times += 1
+			antag_fraction += get_antag_cap(population) / mode.roundstart_pop_ready // we added new antags, gotta update the %
+
+	return scaled_times * scaling_cost
+
+/// Returns what the antag cap with the given population is.
+/datum/dynamic_ruleset/proc/get_antag_cap(population)
+	if (isnum(antag_cap))
+		return antag_cap
+
+	return CEILING(population / antag_cap["denominator"], 1) + (antag_cap["offset"] || 0)
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
@@ -179,13 +185,8 @@
 	return
 
 /// Set mode result and news report here.
-/// Only called if ruleset is flagged as HIGHLANDER_RULESET
+/// Only called if ruleset is flagged as HIGH_IMPACT_RULESET
 /datum/dynamic_ruleset/proc/round_result()
-
-/// Checks if round is finished, return true to end the round.
-/// Only called if ruleset is flagged as HIGHLANDER_RULESET
-/datum/dynamic_ruleset/proc/check_finished()
-	return FALSE
 
 //////////////////////////////////////////////
 //                                          //
@@ -195,21 +196,45 @@
 
 /// Checks if candidates are connected and if they are banned or don't want to be the antagonist.
 /datum/dynamic_ruleset/roundstart/trim_candidates()
-	for(var/mob/dead/new_player/P in candidates)
-		if (!P.client || !P.mind) // Are they connected?
-			candidates.Remove(P)
-		else if(!mode.check_age(P.client, minimum_required_age))
-			candidates.Remove(P)
-		else if(P.mind.special_role) // We really don't want to give antag to an antag.
-			candidates.Remove(P)
-		else if(antag_flag_override)
-			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
-				candidates.Remove(P)
-		else
-			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
-				candidates.Remove(P)
+	for(var/mob/dead/new_player/candidate_player in candidates)
+		var/client/candidate_client = GET_CLIENT(candidate_player)
+		if (!candidate_client || !candidate_player.mind) // Are they connected?
+			candidates.Remove(candidate_player)
+			continue
+
+		if(candidate_client.get_remaining_days(minimum_required_age) > 0)
+			candidates.Remove(candidate_player)
+			continue
+
+		if(candidate_player.mind.special_role) // We really don't want to give antag to an antag.
+			candidates.Remove(candidate_player)
+			continue
+
+		if (!((antag_preference || antag_flag) in candidate_client.prefs.be_special))
+			candidates.Remove(candidate_player)
+			continue
+
+		if (is_banned_from(candidate_player.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+			candidates.Remove(candidate_player)
+			continue
+
+		// If this ruleset has exclusive_roles set, we want to only consider players who have those
+		// job prefs enabled and are eligible to play that job. Otherwise, continue as before.
+		if(length(exclusive_roles))
+			var/exclusive_candidate = FALSE
+			for(var/role in exclusive_roles)
+				var/datum/job/job = SSjob.GetJob(role)
+
+				if((role in candidate_client.prefs.job_preferences) && SSjob.check_job_eligibility(candidate_player, job, "Dynamic Roundstart TC", add_job_to_log = TRUE)==JOB_AVAILABLE)
+					exclusive_candidate = TRUE
+					break
+
+			// If they didn't have any of the required job prefs enabled or were banned from all enabled prefs,
+			// they're not eligible for this antag type.
+			if(!exclusive_candidate)
+				candidates.Remove(candidate_player)
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE
-/datum/dynamic_ruleset/roundstart/ready(forced = FALSE)
+/datum/dynamic_ruleset/roundstart/ready(population, forced = FALSE)
 	return ..()

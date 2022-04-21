@@ -1,4 +1,4 @@
-/proc/show_individual_logging_panel(mob/M, source = LOGSRC_CLIENT, type = INDIVIDUAL_ATTACK_LOG)
+/proc/show_individual_logging_panel(mob/M, source = LOGSRC_CKEY, type = INDIVIDUAL_ATTACK_LOG)
 	if(!M || !ismob(M))
 		return
 
@@ -6,23 +6,23 @@
 
 	//Add client links
 	var/list/dat = list()
-	if(M.client)
-		dat += "<center><p>Client</p></center>"
+	if(M.ckey)
+		dat += "<center><p>Ckey</p></center>"
 		dat += "<center>"
-		dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_CLIENT, "Attack Log", source, ntype)
+		dat += individual_logging_panel_link(M, INDIVIDUAL_ATTACK_LOG, LOGSRC_CKEY, "Attack Log", source, ntype)
 		dat += " | "
-		dat += individual_logging_panel_link(M, INDIVIDUAL_SAY_LOG, LOGSRC_CLIENT, "Say Log", source, ntype)
+		dat += individual_logging_panel_link(M, INDIVIDUAL_SAY_LOG, LOGSRC_CKEY, "Say Log", source, ntype)
 		dat += " | "
-		dat += individual_logging_panel_link(M, INDIVIDUAL_EMOTE_LOG, LOGSRC_CLIENT, "Emote Log", source, ntype)
+		dat += individual_logging_panel_link(M, INDIVIDUAL_EMOTE_LOG, LOGSRC_CKEY, "Emote Log", source, ntype)
 		dat += " | "
-		dat += individual_logging_panel_link(M, INDIVIDUAL_COMMS_LOG, LOGSRC_CLIENT, "Comms Log", source, ntype)
+		dat += individual_logging_panel_link(M, INDIVIDUAL_COMMS_LOG, LOGSRC_CKEY, "Comms Log", source, ntype)
 		dat += " | "
-		dat += individual_logging_panel_link(M, INDIVIDUAL_OOC_LOG, LOGSRC_CLIENT, "OOC Log", source, ntype)
+		dat += individual_logging_panel_link(M, INDIVIDUAL_OOC_LOG, LOGSRC_CKEY, "OOC Log", source, ntype)
 		dat += " | "
-		dat += individual_logging_panel_link(M, INDIVIDUAL_SHOW_ALL_LOG, LOGSRC_CLIENT, "Show All", source, ntype)
+		dat += individual_logging_panel_link(M, INDIVIDUAL_SHOW_ALL_LOG, LOGSRC_CKEY, "Show All", source, ntype)
 		dat += "</center>"
 	else
-		dat += "<p> No client attached to mob </p>"
+		dat += "<p> No ckey attached to mob </p>"
 
 	dat += "<hr style='background:#000000; border:0; height:1px'>"
 	dat += "<center><p>Mob</p></center>"
@@ -43,9 +43,11 @@
 
 	dat += "<hr style='background:#000000; border:0; height:1px'>"
 
-	var/log_source = M.logging;
-	if(source == LOGSRC_CLIENT && M.client) //if client doesn't exist just fall back to the mob log
-		log_source = M.client.player_details.logging //should exist, if it doesn't that's a bug, don't check for it not existing
+	var/log_source = M.logging
+	if(source == LOGSRC_CKEY && M.ckey)
+		var/datum/player_details/details = GLOB.player_details[M.ckey]
+		if(details) //we dont want to runtime if an admin aghosted
+			log_source = details.logging
 	var/list/concatenated_logs = list()
 	for(var/log_type in log_source)
 		var/nlog_type = text2num(log_type)

@@ -3,7 +3,7 @@
 	var/obj/item/melee/touch_attack/attached_hand = null
 	var/drawmessage = "You channel the power of the spell to your hand."
 	var/dropmessage = "You draw the power out of your hand."
-	invocation_type = "none" //you scream on connecting, not summoning
+	invocation_type = INVOCATION_NONE //you scream on connecting, not summoning
 	include_user = TRUE
 	range = -1
 
@@ -11,8 +11,8 @@
 	remove_hand()
 	if(action?.owner)
 		var/mob/guy_who_needs_to_know = action.owner
-		to_chat(guy_who_needs_to_know, "<span class='notice'>The power of the spell dissipates from your hand.</span>")
-	..()
+		to_chat(guy_who_needs_to_know, span_notice("The power of the spell dissipates from your hand."))
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
 	QDEL_NULL(attached_hand)
@@ -25,12 +25,12 @@
 	//Start recharging.
 	attached_hand = null
 	recharging = TRUE
-	action.UpdateButtonIcon()
+	action.UpdateButtons()
 
 /obj/effect/proc_holder/spell/targeted/touch/cast(list/targets,mob/user = usr)
 	if(!QDELETED(attached_hand))
 		remove_hand(TRUE)
-		to_chat(user, "<span class='notice'>[dropmessage]</span>")
+		to_chat(user, span_notice("[dropmessage]"))
 		return
 
 	for(var/mob/living/carbon/C in targets)
@@ -51,11 +51,11 @@
 	if(!user.put_in_hands(attached_hand))
 		remove_hand(TRUE)
 		if (user.usable_hands == 0)
-			to_chat(user, "<span class='warning'>You dont have any usable hands!</span>")
+			to_chat(user, span_warning("You dont have any usable hands!"))
 		else
-			to_chat(user, "<span class='warning'>Your hands are full!</span>")
+			to_chat(user, span_warning("Your hands are full!"))
 		return FALSE
-	to_chat(user, "<span class='notice'>[drawmessage]</span>")
+	to_chat(user, span_notice("[drawmessage]"))
 	return TRUE
 
 
@@ -64,7 +64,7 @@
 	desc = "This spell charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
 	hand_path = /obj/item/melee/touch_attack/disintegrate
 
-	school = "evocation"
+	school = SCHOOL_EVOCATION
 	charge_max = 600
 	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
@@ -76,10 +76,21 @@
 	desc = "This spell charges your hand with the power to turn victims into inert statues for a long period of time."
 	hand_path = /obj/item/melee/touch_attack/fleshtostone
 
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 600
 	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"
 	sound = 'sound/magic/fleshtostone.ogg'
+
+/obj/effect/proc_holder/spell/targeted/touch/duffelbag
+	name = "Bestow Cursed Duffel Bag"
+	desc = "A spell that summons a duffel bag demon on the target, slowing them down and slowly eating them."
+	hand_path = /obj/item/melee/touch_attack/duffelbag
+	action_icon_state = "duffelbag_curse"
+
+	school = SCHOOL_CONJURATION
+	charge_max = 60
+	clothes_req = FALSE
+	cooldown_min = 20

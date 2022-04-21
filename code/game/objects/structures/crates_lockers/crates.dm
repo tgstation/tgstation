@@ -9,24 +9,31 @@
 	allow_objects = TRUE
 	allow_dense = TRUE
 	dense_when_open = TRUE
-	climbable = TRUE
-	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
-	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
 	open_sound = 'sound/machines/crate_open.ogg'
 	close_sound = 'sound/machines/crate_close.ogg'
 	open_sound_volume = 35
 	close_sound_volume = 50
 	drag_slowdown = 0
+	door_anim_time = 0 // no animation
+	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
+	var/crate_climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
-/obj/structure/closet/crate/Initialize()
+/obj/structure/closet/crate/Initialize(mapload)
 	. = ..()
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
-	update_icon()
+		AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	else
+		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	update_appearance()
 
-/obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/closet/crate/Destroy()
+	QDEL_NULL(manifest)
+	return ..()
+
+/obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!istype(mover, /obj/structure/closet))
 		var/obj/structure/closet/crate/locatedcrate = locate(/obj/structure/closet/crate) in get_turf(mover)
@@ -38,37 +45,55 @@
 
 /obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
+	return ..()
 
 /obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
 	. = new_overlays
 	if(manifest)
 		. += "manifest"
+	if(broken)
+		. += "securecrateemag"
+	else if(locked)
+		. += "securecrater"
+	else if(secure)
+		. += "securecrateg"
 
-/obj/structure/closet/crate/attack_hand(mob/user)
+/obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(manifest)
 		tear_manifest(user)
 
+/obj/structure/closet/crate/after_open(mob/living/user, force)
+	. = ..()
+	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+
+/obj/structure/closet/crate/after_close(mob/living/user, force)
+	. = ..()
+	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+
+
 /obj/structure/closet/crate/open(mob/living/user, force = FALSE)
 	. = ..()
-	if(. && manifest)
-		to_chat(user, "<span class='notice'>The manifest is torn off [src].</span>")
+	if(. && !QDELETED(manifest))
+		to_chat(user, span_notice("The manifest is torn off [src]."))
 		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
 		manifest = null
-		update_icon()
+		update_appearance()
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
+	to_chat(user, span_notice("You tear the manifest off of [src]."))
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 
 	manifest.forceMove(loc)
 	if(ishuman(user))
 		user.put_in_hands(manifest)
 	manifest = null
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/crate/coffin
 	name = "coffin"
@@ -82,15 +107,21 @@
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/maint
 
+/obj/structure/closet/crate/maint/Initialize(mapload)
+	..()
+	return INITIALIZE_HINT_QDEL
+
 /obj/structure/closet/crate/maint/PopulateContents()
 	. = ..()
+	new /obj/effect/spawner/random/structure/crate_empty(loc)
 	for(var/i in 1 to rand(2,6))
-		new /obj/effect/spawner/lootdrop/maintenance(src)
+		new /obj/effect/spawner/random/maintenance(src)
 
-/obj/structure/closet/crate/trashcart/Initialize()
+/obj/structure/closet/crate/trashcart/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
 
@@ -99,10 +130,10 @@
 /obj/structure/closet/crate/trashcart/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(7,15))
-		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		new /obj/effect/spawner/random/trash/garbage(src)
 		if(prob(12))
-			new	/obj/item/storage/bag/trash/filled(src)
-	new /obj/effect/spawner/scatter/grime(loc)
+			new /obj/item/storage/bag/trash/filled(src)
+	new /obj/effect/spawner/random/trash/grime(loc)
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -113,6 +144,7 @@
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
 	icon_state = "trashcart"
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/trashcart/Moved()
 	. = ..()
@@ -147,9 +179,9 @@
 
 /obj/structure/closet/crate/freezer/Destroy()
 	recursive_organ_check(src)
-	..()
+	return ..()
 
-/obj/structure/closet/crate/freezer/Initialize()
+/obj/structure/closet/crate/freezer/Initialize(mapload)
 	. = ..()
 	recursive_organ_check(src)
 
@@ -256,4 +288,4 @@
 /obj/structure/closet/crate/decorations/PopulateContents()
 	. = ..()
 	for(var/i in 1 to 4)
-		new /obj/effect/spawner/lootdrop/decorations_spawner(src)
+		new /obj/effect/spawner/random/decoration/generic(src)

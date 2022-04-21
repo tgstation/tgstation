@@ -39,7 +39,7 @@
 				. += "It has a slot installed for an intelliCard which contains: [ai_slot.stored_card.name]"
 			else
 				. += "It has a slot installed for an intelliCard, which appears to be occupied."
-			. += "<span class='info'>Alt-click to eject the intelliCard.</span>"
+			. += span_info("Alt-click to eject the intelliCard.")
 		else
 			. += "It has a slot installed for an intelliCard."
 
@@ -55,7 +55,7 @@
 				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID ? first_ID : second_ID]"]."
 			else
 				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed, [multiple_cards ? "both of which appear" : "and one of them appears"] to be occupied."
-			. += "<span class='info'>Alt-click [src] to eject the identification card[multiple_cards ? "s":""].</span>"
+			. += span_info("Alt-click [src] to eject the identification card[multiple_cards ? "s":""].")
 		else
 			. += "It has [multiple_slots ? "two slots" : "a slot"] installed for identification cards."
 
@@ -63,4 +63,4 @@
 	if(printer_slot)
 		. += "It has a printer installed."
 		if(user_is_adjacent)
-			. += "The printer's paper levels are at: [printer_slot.stored_paper]/[printer_slot.max_paper].</span>]"
+			. += "The printer's paper levels are at: [printer_slot.stored_paper]/[printer_slot.max_paper].</span>"

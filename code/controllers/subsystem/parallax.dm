@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(parallax)
 //These are cached per client so needs to be done asap so people joining at roundstart do not miss these.
 /datum/controller/subsystem/parallax/PreInit()
 	. = ..()
-	if(prob(70))	//70% chance to pick a special extra layer
+	if(prob(70)) //70% chance to pick a special extra layer
 		random_layer = pick(/atom/movable/screen/parallax_layer/random/space_gas, /atom/movable/screen/parallax_layer/random/asteroids)
 		random_parallax_color = pick(COLOR_TEAL, COLOR_GREEN, COLOR_SILVER, COLOR_YELLOW, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE)//Special color for random_layer1. Has to be done here so everyone sees the same color.
 	planet_y_offset = rand(100, 160)
@@ -40,15 +40,20 @@ SUBSYSTEM_DEF(parallax)
 		if(!istype(movable_eye))
 			continue
 
-		for (movable_eye; isloc(movable_eye.loc) && !isturf(movable_eye.loc); movable_eye = movable_eye.loc);
+		while(isloc(movable_eye.loc) && !isturf(movable_eye.loc))
+			movable_eye = movable_eye.loc
+		//get the last movable holding the mobs eye
 
 		if(movable_eye == processing_client.movingmob)
 			if (MC_TICK_CHECK)
 				return
 			continue
+
+		//eye and the last recorded eye are different, and the last recorded eye isnt just the clients mob
 		if(!isnull(processing_client.movingmob))
 			LAZYREMOVE(processing_client.movingmob.client_mobs_in_contents, processing_client.mob)
 		LAZYADD(movable_eye.client_mobs_in_contents, processing_client.mob)
+
 		processing_client.movingmob = movable_eye
 		if (MC_TICK_CHECK)
 			return

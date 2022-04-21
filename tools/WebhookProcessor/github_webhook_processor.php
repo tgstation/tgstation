@@ -11,7 +11,7 @@
 
 /**CREDITS:
  * GitHub webhook handler template.
- * 
+ *
  * @see  https://developer.github.com/webhooks/
  * @author  Miloslav Hula (https://github.com/milo)
  */
@@ -33,15 +33,24 @@ $servers = array();
 $enable_live_tracking = true;
 $path_to_script = 'tools/WebhookProcessor/github_webhook_processor.php';
 $tracked_branch = "master";
-$trackPRBalance = true;
-$prBalanceJson = '';
-$startingPRBalance = 30;
 $maintainer_team_id = 133041;
 $validation = "org";
 $validation_count = 1;
 $tracked_branch = 'master';
 $require_changelogs = false;
 $discordWebHooks = array();
+
+// Only these repositories will announce in game.
+// Any repository that players actually care about.
+$game_announce_whitelist = array(
+	"tgstation",
+	"TerraGov-Marine-Corps",
+);
+
+// Any repository that matches in this blacklist will not appear on Discord.
+$discord_announce_blacklist = array(
+	"/^event-.*$/",
+);
 
 require_once 'secret.php';
 
@@ -126,24 +135,24 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 function apisend($url, $method = 'GET', $content = null, $authorization = null) {
 	if (is_array($content))
 		$content = json_encode($content);
-	
+
 	$headers = array();
 	$headers[] = 'Content-type: application/json';
 	if ($authorization)
 		$headers[] = 'Authorization: ' . $authorization;
-	
+
 	$scontext = array('http' => array(
 		'method'		=> $method,
 		'header'		=> implode("\r\n", $headers),
 		'ignore_errors' => true,
 		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
 	));
-	
+
 	if ($content)
 		$scontext['http']['content'] = $content;
-	
+
 	return file_get_contents($url, false, stream_context_create($scontext));
-	
+
 }
 
 function github_apisend($url, $method = 'GET', $content = NULL) {
@@ -178,7 +187,7 @@ function validate_user($payload) {
 	$res = github_apisend('https://api.github.com/search/issues?q='.$querystring);
 	$res = json_decode($res, TRUE);
 	return $res['total_count'] >= (int)$validation_count;
-	
+
 }
 
 function get_labels($payload){
@@ -227,7 +236,7 @@ function tag_pr($payload, $opened) {
 		sleep(10);
 		$payload['pull_request'] = json_decode(github_apisend($url), TRUE);
 	}
-	
+
 	$tags = array();
 	$title = $payload['pull_request']['title'];
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
@@ -235,7 +244,6 @@ function tag_pr($payload, $opened) {
 
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
-		
 		if(strpos(strtolower($title), 'revert') !== FALSE)
 			$tags[] = 'Revert';
 		if(strpos(strtolower($title), 'removes') !== FALSE)
@@ -262,8 +270,7 @@ function tag_pr($payload, $opened) {
 			$tags[] = $tag;
 
 	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
-	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags) && check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove))
-		$tags[] = 'Needs Review';
+	check_tag_and_replace($payload, '[no gbp]', 'GBP: No Update', $tags);
 
 	return array($tags, $remove);
 }
@@ -287,86 +294,16 @@ function get_reviews($payload){
 	return json_decode(github_apisend($payload['pull_request']['url'] . '/reviews'), true);
 }
 
-function check_ready_for_review($payload, $labels = null, $remove = array()){
-	$r4rlabel = 'Needs Review';
-	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
-	$has_label_already = false;
-	$should_not_have_label = false;
-	if($labels == null)
-		$labels = get_labels($payload);
-	$returned = array($labels, $remove);
-	//if the label is already there we may need to remove it
-	foreach($labels as $L){
-		if(in_array($L, $labels_which_should_not_be_ready))
-			$should_not_have_label = true;
-		if($L == $r4rlabel)
-			$has_label_already = true;
-	}
-	
-	if($has_label_already && $should_not_have_label){
-		$remove[] = $r4rlabel;
-		return $returned;
-	}
-
-	//find all reviews to see if changes were requested at some point
-	$reviews = get_reviews($payload);
-
-	$reviews_ids_with_changes_requested = array();
-	$dismissed_an_approved_review = false;
-
-	foreach($reviews as $R)
-		if(is_maintainer($payload, $R['user']['login'])){
-			$lower_state = strtolower($R['state']);
-			if($lower_state == 'changes_requested')
-				$reviews_ids_with_changes_requested[] = $R['id'];
-			else if ($lower_state == 'approved'){
-				dismiss_review($payload, $R['id'], 'Out of date review');
-				$dismissed_an_approved_review = true;
-			}
-		}
-
-	if(!$dismissed_an_approved_review && count($reviews_ids_with_changes_requested) == 0){
-		if($has_label_already)
-			$remove[] = $r4rlabel;
-		return $returned;	//no need to be here
-	}
-
-	if(count($reviews_ids_with_changes_requested) > 0){
-		//now get the review comments for the offending reviews
-
-		$review_comments = json_decode(github_apisend($payload['pull_request']['review_comments_url']), true);
-
-		foreach($review_comments as $C){
-			//make sure they are part of an offending review
-			if(!in_array($C['pull_request_review_id'], $reviews_ids_with_changes_requested))
-				continue;
-			
-			//review comments which are outdated have a null position
-			if($C['position'] !== null){
-				if($has_label_already)
-					$remove[] = $r4rlabel;
-				return $returned;	//no need to tag
-			}
-		}
-	}
-
-	//finally, add it if necessary
-	if(!$has_label_already){
-		$labels[] = $r4rlabel;
-	}
-	return $returned;
-}
-
 function check_dismiss_changelog_review($payload){
-	global $require_changelog;
+	global $require_changelogs;
 	global $no_changelog;
 
-	if(!$require_changelog)
+	if(!$require_changelogs)
 		return;
-	
+
 	if(!$no_changelog)
 		checkchangelog($payload, false);
-	
+
 	$review_message = 'Your changelog for this PR is either malformed or non-existent. Please create one to document your changes.';
 
 	$reviews = get_reviews($payload);
@@ -385,8 +322,21 @@ function check_dismiss_changelog_review($payload){
 				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
 
+function is_blacklisted($blacklist, $name) {
+	foreach ($blacklist as $pattern) {
+		if (preg_match($pattern, $name)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 function handle_pr($payload) {
+	global $discord_announce_blacklist;
 	global $no_changelog;
+	global $game_announce_whitelist;
+
 	$action = 'opened';
 	$validated = validate_user($payload);
 	switch ($payload["action"]) {
@@ -395,19 +345,11 @@ function handle_pr($payload) {
 			set_labels($payload, $labels, $remove);
 			if($no_changelog)
 				check_dismiss_changelog_review($payload);
-			if(get_pr_code_friendliness($payload) <= 0){
-				$balances = pr_balances();
-				$author = $payload['pull_request']['user']['login'];
-				if(isset($balances[$author]) && $balances[$author] < 0 && !is_maintainer($payload, $author))
-					create_comment($payload, 'You currently have a negative Fix/Feature pull request delta of ' . $balances[$author] . '. Maintainers may close this PR at will. Fixing issues or improving the codebase will improve this score.');
-			}
 			break;
 		case 'edited':
 			check_dismiss_changelog_review($payload);
 		case 'synchronize':
 			list($labels, $remove) = tag_pr($payload, false);
-			if($payload['action'] == 'synchronize')
-				list($labels, $remove) = check_ready_for_review($payload, $labels, $remove);
 			set_labels($payload, $labels, $remove);
 			return;
 		case 'reopened':
@@ -421,14 +363,13 @@ function handle_pr($payload) {
 				$action = 'merged';
 				auto_update($payload);
 				checkchangelog($payload, true);
-				update_pr_balance($payload);
 				$validated = TRUE; //pr merged events always get announced.
 			}
 			break;
 		default:
 			return;
-	} 
-	
+	}
+
 	$pr_flags = 0;
 	if (strpos(strtolower($payload['pull_request']['title']), '[s]') !== false) {
 		$pr_flags |= F_SECRET_PR;
@@ -436,9 +377,16 @@ function handle_pr($payload) {
 	if (!$validated) {
 		$pr_flags |= F_UNVALIDATED_USER;
 	}
-	discord_announce($action, $payload, $pr_flags);
-	game_announce($action, $payload, $pr_flags);
-	
+
+	$repo_name = $payload['repository']['name'];
+
+	if (in_array($repo_name, $game_announce_whitelist)) {
+		game_announce($action, $payload, $pr_flags);
+	}
+
+	if (!is_blacklisted($discord_announce_blacklist, $repo_name)) {
+		discord_announce($action, $payload, $pr_flags);
+	}
 }
 
 function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
@@ -447,7 +395,7 @@ function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
 			unset($targets[$i]);
 			continue;
 		}
-		
+
 		if (isset($target['announce_secret']) && $target['announce_secret']) {
 			if (!($pr_flags & F_SECRET_PR) && $target['announce_secret'] === 'only') {
 				unset($targets[$i]);
@@ -457,7 +405,7 @@ function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
 			unset($targets[$i]);
 			continue;
 		}
-		
+
 		if (isset($target['announce_unvalidated']) && $target['announce_unvalidated']) {
 			if (!($pr_flags & F_UNVALIDATED_USER) && $target['announce_unvalidated'] === 'only') {
 				unset($targets[$i]);
@@ -467,7 +415,7 @@ function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
 			unset($targets[$i]);
 			continue;
 		}
-		
+
 		$wildcard = false;
 		if (isset($target['include_repos'])) {
 			foreach ($target['include_repos'] as $match_string) {
@@ -490,7 +438,7 @@ function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
 				continue;
 			}
 		}
-		
+
 		if (isset($target['exclude_repos']))
 			foreach ($target['exclude_repos'] as $match_string) {
 				$owner_repo_pair = explode('/', strtolower($match_string));
@@ -517,13 +465,13 @@ function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
 
 function game_announce($action, $payload, $pr_flags) {
 	global $servers;
-	
+
 	$msg = '['.$payload['pull_request']['base']['repo']['full_name'].'] Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
 
 	$game_servers = filter_announce_targets($servers, $payload['pull_request']['base']['repo']['owner']['login'], $payload['pull_request']['base']['repo']['name'], $action, $pr_flags);
-	
+
 	$msg = '?announce='.urlencode($msg).'&payload='.urlencode(json_encode($payload));
-	
+
 	foreach ($game_servers as $serverid => $server) {
 		$server_message = $msg;
 		if (isset($server['comskey']))
@@ -554,9 +502,9 @@ function discord_announce($action, $payload, $pr_flags) {
 		'username' => 'GitHub',
 		'avatar_url' => $payload['pull_request']['base']['user']['avatar_url'],
 	);
-	
+
 	$content = 'Pull Request #'.$payload['pull_request']['number'].' *'.$action.'* by '.discord_sanitize($payload['sender']['login'])."\n".discord_sanitize($payload['pull_request']['user']['login']).' - __**'.discord_sanitize($payload['pull_request']['title']).'**__'."\n".'<'.$payload['pull_request']['html_url'].'>';
-	
+
 	$embeds = array(
 			array(
 				'title' => '__**'.discord_sanitize($payload['pull_request']['title'], S_MARKDOWN).'**__',
@@ -586,22 +534,22 @@ function discord_announce($action, $payload, $pr_flags) {
 		}
 		discord_webhook_send($discordWebHook['url'], $sending_data);
 	}
-	
+
 }
 
-function discord_sanitize($text, $flags = S_MENTIONS|S_LINK_EMBED|S_MARKDOWN) { 
+function discord_sanitize($text, $flags = S_MENTIONS|S_LINK_EMBED|S_MARKDOWN) {
 	if ($flags & S_MARKDOWN)
 		$text = str_ireplace(array('\\', '*', '_', '~', '`', '|'), (array('\\\\', '\\*', '\\_', '\\~', '\\`', '\\|')), $text);
-	
+
 	if ($flags & S_HTML_COMMENTS)
 		$text = preg_replace('/<!--(.*)-->/Uis', '', $text);
-	
+
 	if ($flags & S_MENTIONS)
 		$text = str_ireplace(array('@everyone', '@here', '<@'), array('`@everyone`', '`@here`', '@<'), $text);
 
 	if ($flags & S_LINK_EMBED)
 		$text = preg_replace("/((https?|ftp|byond)\:\/\/)([a-z0-9-.]*)\.([a-z]{2,3})(\:[0-9]{2,5})?(\/(?:[a-z0-9+\$_-]\.?)+)*\/?(\?[a-z+&\$_.-][a-z0-9;:@&%=+\/\$_.-]*)?(#[a-z_.-][a-z0-9+\$_.-]*)?/mi", '<$0>', $text);
-	
+
 	return $text;
 }
 
@@ -620,64 +568,6 @@ function get_pr_labels_array($payload){
 	return $result;
 }
 
-//helper for getting the path the the balance json file
-function pr_balance_json_path(){
-	global $prBalanceJson;
-	return $prBalanceJson != '' ? $prBalanceJson : 'pr_balances.json';
-}
-
-//return the assoc array of login -> balance for prs
-function pr_balances(){
-	$path = pr_balance_json_path();
-	if(file_exists($path))
-		return json_decode(file_get_contents($path), true);
-	else
-		return array();
-}
-
-//returns the difference in PR balance a pull request would cause
-function get_pr_code_friendliness($payload, $oldbalance = null){
-	global $startingPRBalance;
-	if($oldbalance == null)
-		$oldbalance = $startingPRBalance;
-	$labels = get_pr_labels_array($payload);
-	//anything not in this list defaults to 0
-	$label_values = array(
-		'Fix' => 3,
-		'Refactor' => 10,
-		'Code Improvement' => 2,
-		'Grammar and Formatting' => 1,
-		'Priority: High' => 15,
-		'Priority: CRITICAL' => 20,
-		'Unit Tests' => 6,
-		'Logging' => 1,
-		'Feedback' => 2,
-		'Performance' => 12,
-		'Feature' => -10,
-		'Balance/Rebalance' => -8,
-		'Tweak' => -2,
-		'GBP: Reset' => $startingPRBalance - $oldbalance,
-	);
-
-	$maxNegative = 0;
-	$maxPositive = 0;
-	foreach($labels as $l){
-		if($l == 'GBP: No Update') {	//no effect on balance
-			return 0;
-		}
-		else if(isset($label_values[$l])) {
-			$friendliness = $label_values[$l];
-			if($friendliness > 0)
-				$maxPositive = max($friendliness, $maxPositive);
-			else
-				$maxNegative = min($friendliness, $maxNegative);
-		}
-	}
-	
-	$affecting = abs($maxNegative) >= $maxPositive ? $maxNegative : $maxPositive;
-	return $affecting;
-}
-
 function is_maintainer($payload, $author){
 	global $maintainer_team_id;
 	$repo_is_org = $payload['pull_request']['base']['repo']['owner']['type'] == 'Organization';
@@ -692,29 +582,6 @@ function is_maintainer($payload, $author){
 		$result = json_decode(github_apisend($check_url), true);
 		return isset($result['state']) && $result['state'] == 'active';
 	}
-}
-
-//payload is a merged pull request, updates the pr balances file with the correct positive or negative balance based on comments
-function update_pr_balance($payload) {
-	global $startingPRBalance;
-	global $trackPRBalance;
-	if(!$trackPRBalance)
-		return;
-	$author = $payload['pull_request']['user']['login'];
-	$balances = pr_balances();
-	if(!isset($balances[$author]))
-		$balances[$author] = $startingPRBalance;
-	$friendliness = get_pr_code_friendliness($payload, $balances[$author]);
-	$balances[$author] += $friendliness;
-	if(!is_maintainer($payload, $author)){	//immune
-		if($balances[$author] < 0 && $friendliness < 0)
-			create_comment($payload, 'Your Fix/Feature pull request delta is currently below zero (' . $balances[$author] . '). Maintainers may close future Feature/Tweak/Balance PRs. Fixing issues or helping to improve the codebase will raise this score.');
-		else if($balances[$author] >= 0 && ($balances[$author] - $friendliness) < 0)
-			create_comment($payload, 'Your Fix/Feature pull request delta is now above zero (' . $balances[$author] . '). Feel free to make Feature/Tweak/Balance PRs.');
-	}
-	$balances_file = fopen(pr_balance_json_path(), 'w');
-	fwrite($balances_file, json_encode($balances));
-	fclose($balances_file);
 }
 
 $github_diff = null;
@@ -805,7 +672,7 @@ function checkchangelog($payload, $compile = true) {
 		}
 		if (!$incltag)
 			continue;
-		
+
 		$firstword = explode(' ', $line)[0];
 		$pos = strpos($line, " ");
 		$item = '';
@@ -815,8 +682,10 @@ function checkchangelog($payload, $compile = true) {
 		} else {
 			$firstword = $line;
 		}
-		
+
 		if (!strlen($firstword)) {
+			if (count($currentchangelogblock) <= 0)
+				continue;
 			$currentchangelogblock[count($currentchangelogblock)-1]['body'] .= "\n";
 			continue;
 		}
@@ -838,12 +707,10 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
 				}
 				break;
-			case 'rsctweak':
-			case 'tweaks':
-			case 'tweak':
-				if($item != 'tweaked a few things') {
-					$tags[] = 'Tweak';
-					$currentchangelogblock[] = array('type' => 'tweak', 'body' => $item);
+			case 'qol':
+				if($item != 'made something easier to use') {
+					$tags[] = 'Quality of Life';
+					$currentchangelogblock[] = array('type' => 'qol', 'body' => $item);
 				}
 				break;
 			case 'soundadd':
@@ -862,8 +729,8 @@ function checkchangelog($payload, $compile = true) {
 			case 'add':
 			case 'adds':
 			case 'rscadd':
-				if($item != 'Added new things' && $item != 'Added more things') {
-					$tags[] = 'Feature';
+				if($item != 'Added new mechanics or gameplay changes' && $item != 'Added more things') {
+					$tags[] = 'Mechanic';
 					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
 				}
 				break;
@@ -902,14 +769,17 @@ function checkchangelog($payload, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'balance', 'body' => $item);
 				}
 				break;
-			case 'tgs':
-				$currentchangelogblock[] = array('type' => 'tgs', 'body' => $item);
-				break;
 			case 'code_imp':
 			case 'code':
 				if($item != 'changed some code'){
 					$tags[] = 'Code Improvement';
 					$currentchangelogblock[] = array('type' => 'code_imp', 'body' => $item);
+				}
+				break;
+			case 'expansion':
+				if($item != 'Expands content of an existing feature'){
+					$tags[] = 'Content Expansion';
+					$currentchangelogblock[] = array('type' => 'expansion', 'body' => $item);
 				}
 				break;
 			case 'refactor':
@@ -933,7 +803,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'server':
 				if($item != 'something server ops should know')
 					$currentchangelogblock[] = array('type' => 'server', 'body' => $item);
-				break;			
+				break;
 			default:
 				//we add it to the last changelog entry as a separate line
 				if (count($currentchangelogblock) > 0)
@@ -970,10 +840,10 @@ function checkchangelog($payload, $compile = true) {
 function game_server_send($addr, $port, $str) {
 	// All queries must begin with a question mark (ie "?players")
 	if($str[0] != '?') $str = ('?' . $str);
-	
+
 	/* --- Prepare a packet to send to the server (based on a reverse-engineered packet structure) --- */
 	$query = "\x00\x83" . pack('n', strlen($str) + 6) . "\x00\x00\x00\x00\x00" . $str . "\x00";
-	
+
 	/* --- Create a socket and connect it to the server --- */
 	$server = socket_create(AF_INET,SOCK_STREAM,SOL_TCP) or exit("ERROR");
 	socket_set_option($server, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 2, 'usec' => 0)); //sets connect and send timeout to 2 seconds
@@ -981,7 +851,7 @@ function game_server_send($addr, $port, $str) {
 		return "ERROR: Connection failed";
 	}
 
-	
+
 	/* --- Send bytes to the server. Loop until all bytes have been sent --- */
 	$bytestosend = strlen($query);
 	$bytessent = 0;
@@ -989,22 +859,22 @@ function game_server_send($addr, $port, $str) {
 		//echo $bytessent.'<br>';
 		$result = socket_write($server,substr($query,$bytessent),$bytestosend-$bytessent);
 		//echo 'Sent '.$result.' bytes<br>';
-		if ($result===FALSE) 
+		if ($result===FALSE)
 			return "ERROR: " . socket_strerror(socket_last_error());
 		$bytessent += $result;
 	}
-	
+
 	/* --- Idle for a while until recieved bytes from game server --- */
 	$result = socket_read($server, 10000, PHP_BINARY_READ);
 	socket_close($server); // we don't need this anymore
-	
+
 	if($result != "") {
 		if($result[0] == "\x00" || $result[1] == "\x83") { // make sure it's the right packet format
-			
+
 			// Actually begin reading the output:
 			$sizebytes = unpack('n', $result[2] . $result[3]); // array size of the type identifier and content
 			$size = $sizebytes[1] - 1; // size of the string/floating-point (minus the size of the identifier byte)
-			
+
 			if($result[4] == "\x2a") { // 4-byte big-endian floating-point
 				$unpackint = unpack('f', $result[5] . $result[6] . $result[7] . $result[8]); // 4 possible bytes: add them up together, unpack them as a floating-point
 				return $unpackint[1];
@@ -1012,7 +882,7 @@ function game_server_send($addr, $port, $str) {
 			else if($result[4] == "\x06") { // ASCII string
 				$unpackstr = ""; // result string
 				$index = 5; // string index
-				
+
 				while($size > 0) { // loop through the entire ASCII string
 					$size--;
 					$unpackstr .= $result[$index]; // add the string position to return string

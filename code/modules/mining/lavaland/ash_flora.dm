@@ -8,6 +8,7 @@
 	icon_state = "l_mushroom"
 	name = "large mushrooms"
 	desc = "A number of large mushrooms, covered in a faint layer of ash and what can only be spores."
+	herbage = TRUE //not really accurate but what sound do hit mushrooms make anyway
 	var/harvested_name = "shortened mushrooms"
 	var/harvested_desc = "Some quickly regrowing mushrooms, formerly known to be quite large."
 	var/needs_sharp_harvest = TRUE
@@ -24,7 +25,7 @@
 	var/regrowth_time_high = 16 MINUTES
 	var/number_of_variants = 4
 
-/obj/structure/flora/ash/Initialize()
+/obj/structure/flora/ash/Initialize(mapload)
 	. = ..()
 	base_icon = "[icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon
@@ -41,7 +42,7 @@
 				msg = harvest_message_low
 			else if(rand_harvested == harvest_amount_high)
 				msg = harvest_message_high
-			to_chat(user, "<span class='notice'>[msg]</span>")
+			to_chat(user, span_notice("[msg]"))
 		for(var/i in 1 to rand_harvested)
 			new harvest(get_turf(src))
 
@@ -60,18 +61,18 @@
 
 /obj/structure/flora/ash/attackby(obj/item/W, mob/user, params)
 	if(!harvested && needs_sharp_harvest && W.get_sharpness())
-		user.visible_message("<span class='notice'>[user] starts to harvest from [src] with [W].</span>","<span class='notice'>You begin to harvest from [src] with [W].</span>")
+		user.visible_message(span_notice("[user] starts to harvest from [src] with [W]."),span_notice("You begin to harvest from [src] with [W]."))
 		if(do_after(user, harvest_time, target = src))
 			harvest(user)
 	else
 		return ..()
 
-/obj/structure/flora/ash/attack_hand(mob/user)
+/obj/structure/flora/ash/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(!harvested && !needs_sharp_harvest)
-		user.visible_message("<span class='notice'>[user] starts to harvest from [src].</span>","<span class='notice'>You begin to harvest from [src].</span>")
+		user.visible_message(span_notice("[user] starts to harvest from [src]."),span_notice("You begin to harvest from [src]."))
 		if(do_after(user, harvest_time, target = src))
 			harvest(user)
 
@@ -144,8 +145,24 @@
 
 /obj/structure/flora/ash/cacti/Initialize(mapload)
 	. = ..()
-	// min dmg 3, max dmg 6, prob(70)
-	AddComponent(/datum/component/caltrop, 3, 6, 70)
+	AddComponent(/datum/component/caltrop, min_damage = 3, max_damage = 6, probability = 70)
+
+/obj/structure/flora/ash/seraka
+	icon_state = "seraka_mushroom"
+	name = "seraka mushrooms"
+	desc = "A small cluster of seraka mushrooms. These must have come with the ashlizards."
+	needs_sharp_harvest = FALSE
+	harvested_name = "harvested seraka mushrooms"
+	harvested_desc = "A couple of small seraka mushrooms, with the larger ones clearly having been recently removed. They'll grow back... eventually."
+	harvest = /obj/item/food/grown/ash_flora/seraka
+	harvest_amount_high = 6
+	harvest_time = 25
+	harvest_message_low = "You pluck a few choice tasty mushrooms."
+	harvest_message_med = "You grab a good haul of mushrooms."
+	harvest_message_high = "You hit the mushroom motherlode and make off with a bunch of tasty mushrooms."
+	regrowth_time_low = 3000
+	regrowth_time_high = 5400
+	number_of_variants = 2
 
 ///Snow flora to exist on icebox.
 /obj/structure/flora/ash/chilly
@@ -178,12 +195,13 @@
 	seed = /obj/item/seeds/lavaland/polypore
 	wine_power = 20
 
-/obj/item/food/grown/ash_flora/Initialize()
+/obj/item/food/grown/ash_flora/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-4, 4)
 	pixel_y = base_pixel_y + rand(-4, 4)
 
 /obj/item/food/grown/ash_flora/shavings //So we can't craft bowls from everything.
+	grind_results = list(/datum/reagent/toxin/mushroom_powder = 5)
 
 /obj/item/food/grown/ash_flora/mushroom_leaf
 	name = "mushroom leaf"
@@ -213,6 +231,13 @@
 	seed = /obj/item/seeds/lavaland/cactus
 	wine_power = 50
 
+/obj/item/food/grown/ash_flora/seraka
+	name = "seraka cap"
+	desc = "Small, deeply flavourful mushrooms originally native to Tizira."
+	icon_state = "seraka_cap"
+	seed = /obj/item/seeds/lavaland/seraka
+	wine_power = 40
+
 //SEEDS
 
 /obj/item/seeds/lavaland
@@ -227,7 +252,6 @@
 	growthstages = 3
 	rarity = 20
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
-	resistance_flags = FIRE_PROOF
 	species = "polypore" // silence unit test
 	genes = list(/datum/plant_gene/trait/fire_resistance)
 	graft_gene = /datum/plant_gene/trait/fire_resistance
@@ -271,7 +295,6 @@
 	desc = "A spikey, round cluster of prickly star cacti. And no, it's not called a star cactus because it's in space."
 	icon_state = "starcactus"
 	filling_color = "#1c801c"
-	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 
@@ -320,6 +343,17 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/tinlux = 0.04, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/drug/space_drugs = 0.02)
 
+/obj/item/seeds/lavaland/seraka
+	name = "pack of seraka mycelium"
+	desc = "This mycelium grows into seraka mushrooms, a species of savoury mushrooms originally native to Tizira used in food and traditional medicine."
+	icon_state = "mycelium-seraka"
+	species = "seraka"
+	plantname = "Seraka Mushrooms"
+	product = /obj/item/food/grown/ash_flora/seraka
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list(/datum/reagent/toxin/mushroom_powder = 0.1, /datum/reagent/medicine/coagulant/seraka_extract = 0.02)
+
 //CRAFTING
 
 /datum/crafting_recipe/mushroom_bowl
@@ -336,11 +370,13 @@
 
 /obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_overlays()
 	. = ..()
-	if(reagents?.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/lavaland/ash_flora.dmi', "fullbowl")
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		. += filling
+	if(!reagents?.total_volume)
+		return
+	var/mutable_appearance/filling = mutable_appearance('icons/obj/lavaland/ash_flora.dmi', "fullbowl")
+	filling.color = mix_color_from_reagents(reagents.reagent_list)
+	. += filling
 
 /obj/item/reagent_containers/glass/bowl/mushroom_bowl/update_icon_state()
 	if(!reagents || !reagents.total_volume)
 		icon_state = "mushroom_bowl"
+	return ..()

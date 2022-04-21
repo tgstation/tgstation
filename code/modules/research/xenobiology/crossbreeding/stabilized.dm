@@ -14,7 +14,7 @@ Stabilized extracts:
 	var/datum/status_effect/linked_effect
 	var/mob/living/owner
 
-/obj/item/slimecross/stabilized/Initialize()
+/obj/item/slimecross/stabilized/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 
@@ -121,7 +121,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/gold/proc/generate_mobtype()
 	var/static/list/mob_spawn_pets = list()
-	if(mob_spawn_pets.len <= 0)
+	if(!length(mob_spawn_pets))
 		for(var/T in typesof(/mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = T
 			switch(initial(SA.gold_core_spawnable))
@@ -129,12 +129,14 @@ Stabilized extracts:
 					mob_spawn_pets += T
 	mob_type = pick(mob_spawn_pets)
 
-/obj/item/slimecross/stabilized/gold/Initialize()
+/obj/item/slimecross/stabilized/gold/Initialize(mapload)
 	. = ..()
 	generate_mobtype()
 
 /obj/item/slimecross/stabilized/gold/attack_self(mob/user)
-	var/choice = input(user, "Which do you want to reset?", "Familiar Adjustment") as null|anything in sortList(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name"))
+	var/choice = tgui_input_list(user, "Which do you want to reset?", "Familiar Adjustment", sort_list(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name")))
+	if(isnull(choice))
+		return
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if(isliving(user))
@@ -142,21 +144,21 @@ Stabilized extracts:
 		if(L.has_status_effect(/datum/status_effect/stabilized/gold))
 			L.remove_status_effect(/datum/status_effect/stabilized/gold)
 	if(choice == "Familiar Location")
-		to_chat(user, "<span class='notice'>You prod [src], and it shudders slightly.</span>")
+		to_chat(user, span_notice("You prod [src], and it shudders slightly."))
 		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Species")
-		to_chat(user, "<span class='notice'>You squeeze [src], and a shape seems to shift around inside.</span>")
+		to_chat(user, span_notice("You squeeze [src], and a shape seems to shift around inside."))
 		generate_mobtype()
 		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Sentience")
-		to_chat(user, "<span class='notice'>You poke [src], and it lets out a glowing pulse.</span>")
+		to_chat(user, span_notice("You poke [src], and it lets out a glowing pulse."))
 		saved_mind = null
 		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Name")
-		var/newname = sanitize_name(stripped_input(user, "Would you like to change the name of [mob_name]", "Name change", mob_name, MAX_NAME_LEN))
+		var/newname = sanitize_name(tgui_input_text(user, "Would you like to change the name of [mob_name]", "Name change", mob_name, MAX_NAME_LEN))
 		if(newname)
 			mob_name = newname
-		to_chat(user, "<span class='notice'>You speak softly into [src], and it shakes slightly in response.</span>")
+		to_chat(user, span_notice("You speak softly into [src], and it shakes slightly in response."))
 		START_PROCESSING(SSobj, src)
 
 /obj/item/slimecross/stabilized/oil
@@ -183,7 +185,7 @@ Stabilized extracts:
 /obj/item/slimecross/stabilized/rainbow/attackby(obj/item/O, mob/user)
 	var/obj/item/slimecross/regenerative/regen = O
 	if(istype(regen) && !regencore)
-		to_chat(user, "<span class='notice'>You place [O] in [src], prepping the extract for automatic application!</span>")
+		to_chat(user, span_notice("You place [O] in [src], prepping the extract for automatic application!"))
 		regencore = regen
 		regen.forceMove(src)
 		return

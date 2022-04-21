@@ -2,7 +2,7 @@
 	name = "2 SPOOKY! (Halloween)"
 	holidayID = HALLOWEEN
 	typepath = /datum/round_event/spooky
-	weight = -1							//forces it to be called, regardless of weight
+	weight = -1 //forces it to be called, regardless of weight
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 
@@ -44,7 +44,7 @@
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "treatbag"
 
-/obj/item/storage/spooky/Initialize()
+/obj/item/storage/spooky/Initialize(mapload)
 	. = ..()
 	for(var/distrobuteinbag in 0 to 5)
 		var/type = pick(/obj/item/food/cookie/sugar/spookyskull,

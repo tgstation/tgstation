@@ -9,26 +9,26 @@
 /datum/round_event/anomaly
 	var/area/impact_area
 	var/obj/effect/anomaly/anomaly_path = /obj/effect/anomaly/flux
-	announceWhen	= 1
+	announceWhen = 1
 
 
 /datum/round_event/anomaly/proc/findEventArea()
 	var/static/list/allowed_areas
 	if(!allowed_areas)
 		//Places that shouldn't explode
-		var/list/safe_area_types = typecacheof(list(
+		var/static/list/safe_area_types = typecacheof(list(
 		/area/ai_monitored/turret_protected/ai,
 		/area/ai_monitored/turret_protected/ai_upload,
-		/area/engine,
-		/area/solar,
+		/area/engineering,
+		/area/solars,
 		/area/holodeck,
 		/area/shuttle,
 		/area/maintenance,
-		/area/science/test_area)
-		)
+		/area/science/test_area,
+	))
 
 		//Subtypes from the above that actually should explode.
-		var/list/unsafe_area_subtypes = typecacheof(list(/area/engine/break_room))
+		var/static/list/unsafe_area_subtypes = typecacheof(list(/area/engineering/break_room))
 
 		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
 	var/list/possible_areas = typecache_filter_list(GLOB.sortedAreas,allowed_areas)

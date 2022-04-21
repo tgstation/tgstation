@@ -10,6 +10,7 @@
 	var/access_any = FALSE
 	var/list/contains = null
 	var/crate_name = "crate"
+	var/id
 	var/desc = ""//no desc by default
 	var/crate_type = /obj/structure/closet/crate
 	var/dangerous = FALSE // Should we message admins?
@@ -19,6 +20,9 @@
 	var/special_pod //If this pack comes shipped in a specific pod when launched from the express console
 	var/admin_spawned = FALSE
 	var/goody = FALSE //Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the 700 min doesn't apply
+
+/datum/supply_pack/New()
+	id = type
 
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
@@ -36,6 +40,10 @@
 	fill(C)
 	return C
 
+/datum/supply_pack/proc/get_cost()
+	. = cost
+	. *= SSeconomy.pack_price_modifier
+
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	if (admin_spawned)
 		for(var/item in contains)
@@ -44,6 +52,10 @@
 	else
 		for(var/item in contains)
 			new item(C)
+
+/// For generating supply packs at runtime. Returns a list of supply packs to use instead of this one.
+/datum/supply_pack/proc/generate_supply_packs()
+	return
 
 // If you add something to this list, please group it by type and sort it alphabetically instead of just jamming it in like an animal
 
@@ -60,12 +72,12 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contraband = TRUE
 	contains = list(/obj/vehicle/ridden/atv,
-					/obj/item/key,
+					/obj/item/key/atv,
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
 					/obj/item/clothing/head/soft,
-					/obj/item/clothing/mask/bandana/skull)//so you can properly #cargoniabikergang
-	crate_name = "Biker Kit"
+					/obj/item/clothing/mask/bandana/color/skull/black)//so you can properly #cargoniabikergang
+	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/emergency/bio
@@ -249,6 +261,16 @@
 	crate_name = "weed control crate"
 	crate_type = /obj/structure/closet/crate/secure/hydroponics
 
+/datum/supply_pack/emergency/mothic_rations
+	name = "Surplus Mothic Rations Triple-Pak"
+	desc = "Crew starving? Chef slacking off? Keep everyone fed on the barest minimum of what can be considered food with surplus ration packs, directly from the Mothic Fleet! Pack includes 3 packs of 3 bars each."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/storage/box/mothic_rations,
+					/obj/item/storage/box/mothic_rations,
+					/obj/item/storage/box/mothic_rations,)
+	crate_name = "surplus rations box"
+	crate_type = /obj/structure/closet/crate/cardboard/mothic
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -260,14 +282,12 @@
 
 /datum/supply_pack/security/ammo
 	name = "Ammo Crate"
-	desc = "Contains two 20-round magazines for the WT-550 Auto Rifle, three boxes of buckshot ammo, three boxes of rubber ammo and special .38 speedloarders. Requires Security access to open."
+	desc = "Contains three boxes of beanbag shotgun shells, three boxes of rubbershot shotgun shells and one of each special .38 speedloarders. Requires Security access to open."
 	cost = CARGO_CRATE_VALUE * 8
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/storage/box/lethalshot,
-					/obj/item/storage/box/lethalshot,
-					/obj/item/storage/box/lethalshot,
+	contains = list(/obj/item/storage/box/beanbag,
+					/obj/item/storage/box/beanbag,
+					/obj/item/storage/box/beanbag,
 					/obj/item/storage/box/rubbershot,
 					/obj/item/storage/box/rubbershot,
 					/obj/item/storage/box/rubbershot,
@@ -328,8 +348,6 @@
 					/obj/item/gun/energy/laser)
 	crate_name = "laser crate"
 
-
-
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
 	desc = "Stem the tide with four Security Barrier grenades. Requires Security access to open."
@@ -357,7 +375,7 @@
 					/obj/item/clothing/head/beret/sec/navywarden,
 					/obj/item/clothing/under/rank/security/head_of_security/formal,
 					/obj/item/clothing/suit/security/hos,
-					/obj/item/clothing/head/beret/sec/navyhos)
+					/obj/item/clothing/head/hos/beret/navyhos)
 	crate_name = "security clothing crate"
 
 /datum/supply_pack/security/stingpack
@@ -411,9 +429,9 @@
 	desc = "Arm the Civil Protection Forces with three stun batons. Batteries included. Requires Security access to open."
 	cost = CARGO_CRATE_VALUE * 2
 	access_view = ACCESS_SECURITY
-	contains = list(/obj/item/melee/baton/loaded,
-					/obj/item/melee/baton/loaded,
-					/obj/item/melee/baton/loaded)
+	contains = list(/obj/item/melee/baton/security/loaded,
+					/obj/item/melee/baton/security/loaded,
+					/obj/item/melee/baton/security/loaded)
 	crate_name = "stun baton crate"
 
 /datum/supply_pack/security/wall_flash
@@ -471,15 +489,6 @@
 	cost = CARGO_CRATE_VALUE * 3.5
 	contains = list(/obj/item/storage/box/chemimp)
 	crate_name = "chemical implant crate"
-
-/datum/supply_pack/security/armory/combatknives
-	name = "Combat Knives Crate"
-	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
-	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/kitchen/knife/combat,
-					/obj/item/kitchen/knife/combat,
-					/obj/item/kitchen/knife/combat)
-	crate_name = "combat knife crate"
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
@@ -590,11 +599,12 @@
 /datum/supply_pack/security/armory/russian
 	name = "Russian Surplus Crate"
 	desc = "Hello Comrade, we have the most modern russian military equipment the black market can offer, for the right price of course. Sadly we couldnt remove the lock so it requires Armory access to open."
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 12
 	contraband = TRUE
 	contains = list(/obj/item/food/rationpack,
 					/obj/item/ammo_box/a762,
 					/obj/item/storage/toolbox/ammo,
+					/obj/item/storage/toolbox/maint_kit,
 					/obj/item/clothing/suit/armor/vest/russian,
 					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/shoes/russian,
@@ -615,12 +625,12 @@
 
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
-	desc = "Contains two fullbody sets of tough, fireproof, pressurized suits designed in a joint effort by IS-ERI and Nanotrasen. Each set contains a suit, helmet, mask, combat belt, and combat gloves. Requires Armory access to open."
-	cost = CARGO_CRATE_VALUE * 12
+	desc = "Contains two fullbody sets of tough, fireproof suits designed in a joint effort by IS-ERI and Nanotrasen. Each set contains a suit, helmet, mask, combat belt, and combat gloves. Requires Armory access to open."
+	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen,
 					/obj/item/clothing/head/helmet/swat/nanotrasen,
-					/obj/item/clothing/suit/space/swat,
-					/obj/item/clothing/suit/space/swat,
+					/obj/item/clothing/suit/armor/swat,
+					/obj/item/clothing/suit/armor/swat,
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/storage/belt/military/assault,
@@ -629,23 +639,13 @@
 					/obj/item/clothing/gloves/tackler/combat)
 	crate_name = "swat crate"
 
-/datum/supply_pack/security/armory/wt550
-	name = "WT-550 Auto Rifle Crate"
-	desc = "Contains two high-powered, semiautomatic rifles chambered in 4.6x30mm. Requires Armory access to open."
+/datum/supply_pack/security/armory/thermal
+	name = "Thermal Pistol Crate"
+	desc = "Contains a pair of holsters each with two experimental thermal pistols, using nanites as the basis for their ammo. Requires Armory access to open."
 	cost = CARGO_CRATE_VALUE * 7
-	contains = list(/obj/item/gun/ballistic/automatic/wt550,
-					/obj/item/gun/ballistic/automatic/wt550)
-	crate_name = "auto rifle crate"
-
-/datum/supply_pack/security/armory/wt550ammo
-	name = "WT-550 Auto Rifle Ammo Crate"
-	desc = "Contains four 20-round magazine for the WT-550 Auto Rifle. Each magazine is designed to facilitate rapid tactical reloads. Requires Armory access to open."
-	cost = CARGO_CRATE_VALUE * 3.5
-	contains = list(/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/ammo_box/magazine/wt550m9,
-					/obj/item/ammo_box/magazine/wt550m9)
-
+	contains = list(/obj/item/storage/belt/holster/thermal,
+					/obj/item/storage/belt/holster/thermal)
+	crate_name = "thermal pistol crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
@@ -681,7 +681,7 @@
 					/obj/item/circuitboard/mecha/ripley/peripherals,
 					/obj/item/mecha_parts/mecha_equipment/drill,
 					/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp)
-	crate_name= "APLU MK-I kit"
+	crate_name= "\improper APLU MK-I kit"
 
 /datum/supply_pack/engineering/conveyor
 	name = "Conveyor Assembly Crate"
@@ -716,7 +716,7 @@
 /datum/supply_pack/engineering/powergamermitts
 	name = "Insulated Gloves Crate"
 	desc = "The backbone of modern society. Barely ever ordered for actual engineering. Contains three insulated gloves."
-	cost = CARGO_CRATE_VALUE * 8	//Made of pure-grade bullshittinium
+	cost = CARGO_CRATE_VALUE * 8 //Made of pure-grade bullshittinium
 	access_view = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow,
@@ -738,7 +738,7 @@
 	cost = CARGO_CRATE_VALUE * 5
 	access_view = ACCESS_ENGINE
 	contains = list(/obj/machinery/power/port_gen/pacman)
-	crate_name = "PACMAN generator crate"
+	crate_name = "\improper PACMAN generator crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engineering/power
@@ -800,6 +800,14 @@
 	access_view = ACCESS_ATMOSPHERICS
 	contains = list(/obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo)
 	crate_name = "huge portable scrubber crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/engineering/space_heater
+	name = "Space Heater Crate"
+	desc = "A dual purpose heater/cooler for when things are too chilly/toasty."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/machinery/space_heater)
+	crate_name = "space heater crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/engineering/bsa
@@ -882,7 +890,7 @@
 /datum/supply_pack/engine/emitter
 	name = "Emitter Crate"
 	desc = "Useful for powering forcefield generators while destroying locked crates and intruders alike. Contains two high-powered energy emitters. Requires CE access to open."
-	cost = CARGO_CRATE_VALUE * 4
+	cost = CARGO_CRATE_VALUE * 7
 	access = ACCESS_CE
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
@@ -893,7 +901,7 @@
 /datum/supply_pack/engine/field_gen
 	name = "Field Generator Crate"
 	desc = "Typically the only thing standing between the station and a messy death. Powered by emitters. Contains two field generators."
-	cost = CARGO_CRATE_VALUE * 3
+	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/machinery/field/generator,
 					/obj/machinery/field/generator)
 	crate_name = "field generator crate"
@@ -902,27 +910,18 @@
 	name = "Grounding Rod Crate"
 	desc = "Four grounding rods guaranteed to keep any uppity tesla coil's lightning under control."
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/machinery/power/grounding_rod,
-					/obj/machinery/power/grounding_rod,
-					/obj/machinery/power/grounding_rod,
-					/obj/machinery/power/grounding_rod)
+	contains = list(/obj/machinery/power/energy_accumulator/grounding_rod,
+					/obj/machinery/power/energy_accumulator/grounding_rod,
+					/obj/machinery/power/energy_accumulator/grounding_rod,
+					/obj/machinery/power/energy_accumulator/grounding_rod)
 	crate_name = "grounding rod crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
-
-/datum/supply_pack/engine/collector
-	name = "Radiation Collector Crate"
-	desc = "Contains three radiation collectors. Useful for collecting energy off nearby Supermatter Crystals, Singularities or Teslas!"
-	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/machinery/power/rad_collector,
-					/obj/machinery/power/rad_collector,
-					/obj/machinery/power/rad_collector)
-	crate_name = "collector crate"
 
 /datum/supply_pack/engine/solar
 	name = "Solar Panel Crate"
 	desc = "Go green with this DIY advanced solar array. Contains twenty one solar assemblies, a solar-control circuit board, and tracker. If you have any questions, please check out the enclosed instruction book."
-	cost = CARGO_CRATE_VALUE * 5
-	contains  = list(/obj/item/solar_assembly,
+	cost = CARGO_CRATE_VALUE * 8
+	contains = list(/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
@@ -963,12 +962,30 @@
 	name = "Tesla Coil Crate"
 	desc = "Whether it's high-voltage executions, creating research points, or just plain old assistant electrofrying: This pack of four Tesla coils can do it all!"
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/obj/machinery/power/tesla_coil,
-					/obj/machinery/power/tesla_coil,
-					/obj/machinery/power/tesla_coil,
-					/obj/machinery/power/tesla_coil)
+	contains = list(/obj/machinery/power/energy_accumulator/tesla_coil,
+					/obj/machinery/power/energy_accumulator/tesla_coil,
+					/obj/machinery/power/energy_accumulator/tesla_coil,
+					/obj/machinery/power/energy_accumulator/tesla_coil)
 	crate_name = "tesla coil crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engine/hypertorus_fusion_reactor
+	name = "HFR Crate"
+	desc = "The new and improved fusion reactor. Requires CE access to open."
+	cost = CARGO_CRATE_VALUE * 23
+	access = ACCESS_CE
+	contains = list(/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/corner,
+					/obj/item/hfr_box/body/fuel_input,
+					/obj/item/hfr_box/body/moderator_input,
+					/obj/item/hfr_box/body/waste_output,
+					/obj/item/hfr_box/body/interface,
+					/obj/item/hfr_box/core)
+	crate_name = "HFR crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	dangerous = TRUE
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Canisters & Materials ////////////////////////////////
@@ -988,7 +1005,7 @@
 	name = "50 Empty License Plates"
 	desc = "Create a bunch of boxes."
 	cost = CARGO_CRATE_VALUE * 2  // 50 * 25 + 700 - 1000 = 950 credits profit
-	access_view = ACCESS_SEC_DOORS
+	access_view = ACCESS_BRIG_ENTRANCE
 	contains = list(/obj/item/stack/license_plates/empty/fifty)
 	crate_name = "empty license plate crate"
 
@@ -999,12 +1016,12 @@
 	contains = list(/obj/item/stack/sheet/glass/fifty)
 	crate_name = "glass sheets crate"
 
-/datum/supply_pack/materials/metal50
-	name = "50 Metal Sheets"
-	desc = "Any construction project begins with a good stack of fifty metal sheets!"
+/datum/supply_pack/materials/iron50
+	name = "50 Iron Sheets"
+	desc = "Any construction project begins with a good stack of fifty iron sheets!"
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/stack/sheet/metal/fifty)
-	crate_name = "metal sheets crate"
+	contains = list(/obj/item/stack/sheet/iron/fifty)
+	crate_name = "iron sheets crate"
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets"
@@ -1041,25 +1058,6 @@
 	contains = list(/obj/item/stack/sheet/mineral/wood/fifty)
 	crate_name = "wood planks crate"
 
-/datum/supply_pack/materials/bz
-	name = "BZ Canister Crate"
-	desc = "Contains a canister of BZ. Requires Toxins access to open."
-	cost = CARGO_CRATE_VALUE * 16
-	access = ACCESS_TOXINS
-	access_view = ACCESS_ATMOSPHERICS
-	contains = list(/obj/machinery/portable_atmospherics/canister/bz)
-	crate_name = "BZ canister crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-
-/datum/supply_pack/materials/carbon_dio
-	name = "Carbon Dioxide Canister"
-	desc = "Contains a canister of Carbon Dioxide."
-	cost = CARGO_CRATE_VALUE * 6
-	access_view = ACCESS_ATMOSPHERICS
-	contains = list(/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
-	crate_name = "carbon dioxide canister crate"
-	crate_type = /obj/structure/closet/crate/large
-
 /datum/supply_pack/materials/foamtank
 	name = "Firefighting Foam Tank Crate"
 	desc = "Contains a tank of firefighting foam. Also known as \"plasmaman's bane\"."
@@ -1093,32 +1091,6 @@
 	crate_name = "high-capacity fuel tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
-/datum/supply_pack/materials/nitrogen
-	name = "Nitrogen Canister"
-	desc = "Contains a canister of Nitrogen."
-	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/machinery/portable_atmospherics/canister/nitrogen)
-	crate_name = "nitrogen canister crate"
-	crate_type = /obj/structure/closet/crate/large
-
-/datum/supply_pack/materials/nitrous_oxide_canister
-	name = "Nitrous Oxide Canister"
-	desc = "Contains a canister of Nitrous Oxide. Requires Atmospherics access to open."
-	cost = CARGO_CRATE_VALUE * 6
-	access = ACCESS_ATMOSPHERICS
-	access_view = ACCESS_ATMOSPHERICS
-	contains = list(/obj/machinery/portable_atmospherics/canister/nitrous_oxide)
-	crate_name = "nitrous oxide canister crate"
-	crate_type = /obj/structure/closet/crate/secure
-
-/datum/supply_pack/materials/oxygen
-	name = "Oxygen Canister"
-	desc = "Contains a canister of Oxygen. Canned in Druidia."
-	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
-	crate_name = "oxygen canister crate"
-	crate_type = /obj/structure/closet/crate/large
-
 /datum/supply_pack/materials/watertank
 	name = "Water Tank Crate"
 	desc = "Contains a tank of dihydrogen monoxide... sounds dangerous."
@@ -1127,13 +1099,43 @@
 	crate_name = "water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
-/datum/supply_pack/materials/water_vapor
-	name = "Water Vapor Canister"
-	desc = "Contains a canister of Water Vapor. I swear to god if you open this in the halls..."
-	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/machinery/portable_atmospherics/canister/water_vapor)
-	crate_name = "water vapor canister crate"
+/datum/supply_pack/materials/gas_canisters
+	cost = CARGO_CRATE_VALUE * 0.05
+	contains = list(/obj/machinery/portable_atmospherics/canister)
 	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/materials/gas_canisters/generate_supply_packs()
+	var/list/canister_packs = list()
+
+	var/obj/machinery/portable_atmospherics/canister/fakeCanister = /obj/machinery/portable_atmospherics/canister
+	// This is the amount of moles in a default canister
+	var/moleCount = (initial(fakeCanister.maximum_pressure) * initial(fakeCanister.filled)) * initial(fakeCanister.volume) / (R_IDEAL_GAS_EQUATION * T20C)
+
+	for(var/gasType in GLOB.meta_gas_info)
+		var/datum/gas/gas = gasType
+		var/name = initial(gas.name)
+		if(!initial(gas.purchaseable))
+			continue
+		var/datum/supply_pack/materials/pack = new
+		pack.name = "[name] Canister"
+		pack.desc = "Contains a canister of [name]."
+		if(initial(gas.dangerous))
+			pack.desc = "[pack.desc] Requires Atmospherics access to open."
+			pack.access = ACCESS_ATMOSPHERICS
+			pack.access_view = ACCESS_ATMOSPHERICS
+		pack.crate_name = "[name] canister crate"
+		pack.id = "[type]([name])"
+
+		pack.cost = cost + moleCount * initial(gas.base_value) * 1.6
+		pack.cost = CEILING(pack.cost, 10)
+
+		pack.contains = list(GLOB.gas_id_to_canister[initial(gas.id)])
+
+		pack.crate_type = crate_type
+
+		canister_packs += pack
+
+	return canister_packs
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
@@ -1146,7 +1148,7 @@
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
-	desc = "Contains eight different blood packs for reintroducing blood to patients."
+	desc = "Contains ten different blood packs for reintroducing blood to patients."
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/reagent_containers/blood,
 					/obj/item/reagent_containers/blood,
@@ -1228,17 +1230,17 @@
 					/obj/item/storage/box/medigels,
 					/obj/item/storage/box/syringes,
 					/obj/item/storage/box/bodybags,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/fire,
+					/obj/item/storage/medkit/regular,
+					/obj/item/storage/medkit/o2,
+					/obj/item/storage/medkit/toxin,
+					/obj/item/storage/medkit/brute,
+					/obj/item/storage/medkit/fire,
 					/obj/item/defibrillator/loaded,
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/storage/pill_bottle/mining,
 					/obj/item/reagent_containers/pill/neurine,
-					/obj/item/stack/medical/bone_gel,
-					/obj/item/stack/medical/bone_gel,
+					/obj/item/stack/medical/bone_gel/four,
+					/obj/item/stack/medical/bone_gel/four,
 					/obj/item/vending_refill/medical,
 					/obj/item/vending_refill/drugs)
 	crate_name = "medical supplies crate"
@@ -1289,6 +1291,14 @@
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
 
+/datum/supply_pack/medical/cmoturtlenecks
+	name = "Chief Medical Officer Turtlenecks"
+	desc = "Contains the CMO's turtleneck and turtleneck skirt. Requires CMO access to open."
+	cost = CARGO_CRATE_VALUE * 2
+	access = ACCESS_CMO
+	contains = list(/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck,
+					/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt)
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1300,10 +1310,10 @@
 
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
-	desc = "Everything you need to burn something to the ground, this contains three plasma assembly sets. Each set contains a plasma tank, igniter, proximity sensor, and timer! Warranty void if exposed to high temperatures. Requires Toxins access to open."
+	desc = "Everything you need to burn something to the ground, this contains three plasma assembly sets. Each set contains a plasma tank, igniter, proximity sensor, and timer! Warranty void if exposed to high temperatures. Requires Ordnance access to open."
 	cost = CARGO_CRATE_VALUE * 2
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/tank/internals/plasma,
 					/obj/item/tank/internals/plasma,
 					/obj/item/tank/internals/plasma,
@@ -1323,8 +1333,8 @@
 	name = "Raw Flux Anomaly"
 	desc = "The raw core of a flux anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/flux)
 	crate_name = "raw flux anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -1333,18 +1343,18 @@
 	name = "Raw Gravitational Anomaly"
 	desc = "The raw core of a gravitational anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/grav)
-	crate_name = "raw pyro anomaly"
+	crate_name = "raw gravitational anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/raw_vortex_anomaly
 	name = "Raw Vortex Anomaly"
 	desc = "The raw core of a vortex anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/vortex)
 	crate_name = "raw vortex anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -1353,8 +1363,8 @@
 	name = "Raw Bluespace Anomaly"
 	desc = "The raw core of a bluespace anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/bluespace)
 	crate_name = "raw bluespace anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -1363,8 +1373,8 @@
 	name = "Raw Pyro Anomaly"
 	desc = "The raw core of a pyro anomaly, ready to be implosion-compressed into a powerful artifact."
 	cost = CARGO_CRATE_VALUE * 10
-	access = ACCESS_TOXINS
-	access_view = ACCESS_TOXINS
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/pyro)
 	crate_name = "raw pyro anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -1379,8 +1389,8 @@
 					/obj/item/assembly/prox_sensor,
 					/obj/item/assembly/prox_sensor,
 					/obj/item/assembly/prox_sensor,
-					/obj/item/storage/firstaid,
-					/obj/item/storage/firstaid,
+					/obj/item/storage/medkit,
+					/obj/item/storage/medkit,
 					/obj/item/healthanalyzer,
 					/obj/item/healthanalyzer,
 					/obj/item/clothing/head/hardhat/red,
@@ -1444,6 +1454,18 @@
 					/obj/item/storage/box/swab,
 					/obj/item/construction/plumbing/research)
 	crate_name = "cytology supplies crate"
+
+/datum/supply_pack/science/mod_core
+	name = "MOD core Crate"
+	desc = "Three cores, perfect for any MODsuit construction! Naturally harvested™, of course."
+	cost = CARGO_CRATE_VALUE * 3
+	access = ACCESS_ROBOTICS
+	access_view = ACCESS_ROBOTICS
+	contains = list(/obj/item/mod/core/standard,
+		/obj/item/mod/core/standard,
+		/obj/item/mod/core/standard)
+	crate_name = "\improper MOD core crate"
+	crate_type = /obj/structure/closet/crate/secure/science
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Service //////////////////////////////////////
@@ -1527,8 +1549,8 @@
 					/obj/item/reagent_containers/food/drinks/shaker,
 					/obj/item/reagent_containers/food/drinks/bottle/patron,
 					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
-					/obj/item/reagent_containers/food/drinks/ale,
-					/obj/item/reagent_containers/food/drinks/ale,
+					/obj/item/reagent_containers/food/drinks/bottle/ale,
+					/obj/item/reagent_containers/food/drinks/bottle/ale,
 					/obj/item/storage/cans/sixbeer,
 					/obj/item/storage/cans/sixsoda,
 					/obj/item/flashlight/glowstick,
@@ -1542,7 +1564,7 @@
 
 /datum/supply_pack/service/carpet
 	name = "Premium Carpet Crate"
-	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together."
+	desc = "Iron floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/stack/tile/carpet/fifty,
 					/obj/item/stack/tile/carpet/fifty,
@@ -1572,6 +1594,40 @@
 					/obj/item/stack/tile/carpet/royalblack/fifty)
 	crate_name = "exotic carpet crate"
 
+/datum/supply_pack/service/carpet_neon
+	name = "Simple Neon Carpet Crate"
+	desc = "Simple rubbery mats with phosphorescent lining. Contains 120 tiles each of 13 color variants. Limited edition release."
+	cost = CARGO_CRATE_VALUE * 15
+	contains = list(
+		/obj/item/stack/tile/carpet/neon/simple/white/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/white/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/black/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/black/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/red/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/red/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/orange/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/orange/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/yellow/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/yellow/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/lime/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/lime/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/green/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/green/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/teal/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/teal/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/cyan/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/cyan/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/blue/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/blue/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/purple/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/purple/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/violet/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/violet/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/pink/sixty,
+		/obj/item/stack/tile/carpet/neon/simple/pink/sixty,
+	)
+	crate_name = "neon carpet crate"
+
 /datum/supply_pack/service/lightbulbs
 	name = "Replacement Lights"
 	desc = "May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs."
@@ -1591,6 +1647,15 @@
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/service/survivalknives
+	name = "Survival Knives Crate"
+	desc = "Contains three sharpened survival knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/knife/combat/survival,
+					/obj/item/knife/combat/survival,
+					/obj/item/knife/combat/survival)
+	crate_name = "survival knife crate"
+
 /datum/supply_pack/service/wedding
 	name = "Wedding Crate"
 	desc = "Everything you need to host a wedding! Now you just need an officiant."
@@ -1604,6 +1669,22 @@
 					/obj/item/bouquet/poppy,
 					/obj/item/reagent_containers/food/drinks/bottle/champagne)
 	crate_name = "wedding crate"
+
+/// Box of 7 grey IDs.
+/datum/supply_pack/service/greyidbox
+	name = "Grey ID Card Multipack Cate"
+	desc = "A convenient crate containing a box of cheap ID cards in a handy wallet-sized form factor. Cards come in every colour you can imagne, as long as it's grey."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/storage/box/ids)
+	crate_name = "basic id card crate"
+
+/// Single silver ID.
+/datum/supply_pack/service/silverid
+	name = "Silver ID Card Crate"
+	desc = "Did we forget to hire any Heads of Staff? Recruit your own with this high value ID card capable of holding advanced levels of access in a handy wallet-sized form factor"
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/card/id/advanced/silver)
+	crate_name = "silver id card crate"
 
 /datum/supply_pack/service/emptycrate
 	name = "Empty Crate"
@@ -1624,6 +1705,20 @@
 	crate_name = "donk pocket crate"
 
 /datum/supply_pack/service/randomized/donkpockets/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 3)
+		var/item = pick(contains)
+		new item(C)
+
+/datum/supply_pack/service/randomized/ready_donk
+	name = "Ready-Donk Variety Crate"
+	desc = "Featuring a line up of Donk Co.'s most popular pastry!"
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/food/ready_donk,
+	/obj/item/food/ready_donk/mac_n_cheese,
+	/obj/item/food/ready_donk/donkhiladas)
+	crate_name = "\improper Ready-Donk crate"
+
+/datum/supply_pack/service/randomized/ready_donk/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 3)
 		var/item = pick(contains)
 		new item(C)
@@ -1677,7 +1772,7 @@
 					/obj/item/food/meat/rawbacon,
 					/obj/item/food/meat/slab/penguin,
 					/obj/item/food/spiderleg,
-					/obj/item/food/carpmeat,
+					/obj/item/food/fishmeat/carp,
 					/obj/item/food/meat/slab/human)
 	crate_name = "food crate"
 
@@ -1775,7 +1870,8 @@
 
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
-	desc = "Best prices on this side of the galaxy. All deliveries are guaranteed to be 99% anomaly-free!"
+	desc = "Why visit the kitchen when you can have five random pizzas in a fraction of the time? \
+			Best prices this side of the galaxy! All deliveries are guaranteed to be 99% anomaly-free."
 	cost = CARGO_CRATE_VALUE * 10 // Best prices this side of the galaxy.
 	contains = list(/obj/item/pizzabox/margherita,
 					/obj/item/pizzabox/mushroom,
@@ -1783,15 +1879,37 @@
 					/obj/item/pizzabox/vegetable,
 					/obj/item/pizzabox/pineapple)
 	crate_name = "pizza crate"
+	///Whether we've provided an infinite pizza box already this shift or not.
 	var/static/anomalous_box_provided = FALSE
+	///The percentage chance (per pizza) of this supply pack to spawn an anomalous pizza box.
+	var/anna_molly_box_chance = 1
+	///Total tickets in our figurative lottery (per pizza) to decide if we create a bomb box, and if so what type. 1 to 3 create a bomb. The rest do nothing.
+	var/boombox_tickets = 100
+	///Whether we've provided a bomb pizza box already this shift or not.
+	var/boombox_provided = FALSE
 
 /datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/C)
 	. = ..()
-	if(!anomalous_box_provided)
-		for(var/obj/item/pizzabox/P in C)
-			if(prob(1)) //1% chance for each box, so 4% total chance per order
+
+	var/list/pizza_types = list(
+		/obj/item/food/pizza/margherita = 10,
+		/obj/item/food/pizza/meat = 10,
+		/obj/item/food/pizza/mushroom = 10,
+		/obj/item/food/pizza/vegetable = 10,
+		/obj/item/food/pizza/donkpocket = 10,
+		/obj/item/food/pizza/dank = 7,
+		/obj/item/food/pizza/sassysage = 10,
+		/obj/item/food/pizza/pineapple = 10,
+		/obj/item/food/pizza/arnold = 3
+	) //weighted by chance to disrupt eaters' rounds
+
+	for(var/obj/item/pizzabox/P in C)
+		if(!anomalous_box_provided)
+			if(prob(anna_molly_box_chance)) //1% chance for each box, so 4% total chance per order
 				var/obj/item/pizzabox/infinite/fourfiveeight = new(C)
 				fourfiveeight.boxtag = P.boxtag
+				fourfiveeight.boxtag_set = TRUE
+				fourfiveeight.update_appearance()
 				qdel(P)
 				anomalous_box_provided = TRUE
 				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery")
@@ -1799,7 +1917,34 @@
 					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
 				else
 					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
-				break
+				continue
+
+		if(!boombox_provided)
+			var/boombox_lottery = rand(1,boombox_tickets)
+			var/boombox_type
+			switch(boombox_lottery)
+				if(1 to 2)
+					boombox_type = /obj/item/pizzabox/bomb/armed //explodes after opening
+				if(3)
+					boombox_type = /obj/item/pizzabox/bomb //free bomb
+
+			if(boombox_type)
+				new boombox_type(C)
+				qdel(P)
+				boombox_provided = TRUE
+				log_game("A bomb pizza box was created by a pizza crate delivery.")
+				message_admins("A bomb pizza box has arrived in a pizza crate delivery.")
+				continue
+
+		//here we randomly replace our pizzas for a chance at the full range
+		var/obj/item/food/pizza/replacement_type = pick_weight(pizza_types)
+		pizza_types -= replacement_type
+		if(replacement_type && !istype(P.pizza, replacement_type))
+			QDEL_NULL(P.pizza)
+			P.pizza = new replacement_type
+			P.boxtag = P.pizza.boxtag
+			P.boxtag_set = TRUE
+			P.update_appearance()
 
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
 	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
@@ -1821,7 +1966,7 @@
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
-	desc = "Big things have small beginnings. Contains fourteen different seeds."
+	desc = "Big things have small beginnings. Contains fifteen different seeds."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/seeds/chili,
 					/obj/item/seeds/cotton,
@@ -1834,6 +1979,7 @@
 					/obj/item/seeds/wheat/rice,
 					/obj/item/seeds/carrot,
 					/obj/item/seeds/sunflower,
+					/obj/item/seeds/rose,
 					/obj/item/seeds/chanter,
 					/obj/item/seeds/potato,
 					/obj/item/seeds/sugarcane)
@@ -1957,7 +2103,7 @@
 	desc = "The cow goes moo!"
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_HYDROPONICS
-	contains = list(/mob/living/simple_animal/cow)
+	contains = list(/mob/living/basic/cow)
 	crate_name = "cow crate"
 
 /datum/supply_pack/critter/crab
@@ -2028,9 +2174,9 @@
 	desc = "Tired of these MOTHER FUCKING snakes on this MOTHER FUCKING space station? Then this isn't the crate for you. Contains three poisonous snakes."
 	cost = CARGO_CRATE_VALUE * 6
 	access_view = ACCESS_SECURITY
-	contains = list(/mob/living/simple_animal/hostile/retaliate/poison/snake,
-					/mob/living/simple_animal/hostile/retaliate/poison/snake,
-					/mob/living/simple_animal/hostile/retaliate/poison/snake)
+	contains = list(/mob/living/simple_animal/hostile/retaliate/snake,
+					/mob/living/simple_animal/hostile/retaliate/snake,
+					/mob/living/simple_animal/hostile/retaliate/snake)
 	crate_name = "snake crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -2115,8 +2261,8 @@
 	desc = "Psst.. hey bud... remember those old foam force pistols that got discontinued for being too cool? Well I got two of those right here with your name on em. I'll even throw in a spare mag for each, waddya say?"
 	contraband = TRUE
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/item/gun/ballistic/automatic/toy/pistol,
-					/obj/item/gun/ballistic/automatic/toy/pistol,
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/toy,
+					/obj/item/gun/ballistic/automatic/pistol/toy,
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
 	crate_name = "foam force crate"
@@ -2197,11 +2343,12 @@
 
 /datum/supply_pack/costumes_toys/mech_suits
 	name = "Mech Pilot's Suit Crate"
-	desc = "Suits for piloting big robots. Contains all three colors!"
+	desc = "Suits for piloting big robots. Contains four of those!"
 	cost = CARGO_CRATE_VALUE * 3 //state-of-the-art technology doesn't come cheap
 	contains = list(/obj/item/clothing/under/costume/mech_suit,
-					/obj/item/clothing/under/costume/mech_suit/white,
-					/obj/item/clothing/under/costume/mech_suit/blue)
+					/obj/item/clothing/under/costume/mech_suit,
+					/obj/item/clothing/under/costume/mech_suit,
+					/obj/item/clothing/under/costume/mech_suit)
 	crate_name = "mech pilot's suit crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
@@ -2259,7 +2406,7 @@
 	var/the_toy
 	for(var/i in 1 to num_contained)
 		if(prob(50))
-			the_toy = pickweight(GLOB.arcade_prize_pool)
+			the_toy = pick_weight(GLOB.arcade_prize_pool)
 		else
 			the_toy = pick(subtypesof(/obj/item/toy/plush))
 		new the_toy(C)
@@ -2290,12 +2437,12 @@
 
 /datum/supply_pack/costumes_toys/mafia/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 4)
-		new /obj/effect/spawner/lootdrop/mafia_outfit(C)
+		new /obj/effect/spawner/random/clothing/mafia_outfit(C)
 		new /obj/item/virgin_mary(C)
 		if(prob(30)) //Not all mafioso have mustaches, some people also find this item annoying.
 			new /obj/item/clothing/mask/fakemoustache/italian(C)
 	if(prob(10)) //A little extra sugar every now and then to shake things up.
-		new	/obj/item/switchblade(C)
+		new /obj/item/switchblade(C)
 
 /datum/supply_pack/costumes_toys/randomised/tcg
 	name = "Big-Ass Booster Pack Pack"
@@ -2332,12 +2479,74 @@
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc
+	group = "Miscellaneous Supplies"
+
+/datum/supply_pack/misc/tattoo_kit
+	name = "Tattoo Kit"
+	desc = "A tattoo kit with some extra starting ink."
+	cost = CARGO_CRATE_VALUE * 1.8
+	contains = list(
+		/obj/item/tattoo_kit,
+		/obj/item/toner,
+		/obj/item/toner,
+	)
+	crate_name = "tattoo crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/misc/aquarium_kit
+	name = "Aquarium Kit"
+	desc = "Everything you need to start your own aquarium. Contains aquarium construction kit, fish catalog, feed can and three freshwater fish from our collection."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/book/fish_catalog,
+					/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/fish_feed,
+					/obj/item/storage/box/aquarium_props,
+					/obj/item/aquarium_kit)
+	crate_name = "aquarium kit crate"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/misc/aquarium_fish
+	name = "Aquarium Fish Case"
+	desc = "An aquarium fish bundle handpicked by monkeys from our collection."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random,
+					/obj/item/storage/fish_case/random,
+					/obj/item/storage/fish_case/random)
+	crate_name = "aquarium fish crate"
+
+/datum/supply_pack/misc/freshwater_fish
+	name = "Freshwater Fish Case"
+	desc = "Aquarium fish that have had most of their mud cleaned off."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/storage/fish_case/random/freshwater)
+	crate_name = "freshwater fish crate"
+
+/datum/supply_pack/misc/saltwater_fish
+	name = "Saltwater Fish Case"
+	desc = "Aquarium fish that fill the room with the smell of salt."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random/saltwater,
+					/obj/item/storage/fish_case/random/saltwater)
+	crate_name = "saltwater fish crate"
+
+/datum/supply_pack/misc/tiziran_fish
+	name = "Tirizan Fish Case"
+	desc = "Tiziran saltwater fish imported from the Zagos Sea."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/tiziran,
+					/obj/item/storage/fish_case/tiziran)
+	crate_name = "tiziran fish crate"
+
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
 	desc = "Nanotrasen reminds all employees to never toy with powers outside their control."
 	cost = 1000000 //Special case, we don't want to make this in terms of crates because having bikes be a million credits is the whole meme.
 	contains = list(/obj/vehicle/ridden/bicycle)
-	crate_name = "Bicycle Crate"
+	crate_name = "bicycle crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/bigband
@@ -2369,6 +2578,32 @@
 					/obj/item/book/random,
 					/obj/item/book/random)
 	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/misc/commandkeys
+	name = "Command Encryption Key Crate"
+	desc = "A pack of encryption keys that give access to the command radio network. Nanotrasen reminds unauthorized employees not to eavesdrop in on secure communications channels, or at least to keep heckling of the command staff to a minimum."
+	access_view = ACCESS_HEADS
+	access = ACCESS_HEADS
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/encryptionkey/headset_com,
+					/obj/item/encryptionkey/headset_com,
+					/obj/item/encryptionkey/headset_com)
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "command encryption key crate"
+
+/datum/supply_pack/misc/exploration_drone
+	name = "Exploration Drone"
+	desc = "A replacement long-range exploration drone."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/exodrone)
+	crate_name = "exodrone crate"
+
+/datum/supply_pack/misc/exploration_fuel
+	name = "Drone Fuel Pellet"
+	desc = "A fresh tank of exploration drone fuel."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/fuel_pellet)
+	crate_name = "exodrone fuel crate"
 
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"
@@ -2437,14 +2672,17 @@
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
-	cost = CARGO_CRATE_VALUE * 6	// it costs so much because the Space Church needs funding to build a cathedral
+	cost = CARGO_CRATE_VALUE * 6 // it costs so much because the Space Church needs funding to build a cathedral
 	access_view = ACCESS_CHAPEL_OFFICE
 	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie)
+					/obj/item/clothing/suit/hooded/chaplain_hoodie,
+					/obj/item/clothing/under/misc/burial,
+					/obj/item/clothing/under/misc/burial,
+				)
 	crate_name = "religious supplies crate"
 
 /datum/supply_pack/misc/toner
@@ -2502,20 +2740,24 @@
 	crate_name = "syndicate gear crate"
 	crate_type = /obj/structure/closet/crate
 	var/crate_value = 30 ///Total TC worth of contained uplink items
+	var/uplink_flag = UPLINK_TRAITORS
 
 ///Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
 /datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
-	var/list/uplink_items = get_uplink_items(SSticker.mode)
+	var/list/uplink_items = list()
+	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
+		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
+		if(item.purchasable_from & UPLINK_TRAITORS && item.item)
+			uplink_items += item
+
 	while(crate_value)
-		var/category = pick(uplink_items)
-		var/item = pick(uplink_items[category])
-		var/datum/uplink_item/I = uplink_items[category][item]
-		if(!I.surplus || prob(100 - I.surplus))
+		var/datum/uplink_item/uplink_item = pick(uplink_items)
+		if(!uplink_item.surplus || prob(100 - uplink_item.surplus))
 			continue
-		if(crate_value < I.cost)
+		if(crate_value < uplink_item.cost)
 			continue
-		crate_value -= I.cost
-		new I.item(C)
+		crate_value -= uplink_item.cost
+		new uplink_item.item(C)
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// General Vending Restocks /////////////////////////////
@@ -2602,7 +2844,7 @@
 	desc = "Not enough cartridges after half the crew lost their PDA to explosions? This may fix it."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/vending_refill/cart)
-	crate_name = "ptech supply crate"
+	crate_name = "\improper PTech supply crate"
 
 /datum/supply_pack/vending/sectech
 	name = "SecTech Supply Crate"
@@ -2610,7 +2852,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	access = ACCESS_SECURITY
 	contains = list(/obj/item/vending_refill/security)
-	crate_name = "SecTech supply crate"
+	crate_name = "\improper SecTech supply crate"
 	crate_type = /obj/structure/closet/crate/secure/gear
 
 /datum/supply_pack/vending/snack
@@ -2628,11 +2870,19 @@
 	crate_name = "soft drinks supply crate"
 
 /datum/supply_pack/vending/vendomat
-	name = "Vendomat Supply Crate"
+	name = "Part-Mart & YouTool Supply Crate"
 	desc = "More tools for your IED testing facility."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/vending_refill/assist)
-	crate_name = "vendomat supply crate"
+	contains = list(/obj/item/vending_refill/assist,
+					/obj/item/vending_refill/youtool)
+	crate_name = "\improper Part-Mart & YouTool supply crate"
+
+/datum/supply_pack/vending/clothesmate
+	name = "ClothesMate Supply Crate"
+	desc = "Out of cowboy boots? Buy this crate."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/vending_refill/clothing)
+	crate_name = "\improper ClothesMate supply crate"
 
 //////////////////////////////////////////////////////////////////////////////
 /////////////////////// Clothing Vending Restocks ////////////////////////////
@@ -2698,8 +2948,54 @@
 
 /datum/supply_pack/vending/wardrobes/security
 	name = "Security Wardrobe Supply Crate"
-	desc = "This crate contains refills for the SecDrobe and LawDrobe."
-	cost = CARGO_CRATE_VALUE * 3
+	desc = "This crate contains refills for the SecDrobe, DetDrobe and LawDrobe."
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/vending_refill/wardrobe/sec_wardrobe,
+					/obj/item/vending_refill/wardrobe/det_wardrobe,
 					/obj/item/vending_refill/wardrobe/law_wardrobe)
 	crate_name = "security department supply crate"
+
+/// Exploration drone unlockables ///
+
+/datum/supply_pack/exploration
+	special = TRUE
+	group = "Outsourced"
+
+/datum/supply_pack/exploration/scrapyard
+	name = "Scrapyard Crate"
+	desc = "Outsourced crate containing various junk."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/relic,
+					/obj/item/broken_bottle,
+					/obj/item/pickaxe/rusted)
+	crate_name = "scrapyard crate"
+
+/datum/supply_pack/exploration/catering
+	name = "Catering Crate"
+	desc = "No cook? No problem! Food quality may vary depending on provider."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/food/sandwich,
+					/obj/item/food/sandwich,
+					/obj/item/food/sandwich,
+					/obj/item/food/sandwich,
+					/obj/item/food/sandwich)
+	crate_name = "outsourced food crate"
+
+/datum/supply_pack/exploration/catering/fill(obj/structure/closet/crate/C)
+	. = ..()
+	if(prob(30))
+		for(var/obj/item/food/F in C)
+			F.name = "spoiled [F.name]"
+			F.foodtypes |= GROSS
+			F.MakeEdible()
+
+/datum/supply_pack/exploration/shrubbery
+	name = "Shrubbery Crate"
+	desc = "Crate full of hedge shrubs."
+	cost = CARGO_CRATE_VALUE * 5
+	crate_name = "shrubbery crate"
+	var/shrub_amount = 8
+
+/datum/supply_pack/exploration/shrubbery/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to shrub_amount)
+		new /obj/item/grown/shrub(C)

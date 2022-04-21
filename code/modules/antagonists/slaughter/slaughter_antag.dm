@@ -1,11 +1,13 @@
 /datum/antagonist/slaughter
-	name = "Slaughter demon"
+	name = "\improper Slaughter Demon"
 	show_name_in_check_antagonists = TRUE
-	var/objective_verb = "Kill"
-	var/datum/mind/summoner
+	ui_name = "AntagInfoDemon"
 	job_rank = ROLE_ALIEN
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
+	var/fluff = "You're a Demon of Wrath, often dragged into reality by wizards to terrorize their enemies."
+	var/objective_verb = "Kill"
+	var/datum/mind/summoner
 
 /datum/antagonist/slaughter/on_gain()
 	forge_objectives()
@@ -14,7 +16,7 @@
 /datum/antagonist/slaughter/greet()
 	. = ..()
 	owner.announce_objectives()
-	to_chat(owner, "<span class='warning'>You have a powerful alt-attack that slams people backwards that you can activate by shift+ctrl+clicking your target!</span>")
+	to_chat(owner, span_warning("You have a powerful alt-attack that slams people backwards that you can activate by right-clicking your target!"))
 
 /datum/antagonist/slaughter/proc/forge_objectives()
 	if(summoner)
@@ -28,6 +30,14 @@
 	new_objective2.explanation_text = "[objective_verb] everyone[summoner ? " else while you're at it":""]."
 	objectives += new_objective2
 
+/datum/antagonist/slaughter/ui_static_data(mob/user)
+	var/list/data = list()
+	data["fluff"] = fluff
+	data["objectives"] = get_objectives()
+	data["explain_attack"] = TRUE
+	return data
+
 /datum/antagonist/slaughter/laughter
 	name = "Laughter demon"
 	objective_verb = "Hug and Tickle"
+	fluff = "You're a Demon of Envy, sometimes dragged into reality by wizards as a way to cause wanton chaos."

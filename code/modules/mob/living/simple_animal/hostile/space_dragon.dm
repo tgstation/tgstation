@@ -1,11 +1,11 @@
 /// The carp rift is currently charging.
-#define CHARGE_ONGOING			0
+#define CHARGE_ONGOING 0
 /// The carp rift is currently charging and has output a final warning.
-#define CHARGE_FINALWARNING		1
+#define CHARGE_FINALWARNING 1
 /// The carp rift is now fully charged.
-#define CHARGE_COMPLETED		2
+#define CHARGE_COMPLETED 2
 /// The darkness threshold for space dragon when choosing a color
-#define DARKNESS_THRESHOLD		0.5
+#define DARKNESS_THRESHOLD 50
 
 /**
  * # Space Dragon
@@ -16,8 +16,9 @@
  * Normally spawned as an antagonist during the Space Dragon event, Space Dragon's main goal is to open three rifts from which to pull a great tide of carp onto the station.
  * Space Dragon can summon only one rift at a time, and can do so anywhere a blob is allowed to spawn.  In order to trigger his victory condition, Space Dragon must summon and defend three rifts while they charge.
  * Space Dragon, when spawned, has five minutes to summon the first rift.  Failing to do so will cause Space Dragon to return from whence he came.
- * When the rift spawns, ghosts can interact with it to spawn in as space carp to help complete the mission.  One carp is granted when the rift is first summoned, with an extra one every 40 seconds.
- * Once the victory condition is met, the shuttle is called and all current rifts are allowed to spawn infinite sentient space carp.
+ * When the rift spawns, ghosts can interact with it to spawn in as space carp to help complete the mission.  One carp is granted when the rift is first summoned, with an extra one every 30 seconds.
+ * Once the victory condition is met, all current rifts become invulnerable to damage, are allowed to spawn infinite sentient space carp, and Space Dragon gets unlimited rage.
+ * Alternatively, if the shuttle arrives while Space Dragon is still active, their victory condition will automatically be met and all the rifts will immediately become fully charged.
  * If a charging rift is destroyed, Space Dragon will be incredibly slowed, and the endlag on his gust attack is greatly increased on each use.
  * Space Dragon has the following abilities to assist him with his objective:
  * - Can shoot fire in straight line, dealing 30 burn damage and setting those suseptible on fire.
@@ -27,15 +28,19 @@
  */
 /mob/living/simple_animal/hostile/space_dragon
 	name = "Space Dragon"
-	desc = "A vile, leviathan-esque creature that flies in the most unnatural way.  Looks slightly similar to a space carp."
-	maxHealth = 400
-	health = 400
-	a_intent = INTENT_HARM
+	desc = "A vile, leviathan-esque creature that flies in the most unnatural way. Looks slightly similar to a space carp."
+	gender = NEUTER
+	maxHealth = 320
+	health = 320
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0.5, OXY = 1)
+	combat_mode = TRUE
 	speed = 0
+	movement_type = FLYING
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	deathsound = 'sound/magic/demon_dies.ogg'
+	attack_vis_effect = ATTACK_EFFECT_BITE
+	deathsound = 'sound/creatures/space_dragon_roar.ogg'
 	icon = 'icons/mob/spacedragon.dmi'
 	icon_state = "spacedragon"
 	icon_living = "spacedragon"
@@ -43,19 +48,21 @@
 	health_doll_icon = "spacedragon"
 	obj_damage = 50
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	melee_damage_upper = 35
 	melee_damage_lower = 35
 	mob_size = MOB_SIZE_LARGE
 	armour_penetration = 30
 	pixel_x = -16
 	base_pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	turns_per_move = 5
 	ranged = TRUE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, its life extinguished."
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("carp")
@@ -68,33 +75,38 @@
 	var/tiredness = 0
 	/// A multiplier to how much each use of wing gust should add to the tiredness variable.  Set to 5 if the current rift is destroyed.
 	var/tiredness_mult = 1
-	/// Determines whether or not Space Dragon is in the middle of using wing guat.  If set to true, prevents him from moving and doing certain actions.
+	/// The distance Space Dragon's gust reaches
+	var/gust_distance = 4
+	/// The amount of tiredness to add to Space Dragon per use of gust
+	var/gust_tiredness = 30
+	/// Determines whether or not Space Dragon is in the middle of using wing gust.  If set to true, prevents him from moving and doing certain actions.
 	var/using_special = FALSE
+	/// Determines whether or not Space Dragon is currently tearing through a wall.
+	var/tearing_wall = FALSE
 	/// A list of all of the rifts created by Space Dragon.  Used for setting them all to infinite carp spawn when Space Dragon wins, and removing them when Space Dragon dies.
 	var/list/obj/structure/carp_rift/rift_list = list()
 	/// How many rifts have been successfully charged
 	var/rifts_charged = 0
 	/// Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.
 	var/objective_complete = FALSE
-	/// The togglable small sprite action
-	var/small_sprite_type = /datum/action/small_sprite/megafauna/spacedragon
-	/// The innate ability to use wing gust
-	var/datum/action/innate/space_dragon/gust_attack/gust
-	/// The innate ability to summon rifts
-	var/datum/action/innate/space_dragon/summon_rift/rift
+	/// The ability to make your sprite smaller
+	var/datum/action/small_sprite/space_dragon/small_sprite
 	/// The color of the space dragon.
 	var/chosen_color
+	/// Minimum devastation damage dealt coefficient based on max health
+	var/devastation_damage_min_percentage = 0.4
+	/// Maximum devastation damage dealt coefficient based on max health
+	var/devastation_damage_max_percentage = 0.75
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	if(small_sprite_type)
-		var/datum/action/small_sprite/small_action = new small_sprite_type()
-		small_action.Grant(src)
-	gust = new
-	gust.Grant(src)
-	rift = new
-	rift.Grant(src)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
+	small_sprite = new
+	small_sprite.Grant(src)
+	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
 
 /mob/living/simple_animal/hostile/space_dragon/Login()
 	. = ..()
@@ -102,39 +114,48 @@
 		dragon_name()
 		color_selection()
 
+/mob/living/simple_animal/hostile/space_dragon/ex_act_devastate()
+	var/damage_coefficient = rand(devastation_damage_min_percentage, devastation_damage_max_percentage)
+	adjustBruteLoss(initial(maxHealth)*damage_coefficient)
 
-/mob/living/simple_animal/hostile/space_dragon/Life(mapload)
+/mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
-	tiredness = max(tiredness - 1, 0)
+	tiredness = max(tiredness - (0.5 * delta_time), 0)
 	for(var/mob/living/consumed_mob in src)
 		if(consumed_mob.stat == DEAD)
 			continue
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-		visible_message("<span class='danger'>[src] vomits up [consumed_mob]!</span>")
+		visible_message(span_danger("[src] vomits up [consumed_mob]!"))
 		consumed_mob.forceMove(loc)
 		consumed_mob.Paralyze(50)
-	if(rifts_charged == 3 && !objective_complete)
+	if(!mind.has_antag_datum(/datum/antagonist/space_dragon))
+		return
+	if((rifts_charged == 3 || (SSshuttle.emergency.mode == SHUTTLE_DOCKED && rifts_charged > 0)) && !objective_complete)
 		victory()
 	if(riftTimer == -1)
 		return
 	riftTimer = min(riftTimer + 1, maxRiftTimer + 1)
 	if(riftTimer == (maxRiftTimer - 60))
-		to_chat(src, "<span class='boldwarning'>You have a minute left to summon the rift!  Get to it!</span>")
+		to_chat(src, span_boldwarning("You have a minute left to summon the rift! Get to it!"))
 		return
-	if(riftTimer == maxRiftTimer)
-		to_chat(src, "<span class='boldwarning'>You've failed to summon the rift in a timely manner!  You're being pulled back from whence you came!</span>")
+	if(riftTimer >= maxRiftTimer)
+		to_chat(src, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
 		destroy_rifts()
+		playsound(src, 'sound/magic/demon_dies.ogg', 100, TRUE)
 		QDEL_NULL(src)
 
 /mob/living/simple_animal/hostile/space_dragon/AttackingTarget()
 	if(using_special)
 		return
 	if(target == src)
-		to_chat(src, "<span class='warning'>You almost bite yourself, but then decide against it.</span>")
+		to_chat(src, span_warning("You almost bite yourself, but then decide against it."))
 		return
 	if(istype(target, /turf/closed/wall))
+		if(tearing_wall)
+			return
+		tearing_wall = TRUE
 		var/turf/closed/wall/thewall = target
-		to_chat(src, "<span class='warning'>You begin tearing through the wall...</span>")
+		to_chat(src, span_warning("You begin tearing through the wall..."))
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 		var/timetotear = 40
 		if(istype(target, /turf/closed/wall/r_wall))
@@ -144,19 +165,28 @@
 				return
 			thewall.dismantle_wall(1)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		tearing_wall = FALSE
 		return
 	if(isliving(target)) //Swallows corpses like a snake to regain health.
 		var/mob/living/L = target
 		if(L.stat == DEAD)
-			to_chat(src, "<span class='warning'>You begin to swallow [L] whole...</span>")
+			to_chat(src, span_warning("You begin to swallow [L] whole..."))
 			if(do_after(src, 30, target = L))
 				if(eat(L))
-					adjustHealth(-L.maxHealth * 0.5)
+					adjustHealth(-L.maxHealth * 0.25)
 			return
 	. = ..()
 	if(istype(target, /obj/vehicle/sealed/mecha))
 		var/obj/vehicle/sealed/mecha/M = target
 		M.take_damage(50, BRUTE, MELEE, 1)
+
+/mob/living/simple_animal/hostile/space_dragon/ranged_secondary_attack(atom/target, modifiers)
+	if(using_special)
+		return
+	using_special = TRUE
+	icon_state = "spacedragon_gust"
+	add_dragon_overlay()
+	useGust(0)
 
 /mob/living/simple_animal/hostile/space_dragon/Move()
 	if(!using_special)
@@ -172,8 +202,14 @@
 	empty_contents()
 	if(!objective_complete)
 		destroy_rifts()
-	add_overlay()
 	..()
+	add_dragon_overlay()
+	UnregisterSignal(small_sprite, COMSIG_ACTION_TRIGGER)
+
+/mob/living/simple_animal/hostile/space_dragon/revive(full_heal, admin_revive)
+	. = ..()
+	add_dragon_overlay()
+	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
 
 /mob/living/simple_animal/hostile/space_dragon/wabbajack_act(mob/living/new_mob)
 	empty_contents()
@@ -186,12 +222,12 @@
  * If the name is invalid, will re-prompt the dragon until a proper name is chosen.
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/dragon_name()
-	var/chosen_name = sanitize_name(reject_bad_text(stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
+	var/chosen_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
 	if(!chosen_name)
-		to_chat(src, "<span class='warning'>Not a valid name, please try again.</span>")
+		to_chat(src, span_warning("Not a valid name, please try again."))
 		dragon_name()
 		return
-	to_chat(src, "<span class='notice'>Your name is now <span class='name'>[chosen_name]</span>, the feared Space Dragon.</span>")
+	to_chat(src, span_notice("Your name is now [span_name("[chosen_name]")], the feared Space Dragon."))
 	fully_replace_character_name(null, chosen_name)
 
 /**
@@ -203,14 +239,12 @@
 /mob/living/simple_animal/hostile/space_dragon/proc/color_selection()
 	chosen_color = input(src,"What would you like your color to be?","Choose Your Color", COLOR_WHITE) as color|null
 	if(!chosen_color) //redo proc until we get a color
-		to_chat(src, "<span class='warning'>Not a valid color, please try again.</span>")
+		to_chat(src, span_warning("Not a valid color, please try again."))
 		color_selection()
 		return
 	var/temp_hsv = RGBtoHSV(chosen_color)
-	if(chosen_color == COLOR_BLACK)
-		chosen_color = COLOR_WHITE
-	else if(ReadHSV(temp_hsv)[3] < DARKNESS_THRESHOLD)
-		to_chat(src, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
+	if(ReadHSV(temp_hsv)[3] < DARKNESS_THRESHOLD)
+		to_chat(src, span_danger("Invalid color. Your color is not bright enough."))
 		color_selection()
 		return
 	add_atom_colour(chosen_color, FIXED_COLOUR_PRIORITY)
@@ -223,6 +257,8 @@
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/add_dragon_overlay()
 	cut_overlays()
+	if(!small_sprite.small)
+		return
 	if(stat == DEAD)
 		var/mutable_appearance/overlay = mutable_appearance(icon, "overlay_dead")
 		overlay.appearance_flags = RESET_COLOR
@@ -258,7 +294,7 @@
 		if(!check)
 			break
 		T = check
-	return (getline(src, T) - get_turf(src))
+	return (get_line(src, T) - get_turf(src))
 
 /**
  * Spawns fire at each position in a line from the source to the target.
@@ -274,7 +310,7 @@
 	var/range = 20
 	var/list/turfs = list()
 	turfs = line_target(0, range, at)
-	var/delayFire = -1.5
+	var/delayFire = -1.0
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
 			return
@@ -305,7 +341,7 @@
 			continue
 		hit_list += L
 		L.adjustFireLoss(30)
-		to_chat(L, "<span class='userdanger'>You're hit by [src]'s fire breath!</span>")
+		to_chat(L, span_userdanger("You're hit by [src]'s fire breath!"))
 	// deals damage to mechs
 	for(var/obj/vehicle/sealed/mecha/M in T.contents)
 		if(M in hit_list)
@@ -324,7 +360,7 @@
 /mob/living/simple_animal/hostile/space_dragon/proc/eat(atom/movable/A)
 	if(A && A.loc != src)
 		playsound(src, 'sound/magic/demon_attack1.ogg', 100, TRUE)
-		visible_message("<span class='warning'>[src] swallows [A] whole!</span>")
+		visible_message(span_warning("[src] swallows [A] whole!"))
 		A.forceMove(src)
 		return TRUE
 	return FALSE
@@ -359,32 +395,53 @@
  *
  * Empowers and depowers Space Dragon after a successful rift charge.
  * Empowered, Space Dragon regains all his health and becomes temporarily faster for 30 seconds, along with being tinted red.
- * Depowered simply resets him back to his default state.
  */
-/mob/living/simple_animal/hostile/space_dragon/proc/rift_empower(is_empowered)
-	if(is_empowered)
-		fully_heal()
-		add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
-		set_varspeed(-0.5)
-		addtimer(CALLBACK(src, .proc/rift_empower, FALSE), 300)
-	else
-		remove_filter("anger_glow")
-		set_varspeed(0)
+/mob/living/simple_animal/hostile/space_dragon/proc/rift_empower()
+	fully_heal()
+	add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
+	addtimer(CALLBACK(src, .proc/rift_depower), 30 SECONDS)
+
+/**
+ * Gives Space Dragon their the rift speed buff permanantly.
+ *
+ * Gives Space Dragon the enraged speed buff from charging rifts permanantly.
+ * Only happens in circumstances where Space Dragon completes their objective.
+ */
+/mob/living/simple_animal/hostile/space_dragon/proc/permanant_empower()
+	fully_heal()
+	add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
+	add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
+
+/**
+ * Removes Space Dragon's rift speed buff.
+ *
+ * Removes Space Dragon's speed buff from charging a rift.  This is only called
+ * in rift_empower, which uses a timer to call this after 30 seconds.  Also
+ * removes the red glow from Space Dragon which is synonymous with the speed buff.
+ */
+/mob/living/simple_animal/hostile/space_dragon/proc/rift_depower()
+	remove_filter("anger_glow")
+	remove_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
 
 /**
  * Destroys all of Space Dragon's current rifts.
  *
  * QDeletes all the current rifts after removing their references to other objects.
  * Currently, the only reference they have is to the Dragon which created them, so we clear that before deleting them.
- * Currently used when Space Dragon dies.
+ * Currently used when Space Dragon dies or one of his rifts is destroyed.
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/destroy_rifts()
+	rifts_charged = 0
+	add_movespeed_modifier(/datum/movespeed_modifier/dragon_depression)
+	riftTimer = -1
+	tiredness_mult = 5
+	playsound(src, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.dragon = null
 		rift_list -= rift
 		if(!QDELETED(rift))
 			QDEL_NULL(rift)
-	rifts_charged = 0
 
 /**
  * Handles wing gust from the windup all the way to the endlag at the end.
@@ -408,21 +465,21 @@
 	overlay.appearance_flags = RESET_COLOR
 	add_overlay(overlay)
 	playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)
-	var/gust_locs = spiral_range_turfs(3, get_turf(src))
+	var/gust_locs = spiral_range_turfs(gust_distance, get_turf(src))
 	var/list/hit_things = list()
 	for(var/turf/T in gust_locs)
 		for(var/mob/living/L in T.contents)
 			if(L == src)
 				continue
 			hit_things += L
-			visible_message("<span class='boldwarning'>[L] is knocked back by the gust!</span>")
-			to_chat(L, "<span class='userdanger'>You're knocked back by the gust!</span>")
+			visible_message(span_boldwarning("[L] is knocked back by the gust!"))
+			to_chat(L, span_userdanger("You're knocked back by the gust!"))
 			var/dir_to_target = get_dir(get_turf(src), get_turf(L))
 			var/throwtarget = get_edge_target_turf(target, dir_to_target)
 			L.safe_throw_at(throwtarget, 10, 1, src)
 			L.Paralyze(50)
 	addtimer(CALLBACK(src, .proc/reset_status), 4 + ((tiredness * tiredness_mult) / 10))
-	tiredness = tiredness + (30 * tiredness_mult)
+	tiredness = tiredness + (gust_tiredness * tiredness_mult)
 
 /**
  * Sets up Space Dragon's victory for completing the objectives.
@@ -434,56 +491,43 @@
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/victory()
 	objective_complete = TRUE
+	permanant_empower()
 	var/datum/antagonist/space_dragon/S = mind.has_antag_datum(/datum/antagonist/space_dragon)
 	if(S)
 		var/datum/objective/summon_carp/main_objective = locate() in S.objectives
 		if(main_objective)
 			main_objective.completed = TRUE
-	sound_to_playing_players('sound/machines/alarm.ogg')
-	sleep(100)
-	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. Evacuation of the remaining crew will begin immediately.", "Central Command Spatial Corps")
+	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. \
+	Remaining crew are advised to evacuate as soon as possible.", "Central Command Wildlife Observations")
+	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg')
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.carp_stored = 999999
-	sleep(50)
-	SSshuttle.emergency.request(null, set_coefficient = 0.3)
+		rift.time_charged = rift.max_charge
 
-/datum/action/innate/space_dragon
+/datum/action/innate/summon_rift
+	name = "Summon Rift"
+	desc = "Summon a rift to bring forth a horde of space carp."
 	background_icon_state = "bg_default"
 	icon_icon = 'icons/mob/actions/actions_space_dragon.dmi'
+	button_icon_state = "carp_rift"
 
-/datum/action/innate/space_dragon/gust_attack
-	name = "Gust Attack"
-	button_icon_state = "gust_attack"
-	desc = "Use your wings to knock back foes with gusts of air, pushing them away and stunning them.  Using this too often will leave you vulnerable for longer periods of time."
-
-/datum/action/innate/space_dragon/gust_attack/Activate()
+/datum/action/innate/summon_rift/Activate()
 	var/mob/living/simple_animal/hostile/space_dragon/S = owner
 	if(S.using_special)
 		return
-	S.using_special = TRUE
-	S.icon_state = "spacedragon_gust"
-	S.add_dragon_overlay()
-	S.useGust(0)
-
-/datum/action/innate/space_dragon/summon_rift
-	name = "Summon Rift"
-	button_icon_state = "carp_rift"
-	desc = "Summon a rift to bring forth a horde of space carp."
-
-/datum/action/innate/space_dragon/summon_rift/Activate()
-	var/mob/living/simple_animal/hostile/space_dragon/S = owner
-	if(S.using_special)
+	if(S.riftTimer == -1)
+		to_chat(S, span_warning("Your death has left you unable to summon rifts!"))
 		return
 	var/area/A = get_area(S)
 	if(!(A.area_flags & VALID_TERRITORY))
-		to_chat(S, "<span class='warning'>You can't summon a rift here!  Try summoning somewhere secure within the station!</span>")
+		to_chat(S, span_warning("You can't summon a rift here! Try summoning somewhere secure within the station!"))
 		return
 	for(var/obj/structure/carp_rift/rift in S.rift_list)
 		var/area/RA = get_area(rift)
 		if(RA == A)
-			to_chat(S, "<span class='warning'>You've already summoned a rift in this area!  You have to summon again somewhere else!</span>")
+			to_chat(S, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
 			return
-	to_chat(S, "<span class='warning'>You begin to open a rift...</span>")
+	to_chat(S, span_warning("You begin to open a rift..."))
 	if(do_after(S, 100, target = S))
 		for(var/obj/structure/carp_rift/c in S.loc.contents)
 			return
@@ -492,7 +536,7 @@
 		S.riftTimer = -1
 		CR.dragon = S
 		S.rift_list += CR
-		to_chat(S, "<span class='boldwarning'>The rift has been summoned.  Prevent the crew from destroying it at all costs!</span>")
+		to_chat(S, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
 		notify_ghosts("The Space Dragon has opened a rift!", source = CR, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
 		qdel(src)
 
@@ -508,7 +552,7 @@
 /obj/structure/carp_rift
 	name = "carp rift"
 	desc = "A rift akin to the ones space carp use to travel long distances."
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	max_integrity = 300
 	icon = 'icons/obj/carp_rift.dmi'
 	icon_state = "carp_rift_carpspawn"
@@ -516,33 +560,52 @@
 	light_range = 10
 	anchored = TRUE
 	density = FALSE
-	layer = MASSIVE_OBJ_LAYER
+	plane = MASSIVE_OBJ_PLANE
 	/// The amount of time the rift has charged for.
 	var/time_charged = 0
 	/// The maximum charge the rift can have.
-	var/max_charge = 480
+	var/max_charge = 300
 	/// How many carp spawns it has available.
 	var/carp_stored = 1
 	/// A reference to the Space Dragon that created it.
 	var/mob/living/simple_animal/hostile/space_dragon/dragon
 	/// Current charge state of the rift.
 	var/charge_state = CHARGE_ONGOING
+	/// The interval for adding additional space carp spawns to the rift.
+	var/carp_interval = 60
 	/// The time since an extra carp was added to the ghost role spawning pool.
 	var/last_carp_inc = 0
+	/// A list of all the ckeys which have used this carp rift to spawn in as carps.
+	var/list/ckey_list = list()
 
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
+
+	AddComponent( \
+		/datum/component/aura_healing, \
+		range = 0, \
+		simple_heal = 5, \
+		limit_to_trait = TRAIT_HEALS_FROM_CARP_RIFTS, \
+		healing_color = COLOR_BLUE, \
+	)
+
 	START_PROCESSING(SSobj, src)
+
+// Carp rifts always take heavy explosion damage. Discourages the use of maxcaps
+// and favours more weaker explosives to destroy the portal
+// as they have the same effect on the portal.
+/obj/structure/carp_rift/ex_act(severity, target)
+	return ..(min(EXPLODE_HEAVY, severity))
 
 /obj/structure/carp_rift/examine(mob/user)
 	. = ..()
 	if(time_charged < max_charge)
-		. += "<span class='notice'>It seems to be [(time_charged / max_charge) * 100]% charged.</span>"
+		. += span_notice("It seems to be [(time_charged / max_charge) * 100]% charged.")
 	else
-		. += "<span class='warning'>This one is fully charged, and is capable of bringing many carp to the station's location.</span>"
+		. += span_warning("This one is fully charged. In this state, it is poised to transport a much larger amount of carp than normal.")
 
 	if(isobserver(user))
-		. += "<span class='notice'>It has [carp_stored] carp available to spawn as.</span>"
+		. += span_notice("It has [carp_stored] carp available to spawn as.")
 
 /obj/structure/carp_rift/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/magic/lightningshock.ogg', 50, TRUE)
@@ -550,21 +613,12 @@
 /obj/structure/carp_rift/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	if(time_charged != max_charge + 1)
-		to_chat(dragon, "<span class='boldwarning'>The rift has been destroyed!  You have failed, and find yourself brought down by the weight of your failure.</span>")
-		dragon.set_varspeed(5)
-		dragon.tiredness_mult = 5
-		dragon.destroy_rifts()
-		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
+		dragon?.destroy_rifts()
+		if(dragon)
+			to_chat(dragon, span_boldwarning("A rift has been destroyed! You have failed, and find yourself weakened."))
 	return ..()
 
 /obj/structure/carp_rift/process(delta_time)
-	// Heal carp on our loc.
-	for(var/mob/living/simple_animal/hostile/hostilehere in loc)
-		if("carp" in hostilehere.faction)
-			hostilehere.adjustHealth(-5 * delta_time)
-			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(hostilehere))
-			H.color = "#0000FF"
-
 	// If we're fully charged, just start mass spawning carp and move around.
 	if(charge_state == CHARGE_COMPLETED)
 		if(DT_PROB(1.25, delta_time))
@@ -581,13 +635,15 @@
 
 /obj/structure/carp_rift/attack_ghost(mob/user)
 	. = ..()
+	if(.)
+		return
 	summon_carp(user)
 
 /**
  * Does a series of checks based on the portal's status.
  *
  * Performs a number of checks based on the current charge of the portal, and triggers various effects accordingly.
- * If the current charge is a multiple of 40, add an extra carp spawn.
+ * If the current charge is a multiple of carp_interval, add an extra carp spawn.
  * If we're halfway charged, announce to the crew our location in a CENTCOM announcement.
  * If we're fully charged, tell the crew we are, change our color to yellow, become invulnerable, and give Space Dragon the ability to make another rift, if he hasn't summoned 3 total.
  */
@@ -597,32 +653,32 @@
 		return
 
 	// Can we increase the carp spawn pool size?
-	if(last_carp_inc >= 40)
+	if(last_carp_inc >= carp_interval)
 		carp_stored++
 		icon_state = "carp_rift_carpspawn"
 		if(light_color != LIGHT_COLOR_PURPLE)
 			set_light_color(LIGHT_COLOR_PURPLE)
 			update_light()
 		notify_ghosts("The carp rift can summon an additional carp!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Spawn Available")
-		last_carp_inc -= 40
+		last_carp_inc -= carp_interval
 
 	// Is the rift now fully charged?
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
 		var/area/A = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Spatial Corps")
-		obj_integrity = INFINITY
+		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations")
+		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_YELLOW)
 		update_light()
-		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
-		if(dragon.rifts_charged != 3)
-			dragon.rift = new
-			dragon.rift.Grant(dragon)
+		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
+			var/datum/action/innate/summon_rift/rift = new()
+			rift.Grant(dragon)
 			dragon.riftTimer = 0
-			dragon.rift_empower(TRUE)
+			dragon.rift_empower()
 		// Early return, nothing to do after this point.
 		return
 
@@ -630,7 +686,7 @@
 	if(charge_state < CHARGE_FINALWARNING && time_charged >= (max_charge * 0.5))
 		charge_state = CHARGE_FINALWARNING
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)].  Stop it at all costs!", "Central Command Spatial Corps", 'sound/ai/spanomalies.ogg')
+		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!", "Central Command Wildlife Observations", ANNOUNCER_SPANOMALIES)
 
 /**
  * Used to create carp controlled by ghosts when the option is available.
@@ -644,18 +700,31 @@
 /obj/structure/carp_rift/proc/summon_carp(mob/user)
 	if(carp_stored <= 0)//Not enough carp points
 		return FALSE
-	var/carp_ask = alert("Become a carp?", "Help bring forth the horde?", "Yes", "No")
-	if(carp_ask == "No" || !src || QDELETED(src) || QDELETED(user))
+	var/is_listed = FALSE
+	if (user.ckey in ckey_list)
+		if(carp_stored == 1)
+			to_chat(user, span_warning("You've already become a carp using this rift!  Either wait for a backlog of carp spawns or until the next rift!"))
+			return FALSE
+		is_listed = TRUE
+	var/carp_ask = tgui_alert(user, "Become a carp?", "Carp Rift", list("Yes", "No"))
+	if(carp_ask != "Yes" || !src || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)
-		to_chat(user, "<span class='warning'>The rift already summoned enough carp!</span>")
+		to_chat(user, span_warning("The rift already summoned enough carp!"))
 		return FALSE
+
 	var/mob/living/simple_animal/hostile/carp/newcarp = new /mob/living/simple_animal/hostile/carp(loc)
+	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
+	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
+
+	if(!is_listed)
+		ckey_list += user.ckey
 	newcarp.key = user.key
-	var/datum/antagonist/space_dragon/S = dragon.mind.has_antag_datum(/datum/antagonist/space_dragon)
+	newcarp.set_name()
+	var/datum/antagonist/space_dragon/S = dragon?.mind?.has_antag_datum(/datum/antagonist/space_dragon)
 	if(S)
 		S.carp += newcarp.mind
-	to_chat(newcarp, "<span class='boldwarning'>You have arrived in order to assist the space dragon with securing the rift.  Do not jeopardize the mission, and protect the rift at all costs!</span>")
+	to_chat(newcarp, span_boldwarning("You have arrived in order to assist the space dragon with securing the rifts. Do not jeopardize the mission, and protect the rifts at all costs!"))
 	carp_stored--
 	if(carp_stored <= 0 && charge_state < CHARGE_COMPLETED)
 		icon_state = "carp_rift"

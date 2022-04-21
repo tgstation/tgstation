@@ -13,18 +13,16 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/oldteleporter)
 "e" = (
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "f" = (
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
 /area/ruin/space/oldteleporter)
 "g" = (
-/obj/structure/light_construct/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/airless{
+/obj/structure/light_construct/small/directional/north,
+/turf/open/floor/iron/airless{
 	icon_state = "damaged3"
 	},
 /area/ruin/space/oldteleporter)
@@ -32,41 +30,33 @@
 /obj/machinery/computer/teleporter{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "i" = (
 /obj/machinery/teleport/station,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "j" = (
 /obj/machinery/teleport/hub,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "k" = (
-/obj/structure/light_construct/small{
-	dir = 4
-	},
+/obj/structure/light_construct/small/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/oldteleporter)
 "l" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell{
-	charge = 100;
-	maxcharge = 15000
-	},
-/turf/open/floor/plasteel/airless,
+/obj/item/stock_parts/cell/high,
+/turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "m" = (
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/iron/airless{
 	icon_state = "damaged4"
 	},
 /area/ruin/space/oldteleporter)
 "n" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -23
-	},
-/turf/open/floor/plasteel/airless,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 
 (1,1,1) = {"

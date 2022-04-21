@@ -13,7 +13,7 @@
 		return
 	if(absorb_stun(0)) //continuous effect, so we don't want it to increment the stuns absorbed.
 		return
-	to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
+	to_chat(src, span_notice("You're too exhausted to keep going..."))
 	ADD_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
 	ADD_TRAIT(src, TRAIT_FLOORED, STAMINA)
@@ -25,12 +25,12 @@
 	druggy = max(druggy+amount, 0)
 	if(druggy)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
-		throw_alert("high", /atom/movable/screen/alert/high)
+		throw_alert(ALERT_HIGH, /atom/movable/screen/alert/high)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high", /datum/mood_event/high)
 		sound_environment_override = SOUND_ENVIRONMENT_DRUGGED
 	else
 		clear_fullscreen("high")
-		clear_alert("high")
+		clear_alert(ALERT_HIGH)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "high")
 		sound_environment_override = SOUND_ENVIRONMENT_NONE
 
@@ -38,10 +38,10 @@
 	druggy = max(amount, 0)
 	if(druggy)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
-		throw_alert("high", /atom/movable/screen/alert/high)
+		throw_alert(ALERT_HIGH, /atom/movable/screen/alert/high)
 	else
 		clear_fullscreen("high")
-		clear_alert("high")
+		clear_alert(ALERT_HIGH)
 
 /mob/living/carbon/adjust_disgust(amount)
 	disgust = clamp(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)

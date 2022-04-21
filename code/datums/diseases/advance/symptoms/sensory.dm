@@ -18,25 +18,28 @@
 	)
 
 /datum/symptom/mind_restoration/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["resistance"] >= 6) //heal brain damage
+	if(A.totalResistance() >= 6) //heal brain damage
 		trauma_heal_mild = TRUE
-	if(A.properties["resistance"] >= 9) //heal severe traumas
+	if(A.totalResistance() >= 9) //heal severe traumas
 		trauma_heal_severe = TRUE
-	if(A.properties["transmittable"] >= 8) //purge alcohol
+	if(A.totalTransmittable() >= 8) //purge alcohol
 		purge_alcohol = TRUE
 
 /datum/symptom/mind_restoration/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 
 
 	if(A.stage >= 3)
 		M.dizziness = max(0, M.dizziness - 2)
-		M.drowsyness = max(0, M.drowsyness - 2)
-		M.slurring = max(0, M.slurring - 2)
+		M.adjust_drowsyness(-2)
+		M.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/speech/slurring/drunk)
+
 		M.set_confusion(max(0, M.get_confusion() - 2))
 		if(purge_alcohol)
 			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
@@ -45,7 +48,7 @@
 				H.drunkenness = max(H.drunkenness - 5, 0)
 
 	if(A.stage >= 4)
-		M.drowsyness = max(0, M.drowsyness - 2)
+		M.adjust_drowsyness(-2)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
 			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
 		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
@@ -77,7 +80,8 @@
 	symptom_delay_max = 1
 
 /datum/symptom/sensory_restoration/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
@@ -93,14 +97,14 @@
 			eyes.applyOrganDamage(-2)
 			if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
 				if(prob(20))
-					to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
+					to_chat(M, span_warning("Your vision slowly returns..."))
 					M.cure_blind(EYE_DAMAGE)
 					M.cure_nearsighted(EYE_DAMAGE)
 					M.blur_eyes(35)
 			else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
-				to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
+				to_chat(M, span_warning("The blackness in your peripheral vision fades."))
 				M.cure_nearsighted(EYE_DAMAGE)
 				M.blur_eyes(10)
 		else
 			if(prob(base_message_chance))
-				to_chat(M, "<span class='notice'>[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your hearing feels more acute.")]</span>")
+				to_chat(M, span_notice("[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your hearing feels more acute.")]"))

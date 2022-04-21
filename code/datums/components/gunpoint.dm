@@ -5,7 +5,7 @@
 /// How long it takes from stage 2 starting to move up to stage 3
 #define GUNPOINT_DELAY_STAGE_3 7.5 SECONDS
 /// If the projectile doesn't have a wound_bonus of CANT_WOUND, we add (this * the stage mult) to their wound_bonus and bare_wound_bonus upon triggering
-#define GUNPOINT_BASE_WOUND_BONUS	5
+#define GUNPOINT_BASE_WOUND_BONUS 5
 /// How much the damage and wound bonus mod is multiplied when you're on stage 1
 #define GUNPOINT_MULT_STAGE_1 1
 /// As above, for stage 2
@@ -37,15 +37,16 @@
 
 	RegisterSignal(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), .proc/cancel)
 
-	shooter.visible_message("<span class='danger'>[shooter] aims [weapon] point blank at [target]!</span>", \
-		"<span class='danger'>You aim [weapon] point blank at [target]!</span>", ignored_mobs = target)
-	to_chat(target, "<span class='userdanger'>[shooter] aims [weapon] point blank at you!</span>")
+	shooter.visible_message(span_danger("[shooter] aims [weapon] point blank at [target]!"), \
+		span_danger("You aim [weapon] point blank at [target]!"), ignored_mobs = target)
+	to_chat(target, span_userdanger("[shooter] aims [weapon] point blank at you!"))
+	add_memory_in_range(target, 7, MEMORY_GUNPOINT, list(DETAIL_PROTAGONIST = target, DETAIL_DEUTERAGONIST = shooter, DETAIL_WHAT_BY = weapon), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
 
-	shooter.apply_status_effect(STATUS_EFFECT_HOLDUP)
-	target.apply_status_effect(STATUS_EFFECT_HELDUP)
+	shooter.apply_status_effect(/datum/status_effect/holdup, shooter)
+	target.apply_status_effect(/datum/status_effect/grouped/heldup, shooter)
 
 	if(istype(weapon, /obj/item/gun/ballistic/rocketlauncher) && weapon.chambered)
-		if(target.stat == CONSCIOUS && is_nuclear_operative(shooter) && !is_nuclear_operative(target) && (locate(/obj/item/disk/nuclear) in target.get_contents()) && shooter.client)
+		if(target.stat == CONSCIOUS && IS_NUKE_OP(shooter) && !IS_NUKE_OP(target) && (locate(/obj/item/disk/nuclear) in target.get_contents()) && shooter.client)
 			shooter.client.give_award(/datum/award/achievement/misc/rocket_holdup, shooter)
 
 	target.do_alert_animation()
@@ -56,19 +57,20 @@
 
 /datum/component/gunpoint/Destroy(force, silent)
 	var/mob/living/shooter = parent
-	shooter.remove_status_effect(STATUS_EFFECT_HOLDUP)
-	target.remove_status_effect(STATUS_EFFECT_HELDUP)
+	shooter.remove_status_effect(/datum/status_effect/holdup)
+	target.remove_status_effect(/datum/status_effect/grouped/heldup, shooter)
+	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 	return ..()
 
 /datum/component/gunpoint/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_deescalate)
-	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMGE, .proc/flinch)
+	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, .proc/flinch)
 	RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, .proc/check_shove)
 	RegisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), .proc/check_bump)
 
 /datum/component/gunpoint/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMGE)
+	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	UnregisterSignal(parent, COMSIG_MOB_ATTACK_HAND)
 	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
 
@@ -79,33 +81,33 @@
 	if(A != target)
 		return
 	var/mob/living/shooter = parent
-	shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
-		"<span class='danger'>You bump into [target] and fumble your aim!</span>", ignored_mobs = target)
-	to_chat(target, "<span class='userdanger'>[shooter] bumps into you and fumbles [shooter.p_their()] aim!</span>")
+	shooter.visible_message(span_danger("[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!"), \
+		span_danger("You bump into [target] and fumble your aim!"), ignored_mobs = target)
+	to_chat(target, span_userdanger("[shooter] bumps into you and fumbles [shooter.p_their()] aim!"))
 	qdel(src)
 
 ///If the shooter shoves or grabs the target, cancel the holdup to avoid cheesing and forcing the charged shot
-/datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T)
+/datum/component/gunpoint/proc/check_shove(mob/living/carbon/shooter, mob/shooter_again, mob/living/T, datum/martial_art/attacker_style, modifiers)
 	SIGNAL_HANDLER
 
-	if(T != target || shooter.a_intent == INTENT_DISARM || shooter.a_intent == INTENT_GRAB)
+	if(T != target || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
-	shooter.visible_message("<span class='danger'>[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!</span>", \
-		"<span class='danger'>You bump into [target] and fumble your aim!</span>", ignored_mobs = target)
-	to_chat(target, "<span class='userdanger'>[shooter] bumps into you and fumbles [shooter.p_their()] aim!</span>")
+	shooter.visible_message(span_danger("[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!"), \
+		span_danger("You bump into [target] and fumble your aim!"), ignored_mobs = target)
+	to_chat(target, span_userdanger("[shooter] bumps into you and fumbles [shooter.p_their()] aim!"))
 	qdel(src)
 
 ///Update the damage multiplier for whatever stage we're entering into
 /datum/component/gunpoint/proc/update_stage(new_stage)
 	stage = new_stage
 	if(stage == 2)
-		to_chat(parent, "<span class='danger'>You steady [weapon] on [target].</span>")
-		to_chat(target, "<span class='userdanger'>[parent] has steadied [weapon] on you!</span>")
+		to_chat(parent, span_danger("You steady [weapon] on [target]."))
+		to_chat(target, span_userdanger("[parent] has steadied [weapon] on you!"))
 		damage_mult = GUNPOINT_MULT_STAGE_2
 		addtimer(CALLBACK(src, .proc/update_stage, 3), GUNPOINT_DELAY_STAGE_3)
 	else if(stage == 3)
-		to_chat(parent, "<span class='danger'>You have fully steadied [weapon] on [target].</span>")
-		to_chat(target, "<span class='userdanger'>[parent] has fully steadied [weapon] on you!</span>")
+		to_chat(parent, span_danger("You have fully steadied [weapon] on [target]."))
+		to_chat(target, span_userdanger("[parent] has fully steadied [weapon] on you!"))
 		damage_mult = GUNPOINT_MULT_STAGE_3
 
 ///Cancel the holdup if the shooter moves out of sight or out of range of the target
@@ -117,11 +119,13 @@
 
 ///Bang bang, we're firing a charged shot off
 /datum/component/gunpoint/proc/trigger_reaction()
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/async_trigger_reaction)
 
+/datum/component/gunpoint/proc/async_trigger_reaction()
 	var/mob/living/shooter = parent
-	shooter.remove_status_effect(STATUS_EFFECT_HOLDUP) // try doing these before the trigger gets pulled since the target (or shooter even) may not exist after pulling the trigger, dig?
-	target.remove_status_effect(STATUS_EFFECT_HELDUP)
+	shooter.remove_status_effect(/datum/status_effect/holdup) // try doing these before the trigger gets pulled since the target (or shooter even) may not exist after pulling the trigger, dig?
+	target.remove_status_effect(/datum/status_effect/grouped/heldup, shooter)
 	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 
 	if(point_of_no_return)
@@ -129,27 +133,27 @@
 	point_of_no_return = TRUE
 
 	if(!weapon.can_shoot() || !weapon.can_trigger_gun(shooter) || (weapon.weapon_weight == WEAPON_HEAVY && shooter.get_inactive_held_item()))
-		shooter.visible_message("<span class='danger'>[shooter] fumbles [weapon]!</span>", \
-			"<span class='danger'>You fumble [weapon] and fail to fire at [target]!</span>", ignored_mobs = target)
-		to_chat(target, "<span class='userdanger'>[shooter] fumbles [weapon] and fails to fire at you!</span>")
+		shooter.visible_message(span_danger("[shooter] fumbles [weapon]!"), \
+			span_danger("You fumble [weapon] and fail to fire at [target]!"), ignored_mobs = target)
+		to_chat(target, span_userdanger("[shooter] fumbles [weapon] and fails to fire at you!"))
 		qdel(src)
 		return
 
-	if(weapon.chambered && weapon.chambered.BB)
-		weapon.chambered.BB.damage *= damage_mult
-		if(weapon.chambered.BB.wound_bonus != CANT_WOUND)
-			weapon.chambered.BB.wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
-			weapon.chambered.BB.bare_wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
+	if(weapon.chambered && weapon.chambered.loaded_projectile)
+		weapon.chambered.loaded_projectile.damage *= damage_mult
+		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+			weapon.chambered.loaded_projectile.wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
+			weapon.chambered.loaded_projectile.bare_wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
 
 	if(weapon.check_botched(shooter))
 		return
 
 	var/fired = weapon.process_fire(target, shooter)
-	if(!fired && weapon.chambered?.BB)
-		weapon.chambered.BB.damage /= damage_mult
-		if(weapon.chambered.BB.wound_bonus != CANT_WOUND)
-			weapon.chambered.BB.wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
-			weapon.chambered.BB.bare_wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
+	if(!fired && weapon.chambered?.loaded_projectile)
+		weapon.chambered.loaded_projectile.damage /= damage_mult
+		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+			weapon.chambered.loaded_projectile.wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
+			weapon.chambered.loaded_projectile.bare_wound_bonus -= damage_mult * GUNPOINT_BASE_WOUND_BONUS
 
 	qdel(src)
 
@@ -158,10 +162,9 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/shooter = parent
-	shooter.visible_message("<span class='danger'>[shooter] breaks [shooter.p_their()] aim on [target]!</span>", \
-		"<span class='danger'>You are no longer aiming [weapon] at [target].</span>", ignored_mobs = target)
-	to_chat(target, "<span class='userdanger'>[shooter] breaks [shooter.p_their()] aim on you!</span>")
-	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
+	shooter.visible_message(span_danger("[shooter] breaks [shooter.p_their()] aim on [target]!"), \
+		span_danger("You are no longer aiming [weapon] at [target]."), ignored_mobs = target)
+	to_chat(target, span_userdanger("[shooter] breaks [shooter.p_their()] aim on you!"))
 	qdel(src)
 
 ///If the shooter is hit by an attack, they have a 50% chance to flinch and fire. If it hit the arm holding the trigger, it's an 80% chance to fire instead
@@ -182,8 +185,8 @@
 		flinch_chance = 80
 
 	if(prob(flinch_chance))
-		shooter.visible_message("<span class='danger'>[shooter] flinches!</span>", \
-			"<span class='danger'>You flinch!</span>")
+		shooter.visible_message(span_danger("[shooter] flinches!"), \
+			span_danger("You flinch!"))
 		INVOKE_ASYNC(src, .proc/trigger_reaction)
 
 #undef GUNPOINT_SHOOTER_STRAY_RANGE

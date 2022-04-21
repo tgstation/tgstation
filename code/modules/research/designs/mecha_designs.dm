@@ -12,7 +12,7 @@
 
 /datum/design/board/ripley_peri
 	name = "APLU \"Ripley\" Peripherals Control module"
-	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
+	desc = "Allows for the construction of a \"Ripley\" Peripheral Control module."
 	id = "ripley_peri"
 	build_path = /obj/item/circuitboard/mecha/ripley/peripherals
 	category = list("Exosuit Modules")
@@ -143,9 +143,33 @@
 
 /datum/design/board/clarke_peri
 	name = "\"Clarke\" Peripherals Control module"
-	desc = "Allows for the construction of a  \"Clarke\" Peripheral Control module."
+	desc = "Allows for the construction of a \"Clarke\" Peripheral Control module."
 	id = "clarke_peri"
 	build_path = /obj/item/circuitboard/mecha/clarke/peripherals
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/savannah_ivanov_main
+	name = "\"Savannah-Ivanov\" Central Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Central Control module."
+	id = "savannah_ivanov_main"
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/main
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/savannah_ivanov_peri
+	name = "\"Savannah-Ivanov\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Peripheral Control module."
+	id = "savannah_ivanov_peri"
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/peripherals
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/savannah_ivanov_targ
+	name = "\"Savannah-Ivanov\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Weapons & Targeting Control module."
+	id = "savannah_ivanov_targ"
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/targeting
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -167,7 +191,7 @@
 	name = "LBX AC 10 Scattershot Ammunition"
 	desc = "Ammunition for the LBX AC 10 exosuit weapon."
 	id = "mech_scattershot_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/scattershot
 	materials = list(/datum/material/iron=6000)
 	construction_time = 20
@@ -188,7 +212,7 @@
 	name = "FNX-99 Carbine Ammunition"
 	desc = "Ammunition for the FNX-99 \"Hades\" Carbine."
 	id = "mech_carbine_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/incendiary
 	materials = list(/datum/material/iron=6000)
 	construction_time = 20
@@ -259,7 +283,7 @@
 	name = "SGL-6 Grenade Launcher Ammunition"
 	desc = "Ammunition for the SGL-6 Grenade Launcher."
 	id = "mech_grenade_launcher_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/flashbang
 	materials = list(/datum/material/iron=4000,/datum/material/gold=500,/datum/material/iron=500)
 	construction_time = 20
@@ -280,7 +304,7 @@
 	name = "SRM-8 Missile Rack Ammunition"
 	desc = "Ammunition for the SRM-8 Missile Rack."
 	id = "mech_missile_rack_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/missiles_br
 	materials = list(/datum/material/iron=8000,/datum/material/gold=500,/datum/material/iron=500)
 	construction_time = 20
@@ -301,7 +325,7 @@
 	name = "SOB-3 Clusterbang Launcher Ammunition"
 	desc = "Ammunition for the SOB-3 Clusterbang Launcher"
 	id = "clusterbang_launcher_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/clusterbang
 	materials = list(/datum/material/iron=6000,/datum/material/gold=1500,/datum/material/uranium=1500)
 	construction_time = 20
@@ -368,32 +392,22 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/mech_energy_relay
-	name = "Exosuit Module (Tesla Energy Relay)"
-	desc = "Tesla Energy Relay"
-	id = "mech_energy_relay"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
-	materials = list(/datum/material/iron=10000,/datum/material/glass =  2000,/datum/material/gold=2000,/datum/material/silver=3000)
-	construction_time = 100
-	category = list("Exosuit Equipment")
-
 /datum/design/mech_ccw_armor
 	name = "Exosuit Module (Reactive Armor Booster Module)"
-	desc = "Exosuit-mounted armor booster."
+	desc = "Exosuit-mounted melee armor booster."
 	id = "mech_ccw_armor"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster
+	build_path = /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
 	materials = list(/datum/material/iron=20000,/datum/material/silver=5000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_proj_armor
 	name = "Exosuit Module (Reflective Armor Booster Module)"
-	desc = "Exosuit-mounted armor booster."
+	desc = "Exosuit-mounted ranged armor booster."
 	id = "mech_proj_armor"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
+	build_path = /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
 	materials = list(/datum/material/iron=20000,/datum/material/gold=5000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
@@ -408,16 +422,6 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/mech_generator_nuclear
-	name = "Exosuit Module (ExoNuclear Reactor)"
-	desc = "Compact nuclear reactor module."
-	id = "mech_generator_nuclear"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
-	materials = list(/datum/material/iron=10000,/datum/material/glass =  1000,/datum/material/silver=500)
-	construction_time = 100
-	category = list("Exosuit Equipment")
-
 /datum/design/mech_plasma_cutter
 	name = "Exosuit Mining (217-D Heavy Plasma Cutter)"
 	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demolishing solid obstacles."
@@ -425,6 +429,16 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
 	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000, /datum/material/plasma = 2000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+/datum/design/mecha_kineticgun
+	name = "Exosuit Mining (Proto-kinetic Accelerator)"
+	desc = "An exosuit-mounted mining tool that does increased damage in low pressure. Drawing from an onboard power source allows it to project further than the handheld version."
+	id = "mecha_kineticgun"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
+	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -442,7 +456,7 @@
 	name = "Ultra AC 2 Ammunition"
 	desc = "Ammunition for the Ultra AC 2 LMG"
 	id = "mech_lmg_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/lmg
 	materials = list(/datum/material/iron=4000)
 	construction_time = 20
@@ -455,7 +469,7 @@
 	id = "mech_sleeper"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/sleeper
-	materials = list(/datum/material/iron=5000, /datum/material/glass =  10000)
+	materials = list(/datum/material/iron=5000, /datum/material/glass = 10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 

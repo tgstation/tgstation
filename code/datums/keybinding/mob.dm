@@ -15,43 +15,13 @@
 		return
 	var/mob/M = user.mob
 	if(!M.pulling)
-		to_chat(user, "<span class='notice'>You are not pulling anything.</span>")
+		to_chat(user, span_notice("You are not pulling anything."))
 	else
 		M.stop_pulling()
 	return TRUE
 
-/datum/keybinding/mob/cycle_intent_right
-	hotkey_keys = list("Northwest") // HOME
-	name = "cycle_intent_right"
-	full_name = "cycle intent right"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_CYCLEINTENTRIGHT_DOWN
-
-/datum/keybinding/mob/cycle_intent_right/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.a_intent_change(INTENT_HOTKEY_RIGHT)
-	return TRUE
-
-/datum/keybinding/mob/cycle_intent_left
-	hotkey_keys = list("Insert")
-	name = "cycle_intent_left"
-	full_name = "cycle intent left"
-	description = ""
-	keybind_signal = COMSIG_KB_MOB_CYCLEINTENTLEFT_DOWN
-
-/datum/keybinding/mob/cycle_intent_left/down(client/user)
-	. = ..()
-	if(.)
-		return
-	var/mob/M = user.mob
-	M.a_intent_change(INTENT_HOTKEY_LEFT)
-	return TRUE
-
 /datum/keybinding/mob/swap_hands
-	hotkey_keys = list("X", "Northeast") // PAGEUP
+	hotkey_keys = list("X")
 	name = "swap_hands"
 	full_name = "Swap hands"
 	description = ""
@@ -66,7 +36,7 @@
 	return TRUE
 
 /datum/keybinding/mob/activate_inhand
-	hotkey_keys = list("Z", "Southeast") // Southeast = PAGEDOWN
+	hotkey_keys = list("Z")
 	name = "activate_inhand"
 	full_name = "Activate in-hand"
 	description = "Uses whatever item you have inhand"
@@ -96,7 +66,7 @@
 	var/mob/M = user.mob
 	var/obj/item/I = M.get_active_held_item()
 	if(!I)
-		to_chat(user, "<span class='warning'>You have nothing to drop in your hand!</span>")
+		to_chat(user, span_warning("You have nothing to drop in your hand!"))
 	else
 		user.mob.dropItemToGround(I)
 	return TRUE

@@ -8,7 +8,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
-	worn_icon_state = "electronic"
+	worn_icon_state = "pinpointer"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
@@ -21,7 +21,7 @@
 	var/process_scan = TRUE // some pinpointers change target every time they scan, which means we can't have it change very process but instead when it turns on.
 	var/icon_suffix = "" // for special pinpointer icons
 
-/obj/item/pinpointer/Initialize()
+/obj/item/pinpointer/Initialize(mapload)
 	. = ..()
 	GLOB.pinpointer_list += src
 
@@ -35,7 +35,7 @@
 	if(!process_scan) //since it's not scanning on process, it scans here.
 		scan_for_target()
 	toggle_on()
-	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
+	user.visible_message(span_notice("[user] [active ? "" : "de"]activates [user.p_their()] pinpointer."), span_notice("You [active ? "" : "de"]activate your pinpointer."))
 
 /obj/item/pinpointer/proc/toggle_on()
 	active = !active
@@ -45,14 +45,14 @@
 	else
 		target = null
 		STOP_PROCESSING(SSfastprocess, src)
-	update_icon()
+	update_appearance()
 
 /obj/item/pinpointer/process()
 	if(!active)
 		return PROCESS_KILL
 	if(process_scan)
 		scan_for_target()
-	update_icon()
+	update_appearance()
 
 /obj/item/pinpointer/proc/scan_for_target()
 	return
@@ -89,6 +89,7 @@
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
+	worn_icon_state = "pinpointer_crew"
 	custom_price = PAYCHECK_MEDIUM * 4
 	custom_premium_price = PAYCHECK_MEDIUM * 6
 	var/has_owner = FALSE
@@ -97,29 +98,25 @@
 
 /obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
 	var/turf/here = get_turf(src)
-	if((H.z == 0 || H.z == here.z) && istype(H.w_uniform, /obj/item/clothing/under))
-		var/obj/item/clothing/under/U = H.w_uniform
-
-		// Suit sensors must be on maximum.
-		if(!U.has_sensor || (U.sensor_mode < SENSOR_COORDS && !ignore_suit_sensor_level))
-			return FALSE
-
-		var/turf/there = get_turf(H)
-		return (H.z != 0 || (there && there.z == here.z))
-
+	var/turf/there = get_turf(H)
+	if(here && there && (there.z == here.z || (is_station_level(here.z) && is_station_level(there.z)))) // Device and target should be on the same level or different levels of the same station
+		if (istype(H.w_uniform, /obj/item/clothing/under))
+			var/obj/item/clothing/under/U = H.w_uniform
+			if(U.has_sensor && (U.sensor_mode >= SENSOR_COORDS || ignore_suit_sensor_level)) // Suit sensors must be on maximum or a contractor pinpointer
+				return TRUE
 	return FALSE
 
 /obj/item/pinpointer/crew/attack_self(mob/living/user)
 	if(active)
 		toggle_on()
-		user.visible_message("<span class='notice'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
+		user.visible_message(span_notice("[user] deactivates [user.p_their()] pinpointer."), span_notice("You deactivate your pinpointer."))
 		return
 
 	if (has_owner && !pinpointer_owner)
 		pinpointer_owner = user
 
 	if (pinpointer_owner && pinpointer_owner != user)
-		to_chat(user, "<span class='notice'>The pinpointer doesn't respond. It seems to only recognise its owner.</span>")
+		to_chat(user, span_notice("The pinpointer doesn't respond. It seems to only recognise its owner."))
 		return
 
 	var/list/name_counts = list()
@@ -142,17 +139,19 @@
 		names[crewmember_name] = H
 		name_counts[crewmember_name] = 1
 
-	if(!names.len)
-		user.visible_message("<span class='notice'>[user]'s pinpointer fails to detect a signal.</span>", "<span class='notice'>Your pinpointer fails to detect a signal.</span>")
+	if(!length(names))
+		user.visible_message(span_notice("[user]'s pinpointer fails to detect a signal."), span_notice("Your pinpointer fails to detect a signal."))
 		return
-
-	var/A = input(user, "Person to track", "Pinpoint") in sortList(names)
-	if(!A || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+	var/pinpoint_target = tgui_input_list(user, "Person to track", "Pinpoint", sort_list(names))
+	if(isnull(pinpoint_target))
 		return
-
-	target = names[A]
+	if(isnull(names[pinpoint_target]))
+		return
+	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+		return
+	target = names[pinpoint_target]
 	toggle_on()
-	user.visible_message("<span class='notice'>[user] activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You activate your pinpointer.</span>")
+	user.visible_message(span_notice("[user] activates [user.p_their()] pinpointer."), span_notice("You activate your pinpointer."))
 
 /obj/item/pinpointer/crew/scan_for_target()
 	if(target)
@@ -167,6 +166,7 @@
 	name = "proximity crew pinpointer"
 	desc = "A handheld tracking device that displays its proximity to crew suit sensors."
 	icon_state = "pinpointer_crewprox"
+	worn_icon_state = "pinpointer_prox"
 	custom_price = PAYCHECK_MEDIUM * 3
 
 /obj/item/pinpointer/crew/prox/get_direction_icon(here, there)
@@ -219,6 +219,7 @@
 	name = "fugitive pinpointer"
 	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."
 	icon_state = "pinpointer_hunter"
+	worn_icon_state = "pinpointer_black"
 	icon_suffix = "_hunter"
 	var/obj/shuttleport
 

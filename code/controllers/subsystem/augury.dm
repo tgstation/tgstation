@@ -14,8 +14,11 @@ SUBSYSTEM_DEF(augury)
 
 /datum/controller/subsystem/augury/proc/register_doom(atom/A, severity)
 	doombringers[A] = severity
+	RegisterSignal(A, COMSIG_PARENT_QDELETING, .proc/unregister_doom)
 
 /datum/controller/subsystem/augury/proc/unregister_doom(atom/A)
+	SIGNAL_HANDLER
+	UnregisterSignal(A, COMSIG_PARENT_QDELETING)
 	doombringers -= A
 
 /datum/controller/subsystem/augury/fire()
@@ -67,17 +70,17 @@ SUBSYSTEM_DEF(augury)
 
 /datum/action/innate/augury/Activate()
 	SSaugury.watchers += owner
-	to_chat(owner, "<span class='notice'>You are now auto-following debris.</span>")
+	to_chat(owner, span_notice("You are now auto-following debris."))
 	active = TRUE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/innate/augury/Deactivate()
 	SSaugury.watchers -= owner
-	to_chat(owner, "<span class='notice'>You are no longer auto-following debris.</span>")
+	to_chat(owner, span_notice("You are no longer auto-following debris."))
 	active = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()
 
-/datum/action/innate/augury/UpdateButtonIcon(status_only = FALSE, force)
+/datum/action/innate/augury/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force)
 	..()
 	if(active)
 		button.icon_state = "template_active"

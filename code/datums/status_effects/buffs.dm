@@ -19,7 +19,7 @@
 	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
 	<br>Becomes undroppable at <b>[HIS_GRACE_FAMISHED]</b>\
 	<br>Will consume you at <b>[HIS_GRACE_CONSUME_OWNER]</b>"
-	..()
+	return ..()
 
 /datum/status_effect/his_grace/on_apply()
 	owner.log_message("gained His Grace's stun immunity", LOG_ATTACK)
@@ -35,7 +35,7 @@
 		if(HG.awakened)
 			graces++
 	if(!graces)
-		owner.apply_status_effect(STATUS_EFFECT_HISWRATH)
+		owner.apply_status_effect(/datum/status_effect/his_wrath)
 		qdel(src)
 		return
 	var/grace_heal = bloodlust * 0.05
@@ -57,13 +57,13 @@
 	alert_type = /atom/movable/screen/alert/status_effect/wish_granters_gift
 
 /datum/status_effect/wish_granters_gift/on_apply()
-	to_chat(owner, "<span class='notice'>Death is not your end! The Wish Granter's energy suffuses you, and you begin to rise...</span>")
+	to_chat(owner, span_notice("Death is not your end! The Wish Granter's energy suffuses you, and you begin to rise..."))
 	return ..()
 
 
 /datum/status_effect/wish_granters_gift/on_remove()
 	owner.revive(full_heal = TRUE, admin_revive = TRUE)
-	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>")
+	owner.visible_message(span_warning("[owner] appears to wake from the dead, having healed all wounds!"), span_notice("You have regenerated."))
 
 
 /atom/movable/screen/alert/status_effect/wish_granters_gift
@@ -82,11 +82,11 @@
 	if(!QDELETED(GLOB.cult_narsie))
 		return //if Nar'Sie is alive, don't even worry about it
 	var/area/A = get_area(owner)
-	for(var/datum/mind/B in SSticker.mode.cult)
+	for(var/datum/mind/B as anything in get_antag_minds(/datum/antagonist/cult))
 		if(isliving(B.current))
 			var/mob/living/M = B.current
 			SEND_SOUND(M, sound('sound/hallucinations/veryfar_noise.ogg'))
-			to_chat(M, "<span class='cultlarge'>The Cult's Master, [owner], has fallen in \the [A]!</span>")
+			to_chat(M, span_cultlarge("The Cult's Master, [owner], has fallen in \the [A]!"))
 
 /datum/status_effect/cult_master/tick()
 	if(owner.stat != DEAD && !alive)
@@ -114,7 +114,7 @@
 /datum/status_effect/blooddrunk/on_apply()
 	. = ..()
 	if(.)
-		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk")
+		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.physiology.brute_mod *= 0.1
@@ -137,7 +137,7 @@
 		H.physiology.clone_mod *= 10
 		H.physiology.stamina_mod *= 10
 	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT);
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
@@ -149,7 +149,7 @@
 
 
 /datum/status_effect/sword_spin/on_apply()
-	owner.visible_message("<span class='danger'>[owner] begins swinging the sword with inhuman strength!</span>")
+	owner.visible_message(span_danger("[owner] begins swinging the sword with inhuman strength!"))
 	var/oldcolor = owner.color
 	owner.color = "#ff0000"
 	owner.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
@@ -168,7 +168,7 @@
 		slashy.attack(M, owner)
 
 /datum/status_effect/sword_spin/on_remove()
-	owner.visible_message("<span class='warning'>[owner]'s inhuman strength dissipates and the sword's runes grow cold!</span>")
+	owner.visible_message(span_warning("[owner]'s inhuman strength dissipates and the sword's runes grow cold!"))
 
 
 //Used by changelings to rapidly heal
@@ -202,15 +202,7 @@
 	id = "Exercised"
 	duration = 1200
 	alert_type = null
-
-/datum/status_effect/exercised/on_creation(mob/living/new_owner, ...)
-	. = ..()
-	STOP_PROCESSING(SSfastprocess, src)
-	START_PROCESSING(SSprocessing, src) //this lasts 20 minutes, so SSfastprocess isn't needed.
-
-/datum/status_effect/exercised/Destroy()
-	. = ..()
-	STOP_PROCESSING(SSprocessing, src)
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 
 //Hippocratic Oath: Applied when the Rod of Asclepius is activated.
 /datum/status_effect/hippocratic_oath
@@ -220,18 +212,39 @@
 	tick_interval = 25
 	examine_text = "<span class='notice'>They seem to have an aura of healing and helpfulness about them.</span>"
 	alert_type = null
+
+	var/datum/component/aura_healing/aura_healing
 	var/hand
 	var/deathTick = 0
 
 /datum/status_effect/hippocratic_oath/on_apply()
+	var/static/list/organ_healing = list(
+		ORGAN_SLOT_BRAIN = 1.4,
+	)
+
+	aura_healing = owner.AddComponent( \
+		/datum/component/aura_healing, \
+		range = 7, \
+		brute_heal = 1.4, \
+		burn_heal = 1.4, \
+		toxin_heal = 1.4, \
+		suffocation_heal = 1.4, \
+		stamina_heal = 1.4, \
+		clone_heal = 0.4, \
+		simple_heal = 1.4, \
+		organ_healing = organ_healing, \
+		healing_color = "#375637", \
+	)
+
 	//Makes the user passive, it's in their oath not to harm!
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.add_hud_to(owner)
 	return ..()
 
 /datum/status_effect/hippocratic_oath/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "hippocraticOath")
+	QDEL_NULL(aura_healing)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	H.remove_hud_from(owner)
 
@@ -266,11 +279,11 @@
 							qdel(L)
 							consume_owner() //see above comment
 							return
-					to_chat(itemUser, "<span class='notice'>Your arm suddenly grows back with the Rod of Asclepius still attached!</span>")
+					to_chat(itemUser, span_notice("Your arm suddenly grows back with the Rod of Asclepius still attached!"))
 				else
 					//Otherwise get rid of whatever else is in their hand and return the rod to said hand
 					itemUser.put_in_hand(newRod, hand, forced = TRUE)
-					to_chat(itemUser, "<span class='notice'>The Rod of Asclepius suddenly grows back out of your arm!</span>")
+					to_chat(itemUser, span_notice("The Rod of Asclepius suddenly grows back out of your arm!"))
 			//Because a servant of medicines stops at nothing to help others, lets keep them on their toes and give them an additional boost.
 			if(itemUser.health < itemUser.maxHealth)
 				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
@@ -281,30 +294,11 @@
 			itemUser.adjustStaminaLoss(-1.5)
 			itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1.5)
 			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
-		//Heal all those around you, unbiased
-		for(var/mob/living/L in view(7, owner))
-			if(L.health < L.maxHealth)
-				new /obj/effect/temp_visual/heal(get_turf(L), "#375637")
-			if(iscarbon(L))
-				L.adjustBruteLoss(-3.5)
-				L.adjustFireLoss(-3.5)
-				L.adjustToxLoss(-3.5, forced = TRUE) //Because Slime People are people too
-				L.adjustOxyLoss(-3.5)
-				L.adjustStaminaLoss(-3.5)
-				L.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3.5)
-				L.adjustCloneLoss(-1) //Becasue apparently clone damage is the bastion of all health
-			else if(issilicon(L))
-				L.adjustBruteLoss(-3.5)
-				L.adjustFireLoss(-3.5)
-			else if(isanimal(L))
-				var/mob/living/simple_animal/SM = L
-				SM.adjustHealth(-3.5, forced = TRUE)
 
 /datum/status_effect/hippocratic_oath/proc/consume_owner()
-	owner.visible_message("<span class='notice'>[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.</span>")
-	var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
+	owner.visible_message(span_notice("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty."))
 	var/list/chems = list(/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/oxandrolone)
-	healSnake.poison_type = pick(chems)
+	var/mob/living/simple_animal/hostile/retaliate/snake/healSnake = new(owner.loc, pick(chems))
 	healSnake.name = "Asclepius's Snake"
 	healSnake.real_name = "Asclepius's Snake"
 	healSnake.desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of its burden. Unlike the average snake, its bites contain chemicals with minor healing properties."
@@ -339,26 +333,36 @@
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()
 	owner.bodytemperature = owner.get_body_temp_normal()
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/humi = owner
-		humi.coretemperature = humi.get_body_temp_normal()
+		humi.set_coretemperature(humi.get_body_temp_normal())
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/antimagic
 	id = "antimagic"
+	status_type = STATUS_EFFECT_REFRESH
 	duration = 10 SECONDS
 	examine_text = "<span class='notice'>They seem to be covered in a dull, grey aura.</span>"
 
+/datum/status_effect/antimagic/on_creation(mob/living/new_owner, duration = 10 SECONDS)
+	src.duration = duration
+	return ..()
+
+/datum/status_effect/antimagic/refresh(effect, duration = 10 SECONDS)
+	if(duration == -1)
+		return
+	duration = world.time + duration
+
 /datum/status_effect/antimagic/on_apply()
-	owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
+	owner.visible_message(span_notice("[owner] is coated with a dull aura!"))
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	//glowing wings overlay
 	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
@@ -366,7 +370,7 @@
 
 /datum/status_effect/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
+	owner.visible_message(span_warning("[owner]'s dull aura fades away..."))
 
 /datum/status_effect/crucible_soul
 	id = "Blessing of Crucible Soul"
@@ -377,19 +381,18 @@
 	var/turf/location
 
 /datum/status_effect/crucible_soul/on_apply()
-	. = ..()
-	to_chat(owner,"<span class='notice'>You phase through reality, nothing is out of bounds!</span>")
+	to_chat(owner,span_notice("You phase through reality, nothing is out of bounds!"))
 	owner.alpha = 180
-	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB
+	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE
 	location = get_turf(owner)
+	return TRUE
 
 /datum/status_effect/crucible_soul/on_remove()
-	to_chat(owner,"<span class='notice'>You regain your physicality, returning you to your original location...</span>")
+	to_chat(owner,span_notice("You regain your physicality, returning you to your original location..."))
 	owner.alpha = initial(owner.alpha)
-	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB)
+	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE)
 	owner.forceMove(location)
 	location = null
-	return ..()
 
 /datum/status_effect/duskndawn
 	id = "Blessing of Dusk and Dawn"
@@ -398,14 +401,13 @@
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
 /datum/status_effect/duskndawn/on_apply()
-	. = ..()
-	ADD_TRAIT(owner,TRAIT_XRAY_VISION,type)
+	ADD_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
 	owner.update_sight()
+	return TRUE
 
 /datum/status_effect/duskndawn/on_remove()
-	REMOVE_TRAIT(owner,TRAIT_XRAY_VISION,type)
+	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
 	owner.update_sight()
-	return ..()
 
 /datum/status_effect/marshal
 	id = "Blessing of Wounded Soldier"
@@ -415,15 +417,13 @@
 	alert_type = /atom/movable/screen/alert/status_effect/marshal
 
 /datum/status_effect/marshal/on_apply()
-	. = ..()
-	ADD_TRAIT(owner,TRAIT_IGNOREDAMAGESLOWDOWN,type)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	return TRUE
 
 /datum/status_effect/marshal/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner,TRAIT_IGNOREDAMAGESLOWDOWN,type)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/marshal/tick()
-	. = ..()
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbie = owner
@@ -450,15 +450,118 @@
 
 /atom/movable/screen/alert/status_effect/crucible_soul
 	name = "Blessing of Crucible Soul"
-	desc = "You phased through the reality, you are halfway to your final destination..."
+	desc = "You phased through reality. You are halfway to your final destination..."
 	icon_state = "crucible"
 
 /atom/movable/screen/alert/status_effect/duskndawn
 	name = "Blessing of Dusk and Dawn"
-	desc = "Many things hide beyond the horizon, with Owl's help i managed to slip past sun's guard and moon's watch."
+	desc = "Many things hide beyond the horizon. With Owl's help I managed to slip past Sun's guard and Moon's watch."
 	icon_state = "duskndawn"
 
 /atom/movable/screen/alert/status_effect/marshal
 	name = "Blessing of Wounded Soldier"
-	desc = "Some people seek power through redemption, one thing many people don't know is that battle is the ultimate redemption and wounds let you bask in eternal glory."
+	desc = "Some people seek power through redemption. One thing many people don't know is that battle \
+		is the ultimate redemption, and wounds let you bask in eternal glory."
 	icon_state = "wounded_soldier"
+
+/datum/status_effect/lightningorb
+	id = "Lightning Orb"
+	duration = 30 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/lightningorb
+
+/datum/status_effect/lightningorb/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
+	to_chat(owner, span_notice("You feel fast!"))
+
+/datum/status_effect/lightningorb/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
+	to_chat(owner, span_notice("You slow down."))
+
+/atom/movable/screen/alert/status_effect/lightningorb
+	name = "Lightning Orb"
+	desc = "The speed surges through you!"
+	icon_state = "lightningorb"
+
+/datum/status_effect/mayhem
+	id = "Mayhem"
+	duration = 2 MINUTES
+	/// The chainsaw spawned by the status effect
+	var/obj/item/chainsaw/doomslayer/chainsaw
+
+/datum/status_effect/mayhem/on_apply()
+	. = ..()
+	to_chat(owner, "<span class='reallybig redtext'>RIP AND TEAR</span>")
+	SEND_SOUND(owner, sound('sound/hallucinations/veryfar_noise.ogg'))
+	new /datum/hallucination/delusion(owner, forced = TRUE, force_kind = "demon", duration = duration, skip_nearby = FALSE)
+	chainsaw = new(get_turf(owner))
+	owner.log_message("entered a blood frenzy", LOG_ATTACK)
+	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+	owner.drop_all_held_items()
+	owner.put_in_hands(chainsaw, forced = TRUE)
+	chainsaw.attack_self(owner)
+	owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
+	to_chat(owner, span_warning("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!"))
+	var/datum/client_colour/colour = owner.add_client_colour(/datum/client_colour/bloodlust)
+	QDEL_IN(colour, 1.1 SECONDS)
+
+/datum/status_effect/mayhem/on_remove()
+	. = ..()
+	to_chat(owner, span_notice("Your bloodlust seeps back into the bog of your subconscious and you regain self control."))
+	owner.log_message("exited a blood frenzy", LOG_ATTACK)
+	QDEL_NULL(chainsaw)
+
+/datum/status_effect/speed_boost
+	id = "speed_boost"
+	duration = 2 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/speed_boost/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+	return ..()
+
+/datum/status_effect/speed_boost/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_speed_boost, update = TRUE)
+
+/datum/movespeed_modifier/status_speed_boost
+	multiplicative_slowdown = -1
+
+///this buff provides a max health buff and a heal.
+/datum/status_effect/limited_buff/health_buff
+	id = "health_buff"
+	alert_type = null
+	///This var stores the mobs max health when the buff was first applied, and determines the size of future buffs.database.database.
+	var/historic_max_health
+	///This var determines how large the health buff will be. health_buff_modifier * historic_max_health * stacks
+	var/health_buff_modifier = 0.1 //translate to a 10% buff over historic health per stack
+	///This modifier multiplies the healing by the effect.
+	var/healing_modifier = 2
+	///If the mob has a low max health, we instead use this flat value to increase max health and calculate any heal.
+	var/fragile_mob_health_buff = 10
+
+/datum/status_effect/limited_buff/health_buff/on_creation(mob/living/new_owner)
+	historic_max_health = new_owner.maxHealth
+	. = ..()
+
+/datum/status_effect/limited_buff/health_buff/on_apply()
+	. = ..()
+	var/health_increase = round(max(fragile_mob_health_buff, historic_max_health * health_buff_modifier))
+	owner.maxHealth += health_increase
+	owner.balloon_alert_to_viewers("health buffed")
+	to_chat(owner, span_nicegreen("You feel healthy, like if your body is little stronger than it was a moment ago."))
+
+	if(isanimal(owner))	//dumb animals have their own proc for healing.
+		var/mob/living/simple_animal/healthy_animal = owner
+		healthy_animal.adjustHealth(-(health_increase * healing_modifier))
+	else
+		owner.adjustBruteLoss(-(health_increase * healing_modifier))
+
+/datum/status_effect/limited_buff/health_buff/maxed_out()
+	. = ..()
+	to_chat(owner, span_warning("You don't feel any healthier."))

@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "c" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "d" = (
 /turf/closed/mineral/random,
@@ -25,7 +25,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "i" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "j" = (
@@ -40,7 +40,7 @@
 /area/ruin/unpowered)
 "l" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "m" = (
@@ -57,7 +57,7 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "p" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/unpowered)
 "q" = (
 /obj/structure/barricade/wooden,
@@ -65,11 +65,11 @@
 /area/ruin/unpowered)
 "r" = (
 /obj/structure/barricade/wooden,
-/obj/machinery/door/airlock/external,
-/turf/open/floor/plating/asteroid/airless,
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered)
 "s" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 

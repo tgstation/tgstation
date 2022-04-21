@@ -3,7 +3,7 @@
 	icon_state = "tesla_projectile"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	damage = 10 //A worse lasergun
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 	var/zap_range = 3
 	var/power = 10000
 
@@ -24,3 +24,16 @@
 	name = "tesla orb"
 	power = 20000
 	damage = 15 //Mech man big
+
+/obj/projectile/energy/tesla_cannon
+	name = "tesla orb"
+	icon_state = "ice_1"
+	damage = 0
+	speed = 1.5
+	var/shock_damage = 5
+
+/obj/projectile/energy/tesla_cannon/on_hit(atom/target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/victim = target
+		victim.electrocute_act(shock_damage, src, siemens_coeff = 1, flags = SHOCK_NOSTUN|SHOCK_TESLA)

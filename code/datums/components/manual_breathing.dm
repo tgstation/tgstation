@@ -8,7 +8,7 @@
 	var/check_every = 12 SECONDS
 	var/grace_period = 6 SECONDS
 	var/damage_rate = 1 // organ damage taken per tick
-	var/datum/emote/next_breath_type = /datum/emote/inhale
+	var/datum/emote/next_breath_type = /datum/emote/living/inhale
 
 /datum/component/manual_breathing/Initialize()
 	if(!iscarbon(parent))
@@ -20,12 +20,12 @@
 	if(L)
 		START_PROCESSING(SSdcs, src)
 		last_breath = world.time
-		to_chat(C, "<span class='notice'>You suddenly realize you're breathing manually.</span>")
+		to_chat(C, span_notice("You suddenly realize you're breathing manually."))
 
 /datum/component/manual_breathing/Destroy(force, silent)
 	L = null
 	STOP_PROCESSING(SSdcs, src)
-	to_chat(parent, "<span class='notice'>You revert back to automatic breathing.</span>")
+	to_chat(parent, span_notice("You revert back to automatic breathing."))
 	return ..()
 
 /datum/component/manual_breathing/RegisterWithParent()
@@ -58,14 +58,14 @@
 	var/next_text = initial(next_breath_type.key)
 	if(world.time > (last_breath + check_every + grace_period))
 		if(!warn_dying)
-			to_chat(C, "<span class='userdanger'>You begin to suffocate, you need to [next_text]!</span>")
+			to_chat(C, span_userdanger("You begin to suffocate, you need to [next_text]!"))
 			warn_dying = TRUE
 
 		L.applyOrganDamage(damage_rate)
 		C.losebreath += 0.8
 	else if(world.time > (last_breath + check_every))
 		if(!warn_grace)
-			to_chat(C, "<span class='danger'>You feel a need to [next_text]!</span>")
+			to_chat(C, span_danger("You feel a need to [next_text]!"))
 			warn_grace = TRUE
 
 /datum/component/manual_breathing/proc/check_added_organ(mob/who_cares, obj/item/organ/O)
@@ -90,10 +90,10 @@
 	SIGNAL_HANDLER
 
 	if(emote.type == next_breath_type)
-		if(next_breath_type == /datum/emote/inhale)
-			next_breath_type = /datum/emote/exhale
+		if(next_breath_type == /datum/emote/living/inhale)
+			next_breath_type = /datum/emote/living/exhale
 		else
-			next_breath_type = /datum/emote/inhale
+			next_breath_type = /datum/emote/living/inhale
 
 		warn_grace = FALSE
 		warn_dying = FALSE

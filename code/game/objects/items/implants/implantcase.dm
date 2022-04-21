@@ -1,3 +1,6 @@
+/**
+ * Item used to store implants. Can be renamed with a pen. Implants are moved between those and implanters when a mob uses an implanter on a case.
+ */
 /obj/item/implantcase
 	name = "implant case"
 	desc = "A glass case containing an implant."
@@ -10,53 +13,46 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/glass=500)
+	///the implant within the case
 	var/obj/item/implant/imp = null
+	///Type of implant this will spawn as imp upon being spawned
 	var/imp_type
 
 
 /obj/item/implantcase/update_icon_state()
-	if(imp)
-		icon_state = "implantcase-[imp.implant_color]"
-	else
-		icon_state = "implantcase-0"
+	icon_state = "implantcase-[imp ? imp.implant_color : 0]"
+	return ..()
 
-
-/obj/item/implantcase/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pen))
+/obj/item/implantcase/attackby(obj/item/used_item, mob/living/user, params)
+	if(istype(used_item, /obj/item/pen))
 		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
+			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
-		var/t = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_held_item() != W)
+		var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
+		if((user.get_active_held_item() != used_item) || !user.canUseTopic(src, BE_CLOSE))
 			return
-		if(!user.canUseTopic(src, BE_CLOSE))
-			return
-		if(t)
-			name = "implant case - '[t]'"
+		if(new_name)
+			name = "implant case - '[new_name]'"
 		else
 			name = "implant case"
-	else if(istype(W, /obj/item/implanter))
-		var/obj/item/implanter/I = W
-		if(I.imp)
-			if(imp || I.imp.imp_in)
-				return
-			I.imp.forceMove(src)
-			imp = I.imp
-			I.imp = null
-			update_icon()
+	else if(istype(used_item, /obj/item/implanter))
+		var/obj/item/implanter/used_implanter = used_item
+		if(used_implanter.imp && !imp)
+			//implanter to case implant transfer
+			used_implanter.imp.forceMove(src)
+			imp = used_implanter.imp
+			used_implanter.imp = null
+			update_appearance()
 			reagents = imp.reagents
-			I.update_icon()
-		else
-			if(imp)
-				if(I.imp)
-					return
-				imp.forceMove(I)
-				I.imp = imp
-				imp = null
-				reagents = null
-				update_icon()
-			I.update_icon()
-
+			used_implanter.update_appearance()
+		else if(!used_implanter.imp && imp)
+			//implant case to implanter implant transfer
+			imp.forceMove(used_implanter)
+			used_implanter.imp = imp
+			imp = null
+			reagents = null
+			update_appearance()
+			used_implanter.update_appearance()
 	else
 		return ..()
 
@@ -64,22 +60,19 @@
 	. = ..()
 	if(imp_type)
 		imp = new imp_type(src)
-	update_icon()
+	update_appearance()
 	if(imp)
 		reagents = imp.reagents
 
 
+///An implant case that spawns with a tracking implant, as well as an appropriate name and description.
 /obj/item/implantcase/tracking
 	name = "implant case - 'Tracking'"
 	desc = "A glass case containing a tracking implant."
 	imp_type = /obj/item/implant/tracking
 
+///An implant case that spawns with a firearms authentication implant, as well as an appropriate name and description.
 /obj/item/implantcase/weapons_auth
 	name = "implant case - 'Firearms Authentication'"
 	desc = "A glass case containing a firearms authentication implant."
 	imp_type = /obj/item/implant/weapons_auth
-
-/obj/item/implantcase/adrenaline
-	name = "implant case - 'Adrenaline'"
-	desc = "A glass case containing an adrenaline implant."
-	imp_type = /obj/item/implant/adrenalin

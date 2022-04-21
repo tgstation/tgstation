@@ -20,6 +20,7 @@
 	pixel_x = -16
 	base_pixel_x = -16
 	layer = LARGE_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	speed = 10
 	stat_attack = HARD_CRIT
 	robust_searching = 1
@@ -56,12 +57,13 @@
 
 /obj/effect/temp_visual/leaper_projectile_impact
 	name = "leaper bubble"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "leaper_bubble_pop"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	duration = 3
 
-/obj/effect/temp_visual/leaper_projectile_impact/Initialize()
+/obj/effect/temp_visual/leaper_projectile_impact/Initialize(mapload)
 	. = ..()
 	new /obj/effect/decal/cleanable/leaper_sludge(get_turf(src))
 
@@ -71,25 +73,39 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	icon_state = "tomato_floor1"
 
+/obj/effect/decal/cleanable/leaper_sludge/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_LEAPER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /obj/structure/leaper_bubble
 	name = "leaper bubble"
 	desc = "A floating bubble containing leaper venom. The contents are under a surprising amount of pressure."
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "leaper"
 	max_integrity = 10
 	density = FALSE
 
-/obj/structure/leaper_bubble/Initialize()
+/obj/structure/leaper_bubble/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
 	QDEL_IN(src, 100)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_LEAPER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/obj/structure/leaper_bubble/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/movetype_handler)
+	ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPER_BUBBLE_TRAIT)
 
 /obj/structure/leaper_bubble/Destroy()
 	new /obj/effect/temp_visual/leaper_projectile_impact(get_turf(src))
 	playsound(src,'sound/effects/snap.ogg',50, TRUE, -1)
 	return ..()
 
-/obj/structure/leaper_bubble/Crossed(atom/movable/AM)
+/obj/structure/leaper_bubble/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/jungle/leaper))
@@ -102,7 +118,6 @@
 				var/mob/living/simple_animal/A = L
 				A.adjustHealth(25)
 			qdel(src)
-	return ..()
 
 /datum/reagent/toxin/leaper_venom
 	name = "Leaper venom"
@@ -112,9 +127,9 @@
 	taste_description = "french cuisine"
 	taste_mult = 1.3
 
-/datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/leaper_venom/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(volume >= 10)
-		M.adjustToxLoss(5, 0)
+		M.adjustToxLoss(5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
 	..()
 
 /obj/effect/temp_visual/leaper_crush
@@ -123,19 +138,21 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "lily_pad"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	pixel_x = -32
 	base_pixel_x = -32
 	pixel_y = -32
 	base_pixel_y = -32
 	duration = 30
 
-/mob/living/simple_animal/hostile/jungle/leaper/Initialize()
+/mob/living/simple_animal/hostile/jungle/leaper/Initialize(mapload)
 	. = ..()
 	remove_verb(src, /mob/living/verb/pulled)
+	add_cell_sample()
 
 /mob/living/simple_animal/hostile/jungle/leaper/CtrlClickOn(atom/A)
 	face_atom(A)
-	target = A
+	GiveTarget(A)
 	if(!isturf(loc))
 		return
 	if(next_move > world.time)
@@ -168,7 +185,7 @@
 		if(!hopping)
 			Hop()
 
-/mob/living/simple_animal/hostile/jungle/leaper/Life()
+/mob/living/simple_animal/hostile/jungle/leaper/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	update_icons()
 
@@ -197,7 +214,7 @@
 	if(z != target.z)
 		return
 	hopping = TRUE
-	density = FALSE
+	set_density(FALSE)
 	pass_flags |= PASSMOB
 	notransform = TRUE
 	var/turf/new_turf = locate((target.x + rand(-3,3)),(target.y + rand(-3,3)),target.z)
@@ -210,7 +227,7 @@
 	throw_at(new_turf, max(3,get_dist(src,new_turf)), 1, src, FALSE, callback = CALLBACK(src, .proc/FinishHop))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/FinishHop()
-	density = TRUE
+	set_density(TRUE)
 	notransform = FALSE
 	pass_flags &= ~PASSMOB
 	hopping = FALSE
@@ -227,12 +244,12 @@
 	addtimer(CALLBACK(src, .proc/BellyFlopHop, new_turf), 30)
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/BellyFlopHop(turf/T)
-	density = FALSE
+	set_density(FALSE)
 	throw_at(T, get_dist(src,T),1,src, FALSE, callback = CALLBACK(src, .proc/Crush))
 
 /mob/living/simple_animal/hostile/jungle/leaper/proc/Crush()
 	hopping = FALSE
-	density = TRUE
+	set_density(TRUE)
 	notransform = FALSE
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE)
 	for(var/mob/living/L in orange(1, src))
@@ -243,7 +260,7 @@
 				throw_dir = pick(GLOB.alldirs)
 			var/throwtarget = get_edge_target_turf(src, throw_dir)
 			L.throw_at(throwtarget, 3, 1)
-			visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
+			visible_message(span_warning("[L] is thrown clear of [src]!"))
 	if(ckey)//Lessens ability to chain stun as a player
 		ranged_cooldown = ranged_cooldown_time + world.time
 		update_icons()
@@ -264,5 +281,9 @@
 			icon_state = "leaper_alert"
 			return
 	icon_state = "leaper"
+
+/mob/living/simple_animal/hostile/jungle/leaper/add_cell_sample()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_LEAPER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 #undef PLAYER_HOP_DELAY

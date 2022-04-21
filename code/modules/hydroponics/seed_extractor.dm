@@ -67,7 +67,29 @@
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
+/obj/machinery/seed_extractor/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	register_context()
+
+/obj/machinery/seed_extractor/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+
+	if(held_item?.get_plant_seed())
+		context[SCREENTIP_CONTEXT_LMB] = "Make seeds"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/storage/bag/plants) && (locate(/obj/item/seeds) in held_item.contents))
+		context[SCREENTIP_CONTEXT_LMB] = "Store seeds"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
 /obj/machinery/seed_extractor/RefreshParts()
+	. = ..()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_seeds = initial(max_seeds) * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -76,17 +98,19 @@
 /obj/machinery/seed_extractor/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Extracting <b>[seed_multiplier]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]%</b> seeds.</span>"
+		. += span_notice("The status display reads: Extracting <b>[seed_multiplier] to [seed_multiplier * 4]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]</b> seeds.")
 
-/obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)
+/obj/machinery/seed_extractor/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/seed_extractor/attackby(obj/item/O, mob/living/user, params)
 
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
 		return
 
 	if(default_pry_open(O))
-		return
-
-	if(default_unfasten_wrench(user, O))
 		return
 
 	if(default_deconstruction_crowbar(O))
@@ -101,21 +125,21 @@
 			++loaded
 			add_seed(G)
 		if (loaded)
-			to_chat(user, "<span class='notice'>You put as many seeds from \the [O.name] into [src] as you can.</span>")
+			to_chat(user, span_notice("You put as many seeds from \the [O.name] into [src] as you can."))
 		else
-			to_chat(user, "<span class='notice'>There are no seeds in \the [O.name].</span>")
+			to_chat(user, span_notice("There are no seeds in \the [O.name]."))
 		return
 
 	else if(seedify(O,-1, src, user))
-		to_chat(user, "<span class='notice'>You extract some seeds.</span>")
+		to_chat(user, span_notice("You extract some seeds."))
 		return
 	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
-			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
+			to_chat(user, span_notice("You add [O] to [src.name]."))
 			updateUsrDialog()
 		return
-	else if(user.a_intent != INTENT_HARM)
-		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
+	else if(!user.combat_mode)
+		to_chat(user, span_warning("You can't extract any seeds from \the [O.name]!"))
 	else
 		return ..()
 
@@ -141,7 +165,7 @@
  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
-		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")
+		to_chat(usr, span_notice("\The [src] is full."))
 		return FALSE
 
 	var/datum/component/storage/STR = O.loc.GetComponent(/datum/component/storage)
@@ -190,11 +214,19 @@
 		if("select")
 			var/item = params["item"]
 			if(piles[item] && length(piles[item]) > 0)
-				var/datum/weakref/WO = piles[item][1]
-				var/obj/item/seeds/O = WO.resolve()
-				if(O)
-					piles[item] -= WO
-					O.forceMove(drop_location())
-					. = TRUE
-					//to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+				var/datum/weakref/found_seed_weakref = piles[item][1]
+				var/obj/item/seeds/found_seed = found_seed_weakref.resolve()
+				if(!found_seed)
+					return
 
+				piles[item] -= found_seed_weakref
+				if(usr)
+					var/mob/user = usr
+					if(user.put_in_hands(found_seed))
+						to_chat(user, span_notice("You take [found_seed] out of the slot."))
+					else
+						to_chat(user, span_notice("[found_seed] falls onto the floor."))
+				else
+					found_seed.forceMove(drop_location())
+					visible_message(span_notice("[found_seed] falls onto the floor."), null, span_hear("You hear a soft clatter."), COMBAT_MESSAGE_RANGE)
+				. = TRUE

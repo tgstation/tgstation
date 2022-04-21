@@ -3,196 +3,165 @@ SUBSYSTEM_DEF(pai)
 
 	flags = SS_NO_INIT|SS_NO_FIRE
 
+	/// List of pAI candidates, including those not submitted.
 	var/list/candidates = list()
-	var/ghost_spam = FALSE
-	var/spam_delay = 100
+	/// Prevents a crew member from hitting "request pAI"
+	var/request_spam = FALSE
+	/// Prevents a pAI from submitting itself repeatedly and sounding an alert.
+	var/submit_spam = FALSE
+	/// All pAI cards on the map.
 	var/list/pai_card_list = list()
 
-/datum/controller/subsystem/pai/Topic(href, href_list[])
-	if(href_list["download"])
-		var/datum/pai_candidate/candidate = locate(href_list["candidate"]) in candidates
-		var/obj/item/paicard/card = locate(href_list["device"]) in pai_card_list
-		if(card.pai)
-			return
-		if(istype(card, /obj/item/paicard) && istype(candidate, /datum/pai_candidate))
-			if(check_ready(candidate) != candidate)
-				return FALSE
-			var/mob/living/silicon/pai/pai = new(card)
-			if(!candidate.name)
-				pai.name = pick(GLOB.ninja_names)
-			else
-				pai.name = candidate.name
-			pai.real_name = pai.name
-			pai.key = candidate.key
+/// Created when a user clicks the "pAI candidate" window
+/datum/pai_candidate
+	/// User inputted OOC comments
+	var/comments
+	/// User inputted behavior description
+	var/description
+	/// User's ckey - not input
+	var/key
+	/// User's pAI name. If blank, ninja name.
+	var/name
+	/// If the user has hit "submit"
+	var/ready = FALSE
 
-			card.setPersonality(pai)
+/**
+ * Pings ghosts to announce that someone is requesting a pAI
+ *
+ * Arguments
+ * @pai - The card requesting assistance
+ * @user - The player requesting a pAI
+*/
+/datum/controller/subsystem/pai/proc/findPAI(obj/item/paicard/pai, mob/user)
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
+		to_chat(user, span_warning("Due to growing incidents of SELF corrupted independent artificial intelligences, freeform personality devices have been temporarily banned in this sector."))
+		return
+	if(request_spam)
+		to_chat(user, span_warning("Request sent too recently."))
+		return
+	request_spam = TRUE
+	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
+	to_chat(user, span_notice("You have requested pAI assistance."))
+	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
+	notify_ghosts("[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.", source=user, alert_overlay = alert_overlay, action=NOTIFY_ORBIT, header="pAI Request!", ignore_key = POLL_IGNORE_PAI)
+	addtimer(CALLBACK(src, .proc/request_again), 10 SECONDS)
+	return TRUE
 
-			candidates -= candidate
-			usr << browse(null, "window=findPai")
-
-	if(href_list["new"])
-		var/datum/pai_candidate/candidate = locate(href_list["candidate"]) in candidates
-		var/option = href_list["option"]
-		var/t = ""
-
-		switch(option)
-			if("name")
-				t = sanitize_name(stripped_input(usr, "Enter a name for your pAI", "pAI Name", candidate.name, MAX_NAME_LEN),allow_numbers = TRUE)
-				if(t)
-					candidate.name = t
-			if("desc")
-				t = stripped_multiline_input(usr, "Enter a description for your pAI", "pAI Description", candidate.description, MAX_MESSAGE_LEN)
-				if(t)
-					candidate.description = t
-			if("role")
-				t = stripped_input(usr, "Enter a role for your pAI", "pAI Role", candidate.role, MAX_MESSAGE_LEN)
-				if(t)
-					candidate.role = t
-			if("ooc")
-				t = stripped_multiline_input(usr, "Enter any OOC comments", "pAI OOC Comments", candidate.comments, MAX_MESSAGE_LEN)
-				if(t)
-					candidate.comments = t
-			if("save")
-				candidate.savefile_save(usr)
-			if("load")
-				candidate.savefile_load(usr)
-				//In case people have saved unsanitized stuff.
-				if(candidate.name)
-					candidate.name = copytext_char(sanitize(candidate.name),1,MAX_NAME_LEN)
-				if(candidate.description)
-					candidate.description = copytext_char(sanitize(candidate.description),1,MAX_MESSAGE_LEN)
-				if(candidate.role)
-					candidate.role = copytext_char(sanitize(candidate.role),1,MAX_MESSAGE_LEN)
-				if(candidate.comments)
-					candidate.comments = copytext_char(sanitize(candidate.comments),1,MAX_MESSAGE_LEN)
-
-			if("submit")
-				if(candidate)
-					candidate.ready = TRUE
-					for(var/obj/item/paicard/p in pai_card_list)
-						if(!p.pai)
-							p.alertUpdate()
-				usr << browse(null, "window=paiRecruit")
-				return
-		recruitWindow(usr)
-
-/datum/controller/subsystem/pai/proc/recruitWindow(mob/M)
-	var/datum/pai_candidate/candidate
-	for(var/datum/pai_candidate/c in candidates)
-		if(c.key == M.key)
-			candidate = c
-	if(!candidate)
+/**
+ * This is the primary window proc when the pAI candidate
+ * hud menu is pressed by observers.
+ *
+ * Arguments
+ * @user - The ghost doing the pressing.
+ */
+/datum/controller/subsystem/pai/proc/recruitWindow(mob/user)
+	/// Searches for a previous candidate upon opening the menu
+	var/datum/pai_candidate/candidate = check_candidate(user)
+	if(isnull(candidate))
 		candidate = new /datum/pai_candidate()
-		candidate.key = M.key
+		candidate.key = user.key
 		candidates.Add(candidate)
+	ui_interact(user)
 
+/datum/controller/subsystem/pai/ui_state(mob/user)
+	return GLOB.observer_state
 
-	var/dat = ""
-	dat += {"
-			<style type="text/css">
+/datum/controller/subsystem/pai/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PaiSubmit")
+		ui.open()
 
-			p.top {
-				background-color: #AAAAAA; color: black;
-			}
+/datum/controller/subsystem/pai/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	/// The matching candidate from search
+	var/datum/pai_candidate/candidate = check_candidate(user)
+	if(isnull(candidate))
+		return data
+	data["comments"] = candidate.comments
+	data["description"] = candidate.description
+	data["name"] = candidate.name
+	return data
 
-			tr.d0 td {
-				background-color: #CC9999; color: black;
-			}
-			tr.d1 td {
-				background-color: #9999CC; color: black;
-			}
-			</style>
-			"}
-
-	dat += "<p class=\"top\">Please configure your pAI personality's options. Remember, what you enter here could determine whether or not the user requesting a personality chooses you!</p>"
-	dat += "<table>"
-	dat += "<tr class=\"d0\"><td>Name:</td><td>[candidate.name]</td></tr>"
-	dat += "<tr class=\"d1\"><td><a href='byond://?src=[REF(src)];option=name;new=1;candidate=[REF(candidate)]'>\[Edit\]</a></td><td>What you plan to call yourself. Suggestions: Any character name you would choose for a station character OR an AI.</td></tr>"
-
-	dat += "<tr class=\"d0\"><td>Description:</td><td>[candidate.description]</td></tr>"
-	dat += "<tr class=\"d1\"><td><a href='byond://?src=[REF(src)];option=desc;new=1;candidate=[REF(candidate)]'>\[Edit\]</a></td><td>What sort of pAI you typically play; your mannerisms, your quirks, etc. This can be as sparse or as detailed as you like.</td></tr>"
-
-	dat += "<tr class=\"d0\"><td>Preferred Role:</td><td>[candidate.role]</td></tr>"
-	dat += "<tr class=\"d1\"><td><a href='byond://?src=[REF(src)];option=role;new=1;candidate=[REF(candidate)]'>\[Edit\]</a></td><td>Do you like to partner with sneaky social ninjas? Like to help security hunt down thugs? Enjoy watching an engineer's back while he saves the station yet again? This doesn't have to be limited to just station jobs. Pretty much any general descriptor for what you'd like to be doing works here.</td></tr>"
-
-	dat += "<tr class=\"d0\"><td>OOC Comments:</td><td>[candidate.comments]</td></tr>"
-	dat += "<tr class=\"d1\"><td><a href='byond://?src=[REF(src)];option=ooc;new=1;candidate=[REF(candidate)]'>\[Edit\]</a></td><td>Anything you'd like to address specifically to the player reading this in an OOC manner. \"I prefer more serious RP.\", \"I'm still learning the interface!\", etc. Feel free to leave this blank if you want.</td></tr>"
-
-	dat += "</table>"
-
-	dat += "<br>"
-	dat += "<h3><a href='byond://?src=[REF(src)];option=submit;new=1;candidate=[REF(candidate)]'>Submit Personality</a></h3><br>"
-	dat += "<a href='byond://?src=[REF(src)];option=save;new=1;candidate=[REF(candidate)]'>Save Personality</a><br>"
-	dat += "<a href='byond://?src=[REF(src)];option=load;new=1;candidate=[REF(candidate)]'>Load Personality</a><br>"
-
-	M << browse(dat, "window=paiRecruit")
-
-/datum/controller/subsystem/pai/proc/spam_again()
-	ghost_spam = FALSE
-
-/datum/controller/subsystem/pai/proc/check_ready(datum/pai_candidate/C)
-	if(!C.ready)
+/datum/controller/subsystem/pai/ui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+	/// The matching candidate from search
+	var/datum/pai_candidate/candidate = check_candidate(usr)
+	if(isnull(candidate))
+		to_chat(usr, span_warning("There was an error. Please resubmit."))
+		ui.close()
 		return FALSE
-	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(O.key == C.key)
-			return C
+	switch(action)
+		if("submit")
+			candidate.comments = params["candidate"]["comments"]
+			candidate.description = params["candidate"]["description"]
+			candidate.name = params["candidate"]["name"]
+			candidate.ready = TRUE
+			ui.close()
+			submit_alert()
+		if("save")
+			candidate.comments = params["candidate"]["comments"]
+			candidate.description = params["candidate"]["description"]
+			candidate.name = params["candidate"]["name"]
+			candidate.savefile_save(usr)
+		if("load")
+			candidate.savefile_load(usr)
+			//In case people have saved unsanitized stuff.
+			if(candidate.comments)
+				candidate.comments = copytext_char(candidate.comments,1,MAX_MESSAGE_LEN)
+			if(candidate.description)
+				candidate.description = copytext_char(candidate.description,1,MAX_MESSAGE_LEN)
+			if(candidate.name)
+				candidate.name = copytext_char(candidate.name,1,MAX_NAME_LEN)
+			ui.send_full_update()
+	return
+
+/**
+ * Finds the candidate in question from the list of candidates.
+ */
+/datum/controller/subsystem/pai/proc/check_candidate(mob/user)
+	/// Finds a matching candidate.
+	var/datum/pai_candidate/candidate
+	for(var/datum/pai_candidate/checked_candidate as anything in candidates)
+		if(checked_candidate.key == user.key)
+			candidate = checked_candidate
+			return candidate
+	return null
+
+/**
+ * Pings all pAI cards on the station that new candidates are available.
+ */
+/datum/controller/subsystem/pai/proc/submit_alert()
+	if(submit_spam)
+		to_chat(usr, span_warning("Your candidacy has been submitted, but pAI cards have been alerted too recently."))
+		return FALSE
+	submit_spam = TRUE
+	for(var/obj/item/paicard/paicard in pai_card_list)
+		if(!paicard.pai)
+			paicard.alertUpdate()
+	to_chat(usr, span_notice("Your pAI candidacy has been submitted!"))
+	addtimer(CALLBACK(src, .proc/submit_again), 10 SECONDS)
+	return TRUE
+
+/datum/controller/subsystem/pai/proc/request_again()
+	request_spam = FALSE
+
+/datum/controller/subsystem/pai/proc/submit_again()
+	submit_spam = FALSE
+
+/**
+ * Checks if a candidate is ready so that they may be displayed in the pAI
+ * card's candidate window
+ */
+/datum/controller/subsystem/pai/proc/check_ready(datum/pai_candidate/candidate)
+	if(!candidate.ready)
+		return FALSE
+	for(var/mob/dead/observer/observer in GLOB.player_list)
+		if(observer.key == candidate.key)
+			return candidate
 	return FALSE
 
-/datum/controller/subsystem/pai/proc/findPAI(obj/item/paicard/p, mob/user)
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
-		to_chat(user, "<span class='warning'>Due to growing incidents of SELF corrupted independent artificial intelligences, freeform personality devices have been temporarily banned in this sector.</span>")
-		return
-	if(!ghost_spam)
-		ghost_spam = TRUE
-		for(var/mob/dead/observer/G in GLOB.player_list)
-			if(!G.key)
-				continue
-			if(!(ROLE_PAI in G.client.prefs.be_special))
-				continue
-			to_chat(G, "<span class='ghostalert'>[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
-		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
-	var/list/available = list()
-	for(var/datum/pai_candidate/c in SSpai.candidates)
-		available.Add(check_ready(c))
-	var/dat = ""
-
-	dat += {"
-			<style type="text/css">
-
-			p.top {
-				background-color: #AAAAAA; color: black;
-			}
-
-			tr.d0 td {
-				background-color: #CC9999; color: black;
-			}
-			tr.d1 td {
-				background-color: #9999CC; color: black;
-			}
-			tr.d2 td {
-				background-color: #99CC99; color: black;
-			}
-			</style>
-			"}
-	dat += "<p class=\"top\">Requesting AI personalities from central database... If there are no entries, or if a suitable entry is not listed, check again later as more personalities may be added.</p>"
-
-	dat += "<table>"
-
-	for(var/datum/pai_candidate/c in available)
-		dat += "<tr class=\"d0\"><td>Name:</td><td>[c.name]</td></tr>"
-		dat += "<tr class=\"d1\"><td>Description:</td><td>[c.description]</td></tr>"
-		dat += "<tr class=\"d0\"><td>Preferred Role:</td><td>[c.role]</td></tr>"
-		dat += "<tr class=\"d1\"><td>OOC Comments:</td><td>[c.comments]</td></tr>"
-		dat += "<tr class=\"d2\"><td><a href='byond://?src=[REF(src)];download=1;candidate=[REF(c)];device=[REF(p)]'>\[Download [c.name]\]</a></td><td></td></tr>"
-
-	dat += "</table>"
-
-	user << browse(dat, "window=findPai")
-
-/datum/pai_candidate
-	var/name
-	var/key
-	var/description
-	var/role
-	var/comments
-	var/ready = FALSE

@@ -11,12 +11,12 @@
 
 	if (user.layer != ABOVE_NORMAL_TURF_LAYER)
 		user.layer = ABOVE_NORMAL_TURF_LAYER
-		user.visible_message("<span class='name'>[user] scurries to the ground!</span>", \
-						"<span class='noticealien'>You are now hiding.</span>")
+		user.visible_message(span_name("[user] scurries to the ground!"), \
+						span_noticealien("You are now hiding."))
 	else
 		user.layer = MOB_LAYER
-		user.visible_message("<span class='notice'>[user] slowly peeks up from the ground...</span>", \
-					"<span class='noticealien'>You stop hiding.</span>")
+		user.visible_message(span_notice("[user] slowly peeks up from the ground..."), \
+					span_noticealien("You stop hiding."))
 	return 1
 
 
@@ -30,38 +30,39 @@
 /obj/effect/proc_holder/alien/larva_evolve/fire(mob/living/carbon/alien/user)
 	if(!islarva(user))
 		return
-	var/mob/living/carbon/alien/larva/L = user
+	var/mob/living/carbon/alien/larva/larva = user
 
-	if(L.handcuffed || L.legcuffed) // Cuffing larvas ? Eh ?
-		to_chat(user, "<span class='warning'>You cannot evolve when you are cuffed!</span>")
+	if(larva.handcuffed || larva.legcuffed) // Cuffing larvas ? Eh ?
+		to_chat(user, span_warning("You cannot evolve when you are cuffed!"))
 		return
 
-	if(L.amount_grown >= L.max_grown)	//TODO ~Carn
-		to_chat(L, "<span class='name'>You are growing into a beautiful alien! It is time to choose a caste.</span>")
-		to_chat(L, "<span class='info'>There are three to choose from:</span>")
-		to_chat(L, "<span class='name'>Hunters</span> <span class='info'>are the most agile caste, tasked with hunting for hosts. They are faster than a human and can even pounce, but are not much tougher than a drone.</span>")
-		to_chat(L, "<span class='name'>Sentinels</span> <span class='info'>are tasked with protecting the hive. With their ranged spit, invisibility, and high health, they make formidable guardians and acceptable secondhand hunters.</span>")
-		to_chat(L, "<span class='name'>Drones</span> <span class='info'>are the weakest and slowest of the castes, but can grow into a praetorian and then queen if no queen exists, and are vital to maintaining a hive with their resin secretion abilities.</span>")
-		var/alien_caste = alert(L, "Please choose which alien caste you shall belong to.",,"Hunter","Sentinel","Drone")
-
-		if(L.movement_type & VENTCRAWLING)
-			to_chat(user, "<span class='warning'>You cannot evolve while ventcrawling!</span>")
-			return
-
-		if(user.incapacitated()) //something happened to us while we were choosing.
-			return
-
-		var/mob/living/carbon/alien/humanoid/new_xeno
-		switch(alien_caste)
-			if("Hunter")
-				new_xeno = new /mob/living/carbon/alien/humanoid/hunter(L.loc)
-			if("Sentinel")
-				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(L.loc)
-			if("Drone")
-				new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
-
-		L.alien_evolve(new_xeno)
+	if(larva.amount_grown < larva.max_grown)
+		to_chat(user, span_warning("You are not fully grown!"))
 		return
-	else
-		to_chat(user, "<span class='warning'>You are not fully grown!</span>")
+
+	to_chat(larva, span_name("You are growing into a beautiful alien! It is time to choose a caste."))
+	to_chat(larva, span_info("There are three to choose from:"))
+	to_chat(larva, span_name("Hunters</span> <span class='info'>are the most agile caste, tasked with hunting for hosts. They are faster than a human and can even pounce, but are not much tougher than a drone."))
+	to_chat(larva, span_name("Sentinels</span> <span class='info'>are tasked with protecting the hive. With their ranged spit, invisibility, and high health, they make formidable guardians and acceptable secondhand hunters."))
+	to_chat(larva, span_name("Drones</span> <span class='info'>are the weakest and slowest of the castes, but can grow into a praetorian and then queen if no queen exists, and are vital to maintaining a hive with their resin secretion abilities."))
+	var/alien_caste = tgui_input_list(larva, "Please choose which alien caste you shall belong to.",,list("Hunter","Sentinel","Drone"))
+
+	if(larva.movement_type & VENTCRAWLING)
+		to_chat(user, span_warning("You cannot evolve while ventcrawling!"))
 		return
+
+	if(user.incapacitated()) //something happened to us while we were choosing.
+		return
+
+	var/mob/living/carbon/alien/humanoid/new_xeno
+	switch(alien_caste)
+		if("Hunter")
+			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(larva.loc)
+		if("Sentinel")
+			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(larva.loc)
+		if("Drone")
+			new_xeno = new /mob/living/carbon/alien/humanoid/drone(larva.loc)
+
+	larva.alien_evolve(new_xeno)
+	return
+

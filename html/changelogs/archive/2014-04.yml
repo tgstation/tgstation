@@ -1,0 +1,148 @@
+2014-04-01:
+  Aranclanos:
+  - tweak: Made combat more hardcore for hardcore players like myself. This won't
+      be reverted.
+  Malkevin:
+  - experiment: <b>Sacrifice Cult - Cult has received a massive overhaul to how it
+      works, focusing more on cult magics and sacrificing unbelievers. The most important
+      changes are:</b>
+  - tweak: Cult starts off with alot more cultists, 6 cultists below 30 players and
+      9 above. The HoP can no longer be a round start cultist but is still convertible.
+  - tweak: Cultists start off with join, blood, self, and hell. These give the runes
+      for the sacrifice and convert.
+  - tweak: Conversions now require three cultists and converts no longer reward words,
+      words must be obtained via sacrifice
+  - tweak: Sacrificing players traps their soul in a soul stone, which can then be
+      used on construct shells to implant the souls in them
+  - tweak: Constructs shells can be summoned via a new rune (travel, hell, technology)
+  - bugfix: You can no longer convert the sacrifice target, you dozzy sods
+  - experiment: Summoning Narsie when she is not an objective leads to !!FUN!!
+  - wip: Wrote a system to allow all mob types to be sacrificable - currently only
+      corgis are in the new system
+  - experiment: Holy Water will DECONVERT cultists, takes around 35 units and two
+      minutes to succeed
+  - experiment: Hitting a mob that contains holy water with a tome will convert that
+      water to unholy water, conversely hitting any container that contains unholy
+      water with a bible as chaplain will 'cleanse' the taint.
+  - experiment: Unholy water works like a combination synaptazine and hyperzine, with
+      a twist of branes dimarge and highly toxic to non-cultists
+  - rscadd: Cargo can order a religious supplies crate - it contains flasks of holy
+      water, candles, bibles, and robes
+  - experiment: Cultists have an innate ability to communicate to the cult hive mind
+      (BE AWARE - THIS DOES A LOT OF DAMAGE), cultists can also communicate via the
+      new Commune option on their tomes (the Read Tome option has been shifted under
+      the Notes option)
+  MrStonedOne:
+  - rscadd: Cyborgs can now use AI click shortcuts. (shift click on doors opens them,
+      etc) (including ones added below)
+  - rscadd: 'New silicon click shortcut: Control+Shift click on doors toggles access
+      override'
+  - rscadd: 'New silicon click shortcut: Control click turret controls toggles them
+      on or off'
+  - rscadd: 'New silicon click shortcut: Alt click turret controls toggles lethal
+      on or off'
+  - tweak: Cyborg hotkey mode was massively improved. 1-3 selects module slot, q unloads
+      the active module. use hotkeys-help as cyborg for more details
+2014-04-02:
+  Giacom:
+  - rscadd: The syndicate suit is now black and red, because black and red is the
+      new red.
+  - rscadd: The Ruskie DJ Station now has a classy orange syndicate suit.
+  - rscadd: Security officers have been equipped with the latest in flashlight technology.
+      You can find a SecLite&trade; inside your security belt or you can dispense
+      one from the security vending machine.
+  Ikarrus:
+  - wip: <b>Nanotrasen Construction division is pleased to announce the unveiling
+      of our brand now state-of-the-art Space Station 13 v2.1.3!</b>
+  - rscadd: -Scaffolding used during construction has been repurposed as an expanded
+      maintenance around the station.
+  - tweak: -Our new Emergency Transport Shuttle Mk III will be making its debut in
+      times of crisis. Includes a new cargo area and extra security features.
+  - tweak: -A redesigned brig will give security staff more peace of mind with added
+      security features
+  - rscadd: -The armory is now protected by a motion alarm.
+  - rscadd: -The armory is now equipped with security hardsuits.
+  - rscadd: -A new command EVA wing has been added to EVA Storage. Station heads of
+      staff will be able to make use of suits stored here.
+  - rscadd: -A new garden area will be made publicly available for everyone to enjoy
+      some R&amp;R; during their company-endorsed break periods
+  - rscadd: -A new Testing Lab has been added to the Science department for any field
+      experiments that need to be run.
+  - tweak: -The mining ore redemption machine has been relocated to the Cargo Delivery
+      Office.
+2014-04-03:
+  Ikarrus:
+  - rscadd: NT AI Firmware version 2554.03.03 includes a function to notify the master
+      AI when a new cyborg is slaved to it.
+2014-04-10:
+  Ikarrus:
+  - rscadd: Centcom officials have announced a new initiative to combat misuse of
+      their Emergency Shuttle Service. After the shuttle has been recalled several
+      times over the course of a simple work shift, Centcom will attempt to trace
+      the signal origin and pinpoint its source for station authorities.
+  Steelpoint:
+  - rscadd: "Thanks to Nanotrasen's Construction division, the brig has recieved a\
+      \ overhaul in its design, to increase ease of movement, including an addition\
+      \ of a \"prisioner release room\" and a insanity ward.\n\t\t"
+  - tweak: Furthing concerns among commentators, Nanotrasen has shipped out additional
+      security equipment to station armories, including Riot Shotguns, tear gas grenades,
+      additional securitron units and military grade Ion Guns.
+  - rscadd: "JaniCo have released a new unique product called the JaniBelt. Capable\
+      \ of holding most standard issue janitorial equipment, designed to help relive\
+      \ inventory management among station janitors. In addition the Jani Water Tank\
+      \ has had its reserve of space clenaer increased to 500 units, up from 250.\n\
+      \t"
+  Validsalad:
+  - tweak: "After concerns raised by security personel, new armor has been shipped\
+      \ that covers the lower waist and readjusts the helmet for comfort.\n\t\t"
+  - tweak: "In addition, the aging riot shield has been replaced with a newer, more\
+      \ modern, apperance. \n\t"
+2014-04-11:
+  Jordie0608:
+  - rscadd: Wood planks can be used to make wood walls and airlocks; flammability
+      not included
+2014-04-20:
+  Gun Hog:
+  - rscadd: NanoTrasen Emergency Alerts System 4.20 has been released!
+  - rscadd: In the unfortunate event of any nuclear device being armed, the station
+      will enter Code Delta Alert.
+  - rscadd: Should the nuclear explosive be disarmed, the station shall automatically
+      return to its previous alert level.
+  Steelpoint:
+  - wip: A new AI satellite has been constructed in orbit of Space Station 13!
+  - rscadd: The satellite exclusivly is used to hold a station's Artifical Intelligence
+      Unit, the satellite contains a miried of turret and motion sensor defences.
+      A transit tube network is used to connect the satellite to the station, with
+      the transit room being located at engineering south of the engi escape pod.
+  - rscadd: The AI Upload however has been moved north slightly and is connected directly
+      to the bridge.
+  - rscadd: In addition, the Gravity Generator has been relocated from its prior position
+      in engineering to the location of the old AI Upload, increasing its defence
+      and logical positioning.
+2014-04-22:
+  Ikarrus:
+  - rscadd: ID Computers have been modified to allow Station Heads of Staff to assign
+      and remove access to their departments, as well as stripping the rank of their
+      subordinates. An ID computer on the bridge is available for the use of this
+      function.
+2014-04-27:
+  Ikarrus:
+  - imageadd: NT Human Resources announces an expansion of the List of Company-Approved
+      Hair Styles, as well as more relaxed gender restrictions on hair styles. Check
+      with your local company-sponsored hairstylist to learn more.
+2014-04-30:
+  Giacom:
+  - imageadd: You now have to give a reason when calling the shuttle.
+  - imageadd: The amount of time it takes for the shuttle to refuel is now a config
+      option, the default is 20 minutes.
+  Gun Hog:
+  - rscadd: Certain Enemies of the Corporation have discovered a critical exploit
+      in the firmware of several NanoTrasen robots that could prevent the safe shutdown
+      of units corrupted by illegally modified ID cards, dubbed "cryptographic sequencers".
+  - rscadd: NanoTrasen requires more research into this exploit, this we have issued
+      a patch for AI and Cyborg software to simulate this malfunction. All NanoTrasen
+      AI units are advised to only allow testing in a safe and contained environment.
+      The robot can safely be reset at any time.
+  - experiment: Unfortunately, a robot corrupted by a "cryptographic sequencer" still
+      cannot be reset by any means. NanoTrasen urges regular maintenance and care
+      of all robots to reduce replacement costs.

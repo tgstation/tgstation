@@ -34,15 +34,17 @@ Bonus
 	)
 
 /datum/symptom/deafness/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stealth"] >= 4)
+	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
-	if(A.properties["resistance"] >= 9) //permanent deafness
+	if(A.totalResistance() >= 9) //permanent deafness
 		power = 2
 
 /datum/symptom/deafness/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
@@ -51,13 +53,13 @@ Bonus
 	switch(A.stage)
 		if(3, 4)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>")
+				to_chat(M, span_warning("[pick("You hear a ringing in your ear.", "Your ears pop.")]"))
 		if(5)
 			if(power >= 2)
 				if(ears.damage < ears.maxHealth)
-					to_chat(M, "<span class='userdanger'>Your ears pop painfully and start bleeding!</span>")
+					to_chat(M, span_userdanger("Your ears pop painfully and start bleeding!"))
 					ears.damage = max(ears.damage, ears.maxHealth)
 					M.emote("scream")
 			else
-				to_chat(M, "<span class='userdanger'>Your ears pop and begin ringing loudly!</span>")
+				to_chat(M, span_userdanger("Your ears pop and begin ringing loudly!"))
 				ears.deaf = min(20, ears.deaf + 15)

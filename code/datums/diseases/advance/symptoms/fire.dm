@@ -37,46 +37,48 @@ Bonus
 	)
 
 /datum/symptom/fire/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["stage_rate"] >= 4)
+	if(A.totalStageSpeed() >= 4)
 		power = 1.5
-	if(A.properties["stage_rate"] >= 8)
+	if(A.totalStageSpeed() >= 8)
 		power = 2
-	if(A.properties["stealth"] >= 4)
+	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
-	if(A.properties["transmittable"] >= 8) //burning skin spreads the virus through smoke
+	if(A.totalTransmittable() >= 8) //burning skin spreads the virus through smoke
 		infective = TRUE
 
 /datum/symptom/fire/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(3)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span class='warning'>[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]</span>")
+				to_chat(M, span_warning("[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]"))
 		if(4)
 			Firestacks_stage_4(M, A)
 			M.IgniteMob()
-			to_chat(M, "<span class='userdanger'>Your skin bursts into flames!</span>")
+			to_chat(M, span_userdanger("Your skin bursts into flames!"))
 			M.emote("scream")
 		if(5)
 			Firestacks_stage_5(M, A)
 			M.IgniteMob()
-			to_chat(M, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
+			to_chat(M, span_userdanger("Your skin erupts into an inferno!"))
 			M.emote("scream")
 
 /datum/symptom/fire/proc/Firestacks_stage_4(mob/living/M, datum/disease/advance/A)
 	M.adjust_fire_stacks(1 * power)
-	M.take_overall_damage(burn = 3 * power, required_status = BODYPART_ORGANIC)
+	M.take_overall_damage(burn = 3 * power, required_status = BODYTYPE_ORGANIC)
 	if(infective)
 		A.spread(2)
 	return 1
 
 /datum/symptom/fire/proc/Firestacks_stage_5(mob/living/M, datum/disease/advance/A)
 	M.adjust_fire_stacks(3 * power)
-	M.take_overall_damage(burn = 5 * power, required_status = BODYPART_ORGANIC)
+	M.take_overall_damage(burn = 5 * power, required_status = BODYTYPE_ORGANIC)
 	if(infective)
 		A.spread(4)
 	return 1
@@ -121,46 +123,48 @@ Bonus
 	)
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["resistance"] >= 9) //intense but sporadic effect
+	if(A.totalResistance() >= 9) //intense but sporadic effect
 		power = 2
 		symptom_delay_min = 50
 		symptom_delay_max = 140
-	if(A.properties["stage_rate"] >= 8) //serious boom when wet
+	if(A.totalStageSpeed() >= 8) //serious boom when wet
 		explosion_power = 2
-	if(A.properties["transmittable"] >= 8) //extra chemicals
+	if(A.totalTransmittable() >= 8) //extra chemicals
 		chems = TRUE
 
 /datum/symptom/alkali/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(3)
 			if(prob(base_message_chance))
-				to_chat(M, "<span class='warning'>[pick("Your veins boil.", "You feel hot.", "You smell meat cooking.")]</span>")
+				to_chat(M, span_warning("[pick("Your veins boil.", "You feel hot.", "You smell meat cooking.")]"))
 		if(4)
 			if(M.fire_stacks < 0)
-				M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
-				explosion(get_turf(M),-1,(-1 + explosion_power),(2 * explosion_power))
+				M.visible_message(span_warning("[M]'s sweat sizzles and pops on contact with water!"))
+				explosion(M, devastation_range = -1, heavy_impact_range = (-1 + explosion_power), light_impact_range = (2 * explosion_power), explosion_cause = src)
 			Alkali_fire_stage_4(M, A)
 			M.IgniteMob()
-			to_chat(M, "<span class='userdanger'>Your sweat bursts into flames!</span>")
+			to_chat(M, span_userdanger("Your sweat bursts into flames!"))
 			M.emote("scream")
 		if(5)
 			if(M.fire_stacks < 0)
-				M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
-				explosion(get_turf(M),-1,(-1 + explosion_power),(2 * explosion_power))
+				M.visible_message(span_warning("[M]'s sweat sizzles and pops on contact with water!"))
+				explosion(M, devastation_range = -1, heavy_impact_range = (-1 + explosion_power), light_impact_range = (2 * explosion_power), explosion_cause = src)
 			Alkali_fire_stage_5(M, A)
 			M.IgniteMob()
-			to_chat(M, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
+			to_chat(M, span_userdanger("Your skin erupts into an inferno!"))
 			M.emote("scream")
 
 /datum/symptom/alkali/proc/Alkali_fire_stage_4(mob/living/M, datum/disease/advance/A)
 	var/get_stacks = 6 * power
 	M.adjust_fire_stacks(get_stacks)
-	M.take_overall_damage(burn = get_stacks / 2, required_status = BODYPART_ORGANIC)
+	M.take_overall_damage(burn = get_stacks / 2, required_status = BODYTYPE_ORGANIC)
 	if(chems)
 		M.reagents.add_reagent(/datum/reagent/clf3, 2 * power)
 	return 1
@@ -168,7 +172,7 @@ Bonus
 /datum/symptom/alkali/proc/Alkali_fire_stage_5(mob/living/M, datum/disease/advance/A)
 	var/get_stacks = 8 * power
 	M.adjust_fire_stacks(get_stacks)
-	M.take_overall_damage(burn = get_stacks, required_status = BODYPART_ORGANIC)
+	M.take_overall_damage(burn = get_stacks, required_status = BODYTYPE_ORGANIC)
 	if(chems)
 		M.reagents.add_reagent_list(list(/datum/reagent/napalm = 4 * power, /datum/reagent/clf3 = 4 * power))
 	return 1

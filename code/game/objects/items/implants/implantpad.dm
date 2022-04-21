@@ -13,21 +13,22 @@
 
 /obj/item/implantpad/update_icon_state()
 	icon_state = "implantpad-[!QDELETED(case)]"
+	return ..()
 
 /obj/item/implantpad/examine(mob/user)
 	. = ..()
 	if(Adjacent(user))
 		. += "It [case ? "contains \a [case]" : "is currently empty"]."
 		if(case)
-			. += "<span class='info'>Alt-click to remove [case].</span>"
+			. += span_info("Alt-click to remove [case].")
 	else
 		if(case)
-			. += "<span class='warning'>There seems to be something inside it, but you can't quite tell what from here...</span>"
+			. += span_warning("There seems to be something inside it, but you can't quite tell what from here...")
 
 /obj/item/implantpad/handle_atom_del(atom/A)
 	if(A == case)
 		case = null
-	update_icon()
+	update_appearance()
 	updateSelfDialog()
 	. = ..()
 
@@ -36,7 +37,7 @@
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	if(!case)
-		to_chat(user, "<span class='warning'>There's no implant to remove from [src].</span>")
+		to_chat(user, span_warning("There's no implant to remove from [src]."))
 		return
 
 	user.put_in_hands(case)
@@ -46,7 +47,7 @@
 	case = null
 
 	updateSelfDialog()
-	update_icon()
+	update_appearance()
 
 /obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user, params)
 	if(istype(C, /obj/item/implantcase) && !case)
@@ -54,7 +55,7 @@
 			return
 		case = C
 		updateSelfDialog()
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 

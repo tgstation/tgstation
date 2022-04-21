@@ -1,0 +1,229 @@
+2015-08-02:
+  Incoming5643:
+  - rscadd: Syndicate toolboxes now come with never before seen red insulated gloves.
+  Steelpoint:
+  - bugfix: Fixed multiple mapping errors for Boxstation and the mining base.
+  - rscadd: A circuit imprinter and exosuit fabrication board have been added to tech
+      storage.
+  SvartaSvansen:
+  - rscadd: Our lizard engineers have worked hard and managed to improve Centcom airlocks
+      so they no longer disintegrate when the electronics are removed!
+  - tweak: Put a safety net in place so future airlocks without assemblies produce
+      the default assembly instead of disintegrating.
+2015-08-04:
+  Kor:
+  - rscadd: Soulstones will now attempt to pull ghosts from beyond if the targeted
+      corpse has no soul.
+  Summoner99:
+  - rscadd: Added the *roar emote back to Alien Larva
+  - bugfix: Fixed aliens not being able to do the *hiss and *screech emotes
+  - tweak: 'Changed how the plural emote system works and now some emotes have plural
+      versions, example is: *hiss and *hisses.'
+2015-08-05:
+  CoreOverload:
+  - rscadd: Implants, implant cases and implanters got RnD levels and can be DA'ed
+      for science.
+  - rscadd: Surgically removed implant can be placed into an implant case. Remove
+      implant with empty implant case in inactive hand.
+  - rscadd: Surgical steps now got progress bars.
+  - rscadd: You can cancel a surgery by using drape on operable body part again. This
+      works only before you perform surgery's first step.
+  - rscadd: Operating computer shows next step for surgeries. No more alt-tabbing
+      to view next step on wiki while operating.
+  - tweak: You cannot start two surgeries on one body part at once. You can start
+      two multiloc surgeries (i.e. two augumentations) on diffirent body parts at
+      once.
+  - tweak: Monkey <-> Human transformations now keep your internal organs, cyberimplants
+      and xeno embryos included.
+  Ikarrus:
+  - rscdel: Head beatings no longer deconvert gangsters.
+  LordPidey:
+  - rscadd: 'Added a new chemical. Spray tan. It is made by mixing orange juice with
+      oil or corn oil. Warning: overexposure may result in orange douchebaggery.'
+  Xhuis:
+  - rscadd: Shadowling thralls can now be deconverted via surgery or borging.
+  - rscadd: Thralls can be revealed by examining them. They can hide this by wearing
+      a mask.
+  - rscadd: Thralls have a few minor abilities they can use in addition to night vision.
+  - rscadd: Hatch-exclusive abilities can no longer be used if you are not the shadowling
+      mutant race.
+  - rscadd: Ascendants are now immune to bombs and singularities. Honk.
+  - rscadd: A Centcom report has been added for shadowlings.
+  - tweak: Ascending no longer kills all shadowling thralls. This allows antagonists
+      who were enthralled to succeed along with the ascendants.
+  - tweak: Annihilate now has different sound and a shorter delay before the target
+      explodes. In addition, it now works on all mobs, instead of just humans.
+  - bugfix: Glacial Blast now properly has no cooldown if used while phase shifting.
+  - bugfix: Fixes a runtime if a target with no mind is enthralled.
+  bgobandit:
+  - rscadd: Nanotrasen scientists have achieved the tremendous breakthrough of injecting
+      gold slime extracts with water. Pets ensued.
+2015-08-06:
+  AnturK:
+  - rscadd: Adds the voodoo doll as a mining treasure, link it with a victim with
+      an item previously held by them.
+  - rscadd: Once linked the voodoo doll can be used to injure, confuse and control
+      the victim.
+  Core0verlad:
+  - tweak: Items can now be removed from storage containers inside storage containers.
+  - imageadd: Beds and bedsheets have new sprites.
+  - rscdel: MMIs are no longer ID locked.
+  KorPhaeron:
+  - tweak: Slaughter Demon's have had their health reduced to 200 and their speed
+      reduced but they get a speed boost when exiting blood.
+  MrPerson:
+  - rscadd: Items stacks now automatically merge unless thrown when moved onto the
+      same tile.
+2015-08-07:
+  KorPhaeron:
+  - rscadd: Added a new Guardian Mob that can be summoned to manifest inside a mob.
+  - rscadd: Guardians can communicate with their host and materialize themselves to
+      protect their host with magic powers.
+  - rscadd: Guardians are invincible but cannot live without or too far from their
+      host, they also relay injuries they suffer to the host.
+  Phil235:
+  - bugfix: Fixed being able to run into your own bullet.
+  RemieRichards:
+  - rscadd: You no longer need to click on an item in a storage container to remove
+      it, clicking anywhere around the item works.
+  bustygoku:
+  - rscdel: Removed the chance for a disease to make you a carrier on transfer.
+  phil235:
+  - tweak: The plasma cutter's fire rate is now a bit lower but its projectile can
+      pierce multiple asteroid walls and its range isn't lowered in pressurized environment
+      anymore.
+2015-08-09:
+  RemieRichards:
+  - rscadd: 'Nanotrasen Mandatory FunCo Subsidiary: CoderbusGames, would like to announce
+      an update to Orion Trail!'
+  - rscadd: 'Spaceports: Buy/Sell Crew, Trade Fuel for Food, Trade Food for Fuel,
+      Buy Spare Electronics, Engine Parts and Hull Plates, or maybe you think you''re
+      tough enough to attack the spaceport?'
+  - rscadd: 'Changelings: Changelings can now sneak into your crew, Changelings eat
+      double the standard food ration and have a chance to Ambush the rest of the
+      crew!'
+  - rscadd: 'Kill Crewmembers: Do you suspect changelings? or dont feel you have enough
+      food rations? Just shoot somebody in the head, at any time!'
+2015-08-12:
+  CosmicScientist:
+  - rscadd: Added Space Carp costume to the code, get it from an autodrobe near you.
+  - rscadd: Added Ian costume to the code, take his place under the HoP's hand, get
+      it from an autodrobe or corgi hide, keep it away from washing machines or it'll
+      meat its end as clothing.
+  - rscadd: Added Space Carp spacesuit to the code, I know what I'm praying for.
+  bgobandit:
+  - rscadd: After multiple complaints from WaffleCo food activists, Nanotrasen has
+      added real chocolate, berry juice and blue flavouring to its ice cream products.
+2015-08-13:
+  CoreOverload:
+  - rscadd: 'Added a new 8TC traitor item: subspace storage implant. It allows you
+      to store two box-sized items in (almost) undetectable storage. '
+  - tweak: Changed the way most of the surgical operations work. See wiki for new
+      steps.
+  - tweak: You can cancel step 2+ surgeries with drapes and cautery in inactive hand.
+  - tweak: Defib no longer works on humans who have no heart. Changeling/thrall/cult/strange
+      reagent revives are still working, and this is intended.
+  - rscadd: You can eat all organs raw now, with exception for brains and cyberimplants.
+  - rscadd: Some xenos abilities are linked to their organs. Play with xenos' guts
+      for fun and profit!
+  RemieRichards:
+  - rscadd: Modifying a string (Text) variable with View Variables or View Variables
+      Mass Modify now allows you to embed variables like real byond strings, For example
+      the variable real_name; you could set a text var to [real_name] and it would
+      be replaced with the actual contents of the var, This allows for Mass fixing
+      of certain variables but it's also useful for badmin gimmickery
+2015-08-15:
+  Miauw:
+  - rscadd: Changeling transformations have been upgraded to also include clothing
+      instead of just DNA.
+  - tweak: Patches no longer work on dead people.
+  - rscadd: Added 15-force edaggers that function like pens when off.
+  MrPerson:
+  - rscadd: Objects being dragged will no longer get shoved out of your grasp by space
+      wind. Retrieving dead bodies should be possible.
+  RemieRichards:
+  - rscadd: Added Changeling Team Objectives, these are handed out to all lings, with
+      the chance of a round having one being 20*number_of_lings% (3 lings = 60%)
+  - rscadd: 'Impersonate Department (Team Objective): As many members of a department
+      as can reasonably be picked are chosen for the lings to kill, replace and escape
+      as'
+  - rscadd: 'Impersonate Heads (Team Objective): 3 to 6 Heads of Staff are chosen
+      for the lings to kill, replace and escape as'
+  - tweak: If the Changelings have a Team Objective, their usual Kill, Maroon, Etc.
+      objectives will not pick other changelings, to discourage backstabbing in teamling
+  - tweak: Changeling Engorged Glands is now the default storage and regen rate, Engorged
+      Glands remains for an extra boost
+  - rscadd: Armblades can now be used to open powered doors, however it takes 10 seconds
+      of the changeling standing still, Their ability to instantly open unpowered
+      doors remains unchanged
+  - rscdel: Debrain objective is no longer handed out to lings, it's as good as broken
+      these days
+  - rscadd: Changelings may now purchase a togglable version of the Chameleon Skin
+      genetics mutation, for 2 DNA
+2015-08-16:
+  Joan:
+  - rscadd: Revenants will now occasionally spawn as an event.
+  - tweak: Revenants gain more energy from Harvesting, and can Harvest from people
+      in crit.
+  - tweak: Revenant powers are more effective, and no longer freeze you in place,
+      besides Harvest.
+  - tweak: Slain Revenants will respawn much faster.
+  - bugfix: Fixed a whole bunch of revenant bugs, including one that caused the objective
+      to always fail.
+  Kor:
+  - rscadd: The wizard can now stop time.
+  MMMiracles:
+  - tweak: Revamps bioterror darts into a less-lethal, syringe form. Removed the coniine
+      and spore toxins to keep it solely for quiet take-downs.
+2015-08-18:
+  CoreOverload:
+  - rscadd: Added a new low-tech eye cyberimplant in RnD - welding shield implant.
+  - rscadd: Implanter and empty implant case added to protolathe.
+  - rscadd: You can sell tech disks and maxed reliability design disks in cargo for
+      supply points.
+  - tweak: DA menu shows current research levels.
+  - tweak: You can print cyberimplants in updated mech fab.
+  Supermichael777:
+  - bugfix: Added an ooc hotkey for borgs = O. They simply didn't have one and it
+      was a consistency issue
+  - rscadd: Also added Ctrl+O as an any mode keycombo so you dont have to backspace
+      and type ooc. Added to hotkey mode to remain consistent with all other Ctrl
+      combos
+  bustygoku:
+  - tweak: Most backpacks now have 21 or more slots, but are still weight restricted.
+      What this means is that you can have a lot of tiny weight items, but only 7
+      medium items just like before.
+  phil235:
+  - tweak: Janicart rider no longer slip on wet floor or bananas. Moving on a floor
+      tile with lube while buckled (chair, roller bed, etc) will make you fall off.
+2015-08-19:
+  Joan:
+  - rscadd: Added a new revenant ability; Malfunction. It does bad stuff to machines.
+  - tweak: Defile and Overload Lights now briefly stun the revenant.
+  - tweak: You can now Harvest a target by clicking on them while next to them.
+  - bugfix: Harvesting no longer leaves you draining if the target is deleted mid-drain
+      attempt.
+  - rscdel: Defile no longer emags bots or disables cyborgs, Malfunction does that
+      now.
+  Kor:
+  - rscadd: The Ranged and Scout guardian types have been merged, and gained a new
+      surveillance snare ability.
+  SconesC:
+  - rscadd: Added Military Belts to traitor uplinks.
+  bgobandit:
+  - rscadd: CentComm now offers its cargo department toys, as well as detective gear
+      so their boss can figure out which tech wasted all the points on them.
+  phil235:
+  - rscadd: You can now partially protect yourself from blob attack effects by wearing
+      impermeable clothes like hardsuits, medical clothes, masks, etc. Max protection
+      effect is capped at 50%.
+  - rscdel: Splashing someone with chemicals no longer injects those chemicals in
+      their body.
+  - bugfix: Fixes splashing acid on items or floor with items not having any effect.
+2015-08-28:
+  bgobandit:
+  - bugfix: 'Overheard at CentComm: ''This burn kit said salicyclic acid would heal
+      my burns! WHO MADE THIS SHIT?'' A muffled honking is heard in the background.
+      (Burn first-aid kits now contain an appropriate burn pill.)'
+  - rscadd: Oxandrolone, a new burn healing medication, has been added to burn first-aid
+      kits and to chemistry. Ingesting 25 units or more causes burn and brute damage.

@@ -53,7 +53,6 @@
 /obj/structure/closet/jcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/rank/civilian/janitor(src)
-	new /obj/item/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
 	new /obj/item/paint/paint_remover(src)
@@ -78,7 +77,7 @@
 /obj/structure/closet/lawcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/suit/blacktwopiece(src)
-	new /obj/item/clothing/under/rank/civilian/lawyer/female(src)
+	new /obj/item/clothing/under/rank/civilian/lawyer/beige(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/black(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/red(src)
 	new /obj/item/clothing/under/rank/civilian/lawyer/bluesuit(src)
@@ -126,7 +125,7 @@
 		/obj/item/clothing/shoes/jackboots = 3,
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
-		/obj/item/clothing/mask/bandana/red = 2)
+		/obj/item/clothing/mask/bandana/color/red = 2)
 	generate_items_inside(items_inside,src)
 	return
 
@@ -188,12 +187,10 @@
 		/obj/item/storage/backpack/medic = 1,
 		/obj/item/storage/backpack/satchel/med = 1,
 		/obj/item/clothing/suit/hooded/wintercoat/medical = 1,
-		/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
 		/obj/item/clothing/head/nursehat = 1,
-		/obj/item/clothing/under/rank/medical/doctor/blue = 1,
-		/obj/item/clothing/under/rank/medical/doctor/green = 1,
-		/obj/item/clothing/under/rank/medical/doctor/purple = 1,
-		/obj/item/clothing/under/rank/medical/doctor = 3,
+		/obj/item/clothing/under/rank/medical/scrubs/blue = 1,
+		/obj/item/clothing/under/rank/medical/scrubs/green = 1,
+		/obj/item/clothing/under/rank/medical/scrubs/purple = 1,
 		/obj/item/clothing/suit/toggle/labcoat = 3,
 		/obj/item/clothing/suit/toggle/labcoat/paramedic = 3,
 		/obj/item/clothing/shoes/sneakers/white = 3,
@@ -215,9 +212,9 @@
 		/obj/item/clothing/head/soft/black = 2)
 	generate_items_inside(items_inside,src)
 	if(prob(40))
-		new /obj/item/clothing/mask/bandana/skull(src)
+		new /obj/item/clothing/mask/bandana/color/skull/black(src)
 	if(prob(40))
-		new /obj/item/clothing/mask/bandana/skull(src)
+		new /obj/item/clothing/mask/bandana/color/skull/black(src)
 	return
 
 
@@ -232,6 +229,7 @@
 		/obj/item/clothing/suit/toggle/labcoat/chemist = 2,
 		/obj/item/storage/backpack/chemistry = 2,
 		/obj/item/storage/backpack/satchel/chem = 2,
+		/obj/item/storage/backpack/duffelbag/chemistry = 2,
 		/obj/item/storage/bag/chemistry = 2)
 	generate_items_inside(items_inside,src)
 	return
@@ -247,7 +245,8 @@
 		/obj/item/clothing/shoes/sneakers/white = 2,
 		/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
 		/obj/item/storage/backpack/genetics = 2,
-		/obj/item/storage/backpack/satchel/gen = 2)
+		/obj/item/storage/backpack/satchel/gen = 2,
+		/obj/item/storage/backpack/duffelbag/genetics = 2)
 	generate_items_inside(items_inside,src)
 	return
 
@@ -263,7 +262,8 @@
 		/obj/item/clothing/suit/toggle/labcoat/virologist = 2,
 		/obj/item/clothing/mask/surgical = 2,
 		/obj/item/storage/backpack/virology = 2,
-		/obj/item/storage/backpack/satchel/vir = 2)
+		/obj/item/storage/backpack/satchel/vir = 2,
+		/obj/item/storage/backpack/duffelbag/virology = 2,)
 	generate_items_inside(items_inside,src)
 	return
 
@@ -275,7 +275,8 @@
 	var/static/items_inside = list(
 		/obj/item/clothing/accessory/pocketprotector = 1,
 		/obj/item/storage/backpack/science = 2,
-		/obj/item/storage/backpack/satchel/tox = 2,
+		/obj/item/storage/backpack/satchel/science = 2,
+		/obj/item/storage/backpack/duffelbag/science = 2,
 		/obj/item/clothing/suit/hooded/wintercoat/science = 1,
 		/obj/item/clothing/under/rank/rnd/scientist = 3,
 		/obj/item/clothing/suit/toggle/labcoat/science = 3,
@@ -293,11 +294,12 @@
 	var/static/items_inside = list(
 		/obj/item/storage/backpack/botany = 2,
 		/obj/item/storage/backpack/satchel/hyd = 2,
+		/obj/item/storage/backpack/duffelbag/hydroponics = 2,
 		/obj/item/clothing/suit/hooded/wintercoat/hydro = 1,
 		/obj/item/clothing/suit/apron = 2,
 		/obj/item/clothing/suit/apron/overalls = 2,
 		/obj/item/clothing/under/rank/civilian/hydroponics = 3,
-		/obj/item/clothing/mask/bandana = 3)
+		/obj/item/clothing/mask/bandana/color/striped/botany = 3)
 	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/wardrobe/curator

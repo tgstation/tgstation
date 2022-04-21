@@ -11,12 +11,13 @@
 	allow_dense = TRUE
 	delivery_icon = null
 	can_weld_shut = FALSE
-	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 100, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
+	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 100, BIO = 0, FIRE = 100, ACID = 80)
 	anchored = TRUE //So it cant slide around after landing
 	anchorable = FALSE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	density = FALSE
+	divable = FALSE
 	///List of bitflags for supply pods, see: code\__DEFINES\obj_flags.dm
 	var/pod_flags = NONE
 
@@ -50,7 +51,7 @@
 	var/rubble_type //Rubble effect associated with this supplypod
 	var/decal = "default" //What kind of extra decals we add to the pod to make it look nice
 	var/door = "pod_door"
-	var/fin_mask  = "topfin"
+	var/fin_mask = "topfin"
 	var/obj/effect/supplypod_rubble/rubble
 	var/obj/effect/engineglow/glow_effect
 	var/effectShrapnel = FALSE
@@ -63,6 +64,11 @@
 	style = STYLE_BLUESPACE
 	bluespace = TRUE
 	explosionSize = list(0,0,1,2)
+
+//type used for one drop spawning items. doesn't have a style as style is set by the helper that creates this
+/obj/structure/closet/supplypod/podspawn
+	bluespace = TRUE
+	explosionSize = list(0,0,0,0)
 
 /obj/structure/closet/supplypod/extractionpod
 	name = "Syndicate Extraction Pod"
@@ -89,7 +95,7 @@
 		style = customStyle
 	setStyle(style) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
-/obj/structure/closet/supplypod/extractionpod/Initialize()
+/obj/structure/closet/supplypod/extractionpod/Initialize(mapload)
 	. = ..()
 	var/turf/picked_turf = pick(GLOB.holdingfacility)
 	reverse_dropoff_coords = list(picked_turf.x, picked_turf.y, picked_turf.z)
@@ -107,7 +113,7 @@
 		door = "[base]_door"
 	else
 		door = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/SetReverseIcon()
 	fin_mask = "bottomfin"
@@ -115,7 +121,7 @@
 		icon_state = GLOB.podstyles[style][POD_BASE] + "_reverse"
 	pixel_x = initial(pixel_x)
 	transform = matrix()
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/backToNonReverseIcon()
 	fin_mask = initial(fin_mask)
@@ -123,33 +129,35 @@
 		icon_state = GLOB.podstyles[style][POD_BASE]
 	pixel_x = initial(pixel_x)
 	transform = matrix()
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/closet_update_overlays(list/new_overlays)
 	return
 
 /obj/structure/closet/supplypod/update_overlays()
 	. = ..()
-	if (style == STYLE_INVISIBLE)
+	if(style == STYLE_INVISIBLE)
 		return
-	if (rubble)
+
+	if(rubble)
 		. += rubble.getForeground(src)
-	if (style == STYLE_SEETHROUGH)
-		for (var/atom/A in contents)
+
+	if(style == STYLE_SEETHROUGH)
+		for(var/atom/A in contents)
 			var/mutable_appearance/itemIcon = new(A)
 			itemIcon.transform = matrix().Translate(-1 * SUPPLYPOD_X_OFFSET, 0)
 			. += itemIcon
-		for (var/t in turfs_in_cargo)//T is just a turf's type
+		for(var/t in turfs_in_cargo)//T is just a turf's type
 			var/turf/turf_type = t
 			var/mutable_appearance/itemIcon = mutable_appearance(initial(turf_type.icon), initial(turf_type.icon_state))
 			itemIcon.transform = matrix().Translate(-1 * SUPPLYPOD_X_OFFSET, 0)
 			. += itemIcon
 		return
 
-	if (opened) //We're opened means all we have to worry about is masking a decal if we have one
-		if (!decal) //We don't have a decal to mask
+	if(opened) //We're opened means all we have to worry about is masking a decal if we have one
+		if(!decal) //We don't have a decal to mask
 			return
-		if (!door) //We have a decal but no door, so let's just add the decal
+		if(!door) //We have a decal but no door, so let's just add the decal
 			. += decal
 			return
 		var/icon/masked_decal = new(icon, decal) //The decal we want to apply
@@ -159,23 +167,25 @@
 		door_masker.Blend("#000000", ICON_SUBTRACT)
 		masked_decal.Blend(door_masker, ICON_ADD)
 		. += masked_decal
-	else //If we're closed
-		if (!door) //We have no door, lets see if we have a decal. If not, theres nothing we need to do
-			if (decal)
-				. += decal
-			return
-		else if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML) //If we're not a normal pod shape (aka, if we don't have fins), just add the door without masking
-			. += door
-		else
-			var/icon/masked_door = new(icon, door) //The door we want to apply
-			var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
-			fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
-			fin_masker.SwapColor("#ffffffff", null)
-			fin_masker.Blend("#000000", ICON_SUBTRACT)
-			masked_door.Blend(fin_masker, ICON_ADD)
-			. += masked_door
-		if (decal)
+		return
+
+	//If we're closed
+	if(!door) //We have no door, lets see if we have a decal. If not, theres nothing we need to do
+		if(decal)
 			. += decal
+		return
+	else if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML) //If we're not a normal pod shape (aka, if we don't have fins), just add the door without masking
+		. += door
+	else
+		var/icon/masked_door = new(icon, door) //The door we want to apply
+		var/icon/fin_masker = new(icon, "mask_[fin_mask]") //The fin shape we want to 'cut out' of the door
+		fin_masker.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 1,1,1,0, 0,0,0,1)
+		fin_masker.SwapColor("#ffffffff", null)
+		fin_masker.Blend("#000000", ICON_SUBTRACT)
+		masked_door.Blend(fin_masker, ICON_ADD)
+		. += masked_door
+	if(decal)
+		. += decal
 
 /obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
 	if(bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
@@ -184,7 +194,7 @@
 		..()
 
 /obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
-	return
+	return FALSE
 
 /obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return
@@ -192,7 +202,7 @@
 /obj/structure/closet/supplypod/toggle(mob/living/user)
 	return
 
-/obj/structure/closet/supplypod/open(mob/living/user, force = TRUE)
+/obj/structure/closet/supplypod/open(mob/living/user, force = FALSE)
 	return
 
 /obj/structure/closet/supplypod/proc/handleReturnAfterDeparting(atom/movable/holder = src)
@@ -200,7 +210,7 @@
 	bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
 	pod_flags &= ~FIRST_SOUNDS //Make it so we play sounds now
 	if (!effectQuiet && style != STYLE_SEETHROUGH)
-		audible_message("<span class='notice'>The pod hisses, closing and launching itself away from the station.</span>", "<span class='notice'>The ground vibrates, and you hear the sound of engines firing.</span>")
+		audible_message(span_notice("The pod hisses, closing and launching itself away from the station."), span_notice("The ground vibrates, and you hear the sound of engines firing."))
 	stay_after_drop = FALSE
 	holder.pixel_z = initial(holder.pixel_z)
 	holder.alpha = initial(holder.alpha)
@@ -219,7 +229,7 @@
 /obj/structure/closet/supplypod/proc/preOpen() //Called before the open_pod() proc. Handles anything that occurs right as the pod lands.
 	var/turf/turf_underneath = get_turf(src)
 	var/list/B = explosionSize //Mostly because B is more readable than explosionSize :p
-	density = TRUE //Density is originally false so the pod doesn't block anything while it's still falling through the air
+	set_density(TRUE) //Density is originally false so the pod doesn't block anything while it's still falling through the air
 	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
 	if(effectShrapnel)
 		SEND_SIGNAL(src, COMSIG_SUPPLYPOD_LANDED)
@@ -258,9 +268,9 @@
 			target_living.adjustBruteLoss(damage)
 	var/explosion_sum = B[1] + B[2] + B[3] + B[4]
 	if (explosion_sum != 0) //If the explosion list isn't all zeroes, call an explosion
-		explosion(turf_underneath, B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod)) //less advanced equipment than bluespace pod, so larger explosion when landing
+		explosion(turf_underneath, B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod), explosion_cause = src) //less advanced equipment than bluespace pod, so larger explosion when landing
 	else if (!effectQuiet && !(pod_flags & FIRST_SOUNDS)) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
-		playsound(src, "explosion", landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
+		playsound(src, SFX_EXPLOSION, landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
 	if (landingSound)
 		playsound(turf_underneath, landingSound, soundVolume, FALSE, FALSE)
 	if (effectMissile) //If we are acting like a missile, then right after we land and finish fucking shit up w explosions, we should delete
@@ -312,7 +322,7 @@
 		playsound(get_turf(holder), leavingSound, soundVolume, FALSE, FALSE)
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
-	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a seperate holder exists)
+	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a separate holder exists)
 		deleteRubble()
 		if (!effectQuiet && style != STYLE_INVISIBLE && style != STYLE_SEETHROUGH)
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
@@ -407,18 +417,18 @@
 
 /obj/structure/closet/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
 	opened = TRUE
-	density = FALSE
-	update_icon()
+	set_density(FALSE)
+	update_appearance()
 
 /obj/structure/closet/supplypod/extractionpod/setOpened()
 	opened = TRUE
-	density = TRUE
-	update_icon()
+	set_density(TRUE)
+	update_appearance()
 
 /obj/structure/closet/supplypod/setClosed() //Ditto
 	opened = FALSE
-	density = TRUE
-	update_icon()
+	set_density(TRUE)
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/tryMakeRubble(turf/T) //Ditto
 	if (rubble_type == RUBBLE_NONE)
@@ -431,7 +441,7 @@
 		return
 	rubble = new /obj/effect/supplypod_rubble(T)
 	rubble.setStyle(rubble_type, src)
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/Moved()
 	deleteRubble()
@@ -440,7 +450,7 @@
 /obj/structure/closet/supplypod/proc/deleteRubble()
 	rubble?.fadeAway()
 	rubble = null
-	update_icon()
+	update_appearance()
 
 /obj/structure/closet/supplypod/proc/addGlow()
 	if (GLOB.podstyles[style][POD_SHAPE] != POD_SHAPE_NORML)
@@ -449,17 +459,26 @@
 	glow_effect.icon_state = "pod_glow_" + GLOB.podstyles[style][POD_GLOW]
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
+	glow_effect.plane = ABOVE_GAME_PLANE
+	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, .proc/remove_glow)
 
 /obj/structure/closet/supplypod/proc/endGlow()
 	if(!glow_effect)
 		return
 	glow_effect.layer = LOW_ITEM_LAYER
 	glow_effect.fadeAway(delays[POD_OPENING])
+	//Trust the signals
+
+/obj/structure/closet/supplypod/proc/remove_glow()
+	SIGNAL_HANDLER
+	UnregisterSignal(glow_effect, COMSIG_PARENT_QDELETING)
+	vis_contents -= glow_effect
 	glow_effect = null
 
 /obj/structure/closet/supplypod/Destroy()
 	deleteRubble()
-	endGlow()
+	//Trust the signals even harder
+	qdel(glow_effect)
 	open_pod(src, broken = TRUE) //Lets dump our contents by opening up
 	return ..()
 
@@ -479,6 +498,7 @@
 	icon_state = "pod_engineglow"
 	desc = ""
 	layer = GASFIRE_LAYER
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 255
 
@@ -491,7 +511,7 @@
 	alpha = max(0, 255-(amount*20))
 
 /obj/effect/supplypod_rubble //This is the object that forceMoves the supplypod to it's location
-	name = "Debris"
+	name = "debris"
 	desc = "A small crater of rubble. Closer inspection reveals the debris to be made primarily of space-grade metal fragments. You're pretty sure that this will disperse before too long."
 	icon = 'icons/obj/supplypods.dmi'
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER // We want this to go right below the layer of supplypods and supplypod_rubble's forground.
@@ -534,6 +554,9 @@
 
 /obj/effect/pod_landingzone_effect/Initialize(mapload, obj/structure/closet/supplypod/pod)
 	. = ..()
+	if(!pod)
+		stack_trace("Pod landingzone effect created with no pod")
+		return INITIALIZE_HINT_QDEL
 	transform = matrix() * 1.5
 	animate(src, transform = matrix()*0.01, time = pod.delays[POD_TRANSIT]+pod.delays[POD_FALLING])
 
@@ -552,6 +575,9 @@
 
 /obj/effect/pod_landingzone/Initialize(mapload, podParam, single_order = null, clientman)
 	. = ..()
+	if(!podParam)
+		stack_trace("Pod landingzone created with no pod")
+		return INITIALIZE_HINT_QDEL
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
 		podParam = new podParam() //If its just a path, instantiate it
 	pod = podParam
@@ -574,7 +600,7 @@
 			target_living.Stun(pod.delays[POD_TRANSIT]+10, ignore_canstun = TRUE)//you ain't goin nowhere, kid.
 	if (pod.delays[POD_FALLING] == initial(pod.delays[POD_FALLING]) && pod.delays[POD_TRANSIT] + pod.delays[POD_FALLING] < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
-		pod.fallingSound =  'sound/weapons/mortar_whistle.ogg'
+		pod.fallingSound = 'sound/weapons/mortar_whistle.ogg'
 	var/soundStartTime = pod.delays[POD_TRANSIT] - pod.fallingSoundLength + pod.delays[POD_FALLING]
 	if (soundStartTime < 0)
 		soundStartTime = 1
@@ -587,22 +613,20 @@
 
 /obj/effect/pod_landingzone/proc/beginLaunch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
 	pod.addGlow()
-	pod.update_icon()
-	if (pod.style != STYLE_INVISIBLE)
-		pod.add_filter("motionblur",1,list("type"="motion_blur", "x"=0, "y"=3))
+	pod.update_appearance()
 	pod.forceMove(drop_location())
 	for (var/mob/living/M in pod) //Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace? Time to get them out
 		M.reset_perspective(null)
 	var/angle = effectCircle ? rand(0,360) : rand(70,110) //The angle that we can come in from
 	pod.pixel_x = cos(angle)*32*length(smoke_effects) //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the pod_landingzone
 	pod.pixel_z = sin(angle)*32*length(smoke_effects)
-	var/rotation = Get_Pixel_Angle(pod.pixel_z, pod.pixel_x) //CUSTOM HOMEBREWED proc that is just arctan with extra steps
+	var/rotation = get_pixel_angle(pod.pixel_z, pod.pixel_x) //CUSTOM HOMEBREWED proc that is just arctan with extra steps
 	setupSmoke(rotation)
 	pod.transform = matrix().Turn(rotation)
 	pod.layer = FLY_LAYER
+	pod.plane = ABOVE_GAME_PLANE
 	if (pod.style != STYLE_INVISIBLE)
-		animate(pod.get_filter("motionblur"), y = 0, time = pod.delays[POD_FALLING], flags = ANIMATION_PARALLEL)
-		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING, flags = ANIMATION_PARALLEL) //Make the pod fall! At an angle!
+		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) //Make the pod fall! At an angle!
 	addtimer(CALLBACK(src, .proc/endLaunch), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 /obj/effect/pod_landingzone/proc/setupSmoke(rotation)
@@ -612,6 +636,7 @@
 		var/obj/effect/supplypod_smoke/smoke_part = new (drop_location())
 		if (i == 1)
 			smoke_part.layer = FLY_LAYER
+			smoke_part.plane = ABOVE_GAME_PLANE
 			smoke_part.icon_state = "smoke_start"
 		smoke_part.transform = matrix().Turn(rotation)
 		smoke_effects[i] = smoke_part
@@ -632,6 +657,7 @@
 /obj/effect/pod_landingzone/proc/endLaunch()
 	pod.tryMakeRubble(drop_location())
 	pod.layer = initial(pod.layer)
+	pod.plane = initial(pod.plane)
 	pod.endGlow()
 	QDEL_NULL(helper)
 	pod.preOpen() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place

@@ -6,10 +6,10 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape/luxury)
 "ac" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Economy-Class"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ad" = (
 /obj/machinery/scanner_gate/luxury_shuttle{
@@ -18,7 +18,7 @@
 /obj/machinery/door/airlock/silver{
 	name = "First Class"
 	},
-/turf/open/floor/carpet/orange,
+/turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "ae" = (
 /obj/docking_port/mobile/emergency{
@@ -34,15 +34,15 @@
 /obj/machinery/door/airlock/silver{
 	name = "First Class"
 	},
-/turf/open/floor/carpet/orange,
+/turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "af" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Escape Shuttle Cell";
-	req_access_txt = "2"
+	name = "Escape Shuttle Cell"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "ag" = (
 /turf/closed/indestructible/riveted/plastinum,
 /area/shuttle/escape/luxury)
@@ -50,46 +50,31 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
-"ai" = (
-/turf/closed/indestructible/riveted/plastinum,
-/area/shuttle/escape)
 "aj" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/large,
-/obj/effect/spawner/lootdrop/maintenance/eight,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/random/maintenance/eight,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ak" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "al" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/escape/luxury)
-"am" = (
-/turf/open/floor/carpet/orange,
-/area/shuttle/escape/luxury)
 "ao" = (
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
-"ap" = (
-/obj/structure/chair/comfy/teal{
-	dir = 4;
-	icon_state = "comfychair"
-	},
-/turf/open/floor/mineral/diamond,
-/area/shuttle/escape)
 "aq" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/reagent_dispensers/fueltank,
 /obj/structure/window{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ar" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -108,7 +93,7 @@
 /area/shuttle/escape/luxury)
 "at" = (
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "au" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -127,10 +112,8 @@
 /area/shuttle/escape/luxury)
 "ax" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ay" = (
 /turf/closed/indestructible/syndicate,
@@ -145,9 +128,7 @@
 /obj/machinery/button/door{
 	id = "ohnopoors";
 	name = "window shutters";
-	pixel_x = -5;
-	pixel_y = 26;
-	req_access_txt = "0"
+	pixel_y = 26
 	},
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
@@ -226,8 +207,7 @@
 /area/shuttle/escape/luxury)
 "aM" = (
 /obj/structure/chair/comfy/teal{
-	dir = 4;
-	icon_state = "comfychair"
+	dir = 4
 	},
 /turf/open/floor/mineral/diamond,
 /area/shuttle/escape/luxury)
@@ -260,10 +240,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aR" = (
-/obj/structure/mirror{
-	pixel_x = -23;
-	pixel_y = -2
-	},
+/obj/structure/mirror/directional/west,
 /obj/structure/sink/greyscale{
 	dir = 4;
 	pixel_x = -12
@@ -302,7 +279,7 @@
 /turf/open/floor/carpet/red,
 /area/shuttle/escape/luxury)
 "aX" = (
-/obj/item/food/grilledcheese{
+/obj/item/food/grilled_cheese_sandwich{
 	pixel_y = 11
 	},
 /obj/structure/table/wood/fancy/black,
@@ -343,19 +320,19 @@
 /area/shuttle/escape/luxury)
 "be" = (
 /obj/structure/girder,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bf" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/turf_decal/loading_area,
-/obj/effect/spawner/lootdrop/maintenance/six,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/random/maintenance/six,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bg" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/turf_decal/loading_area,
-/obj/effect/spawner/lootdrop/maintenance/three,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bi" = (
 /obj/machinery/computer/emergency_shuttle{
@@ -365,15 +342,11 @@
 /area/shuttle/escape/luxury)
 "bj" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "bk" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "bl" = (
@@ -388,19 +361,19 @@
 	pixel_y = 7
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bn" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/engineering/electrical,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/lootdrop/maintenance/eight,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/random/maintenance/eight,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bo" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/engineering,
-/obj/effect/spawner/lootdrop/maintenance/eight,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/random/maintenance/eight,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bp" = (
 /obj/effect/turf_decal/delivery,
@@ -410,7 +383,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bq" = (
 /obj/item/stack/rods/ten,
@@ -454,8 +427,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/holofloor/beach/coast_t{
-	dir = 8;
-	icon_state = "sandwater_t"
+	dir = 8
 	},
 /area/shuttle/escape/luxury)
 "bx" = (
@@ -468,15 +440,15 @@
 /obj/structure/closet/crate/large,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/lootdrop/maintenance/eight,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/random/maintenance/eight,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bz" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bA" = (
 /obj/effect/turf_decal/delivery,
@@ -487,8 +459,8 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/decal/cleanable/oil,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bB" = (
 /obj/item/stack/ore/glass,
@@ -500,30 +472,27 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/window,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bD" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 "bE" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
+/area/shuttle/escape/luxury)
 "bF" = (
 /obj/item/bikehorn/rubberducky,
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
 "bG" = (
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /turf/open/floor/holofloor/beach/coast_t{
-	dir = 8;
-	icon_state = "sandwater_t"
+	dir = 8
 	},
 /area/shuttle/escape/luxury)
 "bH" = (
@@ -531,8 +500,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "bI" = (
-/obj/item/stack/tile/plasteel,
-/turf/open/floor/plasteel,
+/obj/item/stack/tile/iron/base,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bJ" = (
 /obj/structure/chair/comfy/shuttle,
@@ -542,7 +511,7 @@
 /obj/structure/window{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bK" = (
 /obj/structure/chair/comfy/shuttle,
@@ -560,10 +529,9 @@
 /area/shuttle/escape/luxury)
 "bM" = (
 /obj/structure/window/reinforced,
-/obj/machinery/door/window/eastright,
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/holofloor/beach/coast_t{
-	dir = 8;
-	icon_state = "sandwater_t"
+	dir = 8
 	},
 /area/shuttle/escape/luxury)
 "bN" = (
@@ -588,9 +556,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
 "bQ" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
 "bR" = (
@@ -598,16 +564,16 @@
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "bS" = (
-/obj/item/stack/tile/plasteel,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "bT" = (
 /obj/effect/decal/cleanable/oil,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bU" = (
 /obj/effect/decal/cleanable/generic,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bV" = (
 /obj/structure/chair/comfy/brown,
@@ -642,19 +608,7 @@
 /area/shuttle/escape/luxury)
 "bZ" = (
 /obj/machinery/vending/boozeomat,
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/open/floor/carpet/green,
-/area/shuttle/escape/luxury)
-"ca" = (
-/obj/machinery/iv_drip,
-/mob/living/simple_animal/bot/medbot{
-	name = "\improper emergency medibot";
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "cb" = (
 /obj/machinery/stasis,
@@ -664,8 +618,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/large,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/lootdrop/maintenance/eight,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/random/maintenance/eight,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cd" = (
 /obj/machinery/door/airlock/public/glass{
@@ -673,22 +627,14 @@
 	},
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
-"ce" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	pixel_x = 26;
-	use_power = 0
-	},
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
 "cf" = (
 /obj/effect/decal/cleanable/vomit/old,
 /obj/item/stack/ore/glass,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cg" = (
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ch" = (
 /obj/structure/chair/comfy/brown{
@@ -727,15 +673,16 @@
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "ck" = (
-/obj/item/stack/tile/plasteel,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
+/obj/item/stack/tile/iron/base,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cl" = (
-/obj/structure/table/optable,
-/obj/item/surgical_drapes,
+/mob/living/simple_animal/bot/medbot{
+	name = "\improper emergency medibot";
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "cm" = (
@@ -760,7 +707,7 @@
 /obj/machinery/door/airlock{
 	name = "Economy Medical"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "co" = (
 /obj/item/shard,
@@ -775,7 +722,7 @@
 /obj/item/reagent_containers/glass/bottle/ethanol,
 /obj/item/organ/stomach,
 /obj/item/clothing/mask/surgical,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cq" = (
 /obj/effect/decal/cleanable/chem_pile,
@@ -784,11 +731,11 @@
 "cr" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cs" = (
 /obj/effect/decal/cleanable/robot_debris,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ct" = (
 /obj/machinery/shower{
@@ -800,22 +747,20 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "cv" = (
 /obj/structure/table,
-/obj/item/reagent_containers/pill/floorpill{
+/obj/item/reagent_containers/pill/maintenance{
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/pill/floorpill{
+/obj/item/reagent_containers/pill/maintenance{
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/pill/floorpill,
+/obj/item/reagent_containers/pill/maintenance,
 /obj/item/healthanalyzer{
 	pixel_y = 9
 	},
@@ -823,18 +768,18 @@
 /area/shuttle/escape/luxury)
 "cw" = (
 /obj/structure/bed,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cx" = (
 /obj/effect/decal/cleanable/vomit/old,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cy" = (
 /obj/item/shard,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cz" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape/luxury)
 "cA" = (
@@ -844,47 +789,34 @@
 "cB" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cC" = (
 /obj/structure/grille/broken,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/turf/open/floor/plasteel,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cD" = (
 /obj/structure/frame/machine,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cE" = (
 /obj/structure/chair/comfy/brown,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "cF" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "cG" = (
-/obj/machinery/stasis,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"cH" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/advanced,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/advanced,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/fire,
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},
@@ -911,20 +843,22 @@
 	pixel_x = 3;
 	pixel_y = -2
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/north,
+/turf/open/floor/carpet/cyan,
+/area/shuttle/escape/luxury)
+"cH" = (
+/obj/machinery/light/directional/south,
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "cI" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/carpet/blue,
 /area/shuttle/escape/luxury)
 "cJ" = (
-/obj/item/stack/tile/plasteel,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/item/stack/tile/iron/base,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "cK" = (
@@ -933,21 +867,19 @@
 	pixel_y = 6
 	},
 /obj/item/hatchet,
-/obj/item/kitchen/knife,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/item/knife/kitchen,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
 "cL" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "cM" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape/luxury)
 "cN" = (
@@ -960,19 +892,25 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"zh" = (
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape/luxury)
+"Eg" = (
+/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/iv_drip,
+/turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "Lt" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Escape Shuttle Cell";
-	req_access_txt = "2"
+	name = "Escape Shuttle Cell"
 	},
 /obj/machinery/scanner_gate/luxury_shuttle,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/mineral/plastitanium/red/brig,
-/area/shuttle/escape/luxury)
+/area/shuttle/escape/brig)
 
 (1,1,1) = {"
 aa
@@ -1280,7 +1218,7 @@ ag
 "}
 (20,1,1) = {"
 ag
-am
+ao
 ao
 ao
 bO
@@ -1311,15 +1249,15 @@ cM
 ag
 "}
 (22,1,1) = {"
-ai
+ag
 bm
 aw
 aw
 bP
 ag
-ca
-aB
 cj
+aB
+cm
 ag
 ag
 ag
@@ -1327,7 +1265,7 @@ aS
 ag
 "}
 (23,1,1) = {"
-ai
+ag
 bE
 aw
 aw
@@ -1343,13 +1281,13 @@ aS
 ag
 "}
 (24,1,1) = {"
-ai
-ap
-aM
-aM
-aM
 ag
-cb
+aM
+aM
+aM
+zh
+ag
+Eg
 aB
 cl
 ag
@@ -1366,8 +1304,8 @@ bl
 bv
 ag
 cb
-ce
-cm
+cb
+cb
 ag
 qa
 bb

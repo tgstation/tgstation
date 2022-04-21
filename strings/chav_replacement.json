@@ -1,0 +1,80 @@
+{
+
+    "chav": {
+		"fucking": "bloody",
+		"dick": "knob",
+		"dickhead": "bellend",
+		"coffee": "tea",
+		"pussy": "fanny",
+		"my": "me",
+		"stupid": "daft",
+		"looking at": "gawpin' at",
+		"head": "dome",
+		"bar": "pub",
+		"water": "wa'er",
+		"music": "tunes",
+		"dissapointed": "gutted",
+		"vacuum": "hoover",
+		"sus": "dodgy",
+		"sleep": "kip",
+		"tired": "knackered",
+		"fries": "chips",
+		"chips": "crisps",
+		"what": "wot",
+		"robust": "chin",
+		"windows": "windies",
+		"window": "windy",
+		"break": "do",
+		"your": "yer",
+		"no": "naw",
+		"mom": "mum",
+		"hair": "mop",
+		"nothing": "bugger all",
+		"food": "scran",
+		"security": [
+			"coppers",
+			"bobbies"
+		],
+		"friend": [
+			"mate",
+			"bruv",
+			"lad"
+		],
+		"great": [
+			"bangin'",
+			"sound"
+		],
+		"man": [
+			"mate",
+			"mans",
+			"bloke"
+		],
+		"isnt": [
+			"innit",
+			"aint it"
+		],
+		"dumb": [
+			"daft",
+			"stupid"
+		],
+		"idiot": [
+			"wanker",
+			"tosser",
+			"prick"
+		],
+		"little": [
+			"tad",
+			"wee"
+		],
+		"credits": [
+			"pounds",
+			"quid"
+		],
+		"drunk": [
+			"shitfaced",
+			"pissed"
+		],
+		"tough": "big"
+	}
+
+}

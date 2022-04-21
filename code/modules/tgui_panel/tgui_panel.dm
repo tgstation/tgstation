@@ -37,16 +37,20 @@
  * Initializes tgui panel.
  */
 /datum/tgui_panel/proc/initialize(force = FALSE)
+	set waitfor = FALSE
+	// Minimal sleep to defer initialization to after client constructor
+	sleep(1)
 	initialized_at = world.time
 	// Perform a clean initialization
-	window.initialize(inline_assets = list(
-		get_asset_datum(/datum/asset/simple/tgui_common),
+	window.initialize(assets = list(
 		get_asset_datum(/datum/asset/simple/tgui_panel),
 	))
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/fontawesome))
+	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/tgfont))
 	window.send_asset(get_asset_datum(/datum/asset/spritesheet/chat))
+	// Other setup
 	request_telemetry()
-	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 2 SECONDS)
+	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 5 SECONDS)
 
 /**
  * private

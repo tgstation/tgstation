@@ -8,19 +8,22 @@
 	device_type = MC_HDD
 	var/max_capacity = 128
 	var/used_capacity = 0
-	var/list/stored_files = list()		// List of stored files on this drive. DO NOT MODIFY DIRECTLY!
+	var/list/stored_files = list() // List of stored files on this drive. DO NOT MODIFY DIRECTLY!
+	var/default_installs = TRUE // install the default progs
 
-/obj/item/computer_hardware/hard_drive/on_remove(obj/item/modular_computer/MC, mob/user)
-	MC.shutdown_computer()
+/obj/item/computer_hardware/hard_drive/on_remove(obj/item/modular_computer/remove_from, mob/user)
+	remove_from.shutdown_computer()
+	for(var/datum/computer_file/program/program in stored_files)
+		program.computer = null
 
 /obj/item/computer_hardware/hard_drive/proc/install_default_programs()
-	store_file(new/datum/computer_file/program/computerconfig(src)) 	// Computer configuration utility, allows hardware control and displays more info than status bar
-	store_file(new/datum/computer_file/program/ntnetdownload(src))		// NTNet Downloader Utility, allows users to download more software from NTNet repository
-	store_file(new/datum/computer_file/program/filemanager(src))		// File manager, allows text editor functions and basic file manipulation.
+	store_file(new/datum/computer_file/program/computerconfig(src)) // Computer configuration utility, allows hardware control and displays more info than status bar
+	store_file(new/datum/computer_file/program/ntnetdownload(src)) // NTNet Downloader Utility, allows users to download more software from NTNet repository
+	store_file(new/datum/computer_file/program/filemanager(src)) // File manager, allows text editor functions and basic file manipulation.
 
 /obj/item/computer_hardware/hard_drive/examine(user)
 	. = ..()
-	. += "<span class='notice'>It has [max_capacity] GQ of storage capacity.</span>"
+	. += span_notice("It has [max_capacity] GQ of storage capacity.")
 
 /obj/item/computer_hardware/hard_drive/diagnostics(mob/user)
 	..()
@@ -46,9 +49,13 @@
 	if(F in stored_files)
 		return FALSE
 
+	SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_ADDING)
+
 	F.holder = src
 	stored_files.Add(F)
 	recalculate_size()
+
+	SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_ADDED)
 	return TRUE
 
 // Use this proc to remove file from the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
@@ -63,8 +70,10 @@
 		return FALSE
 
 	if(F in stored_files)
+		SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_DELETING)
 		stored_files -= F
 		recalculate_size()
+		SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
 		return TRUE
 	else
 		return FALSE
@@ -117,19 +126,21 @@
 	return null
 
 /obj/item/computer_hardware/hard_drive/Destroy()
-	stored_files = null
+	QDEL_LIST(stored_files)
 	return ..()
 
-/obj/item/computer_hardware/hard_drive/Initialize()
+/obj/item/computer_hardware/hard_drive/Initialize(mapload)
 	. = ..()
-	install_default_programs()
+
+	if(default_installs)
+		install_default_programs()
 
 
 /obj/item/computer_hardware/hard_drive/advanced
 	name = "advanced hard disk drive"
 	desc = "A hybrid HDD, for use in higher grade computers where balance between power efficiency and capacity is desired."
 	max_capacity = 256
-	power_usage = 50 					// Hybrid, medium capacity and medium power storage
+	power_usage = 50 // Hybrid, medium capacity and medium power storage
 	icon_state = "harddisk_mini"
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -137,7 +148,7 @@
 	name = "super hard disk drive"
 	desc = "A high capacity HDD, for use in cluster storage solutions where capacity is more important than power efficiency."
 	max_capacity = 512
-	power_usage = 100					// High-capacity but uses lots of power, shortening battery life. Best used with APC link.
+	power_usage = 100 // High-capacity but uses lots of power, shortening battery life. Best used with APC link.
 	icon_state = "harddisk_mini"
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -159,12 +170,25 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_MEDIUM * 2
 
+/obj/item/computer_hardware/hard_drive/small/install_default_programs()
+	. = ..()
+
+	store_file(new /datum/computer_file/program/messenger(src))
+	store_file(new /datum/computer_file/program/notepad(src))
+
 // For borg integrated tablets. No downloader.
 /obj/item/computer_hardware/hard_drive/small/integrated/install_default_programs()
-	store_file(new /datum/computer_file/program/computerconfig(src)) 	// Computer configuration utility, allows hardware control and displays more info than status bar
-	store_file(new /datum/computer_file/program/filemanager(src))		// File manager, allows text editor functions and basic file manipulation.
-	store_file(new /datum/computer_file/program/robotact(src))
+	var/datum/computer_file/program/messenger/messenger = new(src)
+	messenger.is_silicon = TRUE
+	store_file(messenger)
 
+/obj/item/computer_hardware/hard_drive/small/integrated/borg/install_default_programs()
+	store_file(new /datum/computer_file/program/computerconfig(src)) // Computer configuration utility, allows hardware control and displays more info than status bar
+	store_file(new /datum/computer_file/program/filemanager(src)) // File manager, allows text editor functions and basic file manipulation.
+	store_file(new /datum/computer_file/program/robotact(src))
+	var/datum/computer_file/program/messenger/messenger = new(src)
+	messenger.is_silicon = TRUE
+	store_file(messenger)
 
 // Syndicate variant - very slight better
 /obj/item/computer_hardware/hard_drive/small/syndicate

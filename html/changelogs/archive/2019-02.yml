@@ -1,0 +1,471 @@
+2019-02-04:
+  4dplanner:
+  - balance: perfluorodecalin's side effects have been significantly reduced to 0.3
+      toxloss per tick
+  - balance: perfluorodecalin no longer heals brute/burn damage
+  - bugfix: the pirate shuttle APC cannot be remotely controlled
+  81Denton:
+  - tweak: Added a bigger selection of sounds to the H.O.N.K. mech's "Sounds of HONK"
+      panel.
+  Anonmare:
+  - bugfix: Updates the malf fire alarm hack to be more up to date
+  As334 and Unit2E:
+  - tweak: Miasma and BZ no longer affect the energy level of the BZ generation reaction.
+  - balance: Tweaked how BZ generation's research points work to reward higher efficiency
+      setups.
+  Basilman:
+  - refactor: refactored how sounds are stored and played
+  - rscadd: Added sound rings and supporting text
+  BuffEngineering:
+  - bugfix: Addicts can now feel like they're getting their fix or kicking it
+  Floyd / Qustinnus:
+  - tweak: Bonechill now actually chills you
+  - tweak: Bonechill lasts 2 seconds longer
+  - tweak: RESIST_COLD is checked before bonechill is applied
+  - bugfix: Changes makeshift vests' name to durathread vest
+  - bugfix: Cardboard golem can now reproduce himself.
+  - bugfix: The durathread golem now needs cloth instead of strands
+  Hathkar:
+  - balance: Red slime speed potions applied to vehicles will now make the vehicle
+      as fast as a normal running person.
+  Menshin:
+  - bugfix: syringes launched from the mecha syringe gun will now properly transfer
+      reagents
+  - bugfix: Plastic flaps won't become invisible on unscrew anymore
+  Michael-Ashfield:
+  - tweak: Beekeepers can finally store their flyswatters in their suit storage
+  ShizCalev:
+  - bugfix: Fixed turrets targeting pAI devices.
+  - bugfix: Fixed fire alarms not updating icons properly after being emagged and
+      hacked by Malf AI's.
+  - bugfix: Fixed an exploit which allowed you to stack petting related mood buffs.
+  - bugfix: Fixed petting moodlets showing an animal's pronouns as simply "it", instead
+      of their actual pronoun.
+  SuicidalPickles:
+  - balance: Flagellant Robes have had their speed reduced from -1 to -0.6, in return
+      for tuning the extra received damage down by 5.
+  TheMythicGhost:
+  - rscadd: Adds an in-hand sprite for package wrapped parcels.
+  Tlaltecuhtli:
+  - balance: Ripley, Firefighter, Odysseus and H.O.N.K. mechs now also use scanning
+      modules and capacitors on construction. This means that they also gain reduced
+      power consumption and EMP protection from higher-tier stock parts.
+  - balance: neurotoxin doesnt insta stun but gives you limb paralysis overtime and
+      heart attacks if it stays in for too long and it is also alcholic
+  actioninja:
+  - balance: Bone Hurting Juice now metabolizes at a standard rate for toxins.
+  actioninja\memager:
+  - refactor: Ballistic guns have been almost entirely reworked from a backend side.
+      This primarily focused on moving as much as possible into the base ballistic
+      gun and turning as many other guns into essentially varedits as possible.
+  - rscadd: Guns can now be racked. This is the default action unless the magazine
+      is empty.
+  - rscadd: Guns now can have the magazine removed by clicking on them with an open
+      hand while they are in hand.
+  - tweak: Suppressors are now removed by alt clicking instead of clicking with an
+      open hand
+  - rscadd: Guns now have various bolt types that all function a bit differently.
+      Open bolts cannot have a bullet chambered with no mag, locking bolts lock back
+      after running out of ammo, etc.
+  - rscadd: All ballistic gun sounds are controlled by variables instead of hardcoded
+      usages.
+  - tweak: The l6 LMG has a reworked control scheme. alt + click to open and close
+      the cover, open hand to remove mag, place mag in by slapping them together,
+      default action is rack.
+  - tweak: Functionality that used to be snowflake code such as tactical reloads has
+      been moved to the base gun, and can be toggled by variables.
+  - refactor: All shotguns are now properly subpaths of the shotgun type. They still
+      work the same.
+  - imagedel: Gun sprites have been almost entirely overhauled to use overlays instead
+      of states. This collapsed the L6 sprite from 20 sprites to 9 sprites to give
+      an example.
+  - soundadd: Remixed versions of the shotgun and base gun firesound
+  - soundadd: New rifle firesound for l6 and moist nugget, new SMG fire sound, new
+      sniper fire sound.
+  - soundadd: Lots of new weapon operation sounds such as racking and bolts and the
+      like.
+  - imageadd: New sprites for the Riot Shotgun, Combat Shotgun, c20r, Deagle, m90,
+      double barrel shotgun and 1911 by Memager.
+  - imageadd: All gun sprites that were pointing to the left have been flipped to
+      point to the right.
+  - balance: Shotguns now can be pumped faster.
+  - balance: Bulldog can now be tac reloaded
+  - balance: Sawn off shotguns now have an accuracy penalty and recoil
+  coiax:
+  - code_imp: Job code has been moved into separate files. There should be no change
+      in behavior.
+  fizzle7:
+  - bugfix: Tourettes bug fix. You can now swear and get stunned yet again.
+  loserXD:
+  - bugfix: fixes typo in DNA defines
+  oranges:
+  - balance: soviet and capitalistic golems no longer available from pride mirror
+  - refactor: changed how species manage their source behaviours
+  the epic purple skeleton in the sky:
+  - balance: Plasmamen now take 1.5x brute damage.
+2019-02-06:
+  4dplanner:
+  - bugfix: fireproofing works properly
+  Floyd / Qustinnus:
+  - bugfix: you can no longer spam bone rattling
+  Joe Berry:
+  - bugfix: Fixes various mobs death sounds and messages not functioning
+  - bugfix: Fixes hierophants death animation not working properly
+  Kierany9:
+  - tweak: Fixed some bad math in the chance to get a brain trauma, traumas should
+      now be a little less common.
+  MMMiracles:
+  - tweak: Several small tweaks have been done on Donutstation based on feedback.
+  ShizCalev:
+  - bugfix: PDA messages through the messaging server monitor will now correctly log
+      the sender.
+  Tlaltecuhtli:
+  - bugfix: some syndicate operatives simple mobs no longer have an invisible shield
+  granpawalton:
+  - bugfix: Screwing a disk compartmentalizer no longer makes it look like a smartfridge
+  oranges:
+  - balance: Mecha capacitor stock part now only does half as much damage resist for
+      emps
+2019-02-07:
+  AndrewMontague, FlattestGuitar, nichlas0010, TheMythicGhost:
+  - tweak: Changes vending machine selections to now display their contents icon instead
+      of just their name and a random color.
+  Vile Beggar:
+  - rscadd: Central Command now has access to a janitorial ERT. Be wary of the heavy-duty
+      ones!
+2019-02-10:
+  Ghommie:
+  - code_imp: Fixes ISINRANGE_EX using the wrong relational operator.
+  Nero1024:
+  - bugfix: lying or otherwise incapacitated mobs shouldn't play footstep sounds anymore
+      while moving or being moved
+  - soundadd: instead they'll play a crawling/dragging sound
+  PKPenguin321:
+  - rscadd: 'New system in genetics: Conflicting mutations. Some mutations will not
+      allow others to activate. Example - If you have mutation A, and it conflicts
+      with B, then B will never activate until you get rid of mutation A (and visa
+      versa). The only mutations to currently use this are Dwarfism and Gigantism.
+      Speaking of which...'
+  - rscadd: 'New minor negative mutation: Gigantism. Opposite of dwarfism, makes you
+      larger.'
+  - rscadd: 'New disability: Spastic. You will randomly take a step in a random direction,
+      will randomly change intent, and will randomly try to click on somebody near
+      you (which can hug them, punch them, use whatever is in your hand on them, etc).'
+  - rscadd: 'New disability: Acid flesh. Pockets of acid bubble beneath your skin.
+      They will occasionally pop, coating you with acid. This will melt clothes and
+      deal damage to you.'
+  - rscadd: 'New disability: Spatial Instability. You will randomly teleport, similar
+      to a wizard''s blink teleport. This is a very nauseating process, and will inevitably
+      make you very sick if you don''t rid yourself of it.'
+  - rscadd: 'New disability: Two Left Feet. Your right foot becomes a second left
+      foot. You take longer to get up from stuns.'
+  ShizCalev:
+  - bugfix: Fixed a bug that allowed you to teleport an ID in your possession to a
+      PDA anywhere ingame.
+  - bugfix: Fixed an exploit allowing you to steal ID's/pens from PDA's not in your
+      possession.
+  - bugfix: Fixed an exploit allowing you unlimited control of a PDA's interface even
+      if it wasn't near you/in your possession.
+  - bugfix: Honk Blaster 5000 will no longer knock you down in space if you aren't
+      adjacent to it.
+  - bugfix: Fixed a runtime which caused microwaves/showers/ect to not play sounds.
+  - bugfix: Internal beakers for medbots now work.
+  TerraGS:
+  - rscadd: Adds toggleable light and blinking charge indicator to kinetic crusher
+  Vile Beggar:
+  - tweak: The drill hat is less annoying now. You can change the loudness setting
+      of it by using a screwdriver on it. Use wirecutters on it for a surprise.
+  - tweak: Lights now spark less.
+  YoYoBatty:
+  - code_imp: Fixed an undeleted sql query.
+  actioninja:
+  - bugfix: fixed a bunch of missing sprites for various guns including the RPG, grenade
+      launcher, and toy weapons
+  - bugfix: fixed sprite issues with no mag spawn weapons such as the 1911.
+  - bugfix: fixed ammo counts on weapons such as the double barrel shotgun being incorrect
+  - bugfix: fixed issue with double barrel and revolver "tac loading" that prevented
+      them from firing until it was properly reloaded
+  - bugfix: more gun fixes
+  gy1ta23:
+  - tweak: updates clothesmate line
+  the big gay:
+  - rscdel: The old stamina damage dealing .45 ammo has been removed. This only affects
+      the 1911 handgun.
+  tralezab:
+  - tweak: sleeping carp now deflects projectiles
+2019-02-13:
+  Caiggas:
+  - rscadd: Wooden pews may be constructed from 3 wood for all your religious needs!
+  GranpaWalton:
+  - tweak: The tissue hydration water absorption bonus now applies at the correct
+      threshold
+  - tweak: The interaction between tissue hydration and holy water has been added
+      to its description
+  - tweak: A lavaland syndicate base portable scrubber was replaced with a portable
+      pump
+  - bugfix: layer 3 injectors now properly initialize on layer 3 instead of 2
+  IndieanaJones:
+  - rscadd: Space Dragon Mob
+  - rscadd: Space Dragon Antagonist Event
+  Joe Berry:
+  - rscadd: VR Megafauna Arena Map, train against respawning megafauna without the
+      fear of permanent death, comes randomly chosen in a selection of other vr maps
+      in the normal vr sleeper
+  - rscadd: Permanent portals, indestructible portals that are paired up and linked
+      forever
+  - rscadd: One way portals, portals that don't have a portal that leads back (mapping
+      tool)
+  - rscadd: Recall portals, one way portals with a twist, you can use a spell given
+      to you to go back to the old portal at any time
+  - rscadd: Megafauna arena portals, permanent portals that megafauna cannot travel
+      through
+  - rscadd: Virtual Megafauna Spawners, spawn holographic megafauna on their person
+      infinitely
+  - rscadd: Virtual versions of the megafauna, don't drop loot and are linked to their
+      spawner
+  - rscadd: Infinite miner item chests, delete items on them when closed and respawn
+      the same initial items when opened, used for vr mining equipment restocking
+  - rscadd: Boss rush mode for virtual megafauna arena, fight your way through all
+      the megafauna one at a time
+  - tweak: Makes it easier for new bubblegum types to be created
+  - bugfix: Ash Drake Corpses no longer have an internal gps signal
+  - imageadd: Added icons for the megafauna spawners
+  - code_imp: Removes worthless and copy pasted code from the colossus file, like
+      having a dead icon state of the ash drake and butcher results
+  - refactor: Makes it easier for new bubblegum types to be created without having
+      to edit the initialization each time
+  - config: Adds VR Megafauna Arena Map to the away missions
+  Kierany9:
+  - rscadd: 'Assmilation has received a major update! remove: Kill, Maroon and Protect
+      objectives have been removed from the mode.'
+  - tweak: Powers have been reorganized and are now unlocked in batches every five
+      vessels. This gives hosts more power from the get-go and gives them distinct
+      phases due to each batch affecting a specific area of the host's ability.
+  - tweak: The psychic link pinpointer now starts off with very little time for hosts
+      and must be strengthened by using Network Invasion. Each time a host is detected
+      via NI, they can be tracked for an extra 30 seconds, and every successful use
+      of NI increases the duration of all tracking by 10 seconds. A successful use
+      of a new power, Reclaim, also increases the duration of all tracking by 30 seconds.
+  - tweak: This means that without generous use of Network Invasion and Reclaim, hivemind
+      hosts will lose their radar before Security does.
+  - rscadd: Four new powers have been added!
+  - rscadd: Reclaim is an early-game ability that instantly kills critically injured
+      hosts that are adjacent, and reduces all power requirements by five vessels
+      for each host reclaimed, instantly unlocking your next set of powers.
+  - rscadd: Psychoreception is an early-game ability that gives you the approximate
+      distance of anybody currently tracking you and any hosts you've previously detected
+      via Network Invasion.
+  - rscadd: Chaos Induction is a mid-game power with a single use that turns four
+      random vessels into antagonists with a single, customizable objective.
+  - rscadd: 'Circadian Shift is a late-game power that sends everybody in sight to
+      sleep for up to almost a minute. The more people affected, the less time it
+      lasts, the minimum being eight seconds. remove: Mass Assimilation has been removed
+      as Reclaim now fills its role.'
+  - tweak: Assimilate Vessel and Release Vessel's cooldown have been reduced to 5
+      seconds to reduce waiting time between assimilation attempts.
+  - tweak: Bruteforce is no longer temporary, but immobilizes the user for five seconds
+      after assimilation.
+  - tweak: Hive Sight also lets you hear what the vessel does.
+  - tweak: The antag limit has been upped from 6 to 9
+  - code_imp: A lot of internal changes to how Assimilation works. In summary, Assimilation
+      now affects the mind instead of the mob, meaning that players will stay assimilated
+      in a few more scenarios, most notably after death.
+  - balance: Induce Panic and Distortion Field have been buffed to be more reliable,
+      especially at lower hive sizes.
+  - balance: 'Induce Panic and Circadian Shift can affect silicons but no longer affect
+      hivemind hosts. experimental: A new endgame has been added. The One Mind that
+      survives this ordeal will show the world the true terror of the word Hivemind.'
+  PKPenguin321:
+  - rscadd: Added the Antenna power to genetics. It gives you a built-in radio.
+  - rscadd: Added the Mind Reader power to genetics. You can read the minds of people
+      on your screen. This will reveal semi-random bit of their past conversations,
+      their intent, and their true name. You also get the antenna sprite. Can only
+      be unlocked by combining Paranoia and Antenna.
+  - rscadd: Added the Paranoia disability to genetics. You scream randomly, and have
+      a small chance to suffer from hallucinations now and then.
+  ShizCalev:
+  - bugfix: The Random Human-level Intelligence event will no longer create sentient
+      animal holograms that disappear when they leave the holodeck.
+  - bugfix: The syndicate cyborg L6 LMG now has a sprite again.
+  Time-Green:
+  - rscadd: Adds chromosomes to mutations. You can now alter your mutations in unexpected
+      ways
+  Tlaltecuhtli:
+  - tweak: light replacer is now WEIGHT_CLASS_SMALL, can be fit in a toolbelt and
+      printed from engilathe
+  Zxaber:
+  - tweak: There is now a max character config option for AI Freeform, Core Freeform,
+      and Asimov upload boards.
+  imsxz:
+  - tweak: antags with the pacifist trait no longer lose pacifism.
+  subject217:
+  - rscdel: Headslugs have been removed from the gold extract spawn pool.
+2019-02-14:
+  Lett1:
+  - code_imp: spawn_and_random_walk not returns a list of objects created
+  MrDoomBringer:
+  - admin: Added a Drop Pod bay conveniently close to the CentCom ferry, useful for
+      ERTs or Deathsquads who want to arrive in style!
+  - admin: The CentCom-Supplypod-Launcher now has an option to clear a bay of any
+      mobs and objects.
+  Nervere:
+  - bugfix: Fixed only mimes being able to scream. Now everyone can express their
+      existential dread... except for mimes.
+  ShizCalev:
+  - bugfix: Fixed incorrect default ethereal color causing a runtime when opening
+      player preferences.
+  Vile Beggar, Hulkamania:
+  - soundadd: Adds the scrungulartiy as a roundend sound effect.
+2019-02-17:
+  4dplanner:
+  - bugfix: removed some nanite exploits
+  - bugfix: Blood-drunk eye is now less likely to cripple its user
+  BuffEngineering:
+  - bugfix: Vapes now come out of the mouth
+  Denton:
+  - balance: Bluespace beakers now only fit in large grenade casings. Large casings
+      have to be researched first and can be printed at the Security and Medical protolathes
+      or techfabs.
+  - balance: Increased the glass (5000), diamond (1000) and bluespace (1000) resource
+      cost for bluespace beakers.
+  - bugfix: Fixed bluespace beakers only containing glass in their materials list.
+  Kierany9:
+  - bugfix: Fixed several bugs involving hivemind tracking, team assignation and de-assimilation
+      not working.
+  - tweak: Assimilated vessels lose their vessel status when cloned once again.
+  - tweak: Made several hivemind abilities less janky.
+  - imageadd: The sprite for members of the One Mind has been updated to be much more
+      noticeable.
+  ShizCalev:
+  - bugfix: The deafness symptom will now correctly make a player permanently deaf
+      with the appropriate resistance value.
+  - bugfix: Fixed some DNA console issues causing mutations breaking injector and
+      disk printing.
+  - bugfix: Corrected a bad sanity check when removing hivemembers in the assimilation
+      gamemode.
+  SouDescolado:
+  - bugfix: Restricted VR uplinks from buying syndicate cash briefcases.
+  Time-Green:
+  - bugfix: You can now print mutators and stuff again from storage if the occupant
+      doesnt have it
+2019-02-20:
+  Denton:
+  - admin: Added a cancel button to ahelp and asay popups.
+  LaKiller8:
+  - bugfix: Goonchat options should now save properly.
+  ShizCalev:
+  - tweak: The emergency internals crate now contains breath masks instead of gas
+      masks.
+  - imageadd: Added sprites for emitters so they stop facing weird directions when
+      their maintenance panel is opened.
+  - bugfix: Corrected a rogue linebreak in atmos canister warning/logging messages.
+  - bugfix: Fixed runtime related to the neet quirk when spawning in as a special
+      role without a bank account.
+  - bugfix: Corrected a bad area tile in chapel maintenance on box.
+  - bugfix: Junkies will now spawn with their pills correctly filled with their appropriate
+      drug.
+  Tlaltecuhtli:
+  - bugfix: tesla coil zapping no longer blows up everything and itself
+  Vile Beggar:
+  - soundadd: Soviet Golems now play the USSR anthem instead of the Russian Federation
+      one.
+  daklaj:
+  - balance: beam projectiles now pass through riot shields
+  - balance: shields will break after absorbing too much damage
+  nemvar:
+  - balance: Love and pacification potions no longer work on megafauna.
+  wesoda25:
+  - balance: disembowelment no longer works on mobs that aren't dead or in critical
+      condition
+2019-02-24:
+  Denton:
+  - tweak: Ghosts/observers can now look at photos from far away.
+  Poojawa:
+  - bugfix: fixed a bug where husks kept their hair if husked by fire damage or Ling
+      succ
+  SouDescolado:
+  - refactor: Slot Machines can now accept holocredits (Switch mode back and forth
+      with a multitool. Default is Holocredit.)
+  Time-Green:
+  - code_imp: Removes duplicant paraplegic quirk in the code
+  Tlaltecuhtli:
+  - tweak: crafting a pneumatic cannon no longer takes an eternity
+  - bugfix: Other people's clothes burning no longer spam you
+  Yenwodyah:
+  - bugfix: Destroying an empty head no longer destroys the organs you pulled out
+      of it.
+  actioninja:
+  - bugfix: The anti-combat mechanism in the Russian Revolver has been revised to
+      prevent usage while dual wielding.
+  subject217:
+  - tweak: Soviet and Capitalist golems no longer appear in opportunities where a
+      random golem species was selected, primarily golem mutation toxin.
+  tralezab:
+  - bugfix: Valentines no longer hold up mulligan!
+2019-02-25:
+  4dplanner:
+  - bugfix: the center blast of the hierophant club cross attack no longer deals reduced
+      damage
+  MacHac:
+  - bugfix: Portable atmospherics machinery now releases its air when it explodes.
+  - bugfix: Bank cards can now talk again.
+  - rscadd: There's now a client preference to ignore them.
+  Mickyan:
+  - tweak: Clowns now get a mood boost from wearing clown shoes, but no longer feel
+      sad when they are not.
+  - bugfix: Wearing shoes means on your FEET!
+  - bugfix: Drunkenness will now correctly reach zero over time
+  - bugfix: Drunk moodlet now clears properly
+  MrDoomBringer:
+  - admin: Admins can now use the Centcom Podlauncher to launch things without the
+      things looking like they're being sent inside a pod.
+  MrStonedOne:
+  - admin: 'Some tweaks to the ban interface:'
+  - rscadd: Bans apply to computer_ids by default
+  - rscadd: Bans only apply to IPs by default if its a permaban.
+  - admin: 'Note: The behavior of the "Use IP and CID from last connection of key"
+      box has been changed. It now only fills in checked values, where as before it
+      would error if CID or IP was check.'
+  Nero1024:
+  - bugfix: crawling sounds will no longer be played from moving buckled mobs
+  ShizCalev:
+  - bugfix: Corrected slime mutation not correctly replacing the word douchebag.
+  - bugfix: Fixed Elvis speech mutation inserting the word "getting" when saying "muh
+      valids"
+  Tlaltecuhtli:
+  - rscadd: pumps, volume pumps, filters and mixers can be turned on and off by ctrlclick
+  - rscadd: pumps, volume pumps, filters and mixers can be set to max transfer by
+      altclick
+  actioninja:
+  - bugfix: The RPG can be loaded properly after firing
+  - spellcheck: The RPG has been renamed to the PML-9
+  nemvar:
+  - bugfix: You can now properly remove welding goggles.
+2019-02-26:
+  BuffEngineering:
+  - bugfix: Mass driver time is now in sync with normal time
+  Lett1:
+  - rscadd: 'Added a new type of bot: the firebot.'
+  - rscadd: Firebots can be constructed out of extinguisher + borg arm > red fire
+      helmet > prox sensor
+  MacHac:
+  - rscadd: Nanotrasen's Blood Sports division has cracked down on cheating in the
+      CTF arena.
+  ShizCalev:
+  - bugfix: Jaunting mobs will no longer cause mice/ducks/ect to squeek when moving
+      over them.
+  Time-Green:
+  - rscadd: Adds more effects to genetic meltdown
+  YPOQ:
+  - bugfix: Defective clones will no longer be permanently mute
+  anconfuzedrock:
+  - imageadd: Old shoe object sprites
+  gy1ta23:
+  - spellcheck: fixes cheap lighter description
+2019-02-27:
+  WJohn:
+  - tweak: Very minor tweaks to lavaland syndie base to fix a dark spot left by the
+      removal of the circuit lab and to dissuade players blowing themselves up with
+      explosive testing in the test chamber.
+  YPOQ:
+  - bugfix: Shield-less syndicate mobs no longer block projectiles

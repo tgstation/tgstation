@@ -3,8 +3,8 @@
 	desc = "95% Polyester, 5% Spandex!"
 	gender = PLURAL
 	body_parts_covered = GROIN
-	fitted = NO_FEMALE_UNIFORM
-	mutantrace_variation = MUTANTRACE_VARIATION
+	female_sprite_flags = NO_FEMALE_UNIFORM
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	can_adjust = FALSE
 	icon = 'icons/obj/clothing/under/shorts_pants.dmi'
 	worn_icon = 'icons/mob/clothing/under/shorts_pants.dmi'

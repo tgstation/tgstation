@@ -3,39 +3,47 @@
 
 /obj/machinery/computer/operating
 	name = "operating computer"
-	desc = "Monitors patient vitals and displays surgery steps. Can be loaded with surgery disks to perform experimental procedures. Automatically syncs to stasis beds within its line of sight for surgical tech advancement."
+	desc = "Monitors patient vitals and displays surgery steps. Can be loaded with surgery disks to perform experimental procedures. Automatically syncs to operating tables within its line of sight for surgical tech advancement."
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/operating
 
-	var/mob/living/carbon/human/patient
 	var/obj/structure/table/optable/table
-	var/obj/machinery/stasis/sbed
 	var/list/advanced_surgeries = list()
 	var/datum/techweb/linked_techweb
 	light_color = LIGHT_COLOR_BLUE
 
-/obj/machinery/computer/operating/Initialize()
-	. = ..()
+	var/datum/component/experiment_handler/experiment_handler
+
+/obj/machinery/computer/operating/Initialize(mapload)
+	..()
 	linked_techweb = SSresearch.science_tech
 	find_table()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/operating/LateInitialize()
+	. = ..()
+
+	experiment_handler = AddComponent( \
+		/datum/component/experiment_handler, \
+		allowed_experiments = list(/datum/experiment/dissection), \
+		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
+		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
+	)
 
 /obj/machinery/computer/operating/Destroy()
 	for(var/direction in GLOB.alldirs)
 		table = locate(/obj/structure/table/optable) in get_step(src, direction)
 		if(table && table.computer == src)
 			table.computer = null
-		else
-			sbed = locate(/obj/machinery/stasis) in get_step(src, direction)
-			if(sbed && sbed.op_computer == src)
-				sbed.op_computer = null
+	QDEL_NULL(experiment_handler)
 	. = ..()
 
 /obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/disk/surgery))
-		user.visible_message("<span class='notice'>[user] begins to load \the [O] in \the [src]...</span>", \
-			"<span class='notice'>You begin to load a surgery protocol from \the [O]...</span>", \
-			"<span class='hear'>You hear the chatter of a floppy drive.</span>")
+		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."), \
+			span_notice("You begin to load a surgery protocol from \the [O]..."), \
+			span_hear("You hear the chatter of a floppy drive."))
 		var/obj/item/disk/surgery/D = O
 		if(do_after(user, 10, target = src))
 			advanced_surgeries |= D.surgeries
@@ -55,16 +63,12 @@
 		if(table)
 			table.computer = src
 			break
-		else
-			sbed = locate(/obj/machinery/stasis) in get_step(src, direction)
-			if(sbed)
-				sbed.op_computer = src
-				break
 
 /obj/machinery/computer/operating/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
 
 /obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "OperatingComputer", name)
@@ -80,23 +84,18 @@
 		surgery["desc"] = initial(S.desc)
 		surgeries += list(surgery)
 	data["surgeries"] = surgeries
-	data["patient"] = null
-	if(table)
-		data["table"] = table
-		if(!table.check_eligible_patient())
-			return data
-		data["patient"] = list()
-		patient = table.patient
-	else
-		if(sbed)
-			data["table"] = sbed
-			if(!ishuman(sbed.occupant) && !ismonkey(sbed.occupant))
-				return data
-			data["patient"] = list()
-			patient = sbed.occupant
-		else
-			data["patient"] = null
-			return data
+
+	//If there's no patient just hop to it yeah?
+	if(!table)
+		data["patient"] = null
+		return data
+
+	data["table"] = table
+	if(!table.check_eligible_patient())
+		return data
+	data["patient"] = list()
+	var/mob/living/carbon/human/patient = table.patient
+
 	switch(patient.stat)
 		if(CONSCIOUS)
 			data["patient"]["stat"] = "Conscious"
@@ -150,8 +149,9 @@
 	switch(action)
 		if("sync")
 			sync_surgeries()
-			. = TRUE
-	. = TRUE
+		if("open_experiments")
+			experiment_handler.ui_interact(usr)
+	return TRUE
 
 #undef MENU_OPERATION
 #undef MENU_SURGERIES

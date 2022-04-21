@@ -1,7 +1,7 @@
-import { toArray } from 'common/collections';
-import { Fragment } from 'inferno';
+import { flow } from 'common/fp';
+import { filter, sortBy } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
+import { AnimatedNumber, Box, Button, Flex, Icon, Input, LabeledList, NoticeBox, Section, Stack, Table, Tabs } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -9,8 +9,7 @@ export const Cargo = (props, context) => {
   return (
     <Window
       width={780}
-      height={750}
-      resizable>
+      height={750}>
       <Window.Content scrollable>
         <CargoContent />
       </Window.Content>
@@ -47,15 +46,23 @@ export const CargoContent = (props, context) => {
             Requests ({requests.length})
           </Tabs.Tab>
           {!requestonly && (
-            <Tabs.Tab
-              icon="shopping-cart"
-              textColor={tab !== 'cart'
-                && cart.length > 0
-                && 'yellow'}
-              selected={tab === 'cart'}
-              onClick={() => setTab('cart')}>
-              Checkout ({cart.length})
-            </Tabs.Tab>
+            <>
+              <Tabs.Tab
+                icon="shopping-cart"
+                textColor={tab !== 'cart'
+                  && cart.length > 0
+                  && 'yellow'}
+                selected={tab === 'cart'}
+                onClick={() => setTab('cart')}>
+                Checkout ({cart.length})
+              </Tabs.Tab>
+              <Tabs.Tab
+                icon="question"
+                selected={tab === 'help'}
+                onClick={() => setTab('help')}>
+                Help
+              </Tabs.Tab>
+            </>
           )}
         </Tabs>
       </Section>
@@ -68,6 +75,9 @@ export const CargoContent = (props, context) => {
       {tab === 'cart' && (
         <CargoCart />
       )}
+      {tab === 'help' && (
+        <CargoHelp />
+      )}
     </Box>
   );
 };
@@ -75,6 +85,7 @@ export const CargoContent = (props, context) => {
 const CargoStatus = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    grocery,
     away,
     docked,
     loan,
@@ -100,7 +111,10 @@ const CargoStatus = (props, context) => {
         <LabeledList.Item label="Shuttle">
           {docked && !requestonly && can_send &&(
             <Button
+              color={grocery && "orange" || "green"}
               content={location}
+              tooltip={grocery && "The chef is waiting on their grocery supplies." || ""}
+              tooltipPosition="right"
               onClick={() => act('send')} />
           ) || location}
         </LabeledList.Item>
@@ -126,42 +140,111 @@ const CargoStatus = (props, context) => {
   );
 };
 
+/**
+ * Take entire supplies tree
+ * and return a flat supply pack list that matches search,
+ * sorted by name and only the first page.
+ * @param {any[]} supplies Supplies list.
+ * @param {string} search The search term
+ * @returns {any[]} The flat list of supply packs.
+ */
+const searchForSupplies = (supplies, search) => {
+  search = search.toLowerCase();
+
+  return flow([
+    categories => categories.flatMap(category => category.packs),
+    filter(pack =>
+      pack.name?.toLowerCase().includes(search.toLowerCase())
+      || pack.desc?.toLowerCase().includes(search.toLowerCase())),
+    sortBy(pack => pack.name),
+    packs => packs.slice(0, 25),
+  ])(supplies);
+};
+
 export const CargoCatalog = (props, context) => {
   const { express } = props;
   const { act, data } = useBackend(context);
+
   const {
     self_paid,
     app_cost,
   } = data;
-  const supplies = toArray(data.supplies);
+
+  const supplies = Object.values(data.supplies);
+
   const [
     activeSupplyName,
     setActiveSupplyName,
   ] = useSharedState(context, 'supply', supplies[0]?.name);
-  const activeSupply = supplies.find(supply => {
-    return supply.name === activeSupplyName;
-  });
+
+  const [
+    searchText,
+    setSearchText,
+  ] = useSharedState(context, "search_text", "");
+
+  const activeSupply = activeSupplyName === "search_results"
+    ? { packs: searchForSupplies(supplies, searchText) }
+    : supplies.find(supply => supply.name === activeSupplyName);
+
   return (
     <Section
       title="Catalog"
       buttons={!express && (
-        <Fragment>
+        <>
           <CargoCartButtons />
           <Button.Checkbox
             ml={2}
             content="Buy Privately"
             checked={self_paid}
             onClick={() => act('toggleprivate')} />
-        </Fragment>
+        </>
       )}>
       <Flex>
         <Flex.Item ml={-1} mr={1}>
           <Tabs vertical>
+            <Tabs.Tab
+              key="search_results"
+              selected={activeSupplyName === "search_results"}>
+              <Stack align="baseline">
+                <Stack.Item>
+                  <Icon name="search" />
+                </Stack.Item>
+                <Stack.Item grow>
+                  <Input fluid
+                    placeholder="Search..."
+                    value={searchText}
+                    onInput={(e, value) => {
+                      if (value === searchText) {
+                        return;
+                      }
+
+                      if (value.length) {
+                        // Start showing results
+                        setActiveSupplyName("search_results");
+                      } else if (activeSupplyName === "search_results") {
+                        // return to normal category
+                        setActiveSupplyName(supplies[0]?.name);
+                      }
+                      setSearchText(value);
+                    }}
+                    onChange={(e, value) => {
+                      // Allow edge cases like the X button to work
+                      const onInput = e.target?.props?.onInput;
+                      if (onInput) {
+                        onInput(e, value);
+                      }
+                    }} />
+                </Stack.Item>
+              </Stack>
+            </Tabs.Tab>
             {supplies.map(supply => (
               <Tabs.Tab
                 key={supply.name}
                 selected={supply.name === activeSupplyName}
-                onClick={() => setActiveSupplyName(supply.name)}>
+                onClick={() => {
+                  setActiveSupplyName(supply.name);
+                  setSearchText("");
+                }}>
                 {supply.name} ({supply.packs.length})
               </Tabs.Tab>
             ))}
@@ -298,7 +381,7 @@ const CargoCartButtons = (props, context) => {
     return null;
   }
   return (
-    <Fragment>
+    <>
       <Box inline mx={1}>
         {cart.length === 0 && 'Cart is empty'}
         {cart.length === 1 && '1 item'}
@@ -311,7 +394,7 @@ const CargoCartButtons = (props, context) => {
         color="transparent"
         content="Clear"
         onClick={() => act('clear')} />
-    </Fragment>
+    </>
   );
 };
 
@@ -353,18 +436,28 @@ const CargoCart = (props, context) => {
                   <b>[Paid Privately]</b>
                 )}
               </Table.Cell>
-              <Table.Cell collapsing textAlign="right">
-                {formatMoney(entry.cost)} cr
-              </Table.Cell>
-              <Table.Cell collapsing>
-                {can_send &&(
-                  <Button
-                    icon="minus"
-                    onClick={() => act('remove', {
-                      id: entry.id,
-                    })} />
-                )}
-              </Table.Cell>
+              {entry.dep_order && (
+                <Table.Cell collapsing textAlign="right">
+                  {formatMoney(entry.cost)} cr earned on delivery
+                </Table.Cell>
+              ) || (
+                <>
+                  <Table.Cell collapsing textAlign="right">
+                    {formatMoney(entry.cost)} cr
+                  </Table.Cell>
+                  <Table.Cell collapsing>
+                    {can_send &&(
+                      <Button
+                        icon="minus"
+                        onClick={() => act('remove', {
+                          id: entry.id,
+                        })} />
+                    )}
+                  </Table.Cell>
+                </>
+              )}
+
+
             </Table.Row>
           ))}
         </Table>
@@ -388,5 +481,60 @@ const CargoCart = (props, context) => {
         </Box>
       )}
     </Section>
+  );
+};
+
+const CargoHelp = (props, context) => {
+  return (
+    <>
+      <Section title="Department Orders">
+        Each department on the station will order crates from their own personal
+        consoles. These orders are ENTIRELY FREE! They do not come out of
+        cargo&apos;s budget, and rather put the consoles on cooldown. So
+        here&apos;s where you come in: The ordered crates will show up on your
+        supply console, and you need to deliver the crates to the orderers.
+        You&apos;ll actually be paid the full value of the department crate on
+        delivery if the crate was not tampered with, making the system a good
+        source of income.
+        <br />
+        <b>
+          Examine a department order crate to get specific details about where
+          the crate needs to go.
+        </b>
+      </Section>
+      <Section title="MULEbots">
+        MULEbots are slow but loyal delivery bots that will get crates delivered
+        with minimal technician effort required. It is slow, though, and can be
+        tampered with while en route.
+        <br />
+        <b>Setting up a MULEbot is easy:</b><br />
+        <b>1.</b> Drag the crate you want to deliver next to the MULEbot.<br />
+        <b>2.</b> Drag the crate on top of MULEbot. It should load on.<br />
+        <b>3.</b> Open your PDA.<br />
+        <b>4.</b> Click <i>Delivery Bot Control</i>.<br />
+        <b>5.</b> Click <i>Scan for Active Bots</i>.<br />
+        <b>6.</b> Choose your MULE.<br />
+        <b>7.</b> Click on <i>Destination: (set)</i>.<br />
+        <b>8.</b> Choose a destination and click OK.<br />
+        <b>9.</b> Click <i>Proceed</i>.
+      </Section>
+      <Section title="Disposals Delivery System">
+        In addition to MULEs and hand-deliveries, you can also make use of the
+        disposals mailing system. Note that a break in the disposal piping could
+        cause your package to be lost (this hardly ever happens), so this is not
+        always the most secure ways to deliver something. You can wrap up a
+        piece of paper and mail it the same way if you (or someone at the desk)
+        wants to mail a letter.
+        <br />
+        <b>Using the Disposals Delivery System is even easier:</b><br />
+        <b>1.</b> Wrap your item/crate in packaging paper.<br />
+        <b>2.</b> Use the destinations tagger to choose where to send it.<br />
+        <b>3.</b> Tag the package.<br />
+        <b>4.</b> Stick it on the conveyor and let the system handle it.<br />
+      </Section>
+      <NoticeBox textAlign="center" info mb={0}>
+        Pondering something not included here? When in doubt, ask the QM!
+      </NoticeBox>
+    </>
   );
 };

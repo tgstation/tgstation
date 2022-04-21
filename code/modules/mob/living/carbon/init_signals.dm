@@ -1,4 +1,4 @@
-//Called on /mob/living/carbon/Initialize(), for the carbon mobs to register relevant signals.
+//Called on /mob/living/carbon/Initialize(mapload), for the carbon mobs to register relevant signals.
 /mob/living/carbon/register_init_signals()
 	. = ..()
 
@@ -14,15 +14,19 @@
 	SIGNAL_HANDLER
 
 	failed_last_breath = FALSE
-	clear_alert("too_much_oxy")
-	clear_alert("not_enough_oxy")
-	clear_alert("too_much_tox")
-	clear_alert("not_enough_tox")
-	clear_alert("nitro")
-	clear_alert("too_much_nitro")
-	clear_alert("not_enough_nitro")
-	clear_alert("too_much_co2")
-	clear_alert("not_enough_co2")
+
+	clear_alert(ALERT_TOO_MUCH_OXYGEN)
+	clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
+
+	clear_alert(ALERT_TOO_MUCH_PLASMA)
+	clear_alert(ALERT_NOT_ENOUGH_PLASMA)
+
+	clear_alert(ALERT_TOO_MUCH_NITRO)
+	clear_alert(ALERT_NOT_ENOUGH_NITRO)
+
+	clear_alert(ALERT_TOO_MUCH_CO2)
+	clear_alert(ALERT_NOT_ENOUGH_CO2)
+
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
@@ -33,12 +37,7 @@
  */
 /mob/living/carbon/proc/on_nometabolism_trait_gain(datum/source)
 	SIGNAL_HANDLER
+	for(var/addiction_type in subtypesof(/datum/addiction))
+		mind?.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
 
-	if(reagents.addiction_list)
-		to_chat(source, "<span class='notice'>You feel like you've gotten over your need for drugs.</span>")
-		for(var/a in reagents.addiction_list)
-			var/datum/reagent/R = a
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
-			LAZYREMOVE(reagents.addiction_list, R)
-			qdel(R)
 	reagents.end_metabolization(keep_liverless = TRUE)

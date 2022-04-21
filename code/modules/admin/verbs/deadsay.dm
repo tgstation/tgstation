@@ -8,7 +8,7 @@
 	if(!mob)
 		return
 	if(prefs.muted & MUTE_DEADCHAT)
-		to_chat(src, "<span class='danger'>You cannot send DSAY messages (muted).</span>", confidential = TRUE)
+		to_chat(src, span_danger("You cannot send DSAY messages (muted)."), confidential = TRUE)
 		return
 
 	if (handle_spam_prevention(msg,MUTE_DEADCHAT))
@@ -24,12 +24,13 @@
 	if(holder.fakekey)
 		rank_name = pick(strings("admin_nicknames.json", "ranks", "config"))
 		admin_name = pick(strings("admin_nicknames.json", "names", "config"))
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[rank_name]([admin_name])</span> says, <span class='message'>\"[emoji_parse(msg)]\"</span></span>"
+	var/rendered = "<span class='game deadsay'>[span_prefix("DEAD:")] [span_name("[rank_name]([admin_name])")] says, <span class='message'>\"[emoji_parse(msg)]\"</span></span>"
 
 	for (var/mob/M in GLOB.player_list)
-		if(isnewplayer(M))
+		var/admin_holder = M.client?.holder
+		if(isnewplayer(M) && !admin_holder) // We want to make sure admins can see this when in the lobby too!
 			continue
-		if (M.stat == DEAD || (M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
+		if (M.stat == DEAD || (admin_holder && (M.client?.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only given to Administrators and above
 			to_chat(M, rendered, confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Dsay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

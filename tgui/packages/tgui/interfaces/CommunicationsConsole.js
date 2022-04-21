@@ -13,7 +13,13 @@ const STATE_MESSAGES = "messages";
 // Used for whether or not you need to swipe to confirm an alert level change
 const SWIPE_NEEDED = "SWIPE_NEEDED";
 
-const sortByCreditCost = sortBy(shuttle => shuttle.creditCost);
+const EMAG_SHUTTLE_NOTICE
+  = "This shuttle is deemed significantly dangerous to the crew, and is only supplied by the Syndicate.";
+
+const sortShuttles = sortBy(
+  shuttle => !shuttle.emagOnly,
+  shuttle => shuttle.creditCost
+);
 
 const AlertButton = (props, context) => {
   const { act, data } = useBackend(context);
@@ -157,7 +163,7 @@ const PageBuyingShuttle = (props, context) => {
         Budget: <b>{data.budget.toLocaleString()}</b> credits
       </Section>
 
-      {sortByCreditCost(data.shuttles).map(shuttle => (
+      {sortShuttles(data.shuttles).map(shuttle => (
         <Section
           title={(
             <span
@@ -172,6 +178,7 @@ const PageBuyingShuttle = (props, context) => {
           buttons={(
             <Button
               content={`${shuttle.creditCost.toLocaleString()} credits`}
+              color={shuttle.emagOnly ? "red" : "default"}
               disabled={data.budget < shuttle.creditCost}
               onClick={() => act("purchaseShuttle", {
                 shuttle: shuttle.ref,
@@ -179,7 +186,7 @@ const PageBuyingShuttle = (props, context) => {
               tooltip={
                 data.budget < shuttle.creditCost
                   ? `You need ${shuttle.creditCost - data.budget} more credits.`
-                  : undefined
+                  : (shuttle.emagOnly ? EMAG_SHUTTLE_NOTICE : undefined)
               }
               tooltipPosition="left"
             />
@@ -299,6 +306,7 @@ const PageMain = (props, context) => {
   const {
     alertLevel,
     alertLevelTick,
+    aprilFools,
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
@@ -309,6 +317,7 @@ const PageMain = (props, context) => {
     canSetAlertLevel,
     canToggleEmergencyAccess,
     emagged,
+    syndicate,
     emergencyAccess,
     importantActionReady,
     sectors,
@@ -335,10 +344,10 @@ const PageMain = (props, context) => {
 
   return (
     <Box>
-      <Section title="Emergency Shuttle">
-        {
-          shuttleCalled
-            ? <Button.Confirm
+      {!syndicate && (
+        <Section title="Emergency Shuttle">
+          {!!shuttleCalled && (
+            <Button.Confirm
               icon="space-shuttle"
               content="Recall Emergency Shuttle"
               color="bad"
@@ -350,10 +359,11 @@ const PageMain = (props, context) => {
                   "You do not have permission to recall the emergency shuttle."
                 )
               )}
-              tooltipPosition="bottom-right"
+              tooltipPosition="bottom-end"
               onClick={() => act("recallShuttle")}
             />
-            : <Button
+          ) || (
+            <Button
               icon="space-shuttle"
               content="Call Emergency Shuttle"
               disabled={shuttleCanEvacOrFailReason !== 1}
@@ -362,22 +372,22 @@ const PageMain = (props, context) => {
                   ? shuttleCanEvacOrFailReason
                   : undefined
               }
-              tooltipPosition="bottom-right"
+              tooltipPosition="bottom-end"
               onClick={() => setCallingShuttle(true)}
             />
-        }
-
-        {!!shuttleCalledPreviously && (
-          shuttleLastCalled && (
-            <Box>
-              Most recent shuttle call/recall traced to:
-              {" "}<b>{shuttleLastCalled}</b>
-            </Box>
-          ) || (
-            <Box>Unable to trace most recent shuttle/recall signal.</Box>
-          )
-        )}
-      </Section>
+          )}
+          {!!shuttleCalledPreviously && (
+            shuttleLastCalled && (
+              <Box>
+                Most recent shuttle call/recall traced to:
+                {" "}<b>{shuttleLastCalled}</b>
+              </Box>
+            ) || (
+              <Box>Unable to trace most recent shuttle/recall signal.</Box>
+            )
+          )}
+        </Section>
+      )}
 
       {!!canSetAlertLevel && (
         <Section title="Alert Level">
@@ -414,6 +424,12 @@ const PageMain = (props, context) => {
             onClick={() => act("makePriorityAnnouncement")}
           />}
 
+          {!!aprilFools && !!canMakeAnnouncement && <Button
+            icon="bullhorn"
+            content="Call Emergency Meeting"
+            onClick={() => act("emergency_meeting")}
+          />}
+
           {!!canToggleEmergencyAccess && <Button.Confirm
             icon="id-card-o"
             content={`${emergencyAccess ? "Disable" : "Enable"} Emergency Maintenance Access`}
@@ -421,11 +437,13 @@ const PageMain = (props, context) => {
             onClick={() => act("toggleEmergencyAccess")}
           />}
 
-          <Button
-            icon="desktop"
-            content="Set Status Display"
-            onClick={() => act("setState", { state: STATE_CHANGING_STATUS })}
-          />
+          {!syndicate && (
+            <Button
+              icon="desktop"
+              content="Set Status Display"
+              onClick={() => act("setState", { state: STATE_CHANGING_STATUS })}
+            />
+          )}
 
           <Button
             icon="envelope-o"
@@ -458,7 +476,7 @@ const PageMain = (props, context) => {
             onClick={() => setRequestingNukeCodes(true)}
           />}
 
-          {!!emagged && <Button
+          {(!!emagged && !syndicate) && <Button
             icon="undo"
             content="Restore Backup Routing Data"
             onClick={() => act("restoreBackupRoutingData")}
@@ -635,7 +653,7 @@ const PageMessages = (props, context) => {
               color={message.answered === answerIndex + 1 ? "good" : undefined}
               key={answerIndex}
               onClick={message.answered ? undefined : () => act("answerMessage", {
-                message: messageIndex + 1,
+                message: parseInt(messageIndex, 10) + 1,
                 answer: answerIndex + 1,
               })}
             />
@@ -684,29 +702,44 @@ export const CommunicationsConsole = (props, context) => {
     emagged,
     hasConnection,
     page,
+    canRequestSafeCode,
+    safeCodeDeliveryWait,
+    safeCodeDeliveryArea,
   } = data;
 
   return (
     <Window
       width={400}
       height={650}
-      theme={emagged ? "syndicate" : undefined}
-      resizable>
+      theme={emagged ? "syndicate" : undefined}>
       <Window.Content scrollable>
         {!hasConnection && <NoConnectionModal />}
 
-        {(canLogOut || !authenticated)
-          ? (
-            <Section title="Authentication">
-              <Button
-                icon={authenticated ? "sign-out-alt" : "sign-in-alt"}
-                content={authenticated ? `Log Out${authorizeName ? ` (${authorizeName})` : ""}` : "Log In"}
-                color={authenticated ? "bad" : "good"}
-                onClick={() => act("toggleAuthentication")}
-              />
-            </Section>
-          )
-          : null}
+        {(canLogOut || !authenticated) && (
+          <Section title="Authentication">
+            <Button
+              icon={authenticated ? "sign-out-alt" : "sign-in-alt"}
+              content={authenticated ? `Log Out${authorizeName ? ` (${authorizeName})` : ""}` : "Log In"}
+              color={authenticated ? "bad" : "good"}
+              onClick={() => act("toggleAuthentication")}
+            />
+          </Section>
+        )}
+
+        {(!!canRequestSafeCode && (
+          <Section title="Emergency Safe Code">
+            <Button
+              icon="key"
+              content="Request Safe Code"
+              color="good"
+              onClick={() => act("requestSafeCodes")} />
+          </Section>
+        )) || (!!safeCodeDeliveryWait && (
+          <Section title="Emergency Safe Code Delivery">
+            {`Drop pod to ${safeCodeDeliveryArea} in \
+            ${Math.round(safeCodeDeliveryWait/10)}s`}
+          </Section>
+        ))}
 
         {!!authenticated && (
           page === STATE_BUYING_SHUTTLE && <PageBuyingShuttle />

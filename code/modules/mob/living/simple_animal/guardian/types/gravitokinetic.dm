@@ -20,17 +20,17 @@
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget()
 	. = ..()
 	if(isliving(target) && target != src && target != summoner)
-		to_chat(src, "<span class='danger'><B>Your punch has applied heavy gravity to [target]!</span></B>")
+		to_chat(src, "[span_danger("<B>Your punch has applied heavy gravity to [target]!")]</B>")
 		add_gravity(target, 5)
-		to_chat(target, "<span class='userdanger'>Everything feels really heavy!</span>")
+		to_chat(target, span_userdanger("Everything feels really heavy!"))
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AltClickOn(atom/A)
 	if(isopenturf(A) && is_deployed() && stat != DEAD && in_range(src, A) && !incapacitated())
 		var/turf/T = A
 		if(isspaceturf(T))
-			to_chat(src, "<span class='warning'>You cannot add gravity to space!</span>")
+			to_chat(src, span_warning("You cannot add gravity to space!"))
 			return
-		visible_message("<span class='danger'>[src] slams their fist into the [T]!</span>", "<span class='notice'>You modify the gravity of the [T].</span>")
+		visible_message(span_danger("[src] slams their fist into the [T]!"), span_notice("You modify the gravity of the [T]."))
 		do_attack_animation(T)
 		add_gravity(T, 3)
 		return
@@ -38,7 +38,7 @@
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Recall(forced)
 	. = ..()
-	to_chat(src, "<span class='danger'><B>You have released your gravitokinetic powers!</span></B>")
+	to_chat(src, "[span_danger("<B>You have released your gravitokinetic powers!")]</B>")
 	for(var/i in gravito_targets)
 		remove_gravity(i)
 
@@ -70,5 +70,6 @@
 	gravito_targets -= target
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/__distance_check(atom/movable/AM, OldLoc, Dir, Forced)
+	SIGNAL_HANDLER
 	if(get_dist(src, AM) > gravity_power_range)
 		remove_gravity(AM)

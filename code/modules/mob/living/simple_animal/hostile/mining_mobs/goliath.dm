@@ -39,7 +39,7 @@
 
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
-/mob/living/simple_animal/hostile/asteroid/goliath/Life()
+/mob/living/simple_animal/hostile/asteroid/goliath/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	handle_preattack()
 
@@ -68,7 +68,7 @@
 	if(!isturf(tturf))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
-		visible_message("<span class='warning'>[src] digs its tentacles under [target]!</span>")
+		visible_message(span_warning("[src] digs its tentacles under [target]!"))
 		new /obj/effect/temp_visual/goliath_tentacle/original(tturf, src)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
@@ -102,34 +102,34 @@
 	loot = list()
 	stat_attack = HARD_CRIT
 	robust_searching = 1
-	food_type = list(/obj/item/food/grown/ash_flora)//use lavaland plants to feed the lavaland monster
-	tame_chance = 10
-	bonus_tame_chance = 5
+
+	var/can_saddle = FALSE
 	var/saddled = FALSE
 
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
+
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/saddle) && !saddled)
-		if(tame && do_after(user,55,target=src))
-			user.visible_message("<span class='notice'>You manage to put [O] on [src], you can now ride [p_them()].</span>")
-			qdel(O)
-			saddled = TRUE
-			can_buckle = TRUE
-			buckle_lying = 0
-			add_overlay("goliath_saddled")
-			var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-			D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
-			D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-			D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-			D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-			D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
-			D.keytype = /obj/item/key/lasso
-			D.drive_verb = "ride"
-		else
-			user.visible_message("<span class='warning'>[src] is rocking around! You can't put the saddle on!</span>")
-		return
+	if(!istype(O, /obj/item/saddle) || saddled)
+		return ..()
+
+	if(can_saddle && do_after(user,55,target=src))
+		user.visible_message(span_notice("You manage to put [O] on [src], you can now ride [p_them()]."))
+		qdel(O)
+		saddled = TRUE
+		can_buckle = TRUE
+		buckle_lying = 0
+		add_overlay("goliath_saddled")
+		AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
+	else
+		user.visible_message(span_warning("[src] is rocking around! You can't put the saddle on!"))
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize()
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/proc/tamed(mob/living/tamer)
+	can_saddle = TRUE
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		new /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient(loc)
@@ -156,7 +156,7 @@
 	var/turf/last_location
 	var/tentacle_recheck_cooldown = 100
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life()
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) // dead
 		return
@@ -183,6 +183,7 @@
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath_tentacle_spawn"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	var/mob/living/spawner
 
 /obj/effect/temp_visual/goliath_tentacle/Initialize(mapload, mob/living/new_spawner)
@@ -217,7 +218,7 @@
 	for(var/mob/living/L in loc)
 		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
 			continue
-		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
+		visible_message(span_danger("[src] grabs hold of [L]!"))
 		L.Stun(100)
 		L.adjustBruteLoss(rand(10,15))
 		latched = TRUE

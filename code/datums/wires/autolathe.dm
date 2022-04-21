@@ -11,6 +11,8 @@
 	..()
 
 /datum/wires/autolathe/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/machinery/autolathe/A = holder
 	if(A.panel_open)
 		return TRUE
@@ -40,7 +42,7 @@
 	switch(wire)
 		if(WIRE_HACK)
 			A.adjust_hacked(!mend)
-		if(WIRE_HACK)
+		if(WIRE_SHOCK)
 			A.shocked = !mend
 		if(WIRE_DISABLE)
 			A.disabled = !mend

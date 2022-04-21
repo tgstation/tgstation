@@ -6,6 +6,7 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
+	plane = ABOVE_GAME_PLANE
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/recycler
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
@@ -17,26 +18,36 @@
 	var/eat_victim_items = TRUE
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
-/obj/machinery/recycler/Initialize()
-	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
-	var/list/allowed_materials = list(/datum/material/iron,
-									/datum/material/glass,
-									/datum/material/silver,
-									/datum/material/plasma,
-									/datum/material/gold,
-									/datum/material/diamond,
-									/datum/material/plastic,
-									/datum/material/uranium,
-									/datum/material/bananium,
-									/datum/material/titanium,
-									/datum/material/bluespace
-									)
+/obj/machinery/recycler/Initialize(mapload)
+	var/list/allowed_materials = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/silver,
+		/datum/material/plasma,
+		/datum/material/gold,
+		/datum/material/diamond,
+		/datum/material/plastic,
+		/datum/material/uranium,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/bluespace
+	)
 	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
 	. = ..()
-	update_icon()
-	req_one_access = get_all_accesses() + get_all_centcom_access()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/recycler/LateInitialize()
+	. = ..()
+	update_appearance(UPDATE_ICON)
+	req_one_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION, REGION_CENTCOM))
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/recycler/RefreshParts()
+	. = ..()
 	var/amt_made = 0
 	var/mat_mod = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -53,20 +64,21 @@
 
 /obj/machinery/recycler/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Reclaiming <b>[amount_produced]%</b> of materials salvaged.</span>"
+	. += span_notice("Reclaiming <b>[amount_produced]%</b> of materials salvaged.")
 	. += {"The power light is [(machine_stat & NOPOWER) ? "off" : "on"].
 	The safety-mode light is [safety_mode ? "on" : "off"].
 	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
+/obj/machinery/recycler/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 
 	if(default_pry_open(I))
-		return
-
-	if(default_unfasten_wrench(user, I))
 		return
 
 	if(default_deconstruction_crowbar(I))
@@ -79,38 +91,39 @@
 	obj_flags |= EMAGGED
 	if(safety_mode)
 		safety_mode = FALSE
-		update_icon()
-	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(user, "<span class='notice'>You use the cryptographic sequencer on [src].</span>")
+		update_appearance()
+	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	to_chat(user, span_notice("You use the cryptographic sequencer on [src]."))
 
 /obj/machinery/recycler/update_icon_state()
-	..()
 	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
 	if(safety_mode)
 		is_powered = FALSE
 	icon_state = icon_name + "[is_powered]" + "[(bloody ? "bld" : "")]" // add the blood tag at the end
+	return ..()
 
-/obj/machinery/recycler/CanAllowThrough(atom/movable/AM)
+/obj/machinery/recycler/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!anchored)
 		return
-	var/move_dir = get_dir(loc, AM.loc)
-	if(move_dir == eat_dir)
+	if(border_dir == eat_dir)
 		return TRUE
 
-/obj/machinery/recycler/Crossed(atom/movable/AM)
-	eat(AM)
-	. = ..()
+/obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/eat, AM)
 
 /obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
 		return
+	if(iseffect(AM0))
+		return
 	if(!isturf(AM0.loc))
 		return //I don't know how you called Crossed() but stop it.
 
-	var/list/to_eat = AM0.GetAllContents()
+	var/list/to_eat = AM0.get_all_contents()
 
 	var/living_detected = FALSE //technically includes silicons as well but eh
 	var/list/nom = list()
@@ -127,25 +140,27 @@
 		else if(isliving(AM))
 			living_detected = TRUE
 			crunchy_nom += AM
+
 	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
 	if(living_detected) // First, check if we have any living beings detected.
 		if(obj_flags & EMAGGED)
 			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
 				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
 					crush_living(CRUNCH)
+					use_power(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
 	for(var/nommed in nom)
 		recycle_item(nommed)
+		use_power(active_power_usage)
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
 	if(!ismob(AM0))
-		AM0.moveToNullspace()
 		qdel(AM0)
-	else // Lets not move a mob to nullspace and qdel it, yes?
+	else // Lets not qdel a mob, yes?
 		for(var/i in AM0.contents)
 			var/atom/movable/content = i
 			content.moveToNullspace()
@@ -166,18 +181,19 @@
 			return
 		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
 		materials.retrieve_all()
+	qdel(I)
 
 
 /obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 	safety_mode = TRUE
-	update_icon()
+	update_appearance()
 	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
 	playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
 	safety_mode = FALSE
-	update_icon()
+	update_appearance()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
 
@@ -195,11 +211,14 @@
 
 	if(!bloody && !issilicon(L))
 		bloody = TRUE
-		update_icon()
+		update_appearance()
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
+
+/obj/machinery/recycler/on_deconstruction()
+	safety_mode = TRUE
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"

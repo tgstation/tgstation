@@ -32,7 +32,7 @@
 	species = "teaastra"
 	plantname = "Tea Astra Plant"
 	product = /obj/item/food/grown/tea/astra
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/medicine/synaptizine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/teapowder = 0.1)
 	rarity = 20
 
@@ -40,6 +40,7 @@
 	seed = /obj/item/seeds/tea/astra
 	name = "Tea Astra tips"
 	icon_state = "tea_astra_leaves"
+	bite_consumption_mod = 2
 	grind_results = list(/datum/reagent/toxin/teapowder = 0, /datum/reagent/medicine/salglu_solution = 0)
 
 
@@ -61,14 +62,13 @@
 	icon_dead = "coffee-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/coffee/robusta)
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/coffeepowder = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/coffeepowder = 0.1, /datum/reagent/nitrogen = 0.05)
 
 /obj/item/food/grown/coffee
 	seed = /obj/item/seeds/coffee
 	name = "coffee arabica beans"
 	desc = "Dry them out to make coffee."
 	icon_state = "coffee_arabica"
-	bite_consumption_mod = 2
 	dry_grind = TRUE
 	grind_results = list(/datum/reagent/toxin/coffeepowder = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/kahlua
@@ -81,7 +81,7 @@
 	species = "coffeer"
 	plantname = "Coffee Robusta Bush"
 	product = /obj/item/food/grown/coffee/robusta
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/medicine/ephedrine = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/toxin/coffeepowder = 0.1)
 	rarity = 20
 

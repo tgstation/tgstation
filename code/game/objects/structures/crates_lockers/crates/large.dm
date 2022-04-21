@@ -3,6 +3,7 @@
 	desc = "A hefty wooden crate. You'll need a crowbar to get it open."
 	icon_state = "largecrate"
 	density = TRUE
+	pass_flags_self = PASSSTRUCTURE
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
 	delivery_icon = "deliverybox"
@@ -11,22 +12,26 @@
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
+	can_install_electronics = FALSE
 
-/obj/structure/closet/crate/large/attack_hand(mob/user)
+	// Stops people from "diving into" a crate you can't open normally
+	divable = FALSE
+
+/obj/structure/closet/crate/large/attack_hand(mob/user, list/modifiers)
 	add_fingerprint(user)
 	if(manifest)
 		tear_manifest(user)
 	else
-		to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
+		to_chat(user, span_warning("You need a crowbar to pry this open!"))
 
-/obj/structure/closet/crate/large/attackby(obj/item/W, mob/user, params)
+/obj/structure/closet/crate/large/attackby(obj/item/W, mob/living/user, params)
 	if(W.tool_behaviour == TOOL_CROWBAR)
 		if(manifest)
 			tear_manifest(user)
 
-		user.visible_message("<span class='notice'>[user] pries \the [src] open.</span>", \
-			"<span class='notice'>You pry open \the [src].</span>", \
-			"<span class='hear'>You hear splitting wood.</span>")
+		user.visible_message(span_notice("[user] pries \the [src] open."), \
+			span_notice("You pry open \the [src]."), \
+			span_hear("You hear splitting wood."))
 		playsound(src.loc, 'sound/weapons/slashmiss.ogg', 75, TRUE)
 
 		var/turf/T = get_turf(src)
@@ -38,10 +43,10 @@
 		qdel(src)
 
 	else
-		if(user.a_intent == INTENT_HARM)	//Only return  ..() if intent is harm, otherwise return 0 or just end it.
-			return ..()						//Stops it from opening and turning invisible when items are used on it.
+		if(user.combat_mode) //Only return  ..() if intent is harm, otherwise return 0 or just end it.
+			return ..() //Stops it from opening and turning invisible when items are used on it.
 
 		else
-			to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
+			to_chat(user, span_warning("You need a crowbar to pry this open!"))
 			return FALSE //Just stop. Do nothing. Don't turn into an invisible sprite. Don't open like a locker.
 					//The large crate has no non-attack interactions other than the crowbar, anyway.

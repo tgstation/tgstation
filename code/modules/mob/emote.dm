@@ -1,24 +1,30 @@
-#define BEYBLADE_PUKE_THRESHOLD 30 //How confused a carbon must be before they will vomit
-#define BEYBLADE_PUKE_NUTRIENT_LOSS 60 //How must nutrition is lost when a carbon pukes
-#define BEYBLADE_DIZZINESS_PROBABILITY 20 //How often a carbon becomes penalized
-#define BEYBLADE_DIZZINESS_VALUE 10 //How long the screenshake lasts
-#define BEYBLADE_CONFUSION_INCREMENT 10 //How much confusion a carbon gets when penalized
-#define BEYBLADE_CONFUSION_LIMIT 40 //A max for how penalized a carbon will be for beyblading
+///How confused a carbon must be before they will vomit
+#define BEYBLADE_PUKE_THRESHOLD 30
+///How must nutrition is lost when a carbon pukes
+#define BEYBLADE_PUKE_NUTRIENT_LOSS 60
+///How often a carbon becomes penalized
+#define BEYBLADE_DIZZINESS_PROBABILITY 20
+///How long the screenshake lasts
+#define BEYBLADE_DIZZINESS_VALUE 10
+///How much confusion a carbon gets when penalized
+#define BEYBLADE_CONFUSION_INCREMENT 10
+///A max for how penalized a carbon will be for beyblading
+#define BEYBLADE_CONFUSION_LIMIT 40
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE)
-	act = lowertext(act)
+/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
 		param = copytext(act, custom_param + length(act[custom_param]))
 		act = copytext(act, 1, custom_param)
 
+	act = lowertext(act)
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
-		if(intentional)
-			to_chat(src, "<span class='notice'>'[act]' emote does not exist. Say *help for a list.</span>")
+		if(intentional && !force_silence)
+			to_chat(src, span_notice("'[act]' emote does not exist. Say *help for a list."))
 		return FALSE
 	var/silenced = FALSE
 	for(var/datum/emote/P in key_emotes)
@@ -27,10 +33,33 @@
 			continue
 		if(P.run_emote(src, param, m_type, intentional))
 			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
+			SEND_SIGNAL(src, COMSIG_MOB_EMOTED(P.key))
 			return TRUE
-	if(intentional && !silenced)
-		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
+	if(intentional && !silenced && !force_silence)
+		to_chat(src, span_notice("Unusable emote '[act]'. Say *help for a list."))
 	return FALSE
+
+/datum/emote/help
+	key = "help"
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai)
+
+/datum/emote/help/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	var/list/keys = list()
+	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
+
+	for(var/key in GLOB.emote_list)
+		for(var/datum/emote/P in GLOB.emote_list[key])
+			if(P.key in keys)
+				continue
+			if(P.can_run_emote(user, status_check = FALSE , intentional = TRUE))
+				keys += P.key
+
+	keys = sort_list(keys)
+	message += keys.Join(", ")
+	message += "."
+	message = message.Join("")
+	to_chat(user, message)
 
 /datum/emote/flip
 	key = "flip"
@@ -55,15 +84,15 @@
 		if(prob(20))
 			flippy_mcgee.Knockdown(1 SECONDS)
 			flippy_mcgee.visible_message(
-				"<span class='notice'>[flippy_mcgee] attempts to do a flip and falls over, what a doofus!</span>",
-				"<span class='notice'>You attempt to do a flip while still off balance from the last flip and fall down!</span>"
+				span_notice("[flippy_mcgee] attempts to do a flip and falls over, what a doofus!"),
+				span_notice("You attempt to do a flip while still off balance from the last flip and fall down!")
 			)
 			if(prob(50))
 				flippy_mcgee.adjustBruteLoss(1)
 		else
 			flippy_mcgee.visible_message(
-				"<span class='notice'>[flippy_mcgee] stumbles a bit after their flip.</span>",
-				"<span class='notice'>You stumble a bit from still being off balance from your last flip.</span>"
+				span_notice("[flippy_mcgee] stumbles a bit after their flip."),
+				span_notice("You stumble a bit from still being off balance from your last flip.")
 			)
 
 /datum/emote/spin
@@ -78,19 +107,6 @@
 	if(.)
 		user.spin(20, 1)
 
-		if((iscyborg(user) || isanimal(user)) && user.has_buckled_mobs())
-			var/mob/living/L = user
-			var/datum/component/riding/riding_datum = L.GetComponent(/datum/component/riding)
-			if(riding_datum)
-				if(L.a_intent == INTENT_HELP)
-					for(var/mob/M in L.buckled_mobs)
-						riding_datum.force_dismount(M, TRUE)
-				else
-					for(var/mob/M in L.buckled_mobs)
-						riding_datum.force_dismount(M)
-			else
-				L.unbuckle_all_mobs()
-
 /datum/emote/spin/check_cooldown(mob/living/carbon/user, intentional)
 	. = ..()
 	if(.)
@@ -104,11 +120,10 @@
 		user.vomit(BEYBLADE_PUKE_NUTRIENT_LOSS, distance = 0)
 		return
 	if(prob(BEYBLADE_DIZZINESS_PROBABILITY))
-		to_chat(user, "<span class='warning'>You feel woozy from spinning.</span>")
+		to_chat(user, span_warning("You feel woozy from spinning."))
 		user.Dizzy(BEYBLADE_DIZZINESS_VALUE)
 		if(current_confusion < BEYBLADE_CONFUSION_LIMIT)
 			user.add_confusion(BEYBLADE_CONFUSION_INCREMENT)
-
 
 #undef BEYBLADE_PUKE_THRESHOLD
 #undef BEYBLADE_PUKE_NUTRIENT_LOSS

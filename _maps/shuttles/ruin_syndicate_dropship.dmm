@@ -1,33 +1,26 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "al" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
-	pixel_x = -24
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark,
-/area/shuttle/caravan/syndicate3)
-"bo" = (
-/obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/open/floor/plasteel/dark,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/shuttle/caravan/syndicate3)
+"bo" = (
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "bB" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/button/door{
+/obj/machinery/light/small/directional/west,
+/obj/machinery/button/door/directional/west{
 	id = "caravansyndicate3_bolt_starboard";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = -24;
-	pixel_y = -6;
 	req_access_txt = "150";
 	specialfunctions = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "bN" = (
 /obj/machinery/power/smes{
@@ -40,19 +33,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/shuttle/caravan/syndicate3)
-"cB" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
 "dZ" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -94,9 +74,7 @@
 /area/shuttle/caravan/syndicate3)
 "hF" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/machinery/power/apc/syndicate{
 	dir = 8;
 	name = "Syndicate Drop Ship APC";
@@ -110,11 +88,14 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
+/area/shuttle/caravan/syndicate3)
+"kY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "mJ" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
@@ -148,7 +129,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "qE" = (
 /obj/effect/turf_decal/stripes/line{
@@ -172,11 +153,11 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "rU" = (
 /obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor{
 	id = "caravansyndicate3_bridge"
 	},
@@ -201,7 +182,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "sn" = (
 /obj/structure/chair/comfy/shuttle,
@@ -215,14 +196,12 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "uy" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -230,21 +209,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/caravan/syndicate3)
-"vw" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
-/obj/item/assembly/flash/handheld,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "vQ" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
@@ -262,45 +227,47 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/syndicate3)
 "xC" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/button/door{
+/obj/machinery/light/small/directional/west,
+/obj/machinery/button/door/directional/west{
 	id = "caravansyndicate3_bolt_port";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = -24;
-	pixel_y = 6;
 	req_access_txt = "150";
 	specialfunctions = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "BQ" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "Cm" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -26
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
+/area/shuttle/caravan/syndicate3)
+"Da" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Ready Room";
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "Dt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/syndicate{
@@ -310,23 +277,10 @@
 /obj/item/crowbar/red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
-"Dx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/caravan/syndicate3)
 "EO" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/airalarm/syndicate{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -348,10 +302,10 @@
 /area/shuttle/caravan/syndicate3)
 "Gx" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "HJ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -375,7 +329,21 @@
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
+/area/shuttle/caravan/syndicate3)
+"Ia" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/regular,
+/obj/item/assembly/flash/handheld,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "Ij" = (
 /obj/machinery/turretid{
@@ -394,29 +362,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/caravan/syndicate3)
-"IR" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/hatch{
-	id_tag = "caravansyndicate3_bolt_bridge";
-	name = "Bridge";
-	req_access_txt = "150"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "Jv" = (
 /turf/template_noop,
@@ -447,13 +393,24 @@
 /obj/item/clothing/shoes/sneakers/black,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
+"MR" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate3_bolt_bridge";
+	name = "Bridge";
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/caravan/syndicate3)
 "NH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
@@ -469,7 +426,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{
 	amount = 10
 	},
@@ -498,9 +455,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/emergency,
 /obj/item/wrench,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -512,7 +467,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "Tn" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -523,7 +478,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "US" = (
 /obj/effect/decal/cleanable/dirt,
@@ -534,34 +489,18 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
-"Vf" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Ready Room";
-	req_access_txt = "150"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
+"Vr" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "Wr" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "YU" = (
 /obj/effect/turf_decal/stripes/line{
@@ -589,7 +528,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)
 "ZJ" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "ZK" = (
 /obj/machinery/computer/crew{
@@ -605,15 +544,12 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "ZZ" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
+/obj/machinery/firealarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 
 (1,1,1) = {"
@@ -656,7 +592,7 @@ Tn
 Tn
 EO
 ss
-cB
+Vr
 BQ
 Cm
 Tn
@@ -665,7 +601,7 @@ Tn
 Tn
 sn
 ss
-cB
+Vr
 UD
 rV
 Tn
@@ -674,7 +610,7 @@ Tn
 Tn
 NH
 Fa
-cB
+Vr
 qE
 Dt
 Tn
@@ -683,7 +619,7 @@ Tn
 Rj
 Tn
 Tn
-Vf
+Da
 Tn
 Tn
 PL
@@ -692,7 +628,7 @@ PL
 gl
 xC
 al
-cB
+Vr
 bo
 bB
 KS
@@ -701,7 +637,7 @@ KS
 Tn
 Lq
 YU
-Dx
+kY
 ZI
 HJ
 Tn
@@ -710,7 +646,7 @@ Tn
 Tn
 Tn
 Tn
-IR
+MR
 Tn
 Tn
 Tn
@@ -719,7 +655,7 @@ Tn
 Tn
 uy
 Gx
-cB
+Vr
 ZZ
 Sl
 Tn
@@ -730,7 +666,7 @@ ns
 Ij
 HM
 Wr
-vw
+Ia
 rU
 "}
 (14,1,1) = {"

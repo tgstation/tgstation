@@ -12,12 +12,16 @@
 	/// If set, we default armed to FALSE and set it to TRUE after this long from initializing
 	var/arm_delay
 
-/obj/effect/mine/Initialize()
+/obj/effect/mine/Initialize(mapload)
 	. = ..()
 	if(arm_delay)
 		armed = FALSE
 		icon_state = "uglymine-inactive"
 		addtimer(CALLBACK(src, .proc/now_armed), arm_delay)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/mine/examine(mob/user)
 	. = ..()
@@ -26,19 +30,20 @@
 
 /// The effect of the mine
 /obj/effect/mine/proc/mineEffect(mob/victim)
-	to_chat(victim, "<span class='danger'>*click*</span>")
+	to_chat(victim, span_danger("*click*"))
 
 /// If the landmine was previously inactive, this beeps and displays a message marking it active
 /obj/effect/mine/proc/now_armed()
 	armed = TRUE
 	icon_state = "uglymine"
 	playsound(src, 'sound/machines/nuke/angry_beep.ogg', 40, FALSE, -2)
-	visible_message("<span class='danger'>\The [src] beeps softly, indicating it is now active.<span>", vision_distance = COMBAT_MESSAGE_RANGE)
+	visible_message(span_danger("\The [src] beeps softly, indicating it is now active."), vision_distance = COMBAT_MESSAGE_RANGE)
 
-/obj/effect/mine/Crossed(atom/movable/AM)
+/obj/effect/mine/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	if(triggered || !isturf(loc) || !armed)
 		return
-	. = ..()
 
 	if(AM.movement_type & FLYING)
 		return
@@ -51,12 +56,14 @@
 
 /// When something sets off a mine
 /obj/effect/mine/proc/triggermine(atom/movable/triggerer)
+	if(iseffect(triggerer))
+		return
 	if(triggered) //too busy detonating to detonate again
 		return
 	if(triggerer)
-		visible_message("<span class='danger'>[triggerer] sets off [icon2html(src, viewers(src))] [src]!</span>")
+		visible_message(span_danger("[triggerer] sets off [icon2html(src, viewers(src))] [src]!"))
 	else
-		visible_message("<span class='danger'>[icon2html(src, viewers(src))] [src] detonates!</span>")
+		visible_message(span_danger("[icon2html(src, viewers(src))] [src] detonates!"))
 
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
@@ -69,13 +76,19 @@
 
 /obj/effect/mine/explosive
 	name = "explosive mine"
+	/// The devastation range of the resulting explosion.
 	var/range_devastation = 0
+	/// The heavy impact range of the resulting explosion.
 	var/range_heavy = 1
+	/// The light impact range of the resulting explosion.
 	var/range_light = 2
+	/// The flame range of the resulting explosion.
+	var/range_flame = 0
+	/// The flash range of the resulting explosion.
 	var/range_flash = 3
 
 /obj/effect/mine/explosive/mineEffect(mob/victim)
-	explosion(loc, range_devastation, range_heavy, range_light, range_flash)
+	explosion(src, range_devastation, range_heavy, range_light, range_flame, range_flash)
 
 /obj/effect/mine/stun
 	name = "stun mine"
@@ -90,7 +103,7 @@
 
 /obj/effect/mine/kickmine/mineEffect(mob/victim)
 	if(isliving(victim) && victim.client)
-		to_chat(victim, "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>")
+		to_chat(victim, span_userdanger("You have been kicked FOR NO REISIN!"))
 		qdel(victim.client)
 
 
@@ -129,95 +142,6 @@
 /obj/effect/mine/sound/bwoink
 	name = "bwoink mine"
 	sound = 'sound/effects/adminhelp.ogg'
-
-/obj/effect/mine/pickup
-	name = "pickup"
-	desc = "pick me up"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "electricity2"
-	density = FALSE
-	var/duration = 0
-
-/obj/effect/mine/pickup/Initialize()
-	. = ..()
-	animate(src, pixel_y = 4, time = 20, loop = -1)
-
-/obj/effect/mine/pickup/triggermine(mob/victim)
-	if(triggered)
-		return
-	triggered = 1
-	invisibility = INVISIBILITY_ABSTRACT
-	mineEffect(victim)
-	qdel(src)
-
-
-/obj/effect/mine/pickup/bloodbath
-	name = "Red Orb"
-	desc = "You feel angry just looking at it."
-	duration = 1200 //2min
-	color = "#FF0000"
-	var/mob/living/doomslayer
-	var/obj/item/chainsaw/doomslayer/chainsaw
-
-/obj/effect/mine/pickup/bloodbath/mineEffect(mob/living/carbon/victim)
-	if(!victim.client || !istype(victim))
-		return
-	to_chat(victim, "<span class='reallybig redtext'>RIP AND TEAR</span>")
-
-	INVOKE_ASYNC(src, .proc/blood_delusion, victim)
-
-	chainsaw = new(victim.loc)
-	victim.log_message("entered a blood frenzy", LOG_ATTACK)
-
-	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
-	victim.drop_all_held_items()
-	victim.put_in_hands(chainsaw, forced = TRUE)
-	chainsaw.attack_self(victim)
-	victim.reagents.add_reagent(/datum/reagent/medicine/adminordrazine,25)
-	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
-
-	var/datum/client_colour/colour = victim.add_client_colour(/datum/client_colour/bloodlust)
-	QDEL_IN(colour, 11)
-	doomslayer = victim
-	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/end_blood_frenzy)
-	QDEL_IN(src, duration)
-
-/obj/effect/mine/pickup/bloodbath/proc/end_blood_frenzy()
-	if(doomslayer)
-		to_chat(doomslayer, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.</span>")
-		doomslayer.log_message("exited a blood frenzy", LOG_ATTACK)
-	if(chainsaw)
-		qdel(chainsaw)
-
-/obj/effect/mine/pickup/bloodbath/proc/blood_delusion(mob/living/carbon/victim)
-	new /datum/hallucination/delusion(victim, TRUE, "demon", duration, 0)
-
-/obj/effect/mine/pickup/healing
-	name = "Blue Orb"
-	desc = "You feel better just looking at it."
-	color = "#0000FF"
-
-/obj/effect/mine/pickup/healing/mineEffect(mob/living/carbon/victim)
-	if(!victim.client || !istype(victim))
-		return
-	to_chat(victim, "<span class='notice'>You feel great!</span>")
-	victim.revive(full_heal = TRUE, admin_revive = TRUE)
-
-/obj/effect/mine/pickup/speed
-	name = "Yellow Orb"
-	desc = "You feel faster just looking at it."
-	color = "#FFFF00"
-	duration = 300
-
-/obj/effect/mine/pickup/speed/mineEffect(mob/living/carbon/victim)
-	if(!victim.client || !istype(victim))
-		return
-	to_chat(victim, "<span class='notice'>You feel fast!</span>")
-	victim.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
-	sleep(duration)
-	victim.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
-	to_chat(victim, "<span class='notice'>You slow down.</span>")
-
 
 /// These mines spawn pellet_clouds around them when triggered
 /obj/effect/mine/shrapnel
@@ -268,12 +192,10 @@
 	. = ..()
 	if(active)
 		return
-	if(iscarbon(user))
-		var/mob/living/carbon/user_human = user
-		user_human.throw_mode_on()
+
 
 	playsound(src, 'sound/weapons/armbomb.ogg', 70, TRUE)
-	to_chat(user, "<span class='warning'>You arm \the [src], causing it to shake! It will deploy in 3 seconds.</span>")
+	to_chat(user, span_warning("You arm \the [src], causing it to shake! It will deploy in 3 seconds."))
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/deploy_mine), 3 SECONDS)
 
@@ -282,7 +204,7 @@
 	do_alert_animation()
 	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE, -3)
 	var/obj/effect/mine/new_mine = new mine_type(get_turf(src))
-	visible_message("<span class='danger'>\The [src] releases a puff of smoke, revealing \a [new_mine]!</span>")
+	visible_message(span_danger("\The [src] releases a puff of smoke, revealing \a [new_mine]!"))
 	var/obj/effect/particle_effect/smoke/poof = new (get_turf(src))
 	poof.lifetime = 3
 	qdel(src)

@@ -64,8 +64,7 @@ export const CrewConsole = () => {
     <Window
       title="Crew Monitor"
       width={600}
-      height={600}
-      resizable>
+      height={600}>
       <Window.Content scrollable>
         <Section minHeight="540px">
           <CrewTable />
@@ -131,12 +130,16 @@ const CrewTableEntry = (props, context) => {
         {name}{assignment !== undefined ? ` (${assignment})` : ""}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
-        <ColorBox
-          color={healthToColor(
-            oxydam,
-            toxdam,
-            burndam,
-            brutedam)} />
+        {life_status ? (
+          <ColorBox
+            color={healthToColor(
+              oxydam,
+              toxdam,
+              burndam,
+              brutedam)} />
+        ) : (
+          <ColorBox color={'#ed2814'} />
+        )}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         {oxydam !== undefined ? (

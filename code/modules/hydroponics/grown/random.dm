@@ -13,7 +13,7 @@
 	growthstages = 4
 	custom_premium_price = PAYCHECK_EASY * 2
 
-/obj/item/seeds/random/Initialize()
+/obj/item/seeds/random/Initialize(mapload)
 	. = ..()
 	randomize_stats()
 	if(prob(60))
@@ -27,9 +27,8 @@
 	name = "strange plant"
 	desc = "What could this even be?"
 	icon_state = "crunchy"
-	bite_consumption_mod = 2
 
-/obj/item/food/grown/random/Initialize()
+/obj/item/food/grown/random/Initialize(mapload)
 	. = ..()
 	wine_power = rand(10,150)
 	if(prob(1))

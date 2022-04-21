@@ -2,6 +2,8 @@
 	name = "Genetic"
 	desc = "This spell inflicts a set of mutations and disabilities upon the target."
 
+	school = SCHOOL_TRANSMUTATION
+
 	var/list/active_on = list()
 	var/list/traits = list() //disabilities
 	var/list/mutations = list() //mutation defines
@@ -19,7 +21,8 @@
 /obj/effect/proc_holder/spell/targeted/genetic/cast(list/targets,mob/user = usr)
 	playMagSound()
 	for(var/mob/living/carbon/target in targets)
-		if(target.anti_magic_check())
+		if(target.can_block_magic())
+			to_chat(user, span_warning("The spell had no effect on [target]!"))		
 			continue
 		if(!target.dna)
 			continue

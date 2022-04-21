@@ -3,36 +3,34 @@
 	desc = "chemical grinder."
 	icon_state = "grinder_chemical"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
-
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	var/eat_dir = SOUTH
 
-/obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt)
+/obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt)
-
-/obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
-		return FALSE
-	return TRUE
+	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/plumbing/grinder_chemical/setDir(newdir)
 	. = ..()
 	eat_dir = newdir
 
-/obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/AM)
+/obj/machinery/plumbing/grinder_chemical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!anchored)
 		return
-	var/move_dir = get_dir(loc, AM.loc)
-	if(move_dir == eat_dir)
+	if(border_dir == eat_dir)
 		return TRUE
 
-/obj/machinery/plumbing/grinder_chemical/Crossed(atom/movable/AM)
-	. = ..()
+/obj/machinery/plumbing/grinder_chemical/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	grind(AM)
 
 /obj/machinery/plumbing/grinder_chemical/proc/grind(atom/AM)
@@ -44,6 +42,7 @@
 		return
 	var/obj/item/I = AM
 	if(I.juice_results || I.grind_results)
+		use_power(active_power_usage)
 		if(I.juice_results)
 			I.on_juice()
 			reagents.add_reagent_list(I.juice_results)

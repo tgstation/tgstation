@@ -5,6 +5,7 @@
 	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "smoke0"
+	base_icon_state = "smoke"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
 	processing_flags = NONE
@@ -30,7 +31,7 @@
 	opaque = FALSE
 	alpha = 100
 
-/obj/machinery/smoke_machine/Initialize()
+/obj/machinery/smoke_machine/Initialize(mapload)
 	. = ..()
 	create_reagents(REAGENTS_BASE_VOLUME)
 	AddComponent(/datum/component/plumbing/simple_demand)
@@ -42,14 +43,13 @@
 
 /obj/machinery/smoke_machine/update_icon_state()
 	if((!is_operational) || (!on) || (reagents.total_volume == 0))
-		if (panel_open)
-			icon_state = "smoke0-o"
-		else
-			icon_state = "smoke0"
-	else
-		icon_state = "smoke1"
+		icon_state = "[base_icon_state]0[panel_open ? "-o" : null]"
+		return ..()
+	icon_state = "[base_icon_state]1"
+	return ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
+	. = ..()
 	var/new_volume = REAGENTS_BASE_VOLUME
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		new_volume += REAGENTS_BASE_VOLUME * B.rating
@@ -67,7 +67,6 @@
 		max_range += M.rating
 	max_range = max(3, max_range)
 
-
 /obj/machinery/smoke_machine/on_set_is_operational(old_value)
 	if(old_value) //Turned off
 		end_processing()
@@ -79,15 +78,23 @@
 	..()
 	if(reagents.total_volume == 0)
 		on = FALSE
-		update_icon()
+		update_appearance()
 		return
 	var/turf/T = get_turf(src)
 	var/smoke_test = locate(/obj/effect/particle_effect/smoke) in T
 	if(on && !smoke_test)
-		update_icon()
+		update_appearance()
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
 		smoke.set_up(reagents, setting*3, efficiency, T)
 		smoke.start()
+		use_power(active_power_usage)
+
+/obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_unfasten_wrench(user, tool, time = 4 SECONDS))
+		on = FALSE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return FALSE
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -95,11 +102,8 @@
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
-			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
+			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
 			return
-	if(default_unfasten_wrench(user, I, 40))
-		on = FALSE
-		return
 	if(default_deconstruction_screwdriver(user, "smoke0-o", "smoke0", I))
 		return
 	if(default_deconstruction_crowbar(I))
@@ -142,7 +146,7 @@
 	switch(action)
 		if("purge")
 			reagents.clear_reagents()
-			update_icon()
+			update_appearance()
 			. = TRUE
 		if("setting")
 			var/amount = text2num(params["amount"])
@@ -151,7 +155,7 @@
 				. = TRUE
 		if("power")
 			on = !on
-			update_icon()
+			update_appearance()
 			if(on)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
 				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")

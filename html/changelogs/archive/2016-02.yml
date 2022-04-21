@@ -1,0 +1,350 @@
+2016-02-01:
+  Erwgd:
+  - rscadd: The Kitchen Vending machine now stocks salt shakers and pepper mills!
+  - rscadd: The NutriMax now stocks spades, cultivators and plant analyzers.
+  - rscadd: Rice seeds are now stocked in the MegaSeed Servitor, and the seeds supply
+      crate now contains a pack of rice seeds.
+  - rscdel: Botanists should be aware that wheat stalks can no longer mutate into
+      rice.
+  Fayrik:
+  - rscadd: pAI cards can now be inserted into simple robots, to allow for more robust
+      robot personalities.
+  PKPenguin321:
+  - rscadd: You can now store knives, pens, switchblades, and energy daggers in certain
+      types of shoes (such as jackboots, workboots, winter boots, combat boots, or
+      no-slips).
+  - rscadd: Horns can now be stored in clown shoes. Honk.
+  TrustyGun:
+  - rscadd: Adds gag handcuffs to the prize pool for arcade machines. They act like
+      regular handcuffs, but you break out of them in a second.
+  WJohnston:
+  - rscadd: Adds missing booze & soda dispenser, library console, fixes door access
+      and a few other minor things to Efficiency Station
+  - rscadd: Also adds direction tags so people can find their way around better.
+  bgobandit:
+  - rscadd: On Valentine's Day, all spacemen will receive candy hearts and valentines
+      for their special someones! Label valentines with a pen.
+  - rscadd: Note that today is not Valentine's Day.
+2016-02-05:
+  Joan:
+  - experiment: Blob expansion is faster near the expanding blob, but slower further
+      away from it.
+  - tweak: Blob spores produce a slightly larger smoke cloud when dying. Sporing Pods
+      spores and blob zombies produce the current small cloud.
+  - rscdel: Blobbernauts can no longer pull anything at all.
+  - tweak: Blobbernauts health reduced to 200, but blobbernauts now take half brute
+      damage.
+  - tweak: Blobbernauts now take massive damage from fire.
+  - tweak: Blobbernauts do approximately 3 more damage when attacking.
+  - wip: Replicating Foam will expand more actively when damaged.
+  - rscadd: Adds Electromagnetic Web, which is light blue, does burn damage and EMPs
+      targets, and causes a small EMP when dying.
+  - rscadd: Electromagnetic Web takes more damage; a normal blob that hasn't been
+      near a node or the core for 6~ seconds can be oneshotted by a laser.
+  - rscadd: Anomalies, such as pyroclastic and vortex anomalies, now appear at the
+      bottom of the ghost orbit and observe menus.
+  Kor:
+  - rscadd: Nuke ops can purchase sentience potions for 4tc
+  MMMiracles:
+  - tweak: Bulldog now starts with stun-slugs instead of its usual 60-brute slugs.
+      Slugs now cost 3 TC instead of 2.
+  - tweak: Most SAW ammo has been slightly buffed in damage so maybe it'll be worth
+      buying now along with a slight cost decrease for the gun itself.
+  - tweak: Incen shells for the shotgun now apply extra firestacks on hit so it actually
+      sets people on fire instead of turning them into a light show.
+  - tweak: Incen rounds for the SAW now leave a fire trail similar to the bulldog's
+      dragonsbreath round.
+  - rscadd: Nuke Ops now have the ability to purchase breaching shells, a weaker variant
+      of the meteorslugs that can still push back people/airlocks/mechs/corgis.
+  - bugfix: SAW should now use its in-hand sprites for an open-closed magazine
+  PKPenguin321:
+  - rscadd: You can now sharpen carrots into shivs by using a knife or hatchet on
+      them.
+  bgobandit:
+  - rscadd: Seven new emoji have been added to hasten the death of the English language.
+  octareenroon91:
+  - rscadd: Player-controlled medibots can examine a patient to know what chems are
+      in the patient's body.
+  - bugfix: autolathes have been showing extra copies of the hacked designs, but no
+      more.
+2016-02-06:
+  LordPidey:
+  - rscadd: Added suicide command for pipe valves.  It's quite messy.
+  Lzimann:
+  - tweak: Combat Mechas now have a increased chance of destroying a wall with punches
+      (40% for walls and 20% for reinforced walls)!
+  - rscadd: Combat mechas can now destroy tables and racks with a punch!
+  neersighted:
+  - rscadd: The Syndicate has stolen the latest tgui improvements from Nanotrasen!
+      All uplinks now feature filtering/search.
+  - rscadd: Nanotrasen is proud to announce its next generation sleepers, featuring
+      tgui!
+  - rscadd: Portable atmospheric components have been overhauled to use the latest
+      interface technology.
+  - rscdel: The Area Atmosphere Computer has been removed.
+  - rscadd: Huge scrubbers now require power.
+  - rscdel: Borg jetpacks are now refilled from a recharger and not a canister.
+  - rscadd: Power monitors now have a state of the art graph. Hopefully they're actually
+      useful to someone.
+  - rscadd: Cargo consoles have been redesigned and now feature search and a shopping
+      cart!
+2016-02-08:
+  Incoming5643:
+  - rscadd: Poly will now speak a line or emote when pet.
+  - rscadd: Poly now responds to getting fed crackers by becoming more annoying for
+      the round.
+  - experiment: Every day he is growing stronger
+  Kor:
+  - rscadd: A certain hygiene obsessed alien is now obtainable via xenobiology gold
+      cores.
+  - rscadd: Add laserguns with swappable, rechargeable magazines. They are adminspawn
+      only.
+  - rscadd: Operatives now get their pinpointers in their pocket when they spawn,
+      meaning reinforcements automatically come with them (and hopefully people stop
+      forgetting them in general).
+  - rscadd: Capture the flag now features a high speed instagib mode, with guns courtesy
+      of MMMiracles.
+  phil235:
+  - tweak: The vision updates for mobs are now instantaneous (e.g. you don't have
+      to wait one second to see again when removing your welding helmet)
+  - tweak: Your vision is now affected when you're inside something or viewing through
+      a camera. You can no longer see mobs or objects when ventcrawling (unless you
+      have xray for example), an xray user viewing through a camera do not see through
+      walls around the camera. On the other hand, cameras with an xray upgrade let
+      you see through walls. Unfocused camera now give you the same effect as when
+      you are nearsighted. Being inside closets, morgue container and disposal bins
+      give you some vision impairments.
+  - rscadd: The ability to toggle your hud on and off (with f12) is now available
+      to all mobs not just humans.
+2016-02-09:
+  AnturK:
+  - rscadd: Syndicate Operatives can now buy bags full of plastic explosives for 9
+      TC.
+  Gun Hog:
+  - rscadd: '"Nanotrasen has drafted a design for an exosuit version of the medical
+      nanite projector normally issued to its Emergency Response Personnel. With sufficient
+      research, a prototype may be fabricated for field testing!"'
+  incoming5643:
+  - rscadd: The wizard spell wild shapeshift has been made less terrible.
+  neersighted:
+  - rscadd: Internals tanks now provide an action button
+  - rscadd: Jetpacks now emit the gas consumed for propulsion onto their turf
+  - rscdel: Jetpacks no longer have object verbs
+  - rscdel: tgui no longer has internals buttons
+  - bugfix: Malf AI's flood ability now correctly sets vent pressure bounds -- the
+      results are devastating... Try it!
+2016-02-10:
+  Joan:
+  - rscadd: Blob mobs now heal for 2.5% of their maxhealth when blob_act()ed, basically
+      whenever they're on blobs near a node or the core.
+  - tweak: Blob expansion no longer has a chance to fail inversely proportional with
+      the expanding blob's health. Blobs still, however, expand at roughly the same
+      rate as they do currently.
+  - experiment: Adds five new blob chemicals.
+  - rscadd: Adds Penetrating Spines, which is sea green and does brute damage through
+      armor. The damage can still be reduced by bio protection.
+  - rscadd: Adds Explosive Lattice, which is dark orange and does brute damage to
+      all mobs near the target. Explosive Lattice is very resistant to explosions.
+  - rscadd: Adds Cyclonic Grid, which is a light blueish green and does oxygen damage,
+      in addition to randomly throwing or pulling nearby objects.
+  - rscadd: Adds Zombifying Feelers, which is a fleshy zombie color and does toxin
+      damage, in addition to killing and reviving unconscious humans as blob zombies.
+  - rscadd: Adds Regenerative Materia, which is light pink and does toxin damage,
+      in addition to making the attacked mob think it is at full health.
+  - wip: Tweaks some of the existing blob chemicals slightly.
+  - rscadd: Sporing Pods can produce spores when killed by damage less than 21, from
+      less than 20. This means lasers can produce spores.
+  - rscadd: Reactive Gelatin has a slightly higher maximum damage and will attack
+      the nearby area when hit with brute damage projectiles, from just when attacked
+      by brute damage in melee.
+  - tweak: Sorium, Dark Matter, and the new Cyclonic Grid will not throw mobs with
+      the 'blob' faction, such as blobbernauts and spores.
+  Kor:
+  - rscadd: The chaplain can now transform the null rod into a holy weapon of his
+      choice by using it in hand. Each one has different strengths and drawbacks.
+  MrStonedOne:
+  - tweak: Tesla balance changes
+  - tweak: Tesla will now require increasingly more energy to trigger new orbiting
+      balls. First ball comes with 32 energy (down from 300), fourth requires 256
+      (down from 1200), and so on and on, doubling with each new ball. Balls after
+      7 are increasingly harder to get than before, whereas balls before 6 are easier
+      to get.
+  - rscadd: MULTIBOLT IS BACK!
+  - tweak: Be warned that in multibolt all but 1 primary bolt now have a random shocking
+      range, meaning they may still target a close human over a far away grounding
+      rod as the rod may be out of range.
+  - tweak: Power output of tesla massively dropped, it should no longer put out almost
+      twice the power of a stage 3 singulo with maxed collectors without any balls,
+      you'll need at least 3 balls for that now.
+  - tweak: Tesla can now lose power, causing ball count to drop. Tesla will never
+      shrink out of existence, just lose its balls.
+  - tweak: Tesla is now more likely to head in the direction of the thing it last
+      zapped.
+  PKPenguin321:
+  - rscadd: Chameleon Jumpsuits now have slight melee, bullet, and laser protection.
+  - tweak: The armor values for security helmets, caps, and berets have all been brought
+      in line. Consequently, helmets and berets are a teeny bit better, and caps now
+      have the slight bomb protection that the other two had.
+  - experiment: The time needed to complete most tablecrafting recipes has been cut
+      in half to make tablecrafting less annoying to use.
+  Shadowlight213:
+  - rscadd: pAI controlled mulebots can now run people over.
+  - tweak: Mulebot health has been greatly decreased.
+  neersighted:
+  - rscadd: Horizontal (lying) mobs now fit into crates
+  - rscadd: Mobs may now be stuffed into crates, as with lockers
+  - rscadd: Stuffing into a locker deals a mild stun (the same as tabling)
+  octareenroon91:
+  - rscadd: New designs can now be added to Autolathes via a design disk. Simply use
+      a disk containing a suitable design on your autolathe.
+2016-02-11:
+  neersighted:
+  - rscdel: Remove all cyborg jetpacks... They were awful...
+  - rscadd: Adds borg ion thrusters, which are available as an upgrade module for
+      any borg.
+  - rscdel: Jetpack stabilizers are always on, but now we have...
+  - rscadd: Jetpack turbo mode, to move at sanic speed in space.
+2016-02-12:
+  Kor:
+  - rscadd: Malf AIs can now get the objective to have a robot army by the end of
+      the round.
+  - rscadd: Malf AIs can now get the objective to ensure only human crew (no mutants)
+      are on the shuttle at round end.
+  - rscadd: Malf AIs can now get the objective to prevent a crewmember from escaping
+      the station, while requiring that crewmember still be alive.
+  neersighted:
+  - rscadd: Cybernetic implants purchased from the uplink now include a free autoimplanter!
+  octareenroon91:
+  - rscdel: You can no longer kill yourself with the SORD
+  - rscadd: Suicide attempts with the SORD will inflict 200 stamina damage. You will
+      only die of shame.
+  - bugfix: Cleanup to suicide verb code.
+2016-02-13:
+  Buggy123:
+  - rscadd: You can now build cable coils using the autolathe.
+  Fox McCloud:
+  - bugfix: Fixes the sleeping carp martial arts grab not being an instant aggressive
+      grab
+  KazeEspada:
+  - rscadd: 'New backpack options available! New options include:  Department Bags,
+      Leather Satchels, and Dufflebags!'
+  Kor:
+  - rscadd: Chainsaw sword, force weapon, and war hammer have all been added as Chaplain
+      weapon options.
+  Malkevin:
+  - tweak: Tracking implants have been upgraded. The old clunky manually adjusted
+      number system has been replaced with an automated ID scanner, this will show
+      the implant carrier's name on both the Prisoner Management Console and the hand
+      tracker. Happy deep striking!
+  PKPenguin321:
+  - tweak: 'Traitor EMP kits have had their cost reduced from 5 to 2, and no longer
+      contain the EMP flashlight. rcsadd: EMP flashlights can now be bought separately
+      for 2 TCs.'
+  Zerrien:
+  - rscadd: Conveyor pieces can be placed as corner pieces when building in non-cardinal
+      directions.
+  - rscadd: Using a wrench on a conveyor rotates it while in place.
+  neersighted:
+  - tweak: Gibtonite can now be pulled.
+  - tweak: Slowdown factors are ignored when in zero gravity.
+  phil235:
+  - rscadd: Brains can no longer be blinded.
+  - bugfix: Fixes brain being immortal. They are immune to everything but melee weapon
+      attacks. Brains not inside a MMI can now be attacked just like MMIs. Damaged
+      brain can't be put into a robot, they can still be put inside a brainless humanoid
+      corpse and cloned, but deffibing the corpse always fails (can't revive someone
+      with a brain beaten to a pulp).
+2016-02-14:
+  Joan:
+  - rscadd: Blobbernauts can now speak to overminds and other blobbernauts with :b
+  - rscadd: Blobs can now expand onto lattices and catwalks.
+  - rscdel: Blob expansion on space tiles with no supports is much slower.
+  - tweak: Blob Sorium and Dark Matter now have less range on targets with bio protection.
+  - tweak: Blob Sorium does slightly less damage.
+2016-02-17:
+  Fox McCloud:
+  - tweak: Laser eyes mutation no longer drains nutrition
+  Joan:
+  - rscdel: The sleeping carp gang no longer has special equipment and an inability
+      to use pneumatic cannons.
+  PKPenguin321:
+  - tweak: The traitor surgery bag now costs 3 TC, down from 4.
+  Zerrien:
+  - rscadd: adds unique icons for the two medical patch types
+2016-02-18:
+  Kor:
+  - rscadd: 'Four more chaplain weapon options have been added: hanzo steel, light
+      energy sword, dark energy sword, and monk''s staff.'
+2016-02-19:
+  AnturK:
+  - rscadd: Chairs and stools can now be picked up and used as weapons by dragging
+      them over your character.
+  PKPenguin321:
+  - rscadd: The cleanbot uprising has begun.
+  - rscadd: Emagged cleanbots are much scarier now. Standing on top of one will yield
+      very devastating results, namely in the form of powerful flesh-eating acid.
+2016-02-20:
+  CPTANT:
+  - tweak: Due to new crystals Nanotrasen lasers weapons may now set you on FIRE.
+  Joan:
+  - imageadd: Blobbernauts and blob spores now have a visual healing effect when being
+      healed by the blob.
+  xxalpha:
+  - rscadd: 'New event: Portal Storm.'
+  - rscadd: Kinetic accelerators now reload automatically.
+2016-02-24:
+  CPTANT:
+  - tweak: stamina regeneration is now 50% faster.
+  Joan:
+  - rscadd: Revenants now have an essence display on their HUD
+  - rscadd: Revenants retain the essence cap from the previous revenant when reforming,
+      minus any perfect souls.
+  - rscadd: Revenants can now toggle their night vision.
+  - tweak: Revenant Defile has one tile more of range, but does less damage to windows.
+  - tweak: Revenant Blight kills space vines and glowshrooms slightly more rapidly.
+  - tweak: Delays before appearing when harvesting are slightly randomized.
+  - tweak: Revenant fluff objectives have been changed to be slightly more interesting.
+  RemieRichards:
+  - rscadd: Cursed heart item for wizards, allows them to heal themselves in exchange
+      for having to MANUALLY beat their heart every 6 seconds. Heals 25 brute/burn/oxy
+      damage per correctly timed pump.
+  Steelpoint:
+  - tweak: Syndicate engineers have reinforced the exterior of their stealth attack
+      ships. Nuclear Operative ship hull walls are now, once again, indestructible.
+  - tweak: In addition Syndicate engineers had the opportunity to revamp the interior
+      of stealth attack ships. The inside of Op ships now has a slightly new layout,
+      including a expanded medbay, as well as additional medical and explosive equipment.
+  - rscadd: Thanks to covert Syndicate operatives, strike teams can now bring the
+      stealth attack ship within very close proximity to the station codenamed 'Boxstation'.
+      A new ship destination labeled 'south maintenance airlock' is now available
+      to Op strike teams.
+  phil235:
+  - rscadd: Holo tape is replaced by holo barriers.
+  - rscadd: The action button of gas tanks and jetpacks now turn green when you turn
+      your internals on.
+2016-02-26:
+  Iamgoofball:
+  - rscadd: Adds the Chameleon Kit to uplinks for 4 telecrystals containing a Chameleon
+      Jumpsuit/Exosuit/Gloves/Shoes/Glasses/Hat/Mask/Backpack/Radio/Stamp/Gun/PDA.
+  - rscadd: The chameleon gun fires no-damage lasers regardless of what it looks like.
+  - rscadd: The Voice Changer has been merged into the Chameleon Mask.
+  - rscadd: No-slip shoes have been combined into Chameleon Shoes.
+  - rscdel: Space Ninjas no longer have voice changing capabilities.
+  - rscdel: The Chameleon Jumpsuit has been replaced by the Chameleon Kit in the uplink
+      for the same price.
+  - tweak: All chameleon clothing items have lost EMP vulnerability.
+  - tweak: Chameleon equipment provides very minor armor.
+  - experimental: Agent ID Cards can now use chameleon technology to look like any
+      other ID card.
+  - bugfix: The Chameleon Kit is actually purchasable now. It doesn't give a single
+      chameleon jumpsuit anymore.
+  PKPenguin321:
+  - rscadd: The kitchen vendor now contains two sharpening blocks.
+  - rscadd: Only items that are already sharp (such as fire axes, knives, etc) can
+      be sharpened. Items used on sharpening blocks become sharper and deadlier. The
+      sharpening blocks themselves can only be used once, and you can only sharpen
+      items once.
+  - tweak: The EMP kit has been buffed. It now contains five EMP grenades, up from
+      two.
+  - tweak: The EMP implant found in the EMP kit has been buffed. It now has three
+      uses, up from two.

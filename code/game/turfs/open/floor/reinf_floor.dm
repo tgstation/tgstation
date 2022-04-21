@@ -3,6 +3,7 @@
 	name = "reinforced floor"
 	desc = "Extremely sturdy."
 	icon_state = "engine"
+	holodeck_compatible = TRUE
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
@@ -12,9 +13,10 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
+
 /turf/open/floor/engine/examine(mob/user)
 	. += ..()
-	. += "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>"
+	. += span_notice("The reinforcement rods are <b>wrenched</b> firmly in place.")
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -27,7 +29,7 @@
 
 /turf/open/floor/engine/make_plating(force = FALSE)
 	if(force)
-		..()
+		return ..()
 	return //unplateable
 
 /turf/open/floor/engine/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
@@ -38,7 +40,7 @@
 
 /turf/open/floor/engine/wrench_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, "<span class='notice'>You begin removing rods...</span>")
+	to_chat(user, span_notice("You begin removing rods..."))
 	if(I.use_tool(src, user, 30, volume=80))
 		if(!istype(src, /turf/open/floor/engine))
 			return TRUE
@@ -51,16 +53,15 @@
 	acidpwr = min(acidpwr, 50) //we reduce the power so reinf floor never get melted.
 	return ..()
 
-/turf/open/floor/engine/ex_act(severity,target)
-	var/shielded = is_shielded()
-	contents_explosion(severity, target)
-	if(severity != 1 && shielded && target != src)
-		return
+/turf/open/floor/engine/ex_act(severity, target)
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		return
+		return TRUE
+	if(severity < EXPLODE_DEVASTATE && is_shielded())
+		return FALSE
+
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			if(prob(80))
 				if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
 					ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
@@ -71,7 +72,7 @@
 				ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 			else
 				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -85,10 +86,10 @@
 		else if(prob(30))
 			ReplaceWithLattice()
 
-/turf/open/floor/engine/attack_paw(mob/user)
-	return attack_hand(user)
+/turf/open/floor/engine/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/turf/open/floor/engine/attack_hand(mob/user)
+/turf/open/floor/engine/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -147,10 +148,9 @@
 	name = "\improper Miasma floor"
 	initial_gas_mix = ATMOS_TANK_MIASMA
 
-/turf/open/floor/engine/no2
-	article = "an"
-	name = "\improper NO2 floor"
-	initial_gas_mix = ATMOS_TANK_NO2
+/turf/open/floor/engine/nitrium
+	name = "\improper nitrium floor"
+	initial_gas_mix = ATMOS_TANK_NITRIUM
 
 /turf/open/floor/engine/pluoxium
 	name = "\improper Pluoxium floor"
@@ -159,10 +159,6 @@
 /turf/open/floor/engine/proto_nitrate
 	name = "\improper Proto-Nitrate floor"
 	initial_gas_mix = ATMOS_TANK_PROTO_NITRATE
-
-/turf/open/floor/engine/stimulum
-	name = "\improper Stimulum floor"
-	initial_gas_mix = ATMOS_TANK_STIMULUM
 
 /turf/open/floor/engine/tritium
 	name = "\improper Tritium floor"
@@ -194,13 +190,14 @@
 /turf/open/floor/engine/cult
 	name = "engraved floor"
 	desc = "The air smells strange over this sinister flooring."
-	icon_state = "plating"
+	icon_state = "cult"
 	floor_tile = null
 	var/obj/effect/cult_turf/overlay/floor/bloodcult/realappearance
 
 
-/turf/open/floor/engine/cult/Initialize()
+/turf/open/floor/engine/cult/Initialize(mapload)
 	. = ..()
+	icon_state = "plating" //we're redefining the base icon_state here so that the Conceal/Reveal Presence spell works for cultists
 	new /obj/effect/temp_visual/cult/turf/floor(src)
 	realappearance = new /obj/effect/cult_turf/overlay/floor/bloodcult(src)
 	realappearance.linked = src

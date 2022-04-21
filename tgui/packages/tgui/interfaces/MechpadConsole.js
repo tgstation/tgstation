@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Flex, Grid, Input, NoticeBox, NumberInput, Section } from '../components';
+import { Box, Button, Divider, Flex, Input, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const MechpadControl = (props, context) => {
@@ -52,8 +52,7 @@ export const MechpadConsole = (props, context) => {
   return (
     <Window
       width={475}
-      height={130}
-      resizable>
+      height={130}>
       <Window.Content>
         {mechpads.length === 0 && (
           <NoticeBox>

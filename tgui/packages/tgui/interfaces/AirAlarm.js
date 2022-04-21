@@ -12,8 +12,7 @@ export const AirAlarm = (props, context) => {
   return (
     <Window
       width={440}
-      height={650}
-      resizable>
+      height={650}>
       <Window.Content scrollable>
         <InterfaceLockNoticeBox />
         <AirAlarmStatus />
@@ -48,7 +47,7 @@ const AirAlarmStatus = (props, context) => {
     <Section title="Air Status">
       <LabeledList>
         {entries.length > 0 && (
-          <Fragment>
+          <>
             {entries.map(entry => {
               const status = dangerMap[entry.danger_level] || dangerMap[0];
               return (
@@ -72,7 +71,7 @@ const AirAlarmStatus = (props, context) => {
                 || data.fire_alarm && 'Fire Alarm'
                 || 'Nominal'}
             </LabeledList.Item>
-          </Fragment>
+          </>
         ) || (
           <LabeledList.Item
             label="Warning"
@@ -145,7 +144,7 @@ const AirAlarmControlHome = (props, context) => {
     atmos_alarm,
   } = data;
   return (
-    <Fragment>
+    <>
       <Button
         icon={atmos_alarm
           ? 'exclamation-triangle'
@@ -183,7 +182,7 @@ const AirAlarmControlHome = (props, context) => {
         icon="chart-bar"
         content="Alarm Thresholds"
         onClick={() => setScreen('thresholds')} />
-    </Fragment>
+    </>
   );
 };
 
@@ -256,10 +255,10 @@ const AirAlarmControlThresholds = (props, context) => {
       <thead>
         <tr>
           <td />
-          <td className="color-bad">min2</td>
-          <td className="color-average">min1</td>
-          <td className="color-average">max1</td>
-          <td className="color-bad">max2</td>
+          <td className="color-bad">hazard_min</td>
+          <td className="color-average">warning_min</td>
+          <td className="color-average">warning_max</td>
+          <td className="color-bad">hazard_max</td>
         </tr>
       </thead>
       <tbody>

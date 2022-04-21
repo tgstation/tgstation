@@ -272,7 +272,7 @@
 	)
 	result = /obj/item/food/donut/jelly/slimejelly/laugh
 
-////////////////////////////////////////////////WAFFLES AND PANCAKES////////////////////////////////////////////////
+////////////////////////////////////////////////WAFFLES////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/waffles
 	time = 15
@@ -312,33 +312,6 @@
 	result = /obj/item/food/rofflewaffles
 	subcategory = CAT_PASTRY
 
-/datum/crafting_recipe/food/pancakes
-	name = "Pancake"
-	reqs = list(
-		/obj/item/food/pastrybase = 1
-	)
-	result = /obj/item/food/pancakes
-	subcategory = CAT_PASTRY
-
-/datum/crafting_recipe/food/bbpancakes
-	name = "Blueberry pancake"
-	reqs = list(
-		/obj/item/food/pastrybase = 1,
-		/obj/item/food/grown/berries = 1
-	)
-	result = /obj/item/food/pancakes/blueberry
-	subcategory = CAT_PASTRY
-
-/datum/crafting_recipe/food/ccpancakes
-	name = "Chocolate chip pancake"
-	reqs = list(
-		/obj/item/food/pastrybase = 1,
-		/obj/item/food/chocolatebar = 1
-	)
-	result = /obj/item/food/pancakes/chocolatechip
-	subcategory = CAT_PASTRY
-
-
 ////////////////////////////////////////////////DONKPOCCKETS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donkpocket
@@ -367,7 +340,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/obj/item/food/grown/chili
+		/obj/item/food/grown/chili = 1
 	)
 	result = /obj/item/food/donkpocket/spicy
 	subcategory = CAT_PASTRY
@@ -421,7 +394,7 @@
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/meatball = 1,
-		/datum/reagent/tranquility = 5
+		/datum/reagent/gondola_mutation_toxin = 5
 	)
 	result = /obj/item/food/donkpocket/gondola
 	subcategory = CAT_PASTRY
@@ -459,45 +432,15 @@
 	result = /obj/item/food/muffin/booberry
 	subcategory = CAT_PASTRY
 
-/datum/crafting_recipe/food/chawanmushi
-	name = "Chawanmushi"
-	reqs = list(
-		/datum/reagent/water = 5,
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/food/boiledegg = 2,
-		/obj/item/food/grown/mushroom/chanterelle = 1
-	)
-	result = /obj/item/food/chawanmushi
-	subcategory = CAT_PASTRY
-
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
-/datum/crafting_recipe/food/hotdog
-	name = "Hot dog"
-	reqs = list(
-		/datum/reagent/consumable/ketchup = 5,
-		/obj/item/food/bun = 1,
-		/obj/item/food/sausage = 1
-	)
-	result = /obj/item/food/hotdog
-	subcategory = CAT_PASTRY
-
-/datum/crafting_recipe/food/meatbun
-	name = "Meat bun"
-	reqs = list(
-		/datum/reagent/consumable/soysauce = 5,
-		/obj/item/food/bun = 1,
-		/obj/item/food/meatball = 1,
-		/obj/item/food/grown/cabbage = 1
-	)
-	result = /obj/item/food/meatbun
-	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/khachapuri
 	name = "Khachapuri"
 	reqs = list(
-		/datum/reagent/consumable/eggyolk = 5,
-		/obj/item/food/cheesewedge = 1,
+		/datum/reagent/consumable/eggyolk = 2,
+		/datum/reagent/consumable/eggwhite = 4,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/food/khachapuri
@@ -513,6 +456,28 @@
 	result = /obj/item/food/cookie/sugar
 	subcategory = CAT_PASTRY
 
+/datum/crafting_recipe/food/spookyskull
+	time = 15
+	name = "Skull cookie"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/milk = 5
+	)
+	result = /obj/item/food/cookie/sugar/spookyskull
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/spookycoffin
+	time = 15
+	name = "Coffin cookie"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/coffee = 5
+	)
+	result = /obj/item/food/cookie/sugar/spookycoffin
+	subcategory = CAT_PASTRY
+
 /datum/crafting_recipe/food/fortunecookie
 	time = 15
 	name = "Fortune cookie"
@@ -520,7 +485,7 @@
 		/obj/item/food/pastrybase = 1,
 		/obj/item/paper = 1
 	)
-	parts =	list(
+	parts = list(
 		/obj/item/paper = 1
 	)
 	result = /obj/item/food/fortunecookie

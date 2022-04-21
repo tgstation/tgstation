@@ -30,7 +30,8 @@ BONUS
 	symptom_delay_max = 50
 
 /datum/symptom/youth/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	if(ishuman(M))
@@ -39,20 +40,20 @@ BONUS
 			if(1)
 				if(H.age > 41)
 					H.age = 41
-					to_chat(H, "<span class='notice'>You haven't had this much energy in years!</span>")
+					to_chat(H, span_notice("You haven't had this much energy in years!"))
 			if(2)
 				if(H.age > 36)
 					H.age = 36
-					to_chat(H, "<span class='notice'>You're suddenly in a good mood.</span>")
+					to_chat(H, span_notice("You're suddenly in a good mood."))
 			if(3)
 				if(H.age > 31)
 					H.age = 31
-					to_chat(H, "<span class='notice'>You begin to feel more lithe.</span>")
+					to_chat(H, span_notice("You begin to feel more lithe."))
 			if(4)
 				if(H.age > 26)
 					H.age = 26
-					to_chat(H, "<span class='notice'>You feel reinvigorated.</span>")
+					to_chat(H, span_notice("You feel reinvigorated."))
 			if(5)
 				if(H.age > 21)
 					H.age = 21
-					to_chat(H, "<span class='notice'>You feel like you can take on the world!</span>")
+					to_chat(H, span_notice("You feel like you can take on the world!"))

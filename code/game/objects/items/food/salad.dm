@@ -8,13 +8,14 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES
-	eatverbs = list("devour","nibble","gnaw","gobble","chomp") //who the fuck gnaws and devours on a salad
+	eatverbs = list("devour", "nibble", "gnaw", "gobble", "chomp") //who the fuck gnaws and devours on a salad
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/salad/aesirsalad
 	name = "\improper Aesir salad"
 	desc = "Probably too incredible for mortal men to fully enjoy."
 	icon_state = "aesirsalad"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/medicine/omnizine = 10, /datum/reagent/consumable/nutriment/vitamin = 12)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 12)
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES | FRUIT
 
@@ -32,15 +33,7 @@
 	icon_state = "validsalad"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/doctor_delight = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1, "potato" = 1, "meat" = 1, "valids" = 1)
-	foodtypes = VEGETABLES | MEAT | FRIED | JUNKFOOD | FRUIT
-
-/obj/item/food/salad/oatmeal
-	name = "oatmeal"
-	desc = "A nice bowl of oatmeal."
-	icon_state = "oatmeal"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
-	tastes = list("oats" = 1, "milk" = 1)
-	foodtypes = DAIRY | GRAIN | BREAKFAST
+	foodtypes = VEGETABLES | MEAT | FRIED | FRUIT
 
 /obj/item/food/salad/fruit
 	name = "fruit salad"
@@ -64,7 +57,7 @@
 	icon_state = "citrusdelight"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/vitamin = 7)
 	tastes = list("sourness" = 1, "leaves" = 1)
-	foodtypes = FRUIT
+	foodtypes = FRUIT | ORANGES
 
 /obj/item/food/salad/ricebowl
 	name = "ricebowl"
@@ -81,7 +74,7 @@
 	icon_state = "boiledrice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("rice" = 1)
-	foodtypes = GRAIN
+	foodtypes = GRAIN | BREAKFAST
 
 /obj/item/food/salad/ricepudding
 	name = "rice pudding"
@@ -89,7 +82,8 @@
 	icon_state = "ricepudding"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("rice" = 1, "sweetness" = 1)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = GRAIN | DAIRY | SUGAR
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/salad/ricepork
 	name = "rice and pork"
@@ -98,6 +92,15 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("rice" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT
+
+/obj/item/food/salad/risotto
+	name = "risotto"
+	desc = "Proof the Italians mastered every carb."
+	icon_state = "risotto"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("rice" = 1, "cheese" = 1)
+	foodtypes = GRAIN | DAIRY
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/salad/eggbowl
 	name = "egg bowl"
@@ -111,7 +114,7 @@
 	name = "\improper Salad of Eden"
 	desc = "A salad brimming with untapped potential."
 	icon_state = "edensalad"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/earthsblood = 3, /datum/reagent/medicine/omnizine = 5, /datum/reagent/drug/happiness = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("extreme bitterness" = 3, "hope" = 1)
 	foodtypes = VEGETABLES
 
@@ -134,7 +137,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_ASSISTANT * 0.6
 
-/obj/item/reagent_containers/glass/bowl/Initialize()
+/obj/item/reagent_containers/glass/bowl/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 

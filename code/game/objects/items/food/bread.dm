@@ -6,7 +6,7 @@
 	foodtypes = GRAIN
 	eat_time = 3 SECONDS
 
-/obj/item/food/bread/Initialize()
+/obj/item/food/bread/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 	AddComponent(/datum/component/food_storage)
@@ -15,10 +15,11 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	slot_flags = ITEM_SLOT_HEAD
 	foodtypes = GRAIN
+	food_flags = FOOD_FINGER_FOOD
 	eat_time = 0.5 SECONDS
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/breadslice/Initialize()
+/obj/item/food/breadslice/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -30,8 +31,10 @@
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
+	burns_in_oven = TRUE
 
-/obj/item/food/bread/plain/Initialize()
+/obj/item/food/bread/plain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
@@ -44,22 +47,32 @@
 	icon_state = "breadslice"
 	foodtypes = GRAIN
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	venue_value = FOOD_PRICE_TRASH
+	decomp_type = /obj/item/food/breadslice/moldy
 
-/obj/item/food/breadslice/plain/Initialize()
+/obj/item/food/breadslice/plain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
+/obj/item/food/breadslice/plain/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/griddle_toast, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+
 /obj/item/food/breadslice/moldy
-	name = "moldy bread slice"
+	name = "moldy 'bread' slice"
 	desc = "Entire stations have been ripped apart over arguing whether this is still good to eat."
 	icon_state = "moldybreadslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/mold = 10)
 	tastes = list("decaying fungus" = 1)
 	foodtypes = GROSS
+	preserved_food = TRUE
 
-/obj/item/food/breadslice/moldy/Initialize()
+/obj/item/food/breadslice/moldy/bacteria
+	name = "bacteria rich moldy 'bread' slice"
+	desc = "Something (possibly necroyeast) has caused this bread to rise in a macabre state of unlife. It lurchs about when unattended. You might want to locate a priest if you see this. Or maybe a flamethrower."
+
+/obj/item/food/breadslice/moldy/bacteria/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2, 4), 25)
 
 
 /obj/item/food/bread/meat
@@ -69,6 +82,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/consumable/nutriment/protein = 12)
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtypes = GRAIN | MEAT
+	venue_value = FOOD_PRICE_CHEAP
+
 
 /obj/item/food/bread/meat/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/meat, 5, 30)
@@ -79,6 +94,25 @@
 	icon_state = "meatbreadslice"
 	foodtypes = GRAIN | MEAT
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2.4)
+
+/obj/item/food/bread/sausage
+	name = "sausagebread loaf"
+	desc = "Dont think too much about it."
+	icon_state = "sausagebread"
+	foodtypes = GRAIN | MEAT
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/consumable/nutriment/protein = 12)
+	tastes = list("bread" = 10, "meat" = 10)
+
+/obj/item/food/bread/sausage/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/sausage, 5, 30)
+
+/obj/item/food/breadslice/sausage
+	name = "sausagebread slice"
+	desc = "A slice of delicious sausagebread."
+	icon_state = "sausagebreadslice"
+	foodtypes = GRAIN | MEAT
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2.4)
+	tastes = list("bread" = 10, "meat" = 10)
 
 /obj/item/food/bread/xenomeat
 	name = "xenomeatbread loaf"
@@ -112,7 +146,7 @@
 /obj/item/food/breadslice/spidermeat
 	name = "spider meat bread slice"
 	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
-	icon_state = "xenobreadslice"
+	icon_state = "spidermeatslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/toxin = 3, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtypes = GRAIN | MEAT | TOXIC
 
@@ -141,6 +175,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10, /datum/reagent/consumable/nutriment/protein = 10)
 	tastes = list("bread" = 10, "tofu" = 10)
 	foodtypes = GRAIN | VEGETABLES
+	venue_value = FOOD_PRICE_TRASH
 
 /obj/item/food/bread/tofu/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/tofu, 5, 30)
@@ -202,7 +237,7 @@
 	foodtypes = GRAIN
 	desc = "It's a slice of bread, customized to your wildest dreams."
 
-/obj/item/food/breadslice/empty/Initialize()
+/obj/item/food/breadslice/empty/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
@@ -221,6 +256,7 @@
 	attack_verb_simple = list("touche")
 	tastes = list("bread" = 1)
 	foodtypes = GRAIN
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/garlicbread
 	name = "garlic bread"
@@ -232,81 +268,7 @@
 	bite_consumption = 3
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
 	foodtypes = GRAIN
-
-/obj/item/food/deepfryholder
-	name = "Deep Fried Foods Holder Obj"
-	desc = "If you can see this description the code for the deep fryer fucked up."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = ""
-	bite_consumption = 2
-
-/obj/item/food/deepfryholder/MakeEdible()
-	AddComponent(/datum/component/edible,\
-			initial_reagents = food_reagents,\
-			food_flags = food_flags,\
-			foodtypes = foodtypes,\
-			volume = max_volume,\
-			eat_time = eat_time,\
-			tastes = tastes,\
-			eatverbs = eatverbs,\
-			bite_consumption = bite_consumption,\
-			on_consume = CALLBACK(src, .proc/On_Consume))
-
-
-/obj/item/food/deepfryholder/Initialize(mapload, obj/item/fried)
-	. = ..()
-	name = fried.name //We'll determine the other stuff when it's actually removed
-	appearance = fried.appearance
-	layer = initial(layer)
-	plane = initial(plane)
-	lefthand_file = fried.lefthand_file
-	righthand_file = fried.righthand_file
-	inhand_icon_state = fried.inhand_icon_state
-	desc = fried.desc
-	w_class = fried.w_class
-	slowdown = fried.slowdown
-	equip_delay_self = fried.equip_delay_self
-	equip_delay_other = fried.equip_delay_other
-	strip_delay = fried.strip_delay
-	species_exception = fried.species_exception
-	item_flags = fried.item_flags
-	obj_flags = fried.obj_flags
-	inhand_x_dimension = fried.inhand_x_dimension
-	inhand_y_dimension = fried.inhand_y_dimension
-
-	if(!(SEND_SIGNAL(fried, COMSIG_ITEM_FRIED, src) & COMSIG_FRYING_HANDLED)) //If frying is handled by signal don't do the defaault behavior.
-		fried.forceMove(src)
-
-
-/obj/item/food/deepfryholder/Destroy()
-	if(contents)
-		QDEL_LIST(contents)
-	return ..()
-
-/obj/item/food/deepfryholder/proc/On_Consume(eater, feeder)
-	if(contents)
-		QDEL_LIST(contents)
-
-
-/obj/item/food/deepfryholder/proc/fry(cook_time = 30)
-	switch(cook_time)
-		if(0 to 15)
-			add_atom_colour(rgb(166,103,54), FIXED_COLOUR_PRIORITY)
-			name = "lightly-fried [name]"
-			desc = "[desc] It's been lightly fried in a deep fryer."
-		if(16 to 49)
-			add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
-			name = "fried [name]"
-			desc = "[desc] It's been fried, increasing its tastiness value by [rand(1, 75)]%."
-		if(50 to 59)
-			add_atom_colour(rgb(63,23,4), FIXED_COLOUR_PRIORITY)
-			name = "deep-fried [name]"
-			desc = "[desc] Deep-fried to perfection."
-		if(60 to INFINITY)
-			add_atom_colour(rgb(33,19,9), FIXED_COLOUR_PRIORITY)
-			name = "\proper the physical manifestation of the very concept of fried foods"
-			desc = "A heavily-fried... something. Who can tell anymore?"
-	foodtypes |= FRIED
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/butterbiscuit
 	name = "butter biscuit"
@@ -317,6 +279,7 @@
 	tastes = list("butter" = 1, "biscuit" = 1)
 	foodtypes = GRAIN | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/butterdog
 	name = "butterdog"

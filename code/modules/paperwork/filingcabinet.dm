@@ -1,9 +1,9 @@
 /* Filing cabinets!
  * Contains:
- *		Filing Cabinets
- *		Security Record Cabinets
- *		Medical Record Cabinets
- *		Employment Contract Cabinets
+ * Filing Cabinets
+ * Security Record Cabinets
+ * Medical Record Cabinets
+ * Employment Contract Cabinets
  */
 
 
@@ -27,7 +27,7 @@
 	desc = "A small cabinet with drawers. This one has wheels!"
 	anchored = FALSE
 
-/obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unnecessary map issues, but please don't name stuff like this in the future -Pete
+/obj/structure/filingcabinet/filingcabinet //not changing the path to avoid unnecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
 
 
@@ -40,44 +40,68 @@
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/stack/sheet/iron(loc, 2)
 		for(var/obj/item/I in src)
 			I.forceMove(loc)
 	qdel(src)
 
-/obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
-	if(P.tool_behaviour == TOOL_WRENCH && user.a_intent != INTENT_HELP)
-		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
+/obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, params)
+	var/list/modifiers = params2list(params)
+	if(P.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
+		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
 		if(P.use_tool(src, user, 20, volume=50))
-			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
+			to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
 			set_anchored(!anchored)
 	else if(P.w_class < WEIGHT_CLASS_NORMAL)
 		if(!user.transferItemToLoc(P, src))
 			return
-		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
+		to_chat(user, span_notice("You put [P] in [src]."))
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
-	else if(user.a_intent != INTENT_HARM)
-		to_chat(user, "<span class='warning'>You can't put [P] in [src]!</span>")
+	else if(!user.combat_mode)
+		to_chat(user, span_warning("You can't put [P] in [src]!"))
 	else
 		return ..()
 
-
-/obj/structure/filingcabinet/ui_interact(mob/user)
+/obj/structure/filingcabinet/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
-	if(contents.len <= 0)
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+	ui_interact(user)
+
+/obj/structure/filingcabinet/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "FilingCabinet")
+		ui.open()
+
+/obj/structure/filingcabinet/ui_data(mob/user)
+	var/list/data = list()
+
+	data["cabinet_name"] = "[name]"
+	data["contents"] = list()
+	data["contents_ref"] = list()
+	for(var/obj/item/content in src)
+		data["contents"] += "[content]"
+		data["contents_ref"] += "[REF(content)]"
+
+	return data
+
+
+/obj/structure/filingcabinet/ui_act(action, params)
+	. = ..()
+	if(.)
 		return
 
-	var/dat = "<center><table>"
-	var/i
-	for(i=contents.len, i>=1, i--)
-		var/obj/item/P = contents[i]
-		dat += "<tr><td><a href='?src=[REF(src)];retrieve=[REF(P)]'>[P.name]</a></td></tr>"
-	dat += "</table></center>"
-	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
+	switch(action)
+		// Take the object out
+		if("remove_object")
+			var/obj/item/content = locate(params["ref"]) in src
+			if(istype(content) && in_range(src, usr))
+				usr.put_in_hands(content)
+				updateUsrDialog()
+				icon_state = "[initial(icon_state)]-open"
+				addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
 
 
 /obj/structure/filingcabinet/attack_tk(mob/user)
@@ -94,9 +118,9 @@
 			I.forceMove(loc)
 			if(prob(25))
 				step_rand(I)
-			to_chat(user, "<span class='notice'>You pull \a [I] out of [src] at random.</span>")
+			to_chat(user, span_notice("You pull \a [I] out of [src] at random."))
 			return
-	to_chat(user, "<span class='notice'>You find nothing in [src].</span>")
+	to_chat(user, span_notice("You find nothing in [src]."))
 
 
 /obj/structure/filingcabinet/Topic(href, href_list)
@@ -135,10 +159,10 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "paper - '[G.fields["name"]]'"
-			virgin = FALSE	//tabbing here is correct- it's possible for people to try and use it
+			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
-/obj/structure/filingcabinet/security/attack_hand()
+/obj/structure/filingcabinet/security/attack_hand(mob/user, list/modifiers)
 	populate()
 	return ..()
 
@@ -169,11 +193,11 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "paper - '[G.fields["name"]]'"
-			virgin = FALSE	//tabbing here is correct- it's possible for people to try and use it
+			virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/filingcabinet/medical/attack_hand()
+/obj/structure/filingcabinet/medical/attack_hand(mob/user, list/modifiers)
 	populate()
 	return ..()
 
@@ -192,7 +216,7 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
 	var/virgin = TRUE
 
-/obj/structure/filingcabinet/employment/Initialize()
+/obj/structure/filingcabinet/employment/Initialize(mapload)
 	. = ..()
 	GLOB.employmentCabinets += src
 
@@ -212,7 +236,7 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
-	new /obj/item/paper/contract/employment(src, employee)
+	new /obj/item/paper/employment_contract(src, employee.mind.name)
 
 /obj/structure/filingcabinet/employment/interact(mob/user)
 	if(virgin)

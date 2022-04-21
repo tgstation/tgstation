@@ -2,20 +2,20 @@
 //All based on clusterMin and clusterMax as guides
 
 //Individual defines
-#define CLUSTER_CHECK_NONE				0  			//No checks are done, cluster as much as possible
-#define CLUSTER_CHECK_DIFFERENT_TURFS	(1<<1)  //Don't let turfs of DIFFERENT types cluster
-#define CLUSTER_CHECK_DIFFERENT_ATOMS	(1<<2)  //Don't let atoms of DIFFERENT types cluster
-#define CLUSTER_CHECK_SAME_TURFS		(1<<3)  //Don't let turfs of the SAME type cluster
-#define CLUSTER_CHECK_SAME_ATOMS		(1<<4) 	//Don't let atoms of the SAME type cluster
+#define CLUSTER_CHECK_NONE 0 //No checks are done, cluster as much as possible
+#define CLUSTER_CHECK_DIFFERENT_TURFS (1<<1)  //Don't let turfs of DIFFERENT types cluster
+#define CLUSTER_CHECK_DIFFERENT_ATOMS (1<<2)  //Don't let atoms of DIFFERENT types cluster
+#define CLUSTER_CHECK_SAME_TURFS (1<<3)  //Don't let turfs of the SAME type cluster
+#define CLUSTER_CHECK_SAME_ATOMS (1<<4) //Don't let atoms of the SAME type cluster
 
 //Combined defines
-#define CLUSTER_CHECK_SAMES				24 //Don't let any of the same type cluster
-#define CLUSTER_CHECK_DIFFERENTS		6  //Don't let any of different types cluster
-#define CLUSTER_CHECK_ALL_TURFS			10 //Don't let ANY turfs cluster same and different types
-#define CLUSTER_CHECK_ALL_ATOMS			20 //Don't let ANY atoms cluster same and different types
+#define CLUSTER_CHECK_SAMES 24 //Don't let any of the same type cluster
+#define CLUSTER_CHECK_DIFFERENTS 6  //Don't let any of different types cluster
+#define CLUSTER_CHECK_ALL_TURFS 10 //Don't let ANY turfs cluster same and different types
+#define CLUSTER_CHECK_ALL_ATOMS 20 //Don't let ANY atoms cluster same and different types
 
 //All
-#define CLUSTER_CHECK_ALL				30 //Don't let anything cluster, like, at all
+#define CLUSTER_CHECK_ALL 30 //Don't let anything cluster, like, at all
 
 /datum/map_generator
 
@@ -30,7 +30,7 @@
 /datum/map_generator/New()
 	..()
 	if(buildmode_name == "Undocumented")
-		buildmode_name = copytext_char("[type]", 20)	// / d a t u m / m a p g e n e r a t o r / = 20 characters.
+		buildmode_name = copytext_char("[type]", 20) // / d a t u m / m a p g e n e r a t o r / = 20 characters.
 	initialiseModules()
 
 //Defines the region the map represents, sets map
@@ -69,13 +69,13 @@
 	if(bigZ % 2 == 0)
 		offByOneOffset = 0
 
-	for(var/i = lilZ, i <= bigZ+offByOneOffset, i++)
+	for(var/i in lilZ to bigZ+offByOneOffset)
 		var/theRadius = radius
 		if(i != sphereMagic)
 			theRadius = max(radius/max((2*abs(sphereMagic-i)),1),1)
 
 
-		map |= circlerange(locate(centerX,centerY,i),theRadius)
+		map |= circle_range(locate(centerX,centerY,i),theRadius)
 
 
 	return map
@@ -191,7 +191,7 @@
 			return
 		theCluster = clusters[moduleClusters]
 	else
-		theCluster =  CLUSTER_CHECK_NONE
+		theCluster = CLUSTER_CHECK_NONE
 
 	if(theCluster)
 		for(var/datum/map_generator_module/M in N.modules)

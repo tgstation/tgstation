@@ -1,0 +1,63 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/maintenance/starboard/lesser)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/item/crowbar,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"h" = (
+/turf/template_noop,
+/area/template_noop)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/item/clothing/mask/gas,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/girder,
+/obj/structure/grille,
+/obj/modular_map_connector,
+/turf/open/floor/plating,
+/area/maintenance/starboard/lesser)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/starboard/lesser)
+
+(1,1,1) = {"
+h
+c
+E
+F
+a
+"}
+(2,1,1) = {"
+G
+L
+y
+y
+a
+"}
+(3,1,1) = {"
+h
+a
+a
+a
+a
+"}

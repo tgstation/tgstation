@@ -12,7 +12,7 @@
 
 	var/suggested = pick(strings(REDPILL_FILE, "redpill_questions"))
 
-	forced_secret = (input(usr, "What horrifying truth will you reveal?", "Curse of Madness", sortList(suggested)) as text|null) || suggested
+	forced_secret = (input(usr, "What horrifying truth will you reveal?", "Curse of Madness", sort_list(suggested)) as text|null) || suggested
 
 /datum/round_event/wizard/madness/start()
 	var/datum/round_event_control/wizard/madness/C = control

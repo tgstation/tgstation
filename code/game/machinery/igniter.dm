@@ -3,18 +3,16 @@
 	desc = "It's useful for igniting plasma."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter0"
+	base_icon_state = "igniter"
 	plane = FLOOR_PLANE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 4
 	max_integrity = 300
-	armor = list(MELEE = 50, BULLET = 30, LASER = 70, ENERGY = 50, BOMB = 20, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 70, ENERGY = 50, BOMB = 20, BIO = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	var/id = null
 	var/on = FALSE
 
-/obj/machinery/igniter/incinerator_toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/igniter/incinerator_ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
 
 /obj/machinery/igniter/incinerator_atmos
 	id = INCINERATOR_ATMOS_IGNITER
@@ -26,32 +24,30 @@
 	on = TRUE
 	icon_state = "igniter1"
 
-/obj/machinery/igniter/attack_hand(mob/user)
+/obj/machinery/igniter/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	add_fingerprint(user)
 
-	use_power(50)
+	use_power(active_power_usage)
 	on = !( on )
-	update_icon()
+	update_appearance()
 
-/obj/machinery/igniter/process()	//ugh why is this even in process()?
+/obj/machinery/igniter/process() //ugh why is this even in process()?
 	if (on && !(machine_stat & NOPOWER) )
 		var/turf/location = loc
 		if (isturf(location))
 			location.hotspot_expose(1000,500,1)
 	return 1
 
-/obj/machinery/igniter/Initialize()
+/obj/machinery/igniter/Initialize(mapload)
 	. = ..()
 	icon_state = "igniter[on]"
 
 /obj/machinery/igniter/update_icon_state()
-	if(machine_stat & NOPOWER)
-		icon_state = "igniter0"
-	else
-		icon_state = "igniter[on]"
+	icon_state = "[base_icon_state][(machine_stat & NOPOWER) ? 0 : on]"
+	return ..()
 
 /obj/machinery/igniter/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.id]_[id]"
@@ -63,16 +59,19 @@
 	desc = "A wall-mounted ignition device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"
+	base_icon_state = "migniter"
 	resistance_flags = FIRE_PROOF
 	var/id = null
 	var/disable = 0
 	var/last_spark = 0
 	var/datum/effect_system/spark_spread/spark_system
 
-/obj/machinery/sparker/toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 
-/obj/machinery/sparker/Initialize()
+/obj/machinery/sparker/ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
+
+/obj/machinery/sparker/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
@@ -84,28 +83,26 @@
 
 /obj/machinery/sparker/update_icon_state()
 	if(disable)
-		icon_state = "[initial(icon_state)]-d"
-	else if(powered())
-		icon_state = "[initial(icon_state)]"
-	else
-		icon_state = "[initial(icon_state)]-p"
+		icon_state = "[base_icon_state]-d"
+		return ..()
+	icon_state = "[base_icon_state][powered() ? null : "-p"]"
+	return ..()
 
 /obj/machinery/sparker/powered()
 	if(disable)
 		return FALSE
 	return ..()
 
-/obj/machinery/sparker/attackby(obj/item/W, mob/user, params)
-	if (W.tool_behaviour == TOOL_SCREWDRIVER)
-		add_fingerprint(user)
-		disable = !disable
-		if (disable)
-			user.visible_message("<span class='notice'>[user] disables \the [src]!</span>", "<span class='notice'>You disable the connection to \the [src].</span>")
-		if (!disable)
-			user.visible_message("<span class='notice'>[user] reconnects \the [src]!</span>", "<span class='notice'>You fix the connection to \the [src].</span>")
-		update_icon()
-	else
-		return ..()
+/obj/machinery/sparker/screwdriver_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	tool.play_tool_sound(src, 50)
+	disable = !disable
+	if (disable)
+		user.visible_message(span_notice("[user] disables \the [src]!"), span_notice("You disable the connection to \the [src]."))
+	if (!disable)
+		user.visible_message(span_notice("[user] reconnects \the [src]!"), span_notice("You fix the connection to \the [src]."))
+	update_appearance()
+	return TRUE
 
 /obj/machinery/sparker/attack_ai()
 	if (anchored)
@@ -124,7 +121,7 @@
 	flick("[initial(icon_state)]-spark", src)
 	spark_system.start()
 	last_spark = world.time
-	use_power(1000)
+	use_power(active_power_usage)
 	var/turf/location = loc
 	if (isturf(location))
 		location.hotspot_expose(1000,2500,1)

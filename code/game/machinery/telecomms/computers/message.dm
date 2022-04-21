@@ -5,10 +5,10 @@
 
 #define LINKED_SERVER_NONRESPONSIVE  (!linkedServer || (linkedServer.machine_stat & (NOPOWER|BROKEN)))
 
-#define MSG_MON_SCREEN_MAIN 		0
-#define MSG_MON_SCREEN_LOGS 		1
-#define MSG_MON_SCREEN_HACKED 		2
-#define MSG_MON_SCREEN_CUSTOM_MSG 	3
+#define MSG_MON_SCREEN_MAIN 0
+#define MSG_MON_SCREEN_LOGS 1
+#define MSG_MON_SCREEN_HACKED 2
+#define MSG_MON_SCREEN_CUSTOM_MSG 3
 #define MSG_MON_SCREEN_REQUEST_LOGS 4
 
 // The monitor itself.
@@ -28,24 +28,18 @@
 	var/defaultmsg = "<span class='notice'>Welcome. Please select an option.</span>"
 	var/rebootmsg = "<span class='warning'>%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
 	//Computer properties
-	var/screen = MSG_MON_SCREEN_MAIN 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
-	var/hacking = FALSE		// Is it being hacked into by the AI/Cyborg
-	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>"	// The message that shows on the main menu.
+	var/screen = MSG_MON_SCREEN_MAIN // 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
+	var/hacking = FALSE // Is it being hacked into by the AI/Cyborg
+	var/message = "<span class='notice'>System bootup complete. Please select an option.</span>" // The message that shows on the main menu.
 	var/auth = FALSE // Are they authenticated?
 	var/optioncount = 7
-	// Custom Message Properties
-	var/customsender = "System Administrator"
-	var/obj/item/pda/customrecepient = null
-	var/customjob		= "Admin"
-	var/custommessage 	= "This is a test, please ignore."
 
-
-/obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
-	if(O.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
+/obj/machinery/computer/message_monitor/screwdriver_act(mob/living/user, obj/item/I)
+	if(obj_flags & EMAGGED)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
-		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
-	else
-		return ..()
+		to_chat(user, span_warning("It is too hot to mess with!"))
+		return TRUE
+	return ..()
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -62,14 +56,11 @@
 		addtimer(CALLBACK(src, .proc/UnmagConsole), time)
 		message = rebootmsg
 	else
-		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
+		to_chat(user, span_notice("A no server error appears on the screen."))
 
-/obj/machinery/computer/message_monitor/New()
+/obj/machinery/computer/message_monitor/Initialize(mapload)
 	..()
 	GLOB.telecomms_list += src
-
-/obj/machinery/computer/message_monitor/Initialize()
-	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/message_monitor/LateInitialize()
@@ -132,16 +123,16 @@
 
 			//Bottom message
 			if(!auth)
-				dat += "<br><hr><dd><span class='notice'>Please authenticate with the server in order to show additional options.</span>"
+				dat += "<br><hr><dd>[span_notice("Please authenticate with the server in order to show additional options.")]"
 			else
-				dat += "<br><hr><dd><span class='warning'>Reg, #514 forbids sending messages to a Head of Staff containing Erotic Rendering Properties.</span>"
+				dat += "<br><hr><dd>[span_warning("Reg, #514 forbids sending messages to a Head of Staff containing Erotic Rendering Properties.")]"
 
 		//Message Logs
 		if(MSG_MON_SCREEN_LOGS)
 			var/index = 0
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += "<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sender</th><th width='15%'>Recipient</th><th width='300px' word-wrap: break-word>Message</th></tr>"
-			for(var/datum/data_pda_msg/pda in linkedServer.pda_msgs)
+			for(var/datum/data_tablet_msg/pda in linkedServer.pda_msgs)
 				index++
 				if(index > 3000)
 					break
@@ -192,36 +183,18 @@
 				10010000001110100011010000110000101110100001000000111010<br>
 				001101001011011010110010100101110"}
 
-		//Fake messages
-		if(MSG_MON_SCREEN_CUSTOM_MSG)
-			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];Reset=1'>Reset</a></center><hr>"
-
-			dat += {"<table border='1' width='100%'>
-					<tr><td width='20%'><A href='?src=[REF(src)];select=Sender'>Sender</a></td>
-					<td width='20%'><A href='?src=[REF(src)];select=RecJob'>Sender's Job</a></td>
-					<td width='20%'><A href='?src=[REF(src)];select=Recepient'>Recipient</a></td>
-					<td width='300px' word-wrap: break-word><A href='?src=[REF(src)];select=Message'>Message</a></td></tr>"}
-				//Sender  - Sender's Job  - Recepient - Message
-				//Al Green- Your Dad	  - Your Mom  - WHAT UP!?
-
-			dat += {"<tr><td width='20%'>[customsender]</td>
-			<td width='20%'>[customjob]</td>
-			<td width='20%'>[customrecepient ? customrecepient.owner : "NONE"]</td>
-			<td width='300px'>[custommessage]</td></tr>"}
-			dat += "</table><br><center><A href='?src=[REF(src)];select=Send'>Send</a>"
-
 		//Request Console Logs
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
 
 			var/index = 0
-			/* 	data_rc_msg
-				X												 - 5%
+			/* data_rc_msg
+				X  - 5%
 				var/rec_dpt = "Unspecified" //name of the person - 15%
 				var/send_dpt = "Unspecified" //name of the sender- 15%
-				var/message = "Blank" //transferred message		 - 300px
-				var/stamp = "Unstamped"							 - 15%
-				var/id_auth = "Unauthenticated"					 - 15%
-				var/priority = "Normal"							 - 10%
+				var/message = "Blank" //transferred message  - 300px
+				var/stamp = "Unstamped"  - 15%
+				var/id_auth = "Unauthenticated"  - 15%
+				var/priority = "Normal"  - 10%
 			*/
 			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];refresh=1'>Refresh</a></center><hr>"
 			dat += {"<table border='1' width='100%'><tr><th width = '5%'>X</th><th width='15%'>Sending Dep.</th><th width='15%'>Receiving Dep.</th>
@@ -243,21 +216,15 @@
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
-		to_chat(user, "<span class='warning'>Could not complete brute-force: Linked Server Disconnected!</span>")
+		to_chat(user, span_warning("Could not complete brute-force: Linked Server Disconnected!"))
 	else
 		var/currentKey = linkedServer.decryptkey
-		to_chat(user, "<span class='warning'>Brute-force completed! The key is '[currentKey]'.</span>")
+		to_chat(user, span_warning("Brute-force completed! The key is '[currentKey]'."))
 	hacking = FALSE
 	screen = MSG_MON_SCREEN_MAIN // Return the screen back to normal
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
 	obj_flags &= ~EMAGGED
-
-/obj/machinery/computer/message_monitor/proc/ResetMessage()
-	customsender 	= "System Administrator"
-	customrecepient = null
-	custommessage 	= "This is a test, please ignore."
-	customjob 		= "Admin"
 
 /obj/machinery/computer/message_monitor/Topic(href, href_list)
 	if(..())
@@ -272,7 +239,7 @@
 				auth = FALSE
 				screen = MSG_MON_SCREEN_MAIN
 			else
-				var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+				var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption")
 				if(dkey && dkey != "")
 					if(linkedServer.decryptkey == dkey)
 						auth = TRUE
@@ -291,12 +258,13 @@
 			for (var/obj/machinery/telecomms/message_server/M in GLOB.telecomms_list)
 				message_servers += M
 
-			if(message_servers.len > 1)
-				linkedServer = input(usr, "Please select a server.", "Select a server.", null) as null|anything in message_servers
-				message = "<span class='alert'>NOTICE: Server selected.</span>"
-			else if(message_servers.len > 0)
+			if(length(message_servers) > 1)
+				linkedServer = tgui_input_list(usr, "Please select a server", "Server Selection", message_servers)
+				if(linkedServer)
+					message = span_alert("NOTICE: Server selected.")
+			else if(length(message_servers) > 0)
 				linkedServer = message_servers[1]
-				message =  "<span class='notice'>NOTICE: Only Single Server Detected - Server selected.</span>"
+				message = span_notice("NOTICE: Only Single Server Detected - Server selected.")
 			else
 				message = noserver
 
@@ -313,30 +281,28 @@
 				message = noserver
 			else if(auth)
 				linkedServer.pda_msgs = list()
-				message = "<span class='notice'>NOTICE: Logs cleared.</span>"
+				message = span_notice("NOTICE: Logs cleared.")
 		//Clears the request console logs - KEY REQUIRED
 		if (href_list["clear_requests"])
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
 			else if(auth)
 				linkedServer.rc_msgs = list()
-				message = "<span class='notice'>NOTICE: Logs cleared.</span>"
+				message = span_notice("NOTICE: Logs cleared.")
 		//Change the password - KEY REQUIRED
 		if (href_list["pass"])
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
 			else if(auth)
-				var/dkey = stripped_input(usr, "Please enter the decryption key.")
+				var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption")
 				if(dkey && dkey != "")
 					if(linkedServer.decryptkey == dkey)
-						var/newkey = stripped_input(usr,"Please enter the new key (3 - 16 characters max):")
+						var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key", 16)
 						if(length(newkey) <= 3)
-							message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
-						else if(length(newkey) > 16)
-							message = "<span class='notice'>NOTICE: Decryption key too long!</span>"
+							message = span_notice("NOTICE: Decryption key too short!")
 						else if(newkey && newkey != "")
 							linkedServer.decryptkey = newkey
-						message = "<span class='notice'>NOTICE: Decryption key set.</span>"
+						message = span_notice("NOTICE: Decryption key set.")
 					else
 						message = incorrectkey
 
@@ -355,80 +321,18 @@
 			if(screen == MSG_MON_SCREEN_LOGS)
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
-				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
+				else if(istype(href_list["delete_logs"], /datum/data_tablet_msg))
 					linkedServer.pda_msgs -= locate(href_list["delete_logs"]) in linkedServer.pda_msgs
-					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
+					message = span_notice("NOTICE: Log Deleted!")
 		//Delete the request console log.
 		if (href_list["delete_requests"])
 			//Are they on the view logs screen?
 			if(screen == MSG_MON_SCREEN_REQUEST_LOGS)
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
-				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
+				else if(istype(href_list["delete_logs"], /datum/data_tablet_msg))
 					linkedServer.rc_msgs -= locate(href_list["delete_requests"]) in linkedServer.rc_msgs
-					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
-		//Create a custom message
-		if (href_list["msg"])
-			if(LINKED_SERVER_NONRESPONSIVE)
-				message = noserver
-			else if(auth)
-				screen = MSG_MON_SCREEN_CUSTOM_MSG
-		//Fake messaging selection - KEY REQUIRED
-		if (href_list["select"])
-			if(LINKED_SERVER_NONRESPONSIVE)
-				message = noserver
-				screen = MSG_MON_SCREEN_MAIN
-			else
-				switch(href_list["select"])
-
-					//Reset
-					if("Reset")
-						ResetMessage()
-
-					//Select Your Name
-					if("Sender")
-						customsender = stripped_input(usr, "Please enter the sender's name.") || customsender
-
-					//Select Receiver
-					if("Recepient")
-						//Get out list of viable PDAs
-						var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
-						if(GLOB.PDAs && GLOB.PDAs.len > 0)
-							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sendPDAs
-						else
-							customrecepient = null
-
-					//Enter custom job
-					if("RecJob")
-						customjob = stripped_input(usr, "Please enter the sender's job.") || customjob
-
-					//Enter message
-					if("Message")
-						custommessage = stripped_input(usr, "Please enter your message.") || custommessage
-
-					//Send message
-					if("Send")
-						if(isnull(customsender) || customsender == "")
-							customsender = "UNKNOWN"
-
-						if(isnull(customrecepient))
-							message = "<span class='notice'>NOTICE: No recepient selected!</span>"
-							return attack_hand(usr)
-
-						if(isnull(custommessage) || custommessage == "")
-							message = "<span class='notice'>NOTICE: No message entered!</span>"
-							return attack_hand(usr)
-
-						var/datum/signal/subspace/messaging/pda/signal = new(src, list(
-							"name" = "[customsender]",
-							"job" = "[customjob]",
-							"message" = custommessage,
-							"targets" = list("[customrecepient.owner] ([customrecepient.ownjob])")
-						))
-						// this will log the signal and transmit it to the target
-						linkedServer.receive_information(signal, null)
-						usr.log_message("(PDA: [name] | [usr.real_name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
-
+					message = span_notice("NOTICE: Log Deleted!")
 
 		//Request Console Logs - KEY REQUIRED
 		if(href_list["view_requests"])

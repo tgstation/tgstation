@@ -2,18 +2,33 @@
 	//Common stuffs for Praetorian and Queen
 	icon = 'icons/mob/alienqueen.dmi'
 	status_flags = 0
-	ventcrawler = VENTCRAWLER_NONE //pull over that ass too fat
 	pixel_x = -16
 	base_pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
-/mob/living/carbon/alien/humanoid/royal/can_inject()
+/mob/living/carbon/alien/humanoid/royal/Initialize(mapload)
+	. = ..()
+	// as a wise man once wrote: "pull over that ass too fat"
+	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/carbon/alien/humanoid/royal/on_lying_down(new_lying_angle)
+	. = ..()
+	plane = GAME_PLANE_FOV_HIDDEN //So it won't hide smaller mobs.
+
+/mob/living/carbon/alien/humanoid/royal/on_standing_up(new_lying_angle)
+	. = ..()
+	plane = initial(plane)
+
+/mob/living/carbon/alien/humanoid/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
 
 /mob/living/carbon/alien/humanoid/royal/queen
@@ -24,7 +39,7 @@
 	icon_state = "alienq"
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
 
-/mob/living/carbon/alien/humanoid/royal/queen/Initialize()
+/mob/living/carbon/alien/humanoid/royal/queen/Initialize(mapload)
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in GLOB.carbon_list)
 		if(Q == src)
@@ -32,7 +47,7 @@
 		if(Q.stat == DEAD)
 			continue
 		if(Q.client)
-			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
+			name = "alien princess ([rand(1, 999)])" //if this is too cutesy feel free to change it/remove it.
 			break
 
 	real_name = src.name
@@ -63,10 +78,10 @@
 		return FALSE
 
 	if(locate(/obj/structure/alien/egg) in get_turf(user))
-		to_chat(user, "<span class='alertalien'>There's already an egg here.</span>")
+		to_chat(user, span_alertalien("There's already an egg here."))
 		return FALSE
 
-	user.visible_message("<span class='alertalien'>[user] lays an egg!</span>")
+	user.visible_message(span_alertalien("[user] lays an egg!"))
 	new /obj/structure/alien/egg(user.loc)
 	return TRUE
 
@@ -83,20 +98,20 @@
 /obj/effect/proc_holder/alien/royal/queen/promote/fire(mob/living/carbon/alien/user)
 	var/obj/item/queenpromote/prom
 	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
-		to_chat(user, "<span class='noticealien'>You already have a Praetorian!</span>")
+		to_chat(user, span_noticealien("You already have a Praetorian!"))
 		return
 	else
 		for(prom in user)
-			to_chat(user, "<span class='noticealien'>You discard [prom].</span>")
+			to_chat(user, span_noticealien("You discard [prom]."))
 			qdel(prom)
 			return
 
 		prom = new (user.loc)
 		if(!user.put_in_active_hand(prom, 1))
-			to_chat(user, "<span class='warning'>You must empty your hands before preparing the parasite.</span>")
+			to_chat(user, span_warning("You must empty your hands before preparing the parasite."))
 			return
 		else //Just in case telling the player only once is not enough!
-			to_chat(user, "<span class='noticealien'>Use the royal parasite on one of your children to promote her to Praetorian!</span>")
+			to_chat(user, span_noticealien("Use the royal parasite on one of your children to promote her to Praetorian!"))
 	return
 
 /obj/item/queenpromote
@@ -106,34 +121,34 @@
 	item_flags = ABSTRACT | DROPDEL
 	icon = 'icons/mob/alien.dmi'
 
-/obj/item/queenpromote/Initialize()
+/obj/item/queenpromote/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/alien/humanoid/user)
 	if(!isalienadult(M) || isalienroyal(M))
-		to_chat(user, "<span class='noticealien'>You may only use this with your adult, non-royal children!</span>")
+		to_chat(user, span_noticealien("You may only use this with your adult, non-royal children!"))
 		return
 	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
-		to_chat(user, "<span class='noticealien'>You already have a Praetorian!</span>")
+		to_chat(user, span_noticealien("You already have a Praetorian!"))
 		return
 
 	var/mob/living/carbon/alien/humanoid/A = M
 	if(A.stat == CONSCIOUS && A.mind && A.key)
 		if(!user.usePlasma(500))
-			to_chat(user, "<span class='noticealien'>You must have 500 plasma stored to use this!</span>")
+			to_chat(user, span_noticealien("You must have 500 plasma stored to use this!"))
 			return
 
-		to_chat(A, "<span class='noticealien'>The queen has granted you a promotion to Praetorian!</span>")
-		user.visible_message("<span class='alertalien'>[A] begins to expand, twist and contort!</span>")
+		to_chat(A, span_noticealien("The queen has granted you a promotion to Praetorian!"))
+		user.visible_message(span_alertalien("[A] begins to expand, twist and contort!"))
 		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_prae = new (A.loc)
 		A.mind.transfer_to(new_prae)
 		qdel(A)
 		qdel(src)
 		return
 	else
-		to_chat(user, "<span class='warning'>This child must be alert and responsive to become a Praetorian!</span>")
+		to_chat(user, span_warning("This child must be alert and responsive to become a Praetorian!"))
 
 /obj/item/queenpromote/attack_self(mob/user)
-	to_chat(user, "<span class='noticealien'>You discard [src].</span>")
+	to_chat(user, span_noticealien("You discard [src]."))
 	qdel(src)

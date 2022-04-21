@@ -6,9 +6,9 @@
 	desc = "Used to work with viruses."
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "mixer0"
-	use_power = TRUE
-	idle_power_usage = 20
+	icon_state = "pandemic0"
+	icon_keyboard = null
+	base_icon_state = "pandemic"
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
 
@@ -16,9 +16,9 @@
 	var/datum/symptom/selected_symptom
 	var/obj/item/reagent_containers/beaker
 
-/obj/machinery/computer/pandemic/Initialize()
+/obj/machinery/computer/pandemic/Initialize(mapload)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/machinery/computer/pandemic/Destroy()
 	QDEL_NULL(beaker)
@@ -33,17 +33,27 @@
 			is_close = TRUE
 		else
 			. += "It has a beaker inside it."
-		. += "<span class='info'>Alt-click to eject [is_close ? beaker : "the beaker"].</span>"
+		. += span_info("Alt-click to eject [is_close ? beaker : "the beaker"].")
 
-/obj/machinery/computer/pandemic/AltClick(mob/user)
+/obj/machinery/computer/pandemic/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(user.canUseTopic(src, BE_CLOSE))
-		eject_beaker()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
+		return
+	eject_beaker()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/computer/pandemic/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/obj/machinery/computer/pandemic/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/computer/pandemic/handle_atom_del(atom/A)
 	if(A == beaker)
 		beaker = null
-		update_icon()
+		update_appearance()
 	return ..()
 
 /obj/machinery/computer/pandemic/proc/get_by_index(thing, index)
@@ -123,14 +133,12 @@
 
 /obj/machinery/computer/pandemic/proc/reset_replicator_cooldown()
 	wait = FALSE
-	update_icon()
+	update_appearance()
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
 /obj/machinery/computer/pandemic/update_icon_state()
-	if(machine_stat & BROKEN)
-		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
-	else
-		icon_state = "mixer[(beaker) ? "1" : "0"][powered() ? "" : "_nopower"]"
+	icon_state = "[base_icon_state][beaker ? 1 : 0][(machine_stat & BROKEN) ? "_b" : (powered() ? null : "_nopower")]"
+	return ..()
 
 /obj/machinery/computer/pandemic/update_overlays()
 	. = ..()
@@ -141,9 +149,10 @@
 	if(beaker)
 		try_put_in_hand(beaker, usr)
 		beaker = null
-		update_icon()
+		update_appearance()
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Pandemic", name)
@@ -154,7 +163,10 @@
 	data["is_ready"] = !wait
 	if(beaker)
 		data["has_beaker"] = TRUE
-		data["beaker_empty"] = (!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
+		data["beaker"] = list(
+			"volume" = round(beaker.reagents?.total_volume, 0.01) || 0,
+			"capacity" = beaker.volume,
+		)
 		var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
 		if(B)
 			data["has_blood"] = TRUE
@@ -205,8 +217,9 @@
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
 			if(!istype(A) || !A.mutable)
-				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
+				to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
 				return
+			use_power(active_power_usage)
 			A = A.Copy()
 			var/list/data = list("viruses" = list(A))
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
@@ -214,7 +227,7 @@
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
 			B.reagents.add_reagent(/datum/reagent/blood, 20, data)
 			wait = TRUE
-			update_icon()
+			update_appearance()
 			var/turf/source_turf = get_turf(src)
 			log_virus("A culture bottle was printed for the virus [A.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
@@ -222,13 +235,14 @@
 		if("create_vaccine_bottle")
 			if (wait)
 				return
+			use_power(active_power_usage)
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 			wait = TRUE
-			update_icon()
+			update_appearance()
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 200)
 			. = TRUE
 
@@ -239,14 +253,14 @@
 		if(machine_stat & (NOPOWER|BROKEN))
 			return
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
+			to_chat(user, span_warning("A container is already loaded into [src]!"))
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 
 		beaker = I
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		update_icon()
+		to_chat(user, span_notice("You insert [I] into [src]."))
+		update_appearance()
 	else
 		return ..()
 

@@ -2,9 +2,6 @@
 	plane = FLOOR_PLANE
 	var/slowdown = 0 //negative for faster, positive for slower
 
-	var/postdig_icon_change = FALSE
-	var/postdig_icon
-
 	var/footstep = null
 	var/barefootstep = null
 	var/clawfootstep = null
@@ -36,6 +33,10 @@
 /turf/open/zAirOut(direction, turf/source)
 	return (direction == UP)
 
+/turf/open/update_icon()
+	. = ..()
+	update_visuals()
+
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
@@ -58,6 +59,9 @@
 
 /turf/open/indestructible/white
 	icon_state = "white"
+
+/turf/open/indestructible/dark
+	icon_state = "darkfull"
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
@@ -82,10 +86,10 @@
 	. = ..()
 	AddComponent(/datum/component/wet_floor, TURF_WET_SUPERLUBE, INFINITY, 0, INFINITY, TRUE)
 
-/turf/open/indestructible/honk/Entered(atom/movable/AM)
-	..()
-	if(ismob(AM))
-		playsound(src,sound,50,TRUE)
+/turf/open/indestructible/honk/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(ismob(arrived))
+		playsound(src, sound, 50, TRUE)
 
 /turf/open/indestructible/necropolis
 	name = "necropolis floor"
@@ -100,7 +104,7 @@
 	heavyfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
 
-/turf/open/indestructible/necropolis/Initialize()
+/turf/open/indestructible/necropolis/Initialize(mapload)
 	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
@@ -113,6 +117,7 @@
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "boss"
 	baseturfs = /turf/open/indestructible/boss
+	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/indestructible/boss/air
@@ -120,6 +125,7 @@
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
+	planetary_atmos = TRUE
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/hierophant
 	smoothing_flags = SMOOTH_CORNERS
@@ -142,7 +148,7 @@
 
 /turf/open/indestructible/binary
 	name = "tear in the fabric of reality"
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 	baseturfs = /turf/open/indestructible/binary
 	icon_state = "binary"
 	footstep = null
@@ -160,26 +166,26 @@
 	update_visuals()
 
 	current_cycle = times_fired
-	ImmediateCalculateAdjacentTurfs()
+	immediate_calculate_adjacent_turfs()
 	for(var/i in atmos_adjacent_turfs)
 		var/turf/open/enemy_tile = i
 		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
 		if(!excited && air.compare(enemy_air))
 			//testing("Active turf found. Return value of compare(): [is_active]")
 			excited = TRUE
-			SSair.active_turfs |= src
+			SSair.active_turfs += src
 
-/turf/open/proc/GetHeatCapacity()
+/turf/open/GetHeatCapacity()
 	. = air.heat_capacity()
 
-/turf/open/proc/GetTemperature()
+/turf/open/GetTemperature()
 	. = air.temperature
 
-/turf/open/proc/TakeTemperature(temp)
+/turf/open/TakeTemperature(temp)
 	air.temperature += temp
-	air_update_turf()
+	air_update_turf(FALSE, FALSE)
 
-/turf/open/proc/freon_gas_act()
+/turf/open/proc/freeze_turf()
 	for(var/obj/I in contents)
 		if(I.resistance_flags & FREEZE_PROOF)
 			continue
@@ -205,48 +211,47 @@
 		movable_content.wash(CLEAN_WASH)
 	return TRUE
 
-/turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
-	if(C.movement_type & FLYING)
+/turf/open/handle_slip(mob/living/carbon/slipper, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
+	if(slipper.movement_type & FLYING)
 		return FALSE
 	if(has_gravity(src))
 		var/obj/buckled_obj
-		if(C.buckled)
-			buckled_obj = C.buckled
+		if(slipper.buckled)
+			buckled_obj = slipper.buckled
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return FALSE
 		else
-			if(!(lube & SLIP_WHEN_CRAWLING) && (C.body_position == LYING_DOWN || !(C.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
+			if(!(lube & SLIP_WHEN_CRAWLING) && (slipper.body_position == LYING_DOWN || !(slipper.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
 				return FALSE
-			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
+			if(slipper.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return FALSE
 		if(!(lube&SLIDE_ICE))
-			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-			playsound(C.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
+			to_chat(slipper, span_notice("You slipped[ O ? " on the [O.name]" : ""]!"))
+			playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-		SEND_SIGNAL(C, COMSIG_ON_CARBON_SLIP)
+		SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
 		if(force_drop)
-			for(var/obj/item/I in C.held_items)
-				C.accident(I)
+			for(var/obj/item/I in slipper.held_items)
+				slipper.accident(I)
 
-		var/olddir = C.dir
-		C.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
+		var/olddir = slipper.dir
+		slipper.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
 		if(!(lube & SLIDE_ICE))
-			C.Knockdown(knockdown_amount)
-			C.Paralyze(paralyze_amount)
-			C.stop_pulling()
+			slipper.Knockdown(knockdown_amount)
+			slipper.Paralyze(paralyze_amount)
+			slipper.stop_pulling()
 		else
-			C.Knockdown(20)
+			slipper.Knockdown(20)
 
 		if(buckled_obj)
-			buckled_obj.unbuckle_mob(C)
+			buckled_obj.unbuckle_mob(slipper)
 			lube |= SLIDE_ICE
 
-		if(lube&SLIDE)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
+		var/turf/target = get_ranged_target_turf(slipper, olddir, 4)
+		if(lube & SLIDE)
+			slipper.AddComponent(/datum/component/force_move, target, TRUE)
 		else if(lube&SLIDE_ICE)
-			if(C.force_moving) //If we're already slipping extend it
-				qdel(C.force_moving)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
+			slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, fucks up the next dir
 		return TRUE
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent)
@@ -261,21 +266,45 @@
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
 
-/turf/open/rad_act(pulse_strength)
-	. = ..()
-	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
-		pulse_strength = min(pulse_strength, air.gases[/datum/gas/carbon_dioxide][MOLES] * 1000, air.gases[/datum/gas/oxygen][MOLES] * 2000) //Ensures matter is conserved properly
-		air.gases[/datum/gas/carbon_dioxide][MOLES] = max(air.gases[/datum/gas/carbon_dioxide][MOLES] - (pulse_strength * 0.001),0)
-		air.gases[/datum/gas/oxygen][MOLES] = max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength * 0.0005),0)
-		air.assert_gas(/datum/gas/pluoxium)
-		air.gases[/datum/gas/pluoxium][MOLES] +=(pulse_strength * 0.00025)
-		air.garbage_collect()
-		air_update_turf()
-	if (air.gases[/datum/gas/hydrogen])
-		pulse_strength = min(pulse_strength, air.gases[/datum/gas/hydrogen][MOLES] * 1000)
-		air.gases[/datum/gas/hydrogen][MOLES] = max(air.gases[/datum/gas/hydrogen][MOLES] - (pulse_strength * 0.001), 0)
-		air.assert_gas(/datum/gas/tritium)
-		air.gases[/datum/gas/tritium][MOLES] += (pulse_strength * 0.001)
-		air.garbage_collect()
-		air_update_turf()
+/// Builds with rods. This doesn't exist to be overriden, just to remove duplicate logic for turfs that want
+/// To support floor tile creation
+/// I'd make it a component, but one of these things is space. So no.
+/turf/open/proc/build_with_rods(obj/item/stack/rods/used_rods, mob/user)
+	var/obj/structure/lattice/catwalk_bait = locate(/obj/structure/lattice, src)
+	var/obj/structure/lattice/catwalk/existing_catwalk = locate(/obj/structure/lattice/catwalk, src)
+	if(existing_catwalk)
+		to_chat(user, span_warning("There is already a catwalk here!"))
+		return
 
+	if(catwalk_bait)
+		if(used_rods.use(1))
+			qdel(catwalk_bait)
+			to_chat(user, span_notice("You construct a catwalk."))
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			new /obj/structure/lattice/catwalk(src)
+		else
+			to_chat(user, span_warning("You need two rods to build a catwalk!"))
+		return
+
+	if(used_rods.use(1))
+		to_chat(user, span_notice("You construct a lattice."))
+		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+		new /obj/structure/lattice(src)
+	else
+		to_chat(user, span_warning("You need one rod to build a lattice."))
+
+/// Very similar to build_with_rods, this exists to allow consistent behavior between different types in terms of how
+/// Building floors works
+/turf/open/proc/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles, user)
+	var/obj/structure/lattice/soon_to_be_floor = locate(/obj/structure/lattice, src)
+	if(!soon_to_be_floor)
+		to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
+		return
+	if(!used_tiles.use(1))
+		to_chat(user, span_warning("You need one floor tile to build a floor!"))
+		return
+
+	qdel(soon_to_be_floor)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	to_chat(user, span_notice("You build a floor."))
+	PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)

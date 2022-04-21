@@ -37,7 +37,7 @@ $bg-map: colors.$bg-map !default;
 
   &:hover,
   &:focus {
-    background-color: lighten($color, 15%);
+    background-color: lighten($color, 30%);
     color: $text-color;
   }
 }
@@ -133,4 +133,30 @@ $bg-map: colors.$bg-map !default;
 
 .Button--selected {
   @include button-color($color-selected);
+}
+
+.Button--flex {
+  display: inline-flex; //Inline even for fluid
+  flex-direction: column;
+}
+
+.Button--flex--fluid {
+  width: 100%;
+}
+
+.Button--verticalAlignContent--top {
+  justify-content: flex-start;
+}
+  
+.Button--verticalAlignContent--middle {
+  justify-content: center;
+}
+  
+.Button--verticalAlignContent--bottom {
+  justify-content: flex-end;
+}
+
+.Button__content {
+  display: block;
+  align-self: stretch;
 }

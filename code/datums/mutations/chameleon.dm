@@ -16,15 +16,34 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
 
-/datum/mutation/human/chameleon/on_life()
-	owner.alpha = max(0, owner.alpha - 25)
+/datum/mutation/human/chameleon/on_life(delta_time, times_fired)
+	owner.alpha = max(owner.alpha - (12.5 * delta_time), 0)
 
-/datum/mutation/human/chameleon/proc/on_move()
+/**
+ * Resets the alpha of the host to the chameleon default if they move.
+ *
+ * Arguments:
+ * - [source][/atom/movable]: The source of the signal. Presumably the host mob.
+ * - [old_loc][/atom]: The location the host mob used to be in.
+ * - move_dir: The direction the host mob moved in.
+ * - forced: Whether the movement was caused by a forceMove or moveToNullspace.
+ * - [old_locs][/list/atom]: The locations the host mob used to be in.
+ */
+/datum/mutation/human/chameleon/proc/on_move(atom/movable/source, atom/old_loc, move_dir, forced, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
-/datum/mutation/human/chameleon/proc/on_attack_hand(atom/target, proximity)
+/**
+ * Resets the alpha of the host if they click on something nearby.
+ *
+ * Arguments:
+ * - [source][/mob/living/carbon/human]: The host mob that just clicked on something.
+ * - [target][/atom]: The thing the host mob clicked on.
+ * - proximity: Whether the host mob can physically reach the thing that they clicked on.
+ * - [modifiers][/list]: The set of click modifiers associated with this attack chain call.
+ */
+/datum/mutation/human/chameleon/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(!proximity) //stops tk from breaking chameleon
@@ -35,4 +54,4 @@
 	if(..())
 		return
 	owner.alpha = 255
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_EARLY_UNARMED_ATTACK))

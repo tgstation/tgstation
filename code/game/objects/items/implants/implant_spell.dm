@@ -30,7 +30,7 @@
 	if (.)
 		target.RemoveSpell(spell)
 		if(target.stat != DEAD && !silent)
-			to_chat(target, "<span class='boldnotice'>The knowledge of how to cast [spell] slips out from your mind.</span>")
+			to_chat(target, span_boldnotice("The knowledge of how to cast [spell] slips out from your mind."))
 
 /obj/item/implanter/spell
 	name = "implanter (spell)"

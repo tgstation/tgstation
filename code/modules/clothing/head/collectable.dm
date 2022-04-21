@@ -6,6 +6,10 @@
 	desc = "A rare collectable hat."
 	icon_state = null
 
+/obj/item/clothing/head/collectable/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/series, /obj/item/clothing/head/collectable, "Super duper collectable hats")
+
 /obj/item/clothing/head/collectable/petehat
 	name = "ultra rare Pete's hat!"
 	desc = "It smells faintly of plasma."
@@ -22,7 +26,6 @@
 	desc = "A rare chef's hat meant for hat collectors!"
 	icon_state = "chef"
 	inhand_icon_state = "chef"
-	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/chef
 
@@ -51,7 +54,6 @@
 	name = "collectable police officer's hat"
 	desc = "A collectable police officer's Hat. This hat emphasizes that you are THE LAW."
 	icon_state = "policehelm"
-	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/warden
 
@@ -59,6 +61,9 @@
 	name = "collectable beret"
 	desc = "A collectable red beret. It smells faintly of garlic."
 	icon_state = "beret"
+	greyscale_config = /datum/greyscale_config/beret
+	greyscale_config_worn = /datum/greyscale_config/beret/worn
+	greyscale_colors = "#972A2A"
 
 	dog_fashion = /datum/dog_fashion/head/beret
 
@@ -75,12 +80,15 @@
 	icon_state = "headslime"
 	inhand_icon_state = "headslime"
 	clothing_flags = SNUG_FIT
-	dynamic_hair_suffix = ""
+
 
 /obj/item/clothing/head/collectable/flatcap
 	name = "collectable flat cap"
 	desc = "A collectible farmer's flat cap!"
-	icon_state = "flat_cap"
+	icon_state = "beret_flat"
+	greyscale_config = /datum/greyscale_config/beret
+	greyscale_config_worn = /datum/greyscale_config/beret/worn
+	greyscale_colors = "#8F7654"
 	inhand_icon_state = "detective"
 
 /obj/item/clothing/head/collectable/pirate
@@ -96,7 +104,7 @@
 	desc = "The fur feels... a bit too realistic."
 	icon_state = "kitty"
 	inhand_icon_state = "kitty"
-	dynamic_hair_suffix = ""
+
 
 	dog_fashion = /datum/dog_fashion/head/kitty
 
@@ -105,7 +113,7 @@
 	desc = "Not as lucky as the feet!"
 	icon_state = "bunny"
 	inhand_icon_state = "bunny"
-	dynamic_hair_suffix = ""
+
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
 
@@ -129,7 +137,7 @@
 	name = "collectable HoS hat"
 	desc = "Now you too can beat prisoners, set silly sentences, and arrest for no reason!"
 	icon_state = "hoscap"
-	dynamic_hair_suffix = ""
+
 
 /obj/item/clothing/head/collectable/hop
 	name = "collectable HoP hat"

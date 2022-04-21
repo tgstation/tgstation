@@ -10,13 +10,29 @@
 
 /obj/effect/dummy/phased_mob/Destroy()
 	// Eject contents if deleted somehow
-	for(var/a in contents)
-		var/atom/movable/AM = a
-		AM.forceMove(drop_location())
+	var/atom/dest = drop_location()
+	if(!dest) //You're in nullspace you clown
+		return ..()
+	var/area/destination_area = get_area(dest)
+	var/failed_areacheck = FALSE
+	if(destination_area.area_flags & NOTELEPORT)
+		failed_areacheck = TRUE
+	for(var/_phasing_in in contents)
+		var/atom/movable/phasing_in = _phasing_in
+		if(!failed_areacheck)
+			phasing_in.forceMove(drop_location())
+		else //this ONLY happens if someone uses a phasing effect to try to land in a NOTELEPORT zone after it is created, AKA trying to exploit.
+			if(isliving(phasing_in))
+				var/mob/living/living_cheaterson = phasing_in
+				to_chat(living_cheaterson, span_userdanger("This area has a heavy universal force occupying it, and you are scattered to the cosmos!"))
+				if(ishuman(living_cheaterson))
+					shake_camera(living_cheaterson, 20, 1)
+					addtimer(CALLBACK(living_cheaterson, /mob/living/carbon.proc/vomit), 2 SECONDS)
+			phasing_in.forceMove(find_safe_turf(z))
 	return ..()
 
 /obj/effect/dummy/phased_mob/ex_act()
-	return
+	return FALSE
 
 /obj/effect/dummy/phased_mob/bullet_act(blah)
 	return BULLET_ACT_FORCE_PIERCE
@@ -36,9 +52,13 @@
 	var/turf/newloc = get_step(src,direction)
 	if(!newloc)
 		return
+	var/area/destination_area = newloc.loc
 	movedelay = world.time + movespeed
-	if(newloc.flags_1 & NOJAUNT_1)
-		to_chat(user, "<span class='warning'>Some strange aura is blocking the way.</span>")
+	if(newloc.flags_1 & NOJAUNT)
+		to_chat(user, span_warning("Some strange aura is blocking the way."))
+		return
+	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(newloc.z, ZTRAIT_NOPHASE))
+		to_chat(user, span_danger("Some dull, universal force is blocking the way. It's overwhelmingly oppressive force feels dangerous."))
 		return
 	return newloc
 

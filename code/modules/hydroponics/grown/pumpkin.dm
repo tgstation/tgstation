@@ -25,11 +25,13 @@
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/pumpkinjuice = 0)
 	wine_power = 20
+	///Which type of lantern this gourd produces when carved.
+	var/carved_type = /obj/item/clothing/head/hardhat/pumpkinhead
 
 /obj/item/food/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(W.get_sharpness())
-		user.show_message("<span class='notice'>You carve a face into [src]!</span>", MSG_VISUAL)
-		new /obj/item/clothing/head/hardhat/pumpkinhead(user.loc)
+		user.show_message(span_notice("You carve a face into [src]!"), MSG_VISUAL)
+		new carved_type(user.loc)
 		qdel(src)
 		return
 	else
@@ -42,17 +44,18 @@
 	icon_state = "seed-blumpkin"
 	species = "blumpkin"
 	plantname = "Blumpkin Vines"
-	product = /obj/item/food/grown/blumpkin
-	mutatelist = list()
+	product = /obj/item/food/grown/pumpkin/blumpkin
+	mutatelist = null
 	reagents_add = list(/datum/reagent/ammonia = 0.2, /datum/reagent/chlorine = 0.1, /datum/reagent/consumable/nutriment = 0.2)
 	rarity = 20
 
-/obj/item/food/grown/blumpkin
+/obj/item/food/grown/pumpkin/blumpkin
 	seed = /obj/item/seeds/pumpkin/blumpkin
 	name = "blumpkin"
 	desc = "The pumpkin's toxic sibling."
 	icon_state = "blumpkin"
-	bite_consumption_mod = 2
+	bite_consumption_mod = 3
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/blumpkinjuice = 0)
 	wine_power = 50
+	carved_type = /obj/item/clothing/head/hardhat/pumpkinhead/blumpkin

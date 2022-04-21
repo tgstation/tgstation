@@ -6,7 +6,7 @@
 	locked = TRUE
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
-	species_allowed = list("human") //no skeleton/lizard hulk
+	species_allowed = list(SPECIES_HUMAN) //no skeleton/lizard hulk
 	health_req = 25
 	instability = 40
 	var/scream_delay = 50
@@ -27,12 +27,12 @@
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, .proc/check_swing)
 
-/datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity)
+/datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
 	if(!proximity)
 		return
-	if(source.a_intent != INTENT_HARM)
+	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
 	if(target.attack_hulk(owner))
 		if(world.time > (last_scream + scream_delay))
@@ -65,10 +65,10 @@
 		if(35 to 41)
 			arm.force_wound_upwards(/datum/wound/blunt/moderate)
 
-/datum/mutation/human/hulk/on_life()
-	if(owner.health < 0)
+/datum/mutation/human/hulk/on_life(delta_time, times_fired)
+	if(owner.health < owner.crit_threshold)
 		on_losing(owner)
-		to_chat(owner, "<span class='danger'>You suddenly feel very weak.</span>")
+		to_chat(owner, span_danger("You suddenly feel very weak."))
 
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -97,26 +97,25 @@
 #define HULK_TAILTHROW_STEPS 28
 
 /// Run a barrage of checks to see if any given click is actually able to swing
-/datum/mutation/human/hulk/proc/check_swing(mob/living/carbon/human/user, atom/clicked_atom, params)
+/datum/mutation/human/hulk/proc/check_swing(mob/living/carbon/human/user, atom/clicked_atom, list/modifiers)
 	SIGNAL_HANDLER
 
 	/// Basically, we only proceed if we're in throw mode with a tailed carbon in our grasp with at least a neck grab and we're not restrained in some way
-	var/list/modifiers = params2list(params)
-	if(modifiers["alt"] || modifiers["shift"] || modifiers["ctrl"] || modifiers["middle"])
+	if(LAZYACCESS(modifiers, ALT_CLICK) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
-	if(!user.in_throw_mode || user.get_active_held_item() || user.zone_selected != BODY_ZONE_PRECISE_GROIN)
+	if(!user.throw_mode || user.get_active_held_item() || user.zone_selected != BODY_ZONE_PRECISE_GROIN)
 		return
 	if(user.grab_state < GRAB_NECK || !iscarbon(user.pulling) || user.buckled || user.incapacitated())
 		return
 
 	var/mob/living/carbon/possible_throwable = user.pulling
-	if(!possible_throwable.getorganslot(ORGAN_SLOT_TAIL) && !ismonkey(possible_throwable))
+	if(!possible_throwable.getorganslot(ORGAN_SLOT_TAIL))
 		return
 
 	if(ishuman(possible_throwable))
 		var/mob/living/carbon/human/human_throwable = possible_throwable
 		if(human_throwable.wear_suit && (human_throwable.wear_suit.flags_inv & HIDEJUMPSUIT))
-			to_chat(user, "<span class='warning'>You can't reach [human_throwable]'s tail through [human_throwable.p_their()] [human_throwable.wear_suit.name]!</span>")
+			to_chat(user, span_warning("You can't reach [human_throwable]'s tail through [human_throwable.p_their()] [human_throwable.wear_suit.name]!"))
 			return
 
 	user.face_atom(clicked_atom)
@@ -132,31 +131,37 @@
 
 	log_combat(the_hulk, yeeted_person, "has started swinging by tail")
 	yeeted_person.Stun(2 SECONDS)
-	yeeted_person.visible_message("<span class='danger'>[the_hulk] starts grasping [yeeted_person] by the tail...</span>", \
-					"<span class='userdanger'>[the_hulk] begins grasping your tail!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, the_hulk)
-	to_chat(the_hulk, "<span class='danger'>You start grasping [yeeted_person] by the tail...</span>")
+	yeeted_person.visible_message(span_danger("[the_hulk] starts grasping [yeeted_person] by the tail..."), \
+					span_userdanger("[the_hulk] begins grasping your tail!"), span_hear("You hear aggressive shuffling!"), null, the_hulk)
+	to_chat(the_hulk, span_danger("You start grasping [yeeted_person] by the tail..."))
 
 	if(!do_after(the_hulk, 2 SECONDS, yeeted_person))
-		yeeted_person.visible_message("<span class='danger'>[yeeted_person] breaks free of [the_hulk]'s grasp!</span>", \
-					"<span class='userdanger'>You break free from [the_hulk]'s grasp!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, the_hulk)
-		to_chat(the_hulk, "<span class='danger'>You lose your grasp on [yeeted_person]'s tail!</span>")
+		yeeted_person.visible_message(span_danger("[yeeted_person] breaks free of [the_hulk]'s grasp!"), \
+					span_userdanger("You break free from [the_hulk]'s grasp!"), span_hear("You hear aggressive shuffling!"), null, the_hulk)
+		to_chat(the_hulk, span_danger("You lose your grasp on [yeeted_person]'s tail!"))
 		return
 
 	// we're officially a-go!
 	yeeted_person.Paralyze(8 SECONDS)
-	yeeted_person.visible_message("<span class='danger'>[the_hulk] starts spinning [yeeted_person] around by [yeeted_person.p_their()] tail!</span>", \
-					"<span class='userdanger'>[the_hulk] starts spinning you around by your tail!</span>", "<span class='hear'>You hear wooshing sounds!</span>", null, the_hulk)
-	to_chat(the_hulk, "<span class='danger'>You start spinning [yeeted_person] around by [yeeted_person.p_their()] tail!</span>")
+	yeeted_person.visible_message(span_danger("[the_hulk] starts spinning [yeeted_person] around by [yeeted_person.p_their()] tail!"), \
+					span_userdanger("[the_hulk] starts spinning you around by your tail!"), span_hear("You hear wooshing sounds!"), null, the_hulk)
+	to_chat(the_hulk, span_danger("You start spinning [yeeted_person] around by [yeeted_person.p_their()] tail!"))
 	the_hulk.emote("scream")
 	yeeted_person.emote("scream")
 	swing_loop(the_hulk, yeeted_person, 0, original_dir)
 
-/// For each step of the swinging, with the delay getting shorter along the way. Checks to see we still have them in our grasp at each step.
+/**
+ * Does the animations for the hulk swing loop
+ *
+ * This code is based in part on the wrestling swing code ported from goon, see [code/datums/martial/wrestling.dm]
+ * credit to: cogwerks, pistoleer, spyguy, angriestibm, marquesas, and stuntwaffle.
+ * For each step of the swinging, with the delay getting shorter along the way. Checks to see we still have them in our grasp at each step.
+ */
 /datum/mutation/human/hulk/proc/swing_loop(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person, step, original_dir)
 	if(!yeeted_person || !the_hulk || the_hulk.incapacitated())
 		return
 	if(get_dist(the_hulk, yeeted_person) > 1 || !isturf(the_hulk.loc) || !isturf(yeeted_person.loc))
-		to_chat(the_hulk, "<span class='warning'>You lose your grasp on [yeeted_person]!</span>")
+		to_chat(the_hulk, span_warning("You lose your grasp on [yeeted_person]!"))
 		return
 
 	var/delay = 5
@@ -180,8 +185,9 @@
 	var/turf/current_spin_turf = yeeted_person.loc
 	var/turf/intermediate_spin_turf = get_step(yeeted_person, the_hulk.dir) // the diagonal
 	var/turf/next_spin_turf = get_step(the_hulk, the_hulk.dir)
+	var/direction = get_dir(current_spin_turf, intermediate_spin_turf)
 
-	if((isturf(current_spin_turf) && current_spin_turf.Exit(yeeted_person)) && (isturf(next_spin_turf) && next_spin_turf.Enter(yeeted_person)))
+	if((isturf(current_spin_turf) && current_spin_turf.Exit(yeeted_person, direction)) && (isturf(next_spin_turf) && next_spin_turf.Enter(yeeted_person)))
 		yeeted_person.forceMove(next_spin_turf)
 		yeeted_person.face_atom(the_hulk)
 
@@ -198,14 +204,14 @@
 		log_combat(the_hulk, yeeted_person, "has smacked this person into someone while tail swinging") // i have no idea how to better word this
 
 		if(collateral_mob == the_hulk) // if the hulk moves wrong and crosses himself
-			the_hulk.visible_message("<span class='warning'>[the_hulk] smacks [the_hulk.p_them()]self with [yeeted_person]!</span>", "<span class='userdanger'>You end up smacking [yeeted_person] into yourself!</span>", ignored_mobs = yeeted_person)
-			to_chat(yeeted_person, "<span class='userdanger'>[the_hulk] smacks you into [the_hulk.p_them()]self, turning you free!</span>")
+			the_hulk.visible_message(span_warning("[the_hulk] smacks [the_hulk.p_them()]self with [yeeted_person]!"), span_userdanger("You end up smacking [yeeted_person] into yourself!"), ignored_mobs = yeeted_person)
+			to_chat(yeeted_person, span_userdanger("[the_hulk] smacks you into [the_hulk.p_them()]self, turning you free!"))
 			the_hulk.adjustBruteLoss(step)
 			return
 
-		yeeted_person.visible_message("<span class='warning'>[the_hulk] swings [yeeted_person] directly into [collateral_mob], sending [collateral_mob.p_them()] flying!</span>", \
-			"<span class='userdanger'>You're smacked into [collateral_mob]!</span>", ignored_mobs = collateral_mob)
-		to_chat(collateral_mob, "<span class='userdanger'>[the_hulk] swings [yeeted_person] directly into you, sending you flying!</span>")
+		yeeted_person.visible_message(span_warning("[the_hulk] swings [yeeted_person] directly into [collateral_mob], sending [collateral_mob.p_them()] flying!"), \
+			span_userdanger("You're smacked into [collateral_mob]!"), ignored_mobs = collateral_mob)
+		to_chat(collateral_mob, span_userdanger("[the_hulk] swings [yeeted_person] directly into you, sending you flying!"))
 
 		collateral_mob.adjustBruteLoss(step*0.5)
 		collateral_mob.throw_at(collat_throw_target, round(step * 0.25) + 1, round(step * 0.25) + 1)
@@ -216,8 +222,8 @@
 	if(step >= HULK_TAILTHROW_STEPS)
 		finish_swing(the_hulk, yeeted_person, original_dir)
 	else if(step < 0)
-		the_hulk.visible_message("<span class='danger'>[the_hulk] loses [the_hulk.p_their()] momentum on [yeeted_person]!</span>", "<span class='warning'>You lose your momentum on swinging [yeeted_person]!</span>", ignored_mobs = yeeted_person)
-		to_chat(yeeted_person, "<span class='userdanger'>[the_hulk] loses [the_hulk.p_their()] momentum and lets go of you!</span>")
+		the_hulk.visible_message(span_danger("[the_hulk] loses [the_hulk.p_their()] momentum on [yeeted_person]!"), span_warning("You lose your momentum on swinging [yeeted_person]!"), ignored_mobs = yeeted_person)
+		to_chat(yeeted_person, span_userdanger("[the_hulk] loses [the_hulk.p_their()] momentum and lets go of you!"))
 	else
 		addtimer(CALLBACK(src, .proc/swing_loop, the_hulk, yeeted_person, step, original_dir), delay)
 
@@ -226,15 +232,15 @@
 	if(!yeeted_person || !the_hulk || the_hulk.incapacitated())
 		return
 	if(get_dist(the_hulk, yeeted_person) > 1 || !isturf(the_hulk.loc) || !isturf(yeeted_person.loc))
-		to_chat(the_hulk, "<span class='warning'>You lose your grasp on [yeeted_person]!</span>")
+		to_chat(the_hulk, span_warning("You lose your grasp on [yeeted_person]!"))
 		return
 
 	the_hulk.setDir(original_dir)
 	yeeted_person.forceMove(the_hulk.loc) // Maybe this will help with the wallthrowing bug.
-	yeeted_person.visible_message("<span class='danger'>[the_hulk] throws [yeeted_person]!</span>", \
-					"<span class='userdanger'>You're thrown by [the_hulk]!</span>", "<span class='hear'>You hear aggressive shuffling and a loud thud!</span>", null, the_hulk)
-	to_chat(the_hulk, "<span class='danger'>You throw [yeeted_person]!</span>")
-	playsound(the_hulk.loc, "swing_hit", 50, TRUE)
+	yeeted_person.visible_message(span_danger("[the_hulk] throws [yeeted_person]!"), \
+					span_userdanger("You're thrown by [the_hulk]!"), span_hear("You hear aggressive shuffling and a loud thud!"), null, the_hulk)
+	to_chat(the_hulk, span_danger("You throw [yeeted_person]!"))
+	playsound(the_hulk.loc, SFX_SWING_HIT, 50, TRUE)
 	var/turf/T = get_edge_target_turf(the_hulk, the_hulk.dir)
 	if(!isturf(T))
 		return

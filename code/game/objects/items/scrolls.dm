@@ -4,71 +4,72 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	worn_icon_state = "scroll"
-	var/uses = 4
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "paper"
 	throw_speed = 3
 	throw_range = 7
 	resistance_flags = FLAMMABLE
+	/// Number of uses remaining
+	var/uses = 4
 
 /obj/item/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
 	uses = 1
 
-
+/obj/item/teleportation_scroll/examine(mob/user)
+	. = ..()
+	if(uses > 0)
+		. += "It has [uses] use\s remaining."
 
 /obj/item/teleportation_scroll/attack_self(mob/user)
-	user.set_machine(src)
-	var/dat = "<B>Teleportation Scroll:</B><BR>"
-	dat += "Number of uses: [src.uses]<BR>"
-	dat += "<HR>"
-	dat += "<B>Four uses, use them wisely:</B><BR>"
-	dat += "<A href='byond://?src=[REF(src)];spell_teleport=1'>Teleport</A><BR>"
-	dat += "Kind regards,<br>Wizards Federation<br><br>P.S. Don't forget to bring your gear, you'll need it to cast most spells.<HR>"
-	user << browse(dat, "window=scroll")
-	onclose(user, "scroll")
-	return
-
-/obj/item/teleportation_scroll/Topic(href, href_list)
-	..()
-	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || src.loc != usr)
+	if(!uses)
 		return
-	if (!ishuman(usr))
-		return 1
-	var/mob/living/carbon/human/H = usr
-	if(H.is_holding(src))
-		H.set_machine(src)
-		if (href_list["spell_teleport"])
-			if(uses)
-				teleportscroll(H)
-	if(H)
-		attack_self(H)
-	return
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.incapacitated())
+		return
+	if(!human_user.is_holding(src))
+		return
+	teleportscroll(human_user)
 
+/**
+ * Shows a list of a possible teleport destinations to a user and then teleports him to to his chosen destination
+ *
+ * Arguments:
+ * * user The mob that is being teleported
+ */
 /obj/item/teleportation_scroll/proc/teleportscroll(mob/user)
-
-	var/A
-
-	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs
-	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
+	if(!length(GLOB.teleportlocs))
+		to_chat(user, span_warning("There are no locations available"))
 		return
-	var/area/thearea = GLOB.teleportlocs[A]
+	var/jump_target = tgui_input_list(user, "Area to jump to", "BOOYEA", GLOB.teleportlocs)
+	if(isnull(jump_target))
+		return
+	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !uses)
+		return
+	var/area/thearea = GLOB.teleportlocs[jump_target]
 
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(2, user.loc)
 	smoke.attach(user)
 	smoke.start()
-	var/list/L = list()
-	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.is_blocked_turf())
-			L += T
+	var/list/possible_locations = list()
+	for(var/turf/target_turf in get_area_turfs(thearea.type))
+		if(!target_turf.is_blocked_turf())
+			possible_locations += target_turf
 
-	if(!L.len)
-		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
+	if(!length(possible_locations))
+		to_chat(user, span_warning("The spell matrix was unable to locate a suitable teleport destination for an unknown reason."))
 		return
 
-	if(do_teleport(user, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+	if(do_teleport(user, pick(possible_locations), channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		smoke.start()
 		uses--
+		if(!uses)
+			to_chat(user, span_warning("[src] has run out of uses and crumbles to dust!"))
+			qdel(src)
+		else
+			to_chat(user, span_notice("[src] has [uses] use\s remaining."))
 	else
-		to_chat(user, "The spell matrix was disrupted by something near the destination.")
+		to_chat(user, span_warning("The spell matrix was disrupted by something near the destination."))

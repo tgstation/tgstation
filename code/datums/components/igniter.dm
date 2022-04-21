@@ -13,10 +13,10 @@
 	else if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
 	else if(ishostile(parent))
-		RegisterSignal(parent, COMSIG_HOSTILE_ATTACKINGTARGET, .proc/hostile_attackingtarget)
+		RegisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 
 /datum/component/igniter/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
+	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/igniter/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
@@ -25,9 +25,11 @@
 		return
 	do_igniter(target)
 
-/datum/component/igniter/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target)
+/datum/component/igniter/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER
 
+	if(!success)
+		return
 	do_igniter(target)
 
 /datum/component/igniter/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)

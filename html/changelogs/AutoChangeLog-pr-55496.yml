@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Adds shrub plants and seeds, which can be obtained from the exotic seeds crate in cargo. Plant grown shrubs in-hand to plant a full hedge where you're standing."
-  - tweak: "The shrub seeds have replaced one of the rainbow bunch seeds in the exotic seeds crate."
-  - tweak: "Hedges that block sight can be trimmed with a sharp implement if you have the hedge trimming skillchip."

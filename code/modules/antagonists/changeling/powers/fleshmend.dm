@@ -10,12 +10,12 @@
 //Starts healing you every second for 10 seconds.
 //Can be used whilst unconscious.
 /datum/action/changeling/fleshmend/sting_action(mob/living/user)
-	if(user.has_status_effect(STATUS_EFFECT_FLESHMEND))
-		to_chat(user, "<span class='warning'>We are already fleshmending!</span>")
+	if(user.has_status_effect(/datum/status_effect/fleshmend))
+		to_chat(user, span_warning("We are already fleshmending!"))
 		return
 	..()
-	to_chat(user, "<span class='notice'>We begin to heal rapidly.</span>")
-	user.apply_status_effect(STATUS_EFFECT_FLESHMEND)
+	to_chat(user, span_notice("We begin to heal rapidly."))
+	user.apply_status_effect(/datum/status_effect/fleshmend)
 	return TRUE
 
 //Check buffs.dm for the fleshmend status effect code

@@ -5,19 +5,11 @@
 
 /obj/structure/closet/secure_closet/research_director/PopulateContents()
 	..()
-	new /obj/item/clothing/neck/cloak/rd(src)
+
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
 	new /obj/item/clothing/head/bio_hood/scientist(src)
-	new /obj/item/clothing/suit/toggle/labcoat(src)
-	new /obj/item/clothing/under/rank/rnd/research_director(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/skirt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/alt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/alt/skirt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt(src)
-	new /obj/item/clothing/head/beret/science(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
-	new /obj/item/cartridge/rd(src)
+	new /obj/item/storage/bag/garment/research_director(src)
+	new /obj/item/computer_hardware/hard_drive/role/rd(src)
 	new /obj/item/radio/headset/heads/rd(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/storage/lockbox/medal/sci(src)
@@ -30,6 +22,7 @@
 	new /obj/item/storage/box/skillchips/science(src)
 
 
+
 /obj/structure/closet/secure_closet/cytology
 	name = "cytology equipment locker"
 	icon_state = "science"
@@ -39,7 +32,7 @@
 	. = ..()
 	new /obj/item/pushbroom(src)
 	new /obj/item/plunger(src)
-	new /obj/item/storage/bag/bio(src)
+	new /obj/item/storage/bag/xeno(src)
 	new /obj/item/storage/box/petridish(src)
 	new /obj/item/stack/ducts/fifty(src)
 	for(var/i in 1 to 2)

@@ -5,7 +5,7 @@
 	health = 250
 	icon_state = "alienp"
 
-/mob/living/carbon/alien/humanoid/royal/praetorian/Initialize()
+/mob/living/carbon/alien/humanoid/royal/praetorian/Initialize(mapload)
 	real_name = name
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
@@ -28,15 +28,15 @@
 /obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/alien/humanoid/user)
 	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
 	if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
-		to_chat(user, "<span class='warning'>Without the hivemind, you would be unfit to rule as queen!</span>")
+		to_chat(user, span_warning("Without the hivemind, you would be unfit to rule as queen!"))
 		return FALSE
 	if(node.recent_queen_death)
-		to_chat(user, "<span class='warning'>You are still too burdened with guilt to evolve into a queen.</span>")
+		to_chat(user, span_warning("You are still too burdened with guilt to evolve into a queen."))
 		return FALSE
 	if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return TRUE
 	else
-		to_chat(user, "<span class='warning'>We already have an alive queen!</span>")
+		to_chat(user, span_warning("We already have an alive queen!"))
 		return FALSE

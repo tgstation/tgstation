@@ -1,9 +1,9 @@
 /* Alien shit!
  * Contains:
- *		structure/alien
- *		Resin
- *		Weeds
- *		Egg
+ * structure/alien
+ * Resin
+ * Weeds
+ * Egg
  */
 
 
@@ -11,7 +11,7 @@
 	icon = 'icons/mob/alien.dmi'
 	max_integrity = 100
 
-/obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/alien/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BRUTE)
@@ -43,7 +43,7 @@
 
 /obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
+		new /obj/effect/mob_spawn/corpse/human/damaged(get_turf(src))
 	qdel(src)
 
 /*
@@ -63,12 +63,16 @@
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_RESIN)
 	max_integrity = 200
 	var/resintype = null
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 
 
 /obj/structure/alien/resin/Initialize(mapload)
 	. = ..()
-	air_update_turf(TRUE)
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/alien/resin/Destroy()
+	air_update_turf(TRUE, FALSE)
+	. = ..()
 
 /obj/structure/alien/resin/Move()
 	var/turf/T = loc
@@ -85,8 +89,13 @@
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
 
-/obj/structure/alien/resin/wall/BlockSuperconductivity()
+/obj/structure/alien/resin/wall/block_superconductivity()
 	return 1
+
+/// meant for one lavaland ruin or anywhere that has simplemobs who can push aside structures
+/obj/structure/alien/resin/wall/immovable
+	desc = "Dense resin solidified into a wall."
+	move_resist = MOVE_FORCE_VERY_STRONG
 
 /obj/structure/alien/resin/wall/creature
 	name = "gelatinous wall"
@@ -105,8 +114,8 @@
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
 
-/obj/structure/alien/resin/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/alien/resin/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 ///Used in the big derelict ruin exclusively.
 /obj/structure/alien/resin/membrane/creature
@@ -135,29 +144,35 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WEEDS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WEEDS, SMOOTH_GROUP_WALLS)
-	var/last_expand = 0 //last world.time this weed expanded
-	var/growth_cooldown_low = 150
-	var/growth_cooldown_high = 200
-	var/static/list/blacklisted_turfs
+	///the range of the weeds going to be affected by the node
+	var/node_range = NODERANGE
+	///the parent node that will determine if we grow or die
+	var/obj/structure/alien/weeds/node/parent_node
+	///the list of turfs that the weeds will not be able to grow over
+	var/static/list/blacklisted_turfs = list(
+		/turf/open/space,
+		/turf/open/chasm,
+		/turf/open/lava,
+		/turf/open/water,
+		/turf/open/openspace,
+	)
 
-
-/obj/structure/alien/weeds/Initialize()
+/obj/structure/alien/weeds/Initialize(mapload)
+	//so the sprites line up right in the map editor
 	pixel_x = -4
-	pixel_y = -4 //so the sprites line up right in the map editor
+	pixel_y = -4
 
 	. = ..()
 
-	if(!blacklisted_turfs)
-		blacklisted_turfs = typecacheof(list(
-			/turf/open/space,
-			/turf/open/chasm,
-			/turf/open/lava,
-			/turf/open/openspace))
-
 	set_base_icon()
 
-	last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
+/obj/structure/alien/weeds/Destroy()
+	if(parent_node)
+		UnregisterSignal(parent_node, COMSIG_PARENT_QDELETING)
+		parent_node = null
+	return ..()
 
 ///Randomizes the weeds' starting icon, gets redefined by children for them not to share the behavior.
 /obj/structure/alien/weeds/proc/set_base_icon()
@@ -174,28 +189,69 @@
 			base_icon_state = "weeds3"
 	set_smoothed_icon_state(smoothing_junction)
 
-
-/obj/structure/alien/weeds/proc/expand()
-	var/turf/U = get_turf(src)
-	if(is_type_in_typecache(U, blacklisted_turfs))
+/**
+ * Called when the node is trying to grow/expand
+ */
+/obj/structure/alien/weeds/proc/try_expand()
+	//we cant grow without a parent node
+	if(!parent_node)
+		return
+	//lets make sure we are still on a valid location
+	var/turf/src_turf = get_turf(src)
+	if(is_type_in_list(src_turf, blacklisted_turfs))
 		qdel(src)
-		return FALSE
-
-	for(var/turf/T in U.GetAtmosAdjacentTurfs())
-		if(locate(/obj/structure/alien/weeds) in T)
+		return
+	//lets try to grow in a direction
+	for(var/turf/check_turf in src_turf.get_atmos_adjacent_turfs())
+		//we cannot grow on blacklisted turfs
+		if(is_type_in_list(check_turf, blacklisted_turfs))
 			continue
-
-		if(is_type_in_typecache(T, blacklisted_turfs))
+		var/obj/structure/alien/weeds/check_weed = locate() in check_turf
+		//we cannot grow onto other weeds
+		if(check_weed)
 			continue
+		//spawn a new one in the turf
+		check_weed = new(check_turf)
+		//set the new one's parent node to our parent node
+		check_weed.parent_node = parent_node
+		check_weed.RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
 
-		new /obj/structure/alien/weeds(T)
-	return TRUE
+/**
+ * Called when the parent node is destroyed
+ */
+/obj/structure/alien/weeds/proc/after_parent_destroyed()
+	if(!find_new_parent())
+		var/random_time = rand(2 SECONDS, 8 SECONDS)
+		addtimer(CALLBACK(src, .proc/do_qdel), random_time)
 
-/obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+/**
+ * Called when trying to find a new parent after our previous parent died
+ * Will return false if it can't find a new_parent
+ * Will return the new parent if it can find one
+ */
+/obj/structure/alien/weeds/proc/find_new_parent()
+	var/previous_node = parent_node
+	parent_node = null
+	for(var/obj/structure/alien/weeds/node/new_parent in range(node_range, src))
+		if(new_parent == previous_node)
+			continue
+		parent_node = new_parent
+		RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
+		return parent_node
+	return FALSE
 
-//Weed nodes
+/**
+ * Called to delete the weed
+ */
+/obj/structure/alien/weeds/proc/do_qdel()
+	qdel(src)
+
+/obj/structure/alien/weeds/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 300
+
+/obj/structure/alien/weeds/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(5, BURN, 0, 0)
+
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
@@ -204,30 +260,47 @@
 	base_icon_state = "weednode"
 	light_color = LIGHT_COLOR_BLUE
 	light_power = 0.5
+	///the range of the light for the node
 	var/lon_range = 4
-	var/node_range = NODERANGE
+	///the minimum time it takes for another weed to spread from this one
+	var/minimum_growtime = 5 SECONDS
+	///the maximum time it takes for another weed to spread from this one
+	var/maximum_growtime = 10 SECONDS
+	//the cooldown between each growth
+	COOLDOWN_DECLARE(growtime)
 
-
-/obj/structure/alien/weeds/node/Initialize()
+/obj/structure/alien/weeds/node/Initialize(mapload)
 	. = ..()
-	set_light(lon_range)
-	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in loc
-	if(W && W != src)
-		qdel(W)
-	START_PROCESSING(SSobj, src)
 
+	//give it light
+	set_light(lon_range)
+
+	//we are the parent node
+	parent_node = src
+
+	//destroy any non-node weeds on turf
+	var/obj/structure/alien/weeds/check_weed = locate(/obj/structure/alien/weeds) in loc
+	if(check_weed && check_weed != src)
+		qdel(check_weed)
+
+	//start the cooldown
+	COOLDOWN_START(src, growtime, rand(minimum_growtime, maximum_growtime))
+
+	//start processing
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/alien/weeds/node/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-
 /obj/structure/alien/weeds/node/process()
-	for(var/obj/structure/alien/weeds/W in range(node_range, src))
-		if(W.last_expand <= world.time)
-			if(W.expand())
-				W.last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
-
+	//we need to have a cooldown, so check and then add
+	if(!COOLDOWN_FINISHED(src, growtime))
+		return
+	COOLDOWN_START(src, growtime, rand(minimum_growtime, maximum_growtime))
+	//attempt to grow all weeds in range
+	for(var/obj/structure/alien/weeds/growing_weed in range(node_range, src))
+		growing_weed.try_expand()
 
 /obj/structure/alien/weeds/node/set_base_icon()
 	return //No icon randomization at init. The node's icon is already well defined.
@@ -246,10 +319,11 @@
  */
 
 //for the status var
+#define BURSTING "bursting"
 #define BURST "burst"
 #define GROWING "growing"
 #define GROWN "grown"
-#define MIN_GROWTH_TIME 900	//time it takes to grow a hugger
+#define MIN_GROWTH_TIME 900 //time it takes to grow a hugger
 #define MAX_GROWTH_TIME 1500
 
 /obj/structure/alien/egg
@@ -261,20 +335,25 @@
 	anchored = TRUE
 	max_integrity = 100
 	integrity_failure = 0.05
-	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
+	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 	var/obj/item/clothing/mask/facehugger/child
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/structure/alien/egg/Initialize(mapload)
 	. = ..()
-	update_icon()
+	update_appearance()
 	if(status == GROWING || status == GROWN)
 		child = new(src)
 	if(status == GROWING)
 		addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 	proximity_monitor = new(src, status == GROWN ? 1 : 0)
 	if(status == BURST)
-		obj_integrity = integrity_failure * max_integrity
+		atom_integrity = integrity_failure * max_integrity
+
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)
@@ -284,51 +363,56 @@
 			icon_state = "[base_icon]"
 		if(BURST)
 			icon_state = "[base_icon]_hatched"
+	return ..()
 
-/obj/structure/alien/egg/attack_paw(mob/living/user)
-	return attack_hand(user)
+/obj/structure/alien/egg/attack_paw(mob/living/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user)
-	return attack_hand(user)
+/obj/structure/alien/egg/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
-/obj/structure/alien/egg/attack_hand(mob/living/user)
+/obj/structure/alien/egg/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 		switch(status)
+			if(BURSTING)
+				to_chat(user, span_notice("The child is hatching out."))
+				return
 			if(BURST)
-				to_chat(user, "<span class='notice'>You clear the hatched egg.</span>")
+				to_chat(user, span_notice("You clear the hatched egg."))
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
 				qdel(src)
 				return
 			if(GROWING)
-				to_chat(user, "<span class='notice'>The child is not developed yet.</span>")
+				to_chat(user, span_notice("The child is not developed yet."))
 				return
 			if(GROWN)
-				to_chat(user, "<span class='notice'>You retrieve the child.</span>")
+				to_chat(user, span_notice("You retrieve the child."))
 				Burst(kill=FALSE)
 				return
 	else
-		to_chat(user, "<span class='notice'>It feels slimy.</span>")
+		to_chat(user, span_notice("It feels slimy."))
 		user.changeNext_move(CLICK_CD_MELEE)
 
 
 /obj/structure/alien/egg/proc/Grow()
 	status = GROWN
-	update_icon()
-	proximity_monitor.SetRange(1)
+	update_appearance()
+	proximity_monitor.set_range(1)
 
 //drops and kills the hugger if any is remaining
 /obj/structure/alien/egg/proc/Burst(kill = TRUE)
 	if(status == GROWN || status == GROWING)
-		proximity_monitor.SetRange(0)
-		status = BURST
-		update_icon()
+		status = BURSTING
+		proximity_monitor.set_range(0)
 		flick("egg_opening", src)
 		addtimer(CALLBACK(src, .proc/finish_bursting, kill), 15)
 
 /obj/structure/alien/egg/proc/finish_bursting(kill = TRUE)
+	status = BURST
+	update_appearance()
 	if(child)
 		child.forceMove(get_turf(src))
 		// TECHNICALLY you could put non-facehuggers in the child var
@@ -341,15 +425,17 @@
 						child.Leap(M)
 						break
 
-/obj/structure/alien/egg/obj_break(damage_flag)
+/obj/structure/alien/egg/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return exposed_temperature > 500
+
+/obj/structure/alien/egg/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	take_damage(5, BURN, 0, 0)
+
+/obj/structure/alien/egg/atom_break(damage_flag)
+	. = ..()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(status != BURST)
 			Burst(kill=TRUE)
-
-/obj/structure/alien/egg/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 500)
-		take_damage(5, BURN, 0, 0)
-
 
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)
 	if(status == GROWN)
@@ -370,6 +456,7 @@
 	status = BURST
 	icon_state = "egg_hatched"
 
+#undef BURSTING
 #undef BURST
 #undef GROWING
 #undef GROWN

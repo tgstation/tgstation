@@ -1,19 +1,23 @@
 /datum/antagonist/space_dragon
-	name = "Space Dragon"
+	name = "\improper Space Dragon"
 	roundend_category = "space dragons"
 	antagpanel_category = "Space Dragon"
 	job_rank = ROLE_SPACE_DRAGON
 	show_in_antagpanel = TRUE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
+	/// All space carps created by this antagonist space dragon
 	var/list/datum/mind/carp = list()
+	/// The innate ability to summon rifts
+	var/datum/action/innate/summon_rift/rift_ability
 
 /datum/antagonist/space_dragon/greet()
+	. = ..()
 	to_chat(owner, "<b>Through endless time and space we have moved. We do not remember from where we came, we do not know where we will go.  All of space belongs to us.\n\
 					It is an empty void, of which our kind was the apex predator, and there was little to rival our claim to this title.\n\
 					But now, we find intruders spread out amongst our claim, willing to fight our teeth with magics unimaginable, their dens like lights flickering in the depths of space.\n\
 					Today, we will snuff out one of those lights.</b>")
-	to_chat(owner, "<span class='boldwarning'>You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came.</span>")
+	to_chat(owner, span_boldwarning("You have five minutes to find a safe location to place down the first rift.  If you take longer than five minutes to place a rift, you will be returned from whence you came."))
 	owner.announce_objectives()
 	SEND_SOUND(owner.current, sound('sound/magic/demon_attack1.ogg'))
 
@@ -25,6 +29,23 @@
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
 	. = ..()
+	rift_ability = new
+	rift_ability.Grant(owner.current)
+
+/datum/antagonist/space_dragon/on_removal()
+	. = ..()
+	rift_ability.Remove(owner.current)
+
+/datum/antagonist/space_dragon/get_preview_icon()
+	var/icon/icon = icon('icons/mob/spacedragon.dmi', "spacedragon")
+
+	icon.Blend(COLOR_STRONG_VIOLET, ICON_MULTIPLY)
+	icon.Blend(icon('icons/mob/spacedragon.dmi', "overlay_base"), ICON_OVERLAY)
+
+	icon.Crop(10, 9, 54, 53)
+	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+
+	return icon
 
 /datum/objective/summon_carp
 	var/datum/antagonist/space_dragon/dragon

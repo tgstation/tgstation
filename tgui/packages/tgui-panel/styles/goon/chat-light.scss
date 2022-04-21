@@ -273,8 +273,7 @@ a.popt {
 
 
 .italic,
-.italics,
-.emote {
+.italics {
   font-style: italic;
 }
 
@@ -330,7 +329,7 @@ em {
   font-weight: bold;
 }
 
-.say {
+.say, .emote, .infoplain, .oocplain, .warningplain {
 }
 
 .deadsay {
@@ -388,6 +387,10 @@ em {
   color: #6d3f40;
 }
 
+.gangradio {
+  color: #ac2ea1;
+}
+
 .centcomradio {
   color: #686868;
 }
@@ -404,6 +407,14 @@ em {
   color: #0000ff;
 }
 
+.greenteamradio {
+  color: #00ff00;
+}
+
+.yellowteamradio {
+  color: #d1ba22;
+}
+
 .yell {
   font-weight: bold;
 }
@@ -414,10 +425,6 @@ em {
 
 h1.alert, h2.alert {
   color: #000000;
-}
-
-.emote {
-  font-style: italic;
 }
 
 .userdanger {
@@ -469,6 +476,11 @@ h1.alert, h2.alert {
 .boldannounce {
   color: #ff0000;
   font-weight: bold;
+}
+
+.minorannounce {
+  font-weight: bold;
+  font-size: 185%;
 }
 
 .greenannounce {
@@ -543,6 +555,10 @@ h1.alert, h2.alert {
   color: #03ff39;
 }
 
+.grey {
+  color: #838383;
+}
+
 .red {
   color: #FF0000;
 }
@@ -553,6 +569,11 @@ h1.alert, h2.alert {
 
 .nicegreen {
   color: #14a833;
+}
+
+.boldnicegreen {
+  color: #14a833;
+  font-weight: bold;
 }
 
 .cult {
@@ -706,6 +727,11 @@ h1.alert, h2.alert {
   font-family: "Courier New", cursive, sans-serif;
 }
 
+.tape_recorder {
+  color: #800000;
+  font-family: "Courier New", cursive, sans-serif;
+}
+
 .command_headset {
   font-weight: bold;
   font-size: 160%;
@@ -809,6 +835,10 @@ h1.alert, h2.alert {
   width: auto;
 }
 
+.bigicon {
+  font-size: 2.5em;
+}
+
 .memo {
   color: #638500;
   text-align: center;
@@ -901,4 +931,9 @@ h1.alert, h2.alert {
 
 .ml-3 {
   margin-left: 3em;
+}
+
+.tooltip {
+  font-style: italic;
+  border-bottom: 1px dashed #000;
 }

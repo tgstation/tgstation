@@ -35,7 +35,8 @@ const compareNumberedText = (a, b) => {
 
 const BasicSection = (props, context) => {
   const { act } = useBackend(context);
-  const { searchText, source, title } = props;
+  const { searchText, source, title, autoObserve } = props;
+
   const things = source.filter(searchFor(searchText));
   things.sort(compareNumberedText);
   return source.length > 0 && (
@@ -46,6 +47,7 @@ const BasicSection = (props, context) => {
           content={thing.name}
           onClick={() => act("orbit", {
             ref: thing.ref,
+            auto_observe: autoObserve,
           })} />
       ))}
     </Section>
@@ -54,13 +56,14 @@ const BasicSection = (props, context) => {
 
 const OrbitedButton = (props, context) => {
   const { act } = useBackend(context);
-  const { color, thing } = props;
+  const { color, thing, autoObserve } = props;
 
   return (
     <Button
       color={color}
       onClick={() => act("orbit", {
         ref: thing.ref,
+        auto_observe: autoObserve,
       })}>
       {thing.name}
       {thing.orbiters && (
@@ -82,7 +85,6 @@ export const Orbit = (props, context) => {
   const {
     alive,
     antagonists,
-    auto_observe,
     dead,
     ghosts,
     misc,
@@ -90,6 +92,7 @@ export const Orbit = (props, context) => {
   } = data;
 
   const [searchText, setSearchText] = useLocalState(context, "searchText", "");
+  const [autoObserve, setAutoObserve] = useLocalState(context, "autoObserve", false);
 
   const collatedAntagonists = {};
   for (const antagonist of antagonists) {
@@ -113,7 +116,10 @@ export const Orbit = (props, context) => {
         .filter(searchFor(searchText))
         .sort(compareNumberedText)[0];
       if (member !== undefined) {
-        act("orbit", { ref: member.ref });
+        act("orbit", {
+          ref: member.ref,
+          auto_observe: autoObserve,
+        });
         break;
       }
     }
@@ -150,15 +156,17 @@ export const Orbit = (props, context) => {
                 color="transparent"
                 tooltip={multiline`Toggle Auto-Observe. When active, you'll
                 see the UI / full inventory of whoever you're orbiting. Neat!`}
-                tooltipPosition="bottom-left"
-                selected={auto_observe}
-                icon={auto_observe ? "toggle-on" : "toggle-off"}
-                onClick={() => act("toggle_observe")} />
+                tooltipPosition="bottom-start"
+                selected={autoObserve}
+                icon={autoObserve ? "toggle-on" : "toggle-off"}
+                onClick={() => setAutoObserve(!autoObserve)} />
+            </Flex.Item>
+            <Flex.Item>
               <Button
                 inline
                 color="transparent"
                 tooltip="Refresh"
-                tooltipPosition="bottom-left"
+                tooltipPosition="bottom-start"
                 icon="sync-alt"
                 onClick={() => act("refresh")} />
             </Flex.Item>
@@ -176,6 +184,7 @@ export const Orbit = (props, context) => {
                       key={antag.name}
                       color="bad"
                       thing={antag}
+                      autoObserve={autoObserve}
                     />
                   ))}
               </Section>
@@ -191,7 +200,8 @@ export const Orbit = (props, context) => {
               <OrbitedButton
                 key={thing.name}
                 color="good"
-                thing={thing} />
+                thing={thing}
+                autoObserve={autoObserve} />
             ))}
         </Section>
 
@@ -203,7 +213,8 @@ export const Orbit = (props, context) => {
               <OrbitedButton
                 key={thing.name}
                 color="grey"
-                thing={thing} />
+                thing={thing}
+                autoObserve={autoObserve} />
             ))}
         </Section>
 
@@ -211,6 +222,7 @@ export const Orbit = (props, context) => {
           title="Dead"
           source={dead}
           searchText={searchText}
+          autoObserve={autoObserve}
         />
 
         <BasicSection

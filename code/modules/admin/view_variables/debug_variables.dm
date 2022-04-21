@@ -1,6 +1,6 @@
 #define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
 /// Get displayed variable in VV variable list
-/proc/debug_variable(name, value, level, datum/D, sanitize = TRUE)			//if D is a list, name will be index, and value will be assoc value.
+/proc/debug_variable(name, value, level, datum/D, sanitize = TRUE) //if D is a list, name will be index, and value will be assoc value.
 	var/header
 	if(D)
 		if(islist(D))
@@ -61,6 +61,9 @@
 			item = "[name_part] = <a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>[DV] [DV.type] [REF(value)]</a>"
 		else
 			item = "[name_part] = <a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>[DV.type] [REF(value)]</a>"
+		if(istype(value,/datum/weakref))
+			var/datum/weakref/weakref = value
+			item += " <a href='?_src_=vars;[HrefToken()];Vars=[REF(weakref.reference)]'>(Resolve)</a>"
 
 	else if (islist(value))
 		var/list/L = value
@@ -72,7 +75,7 @@
 				var/val
 				if (IS_NORMAL_LIST(L) && !isnum(key))
 					val = L[key]
-				if (isnull(val))	// we still want to display non-null false values, such as 0 or ""
+				if (isnull(val)) // we still want to display non-null false values, such as 0 or ""
 					val = key
 					key = i
 

@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "c" = (
@@ -29,7 +29,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "f" = (
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/structure/table,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
@@ -76,7 +76,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "m" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -89,16 +89,13 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/mining/large)
 "o" = (
-/obj/machinery/light/small,
-/obj/item/radio/intercom{
-	pixel_y = -29
-	},
+/obj/machinery/light/small/directional/south,
+/obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
-	icon_state = "warninglinecorner";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -110,11 +107,7 @@
 	pixel_y = 18
 	},
 /obj/structure/table,
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 22
-	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "q" = (
@@ -139,8 +132,8 @@
 /obj/machinery/door/airlock/mining{
 	name = "Mining Shuttle Cockpit"
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/turf/open/floor/iron/dark,
 /area/shuttle/mining/large)
 "t" = (
 /obj/item/clothing/suit/hazardvest{
@@ -175,24 +168,16 @@
 	},
 /obj/structure/closet/crate/internals,
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "u" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 4
 	},
-/obj/machinery/light/small{
-	icon_state = "bulb";
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "v" = (
@@ -202,23 +187,18 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/mining/large)
 "w" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 1
 	},
-/obj/machinery/light/small{
-	icon_state = "bulb";
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "x" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -227,7 +207,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ore_box,
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
@@ -249,8 +228,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	icon_state = "manifold-2";
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -258,7 +236,6 @@
 /area/shuttle/mining/large)
 "B" = (
 /obj/effect/turf_decal/box/corners{
-	icon_state = "box_corners";
 	dir = 8
 	},
 /obj/structure/cable,
@@ -268,7 +245,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/mining/large)
 "D" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
@@ -297,7 +274,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/mining/large)
 "I" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Mining Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -306,16 +283,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "J" = (
-/obj/machinery/power/apc/highcap{
-	dir = 4;
-	locked = 0;
-	name = "Mining Shuttle APC";
-	pixel_x = 24
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
@@ -335,17 +307,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/binary/pump{
-	icon_state = "pump_map-2";
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "L" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Mining Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -364,7 +333,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 

@@ -3,16 +3,14 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/labor)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "c" = (
 /obj/machinery/computer/shuttle/labor{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -31
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "d" = (
@@ -37,7 +35,7 @@
 	pixel_y = -26;
 	req_access_txt = "1"
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "h" = (
@@ -67,15 +65,13 @@
 	input_dir = 2;
 	output_dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/labor)
 "l" = (
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
 "m" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
 "n" = (
@@ -89,9 +85,8 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/flasher{
-	id = "gulagshuttleflasher";
-	pixel_x = 25
+/obj/machinery/flasher/directional/east{
+	id = "gulagshuttleflasher"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
@@ -100,19 +95,16 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
 "q" = (
-/obj/machinery/door/airlock/titanium{
-	id_tag = "prisonshuttle";
-	name = "Labor Shuttle Airlock"
-	},
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
 	height = 5;
 	id = "laborcamp";
 	name = "labor camp shuttle";
-	port_direction = 4;
-	width = 9
+	width = 9;
+	port_direction = 4
 	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "r" = (
@@ -127,15 +119,21 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/labor)
+"W" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Labor Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/labor)
 
 (1,1,1) = {"
 a
 a
-b
+i
 a
 a
 b
-a
+W
 a
 a
 "}
@@ -145,8 +143,8 @@ c
 f
 j
 l
-l
 p
+l
 r
 s
 "}
@@ -175,7 +173,7 @@ s
 (5,1,1) = {"
 a
 a
-i
+b
 a
 a
 a

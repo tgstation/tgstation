@@ -1,7 +1,7 @@
 //retvals for attempt_wires_interaction
 #define WIRE_INTERACTION_FAIL 0
 #define WIRE_INTERACTION_SUCCESSFUL 1
-#define WIRE_INTERACTION_BLOCK 2			//don't do anything else rather than open wires and whatever else.
+#define WIRE_INTERACTION_BLOCK 2 //don't do anything else rather than open wires and whatever else.
 
 #define WIRE_DUD_PREFIX "__dud"
 #define WIRE_ACTIVATE "Activate"
@@ -35,7 +35,7 @@
 #define WIRE_POWER2 "Main Power 2"
 #define WIRE_PROCEED "Proceed"
 #define WIRE_RX "Receive"
-#define WIRE_RESET_MODULE "Reset Module"
+#define WIRE_RESET_MODEL "Reset Model"
 #define WIRE_SAFETY "Safety"
 #define WIRE_SHOCK "High Voltage Ground"
 #define WIRE_SIGNAL "Signal"
@@ -51,4 +51,5 @@
 #define WIRE_PRIZEVEND "Emergency Prize Vend"
 #define WIRE_RESETOWNER "Reset Owner"
 #define WIRE_AGELIMIT "Age Limit"
-
+#define WIRE_ACCEPT "Scan Success"
+#define WIRE_DENY "Scan Fail"

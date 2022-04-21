@@ -10,6 +10,7 @@
 		/obj/item/organ/tail/lizard = 1,
 		/datum/reagent/consumable/ethanol = 100
 	)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	result = /obj/item/reagent_containers/food/drinks/bottle/lizardwine
 	category = CAT_DRINK
 
@@ -142,14 +143,4 @@
 	            /obj/item/food/grown = 4,
 	            /obj/item/food/candy_corn = 2,
 	            /datum/reagent/water = 15)
-	category = CAT_DRINK
-
-/datum/crafting_recipe/lean
-	name = "lean"
-	result = /obj/item/reagent_containers/food/drinks/colocup/lean
-	time = 30
-	reqs = list(/obj/item/reagent_containers/food/drinks/colocup = 1,
-				/obj/item/food/chewable/gumball = 2,
-				/datum/reagent/medicine/morphine = 5,
-				/datum/reagent/consumable/space_up = 15)
 	category = CAT_DRINK

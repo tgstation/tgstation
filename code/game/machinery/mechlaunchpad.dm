@@ -13,7 +13,7 @@
 	///List of consoles that can access the pad
 	var/list/obj/machinery/computer/mechpad/consoles
 
-/obj/machinery/mechpad/Initialize()
+/obj/machinery/mechpad/Initialize(mapload)
 	. = ..()
 	display_name = "Orbital Pad - [get_area_name(src)]"
 	GLOB.mechpad_list += src
@@ -24,12 +24,13 @@
 		connected_console = null
 	for(var/obj/machinery/computer/mechpad/console in consoles)
 		console.mechpads -= src
+	GLOB.mechpad_list -= src
 	return ..()
 
 /obj/machinery/mechpad/screwdriver_act(mob/user, obj/item/tool)
 	. = ..()
 	if(!.)
-		return default_deconstruction_screwdriver(user, "mechpad-o", "mechpad", tool)
+		return default_deconstruction_screwdriver(user, "mechpad-open", "mechpad", tool)
 
 /obj/machinery/mechpad/crowbar_act(mob/user, obj/item/tool)
 	..()
@@ -43,7 +44,7 @@
 		return
 	var/obj/item/multitool/multitool = tool
 	multitool.buffer = src
-	to_chat(user, "<span class='notice'>You save the data in the [multitool.name]'s buffer.</span>")
+	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
 	return TRUE
 
 /**
@@ -52,10 +53,14 @@
  * * where - where the supply pod will land after grabbing the mech
  */
 /obj/machinery/mechpad/proc/launch(obj/machinery/mechpad/where)
-	var/obj/structure/closet/supplypod/mechpod/pod = new()
-	var/turf/target_turf = get_turf(where)
-	pod.reverse_dropoff_coords = list(target_turf.x, target_turf.y, target_turf.z)
-	new /obj/effect/pod_landingzone(get_turf(src), pod)
+	var/turf/reverse_turf = get_turf(where)
+	podspawn(list(
+		"target" = get_turf(src),
+		"path" = /obj/structure/closet/supplypod/mechpod,
+		"style" = STYLE_SEETHROUGH,
+		"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
+	))
+	use_power(active_power_usage)
 
 /obj/structure/closet/supplypod/mechpod
 	style = STYLE_SEETHROUGH

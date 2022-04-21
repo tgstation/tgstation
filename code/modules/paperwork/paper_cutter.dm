@@ -12,84 +12,88 @@
 	pass_flags = PASSTABLE
 
 
-/obj/item/papercutter/Initialize()
+/obj/item/papercutter/Initialize(mapload)
 	. = ..()
 	storedcutter = new /obj/item/hatchet/cutterblade(src)
-	update_icon()
+	update_appearance()
 
 
 /obj/item/papercutter/suicide_act(mob/user)
 	if(storedcutter)
-		user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 			if(BP)
 				BP.drop_limb()
-				playsound(loc, "desecration" ,50, TRUE, -1)
+				playsound(loc, SFX_DESECRATION ,50, TRUE, -1)
 		return (BRUTELOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 		return (BRUTELOSS)
 
 
 /obj/item/papercutter/update_icon_state()
 	icon_state = (storedcutter ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
+	return ..()
 
 /obj/item/papercutter/update_overlays()
 	. =..()
 	if(storedpaper)
 		. += "paper"
 
+/obj/item/papercutter/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!storedcutter)
+		return
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("[storedcutter] has been [cuttersecured ? "unsecured" : "secured"]."))
+	cuttersecured = !cuttersecured
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 
 /obj/item/papercutter/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/paper) && !storedpaper)
 		if(!user.transferItemToLoc(P, src))
 			return
-		playsound(loc, "pageturn", 60, TRUE)
-		to_chat(user, "<span class='notice'>You place [P] in [src].</span>")
+		playsound(loc, SFX_PAGE_TURN, 60, TRUE)
+		to_chat(user, span_notice("You place [P] in [src]."))
 		storedpaper = P
-		update_icon()
+		update_appearance()
 		return
 	if(istype(P, /obj/item/hatchet/cutterblade) && !storedcutter)
 		if(!user.transferItemToLoc(P, src))
 			return
-		to_chat(user, "<span class='notice'>You replace [src]'s [P].</span>")
+		to_chat(user, span_notice("You replace [src]'s [P]."))
 		P.forceMove(src)
 		storedcutter = P
-		update_icon()
-		return
-	if(P.tool_behaviour == TOOL_SCREWDRIVER && storedcutter)
-		P.play_tool_sound(src)
-		to_chat(user, "<span class='notice'>[storedcutter] has been [cuttersecured ? "unsecured" : "secured"].</span>")
-		cuttersecured = !cuttersecured
+		update_appearance()
 		return
 	..()
 
-/obj/item/papercutter/attack_hand(mob/user)
+/obj/item/papercutter/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	add_fingerprint(user)
 	if(!storedcutter)
-		to_chat(user, "<span class='warning'>The cutting blade is gone! You can't use [src] now.</span>")
+		to_chat(user, span_warning("The cutting blade is gone! You can't use [src] now."))
 		return
 
 	if(!cuttersecured)
-		to_chat(user, "<span class='notice'>You remove [src]'s [storedcutter].</span>")
+		to_chat(user, span_notice("You remove [src]'s [storedcutter]."))
 		user.put_in_hands(storedcutter)
 		storedcutter = null
-		update_icon()
+		update_appearance()
 
 	if(storedpaper)
 		playsound(src.loc, 'sound/weapons/slash.ogg', 50, TRUE)
-		to_chat(user, "<span class='notice'>You neatly cut [storedpaper].</span>")
+		to_chat(user, span_notice("You neatly cut [storedpaper]."))
 		storedpaper = null
 		qdel(storedpaper)
 		new /obj/item/paperslip(get_turf(src))
 		new /obj/item/paperslip(get_turf(src))
-		update_icon()
+		update_appearance()
 
 /obj/item/papercutter/MouseDrop(atom/over_object)
 	. = ..()
@@ -119,7 +123,7 @@
 	return ..()
 
 
-/obj/item/paperslip/Initialize()
+/obj/item/paperslip/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)

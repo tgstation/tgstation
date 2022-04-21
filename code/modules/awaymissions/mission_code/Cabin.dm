@@ -4,12 +4,13 @@
 	name = "Cabin"
 	icon_state = "away2"
 	requires_power = TRUE
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 
 /area/awaymission/cabin/snowforest
 	name = "Snow Forest"
 	icon_state = "away"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 /area/awaymission/cabin/snowforest/sovietsurface
 	name = "Snow Forest"
@@ -20,7 +21,8 @@
 	name = "Lumbermill"
 	icon_state = "away3"
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 /area/awaymission/cabin/caves/sovietcave
 	name = "Soviet Bunker"
@@ -29,7 +31,7 @@
 /area/awaymission/cabin/caves
 	name = "North Snowdin Caves"
 	icon_state = "awaycontent15"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 
 /area/awaymission/cabin/caves/mountain
 	name = "North Snowdin Mountains"
@@ -41,10 +43,10 @@
 	icon = 'icons/obj/fireplace.dmi'
 	icon_state = "firepit-active"
 	density = FALSE
-	var/active = 1
+	var/active = TRUE
 
-/obj/structure/firepit/Initialize()
-	..()
+/obj/structure/firepit/Initialize(mapload)
+	. = ..()
 	toggleFirepit()
 
 /obj/structure/firepit/interact(mob/living/user)
@@ -101,16 +103,6 @@
 		..()
 		new L.plank_type(src.loc, 1 + round(potency / 25))
 
-/mob/living/simple_animal/chicken/rabbit/normal
-	icon_state = "b_rabbit"
-	icon_living = "b_rabbit"
-	icon_dead = "b_rabbit_dead"
-	icon_prefix = "b_rabbit"
-	minbodytemp = 0
-	eggsleft = 0
-	egg_type = null
-	speak = list()
-
 /*Cabin's forest. Removed in the new cabin map since it was buggy and I prefer manual placement.*/
 /datum/map_generator/snowy
 	modules = list(/datum/map_generator_module/bottomlayer/snow, \
@@ -121,12 +113,12 @@
 	/datum/map_generator_module/snow/bunnies)
 
 /datum/map_generator_module/snow/checkPlaceAtom(turf/T)
-	if(istype(T, /turf/open/floor/plating/asteroid/snow))
+	if(istype(T, /turf/open/misc/asteroid/snow))
 		return ..()
 	return FALSE
 
 /datum/map_generator_module/bottomlayer/snow
-	spawnableTurfs = list(/turf/open/floor/plating/asteroid/snow/atmosphere = 100)
+	spawnableTurfs = list(/turf/open/misc/asteroid/snow/atmosphere = 100)
 
 /datum/map_generator_module/snow/pine_trees
 	spawnableAtoms = list(/obj/structure/flora/tree/pine = 30)
@@ -144,8 +136,7 @@
 		spawnableAtoms[i] = 1
 
 /datum/map_generator_module/snow/bunnies
-	//spawnableAtoms = list(/mob/living/simple_animal/chicken/rabbit/normal = 0.1)
-	spawnableAtoms = list(/mob/living/simple_animal/chicken/rabbit = 0.5)
+	spawnableAtoms = list(/mob/living/simple_animal/rabbit = 0.5)
 
 /datum/map_generator_module/snow/rand_ice_rocks
 	spawnableAtoms = list(/obj/structure/flora/rock/icy = 5, /obj/structure/flora/rock/pile/icy = 5)

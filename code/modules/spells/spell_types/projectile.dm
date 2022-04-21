@@ -1,10 +1,5 @@
-
-
 /obj/projectile/magic/spell
 	name = "custom spell projectile"
-	var/list/ignored_factions //Do not hit these
-	var/check_holy = FALSE
-	var/check_antimagic = FALSE
 	var/trigger_range = 0 //How far we do we need to be to hit
 	var/linger = FALSE //Can't hit anything but the intended target
 
@@ -36,36 +31,25 @@
 	trail.icon = trail_icon
 	trail.icon_state = trail_icon_state
 	//might be changed to temp overlay
-	trail.density = FALSE
+	trail.set_density(FALSE)
 	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	QDEL_IN(trail, trail_lifespan)
 
 /obj/projectile/magic/spell/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
-	. = ..()
 	if(linger && target != original)
 		return FALSE
-	if(ismob(target) && !direct_target) //Unsure about the direct target, i guess it could always skip these.
-		var/mob/M = target
-		if(M.anti_magic_check(check_antimagic, check_holy))
-			return FALSE
-		if(ignored_factions?.len && faction_check(M.faction,ignored_factions))
-			return FALSE
-
+	return ..()
 
 //NEEDS MAJOR CODE CLEANUP.
 
 /obj/effect/proc_holder/spell/targeted/projectile
 	name = "Projectile"
 	desc = "This spell summons projectiles which try to hit the targets."
-
-
-
-	var/proj_type =  /obj/projectile/magic/spell //IMPORTANT use only subtypes of this
-
-
+	antimagic_flags = MAGIC_RESISTANCE
+	var/proj_type = /obj/projectile/magic/spell //IMPORTANT use only subtypes of this
 	var/update_projectile = FALSE //So you want to admin abuse magic bullets ? This is for you
 	//Below only apply if update_projectile is true
-	var/proj_icon = 'icons/obj/projectiles.dmi'
+	var/proj_icon = 'icons/obj/guns/projectiles.dmi'
 	var/proj_icon_state = "spell"
 	var/proj_name = "a spell projectile"
 	var/proj_trail = FALSE //if it leaves a trail
@@ -79,8 +63,6 @@
 	var/proj_lifespan = 15 //in deciseconds * proj_step_delay
 	var/proj_step_delay = 1 //lower = faster
 	var/list/ignore_factions = list() //Faction types that will be ignored
-	var/check_antimagic = TRUE
-	var/check_holy = FALSE
 
 /obj/effect/proc_holder/spell/targeted/projectile/proc/fire_projectile(atom/target, mob/user)
 	var/obj/projectile/magic/spell/projectile = new proj_type()
@@ -122,7 +104,7 @@
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/choose_targets(mob/user = usr)
 	var/turf/T = get_turf(user)
-	for(var/i = 1; i < range; i++)
+	for(var/i in 1 to range-1)
 		var/turf/new_turf = get_step(T, user.dir)
 		if(new_turf.density)
 			break

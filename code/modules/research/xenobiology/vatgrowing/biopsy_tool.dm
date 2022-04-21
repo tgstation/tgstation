@@ -6,7 +6,7 @@
 	icon_state = "biopsy"
 
 ///Adds the swabbing component to the biopsy tool
-/obj/item/biopsy_tool/Initialize()
+/obj/item/biopsy_tool/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/swabbing, FALSE, FALSE, TRUE, CALLBACK(src, .proc/update_swab_icon), max_items = 1)
 

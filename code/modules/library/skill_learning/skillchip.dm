@@ -1,3 +1,10 @@
+// Skillchip categories
+//Various skillchip categories. Use these when setting which categories a skillchip restricts being paired with
+//while using the SKILLCHIP_RESTRICTED_CATEGORIES flag
+/// General related skillchip category
+#define SKILLCHIP_CATEGORY_GENERAL "general"
+
+
 /obj/item/skillchip
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
@@ -7,14 +14,14 @@
 	custom_price = PAYCHECK_MEDIUM * 3
 	w_class = WEIGHT_CLASS_SMALL
 
-	/// Trait automatically granted by this chip, optional
-	var/auto_trait
+	/// Traits automatically granted by this chip, optional. Lazylist.
+	var/list/auto_traits
 	/// Skill name shown on UI
 	var/skill_name
 	/// Skill description shown on UI
 	var/skill_description
 	/// Category string. Used alongside SKILLCHIP_RESTRICTED_CATEGORIES flag to make a chip incompatible with chips from another category.
-	var/chip_category = "general"
+	var/chip_category = SKILLCHIP_CATEGORY_GENERAL
 	/// List of any incompatible categories.
 	var/list/incompatibility_list
 	/// Fontawesome icon show on UI, list of possible icons https://fontawesome.com/icons?d=gallery&m=free
@@ -142,8 +149,8 @@
 	if(!silent && activate_message)
 		to_chat(user, activate_message)
 
-	if(auto_trait)
-		ADD_TRAIT(user, auto_trait, SKILLCHIP_TRAIT)
+	for(var/trait in auto_traits)
+		ADD_TRAIT(user, trait, SKILLCHIP_TRAIT)
 
 	active = TRUE
 
@@ -176,8 +183,8 @@
 	if(!silent && deactivate_message)
 		to_chat(user, deactivate_message)
 
-	if(auto_trait)
-		REMOVE_TRAIT(user, auto_trait, SKILLCHIP_TRAIT)
+	for(var/trait in auto_traits)
+		REMOVE_TRAIT(user, trait, SKILLCHIP_TRAIT)
 
 	active = FALSE
 
@@ -369,7 +376,7 @@
 /obj/item/skillchip/basketweaving
 	name = "Basketsoft 3000 skillchip"
 	desc = "Underwater edition."
-	auto_trait = TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE
+	auto_traits = list(TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE)
 	skill_name = "Underwater Basketweaving"
 	skill_description = "Master intricate art of using twine to create perfect baskets while submerged."
 	skill_icon = "shopping-basket"
@@ -379,7 +386,7 @@
 /obj/item/skillchip/wine_taster
 	name = "WINE skillchip"
 	desc = "Wine.Is.Not.Equal version 5."
-	auto_trait = TRAIT_WINE_TASTER
+	auto_traits = list(TRAIT_WINE_TASTER)
 	skill_name = "Wine Tasting"
 	skill_description = "Recognize wine vintage from taste alone. Never again lack an opinion when presented with an unknown drink."
 	skill_icon = "wine-bottle"
@@ -388,7 +395,7 @@
 
 /obj/item/skillchip/bonsai
 	name = "Hedge 3 skillchip"
-	auto_trait = TRAIT_BONSAI
+	auto_traits = list(TRAIT_BONSAI)
 	skill_name = "Hedgetrimming"
 	skill_description = "Trim hedges and potted plants into marvelous new shapes with any old knife. Not applicable to plastic plants."
 	skill_icon = "spa"
@@ -402,16 +409,54 @@
 	skill_icon = "plug"
 	activate_message = "<span class='notice'>You can now activate another chip through this adapter, but you're not sure why you did this...</span>"
 	deactivate_message = "<span class='notice'>You no longer have the useless skillchip adapter.</span>"
-	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE | SKILLCHIP_CHAMELEON_INCOMPATIBLE
+	skillchip_flags = SKILLCHIP_ALLOWS_MULTIPLE
 	// Literally does nothing.
 	complexity = 0
 	slot_use = 0
 
 /obj/item/skillchip/light_remover
 	name = "N16H7M4R3 skillchip"
-	auto_trait = TRAIT_LIGHTBULB_REMOVER
+	auto_traits = list(TRAIT_LIGHTBULB_REMOVER)
 	skill_name = "Lightbulb Removing"
 	skill_description = "Stop failing taking out lightbulbs today, no gloves needed!"
 	skill_icon = "lightbulb"
 	activate_message = "<span class='notice'>Your feel like your pain receptors are less sensitive to hot objects.</span>"
 	deactivate_message = "<span class='notice'>You feel like hot objects could stop you again...</span>"
+
+/obj/item/skillchip/disk_verifier
+	name = "K33P-TH4T-D15K skillchip"
+	auto_traits = list(TRAIT_DISK_VERIFIER)
+	skill_name = "Nuclear Disk Verification"
+	skill_description = "Nuclear authentication disks have an extremely long serial number for verification. This skillchip stores that number, which allows the user to automatically spot forgeries."
+	skill_icon = "save"
+	activate_message = "<span class='notice'>You feel your mind automatically verifying long serial numbers on disk shaped objects.</span>"
+	deactivate_message = "<span class='notice'>The innate recognition of absurdly long disk-related serial numbers fades from your mind.</span>"
+
+/obj/item/skillchip/entrails_reader
+	name = "3NTR41LS skillchip"
+	auto_traits = list(TRAIT_ENTRAILS_READER)
+	skill_name = "Entrails Reader"
+	skill_description = "Be able to learn about a person's life, by looking at their internal organs. Not to be confused with looking into the future."
+	skill_icon = "lungs"
+	activate_message = "<span class='notice'>You feel that you know a lot about interpreting organs.</span>"
+	deactivate_message = "<span class='notice'>Knowledge of liver damage, heart strain and lung scars fades from your mind.</span>"
+
+/obj/item/skillchip/brainwashing
+	name = "suspicious skillchip"
+	auto_traits = list(TRAIT_BRAINWASHING)
+	skill_name = "Brainwashing"
+	skill_description = "WARNING: The integrity of this chip is compromised. Please discard this skillchip."
+	skill_icon = "soap"
+	activate_message = span_notice("...But all at once it comes to you... something involving putting a brain in a washing machine?")
+	deactivate_message = span_warning("All knowledge of the secret brainwashing technique is GONE.")
+
+/obj/item/skillchip/brainwashing/examine(mob/user)
+	. = ..()
+	. += span_warning("It seems to have been corroded over time, putting this in your head may not be the best idea...")
+
+/obj/item/skillchip/brainwashing/on_activate(mob/living/carbon/user, silent = FALSE)
+	to_chat(user, span_danger("You get a pounding headache as the chip sends corrupt memories into your head!"))
+	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+	. = ..()
+
+#undef SKILLCHIP_CATEGORY_GENERAL

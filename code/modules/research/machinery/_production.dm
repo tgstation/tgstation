@@ -2,18 +2,24 @@
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
 	layer = BELOW_OBJ_LAYER
-	var/efficiency_coeff = 1				//Materials needed / coeff = actual.
+	/// Materials needed / coeff = actual.
+	var/efficiency_coeff = 1
 	var/list/categories = list()
 	var/datum/component/remote_materials/materials
 	var/allowed_department_flags = ALL
-	var/production_animation				//What's flick()'d on print.
+	/// What's flick()'d on print.
+	var/production_animation
 	var/allowed_buildtypes = NONE
 	var/list/datum/design/cached_designs
 	var/list/datum/design/matching_designs
-	var/department_tag = "Unidentified"			//used for material distribution among other things.
+	/// Used for material distribution among other things.
+	var/department_tag = "Unidentified"
 
 	var/screen = RESEARCH_FABRICATOR_SCREEN_MAIN
 	var/selected_category
+
+	/// What color is this machine's stripe? Leave null to not have a stripe.
+	var/stripe_color = null
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
@@ -23,6 +29,7 @@
 	update_designs()
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
 	RefreshParts()
+	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/Destroy()
 	materials = null
@@ -38,6 +45,7 @@
 			cached_designs |= d
 
 /obj/machinery/rnd/production/RefreshParts()
+	. = ..()
 	calculate_efficiency()
 
 /obj/machinery/rnd/production/ui_interact(mob/user)
@@ -48,7 +56,7 @@
 
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1
-	if(reagents)		//If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
+	if(reagents) //If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
 		reagents.maximum_volume = 0
 		for(var/obj/item/reagent_containers/glass/G in component_parts)
 			reagents.maximum_volume += G.volume
@@ -77,25 +85,48 @@
 		investigate_log("[key_name(usr)] built [amount] of [path] at [src]([type]).", INVESTIGATE_RESEARCH)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at \a [src]([type]).")
 	for(var/i in 1 to amount)
-		var/obj/item/I = new path(get_turf(src))
-		if(efficient_with(I.type))
-			I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
-			I.set_custom_materials(matlist)
+		new path(get_turf(src))
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
-/obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, mat)	// now returns how many times the item can be built with the material
-	if (!materials.mat_container)  // no connected silo
+/**
+ * Returns how many times over the given material requirement for the given design is satisfied.
+ *
+ * Arguments:
+ * - [being_built][/datum/design]: The design being referenced.
+ * - material: The material being checked.
+ */
+/obj/machinery/rnd/production/proc/check_material_req(datum/design/being_built, material)
+	if(!materials.mat_container)  // no connected silo
 		return 0
-	var/list/all_materials = being_built.reagents_list + being_built.materials
 
-	var/A = materials.mat_container.get_material_amount(mat)
-	if(!A)
-		A = reagents.get_reagent_amount(mat)
+	var/mat_amt = materials.mat_container.get_material_amount(material)
+	if(!mat_amt)
+		return 0
 
 	// these types don't have their .materials set in do_print, so don't allow
 	// them to be constructed efficiently
-	var/ef = efficient_with(being_built.build_path) ? efficiency_coeff : 1
-	return round(A / max(1, all_materials[mat] / ef))
+	var/efficiency = efficient_with(being_built.build_path) ? efficiency_coeff : 1
+	return round(mat_amt / max(1, being_built.materials[material] / efficiency))
+
+/**
+ * Returns how many times over the given reagent requirement for the given design is satisfied.
+ *
+ * Arguments:
+ * - [being_built][/datum/design]: The design being referenced.
+ * - reagent: The reagent being checked.
+ */
+/obj/machinery/rnd/production/proc/check_reagent_req(datum/design/being_built, reagent)
+	if(!reagents)  // no reagent storage
+		return 0
+
+	var/chem_amt = reagents.get_reagent_amount(reagent)
+	if(!chem_amt)
+		return 0
+
+	// these types don't have their .materials set in do_print, so don't allow
+	// them to be constructed efficiently
+	var/efficiency = efficient_with(being_built.build_path) ? efficiency_coeff : 1
+	return round(chem_amt / max(1, being_built.reagents_list[reagent] / efficiency))
 
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
@@ -122,11 +153,11 @@
 	if(materials.on_hold())
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
-	var/power = 1000
+	var/power = active_power_usage
 	amount = clamp(amount, 1, 50)
 	for(var/M in D.materials)
 		power += round(D.materials[M] * amount / 35)
-	power = min(3000, power)
+	power = min(active_power_usage, power)
 	use_power(power)
 	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
 	var/list/efficient_mats = list()
@@ -239,40 +270,51 @@
 /obj/machinery/rnd/production/proc/design_menu_entry(datum/design/D, coeff)
 	if(!istype(D))
 		return
-	if(!coeff)
-		coeff = efficiency_coeff
 	if(!efficient_with(D.build_path))
 		coeff = 1
-	var/list/l = list()
-	var/temp_material
-	var/c = 50
-	var/t
-	var/all_materials = D.materials + D.reagents_list
-	for(var/M in all_materials)
-		t = check_mat(D, M)
-		temp_material += " | "
-		if (t < 1)
-			temp_material += "<span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
-		else
-			temp_material += " [all_materials[M]/coeff] [CallMaterialName(M)]"
-		c = min(c,t)
+	else if(!coeff)
+		coeff = efficiency_coeff
 
-	if (c >= 1)
-		l += "<A href='?src=[REF(src)];build=[D.id];amount=1'>[D.name]</A>[RDSCREEN_NOBREAK]"
-		if(c >= 5)
-			l += "<A href='?src=[REF(src)];build=[D.id];amount=5'>x5</A>[RDSCREEN_NOBREAK]"
-		if(c >= 10)
-			l += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
-		l += "[temp_material][RDSCREEN_NOBREAK]"
+	var/list/entry_text = list()
+	var/temp_material
+	var/max_production = 50
+	var/list/cached_mats = D.materials
+	for(var/material in cached_mats)
+		var/enough_mats = check_material_req(D, material)
+		max_production = min(max_production, enough_mats)
+
+		temp_material += " | "
+		if (enough_mats < 1)
+			temp_material += "<span class='bad'>[cached_mats[material]/coeff] [CallMaterialName(material)]</span>"
+		else
+			temp_material += " [cached_mats[material]/coeff] [CallMaterialName(material)]"
+
+	var/list/cached_reagents = D.reagents_list
+	for(var/reagent in cached_reagents)
+		var/enough_chems = check_reagent_req(D, reagent)
+		max_production = min(max_production, enough_chems)
+
+		temp_material += " | "
+		if (enough_chems < 1)
+			temp_material += "<span class='bad'>[cached_reagents[reagent]/coeff] [CallMaterialName(reagent)]</span>"
+		else
+			temp_material += " [cached_reagents[reagent]/coeff] [CallMaterialName(reagent)]"
+
+	if (max_production >= 1)
+		entry_text += "<A href='?src=[REF(src)];build=[D.id];amount=1'>[D.name]</A>[RDSCREEN_NOBREAK]"
+		if(max_production >= 5)
+			entry_text += "<A href='?src=[REF(src)];build=[D.id];amount=5'>x5</A>[RDSCREEN_NOBREAK]"
+		if(max_production >= 10)
+			entry_text += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
+		entry_text += "[temp_material][RDSCREEN_NOBREAK]"
 	else
-		l += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
-	l += ""
-	return l
+		entry_text += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
+	entry_text += ""
+	return entry_text
 
 /obj/machinery/rnd/production/Topic(raw, ls)
 	if(..())
 		return
-	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(ls["switch_screen"])
 		screen = text2num(ls["switch_screen"])
@@ -290,7 +332,11 @@
 	if(ls["category"])
 		selected_category = ls["category"]
 	if(ls["dispose"])  //Causes the protolathe to dispose of a single reagent (all of it)
-		reagents.del_reagent(ls["dispose"])
+		var/reagent_path = text2path(ls["dispose"])
+		if(!ispath(reagent_path, /datum/reagent))
+			stack_trace("Invalid reagent typepath - [ls["dispose"]] - returned in reagent disposal topic call")
+		else
+			reagents.del_reagent(reagent_path)
 	if(ls["disposeall"]) //Causes the protolathe to dispose of all it's reagents.
 		reagents.clear_reagents()
 	if(ls["ejectsheet"]) //Causes the protolathe to eject a sheet of material
@@ -359,3 +405,20 @@
 
 	l += "</tr></table></div>"
 	return l
+
+// Stuff for the stripe on the department machines
+/obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	. = ..()
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/machinery/rnd/production/update_overlays()
+	. = ..()
+	if(!stripe_color)
+		return
+	var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolate_stripe")
+	if(!panel_open)
+		stripe.icon_state = "protolathe_stripe"
+	else
+		stripe.icon_state = "protolathe_stripe_t"
+	stripe.color = stripe_color
+	. += stripe

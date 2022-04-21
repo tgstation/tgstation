@@ -1,5 +1,35 @@
 // A very special plant, deserving it's own file.
 
+// Yes, i'm talking about cabbage, baby! No, just kidding, but cabbages are the precursor to replica pods, so they are here as well.
+/obj/item/seeds/cabbage
+	name = "pack of cabbage seeds"
+	desc = "These seeds grow into cabbages."
+	icon_state = "seed-cabbage"
+	species = "cabbage"
+	plantname = "Cabbages"
+	product = /obj/item/food/grown/cabbage
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 4
+	instability = 10
+	growthstages = 1
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	mutatelist = list(/obj/item/seeds/replicapod)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	seed_flags = null
+
+/obj/item/food/grown/cabbage
+	seed = /obj/item/seeds/cabbage
+	name = "cabbage"
+	desc = "Ewwwwwwwwww. Cabbage."
+	icon_state = "cabbage"
+	foodtypes = VEGETABLES
+	wine_power = 20
+
+///The actual replica pods themselves!
 /obj/item/seeds/replicapod
 	name = "pack of replica pod seeds"
 	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
@@ -12,6 +42,7 @@
 	maturation = 10
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
+	instability = 15 //allows it to gain reagent genes from nearby plants
 	potency = 30
 	var/volume = 5
 	var/ckey
@@ -26,47 +57,69 @@
 	var/contains_sample = FALSE
 	var/being_harvested = FALSE
 
-/obj/item/seeds/replicapod/Initialize()
+/obj/item/seeds/replicapod/Initialize(mapload)
 	. = ..()
 
 	create_reagents(volume, INJECTABLE|DRAWABLE)
 
-/obj/item/seeds/replicapod/on_reagent_change(changetype)
-	if(changetype == ADD_REAGENT)
-		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
-		if(B)
-			if(B.data["mind"] && B.data["cloneable"])
-				mind = B.data["mind"]
-				ckey = B.data["ckey"]
-				realName = B.data["real_name"]
-				blood_gender = B.data["gender"]
-				blood_type = B.data["blood_type"]
-				features = B.data["features"]
-				factions = B.data["factions"]
-				quirks = B.data["quirks"]
-				sampleDNA = B.data["blood_DNA"]
-				contains_sample = TRUE
-				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
-				log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
-			else
-				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
+/obj/item/seeds/replicapod/create_reagents(max_vol, flags)
+	. = ..()
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT), .proc/on_reagent_add)
+	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, .proc/on_reagent_del)
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
 
-	if(!reagents.has_reagent(/datum/reagent/blood))
-		mind = null
-		ckey = null
-		realName = null
-		blood_gender = null
-		blood_type = null
-		features = null
-		factions = null
-		sampleDNA = null
-		contains_sample = FALSE
+/// Handles the seeds' reagents datum getting deleted.
+/obj/item/seeds/replicapod/proc/on_reagents_del(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_PARENT_QDELETING))
+	return NONE
 
-/obj/item/seeds/replicapod/get_analyzer_text()
-	var/text = ..()
+/// Handles reagents getting added to this seed.
+/obj/item/seeds/replicapod/proc/on_reagent_add(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
+	if(!B)
+		return
+
+	if(B.data["mind"] && B.data["cloneable"])
+		mind = B.data["mind"]
+		ckey = B.data["ckey"]
+		realName = B.data["real_name"]
+		blood_gender = B.data["gender"]
+		blood_type = B.data["blood_type"]
+		features = B.data["features"]
+		factions = B.data["factions"]
+		quirks = B.data["quirks"]
+		sampleDNA = B.data["blood_DNA"]
+		contains_sample = TRUE
+		visible_message(span_notice("The [src] is injected with a fresh blood sample."))
+		log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
+	else
+		visible_message(span_warning("The [src] rejects the sample!"))
+	return NONE
+
+/// Handles reagents being deleted from these seeds.
+/obj/item/seeds/replicapod/proc/on_reagent_del(changetype)
+	SIGNAL_HANDLER
+	if(reagents.has_reagent(/datum/reagent/blood))
+		return
+
+	mind = null
+	ckey = null
+	realName = null
+	blood_gender = null
+	blood_type = null
+	features = null
+	factions = null
+	sampleDNA = null
+	contains_sample = FALSE
+	return NONE
+
+/obj/item/seeds/replicapod/get_unique_analyzer_text()
 	if(contains_sample)
-		text += "\n It contains a blood sample with blood DNA (UE) \"sampleDNA\"." //blood DNA (UE) shows in medical records and is readable by forensics scanners
-	return text
+		return "It contains a blood sample with blood DNA (UE) \"[sampleDNA]\"." //blood DNA (UE) shows in medical records and is readable by forensics scanners
+	else
+		return null
 
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
@@ -100,7 +153,7 @@
 	if(!make_podman)
 		// Prevent accidental harvesting. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
 		if(mind || ckey)
-			var/choice = alert("The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", "Harvest Seeds", "Cancel")
+			var/choice = tgui_alert(usr,"The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", list("Harvest Seeds", "Cancel"))
 			if(choice == "Cancel")
 				return result
 
@@ -119,11 +172,11 @@
 		if(prob(getYield() * 20))
 			seed_count++
 		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
-		for(var/i=0,i<seed_count,i++)
+		for(var/i  in 1 to seed_count)
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
 			result.Add(harvestseeds)
 			harvestseeds.forceMove(output_loc)
-		parent.update_tray()
+		parent.update_tray(user, seed_count)
 		return result
 
 	// Congratulations! %Do you want to build a pod man?%
@@ -142,11 +195,15 @@
 	podman.faction |= factions
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
+	if(!features["pod_hair"])
+		features["pod_hair"] = pick(GLOB.pod_hair_list)
+
 	for(var/V in quirks)
 		new V(podman)
-	podman.hardset_dna(null,null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+	podman.hardset_dna(null, null, null, podman.real_name, blood_type, new /datum/species/pod, features) // Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 	podman.set_cloned_appearance()
-	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 
-	parent.update_tray()
+	podman.dna.species.exotic_blood = max(reagents_add) || /datum/reagent/water
+	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
+	parent.update_tray(user, 1)
 	return result

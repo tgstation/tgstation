@@ -5,16 +5,29 @@ have ways of interacting with a specific mob and control it.
 ///OOK OOK OOK
 
 /datum/ai_controller/monkey
-	blackboard = list(BB_MONKEY_AGRESSIVE = FALSE,\
-	BB_MONKEY_BEST_FORCE_FOUND = 0,\
-	BB_MONKEY_ENEMIES = list(),\
-	BB_MONKEY_BLACKLISTITEMS = list(),\
-	BB_MONKEY_PICKUPTARGET = null,\
-	BB_MONKEY_PICKPOCKETING = FALSE,
-	BB_MONKEY_DISPOSING = FALSE,
-	BB_MONKEY_TARGET_DISPOSAL = null,
-	BB_MONKEY_CURRENT_ATTACK_TARGET = null,
-	BB_MONKEY_CURRENT_ATTACK_TARGET)
+	movement_delay = 0.4 SECONDS
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/generic_resist,
+		/datum/ai_planning_subtree/monkey_combat,
+		/datum/ai_planning_subtree/generic_hunger,
+		/datum/ai_planning_subtree/generic_play_instrument,
+		/datum/ai_planning_subtree/monkey_shenanigans,
+	)
+	blackboard = list(
+		BB_MONKEY_AGGRESSIVE = FALSE,
+		BB_MONKEY_BEST_FORCE_FOUND = 0,
+		BB_MONKEY_ENEMIES = list(),
+		BB_MONKEY_BLACKLISTITEMS = list(),
+		BB_MONKEY_PICKUPTARGET = null,
+		BB_MONKEY_PICKPOCKETING = FALSE,
+		BB_MONKEY_DISPOSING = FALSE,
+		BB_MONKEY_TARGET_DISPOSAL = null,
+		BB_MONKEY_CURRENT_ATTACK_TARGET = null,
+		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
+		BB_MONKEY_GUN_WORKED = TRUE,
+		BB_SONG_LINES = MONKEY_SONG,
+	)
+	idle_behavior = /datum/idle_behavior/idle_monkey
 
 /datum/ai_controller/monkey/angry
 
@@ -22,88 +35,64 @@ have ways of interacting with a specific mob and control it.
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	blackboard[BB_MONKEY_AGRESSIVE] = TRUE //Angry cunt
+	blackboard[BB_MONKEY_AGGRESSIVE] = TRUE //Angry cunt
 
 /datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
+
+	var/mob/living/living_pawn = new_pawn
+	RegisterSignal(new_pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_paw)
+	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_ANIMAL, .proc/on_attack_animal)
+	RegisterSignal(new_pawn, COMSIG_MOB_ATTACK_ALIEN, .proc/on_attack_alien)
 	RegisterSignal(new_pawn, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
 	RegisterSignal(new_pawn, COMSIG_ATOM_HITBY, .proc/on_hitby)
-	RegisterSignal(new_pawn, COMSIG_MOVABLE_CROSSED, .proc/on_Crossed)
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, .proc/on_startpulling)
 	RegisterSignal(new_pawn, COMSIG_LIVING_TRY_SYRINGE, .proc/on_try_syringe)
 	RegisterSignal(new_pawn, COMSIG_ATOM_HULK_ATTACK, .proc/on_attack_hulk)
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, .proc/on_attempt_cuff)
+	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, .proc/update_movespeed)
+
+	movement_delay = living_pawn.cached_multiplicative_slowdown
 	return ..() //Run parent at end
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_MOVABLE_CROSSED, COMSIG_LIVING_START_PULL,\
-	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED))
+	UnregisterSignal(pawn, list(
+		COMSIG_MOVABLE_CROSS,
+		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_ATTACK_PAW,
+		COMSIG_ATOM_BULLET_ACT,
+		COMSIG_ATOM_HITBY,
+		COMSIG_LIVING_START_PULL,
+		COMSIG_LIVING_TRY_SYRINGE,
+		COMSIG_ATOM_HULK_ATTACK,
+		COMSIG_CARBON_CUFF_ATTEMPTED,
+		COMSIG_MOB_MOVESPEED_UPDATED,
+		COMSIG_ATOM_ATTACK_ANIMAL,
+		COMSIG_MOB_ATTACK_ALIEN,
+	))
+
 	return ..() //Run parent at end
 
+// Stops sentient monkeys from being knocked over like weak dunces.
+/datum/ai_controller/monkey/on_sentience_gained()
+	. = ..()
+	UnregisterSignal(pawn, COMSIG_MOVABLE_CROSS)
+
+/datum/ai_controller/monkey/on_sentience_lost()
+	. = ..()
+	RegisterSignal(pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
+
 /datum/ai_controller/monkey/able_to_run()
+	. = ..()
 	var/mob/living/living_pawn = pawn
 
 	if(IS_DEAD_OR_INCAP(living_pawn))
 		return FALSE
-	return ..()
-
-/datum/ai_controller/monkey/SelectBehaviors(delta_time)
-	current_behaviors = list()
-	var/mob/living/living_pawn = pawn
-
-	if(SHOULD_RESIST(living_pawn) && DT_PROB(MONKEY_RESIST_PROB, delta_time))
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/resist) //BRO IM ON FUCKING FIRE BRO
-		return //IM NOT DOING ANYTHING ELSE BUT EXTUINGISH MYSELF, GOOD GOD HAVE MERCY.
-
-	var/list/enemies = blackboard[BB_MONKEY_ENEMIES]
-
-	if(HAS_TRAIT(pawn, TRAIT_PACIFISM)) //Not a pacifist? lets try some combat behavior.
-		return
-	if(length(enemies) || blackboard[BB_MONKEY_AGRESSIVE]) //We have enemies or are pissed
-
-		var/mob/living/selected_enemy
-
-		for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, living_pawn))
-			if(possible_enemy == living_pawn || (!enemies[possible_enemy] && (!blackboard[BB_MONKEY_AGRESSIVE] || HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey)))) //Are they an enemy? (And do we even care?)
-				continue
-
-			selected_enemy = possible_enemy
-			break
-		if(selected_enemy)
-			if(!selected_enemy.stat) //He's up, get him!
-				if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
-					blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
-					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_flee)
-					return //I'm running fuck you guys
-
-				if(TryFindWeapon()) //Getting a weapon is higher priority if im not fleeing.
-					return
-
-				blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
-				current_movement_target = selected_enemy
-				if(blackboard[BB_MONKEY_RECRUIT_COOLDOWN] < world.time)
-					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/recruit_monkeys)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/battle_screech/monkey)
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_attack_mob)
-				return //Focus on this
-
-			else //He's down, can we disposal him?
-				var/obj/machinery/disposal/bodyDisposal = locate(/obj/machinery/disposal/) in view(MONKEY_ENEMY_VISION, living_pawn)
-				if(bodyDisposal)
-					blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] = selected_enemy
-					blackboard[BB_MONKEY_TARGET_DISPOSAL] = bodyDisposal
-					current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/disposal_mob)
-					return
-
-			return //Too busy fighting to steal atm.
-
-	else if(DT_PROB(MONKEY_SHENANIGAN_PROB, delta_time))
-		if(TryFindWeapon()) //Found a better weapon, let's grab it first.
-			return
 
 ///re-used behavior pattern by monkeys for finding a weapon
 /datum/ai_controller/monkey/proc/TryFindWeapon()
@@ -112,57 +101,65 @@ have ways of interacting with a specific mob and control it.
 	if(!locate(/obj/item) in living_pawn.held_items)
 		blackboard[BB_MONKEY_BEST_FORCE_FOUND] = 0
 
-	var/obj/item/W = locate(/obj/item) in oview(2, living_pawn)
+	if(blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && (locate(/obj/item/gun) in living_pawn.held_items))
+		// We have a gun, what could we possibly want?
+		return FALSE
 
-	if(W && !blackboard[BB_MONKEY_BLACKLISTITEMS][W] && W.force > blackboard[BB_MONKEY_BEST_FORCE_FOUND])
-		blackboard[BB_MONKEY_PICKUPTARGET] = W
-		current_movement_target = W
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/ground)
-		return TRUE
+	var/obj/item/weapon
+	var/list/nearby_items = list()
+	for(var/obj/item/item in oview(2, living_pawn))
+		nearby_items += item
+
+	weapon = GetBestWeapon(src, nearby_items, living_pawn.held_items)
+
+	var/pickpocket = FALSE
+	for(var/mob/living/carbon/human/human in oview(5, living_pawn))
+		var/obj/item/held_weapon = GetBestWeapon(src, human.held_items + weapon, living_pawn.held_items)
+		if(held_weapon == weapon) // It's just the same one, not a held one
+			continue
+		pickpocket = TRUE
+		weapon = held_weapon
+
+	if(!weapon || (weapon in living_pawn.held_items))
+		return FALSE
+
+	blackboard[BB_MONKEY_PICKUPTARGET] = weapon
+	current_movement_target = weapon
+	if(pickpocket)
+		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket)
 	else
-		var/mob/living/carbon/human/H = locate(/mob/living/carbon/human/) in oview(2,living_pawn)
-		if(H)
-			W = pick(H.held_items)
-			if(W && !blackboard[BB_MONKEY_BLACKLISTITEMS][W] && W.force > blackboard[BB_MONKEY_BEST_FORCE_FOUND])
-				blackboard[BB_MONKEY_PICKUPTARGET] = W
-				current_movement_target = W
-				current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/monkey_equip/pickpocket)
-				return TRUE
-
-//When idle just kinda fuck around.
-/datum/ai_controller/monkey/PerformIdleBehavior(delta_time)
-	var/mob/living/living_pawn = pawn
-
-	if(DT_PROB(25, delta_time) && (living_pawn.mobility_flags & MOBILITY_MOVE) && isturf(living_pawn.loc) && !living_pawn.pulledby)
-		step(living_pawn, pick(GLOB.cardinals))
-	else if(DT_PROB(5, delta_time))
-		INVOKE_ASYNC(living_pawn, /mob.proc/emote, pick("screech"))
-	else if(DT_PROB(1, delta_time))
-		INVOKE_ASYNC(living_pawn, /mob.proc/emote, pick("scratch","jump","roll","tail"))
+		queue_behavior(/datum/ai_behavior/monkey_equip/ground)
+	return TRUE
 
 ///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/L)
 	var/list/enemies = blackboard[BB_MONKEY_ENEMIES]
-	enemies[L] += MONKEY_HATRED_AMOUNT
+	enemies[WEAKREF(L)] += MONKEY_HATRED_AMOUNT
 
 /datum/ai_controller/monkey/proc/on_attackby(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
 	if(I.force && I.damtype != STAMINA)
 		retaliate(user)
 
-/datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/L)
+/datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
-		retaliate(L)
-	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
-		retaliate(L)
+	if((user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)) && prob(MONKEY_RETALIATE_PROB))
+		retaliate(user)
 
-/datum/ai_controller/monkey/proc/on_attack_paw(datum/source, mob/living/L)
+/datum/ai_controller/monkey/proc/on_attack_paw(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
-		retaliate(L)
-	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
-		retaliate(L)
+	if((user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)) && prob(MONKEY_RETALIATE_PROB))
+		retaliate(user)
+
+/datum/ai_controller/monkey/proc/on_attack_animal(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+	if(user.melee_damage_upper > 0 && prob(MONKEY_RETALIATE_PROB))
+		retaliate(user)
+
+/datum/ai_controller/monkey/proc/on_attack_alien(datum/source, mob/living/user, list/modifiers)
+	SIGNAL_HANDLER
+	if((user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)) && prob(MONKEY_RETALIATE_PROB))
+		retaliate(user)
 
 /datum/ai_controller/monkey/proc/on_bullet_act(datum/source, obj/projectile/Proj)
 	SIGNAL_HANDLER
@@ -177,15 +174,16 @@ have ways of interacting with a specific mob and control it.
 	if(istype(AM, /obj/item))
 		var/mob/living/living_pawn = pawn
 		var/obj/item/I = AM
-		if(I.throwforce < living_pawn.health && ishuman(I.thrownby))
-			var/mob/living/carbon/human/H = I.thrownby
+		var/mob/thrown_by = I.thrownby?.resolve()
+		if(I.throwforce && I.throwforce < living_pawn.health && ishuman(thrown_by))
+			var/mob/living/carbon/human/H = thrown_by
 			retaliate(H)
 
-/datum/ai_controller/monkey/proc/on_Crossed(datum/source, atom/movable/AM)
+/datum/ai_controller/monkey/proc/on_crossed(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
-	if(!IS_DEAD_OR_INCAP(living_pawn) && ismob(AM))
-		var/mob/living/in_the_way_mob = AM
+	if(!IS_DEAD_OR_INCAP(living_pawn) && isliving(crossed))
+		var/mob/living/in_the_way_mob = crossed
 		in_the_way_mob.knockOver(living_pawn)
 		return
 
@@ -211,3 +209,11 @@ have ways of interacting with a specific mob and control it.
 	// chance of monkey retaliation
 	if(prob(MONKEY_CUFF_RETALIATION_PROB))
 		retaliate(user)
+
+/datum/ai_controller/monkey/proc/update_movespeed(mob/living/pawn)
+	SIGNAL_HANDLER
+	movement_delay = pawn.cached_multiplicative_slowdown
+
+/datum/ai_controller/monkey/proc/target_del(target)
+	SIGNAL_HANDLER
+	blackboard[BB_MONKEY_BLACKLISTITEMS] -= target

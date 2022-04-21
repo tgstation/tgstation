@@ -46,8 +46,12 @@
 /turf/open/floor/plating,
 /area/mafia)
 "l" = (
-/obj/item/bedsheet/brown,
-/obj/structure/bed,
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "m" = (
@@ -60,8 +64,12 @@
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "o" = (
-/obj/item/bedsheet/blue,
-/obj/structure/bed,
+/obj/item/bedsheet/blue{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "p" = (
@@ -74,10 +82,10 @@
 /turf/closed/indestructible/fakeglass,
 /area/mafia)
 "q" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "r" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "s" = (
 /turf/closed/wall/ice,
@@ -100,7 +108,7 @@
 /turf/open/lava/plasma/mafia,
 /area/mafia)
 "x" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	max_integrity = 9999;
 	opacity = 0
 	},
@@ -111,7 +119,7 @@
 	name = "Station Night Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "y" = (
 /obj/effect/landmark/mafia,
@@ -122,7 +130,7 @@
 /turf/open/lava/plasma/mafia,
 /area/mafia)
 "A" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	max_integrity = 9999
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -132,7 +140,7 @@
 	name = "Station Night Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "B" = (
 /obj/effect/landmark/mafia,
@@ -165,8 +173,12 @@
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "H" = (
-/obj/item/bedsheet/black,
-/obj/structure/bed,
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "I" = (

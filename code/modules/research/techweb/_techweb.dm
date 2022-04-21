@@ -1,27 +1,58 @@
-
-//Used \n[\s]*origin_tech[\s]*=[\s]*"[\S]+" to delete all origin techs.
-//Or \n[\s]*origin_tech[\s]*=[\s]list\([A-Z_\s=0-9,]*\)
-//Used \n[\s]*req_tech[\s]*=[\s]*list\(["a-z\s=0-9,]*\) to delete all req_techs.
-
-//Techweb datums are meant to store unlocked research, being able to be stored on research consoles, servers, and disks. They are NOT global.
+/**
+ * # Techweb
+ *
+ * A datum representing a research techweb
+ *
+ * Techweb datums are meant to store unlocked research, being able to be stored
+ * on research consoles, servers, and disks. They are NOT global.
+ */
 /datum/techweb
-	var/list/researched_nodes = list()		//Already unlocked and all designs are now available. Assoc list, id = TRUE
-	var/list/visible_nodes = list()			//Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE
-	var/list/available_nodes = list()		//Nodes that can immediately be researched, all reqs met. assoc list, id = TRUE
-	var/list/researched_designs = list()	//Designs that are available for use. Assoc list, id = TRUE
-	var/list/custom_designs = list()		//Custom inserted designs like from disks that should survive recalculation.
-	var/list/boosted_nodes = list()			//Already boosted nodes that can't be boosted again. node id = path of boost object.
-	var/list/hidden_nodes = list()			//Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
-	var/list/deconstructed_items = list()						//items already deconstructed for a generic point boost. path = list(point_type = points)
-	var/list/research_points = list()										//Available research points. type = number
+	/// Already unlocked and all designs are now available. Assoc list, id = TRUE
+	var/list/researched_nodes = list()
+	/// Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE
+	var/list/visible_nodes = list()
+	/// Nodes that can immediately be researched, all reqs met. assoc list, id = TRUE
+	var/list/available_nodes = list()
+	/// Designs that are available for use. Assoc list, id = TRUE
+	var/list/researched_designs = list()
+	/// Custom inserted designs like from disks that should survive recalculation.
+	var/list/custom_designs = list()
+	/// Already boosted nodes that can't be boosted again. node id = path of boost object.
+	var/list/boosted_nodes = list()
+	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
+	var/list/hidden_nodes = list()
+	/// Items already deconstructed for a generic point boost, path = list(point_type = points)
+	var/list/deconstructed_items = list()
+	/// Available research points, type = number
+	var/list/research_points = list()
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 	var/id = "generic"
-	var/list/research_logs = list()								//IC logs.
-	var/largest_bomb_value = 0
-	var/organization = "Third-Party"							//Organization name, used for display.
-	var/list/last_bitcoins = list()								//Current per-second production, used for display only.
-	var/list/discovered_mutations = list()                           //Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console
-	var/list/tiers = list()										//Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
+	/// IC logs
+	var/list/research_logs = list()
+	/// Organization name, used for display
+	var/organization = "Third-Party"
+	/// Current per-second production, used for display only.
+	var/list/last_bitcoins = list()
+	/// Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console
+	var/list/discovered_mutations = list()
+	/// Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
+	var/list/tiers = list()
+	/// Available experiments
+	var/list/available_experiments = list()
+	/// Completed experiments
+	var/list/completed_experiments = list()
+	
+	/**
+	 * Assoc list of relationships with various partners
+	 * scientific_cooperation[partner_typepath] = relationship
+	 */
+	var/list/scientific_cooperation
+	/**
+	  * Assoc list of papers already published by the crew. 
+	  * published_papers[experiment_typepath][tier] = paper
+	  * Filled with nulls on init, populated only on publication.
+	*/
+	var/list/published_papers
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -29,13 +60,13 @@
 		var/datum/techweb_node/DN = SSresearch.techweb_node_by_id(i)
 		research_node(DN, TRUE, FALSE, FALSE)
 	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
+	initialize_published_papers()
 	return ..()
-
 /datum/techweb/admin
 	id = "ADMIN"
 	organization = "CentCom"
 
-/datum/techweb/admin/New()	//All unlocked.
+/datum/techweb/admin/New() //All unlocked.
 	. = ..()
 	for(var/i in SSresearch.techweb_nodes)
 		var/datum/techweb_node/TN = SSresearch.techweb_nodes[i]
@@ -44,19 +75,19 @@
 		research_points[i] = INFINITY
 	hidden_nodes = list()
 
-/datum/techweb/science	//Global science techweb for RND consoles.
+/datum/techweb/science //Global science techweb for RND consoles.
 	id = "SCIENCE"
 	organization = "Nanotrasen"
 
-/datum/techweb/bepis	//Should contain only 1 BEPIS tech selected at random.
+/datum/techweb/bepis //Should contain only 1 BEPIS tech selected at random.
 	id = "EXPERIMENTAL"
 	organization = "Nanotrasen R&D"
 
 /datum/techweb/bepis/New(remove_tech = TRUE)
 	. = ..()
-	var/bepis_id = pick(SSresearch.techweb_nodes_experimental)	//To add a new tech to the BEPIS, add the ID to this pick list.
+	var/bepis_id = pick(SSresearch.techweb_nodes_experimental) //To add a new tech to the BEPIS, add the ID to this pick list.
 	var/datum/techweb_node/BN = (SSresearch.techweb_node_by_id(bepis_id))
-	hidden_nodes -= BN.id				//Has to be removed from hidden nodes
+	hidden_nodes -= BN.id //Has to be removed from hidden nodes
 	research_node(BN, TRUE, FALSE, FALSE)
 	update_node_status(BN)
 	if(remove_tech)
@@ -123,12 +154,12 @@
 		l[i] = amount
 	modify_point_list(l)
 
-/datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE)				//Adds any missing research to theirs.
+/datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE) //Adds any missing research to theirs.
 	if(unlock_hidden)
 		for(var/i in receiver.hidden_nodes)
 			CHECK_TICK
-			if(!hidden_nodes[i])
-				receiver.hidden_nodes -= i		//We can see it so let them see it too.
+			if(available_nodes[i] || researched_nodes[i] || visible_nodes[i])
+				receiver.hidden_nodes -= i //We can see it so let them see it too.
 	for(var/i in researched_nodes)
 		CHECK_TICK
 		receiver.research_node_id(i, TRUE, FALSE, FALSE)
@@ -146,7 +177,7 @@
 	returned.hidden_nodes = hidden_nodes.Copy()
 	return returned
 
-/datum/techweb/proc/get_visible_nodes()			//The way this is set up is shit but whatever.
+/datum/techweb/proc/get_visible_nodes() //The way this is set up is shit but whatever.
 	return visible_nodes - hidden_nodes
 
 /datum/techweb/proc/get_available_nodes()
@@ -179,6 +210,7 @@
 /datum/techweb/proc/add_design(datum/design/design, custom = FALSE)
 	if(!istype(design))
 		return FALSE
+	SEND_SIGNAL(src, COMSIG_TECHWEB_ADD_DESIGN, design, custom)
 	researched_designs[design.id] = TRUE
 	if(custom)
 		custom_designs[design.id] = TRUE
@@ -192,6 +224,7 @@
 		return FALSE
 	if(custom_designs[design.id] && !custom)
 		return FALSE
+	SEND_SIGNAL(src, COMSIG_TECHWEB_REMOVE_DESIGN, design, custom)
 	custom_designs -= design.id
 	researched_designs -= design.id
 	return TRUE
@@ -206,6 +239,69 @@
 			return FALSE
 	return TRUE
 
+/**
+ * Checks if all experiments have been completed for a given node on this techweb
+ *
+ * Arguments:
+ * * node - the node to check
+ */
+/datum/techweb/proc/have_experiments_for_node(datum/techweb_node/node)
+	. = TRUE
+	for (var/experiment_type in node.required_experiments)
+		if (!completed_experiments[experiment_type])
+			return FALSE
+
+/**
+ * Checks if a node can be unlocked on this techweb, having the required points and experiments
+ *
+ * Arguments:
+ * * node - the node to check
+ */
+/datum/techweb/proc/can_unlock_node(datum/techweb_node/node)
+	return can_afford(node.get_price(src)) && have_experiments_for_node(node)
+
+/**
+ * Adds an experiment to this techweb by its type, ensures that no duplicates are added.
+ *
+ * Arguments:
+ * * experiment_type - the type of the experiment to add
+ */
+/datum/techweb/proc/add_experiment(experiment_type)
+	. = TRUE
+	// check active experiments for experiment of this type
+	for (var/available_experiment in available_experiments)
+		var/datum/experiment/experiment = available_experiment
+		if (experiment.type == experiment_type)
+			return FALSE
+	// check completed experiments for experiments of this type
+	for (var/completed_experiment in completed_experiments)
+		var/datum/experiment/experiment = completed_experiment
+		if (experiment == experiment_type)
+			return FALSE
+	available_experiments += new experiment_type()
+
+/**
+ * Adds a list of experiments to this techweb by their types, ensures that no duplicates are added.
+ *
+ * Arguments:
+ * * experiment_list - the list of types of experiments to add
+ */
+/datum/techweb/proc/add_experiments(list/experiment_list)
+	. = TRUE
+	for (var/experiment_type in experiment_list)
+		var/datum/experiment/experiment = experiment_type
+		. = . && add_experiment(experiment)
+
+/**
+ * Notifies the techweb that an experiment has been completed, updating internal state of the techweb to reflect this.
+ *
+ * Arguments:
+ * * completed_experiment - the experiment which was completed
+ */
+/datum/techweb/proc/complete_experiment(datum/experiment/completed_experiment)
+	available_experiments -= completed_experiment
+	completed_experiments[completed_experiment.type] = completed_experiment
+
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
 
@@ -217,21 +313,25 @@
 		return FALSE
 	update_node_status(node)
 	if(!force)
-		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))))
+		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))) || !have_experiments_for_node(node))
 			return FALSE
 	if(auto_adjust_cost)
 		remove_point_list(node.get_price(src))
-	researched_nodes[node.id] = TRUE				//Add to our researched list
+	researched_nodes[node.id] = TRUE //Add to our researched list
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
-		update_node_status(SSresearch.techweb_node_by_id(id))
+		var/datum/techweb_node/unlocked_node = SSresearch.techweb_node_by_id(id)
+		if (unlocked_node.required_experiments.len > 0)
+			add_experiments(unlocked_node.required_experiments)
+		if (unlocked_node.discount_experiments.len > 0)
+			add_experiments(unlocked_node.discount_experiments)
+		update_node_status(unlocked_node)
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
 	update_node_status(node)
 	if(get_that_dosh)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
-		if(D)
-			D.adjust_money(SSeconomy.techweb_bounty)
+		var/datum/bank_account/science_department_bank_account = SSeconomy.get_dep_account(ACCOUNT_SCI)
+		science_department_bank_account?.adjust_money(SSeconomy.techweb_bounty)
 	return TRUE
 
 /datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only
@@ -246,17 +346,26 @@
 	if(!istype(node))
 		return FALSE
 	researched_nodes -= node.id
-	recalculate_nodes(TRUE)				//Fully rebuild the tree.
+	recalculate_nodes(TRUE) //Fully rebuild the tree.
 
-/datum/techweb/proc/boost_with_path(datum/techweb_node/N, itempath)
-	if(!istype(N) || !ispath(itempath))
+/// Boosts a techweb node.
+/datum/techweb/proc/boost_techweb_node(datum/techweb_node/node, list/pointlist)
+	if(!istype(node))
 		return FALSE
-	LAZYINITLIST(boosted_nodes[N.id])
-	for(var/i in N.boost_item_paths[itempath])
-		boosted_nodes[N.id][i] = max(boosted_nodes[N.id][i], N.boost_item_paths[itempath][i])
-	if(N.autounlock_by_boost)
-		hidden_nodes -= N.id
-	update_node_status(N)
+	LAZYINITLIST(boosted_nodes[node.id])
+	for(var/point_type in pointlist)
+		boosted_nodes[node.id][point_type] = max(boosted_nodes[node.id][point_type], pointlist[point_type])
+	if(node.autounlock_by_boost)
+		hidden_nodes -= node.id
+	update_node_status(node)
+	return TRUE
+
+/// Boosts a techweb node by using items.
+/datum/techweb/proc/boost_with_item(datum/techweb_node/node, itempath)
+	if(!istype(node) || !ispath(itempath))
+		return FALSE
+	var/list/boost_amount = node.boost_item_paths[itempath]
+	boost_techweb_node(node, boost_amount)
 	return TRUE
 
 /datum/techweb/proc/update_tiers(datum/techweb_node/base)
@@ -293,7 +402,7 @@
 	researched_nodes -= node.id
 	available_nodes -= node.id
 	visible_nodes -= node.id
-	if(hidden_nodes[node.id])	//Hidden.
+	if(hidden_nodes[node.id]) //Hidden.
 		return
 	if(researched)
 		researched_nodes[node.id] = TRUE
@@ -353,8 +462,8 @@
 
 /datum/techweb/specialized/autounlocking
 	var/design_autounlock_buildtypes = NONE
-	var/design_autounlock_categories = list("initial")		//if a design has a buildtype that matches the abovea and either has a category in this or this is null, unlock it.
-	var/node_autounlock_ids = list()				//autounlock nodes of this type.
+	var/design_autounlock_categories = list("initial") //if a design has a buildtype that matches the abovea and either has a category in this or this is null, unlock it.
+	var/node_autounlock_ids = list() //autounlock nodes of this type.
 
 /datum/techweb/specialized/autounlocking/New()
 	..()
@@ -389,3 +498,41 @@
 
 /datum/techweb/specialized/autounlocking/exofab
 	allowed_buildtypes = MECHFAB
+
+/// Fill published_papers with nulls.
+/datum/techweb/proc/initialize_published_papers()
+	published_papers = list()
+	scientific_cooperation = list()
+	for (var/datum/experiment/ordnance/ordnance_experiment as anything in SSresearch.ordnance_experiments)
+		var/max_tier = min(length(ordnance_experiment.gain), length(ordnance_experiment.target_amount))
+		var/list/tier_list[max_tier]
+		published_papers[ordnance_experiment.type] = tier_list
+	for (var/datum/scientific_partner/partner as anything in SSresearch.scientific_partners)
+		scientific_cooperation[partner.type] = 0
+
+/// Publish the paper into our techweb. Cancel if we are not allowed to.
+/datum/techweb/proc/add_scientific_paper(datum/scientific_paper/paper_to_add)
+	if(!paper_to_add.allowed_to_publish(src))
+		return FALSE
+	paper_to_add.publish_paper(src)
+
+	// If we haven't published a paper in the same topic ...
+	if(locate(paper_to_add.experiment_path) in published_papers[paper_to_add.experiment_path])
+		return TRUE	
+	// Quickly add and complete it.
+	// PS: It's also possible to use add_experiment() together with a list/available_experiments check
+	// to determine if we need to run all this, but this pretty much does the same while only needing one evaluation.
+
+	add_experiment(paper_to_add.experiment_path)
+
+	for (var/datum/experiment/experiment as anything in available_experiments)
+		if(experiment.type != paper_to_add.experiment_path)
+			continue
+
+		experiment.completed = TRUE
+		complete_experiment(experiment)
+		if(length(GLOB.experiment_handlers))
+			var/datum/component/experiment_handler/handler = GLOB.experiment_handlers[1]
+			handler.announce_message_to_all("The [experiment.name] has been completed!")	
+	
+	return TRUE

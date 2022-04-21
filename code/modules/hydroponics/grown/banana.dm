@@ -23,7 +23,7 @@
 	icon_state = "banana"
 	inhand_icon_state = "banana"
 	trash_type = /obj/item/grown/bananapeel
-	bite_consumption = 5
+	bite_consumption_mod = 3
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
@@ -32,11 +32,11 @@
 	. = ..()
 	var/obj/item/grown/bananapeel/peel = .
 	if(istype(peel))
-		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = seed.potency * 0.2)
-		peel.juice_results = list(/datum/reagent/medicine/coagulant/banana_peel = seed.potency * 0.2)
+		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
+		peel.juice_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
 
 /obj/item/food/grown/banana/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
 	sleep(25)
 	if(!user)
@@ -62,8 +62,16 @@
 	throw_speed = 3
 	throw_range = 7
 
+/obj/item/grown/bananapeel/Initialize(mapload)
+	. = ..()
+	if(prob(40))
+		if(prob(60))
+			icon_state = "[icon_state]_2"
+		else
+			icon_state = "[icon_state]_3"
+
 /obj/item/grown/bananapeel/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
@@ -77,7 +85,7 @@
 	plantname = "Mimana Tree"
 	product = /obj/item/food/grown/banana/mime
 	growthstages = 4
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nothing = 0.1, /datum/reagent/toxin/mutetoxin = 0.1, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 
@@ -106,7 +114,7 @@
 	plantname = "Bluespace Banana Tree"
 	instability = 40
 	product = /obj/item/food/grown/banana/bluespace
-	mutatelist = list()
+	mutatelist = null
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/bluespace = 0.2, /datum/reagent/consumable/banana = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 30
@@ -115,7 +123,7 @@
 /obj/item/food/grown/banana/bluespace
 	seed = /obj/item/seeds/banana/bluespace
 	name = "bluespace banana"
-	icon_state = "banana_blue"
+	icon_state = "bluenana"
 	inhand_icon_state = "bluespace_peel"
 	trash_type = /obj/item/grown/bananapeel/bluespace
 	tastes = list("banana" = 1)
@@ -126,7 +134,7 @@
 	seed = /obj/item/seeds/banana/bluespace
 	name = "bluespace banana peel"
 	desc = "A peel from a bluespace banana."
-	icon_state = "banana_peel_blue"
+	icon_state = "bluenana_peel"
 
 // Other
 /obj/item/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
@@ -136,3 +144,34 @@
 /obj/item/grown/bananapeel/specialpeel/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 40)
+
+/obj/item/food/grown/banana/bunch
+	name = "banana bunch"
+	desc = "Am exquisite bunch of bananas. The almost otherwordly plumpness steers the mind any discening entertainer towards the divine."
+	icon_state = "banana_bunch"
+	bite_consumption_mod = 4
+	var/is_ripening = FALSE
+
+/obj/item/food/grown/banana/bunch/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/monkey_energy, 10)
+	reagents.add_reagent(/datum/reagent/consumable/banana, 10)
+
+/obj/item/food/grown/banana/bunch/proc/start_ripening()
+	if(is_ripening)
+		return
+	playsound(src, 'sound/effects/fuse.ogg', 80)
+
+	animate(src, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
+	animate(time = 1, pixel_z = 0, easing = BOUNCE_EASING)
+	addtimer(CALLBACK(src, .proc/explosive_ripening), 3 SECONDS)
+	for(var/i in 1 to 32)
+		animate(color = (i % 2) ? "#ffffff": "#ff6739", time = 1, easing = QUAD_EASING)
+
+/obj/item/food/grown/banana/bunch/proc/explosive_ripening()
+	honkerblast(src, light_range = 3, medium_range = 1)
+	for(var/mob/shook_boi in range(6, loc))
+		shake_camera(shook_boi, 3, 5)
+	var/obj/effect/decal/cleanable/food/plant_smudge/banana_smudge = new(loc)
+	banana_smudge.color = "#ffe02f"
+	qdel(src)

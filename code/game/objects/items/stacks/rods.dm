@@ -6,12 +6,13 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("railing", /obj/structure/railing, 3, time = 18, window_checks = TRUE), \
 	new/datum/stack_recipe("tank holder", /obj/structure/tank_holder, 2, time = 5, one_per_turf = TRUE, on_floor = FALSE), \
 	new/datum/stack_recipe("ladder", /obj/structure/ladder/crafted, 15, time = 150, one_per_turf = TRUE, on_floor = FALSE), \
+	new/datum/stack_recipe("catwalk floor tile", /obj/item/stack/tile/catwalk_tile, 1, 4, 20), \
 	))
 
 /obj/item/stack/rods
-	name = "metal rod"
+	name = "iron rod"
 	desc = "Some rods. Can be used for building or something."
-	singular_name = "metal rod"
+	singular_name = "iron rod"
 	icon_state = "rods"
 	inhand_icon_state = "rods"
 	flags_1 = CONDUCT_1
@@ -25,26 +26,32 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	attack_verb_continuous = list("hits", "bludgeons", "whacks")
 	attack_verb_simple = list("hit", "bludgeon", "whack")
 	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	embedding = list()
+	embedding = list(embed_chance = 50)
 	novariants = TRUE
 	matter_amount = 2
 	cost = 250
-	source = /datum/robot_energy_storage/metal
+	source = /datum/robot_energy_storage/iron
 	merge_type = /obj/item/stack/rods
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!</span>")//it looks like theyre ur mum
+	user.visible_message(span_suicide("[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))//it looks like theyre ur mum
 	return BRUTELOSS
 
-/obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
+/obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	update_icon()
+	update_appearance()
+	AddElement(/datum/element/openspace_item_click_handler)
+
+/obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag)
+		target.attackby(src, user, click_parameters)
 
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()
 	. += GLOB.rod_recipes
 
 /obj/item/stack/rods/update_icon_state()
+	. = ..()
 	var/amount = get_amount()
 	if(amount <= 5)
 		icon_state = "rods-[amount]"
@@ -54,14 +61,14 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 /obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WELDER)
 		if(get_amount() < 2)
-			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
+			to_chat(user, span_warning("You need at least two rods to do this!"))
 			return
 
 		if(W.use_tool(src, user, 0, volume=40))
-			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			user.visible_message("<span class='notice'>[user.name] shaped [src] into metal with [W].</span>", \
-				"<span class='notice'>You shape [src] into metal with [W].</span>", \
-				"<span class='hear'>You hear welding.</span>")
+			var/obj/item/stack/sheet/iron/new_item = new(usr.loc)
+			user.visible_message(span_notice("[user.name] shaped [src] into iron sheets with [W]."), \
+				span_notice("You shape [src] into iron sheets with [W]."), \
+				span_hear("You hear welding."))
 			var/obj/item/stack/rods/R = src
 			src = null
 			var/replace = (user.get_inactive_held_item()==R)
@@ -86,7 +93,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/lava
 	name = "heat resistant rod"
-	desc = "Treated, specialized metal rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
+	desc = "Treated, specialized iron rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
 	singular_name = "heat resistant rod"
 	icon_state = "rods"
 	inhand_icon_state = "rods"

@@ -6,29 +6,25 @@
 
 /datum/dynamic_ruleset/latejoin/trim_candidates()
 	for(var/mob/P in candidates)
-		if(!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
+		if(!P.client || !P.mind || is_unassigned_job(P.mind.assigned_role)) // Are they connected?
 			candidates.Remove(P)
-		else if(!mode.check_age(P.client, minimum_required_age))
+		else if (P.client.get_remaining_days(minimum_required_age) > 0)
 			candidates.Remove(P)
-		else if(P.mind.assigned_role in restricted_roles) // Does their job allow for it?
+		else if(P.mind.assigned_role.title in restricted_roles) // Does their job allow for it?
 			candidates.Remove(P)
-		else if((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
+		else if((exclusive_roles.len > 0) && !(P.mind.assigned_role.title in exclusive_roles)) // Is the rule exclusive to their job?
 			candidates.Remove(P)
-		else if(antag_flag_override)
-			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
-				candidates.Remove(P)
-		else
-			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
-				candidates.Remove(P)
+		else if (!((antag_preference || antag_flag) in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+			candidates.Remove(P)
 
 /datum/dynamic_ruleset/latejoin/ready(forced = 0)
 	if (!forced)
 		var/job_check = 0
 		if (enemy_roles.len > 0)
-			for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
+			for (var/mob/M in GLOB.alive_player_list)
 				if (M.stat == DEAD)
 					continue // Dead players cannot count as opponents
-				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
+				if (M.mind && (M.mind.assigned_role.title in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role.title in restricted_roles)))
 					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
 		var/threat = round(mode.threat_level/10)
@@ -52,15 +48,25 @@
 /datum/dynamic_ruleset/latejoin/infiltrator
 	name = "Syndicate Infiltrator"
 	antag_datum = /datum/antagonist/traitor
-	antag_flag = ROLE_TRAITOR
-	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("AI","Cyborg")
+	antag_flag = ROLE_SYNDICATE_INFILTRATOR
+	antag_flag_override = ROLE_TRAITOR
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 1
 	weight = 7
 	cost = 5
-	requirements = list(40,30,20,10,10,10,10,10,10,10)
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	repeatable = TRUE
-	flags = TRAITOR_RULESET
 
 //////////////////////////////////////////////
 //                                          //
@@ -72,20 +78,43 @@
 	name = "Provocateur"
 	persistent = TRUE
 	antag_datum = /datum/antagonist/rev/head
-	antag_flag = ROLE_REV_HEAD
-	antag_flag_override = ROLE_REV
-	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
-	enemy_roles = list("AI", "Cyborg", "Security Officer","Detective","Head of Security", "Captain", "Warden")
+	antag_flag = ROLE_PROVOCATEUR
+	antag_flag_override = ROLE_REV_HEAD
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_CYBORG,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	enemy_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 2
-	delay = 1 MINUTES	// Prevents rule start while head is offstation.
+	delay = 1 MINUTES // Prevents rule start while head is offstation.
 	cost = 20
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
-	flags = HIGHLANDER_RULESET
+	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
+	/// How much threat should be injected when the revolution wins?
+	var/revs_win_threat_injection = 20
 	var/datum/team/revolution/revolution
 
 /datum/dynamic_ruleset/latejoin/provocateur/ready(forced=FALSE)
@@ -94,14 +123,14 @@
 	if(!..())
 		return FALSE
 	var/head_check = 0
-	for(var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
-		if (player.mind.assigned_role in GLOB.command_positions)
+	for(var/mob/player in GLOB.alive_player_list)
+		if (player.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			head_check++
 	return (head_check >= required_heads_of_staff)
 
 /datum/dynamic_ruleset/latejoin/provocateur/execute()
-	var/mob/M = pick(candidates)	// This should contain a single player, but in case.
-	if(check_eligible(M.mind))	// Didnt die/run off z-level/get implanted since leaving shuttle.
+	var/mob/M = pick(candidates) // This should contain a single player, but in case.
+	if(check_eligible(M.mind)) // Didnt die/run off z-level/get implanted since leaving shuttle.
 		assigned += M.mind
 		M.mind.special_role = antag_flag
 		revolution = new()
@@ -112,7 +141,7 @@
 		new_head = M.mind.add_antag_datum(new_head, revolution)
 		revolution.update_objectives()
 		revolution.update_heads()
-		SSshuttle.registerHostileEnvironment(src)
+		SSshuttle.registerHostileEnvironment(revolution)
 		return TRUE
 	else
 		log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
@@ -120,29 +149,12 @@
 		return FALSE
 
 /datum/dynamic_ruleset/latejoin/provocateur/rule_process()
-	if(check_rev_victory())
-		finished = REVOLUTION_VICTORY
-		return RULESET_STOP_PROCESSING
-	else if (check_heads_victory())
-		finished = STATION_VICTORY
-		SSshuttle.clearHostileEnvironment(src)
-		revolution.save_members()
-		for(var/datum/mind/M in revolution.members)	// Remove antag datums and prevents podcloned or exiled headrevs restarting rebellions.
-			if(M.has_antag_datum(/datum/antagonist/rev/head))
-				var/datum/antagonist/rev/head/R = M.has_antag_datum(/datum/antagonist/rev/head)
-				R.remove_revolutionary(FALSE, "gamemode")
-				if(M.current)
-					var/mob/living/carbon/C = M.current
-					if(istype(C) && C.stat == DEAD)
-						C.makeUncloneable()
-			if(M.has_antag_datum(/datum/antagonist/rev))
-				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
-				R.remove_revolutionary(FALSE, "gamemode")
-		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-			We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
-		return RULESET_STOP_PROCESSING
+	var/winner = revolution.process_victory(revs_win_threat_injection)
+	if (isnull(winner))
+		return
 
-
+	finished = winner
+	return RULESET_STOP_PROCESSING
 
 /// Checks for revhead loss conditions and other antag datums.
 /datum/dynamic_ruleset/latejoin/provocateur/proc/check_eligible(datum/mind/M)
@@ -151,48 +163,52 @@
 		return TRUE
 	return FALSE
 
-/datum/dynamic_ruleset/latejoin/provocateur/check_finished()
-	if(finished == REVOLUTION_VICTORY)
-		return TRUE
-	else
-		return ..()
-
-/datum/dynamic_ruleset/latejoin/provocateur/proc/check_rev_victory()
-	for(var/datum/objective/mutiny/objective in revolution.objectives)
-		if(!(objective.check_completion()))
-			return FALSE
-	return TRUE
-
-/datum/dynamic_ruleset/latejoin/provocateur/proc/check_heads_victory()
-	for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
-		var/turf/T = get_turf(rev_mind.current)
-		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(T.z))
-			if(ishuman(rev_mind.current) || ismonkey(rev_mind.current))
-				return FALSE
-	return TRUE
-
 /datum/dynamic_ruleset/latejoin/provocateur/round_result()
-	if(finished == REVOLUTION_VICTORY)
-		SSticker.mode_result = "win - heads killed"
-		SSticker.news_report = REVS_WIN
-	else if(finished == STATION_VICTORY)
-		SSticker.mode_result = "loss - rev heads killed"
-		SSticker.news_report = REVS_LOSE
+	revolution.round_result(finished)
 
 //////////////////////////////////////////////
 //                                          //
-//           HERETIC SMUGGLER          		//
+//           HERETIC SMUGGLER               //
 //                                          //
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/latejoin/heretic_smuggler
 	name = "Heretic Smuggler"
 	antag_datum = /datum/antagonist/heretic
-	antag_flag = ROLE_HERETIC
-	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain","Prisoner")
-	restricted_roles = list("AI","Cyborg")
+	antag_flag = ROLE_HERETIC_SMUGGLER
+	antag_flag_override = ROLE_HERETIC
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(40,30,20,10,10,10,10,10,10,10)
+	requirements = list(101,101,101,10,10,10,10,10,10,10)
 	repeatable = TRUE
+
+/datum/dynamic_ruleset/latejoin/heretic_smuggler/execute()
+	var/mob/picked_mob = pick(candidates)
+	assigned += picked_mob.mind
+	picked_mob.mind.special_role = antag_flag
+	var/datum/antagonist/heretic/new_heretic = picked_mob.mind.add_antag_datum(antag_datum)
+
+	// Heretics passively gain influence over time.
+	// As a consequence, latejoin heretics start out at a massive
+	// disadvantage if the round's been going on for a while.
+	// Let's give them some influence points when they arrive.
+	new_heretic.knowledge_points += round((world.time - SSticker.round_start_time) / new_heretic.passive_gain_timer)
+	// BUT let's not give smugglers a million points on arrival.
+	// Limit it to four missed passive gain cycles (4 points).
+	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
+
+	return TRUE

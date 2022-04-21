@@ -5,7 +5,7 @@ import { multiline } from 'common/string';
 import { createUuid } from 'common/uuid';
 import { Component, Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ByondUi, Divider, Flex, Input, Knob, LabeledControls, NumberInput, Section } from '../components';
+import { Box, Button, ByondUi, Divider, Input, Knob, LabeledControls, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const pod_grey = {
@@ -22,13 +22,8 @@ export const CentcomPodLauncher = (props, context) => {
   const [compact] = useCompact(context);
   return (
     <Window
-      resizable
-      key={'CPL_' + compact}
-      title={compact
-        ? "Use against Helen Weinstein"
-        : "Supply Pod Menu (Use against Helen Weinstein)"}
-      overflow="hidden"
-      width={compact ? 435 : 730}
+      title="Supply Pod Menu (Use against Helen Weinstein)"
+      width={compact ? 460 : 730}
       height={compact ? 360 : 440}>
       <CentcomPodLauncherContent />
     </Window>
@@ -39,53 +34,53 @@ const CentcomPodLauncherContent = (props, context) => {
   const [compact] = useCompact(context);
   return (
     <Window.Content>
-      <Flex direction="column" height="100%">
-        <Flex.Item grow={0} shrink={0}>
+      <Stack fill vertical>
+        <Stack.Item shrink={0}>
           <PodStatusPage />
-        </Flex.Item>
-        <Flex.Item mt={1} grow={1}>
-          <Flex height="100%">
-            <Flex.Item grow={1} shrink={0} basis="14.1em">
-              <Flex direction="column" height="100%" >
-                <Flex.Item grow={1}>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Stack fill>
+            <Stack.Item grow shrink={0} basis="14.1em">
+              <Stack fill vertical>
+                <Stack.Item grow>
                   <PresetsPage />
-                </Flex.Item>
-                <Flex.Item mt={1} grow={0}>
+                </Stack.Item>
+                <Stack.Item>
                   <ReverseMenu />
-                </Flex.Item>
-                <Flex.Item mt={1}>
+                </Stack.Item>
+                <Stack.Item>
                   <Section>
                     <LaunchPage />
                   </Section>
-                </Flex.Item>
-              </Flex>
-            </Flex.Item>
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
             {!compact && (
-              <Flex.Item ml={1} grow={3}>
+              <Stack.Item grow={3}>
                 <ViewTabHolder />
-              </Flex.Item>
+              </Stack.Item>
             )}
-            <Flex.Item ml={1} basis="8em">
-              <Flex direction="column" height="100%">
-                <Flex.Item>
+            <Stack.Item basis="8em">
+              <Stack fill vertical>
+                <Stack.Item>
                   <Bays />
-                </Flex.Item>
-                <Flex.Item mt={1} grow={1}>
+                </Stack.Item>
+                <Stack.Item grow>
                   <Timing />
-                </Flex.Item>
+                </Stack.Item>
                 {!compact && (
-                  <Flex.Item mt={1}>
+                  <Stack.Item>
                     <Sounds />
-                  </Flex.Item>
+                  </Stack.Item>
                 )}
-              </Flex>
-            </Flex.Item>
-            <Flex.Item ml={1} basis="11em">
+              </Stack>
+            </Stack.Item>
+            <Stack.Item basis="11em">
               <StylePage />
-            </Flex.Item>
-          </Flex>
-        </Flex.Item>
-      </Flex>
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+      </Stack>
     </Window.Content>
   );
 };
@@ -137,16 +132,13 @@ const REVERSE_OPTIONS = [
   {
     title: 'Walls',
     icon: 'square',
-
   },
   {
     title: 'Mechs',
     key: 'Mecha',
     icon: 'truck',
-
   },
 ];
-
 
 const DELAYS = [
   {
@@ -210,66 +202,28 @@ const SOUNDS = [
 ];
 
 const STYLES = [
-  {
-    title: 'Standard',
-  },
-  {
-    title: 'Advanced',
-  },
-  {
-    title: 'Nanotrasen',
-  },
-  {
-    title: 'Syndicate',
-  },
-  {
-    title: 'Deathsquad',
-  },
-  {
-    title: 'Cultist',
-  },
-  {
-    title: 'Missile',
-  },
-  {
-    title: 'Syndie Missile',
-  },
-  {
-    title: 'Supply Box',
-  },
-  {
-    title: 'Clown Pod',
-  },
-  {
-    title: 'Fruit',
-  },
-  {
-    title: 'Invisible',
-  },
-  {
-    title: 'Gondola',
-  },
-  {
-    title: 'Seethrough',
-  },
+  { title: 'Standard' },
+  { title: 'Advanced' },
+  { title: 'Nanotrasen' },
+  { title: 'Syndicate' },
+  { title: 'Deathsquad' },
+  { title: 'Cultist' },
+  { title: 'Missile' },
+  { title: 'Syndie Missile' },
+  { title: 'Supply Box' },
+  { title: 'Clown Pod' },
+  { title: 'Fruit' },
+  { title: 'Invisible' },
+  { title: 'Gondola' },
+  { title: 'Seethrough' },
 ];
 
 const BAYS = [
-  {
-    title: '1',
-  },
-  {
-    title: '2',
-  },
-  {
-    title: '3',
-  },
-  {
-    title: '4',
-  },
-  {
-    title: 'ERT',
-  },
+  { title: '1' },
+  { title: '2' },
+  { title: '3' },
+  { title: '4' },
+  { title: 'ERT' },
 ];
 
 const EFFECTS_LOAD = [
@@ -436,6 +390,7 @@ const EFFECTS_HARM =[
     act: 'effectOrgans',
   },
 ];
+
 const EFFECTS_ALL = [
   {
     list: EFFECTS_LOAD,
@@ -464,8 +419,8 @@ const ViewTabHolder = (props, context) => {
   const { mapRef } = data;
   const TabPageComponent = TABPAGES[tabPageIndex].component();
   return (
-    <Section title="View" fill buttons={(
-      <Fragment>
+    <Section fill title="View" buttons={(
+      <>
         {(!!data.customDropoff && data.effectReverse===1) && (
           <Button
             inline
@@ -522,24 +477,22 @@ const ViewTabHolder = (props, context) => {
             act('refreshView');
           }}
         />
-      </Fragment>
+      </>
     )}>
-      <Flex direction="column" height="100%">
-        <Flex.Item m={0.5}>
+      <Stack fill vertical>
+        <Stack.Item>
           <TabPageComponent />
-        </Flex.Item>
-        <Flex.Item m={0.5} grow={1}>
-          <Section fill>
-            <ByondUi
-              fillPositionedParent
-              params={{
-                zoom: 0,
-                id: mapRef,
-                type: 'map',
-              }} />
-          </Section>
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+        <Stack.Item grow>
+          <ByondUi
+            height="100%"
+            params={{
+              zoom: 0,
+              id: mapRef,
+              type: 'map',
+            }} />
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
@@ -554,11 +507,10 @@ const TabPod = (props, context) => {
   );
 };
 
-
 const TabBay = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Fragment>
+    <>
       <Button
         content="Teleport"
         icon="street-view"
@@ -568,14 +520,14 @@ const TabBay = (props, context) => {
         disabled={!data.oldArea}
         icon="undo-alt"
         onClick={() => act('teleportBack')} />
-    </Fragment>
+    </>
   );
 };
 
 const TabDrop = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Fragment>
+    <>
       <Button
         content="Teleport"
         icon="street-view"
@@ -585,7 +537,7 @@ const TabDrop = (props, context) => {
         disabled={!data.oldArea}
         icon="undo-alt"
         onClick={() => act('teleportBack')} />
-    </Fragment>
+    </>
   );
 };
 
@@ -594,10 +546,10 @@ const PodStatusPage = (props, context) => {
   const [compact, toggleCompact] = useCompact(context);
   return (
     <Section fill width="100%">
-      <Flex>
+      <Stack>
         {EFFECTS_ALL.map((list, i) => (
           <Fragment key={i}>
-            <Flex.Item>
+            <Stack.Item>
               <Box bold color="label" mb={1}>
                 {(compact === 1 && list.alt_label)
                   ? list.alt_label
@@ -620,7 +572,6 @@ const PodStatusPage = (props, context) => {
                             : effect.title)
                           : effect.title}
                         tooltipPosition={list.tooltipPosition}
-                        tooltipOverrideLong
                         icon={effect.icon}
                         content={effect.content}
                         selected={effect.soloSelected
@@ -641,14 +592,12 @@ const PodStatusPage = (props, context) => {
                   </Fragment>
                 ))}
               </Box>
-            </Flex.Item>
-            {i < EFFECTS_ALL.length &&(
-              <Flex.Item>
-                <Divider vertical />
-              </Flex.Item>
+            </Stack.Item>
+            {i < EFFECTS_ALL.length && (
+              <Stack.Divider />
             )}
-            {i === EFFECTS_ALL.length-1 &&(
-              <Flex.Item>
+            {i === EFFECTS_ALL.length - 1 &&(
+              <Stack.Item>
                 <Box color="label" mb={1}>
                   <b>Extras:</b>
                 </Box>
@@ -659,7 +608,7 @@ const PodStatusPage = (props, context) => {
                     color="transparent"
                     icon="list-alt"
                     tooltip="Game Panel"
-                    tooltipPosition="top-left"
+                    tooltipPosition="top-start"
                     onClick={() => act('gamePanel')} />
                   <Button
                     inline
@@ -667,7 +616,7 @@ const PodStatusPage = (props, context) => {
                     color="transparent"
                     icon="hammer"
                     tooltip="Build Mode"
-                    tooltipPosition="top-left"
+                    tooltipPosition="top-start"
                     onClick={() => act('buildMode')} />
                   {compact && (
                     <Button
@@ -676,7 +625,7 @@ const PodStatusPage = (props, context) => {
                       color="transparent"
                       icon="expand"
                       tooltip="Maximize"
-                      tooltipPosition="top-left"
+                      tooltipPosition="top-start"
                       onClick={() => {
                         toggleCompact();
                         act('refreshView');
@@ -688,15 +637,15 @@ const PodStatusPage = (props, context) => {
                       color="transparent"
                       icon="compress"
                       tooltip="Compact mode"
-                      tooltipPosition="top-left"
+                      tooltipPosition="top-start"
                       onClick={() => toggleCompact()} />
                   )}
                 </Box>
-              </Flex.Item>
+              </Stack.Item>
             )}
           </Fragment>
         ))}
-      </Flex>
+      </Stack>
     </Section>
   );
 };
@@ -721,8 +670,7 @@ const ReverseMenu = (props, context) => {
             Afer landing, returns to
             dropoff turf (or bay
             if none specified).`}
-          tooltipOverrideLong
-          tooltipPosition="top-left"
+          tooltipPosition="top-start"
           onClick={() => {
             act('effectReverse');
             if (tabPageIndex === 2) {
@@ -732,8 +680,8 @@ const ReverseMenu = (props, context) => {
           }} />
       )}>
       {data.effectReverse === 1 && (
-        <Flex direction="column" height="100%">
-          <Flex.Item maxHeight="20px" >
+        <Stack fill vertical>
+          <Stack.Item maxHeight="20px">
             <Button
               content="Dropoff Turf"
               selected={data.picking_dropoff_turf}
@@ -741,8 +689,7 @@ const ReverseMenu = (props, context) => {
               tooltip={multiline`
                 Where reverse pods
                 go after landing`}
-              tooltipOverrideLong
-              tooltipPosition="bottom-right"
+              tooltipPosition="bottom-end"
               onClick={() => act('pickDropoffTurf')} />
             <Button
               inline
@@ -753,7 +700,6 @@ const ReverseMenu = (props, context) => {
                 location. Reverse pods will
                 instead dropoff at the
                 selected bay.`}
-              tooltipOverrideLong
               tooltipPosition="bottom"
               onClick={() => {
                 act('clearDropoffTurf');
@@ -762,9 +708,9 @@ const ReverseMenu = (props, context) => {
                   act('tabSwitch', { tabIndex: 1 });
                 }
               }} />
-          </Flex.Item>
-          <Divider horizontal />
-          <Flex.Item maxHeight="20px">
+          </Stack.Item>
+          <Stack.Divider />
+          <Stack.Item maxHeight="20px">
             {REVERSE_OPTIONS.map((option, i) => (
               <Button
                 key={i}
@@ -777,19 +723,17 @@ const ReverseMenu = (props, context) => {
                     : data.reverse_option_list[option.title]
                 }
                 tooltip={option.title}
-                tooltipOverrideLong
                 onClick={() => act('reverseOption', {
                   reverseOption: option.key
                     ? option.key
                     : option.title })} />
             ))}
-          </Flex.Item>
-        </Flex>
+          </Stack.Item>
+        </Stack>
       )}
     </Section>
   );
 };
-
 
 class PresetsPage extends Component {
   constructor() {
@@ -844,6 +788,7 @@ class PresetsPage extends Component {
     for (let i = 0; i < presets.length; i++) {
       if (presets[i].id === deleteID) {
         presets.splice(i, 1);
+        break;
       }
     }
     storage.set("podlauncher_presetlist", presets);
@@ -866,7 +811,7 @@ class PresetsPage extends Component {
         fill
         title="Presets"
         buttons={(
-          <Fragment>
+          <>
             {settingName === 0 && (
               <Button
                 color="transparent"
@@ -880,7 +825,6 @@ class PresetsPage extends Component {
               content=""
               icon="download"
               tooltip="Saves preset"
-              tooltipOverrideLong
               tooltipPosition="bottom"
               onClick={() => this.saveDataToPreset(presetIndex, data)} />
             <Button
@@ -897,11 +841,12 @@ class PresetsPage extends Component {
               color="transparent"
               icon="trash"
               tooltip="Deletes the selected preset"
-              tooltipPosition="bottom-left"
+              tooltipPosition="bottom-start"
               onClick={() => this.deletePreset(presetIndex)} />
-          </Fragment>)}>
+          </>
+        )}>
         {settingName === 1 && (
-          <Fragment>
+          <>
             <Button
               inline
               icon="check"
@@ -936,7 +881,7 @@ class PresetsPage extends Component {
               placeholder="Preset Name"
               onChange={(e, value) => setText(value)} />
             <Divider horizontal />
-          </Fragment>
+          </>
         )}
         {(!presets || presets.length === 0) && (
           <span style={pod_grey}>
@@ -950,6 +895,7 @@ class PresetsPage extends Component {
             width="100%"
             backgroundColor={`hsl(${preset.hue}, 50%, 50%)`}
             onClick={() => setSelectedPreset(preset.id)}
+            onDblClick={() => this.loadDataFromPreset(preset.id)}
             content={preset.title}
             style={presetIndex === preset.id ? {
               'border-width': '1px',
@@ -977,7 +923,6 @@ const LaunchPage = (props, context) => {
       tooltip={multiline`
         You should know what the
         Codex Astartes says about this`}
-      tooltipOverrideLong
       selected={data.giveLauncher}
       tooltipPosition="top"
       content={(
@@ -1009,7 +954,7 @@ const StylePage = (props, context) => {
           tooltip={multiline`
             Edit pod's
             name/desc.`}
-          tooltipPosition="bottom-left"
+          tooltipPosition="bottom-start"
           onClick={() => act('effectName')} />
       )}>
       {STYLES.map((page, i) => (
@@ -1019,8 +964,8 @@ const StylePage = (props, context) => {
           height="45px"
           tooltipPosition={
             i >= STYLES.length-2
-              ? (i%2===1 ? "top-left" : "top-right")
-              : (i%2===1 ? "bottom-left" : "bottom-right")
+              ? (i%2===1 ? "top-start" : "top-end")
+              : (i%2===1 ? "bottom-start" : "bottom-end")
           }
           tooltip={page.title}
           style={{
@@ -1049,15 +994,14 @@ const Bays = (props, context) => {
       fill
       title="Bay"
       buttons={(
-        <Fragment>
+        <>
           <Button
             icon="trash"
             color="transparent"
             tooltip={multiline`
               Clears everything
               from the selected bay`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-end"
             onClick={() => act('clearBay')} />
           <Button
             icon="question"
@@ -1070,15 +1014,14 @@ const Bays = (props, context) => {
               in these areas according
               to the "Load from Bay"
               options at the top left.`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right" />
-        </Fragment>
+            tooltipPosition="bottom-end" />
+        </>
       )}>
       {BAYS.map((bay, i) => (
         <Button
           key={i}
           content={bay.title}
-          tooltipPosition={"bottom-right"}
+          tooltipPosition="bottom-end"
           selected={data.bayNumber === ""+(i+1)}
           onClick={() => act('switchBay', { bayNumber: (""+(i+1)) })} />
       ))}
@@ -1093,15 +1036,14 @@ const Timing = (props, context) => {
       fill
       title="Time"
       buttons={(
-        <Fragment>
+        <>
           <Button
             icon="undo"
             color="transparent"
             tooltip={multiline`
             Reset all pod
             timings/delays`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-end"
             onClick={() => act('resetTiming')} />
           <Button
             icon={data.custom_rev_delay === 1 ? "toggle-on" : "toggle-off"}
@@ -1113,26 +1055,26 @@ const Timing = (props, context) => {
             Note: Top set is
             normal delays, bottom set
             is reversing pod's delays`}
-            tooltipOverrideLong
-            tooltipPosition="bottom-right"
+            tooltipPosition="bottom-end"
             onClick={() => act('toggleRevDelays')} />
-        </Fragment>
+        </>
       )}>
       <DelayHelper
         delay_list={DELAYS}
       />
       {data.custom_rev_delay && (
-        <Fragment>
+        <>
           <Divider horizontal />
           <DelayHelper
             delay_list={REV_DELAYS}
             reverse
           />
-        </Fragment>
+        </>
       )||""}
     </Section>
   );
 };
+
 const DelayHelper = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -1169,6 +1111,7 @@ const DelayHelper = (props, context) => {
     </LabeledControls>
   );
 };
+
 const Sounds = (props, context) => {
   const { act, data } = useBackend(context);
   return (
@@ -1180,7 +1123,6 @@ const Sounds = (props, context) => {
           selected={data.soundVolume !== data.defaultSoundVolume}
           tooltip={multiline`
             Sound Volume:` + data.soundVolume}
-          tooltipOverrideLong
           onClick={() => act('soundVolume')} />
       )}>
       {SOUNDS.map((sound, i) => (
@@ -1188,8 +1130,7 @@ const Sounds = (props, context) => {
           key={i}
           content={sound.title}
           tooltip={sound.tooltip}
-          tooltipPosition="top-right"
-          tooltipOverrideLong
+          tooltipPosition="top-end"
           selected={data[sound.act]}
           onClick={() => act(sound.act)} />
       ))}

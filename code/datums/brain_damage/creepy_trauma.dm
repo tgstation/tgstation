@@ -36,7 +36,7 @@
 	antagonist.greet()
 	RegisterSignal(owner, COMSIG_CARBON_HUG, .proc/on_hug)
 
-/datum/brain_trauma/special/obsessed/on_life()
+/datum/brain_trauma/special/obsessed/on_life(delta_time, times_fired)
 	if(!obsession || obsession.stat == DEAD)
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return
@@ -50,10 +50,10 @@
 		viewing = FALSE
 	if(viewing)
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creeping, obsession.name)
-		total_time_creeping += 20
+		total_time_creeping += delta_time SECONDS
 		time_spent_away = 0
 		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
-			attachedobsessedobj.timer -= 20 //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
+			attachedobsessedobj.timer -= delta_time SECONDS //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
 		out_of_view()
 
@@ -73,36 +73,39 @@
 /datum/brain_trauma/special/obsessed/handle_speech(datum/source, list/speech_args)
 	if(!viewing)
 		return
-	var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
-	if(mood && mood.sanity >= SANITY_GREAT && social_interaction())
-		speech_args[SPEECH_MESSAGE] = ""
+	if(prob(25)) // 25% chances to be nervous and stutter.
+		if(prob(50)) // 12.5% chance (previous check taken into account) of doing something suspicious.
+			addtimer(CALLBACK(src, .proc/on_failed_social_interaction), rand(1, 3) SECONDS)
+		else if(!owner.has_status_effect(/datum/status_effect/speech/stutter))
+			to_chat(owner, span_warning("Being near [obsession] makes you nervous and you begin to stutter..."))
+		owner.set_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 
-/datum/brain_trauma/special/obsessed/proc/on_hug(mob/living/hugger, mob/living/hugged)
-	if(hugged == obsession)
-		obsession_hug_count++
+/datum/brain_trauma/special/obsessed/proc/on_hug(datum/source, mob/living/hugger, mob/living/hugged)
+	SIGNAL_HANDLER
 
-/datum/brain_trauma/special/obsessed/proc/social_interaction()
-	var/fail = FALSE //whether you can finish a sentence while doing it
-	owner.stuttering = max(3, owner.stuttering)
-	owner.blur_eyes(10)
-	switch(rand(1,4))
-		if(1)
+	if(hugged != obsession)
+		return
+
+	obsession_hug_count++
+
+/datum/brain_trauma/special/obsessed/proc/on_failed_social_interaction()
+	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS)
+		return
+	switch(rand(1, 100))
+		if(1 to 40)
+			INVOKE_ASYNC(owner, /mob.proc/emote, pick("blink", "blink_r"))
+			owner.blur_eyes(10)
+			to_chat(owner, span_userdanger("You sweat profusely and have a hard time focusing..."))
+		if(41 to 80)
+			INVOKE_ASYNC(owner, /mob.proc/emote, "pale")
 			shake_camera(owner, 15, 1)
-			owner.vomit()
-			fail = TRUE
-		if(2)
+			owner.adjustStaminaLoss(70)
+			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
+		if(81 to 100)
 			INVOKE_ASYNC(owner, /mob.proc/emote, "cough")
 			owner.dizziness += 10
-			fail = TRUE
-		if(3)
-			to_chat(owner, "<span class='userdanger'>You feel your heart lurching in your chest...</span>")
-			owner.Stun(20)
-			shake_camera(owner, 15, 1)
-		if(4)
-			to_chat(owner, "<span class='warning'>You faint.</span>")
-			owner.Unconscious(80)
-			fail = TRUE
-	return fail
+			owner.adjust_disgust(5)
+			to_chat(owner, span_userdanger("You gag and swallow a bit of bile..."))
 
 // if the creep examines first, then the obsession examines them, have a 50% chance to possibly blow their cover. wearing a mask avoids this risk
 /datum/brain_trauma/special/obsessed/proc/stare(datum/source, mob/living/examining_mob, triggering_examiner)
@@ -111,19 +114,39 @@
 	if(examining_mob != owner || !triggering_examiner || prob(50))
 		return
 
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, obsession, "<span class='warning'>You catch [examining_mob] staring at you...</span>", 3))
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, obsession, span_warning("You catch [examining_mob] staring at you..."), 3))
 	return COMSIG_BLOCK_EYECONTACT
 
 /datum/brain_trauma/special/obsessed/proc/find_obsession()
-	var/chosen_victim
-	var/list/possible_targets = list()
-	var/list/viable_minds = list()
-	for(var/mob/Player in GLOB.player_list)//prevents crewmembers falling in love with nuke ops they never met, and other annoying hijinks
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client && Player != owner && SSjob.GetJob(Player.mind.assigned_role))
-			viable_minds += Player.mind
-	for(var/datum/mind/possible_target in viable_minds)
+	var/list/viable_minds = list() //The first list, which excludes hijinks
+	var/list/possible_targets = list() //The second list, which filters out silicons and simplemobs
+	var/static/list/trait_obsessions = list(
+		JOB_MIME = TRAIT_MIME_FAN,
+		JOB_CLOWN = TRAIT_CLOWN_ENJOYER,
+		JOB_CHAPLAIN = TRAIT_SPIRITUAL,
+	) // Jobs and their corresponding quirks
+	var/list/special_pool = list() //The special list, for quirk-based
+	var/chosen_victim  //The obsession target
+
+	for(var/mob/player as anything in GLOB.player_list)//prevents crewmembers falling in love with nuke ops they never met, and other annoying hijinks
+		if(!player.client || !player.mind || isnewplayer(player) || player.stat == DEAD || isbrain(player) || player == owner)
+			continue
+		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+		viable_minds += player.mind
+	for(var/datum/mind/possible_target as anything in viable_minds)
 		if(possible_target != owner && ishuman(possible_target.current))
+			var/job = possible_target.assigned_role.title
+			if (trait_obsessions[job] != null && HAS_TRAIT(owner, trait_obsessions[job]))
+				special_pool += possible_target.current
 			possible_targets += possible_target.current
+
+	//Do we have any special target?
+	if(length(special_pool))
+		chosen_victim = pick(special_pool)
+		return chosen_victim
+
+	//If not, pick any other ordinary target
 	if(possible_targets.len > 0)
 		chosen_victim = pick(possible_targets)
 	return chosen_victim

@@ -10,16 +10,17 @@
 	faction = list(ROLE_BLOB)
 	bubble_icon = "blob"
 	speak_emote = null //so we use verb_yell/verb_say/etc
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	unique_name = 1
-	a_intent = INTENT_HARM
-	see_in_dark = 8
+	combat_mode = TRUE
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	initial_language_holder = /datum/language_holder/empty
+	retreat_distance = null //! retreat doesn't obey pass_flags, so won't work on blob mobs.
 	var/mob/camera/blob/overmind = null
-	var/obj/structure/blob/factory/factory = null
+	var/obj/structure/blob/special/factory = null
 	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/update_icons()
@@ -28,7 +29,7 @@
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
-/mob/living/simple_animal/hostile/blob/Initialize()
+/mob/living/simple_animal/hostile/blob/Initialize(mapload)
 	. = ..()
 	if(!independent) //no pulling people deep into the blob
 		remove_verb(src, /mob/living/verb/pulled)
@@ -53,7 +54,7 @@
 				H.color = overmind.blobstrain.complementary_color
 			else
 				H.color = "#000000"
-		adjustHealth(-maxHealth*0.0125)
+		adjustHealth(-maxHealth*BLOBMOB_HEALING_MULTIPLIER)
 
 /mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
 	..()
@@ -62,17 +63,31 @@
 	else
 		adjustFireLoss(5)
 
-/mob/living/simple_animal/hostile/blob/CanAllowThrough(atom/movable/mover, turf/target)
+/mob/living/simple_animal/hostile/blob/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(istype(mover, /obj/structure/blob))
 		return TRUE
+
+///override to use astar/JPS instead of walk_to so we can take our blob pass_flags into account.
+/mob/living/simple_animal/hostile/blob/Goto(target, delay, minimum_distance)
+	if(prevent_goto_movement)
+		return FALSE
+	if(target == src.target)
+		approaching_target = TRUE
+	else
+		approaching_target = FALSE
+
+	SSmove_manager.jps_move(moving = src, chasing = target, delay = delay, repath_delay = 2 SECONDS, minimum_distance = minimum_distance, simulated_only = FALSE, skip_first = TRUE, timeout = 5 SECONDS, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
+	return TRUE
 
 /mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
 	for(var/obj/structure/blob/B in range(1, src))
 		return 1
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/hostile/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+	if(sanitize)
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	var/spanned_message = say_quote(message)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
@@ -92,20 +107,19 @@
 	icon_state = "blobpod"
 	icon_living = "blobpod"
 	health_doll_icon = "blobpod"
-	health = 30
-	maxHealth = 30
+	health = BLOBMOB_SPORE_HEALTH
+	maxHealth = BLOBMOB_SPORE_HEALTH
 	verb_say = "psychically pulses"
 	verb_ask = "psychically probes"
 	verb_exclaim = "psychically yells"
 	verb_yell = "psychically screams"
-	melee_damage_lower = 2
-	melee_damage_upper = 4
+	melee_damage_lower = BLOBMOB_SPORE_DMG_LOWER
+	melee_damage_upper = BLOBMOB_SPORE_DMG_UPPER
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	obj_damage = 0
 	attack_verb_continuous = "hits"
 	attack_verb_simple = "hit"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	movement_type = FLYING
 	del_on_death = TRUE
 	deathmessage = "explodes into a cloud of gas!"
 	gold_core_spawnable = NO_SPAWN //gold slime cores should only spawn the independent subtype
@@ -115,8 +129,9 @@
 	///Whether or not this is a fragile spore from Distributed Neurons
 	var/is_weak = FALSE
 
-/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/special/linked_node)
 	. = ..()
+	AddElement(/datum/element/simple_flying)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
@@ -124,7 +139,7 @@
 			notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
 		add_cell_sample()
 
-/mob/living/simple_animal/hostile/blob/blobspore/Life()
+/mob/living/simple_animal/hostile/blob/blobspore/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(!is_weak && H.stat == DEAD)
@@ -145,11 +160,11 @@
 		return
 	if(key || stat)
 		return
-	var/pod_ask = alert("Become a blob spore?", "Are you bulbous enough?", "Yes", "No")
-	if(pod_ask == "No" || !src || QDELETED(src))
+	var/pod_ask = tgui_alert(usr, "Are you bulbous enough?", "Blob Spore", list("Yes", "No"))
+	if(pod_ask == "No" || QDELETED(src))
 		return
 	if(key)
-		to_chat(user, "<span class='warning'>Someone else already took this spore!</span>")
+		to_chat(user, span_warning("Someone else already took this spore!"))
 		return
 	key = user.key
 	log_game("[key_name(src)] took control of [name].")
@@ -177,7 +192,7 @@
 	H.forceMove(src)
 	oldguy = H
 	update_icons()
-	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
+	visible_message(span_warning("The corpse of [H.name] suddenly rises!"))
 	if(!key)
 		notify_ghosts("\A [src] has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Blob Zombie Created")
 
@@ -253,12 +268,12 @@
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
 	icon_dead = "blobbernaut_dead"
-	health = 200
-	maxHealth = 200
+	health = BLOBMOB_BLOBBERNAUT_HEALTH
+	maxHealth = BLOBMOB_BLOBBERNAUT_HEALTH
 	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	melee_damage_lower = 20
-	melee_damage_upper = 20
-	obj_damage = 60
+	melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_SOLO_LOWER
+	melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_SOLO_UPPER
+	obj_damage = BLOBMOB_BLOBBERNAUT_DMG_OBJ
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
 	attack_sound = 'sound/effects/blobattack.ogg'
@@ -269,57 +284,50 @@
 	force_threshold = 10
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
-	hud_type = /datum/hud/blobbernaut
+	hud_type = /datum/hud/living/blobbernaut
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize(mapload)
 	. = ..()
 	add_cell_sample()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Life()
-	if(..())
-		var/list/blobs_in_area = range(2, src)
-		if(independent)
-			return // strong independent blobbernaut that don't need no blob
-		var/damagesources = 0
-		if(!(locate(/obj/structure/blob) in blobs_in_area))
-			damagesources++
-		if(!factory)
-			damagesources++
-		else
-			if(locate(/obj/structure/blob/core) in blobs_in_area)
-				adjustHealth(-maxHealth*0.1)
-				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
-				if(overmind)
-					H.color = overmind.blobstrain.complementary_color
-				else
-					H.color = "#000000"
-			if(locate(/obj/structure/blob/node) in blobs_in_area)
-				adjustHealth(-maxHealth*0.05)
-				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
-				if(overmind)
-					H.color = overmind.blobstrain.complementary_color
-				else
-					H.color = "#000000"
-		if(damagesources)
-			for(var/i in 1 to damagesources)
-				adjustHealth(maxHealth*0.025) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
-			var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
-			I.appearance_flags = RESET_COLOR
+/mob/living/simple_animal/hostile/blob/blobbernaut/Life(delta_time = SSMOBS_DT, times_fired)
+	if(!..())
+		return
+	var/list/blobs_in_area = range(2, src)
+	if(independent)
+		return // strong independent blobbernaut that don't need no blob
+	var/damagesources = 0
+	if(!(locate(/obj/structure/blob) in blobs_in_area))
+		damagesources++
+
+	if(!factory)
+		damagesources++
+	else
+		if(locate(/obj/structure/blob/special/core) in blobs_in_area)
+			adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_CORE * delta_time)
+			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
-				I.color = overmind.blobstrain.complementary_color
-			flick_overlay_view(I, src, 8)
+				H.color = overmind.blobstrain.complementary_color
+			else
+				H.color = "#000000"
+		if(locate(/obj/structure/blob/special/node) in blobs_in_area)
+			adjustHealth(-maxHealth*BLOBMOB_BLOBBERNAUT_HEALING_NODE * delta_time)
+			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
+			if(overmind)
+				H.color = overmind.blobstrain.complementary_color
+			else
+				H.color = "#000000"
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(updating_health)
-		update_health_hud()
-
-/mob/living/simple_animal/hostile/blob/blobbernaut/update_health_hud()
-	if(hud_used)
-		hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round((health / maxHealth) * 100, 0.5)]%</font></div>")
+	if(damagesources)
+		adjustHealth(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damagesources * delta_time) //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
+		I.appearance_flags = RESET_COLOR
+		if(overmind)
+			I.color = overmind.blobstrain.complementary_color
+		flick_overlay_view(I, src, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()
@@ -329,8 +337,8 @@
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
 	..()
 	if(overmind) //if we have an overmind, we're doing chemical reactions instead of pure damage
-		melee_damage_lower = 4
-		melee_damage_upper = 4
+		melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_LOWER
+		melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_UPPER
 		attack_verb_continuous = overmind.blobstrain.blobbernaut_message
 	else
 		melee_damage_lower = initial(melee_damage_lower)

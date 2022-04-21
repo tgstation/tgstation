@@ -14,13 +14,11 @@
 	health = 25
 	maxHealth = 25
 
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT
-	model = "Firebot"
-	bot_core = /obj/machinery/bot_core/firebot
-	window_id = "autoextinguisher"
-	window_name = "Mobile Fire Extinguisher v1.0"
+	hackables = "fire safety protocols"
 	path_image_color = "#FFA500"
 
 	var/atom/target_fire
@@ -32,21 +30,24 @@
 
 	var/speech_cooldown = 0
 	var/detected_cooldown = 0
-	var/foam_cooldown = 0
+	COOLDOWN_DECLARE(foam_cooldown)
 
 	var/extinguish_people = TRUE
 	var/extinguish_fires = TRUE
 	var/stationary_mode = FALSE
 
-/mob/living/simple_animal/bot/firebot/Initialize()
+/mob/living/simple_animal/bot/firebot/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	update_icon()
-	var/datum/job/engineer/J = new/datum/job/engineer
-	access_card.access += J.get_access()
-	prev_access = access_card.access
+	update_appearance(UPDATE_ICON)
+
+	// Doing this hurts my soul, but simplebot access reworks are for another day.
+	var/datum/id_trim/job/engi_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/station_engineer]
+	access_card.add_access(engi_trim.access + engi_trim.wildcard_access)
+	prev_access = access_card.access.Copy()
 
 	create_extinguisher()
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /mob/living/simple_animal/bot/firebot/bot_reset()
 	create_extinguisher()
@@ -58,8 +59,8 @@
 	internal_ext.max_water = INFINITY
 	internal_ext.refill()
 
-/mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A)
-	if(!on)
+/mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
@@ -68,8 +69,8 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/bot/firebot/RangedAttack(atom/A)
-	if(!on)
+/mob/living/simple_animal/bot/firebot/RangedAttack(atom/A, proximity_flag, list/modifiers)
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(internal_ext)
 		internal_ext.afterattack(A, src)
@@ -78,88 +79,76 @@
 
 /mob/living/simple_animal/bot/firebot/turn_on()
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/turn_off()
 	..()
-	update_icon()
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/bot_reset()
 	..()
 	target_fire = null
 	old_target_fire = null
 	ignore_list = list()
-	anchored = FALSE
-	update_icon()
+	set_anchored(FALSE)
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/proc/soft_reset()
 	path = list()
 	target_fire = null
 	mode = BOT_IDLE
 	last_found = world.time
-	update_icon()
-
-/mob/living/simple_animal/bot/firebot/set_custom_texts()
-	text_hack = "You corrupt [name]'s safety protocols."
-	text_dehack = "You detect errors in [name] and reset his programming."
-	text_dehack_fail = "[name] is not responding to reset commands!"
-
-/mob/living/simple_animal/bot/firebot/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += "<TT><B>Mobile Fire Extinguisher v1.0</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
-	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
-
-	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		dat += "Extinguish Fires: <A href='?src=[REF(src)];operation=extinguish_fires'>[extinguish_fires ? "Yes" : "No"]</A><BR>"
-		dat += "Extinguish People: <A href='?src=[REF(src)];operation=extinguish_people'>[extinguish_people ? "Yes" : "No"]</A><BR>"
-		dat += "Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
-		dat += "Stationary Mode: <a href='?src=[REF(src)];operation=stationary_mode'>[stationary_mode ? "Yes" : "No"]</a><br>"
-
-	return dat
+	update_appearance()
 
 /mob/living/simple_animal/bot/firebot/emag_act(mob/user)
 	..()
-	if(emagged == 2)
-		if(user)
-			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
-		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
-		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		if(user)
-			old_target_fire = user
-		extinguish_fires = FALSE
-		extinguish_people = TRUE
+	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
+		return
+	if(user)
+		to_chat(user, span_danger("[src] buzzes and beeps."))
+	audible_message(span_danger("[src] buzzes oddly!"))
+	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if(user)
+		old_target_fire = user
+	extinguish_fires = FALSE
+	extinguish_people = TRUE
 
-		internal_ext = new /obj/item/extinguisher(src)
-		internal_ext.chem = /datum/reagent/clf3 //Refill the internal extinguisher with liquid fire
-		internal_ext.power = 3
-		internal_ext.safety = FALSE
-		internal_ext.precision = FALSE
-		internal_ext.max_water = INFINITY
-		internal_ext.refill()
+	internal_ext = new /obj/item/extinguisher(src)
+	internal_ext.chem = /datum/reagent/clf3 //Refill the internal extinguisher with liquid fire
+	internal_ext.power = 3
+	internal_ext.safety = FALSE
+	internal_ext.precision = FALSE
+	internal_ext.max_water = INFINITY
+	internal_ext.refill()
 
-/mob/living/simple_animal/bot/firebot/Topic(href, href_list)
-	if(..())
-		return TRUE
+// Variables sent to TGUI
+/mob/living/simple_animal/bot/firebot/ui_data(mob/user)
+	var/list/data = ..()
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+		data["custom_controls"]["extinguish_fires"] = extinguish_fires
+		data["custom_controls"]["extinguish_people"] = extinguish_people
+		data["custom_controls"]["stationary_mode"] = stationary_mode
+	return data
 
-	switch(href_list["operation"])
+// Actions received from TGUI
+/mob/living/simple_animal/bot/firebot/ui_act(action, params)
+	. = ..()
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+		return
+
+	switch(action)
 		if("extinguish_fires")
 			extinguish_fires = !extinguish_fires
 		if("extinguish_people")
 			extinguish_people = !extinguish_people
 		if("stationary_mode")
 			stationary_mode = !stationary_mode
-
-	update_controls()
-	update_icon()
+			update_appearance()
 
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))
 		var/mob/living/M = target
-		if(M.on_fire || (emagged == 2 && !M.on_fire))
+		if(M.on_fire || (bot_cover_flags & BOT_COVER_EMAGGED && !M.on_fire))
 			return TRUE
 
 	else if(isturf(target))
@@ -207,7 +196,7 @@
 		old_target_fire = target_fire
 
 	// Target reached ENGAGE WATER CANNON
-	if(target_fire && (get_dist(src, target_fire) <= (emagged == 2 ? 1 : 2))) // Make the bot spray water from afar when not emagged
+	if(target_fire && (get_dist(src, target_fire) <= (bot_cover_flags & BOT_COVER_EMAGGED ? 1 : 2))) // Make the bot spray water from afar when not emagged
 		if((speech_cooldown + SPEECH_INTERVAL) < world.time)
 			if(ishuman(target_fire))
 				speak("Stop, drop and roll!")
@@ -234,7 +223,7 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 
-		path = get_path_to(src, get_turf(target_fire), /turf/proc/Distance_cardinal, 0, 30, 1, id=access_card)
+		path = get_path_to(src, target_fire, 30, 1, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()
@@ -249,12 +238,12 @@
 	if(path.len > 8 && target_fire)
 		frustration++
 
-	if(auto_patrol && !target_fire)
-		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
-			start_patrol()
-
-		if(mode == BOT_PATROL)
-			bot_patrol()
+	if(bot_mode_flags & BOT_MODE_AUTOPATROL && !target_fire)
+		switch(mode)
+			if(BOT_IDLE, BOT_START_PATROL)
+				start_patrol()
+			if(BOT_PATROL)
+				bot_patrol()
 
 
 //Look for burning people or turfs around the bot
@@ -273,11 +262,13 @@
 
 	return result
 
-/mob/living/simple_animal/bot/firebot/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && foam_cooldown + FOAM_INTERVAL < world.time)
+/mob/living/simple_animal/bot/firebot/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+
+/mob/living/simple_animal/bot/firebot/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	if(COOLDOWN_FINISHED(src, foam_cooldown))
 		new /obj/effect/particle_effect/foam/firefighting(loc)
-		foam_cooldown = world.time
-	..()
+		COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
 /mob/living/simple_animal/bot/firebot/proc/spray_water(atom/target, mob/user)
 	if(stationary_mode)
@@ -286,22 +277,18 @@
 		flick("firebot1_use", user)
 	internal_ext.afterattack(target, user, null)
 
-/mob/living/simple_animal/bot/firebot/update_icon()
-	if(!on)
+/mob/living/simple_animal/bot/firebot/update_icon_state()
+	. = ..()
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		icon_state = "firebot0"
 		return
-	if(IsStun() || IsParalyzed())
+	if(IsStun() || IsParalyzed() || stationary_mode) //Bot has yellow light to indicate stationary mode.
 		icon_state = "firebots1"
-	else if(stationary_mode) //Bot has yellow light to indicate stationary mode.
-		icon_state = "firebots1"
-	else
-		icon_state = "firebot1"
+		return
+	icon_state = "firebot1"
 
 
 /mob/living/simple_animal/bot/firebot/explode()
-	on = FALSE
-	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
@@ -312,15 +299,7 @@
 	if(isopenturf(T))
 		var/turf/open/theturf = T
 		theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
-
-	do_sparks(3, TRUE, src)
-	..()
-
-/obj/machinery/bot_core/firebot
-	req_one_access = list(ACCESS_CONSTRUCTION, ACCESS_ROBOTICS)
+	return ..()
 
 #undef SPEECH_INTERVAL
 #undef DETECTED_VOICE_INTERVAL

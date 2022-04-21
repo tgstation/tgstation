@@ -1,9 +1,3 @@
-#define PRE_TITLE 1
-#define TITLE 2
-#define SYLLABLE 3
-#define MULTIPLE_SYLLABLE 4
-#define SUFFIX 5
-
 /obj/item/book/codex_gigas
 	name = "\improper Codex Gigas"
 	desc = "A book documenting the nature of devils."
@@ -13,6 +7,6 @@
 	throw_speed = 1
 	throw_range = 10
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	author = "Forces beyond your comprehension"
-	unique = 1
-	title = "the Codex Gigas"
+	starting_title = "the Codex Gigas"
+	starting_author = "Forces beyond your comprehension"
+	unique = TRUE

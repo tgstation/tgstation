@@ -1,9 +1,10 @@
 /obj/item/organ/alien
 	icon_state = "xgibmid2"
+	visual = FALSE
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 	var/list/alien_powers = list()
 
-/obj/item/organ/alien/Initialize()
+/obj/item/organ/alien/Initialize(mapload)
 	. = ..()
 	for(var/A in alien_powers)
 		if(ispath(A))
@@ -35,10 +36,14 @@
 	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/plasma = 10)
 
+	/// The current amount of stored plasma.
 	var/storedPlasma = 100
+	/// The maximum plasma this organ can store.
 	var/max_plasma = 250
-	var/heal_rate = 5
-	var/plasma_rate = 10
+	/// The rate this organ regenerates its owners health at per damage type per second.
+	var/heal_rate = 2.5
+	/// The rate this organ regenerates plasma at per second.
+	var/plasma_rate = 5
 
 /obj/item/organ/alien/plasmavessel/large
 	name = "large plasma vessel"
@@ -46,10 +51,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	storedPlasma = 200
 	max_plasma = 500
-	plasma_rate = 15
+	plasma_rate = 7.5
 
 /obj/item/organ/alien/plasmavessel/large/queen
-	plasma_rate = 20
+	plasma_rate = 10
 
 /obj/item/organ/alien/plasmavessel/small
 	name = "small plasma vessel"
@@ -57,7 +62,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	storedPlasma = 100
 	max_plasma = 150
-	plasma_rate = 5
+	plasma_rate = 2.5
 
 /obj/item/organ/alien/plasmavessel/small/tiny
 	name = "tiny plasma vessel"
@@ -66,22 +71,22 @@
 	max_plasma = 100
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
-/obj/item/organ/alien/plasmavessel/on_life()
+/obj/item/organ/alien/plasmavessel/on_life(delta_time, times_fired)
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
 		if(owner.health >= owner.maxHealth)
-			owner.adjustPlasma(plasma_rate)
+			owner.adjustPlasma(plasma_rate * delta_time)
 		else
 			var/heal_amt = heal_rate
 			if(!isalien(owner))
 				heal_amt *= 0.2
-			owner.adjustPlasma(plasma_rate*0.5)
-			owner.adjustBruteLoss(-heal_amt)
-			owner.adjustFireLoss(-heal_amt)
-			owner.adjustOxyLoss(-heal_amt)
-			owner.adjustCloneLoss(-heal_amt)
+			owner.adjustPlasma(0.5 * plasma_rate * delta_time)
+			owner.adjustBruteLoss(-heal_amt * delta_time)
+			owner.adjustFireLoss(-heal_amt * delta_time)
+			owner.adjustOxyLoss(-heal_amt * delta_time)
+			owner.adjustCloneLoss(-heal_amt * delta_time)
 	else
-		owner.adjustPlasma(plasma_rate * 0.1)
+		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -110,11 +115,11 @@
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	..()
 	M.faction |= ROLE_ALIEN
-	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
+	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
 /obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
+	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
@@ -122,22 +127,22 @@
 	if(!owner|| owner.stat == DEAD)
 		return
 	if(isalien(owner)) //Different effects for aliens than humans
-		to_chat(owner, "<span class='userdanger'>Your Queen has been struck down!</span>")
-		to_chat(owner, "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed.</span>")
+		to_chat(owner, span_userdanger("Your Queen has been struck down!"))
+		to_chat(owner, span_danger("You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed."))
 		owner.emote("roar")
 		owner.Stun(200) //Actually just slows them down a bit.
 
 	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
-		to_chat(owner, "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!</span>")
+		to_chat(owner, span_danger("You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!"))
 		owner.emote("scream")
 		owner.Paralyze(100)
 
 	owner.jitteriness += 30
 	owner.add_confusion(30)
-	owner.stuttering += 30
+	owner.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/stutter)
 
 	recent_queen_death = TRUE
-	owner.throw_alert("alien_noqueen", /atom/movable/screen/alert/alien_vulnerable)
+	owner.throw_alert(ALERT_XENO_NOQUEEN, /atom/movable/screen/alert/alien_vulnerable)
 	addtimer(CALLBACK(src, .proc/clear_queen_death), QUEEN_DEATH_DEBUFF_DURATION)
 
 
@@ -147,8 +152,8 @@
 	recent_queen_death = FALSE
 	if(!owner) //In case the xeno is butchered or subjected to surgery after death.
 		return
-	to_chat(owner, "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>")
-	owner.clear_alert("alien_noqueen")
+	to_chat(owner, span_noticealien("The pain of the queen's death is easing. You begin to hear the hivemind again."))
+	owner.clear_alert(ALERT_XENO_NOQUEEN)
 
 #undef QUEEN_DEATH_DEBUFF_DURATION
 

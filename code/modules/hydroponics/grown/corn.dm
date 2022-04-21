@@ -29,6 +29,9 @@
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
 
+/obj/item/food/grown/corn/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/oven_baked_corn, rand(15 SECONDS, 35 SECONDS), TRUE, TRUE)
+
 /obj/item/grown/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
@@ -42,7 +45,7 @@
 
 /obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, params)
 	if(W.get_sharpness())
-		to_chat(user, "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
+		to_chat(user, span_notice("You use [W] to fashion a pipe out of the corn cob!"))
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		qdel(src)
 	else
@@ -56,7 +59,7 @@
 	species = "snapcorn"
 	plantname = "Snapcorn Stalks"
 	product = /obj/item/grown/snapcorn
-	mutatelist = list()
+	mutatelist = null
 	rarity = 10
 
 /obj/item/grown/snapcorn
@@ -77,7 +80,7 @@
 
 /obj/item/grown/snapcorn/attack_self(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>You pick a snap pop from the cob.</span>")
+	to_chat(user, span_notice("You pick a snap pop from the cob."))
 	var/obj/item/toy/snappop/S = new /obj/item/toy/snappop(user.loc)
 	if(ishuman(user))
 		user.put_in_hands(S)

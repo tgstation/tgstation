@@ -37,7 +37,6 @@
 	message = "hugs themself."
 	message_param = "hugs %t."
 	hands_use_check = TRUE
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/human/mumble
 	key = "mumble"
@@ -49,6 +48,7 @@
 	key = "scream"
 	key_third_person = "screams"
 	message = "screams!"
+	message_mime = "acts out a scream!"
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 	vary = TRUE
@@ -56,19 +56,22 @@
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/user)
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = user
-	if(H.mind?.miming)
+	var/mob/living/carbon/human/human = user
+	if(human.mind?.miming)
 		return
-	if(ishumanbasic(H) || isfelinid(H))
-		if(user.gender == FEMALE)
-			return pick('sound/voice/human/femalescream_1.ogg', 'sound/voice/human/femalescream_2.ogg', 'sound/voice/human/femalescream_3.ogg', 'sound/voice/human/femalescream_4.ogg', 'sound/voice/human/femalescream_5.ogg')
-		else
-			if(prob(1))
-				return 'sound/voice/human/wilhelm_scream.ogg'
-			return pick('sound/voice/human/malescream_1.ogg', 'sound/voice/human/malescream_2.ogg', 'sound/voice/human/malescream_3.ogg', 'sound/voice/human/malescream_4.ogg', 'sound/voice/human/malescream_5.ogg', 'sound/voice/human/malescream_6.ogg')
-	else if(ismoth(H))
-		return 'sound/voice/moth/scream_moth.ogg'
+	return human.dna.species.get_scream_sound(human)
 
+/datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
+	key = "screech"
+	key_third_person = "screeches"
+	message = "screeches."
+	emote_type = EMOTE_AUDIBLE
+	vary = FALSE
+
+/datum/emote/living/carbon/human/scream/screech/should_play_sound(mob/user, intentional)
+	if(ismonkey(user))
+		return TRUE
+	return ..()
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
@@ -132,10 +135,11 @@
 	. = ..()
 	if(.)
 		var/mob/living/carbon/human/H = user
-		if(findtext(select_message_type(user,intentional), "open"))
-			H.OpenWings()
+		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+		if(wings && findtext(select_message_type(user,intentional), "open"))
+			wings.open_wings()
 		else
-			H.CloseWings()
+			wings.close_wings()
 
 /datum/emote/living/carbon/human/wing/select_message_type(mob/user, intentional)
 	. = ..()
@@ -152,23 +156,43 @@
 	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
 		return TRUE
 
-/mob/living/carbon/human/proc/OpenWings()
-	if(!dna || !dna.species)
-		return
-	if(dna.species.mutant_bodyparts["wings"])
-		dna.species.mutant_bodyparts["wingsopen"] = dna.species.mutant_bodyparts["wings"]
-		dna.species.mutant_bodyparts -= "wings"
-	update_body()
+///Snowflake emotes only for le epic chimp
+/datum/emote/living/carbon/human/monkey
 
-/mob/living/carbon/human/proc/CloseWings()
-	if(!dna || !dna.species)
-		return
-	if(dna.species.mutant_bodyparts["wingsopen"])
-		dna.species.mutant_bodyparts["wings"] = dna.species.mutant_bodyparts["wingsopen"]
-		dna.species.mutant_bodyparts -= "wingsopen"
-	update_body()
-	if(isturf(loc))
-		var/turf/T = loc
-		T.Entered(src)
+/datum/emote/living/carbon/human/monkey/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(ismonkey(user))
+		return ..()
+	return FALSE
 
-//Ayy lmao
+/datum/emote/living/carbon/human/monkey/gnarl
+	key = "gnarl"
+	key_third_person = "gnarls"
+	message = "gnarls and shows its teeth..."
+
+/datum/emote/living/carbon/human/monkey/roll
+	key = "roll"
+	key_third_person = "rolls"
+	message = "rolls."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/monkey/scratch
+	key = "scratch"
+	key_third_person = "scratches"
+	message = "scratches."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/monkey/screech/roar
+	key = "roar"
+	key_third_person = "roars"
+	message = "roars."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/monkey/tail
+	key = "tail"
+	message = "waves their tail."
+
+/datum/emote/living/carbon/human/monkeysign
+	key = "sign"
+	key_third_person = "signs"
+	message_param = "signs the number %t."
+	hands_use_check = TRUE

@@ -38,6 +38,9 @@
 #define RUST_G (__rust_g || __detect_rust_g())
 #endif
 
+/// Gets the version of rust_g
+/proc/rustg_get_version() return call(RUST_G, "get_version")()
+
 /**
  * This proc generates a cellular automata noise grid which can be used in procedural generation methods.
  *
@@ -77,8 +80,8 @@
 #define RUSTG_HTTP_METHOD_PATCH "patch"
 #define RUSTG_HTTP_METHOD_HEAD "head"
 #define RUSTG_HTTP_METHOD_POST "post"
-#define rustg_http_request_blocking(method, url, body, headers) call(RUST_G, "http_request_blocking")(method, url, body, headers)
-#define rustg_http_request_async(method, url, body, headers) call(RUST_G, "http_request_async")(method, url, body, headers)
+#define rustg_http_request_blocking(method, url, body, headers, options) call(RUST_G, "http_request_blocking")(method, url, body, headers, options)
+#define rustg_http_request_async(method, url, body, headers, options) call(RUST_G, "http_request_async")(method, url, body, headers, options)
 #define rustg_http_check_request(req_id) call(RUST_G, "http_check_request")(req_id)
 
 #define RUSTG_JOB_NO_RESULTS_YET "NO RESULTS YET"
@@ -98,4 +101,14 @@
 #define rustg_sql_connected(handle) call(RUST_G, "sql_connected")(handle)
 #define rustg_sql_disconnect_pool(handle) call(RUST_G, "sql_disconnect_pool")(handle)
 #define rustg_sql_check_query(job_id) call(RUST_G, "sql_check_query")("[job_id]")
+
+#define rustg_read_toml_file(path) json_decode(call(RUST_G, "toml_file_to_json")(path) || "null")
+
+#define rustg_url_encode(text) call(RUST_G, "url_encode")("[text]")
+#define rustg_url_decode(text) call(RUST_G, "url_decode")(text)
+
+#ifdef RUSTG_OVERRIDE_BUILTINS
+	#define url_encode(text) rustg_url_encode(text)
+	#define url_decode(text) rustg_url_decode(text)
+#endif
 

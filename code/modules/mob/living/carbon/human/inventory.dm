@@ -40,7 +40,7 @@
 			return s_store
 	return null
 
-/mob/living/carbon/human/proc/get_all_slots()
+/mob/living/carbon/human/get_all_worn_items()
 	. = get_head_slots() | get_body_slots()
 
 /mob/living/carbon/human/proc/get_body_slots()
@@ -156,11 +156,11 @@
 			s_store = I
 			update_inv_s_store()
 		else
-			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
+			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
-		I.equipped(src, slot, initial)
+		has_equipped(I, slot, initial)
 
 		// Send a signal for when we equip an item that used to cover our feet/shoes. Used for bloody feet
 		if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
@@ -170,7 +170,7 @@
 
 /mob/living/carbon/human/equipped_speed_mods()
 	. = ..()
-	for(var/sloties in get_all_slots() - list(l_store, r_store, s_store))
+	for(var/sloties in get_all_worn_items() - list(l_store, r_store, s_store))
 		var/obj/item/thing = sloties
 		. += thing?.slowdown
 
@@ -274,10 +274,6 @@
 /mob/living/carbon/human/head_update(obj/item/I, forced)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
 		update_hair()
-	else
-		var/obj/item/clothing/C = I
-		if(istype(C) && C.dynamic_hair_suffix)
-			update_hair()
 	if(I.flags_inv & HIDEEYES || forced)
 		update_inv_glasses()
 	if(I.flags_inv & HIDEEARS || forced)
@@ -302,7 +298,7 @@
 
 //delete all equipment without dropping anything
 /mob/living/carbon/human/proc/delete_equipment()
-	for(var/slot in get_all_slots())//order matters, dependant slots go first
+	for(var/slot in get_all_worn_items())//order matters, dependant slots go first
 		qdel(slot)
 	for(var/obj/item/I in held_items)
 		qdel(I)
@@ -316,27 +312,28 @@
 	var/obj/item/equipped_item = get_item_by_slot(slot_type)
 	if(!equipped_item) // We also let you equip an item like this
 		if(!thing)
-			to_chat(src, "<span class='warning'>You have no [slot_item_name] to take something out of!</span>")
+			to_chat(src, span_warning("You have no [slot_item_name] to take something out of!"))
 			return
 		if(equip_to_slot_if_possible(thing, slot_type))
 			update_inv_hands()
 		return
-	if(!SEND_SIGNAL(equipped_item, COMSIG_CONTAINS_STORAGE)) // not a storage item
+	var/datum/component/storage/storage = equipped_item.GetComponent(/datum/component/storage)
+	if(!storage)
 		if(!thing)
 			equipped_item.attack_hand(src)
 		else
-			to_chat(src, "<span class='warning'>You can't fit [thing] into your [equipped_item.name]!</span>")
+			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
 	if(thing) // put thing in storage item
 		if(!SEND_SIGNAL(equipped_item, COMSIG_TRY_STORAGE_INSERT, thing, src))
-			to_chat(src, "<span class='warning'>You can't fit [thing] into your [equipped_item.name]!</span>")
+			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
-	if(!equipped_item.contents.len) // nothing to take out
-		to_chat(src, "<span class='warning'>There's nothing in your [equipped_item.name] to take out!</span>")
+	var/atom/real_location = storage.real_location()
+	if(!real_location.contents.len) // nothing to take out
+		to_chat(src, span_warning("There's nothing in your [equipped_item.name] to take out!"))
 		return
-	var/obj/item/stored = equipped_item.contents[equipped_item.contents.len]
+	var/obj/item/stored = real_location.contents[real_location.contents.len]
 	if(!stored || stored.on_found(src))
 		return
 	stored.attack_hand(src) // take out thing from item in storage slot
 	return
-

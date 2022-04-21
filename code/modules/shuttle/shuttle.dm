@@ -148,7 +148,7 @@
 //Debug proc used to highlight bounding area
 /obj/docking_port/proc/highlight(_color = "#f00")
 	invisibility = 0
-	layer = GHOST_LAYER
+	plane = GHOST_PLANE
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
 	var/turf/T1 = locate(L[3],L[4],z)
@@ -220,7 +220,7 @@
 	if(!port_destinations)
 		port_destinations = id
 
-	SSshuttle.stationary += src
+	SSshuttle.stationary_docking_ports += src
 
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
@@ -231,7 +231,7 @@
 
 	if(mapload)
 		for(var/turf/T in return_turfs())
-			T.flags_1 |= NO_RUINS_1
+			T.turf_flags |= NO_RUINS
 
 	#ifdef DOCKING_PORT_HIGHLIGHT
 	highlight("#f00")
@@ -239,7 +239,7 @@
 
 /obj/docking_port/stationary/unregister()
 	. = ..()
-	SSshuttle.stationary -= src
+	SSshuttle.stationary_docking_ports -= src
 
 /obj/docking_port/stationary/Destroy(force)
 	if(force)
@@ -279,15 +279,15 @@
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
-/obj/docking_port/stationary/transit/Initialize()
+/obj/docking_port/stationary/transit/Initialize(mapload)
 	. = ..()
-	SSshuttle.transit += src
+	SSshuttle.transit_docking_ports += src
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
 		if(get_docked())
 			log_world("A transit dock was destroyed while something was docked to it.")
-		SSshuttle.transit -= src
+		SSshuttle.transit_docking_ports -= src
 		if(owner)
 			if(owner.assigned_transit == src)
 				owner.assigned_transit = null
@@ -312,12 +312,56 @@
 /obj/docking_port/stationary/picked/whiteship
 	name = "Deep Space"
 	id = "whiteship_away"
-	dheight = 0
+	height = 45 //Width and height need to remain in sync with the size of whiteshipdock.dmm, otherwise we'll get overflow
+	width = 44
+	dheight = 18
+	dwidth = 18
 	dir = 2
-	dwidth = 11
-	height = 22
-	width = 35
-	shuttlekeys = list("whiteship_meta", "whiteship_pubby", "whiteship_box", "whiteship_cere", "whiteship_kilo", "whiteship_donut", "whiteship_delta")
+	shuttlekeys = list("whiteship_meta", "whiteship_pubby", "whiteship_box", "whiteship_cere", "whiteship_kilo", "whiteship_donut", "whiteship_delta", "whiteship_tram")
+
+/// Helper proc that tests to ensure all whiteship templates can spawn at their docking port, and logs their sizes
+/// This should be a unit test, but too much of our other code breaks during shuttle movement, so not yet, not yet.
+/proc/test_whiteship_sizes()
+	var/obj/docking_port/stationary/port_type = /obj/docking_port/stationary/picked/whiteship
+	var/datum/turf_reservation/docking_yard = SSmapping.RequestBlockReservation(initial(port_type.width), initial(port_type.height))
+	var/turf/spawnpoint = locate(docking_yard.bottom_left_coords[1] + initial(port_type.dwidth), docking_yard.bottom_left_coords[2] + initial(port_type.dheight), docking_yard.bottom_left_coords[3])
+
+	var/obj/docking_port/stationary/picked/whiteship/port = new(spawnpoint)
+	var/list/ids = port.shuttlekeys
+	var/height = 0
+	var/width = 0
+	var/dheight = 0
+	var/dwidth = 0
+	var/delta_height = 0
+	var/delta_width = 0
+	for(var/id in ids)
+		var/datum/map_template/shuttle/our_template = SSmapping.shuttle_templates[id]
+		// We do a standard load here so any errors will properly runtimes
+		var/obj/docking_port/mobile/ship = SSshuttle.action_load(our_template, port)
+		if(ship)
+			ship.jumpToNullSpace()
+			ship = null
+		// Yes this is very hacky, but we need to both allow loading a template that's too big to be an error state
+		// And actually get the sizing information from every shuttle
+		SSshuttle.load_template(our_template)
+		var/obj/docking_port/mobile/theoretical_ship = SSshuttle.preview_shuttle
+		if(theoretical_ship)
+			height = max(theoretical_ship.height, height)
+			width = max(theoretical_ship.width, width)
+			dheight = max(theoretical_ship.dheight, dheight)
+			dwidth = max(theoretical_ship.dwidth, dwidth)
+			delta_height = max(theoretical_ship.height - theoretical_ship.dheight, delta_height)
+			delta_width = max(theoretical_ship.width - theoretical_ship.dwidth, delta_width)
+			theoretical_ship.jumpToNullSpace()
+	qdel(port, TRUE)
+	log_world("Whitship sizing information. Use this to set the docking port, and the map size\n\
+		Max Height: [height] \n\
+		Max Width: [width] \n\
+		Max DHeight: [dheight] \n\
+		Max DHeight: [dwidth] \n\
+		The following are the safest bet for map sizing. Anything smaller then this could in the worst case not fit in the docking port\n\
+		Max Combined Width: [height + dheight] \n\
+		Max Combinded Height [width + dwidth]")
 
 /obj/docking_port/mobile
 	name = "shuttle"
@@ -385,18 +429,18 @@
 		else
 			SSshuttle.assoc_mobile[id] = 1
 
-	SSshuttle.mobile += src
+	SSshuttle.mobile_docking_ports += src
 
 /obj/docking_port/mobile/unregister()
 	. = ..()
-	SSshuttle.mobile -= src
+	SSshuttle.mobile_docking_ports -= src
 
 /obj/docking_port/mobile/Destroy(force)
 	if(force)
 		unregister()
 		destination = null
 		previous = null
-		QDEL_NULL(assigned_transit)		//don't need it where we're goin'!
+		QDEL_NULL(assigned_transit) //don't need it where we're goin'!
 		shuttle_areas = null
 		remove_ripples()
 	. = ..()
@@ -533,7 +577,7 @@
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/enterTransit()
-	if((SSshuttle.lockdown && is_station_level(z)) || !canMove())	//emp went off, no escape
+	if((SSshuttle.lockdown && is_station_level(z)) || !canMove()) //emp went off, no escape
 		mode = SHUTTLE_IDLE
 		return
 	previous = null
@@ -577,7 +621,7 @@
 			continue
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
-		oldT.change_area(old_area, underlying_area)
+		oldT.transfer_area_lighting(old_area, underlying_area)
 		oldT.empty(FALSE)
 
 		// Here we locate the bottommost shuttle boundary and remove all turfs above it
@@ -593,9 +637,9 @@
 	// Loop over mobs
 	for(var/t in return_turfs())
 		var/turf/T = t
-		for(var/mob/living/M in T.GetAllContents())
+		for(var/mob/living/M in T.get_all_contents())
 			// If they have a mind and they're not in the brig, they escaped
-			if(M.mind && !istype(t, /turf/open/floor/plasteel/shuttle/red) && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
+			if(M.mind && !istype(t, /turf/open/floor/mineral/plastitanium/red/brig))
 				M.mind.force_escaped = TRUE
 			// Ghostize them and put them in nullspace stasis (for stat & possession checks)
 			M.notransform = TRUE
@@ -717,10 +761,9 @@
 		var/turf/T = thing
 		if(!T || !istype(T.loc, area_type))
 			continue
-		for (var/thing2 in T)
-			var/atom/movable/AM = thing2
-			if (length(AM.client_mobs_in_contents))
-				AM.update_parallax_contents()
+		for (var/atom/movable/movable as anything in T)
+			if (movable.client_mobs_in_contents)
+				movable.update_parallax_contents()
 
 /obj/docking_port/mobile/proc/check_transit_zone()
 	if(assigned_transit)
@@ -879,8 +922,16 @@
 	var/range = (engine_coeff * max(width, height))
 	var/long_range = range * 2.5
 	var/atom/distant_source
-	if(engine_list[1])
-		distant_source = engine_list[1]
+	var/list/engines = list()
+	for(var/datum/weakref/engine in engine_list)
+		var/obj/structure/shuttle/engine/real_engine = engine.resolve()
+		if(!real_engine)
+			engine_list -= engine
+			continue
+		engines += real_engine
+
+	if(engines.len > 0)
+		distant_source = engines[1]
 	else
 		for(var/A in areas)
 			distant_source = locate(/obj/machinery/door) in A
@@ -894,11 +945,11 @@
 				M.playsound_local(distant_source, "sound/runtime/hyperspace/[selected_sound]_distance.ogg", 100)
 			else if(dist_far <= range)
 				var/source
-				if(engine_list.len == 0)
+				if(engines.len == 0)
 					source = distant_source
 				else
 					var/closest_dist = 10000
-					for(var/obj/O in engine_list)
+					for(var/obj/O in engines)
 						var/dist_near = get_dist(M, O)
 						if(dist_near < closest_dist)
 							source = O
@@ -923,7 +974,7 @@
 		var/area/shuttle/areaInstance = thing
 		for(var/obj/structure/shuttle/engine/E in areaInstance.contents)
 			if(!QDELETED(E))
-				engine_list += E
+				engine_list += WEAKREF(E)
 				. += E.engine_power
 
 // Double initial engines to get to 0.5 minimum
@@ -943,7 +994,7 @@
 		var/delta = initial_engines - new_value
 		var/change_per_engine = 1 //doesn't really matter should not be happening for 0 engine shuttles
 		if(initial_engines > 0)
-			change_per_engine = (ENGINE_COEFF_MAX -  1) / initial_engines //just linear drop to max delay
+			change_per_engine = (ENGINE_COEFF_MAX - 1) / initial_engines //just linear drop to max delay
 		return clamp(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
 
 

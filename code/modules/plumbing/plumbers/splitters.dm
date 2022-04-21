@@ -3,7 +3,7 @@
 	name = "Chemical Splitter"
 	desc = "A chemical splitter for smart chemical factorization. Waits till a set of conditions is met and then stops all input and splits the buffer evenly or other in two ducts."
 	icon_state = "splitter"
-
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	buffer = 100
 	density = FALSE
 
@@ -16,9 +16,9 @@
 	//the maximum you can set the transfer to
 	var/max_transfer = 9
 
-/obj/machinery/plumbing/splitter/Initialize(mapload, bolt)
+/obj/machinery/plumbing/splitter/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/splitter, bolt)
+	AddComponent(/datum/component/plumbing/splitter, bolt, layer)
 
 /obj/machinery/plumbing/splitter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -33,15 +33,11 @@
 	return FALSE
 
 
-/datum/saymode/binary //everything that uses .b (silicons, drones, swarmers)
+/datum/saymode/binary //everything that uses .b (silicons, drones)
 	key = MODE_KEY_BINARY
 	mode = MODE_BINARY
 
 /datum/saymode/binary/handle_message(mob/living/user, message, datum/language/language)
-	if(isswarmer(user))
-		var/mob/living/simple_animal/hostile/swarmer/S = user
-		S.swarmer_chat(message)
-		return FALSE
 	if(isdrone(user))
 		var/mob/living/simple_animal/drone/D = user
 		D.drone_chat(message)
@@ -63,36 +59,16 @@
 		return FALSE
 	return TRUE
 
-/datum/saymode/monkey
-	key = "k"
-	mode = MODE_MONKEY
-
-/datum/saymode/monkey/handle_message(mob/living/user, message, datum/language/language)
-	var/datum/mind = user.mind
-	if(!mind)
-		return TRUE
-	if(is_monkey_leader(mind) || (ismonkey(user) && is_monkey(mind)))
-		user.log_talk(message, LOG_SAY, tag="monkey")
-		if(prob(75) && ismonkey(user))
-			user.visible_message("<span class='notice'>\The [user] chimpers.</span>")
-		var/msg = "<span class='[is_monkey_leader(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[[is_monkey_leader(mind) ? "Monkey Leader" : "Monkey"]\]</font> [user]</b>: [message]</span>"
-		for(var/_M in GLOB.mob_list)
-			var/mob/M = _M
-			if(M in GLOB.dead_mob_list)
-				var/link = FOLLOW_LINK(M, user)
-				to_chat(M, "[link] [msg]")
-			if((is_monkey_leader(M.mind) || ismonkey(M)) && (M.mind in SSticker.mode.ape_infectees))
-				to_chat(M, msg)
-		return FALSE
-
 /datum/saymode/mafia
 	key = "j"
 	mode = MODE_MAFIA
 
 /datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
 	var/datum/mafia_controller/MF = GLOB.mafia_game
+	if (!MF)
+		return TRUE
 	var/datum/mafia_role/R = MF.player_role_lookup[user]
 	if(!R || R.team != "mafia")
 		return TRUE
-	MF.send_message("<span class='changeling'><b>[R.body.real_name]:</b> [message]</span>","mafia")
+	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"),"mafia")
 	return FALSE

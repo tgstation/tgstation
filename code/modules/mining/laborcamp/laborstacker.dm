@@ -15,11 +15,14 @@ GLOBAL_LIST(labor_sheet_values)
 	/// Needed to send messages to sec radio
 	var/obj/item/radio/Radio
 
-/obj/machinery/mineral/labor_claim_console/Initialize()
+/obj/machinery/mineral/labor_claim_console/Initialize(mapload)
 	. = ..()
-	Radio = new/obj/item/radio(src)
-	Radio.listening = FALSE
+	Radio = new /obj/item/radio(src)
+	Radio.set_listening(FALSE)
 	locate_stacking_machine()
+	//If we can't find a stacking machine end it all ok?
+	if(!stacking_machine)
+		return INITIALIZE_HINT_QDEL
 
 	if(!GLOB.labor_sheet_values)
 		var/sheet_list = list()
@@ -28,7 +31,14 @@ GLOBAL_LIST(labor_sheet_values)
 			if(!initial(sheet.point_value) || (initial(sheet.merge_type) && initial(sheet.merge_type) != sheet_type)) //ignore no-value sheets and x/fifty subtypes
 				continue
 			sheet_list += list(list("ore" = initial(sheet.name), "value" = initial(sheet.point_value)))
-		GLOB.labor_sheet_values = sortList(sheet_list, /proc/cmp_sheet_list)
+		GLOB.labor_sheet_values = sort_list(sheet_list, /proc/cmp_sheet_list)
+
+/obj/machinery/mineral/labor_claim_console/Destroy()
+	QDEL_NULL(Radio)
+	if(stacking_machine)
+		stacking_machine.labor_console = null
+		stacking_machine = null
+	return ..()
 
 /proc/cmp_sheet_list(list/a, list/b)
 	return a["value"] - b["value"]
@@ -56,8 +66,8 @@ GLOBAL_LIST(labor_sheet_values)
 	if(isliving(usr))
 		var/mob/living/L = usr
 		I = L.get_idcard(TRUE)
-	if(istype(I, /obj/item/card/id/prisoner))
-		var/obj/item/card/id/prisoner/P = I
+	if(istype(I, /obj/item/card/id/advanced/prisoner))
+		var/obj/item/card/id/advanced/prisoner/P = I
 		data["id_points"] = P.points
 		if(P.points >= P.goal)
 			can_go_home = TRUE
@@ -86,43 +96,41 @@ GLOBAL_LIST(labor_sheet_values)
 			if(isliving(M))
 				var/mob/living/L = M
 				I = L.get_idcard(TRUE)
-			if(istype(I, /obj/item/card/id/prisoner))
-				var/obj/item/card/id/prisoner/P = I
+			if(istype(I, /obj/item/card/id/advanced/prisoner))
+				var/obj/item/card/id/advanced/prisoner/P = I
 				P.points += stacking_machine.points
 				stacking_machine.points = 0
-				to_chat(M, "<span class='notice'>Points transferred.</span>")
+				to_chat(M, span_notice("Points transferred."))
 				return TRUE
 			else
-				to_chat(M, "<span class='alert'>No valid id for point transfer detected.</span>")
+				to_chat(M, span_alert("No valid id for point transfer detected."))
 		if("move_shuttle")
 			if(!alone_in_area(get_area(src), M))
-				to_chat(M, "<span class='alert'>Prisoners are only allowed to be released while alone.</span>")
+				to_chat(M, span_alert("Prisoners are only allowed to be released while alone."))
 				return
 			switch(SSshuttle.moveShuttle("laborcamp", "laborcamp_home", TRUE))
 				if(1)
-					to_chat(M, "<span class='alert'>Shuttle not found.</span>")
+					to_chat(M, span_alert("Shuttle not found."))
 				if(2)
-					to_chat(M, "<span class='alert'>Shuttle already at station.</span>")
+					to_chat(M, span_alert("Shuttle already at station."))
 				if(3)
-					to_chat(M, "<span class='alert'>No permission to dock could be granted.</span>")
+					to_chat(M, span_alert("No permission to dock could be granted."))
 				else
 					if(!(obj_flags & EMAGGED))
 						Radio.set_frequency(FREQ_SECURITY)
 						Radio.talk_into(src, "A prisoner has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
-					to_chat(M, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
+					to_chat(M, span_notice("Shuttle received message and will be sent shortly."))
 					return TRUE
 
 /obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()
 	stacking_machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 	if(stacking_machine)
-		stacking_machine.CONSOLE = src
-	else
-		qdel(src)
+		stacking_machine.labor_console = src
 
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
-		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+		to_chat(user, span_warning("PZZTTPFFFT"))
 
 /**********************Prisoner Collection Unit**************************/
 
@@ -130,12 +138,20 @@ GLOBAL_LIST(labor_sheet_values)
 	force_connect = TRUE
 	var/points = 0 //The unclaimed value of ore stacked.
 	damage_deflection = 21
+	var/obj/machinery/mineral/labor_claim_console/labor_console //This is abhorent. I know.
+
+/obj/machinery/mineral/stacking_machine/laborstacker/Destroy()
+	if(labor_console)
+		labor_console.stacking_machine = null
+		labor_console = null
+	return ..()
+
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
 	points += inp.point_value * inp.amount
 	..()
 
 /obj/machinery/mineral/stacking_machine/laborstacker/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/stack/sheet) && user.canUnEquip(I) && user.a_intent == INTENT_HELP)
+	if(istype(I, /obj/item/stack/sheet) && user.canUnEquip(I) && !user.combat_mode)
 		var/obj/item/stack/sheet/inp = I
 		points += inp.point_value * inp.amount
 	return ..()
@@ -149,7 +165,7 @@ GLOBAL_LIST(labor_sheet_values)
 	icon_state = "console"
 	density = FALSE
 
-/obj/machinery/mineral/labor_points_checker/attack_hand(mob/user)
+/obj/machinery/mineral/labor_points_checker/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(. || user.is_blind())
 		return
@@ -157,13 +173,13 @@ GLOBAL_LIST(labor_sheet_values)
 
 /obj/machinery/mineral/labor_points_checker/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
-		if(istype(I, /obj/item/card/id/prisoner))
-			var/obj/item/card/id/prisoner/prisoner_id = I
-			to_chat(user, "<span class='notice'><B>ID: [prisoner_id.registered_name]</B></span>")
-			to_chat(user, "<span class='notice'>Points Collected:[prisoner_id.points]</span>")
-			to_chat(user, "<span class='notice'>Point Quota: [prisoner_id.goal]</span>")
-			to_chat(user, "<span class='notice'>Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.</span>")
+		if(istype(I, /obj/item/card/id/advanced/prisoner))
+			var/obj/item/card/id/advanced/prisoner/prisoner_id = I
+			to_chat(user, span_notice("<B>ID: [prisoner_id.registered_name]</B>"))
+			to_chat(user, span_notice("Points Collected:[prisoner_id.points]"))
+			to_chat(user, span_notice("Point Quota: [prisoner_id.goal]"))
+			to_chat(user, span_notice("Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release."))
 		else
-			to_chat(user, "<span class='warning'>Error: Invalid ID</span>")
+			to_chat(user, span_warning("Error: Invalid ID"))
 	else
 		return ..()

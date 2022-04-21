@@ -13,6 +13,7 @@
 	icon_state = "seedling"
 	icon_living = "seedling"
 	icon_dead = "seedling_dead"
+	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	maxHealth = 100
 	health = 100
 	melee_damage_lower = 30
@@ -43,7 +44,7 @@
 	damage = 10
 	damage_type = BURN
 	light_range = 2
-	flag = ENERGY
+	armor_flag = ENERGY
 	light_color = LIGHT_COLOR_YELLOW
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
@@ -60,7 +61,7 @@
 	name = "beam of solar energy"
 	icon_state = "solar_beam"
 	icon = 'icons/effects/beam.dmi'
-	layer = LIGHTING_LAYER
+	plane = LIGHTING_PLANE
 	duration = 5
 	randomdir = FALSE
 
@@ -94,7 +95,7 @@
 	return ..()
 
 /datum/status_effect/seedling_beam_indicator/tick()
-	var/target_angle = Get_Angle(owner, target)
+	var/target_angle = get_angle(owner, target)
 	var/matrix/final = matrix()
 	final.Turn(target_angle)
 	seedling_screen_object.transform = final
@@ -122,7 +123,7 @@
 /mob/living/simple_animal/hostile/jungle/seedling/proc/WarmupAttack()
 	if(combatant_state == SEEDLING_STATE_NEUTRAL)
 		combatant_state = SEEDLING_STATE_WARMUP
-		walk(src,0)
+		SSmove_manager.stop_looping(src)
 		update_icons()
 		var/target_dist = get_dist(src,target)
 		var/living_target_check = isliving(target)

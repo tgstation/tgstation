@@ -20,9 +20,13 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
 
+	/// The uplink flag for this type.
+	/// See [`code/__DEFINES/uplink.dm`]
+	var/uplink_flag = UPLINK_TRAITORS
+
 /obj/item/uplink/Initialize(mapload, owner, tc_amount = 20)
 	. = ..()
-	AddComponent(/datum/component/uplink, owner, FALSE, TRUE, null, tc_amount)
+	AddComponent(/datum/component/uplink, owner, FALSE, TRUE, uplink_flag, tc_amount)
 
 /obj/item/uplink/debug
 	name = "debug uplink"
@@ -31,33 +35,31 @@
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.name = "debug uplink"
-	hidden_uplink.debug = TRUE
+	hidden_uplink.uplink_handler.debug_mode = TRUE
 
-/obj/item/uplink/nuclear/Initialize()
-	. = ..()
-	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
-	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
+/obj/item/uplink/nuclear
+	uplink_flag = UPLINK_NUKE_OPS
 
 /obj/item/uplink/nuclear/debug
 	name = "debug nuclear uplink"
+	uplink_flag = UPLINK_NUKE_OPS
 
 /obj/item/uplink/nuclear/debug/Initialize(mapload, owner, tc_amount = 9000)
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
-	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 	hidden_uplink.name = "debug nuclear uplink"
-	hidden_uplink.debug = TRUE
+	hidden_uplink.uplink_handler.debug_mode = TRUE
 
-/obj/item/uplink/nuclear_restricted/Initialize()
+/obj/item/uplink/nuclear_restricted
+	uplink_flag = UPLINK_NUKE_OPS
+
+/obj/item/uplink/nuclear_restricted/Initialize(mapload)
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
 	hidden_uplink.allow_restricted = FALSE
-	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 
-/obj/item/uplink/clownop/Initialize()
-	. = ..()
-	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
-	hidden_uplink.set_gamemode(/datum/game_mode/nuclear/clown_ops)
+/obj/item/uplink/clownop
+	uplink_flag = UPLINK_CLOWN_OPS
 
 /obj/item/uplink/old
 	name = "dusty radio"
@@ -71,9 +73,9 @@
 // Multitool uplink
 /obj/item/multitool/uplink/Initialize(mapload, owner, tc_amount = 20)
 	. = ..()
-	AddComponent(/datum/component/uplink, owner, FALSE, TRUE, null, tc_amount)
+	AddComponent(/datum/component/uplink, owner, FALSE, TRUE, UPLINK_TRAITORS, tc_amount)
 
 // Pen uplink
 /obj/item/pen/uplink/Initialize(mapload, owner, tc_amount = 20)
 	. = ..()
-	AddComponent(/datum/component/uplink, owner, TRUE, FALSE, null, tc_amount)
+	AddComponent(/datum/component/uplink, owner, TRUE, FALSE, UPLINK_TRAITORS, tc_amount)

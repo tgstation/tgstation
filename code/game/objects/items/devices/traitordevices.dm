@@ -34,9 +34,9 @@ effective or pretty fucking useless.
 
 
 /obj/item/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
-	if(!user) 	return
+	if(!user) return
 	if(times_used >= max_uses)
-		to_chat(user, "<span class='danger'>The mind batterer has been burnt out!</span>")
+		to_chat(user, span_danger("The mind batterer has been burnt out!"))
 		return
 
 	log_combat(user, null, "knocked down people in the area", src)
@@ -45,13 +45,13 @@ effective or pretty fucking useless.
 		if(prob(50))
 
 			M.Paralyze(rand(200,400))
-			to_chat(M, "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
+			to_chat(M, span_userdanger("You feel a tremendous, paralyzing wave flood your mind."))
 
 		else
-			to_chat(M, "<span class='userdanger'>You feel a sudden, electric jolt travel through your head.</span>")
+			to_chat(M, span_userdanger("You feel a sudden, electric jolt travel through your head."))
 
 	playsound(src.loc, 'sound/misc/interference.ogg', 50, TRUE)
-	to_chat(user, "<span class='notice'>You trigger [src].</span>")
+	to_chat(user, span_notice("You trigger [src]."))
 	times_used += 1
 	if(times_used >= max_uses)
 		icon_state = "battererburnt"
@@ -69,7 +69,6 @@ effective or pretty fucking useless.
 */
 
 /obj/item/healthanalyzer/rad_laser
-	custom_materials = list(/datum/material/iron=400)
 	var/irradiate = TRUE
 	var/stealth = FALSE
 	var/used = FALSE // is it cooling down?
@@ -81,6 +80,10 @@ effective or pretty fucking useless.
 		..()
 	if(!irradiate)
 		return
+	var/mob/living/carbon/human/human_target = M
+	if(istype(human_target) && !used && SSradiation.wearing_rad_protected_clothing(human_target)) //intentionally not checking for TRAIT_RADIMMUNE here so that tatortot can still fuck up and waste their cooldown.
+		to_chat(user, span_warning("[M]'s clothing is fully protecting [M.p_them()] from irradiation!"))
+		return
 	if(!used)
 		log_combat(user, M, "irradiated", src)
 		var/cooldown = get_cooldown()
@@ -88,17 +91,16 @@ effective or pretty fucking useless.
 		icon_state = "health1"
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
-		to_chat(user, "<span class='warning'>Successfully irradiated [M].</span>")
-		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M), (wavelength+(intensity*4))*5)
-	else
-		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
-
-/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M)
-	if(QDELETED(M))
+		to_chat(user, span_warning("Successfully irradiated [M]."))
+		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M, intensity), (wavelength+(intensity*4))*5)
 		return
-	if(intensity >= 5)
-		M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)
-	M.rad_act(intensity*10)
+	to_chat(user, span_warning("The radioactive microlaser is still recharging."))
+
+/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
+	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE))
+		return
+	if(passed_intensity >= 5)
+		M.apply_effect(round(passed_intensity/0.075), EFFECT_UNCONSCIOUS) //to save you some math, this is a round(intensity * (4/3)) second long knockout
 
 /obj/item/healthanalyzer/rad_laser/proc/get_cooldown()
 	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
@@ -196,7 +198,6 @@ effective or pretty fucking useless.
 	var/charge = 300
 	var/max_charge = 300
 	var/on = FALSE
-	var/old_alpha = 0
 	actions_types = list(/datum/action/item_action/toggle)
 
 /obj/item/shadowcloak/ui_action_click(mob/user)
@@ -214,17 +215,16 @@ effective or pretty fucking useless.
 /obj/item/shadowcloak/proc/Activate(mob/living/carbon/human/user)
 	if(!user)
 		return
-	to_chat(user, "<span class='notice'>You activate [src].</span>")
+	to_chat(user, span_notice("You activate [src]."))
 	src.user = user
 	START_PROCESSING(SSobj, src)
-	old_alpha = user.alpha
 	on = TRUE
 
 /obj/item/shadowcloak/proc/Deactivate()
-	to_chat(user, "<span class='notice'>You deactivate [src].</span>")
+	to_chat(user, span_notice("You deactivate [src]."))
 	STOP_PROCESSING(SSobj, src)
 	if(user)
-		user.alpha = old_alpha
+		user.alpha = initial(user.alpha)
 	on = FALSE
 	user = null
 
@@ -256,32 +256,111 @@ effective or pretty fucking useless.
 	var/range = 12
 
 /obj/item/jammer/attack_self(mob/user)
-	to_chat(user,"<span class='notice'>You [active ? "deactivate" : "activate"] [src].</span>")
+	to_chat(user,span_notice("You [active ? "deactivate" : "activate"] [src]."))
 	active = !active
 	if(active)
 		GLOB.active_jammers |= src
 	else
 		GLOB.active_jammers -= src
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
 
 /obj/item/storage/toolbox/emergency/turret/PopulateContents()
 	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
+	new /obj/item/wrench/combat(src)
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/analyzer(src)
 	new /obj/item/wirecutters(src)
 
-/obj/item/storage/toolbox/emergency/turret/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH && user.a_intent == INTENT_HARM)
-		user.visible_message("<span class='danger'>[user] bashes [src] with [I]!</span>", \
-			"<span class='danger'>You bash [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
+/obj/item/storage/toolbox/emergency/turret/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH && user.combat_mode && attacking_item.use_tool(src, user, 2 SECONDS, volume = 50))
+		user.visible_message(span_danger("[user] bashes [src] with [attacking_item]!"), \
+			span_danger("You bash [src] with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
 		playsound(src, "sound/items/drill_use.ogg", 80, TRUE, -1)
-		var/obj/machinery/porta_turret/syndicate/pod/toolbox/turret = new(get_turf(loc))
-		turret.faction = list("[REF(user)]")
+		var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
+		set_faction(turret, user)
+		turret.toolbox = src
+		forceMove(turret)
+		return
+	return ..()
+
+/obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
+	turret.faction = list("[REF(user)]")
+
+/obj/item/storage/toolbox/emergency/turret/nukie/set_faction(obj/machinery/porta_turret/turret, mob/user)
+	turret.faction = list(ROLE_SYNDICATE)
+
+/obj/machinery/porta_turret/syndicate/toolbox
+	icon_state = "toolbox_off"
+	base_icon_state = "toolbox"
+
+/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
+	. = ..()
+	underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
+
+/obj/machinery/porta_turret/syndicate/toolbox
+	integrity_failure = 0
+	max_integrity = 100
+	shot_delay = 0.5 SECONDS
+	stun_projectile = /obj/projectile/bullet/toolbox_turret
+	lethal_projectile = /obj/projectile/bullet/toolbox_turret
+	subsystem_type = /datum/controller/subsystem/processing/projectiles
+	ignore_faction = TRUE
+	/// The toolbox we store.
+	var/obj/item/toolbox
+
+/obj/machinery/porta_turret/syndicate/toolbox/examine(mob/user)
+	. = ..()
+	if(faction_check(faction, user.faction))
+		. += span_notice("You can repair it by <b>left-clicking</b> with a combat wrench.")
+		. += span_notice("You can fold it by <b>right-clicking</b> with a combat wrench.")
+
+/obj/machinery/porta_turret/syndicate/toolbox/target(atom/movable/target)
+	if(!target)
+		return
+	if(shootAt(target))
+		setDir(get_dir(base, target))
+	return TRUE
+
+/obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(attacking_item, /obj/item/wrench/combat))
+		if(user.combat_mode && attacking_item.toolspeed && attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
+			deconstruct(TRUE)
+			attacking_item.play_tool_sound(src, 50)
+		else if(!user.combat_mode)
+			to_chat(user, span_notice("You start repairing [src]..."))
+			while(atom_integrity != max_integrity && attacking_item.toolspeed && attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
+				repair_damage(10)
+		return
+	return ..()
+
+/obj/machinery/porta_turret/syndicate/toolbox/deconstruct(disassembled)
+	if(disassembled)
+		var/atom/movable/old_toolbox = toolbox
+		toolbox = null
+		old_toolbox.forceMove(drop_location())
+	else
+		new /obj/effect/gibspawner/robot(drop_location())
+	return ..()
+
+/obj/machinery/porta_turret/syndicate/toolbox/Destroy()
+	toolbox = null
+	return ..()
+
+/obj/machinery/porta_turret/syndicate/toolbox/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == toolbox)
+		toolbox = null
 		qdel(src)
 
-	..()
+/obj/machinery/porta_turret/syndicate/toolbox/ui_status(mob/user)
+	if(faction_check(user.faction, faction))
+		return ..()
+	return UI_CLOSE
+
+/obj/projectile/bullet/toolbox_turret
+	damage = 10
+	speed = 0.6

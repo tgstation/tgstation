@@ -85,7 +85,9 @@
 		if("grant_language")
 			if((is_admin || isobserver(AM)) && language_datum)
 				var/list/choices = list("Only Spoken", "Only Understood", "Both")
-				var/choice = input(user,"How do you want to add this language?","[language_datum]",null) as null|anything in choices
+				var/choice = tgui_input_list(user, "How do you want to add this language?", "[language_datum]", choices)
+				if(isnull(choice))
+					return
 				var/spoken = FALSE
 				var/understood = FALSE
 				switch(choice)
@@ -97,7 +99,7 @@
 						spoken = TRUE
 						understood = TRUE
 				if(language_holder.blocked_languages && language_holder.blocked_languages[language_datum])
-					choice = alert(user, "Do you want to lift the blockage that's also preventing the language to be spoken or understood?", "[language_datum]", "Yes", "No")
+					choice = tgui_alert(user, "Do you want to lift the blockage that's also preventing the language to be spoken or understood?", "[language_datum]", list("Yes", "No"))
 					if(choice == "Yes")
 						language_holder.remove_blocked_language(language_datum, LANGUAGE_ALL)
 				language_holder.grant_language(language_datum, understood, spoken)
@@ -108,7 +110,9 @@
 		if("remove_language")
 			if((is_admin || isobserver(AM)) && language_datum)
 				var/list/choices = list("Only Spoken", "Only Understood", "Both")
-				var/choice = input(user,"Which part do you wish to remove?","[language_datum]",null) as null|anything in choices
+				var/choice = tgui_input_list(user, "Which part do you wish to remove?", "[language_datum]", choices)
+				if(isnull(choice))
+					return
 				var/spoken = FALSE
 				var/understood = FALSE
 				switch(choice)
