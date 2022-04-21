@@ -196,7 +196,8 @@
 /obj/item/circuitboard/machine/pacman/examine(mob/user)
 	. = ..()
 	var/message = high_production_profile ? "high production - high consumption" : "low production - low consumption"
-	. += span_notice("It's set to [message]")
+	. += span_notice("It's set to [message].")
+	. += span_notice("You can switch the mode by using a screwdriver on [src].")
 
 /obj/item/circuitboard/machine/pacman/screwdriver_act(mob/living/user, obj/item/tool)
 	high_production_profile = !high_production_profile
