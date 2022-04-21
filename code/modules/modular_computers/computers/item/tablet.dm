@@ -39,10 +39,12 @@
 		explode(usr, from_message_menu = TRUE)
 		return
 
-/obj/item/modular_computer/tablet/examine(mob/user)
+/obj/item/modular_computer/tablet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(inserted_item)
-		. += "Ctrl-click to remove the [inserted_item.name]."
+
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove pen"
+
+	. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()
