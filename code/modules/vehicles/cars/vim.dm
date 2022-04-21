@@ -82,7 +82,7 @@
 	if(atom_integrity == max_integrity)
 		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
 
-/obj/vehicle/sealed/car/vim/mob_try_exit(mob/M, mob/user, silent = FALSE, randomstep = FALSE)
+/obj/vehicle/sealed/car/vim/mob_try_exit(mob/pilot, mob/user, silent = FALSE, randomstep = FALSE)
 	. = ..()
 	update_appearance()
 
