@@ -558,7 +558,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	else if(valve_open && holding)
 		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
-/obj/machinery/portable_atmospherics/canister/process()
+/obj/machinery/portable_atmospherics/canister/process(delta_time)
 
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()
@@ -566,7 +566,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	protected_contents = FALSE
 	if(shielding_powered)
 		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - heat_limit, 1)))
-		var/power_consumed = power_factor * 250
+		var/power_consumed = power_factor * 250 * delta_time
 		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
 			use_power(power_consumed, AREA_USAGE_EQUIP)
 			protected_contents = TRUE
@@ -574,6 +574,11 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			protected_contents = TRUE
 		else
 			shielding_powered = FALSE
+
+	///function used to check the limit of the canisters and also set the amount of damage that the canister can receive, if the heat and pressure are way higher than the limit the more damage will be done
+	if(!excited && !protected_contents && (our_temperature > heat_limit || our_pressure > pressure_limit))
+		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
+		excited = TRUE
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	if(machine_stat & BROKEN)
