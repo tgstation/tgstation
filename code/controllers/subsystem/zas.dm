@@ -70,6 +70,12 @@ SUBSYSTEM_DEF(zas)
 	wait = 2 SECONDS
 
 	var/cached_cost = 0
+	var/cost_tiles = 0
+	var/cost_deferred_tiles = 0
+	var/cost_edges = 0
+	var/cost_fires = 0
+	var/cost_hotspots = 0
+	var/cost_zones = 0
 
 	//The variable setting controller
 	var/datum/zas_controller/settings
@@ -80,8 +86,6 @@ SUBSYSTEM_DEF(zas)
 	var/list/zones = list()
 	var/list/edges = list()
 
-	//Atoms to be processed
-	var/list/atom_process = list()
 
 	//Geometry updates lists
 	var/list/tiles_to_update = list()
@@ -96,11 +100,9 @@ SUBSYSTEM_DEF(zas)
 	var/tmp/list/processing_hotspots
 	var/tmp/list/processing_zones
 
-	//Currently processing
-	var/list/currentrun = list()
-	var/current_process = SSZAS_TILES
 	var/active_zones = 0
 	var/next_id = 1
+
 
 /datum/controller/subsystem/zas/proc/Reboot()
 	// Stop processing while we rebuild.
@@ -176,111 +178,33 @@ SUBSYSTEM_DEF(zas)
 
 	..(timeofday)
 
-/datum/controller/subsystem/zas/fire(resumed = FALSE, mc_no_tick)
+/datum/controller/subsystem/zas/fire(resumed = FALSE, no_mc_tick)
 	var/timer = TICK_USAGE_REAL
 	if (!resumed)
 		processing_edges = active_edges.Copy()
 		processing_fires = active_fire_zones.Copy()
 		processing_hotspots = active_hotspots.Copy()
 
-	if(current_process == SSZAS_TILES)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_tiles(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		current_process = SSZAS_DEFERED_TILES
-
-	if(current_process == SSZAS_DEFERED_TILES)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_deferred_tiles(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		current_process = SSZAS_EDGES
-
-	if(current_process == SSZAS_EDGES)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_edges(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		current_process = SSZAS_FIRES
-
-	if(current_process == SSZAS_FIRES)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_fires(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		current_process = SSZAS_HOTSPOTS
-
-	if(current_process == SSZAS_HOTSPOTS)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_hotspots(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		current_process = SSZAS_ZONES
-
-	if(current_process == SSZAS_ZONES)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_zones(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
-		current_process = SSZAS_ATOMS
-
-	if(current_process == SSZAS_ATOMS)
-		timer = TICK_USAGE_REAL
-		if(!resumed)
-			cached_cost = 0
-		process_atoms(resumed)
-		cached_cost += TICK_USAGE_REAL - timer
-		if(state != SS_RUNNING)
-			return
-		//cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(cached_cost))
-		resumed = FALSE
+	var/list/curr_tiles = tiles_to_update
+	var/list/curr_defer = deferred
+	var/list/curr_edges = processing_edges
+	var/list/curr_fire = processing_fires
+	var/list/curr_hotspot = processing_hotspots
+	var/list/curr_zones = zones_to_update
 
 
-	current_process = SSZAS_TILES
-
-/datum/controller/subsystem/zas/proc/process_tiles(resumed = FALSE)
-	if(!resumed)
-		src.currentrun = tiles_to_update
-
-	var/list/currentrun = src.currentrun
-	while (currentrun.len)
-		var/turf/T = currentrun[currentrun.len]
-		currentrun.len--
+/////////TILES//////////
+	cached_cost = 0
+	while (curr_tiles.len)
+		var/turf/T = curr_tiles[curr_tiles.len]
+		curr_tiles.len--
 
 		if (!T)
-			if (MC_TICK_CHECK)
+			if (no_mc_tick)
+				CHECK_TICK
+			else if (MC_TICK_CHECK)
 				return
+
 			continue
 
 		//check if the turf is self-zone-blocked
@@ -288,7 +212,9 @@ SUBSYSTEM_DEF(zas)
 		ATMOS_CANPASS_TURF(c_airblock, T, T)
 		if(c_airblock & ZONE_BLOCKED)
 			deferred += T
-			if (MC_TICK_CHECK)
+			if (no_mc_tick)
+				CHECK_TICK
+			else if (MC_TICK_CHECK)
 				return
 			continue
 
@@ -300,110 +226,110 @@ SUBSYSTEM_DEF(zas)
 		//updated++
 		#endif
 
-		if (MC_TICK_CHECK)
+		if (no_mc_tick)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/zas/proc/process_deferred_tiles(resumed)
-	if(!resumed)
-		src.currentrun = deferred
-	var/list/currentrun = src.currentrun
+	cached_cost += TICK_USAGE_REAL - timer
+	cost_tiles = MC_AVERAGE(cost_tiles, TICK_DELTA_TO_MS(cached_cost))
 
-	if(current_process == SSZAS_DEFERED_TILES)
-		while (currentrun.len)
-			var/turf/T = currentrun[currentrun.len]
-			currentrun.len--
+//////////DEFERRED TILES//////////
+	timer = TICK_USAGE_REAL
+	cached_cost = 0
+	while (curr_defer.len)
+		var/turf/T = curr_defer[curr_defer.len]
+		curr_defer.len--
 
-			T.update_air_properties()
-			T.post_update_air_properties()
-			T.needs_air_update = 0
-			#ifdef ZASDBG
-			T.overlays -= mark
-			//updated++
-			#endif
+		T.update_air_properties()
+		T.post_update_air_properties()
+		T.needs_air_update = 0
+		#ifdef ZASDBG
+		T.overlays -= mark
+		//updated++
+		#endif
 
-			if (MC_TICK_CHECK)
+		if (no_mc_tick)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			return
+	cached_cost += TICK_USAGE_REAL - timer
+	cost_deferred_tiles = MC_AVERAGE(cost_deferred_tiles, TICK_DELTA_TO_MS(cached_cost))
+
+//////////EDGES//////////
+
+	timer = TICK_USAGE_REAL
+	cached_cost = 0
+	while (curr_edges.len)
+		var/connection_edge/edge = curr_edges[curr_edges.len]
+		curr_edges.len--
+
+		if (!edge)
+			if (no_mc_tick)
+				CHECK_TICK
+			else if (MC_TICK_CHECK)
 				return
+			continue
 
-/datum/controller/subsystem/zas/proc/process_edges(resumed)
-	if(!resumed)
-		src.currentrun = active_edges.Copy()
-	var/list/currentrun = src.currentrun
+		edge.tick()
 
-	if(current_process == SSZAS_EDGES)
-		while (currentrun.len)
-			var/connection_edge/edge = currentrun[currentrun.len]
-			currentrun.len--
+		if (no_mc_tick)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			return
 
-			if (!edge)
-				if (MC_TICK_CHECK)
-					return
-				continue
+	cached_cost += TICK_USAGE_REAL - timer
+	cost_edges = MC_AVERAGE(cost_edges, TICK_DELTA_TO_MS(cached_cost))
 
-			edge.tick()
-			if (MC_TICK_CHECK)
-				return
+//////////FIRES//////////
+	timer = TICK_USAGE_REAL
+	cached_cost = 0
+	while (curr_fire.len)
+		var/zone/Z = curr_fire[curr_fire.len]
+		curr_fire.len--
 
-/datum/controller/subsystem/zas/proc/process_fires(resumed)
-	if(!resumed)
-		src.currentrun = active_fire_zones.Copy()
-	var/list/currentrun = src.currentrun
+		Z.process_fire()
 
-	if(current_process == SSZAS_FIRES)
-		while (currentrun.len)
-			var/zone/Z = currentrun[currentrun.len]
-			currentrun.len--
+		if (no_mc_tick)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			return
 
-			Z.process_fire()
+	cached_cost += TICK_USAGE_REAL - timer
+	cost_fires= MC_AVERAGE(cost_fires, TICK_DELTA_TO_MS(cached_cost))
 
-			if (MC_TICK_CHECK)
-				return
+//////////HOTSPOTS//////////
+	timer = TICK_USAGE_REAL
+	cached_cost = 0
+	while (curr_hotspot.len)
+		var/obj/effect/hotspot/F = curr_hotspot[curr_hotspot.len]
+		curr_hotspot.len--
 
-/datum/controller/subsystem/zas/proc/process_hotspots(resumed)
-	if(!resumed)
-		src.currentrun = active_hotspots.Copy()
-	var/list/currentrun = src.currentrun
+		F.process()
 
-	if(current_process == SSZAS_HOTSPOTS)
-		while (currentrun.len)
-			var/obj/effect/hotspot/F = currentrun[currentrun.len]
-			currentrun.len--
+		if (no_mc_tick)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			return
+	cached_cost += TICK_USAGE_REAL - timer
+	cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(cached_cost))
 
-			F.process()
+	timer = TICK_USAGE_REAL
+	cached_cost = 0
+	while (curr_zones.len)
+		var/zone/Z = curr_zones[curr_zones.len]
+		curr_zones.len--
 
-			if (MC_TICK_CHECK)
-				return
+		Z.tick()
+		Z.needs_update = FALSE
 
-/datum/controller/subsystem/zas/proc/process_zones(resumed)
-	if(!resumed)
-		src.currentrun = zones_to_update
-	var/list/currentrun = src.currentrun
+		if (no_mc_tick)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			return
 
-	if(current_process == SSZAS_ZONES)
-		while (currentrun.len)
-			var/zone/Z = currentrun[currentrun.len]
-			currentrun.len--
-
-			Z.tick()
-			Z.needs_update = FALSE
-
-			if (MC_TICK_CHECK)
-				return
-
-/datum/controller/subsystem/zas/proc/process_atoms(resumed)
-	if(!resumed)
-		src.currentrun = atom_process
-
-	var/list/currentrun = src.currentrun
-
-	if(current_process == SSZAS_ATOMS)
-		while(currentrun.len)
-			var/atom/talk_to = currentrun[currentrun.len]
-			currentrun.len--
-			if(!talk_to)
-				return
-			talk_to.process_exposure()
-			if(MC_TICK_CHECK)
-				return
+	cached_cost += TICK_USAGE_REAL - timer
+	cost_zones = MC_AVERAGE(cost_zones, TICK_DELTA_TO_MS(cached_cost))
 
 /datum/controller/subsystem/zas/proc/add_zone(zone/z)
 	zones += z
@@ -446,7 +372,7 @@ SUBSYSTEM_DEF(zas)
 //datum/controller/subsystem/zas/proc/connect(turf/simulated/A, turf/simulated/B) //ZASTURF
 /datum/controller/subsystem/zas/proc/connect(turf/A, turf/B)
 	#ifdef ZASDBG
-	ASSERT(istype(A))
+	ASSERT(!istype(A, /turf/open/space))
 	ASSERT(isturf(B))
 	ASSERT(A.zone)
 	ASSERT(!A.zone.invalid)

@@ -24,7 +24,7 @@
 	us.RemoveElement(/datum/element/connect_loc, pass_on)
 	if(us.flags_1 & ATMOS_IS_PROCESSING_1)
 		us.atmos_end()
-		SSzas.atom_process -= us
+		STOP_PROCESSING(SSairatoms, src)
 		us.flags_1 &= ~ATMOS_IS_PROCESSING_1
 	return ..()
 
@@ -65,7 +65,7 @@
 /turf/open/process_exposure()
 	if(!should_atmos_process(air, air.temperature))
 		atmos_end()
-		SSzas.atom_process -= src
+		STOP_PROCESSING(SSairatoms, src)
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
 	atmos_expose(air, air.temperature)
