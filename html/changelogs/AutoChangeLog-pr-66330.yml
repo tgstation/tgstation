@@ -1,0 +1,4 @@
+author: "maxspells"
+delete-after: True
+changes: 
+  - soundadd: "Changed a cautery sound effect to be quieter."
