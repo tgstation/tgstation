@@ -419,4 +419,42 @@
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += T
 
+/obj/effect/anomaly/hallucination
+	name = "hallucination anomaly"
+	icon_state = "blueshatter2"
+	aSignal = /obj/item/assembly/signaler/anomaly/hallucination
+	var/ticks = 0
+	/// How many seconds between each small hallucination pulses
+	var/release_delay = 5
+
+/obj/effect/anomaly/hallucination/anomalyEffect(delta_time)
+	. = ..()
+	ticks += delta_time
+	if(ticks < release_delay)
+		return
+	ticks -= release_delay
+	var/turf/open/our_turf = get_turf(src)
+	if(istype(our_turf))
+		hallucination_pulse(our_turf, 5)
+
+/obj/effect/anomaly/hallucination/detonate()
+	var/turf/open/our_turf = get_turf(src)
+	if(istype(our_turf))
+		hallucination_pulse(our_turf, 10)
+
+/obj/effect/anomaly/hallucination/proc/hallucination_pulse(turf/location, range)
+	for(var/mob/living/carbon/human/near in view(location, range))
+		// If they are immune to hallucinations.
+		if (HAS_TRAIT(near, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (near.mind && HAS_TRAIT(near.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+			continue
+
+		// Blind people don't get hallucinations.
+		if (near.is_blind())
+			continue
+
+		// Everyone else gets hallucinations.
+		var/dist = sqrt(1 / max(1, get_dist(near, location)))
+		near.hallucination += 100 * dist
+		near.hallucination = clamp(near.hallucination, 0, 300)
+
 #undef ANOMALY_MOVECHANCE

@@ -9,6 +9,8 @@
 #define ANOMALY_CORE_VORTEX /obj/item/assembly/signaler/anomaly/vortex
 /// Pyro
 #define ANOMALY_CORE_PYRO /obj/item/assembly/signaler/anomaly/pyro
+/// Hallucination
+#define ANOMALY_CORE_HALLUCINATION /obj/item/assembly/signaler/anomaly/hallucination
 
 // Max amounts of cores you can make
 #define MAX_CORES_BLUESPACE 8
@@ -16,3 +18,4 @@
 #define MAX_CORES_FLUX 8
 #define MAX_CORES_VORTEX 8
 #define MAX_CORES_PYRO 8
+#define MAX_CORES_HALLUCINATION 8
