@@ -1924,9 +1924,8 @@
 	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
 	var/force_no_gravity = FALSE
 
-/turf/open/space
+/turf/open/space//TODOKYLER: LOOK FOR THIS
 	force_no_gravity = TRUE
-
 
 /**
  * Returns true if this atom has gravity for the passed in turf
@@ -1946,16 +1945,17 @@
 	if(!isturf(gravity_turf))
 		gravity_turf = get_turf(src)
 
-	if(!gravity_turf)
+	if(!gravity_turf)//no gravity in nullspace
 		return 0
 
+	//only gets turned into a list if the signal exists since this proc is very hot
 	var/list/forced_gravity
-	if(!isnull(SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity = list())) && !length(forced_gravity))
-		SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)//only gets turned into a list if the signal exists
+	if(SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity = list()) && forced_gravity)
+		if(!length(forced_gravity))
+			SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
 
-	if(forced_gravity)
 		var/max_grav = 0
-		for(var/i in forced_gravity)
+		for(var/i in forced_gravity)//our gravity is the strongest return forced gravity we get
 			max_grav = max(max_grav, i)
 		return max_grav
 

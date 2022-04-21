@@ -25,8 +25,10 @@
 	SIGNAL_HANDLER
 
 	if(!ignore_space && isspaceturf(location))
-		return
+		return FALSE
 	gravs += gravity
+
+	return TRUE
 
 /datum/element/forced_gravity/proc/turf_gravity_check(datum/source, atom/checker, list/gravs)
 	SIGNAL_HANDLER
