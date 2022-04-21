@@ -4866,7 +4866,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/preset/ordnance{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plating/icemoon,
 /area/science/test_area)
