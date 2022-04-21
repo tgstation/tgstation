@@ -15,6 +15,9 @@
 		return
 	..()
 
+/datum/action/item_action/toggle_computer_light
+	name = "Toggle Flashlight"
+
 /datum/action/item_action/toggle_hood
 	name = "Toggle Hood"
 
