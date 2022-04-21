@@ -89,6 +89,7 @@
 	return NONE
 
 /obj/machinery/seed_extractor/RefreshParts()
+	. = ..()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_seeds = initial(max_seeds) * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)

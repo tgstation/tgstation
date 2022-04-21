@@ -9,9 +9,6 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	desc = "This device is used to trigger station functions, which require more than one ID card to authenticate."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 2
-	active_power_usage = 6
 	power_channel = AREA_USAGE_ENVIRON
 	req_access = list(ACCESS_KEYCARD_AUTH)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
