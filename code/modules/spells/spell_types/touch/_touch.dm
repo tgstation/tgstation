@@ -25,6 +25,13 @@
 	remove_hand(remove_from)
 	return ..()
 
+/datum/action/cooldown/spell/touch/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
+	. = ..()
+	if(!button)
+		return
+	if(attached_hand)
+		button.color = COLOR_GREEN
+
 /datum/action/cooldown/spell/touch/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
@@ -102,6 +109,7 @@
 	// when our touch hand hits someone
 	// (see: remove_hand() where it's done)
 	next_use_time = world.time
+	UpdateButtons()
 
 /**
  * Signal proc for [COMSIG_ITEM_AFTERATTACK] from our attached hand.
@@ -170,6 +178,8 @@
 			do_hand_hit(hand, victim, caster)
 
 		// Cancel chain will do nothing,
+		if(SECONDARY_ATTACK_CANCEL_CHAIN)
+			return
 
 /**
  * The actual process of casting the spell on the victim from the caster.
@@ -190,7 +200,7 @@
  * Return SECONDARY_ATTACK_CANCEL_CHAIN to prevent the spell from being used
  */
 /datum/action/cooldown/spell/touch/proc/cast_on_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /**
  * Signal proc for [COMSIG_PARENT_QDELETING] from our attached hand.
@@ -212,7 +222,7 @@
 /datum/action/cooldown/spell/touch/proc/on_hand_dropped(datum/source, mob/living/dropper)
 	SIGNAL_HANDLER
 
-	remove_hand(dropper, reset_cooldown_after = TRUE) // MELBERT TODO check if arm removed
+	remove_hand(dropper, reset_cooldown_after = TRUE)
 
 /obj/item/melee/touch_attack
 	name = "\improper outstretched hand"

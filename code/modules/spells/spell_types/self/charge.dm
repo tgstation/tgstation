@@ -54,14 +54,3 @@
 
 	else
 		to_chat(cast_on, span_notice("[to_charge] doesn't seem to be react to [src]."))
-
-/// Returns TRUE if the charge burnt the cell out, FALSE otherwise
-/datum/action/cooldown/spell/charge/proc/charge_cell(obj/item/stock_parts/cell/to_charge)
-	if(prob(80))
-		to_charge.maxcharge -= 200
-	if(to_charge.maxcharge <= 1) //Div by 0 protection
-		to_charge.maxcharge = 1
-		return TRUE
-
-	to_charge.charge = to_charge.maxcharge
-	return FALSE

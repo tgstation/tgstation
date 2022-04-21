@@ -16,7 +16,7 @@
 	if(uses >= INFINITY - 2000)
 		to_chat(caster, span_notice("This book is infinite use and can't be recharged, yet the magic has improved the book somehow..."))
 		pages_to_mastery--
-		return (COMPONENT_ITEM_CHARGED|COMPONENT_ITEM_BURNT_OUT)
+		return COMPONENT_ITEM_CHARGED|COMPONENT_ITEM_BURNT_OUT
 
 	if(prob(80))
 		caster.dropItemToGround(src, TRUE)
