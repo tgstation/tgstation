@@ -7,6 +7,7 @@
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/accounting/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "AccountingConsole", name)
