@@ -126,10 +126,13 @@
 
 			output += "<tr>"
 			output += "<td style='text-align:center;'>[adm_ckey]<br>[deadminlink]<a class='small' href='?src=[REF(src)];[HrefToken()];editrights=remove;key=[adm_ckey]'>\[-\]</a><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=sync;key=[adm_ckey]'>\[SYNC TGDB\]</a>[verify_link]</td>"
-			output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;key=[adm_ckey]'>[D.rank.name]</a></td>"
-			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank.include_rights," ")]</a></td>"
-			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank.exclude_rights," ", "-")]</a></td>"
-			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank.can_edit_rights," ", "*")]</a></td>"
+			output += "<td><a href='?src=[REF(src)];[HrefToken()];editrights=rank;key=[adm_ckey]'>[D.rank_names()]</a></td>"
+			output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank_flags(), " ")]</a></td>"
+
+			// MOTHBLOCKS TODO: This part of perms panel
+			// output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank.exclude_rights," ", "-")]</a></td>"
+			// output += "<td><a class='small' href='?src=[REF(src)];[HrefToken()];editrights=permissions;key=[adm_ckey]'>[rights2text(D.rank.can_edit_rights," ", "*")]</a></td>"
+
 			output += "</tr>"
 		output += "</table></div><div id='top'><b>Search:</b> <input type='text' id='filter' value='' style='width:70%;' onkeyup='updateSearch();'></div></body>"
 	if(QDELETED(usr))
@@ -160,7 +163,7 @@
 			to_chat(usr, "<span class='admin prefix'>Editing the rank of this admin is blocked by server configuration.</span>", confidential = TRUE)
 			return
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_ranks) && task == "permissions")
-		if(D.rank in GLOB.protected_ranks)
+		if((D.ranks & GLOB.protected_ranks).len > 0)
 			to_chat(usr, "<span class='admin prefix'>Editing the flags of this rank is blocked by server configuration.</span>", confidential = TRUE)
 			return
 	if(CONFIG_GET(flag/load_legacy_ranks_only) && (task == "add" || task == "rank" || task == "permissions"))
@@ -314,30 +317,81 @@
 	log_admin("[old_owner] deadmined via auto-deadmin config.")
 	return TRUE
 
+#define RANK_DONE ":) I'm Done"
+
 /datum/admins/proc/change_admin_rank(admin_ckey, admin_key, use_db, datum/admins/D, legacy_only)
 	if(!check_rights(R_PERMISSIONS))
 		return
-	var/datum/admin_rank/R
+
 	var/list/rank_names = list()
 	if(!use_db || (use_db && !legacy_only))
 		rank_names += "*New Rank*"
-	for(R in GLOB.admin_ranks)
-		if((R.rights & usr.client.holder.rank.can_edit_rights) == R.rights)
-			rank_names[R.name] = R
-	var/new_rank = input("Please select a rank", "New rank") as null|anything in rank_names
-	if(new_rank == "*New Rank*")
-		new_rank = input("Please input a new rank", "New custom rank") as text|null
-	if(!new_rank)
-		return
-	R = rank_names[new_rank]
-	if(!R) //rank with that name doesn't exist yet - make it
-		if(D)
-			R = new(new_rank, D.rank.rights) //duplicate our previous admin_rank but with a new name
-		else
-			R = new(new_rank) //blank new admin_rank
-		GLOB.admin_ranks += R
-	var/m1 = "[key_name_admin(usr)] edited the admin rank of [admin_key] to [new_rank] [use_db ? "permanently" : "temporarily"]"
-	var/m2 = "[key_name(usr)] edited the admin rank of [admin_key] to [new_rank] [use_db ? "permanently" : "temporarily"]"
+	for(var/datum/admin_rank/admin_rank as anything in GLOB.admin_ranks)
+		if((admin_rank.rights & usr.client.holder.can_edit_rights_flags()) == admin_rank.rights)
+			rank_names[admin_rank.name] = admin_rank
+
+	var/list/new_rank_names = list()
+	var/list/custom_ranks = list()
+
+	while (TRUE)
+		var/list/display_rank_names = list(RANK_DONE)
+
+		if (new_rank_names.len > 0)
+			display_rank_names += "** SELECTED **"
+			for (var/rank_name in new_rank_names)
+				display_rank_names += rank_name
+			display_rank_names += "---------"
+
+		for (var/rank_name in rank_names)
+			if (!(rank_name in display_rank_names))
+				display_rank_names += rank_name
+
+		var/next_rank = input("Please select a rank, or select [RANK_DONE] if you are finished.") as null|anything in display_rank_names
+
+		if (isnull(next_rank))
+			return
+
+		if (next_rank == RANK_DONE)
+			break
+
+		// They clicked "** SELECTED **" or something silly.
+		if (!(next_rank in rank_names))
+			continue
+
+		if (next_rank in new_rank_names)
+			new_rank_names -= next_rank
+			continue
+
+		if (next_rank == "*New Rank*")
+			var/new_rank_name = input("Please input a new rank", "New custom rank") as text|null
+			if (!new_rank_name)
+				return
+
+			var/datum/admin_rank/custom_rank = rank_names[new_rank_name]
+			if (isnull(custom_rank))
+				if (D)
+					custom_rank = new(new_rank_name, D.rank_flags())
+				else
+					custom_rank = new(new_rank_name)
+
+				GLOB.admin_ranks += custom_rank
+				custom_ranks += custom_rank
+				new_rank_names += new_rank_name
+
+		new_rank_names += next_rank
+
+	var/list/new_ranks = list()
+	for (var/datum/admin_rank/admin_rank as anything in GLOB.admin_ranks)
+		if (admin_rank.name in new_rank_names)
+			new_ranks += admin_rank
+			new_rank_names -= admin_rank.name
+
+			if (new_rank_names.len == 0)
+				break
+
+	var/joined_rank = join_admin_ranks(new_ranks)
+	var/m1 = "[key_name_admin(usr)] edited the admin rank of [admin_key] to [joined_rank] [use_db ? "permanently" : "temporarily"]"
+	var/m2 = "[key_name(usr)] edited the admin rank of [admin_key] to [joined_rank] [use_db ? "permanently" : "temporarily"]"
 	if(use_db)
 		//if a player was tempminned before having a permanent change made to their rank they won't yet be in the db
 		var/old_rank
@@ -354,36 +408,38 @@
 		else
 			old_rank = query_admin_in_db.item[1]
 		qdel(query_admin_in_db)
-		//similarly if a temp rank is created it won't be in the db if someone is permanently changed to it
-		var/datum/db_query/query_rank_in_db = SSdbcore.NewQuery(
-			"SELECT 1 FROM [format_table_name("admin_ranks")] WHERE `rank` = :new_rank",
-			list("new_rank" = new_rank)
-		)
-		if(!query_rank_in_db.warn_execute())
-			qdel(query_rank_in_db)
-			return
-		if(!query_rank_in_db.NextRow())
-			QDEL_NULL(query_rank_in_db)
-			var/datum/db_query/query_add_rank = SSdbcore.NewQuery({"
-				INSERT INTO [format_table_name("admin_ranks")] (`rank`, flags, exclude_flags, can_edit_flags)
-				VALUES (:new_rank, '0', '0', '0')
-			"}, list("new_rank" = new_rank))
-			if(!query_add_rank.warn_execute())
+
+		for (var/datum/admin_rank/custom_rank in custom_ranks)
+			//similarly if a temp rank is created it won't be in the db if someone is permanently changed to it
+			var/datum/db_query/query_rank_in_db = SSdbcore.NewQuery(
+				"SELECT 1 FROM [format_table_name("admin_ranks")] WHERE `rank` = :new_rank",
+				list("new_rank" = custom_rank.name)
+			)
+			if(!query_rank_in_db.warn_execute())
+				qdel(query_rank_in_db)
+				return
+			if(!query_rank_in_db.NextRow())
+				QDEL_NULL(query_rank_in_db)
+				var/datum/db_query/query_add_rank = SSdbcore.NewQuery({"
+					INSERT INTO [format_table_name("admin_ranks")] (`rank`, flags, exclude_flags, can_edit_flags)
+					VALUES (:new_rank, '0', '0', '0')
+				"}, list("new_rank" = custom_rank.name))
+				if(!query_add_rank.warn_execute())
+					qdel(query_add_rank)
+					return
 				qdel(query_add_rank)
-				return
-			qdel(query_add_rank)
-			var/datum/db_query/query_add_rank_log = SSdbcore.NewQuery({"
-				INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
-				VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'add rank', :new_rank, CONCAT('New rank added: ', :new_rank))
-			"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "new_rank" = new_rank))
-			if(!query_add_rank_log.warn_execute())
+				var/datum/db_query/query_add_rank_log = SSdbcore.NewQuery({"
+					INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
+					VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'add rank', :new_rank, CONCAT('New rank added: ', :new_rank))
+				"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "new_rank" = custom_rank.name))
+				if(!query_add_rank_log.warn_execute())
+					qdel(query_add_rank_log)
+					return
 				qdel(query_add_rank_log)
-				return
-			qdel(query_add_rank_log)
-		qdel(query_rank_in_db)
+			qdel(query_rank_in_db)
 		var/datum/db_query/query_change_rank = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("admin")] SET `rank` = :new_rank WHERE ckey = :admin_ckey",
-			list("new_rank" = new_rank, "admin_ckey" = admin_ckey)
+			list("new_rank" = joined_rank, "admin_ckey" = admin_ckey)
 		)
 		if(!query_change_rank.warn_execute())
 			qdel(query_change_rank)
@@ -392,25 +448,29 @@
 		var/datum/db_query/query_change_rank_log = SSdbcore.NewQuery({"
 			INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
 			VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'change admin rank', :target, CONCAT('Rank of ', :target, ' changed from ', :old_rank, ' to ', :new_rank))
-		"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "target" = admin_ckey, "old_rank" = old_rank, "new_rank" = new_rank))
+		"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "target" = admin_ckey, "old_rank" = old_rank, "new_rank" = joined_rank))
 		if(!query_change_rank_log.warn_execute())
 			qdel(query_change_rank_log)
 			return
 		qdel(query_change_rank_log)
 	if(D) //they were previously an admin
 		D.disassociate() //existing admin needs to be disassociated
-		D.rank = R //set the admin_rank as our rank
+		D.ranks = new_ranks //set the admin_rank as our rank
 		D.bypass_2fa = TRUE // Another admin has cleared us
 		var/client/C = GLOB.directory[admin_ckey]
 		D.associate(C)
 	else
-		D = new(R, admin_ckey) //new admin
+		D = new(new_ranks, admin_ckey) //new admin
 		D.bypass_2fa = TRUE // Another admin has cleared us
 		D.activate()
 	message_admins(m1)
 	log_admin(m2)
 
+#undef RANK_DONE
+
+// MOTHBLOCKS TODO: change_admin_flags
 /datum/admins/proc/change_admin_flags(admin_ckey, admin_key, use_db, datum/admins/D, legacy_only)
+	/*
 	var/new_flags = input_bitfield(usr, "Include permission flags<br>[use_db ? "This will affect ALL admins with this rank." : "This will affect only the current admin [admin_key]"]", "admin_flags", D.rank.include_rights, 350, 590, allowed_edit_list = usr.client.holder.rank.can_edit_rights)
 	if(isnull(new_flags))
 		return
@@ -488,12 +548,13 @@
 		D.associate(C) //link up with the client and add verbs
 	message_admins(m1)
 	log_admin(m2)
+	*/
 
 /datum/admins/proc/remove_rank(admin_rank)
 	if(!admin_rank)
 		return
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
-		if(R.name == admin_rank && (!(R.rights & usr.client.holder.rank.can_edit_rights) == R.rights))
+		if(R.name == admin_rank && (!(R.rights & usr.client.holder.can_edit_rights_flags()) == R.rights))
 			to_chat(usr, "<span class='admin prefix'>You don't have edit rights to all the rights this rank has, rank deletion not permitted.</span>", confidential = TRUE)
 			return
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_ranks) && (admin_rank in GLOB.protected_ranks))
@@ -539,7 +600,7 @@
 /datum/admins/proc/sync_lastadminrank(admin_ckey, admin_key, datum/admins/D)
 	var/sqlrank = "Player"
 	if (D)
-		sqlrank = D.rank.name
+		sqlrank = D.rank_names()
 	var/datum/db_query/query_sync_lastadminrank = SSdbcore.NewQuery(
 		"UPDATE [format_table_name("player")] SET lastadminrank = :rank WHERE ckey = :ckey",
 		list("rank" = sqlrank, "ckey" = admin_ckey)
