@@ -64,3 +64,25 @@
 /area/maintenance/radshelter/civil : /area/station/maintenance/radshelter/civil
 /area/maintenance/radshelter/sci : /area/station/maintenance/radshelter/sci
 /area/maintenance/radshelter/cargo : /area/station/maintenance/radshelter/cargo
+
+/area/hallway : /area/station/hallway
+/area/hallway/primary : /area/station/hallway/primary
+/area/hallway/primary/aft : /area/station/hallway/primary/aft
+/area/hallway/primary/fore : /area/station/hallway/primary/fore
+/area/hallway/primary/starboard : /area/station/hallway/primary/starboard
+/area/hallway/primary/port : /area/station/hallway/primary/port
+/area/hallway/primary/central : /area/station/hallway/primary/central
+/area/hallway/primary/central/fore : /area/station/hallway/primary/central/fore
+/area/hallway/primary/central/aft : /area/station/hallway/primary/central/aft
+/area/hallway/primary/upper : /area/station/hallway/primary/upper
+/area/hallway/primary/tram : /area/station/hallway/primary/tram
+/area/hallway/primary/tram/left : /area/station/hallway/primary/tram/left
+/area/hallway/primary/tram/center : /area/station/hallway/primary/tram/center
+/area/hallway/primary/tram/right : /area/station/hallway/primary/tram/right
+/area/hallway/secondary/command : /area/station/hallway/secondary/command
+/area/hallway/secondary/construction : /area/station/hallway/secondary/construction
+/area/hallway/secondary/construction/engineering : /area/station/hallway/secondary/construction/engineering
+/area/hallway/secondary/exit : /area/station/hallway/secondary/exit
+/area/hallway/secondary/exit/departure_lounge : /area/station/hallway/secondary/exit/departure_lounge
+/area/hallway/secondary/entry : /area/station/hallway/secondary/entry
+/area/hallway/secondary/service : /area/station/hallway/secondary/service

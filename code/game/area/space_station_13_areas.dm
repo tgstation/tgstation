@@ -421,83 +421,83 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Hallway
 
-/area/hallway
+/area/station/hallway
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/hallway/primary
+/area/station/hallway/primary
 	name = "\improper Primary Hallway"
 
-/area/hallway/primary/aft
+/area/station/hallway/primary/aft
 	name = "\improper Aft Primary Hallway"
 	icon_state = "hallA"
 
-/area/hallway/primary/fore
+
 	name = "\improper Fore Primary Hallway"
 	icon_state = "hallF"
 
-/area/hallway/primary/starboard
+/area/station/hallway/primary/starboard
 	name = "\improper Starboard Primary Hallway"
 	icon_state = "hallS"
 
-/area/hallway/primary/port
+/area/station/hallway/primary/port
 	name = "\improper Port Primary Hallway"
 	icon_state = "hallP"
 
-/area/hallway/primary/central
+/area/station/hallway/primary/central
 	name = "\improper Central Primary Hallway"
 	icon_state = "hallC"
 
-/area/hallway/primary/central/fore
+/area/station/hallway/primary/central/fore
 	name = "\improper Fore Central Primary Hallway"
 	icon_state = "hallCF"
 
-/area/hallway/primary/central/aft
+/area/station/hallway/primary/central/aft
 	name = "\improper Aft Central Primary Hallway"
 	icon_state = "hallCA"
 
-/area/hallway/primary/upper
+/area/station/hallway/primary/upper
 	name = "\improper Upper Central Primary Hallway"
 	icon_state = "hallC"
 
-/area/hallway/primary/tram
+/area/station/hallway/primary/tram
 	name = "\improper Primary Tram"
 
-/area/hallway/primary/tram/left
+/area/station/hallway/primary/tram/left
 	name = "\improper Port Tram Dock"
 	icon_state = "halltramL"
 
-/area/hallway/primary/tram/center
+/area/station/hallway/primary/tram/center
 	name = "\improper Central Tram Dock"
 	icon_state = "halltramM"
 
-/area/hallway/primary/tram/right
+/area/station/hallway/primary/tram/right
 	name = "\improper Starboard Tram Dock"
 	icon_state = "halltramR"
 
-/area/hallway/secondary/command
+/area/station/hallway/secondary/command
 	name = "\improper Command Hallway"
 	icon_state = "bridge_hallway"
 
-/area/hallway/secondary/construction
+/area/station/hallway/secondary/construction
 	name = "\improper Construction Area"
 	icon_state = "construction"
 
-/area/hallway/secondary/construction/engineering
+/area/station/hallway/secondary/construction/engineering
 	name = "\improper Engineering Hallway"
 
-/area/hallway/secondary/exit
+/area/station/hallway/secondary/exit
 	name = "\improper Escape Shuttle Hallway"
 	icon_state = "escape"
 
-/area/hallway/secondary/exit/departure_lounge
+/area/station/hallway/secondary/exit/departure_lounge
 	name = "\improper Departure Lounge"
 	icon_state = "escape_lounge"
 
-/area/hallway/secondary/entry
+/area/station/hallway/secondary/entry
 	name = "\improper Arrival Shuttle Hallway"
 	icon_state = "entry"
 
-/area/hallway/secondary/service
+/area/station/hallway/secondary/service
 	name = "\improper Service Hallway"
 	icon_state = "hall_service"
 
