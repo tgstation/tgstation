@@ -86,3 +86,17 @@
 /area/hallway/secondary/exit/departure_lounge : /area/station/hallway/secondary/exit/departure_lounge
 /area/hallway/secondary/entry : /area/station/hallway/secondary/entry
 /area/hallway/secondary/service : /area/station/hallway/secondary/service
+
+/area/command : /area/station/command
+/area/command/bridge : /area/station/command/bridge
+/area/command/meeting_room : /area/station/command/meeting_room
+/area/command/meeting_room/council : /area/station/command/meeting_room/council
+/area/command/corporate_showroom : /area/station/command/corporate_showroom
+/area/command/heads_quarters : /area/station/command/heads_quarters
+/area/command/heads_quarters/captain : /area/station/command/heads_quarters/captain
+/area/command/heads_quarters/captain/private : /area/station/command/heads_quarters/captain/private
+/area/command/heads_quarters/ce : /area/station/command/heads_quarters/ce
+/area/command/heads_quarters/cmo : /area/station/command/heads_quarters/cmo
+/area/command/heads_quarters/hop : /area/station/command/heads_quarters/hop
+/area/command/heads_quarters/hos : /area/station/command/heads_quarters/hos
+/area/command/heads_quarters/rd : /area/station/command/heads_quarters/rd

@@ -503,72 +503,72 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Command
 
-/area/command
+/area/station/command
 	name = "Command"
 	icon_state = "Bridge"
 	ambientsounds = list('sound/ambience/signal.ogg')
 	airlock_wires = /datum/wires/airlock/command
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/command/bridge
+/area/station/command/bridge
 	name = "\improper Bridge"
 	icon_state = "bridge"
 
-/area/command/meeting_room
+/area/station/command/meeting_room
 	name = "\improper Heads of Staff Meeting Room"
 	icon_state = "meeting"
 	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
 
-/area/command/meeting_room/council
+/area/station/command/meeting_room/council
 	name = "\improper Council Chamber"
 	icon_state = "meeting"
 	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
 
-/area/command/corporate_showroom
+/area/station/command/corporate_showroom
 	name = "\improper Corporate Showroom"
 	icon_state = "showroom"
 	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
 
-/area/command/heads_quarters
+/area/station/command/heads_quarters
 
-/area/command/heads_quarters/captain
+/area/station/command/heads_quarters/captain
 	name = "\improper Captain's Office"
 	icon_state = "captain"
 	sound_environment = SOUND_AREA_WOODFLOOR
 
-/area/command/heads_quarters/captain/private
+/area/station/command/heads_quarters/captain/private
 	name = "\improper Captain's Quarters"
 	icon_state = "captain_private"
 	sound_environment = SOUND_AREA_WOODFLOOR
 
-/area/command/heads_quarters/ce
+/area/station/command/heads_quarters/ce
 	name = "\improper Chief Engineer's Office"
 	icon_state = "ce_office"
 
-/area/command/heads_quarters/cmo
+/area/station/command/heads_quarters/cmo
 	name = "\improper Chief Medical Officer's Office"
 	icon_state = "cmo_office"
 
-/area/command/heads_quarters/hop
+/area/station/command/heads_quarters/hop
 	name = "\improper Head of Personnel's Office"
 	icon_state = "hop_office"
 
-/area/command/heads_quarters/hos
+/area/station/command/heads_quarters/hos
 	name = "\improper Head of Security's Office"
 	icon_state = "hos_office"
 
-/area/command/heads_quarters/rd
+/area/station/command/heads_quarters/rd
 	name = "\improper Research Director's Office"
 	icon_state = "rd_office"
 
 //Command - Teleporters
 
-/area/command/teleporter
+/area/station/command/teleporter
 	name = "\improper Teleporter Room"
 	icon_state = "teleporter"
 	ambience_index = AMBIENCE_ENGI
 
-/area/command/gateway
+/area/station/command/gateway
 	name = "\improper Gateway"
 	icon_state = "gateway"
 	ambience_index = AMBIENCE_ENGI
