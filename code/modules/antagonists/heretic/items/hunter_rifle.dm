@@ -26,7 +26,7 @@
 	/// Whether we're currently aiming this casing at something
 	var/currently_aiming = FALSE
 	/// How many seconds it takes to aim per tile of distance between the target
-	var/seconds_per_distance = 0.5
+	var/seconds_per_distance = 0.5 SECONDS
 	/// The minimum distance required to gain a damage bonus from aiming
 	var/min_distance = 4
 
@@ -49,7 +49,7 @@
 		return FALSE
 
 	var/distance = get_dist(user, target)
-	var/fire_time = min((distance SECONDS) * seconds_per_distance, 10 SECONDS)
+	var/fire_time = min(distance * seconds_per_distance, 10 SECONDS)
 
 	if(distance <= min_distance || !isliving(target))
 		return TRUE
