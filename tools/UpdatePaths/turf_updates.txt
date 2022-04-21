@@ -100,3 +100,37 @@
 /area/command/heads_quarters/hop : /area/station/command/heads_quarters/hop
 /area/command/heads_quarters/hos : /area/station/command/heads_quarters/hos
 /area/command/heads_quarters/rd : /area/station/command/heads_quarters/rd
+
+/area/command/teleporter : /area/station/command/teleporter
+/area/command/gateway : /area/station/command/gateway
+
+/area/commons : /area/station/commons
+/area/commons/dorms : /area/station/commons/dorms
+/area/commons/dorms/barracks : /area/station/commons/dorms/barracks
+/area/commons/dorms/barracks/male : /area/station/commons/dorms/barracks/male
+/area/commons/dorms/barracks/female : /area/station/commons/dorms/barracks/female
+/area/commons/dorms/laundry : /area/station/commons/dorms/laundry
+/area/commons/toilet : /area/station/commons/toilet
+/area/commons/toilet/auxiliary : /area/station/commons/toilet/auxiliary
+/area/commons/toilet/locker : /area/station/commons/toilet/locker
+/area/commons/toilet/restrooms : /area/station/commons/toilet/restrooms
+/area/commons/locker : /area/station/commons/locker
+/area/commons/lounge : /area/station/commons/lounge
+/area/commons/fitness : /area/station/commons/fitness
+/area/commons/fitness/locker_room : /area/station/commons/fitness/locker_room
+/area/commons/fitness/locker_room/male : /area/station/commons/fitness/locker_room/male
+/area/commons/fitness/locker_room/female : /area/station/commons/fitness/locker_room/female
+/area/commons/fitness/recreation : /area/station/commons/fitness/recreation
+/area/commons/fitness/recreation/entertainment : /area/station/commons/fitness/recreation/entertainment
+
+/area/commons/vacant_room : /area/station/commons/vacant_room
+/area/commons/vacant_room/office : /area/station/commons/vacant_room/office
+/area/commons/vacant_room/commissary : /area/station/commons/vacant_room/commissary
+
+/area/commons/storage : /area/station/commons/storage
+/area/commons/storage/tools : /area/station/commons/storage/tools
+/area/commons/storage/primary : /area/station/commons/storage/primary
+/area/commons/storage/art : /area/station/commons/storage/art
+/area/commons/storage/emergency/starboard : /area/station/commons/storage/emergency/starboard
+/area/commons/storage/emergency/port : /area/station/commons/storage/emergency/port
+/area/commons/storage/mining : /area/station/commons/storage/mining

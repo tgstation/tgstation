@@ -590,53 +590,53 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Commons
 
-/area/commons
+/area/station/commons
 	name = "\improper Crew Facilities"
 	icon_state = "commons"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
-/area/commons/dorms
+/area/station/commons/dorms
 	name = "\improper Dormitories"
 	icon_state = "dorms"
 
-/area/commons/dorms/barracks
+/area/station/commons/dorms/barracks
 	name = "\improper Sleep Barracks"
 
-/area/commons/dorms/barracks/male
+/area/station/commons/dorms/barracks/male
 	name = "\improper Male Sleep Barracks"
 	icon_state = "dorms_male"
 
-/area/commons/dorms/barracks/female
+/area/station/commons/dorms/barracks/female
 	name = "\improper Female Sleep Barracks"
 	icon_state = "dorms_female"
 
-/area/commons/dorms/laundry
+/area/station/commons/dorms/laundry
 	name = "\improper Laundry Room"
 	icon_state = "laundry_room"
 
-/area/commons/toilet
+/area/station/commons/toilet
 	name = "\improper Dormitory Toilets"
 	icon_state = "toilet"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/commons/toilet/auxiliary
+/area/station/commons/toilet/auxiliary
 	name = "\improper Auxiliary Restrooms"
 	icon_state = "toilet"
 
-/area/commons/toilet/locker
+/area/station/commons/toilet/locker
 	name = "\improper Locker Toilets"
 	icon_state = "toilet"
 
-/area/commons/toilet/restrooms
+/area/station/commons/toilet/restrooms
 	name = "\improper Restrooms"
 	icon_state = "toilet"
 
-/area/commons/locker
+/area/station/commons/locker
 	name = "\improper Locker Room"
 	icon_state = "locker"
 
-/area/commons/lounge
+/area/station/commons/lounge
 	name = "\improper Bar Lounge"
 	icon_state = "lounge"
 	mood_bonus = 5
@@ -644,69 +644,69 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	mood_trait = TRAIT_EXTROVERT
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
-/area/commons/fitness
+/area/station/commons/fitness
 	name = "\improper Fitness Room"
 	icon_state = "fitness"
 
-/area/commons/fitness/locker_room
+/area/station/commons/fitness/locker_room
 	name = "\improper Unisex Locker Room"
 	icon_state = "locker"
 
-/area/commons/fitness/locker_room/male
+/area/station/commons/fitness/locker_room/male
 	name = "\improper Male Locker Room"
 	icon_state = "locker_male"
 
-/area/commons/fitness/locker_room/female
+/area/station/commons/fitness/locker_room/female
 	name = "\improper Female Locker Room"
 	icon_state = "locker_female"
 
-/area/commons/fitness/recreation
+/area/station/commons/fitness/recreation
 	name = "\improper Recreation Area"
 	icon_state = "rec"
 
-/area/commons/fitness/recreation/entertainment
+/area/station/commons/fitness/recreation/entertainment
 	name = "\improper Entertainment Center"
 	icon_state = "entertainment"
 
 // Commons - Vacant Rooms
-/area/commons/vacant_room
+/area/station/commons/vacant_room
 	name = "\improper Vacant Room"
 	icon_state = "vacant_room"
 	ambience_index = AMBIENCE_MAINT
 
-/area/commons/vacant_room/office
+/area/station/commons/vacant_room/office
 	name = "\improper Vacant Office"
 	icon_state = "vacant_office"
 
-/area/commons/vacant_room/commissary
+/area/station/commons/vacant_room/commissary
 	name = "\improper Vacant Commissary"
 	icon_state = "vacant_commissary"
 
 //Commons - Storage
-/area/commons/storage
+/area/station/commons/storage
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/commons/storage/tools
+/area/station/commons/storage/tools
 	name = "\improper Auxiliary Tool Storage"
 	icon_state = "tool_storage"
 
-/area/commons/storage/primary
+/area/station/commons/storage/primary
 	name = "\improper Primary Tool Storage"
 	icon_state = "primary_storage"
 
-/area/commons/storage/art
+/area/station/commons/storage/art
 	name = "\improper Art Supply Storage"
 	icon_state = "art_storage"
 
-/area/commons/storage/emergency/starboard
+/area/station/commons/storage/emergency/starboard
 	name = "\improper Starboard Emergency Storage"
 	icon_state = "emergency_storage"
 
-/area/commons/storage/emergency/port
+/area/station/commons/storage/emergency/port
 	name = "\improper Port Emergency Storage"
 	icon_state = "emergency_storage"
 
-/area/commons/storage/mining
+/area/station/commons/storage/mining
 	name = "\improper Public Mining Storage"
 	icon_state = "mining_storage"
 
