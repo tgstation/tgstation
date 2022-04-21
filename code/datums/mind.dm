@@ -384,14 +384,14 @@
 		return
 
 	var/list/all_contents = traitor_mob.get_all_contents()
-	var/obj/item/modular_computer/tablet/pda/PDA = locate() in all_contents
-	var/obj/item/radio/R = locate() in all_contents
-	var/obj/item/pen/P
+	var/obj/item/modular_computer/tablet/pda/pda = locate() in all_contents
+	var/obj/item/radio/radio = locate() in all_contents
+	var/obj/item/pen/pen
 
-	if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
-		P = locate() in PDA
-	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
-		P = locate() in all_contents
+	if (pda) // Prioritize pda pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
+		pen = locate() in pda
+	if (!pen) // If we couldn't find a pen in the pda, or we didn't even have a pda, do it the old way
+		pen = locate() in all_contents
 
 	var/obj/item/uplink_loc
 	var/implant = FALSE
@@ -399,19 +399,19 @@
 	var/uplink_spawn_location = traitor_mob.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
 	switch (uplink_spawn_location)
 		if(UPLINK_PDA)
-			uplink_loc = PDA
+			uplink_loc = pda
 			if(!uplink_loc)
-				uplink_loc = R
+				uplink_loc = radio
 			if(!uplink_loc)
-				uplink_loc = P
+				uplink_loc = pen
 		if(UPLINK_RADIO)
-			uplink_loc = R
+			uplink_loc = radio
 			if(!uplink_loc)
-				uplink_loc = PDA
+				uplink_loc = pda
 			if(!uplink_loc)
-				uplink_loc = P
+				uplink_loc = pen
 		if(UPLINK_PEN)
-			uplink_loc = P
+			uplink_loc = pen
 		if(UPLINK_IMPLANT)
 			implant = TRUE
 
@@ -434,12 +434,12 @@
 	new_uplink.uplink_handler.owner = traitor_mob.mind
 	new_uplink.uplink_handler.assigned_role = traitor_mob.mind.assigned_role.title
 	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
-	if(uplink_loc == R)
-		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features."
-	else if(uplink_loc == PDA)
-		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
-	else if(uplink_loc == P)
-		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features."
+	if(uplink_loc == radio)
+		unlock_text = "Your Uplink is cunningly disguised as your [radio.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features."
+	else if(uplink_loc == pda)
+		unlock_text = "Your Uplink is cunningly disguised as your [pda.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
+	else if(uplink_loc == pen)
+		unlock_text = "Your Uplink is cunningly disguised as the [pen.name] in your tablet. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features."
 	new_uplink.unlock_text = unlock_text
 	if(!silent)
 		to_chat(traitor_mob, span_boldnotice(unlock_text))

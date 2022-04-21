@@ -59,6 +59,13 @@
 
 	remove_pen(user)
 
+/obj/item/modular_computer/tablet/CtrlClick(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	remove_pen(user)
+
 /obj/item/modular_computer/tablet/proc/tab_no_detonate()
 	SIGNAL_HANDLER
 	return COMPONENT_TABLET_NO_DETONATE
