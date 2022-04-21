@@ -366,11 +366,22 @@
 	if(critical_threshold_proximity > melting_point)
 		countdown()
 
+/obj/machinery/atmospherics/components/unary/hypertorus/core/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
+	emped = TRUE
+
+
 /**
  * Called by check_alert() in this file
  * Called to explain in radio what the issues are with the HFR
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/send_radio_explanation()
+
+	if(emped)
+		radio.talk_into(src, "Warning! Ert%$TD£ id2 2mr9£, Jdaos id£ND£ mdao2e(d da apwoj!", engineering_channel)
+		return
 
 	if(high_power_damage)
 		radio.talk_into(src, "Warning! Shield destabilizing due to excessive power!", engineering_channel)

@@ -163,6 +163,7 @@
 	var/high_fuel_mix_mole = FALSE
 	var/iron_content_damage = FALSE
 	var/iron_content_increasing = FALSE
+	var/emped = FALSE
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Initialize(mapload)
 	. = ..()
