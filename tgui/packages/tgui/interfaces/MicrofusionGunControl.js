@@ -25,13 +25,7 @@ export const MicrofusionGunControl = (props, context) => {
         <Stack vertical grow>
           <Stack.Item>
             <Section
-              title={'Gun Info'}
-              buttons={(
-                <Button
-                  icon="pen"
-                  content="Change Name"
-                  onClick={() => act('change_gun_name')} />
-              )}>
+              title={'Gun Info'}>
               <LabeledList>
                 <LabeledList.Item label="Name">
                   {gun_name}

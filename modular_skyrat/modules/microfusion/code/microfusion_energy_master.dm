@@ -16,6 +16,8 @@
 	can_flashlight = FALSE
 	can_bayonet = FALSE
 	w_class = WEIGHT_CLASS_BULKY
+	obj_flags = UNIQUE_RENAME
+	ammo_x_offset = 2
 
 	/// What type of power cell this uses
 	var/obj/item/stock_parts/cell/microfusion/cell
@@ -29,7 +31,6 @@
 	var/can_charge = TRUE
 	/// How many charge sections do we have?
 	var/charge_sections = 4
-	ammo_x_offset = 2
 	/// if this gun uses a stateful charge bar for more detail
 	var/shaded_charge = FALSE
 	/// If this gun has a "this is loaded with X" overlay alongside chargebars and such
@@ -702,18 +703,6 @@
 	user?.put_in_hands(microfusion_gun_attachment)
 	update_appearance()
 
-/obj/item/gun/microfusion/proc/change_name(mob/user)
-	var/new_name = input(user, "Enter new name:", "Change gun name") as null|text
-	if(!new_name)
-		return
-	var/name_length = length(new_name)
-	if(name_length > GUN_MAX_NAME_CHARS && name_length < GUN_MIN_NAME_CHARS)
-		to_chat(user, span_warning("New name cannot be longer than 20 or shorter than 5 characters!"))
-		return
-
-	name = sanitize(new_name)
-	update_appearance()
-
 // UI CONTROL
 
 /obj/item/gun/microfusion/ui_interact(mob/user, datum/tgui/ui)
@@ -798,8 +787,6 @@
 			if(!cell)
 				return
 			eject_cell(usr)
-		if("change_gun_name")
-			change_name(usr)
 		if("overclock_emitter")
 			if(!phase_emitter)
 				return
