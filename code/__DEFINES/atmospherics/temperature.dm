@@ -18,9 +18,11 @@
 		for(var/thing in _atoms) { \
 			var/atom/A = thing; \
 			if(ATOM_IS_TEMPERATURE_SENSITIVE(A)) { \
-				START_PROCESSING(SStemperature, A); \
+				START_PROCESSING(SSairatoms, A); \
+				A.flags_1 |= ATMOS_IS_PROCESSING_1 \
 			} \
 		} \
 	} else if(ATOM_IS_TEMPERATURE_SENSITIVE(_atoms)) { \
-		START_PROCESSING(SStemperature, _atoms); \
+		START_PROCESSING(SSairatoms, _atoms); \
+		_atoms.flags_1 |= ATMOS_IS_PROCESSING_1 \
 	}

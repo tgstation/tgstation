@@ -1,5 +1,5 @@
 SUBSYSTEM_DEF(airmachines)
-	name = "Atmos Machines"
+	name = "Air (Machines)"
 	priority = FIRE_PRIORITY_AIRMACHINES
 	init_order = INIT_ORDER_AIRMACHINES
 	flags = SS_KEEP_TIMING

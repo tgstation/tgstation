@@ -40,11 +40,11 @@
 	if(should_atmos_process(air, exposed_temperature))
 		if(flags_1 & ATMOS_IS_PROCESSING_1)
 			return
-		//SSzas.atom_process += src
+		START_PROCESSING(SSairatoms, src)
 		flags_1 |= ATMOS_IS_PROCESSING_1
 	else if(flags_1 & ATMOS_IS_PROCESSING_1)
 		atmos_end()
-		//SSzas.atom_process -= src
+		START_PROCESSING(SSairatoms, src)
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 
 /atom/proc/process_exposure()
@@ -52,12 +52,12 @@
 	if(!istype(loc, /turf/open))
 		//If you end up in a locker or a wall reconsider your life decisions
 		atmos_end()
-		SSzas.atom_process -= src
+		STOP_PROCESSING(SSairatoms, src)
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
 	if(!should_atmos_process(spot.air, spot.air.temperature)) //Things can change without a tile becoming active
 		atmos_end()
-		SSzas.atom_process -= src
+		STOP_PROCESSING(SSairatoms, src)
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return
 	atmos_expose(spot.air, spot.air.temperature)

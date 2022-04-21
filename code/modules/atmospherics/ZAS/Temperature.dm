@@ -30,7 +30,7 @@
 	. = ..()
 	temperature_coefficient = isnull(temperature_coefficient) ? clamp(MAX_TEMPERATURE_COEFFICIENT - FLOOR(mob_size/4, 1), MIN_TEMPERATURE_COEFFICIENT, MAX_TEMPERATURE_COEFFICIENT) : temperature_coefficient
 
-/atom/proc/ProcessAtomTemperature()
+/atom/proc/process_atmos_exposure()
 	// Get our location temperature if possible.
 	// Nullspace is room temperature, clearly.
 	var/adjust_temp
@@ -64,6 +64,7 @@
 
 	else
 		temperature = adjust_temp
+		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return PROCESS_KILL
 
 #undef MIN_TEMPERATURE_COEFFICIENT

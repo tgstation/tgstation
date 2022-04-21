@@ -10,7 +10,7 @@
 
 
 SUBSYSTEM_DEF(airflow)
-	name = "Airflow"
+	name = "Air (Airflow)"
 	wait = 1
 	flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_AIRFLOW
