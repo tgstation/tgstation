@@ -386,3 +386,10 @@
 	flags_inv = HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "driscoll_mask"
+
+/obj/item/clothing/mask/gas/prop
+	name = "prop gas mask"
+	desc = "prop gas mask"
+	icon_state = "gas_alt"
+	w_class = WEIGHT_CLASS_SMALL
+	has_fov = FALSE
