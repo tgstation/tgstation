@@ -41,6 +41,7 @@
 	reset_chem_buttons()
 
 /obj/machinery/sleeper/RefreshParts()
+	. = ..()
 	var/E
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		E += B.rating
@@ -161,6 +162,7 @@
 /obj/machinery/sleeper/process()
 	..()
 	check_nap_violations()
+	use_power(active_power_usage)
 
 /obj/machinery/sleeper/nap_violation(mob/violator)
 	open_machine()
@@ -283,7 +285,6 @@
 	desc = "'Sleeper' units were once known for their healing properties, until a lengthy investigation revealed they were also dosing patients with deadly lead acetate. This appears to be one of those old 'sleeper' units repurposed as a 'Party Pod'. It’s probably not a good idea to use it."
 	icon_state = "partypod"
 	base_icon_state = "partypod"
-	idle_power_usage = 3000
 	circuit = /obj/item/circuitboard/machine/sleeper/party
 	var/leddit = FALSE //Get it like reddit and lead alright fine
 

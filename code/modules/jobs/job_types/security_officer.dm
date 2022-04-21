@@ -162,14 +162,14 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		partners += partner.real_name
 
 	if (partners.len)
-		for (var/obj/item/pda/pda as anything in GLOB.PDAs)
-			if (pda.owner in partners)
-				targets += STRINGIFY_PDA_TARGET(pda.owner, pda.ownjob)
+		for (var/obj/item/modular_computer/pda as anything in GLOB.TabletMessengers)
+			if (pda.saved_identification in partners)
+				targets += pda
 
 	if (!targets.len)
 		return
 
-	var/datum/signal/subspace/messaging/pda/signal = new(announcement_system, list(
+	var/datum/signal/subspace/messaging/tablet_msg/signal = new(announcement_system, list(
 		"name" = "Security Department Update",
 		"job" = "Automated Announcement System",
 		"message" = "Officer [officer.real_name] has been assigned to your department, [department].",
@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		/obj/item/evidencebag = 1,
 		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
 		)
-	belt = /obj/item/pda/security
+	belt = /obj/item/modular_computer/tablet/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec

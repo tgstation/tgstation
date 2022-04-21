@@ -45,7 +45,7 @@
 	id_trim = /datum/id_trim/job/chemist
 	uniform = /obj/item/clothing/under/rank/medical/chemist
 	suit = /obj/item/clothing/suit/toggle/labcoat/chemist
-	belt = /obj/item/pda/chemist
+	belt = /obj/item/modular_computer/tablet/pda/chemist
 	ears = /obj/item/radio/headset/headset_med
 	glasses = /obj/item/clothing/glasses/science
 	shoes = /obj/item/clothing/shoes/sneakers/white

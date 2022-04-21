@@ -4869,7 +4869,7 @@
 "nZ" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder,
-/obj/item/cartridge/lawyer,
+/obj/item/computer_hardware/hard_drive/role/lawyer,
 /obj/machinery/computer/security/telescreen/prison{
 	pixel_y = 32
 	},

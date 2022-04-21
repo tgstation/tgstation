@@ -226,6 +226,7 @@
 	return !shut_up
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
+	SHOULD_CALL_PARENT(FALSE)
 	if(!component_parts)
 		return
 
@@ -970,7 +971,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		purchase_message_cooldown = world.time + 5 SECONDS
 		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
 		last_shopper = REF(usr)
-	use_power(5)
+	use_power(active_power_usage)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
@@ -1282,7 +1283,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			last_shopper = REF(usr)
 	/// Remove the item
 	loaded_items--
-	use_power(5)
+	use_power(active_power_usage)
 	vending_machine_input[choice] = max(vending_machine_input[choice] - 1, 0)
 	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
 		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))

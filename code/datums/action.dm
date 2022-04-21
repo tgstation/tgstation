@@ -240,9 +240,9 @@
 	name = "Toggle Light"
 
 /datum/action/item_action/toggle_light/Trigger(trigger_flags)
-	if(istype(target, /obj/item/pda))
-		var/obj/item/pda/P = target
-		P.toggle_light(owner)
+	if(istype(target, /obj/item/modular_computer))
+		var/obj/item/modular_computer/mc = target
+		mc.toggle_flashlight()
 		return
 	..()
 
@@ -264,6 +264,9 @@
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
+
+/datum/action/item_action/toggle_computer_light
+	name = "Toggle Flashlight"
 
 /datum/action/item_action/toggle_gunlight
 	name = "Toggle Gunlight"
