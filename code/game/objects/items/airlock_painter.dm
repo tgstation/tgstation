@@ -14,7 +14,9 @@
 	slot_flags = ITEM_SLOT_BELT
 	usesound = 'sound/effects/spray2.ogg'
 
+	/// The ink cartridge to pull charges from.
 	var/obj/item/toner/ink = null
+	/// The type path to instantiate for the ink cartridge the device initially comes with, eg. /obj/item/toner
 	var/initial_ink_type = /obj/item/toner
 	/// Associate list of all paint jobs the airlock painter can apply. The key is the name of the airlock the user will see. The value is the type path of the airlock
 	var/list/available_paint_jobs = list(
@@ -154,22 +156,32 @@
 	inhand_icon_state = "decalsprayer"
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	initial_ink_type = /obj/item/toner/large
+	/// The current direction of the decal being printed
 	var/stored_dir = 2
+	/// The current color of the decal being printed.
 	var/stored_color = "yellow"
+	/// The current base icon state of the decal being printed.
 	var/stored_decal = "warningline"
+	/// The full icon state of the decal being printed.
 	var/stored_decal_total = "warningline"
+	/// The type path of the spritesheet being used for the frontend.
 	var/spritesheet_type = /datum/asset/spritesheet/decals // spritesheet containing previews
-	var/supports_custom_color = FALSE // Add a custom color option
+	/// Does this printer implementation support custom colors?
+	var/supports_custom_color = FALSE
+	/// Current custom color
 	var/stored_custom_color
+	/// List of color options as list(user-friendly label, color value to return)
 	var/color_list = list(
 		list("Yellow", "yellow"),
 		list("Red", "red"),
 		list("White", "white"))
+	/// List of direction options as list(user-friendly label, dir value to return)
 	var/dir_list = list(
 		list("North", 1),
 		list("South", 2),
 		list("East", 4),
 		list("West", 8))
+	/// List of decal options as list(user-friendly label, icon state base value to return)
 	var/decal_list = list(
 		list("Warning Line", "warningline"),
 		list("Warning Line Corner", "warninglinecorner"),
@@ -199,13 +211,28 @@
 		to_chat(user, span_notice("You need to get closer!"))
 		return
 
-	var/turf/open/floor/floor_target = target
-	if(istype(floor_target, /turf/open/floor) && use_paint(user))
+	if(isfloorturf(target) && use_paint(user))
 		paint_floor(target)
 
+/**
+ * Actually add current decal to the floor.
+ *
+ * Responsible for actually adding the element to the turf for maximum flexibility.area
+ * Can be overriden for different decal behaviors.
+ * Arguments:
+ * * target - The turf being painted to
+*/
 /obj/item/airlock_painter/decal/proc/paint_floor(turf/open/floor/target)
 	target.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, CLEAN_TYPE_PAINT, null)
 
+/**
+ * Return the final icon_state for the given decal options
+ *
+ * Arguments:
+ * * decal - the selected decal base icon state
+ * * color - the selected color
+ * * dir - the selected dir
+ */
 /obj/item/airlock_painter/decal/proc/get_decal_path(decal, color, dir)
 	// Special case due to icon_state names
 	if(color == "yellow")
@@ -226,7 +253,6 @@
 	. = ..()
 	. += get_asset_datum(spritesheet_type)
 
-icon_assets
 /obj/item/airlock_painter/decal/ui_static_data(mob/user)
 	. = ..()
 	var/datum/asset/spritesheet/icon_assets = get_asset_datum(spritesheet_type)
@@ -295,11 +321,25 @@ icon_assets
 	var/preview_floor_state = "floor"
 	var/obj/item/airlock_painter/decal/painter_type = /obj/item/airlock_painter/decal
 
+/**
+ * Underlay an example floor for preview purposes, and return the new icon.
+ *
+ * Arguments:
+ * * decal - the decal to place over the example floor tile
+ */
 /datum/asset/spritesheet/decals/proc/blend_preview_floor(icon/decal)
 	var/icon/final = icon(preview_floor_icon, preview_floor_state)
 	final.Blend(decal, ICON_OVERLAY)
 	return final
 
+/**
+ * Insert a specific state into the spritesheet.
+ *
+ * Arguments:
+ * * decal - the given decal base state.
+ * * dir - the given direction.
+ * * color - the given color.
+ */
 /datum/asset/spritesheet/decals/proc/insert_state(decal, dir, color)
 	// Special case due to icon_state names
 	var/icon_state_color = color == "yellow" ? "" : color
@@ -362,6 +402,7 @@ icon_assets
 		"trimline_box_fill"
 	)
 
+	/// The alpha value to paint the tiles at. The decal mapping helper creates tile overlays at alpha 110.
 	var/stored_alpha = 110
 
 /obj/item/airlock_painter/decal/tile/paint_floor(turf/open/floor/target)
