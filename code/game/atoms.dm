@@ -1945,8 +1945,8 @@
 	if(!isturf(gravity_turf))
 		gravity_turf = get_turf(src)
 
-	if(!gravity_turf)//no gravity in nullspace
-		return 0
+		if(!gravity_turf)//no gravity in nullspace
+			return 0
 
 	//only gets turned into a list if the signal exists since this proc is very hot
 	var/list/forced_gravity

@@ -657,6 +657,8 @@
 		newtonian_move(movement_dir)
 	if (client_mobs_in_contents)
 		update_parallax_contents()
+	for (var/datum/light_source/light as anything in light_sources) // Cycle through the light sources on this atom and tell them to update.
+		light.source_atom.update_light()
 
 	move_stacks--
 	if(move_stacks > 0) //we want only the first Moved() call in the stack to send this signal, all the other ones have an incorrect old_loc
@@ -975,7 +977,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir) & COMSIG_MOVABLE_STOP_SPACEMOVE)
 		return TRUE
 
-	if(has_gravity(src))
+	if(has_gravity())
 		return TRUE
 
 	if(pulledby && (pulledby.pulledby != src || moving_from_pull))
