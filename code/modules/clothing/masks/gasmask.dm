@@ -391,5 +391,20 @@
 	name = "prop gas mask"
 	desc = "prop gas mask"
 	icon_state = "gas_alt"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
+	inhand_icon_state = "gas_alt"
+	permeability_coefficient = 0.5
+	flags_cover = MASKCOVERSEYES
+	has_fov = FALSE
+
+/obj/item/clothing/mask/gas/atmosprop
+	name = "prop atmospheric gas mask"
+	desc = "prop atmospheric gas mask"
+	icon_state = "gas_atmos"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	w_class = WEIGHT_CLASS_SMALL
+	inhand_icon_state = "gas_atmos"
+	permeability_coefficient = 0.5
+	flags_cover = MASKCOVERSEYES
 	has_fov = FALSE
