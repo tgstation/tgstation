@@ -297,31 +297,53 @@ GLOBAL_LIST_EMPTY(lifts)
 		top_right_corner
 	)
 
-	var/list/locs_copy = locs.Copy()
-	var/list/entering_locs = dest_locs - locs_copy
-	var/list/exited_locs = locs_copy - dest_locs
+	var/list/entering_locs = dest_locs - locs
+	var/list/exited_locs = locs - dest_locs
 
-	for(var/turf/dest_turf as anything in entering_locs)
+	if(going == DOWN)
+		for(var/turf/dest_turf as anything in entering_locs)
+			SEND_SIGNAL(dest_turf, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER, things_to_move)
 
-		///handles any special interactions objects could have with the lift/tram, handled on the item itself
-		SEND_SIGNAL(dest_turf, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER, things_to_move)
+			if(istype(dest_turf, /turf/closed/wall))
+				var/turf/closed/wall/C = dest_turf
+				do_sparks(2, FALSE, C)
+				C.dismantle_wall(devastated = TRUE)
+				for(var/mob/M in urange(8, src))
+					shake_camera(M, 2, 3)
+				playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
-		if(istype(dest_turf, /turf/closed/wall))
-			var/turf/closed/wall/C = dest_turf
-			do_sparks(2, FALSE, C)
-			C.dismantle_wall(devastated = TRUE)
-			for(var/mob/M in urange(8, src))
-				shake_camera(M, 2, 3)
-			playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-
-		if(going == DOWN)
 			for(var/mob/living/crushed in dest_turf.contents)
 				to_chat(crushed, span_userdanger("You are crushed by [src]!"))
 				crushed.gib(FALSE,FALSE,FALSE)//the nicest kind of gibbing, keeping everything intact.
 
-		// no reason to check contents if we arent a leading platform in the direction of movement
-		else if(going != UP && is_border_platform)
-			var/atom/throw_target = get_edge_target_turf(src, turn(going, pick(45, -45))) //finds a spot to throw the victim at for daring to be hit by a tram
+	else if(going == UP)
+		for(var/turf/dest_turf as anything in entering_locs)
+			///handles any special interactions objects could have with the lift/tram, handled on the item itself
+			SEND_SIGNAL(dest_turf, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER, things_to_move)
+
+			if(istype(dest_turf, /turf/closed/wall))
+				var/turf/closed/wall/C = dest_turf
+				do_sparks(2, FALSE, C)
+				C.dismantle_wall(devastated = TRUE)
+				for(var/mob/M in urange(8, src))
+					shake_camera(M, 2, 3)
+				playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+
+	else
+		var/atom/throw_target = get_edge_target_turf(src, turn(going, pick(45, -45))) //finds a spot to throw the victim at for daring to be hit by a tram
+
+		for(var/turf/dest_turf as anything in entering_locs)
+			///handles any special interactions objects could have with the lift/tram, handled on the item itself
+			SEND_SIGNAL(dest_turf, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER, things_to_move)
+
+			if(istype(dest_turf, /turf/closed/wall))
+				var/turf/closed/wall/C = dest_turf
+				do_sparks(2, FALSE, C)
+				C.dismantle_wall(devastated = TRUE)
+				for(var/mob/M in urange(8, src))
+					shake_camera(M, 2, 3)
+				playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+
 			for(var/obj/structure/victim_structure in dest_turf.contents)
 				if(QDELETED(victim_structure))
 					continue
@@ -380,8 +402,6 @@ GLOBAL_LIST_EMPTY(lifts)
 ///and is more sensible. without this, if you and a banana are on the same platform, when that platform moves you will slip
 ///on the banana even if youre not moving relative to it.
 /obj/structure/industrial_lift/proc/group_move(list/atom/movable/movers, movement_direction, glide_override)
-
-
 	if(movement_direction == NONE)
 		stack_trace("an industrial lift was told to move to somewhere it already is!")
 		return FALSE
@@ -393,33 +413,36 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/area/their_area = get_area(our_dest)
 	var/different_areas = our_area != their_area
 
-
 	set_glide_size(glide_override)
 	forceMove(our_dest)
 	if(loc != our_dest || QDELETED(src))//check if our movement succeeded, if it didnt then the movers cant be moved
 		return FALSE
 
-	for(var/atom/movable/mover as anything in movers)
-		if(QDELETED(mover))
-			movers -= mover
-			continue
+	if(different_areas)
+		for(var/atom/movable/mover as anything in movers)
+			if(QDELETED(mover))
+				movers -= mover
+				continue
 
-		var/turf/old_loc = get_turf(mover)
-		var/turf/destination = get_step(old_loc, movement_direction)
+			mover.move_stacks++
+			mover.set_glide_size(glide_override)
 
-		mover.move_stacks++
-		mover.set_glide_size(glide_override)
-
-		//we dont need to call Entered() and Exited() for origin and destination here for each mover because
-		//all of them are considered to be on top of us, so the turfs and anything on them can only perceive us,
-		//which is why the platform itself uses forceMove()
-		if(different_areas)
+			//we dont need to call Entered() and Exited() for origin and destination here for each mover because
+			//all of them are considered to be on top of us, so the turfs and anything on them can only perceive us,
+			//which is why the platform itself uses forceMove()
 			our_area.Exited(mover, movement_direction)
-			mover.loc = destination
+			mover.loc = get_step(mover, movement_direction)
 			their_area.Entered(mover, movement_direction)
 
-		else
-			mover.loc = destination
+	else
+		for(var/atom/movable/mover as anything in movers)
+			if(QDELETED(mover))
+				movers -= mover
+				continue
+
+			mover.move_stacks++
+			mover.set_glide_size(glide_override)
+			mover.loc = get_step(mover, movement_direction)
 
 	for(var/atom/movable/mover as anything in movers)
 		mover.Moved(get_step(mover, opposite_direction), movement_direction)
