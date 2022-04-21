@@ -10,14 +10,14 @@
 	abstract_type = /obj/structure/statue/bone
 
 /obj/structure/statue/bone/rib
-	name = "collosal rib"
+	name = "colossal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "rib"
 
 /obj/structure/statue/bone/skull
-	name = "collosal skull"
+	name = "colossal skull"
 	desc = "The gaping maw of a dead, titanic monster."
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/statuelarge.dmi'
