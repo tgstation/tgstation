@@ -10,7 +10,8 @@
 		/obj/item/stack/sheet,
 		/obj/item/stack/sheet/mineral,
 		/obj/item/stack/license_plates,
-		/obj/item/stack/sheet/animalhide,)
+		/obj/item/stack/sheet/animalhide,
+	)
 
 	for(var/obj/item/stack/stack_check as anything in subtypesof(/obj/item/stack) - blacklist)
 		if(!initial(stack_check.singular_name))
