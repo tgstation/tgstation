@@ -19,6 +19,7 @@
 	var/datum/bank_account/target_acc
 	///Does this payment component respect same-department-discount?
 	var/department_discount = FALSE
+	///A static typecache of all the money-based items that can be actively used as currency.
 	var/static/list/allowed_money = typecacheof(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
@@ -54,6 +55,12 @@
 		return
 	return COMPONENT_OBJ_CANCEL_CHARGE
 
+/**
+ * Proc that changes the base cost of the interaction.
+ *
+ * * source: Datum source of the thing changing the cost.
+ * * new_cost: the int value of the attempted new_cost to replace the cost value.
+ */
 /datum/component/payment/proc/change_cost(datum/source, new_cost)
 	SIGNAL_HANDLER
 
@@ -61,6 +68,9 @@
 		CRASH("change_cost called with variable new_cost as not a number.")
 	cost = new_cost
 
+/**
+ * Attempts to charge the mob, user, an integer number of credits, total_cost, without the use of an ID card to directly draw upon.
+ */
 /datum/component/payment/proc/handle_cardless(mob/living/user, total_cost)
 	//Here is all the possible non-ID payment methods.
 	var/list/counted_money = list()
@@ -112,6 +122,9 @@
 	playsound(user, 'sound/effects/cashregister.ogg', 20, TRUE)
 	return TRUE
 
+/**
+ * Attempts to charge a mob, user, an integer number of credits, total_cost, directly from an ID card/bank account.
+ */
 /datum/component/payment/proc/handle_card(mob/living/user, obj/item/card/id/idcard, total_cost)
 	if(!idcard)
 		return FALSE
