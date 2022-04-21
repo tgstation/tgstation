@@ -1,5 +1,5 @@
 /obj/modular_map_root
-	//invisibility = INVISIBILITY_ABSTRACT
+	invisibility = INVISIBILITY_ABSTRACT
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pinonclose"
 
@@ -70,7 +70,7 @@ INITIALIZE_IMMEDIATE(/obj/modular_map_root)
 
 	map.load(spawn_area, FALSE, mapfile)
 
-	//qdel(src, force=TRUE)
+	qdel(src, force=TRUE)
 
 /datum/map_template/map_module
 	name = "Base Map Module Template"
