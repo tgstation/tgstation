@@ -159,7 +159,7 @@
 
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/mining_voucher))
-		RedeemVoucher(I, user)
+		redeem_voucher(I, user)
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		return
@@ -174,42 +174,24 @@
  * * voucher The mining voucher that is being used to redeem the mining equipment
  * * redeemer The mob that is redeeming the mining equipment
  */
-/obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
-	var/items = list(
-		"Crusher Kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "crusher"),
-		"Extraction and Rescue Kit" = image(icon = 'icons/obj/fulton.dmi', icon_state = "extraction_pack"),
-		"Resonator Kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
-		"Survival Capsule and Explorer's Webbing" = image(icon = 'icons/obj/clothing/belts.dmi', icon_state = "explorer1"),
-		"Minebot Kit" = image(icon = 'icons/mob/aibots.dmi', icon_state = "mining_drone"),
-		"Mining Conscription Kit" = image(icon = 'icons/obj/storage.dmi', icon_state = "duffel")
-		)
+/obj/machinery/mineral/equipment_vendor/proc/redeem_voucher(obj/item/mining_voucher/voucher, mob/redeemer)
+	var/list/set_types = list()
+	var/list/items = list()
+	for(var/datum/voucher_set/current_set as anything in subtypesof(/datum/voucher_set))
+		set_types[initial(current_set.name)] = new current_set
+
+		var/datum/radial_menu_choice/option = new
+		option.image = image(icon = initial(current_set.icon), icon_state = initial(current_set.icon_state))
+		option.info = span_boldnotice(initial(current_set.description))
+		items[initial(current_set.name)] = option
+
 	var/selection = show_radial_menu(redeemer, src, items, custom_check = CALLBACK(src, .proc/check_menu, voucher, redeemer), radius = 38, require_near = TRUE, tooltips = TRUE)
 	if(!selection)
 		return
 
-	var/drop_location = drop_location()
-	switch(selection)
-		if("Crusher Kit")
-			new /obj/item/extinguisher/mini(drop_location)
-			new /obj/item/kinetic_crusher(drop_location)
-		if("Extraction and Rescue Kit")
-			new /obj/item/extraction_pack(drop_location)
-			new /obj/item/fulton_core(drop_location)
-			new /obj/item/stack/marker_beacon/thirty(drop_location)
-		if("Resonator Kit")
-			new /obj/item/extinguisher/mini(drop_location)
-			new /obj/item/resonator(drop_location)
-		if("Survival Capsule and Explorer's Webbing")
-			new /obj/item/storage/belt/mining/vendor(drop_location)
-		if("Minebot Kit")
-			new /mob/living/simple_animal/hostile/mining_drone(drop_location)
-			new /obj/item/weldingtool/hugetank(drop_location)
-			new /obj/item/clothing/head/welding(drop_location)
-			new /obj/item/borg/upgrade/modkit/minebot_passthrough(drop_location)
-		if("Mining Conscription Kit")
-			new /obj/item/storage/backpack/duffelbag/mining_conscript(drop_location)
-		else
-			return
+	var/datum/voucher_set/chosen_set = set_types[selection]
+	for(var/item in chosen_set.set_items)
+		new item(drop_location())
 
 	SSblackbox.record_feedback("tally", "mining_voucher_redeemed", 1, selection)
 	qdel(voucher)
