@@ -389,7 +389,7 @@
 
 /obj/item/clothing/mask/gas/prop
 	name = "prop gas mask"
-	desc = "prop gas mask"
+	desc = "A prop gas mask designed for appearance. Unlike a normal gas mask this does not filter gasses or protect against pepper spray."
 	icon_state = "gas_alt"
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
@@ -400,7 +400,7 @@
 
 /obj/item/clothing/mask/gas/atmosprop
 	name = "prop atmospheric gas mask"
-	desc = "prop atmospheric gas mask"
+	desc = "A prop atmospheric gas mask designed for appearance. Unlike a normal atmospheric gas mask this does not filter gasses or protect against pepper spray."
 	icon_state = "gas_atmos"
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
