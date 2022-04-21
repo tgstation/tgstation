@@ -84,5 +84,3 @@
 	var/hal_screwydoll
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts
-	/// A list to keep track of which books a person has read (to prevent people from reading the same book again and again for positive mood events)
-	var/list/book_titles_read

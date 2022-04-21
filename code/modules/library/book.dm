@@ -106,12 +106,12 @@
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/reader = user
-			LAZYINITLIST(reader.book_titles_read)
-			var/has_not_read_book = isnull(reader.book_titles_read[starting_title])
+			LAZYINITLIST(reader.mind.book_titles_read)
+			var/has_not_read_book = isnull(reader.mind.book_titles_read[starting_title])
 
 			if(has_not_read_book) // any new books give bonus mood
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
-			reader.book_titles_read[starting_title] = TRUE
+			reader.mind.book_titles_read[starting_title] = TRUE
 		onclose(user, "book")
 	else
 		to_chat(user, span_notice("This book is completely blank!"))
