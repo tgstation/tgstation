@@ -228,7 +228,7 @@
 								"name" = xgm_gas_data.name[gas_id],
 								"value" = environment.gas[gas_id] / total_moles * 100,
 								"unit" = "%",
-								"danger_level" = cur_tlv.get_danger_level(environment.get_gas(gas_id)* partial_pressure)
+								"danger_level" = cur_tlv.get_danger_level(environment.gas[gas_id]* partial_pressure)
 		))
 
 	if(!locked || user.has_unlimited_silicon_privilege)
@@ -622,7 +622,7 @@
 		if(!(gas_id in cached_tlv)) // We're not interested in this gas, it seems.
 			continue
 		current_tlv = cached_tlv[gas_id]
-		gas_dangerlevel = max(gas_dangerlevel, current_tlv.get_danger_level(environment.get_gas(gas_id)))
+		gas_dangerlevel = max(gas_dangerlevel, current_tlv.get_danger_level(environment.gas[gas_id]))
 
 	var/old_danger_level = danger_level
 	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)
@@ -661,9 +661,17 @@
 			new_area_danger_level = clamp(max(new_area_danger_level, AA.danger_level), 0, 1)
 
 	var/did_anything_happen
+	var/area/local_area = get_area(src)
 	if(new_area_danger_level)
 		did_anything_happen = alarm_manager.send_alarm(ALARM_ATMOS)
+		if(danger_level == TLV_OUTSIDE_HAZARD_LIMIT)
+			for(var/obj/machinery/door/firedoor/door in local_area.firedoors)
+				door.start_activation_process(FIRELOCK_ALARM_TYPE_GENERIC)
 	else
+		if(danger_level < TLV_OUTSIDE_WARNING_LIMIT)
+			for(var/obj/machinery/door/firedoor/door in local_area.firedoors)
+				door.start_deactivation_process(FIRELOCK_ALARM_TYPE_GENERIC)
+
 		did_anything_happen = alarm_manager.clear_alarm(ALARM_ATMOS)
 	if(did_anything_happen) //if something actually changed
 		post_alert(new_area_danger_level)

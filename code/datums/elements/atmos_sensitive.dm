@@ -40,11 +40,11 @@
 	if(should_atmos_process(air, exposed_temperature))
 		if(flags_1 & ATMOS_IS_PROCESSING_1)
 			return
-		SSzas.atom_process += src
+		//SSzas.atom_process += src
 		flags_1 |= ATMOS_IS_PROCESSING_1
 	else if(flags_1 & ATMOS_IS_PROCESSING_1)
 		atmos_end()
-		SSzas.atom_process -= src
+		//SSzas.atom_process -= src
 		flags_1 &= ~ATMOS_IS_PROCESSING_1
 
 /atom/proc/process_exposure()

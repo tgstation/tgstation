@@ -162,7 +162,7 @@ SUBSYSTEM_DEF(zas)
 
 		CHECK_TICK
 
-	to_chat(world, span_boldannounce("ZAS: Total Simulated Turfs: [simulated_turf_count]\nTotal Zones: [zones.len]\nTotal Edges: [edges.len]\nTotal Active Edges: [active_edges.len ? "<span class='danger'>[active_edges.len]</span>" : "None"]\nTotal Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]"))
+	to_chat(world, span_boldannounce("ZAS:\n - Total Simulated Turfs: [simulated_turf_count]\n - Total Zones: [zones.len]\n - Total Edges: [edges.len]\n - Total Active Edges: [active_edges.len ? "<span class='danger'>[active_edges.len]</span>" : "None"]\n - Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]"))
 
 	to_chat(world, span_boldannounce("ZAS: Geometry processing completed in [(REALTIMEOFDAY - starttime)/10] seconds!"))
 

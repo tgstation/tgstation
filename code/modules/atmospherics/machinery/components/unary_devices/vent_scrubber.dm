@@ -254,13 +254,14 @@
 
 			var/total_moles_to_remove = 0
 			for(var/gas in filter_types & environment.get_gases())
-				total_moles_to_remove += environment.get_gas(gas)
+				total_moles_to_remove += environment.gas[gas]
 
 			if(total_moles_to_remove == 0)//sometimes this gets non gc'd values
 				return FALSE
 
 			//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
-			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
+			//var/transfer_moles = min(environment.total_moles, volume_rate/environment.volume)*environment.total_moles
+			var/transfer_moles = min(environment.total_moles, environment.total_moles*volume_rate/environment.volume)
 			scrub_gas(filter_types, environment, filtered_out, transfer_moles, INFINITY)
 
 

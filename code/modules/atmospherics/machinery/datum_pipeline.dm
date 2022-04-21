@@ -209,8 +209,8 @@
 
 	air.temperature += self_temperature_delta
 	modeled_location.TakeTemperature(sharer_temperature_delta)
-	if(modeled_location.blocks_air)
-		modeled_location.temperature_expose(air, modeled_location.temperature)
+	/*if(modeled_location.blocks_air & AIR_BLOCKED)
+		modeled_location.temperature_expose(air, modeled_location.temperature)*/
 
 	update = TRUE
 
