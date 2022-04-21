@@ -771,7 +771,7 @@
 	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
 		return FALSE
 
-	var/obj/item/clothing/glasses/eyewear = src.glasses
+	var/obj/item/clothing/glasses/eyewear = glasses
 	if(istype(eyewear) && eyewear.vision_correction)
 		return FALSE
 
