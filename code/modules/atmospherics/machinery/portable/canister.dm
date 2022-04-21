@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	///Minimum pressure allower for release_pressure var
 	var/can_min_release_pressure = (ONE_ATMOSPHERE * 0.1)
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
-	var/heat_limit = 50000
+	var/heat_limit = 10000
 	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
 	var/pressure_limit = 500000
 	///Maximum amount of heat that the canister can handle before taking damage
@@ -90,6 +90,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/obj/item/stock_parts/cell/internal_cell
 
 	var/cell_container_opened = FALSE
+
+	var/protected_contents = FALSE
 
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
@@ -446,17 +448,14 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		if(!cell_container_opened)
 			balloon_alert(user, "open the hatch first")
 			return
-		if(internal_cell)
-			if(!user.transferItemToLoc(active_cell, src))
-				return
-			user.put_in_hands(internal_cell)
-			internal_cell = active_cell
-			balloon_alert(user, "you successfully replace the cell")
-			return
 		if(!user.transferItemToLoc(active_cell, src))
 			return
+		if(internal_cell)
+			user.put_in_hands(internal_cell)
+			balloon_alert(user, "you successfully replace the cell")
+		else
+			balloon_alert(user, "you successfully install the cell")
 		internal_cell = active_cell
-		balloon_alert(user, "you successfully install the cell")
 		return
 	return ..()
 
@@ -473,7 +472,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(!cell_container_opened || !internal_cell)
 		return
 	internal_cell.forceMove(drop_location())
-	internal_cell = null
 	balloon_alert(user, "you successfully remove the cell")
 	return TRUE
 
@@ -510,6 +508,11 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			return TRUE
 		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
 	return TRUE
+
+/obj/machinery/portable_atmospherics/canister/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == internal_cell)
+		internal_cell = null
 
 /obj/machinery/portable_atmospherics/canister/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
@@ -555,8 +558,24 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	else if(valve_open && holding)
 		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
+/obj/machinery/portable_atmospherics/canister/process()
+
+	var/our_pressure = air_contents.return_pressure()
+	var/our_temperature = air_contents.return_temperature()
+
+	protected_contents = FALSE
+	if(shielding_powered)
+		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - heat_limit, 1)))
+		var/power_consumed = power_factor * 250
+		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
+			use_power(power_consumed, AREA_USAGE_EQUIP)
+			protected_contents = TRUE
+		else if(internal_cell?.use(power_consumed * 0.025))
+			protected_contents = TRUE
+		else
+			shielding_powered = FALSE
+
 /obj/machinery/portable_atmospherics/canister/process_atmos()
-	air_contents.react(src)
 	if(machine_stat & BROKEN)
 		return PROCESS_KILL
 	if(timing && valve_timer < world.time)
@@ -575,23 +594,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/our_pressure = air_contents.return_pressure()
 	var/our_temperature = air_contents.return_temperature()
 
-	var/protected_contents = FALSE
-	if(shielding_powered)
-		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - heat_limit, 1)))
-		var/power_consumed = power_factor * 250
-		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
-			use_power(power_consumed, AREA_USAGE_EQUIP)
-			protected_contents = TRUE
-		else if(internal_cell?.use(power_consumed * 0.025))
-			protected_contents = TRUE
-		else
-			shielding_powered = FALSE
-
 	///function used to check the limit of the canisters and also set the amount of damage that the canister can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(!protected_contents && (our_temperature > heat_limit || our_pressure > pressure_limit))
 		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
 		excited = TRUE
 	update_appearance()
+
+	return ..()
 
 /obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
 	return GLOB.physical_state
