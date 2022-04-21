@@ -39,6 +39,11 @@
 		explode(usr, from_message_menu = TRUE)
 		return
 
+/obj/item/modular_computer/tablet/examine(mob/user)
+	. = ..()
+	if(inserted_item)
+		. += "Ctrl-click to remove the [inserted_item.name]"
+
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()
 
@@ -53,6 +58,13 @@
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
 /obj/item/modular_computer/tablet/AltClick(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	remove_pen(user)
+
+/obj/item/modular_computer/tablet/CtrlClick(mob/user)
 	. = ..()
 	if(.)
 		return
