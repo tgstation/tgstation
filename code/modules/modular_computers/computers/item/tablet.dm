@@ -247,6 +247,7 @@
 // Round start tablets
 
 /obj/item/modular_computer/tablet/pda
+	icon = 'icons/obj/modular_pda.dmi'
 	icon_state = "pda"
 
 	greyscale_config = /datum/greyscale_config/tablet
