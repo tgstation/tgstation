@@ -41920,7 +41920,7 @@
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/power/apc/ten_k/directional/south,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},

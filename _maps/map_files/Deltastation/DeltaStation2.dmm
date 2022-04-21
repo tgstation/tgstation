@@ -50834,9 +50834,9 @@
 /area/command/bridge)
 "mDS" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
+/obj/machinery/power/apc/ten_k/directional/north,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "mDX" = (

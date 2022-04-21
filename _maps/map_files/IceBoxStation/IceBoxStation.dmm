@@ -14536,8 +14536,8 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "ges" = (
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/machinery/power/apc/ten_k/directional/south,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "gev" = (

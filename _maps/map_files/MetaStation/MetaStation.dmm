@@ -40051,8 +40051,7 @@
 /obj/structure/chair,
 /obj/machinery/computer/security/telescreen/interrogation{
 	dir = 4;
-	pixel_x = -30;
-	
+	pixel_x = -30
 	},
 /turf/open/floor/iron/grimy,
 /area/security/interrogation)
@@ -52402,9 +52401,9 @@
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/structure/table/wood/fancy/red,
 /obj/machinery/door/window/brigdoor/left/directional/south{
+	dir = 8;
 	name = "High-Risk Modules";
-	req_access_txt = "20";
-	dir = 8
+	req_access_txt = "20"
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -58782,7 +58781,7 @@
 /area/commons/vacant_room/office)
 "uyI" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/power/apc/ten_k/directional/east,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "uyP" = (
