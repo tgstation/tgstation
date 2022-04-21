@@ -4756,7 +4756,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bJB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -15561,7 +15560,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /turf/open/floor/iron/dark/corner,
 /area/engineering/atmos)
@@ -34131,7 +34129,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "pPt" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -34811,8 +34808,8 @@
 "qgi" = (
 /obj/structure/cable,
 /obj/machinery/duct,
-/obj/machinery/atmospherics/components/trinary/filter/atmos/co2,
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/iron/large,
 /area/engineering/atmos)
 "qgp" = (
@@ -45400,7 +45397,6 @@
 	cycle_id = "atmos-entrance"
 	},
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics";
@@ -49171,13 +49167,6 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"xjE" = (
-/obj/machinery/duct,
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "xjG" = (
 /obj/machinery/light/directional/east,
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -83190,7 +83179,7 @@ fhl
 kQb
 nvH
 sHv
-xjE
+bJB
 hwO
 gDV
 vSa

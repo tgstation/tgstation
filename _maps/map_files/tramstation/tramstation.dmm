@@ -15410,7 +15410,6 @@
 	},
 /obj/item/clothing/shoes/clown_shoes,
 /obj/item/clothing/mask/gas/clown_hat,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/engineering/main)
 "ejQ" = (
@@ -18901,7 +18900,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/main)
@@ -19973,8 +19971,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/atmospherics/pipe/bridge_pipe/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "fNu" = (
@@ -23367,10 +23364,6 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
-"gYA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall/r_wall,
-/area/engineering/main)
 "gYE" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -34748,7 +34741,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/box,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/main)
@@ -41895,12 +41887,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/processing)
-"nLa" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "nLe" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 9
@@ -44906,7 +44892,6 @@
 /obj/item/bikehorn,
 /obj/item/grown/bananapeel,
 /obj/item/food/spaghetti/copypasta,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/engineering/main)
 "oNX" = (
@@ -56741,7 +56726,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "thT" = (
@@ -66683,10 +66667,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/main)
-"wON" = (
-/obj/machinery/atmospherics/components/trinary/filter/atmos/co2,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "wPa" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Science - Upper Power Hatch";
@@ -69494,7 +69474,6 @@
 	pixel_x = 4;
 	pixel_y = -32
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/engineering/main)
 "xNa" = (
@@ -102174,7 +102153,7 @@ lOd
 lOd
 bOS
 dey
-gYA
+pAW
 tBO
 nrb
 jDY
@@ -102431,7 +102410,7 @@ fRN
 lOd
 lOd
 lOd
-gYA
+pAW
 tBO
 cjg
 jDY
@@ -103459,7 +103438,7 @@ rxV
 lOd
 lOd
 lOd
-nLa
+one
 one
 wAJ
 ldk
@@ -104230,7 +104209,7 @@ kdy
 kdy
 kdy
 kdy
-wON
+kdy
 kdy
 kdy
 kdy

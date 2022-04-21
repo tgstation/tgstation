@@ -23562,8 +23562,8 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/trinary/filter/atmos/co2,
 /obj/machinery/light/no_nightlight/directional/west,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -29295,12 +29295,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
-"jEv" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/maintenance/starboard/greater)
 "jEz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -37664,7 +37658,6 @@
 /area/hallway/primary/aft)
 "mEA" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -45715,7 +45708,6 @@
 /turf/open/floor/iron,
 /area/commons/dorms)
 "pxk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/warning/hottemp{
 	pixel_y = -32
 	},
@@ -109025,7 +109017,7 @@ kIb
 jvD
 jvD
 gJp
-jEv
+jvD
 xkU
 lby
 vYt

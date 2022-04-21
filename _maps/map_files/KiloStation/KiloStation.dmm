@@ -29716,10 +29716,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/storage)
-"fsJ" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/turf/closed/wall/r_wall/rust,
-/area/engineering/atmos)
 "fsQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52478,10 +52474,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/brig)
-"mTD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall/r_wall,
-/area/maintenance/aft)
 "mTR" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -80111,10 +80103,10 @@
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
-/obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "waA" = (
@@ -115405,9 +115397,9 @@ bFS
 bFa
 aRQ
 hST
-mTD
-mTD
-fsJ
+bFs
+bFs
+qxq
 wam
 sxA
 gnH
