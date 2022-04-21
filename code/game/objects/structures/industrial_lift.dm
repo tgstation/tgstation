@@ -58,9 +58,6 @@
 
 			possible_expansions -= borderline
 
-//datum/lift_master/proc/create_multitile_platform(z)
-//	var/obj/structure/industrial_lift/middle_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-
 /**
  * Moves the lift UP or DOWN, this is what users invoke with their hand.
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
@@ -80,7 +77,9 @@
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
-/datum/lift_master/proc/MoveLiftHorizontal(going, z, gliding_amount = 8)
+/datum/lift_master/proc/MoveLiftHorizontal(going, z)
+	if(SStramprocess.profile)
+		world.Profile(PROFILE_START)
 	var/max_x = 1
 	var/max_y = 1
 	var/min_x = world.maxx
@@ -93,7 +92,9 @@
 		if(!tram_platform)
 			return FALSE
 
-		tram_platform.travel(going, gliding_amount, TRUE)
+		tram_platform.travel(going, TRUE)
+		if(SStramprocess.profile)
+			world.Profile(PROFILE_STOP)
 		return
 
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
@@ -110,16 +111,16 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == min_x || y == max_y))
+					lift_platform?.travel(going, is_border_platform = (x == min_x || y == max_y))
 			else if (going & SOUTH)
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == min_x || y == min_y))
+					lift_platform?.travel(going, is_border_platform = (x == min_x || y == min_y))
 			else
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == min_x))
+					lift_platform?.travel(going, is_border_platform = (x == min_x))
 	else
 		//Go along the X axis from max to min, from right to left
 		for(var/x in max_x to min_x step -1)
@@ -127,18 +128,18 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == max_x || y == max_y))
+					lift_platform?.travel(going, is_border_platform = (x == max_x || y == max_y))
 
 			else if (going & SOUTH)
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == max_x || y == min_y))
+					lift_platform?.travel(going, is_border_platform = (x == max_x || y == min_y))
 
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, gliding_amount, is_border_platform = (x == max_x))
+					lift_platform?.travel(going, is_border_platform = (x == max_x))
 
 	set_controls(UNLOCKED)
 
@@ -185,10 +186,15 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/pass_through_floors = FALSE
 	///if true, the lift cannot be manually moved.
 	var/controls_locked = FALSE
-	///things to move
+	///what movables on our platform that we are moving
 	var/list/atom/movable/lift_load
-	///control from
+	///lazy list of movables inside lift_load who had their glide_size changed since our last movement.
+	///used so that we dont have to change the glide_size of every object every movement, which scales to cost more than you'd think
+	var/list/atom/movable/changed_gliders
+	///master datum that controls our movement
 	var/datum/lift_master/lift_master_datum
+	///what glide_size we set our moving contents to.
+	var/glide_size_override = 8
 
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
@@ -234,7 +240,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(isliving(potential_rider) && HAS_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED))
 		REMOVE_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
 	LAZYREMOVE(lift_load, potential_rider)
-	UnregisterSignal(potential_rider, COMSIG_PARENT_QDELETING)
+	LAZYREMOVE(changed_gliders, potential_rider)
+	UnregisterSignal(potential_rider, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -247,6 +254,17 @@ GLOBAL_LIST_EMPTY(lifts)
 		ADD_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
 	LAZYADD(lift_load, AM)
 	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
+
+/obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
+	. = ..()
+	if(travelling)
+		on_changed_glide_size(AM, AM.glide_size)
+
+
+/obj/structure/industrial_lift/proc/on_changed_glide_size(atom/movable/moving_contents, new_glide_size)
+	SIGNAL_HANDLER
+	if(new_glide_size != glide_size_override)
+		LAZYADD(changed_gliders, moving_contents)
 
 /**
  * Signal for when the tram runs into a field of which it cannot go through.
@@ -276,8 +294,8 @@ GLOBAL_LIST_EMPTY(lifts)
 			continue
 		. += neighbor
 
-/obj/structure/industrial_lift/proc/travel(going, gliding_amount = 8, is_border_platform = FALSE)
-	var/list/things_to_move = LAZYCOPY(lift_load)
+/obj/structure/industrial_lift/proc/travel(going, is_border_platform = FALSE)
+	var/list/things_to_move = lift_load
 	var/turf/destination
 	if(!isturf(going))
 		destination = get_step_multiz(src, going)
@@ -330,34 +348,41 @@ GLOBAL_LIST_EMPTY(lifts)
 				playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
 	else
-		var/atom/throw_target = get_edge_target_turf(src, turn(going, pick(45, -45))) //finds a spot to throw the victim at for daring to be hit by a tram
+		///potentially finds a spot to throw the victim at for daring to be hit by a tram. is null if we havent found anything to throw
+		var/atom/throw_target
 
 		for(var/turf/dest_turf as anything in entering_locs)
 			///handles any special interactions objects could have with the lift/tram, handled on the item itself
 			SEND_SIGNAL(dest_turf, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER, things_to_move)
 
 			if(istype(dest_turf, /turf/closed/wall))
-				var/turf/closed/wall/C = dest_turf
-				do_sparks(2, FALSE, C)
-				C.dismantle_wall(devastated = TRUE)
-				for(var/mob/M in urange(8, src))
-					shake_camera(M, 2, 3)
-				playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+				var/turf/closed/wall/collided_wall = dest_turf
+				do_sparks(2, FALSE, collided_wall)
+				collided_wall.dismantle_wall(devastated = TRUE)
+				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(collided_wall, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
+					shake_camera(client_mob, 2, 3)
+
+				playsound(collided_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
 			for(var/obj/structure/victim_structure in dest_turf.contents)
-				if(QDELETED(victim_structure))
+				if(QDELING(victim_structure))
 					continue
 				if(!is_type_in_typecache(victim_structure, lift_master_datum.ignored_smashthroughs) && victim_structure.layer >= LOW_OBJ_LAYER)
+
 					if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
 						visible_message(span_danger("[src] smashes through [victim_structure]!"))
 						victim_structure.deconstruct(FALSE)
+
 					else
+						if(!throw_target)
+							throw_target = get_edge_target_turf(src, turn(going, pick(45, -45)))
 						visible_message(span_danger("[src] violently rams [victim_structure] out of the way!"))
 						victim_structure.anchored = FALSE
 						victim_structure.take_damage(rand(20, 25))
 						victim_structure.throw_at(throw_target, 200, 4)
+
 			for(var/obj/machinery/victim_machine in dest_turf.contents)
-				if(QDELETED(victim_machine))
+				if(QDELING(victim_machine))
 					continue
 				if(is_type_in_typecache(victim_machine, lift_master_datum.ignored_smashthroughs))
 					continue
@@ -383,7 +408,10 @@ GLOBAL_LIST_EMPTY(lifts)
 
 				if(QDELETED(collided)) //in case it was a mob that dels on death
 					continue
-				var/turf/T = get_turf(src)
+				if(!throw_target)
+					throw_target = get_edge_target_turf(src, turn(going, pick(45, -45)))
+
+				var/turf/T = get_turf(collided)
 				T.add_mob_blood(collided)
 
 				collided.throw_at()
@@ -392,7 +420,7 @@ GLOBAL_LIST_EMPTY(lifts)
 				collided.throw_at(throw_target, 200, 4, callback = land_slam)
 
 	unset_movement_registrations(exited_locs)
-	group_move(things_to_move, going, gliding_amount)
+	group_move(things_to_move, going)
 	set_movement_registrations(entering_locs)
 
 ///move the movers list of movables on our tile to destination if we successfully move there first.
@@ -401,7 +429,7 @@ GLOBAL_LIST_EMPTY(lifts)
 ///none of the movers are able to react to the movement of any other mover, saving a lot of needless processing cost
 ///and is more sensible. without this, if you and a banana are on the same platform, when that platform moves you will slip
 ///on the banana even if youre not moving relative to it.
-/obj/structure/industrial_lift/proc/group_move(list/atom/movable/movers, movement_direction, glide_override)
+/obj/structure/industrial_lift/proc/group_move(list/atom/movable/movers, movement_direction)
 	if(movement_direction == NONE)
 		stack_trace("an industrial lift was told to move to somewhere it already is!")
 		return FALSE
@@ -413,19 +441,23 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/area/their_area = get_area(our_dest)
 	var/different_areas = our_area != their_area
 
-	set_glide_size(glide_override)
+	if(glide_size != glide_size_override)
+		set_glide_size(glide_size_override)
 	forceMove(our_dest)
 	if(loc != our_dest || QDELETED(src))//check if our movement succeeded, if it didnt then the movers cant be moved
 		return FALSE
+
+	for(var/atom/movable/mover as anything in changed_gliders)
+		if(mover.glide_size != glide_size_override)
+			mover.set_glide_size(glide_size_override)
+
+		LAZYREMOVE(changed_gliders, mover)
 
 	if(different_areas)
 		for(var/atom/movable/mover as anything in movers)
 			if(QDELETED(mover))
 				movers -= mover
 				continue
-
-			mover.move_stacks++
-			mover.set_glide_size(glide_override)
 
 			//we dont need to call Entered() and Exited() for origin and destination here for each mover because
 			//all of them are considered to be on top of us, so the turfs and anything on them can only perceive us,
@@ -440,13 +472,12 @@ GLOBAL_LIST_EMPTY(lifts)
 				movers -= mover
 				continue
 
-			mover.move_stacks++
-			mover.set_glide_size(glide_override)
 			mover.loc = get_step(mover, movement_direction)
 
 	for(var/atom/movable/mover as anything in movers)
-		mover.Moved(get_step(mover, opposite_direction), movement_direction)
+		mover.Moved(get_step(mover, opposite_direction), movement_direction, TRUE, null, src)
 		//tell the movers they moved only after all of them have been moved so they cant react to eachother moving
+
 
 	return TRUE
 
@@ -680,6 +711,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	lift_master_datum.multitile_tram = TRUE
 
 	forceMove(locate(min_x, min_y, z))
+	set_movement_registrations()
 
 /obj/structure/industrial_lift/tram/central/proc/find_dimensions(iterations = 3000)
 	message_admins("num turfs: [length(locs)], lower left corner: ([min_x], [min_y]), upper right corner: ([max_x], [max_y])")
@@ -736,6 +768,15 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	if (src.travelling == travelling)
 		return
 
+
+	for(var/atom/movable/glider as anything in lift_load)
+		if(travelling)
+			glider.set_glide_size(glide_size_override)
+			RegisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/on_changed_glide_size)
+		else
+			LAZYREMOVE(changed_gliders, glider)
+			UnregisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
+
 	src.travelling = travelling
 	SEND_SIGNAL(src, COMSIG_TRAM_SET_TRAVELLING, travelling)
 
@@ -776,9 +817,12 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 		if(other_tram_part.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
 			return //we don't care to undo locked controls, though, as that will resolve itself
 		SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
-		other_tram_part.set_travelling(TRUE)
+
 		other_tram_part.from_where = to_where
-	lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(SStramprocess.wait))
+		other_tram_part.glide_size_override = DELAY_TO_GLIDE_SIZE(SStramprocess.wait)
+		other_tram_part.set_travelling(TRUE)
+
+	lift_master_datum.MoveLiftHorizontal(travel_direction, z)
 	travel_distance--
 
 	START_PROCESSING(SStramprocess, src)
