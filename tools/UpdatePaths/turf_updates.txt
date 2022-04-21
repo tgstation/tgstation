@@ -1,0 +1,66 @@
+#comment This updates primarily station paths to new ones
+
+/area/maintenance : /area/station/maintenance
+/area/maintenance/department/chapel : /area/station/maintenance/department/chapel
+/area/maintenance/department/chapel/monastery : /area/station/maintenance/department/chapel/monastery
+/area/maintenance/department/crew_quarters/bar : /area/station/maintenance/department/crew_quarters/bar
+/area/maintenance/department/crew_quarters/dorms : /area/station/maintenance/department/crew_quarters/dorms
+/area/maintenance/department/eva : /area/station/maintenance/department/eva
+/area/maintenance/department/electrical : /area/station/maintenance/department/electrical
+/area/maintenance/department/engine/atmos : /area/station/maintenance/department/engine/atmos
+/area/maintenance/department/security : /area/station/maintenance/department/security
+/area/maintenance/department/security/upper : /area/station/maintenance/department/security/upper
+/area/maintenance/department/security/brig : /area/station/maintenance/department/security/brig
+/area/maintenance/department/medical : /area/station/maintenance/department/medical
+/area/maintenance/department/medical/central : /area/station/maintenance/department/medical/central
+/area/maintenance/department/medical/morgue : /area/station/maintenance/department/medical/morgue
+/area/maintenance/department/science : /area/station/maintenance/department/science
+/area/maintenance/department/science/central : /area/station/maintenance/department/science/central
+/area/maintenance/department/cargo : /area/station/maintenance/department/cargo
+/area/maintenance/department/bridge : /area/station/maintenance/department/bridge
+/area/maintenance/department/engine : /area/station/maintenance/department/engine
+/area/maintenance/department/science/xenobiology : /area/station/maintenance/department/science/xenobiology
+
+/area/maintenance/aft : /area/station/maintenance/aft
+/area/maintenance/aft/upper : /area/station/maintenance/aft/upper
+/area/maintenance/aft/greater : /area/station/maintenance/aft/greater
+/area/maintenance/aft/lesser : /area/station/maintenance/aft/lesser
+/area/maintenance/central : /area/station/maintenance/central
+/area/maintenance/central/greater : /area/station/maintenance/central/greater
+/area/maintenance/central/lesser : /area/station/maintenance/central/lesser
+/area/maintenance/fore : /area/station/maintenance/fore
+/area/maintenance/fore/upper : /area/station/maintenance/fore/upper
+/area/maintenance/fore/greater : /area/station/maintenance/fore/greater
+/area/maintenance/fore/lesser : /area/station/maintenance/fore/lesser
+/area/maintenance/starboard : /area/station/maintenance/starboard
+/area/maintenance/starboard/upper : /area/station/maintenance/starboard/upper
+/area/maintenance/starboard/central : /area/station/maintenance/starboard/central
+/area/maintenance/starboard/greater : /area/station/maintenance/starboard/greater
+/area/maintenance/starboard/lesser : /area/station/maintenance/starboard/lesser
+/area/maintenance/starboard/aft : /area/station/maintenance/starboard/aft
+/area/maintenance/starboard/fore : /area/station/maintenance/starboard/fore
+/area/maintenance/port : /area/station/maintenance/port
+/area/maintenance/port/central : /area/station/maintenance/port/central
+/area/maintenance/port/greater : /area/station/maintenance/port/greater
+/area/maintenance/port/lesser : /area/station/maintenance/port/lesser
+/area/maintenance/port/aft : /area/station/maintenance/port/aft
+/area/maintenance/port/fore : /area/station/maintenance/port/fore
+/area/maintenance/tram : /area/station/maintenance/tram
+/area/maintenance/tram/left : /area/station/maintenance/tram/left
+/area/maintenance/tram/mid : /area/station/maintenance/tram/mid
+/area/maintenance/tram/right : /area/station/maintenance/tram/right
+
+/area/maintenance/disposal : /area/station/maintenance/disposal
+/area/maintenance/disposal/incinerator : /area/station/maintenance/disposal/incinerator
+/area/maintenance/space_hut : /area/station/maintenance/space_hut
+/area/maintenance/space_hut/cabin : /area/station/maintenance/space_hut/cabin
+/area/maintenance/space_hut/plasmaman : /area/station/maintenance/space_hut/plasmaman
+/area/maintenance/space_hut/observatory : /area/station/maintenance/space_hut/observatory
+
+/area/maintenance/radshelter : /area/station/maintenance/radshelter
+/area/maintenance/radshelter/medical : /area/station/maintenance/radshelter/medical
+/area/maintenance/radshelter/sec : /area/station/maintenance/radshelter/sec
+/area/maintenance/radshelter/service : /area/station/maintenance/radshelter/service
+/area/maintenance/radshelter/civil : /area/station/maintenance/radshelter/civil
+/area/maintenance/radshelter/sci : /area/station/maintenance/radshelter/sci
+/area/maintenance/radshelter/cargo : /area/station/maintenance/radshelter/cargo

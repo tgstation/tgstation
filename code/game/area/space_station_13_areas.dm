@@ -60,6 +60,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/asteroid
 	name = "\improper Asteroid"
+	icon = 'icons/turf/areas_centcomm.dmi'
 	icon_state = "asteroid"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
@@ -164,9 +165,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper AI Sat Ext"
 	icon_state = "ai_sat_west"
 
+// Station areas and shuttles
+
+/area/station/
+	name = "Station Areas"
+	icon = 'icons/turf/areas_station.dmi'
+	icon_state = "spacehut"
+
 //Maintenance
 
-/area/maintenance
+/area/station/maintenance
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
@@ -175,238 +183,239 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Maintenance - Departmental
 
-/area/maintenance/department/chapel
+/area/station/maintenance/department/chapel
 	name = "Chapel Maintenance"
 	icon_state = "maint_chapel"
 
-/area/maintenance/department/chapel/monastery
+/area/station/maintenance/department/chapel/monastery
 	name = "Monastery Maintenance"
 	icon_state = "maint_monastery"
 
-/area/maintenance/department/crew_quarters/bar
+/area/station/maintenance/department/crew_quarters/bar
 	name = "Bar Maintenance"
 	icon_state = "maint_bar"
 	sound_environment = SOUND_AREA_WOODFLOOR
 
-/area/maintenance/department/crew_quarters/dorms
+/area/station/maintenance/department/crew_quarters/dorms
 	name = "Dormitory Maintenance"
 	icon_state = "maint_dorms"
 
-/area/maintenance/department/eva
+/area/station/maintenance/department/eva
 	name = "EVA Maintenance"
 	icon_state = "maint_eva"
 
-/area/maintenance/department/electrical
+/area/station/maintenance/department/electrical
 	name = "Electrical Maintenance"
 	icon_state = "maint_electrical"
 
-/area/maintenance/department/engine/atmos
+/area/station/maintenance/department/engine/atmos
 	name = "Atmospherics Maintenance"
 	icon_state = "maint_atmos"
 
-/area/maintenance/department/security
+/area/station/maintenance/department/security
 	name = "Security Maintenance"
 	icon_state = "maint_sec"
 
-/area/maintenance/department/security/upper
+/area/station/maintenance/department/security/upper
 	name = "Upper Security Maintenance"
 
-/area/maintenance/department/security/brig
+/area/station/maintenance/department/security/brig
 	name = "Brig Maintenance"
 	icon_state = "maint_brig"
 
-/area/maintenance/department/medical
+/area/station/maintenance/department/medical
 	name = "Medbay Maintenance"
 	icon_state = "medbay_maint"
 
-/area/maintenance/department/medical/central
+/area/station/maintenance/department/medical/central
 	name = "Central Medbay Maintenance"
 	icon_state = "medbay_maint_central"
 
-/area/maintenance/department/medical/morgue
+/area/station/maintenance/department/medical/morgue
 	name = "Morgue Maintenance"
 	icon_state = "morgue_maint"
 
-/area/maintenance/department/science
+/area/station/maintenance/department/science
 	name = "Science Maintenance"
 	icon_state = "maint_sci"
 
-/area/maintenance/department/science/central
+/area/station/maintenance/department/science/central
 	name = "Central Science Maintenance"
 	icon_state = "maint_sci_central"
 
-/area/maintenance/department/cargo
+/area/station/maintenance/department/cargo
 	name = "Cargo Maintenance"
 	icon_state = "maint_cargo"
 
-/area/maintenance/department/bridge
+/area/station/maintenance/department/bridge
 	name = "Bridge Maintenance"
 	icon_state = "maint_bridge"
 
-/area/maintenance/department/engine
+/area/station/maintenance/department/engine
 	name = "Engineering Maintenance"
 	icon_state = "maint_engi"
 
-/area/maintenance/department/science/xenobiology
+/area/station/maintenance/department/science/xenobiology
 	name = "Xenobiology Maintenance"
 	icon_state = "xenomaint"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
 
 //Maintenance - Generic Tunnels
 
-/area/maintenance/aft
+/area/station/maintenance/aft
 	name = "Aft Maintenance"
 	icon_state = "aftmaint"
 
-/area/maintenance/aft/upper
+/area/station/maintenance/aft/upper
 	name = "Upper Aft Maintenance"
 	icon_state = "upperaftmaint"
 
-/area/maintenance/aft/greater //use greater variants of area definitions for when the station has two different sections of maintenance on the same z-level. Can stand alone without "lesser". This one means that this goes more fore/north than the "lesser" maintenance area.
+/area/station/maintenance/aft/greater //use greater variants of area definitions for when the station has two different sections of maintenance on the same z-level. Can stand alone without "lesser". This one means that this goes more fore/north than the "lesser" maintenance area.
 	name = "Greater Aft Maintenance"
 	icon_state = "greateraftmaint"
 
-/area/maintenance/aft/lesser //use lesser variants of area definitions for when the station has two different sections of maintenance on the same z-level in conjunction with "greater" (just because it follows better). This one means that this goes more aft/south than the "greater" maintenance area.
+/area/station/maintenance/aft/lesser //use lesser variants of area definitions for when the station has two different sections of maintenance on the same z-level in conjunction with "greater" (just because it follows better). This one means that this goes more aft/south than the "greater" maintenance area.
 	name = "Lesser Aft Maintenance"
 	icon_state = "lesseraftmaint"
 
-/area/maintenance/central
+/area/station/maintenance/central
 	name = "Central Maintenance"
 	icon_state = "centralmaint"
 
-/area/maintenance/central/greater
+/area/station/maintenance/central/greater
 	name = "Greater Central Maintenance"
 	icon_state = "greatercentralmaint"
 
-/area/maintenance/central/lesser
+/area/station/maintenance/central/lesser
 	name = "Lesser Central Maintenance"
 	icon_state = "lessercentralmaint"
 
-/area/maintenance/fore
+/area/station/maintenance/fore
 	name = "Fore Maintenance"
 	icon_state = "foremaint"
 
-/area/maintenance/fore/upper
+/area/station/maintenance/fore/upper
 	name = "Upper Fore Maintenance"
 	icon_state = "upperforemaint"
 
-/area/maintenance/fore/greater
+/area/station/maintenance/fore/greater
 	name = "Greater Fore Maintenance"
 	icon_state = "greaterforemaint"
 
-/area/maintenance/fore/lesser
+/area/station/maintenance/fore/lesser
 	name = "Lesser Fore Maintenance"
 	icon_state = "lesserforemaint"
 
-/area/maintenance/starboard
+/area/station/maintenance/starboard
 	name = "Starboard Maintenance"
 	icon_state = "starboardmaint"
 
-/area/maintenance/starboard/upper
+/area/station/maintenance/starboard/upper
 	name = "Upper Starboard Maintenance"
 	icon_state = "upperstarboardmaint"
 
-/area/maintenance/starboard/central
+/area/station/maintenance/starboard/central
 	name = "Central Starboard Maintenance"
 	icon_state = "centralstarboardmaint"
 
-/area/maintenance/starboard/greater
+/area/station/maintenance/starboard/greater
 	name = "Greater Starboard Maintenance"
 	icon_state = "greaterstarboardmaint"
 
-/area/maintenance/starboard/lesser
+/area/station/maintenance/starboard/lesser
 	name = "Lesser Starboard Maintenance"
 	icon_state = "lesserstarboardmaint"
 
-/area/maintenance/starboard/aft
+/area/station/maintenance/starboard/aft
 	name = "Aft Starboard Maintenance"
 	icon_state = "asmaint"
 
-/area/maintenance/starboard/fore
+/area/station/maintenance/starboard/fore
 	name = "Fore Starboard Maintenance"
 	icon_state = "fsmaint"
 
-/area/maintenance/port
+/area/station/maintenance/port
 	name = "Port Maintenance"
 	icon_state = "portmaint"
 
-/area/maintenance/port/central
+/area/station/maintenance/port/central
 	name = "Central Port Maintenance"
 	icon_state = "centralportmaint"
 
-/area/maintenance/port/greater
+/area/station/maintenance/port/greater
 	name = "Greater Port Maintenance"
 	icon_state = "greaterportmaint"
 
-/area/maintenance/port/lesser
+/area/station/maintenance/port/lesser
 	name = "Lesser Port Maintenance"
 	icon_state = "lesserportmaint"
 
-/area/maintenance/port/aft
+/area/station/maintenance/port/aft
 	name = "Aft Port Maintenance"
 	icon_state = "apmaint"
 
-/area/maintenance/port/fore
+/area/station/maintenance/port/fore
 	name = "Fore Port Maintenance"
 	icon_state = "fpmaint"
 
-/area/maintenance/tram
+/area/station/maintenance/tram
 	name = "Primary Tram Maintenance"
 
-/area/maintenance/tram/left
+/area/station/maintenance/tram/left
 	name = "\improper Port Tram Underpass"
 	icon_state = "mainttramL"
 
-/area/maintenance/tram/mid
+/area/station/maintenance/tram/mid
 	name = "\improper Central Tram Underpass"
 	icon_state = "mainttramM"
 
-/area/maintenance/tram/right
+/area/station/maintenance/tram/right
 	name = "\improper Starboard Tram Underpass"
 	icon_state = "mainttramR"
 
 //Maintenance - Discrete Areas
-/area/maintenance/disposal
+/area/station/maintenance/disposal
 	name = "Waste Disposal"
 	icon_state = "disposal"
-/area/maintenance/disposal/incinerator
+
+/area/station/maintenance/disposal/incinerator
 	name = "\improper Incinerator"
 	icon_state = "incinerator"
 
-/area/maintenance/space_hut
+/area/station/maintenance/space_hut
 	name = "\improper Space Hut"
 	icon_state = "spacehut"
 
-/area/maintenance/space_hut/cabin
+/area/station/maintenance/space_hut/cabin
 	name = "Abandoned Cabin"
 
-/area/maintenance/space_hut/plasmaman
+/area/station/maintenance/space_hut/plasmaman
 	name = "\improper Abandoned Plasmaman Friendly Startup"
 
-/area/maintenance/space_hut/observatory
+/area/station/maintenance/space_hut/observatory
 	name = "\improper Space Observatory"
 
 //Radation storm shelter
-/area/maintenance/radshelter
+/area/station/maintenance/radshelter
 	name = "\improper Radstorm Shelter"
 	icon_state = "radstorm_shelter"
 
-/area/maintenance/radshelter/medical
+/area/station/maintenance/radshelter/medical
 	name = "\improper Medical Radstorm Shelter"
 
-/area/maintenance/radshelter/sec
+/area/station/maintenance/radshelter/sec
 	name = "\improper Security Radstorm Shelter"
 
-/area/maintenance/radshelter/service
+/area/station/maintenance/radshelter/service
 	name = "\improper Service Radstorm Shelter"
 
-/area/maintenance/radshelter/civil
+/area/station/maintenance/radshelter/civil
 	name = "\improper Civilian Radstorm Shelter"
 
-/area/maintenance/radshelter/sci
+/area/station/maintenance/radshelter/sci
 	name = "\improper Science Radstorm Shelter"
 
-/area/maintenance/radshelter/cargo
+/area/station/maintenance/radshelter/cargo
 	name = "\improper Cargo Radstorm Shelter"
 
 
@@ -1053,31 +1062,31 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Solar Maint
 
-/area/maintenance/solars
+/area/station/maintenance/solars
 	name = "Solar Maintenance"
 	icon_state = "yellow"
 
-/area/maintenance/solars/port
+/area/station/maintenance/solars/port
 	name = "Port Solar Maintenance"
 	icon_state = "SolarcontrolP"
 
-/area/maintenance/solars/port/aft
+/area/station/maintenance/solars/port/aft
 	name = "Port Quarter Solar Maintenance"
 	icon_state = "SolarcontrolAP"
 
-/area/maintenance/solars/port/fore
+/area/station/maintenance/solars/port/fore
 	name = "Port Bow Solar Maintenance"
 	icon_state = "SolarcontrolFP"
 
-/area/maintenance/solars/starboard
+/area/station/maintenance/solars/starboard
 	name = "Starboard Solar Maintenance"
 	icon_state = "SolarcontrolS"
 
-/area/maintenance/solars/starboard/aft
+/area/station/maintenance/solars/starboard/aft
 	name = "Starboard Quarter Solar Maintenance"
 	icon_state = "SolarcontrolAS"
 
-/area/maintenance/solars/starboard/fore
+/area/station/maintenance/solars/starboard/fore
 	name = "Starboard Bow Solar Maintenance"
 	icon_state = "SolarcontrolFS"
 
@@ -1573,15 +1582,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
 //External Hull Access
-/area/maintenance/external
+/area/station/maintenance/external
 	name = "\improper External Hull Access"
 	icon_state = "amaint"
 
-/area/maintenance/external/aft
+/area/station/maintenance/external/aft
 	name = "\improper Aft External Hull Access"
 
-/area/maintenance/external/port
+/area/station/maintenance/external/port
 	name = "\improper Port External Hull Access"
 
-/area/maintenance/external/port/bow
+/area/station/maintenance/external/port/bow
 	name = "\improper Port Bow External Hull Access"
