@@ -44,7 +44,7 @@
 
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove pen"
 
-	. = CONTEXTUAL_SCREENTIP_SET
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()

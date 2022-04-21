@@ -289,7 +289,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
 	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Job Disk"
 
-	. = CONTEXTUAL_SCREENTIP_SET
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/modular_computer/update_icon_state()
 	if(!bypass_state)
