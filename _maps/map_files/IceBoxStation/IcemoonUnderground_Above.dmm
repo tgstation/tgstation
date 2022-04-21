@@ -8582,7 +8582,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "yx" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{

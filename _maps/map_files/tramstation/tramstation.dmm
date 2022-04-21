@@ -6285,7 +6285,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	name = "euthanization chamber freezer"
 	},
 /turf/open/floor/iron/dark,
@@ -34748,7 +34748,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "lcW" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/heater{
+/obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -37182,7 +37182,7 @@
 	},
 /area/science/breakroom)
 "lUM" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -42378,7 +42378,7 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
 "nTO" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -64118,7 +64118,7 @@
 /turf/open/openspace,
 /area/hallway/primary/tram/left)
 "vUL" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	piping_layer = 2
 	},
 /turf/open/floor/iron/white,
@@ -68649,7 +68649,7 @@
 /turf/open/openspace,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "xyF" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8;
 	initialize_directions = 8
 	},
@@ -69993,7 +69993,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	name = "euthanization chamber freezer"
 	},
 /obj/structure/cable,

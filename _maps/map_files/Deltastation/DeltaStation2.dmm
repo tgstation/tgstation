@@ -6044,7 +6044,7 @@
 /area/ai_monitored/security/armory)
 "bzJ" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -23330,7 +23330,7 @@
 	dir = 1;
 	pixel_y = 23
 	},
-/obj/machinery/atmospherics/components/binary/thermomachine/heater{
+/obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -30950,7 +30950,7 @@
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
 "gQZ" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -37848,7 +37848,7 @@
 /turf/open/floor/iron/dark,
 /area/security/detectives_office)
 "iPx" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
@@ -41031,7 +41031,7 @@
 	network = list("ss13","tcomms")
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -42586,7 +42586,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "kkJ" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -46531,7 +46531,7 @@
 /area/security/checkpoint/customs/fore)
 "lvO" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/components/binary/thermomachine/heater/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -53584,7 +53584,7 @@
 /turf/open/floor/iron,
 /area/security/execution/transfer)
 "nAE" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	piping_layer = 2
 	},
 /turf/open/floor/iron/dark,
@@ -55411,7 +55411,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/atmospherics/components/binary/thermomachine/heater/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/corner,
@@ -63010,7 +63010,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "qot" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -72858,7 +72858,7 @@
 /area/command/heads_quarters/hop)
 "tfT" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -74619,7 +74619,7 @@
 /area/command/teleporter)
 "tGV" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /obj/machinery/light_switch/directional/east{
 	pixel_x = 21
 	},

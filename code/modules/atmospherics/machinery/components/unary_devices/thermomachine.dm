@@ -1,6 +1,6 @@
 #define THERMOMACHINE_POWER_CONVERSION 0.01
 
-/obj/machinery/atmospherics/components/binary/thermomachine
+/obj/machinery/atmospherics/components/unary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "thermo_base"
 
@@ -33,17 +33,17 @@
 	var/base_cooling = 170
 	var/color_index = 1
 
-/obj/machinery/atmospherics/components/binary/thermomachine/Initialize(mapload)
+/obj/machinery/atmospherics/components/unary/thermomachine/Initialize(mapload)
 	. = ..()
 	RefreshParts()
 	update_appearance()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/is_connectable()
+/obj/machinery/atmospherics/components/unary/thermomachine/is_connectable()
 	if(!anchored || panel_open)
 		return FALSE
 	. = ..()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/on_construction(obj_color, set_layer)
+/obj/machinery/atmospherics/components/unary/thermomachine/on_construction(obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
 	if(board)
 		piping_layer = board.pipe_layer
@@ -54,7 +54,7 @@
 		return
 	return..()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/RefreshParts()
+/obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
 	var/calculated_bin_rating
 	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
@@ -68,7 +68,7 @@
 	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
 	max_temperature = T20C + (base_heating * calculated_laser_rating) //573.15K with T1 stock parts
 
-/obj/machinery/atmospherics/components/binary/thermomachine/update_icon_state()
+/obj/machinery/atmospherics/components/unary/thermomachine/update_icon_state()
 	var/colors_to_use = ""
 	switch(target_temperature)
 		if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
@@ -98,14 +98,14 @@
 	icon_state = "thermo_base"
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/update_overlays()
+/obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
 	if(!initial(icon))
 		return
 	var/mutable_appearance/thermo_overlay = new(initial(icon))
 	. += get_pipe_image(thermo_overlay, "pipe", dir, COLOR_LIME, piping_layer)
 
-/obj/machinery/atmospherics/components/binary/thermomachine/examine(mob/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..()
 	. += span_notice("With the panel open:")
 	. += span_notice("-use a wrench with left-click to rotate [src] and right-click to unanchor it.")
@@ -116,7 +116,7 @@
 		. += span_notice("Heat capacity at <b>[heat_capacity] Joules per Kelvin</b>.")
 		. += span_notice("Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.")
 
-/obj/machinery/atmospherics/components/binary/thermomachine/AltClick(mob/living/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/AltClick(mob/living/user)
 	if(!can_interact(user))
 		return
 	target_temperature = T20C
@@ -130,7 +130,7 @@
  * C2 and T2 is for the heat capacity of the freezer and temperature that we desire respectively.
  * T3 is the temperature we get
  */
-/obj/machinery/atmospherics/components/binary/thermomachine/process_atmos()
+/obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	if(!on)
 		return
 
@@ -165,7 +165,7 @@
 	use_power(power_usage)
 	update_parents()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
 		to_chat("You can't open [src] while it's on!")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -176,13 +176,13 @@
 		change_pipe_connection(panel_open)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/atmospherics/components/binary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
+/obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
 	return default_change_direction_wrench(user, tool)
 
-/obj/machinery/atmospherics/components/binary/thermomachine/crowbar_act(mob/living/user, obj/item/tool)
+/obj/machinery/atmospherics/components/unary/thermomachine/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/atmospherics/components/binary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
+/obj/machinery/atmospherics/components/unary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!panel_open)
 		return
 	piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
@@ -190,20 +190,20 @@
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/atmospherics/components/binary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
+/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
 	if(!..())
 		return FALSE
 	set_init_directions()
 	update_appearance()
 	return TRUE
 
-/obj/machinery/atmospherics/components/binary/thermomachine/proc/change_pipe_connection(disconnect)
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/change_pipe_connection(disconnect)
 	if(disconnect)
 		disconnect_pipes()
 		return
 	connect_pipes()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/proc/connect_pipes()
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/connect_pipes()
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	atmos_init()
 	node1 = nodes[1]
@@ -212,7 +212,7 @@
 		node1.add_member(src)
 	SSair.add_to_rebuild_queue(src)
 
-/obj/machinery/atmospherics/components/binary/thermomachine/proc/disconnect_pipes()
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/disconnect_pipes()
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	if(node1)
 		if(src in node1.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
@@ -221,14 +221,14 @@
 	if(parents[1])
 		nullify_pipenet(parents[1])
 
-/obj/machinery/atmospherics/components/binary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/atmospherics/components/unary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open || check_pipe_on_turf())
 		return
 	if(default_unfasten_wrench(user, tool))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return
 
-/obj/machinery/atmospherics/components/binary/thermomachine/multitool_act_secondary(mob/living/user, obj/item/tool)
+/obj/machinery/atmospherics/components/unary/thermomachine/multitool_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		return
 	color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
@@ -237,7 +237,7 @@
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/atmospherics/components/binary/thermomachine/proc/check_pipe_on_turf()
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/check_pipe_on_turf()
 	for(var/obj/machinery/atmospherics/device in get_turf(src))
 		if(device == src)
 			continue
@@ -246,7 +246,7 @@
 			return TRUE
 	return FALSE
 
-/obj/machinery/atmospherics/components/binary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
+/obj/machinery/atmospherics/components/unary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!istype(multitool))
 		return
 	if(panel_open && !anchored)
@@ -256,12 +256,12 @@
 
 	qdel(src)
 
-/obj/machinery/atmospherics/components/binary/thermomachine/ui_status(mob/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user)
 	if(interactive)
 		return ..()
 	return UI_CLOSE
 
-/obj/machinery/atmospherics/components/binary/thermomachine/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, datum/tgui/ui)
 	if(panel_open)
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -269,7 +269,7 @@
 		ui = new(user, src, "ThermoMachine", name)
 		ui.open()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/ui_data(mob/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/ui_data(mob/user)
 	var/list/data = list()
 	data["on"] = on
 
@@ -286,7 +286,7 @@
 	data["hacked"] = hacked
 	return data
 
-/obj/machinery/atmospherics/components/binary/thermomachine/ui_act(action, params)
+/obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -316,7 +316,7 @@
 
 	update_appearance()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/CtrlClick(mob/living/user)
+/obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
 	if(!panel_open)
 		if(!can_interact(user))
 			return
@@ -326,26 +326,28 @@
 		return
 	. = ..()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
 	icon_state = "thermo_base_1"
 
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/Initialize(mapload)
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
 	if(target_temperature == initial(target_temperature))
 		target_temperature = min_temperature
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
 	name = "Cold room temperature control unit"
 	icon_state = "thermo_base_1"
 	greyscale_colors = COLOR_CYAN
 
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom/Initialize(mapload)
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)
 	. = ..()
 	target_temperature = COLD_ROOM_TEMP
 
-/obj/machinery/atmospherics/components/binary/thermomachine/heater
-/obj/machinery/atmospherics/components/binary/thermomachine/heater/on
+/obj/machinery/atmospherics/components/unary/thermomachine/heater
+
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE
 	icon_state = "thermo_base_1"
 

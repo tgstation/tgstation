@@ -10903,7 +10903,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "elL" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/heater/on,
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/on,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/engineering/atmos/pumproom)
@@ -22906,7 +22906,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "kdq" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/heater,
+/obj/machinery/atmospherics/components/unary/thermomachine/heater,
 /obj/structure/sign/poster/official/science{
 	pixel_y = 32
 	},
@@ -27334,7 +27334,7 @@
 /turf/open/floor/iron/smooth_half,
 /area/security/brig/upper)
 "mxZ" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -28857,7 +28857,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "nns" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30977,7 +30977,7 @@
 /turf/open/floor/grass,
 /area/maintenance/starboard/fore)
 "ont" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -34254,7 +34254,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/aft)
 "pSG" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on/coldroom{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom{
 	dir = 1
 	},
 /turf/open/floor/iron/freezer,
@@ -39156,7 +39156,7 @@
 	},
 /area/engineering/engine_smes)
 "smd" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -42848,7 +42848,7 @@
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "udj" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/heater{
+/obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -43598,7 +43598,7 @@
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "uvb" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/heater{
+/obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -45198,7 +45198,7 @@
 /area/science/xenobiology)
 "vjl" = (
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
