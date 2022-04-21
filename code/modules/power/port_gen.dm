@@ -105,6 +105,8 @@
 /obj/machinery/power/port_gen/pacman/on_construction()
 	var/obj/item/circuitboard/machine/pacman/our_board = circuit
 	if(our_board.high_production_profile)
+		icon_state = "portgen1_0"
+		base_icon = "portgen1"
 		max_sheets = 5
 		time_per_sheet = 20
 		power_gen = 10000
