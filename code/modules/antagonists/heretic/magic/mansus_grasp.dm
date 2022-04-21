@@ -3,7 +3,7 @@
 	desc = "A touch spell that lets you channel the power of the Old Gods through your grip."
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 	school = SCHOOL_EVOCATION
-	charge_max = 100
+	charge_max = 10 SECONDS
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mansus_grasp"
@@ -79,7 +79,7 @@
 	if(SEND_SIGNAL(heretic, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, hit) & COMPONENT_BLOCK_CHARGE_USE)
 		return FALSE
 
-	hit.adjustBruteLoss(10)
+	hit.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	if(iscarbon(hit))
 		var/mob/living/carbon/carbon_hit = hit
 		carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
