@@ -1,5 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - balance: "The Mecha Extinguisher equipment is now classified as utility."
-  - balance: "The Mecha Extinguisher now puts out fires in a 3x3 square (centered on the mech). However, it also only has five uses now. Save it for emergencies!"

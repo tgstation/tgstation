@@ -1,4 +1,0 @@
-author: "shizcalev"
-delete-after: True
-changes: 
-  - bugfix: "re-fixed patrolling bots not properly hunting targets."
