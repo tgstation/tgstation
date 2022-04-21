@@ -503,7 +503,7 @@
 		if(time_until_created <= 0)
 			create_blade()
 		else
-			addtimer(CALLBACK(src, .proc/create_blade), time_until_created, TIMER_DELETE_ME)
+			addtimer(CALLBACK(src, .proc/create_blade), time_until_created)
 
 	return TRUE
 
@@ -515,6 +515,9 @@
 
 /// Creates a floating blade, adds it to our blade list, and makes it orbit our owner.
 /datum/status_effect/protective_blades/proc/create_blade()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
 	var/obj/effect/floating_blade/blade = new(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
@@ -559,7 +562,7 @@
 	to_remove.stop_orbit(owner.orbiters)
 	blades -= to_remove
 
-	if(!length(blades) && delete_on_blades_gone)
+	if(!length(blades) && !QDELETED(src) && delete_on_blades_gone)
 		qdel(src)
 
 	return TRUE

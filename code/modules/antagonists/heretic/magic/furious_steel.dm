@@ -43,8 +43,8 @@
 	. = ..()
 	QDEL_NULL(blade_effect)
 
-/obj/effect/proc_holder/spell/aimed/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(caller.Adjacent(target)) // Let the caster prioritize attacks over blade casts
+/obj/effect/proc_holder/spell/aimed/furious_steel/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(get_dist(caller, target) <= 1) // Let the caster prioritize melee attacks over blade casts
 		return FALSE
 	return ..()
 
