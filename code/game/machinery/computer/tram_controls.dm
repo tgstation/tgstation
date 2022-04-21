@@ -7,7 +7,7 @@
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	light_color = LIGHT_COLOR_GREEN
+	light_range = 0 //we dont want to spam SSlighting with source updates every movement
 
 	///Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
