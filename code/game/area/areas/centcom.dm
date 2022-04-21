@@ -201,7 +201,7 @@
 	static_lighting = TRUE
 
 /area/syndicate_mothership/expansion_bombthreat
-	name = "Syndicate Ordinance Laboratory"
+	name = "Syndicate Ordnance Laboratory"
 	icon_state = "syndie-elite"
 	static_lighting = TRUE
 	ambience_index = AMBIENCE_ENGI
