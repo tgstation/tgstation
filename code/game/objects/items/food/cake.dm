@@ -41,7 +41,7 @@
 	name = "carrot cake"
 	desc = "A favorite desert of a certain wascally wabbit. Not a lie."
 	icon_state = "carrotcake"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/medicine/oculine = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
 	foodtypes = GRAIN | DAIRY | VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_CHEAP
@@ -54,7 +54,7 @@
 	name = "carrot cake slice"
 	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
 	icon_state = "carrotcake_slice"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/medicine/oculine = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
 	foodtypes = GRAIN | DAIRY | VEGETABLES | SUGAR
 
@@ -436,7 +436,7 @@
 	name = "spaceman's cake"
 	desc = "A spaceman's trumpet frosted cake."
 	icon_state = "trumpetcake"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/medicine/polypyr = 15, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/berryjuice = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/berryjuice = 5)
 	tastes = list("cake" = 4, "violets" = 2, "jam" = 2)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
@@ -447,7 +447,7 @@
 	name = "spaceman's cake"
 	desc = "A spaceman's trumpet frosted cake."
 	icon_state = "trumpetcakeslice"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/medicine/polypyr = 3, /datum/reagent/consumable/cream = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/berryjuice = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/cream = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/berryjuice = 1)
 	tastes = list("cake" = 4, "violets" = 2, "jam" = 2)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 

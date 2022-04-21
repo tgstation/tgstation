@@ -384,7 +384,7 @@
 		return
 
 	var/list/all_contents = traitor_mob.get_all_contents()
-	var/obj/item/pda/PDA = locate() in all_contents
+	var/obj/item/modular_computer/tablet/pda/PDA = locate() in all_contents
 	var/obj/item/radio/R = locate() in all_contents
 	var/obj/item/pen/P
 
@@ -437,7 +437,7 @@
 	if(uplink_loc == R)
 		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features."
 	else if(uplink_loc == PDA)
-		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ringtone select to unlock its hidden features."
+		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
 	else if(uplink_loc == P)
 		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features."
 	new_uplink.unlock_text = unlock_text
