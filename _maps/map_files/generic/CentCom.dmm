@@ -295,6 +295,16 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/closed/indestructible/syndicate,
 /area/syndicate_mothership/expansion_bioterrorism)
+"aY" = (
+/obj/docking_port/stationary{
+	dwidth = 25;
+	height = 50;
+	id = "emergency_syndicate";
+	name = "Syndicate Auxiliary Shuttle Dock";
+	width = 50
+	},
+/turf/open/misc/asteroid/snow/airless,
+/area/syndicate_mothership)
 "aZ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -420,9 +430,9 @@
 "bq" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	chamber_id = "nukiebase";
+	desc = "Has a valve and pump attached to it. Slightly more menacing than Nanotrasen's standard.";
 	dir = 1;
-	name = "syndicate air injector";
-	desc = "Has a valve and pump attached to it. Slightly more menacing than Nanotrasen's standard."
+	name = "syndicate air injector"
 	},
 /turf/open/floor/engine/vacuum,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -1308,13 +1318,13 @@
 	},
 /obj/structure/rack,
 /obj/item/analyzer{
-	pixel_y = 1;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 1
 	},
 /obj/item/pipe_dispenser{
-	pixel_y = -3;
 	desc = "A device used to rapidly pipe things. This one has a curious abundance of warning labels.";
-	name = "Syndicate Rapid Pipe Dispenser (RPD)"
+	name = "Syndicate Rapid Pipe Dispenser (RPD)";
+	pixel_y = -3
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -11573,8 +11583,8 @@
 "HO" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/portable_atmospherics/pump{
-	name = "Lil Pump";
-	desc = "A betrayer to pump-kind."
+	desc = "A betrayer to pump-kind.";
+	name = "Lil Pump"
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -16105,10 +16115,10 @@
 /area/syndicate_mothership/control)
 "UK" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	dir = 1;
 	atmos_chambers = list("nukiebase" = "Burn Chamber");
-	name = "Ordnance Chamber Monitor";
-	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber."
+	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
+	dir = 1;
+	name = "Ordnance Chamber Monitor"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/cold/directional/west{
@@ -34981,7 +34991,7 @@ Ff
 Ff
 Ff
 Ff
-Ff
+aY
 Zb
 ll
 ll
