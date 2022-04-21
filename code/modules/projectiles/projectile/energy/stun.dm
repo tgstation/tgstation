@@ -4,7 +4,7 @@
 	color = "#FFFF00"
 	nodamage = FALSE
 	paralyze = 100
-	stutter = 5
+	stutter = 10 SECONDS
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7

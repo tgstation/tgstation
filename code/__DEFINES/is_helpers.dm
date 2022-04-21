@@ -206,6 +206,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isclothing(A) (istype(A, /obj/item/clothing))
 
+#define ispickedupmob(A) (istype(A, /obj/item/clothing/head/mob_holder)) // Checks if clothing item is actually a held mob
+
 #define iscash(A) (istype(A, /obj/item/coin) || istype(A, /obj/item/stack/spacecash) || istype(A, /obj/item/holochip))
 
 #define isbodypart(A) (istype(A, /obj/item/bodypart))
@@ -213,6 +215,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isprojectile(A) (istype(A, /obj/projectile))
 
 #define isgun(A) (istype(A, /obj/item/gun))
+
+#define isinstrument(A) (istype(A, /obj/item/instrument) || istype(A, /obj/structure/musician))
 
 #define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
 

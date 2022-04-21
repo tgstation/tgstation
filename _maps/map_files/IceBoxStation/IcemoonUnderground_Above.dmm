@@ -978,14 +978,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
-"dc" = (
-/obj/structure/table,
-/obj/item/food/pie/cream,
-/obj/machinery/newscaster/directional/north,
-/obj/machinery/light/directional/north,
-/obj/item/storage/fancy/donut_box,
-/turf/open/floor/iron/cafeteria,
-/area/service/kitchen)
 "dd" = (
 /obj/structure/chair{
 	dir = 1
@@ -1022,6 +1014,16 @@
 	},
 /turf/open/floor/grass,
 /area/medical/virology)
+"dh" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/entertainment/gambling{
+	pixel_y = 9
+	},
+/obj/item/storage/fancy/donut_box{
+	pixel_x = -6
+	},
+/turf/open/floor/wood,
+/area/hallway/secondary/service)
 "di" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law,
@@ -1336,6 +1338,20 @@
 	},
 /turf/open/floor/iron/white,
 /area/security/prison)
+"ec" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Chapel Office";
+	req_access_txt = "22"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/landmark/navigate_destination{
+	location = "Chapel Office"
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel/office)
 "ed" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -1895,15 +1911,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
-"fG" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Sec - Permabrig Exercise";
-	network = ssssssssssssss
-	},
-/turf/open/floor/iron/dark/side{
-	dir = 4
-	},
-/area/security/prison)
 "fH" = (
 /obj/structure/table,
 /obj/item/folder,
@@ -3208,6 +3215,12 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
+"iV" = (
+/obj/structure/table,
+/obj/item/radio/intercom/directional/east,
+/obj/effect/turf_decal/tile/green/full,
+/turf/open/floor/iron/dark/smooth_large,
+/area/medical/virology)
 "iW" = (
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
@@ -4867,19 +4880,6 @@
 "nY" = (
 /turf/open/floor/plating,
 /area/medical/morgue)
-"nZ" = (
-/obj/structure/table/wood,
-/obj/item/taperecorder,
-/obj/item/cartridge/lawyer,
-/obj/machinery/computer/security/telescreen/prison{
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/service/lawoffice)
 "oa" = (
 /obj/effect/turf_decal/siding/brown/corner{
 	dir = 4
@@ -5143,23 +5143,6 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/stone,
 /area/commons/lounge)
-"oN" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 5
-	},
-/obj/effect/turf_decal/tile/dark{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/dark{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/dark,
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/turf/open/floor/iron/white/corner{
-	dir = 8
-	},
-/area/mine/living_quarters)
 "oP" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
@@ -7057,6 +7040,22 @@
 /obj/effect/landmark/start/cook,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"tV" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/iron/white/corner{
+	dir = 8
+	},
+/area/mine/living_quarters)
 "tW" = (
 /turf/closed/wall/r_wall,
 /area/security/execution/education)
@@ -12455,13 +12454,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/smooth,
 /area/security/prison)
-"Jn" = (
-/obj/structure/table,
-/obj/item/radio/intercom/directional/east,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
-/obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark/smooth_large,
-/area/medical/virology)
 "Jp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14218,6 +14210,20 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cargo/warehouse)
+"Oo" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/action/spell/smoke/lesser{
+	name = "mysterious old book of cloud-chasing"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/nullrod{
+	pixel_x = 4
+	},
+/turf/open/floor/cult,
+/area/service/chapel/office)
 "Op" = (
 /obj/structure/railing{
 	dir = 8
@@ -14282,6 +14288,13 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"OC" = (
+/obj/structure/table,
+/obj/item/food/pie/cream,
+/obj/machinery/newscaster/directional/north,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/service/kitchen)
 "OE" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -14705,6 +14718,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"PK" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark/textured,
+/area/hallway/secondary/service)
 "PL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -15629,14 +15647,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored/rivers)
-"Sf" = (
-/obj/effect/turf_decal/caution/stand_clear,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/caution{
-	pixel_y = 9
-	},
-/turf/open/floor/iron/dark/textured,
-/area/hallway/secondary/service)
 "Sg" = (
 /obj/machinery/door/window/left/directional/north{
 	base_state = "right";
@@ -15892,11 +15902,6 @@
 /obj/structure/sign/warning,
 /turf/closed/wall/r_wall,
 /area/mine/storage)
-"SS" = (
-/obj/structure/table/wood,
-/obj/effect/spawner/random/entertainment/gambling,
-/turf/open/floor/wood,
-/area/hallway/secondary/service)
 "ST" = (
 /obj/structure/table,
 /obj/machinery/computer/security/telescreen/interrogation{
@@ -17761,20 +17766,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/science/xenobiology)
-"XX" = (
-/obj/structure/table/wood,
-/obj/item/book/granter/action/spell/smoke/lesser{
-	name = "mysterious old book of cloud-chasing"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/holywater{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/nullrod{
-	pixel_x = 4
-	},
-/turf/open/floor/cult,
-/area/service/chapel/office)
 "XY" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -17973,6 +17964,15 @@
 /obj/structure/table/wood,
 /turf/open/floor/stone,
 /area/service/bar)
+"YA" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Sec - Permabrig Exercise";
+	network = list("ss13","prison")
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/security/prison)
 "YB" = (
 /obj/structure/fence/door{
 	name = "graveyard"
@@ -18251,6 +18251,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /turf/open/floor/grass,
 /area/medical/virology)
+"Zv" = (
+/obj/structure/table/wood,
+/obj/item/taperecorder,
+/obj/item/computer_hardware/hard_drive/role/lawyer,
+/obj/machinery/computer/security/telescreen/prison{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/service/lawoffice)
 "Zw" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -18445,20 +18458,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
-"ZU" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Chapel Office";
-	req_access_txt = "22"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/navbeacon/wayfinding{
-	location = "Chapel Office"
-	},
-/turf/open/floor/iron/dark,
-/area/service/chapel/office)
 "ZV" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -31498,7 +31497,7 @@ mO
 mO
 rz
 cR
-oN
+tV
 nf
 DT
 Jt
@@ -41964,7 +41963,7 @@ kK
 rm
 dJ
 Wi
-nZ
+Zv
 Iy
 VF
 jf
@@ -46833,7 +46832,7 @@ mO
 Nt
 qA
 HJ
-fG
+YA
 JK
 gk
 FO
@@ -56638,7 +56637,7 @@ qJ
 qJ
 sG
 oV
-SS
+dh
 qJ
 vb
 hg
@@ -57422,7 +57421,7 @@ kY
 Tu
 WC
 Dg
-dc
+OC
 tT
 wC
 Bt
@@ -58952,7 +58951,7 @@ Et
 Et
 qJ
 nG
-Sf
+PK
 qJ
 Et
 fK
@@ -59504,7 +59503,7 @@ QJ
 zZ
 MH
 qW
-Jn
+iV
 CR
 CR
 CR
@@ -64610,7 +64609,7 @@ QC
 Rb
 Hl
 TI
-ZU
+ec
 TH
 dM
 ZL
@@ -65633,7 +65632,7 @@ Ro
 UK
 bW
 UK
-XX
+Oo
 IC
 VX
 Zw

@@ -395,13 +395,10 @@
 		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))
 		qdel(trauma)
 
-/// Gives magic projectiles a 3x3 Area of Effect range that will bump into any nearby mobs
+/// Gives magic projectiles an area of effect radius that will bump into any nearby mobs
 /obj/projectile/magic/aoe
 	damage = 0
 
-	/// A lazylist of factions.
-	/// People hit by the projectile who have share a faction in this list are skipped.
-	var/list/ignored_factions
 	/// The AOE radius that the projectile will trigger on people.
 	var/trigger_range = 1
 	/// Whether our projectile will only be able to hit the original target / clicked on atom
@@ -425,21 +422,9 @@
 	return ..()
 
 /obj/projectile/magic/aoe/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
-	. = ..()
-	if(!.)
-		return FALSE
 	if(can_only_hit_target && target != original)
 		return FALSE
-
-	//Unsure about the direct target, I guess it could always skip these.
-	if(ismob(target) && !direct_target)
-		var/mob/mob_target = target
-		if(mob_target.can_block_magic(antimagic_flags))
-			return FALSE
-		if(LAZYLEN(ignored_factions) && faction_check(mob_target.faction, ignored_factions))
-			return FALSE
-
-	return TRUE
+	return ..()
 
 /obj/projectile/magic/aoe/Moved(atom/OldLoc, Dir)
 	. = ..()

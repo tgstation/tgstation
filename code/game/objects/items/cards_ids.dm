@@ -909,7 +909,7 @@
 /obj/item/card/id/advanced/Moved(atom/OldLoc, Dir)
 	. = ..()
 
-	if(istype(OldLoc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
+	if(istype(OldLoc, /obj/item/storage/wallet))
 		UnregisterSignal(OldLoc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	if(istype(OldLoc, /obj/item/computer_hardware/card_slot))
@@ -921,7 +921,7 @@
 			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
 			UnregisterSignal(slot_holder, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-	if(istype(loc, /obj/item/pda) || istype(loc, /obj/item/storage/wallet))
+	if(istype(loc, /obj/item/storage/wallet))
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
 		RegisterSignal(loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 

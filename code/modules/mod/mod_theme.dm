@@ -360,7 +360,7 @@
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
 		/obj/item/mail,
-		/obj/item/small_delivery,
+		/obj/item/delivery/small,
 		/obj/item/paper,
 		/obj/item/storage/bag/mail,
 	)
@@ -947,6 +947,7 @@
 		/obj/item/tank/internals,
 		/obj/item/teleportation_scroll,
 		/obj/item/highfrequencyblade/wizard,
+		/obj/item/gun/magic,
 	)
 	skins = list(
 		"enchanted" = list(

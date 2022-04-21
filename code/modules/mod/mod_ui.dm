@@ -55,7 +55,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!allowed(usr) && locked)
+	if(locked && !allowed(usr))
 		balloon_alert(usr, "insufficient access!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return

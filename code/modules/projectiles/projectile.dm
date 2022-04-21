@@ -143,21 +143,27 @@
 	var/decayedRange //stores original range
 	var/reflect_range_decrease = 5 //amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
-		//Effects
+	// Status effects applied on hit
 	var/stun = 0
 	var/knockdown = 0
 	var/paralyze = 0
 	var/immobilize = 0
 	var/unconscious = 0
-	var/stutter = 0
-	var/slur = 0
 	var/eyeblur = 0
 	var/drowsy = 0
-	var/stamina = 0
 	var/jitter = 0
+	/// Extra stamina damage applied on projectile hit (in addition to the main damage)
+	var/stamina = 0
+	/// Stuttering applied on projectile hit
+	var/stutter = 0 SECONDS
+	/// Slurring applied on projectile hit
+	var/slur = 0 SECONDS
+
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
+	/// We ignore mobs with these factions.
+	var/list/ignored_factions
 
 	///If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
@@ -489,6 +495,10 @@
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
+			return FALSE
+	if(ignored_factions?.len && ismob(target) && !direct_target)
+		var/mob/target_mob = target
+		if(faction_check(target_mob.faction, ignored_factions))
 			return FALSE
 	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE

@@ -380,3 +380,419 @@
       squashed!
   - bugfix: You can actually move the Syndicate Infiltrator's docking position on
       icebox again. Yeah. I know.
+2022-04-10:
+  ArcaneMusic:
+  - qol: All ID cards have been given a basic, standalone bank account. Not just for
+      crew, new and old, but also for IDs fresh out of the box.
+  - rscdel: The accounting machine has been retired from station use, as accounts
+      come with a default bank account now.
+  Ghilker:
+  - rscadd: reworked turbine to be a 3x1 machine, with flow and pressure based calculations.
+      A paper explaining how to use will spawn when building it and on the roundstart
+      one.
+  - bugfix: fixes an issue with the old turbine where you could generate infinite
+      power with cold gases
+  - balance: SM consumes items and gain power based on their size
+  Ghommie:
+  - bugfix: The screentip context no longer lies about what happens when you left
+      click another carbon mob with combat mode on.
+  KazooBard:
+  - balance: Regular mansus grasp now inflicts cultslur on the target for 4 seconds.
+  - balance: Increased void mark and void grasp silence duration from 8 seconds each
+      to 10 seconds each.
+  Melbert:
+  - imageadd: Cigars have sprites when held in hand
+  Mothblocks:
+  - balance: Free golems can no longer use shuttle consoles, other than to go home.
+  OneAsianTortoise:
+  - bugfix: removes the crate in window in lavaland base
+  Rhials:
+  - bugfix: The note in the Sloth ruin is fixed! Head on down to Lavaland and reap
+      the rewards!
+  SmArtKar:
+  - expansion: Evangelion jumpsuits have been added to robotics vendor's contraband
+      section
+  - imageadd: Ports new evangelion jumpsuit sprites
+  Son-of-Space:
+  - bugfix: TramStation atmos is more effectively separated into areas
+  - qol: It is easier to isolate and fix atmos issues in the Tramstation tunnel
+  TheBonded:
+  - bugfix: You can no longer create infinite snow with a crowbar
+  TiviPlus:
+  - bugfix: mech armor modules give armor properly now
+  - bugfix: Fix being unable to reload nukie missiles
+  ZephyrTFA:
+  - bugfix: SSUs no longer use power when doing nothing
+  thgvr:
+  - bugfix: Deltastation should once more have wrestling masks and athletic shorts.
+  timothymtorres:
+  - refactor: Refactor antimagic component to be more robust.
+  - soundadd: Add different sound effects for when magic is blocked
+  - bugfix: Equipping or dropping antimagic items now properly updates the magic buttons
+  - bugfix: Any magic being blocked or restricting casting now displays a message
+  - bugfix: Any mind antimagic now properly blocks telepathy effects
+  - bugfix: Remove bloodsplatter when fireball is blocked by antimagic
+  - bugfix: Remove lockers when staff of locker projectiles blocked by antimagic
+  - bugfix: Fire breath is no longer blocked by antimagic
+  - bugfix: Spellcards are now blocked by antimagic
+  - qol: Add antimagic chat notification and animation effects. Mobs will now glow
+      when they successfully block magic.
+  - balance: Foilhats prevent someone from casting mind magic (telepathy, mindswap,
+      etc.)
+  - balance: Bibles, ritual totems, nullrods, holymelons, and `TRAIT_HOLY` prevent
+      someone from casting unholy magic (cult spells, etc.)
+  - balance: Nullrods, ritual totems, and holymelons prevent someone from casting
+      wizard magic (fireball, magic missile, etc.)
+  - balance: Immorality talismans, berserker suits, and `TRAIT_ANTIMAGIC` prevents
+      all types of magic (except stuff like mime abilities)
+  - balance: Touch of Madness and Mindswap is now blocked with `MAGIC_RESISTANCE`
+      and `MAGIC_RESISTANCE_MIND`
+  - balance: Voice of god is now blocked with `MAGIC_RESISTANCE_HOLY` and `MAGIC_RESISTANCE_MIND`
+  - rscdel: Cult blink and cult summon creature spells were never used in the code
+      and have been removed.
+  - bugfix: Fix moonicorns not falling through openspace properly.
+2022-04-11:
+  Ebb-Real:
+  - bugfix: You can no longer fly by spamming ollie onto an empty space and not moving.
+  JohnFulpWillard:
+  - qol: Monkeys can now wear headsets.
+  - balance: Monkeys can now wear glasses.
+  - refactor: Drone PDA apps have been refactored and is now part of Botkeeper, such
+      as granting access to dangerous machinery and sending pings.
+  - refactor: The Curators newscaster PDA app has been moved into a new Newscaster
+      tablet app, with a full new UI.
+  - rscdel: The Detomatix cartridge's ability to open the nuclear operative pod doors
+      has been removed.
+  Son-of-Space:
+  - bugfix: NT Risk Audits have replaced fraudulent posters calling the ice moon environment
+      "space."
+  Tastyfish:
+  - bugfix: Fire alarms no longer magically emit light when they lose power.
+  TheBoondock:
+  - refactor: Zauker now uses reagent to perform its effects on breath
+  ZephyrTFA:
+  - bugfix: Golems can now exist in the rooms they themselves create, sorry about
+      that.
+  Zytolg:
+  - bugfix: relocates the SMES terminal to not be in a wall in the lizard gas space
+      ruin
+  cacogen:
+  - rscdel: Navigate verb uses landmarks now, which means that underfloor wayfinding
+      beacons (which could be used to change the names of destinations) are gone
+  - qol: Adds Nearest Way Up and Nearest Way Down to the navigate list, which point
+      to the nearest ladder or staircase up or down
+  - bugfix: Fixes runtime with navigation verb paths where deleted paths were still
+      attempting to animate
+  san7890:
+  - bugfix: On DeltaStation, Nanotrasen will no longer place a Gas Vendor and an Intercom
+      in such a position on one of the walls on the Clown's bedroom where they overlap.
+  techno0:
+  - bugfix: Debug Glasses have SM protection
+  tralezab:
+  - expansion: New Festival God sect! Sooth or serrate your friends and foes with
+      the beat.
+  unit0016:
+  - expansion: The syndicate infiltrator has been tuned up, coming with a fresh coat
+      of paint, insurance, and the new shuttle smell. Sadly, no complimentary taco
+      in the glovebox.
+2022-04-12:
+  Fikou:
+  - expansion: Maintenance has a new set of special glasses...
+  Fikou, Azlan, PositiveEntropy, Capsaicin:
+  - imageadd: new sprites for the syndicate modsuit (and honkerative)
+  Ghilker:
+  - bugfix: fixes exploit where you could duplicate gases with valves
+  - bugfix: thermal conductivity can be properly set so the turbine turfs will not
+      leak heat
+  GoblinBackwards:
+  - bugfix: Fixes brimdemon lasers never disappearing if the demon was deleted while
+      firing.
+  MacBlaze1:
+  - qol: firelocks now automatically reset upon the air temperature being returned
+      to normal thresholds
+  - bugfix: fire alarms now automatically update on atmos monitoring programs/consoles
+      to show their real status. No more false positives!
+  - code_imp: air alarms now have a variable referencing their area that is used
+  - code_imp: added a new signal for when atmos adjacent turfs are calculated
+  TheSmallBlue:
+  - expansion: The Hygienebot can now be colored with a spraycan.
+  - code_imp: Added a flag that allows mobs to be colored with the spraycan.
+  capsaicinz:
+  - spellcheck: fixed an error in the chilling black extract's description.
+  - code_imp: the 'random' subtype of golems no longer exists, and is now effectively
+      replaced by picking from all subtypes of the golem species.
+  timothymtorres:
+  - bugfix: Fix girder construction runtimes
+2022-04-13:
+  Iamgoofball:
+  - server: Adds Ukraine's Independence Day as a holiday, since the child attacking
+      our hosting requested goofball PRs.
+  necromanceranne:
+  - bugfix: Plasmamen no longer have a stray white pixel.
+2022-04-14:
+  Ghommie:
+  - bugfix: Fixed supply pods not being displayed below their contents when opened
+      or the rubbles effect caused by the impact.
+  GoblinBackwards:
+  - bugfix: Fixes facial hair using main hair colour instead of facial hair colour
+  Rhials:
+  - bugfix: Cleaning strange objects no longer leave behind empty grenade casings.
+      No littering!
+  SmArtKar:
+  - bugfix: Monkeys now can interact with misc(environmental) turfs. Also removed
+      two unused broken turf types.
+  - bugfix: You can no longer dupe ants(or any other chemicals) as a janiborg
+  SmoSmoSmoSmok:
+  - bugfix: Ghosts can now correctly jump to C4's planted on walls/floors when they
+      get the notification
+  Tastyfish:
+  - imageadd: Wrapped parcels now have an overlay when tagged with a destination.
+  - refactor: Refactored wrapped parcels to have a common base type.
+  san7890:
+  - bugfix: After a few mishaps, Nanotrasen fixed a few small area definition errors
+      on MetaStation.
+  unv-annihilator:
+  - bugfix: held mice are no longer edible by moths
+2022-04-15:
+  ArcaneMusic:
+  - soundadd: A new round-end sound is in rotation.
+  Fikou, EOBGames:
+  - rscadd: Redesign of Hilbert Research Facility
+  Ghilker:
+  - qol: mixers now have better indicators for nodes
+  JohnFulpWillard:
+  - bugfix: Changeling HUDs now properly carry over through bodies.
+  - code_imp: Non carbon Changelings now respectively regenerate/lose/spend their
+      chems.
+  - bugfix: Grilling food now makes said food, grilled.
+  LemonInTheDark:
+  - rscdel: The on human examine species readout has been removed
+  OneAsianTortoise:
+  - qol: you can take out PDA/ID from trimmer with right click
+  SmArtKar:
+  - bugfix: Water slime cookie no longer tastes like /datum/reagent/water
+  UnderARock:
+  - bugfix: Fixes spraytan not tanning skin color.
+  Wallem:
+  - imageadd: Updates airlock cycling & mass driver buttons.
+  apynnonen:
+  - qol: Screentips are no longer hidden by action buttons.
+  dragomagol:
+  - bugfix: traitor logging has its own config flag
+  san7890:
+  - bugfix: Nanotrasen will now stop placing reinforced window spawners right on top
+      of snow at IceBox Departures.
+2022-04-16:
+  ATHATH:
+  - bugfix: Washing someone else's mouth out with soap no longer washes YOUR mouth
+      out with soap instead.
+  Fikou:
+  - bugfix: fixes access on the hilberts hotel vault door
+  Fikou, Smartkar for sprites:
+  - balance: the MODsuit clamp can no longer hold crates with human or larger sized
+      mobs
+  - balance: the MODsuit holster has been replaced with a magnetic harness (like tgmc)
+  - balance: the MODsuit pepper mister has been replaced with pepper shoulders. They
+      react to attacks with pepper spray
+  Ghilker:
+  - expansion: freon burn reaction now produces coldspots and cold cyan fires
+  GoblinBackwards:
+  - bugfix: Wizard immovable rod no longer deletes itself when travelling betwen z-levels
+  - bugfix: Diggable turfs no longer get dug up by any item used on them
+  JohnFulpWillard:
+  - bugfix: Brains from HARS victims in a new HARS body will not be revivable anymore.
+  Melbert:
+  - expansion: People who survive the heretic realm now have a unique "slurring" mode,
+      instead of borrowing regular cult slurring
+  - refactor: Stuttering, Derpspeech, Slurring and Cult Slurring and handled by a
+      status effect now instead of variables on mobs
+  - admin: You can now directly give anyone any of the above mentioned speech impediments
+      directly via an option in the VV dropdown
+  Y0SH1M4S73R:
+  - bugfix: The debug industrial lift usable by admins for testing tram behavior has
+      been fixed, and can now be moved again.
+  apynnonen:
+  - bugfix: Bluespace golems can no longer spam teleport
+  capsaicinz:
+  - bugfix: metal foam now blocks you from falling down a z-level if it's below you
+  carshalash:
+  - expansion: Expands pastry output.
+  necromanceranne:
+  - bugfix: Gives the pheromone receptor power an icon.
+2022-04-17:
+  Cheshify:
+  - rscadd: Remaps the gluttony ruin!
+  - rscdel: Remove the free antag syringe from the gluttony ruin.
+  - rscadd: Remapped the Pride's Mirror ruin
+  Fikou:
+  - balance: the mining gas mask no longer protects against pepper spray
+  Ghilker:
+  - bugfix: turbines don't leak heat. Properly now
+  GoblinBackwards:
+  - expansion: Gloves of the north star's effect is now triggered when slapping people
+  Onule:
+  - imageadd: Resprited all slimes and slime cores
+  - imagedel: Removed unused slime and slime core icons
+  PositiveEntropy:
+  - imageadd: Resprites the soft caps!
+  RandomGamer123:
+  - bugfix: Cyborgs can no longer unbolt the door to the execution chamber on Kilostation.
+  Zytolg:
+  - qol: Xenosat Touchups. Employees may now monitor hazardous life forms at a new
+      and conveniently located desk.
+  - bugfix: The Xenosat should now feature 0 Diagonal Walls, once again becoming a
+      symmetrical Pill shape.
+  carshalash:
+  - bugfix: Uncle Pete remembered to order new rollerskates for his rollerdome. 30
+      Skates will now be stocked for rent on his shuttle.
+  san7890:
+  - rscadd: You should now be able to rotate bedsheets on yourself as you take restful
+      sleeps.
+  - bugfix: Nanotrasen will no longer place bedsheets the wrong way on beds.
+  - bugfix: Nanotrasen has tied down a few unruly lattices on TramStation. It's amazing
+      how they didn't fly off in orbit.
+  - rscadd: The KiloStation Commissary (and the rooms that border it) have had their
+      items be shuffled around a bit.
+  - rscadd: Nanotrasen realized that their holodeck simulation of the photobooth was
+      not properly configured, and was showing up with ugly, grouted tiles. This has
+      been rectified to be a pure white backdrop for all your photograph desires.
+  - bugfix: On KiloStation, Nanotrasen will no longer install screens in the space
+      compartment near the bridge.
+  - bugfix: On MetaStation, Nanotrasen will no longer screw a fire extinguisher right
+      through the screen of a newscaster.
+  timothymtorres:
+  - qol: Add colored department posters to cargo delivery room in Meta to help identify
+      delivery chutes.
+  wesoda25:
+  - bugfix: easter baskets can now hold easter eggs
+2022-04-18:
+  Fikou:
+  - qol: modsuit locks are a bit more clear, nukie/centcom/prototype suits start with
+      them
+  - bugfix: modsuits now retract if summoned through summon items or some other hijinx
+  GoldenAlpharex:
+  - qol: Telecomms and the gravity generator are no longer ear-deafening when you
+      don't have a direct line of sight with them, meaning that you can now peacefully
+      build things in maintenance around them, without having to turn off the sound
+      of your game.
+  - code_imp: Added complete documentation and extra configurability to looping sounds,
+      allowing them to be stopped by walls, to ignore pressure or to be unaffected
+      by reverb!
+  Melbert:
+  - bugfix: Healium healing should be a little more responsive, now
+  - bugfix: Maintenance will now have wall engravings
+  MidoriWroth:
+  - rscadd: Added 3 new Polish foods
+  - imageadd: Added sprites for the 3 new foods
+  OrionTheFox:
+  - bugfix: The Volaju hairstyle is now symmetrical on both facing sides
+  SnoopCooper#7310, Ghilker (for some minor parts):
+  - imageadd: better turbine sprites
+  cat348 for sprites, TheBonded for not being gitbanned:
+  - imageadd: Disposals Junctions have visible arrows
+  iprice:
+  - bugfix: Corrected an error in the spicy donk pocket recipe which would permit
+      infinite donk pocket creation.
+  robbertapir:
+  - bugfix: The Russian revolver now works again
+  vincentiusvin:
+  - balance: atmos holofans are now fireproof
+  zxaber:
+  - bugfix: Ripley MK2 mechs no longer have two cargo utility equipment items.
+2022-04-19:
+  ArcaneDefence:
+  - bugfix: Our finest chefs have further refined the art of cookery so grilling random
+      items that have been deep fried will no longer create grill marks on weird lettering
+      above the dish.
+  B4CKU:
+  - bugfix: slimepeople's state will no longer be listed as "error" in the "swap body"
+      menu if their body is in crit
+  Fikou:
+  - expansion: Falling on punji sticks impales you.
+  Ghilker:
+  - qol: Adds a button to the thermomachine to dump residual gases from the main port
+      into the waste port
+  - expansion: supermatter delamination now spawns anomalies across the station, both
+      instantly and overtime
+  Ghommie:
+  - bugfix: Removed a fire extinguisher cabinet that was overlapping a large painting
+      frame on Delta. Moved a newscaster that was also overlapping the large painting
+      frame in the curator's backroom two tiles down on Meta.
+  JohnFulpWillard:
+  - qol: Departmental ID trimmer/PDA painters have been added to head of staff offices,
+      making it way easier to job change someone into your department.
+  Quill-Weave:
+  - bugfix: fixes a stray pixel in library.dmi
+  RandomGamer123:
+  - bugfix: The minor dark blue luminescent ability now heals you properly instead
+      of killing you.
+  - bugfix: The dark blue burning extract now injects you with regenerative jelly
+      instead of useless cryoxadone, making it not (as) deadly for slimepeople.
+  Spessman500:
+  - bugfix: fixed beepsky and ed209s not patroling
+  Vladoricious:
+  - bugfix: The Paranormal Response team has successfully defeated the demon that
+      was putting medicines in food from nowhere.
+  - bugfix: The food processor no longer strips chemicals from the things you put
+      inside. Finally, meth in my carrot fries.
+  Watermelon914:
+  - bugfix: Fixed traitors being able to duplicate their TC
+  Y0SH1M4S73R:
+  - bugfix: After two failed attempts at rectifying the issue, illegal tech is once
+      again unlockable.
+  Zytolg:
+  - rscadd: Firebase Balthazor has received much needed upgrades. Operatives now have
+      an adequate workspace for their radioactive activities.
+  - rscadd: The Syndicate Uplink has received Special Authorization Cards for use
+      by authorized personnel.
+  - rscdel: These expansions came at the cost of the old Nukeops Base.
+  - qol: Nukeops get a bigger and better looking base. Escapees on hijacked shuttles
+      may not be as lucky...
+  - code_imp: Added keycards and keycard_doors for use in the Nukeops Base.
+  - code_imp: Moves /modules/ruins into /modules/mapfluff/ruins and creates /modules/mapfluff/centcom
+  robbertapir:
+  - bugfix: Learning about lavaland bone architecture no longer causes the "Tribal"
+      tab to undergo mitosis.
+  san7890:
+  - bugfix: On IceBoxStation, to the northeastern airlock (in relation to the bar),
+      Nanotrasen will no longer paint the word "Caution" over text that says "STAND
+      CLEAR".
+  - bugfix: In MetaStation's Brig, Nanotrasen will no longer install Camera Monitors
+      on windows. They also removed an excess newscaster embedded within a wall.
+  tf-4:
+  - bugfix: Statues can now once again be wrenched.
+  timothymtorres:
+  - qol: Change AI upload lawsets to be randomized
+  - code_imp: Reorganize AI lawset code and remove deprecated malfunction code
+  timothymtorres, TheBonded:
+  - code_imp: Improved nightvision code
+2022-04-20:
+  Fikou:
+  - bugfix: ebows no longer inherit not needing a gun permit from pkas
+  TheBonded:
+  - expansion: Laserpointer circuit modules now available. they had to be toned down
+      for circuit implementation, so dont expect them to do anything other than shine
+      light.
+  azizonkg:
+  - bugfix: renamed suffix for tgui-polyfill from bundle.js to min.js to prevent CBT
+      failing after target 'clean'
+  magatsuchi:
+  - rscdel: Removes the old PDA code, as well as references to it. (mostly)
+  - refactor: Thinktronic Systems has retired the elegantly aged PDA system, and is
+      now (forcefully) pushing its new patented job disks and SpaceMessenger app!
+      Available on your round-start tablet.
+  robbertapir:
+  - spellcheck: Replaced all occurrences of "collosal" with "colossal"
+  stylemistake:
+  - refactor: Ping system of tgui-panel has been reworked, which fixes things mentioned
+      below.
+  - bugfix: AFK players now get properly detected and kicked
+  - bugfix: Automatic reconnect should now work 100% of the time
+  - bugfix: Manual reconnect should now work 100% of the time
+  timothymtorres:
+  - qol: Fix nearspace areas for Meta
+  timothymtorres, TheBonded:
+  - code_imp: Library items have been refactored to be separate files.
+  vincentiusvin:
+  - bugfix: fixed icebox perma gym camera not working
+  - expansion: Remaps delta's ordnance

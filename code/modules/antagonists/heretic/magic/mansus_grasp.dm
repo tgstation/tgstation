@@ -36,6 +36,7 @@
 	living_hit.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_hit = victim
+		carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		carbon_hit.AdjustKnockdown(5 SECONDS)
 		carbon_hit.adjustStaminaLoss(80)
 
@@ -93,7 +94,7 @@
 			playsound(carbon_user, 'sound/effects/wounds/sizzle1.ogg', 70, vary = TRUE)
 			if(prob(50))
 				carbon_user.emote("scream")
-				carbon_user.stuttering += 13
+				carbon_user.adjust_timed_status_effect(26 SECONDS, /datum/status_effect/speech/stutter)
 
 		source?.cast_on_hand_hit(src, user, user)
 

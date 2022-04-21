@@ -122,19 +122,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
-"aE" = (
-/obj/structure/destructible/cult/item_dispenser/archives,
-/obj/item/stack/sheet/runed_metal{
-	amount = 25
-	},
-/obj/item/coin/antagtoken,
-/obj/item/book/granter/action/spell/summonitem{
-	name = "\proper an extremely flamboyant book"
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_four)
 "aF" = (
 /obj/structure/barricade/wooden{
 	desc = "A forcefield meant to block off areas. Time has aged this forcefield into a weakened state, you could probably smash through it.";
@@ -737,11 +724,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
-"dA" = (
-/obj/structure/closet/secure_closet/personal,
-/obj/item/gun/energy/kinetic_accelerator,
-/turf/open/floor/wood,
-/area/awaymission/caves/northblock)
 "dB" = (
 /obj/structure/dresser,
 /turf/open/floor/wood,
@@ -985,13 +967,6 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eJ" = (
-/turf/open/floor/iron,
-/area/awaymission/caves/listeningpost)
-"eK" = (
-/obj/structure/table,
-/obj/item/gun/energy/kinetic_accelerator,
-/obj/item/gun/energy/kinetic_accelerator,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eL" = (
@@ -1565,6 +1540,13 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
+"sY" = (
+/obj/structure/table,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron,
+/area/awaymission/caves/listeningpost)
 "tz" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
@@ -1903,6 +1885,19 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
+"LC" = (
+/obj/structure/destructible/cult/item_dispenser/archives,
+/obj/item/stack/sheet/runed_metal{
+	amount = 25
+	},
+/obj/item/coin/antagtoken,
+/obj/item/book/granter/action/spell/summonitem{
+	name = "\proper an extremely flamboyant book"
+	},
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_four)
 "Mk" = (
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/wood,
@@ -1938,6 +1933,11 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
+"MU" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/turf/open/floor/wood,
+/area/awaymission/caves/northblock)
 "Np" = (
 /obj/effect/mine/explosive{
 	desc = "Rusted mines planted out by the miners before, probably to keep the cave monsters at bay.";
@@ -5418,7 +5418,7 @@ dM
 dP
 dI
 bn
-dA
+MU
 du
 bL
 bL
@@ -6439,7 +6439,7 @@ bL
 bL
 bL
 du
-dA
+MU
 bn
 dI
 dO
@@ -13132,7 +13132,7 @@ dX
 dX
 dW
 eF
-eK
+sY
 eP
 eV
 eF
@@ -59737,7 +59737,7 @@ ad
 ax
 aC
 ao
-aE
+LC
 ax
 ao
 ao
