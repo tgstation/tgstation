@@ -245,6 +245,49 @@
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 	Consume(hit_object)
 
+/obj/machinery/power/supermatter_crystal/Bump(atom/bumped_atom)
+	. = ..()
+	if(isturf(bumped_atom))
+		var/turf/bumped_turf = bumped_atom
+		var/bumped_name = "\the [bumped_atom]"
+		var/bumped_text = span_danger("\The [src] smacks into [bumped_name] and [bumped_atom.p_they()] rapidly flashes to ash!")
+		if(!bumped_turf.Melt())
+			return
+
+		visible_message(
+			bumped_text,
+			null,
+			span_hear("You hear a loud crack as you are washed with a wave of heat.")
+		)
+		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+
+		var/suspicion = null
+		if (fingerprintslast)
+			suspicion = "- and was last touched by [fingerprintslast]"
+			message_admins("\The [src] has consumed [bumped_name][suspicion].")
+		investigate_log("has consumed [bumped_name][suspicion].")
+
+		radiation_pulse(src, max_range = 6, threshold = 0.2, chance = 50)
+		return
+
+	if(isliving(bumped_atom))
+		visible_message(
+			span_danger("\The [src] slams into \the [bumped_atom] inducing a resonance... [bumped_atom.p_their()] body starts to glow and burst into flames before flashing into dust!"),
+			span_userdanger("\The [src] slams into you as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
+			span_hear("You hear an unearthly noise as a wave of heat washes over you.")
+		)
+	else if(isobj(bumped_atom) && !iseffect(bumped_atom))
+		visible_message(
+			span_danger("\The [src] smacks into \the [bumped_atom] and [bumped_atom.p_they()] rapidly flashes to ash."),
+			null,
+			span_hear("You hear a loud crack as you are washed with a wave of heat.")
+		)
+	else
+		return
+
+	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	Consume(bumped_atom)
+
 /obj/machinery/power/supermatter_crystal/intercept_zImpact(list/falling_movables, levels)
 	. = ..()
 	for(var/atom/movable/hit_object as anything in falling_movables)
