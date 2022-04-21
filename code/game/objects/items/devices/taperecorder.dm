@@ -63,7 +63,10 @@
 
 /obj/item/taperecorder/AltClick(mob/user)
 	. = ..()
-	play()
+	if (recording)
+		stop()
+	else
+		record()
 
 /obj/item/taperecorder/proc/update_available_icons()
 	icons_available = list()
@@ -126,11 +129,8 @@
 	set name = "Eject Tape"
 	set category = "Object"
 
-	if(!can_use(usr))
+	if(!can_use(usr) || !mytape)
 		return
-	if(!mytape)
-		return
-
 	eject(usr)
 
 
@@ -159,13 +159,7 @@
 	set name = "Start Recording"
 	set category = "Object"
 
-	if(!can_use(usr))
-		return
-	if(!mytape || mytape.unspooled)
-		return
-	if(recording)
-		return
-	if(playing)
+	if(!can_use(usr) || recording || playing || !mytape || mytape.unspooled)
 		return
 
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
@@ -215,13 +209,7 @@
 	set name = "Play Tape"
 	set category = "Object"
 
-	if(!can_use(usr))
-		return
-	if(!mytape || mytape.unspooled)
-		return
-	if(recording)
-		return
-	if(playing)
+	if(!can_use(usr) || recording || playing || !mytape || mytape.unspooled)
 		return
 
 	playing = TRUE
@@ -232,9 +220,7 @@
 	var/used = mytape.used_capacity //to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
 	for(var/i = 1, used <= max, sleep(playsleepseconds))
-		if(!mytape)
-			break
-		if(playing == FALSE)
+		if(!mytape || playing == FALSE)
 			break
 		if(mytape.storedinfo.len < i)
 			say("End of recording.")
@@ -283,16 +269,10 @@
 	set name = "Print Transcript"
 	set category = "Object"
 
-	if(!mytape.storedinfo.len)
-		return
-	if(!can_use(usr))
-		return
-	if(!mytape)
+	if(!mytape.storedinfo.len || !mytape || !can_use(usr) || recording || playing)
 		return
 	if(!canprint)
 		to_chat(usr, span_warning("The recorder can't print that fast!"))
-		return
-	if(recording || playing)
 		return
 
 	say("Transcript printed.")
@@ -315,6 +295,15 @@
 /obj/item/taperecorder/empty
 	starting_tape_type = null
 
+/obj/item/taperecorder/verb/WipeTapeInRecorder()
+	set name = "Wipe Tape"
+	if(!mytape || mytape.unspooled || recording || playing)
+		return
+	else
+		mytape.used_capacity = 0;
+		mytape.storedinfo = new;
+		mytape.timestamp = new;
+		to_chat(usr, "<span class='notice'>You wipe this side of the tape entirely.")
 
 /obj/item/tape
 	name = "tape"
@@ -345,6 +334,7 @@
 	var/unspooled = FALSE
 	var/list/icons_available = list()
 	var/radial_icon_file = 'icons/hud/radial_tape.dmi'
+	var/firstFlip = TRUE
 
 /obj/item/tape/fire_act(exposed_temperature, exposed_volume)
 	unspool()
@@ -403,6 +393,19 @@
 	cut_overlay("ribbonoverlay")
 	unspooled = FALSE
 
+/obj/item/tape/proc/wipeproc()
+	used_capacity = 0;
+	storedinfo = new;
+	timestamp = new;
+
+/obj/item/tape/verb/wipeverb()
+	set name = "Wipe Tape";
+	if(unspooled)
+		to_chat(usr, "<span class='notice'>You scrub the magnetic strip clean of its contents.")
+		wipeproc()
+	else if(!unspooled)
+		to_chat(usr, "<span class='notice'>You need to pull out the tape's magnetic strips first.")
+
 /obj/item/tape/proc/tapeflip()
 	//first we save a copy of our current side
 	var/list/storedinfo_currentside = storedinfo.Copy()
@@ -429,6 +432,26 @@
 	if(tool.use_tool(src, user, 120))
 		to_chat(user, span_notice("You wind the tape back in."))
 		respool()
+
+/obj/item/tape/AltClick(mob/user)
+	. = ..()
+	if (firstFlip)
+		to_chat(usr, "<span class='notice'>You flip the tape so you can record on the clean magnetic strip.</span>")
+		firstFlip = FALSE
+	else
+		to_chat(usr, "<span class='notice'>You flip the tape back around.</span>")
+	tapeflip()
+
+/obj/item/tape/verb/flipVerb()
+//adding this verb too just so players know it's an option.
+	set name = "Flip Tape";
+	if (firstFlip)
+		to_chat(usr, "<span class='notice'>You flip the tape so you can record on the clean magnetic strip</span>")
+		firstFlip = FALSE
+	else
+		to_chat(usr, "<span class='notice'>You flip the tape back around.</span>")
+	tapeflip()
+
 
 //Random colour tapes
 /obj/item/tape/random
