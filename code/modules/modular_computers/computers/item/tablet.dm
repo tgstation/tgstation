@@ -42,7 +42,7 @@
 /obj/item/modular_computer/tablet/examine(mob/user)
 	. = ..()
 	if(inserted_item)
-		. += "Ctrl-click to remove the [inserted_item.name]"
+		. += "Ctrl-click to remove the [inserted_item.name]."
 
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()
