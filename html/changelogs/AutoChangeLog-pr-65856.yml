@@ -1,0 +1,4 @@
+author: "TheBoondock"
+delete-after: True
+changes: 
+  - expansion: "Bz now also reduce how much tritium is consumed in hypernob formation. Reduction depends on the ratio of bz to trit, bz > trit will result in reduced trit consumption."

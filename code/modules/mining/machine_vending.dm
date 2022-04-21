@@ -32,7 +32,7 @@
 		new /datum/data/mining_equipment("Tracking Implant Kit", /obj/item/storage/box/minertracker, 600),
 		new /datum/data/mining_equipment("Jaunter", /obj/item/wormhole_jaunter, 750),
 		new /datum/data/mining_equipment("Kinetic Crusher", /obj/item/kinetic_crusher, 750),
-		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/gun/energy/kinetic_accelerator, 750),
+		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/gun/energy/recharge/kinetic_accelerator, 750),
 		new /datum/data/mining_equipment("Advanced Scanner", /obj/item/t_scanner/adv_mining_scanner, 800),
 		new /datum/data/mining_equipment("Resonator", /obj/item/resonator, 800),
 		new /datum/data/mining_equipment("Luxury Medipen", /obj/item/reagent_containers/hypospray/medipen/survival/luxury, 1000),
@@ -273,6 +273,6 @@
 	new /obj/item/encryptionkey/headset_mining(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/card/id/advanced/mining(src)
-	new /obj/item/gun/energy/kinetic_accelerator(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)

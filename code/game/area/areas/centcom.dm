@@ -201,6 +201,37 @@
 	static_lighting = TRUE
 	network_root_id = SYNDICATE_NETWORK_ROOT
 
+/area/syndicate_mothership/expansion_bombthreat
+	name = "Syndicate Ordinance Laboratory"
+	icon_state = "syndie-elite"
+	static_lighting = TRUE
+	network_root_id = SYNDICATE_NETWORK_ROOT
+	area_flags = NOTELEPORT
+	ambience_index = AMBIENCE_ENGI
+
+/area/syndicate_mothership/expansion_bioterrorism
+	name = "Syndicate Bio-Weapon Laboratory"
+	icon_state = "syndie-elite"
+	static_lighting = TRUE
+	network_root_id = SYNDICATE_NETWORK_ROOT
+	area_flags = NOTELEPORT
+	ambience_index = AMBIENCE_MEDICAL
+
+/area/syndicate_mothership/expansion_chemicalwarfare
+	name = "Syndicate Chemical Weapon Manufacturing Plant"
+	icon_state = "syndie-elite"
+	static_lighting = TRUE
+	network_root_id = SYNDICATE_NETWORK_ROOT
+	area_flags = NOTELEPORT
+	ambience_index = AMBIENCE_REEBE
+
+/area/syndicate_mothership/expansion_fridgerummage
+	name = "Syndicate Perishables and Foodstuffs Storage"
+	icon_state = "syndie-elite"
+	static_lighting = TRUE
+	network_root_id = SYNDICATE_NETWORK_ROOT
+	area_flags = NOTELEPORT
+
 /area/syndicate_mothership/elite_squad
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"

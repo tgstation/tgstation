@@ -12,8 +12,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	base_icon_state = "mixer"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 20
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_master
 
@@ -73,6 +72,7 @@
 	return ..()
 
 /obj/machinery/chem_master/RefreshParts()
+	. = ..()
 	reagents.maximum_volume = 0
 	for(var/obj/item/reagent_containers/glass/beaker/B in component_parts)
 		reagents.maximum_volume += B.reagents.maximum_volume
@@ -160,11 +160,20 @@
 	else
 		return ..()
 
-/obj/machinery/chem_master/AltClick(mob/living/user)
+/obj/machinery/chem_master/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
 		return
 	replace_beaker(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/chem_master/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/obj/machinery/chem_master/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /**
  * Handles process of moving input reagents containers in/from machine
@@ -274,6 +283,7 @@
 				name, ""))
 		if (amount == null || amount <= 0)
 			return FALSE
+		use_power(active_power_usage)
 		if (to_container == "beaker" && !mode)
 			reagents.remove_reagent(reagent, amount)
 			return TRUE
@@ -324,7 +334,7 @@
 		var/vol_each_text = params["volume"]
 		var/vol_each_max = reagents.total_volume / amount
 		var/list/style
-
+		use_power(active_power_usage)
 		if (item_type == "pill")
 			vol_each_max = min(50, vol_each_max)
 		else if (item_type == "patch")

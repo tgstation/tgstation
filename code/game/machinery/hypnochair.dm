@@ -115,6 +115,8 @@
 			"...an annoying buzz in your ears..."\
 		)]</span>")
 
+	use_power(active_power_usage * delta_time)
+
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE
 	STOP_PROCESSING(SSobj, src)

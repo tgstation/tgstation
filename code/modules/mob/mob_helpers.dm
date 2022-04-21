@@ -240,6 +240,17 @@
 				A.target = source
 				if(!alert_overlay)
 					alert_overlay = new(source)
+					var/icon/size_check = icon(source.icon, source.icon_state)
+					var/scale = 1
+					var/width = size_check.Width()
+					var/height = size_check.Height()
+					if(width > world.icon_size || height > world.icon_size)
+						if(width >= height)
+							scale = world.icon_size / width
+						else
+							scale = world.icon_size / height
+					alert_overlay.transform = alert_overlay.transform.Scale(scale)
+					alert_overlay.appearance_flags |= TILE_BOUND
 				alert_overlay.layer = FLOAT_LAYER
 				alert_overlay.plane = FLOAT_PLANE
 				A.add_overlay(alert_overlay)
