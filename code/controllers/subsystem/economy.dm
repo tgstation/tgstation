@@ -142,10 +142,17 @@ SUBSYSTEM_DEF(economy)
 	inflation_value = max(round(((station_total / bank_accounts_by_id.len) / station_target), 0.1), 1.0)
 	return inflation_value
 
+/**
+ * Proc that adds a set of strings and ints to the audit log, tracked by the economy SS.
+ *
+ * * account: The bank account of the person purchasing the item.
+ * * price_to_use: The cost of the purchase made for this transaction.
+ * * vendor: The object or structure medium that is charging the user. For Vending machines that's the machine, for payment component that's the parent, cargo that's the crate, etc.
+ */
 /datum/controller/subsystem/economy/proc/track_purchase(datum/bank_account/account, price_to_use, vendor)
 	if(!account || !price_to_use || !vendor)
 		return FALSE
-	SSeconomy.audit_log += list(list(
+	audit_log += list(list(
 		"account" = account.account_holder,
 		"cost" = price_to_use,
 		"vendor" = vendor,
