@@ -1950,10 +1950,10 @@
 		return 0
 
 	var/list/forced_gravity
-	if(!isnull(SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity = list())) && length(forced_gravity))
+	if(!isnull(SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity = list())) && !length(forced_gravity))
 		SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)//only gets turned into a list if the signal exists
 
-	if(length(forced_gravity))
+	if(forced_gravity)
 		var/max_grav = 0
 		for(var/i in forced_gravity)
 			max_grav = max(max_grav, i)
