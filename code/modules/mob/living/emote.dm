@@ -25,7 +25,7 @@
 		var/list/key_emotes = GLOB.emote_list["blush"]
 		for(var/datum/emote/living/blush/living_emote in key_emotes)
 			// The existing timer restarts if it's already running
-			blush_timer = addtimer(CALLBACK(living_emote, /datum/emote/living/blush.proc/end_blush, living_user), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+			blush_timer = addtimer(CALLBACK(living_emote, .proc/end_blush, living_user), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/emote/living/blush/proc/end_blush(mob/living/living_user)
 	REMOVE_TRAIT(living_user, TRAIT_BLUSHING, EMOTE_TRAIT)
