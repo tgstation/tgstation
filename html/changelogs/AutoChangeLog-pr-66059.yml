@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "machines now consume more power all around. Baseline 100 W idle and 1000 W active"
-  - balance: "machines with parts will consume more power depending on the part and on the part tier"
-  - balance: "Notice: The base SM with SMES properly configured is enough for the station when all machines are at tier 1. With few upgrades that don't touch the base cooling loop it can carry most of the rounds."

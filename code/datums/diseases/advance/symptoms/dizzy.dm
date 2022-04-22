@@ -55,4 +55,4 @@ Bonus
 			if(M.dizziness <= 70)
 				M.dizziness += 30
 			if(power >= 2)
-				M.set_drugginess(40)
+				M.set_timed_status_effect(80 SECONDS, /datum/status_effect/drugginess)

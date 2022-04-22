@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - bugfix: "actually makes the flashlight action button work, and fixes silicon/clown/mime names showing up properly on tablets/messenger"

@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes: 
-  - bugfix: "fixes bluespace vendor tanks being incompatible with suit storage"
