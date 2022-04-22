@@ -169,8 +169,8 @@
 			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
 
 		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location(), list(src, card))
-		new_cardhand.pixel_x = src.pixel_x
-		new_cardhand.pixel_y = src.pixel_y
+		new_cardhand.pixel_x = pixel_x
+		new_cardhand.pixel_y = pixel_y
 
 		if(!isturf(loc)) // make a cardhand in our active hand
 			user.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -237,6 +237,6 @@
 
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
-		src.transform = turn(src.transform, 90)
+		transform = turn(transform, 90)
 		// use the simple_rotation component to make this turn with Alt+RMB & Alt+LMB at some point in the future - TimT
 	return ..()

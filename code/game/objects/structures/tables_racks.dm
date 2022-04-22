@@ -219,7 +219,7 @@
 		if(dealer_deck.wielded) // deal a card facedown on the table
 			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
 			if(card)
-				src.attackby(card, user, params)
+				attackby(card, user, params)
 			return
 
 	if(istype(I, /obj/item/riding_offhand))
