@@ -2277,6 +2277,16 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/armory)
+"gx" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "gy" = (
 /obj/machinery/shower{
 	dir = 4
@@ -4674,6 +4684,13 @@
 "ng" = (
 /turf/closed/indestructible/syndicate,
 /area/syndicate_mothership/control)
+"nh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/portable_atmospherics/canister,
+/turf/open/floor/plating,
+/area/syndicate_mothership/expansion_bombthreat)
 "ni" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -7022,6 +7039,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/control)
+"uy" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "uA" = (
 /obj/structure/chair{
 	dir = 4
@@ -9925,6 +9951,17 @@
 "CN" = (
 /turf/closed/indestructible/syndicate,
 /area/syndicate_mothership/expansion_bioterrorism)
+"CO" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/machinery/door/puzzle/keycard/syndicate_bio,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/smooth_half{
+	dir = 4
+	},
+/area/syndicate_mothership/expansion_bioterrorism)
 "CQ" = (
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
@@ -10156,17 +10193,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
-"DB" = (
-/obj/effect/turf_decal/siding/wideplating/dark,
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 1
-	},
-/obj/machinery/door/puzzle/keycard/syndicate_bio,
-/obj/structure/fans/tiny,
-/turf/open/floor/iron/smooth_half{
-	dir = 4
-	},
-/area/syndicate_mothership/expansion_bioterrorism)
 "DC" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -11977,16 +12003,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/tdome/arena)
-"IV" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/syndicate_mothership/expansion_bombthreat)
 "IW" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
@@ -12863,15 +12879,6 @@
 /obj/structure/speaking_tile,
 /turf/closed/mineral/ash_rock,
 /area/awaymission/errorroom)
-"Ma" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/syndicate_mothership/expansion_bombthreat)
 "Mb" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/siding/red/corner{
@@ -12897,13 +12904,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
-"Me" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/machinery/portable_atmospherics/canister/tier_2,
-/turf/open/floor/plating,
-/area/syndicate_mothership/expansion_bombthreat)
 "Mg" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Closet"
@@ -15164,13 +15164,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
-"St" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/machinery/portable_atmospherics/canister/tier_2,
-/turf/open/floor/plating,
-/area/syndicate_mothership/expansion_bombthreat)
 "Su" = (
 /turf/open/floor/iron,
 /area/centcom/supplypod)
@@ -18032,6 +18025,13 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
+"ZU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/portable_atmospherics/canister,
+/turf/open/floor/plating,
+/area/syndicate_mothership/expansion_bombthreat)
 "ZV" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
@@ -24668,7 +24668,7 @@ we
 br
 Bq
 fQ
-DB
+CO
 qM
 uk
 EE
@@ -25440,8 +25440,8 @@ ay
 Bq
 Fn
 kv
-Ma
-IV
+uy
+gx
 ki
 Td
 Zp
@@ -26725,7 +26725,7 @@ ng
 tz
 ng
 kv
-Me
+ZU
 bF
 vc
 Ia
@@ -26982,7 +26982,7 @@ pp
 Go
 KW
 kv
-St
+nh
 cQ
 ZC
 FP
