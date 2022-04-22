@@ -1,0 +1,4 @@
+author: "YakumoChen"
+delete-after: True
+changes: 
+  - bugfix: "Removed a stacked RPlasmaGlass window on Ice Box"
