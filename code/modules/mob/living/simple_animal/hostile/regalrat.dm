@@ -1,3 +1,4 @@
+
 /mob/living/simple_animal/hostile/regalrat
 	name = "feral regal rat"
 	desc = "An evolved rat, created through some strange science. They lead nearby rats with deadly efficiency to protect their kingdom. Not technically a king."
@@ -127,7 +128,7 @@
 		return
 	if (QDELETED(target))
 		return
-	if(istype(target, /obj/machinery/door/airlock))
+	if(istype(target, /obj/machinery/door/airlock) && !opening_airlock)
 		pry_door(target)
 		return
 
@@ -167,12 +168,10 @@
  * accessible doors, something which is common in certain rat king spawn points.
  */
 /mob/living/simple_animal/hostile/regalrat/proc/pry_door(target)
-	if(opening_airlock)
-		return FALSE
-	opening_airlock = TRUE
 	var/obj/machinery/door/airlock/prying_door = target
 	if(!prying_door.density || prying_door.locked || prying_door.welded || prying_door.seal)
 		return FALSE
+	opening_airlock = TRUE
 	visible_message(
 		span_warning("[src] begins prying open the airlock..."),
 		span_notice("You begin digging your claws into the airlock..."),
