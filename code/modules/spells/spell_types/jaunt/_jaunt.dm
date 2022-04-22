@@ -29,9 +29,18 @@
 	if(!.)
 		return FALSE
 	var/area/owner_area = get_area(owner)
-	if(owner_area?.area_flags & NOTELEPORT)
+	var/turf/owner_turf = get_turf(owner)
+	if(!owner_area || !owner_turf)
+		return FALSE // nullspaced?
+
+	if(owner_area.area_flags & NOTELEPORT)
 		if(feedback)
 			to_chat(owner, span_danger("Some dull, universal force is stopping you from jaunting here."))
+		return FALSE
+
+	if(owner_turf?.turf_flags & NOJAUNT)
+		if(feedback)
+			to_chat(owner, span_danger("An otherwordly force is preventing you from jaunting here."))
 		return FALSE
 
 	return isliving(owner)
@@ -46,7 +55,8 @@
  */
 /datum/action/cooldown/spell/jaunt/proc/enter_jaunt(mob/living/jaunter, turf/loc_override)
 	var/obj/effect/dummy/phased_mob/jaunt = new jaunt_type(loc_override || get_turf(jaunter), jaunter)
-	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, jaunt, src)
+	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, src, jaunt)
+	spell_requirements &= ~SPELL_REQUIRES_UNPHASED
 	return jaunt
 
 /**
@@ -63,12 +73,13 @@
 		return FALSE
 
 	if(jaunt.jaunter != unjaunter)
-		CRASH("Jaunt spell attempted to exit_jaunt with an invalid jaunter, somehow.")
+		CRASH("Jaunt spell attempted to exit_jaunt with an invalid unjaunter, somehow.")
 
 	if(loc_override)
 		jaunt.forceMove(loc_override)
 	jaunt.eject_jaunter()
 	SEND_SIGNAL(unjaunter, COMSIG_MOB_AFTER_EXIT_JAUNT, src)
+	spell_requirements |= SPELL_REQUIRES_UNPHASED
 	return TRUE
 
 /// Simple helper to check if the passed mob is currently jaunting or not

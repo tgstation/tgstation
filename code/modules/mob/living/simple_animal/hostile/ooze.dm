@@ -282,10 +282,6 @@
 	obj_damage = 15
 	deathmessage = "deflates and spills its vital juices!"
 	edible_food_types = MEAT | VEGETABLES
-	///The ability lets you envelop a carbon in a healing cocoon. Useful for saving critical carbons.
-
-	///The ability to shoot a mending globule, a sticky projectile that heals over time.
-	var/obj/effect/proc_holder/globules/globules
 
 /mob/living/simple_animal/hostile/ooze/grapes/Initialize(mapload)
 	. = ..()

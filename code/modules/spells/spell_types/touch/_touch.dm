@@ -16,7 +16,7 @@
 	var/drop_message = span_notice("You draw the power out of your hand.")
 
 /datum/action/cooldown/spell/touch/Destroy()
-	// If we have an owner, the hand is hand..led in Remove()
+	// If we have an owner, the hand is hand..led in Remove() (which Destroy() calls)
 	if(!owner)
 		QDEL_NULL(attached_hand)
 	return ..()
@@ -178,7 +178,7 @@
 			do_hand_hit(hand, victim, caster)
 
 		// Cancel chain will do nothing,
-		if(SECONDARY_ATTACK_CANCEL_CHAIN)
+		if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 			return
 
 /**

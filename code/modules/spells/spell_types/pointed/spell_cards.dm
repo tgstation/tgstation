@@ -8,10 +8,10 @@
 	school = SCHOOL_EVOCATION
 	cooldown_time = 5 SECONDS
 	cooldown_reduction_per_rank = 1 SECONDS
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	invocation = "Sigi'lu M'Fan 'Tasia!"
 	invocation_type = INVOCATION_SHOUT
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
 	base_icon_state = "spellcard"
 	cast_range = 40
@@ -38,6 +38,9 @@
 
 /datum/action/cooldown/spell/pointed/projectile/spell_cards/on_activation(mob/on_who)
 	. = ..()
+	if(!.)
+		return
+
 	QDEL_NULL(lockon_component)
 	lockon_component = owner.AddComponent( \
 		/datum/component/lockon_aiming, \
