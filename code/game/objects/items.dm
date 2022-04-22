@@ -346,8 +346,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/examine_more(mob/user)
 	. = ..()
-	if(!HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
-		return
+	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
+		research_scan(user)
+		. += research_scan()
+
+/obj/item/proc/research_scan(mob/user)
 	/// Research prospects, including boostable nodes and point values. Deliver to a console to know whether the boosts have already been used.
 	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
 	///Separator between the items on the list
@@ -381,7 +384,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	else
 		research_msg += "None"
 	research_msg += "."
-	. += research_msg.Join()
+	return research_msg.Join()
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
