@@ -33,6 +33,7 @@
 	var/obj/item/clothing/neck/wear_neck = null
 	var/obj/item/tank/internal = null
 	var/obj/item/clothing/head = null
+	var/obj/item/clothing/wear_suit = null
 
 	///only used by humans
 	var/obj/item/clothing/gloves = null

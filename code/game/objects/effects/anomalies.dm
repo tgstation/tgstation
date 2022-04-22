@@ -419,4 +419,75 @@
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += T
 
+/obj/effect/anomaly/delimber
+	name = "delimber anomaly"
+	icon_state = "delimber_anomaly"
+	drops_core = FALSE
+	var/ticks = 0
+	var/releasedelay = 8
+	var/range = 5
+	///Lists for zones and bodyparts to swap and randomize
+	var/static/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/static/list/chests
+	var/static/list/heads
+	var/static/list/l_arms
+	var/static/list/r_arms
+	var/static/list/l_legs
+	var/static/list/r_legs
+	var/static/list/organs
+
+/obj/effect/anomaly/delimber/Initialize(mapload, new_lifespan, drops_core)
+	. = ..()
+	if(!chests)
+		chests = subtypesof(/obj/item/bodypart/chest)
+	if(!heads)
+		heads = subtypesof(/obj/item/bodypart/head)
+	if(!l_arms)
+		l_arms = subtypesof(/obj/item/bodypart/l_arm)
+	if(!r_arms)
+		r_arms = subtypesof(/obj/item/bodypart/r_arm)
+	if(!l_legs)
+		l_legs = subtypesof(/obj/item/bodypart/l_leg)
+	if(!r_legs)
+		r_legs = subtypesof(/obj/item/bodypart/r_leg)
+
+/obj/effect/anomaly/delimber/anomalyEffect(delta_time)
+	. = ..()
+	ticks += delta_time
+	if(ticks < releasedelay)
+		return
+	ticks -= releasedelay
+
+	swap_parts(range)
+
+/obj/effect/anomaly/delimber/detonate()
+	swap_parts(range * 3)
+	swap_parts(range * 2)
+	swap_parts(range)
+
+/obj/effect/anomaly/delimber/proc/swap_parts(swap_range)
+	for(var/mob/living/carbon/nearby in range(swap_range, src))
+		if(nearby.wear_suit?.clothing_flags & BIOHAZARDS_SAFE && nearby.head?.clothing_flags & BIOHAZARDS_SAFE)
+			continue //We are protected
+		var/picked_zone = pick(zones)
+		var/obj/item/bodypart/picked_user_part = nearby.get_bodypart(picked_zone)
+		var/obj/item/bodypart/picked_part
+		switch(picked_zone)
+			if(BODY_ZONE_HEAD)
+				picked_part = pick(heads)
+			if(BODY_ZONE_CHEST)
+				picked_part = pick(chests)
+			if(BODY_ZONE_L_ARM)
+				picked_part = pick(l_arms)
+			if(BODY_ZONE_R_ARM)
+				picked_part = pick(r_arms)
+			if(BODY_ZONE_L_LEG)
+				picked_part = pick(l_legs)
+			if(BODY_ZONE_R_LEG)
+				picked_part = pick(r_legs)
+		picked_user_part.change_bodypart(picked_part)
+		qdel(picked_user_part)
+		nearby.update_body(TRUE)
+		to_chat(nearby, span_notice("Something has changed about you!"))
+
 #undef ANOMALY_MOVECHANCE
