@@ -1,0 +1,5 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Airlock Controllers now display their name in their GUI menu."
+  - bugfix: "Airlock Controllers' GUI menu now doesn't pop back up after being closed if it update while you'll still in range."

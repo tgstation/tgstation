@@ -444,6 +444,18 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/vim
+	name = "Vim"
+	result = /obj/vehicle/sealed/car/vim
+	reqs = list(/obj/item/clothing/head/helmet/space/eva = 1,
+				/obj/item/bodypart/l_leg/robot = 1,
+				/obj/item/bodypart/r_leg/robot = 1,
+				/obj/item/flashlight = 1,
+				/obj/item/assembly/voice = 1)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 6 SECONDS //Has a four second do_after when building manually
+	category = CAT_ROBOT
+
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto

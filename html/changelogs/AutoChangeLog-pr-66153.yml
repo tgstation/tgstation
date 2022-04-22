@@ -1,0 +1,8 @@
+author: "B4CKU"
+delete-after: True
+changes: 
+  - bugfix: "fixed a bug with Vim overlays"
+  - qol: "attempting to enter Vim while not a small creature now throws a balloon alert"
+  - qol: "Vim can now be assembled using the crafting menu"
+  - expansion: "Vim can now be used as a circuit shell"
+  - balance: "small creatures can now pilot Vim"

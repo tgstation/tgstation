@@ -338,6 +338,15 @@
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
 
+// /obj/vehicle/sealed/car/vim signals
+
+///from /datum/action/vehicle/sealed/noise/chime/Trigger(): ()
+#define COMSIG_VIM_CHIME_USED "vim_chime_used"
+///from /datum/action/vehicle/sealed/noise/buzz/Trigger(): ()
+#define COMSIG_VIM_BUZZ_USED "vim_buzz_used"
+///from /datum/action/vehicle/sealed/headlights/vim/Trigger(): (headlights_on)
+#define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
+
 // /obj/vehicle/sealed/mecha signals
 
 ///sent from mecha action buttons to the mecha they're linked to

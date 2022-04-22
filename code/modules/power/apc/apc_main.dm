@@ -546,7 +546,7 @@
 		INVOKE_ASYNC(src, .proc/break_lights)
 
 /obj/machinery/power/apc/proc/break_lights()
-	for(var/obj/machinery/light/breaked_light as anything in area)
+	for(var/obj/machinery/light/breaked_light in area)
 		breaked_light.on = TRUE
 		breaked_light.break_light_tube()
 		stoplag()

@@ -73,8 +73,10 @@
 #define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"
 ///Called when a movable is hit by a plunger in layer mode, from /obj/item/plunger/attack_atom()
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
-///Called when a movable is teleported from `do_teleport()`: (destination, channel)
+///Called when a movable is being teleported from `do_teleport()`: (destination, channel)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"
+///Called after a movable is teleported from `do_teleport()`: ()
+#define COMSIG_MOVABLE_POST_TELEPORT "movable_post_teleport"
 /// from /mob/living/can_z_move, sent to whatever the mob is buckled to. Only ridable movables should be ridden up or down btw.
 #define COMSIG_BUCKLED_CAN_Z_MOVE "ridden_pre_can_z_move"
 	#define COMPONENT_RIDDEN_STOP_Z_MOVE 1
