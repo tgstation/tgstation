@@ -56,13 +56,12 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
-	var/calculated_bin_rating
+	var/calculated_bin_rating = 0
 	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
 		calculated_bin_rating += bin.rating
 	heat_capacity = 7500 * ((calculated_bin_rating - 1) ** 2)
-	min_temperature = T20C
-	max_temperature = T20C
-	var/calculated_laser_rating
+
+	var/calculated_laser_rating = 0
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
 		calculated_laser_rating += laser.rating
 	min_temperature = max(T0C - (base_cooling + calculated_laser_rating * 15), TCMB) //73.15K with T1 stock parts
@@ -108,8 +107,8 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..()
 	. += span_notice("With the panel open:")
-	. += span_notice("-use a wrench with left-click to rotate [src] and right-click to unanchor it.")
-	. += span_notice("-use a multitool with left-click to change the piping layer and right-click to change the piping color.")
+	. += span_notice(" -Use a wrench with left-click to rotate [src] and right-click to unanchor it.")
+	. += span_notice(" -Use a multitool with left-click to change the piping layer and right-click to change the piping color.")
 	. += span_notice("The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).")
 
 	if(in_range(user, src) || isobserver(user))
@@ -167,7 +166,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
-		to_chat("You can't open [src] while it's on!")
+		to_chat(user, span_notice("You can't open [src] while it's on!"))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!anchored)
 		to_chat(user, span_notice("Anchor [src] first!"))
@@ -196,6 +195,24 @@
 	set_init_directions()
 	update_appearance()
 	return TRUE
+
+/obj/machinery/atmospherics/components/unary/thermomachine/multitool_act_secondary(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		return
+	color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
+	pipe_color = GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]]
+	visible_message("<span class='notice'>You set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]].")
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/thermomachine/proc/check_pipe_on_turf()
+	for(var/obj/machinery/atmospherics/device in get_turf(src))
+		if(device == src)
+			continue
+		if(device.piping_layer == piping_layer)
+			visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
+			return TRUE
+	return FALSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/proc/change_pipe_connection(disconnect)
 	if(disconnect)
@@ -228,34 +245,6 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return
 
-/obj/machinery/atmospherics/components/unary/thermomachine/multitool_act_secondary(mob/living/user, obj/item/tool)
-	if(!panel_open)
-		return
-	color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
-	pipe_color = GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]]
-	visible_message("<span class='notice'>You set [src] pipe color to [GLOB.pipe_color_name[pipe_color]].")
-	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
-/obj/machinery/atmospherics/components/unary/thermomachine/proc/check_pipe_on_turf()
-	for(var/obj/machinery/atmospherics/device in get_turf(src))
-		if(device == src)
-			continue
-		if(device.piping_layer == piping_layer)
-			visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
-			return TRUE
-	return FALSE
-
-/obj/machinery/atmospherics/components/unary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
-	if(!istype(multitool))
-		return
-	if(panel_open && !anchored)
-		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
-		to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
-		update_appearance()
-
-	qdel(src)
-
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user)
 	if(interactive)
 		return ..()
@@ -281,9 +270,6 @@
 	var/datum/gas_mixture/port = airs[1]
 	data["temperature"] = port.temperature
 	data["pressure"] = port.return_pressure()
-
-	var/hacked = (obj_flags & EMAGGED) ? TRUE : FALSE
-	data["hacked"] = hacked
 	return data
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_act(action, params)
