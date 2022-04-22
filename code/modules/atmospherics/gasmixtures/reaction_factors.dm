@@ -130,7 +130,7 @@
 		/datum/gas/tritium = "5 moles of tritium needs to be present for the reaction to occur. Tritium is consumed at 5 reaction rate",
 		/datum/gas/hypernoblium = "Hyper-Noblium is produced at 1 reaction rate",
 		"Energy" = "[NOBLIUM_FORMATION_ENERGY] joules of energy is released per reaction rate.",
-		/datum/gas/bz = "BZ is not consumed in the reaction but will lower the amount of energy released",
+		/datum/gas/bz = "BZ is not consumed in the reaction but will lower the amount of energy released. It also reduces amount of trit consumed by a ratio between trit and bz, greater bz than trit will reduce more.",
 		"Temperature" = "Can only occur between [NOBLIUM_FORMATION_MIN_TEMP] - [NOBLIUM_FORMATION_MAX_TEMP] kelvin",
 	)
 

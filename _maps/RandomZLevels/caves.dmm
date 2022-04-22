@@ -739,7 +739,7 @@
 /area/awaymission/caves/northblock)
 "dA" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dB" = (
@@ -989,8 +989,8 @@
 /area/awaymission/caves/listeningpost)
 "eK" = (
 /obj/structure/table,
-/obj/item/gun/energy/kinetic_accelerator,
-/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
@@ -1059,7 +1059,9 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "fq" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
@@ -1089,7 +1091,9 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "fA" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fB" = (

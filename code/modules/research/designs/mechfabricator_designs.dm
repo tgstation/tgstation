@@ -1183,11 +1183,11 @@
 	build_path = /obj/item/mod/module/magboot
 	department_type = MODULE_ENGINEERING
 
-/datum/design/module/mod_holster
-	name = "MOD Module: Holster"
-	id = "mod_holster"
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
-	build_path = /obj/item/mod/module/holster
+/datum/design/module/mod_mag_harness
+	name = "MOD Module: Magnetic Harness"
+	id = "mod_mag_harness"
+	materials = list(/datum/material/iron = 1500, /datum/material/silver = 500)
+	build_path = /obj/item/mod/module/magnetic_harness
 	department_type = MODULE_SECURITY
 
 /datum/design/module/mod_tether

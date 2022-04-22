@@ -46,8 +46,12 @@
 /turf/open/floor/plating,
 /area/mafia)
 "l" = (
-/obj/item/bedsheet/brown,
-/obj/structure/bed,
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "m" = (
@@ -60,8 +64,12 @@
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "o" = (
-/obj/item/bedsheet/blue,
-/obj/structure/bed,
+/obj/item/bedsheet/blue{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "p" = (
@@ -165,8 +173,12 @@
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "H" = (
-/obj/item/bedsheet/black,
-/obj/structure/bed,
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/holofloor/wood,
 /area/mafia)
 "I" = (

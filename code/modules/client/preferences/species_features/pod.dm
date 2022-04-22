@@ -8,7 +8,7 @@
 /datum/preference/choiced/pod_hair/init_possible_values()
 	var/list/values = list()
 
-	var/icon/pod_head = icon('icons/mob/human_parts.dmi', "pod_head_m")
+	var/icon/pod_head = icon('icons/mob/human_parts_greyscale.dmi', "pod_head_m")
 
 	for (var/pod_name in GLOB.pod_hair_list)
 		var/datum/sprite_accessory/pod_hair = GLOB.pod_hair_list[pod_name]
@@ -20,6 +20,7 @@
 		icon_with_hair.Blend(icon_adj, ICON_OVERLAY)
 		icon_with_hair.Scale(64, 64)
 		icon_with_hair.Crop(15, 64, 15 + 31, 64 - 31)
+		icon_with_hair.Blend(COLOR_GREEN, ICON_MULTIPLY)
 
 		values[pod_hair.name] = icon_with_hair
 

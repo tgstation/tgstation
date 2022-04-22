@@ -8,23 +8,24 @@
  * Aristocrat's Way
  * > Sidepaths:
  *   Void Cloak
- *   Armorer's Ritual
+ *   Shattered Ritual
  *
  * Mark of Void
+ * Ritual of Knowledge
  * Void Phase
  * > Sidepaths:
  *   Carving Knife
- *   Mawed Crucible
+ *   Blood Siphon
  *
  * Seeking blade
  * Void Pull
  * > Sidepaths:
- *   Rusted Ritual
- *   Blood Siphon
+ *   Cleave
+ *   Maid in the Mirror
  *
  * Waltz at the End of Time
  */
-/datum/heretic_knowledge/limited_amount/base_void
+/datum/heretic_knowledge/limited_amount/starting/base_void
 	name = "Glimmer of Winter"
 	desc = "Opens up the path of void to you. \
 		Allows you to transmute a knife in sub-zero temperatures into a Void Blade. \
@@ -32,27 +33,16 @@
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
 		I start to realize the emptiness of existance. Something's watching me."
 	next_knowledge = list(/datum/heretic_knowledge/void_grasp)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/limited_amount/base_ash,
-		/datum/heretic_knowledge/limited_amount/base_flesh,
-		/datum/heretic_knowledge/limited_amount/base_rust,
-		/datum/heretic_knowledge/final/ash_final,
-		/datum/heretic_knowledge/final/flesh_final,
-		/datum/heretic_knowledge/final/rust_final,
-	)
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
-	limit = 2
-	cost = 1
-	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_VOID
 
-/datum/heretic_knowledge/limited_amount/base_void/on_research(mob/user)
+/datum/heretic_knowledge/limited_amount/starting/base_void/on_research(mob/user)
 	. = ..()
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	our_heretic.heretic_path = route
 
-/datum/heretic_knowledge/limited_amount/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
 		loc.balloon_alert(user, "ritual failed, invalid location!")
 		return FALSE
@@ -66,7 +56,7 @@
 
 /datum/heretic_knowledge/void_grasp
 	name = "Grasp of Void"
-	desc = "Your Masus Grasp will temporarily mute and chill the victim."
+	desc = "Your Mansus Grasp will temporarily mute and chill the victim."
 	gain_text = "I saw the cold watcher who observes me. The chill mounts within me. \
 		They are quiet. This isn't the end of the mystery."
 	next_knowledge = list(/datum/heretic_knowledge/cold_snap)
@@ -89,7 +79,7 @@
 	var/turf/open/target_turf = get_turf(carbon_target)
 	target_turf.TakeTemperature(-20)
 	carbon_target.adjust_bodytemperature(-40)
-	carbon_target.silent += 4
+	carbon_target.silent += 5
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
@@ -98,10 +88,10 @@
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
 	next_knowledge = list(
-		/datum/heretic_knowledge/void_mark,
+		/datum/heretic_knowledge/mark/void_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/void_cloak,
-		/datum/heretic_knowledge/armor,
+		/datum/heretic_knowledge/limited_amount/risen_corpse,
 	)
 	cost = 1
 	route = PATH_VOID
@@ -114,49 +104,18 @@
 	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
 	REMOVE_TRAIT(user, TRAIT_NOBREATH, type)
 
-/datum/heretic_knowledge/void_mark
+/datum/heretic_knowledge/mark/void_mark
 	name = "Mark of Void"
 	desc = "Your Mansus Grasp now applies the Mark of Void. The mark is triggered from an attack with your Void Blade. \
 		When triggered, silences the victim and lowers their body temperature significantly."
 	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
 		my senses began to betray me. My mind is my own enemy."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/void)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/rust_mark,
-		/datum/heretic_knowledge/ash_mark,
-		/datum/heretic_knowledge/flesh_mark,
-	)
-	cost = 2
 	route = PATH_VOID
-
-/datum/heretic_knowledge/void_mark/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-
-/datum/heretic_knowledge/void_mark/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
-
-/datum/heretic_knowledge/void_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
-
-	target.apply_status_effect(/datum/status_effect/eldritch/void)
-
-/datum/heretic_knowledge/void_mark/proc/on_eldritch_blade(mob/living/user, mob/living/target)
-	SIGNAL_HANDLER
-
-	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
-	if(!istype(mark))
-		return
-
-	mark.on_effect()
+	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/knowledge_ritual/void
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/knowledge_ritual/ash,
-		/datum/heretic_knowledge/knowledge_ritual/rust,
-		/datum/heretic_knowledge/knowledge_ritual/flesh,
-	)
 	route = PATH_VOID
 
 /datum/heretic_knowledge/spell/void_phase
@@ -166,59 +125,43 @@
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like\
 		nothing leaving a harsh, cold breeze in their wake. They disappear, and I am left in the snow."
 	next_knowledge = list(
-		/datum/heretic_knowledge/void_blade_upgrade,
+		/datum/heretic_knowledge/blade_upgrade/void,
 		/datum/heretic_knowledge/reroll_targets,
+		/datum/heretic_knowledge/spell/blood_siphon,
 		/datum/heretic_knowledge/rune_carver,
-		/datum/heretic_knowledge/crucible,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/void_phase
 	cost = 1
 	route = PATH_VOID
 
-/datum/heretic_knowledge/void_blade_upgrade
+/datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking blade"
 	desc = "You can now attack distant marked targets with your Void Blade, teleporting directly next to them."
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
-	next_knowledge = list(/datum/heretic_knowledge/spell/voidpull)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/ash_blade_upgrade,
-		/datum/heretic_knowledge/flesh_blade_upgrade,
-		/datum/heretic_knowledge/rust_blade_upgrade,
-	)
-	cost = 2
+	next_knowledge = list(/datum/heretic_knowledge/spell/void_pull)
 	route = PATH_VOID
 
-
-/datum/heretic_knowledge/void_blade_upgrade/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, .proc/on_ranged_eldritch_blade)
-
-/datum/heretic_knowledge/void_blade_upgrade/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK)
-
-/datum/heretic_knowledge/void_blade_upgrade/proc/on_ranged_eldritch_blade(mob/living/user, mob/living/target)
-	SIGNAL_HANDLER
-
+/datum/heretic_knowledge/blade_upgrade/void/do_ranged_effects(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(!target.has_status_effect(/datum/status_effect/eldritch))
 		return
 
 	var/dir = angle2dir(dir2angle(get_dir(user, target)) + 180)
 	user.forceMove(get_step(target, dir))
 
-	INVOKE_ASYNC(src, .proc/follow_up_attack, user, target)
+	INVOKE_ASYNC(src, .proc/follow_up_attack, user, target, blade)
 
-/datum/heretic_knowledge/void_blade_upgrade/proc/follow_up_attack(mob/living/user, mob/living/target)
-	var/obj/item/melee/sickly_blade/blade = user.get_active_held_item()
-	blade?.melee_attack_chain(user, target)
+/datum/heretic_knowledge/blade_upgrade/void/proc/follow_up_attack(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
+	blade.melee_attack_chain(user, target)
 
-/datum/heretic_knowledge/spell/voidpull
+/datum/heretic_knowledge/spell/void_pull
 	name = "Void Pull"
 	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
 	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
 		The Aristocrat reveals themself to me again. They tell me I am late. Their pull is immense, I cannot turn back."
 	next_knowledge = list(
 		/datum/heretic_knowledge/final/void_final,
-		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/summon/rusty
+		/datum/heretic_knowledge/spell/cleave,
+		/datum/heretic_knowledge/summon/maid_in_mirror,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/void_pull
 	cost = 1

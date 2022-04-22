@@ -167,7 +167,7 @@ RLD
 		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
-	if(!silo_mats || !silo_mats.mat_container)
+	if(!silo_mats || !silo_mats.mat_container || !silo_link)
 		if(silo_link)
 			to_chat(user, span_alert("Connected silo link is invalid. Reconnect to silo via multitool."))
 			return FALSE

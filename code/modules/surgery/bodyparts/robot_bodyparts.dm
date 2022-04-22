@@ -16,8 +16,8 @@
 	limb_id = "robotic"
 	attack_verb_simple = list("slapped", "punched")
 	inhand_icon_state = "buildpipe"
-	icon_static =  'icons/mob/augmentation/augments.dmi'
-	icon = null
+	icon = 'icons/mob/augmentation/augments.dmi'
+	icon_static = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_arm"
 	is_dimorphic = FALSE
@@ -41,8 +41,8 @@
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	attack_verb_simple = list("slapped", "punched")
 	inhand_icon_state = "buildpipe"
-	icon_static =  'icons/mob/augmentation/augments.dmi'
-	icon = null
+	icon_static = 'icons/mob/augmentation/augments.dmi'
+	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = "robotic"
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_arm"
@@ -67,8 +67,8 @@
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	attack_verb_simple = list("kicked", "stomped")
 	inhand_icon_state = "buildpipe"
-	icon_static =  'icons/mob/augmentation/augments.dmi'
-	icon = null
+	icon_static = 'icons/mob/augmentation/augments.dmi'
+	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = "robotic"
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_leg"
@@ -94,7 +94,7 @@
 	attack_verb_simple = list("kicked", "stomped")
 	inhand_icon_state = "buildpipe"
 	icon_static =  'icons/mob/augmentation/augments.dmi'
-	icon = null
+	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = "robotic"
 	flags_1 = CONDUCT_1
 	icon_state = "borg_r_leg"
@@ -119,7 +119,7 @@
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	inhand_icon_state = "buildpipe"
 	icon_static =  'icons/mob/augmentation/augments.dmi'
-	icon = null
+	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = "robotic"
 	flags_1 = CONDUCT_1
 	icon_state = "borg_chest"
@@ -227,8 +227,8 @@
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	inhand_icon_state = "buildpipe"
 	icon_static = 'icons/mob/augmentation/augments.dmi'
+	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = "robotic"
-	icon = null
 	flags_1 = CONDUCT_1
 	icon_state = "borg_head"
 	is_dimorphic = FALSE
@@ -249,7 +249,6 @@
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
-
 
 /obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
 	if(head_atom == flash1)
