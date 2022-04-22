@@ -3429,8 +3429,9 @@
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
 "aQI" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/spawner/random/maintenance,
-/obj/structure/closet,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aQJ" = (
