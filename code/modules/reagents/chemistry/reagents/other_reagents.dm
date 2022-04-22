@@ -1230,7 +1230,16 @@
 
 /datum/reagent/cryptobiolin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.Dizzy(1)
-	M.set_confusion(clamp(M.get_confusion(), 1, 20))
+
+	// Cryptobiolin adjusts the mob's confusion down to 20 seconds if it's higher,
+	// or up to 1 second if it's lower, but will do nothing if it's in between
+	var/datum/status_effect/confusion/mob_confusion = M.has_status_effect(/datum/status_effect/confusion)
+	if(!mob_confusion || mob_confusion.duration - world.time < 1 SECONDS)
+		M.set_timed_status_effect(1 SECONDS, /datum/status_effect/confusion)
+
+	else if(mob_confusion.duration - world.time > 20 SECONDS)
+		M.set_timed_status_effect(20 SECONDS, /datum/status_effect/confusion)
+
 	..()
 
 /datum/reagent/impedrezene
@@ -1407,7 +1416,7 @@
 		H.blood_volume = max(H.blood_volume - (10 * REM * delta_time), 0)
 	if(DT_PROB(10, delta_time))
 		M.losebreath += 2
-		M.set_confusion(min(M.get_confusion() + 2, 5))
+		M.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/confusion, max_duration = 5 SECONDS)
 	..()
 
 /datum/reagent/nitrium_high_metabolization
@@ -2496,8 +2505,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.get_confusion() < 6)
-		M.set_confusion(clamp(M.get_confusion() + (3 * REM * delta_time), 0, 5))
+	M.adjust_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/confusion, max_duration = 5 SECONDS)
 	if(M.dizziness < 6)
 		M.dizziness = clamp(M.dizziness + (3 * REM * delta_time), 0, 5)
 	if(DT_PROB(10, delta_time))

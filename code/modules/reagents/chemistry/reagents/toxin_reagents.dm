@@ -1176,7 +1176,7 @@
 
 /datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3 * REM * delta_time)
-	M.set_confusion(M.dizziness) //add a tertiary effect here if this is isn't an effective poison.
+	M.set_timed_status_effect(M.dizziness * 1 SECONDS, /datum/status_effect/confusion) //add a tertiary effect here if this is isn't an effective poison.
 	if(current_cycle >= 12 && DT_PROB(4, delta_time))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
 		to_chat(M, span_notice("[tox_message]"))

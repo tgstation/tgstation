@@ -132,19 +132,6 @@
 	//Sometimes you want to look like you're moving with a delay you don't actually have yet
 	visual_delay = 0
 
-	var/confusion = L.get_confusion()
-	if(confusion)
-		var/newdir = 0
-		if(confusion > 40)
-			newdir = pick(GLOB.alldirs)
-		else if(prob(confusion * 1.5))
-			newdir = angle2dir(dir2angle(direct) + pick(90, -90))
-		else if(prob(confusion * 3))
-			newdir = angle2dir(dir2angle(direct) + pick(45, -45))
-		if(newdir)
-			direct = newdir
-			new_loc = get_step(L, direct)
-
 	. = ..()
 
 	if((direct & (direct - 1)) && mob.loc == new_loc) //moved diagonally successfully
