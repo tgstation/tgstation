@@ -137,16 +137,21 @@ There is no strict process when it comes to merging pull requests. Pull requests
 * After leaving reviews on an open pull request, maintainers may convert it to a draft. Once you have addressed all their comments to the best of your ability, feel free to mark the pull as `Ready for Review` again.
 
 ## Justifying Your Changes
+
 You must explain why you are submitting the pull request in the "Why It's Good For The Game" section of your pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting your PR wholesale, or requiring that you fix it before it is merged. A reasonable justification for your changes is a requirement. 
 
 Your "Why It's Good For The Game" section must make a good faith and reasonable attempt to:
 * Assert and argue that the current state of affairs in the game is not good, and needs changing.
 * Assert and argue that your pull request will either fix or help fix the problems you described.
-* Assert and argue that any downsides introduced by your solution as a matter of design, are worth it, and why they are worth it.
+* Assert and argue that any downsides introduced by your solution as a matter of design, if any, are worth it, and why they are worth it.
 
-More controversial changes have higher standards for justification to be considered reasonable. A bugfix does not typically require any effort at all in justification as its worth is usually self evident, however a major feature overhaul or balance change may require significant argumentation to adequately justify its supposed benefit to the game.
+More controversial changes have higher standards for justification to be considered reasonable. A bugfix for example does not typically require any effort at all in justification as its value to the game is usually self evident, however a major feature overhaul or balance change may require significant explanation to adequately justify its supposed benefit to the game.
 
-This does not change if your pull request is supported and/or requested by maintainers before it is opened. This does not change if your pull request is supported and/or requested by head coders before it is opened. This does not change if your pull request has a design document that justifies your changes inside it. You must always properly justify changes (that need justification) within the pull request, even if you also do it elsewhere.
+This is still a requirement if your pull request is supported and/or requested by maintainers before it is opened. This is still a requirement if your pull request is supported and/or requested by head coders before it is opened. The purpose of arguing for your changes is not to convince just the maintainer team of its merits, it is to document the "why" behind your changes to the game to a necessary level of detail. The reason behind a change must exist as it is the purpose of this codebase to improve the game, thus said reasoning must be adequately stated and explained.
+
+This is also still a requirement if your pull request has a corresponding design document that justifies your changes inside it. You must always properly justify changes (those that actually need justification) within the pull request, even if you also do it elsewhere. This is to ensure that:
+1. All reviewers can easily see the reasoning behind your changes on the pull request itself, no reliance on other sites required.
+2. The actual, manifested implementation of the idea behind the design document is being justified after said implementation is actually realized. This is in contrast to any reasoning put on the design document itself, which very well may have been made before any work was done on it, possibly even by an author different from the author of the pull request. Any idea in the design document may have had compromises put into it due to complications not seen in the original vision, thus the current state of the implementation (the pull request as it stands) must be defended, explained, and ultimately justified in and of itself. Of course, you should still list the design document the pull request is implementing, and may even use arguments from the design document if said arguments are applicable to the current reality of your proposed changes.
 
 ## Good Boy Points
 
