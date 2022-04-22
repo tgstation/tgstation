@@ -175,7 +175,7 @@
  * * redeemer The mob that is redeeming the mining equipment
  */
 /obj/machinery/mineral/equipment_vendor/proc/redeem_voucher(obj/item/mining_voucher/voucher, mob/redeemer)
-	var/list/set_types = list()
+	var/static/list/set_types = list()
 	var/list/items = list()
 	for(var/datum/voucher_set/current_set as anything in subtypesof(/datum/voucher_set))
 		set_types[initial(current_set.name)] = new current_set
@@ -201,7 +201,7 @@
  *
  * * Arguments:
  * * voucher The mining voucher that is being used to redeem a mining equipment
- * * redeemer The mob interacting with the menu
+ * * redeemer The living mob interacting with the menu
  */
 /obj/machinery/mineral/equipment_vendor/proc/check_menu(obj/item/mining_voucher/voucher, mob/living/redeemer)
 	if(!istype(redeemer))
