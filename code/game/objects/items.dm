@@ -347,8 +347,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/examine_more(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
-		research_scan(user)
-		. += research_scan()
+		. += research_scan(user)
 
 /obj/item/proc/research_scan(mob/user)
 	/// Research prospects, including boostable nodes and point values. Deliver to a console to know whether the boosts have already been used.
