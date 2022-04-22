@@ -1,29 +1,54 @@
-/// A status effect used for specifying confusion on a living mob.
-/// Created automatically with /mob/living/set_confusion.
+/// The threshold in which all of our movements are fully randomized, in seconds.
+#define CONFUSION_FULL_THRESHOLD 40
+/// A multiplier applied on how much time is left (in seconds) that determines the chance of moving sideways randomly
+#define CONFUSION_SIDEWAYS_MOVE_PROB_PER_SECOND 1.5
+/// A multiplier applied on how much time is left (in seconds) that determines the chance of moving diagonally randomly
+#define CONFUSION_DIAGONAL_MOVE_PROB_PER_SECOND 3
+
+/// A status effect used for adding confusion to a mob.
 /datum/status_effect/confusion
 	id = "confusion"
 	alert_type = null
-	/// How strong the confusion effect is on us.
-	/// The longer duration remaining, the stronger the effect.
-	var/strength = 1
 
-/datum/status_effect/confusion/on_creation(mob/living/new_owner, duration = 10 SECONDS, strength = 1)
-	set_strength(strength)
-	set_duration(duration, adjust_strength = FALSE)
+/datum/status_effect/confusion/on_creation(mob/living/new_owner, duration = 10 SECONDS)
+	src.duration = duration
 	return ..()
 
-/datum/status_effect/confusion/tick()
-	if(duration - world.time >= 40 SECONDS)
-		set_strength(3)
+/datum/status_effect/confusion/on_apply()
+	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_confusion)
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/on_move)
+	return TRUE
 
-/datum/status_effect/confusion/proc/set_strength(new_strength)
-	if(!isnum(new_strength))
-		CRASH("")
+/datum/status_effect/confusion/on_remove()
+	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_CLIENT_PRE_MOVE))
 
-	strength = new_strength
+/// Removes all of our confusion (self terminate) on signal
+/datum/status_effect/confusion/proc/remove_confusion(datum/source)
+	SIGNAL_HANDLER
 
-/datum/status_effect/confusion/proc/set_strength(new_duration)
-	if(!isnum(new_duration))
-		CRASH("")
+	qdel(src)
 
-	duration = new_duration
+/// Signal proc for [COMSIG_MOB_CLIENT_PRE_MOVE]. We have a chance to mix up our movement pre-move with confusion.
+/datum/status_effect/confusion/proc/on_move(datum/source, list/move_args)
+	SIGNAL_HANDLER
+
+	// How much time is left in the duration, in seconds.
+	var/time_left = (duration - world.time) / 10
+	var/new_dir
+
+	if(time_left > FULLY_CONFUSED_THRESHOLD)
+		new_dir = pick(GLOB.alldirs)
+
+	else if(prob(time_left * CONFUSION_SIDEWAYS_MOVE_PROB_PER_SECOND))
+		new_dir = angle2dir(dir2angle(direct) + pick(90, -90))
+
+	else if(prob(time_left * CONFUSION_DIAGONAL_MOVE_PROB_PER_SECOND))
+		new_dir = angle2dir(dir2angle(direct) + pick(45, -45))
+
+	if(!isnull(new_dir))
+		move_args[MOVE_ARG_NEW_LOC] = get_step(owner, new_dir)
+		move_args[MOVE_ARG_DIRECTION] = new_dir
+
+#undef FULLY_CONFUSED_THRESHOLD
+#undef CONFUSION_SIDEWAYS_MOVE_PROB_PER_SECOND
+#undef CONFUSION_DIAGONAL_MOVE_PROB_PER_SECOND
