@@ -16,6 +16,8 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	var/list/requirements
 	var/name = "reaction"
 	var/id = "r"
+	var/desc = ""
+	var/list/factor
 
 /datum/electrolyzer_reaction/proc/react(turf/location, datum/gas_mixture/air_mixture, working_power)
 	return
@@ -35,8 +37,15 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 /datum/electrolyzer_reaction/h2o_conversion
 	name = "H2O Conversion"
 	id = "h2o_conversion"
+	desc = "Conversion of H2o into O2 and H2"
 	requirements = list(
 		/datum/gas/water_vapor = MINIMUM_MOLE_COUNT
+	)
+	factor = list(
+		/datum/gas/water_vapor = "H2O is consumed at 2 reaction rate",
+		/datum/gas/oxygen = "Oxygen is produced at 1 reaction rate",
+		/datum/gas/hydrogen = "H2 is produced at 2 reaction rate",
+		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
 
 /datum/electrolyzer_reaction/h2o_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power)
@@ -50,9 +59,16 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 /datum/electrolyzer_reaction/nob_conversion
 	name = "Hypernob conversion"
 	id = "nob_conversion"
+	desc = "Conversion of Hypernoblium into Antinoblium"
 	requirements = list(
 		/datum/gas/hypernoblium = MINIMUM_MOLE_COUNT,
 		"MAX_TEMP" = 150
+	)
+	factor = list(
+		/datum/gas/hypernoblium = "Hypernoblium is consumed at 1 reaction rate",
+		/datum/gas/antinoblium = "Antinoblium is produced at 0.5 reaction rate",
+		"Temperature" = "Can only occur under 150 kelvin.",
+		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
 
 /datum/electrolyzer_reaction/nob_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power)
@@ -65,10 +81,19 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 /datum/electrolyzer_reaction/halon_generation
 	name = "Halon generation"
 	id = "halon_generation"
+	desc = "Production of halon from CO2 and N2O"
 	requirements = list(
 		/datum/gas/carbon_dioxide = MINIMUM_MOLE_COUNT,
 		/datum/gas/nitrous_oxide = MINIMUM_MOLE_COUNT,
 		"MAX_TEMP" = 230
+	)
+	factor = list(
+		/datum/gas/carbon_dioxide = "CO2 is consumed at 2 reaction rate",
+		/datum/gas/nitrous_oxide = "N2O is consumed at 1 reaction rate",
+		/datum/gas/halon = "Halon is produced at 1 reaction rate",
+		"Energy" = "300 joules of energy is released per reaction rate",
+		"Temperature" = "Can only occur under 230 kelvin.",
+		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
 
 /datum/electrolyzer_reaction/halon_generation/react(turf/location, datum/gas_mixture/air_mixture, working_power)
