@@ -1,5 +1,11 @@
-//Narcolepsy: Causes drowsiness and sleep.
-
+/*Narcolepsy
+ * Slight reduction to stealth
+ * Reduces resistance
+ * Greatly reduces stage speed
+ * No change to transmissibility
+ * Fatal level
+ * Bonus: Causes drowsiness and sleep.
+*/
 /datum/symptom/narcolepsy
 	name = "Narcolepsy"
 	desc = "The virus causes a hormone imbalance, making the host sleepy and narcoleptic."

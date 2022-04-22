@@ -1,5 +1,11 @@
-//Headache: Displays an annoying message! Should be used for buffing your disease.
-
+/*Headache
+ * Slightly reduces stealth
+ * Increases resistance tremendously
+ * Increases stage speed
+ * No change to transmissibility
+ * Low level
+ * Bonus: Displays an annoying message! Should be used for buffing your disease.
+*/
 /datum/symptom/headache
 	name = "Headache"
 	desc = "The virus causes inflammation inside the brain, causing constant headaches."

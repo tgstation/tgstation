@@ -1,5 +1,10 @@
-//Weight Loss: Drains nutrition from the host
-
+/*Weight Loss
+ * Reduces stealth
+ * Increases resistance
+ * Reduces stage speed
+ * Reduces transmissibility
+ * Bonus: Drains nutrition from the host
+*/
 /datum/symptom/weight_loss
 	name = "Weight Loss"
 	desc = "The virus mutates the host's metabolism, making it almost unable to gain nutrition from food."

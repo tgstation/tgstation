@@ -1,5 +1,12 @@
 #define CHILLS_CHANGE "chills"
-//Chills: Cools down your body.
+/** Chills
+ * No change to stealth.
+ * Increases resistance.
+ * Increases stage speed.
+ * Increases transmissibility
+ * Low level
+ * Bonus: Cools down your body.
+ */
 
 /datum/symptom/chills
 	name = "Chills"

@@ -1,5 +1,11 @@
-//Polyvitiligo: Makes the mob gain a random crayon powder colorful reagent.
-
+/*Polyvitiligo
+ * Slight reduction to stealth
+ * Greatly increases resistance
+ * Slightly increases stage speed
+ * Increases transmissibility
+ * Critical level
+ * Bonus: Makes the mob gain a random crayon powder colorful reagent.
+*/
 /datum/symptom/polyvitiligo
 	name = "Polyvitiligo"
 	desc = "The virus replaces the melanin in the skin with reactive pigment."

@@ -1,4 +1,11 @@
-//Choking: Inflicts spikes of oxyloss
+/**Choking
+ * Very very noticable.
+ * Lowers resistance
+ * Decreases stage speed
+ * Greatly decreases transmissibility
+ * Moderate Level.
+ * Bonus: Inflicts spikes of oxyloss
+ */
 
 /datum/symptom/choking
 	name = "Choking"

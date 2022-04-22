@@ -1,4 +1,11 @@
-//Voice Change: Changes the voice of the affected mob. Causing confusion in communication.
+/*Voice Change
+ * Slight stealth reduction
+ * Reduces resistance
+ * Reduces stage speed
+ * Increases transmissibility
+ * Fatal level
+ * Bonus: Changes the voice of the affected mob. Causing confusion in communication.
+*/
 
 /datum/symptom/voice_change
 	name = "Voice Change"

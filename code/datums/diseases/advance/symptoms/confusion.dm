@@ -1,5 +1,11 @@
-//Confusion: Makes the affected mob be confused for short periods of time.
-
+/**Confusion
+ * Slightly increases stealth
+ * Slightly lowers resistance
+ * Decreases stage speed
+ * No effect to transmissibility
+ * Intense level
+ * Bonus: Makes the affected mob be confused for short periods of time.
+ */
 /datum/symptom/confusion
 	name = "Confusion"
 	desc = "The virus interferes with the proper function of the neural system, leading to bouts of confusion and erratic movement."

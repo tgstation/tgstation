@@ -1,5 +1,11 @@
-//Hyphema (Eye bleeding): Causes blindness.
-
+/*Hyphema (Eye bleeding)
+ * Slightly reduces stealth
+ * Tremendously reduces resistance
+ * Tremendously reduces stage speed
+ * Greatly reduces transmissibility
+ * Critical level
+ * Bonus: Causes blindness.
+*/
 /datum/symptom/visionloss
 	name = "Hyphema"
 	desc = "The virus causes inflammation of the retina, leading to eye damage and eventually blindness."

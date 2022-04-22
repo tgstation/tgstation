@@ -1,5 +1,11 @@
-//Sneezing: Forces a spread type of AIRBORNE with extra range!
-
+/*Sneezing
+ * Reduces stealth
+ * Greatly increases resistance
+ * No effect to stage speed
+ * Increases transmission tremendously
+ * Low level
+ * Bonus: Forces a spread type of AIRBORNE with extra range!
+*/
 /datum/symptom/sneeze
 	name = "Sneezing"
 	desc = "The virus causes irritation of the nasal cavity, making the host sneeze occasionally. Sneezes from this symptom will spread the virus in a 4 meter cone in front of the host."

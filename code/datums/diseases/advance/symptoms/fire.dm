@@ -1,4 +1,11 @@
-//Spontaneous Combustion: Ignites infected mob.
+/**Spontaneous Combustion
+ * Slightly hidden.
+ * Lowers resistance tremendously.
+ * Decreases stage speed tremendously.
+ * Decreases transmittablity tremendously.
+ * Fatal level
+ * Bonus: Ignites infected mob.
+ */
 
 /datum/symptom/fire
 	name = "Spontaneous Combustion"
@@ -68,21 +75,15 @@
 	return 1
 
 /*
-//////////////////////////////////////
-
 Alkali perspiration
-
 	Hidden.
 	Lowers resistance.
 	Decreases stage speed.
-	Decreases transmittablity.
+	Decreases transmissibility.
 	Fatal Level.
-
 Bonus
 	Ignites infected mob.
 	Explodes mob on contact with water.
-
-//////////////////////////////////////
 */
 
 /datum/symptom/alkali

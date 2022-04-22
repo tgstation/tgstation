@@ -1,5 +1,13 @@
-//Necrotizing Fasciitis (AKA Flesh-Eating Disease): Deals brute damage over time.
-
+/*
+Necrotizing Fasciitis (AKA Flesh-Eating Disease)
+	Very very noticable.
+	Lowers resistance tremendously.
+	No changes to stage speed.
+	Decreases transmissibility tremendously.
+	Fatal Level.
+Bonus
+	Deals brute damage over time.
+*/
 /datum/symptom/flesh_eating
 	name = "Necrotizing Fasciitis"
 	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."

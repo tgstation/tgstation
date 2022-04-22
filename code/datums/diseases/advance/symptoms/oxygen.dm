@@ -1,5 +1,11 @@
-//Self-Respiration: Gives the carrier TRAIT_NOBREATH, preventing suffocation and CPR
-
+/*Self-Respiration
+ * Slight increase to stealth
+ * Greatly reduces resistance
+ * Greatly reduces stage speed
+ * Reduces transmission tremendously
+ * Lethal level
+ * Bonus: Gives the carrier TRAIT_NOBREATH, preventing suffocation and CPR
+*/
 /datum/symptom/oxygen
 	name = "Self-Respiration"
 	desc = "The virus rapidly synthesizes oxygen, effectively removing the need for breathing."

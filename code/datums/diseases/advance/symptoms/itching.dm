@@ -1,5 +1,11 @@
-//Itching: 	Displays an annoying message! Should be used for buffing your disease.
-
+/*Itching
+ * No effect to stealth
+ * Greatly increases resistance
+ * Greatly increases stage speed
+ * Slightly increases transmissibility
+ * Low level
+ * Bonus: Displays an annoying message! Should be used for buffing your disease.
+*/
 /datum/symptom/itching
 	name = "Itching"
 	desc = "The virus irritates the skin, causing itching."

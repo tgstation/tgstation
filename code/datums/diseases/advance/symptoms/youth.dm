@@ -1,4 +1,11 @@
-//Eternal Youth: Can be used to buff your virus
+/*Eternal Youth
+ * Greatly increases stealth
+ * Tremendous increase to resistance
+ * Tremendous increase to stage speed
+ * Tremendous reduction to transmissibility
+ * Critical level
+ * Bonus: Can be used to buff your virus
+*/
 
 /datum/symptom/youth
 	name = "Eternal Youth"

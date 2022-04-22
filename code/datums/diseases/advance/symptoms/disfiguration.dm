@@ -1,5 +1,11 @@
-//Disfiguration: Adds disfiguration trait making the mob appear as "Unknown" to others.
-
+/**Disfiguration
+ * Increases stealth
+ * No change to resistance
+ * Increases stage speed
+ * Slightly increases transmissibility
+ * Critical level
+ * Bonus: Adds disfiguration trait making the mob appear as "Unknown" to others.
+ */
 /datum/symptom/disfiguration
 	name = "Disfiguration"
 	desc = "The virus liquefies facial muscles, disfiguring the host."

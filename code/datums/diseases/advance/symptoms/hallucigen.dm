@@ -1,4 +1,11 @@
-// Hallucigen: Makes the affected mob be hallucinated for short periods of time.
+/*Hallucigen
+ * Slightly increases stealth
+ * Lowers resistance tremendously
+ * Slightly decreases stage speed
+ * Slightly reduces transmissibility
+ * Critical level
+ * Bonus:Makes the affected mob be hallucinated for short periods of time.
+*/
 
 /datum/symptom/hallucigen
 	name = "Hallucigen"

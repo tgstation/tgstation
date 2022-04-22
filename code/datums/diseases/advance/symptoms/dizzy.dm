@@ -1,4 +1,11 @@
-// Dizziness: Shakes the affected mob's screen for short periods.
+/**Dizziness
+ * Increases stealth
+ * Lowers resistance
+ * Decreases stage speed considerably
+ * Slightly reduces transmissibility
+ * Intense Level
+ * Bonus: Shakes the affected mob's screen for short periods.
+ */
 
 /datum/symptom/dizzy // Not the egg
 
