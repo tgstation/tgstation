@@ -47386,7 +47386,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "qaU" = (
-/obj/structure/closet,
+/obj/effect/spawner/random/structure/closet_maintenance,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port)
