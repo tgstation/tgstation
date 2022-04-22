@@ -380,7 +380,14 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/send_radio_explanation()
 
 	if(emped)
-		radio.talk_into(src, "Warning! Ert%$TD£ id2 2mr9£, Jdaos id£ND£ mdao2e(d da apwoj!", engineering_channel)
+		var/list/characters = list()
+		characters += GLOB.alphabet
+		characters += GLOB.alphabet_upper
+		characters += GLOB.numerals
+		characters += GLOB.space
+		characters += GLOB.space //double the amount of them
+		var/message = random_string(rand(50,70), characters)
+		radio.talk_into(src, "[message]", engineering_channel)
 		return
 
 	if(high_power_damage)

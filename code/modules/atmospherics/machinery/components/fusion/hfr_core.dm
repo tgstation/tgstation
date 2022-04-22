@@ -159,10 +159,15 @@
 	///Var used in the meltdown phase
 	var/final_countdown = FALSE
 
+	///Damage caused because of the high power tier
 	var/high_power_damage = FALSE
+	///Damage caused by too much fuel gas inside
 	var/high_fuel_mix_mole = FALSE
+	///Damage caused by iron content
 	var/iron_content_damage = FALSE
+	///Check if iron inside the core is increasing
 	var/iron_content_increasing = FALSE
+	///If this is true only a non readable message will pop out
 	var/emped = FALSE
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Initialize(mapload)
