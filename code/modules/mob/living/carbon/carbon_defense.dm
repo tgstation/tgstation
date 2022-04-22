@@ -627,6 +627,9 @@
 	. = ..()
 	check_passout(.)
 
+/**
+* Check to see if we should be passed out from oyxloss
+*/
 /mob/living/carbon/proc/check_passout(oxyloss)
 	if(!isnum(oxyloss))
 		return
