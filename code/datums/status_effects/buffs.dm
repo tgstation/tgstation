@@ -349,22 +349,15 @@
 /datum/status_effect/antimagic
 	id = "antimagic"
 	status_type = STATUS_EFFECT_REFRESH
-	duration = 10 SECONDS
+	duration = 5 SECONDS
 	examine_text = "<span class='notice'>They seem to be covered in a dull, grey aura.</span>"
 
-/datum/status_effect/antimagic/on_creation(mob/living/new_owner, duration = 10 SECONDS)
-	src.duration = duration
-	return ..()
-
-/datum/status_effect/antimagic/refresh(effect, duration = 10 SECONDS)
-	if(duration == -1)
-		return
-	duration = world.time + duration
+/datum/status_effect/antimagic/refresh(effect)
+	duration += initial(duration) //slowly builds up, so the more times you get this status effect, the longer it lasts until it's gone.
 
 /datum/status_effect/antimagic/on_apply()
 	owner.visible_message(span_notice("[owner] is coated with a dull aura!"))
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-	//glowing wings overlay
 	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
