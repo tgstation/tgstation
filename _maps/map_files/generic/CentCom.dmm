@@ -418,10 +418,13 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "bq" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_mixing_input{
-	dir = 1
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "nukiebase";
+	dir = 1;
+	name = "syndicate air injector";
+	desc = "Has a valve and pump attached to it. Slightly more menacing than Nanotrasen's standard."
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/vacuum,
 /area/syndicate_mothership/expansion_bombthreat)
 "br" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -992,10 +995,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/structure/sign/poster/contraband/c20r{
 	pixel_x = 32
 	},
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
 /area/syndicate_mothership/expansion_bombthreat)
 "cR" = (
@@ -1299,6 +1302,22 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/tdome/administration)
+"dK" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/analyzer{
+	pixel_y = 1;
+	pixel_x = 2
+	},
+/obj/item/pipe_dispenser{
+	pixel_y = -3;
+	desc = "A device used to rapidly pipe things. This one has a curious abundance of warning labels.";
+	name = "Syndicate Rapid Pipe Dispenser (RPD)"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "dL" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron,
@@ -2873,6 +2892,12 @@
 /obj/item/soap/nanotrasen,
 /turf/open/floor/iron/white,
 /area/tdome/observation)
+"if" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
+	dir = 8
+	},
+/turf/closed/indestructible/syndicate,
+/area/syndicate_mothership/expansion_bioterrorism)
 "ig" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -3603,11 +3628,8 @@
 /turf/open/floor/catwalk_floor/titanium,
 /area/syndicate_mothership/control)
 "kf" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
+/obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump/on,
-/obj/machinery/light/small/red/directional/east,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "kg" = (
@@ -3623,13 +3645,28 @@
 /area/syndicate_mothership/expansion_chemicalwarfare)
 "ki" = (
 /obj/structure/rack,
+/obj/machinery/light/cold/directional/west,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/item/stock_parts/micro_laser/high{
+	pixel_x = 12
+	},
 /obj/item/wrench{
 	desc = "A little smidgeon of Freon...";
 	name = "Freon"
 	},
-/obj/machinery/light/cold/directional/west,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
+/obj/item/stock_parts/micro_laser/high{
+	pixel_x = -4;
+	pixel_y = -8
+	},
+/obj/item/stock_parts/micro_laser/high{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/stock_parts/micro_laser/high{
+	pixel_x = -8;
+	pixel_y = -4
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -4203,7 +4240,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 10
 	},
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/cold/directional/east,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "lV" = (
@@ -4772,6 +4809,12 @@
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible,
 /turf/closed/indestructible/opsglass,
 /area/syndicate_mothership/expansion_bombthreat)
+"nF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/turf/closed/indestructible/syndicate,
+/area/syndicate_mothership/expansion_bombthreat)
 "nG" = (
 /obj/machinery/computer/security/mining{
 	dir = 1
@@ -5303,7 +5346,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "oY" = (
-/turf/open/floor/engine,
+/turf/open/floor/engine/vacuum,
 /area/syndicate_mothership/expansion_bombthreat)
 "oZ" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
@@ -5590,15 +5633,9 @@
 /area/tdome/observation)
 "pP" = (
 /obj/structure/table/reinforced,
-/obj/item/cartridge/quartermaster{
-	pixel_x = -6
-	},
-/obj/item/cartridge/quartermaster{
-	pixel_x = 6
-	},
-/obj/item/cartridge/quartermaster{
-	pixel_y = 6
-	},
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
 /obj/item/gps/mining,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -5926,6 +5963,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/supplypod)
+"qK" = (
+/obj/machinery/air_sensor{
+	chamber_id = "nukiebase";
+	name = "syndicate ordnance gas sensor"
+	},
+/turf/open/floor/engine/vacuum,
+/area/syndicate_mothership/expansion_bombthreat)
 "qM" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -6005,6 +6049,12 @@
 /obj/structure/railing,
 /turf/open/lava/plasma/ice_moon,
 /area/syndicate_mothership/control)
+"rh" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
+	dir = 8
+	},
+/turf/closed/indestructible/opsglass,
+/area/syndicate_mothership/expansion_bioterrorism)
 "ri" = (
 /obj/effect/turf_decal/stripes/full,
 /turf/open/floor/mineral/titanium/yellow,
@@ -6713,7 +6763,6 @@
 /turf/open/floor/iron/textured_large,
 /area/syndicate_mothership/control)
 "tC" = (
-/obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 6
 	},
@@ -7076,7 +7125,7 @@
 /obj/machinery/door/poddoor/incinerator_ordmix{
 	id = "syn_ordmix_vent"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine/vacuum,
 /area/syndicate_mothership/expansion_bombthreat)
 "uV" = (
 /obj/item/paper_bin,
@@ -7140,6 +7189,13 @@
 /obj/structure/flora/ausbushes/pointybush,
 /turf/open/floor/grass,
 /area/centcom/ferry)
+"vc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
+/area/syndicate_mothership/expansion_bombthreat)
 "vd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -7331,13 +7387,6 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron,
 /area/centcom/control)
-"vI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/turf/open/floor/plating,
-/area/syndicate_mothership/expansion_bombthreat)
 "vJ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -8494,7 +8543,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
 "zh" = (
@@ -8602,6 +8651,9 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/tdome/observation)
+"zy" = (
+/turf/open/misc/asteroid/snow/atmosphere,
+/area/syndicate_mothership/control)
 "zz" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs/cable/zipties,
@@ -9646,9 +9698,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/evacuation)
 "Ch" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/heater,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -10130,6 +10184,9 @@
 	},
 /obj/machinery/door/puzzle/keycard/syndicate_bio,
 /obj/structure/fans/tiny,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
+	dir = 8
+	},
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
@@ -10486,7 +10543,7 @@
 /obj/machinery/igniter/incinerator_ordmix{
 	id = "syn_ordmix_igniter"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/vacuum,
 /area/syndicate_mothership/expansion_bombthreat)
 "EI" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -10745,10 +10802,10 @@
 /turf/open/floor/plating,
 /area/centcom/prison)
 "Fp" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
 "Fr" = (
@@ -10889,6 +10946,15 @@
 	dir = 8
 	},
 /area/syndicate_mothership/control)
+"FL" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "FM" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
@@ -11506,7 +11572,10 @@
 /area/syndicate_mothership/control)
 "HO" = (
 /obj/effect/turf_decal/stripes/box,
-/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/portable_atmospherics/pump{
+	name = "Lil Pump";
+	desc = "A betrayer to pump-kind."
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/expansion_bombthreat)
 "HQ" = (
@@ -11630,7 +11699,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership/expansion_bombthreat)
 "Ig" = (
 /turf/closed/wall/mineral/diamond,
@@ -11651,15 +11720,15 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evacuation/ship)
 "Ik" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/machinery/light/small/red/directional/south,
 /obj/structure/sign/poster/contraband/fun_police{
 	pixel_x = -32
+	},
+/obj/machinery/light/cold/directional/south,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -11933,13 +12002,13 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "IV" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
 "IW" = (
@@ -11986,6 +12055,12 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/arena)
+"Je" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
+	dir = 1
+	},
+/turf/open/misc/asteroid/snow/atmosphere,
+/area/syndicate_mothership/control)
 "Jg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -12305,6 +12380,10 @@
 /area/syndicate_mothership)
 "Ki" = (
 /turf/open/lava/plasma/ice_moon,
+/area/syndicate_mothership/control)
+"Kj" = (
+/obj/machinery/atmospherics/components/unary/passive_vent,
+/turf/open/misc/asteroid/snow/atmosphere,
 /area/syndicate_mothership/control)
 "Kk" = (
 /obj/docking_port/stationary{
@@ -12819,7 +12898,9 @@
 /turf/closed/mineral/ash_rock,
 /area/awaymission/errorroom)
 "Ma" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+	dir = 4
+	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
@@ -12836,12 +12917,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/syndicate_mothership/control)
 "Mc" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 8
-	},
-/obj/machinery/camera/autoname/directional/south{
-	network = list("nukie")
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -12858,7 +12935,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/canister/tier_2,
 /turf/open/floor/plating,
 /area/syndicate_mothership/expansion_bombthreat)
 "Mg" = (
@@ -14957,6 +15034,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/control)
+"RS" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/closed/indestructible/syndicate,
+/area/syndicate_mothership/expansion_bombthreat)
 "RT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -15125,7 +15208,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/canister/tier_2,
 /turf/open/floor/plating,
 /area/syndicate_mothership/expansion_bombthreat)
 "Su" = (
@@ -16020,6 +16103,19 @@
 /obj/item/stack/spacecash/c20,
 /turf/open/floor/iron/dark/textured_half,
 /area/syndicate_mothership/control)
+"UK" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	dir = 1;
+	atmos_chambers = list("nukiebase" = "Burn Chamber");
+	name = "Ordnance Chamber Monitor";
+	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber."
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/cold/directional/west{
+	dir = 2
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/syndicate_mothership/expansion_bombthreat)
 "UL" = (
 /obj/machinery/light/floor{
 	pixel_x = 4;
@@ -16079,11 +16175,11 @@
 /turf/open/floor/iron/cafeteria,
 /area/centcom/holding)
 "UT" = (
-/obj/machinery/atmospherics/pipe/smart/simple/general/visible{
-	dir = 5
-	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -16161,6 +16257,12 @@
 	dir = 4
 	},
 /area/centcom/holding)
+"Va" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/closed/indestructible/syndicate,
+/area/syndicate_mothership/expansion_bombthreat)
 "Vc" = (
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron/dark,
@@ -16446,7 +16548,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/vacuum,
 /area/syndicate_mothership/expansion_bombthreat)
 "VV" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -17202,6 +17304,9 @@
 	pixel_x = 5;
 	pixel_y = -29
 	},
+/obj/machinery/camera/autoname/directional/south{
+	network = list("nukie")
+	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "XH" = (
@@ -17314,6 +17419,12 @@
 "Ya" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/armory)
+"Yb" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/closed/indestructible/syndicate,
+/area/syndicate_mothership/expansion_bioterrorism)
 "Yc" = (
 /obj/structure/fireplace,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -17612,7 +17723,10 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
 	},
-/obj/machinery/light/small/red/directional/west,
+/obj/machinery/airalarm/unlocked{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "YY" = (
@@ -17869,8 +17983,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/plasma,
 /obj/machinery/light/cold/directional/east,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/syndicate_mothership/expansion_bombthreat)
 "ZE" = (
@@ -22548,9 +22662,9 @@ kb
 kb
 kb
 kb
-aa
-aa
-aa
+kb
+kb
+kb
 aa
 aa
 aa
@@ -22804,9 +22918,9 @@ nH
 nH
 nH
 nH
-kb
-aa
-kb
+zy
+zy
+zy
 kb
 kb
 kb
@@ -23061,10 +23175,10 @@ Gx
 HY
 zX
 nH
-kb
-kb
-kb
-CN
+zy
+Kj
+Je
+Yb
 CN
 CN
 CN
@@ -23321,7 +23435,7 @@ nH
 ng
 ng
 ng
-CN
+if
 cj
 VV
 Xe
@@ -23578,7 +23692,7 @@ nH
 nw
 nw
 nw
-CN
+if
 UY
 Gj
 Gu
@@ -23835,7 +23949,7 @@ nH
 nw
 nw
 nw
-CN
+if
 Kw
 pS
 uk
@@ -24092,7 +24206,7 @@ nH
 ng
 ac
 ng
-CN
+if
 IH
 pS
 Gu
@@ -24349,7 +24463,7 @@ nH
 gL
 FD
 Ih
-RK
+rh
 Il
 Na
 Sf
@@ -24863,7 +24977,7 @@ HU
 br
 Bq
 fQ
-RK
+rh
 mb
 HV
 Uc
@@ -25120,9 +25234,9 @@ we
 br
 Bq
 Gm
-kv
-kv
-kv
+RS
+nF
+Va
 kv
 kv
 kv
@@ -25636,7 +25750,7 @@ Bq
 fQ
 of
 Ch
-BD
+FL
 uu
 tk
 rE
@@ -25900,7 +26014,7 @@ Nv
 HO
 XG
 kv
-oY
+qK
 EH
 kv
 kb
@@ -26149,7 +26263,7 @@ br
 Bq
 fQ
 of
-Fp
+dK
 UT
 Fp
 zg
@@ -26412,8 +26526,8 @@ BD
 Us
 Ks
 Mc
+UK
 Yg
-kv
 uU
 uU
 kv
@@ -26664,8 +26778,8 @@ tz
 ng
 kv
 Me
-vI
 bF
+vc
 Ia
 Hl
 sh
