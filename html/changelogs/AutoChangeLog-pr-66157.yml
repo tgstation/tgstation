@@ -1,5 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "The minor dark blue luminescent ability now heals you properly instead of killing you."
-  - bugfix: "The dark blue burning extract now injects you with regenerative jelly instead of useless cryoxadone, making it not (as) deadly for slimepeople."
