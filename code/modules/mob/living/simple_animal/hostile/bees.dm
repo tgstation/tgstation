@@ -179,10 +179,22 @@
 	else
 		. = ..()
 		if(. && beegent && isliving(target))
-			var/mob/living/L = target
-			if(L.reagents)
-				beegent.expose_mob(L, INJECT)
-				L.reagents.add_reagent(beegent.type, rand(1,5))
+			on_sting(target)
+
+/**
+ * Handles exposing the target mob to the bees venom and injecting the target with the venom.
+ */
+/mob/living/simple_animal/hostile/bee/proc/on_sting(mob/living/target)
+	var/sting_amt = rand(1, 5)
+	if (target.reagents)
+		sting_amt = target.reagents.add_reagent(beegent.type, sting_amt)
+		if(!sting_amt)
+			return
+
+	target.expose_reagents(list((beegent) = sting_amt), null, INJECT, volume_modifier = 1, show_message = TRUE)
+	if (target.reagents)
+		beegent.on_transfer(target, INJECT, sting_amt)
+
 
 /mob/living/simple_animal/hostile/bee/proc/assign_reagent(datum/reagent/R)
 	if(istype(R))
@@ -191,7 +203,7 @@
 		real_name = name
 		//clear the old since this one is going to have some new value
 		RemoveElement(/datum/element/venomous)
-		AddElement(/datum/element/venomous, beegent.type, list(1, 5))
+		AddElement(/datum/element/venomous, beegent.type, list(1, 5), INJECT)
 		generate_bee_visuals()
 
 /mob/living/simple_animal/hostile/bee/proc/pollinate(obj/machinery/hydroponics/Hydro)
@@ -271,9 +283,7 @@
 /mob/living/simple_animal/hostile/bee/queen/AttackingTarget()
 	. = ..()
 	if(. && beegent && isliving(target))
-		var/mob/living/L = target
-		beegent.expose_mob(L, TOUCH)
-		L.reagents.add_reagent(beegent.type, rand(1,5))
+		on_sting(target)
 
 
 //PEASENT BEES

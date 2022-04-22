@@ -35,12 +35,14 @@
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
+
+	/// The reagent this mob injects pon attacking someone.
 	var/attack_reagent
 
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
 	. = ..()
 	if(attack_reagent)
-		AddElement(/datum/element/venomous, attack_reagent, list(1, 5))
+		AddElement(/datum/element/venomous, attack_reagent, list(1, 5), INJECT)
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
@@ -97,7 +99,7 @@
 	banana_rustle.Grant(src)
 	banana_bunch = new()
 	banana_bunch.Grant(src)
-	
+
 /mob/living/simple_animal/hostile/retaliate/clown/banana/Destroy()
 	. = ..()
 	QDEL_NULL(banana_rustle)
