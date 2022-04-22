@@ -342,10 +342,12 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			. += "[src] is made of cold-resistant materials."
 		if(resistance_flags & FIRE_PROOF)
 			. += "[src] is made of fire-retardant materials."
-
-	if(!user.research_scanner)
 		return
 
+/obj/item/examine_more(mob/user)
+	. = ..()
+	if(!HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
+		return
 	/// Research prospects, including boostable nodes and point values. Deliver to a console to know whether the boosts have already been used.
 	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
 	///Separator between the items on the list
