@@ -50836,7 +50836,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
-/obj/machinery/power/apc/ten_k/directional/north,
+/obj/machinery/power/apc/sm_apc/directional/north,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "mDX" = (

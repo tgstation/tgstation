@@ -58781,7 +58781,7 @@
 /area/commons/vacant_room/office)
 "uyI" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/ten_k/directional/east,
+/obj/machinery/power/apc/sm_apc/directional/east,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "uyP" = (
