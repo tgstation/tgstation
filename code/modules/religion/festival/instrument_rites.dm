@@ -80,7 +80,8 @@
 	if(!song_datum)
 		return
 	for(var/mob/living/listener in song_datum.hearing_mobs)
-		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
+		//chaplains don't check themselves for antimagic so nullwave can cancel out consonance and vice versa
+		if(!listener.mind.holy_role && listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
 			continue
 		listener.apply_status_effect(/datum/status_effect/song/antimagic)
 
@@ -131,8 +132,7 @@
 
 /datum/religion_rites/song_tuner/power_consonance/finish_effect(atom/song_player, datum/song/song_datum)
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-
-		if(listener.mind.holy_role || listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
+		if(!listener.mind.holy_role && listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
 			continue
 		var/obj/item/organ/stomach/ethereal/charge_target = listener.getorganslot(ORGAN_SLOT_STOMACH)
 		if(!charge_target || !istype(charge_target) || charge_target.crystal_charge >= ETHEREAL_CHARGE_FULL)
@@ -140,7 +140,6 @@
 		to_chat(listener, span_notice("You feel recharged!"))
 		playsound(listener, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 		charge_target.adjust_charge(ETHEREAL_CHARGE_FULL)
-
 
 /datum/religion_rites/song_tuner/lullaby
 	name = "Spiritual Lullaby"
