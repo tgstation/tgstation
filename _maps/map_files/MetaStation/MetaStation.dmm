@@ -5817,13 +5817,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/port)
-"bwv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/meter,
-/turf/open/floor/plating,
-/area/maintenance/department/science/xenobiology)
 "bwN" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
@@ -117261,7 +117254,7 @@ cSn
 cRi
 jsI
 nPJ
-bwv
+kJe
 rhT
 aaa
 aaa
