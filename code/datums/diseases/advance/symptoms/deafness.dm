@@ -1,22 +1,12 @@
-/*
-//////////////////////////////////////
-
-Deafness
-
-	Slightly noticable.
-	Lowers resistance.
-	Decreases stage speed slightly.
-	Decreases transmittablity.
-	Intense Level.
-
-Bonus
-	Causes intermittent loss of hearing.
-
-//////////////////////////////////////
+/**Deafness
+ * Slightly decreases stealth
+ * Lowers Resistance
+ * Slightly decreases stage speed
+ * Decreases transmissibility
+ * Intense level
+ * Bonus: Causes intermittent loss of hearing.
 */
-
 /datum/symptom/deafness
-
 	name = "Deafness"
 	desc = "The virus causes inflammation of the eardrums, causing intermittent deafness."
 	stealth = -1
