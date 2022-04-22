@@ -21,17 +21,15 @@
 	var/ready = TRUE
 	var/cooldown = 200
 
-/obj/item/sequence_scanner/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/sequence_scanner/attack(mob/living/mob, mob/living/carbon/human/user)
 	add_fingerprint(user)
 	//no scanning if its a husk or DNA-less Species
-	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
-		user.visible_message(
-				span_notice("[user] analyzes [target]'s genetic sequence."),
-				span_notice("You analyze [target]'s genetic sequence.")
-				)
-		gene_scan(target, user)
+	if (!HAS_TRAIT(mob, TRAIT_GENELESS) && !HAS_TRAIT(mob, TRAIT_BADDNA))
+		user.visible_message(span_notice("[user] analyzes [mob]'s genetic sequence."), \
+							span_notice("You analyze [mob]'s genetic sequence."))
+		gene_scan(mob, user)
 	else
-		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic sequence."), span_warning("[target] has no readable genetic sequence!"))
+		user.visible_message(span_notice("[user] fails to analyze [mob]'s genetic sequence."), span_warning("[mob] has no readable genetic sequence!"))
 
 /obj/item/sequence_scanner/attack_self(mob/user)
 	display_sequence(user)
@@ -50,27 +48,29 @@
 			to_chat(user, span_notice("[name] linked to central research database."))
 			discovered = console.stored_research.discovered_mutations
 		else
-			to_chat(user, span_warning("No database to update from."))
+			to_chat(user,span_warning("No database to update from."))
 
-/obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/target, mob/living/user)
-	if(!iscarbon(target) || !target.has_dna())
+/obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/mob, mob/living/user)
+	if(!iscarbon(mob) || !mob.has_dna())
 		return
 
-	//add target mutations to list as well as extra mutations.
-	//dupe list as scanner could modify target data
-	buffer = LAZYLISTDUPLICATE(target.dna.mutation_index)
+	//add mob mutations to list as well as extra mutations.
+	//dupe list as scanner could modify mob data
+	buffer = LAZYLISTDUPLICATE(mob.dna.mutation_index)
 	var/list/active_mutations = list()
-	for(var/datum/mutation/human/mutation in target.dna.mutations)
+	for(var/datum/mutation/human/mutation in mob.dna.mutations)
 		LAZYOR(buffer, mutation.type)
 		active_mutations.Add(mutation.type)
 
-	to_chat(user, span_notice("Subject [target.name]'s DNA sequence has been saved to buffer."))
-	for(var/mutation in buffer)
-		//highlight activated mutations
-		if(LAZYFIND(active_mutations, mutation))
-			to_chat(user, span_boldnotice("[get_display_name(mutation)]"))
-		else
-			to_chat(user, span_notice("[get_display_name(mutation)]"))	
+	to_chat(user, span_notice("Subject [mob.name]'s DNA sequence has been saved to buffer."))
+	if(LAZYLEN(buffer))
+		for(var/mutation in buffer)
+			//highlight activated mutations
+			//if(mob.dna.is_gene_active(mutation)) //doesnt work on extra mutations, might have to modify the proc itself
+			if(LAZYFIND(active_mutations, mutation))
+				to_chat(user, span_boldnotice("[get_display_name(mutation)]"))
+			else
+				to_chat(user, span_notice("[get_display_name(mutation)]"))	
 
 /obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
 	if(!LAZYLEN(buffer) || !ready)
