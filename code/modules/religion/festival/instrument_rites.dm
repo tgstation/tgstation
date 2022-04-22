@@ -111,6 +111,37 @@
 		var/obj/item/bodypart/sliced_limb = pick(listener.bodyparts)
 		sliced_limb.force_wound_upwards(/datum/wound/slash/moderate/many_cuts)
 
+/datum/religion_rites/song_tuner/power_consonance
+	name = "Consonance of Power"
+	desc = "Sing a powerful tune, speeding up listeners' actions. At the end of the song, Ethereals fully recharge."
+	particles_path = /particles/musical_notes/power
+	song_invocation_message = "You've prepared a powerful song!"
+	song_start_message = span_warning("This music's making you feel excited!")
+	favor_cost = 30 //arguably very useful
+	glow_color = "#E8E822"
+	repeats_okay = FALSE
+
+/datum/religion_rites/song_tuner/power_consonance/song_effect(atom/song_player, datum/song/song_datum)
+	if(!song_datum)
+		return
+	for(var/mob/living/listener in song_datum.hearing_mobs)
+		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
+			continue
+		listener.apply_status_effect(/datum/status_effect/song/power_consonance)
+
+/datum/religion_rites/song_tuner/power_consonance/finish_effect(atom/song_player, datum/song/song_datum)
+	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
+
+		if(listener.mind.holy_role || listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
+			continue
+		var/obj/item/organ/stomach/ethereal/charge_target = listener.getorganslot(ORGAN_SLOT_STOMACH)
+		if(!charge_target || !istype(charge_target) || charge_target.crystal_charge >= ETHEREAL_CHARGE_FULL)
+			continue
+		to_chat(listener, span_notice("You feel recharged!"))
+		playsound(listener, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+		charge_target.adjust_charge(ETHEREAL_CHARGE_FULL)
+
+
 /datum/religion_rites/song_tuner/lullaby
 	name = "Spiritual Lullaby"
 	desc = "Sing a lullaby, tiring those around you, making them slower. At the end of the song, you'll put people who are tired enough to sleep."
@@ -146,4 +177,3 @@
 			continue
 		to_chat(listener, span_danger("Wow, the ending of that song was... pretty..."))
 		listener.AdjustSleeping(5 SECONDS)
-

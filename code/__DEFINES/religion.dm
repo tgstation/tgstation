@@ -1,3 +1,5 @@
+///everyone is this by default.
+#define HOLY_ROLE_NONE 0
 ///role below priests, for losing most powers of priests but still being holy.
 #define HOLY_ROLE_DEACON 1
 ///default priestly role
