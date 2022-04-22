@@ -165,7 +165,7 @@
 		if(M.flash_act(1, 1))
 			if(M.get_confusion() < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
-				M.add_confusion(min(power, diff))
+				affected_mob.adjust_timed_status_effect(min(power, diff) * 1 SECONDS, /datum/status_effect/confusion)
 			// Special check for if we're a revhead. Special cases to attempt conversion.
 			if(converter)
 				// Did we try to flash them from behind?
@@ -391,7 +391,7 @@
 
 			if(!hypnosis)
 				to_chat(M, span_hypnophrase("The light makes you feel oddly relaxed..."))
-				M.add_confusion(min(M.get_confusion() + 10, 20))
+				M.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, max_duration = 20 SECONDS)
 				M.dizziness += min(M.dizziness + 10, 20)
 				M.adjust_drowsyness(min(M.drowsyness+10, 20))
 				M.apply_status_effect(/datum/status_effect/pacify, 100)
@@ -405,7 +405,7 @@
 
 	else if(M.flash_act())
 		to_chat(M, span_notice("Such a pretty light..."))
-		M.add_confusion(min(M.get_confusion() + 4, 20))
+		M.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/confusion, max_duration = 20 SECONDS)
 		M.dizziness += min(M.dizziness + 4, 20)
 		M.adjust_drowsyness(min(M.drowsyness+4, 20))
 		M.apply_status_effect(/datum/status_effect/pacify, 40)

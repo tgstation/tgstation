@@ -505,12 +505,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 		if(drunkenness >= 41)
 			if(DT_PROB(16, delta_time))
-				add_confusion(2)
+				adjust_timed_status_effect(2 SECONDS, /datum/status_effect/confusion)
 			Dizzy(5 * delta_time)
 
 		if(drunkenness >= 51)
 			if(DT_PROB(1.5, delta_time))
-				add_confusion(15)
+				adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
 				vomit() // vomiting clears toxloss, consider this a blessing
 			Dizzy(12.5 * delta_time)
 

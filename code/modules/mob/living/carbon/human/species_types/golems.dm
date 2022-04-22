@@ -552,7 +552,7 @@
 	var/cooldown = 150
 	var/last_teleport = 0
 	///Set to true upon action activation to prevent spamming teleport callbacks while the first is still occurring.
-	var/is_charging = FALSE 
+	var/is_charging = FALSE
 
 /datum/action/innate/unstable_teleport/IsAvailable()
 	. = ..()
@@ -1024,7 +1024,7 @@
 				M.show_message(span_narsiesmall("GONG!"), MSG_AUDIBLE)
 				M.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
 				M.soundbang_act(1, 0, 30, 3)
-				M.add_confusion(10)
+				M.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
 				M.jitteriness += 4
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "gonged", /datum/mood_event/loud_gong)
 			if(2 to 3)

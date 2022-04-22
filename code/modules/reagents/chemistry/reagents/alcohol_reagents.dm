@@ -1468,7 +1468,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	drinker.set_timed_status_effect(100 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		drinker.set_confusion(max(drinker.get_confusion() + (2 * REM * delta_time),0))
+		drinker.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/confusion)
 		drinker.Dizzy(10 * REM * delta_time)
 	drinker.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
 	switch(current_cycle)
@@ -1501,7 +1501,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 		if(45 to 55)
 			if(DT_PROB(30, delta_time))
-				drinker.set_confusion(max(drinker.get_confusion() + 3, 0))
+				drinker.adjust_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/confusion)
 		if(55 to 200)
 			drinker.set_timed_status_effect(110 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 		if(200 to INFINITY)

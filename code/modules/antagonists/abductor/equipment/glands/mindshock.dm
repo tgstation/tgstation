@@ -21,7 +21,7 @@
 				H.Stun(50)
 			if(2)
 				to_chat(H, span_warning("You hear an annoying buzz in your head."))
-				H.add_confusion(15)
+				H.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 			if(3)
 				H.hallucination += 60

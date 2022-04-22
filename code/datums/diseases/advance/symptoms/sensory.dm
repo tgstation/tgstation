@@ -39,8 +39,7 @@
 		M.dizziness = max(0, M.dizziness - 2)
 		M.adjust_drowsyness(-2)
 		M.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/speech/slurring/drunk)
-
-		M.set_confusion(max(0, M.get_confusion() - 2))
+		M.adjust_timed_status_effect(-2 SECONDS, /datum/status_effect/confusion)
 		if(purge_alcohol)
 			M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3)
 			if(ishuman(M))
