@@ -140,7 +140,8 @@
 		/obj/item/fireaxe = 'sound/surgery/scalpel1.ogg',
 		/obj/item/hatchet = 'sound/surgery/scalpel1.ogg',
 		/obj/item/knife/butcher = 'sound/surgery/scalpel1.ogg',
-		/obj/item = 'sound/surgery/scalpel1.ogg') 
+		/obj/item = 'sound/surgery/scalpel1.ogg',
+	) 
 	success_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/saw/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
