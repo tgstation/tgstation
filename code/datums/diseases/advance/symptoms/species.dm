@@ -6,7 +6,7 @@
  * Critical level
  * Bonus: Infected corpses spread disease and undead species are infectable
 */
-datum/symptom/undead_adaptation
+/datum/symptom/undead_adaptation
 	name = "Necrotic Metabolism"
 	desc = "The virus is able to thrive and act even within dead hosts."
 	stealth = 2
