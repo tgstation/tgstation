@@ -42,6 +42,15 @@ SUBSYSTEM_DEF(airmachines)
 	msg += "EQ: [length(expansion_queue)]"
 	return ..()
 
+/datum/controller/subsystem/airmachines/Recover()
+	pipe_init_dirs_cache = SSairmachines.pipe_init_dirs_cache
+	networks = SSairmachines.networks
+	rebuild_queue = SSairmachines.rebuild_queue
+	expansion_queue = SSairmachines.expansion_queue
+	atmos_machinery = SSairmachines.atmos_machinery
+	current_run = SSairmachines.current_run
+	current_part = SSairmachines.current_part
+	return ..()
 
 /datum/controller/subsystem/airmachines/fire(resumed = FALSE)
 	var/timer = TICK_USAGE_REAL
