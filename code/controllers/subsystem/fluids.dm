@@ -221,9 +221,10 @@ SUBSYSTEM_DEF(fluids)
 	if (node.datum_flags & DF_ISPROCESSING)
 		return
 
-	var/bucket_index = effect_bucket_index // Edit this value to make all fluids process effects (at the same time| -> offset by when they started processing <- |offset by a random amount)
+	var/bucket_index = rand(1, num_effect_buckets) // Edit this value to make all fluids process effects (at the same time|offset by when they started processing| -> offset by a random amount <- )
 	effect_carousel[bucket_index] += node
 	node.effect_bucket = bucket_index
+	node.datum_flags |= DF_ISPROCESSING
 
 /**
  * Stops processing the effects of a fluid node.
@@ -241,6 +242,7 @@ SUBSYSTEM_DEF(fluids)
 		currently_processing -= node
 
 	node.effect_bucket = null
+	node.datum_flags &= DF_ISPROCESSING
 
 #undef SS_PROCESSES_SPREADING
 #undef SS_PROCESSES_EFFECTS
