@@ -1233,11 +1233,11 @@
 
 	// Cryptobiolin adjusts the mob's confusion down to 20 seconds if it's higher,
 	// or up to 1 second if it's lower, but will do nothing if it's in between
-	var/datum/status_effect/confusion/mob_confusion = M.has_status_effect(/datum/status_effect/confusion)
-	if(!mob_confusion || mob_confusion.duration - world.time < 1 SECONDS)
+	var/confusion_left = M.get_timed_status_effect_duration(/datum/status_effect/confusion)
+	if(confusion_left < 1 SECONDS)
 		M.set_timed_status_effect(1 SECONDS, /datum/status_effect/confusion)
 
-	else if(mob_confusion.duration - world.time > 20 SECONDS)
+	else if(confusion_left > 20 SECONDS)
 		M.set_timed_status_effect(20 SECONDS, /datum/status_effect/confusion)
 
 	..()

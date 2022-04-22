@@ -707,3 +707,23 @@
 
 	else if(duration > 0)
 		apply_status_effect(effect, duration)
+
+/**
+ * Gets how many deciseconds are remaining in
+ * the duration of the passed status effect on this mob.
+ *
+ * If the mob is unaffected by the passed effect, returns 0.
+ */
+/mob/living/proc/get_timed_status_effect_duration(effect)
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("get_timed_status_effect_duration: called with an invalid effect type. (Got: [effect])")
+
+	var/datum/status_effect/existing = has_status_effect(effect)
+	if(!existing)
+		return 0
+	// Infinite duration status effects technically are not "timed status effects"
+	// by name or nature, but support is included just in case.
+	if(existing.duration == -1)
+		return INFINITY
+
+	return existing.duration - world.time

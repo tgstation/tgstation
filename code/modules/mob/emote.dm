@@ -116,8 +116,7 @@
 	if(!iscarbon(user))
 		return
 
-	var/datum/status_effect/confusion/spinner_confusion = user.has_status_effect(/datum/status_effect/confusion)
-	if(spinner_confusion?.duration - world.time > BEYBLADE_PUKE_THRESHOLD)
+	if(user.get_timed_status_effect_duration(/datum/status_effect/confusion) > BEYBLADE_PUKE_THRESHOLD)
 		user.vomit(BEYBLADE_PUKE_NUTRIENT_LOSS, distance = 0)
 		return
 
