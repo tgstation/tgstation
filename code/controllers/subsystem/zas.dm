@@ -379,7 +379,8 @@ SUBSYSTEM_DEF(zas)
 	//ASSERT(B.zone)
 	ASSERT(A != B)
 	#endif
-
+	if(A.zone == B.zone)
+		var/scream
 	var/block = air_blocked(A,B)
 	if(block & AIR_BLOCKED) return
 

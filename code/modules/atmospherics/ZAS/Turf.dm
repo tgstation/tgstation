@@ -52,6 +52,41 @@
 			if(TURF_HAS_VALID_ZONE(unsim))
 				SSzas.connect(unsim, src)
 
+///Yes. Massive copy paste. Pain.
+/turf/open/space/update_air_properties()
+	var/block
+	ATMOS_CANPASS_TURF(block, src, src)
+	if(block & AIR_BLOCKED)
+		//dbg(blocked)
+		return 1
+
+	#ifdef MULTIZAS
+	for(var/d = 1, d < 64, d *= 2)
+	#else
+	for(var/d = 1, d < 16, d *= 2)
+	#endif
+
+		var/turf/unsim = get_step(src, d)
+
+		if(!unsim)
+			continue
+
+		block = unsim.c_airblock(src)
+
+		if(block & AIR_BLOCKED)
+			//unsim.dbg(air_blocked, turn(180,d))
+			continue
+
+		var/r_block = c_airblock(unsim)
+
+		if(r_block & AIR_BLOCKED)
+			continue
+
+		if(!istype(unsim, /turf/open/space))
+			var/turf/sim = unsim
+			if(TURF_HAS_VALID_ZONE(sim))
+				SSzas.connect(sim, src)
+
 // Helper for can_safely_remove_from_zone().
 //ZASTURF - MACRO IM NOT COMMENTING THIS SHIT OUT
 #define GET_ZONE_NEIGHBOURS(T, ret) \
@@ -221,7 +256,6 @@
 
 			else if(verbose) log_admin("[d] has invalid zone.")
 			#endif
-
 		else
 
 			//Postponing connections to tiles until a zone is assured.
@@ -241,6 +275,8 @@
 	//At this point, a zone should have happened. If it hasn't, don't add more checks, fix the bug.
 
 	for(var/turf/T in postponed)
+		if(T.zone == src.zone)
+			CRASH("Turf in the postponed turflist shares a zone with src, aborting merge!") //Yes yes this is not a fix but atleast it keeps the warning
 		SSzas.connect(src, T)
 
 /turf/proc/post_update_air_properties()

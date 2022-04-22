@@ -97,8 +97,8 @@
 	..()
 	//atmos_overlay_types = null
 
-/turf/open/space/Assimilate_Air()
-	return
+/*/turf/open/space/Assimilate_Air()
+	return*/
 
 //IT SHOULD RETURN NULL YOU MONKEY, WHY IN TARNATION WHAT THE FUCKING FUCK
 /turf/open/space/remove_air(amount)

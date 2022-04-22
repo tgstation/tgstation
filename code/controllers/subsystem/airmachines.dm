@@ -235,6 +235,7 @@ SUBSYSTEM_DEF(airmachines)
 		return
 	machine.atmos_processing = TRUE
 	atmos_machinery += machine
+	machine.flags_1 |= ATMOS_IS_PROCESSING_1
 
 /**
  * Removes a given machine to the processing system for SSZAS_MACHINES processing.
@@ -247,6 +248,7 @@ SUBSYSTEM_DEF(airmachines)
 		return
 	machine.atmos_processing = FALSE
 	atmos_machinery -= machine
+	machine.flags_1 &= ~ATMOS_IS_PROCESSING_1
 
 	// If we're currently processing atmos machines, there's a chance this machine is in
 	// the currentrun list, which is a cache of atmos_machinery. Remove it from that list

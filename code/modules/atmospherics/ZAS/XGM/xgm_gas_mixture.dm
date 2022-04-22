@@ -509,7 +509,7 @@
 
 /turf/open/proc/copy_air_with_tile(turf/open/target_turf)
 	if(istype(target_turf))
-		air.copy_from(target_turf.air)
+		return_air().copy_from(target_turf.return_air())
 
 /datum/gas_mixture/proc/leak_to_enviroment(datum/gas_mixture/environment)
 	pump_gas_passive(src, environment, calculate_transfer_moles(src, environment, src.return_pressure() - environment.return_pressure()))

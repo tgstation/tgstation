@@ -44,7 +44,7 @@
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot && istype(T) && T.air)
 		qdel(hotspot)
-		var/datum/gas_mixture/G = T.air
+		var/datum/gas_mixture/G = T.return_air()
 		if(G.get_gas(GAS_PLASMA))
 			var/plas_amt = min(30, G.get_gas(GAS_PLASMA)) //Absorb some plasma
 			G.adjust_gas(GAS_PLASMA, -plas_amt)
@@ -291,9 +291,8 @@
 	. = ..()
 
 /obj/structure/foamedmetal/Move()
-	var/turf/T = loc
 	. = ..()
-	//move_update_air(T)
+	update_nearby_tiles()
 
 /obj/structure/foamedmetal/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

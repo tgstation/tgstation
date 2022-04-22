@@ -130,6 +130,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 /obj/effect/hotspot/process()
 	. = 1
+	if(QDELETED(src))
+		return PROCESS_KILL
 
 	//var/turf/simulated/my_tile = loc ZASTURF
 	var/turf/my_tile = loc

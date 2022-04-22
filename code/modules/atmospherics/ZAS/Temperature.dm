@@ -18,9 +18,8 @@
 	. = ..()
 	temperature_coefficient = isnull(temperature_coefficient) ? clamp(MAX_TEMPERATURE_COEFFICIENT - w_class, MIN_TEMPERATURE_COEFFICIENT, MAX_TEMPERATURE_COEFFICIENT) : temperature_coefficient
 
-/obj/proc/HandleObjectHeating(var/obj/item/heated_by, var/mob/user, var/adjust_temp)
+/atom/proc/adjust_temperature(adjust_temp, atom/heat_source)
 	if(ATOM_IS_TEMPERATURE_SENSITIVE(src))
-		visible_message(span_notice("\The [user] carefully heats \the [src] with \the [heated_by]."))
 		var/diff_temp = (adjust_temp - temperature)
 		if(diff_temp >= 0)
 			var/altered_temp = max(temperature + (ATOM_TEMPERATURE_EQUILIBRIUM_CONSTANT * temperature_coefficient * diff_temp), 0)

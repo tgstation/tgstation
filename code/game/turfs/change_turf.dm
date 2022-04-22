@@ -40,8 +40,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			var/datum/component/wet_floor/WF = T.AddComponent(/datum/component/wet_floor)
 			WF.InheritComponent(slip)
 		if (copy_air)
-			var/turf/openTurf = T
-			T.air.copy_from(air)
+			T.return_air().copy_from(return_air())
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
 /turf/proc/TerraformTurf(path, new_baseturf, flags)
@@ -318,10 +317,11 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	..()
 	RemoveLattice()
 	if(!(flags & (CHANGETURF_IGNORE_AIR | CHANGETURF_INHERIT_AIR)))
-		Assimilate_Air()
+		//Assimilate_Air()
+		SSzas.mark_for_update(src)
 
 //////Assimilate Air//////
-/turf/open/proc/Assimilate_Air()
+/*/turf/open/proc/Assimilate_Air()
 	var/list/turf/turf_list = get_adjacent_open_turfs(src)
 	var/turf_count = LAZYLEN(turf_list)
 	if(blocks_air || !turf_count)
@@ -333,7 +333,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/energy = 0
 	var/heat_cap = 0
 	for(var/turf/T in turf_list)
-		var/datum/gas_mixture/turf_mix = T.air
+		var/datum/gas_mixture/turf_mix = T.return_air()
 		var/capacity = turf_mix.heat_capacity()
 		energy += turf_mix.temperature * capacity
 		heat_cap += capacity
@@ -347,8 +347,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		total_gases[id] /= turf_count
 
 	for(var/turf/T as anything in turf_list)
-		T.air.copy_from(total)
+		T.return_air().copy_from(total)
 		SSzas.mark_for_update(T)
+*/
 /*
 /turf/open/proc/Assimilate_Air()
 	var/turf_count = LAZYLEN(atmos_adjacent_turfs)

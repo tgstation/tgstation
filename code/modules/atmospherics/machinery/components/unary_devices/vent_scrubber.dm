@@ -51,7 +51,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	SSairmachines.start_processing_machine(src)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/scrub_area = get_area(src)
@@ -62,6 +62,7 @@
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
 	adjacent_turfs.Cut()
+	SSairmachines.stop_processing_machine(src)
 	return ..()
 
 ///adds a gas or list of gases to our filter_types. used so that the scrubber can check if its supposed to be processing after each change
@@ -78,7 +79,7 @@
 	if(!turf_gas)
 		return FALSE
 
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	COOLDOWN_RESET(src, check_turfs_cooldown)
 	return TRUE
 
 ///remove a gas or list of gases from our filter_types.used so that the scrubber can check if its supposed to be processing after each change
@@ -96,7 +97,7 @@
 	if(!turf_gas)
 		return FALSE
 
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
+	COOLDOWN_RESET(src, check_turfs_cooldown)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/toggle_filters(filter_or_filters)
@@ -110,12 +111,10 @@
 	if(!isopenturf(our_turf))
 		return FALSE
 
-	var/datum/gas_mixture/turf_gas = our_turf.air
+	var/datum/gas_mixture/turf_gas = our_turf.return_air()
 
 	if(!turf_gas)
 		return FALSE
-
-	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
@@ -212,23 +211,27 @@
 
 	return FALSE
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
 	if(welded || !is_operational)
-		return FALSE
-	if(!nodes[1] || !on)
+		return
+	if(!on || !nodes[1])
 		on = FALSE
-		return FALSE
+		return
+	if(!COOLDOWN_FINISHED(src, check_turfs_cooldown))
+		return
 	var/turf/open/us = loc
 	if(!istype(us))
 		return
-	scrub(us)
+	var/should_cooldown = TRUE
+	if(scrub(us))
+		should_cooldown = FALSE
 	if(widenet)
-		if(COOLDOWN_FINISHED(src, check_turfs_cooldown))
-			check_turfs()
-			COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
-
+		check_turfs()
 		for(var/turf/tile in adjacent_turfs)
-			scrub(tile)
+			if(scrub(tile))
+				should_cooldown = FALSE
+	if(should_cooldown)
+		COOLDOWN_START(src, check_turfs_cooldown, 5 SECONDS)
 	return TRUE
 
 ///filtered gases at or below this amount automatically get removed from the mix
@@ -297,20 +300,15 @@
 	var/old_scrubbing = scrubbing
 	var/old_filter_length = length(filter_types)
 
-	///whether we should attempt to start processing due to settings allowing us to take gas out of our environment
-	var/try_start_processing = FALSE
-
 	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas = our_turf?.air
+	var/datum/gas_mixture/turf_gas = our_turf?.return_air()
 
 	var/atom/signal_sender = signal.data["user"]
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
-		try_start_processing = TRUE
 	if("power_toggle" in signal.data)
 		on = !on
-		try_start_processing = TRUE
 
 	if("widenet" in signal.data)
 		widenet = text2num(signal.data["widenet"])
@@ -319,10 +317,8 @@
 
 	if("scrubbing" in signal.data)
 		scrubbing = text2num(signal.data["scrubbing"])
-		try_start_processing = TRUE
 	if("toggle_scrubbing" in signal.data)
 		scrubbing = !scrubbing
-		try_start_processing = TRUE
 
 	if(scrubbing != old_scrubbing)
 		investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
@@ -345,11 +341,6 @@
 	broadcast_status()
 	update_appearance()
 
-	if(!our_turf || !turf_gas)
-		try_start_processing = FALSE
-
-	if(try_start_processing)//check if our changes should make us start processing
-		check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
 
 	if(length(filter_types) == old_filter_length && old_scrubbing == scrubbing && old_widenet == widenet)
 		return

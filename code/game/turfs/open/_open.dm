@@ -180,7 +180,7 @@
 	. = air.heat_capacity()
 
 /turf/open/GetTemperature()
-	. = air.temperature
+	. = return_air().temperature
 
 /turf/open/TakeTemperature(temp)
 	air.temperature += temp
