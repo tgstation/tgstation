@@ -842,3 +842,78 @@
   - balance: The Mecha Extinguisher equipment is now classified as utility.
   - balance: The Mecha Extinguisher now puts out fires in a 3x3 square (centered on
       the mech). However, it also only has five uses now. Save it for emergencies!
+2022-04-22:
+  ArcaneDefence:
+  - bugfix: Processing foods with a knife or rolling pin will require a table or tray
+      again.
+  B4CKU:
+  - bugfix: fixed a bug with Vim overlays
+  - qol: attempting to enter Vim while not a small creature now throws a balloon alert
+  - qol: Vim can now be assembled using the crafting menu
+  - expansion: Vim can now be used as a circuit shell
+  - balance: small creatures can now pilot Vim
+  Bondismyname but I wish it wasnt:
+  - qol: Circuit Sound Synthesizers have a few more options of sounds they can play
+  FernandoJ8:
+  - bugfix: fixes runtime caused by a newscaster finding no user bank account when
+      trying to create a channel
+  Fikou, Anturk:
+  - bugfix: ghost alerts now resize to 32x32 if larger
+  Jolly:
+  - bugfix: Crew no longer can spy on the prisoners on Meta Station with a floating
+      camera console. Wardens, please pay attention next time.
+  LordVollkorn:
+  - bugfix: The chemical press will now only dispense stored pills/patches/bottles
+      while wrenched to the floor. This means you won't leave a trail of pills behind
+      you anymore when dragging your chemical press to another location.
+  - bugfix: Plumbing machinery can now be rotated via ALT-click when there is no power.
+  - bugfix: Plumbing machinery is now programmable without power. It won't produce
+      anything without power of course, but at least you can set it up while waiting
+      for power to come back.
+  Melbert:
+  - bugfix: Heretic's Madness Mask applies stamina damage to people when it should
+  - bugfix: Fixes two instances where mob references were passed into source status
+      effects improperly
+  - code_imp: Updated status effect code to modern style guidelines.
+  - refactor: Drugginess is now a status effect. Now any living mob can be high and
+      speak beach-bum instead of just carbons and humanoids. Drug effects should also
+      be more consistently removed on aheal / in rare cases.
+  - rscadd: Adds a new heretic path, the the Blade Path
+  - expansion: Heretic sidepaths got tweaked a bit. Blood siphon is now between raw
+      ritual and void phase. Cleave is now between Lonely Ritual and Void pull. Rusted
+      Ritual is now between Entropic Plume and Firey Rebirth.
+  - refactor: Refactored how heretic alt paths are set up to make adding new heretic
+      paths easier.
+  Pandarsenic:
+  - bugfix: Nuclear Operative Ordnance Lab now has minimum functional equipment.
+  - bugfix: Overlapping sprites in IceBox departures corrected by moving wall-mounted
+      items to other walls.
+  - bugfix: IceBox xenobio camera now attaches to a wall instead of floating in the
+      air.
+  PositiveEntropy, AxieTheAxolotl:
+  - imageadd: Resprites several syndicate outfits, particularly the Syndicate Coat,
+      the Turtlenecks, and the Combat Uniform!
+  - imageadd: Resprites and updates the Really Black Suits!
+  - rscdel: Removes the trak_suit from syndicate.dmi (it was a dupe and unused)
+  RandomGamer123:
+  - bugfix: Airlock Controllers now display their name in their GUI menu.
+  - bugfix: Airlock Controllers' GUI menu now doesn't pop back up after being closed
+      if it update while you'll still in range.
+  TheBoondock:
+  - expansion: Bz now also reduce how much tritium is consumed in hypernob formation.
+      Reduction depends on the ratio of bz to trit, bz > trit will result in reduced
+      trit consumption.
+  Zytolg:
+  - bugfix: The Metastation Tox-Mix chamber now utilizes the airless ver. of the engine
+      turfs.
+  magatsuchi:
+  - bugfix: brings back ctrl-click to remove pen + flavor text
+  maxspells:
+  - soundadd: Changed a cautery sound effect to be quieter.
+  timothymtorres, TheBonded:
+  - expansion: Mobs can no longer read in the dark unless they have some type of night
+      vision.
+  tralezab:
+  - rscadd: Thieves now have a low chance to found a thieves guild somewhere in maint.
+  - rscadd: Adds a new type of thief, the "All Access Fan"
+  - rscdel: Hoarder is disabled and admin only for the moment

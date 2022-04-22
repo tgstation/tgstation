@@ -29,6 +29,7 @@
 		/obj/item/ai_module/core/full/robocop,
 		/obj/item/ai_module/core/full/liveandletlive,
 		/obj/item/ai_module/core/full/hulkamania,
+		/obj/item/ai_module/core/full/ten_commandments,
 		/obj/item/ai_module/supplied/safeguard,
 		/obj/item/ai_module/supplied/protect_station,
 		/obj/item/ai_module/supplied/quarantine,
