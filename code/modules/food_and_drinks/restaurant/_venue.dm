@@ -108,9 +108,6 @@
 	icon_state = "portal"
 	anchored = TRUE
 	density = FALSE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/restaurant_portal
 	layer = BELOW_OBJ_LAYER
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | ACID_PROOF
