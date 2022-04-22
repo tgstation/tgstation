@@ -140,9 +140,9 @@ There is no strict process when it comes to merging pull requests. Pull requests
 You must explain why you are submitting the pull request in the "Why It's Good For The Game" section of your pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting your PR wholesale, or requiring that you fix it before it is merged. A reasonable justification for your changes is a requirement. 
 
 Your "Why It's Good For The Game" section must make a good faith and reasonable attempt to:
-* Convince the community that the current state of affairs in the game is not good, and needs changing.
-* Convince the community that your pull request will either fix or help fix the problems you described.
-* Convince the community that any downsides introduced by your solution as a matter of design, are worth it, and why they are worth it.
+* Assert and argue that the current state of affairs in the game is not good, and needs changing.
+* Assert and argue that your pull request will either fix or help fix the problems you described.
+* Assert and argue that any downsides introduced by your solution as a matter of design, are worth it, and why they are worth it.
 
 More controversial changes have higher standards for justification to be considered reasonable. A bugfix does not typically require any effort at all in justification as its worth is usually self evident, however a major feature overhaul or balance change may require paragraphs to adequately justify itself.
 
