@@ -2363,6 +2363,7 @@
 #include "code\modules\atmospherics\ZAS\XGM\gases.dm"
 #include "code\modules\atmospherics\ZAS\XGM\xgm_immutable_gas_mixture.dm"
 #include "code\modules\atmospherics\ZAS\Zone.dm"
+#include "code\modules\atmospherics\ZAS\zas_extras\inflatable.dm"
 #include "code\modules\atmospherics\ZAS\_docs.dm"
 #include "code\modules\atmospherics\ZAS\Airflow.dm"
 #include "code\modules\atmospherics\ZAS\Atom.dm"

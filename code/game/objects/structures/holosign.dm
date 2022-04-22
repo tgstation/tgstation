@@ -107,7 +107,7 @@
 	. = ..()
 	var/turf/local = get_turf(loc)
 	ADD_TRAIT(local, TRAIT_FIREDOOR_STOP, TRAIT_GENERIC)
-	//air_update_turf(TRUE, TRUE)
+	update_nearby_tiles(TRUE)
 
 /obj/structure/holosign/barrier/atmos/block_superconductivity() //Didn't used to do this, but it's "normal", and will help ease heat flow transitions with the players.
 	return TRUE
@@ -115,7 +115,7 @@
 /obj/structure/holosign/barrier/atmos/Destroy()
 	var/turf/local = get_turf(loc)
 	REMOVE_TRAIT(local, TRAIT_FIREDOOR_STOP, TRAIT_GENERIC)
-	//air_update_turf(TRUE, FALSE)
+	update_nearby_tiles()
 	return ..()
 
 /obj/structure/holosign/barrier/cyborg

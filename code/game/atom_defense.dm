@@ -58,6 +58,16 @@
 	SHOULD_BE_PURE(TRUE)
 	return atom_integrity
 
+/**
+ * Retrieves the atom's current damage as a percentage where `100%` is `100`.
+ * If `use_raw_values` is `TRUE`, uses the raw var values instead of the `get_*` proc results.
+ */
+/atom/proc/get_integrity_percentage()
+	return round((get_integrity_lost())/max_integrity * 100)
+
+/atom/proc/get_integrity_lost()
+	return max_integrity - get_integrity()
+
 ///returns the damage value of the attack after processing the atom's various armor protections
 /atom/proc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
 	if(!uses_integrity)

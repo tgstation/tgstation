@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(airmachines)
 	expansion_queue = SSairmachines.expansion_queue
 	atmos_machinery = SSairmachines.atmos_machinery
 	current_run = SSairmachines.current_run
-	current_part = SSairmachines.current_part
+	current_process = SSairmachines.current_process
 	return ..()
 
 /datum/controller/subsystem/airmachines/fire(resumed = FALSE)

@@ -463,7 +463,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 
 //turf/proc/adjacent_fire_act(turf/simulated/floor/source, exposed_temperature, exposed_volume)
-/turf/proc/adjacent_fire_act(turf/open/floor/source, datum/gas_mixture/adj_air, adjt_temp)
+/turf/proc/adjacent_fire_act(turf/open/floor/source, datum/gas_mixture/adj_air, adj_temp, adj_volume)
 	return
 
 //turf/simulated/floor/adjacent_fire_act(turf/simulated/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume) ZASTURF
