@@ -18,7 +18,7 @@
 	. = ..()
 	if(. && isliving(user))
 		var/mob/living/living_user = user
-		ADD_TRAIT(living_user, TRAIT_BLUSHING, EMOTE_TRAIT)
+		ADD_TRAIT(living_user, TRAIT_BLUSHING, "[type]")
 		living_user.update_body()
 
 		// Use a timer to remove the blush effect after the BLUSH_DURATION has passed
@@ -29,7 +29,7 @@
 
 /datum/emote/living/blush/proc/end_blush(mob/living/living_user)
 	if(!QDELETED(living_user))
-		REMOVE_TRAIT(living_user, TRAIT_BLUSHING, EMOTE_TRAIT)
+		REMOVE_TRAIT(living_user, TRAIT_BLUSHING, "[type]")
 		living_user.update_body()
 
 #undef BLUSH_DURATION
