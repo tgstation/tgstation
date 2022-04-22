@@ -65,13 +65,8 @@
 	else
 		final_amount_added = amount_added
 
-	var/actual_amount_added
-	if (target.reagents)
-		final_amount_added = actual_amount_added = target.reagents.add_reagent(venom.type, final_amount_added)
-		if(!actual_amount_added)
-			return
-
+	target.reagents?.add_reagent(venom.type, final_amount_added)
 	if (methods)
 		target.expose_reagents(list((venom) = final_amount_added), null, methods, volume_modifier = 1, show_message = TRUE)
-	if (actual_amount_added) // Yes, this var exists entirely so that we don't have to call target.reagents again.
-		venom.on_transfer(target, methods, actual_amount_added)
+	if (target.reagents)
+		venom.on_transfer(target, methods, final_amount_added)

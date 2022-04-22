@@ -189,11 +189,8 @@
  */
 /mob/living/simple_animal/hostile/bee/proc/on_sting(mob/living/target)
 	var/sting_amt = rand(1, 5)
-	if (target.reagents)
-		sting_amt = target.reagents.add_reagent(beegent.type, sting_amt)
-		if(!sting_amt)
-			return
 
+	target.reagents?.add_reagent(beegent.type, sting_amt)
 	target.expose_reagents(list((beegent) = sting_amt), null, INJECT, volume_modifier = 1, show_message = TRUE)
 	if (target.reagents)
 		beegent.on_transfer(target, INJECT, sting_amt)
