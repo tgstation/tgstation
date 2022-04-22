@@ -135,7 +135,7 @@
 	if(islist(preop_sound))	
 		var/sound_file_use
 		for(var/typepath in preop_sound)
-			if(ispath(tool.type, typepath))
+			if(istype(tool, typepath))
 				sound_file_use = preop_sound[typepath]	
 				return sound_file_use
 		playsound(get_turf(target), sound_file_use, 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
