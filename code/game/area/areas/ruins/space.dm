@@ -217,7 +217,7 @@
 
 /area/ruin/space/has_grav/ancientstation
 	icon_state = "oldstation"
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 
 
 /area/ruin/space/has_grav/ancientstation/powered

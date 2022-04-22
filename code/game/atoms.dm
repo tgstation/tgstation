@@ -1959,12 +1959,7 @@
 			max_grav = max(max_grav, i)
 		return max_grav
 
-	if(gravity_turf.force_no_gravity)
-		return 0
-
-	var/area/turf_area = gravity_turf.loc
-
-	return turf_area.has_gravity || SSmapping.gravity_by_z_level["[gravity_turf.z]"]
+	return !gravity_turf.force_no_gravity && SSmapping.gravity_by_z_level["[gravity_turf.z]"]
 
 /**
  * Causes effects when the atom gets hit by a rust effect from heretics
