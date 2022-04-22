@@ -93,11 +93,13 @@ GLOBAL_REAL(xgm_gas_data, /datum/xgm_gas_data) = new
 /obj/effect/gas_overlay
 	name = "gas"
 	desc = "You shouldn't be clicking this."
-	icon = 'modular_pariah/master_files/icons/effects/tile_effects.dmi'
+	icon = 'modular_pariah/master_files/icons/effects/gas_overlays.dmi'
 	icon_state = "generic"
-	layer = FIRE_LAYER
+	layer = GAS_LAYER
+	plane = ABOVE_GAME_PLANE
 	appearance_flags = RESET_COLOR|PIXEL_SCALE|TILE_BOUND
 	mouse_opacity = 0
+	vis_flags = NONE
 	var/gas_id
 
 /obj/effect/gas_overlay/proc/update_alpha_animation(var/new_alpha)

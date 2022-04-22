@@ -368,7 +368,7 @@
 		var/pressure_mod = clamp(return_pressure() / ONE_ATMOSPHERE, 0, 2)
 		for(var/obj/effect/gas_overlay/O in graphic)
 			var/concentration_mod = clamp(gas[O.gas_id] / total_moles, 0.1, 1)
-			var/new_alpha = min(230, round(pressure_mod * concentration_mod * 180, 5))
+			var/new_alpha = min(240, round(pressure_mod * concentration_mod * 180, 5))
 			if(new_alpha != O.alpha)
 				O.update_alpha_animation(new_alpha)
 

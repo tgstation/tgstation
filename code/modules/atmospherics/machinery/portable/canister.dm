@@ -113,7 +113,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	pressure_limit = initial(pressure_limit) * (1 + 0.2 * random_quality)
 
 	update_appearance()
-	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/volatile_gas_storage)
 	AddComponent(/datum/component/gas_leaker, leak_rate=0.01)
 
@@ -216,6 +215,12 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	gas_type = GAS_N2O
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#c63e3b#f7d5d3"
+
+/obj/machinery/portable_atmospherics/canister/chlorine
+	name = "Chlorine canister"
+	gas_type = GAS_CHLORINE
+	greyscale_config = /datum/greyscale_config/canister
+	greyscale_colors = "#b9d41b"
 /*
 /obj/machinery/portable_atmospherics/canister/nitrium
 	name = "Nitrium canister"
@@ -516,7 +521,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	. = ..()
 	if(!. || QDELETED(src))
 		return
-	SSairmachines.start_processing_machine(src)
 
 /obj/machinery/portable_atmospherics/canister/atom_break(damage_flag)
 	. = ..()
@@ -614,8 +618,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
 		excited = TRUE
 	update_appearance()
-
-	return ..()
 
 /obj/machinery/portable_atmospherics/canister/ui_state(mob/user)
 	return GLOB.physical_state

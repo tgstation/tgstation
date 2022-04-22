@@ -115,6 +115,7 @@
 
 // ABOVE_GAME_PLANE layers
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define GAS_LAYER 5
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 

@@ -47,7 +47,8 @@
 	//and following a N/Z ratio of 1.5, the molar mass of a monatomic gas is:
 	molar_mass = 0.405	// kg/mol
 
-	tile_color = "#ff9940"
+	//tile_color = "#ff9940"
+	tile_overlay = "phoron"
 	overlay_limit = 0.7
 	flags = XGM_GAS_FUEL | XGM_GAS_CONTAMINANT | XGM_GAS_FUSION_FUEL
 	breathed_product = /datum/reagent/toxin/plasma
@@ -59,6 +60,7 @@
 	name = "Nitrous Oxide"
 	specific_heat = 40	// J/(mol*K)
 	molar_mass = 0.044	// kg/mol. N2O
+	tile_overlay = "sleeping_agent"
 	flags = XGM_GAS_OXIDIZER //N2O is a powerful oxidizer
 	breathed_product = /datum/reagent/nitrous_oxide
 	symbol_html = "N<sub>2</sub>O"
@@ -99,6 +101,7 @@
 	if(prob(50))
 		tile_color = RANDOM_RGB
 		overlay_limit = 0.5
+
 
 /datum/xgm_gas/hydrogen
 	id = GAS_HYDROGEN
@@ -180,7 +183,6 @@
 /datum/xgm_gas/nitricoxide
 	id = GAS_NO
 	name = "Nitric Oxide"
-
 	specific_heat = 10	// J/(mol*K)
 	molar_mass = 0.030	// kg/mol
 	flags = XGM_GAS_OXIDIZER
@@ -194,6 +196,8 @@
 	overlay_limit = 0.5
 	specific_heat = 5	// J/(mol*K)
 	molar_mass = 0.017	// kg/mol
+	tile_overlay = "chlorine"
+	overlay_limit = 0.1
 	flags = XGM_GAS_CONTAMINANT
 	//breathed_product = /datum/reagent/toxin/chlorine
 	symbol_html = "Cl"
