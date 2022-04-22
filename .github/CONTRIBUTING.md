@@ -144,9 +144,9 @@ Your "Why It's Good For The Game" section must make a good faith and reasonable 
 * Assert and argue that your pull request will either fix or help fix the problems you described.
 * Assert and argue that any downsides introduced by your solution as a matter of design, are worth it, and why they are worth it.
 
-More controversial changes have higher standards for justification to be considered reasonable. A bugfix does not typically require any effort at all in justification as its worth is usually self evident, however a major feature overhaul or balance change may require paragraphs to adequately justify itself.
+More controversial changes have higher standards for justification to be considered reasonable. A bugfix does not typically require any effort at all in justification as its worth is usually self evident, however a major feature overhaul or balance change may require significant argumentation to adequately justify its supposed benefit to the game.
 
-This does not change if your pull request is supported and/or requested by maintainers before it is opened. This does not change if your pull request is supported and/or requested by head coders before it is opened. This does not change if your pull request has a design document that justifies your changes inside it. You must always justify changes that need justification within the pull request, even if you also do it elsewhere.
+This does not change if your pull request is supported and/or requested by maintainers before it is opened. This does not change if your pull request is supported and/or requested by head coders before it is opened. This does not change if your pull request has a design document that justifies your changes inside it. You must always properly justify changes (that need justification) within the pull request, even if you also do it elsewhere.
 
 ## Good Boy Points
 
