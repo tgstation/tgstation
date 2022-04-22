@@ -211,7 +211,7 @@ SUBSYSTEM_DEF(id_access)
 		var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 		centcom_job_templates[trim_path] = trim.assignment
 
-	var/list/all_pda_paths = typesof(/obj/item/pda)
+	var/list/all_pda_paths = typesof(/obj/item/modular_computer/tablet/pda)
 	var/list/pda_regions = PDA_PAINTING_REGIONS
 	for(var/pda_path in all_pda_paths)
 		if(!(pda_path in pda_regions))
@@ -225,7 +225,7 @@ SUBSYSTEM_DEF(id_access)
 				if(!(whitelisted_region in manager_regions))
 					continue
 				var/list/manager_pdas = manager_info["pdas"]
-				var/obj/item/pda/fake_pda = pda_path
+				var/obj/item/modular_computer/tablet/pda/fake_pda = pda_path
 				manager_pdas[pda_path] = initial(fake_pda.name)
 				station_pda_templates[pda_path] = initial(fake_pda.name)
 
@@ -248,7 +248,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_SECURITY]"] = "Security"
 	desc_by_access["[ACCESS_BRIG]"] = "Holding Cells"
 	desc_by_access["[ACCESS_COURT]"] = "Courtroom"
-	desc_by_access["[ACCESS_FORENSICS_LOCKERS]"] = "Forensics"
+	desc_by_access["[ACCESS_FORENSICS]"] = "Forensics"
 	desc_by_access["[ACCESS_MEDICAL]"] = "Medical"
 	desc_by_access["[ACCESS_GENETICS]"] = "Genetics Lab"
 	desc_by_access["[ACCESS_MORGUE]"] = "Morgue"
@@ -301,7 +301,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_KEYCARD_AUTH]"] = "Keycode Auth."
 	desc_by_access["[ACCESS_TCOMSAT]"] = "Telecommunications"
 	desc_by_access["[ACCESS_GATEWAY]"] = "Gateway"
-	desc_by_access["[ACCESS_SEC_DOORS]"] = "Brig"
+	desc_by_access["[ACCESS_BRIG_ENTRANCE]"] = "Brig"
 	desc_by_access["[ACCESS_MINERAL_STOREROOM]"] = "Mineral Storage"
 	desc_by_access["[ACCESS_MINISAT]"] = "AI Satellite"
 	desc_by_access["[ACCESS_WEAPONS]"] = "Weapon Permit"

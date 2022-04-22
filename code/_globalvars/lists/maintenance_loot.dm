@@ -178,6 +178,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/glasses/hud/diagnostic = 1,
 		/obj/item/clothing/glasses/hud/health = 1,
 		/obj/item/clothing/glasses/salesman = 1,
+		/obj/item/clothing/glasses/nightmare_vision = 1,
 		/obj/item/clothing/glasses/welding = 1,
 		/obj/item/clothing/gloves/tackler/offbrand = 1,
 		/obj/item/clothing/head/helmet/old = 1,
@@ -315,8 +316,8 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//medical and chemicals
 		list(//medkits
 			/obj/item/storage/box/hug/medical = 1,
-			/obj/item/storage/firstaid/emergency = 1,
-			/obj/item/storage/firstaid/regular = 1,
+			/obj/item/storage/medkit/emergency = 1,
+			/obj/item/storage/medkit/regular = 1,
 			) = 1,
 		list(//medical chems
 			/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,

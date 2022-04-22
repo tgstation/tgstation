@@ -110,8 +110,12 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "L" = (
-/obj/structure/bed,
-/obj/item/bedsheet/purple,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/purple{
+	dir = 4
+	},
 /turf/open/floor/carpet/purple,
 /area/ruin/space/djstation)
 "N" = (

@@ -92,7 +92,7 @@
 		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
-		playsound(src, "shatter", 70, TRUE)
+		playsound(src, SFX_SHATTER, 70, TRUE)
 		update_appearance()
 		trigger_alarm()
 
@@ -533,7 +533,7 @@
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 			toggle_lock()
 			return
-	if(istype(I, /obj/item/pda))
+	if(istype(I, /obj/item/modular_computer))
 		return TRUE
 	SStgui.update_uis(src)
 	. = ..()
@@ -586,7 +586,7 @@
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = TRUE
-		playsound(src, "shatter", 70, TRUE)
+		playsound(src, SFX_SHATTER, 70, TRUE)
 		update_appearance()
 		trigger_alarm() //In case it's given an alarm anyway.
 

@@ -289,7 +289,7 @@
 		/obj/item/lipstick/purple,
 		/obj/item/reagent_containers/spray/waterflower/cyborg,
 		/obj/item/borg/cyborghug/peacekeeper,
-		/obj/item/borg/lollipop/clown,
+		/obj/item/borg/lollipop,
 		/obj/item/picket_sign/cyborg,
 		/obj/item/reagent_containers/borghypo/clown,
 		/obj/item/extinguisher/mini)
@@ -484,12 +484,12 @@
 	if(!wash_audio.is_active())
 		wash_audio.start()
 	clean()
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /// Start the process of disabling the buffer. Plays some effects, waits a bit, then finishes
 /datum/action/toggle_buffer/proc/deactivate_wash()
 	var/mob/living/silicon/robot/robot_owner = owner
-	var/time_left = timeleft(wash_audio.timerid) // We delay by the timer of our wash cause well, we want to hear the ramp down
+	var/time_left = timeleft(wash_audio.timer_id) // We delay by the timer of our wash cause well, we want to hear the ramp down
 	var/finished_by = time_left + 2.6 SECONDS
 	// Need to ensure that people don't spawn the deactivate button
 	COOLDOWN_START(src, toggle_cooldown, finished_by)
@@ -514,7 +514,7 @@
 	var/mob/living/silicon/robot/robot_owner = owner
 	buffer_on = FALSE
 	robot_owner.remove_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /// Should we keep trying to activate our buffer, or did you fuck it up somehow
 /datum/action/toggle_buffer/proc/allow_buffer_activate()
@@ -547,11 +547,11 @@
 	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
 		our_turf.wash(CLEAN_SCRUB)
 
-	reagents.expose(our_turf, TOUCH, 10)
+	reagents.expose(our_turf, TOUCH, min(1, 10 / reagents.total_volume))
 	// We use more water doing this then mopping
 	reagents.remove_any(2) //reaction() doesn't use up the reagents
 
-/datum/action/toggle_buffer/UpdateButtonIcon(status_only = FALSE, force = FALSE)
+/datum/action/toggle_buffer/UpdateButtons(status_only = FALSE, force = FALSE)
 	if(buffer_on)
 		name = "De-Activate Auto-Wash"
 		button_icon_state = "deactivate_wash"
@@ -638,7 +638,7 @@
 		/obj/item/weldingtool/mini,
 		/obj/item/extinguisher/mini,
 		/obj/item/storage/bag/sheetsnatcher/borg,
-		/obj/item/gun/energy/kinetic_accelerator/cyborg,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)

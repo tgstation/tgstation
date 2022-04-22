@@ -6,9 +6,6 @@
 	base_icon_state = "scanner"
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the door is open
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 50
-	active_power_usage = 300
 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
 	circuit = /obj/item/circuitboard/machine/dnascanner
 	var/locked = FALSE
@@ -20,6 +17,7 @@
 	var/obj/machinery/computer/scan_consolenew/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
+	. = ..()
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0

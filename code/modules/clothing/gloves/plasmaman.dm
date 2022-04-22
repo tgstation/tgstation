@@ -22,7 +22,6 @@
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
-	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/plasmaman/white
 	name = "white envirogloves"

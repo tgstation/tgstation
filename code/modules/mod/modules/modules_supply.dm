@@ -50,19 +50,21 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(istype(target, /obj/structure/closet/crate))
+	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/item/delivery/big))
 		var/atom/movable/picked_crate = target
-		if(length(stored_crates) >= max_crates)
-			balloon_alert(mod.wearer, "too many crates!")
+		if(!check_crate_pickup(picked_crate))
 			return
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		if(!do_after(mod.wearer, load_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
+		if(!check_crate_pickup(picked_crate))
+			return
 		stored_crates += picked_crate
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [picked_crate]")
 		drain_power(use_power_cost)
+		mod.wearer.update_inv_back()
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
@@ -77,13 +79,27 @@
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		drain_power(use_power_cost)
+		mod.wearer.update_inv_back()
 	else
 		balloon_alert(mod.wearer, "invalid target!")
 
-/obj/item/mod/module/clamp/on_suit_deactivation()
+/obj/item/mod/module/clamp/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
 	for(var/atom/movable/crate as anything in stored_crates)
 		crate.forceMove(drop_location())
 		stored_crates -= crate
+
+/obj/item/mod/module/clamp/proc/check_crate_pickup(atom/movable/target)
+	if(length(stored_crates) >= max_crates)
+		balloon_alert(mod.wearer, "too many crates!")
+		return FALSE
+	for(var/mob/living/mob in target.get_all_contents())
+		if(mob.mob_size < MOB_SIZE_HUMAN)
+			continue
+		balloon_alert(mod.wearer, "crate too heavy!")
+		return FALSE
+	return TRUE
 
 /obj/item/mod/module/clamp/loader
 	name = "MOD loader hydraulic clamp module"
@@ -94,6 +110,7 @@
 	overlay_state_active = "module_clamp_loader"
 	load_time = 1 SECONDS
 	max_crates = 5
+	use_mod_colors = TRUE
 
 ///Drill - Lets you dig through rock and basalt.
 /obj/item/mod/module/drill
@@ -114,7 +131,7 @@
 		return
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP, .proc/bump_mine)
 
-/obj/item/mod/module/drill/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/drill/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -130,8 +147,8 @@
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
 		drain_power(use_power_cost)
-	else if(istype(target, /turf/open/floor/plating/asteroid))
-		var/turf/open/floor/plating/asteroid/sand_turf = target
+	else if(istype(target, /turf/open/misc/asteroid))
+		var/turf/open/misc/asteroid/sand_turf = target
 		if(!sand_turf.can_dig(mod.wearer))
 			return
 		sand_turf.getDug()
@@ -171,7 +188,7 @@
 
 	for(var/obj/item/stack/ore/ore in get_turf(mod.wearer))
 		INVOKE_ASYNC(src, .proc/move_ore, ore)
-		playsound(src, "rustle", 50, TRUE)
+		playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
 	for(var/obj/item/stack/stored_ore as anything in ores)
@@ -204,6 +221,7 @@
 	cooldown_time = 4 SECONDS
 	overlay_state_inactive = "module_hydraulic"
 	overlay_state_active = "module_hydraulic_active"
+	use_mod_colors = TRUE
 	/// Time it takes to launch
 	var/launch_time = 2 SECONDS
 	/// User overlay
@@ -261,7 +279,7 @@
 /obj/item/mod/module/disposal_connector/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
-/obj/item/mod/module/disposal_connector/on_suit_deactivation()
+/obj/item/mod/module/disposal_connector/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING)
 
 /obj/item/mod/module/disposal_connector/get_configuration()
@@ -291,6 +309,7 @@
 	incompatible_modules = list(/obj/item/mod/module/magnet)
 	cooldown_time = 1.5 SECONDS
 	overlay_state_active = "module_magnet"
+	use_mod_colors = TRUE
 
 /obj/item/mod/module/magnet/on_select_use(atom/target)
 	. = ..()
@@ -314,7 +333,7 @@
 	locker.throw_at(mod.wearer, range = 7, speed = 3, force = MOVE_FORCE_WEAK, \
 		callback = CALLBACK(src, .proc/check_locker, locker))
 
-/obj/item/mod/module/magnet/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/magnet/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -344,12 +363,13 @@
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/ash_accretion)
 	overlay_state_inactive = "module_ash"
+	use_mod_colors = TRUE
 	/// How many tiles we can travel to max out the armor.
 	var/max_traveled_tiles = 10
 	/// How many tiles we traveled through.
 	var/traveled_tiles = 0
 	/// Armor values per tile.
-	var/list/armor_values = list(MELEE = 5.5, BULLET = 1.5, LASER = 2, ENERGY = 2.5, BOMB = 2.5)
+	var/list/armor_values = list(MELEE = 4, BULLET = 1, LASER = 2, ENERGY = 2, BOMB = 4)
 	/// Speed added when you're fully covered in ash.
 	var/speed_added = 0.5
 	/// Turfs that let us accrete ash.
@@ -361,17 +381,17 @@
 	. = ..()
 	if(!accretion_turfs)
 		accretion_turfs = typecacheof(list(
-			/turf/open/floor/plating/asteroid,
-			/turf/open/floor/plating/ashplanet,
-			/turf/open/floor/plating/dirt,
+			/turf/open/misc/asteroid,
+			/turf/open/misc/ashplanet,
+			/turf/open/misc/dirt,
 		))
 	if(!keep_turfs)
 		keep_turfs = typecacheof(list(
-			/turf/open/floor/plating/grass,
+			/turf/open/misc/grass,
 			/turf/open/floor/plating/snowed,
-			/turf/open/floor/plating/sandy_dirt,
-			/turf/open/floor/plating/ironsand,
-			/turf/open/floor/plating/ice,
+			/turf/open/misc/sandy_dirt,
+			/turf/open/misc/ironsand,
+			/turf/open/misc/ice,
 			/turf/open/indestructible/hierophant,
 			/turf/open/indestructible/boss,
 			/turf/open/indestructible/necropolis,
@@ -384,7 +404,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
-/obj/item/mod/module/ash_accretion/on_suit_deactivation()
+/obj/item/mod/module/ash_accretion/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_ASHSTORM_IMMUNE, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
@@ -464,7 +484,7 @@
 	if(!.)
 		return
 	playsound(src, 'sound/items/modsuit/ballin.ogg', 100)
-	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/mod.dmi', "ball_mask"), flags = MASK_INVERSE))
+	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
 	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
 	mod.wearer.add_filter("mod_outline", 3, outline_filter(color = "#000000AA"))
 	mod.wearer.base_pixel_y -= 4
@@ -480,11 +500,12 @@
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, .proc/on_statchange)
 
-/obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/items/modsuit/ballout.ogg', 100)
+	if(!deleting)
+		playsound(src, 'sound/items/modsuit/ballout.ogg', 100)
 	mod.wearer.base_pixel_y = 0
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
 	addtimer(CALLBACK(mod.wearer, /atom.proc/remove_filter, list("mod_ball", "mod_blur", "mod_outline")), animate_time)
@@ -538,7 +559,7 @@
 	nodamage = TRUE
 	range = 6
 	suppressed = SUPPRESSED_VERY
-	flag = BOMB
+	armor_flag = BOMB
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_power = 1

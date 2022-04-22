@@ -5,7 +5,6 @@
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
 	program_icon_state = "radarntos"
 	requires_ntnet = TRUE
-	transfer_access = null
 	available_on_ntnet = FALSE
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
 	size = 5
@@ -212,7 +211,7 @@
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
 	requires_ntnet = TRUE
-	transfer_access = ACCESS_MEDICAL
+	transfer_access = list(ACCESS_MEDICAL)
 	available_on_ntnet = TRUE
 	program_icon = "heartbeat"
 
@@ -249,6 +248,48 @@
 				return TRUE
 	return FALSE
 
+///Tracks all janitor equipment
+/datum/computer_file/program/radar/custodial_locator
+	filename = "custodiallocator"
+	filedesc = "Custodial Locator"
+	extended_desc = "This program allows for tracking of custodial equipment."
+	requires_ntnet = TRUE
+	transfer_access = list(ACCESS_JANITOR)
+	available_on_ntnet = TRUE
+	program_icon = "broom"
+	size = 2
+
+/datum/computer_file/program/radar/custodial_locator/find_atom()
+	return locate(selected) in GLOB.janitor_devices
+
+/datum/computer_file/program/radar/custodial_locator/scan()
+	if(world.time < next_scan)
+		return
+	next_scan = world.time + (2 SECONDS)
+	objects = list()
+	for(var/obj/custodial_tools as anything in GLOB.janitor_devices)
+		if(!trackable(custodial_tools))
+			continue
+		var/tool_name = custodial_tools.name
+
+		if(istype(custodial_tools, /obj/item/mop))
+			var/obj/item/mop/wet_mop = custodial_tools
+			tool_name = "[wet_mop.reagents.total_volume ? "Wet" : "Dry"] [wet_mop.name]"
+
+		if(istype(custodial_tools, /obj/structure/janitorialcart))
+			var/obj/structure/janitorialcart/janicart = custodial_tools
+			tool_name = "[janicart.name] - Water level: [janicart.reagents.total_volume] / [janicart.reagents.maximum_volume]"
+
+		if(istype(custodial_tools, /mob/living/simple_animal/bot/cleanbot))
+			var/mob/living/simple_animal/bot/cleanbot/cleanbots = custodial_tools
+			tool_name = "[cleanbots.name] - [cleanbots.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]"
+
+		var/list/tool_information = list(
+			ref = REF(custodial_tools),
+			name = tool_name,
+		)
+		objects += list(tool_information)
+
 ////////////////////////
 //Nuke Disk Finder App//
 ////////////////////////
@@ -261,7 +302,6 @@
 	program_icon_state = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
 	requires_ntnet = FALSE
-	transfer_access = null
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	tgui_id = "NtosRadarSyndicate"

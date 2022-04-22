@@ -33,8 +33,6 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	name = "holodeck control console"
 	desc = "A computer used to control a nearby holodeck."
 	icon_screen = "holocontrol"
-	idle_power_usage = 10
-	active_power_usage = 50
 
 	//new vars
 	///what area type this holodeck loads into. linked turns into the nearest instance of this area
@@ -133,6 +131,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			LAZYADD(program_cache, list(info_this))
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Holodeck", name)
@@ -315,6 +314,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
 		atom_contents.forceMove(target_turf)
 
+	if(istype(holo_atom, /obj/item/clothing/under/rank))
+		var/obj/item/clothing/under/holo_clothing = holo_atom
+		holo_clothing.dump_attachment()
+
 	if(!silent)
 		visible_message(span_notice("[holo_atom] fades away!"))
 
@@ -353,7 +356,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 				derez(item)
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.tick()
-	update_mode_power_usage(ACTIVE_POWER_USE, 50 + spawned.len * 3 + effects.len * 5)
+	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + spawned.len * 3 + effects.len * 5)
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)
@@ -401,7 +404,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	if(!LAZYLEN(emag_programs))
 		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
 		return
-	playsound(src, "sparks", 75, TRUE)
+	playsound(src, SFX_SPARKS, 75, TRUE)
 	obj_flags |= EMAGGED
 	to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
 	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")

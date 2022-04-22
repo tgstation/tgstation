@@ -7,9 +7,6 @@
 	icon_state = "mw"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/microwave
 	pass_flags = PASSTABLE
 	light_color = LIGHT_COLOR_YELLOW
@@ -46,6 +43,7 @@
 	. = ..()
 
 /obj/machinery/microwave/RefreshParts()
+	. = ..()
 	efficiency = 0
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		efficiency += M.rating
@@ -107,6 +105,14 @@
 	icon_state = "mw"
 	return ..()
 
+/obj/machinery/microwave/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(dirty >= 100)
+		return FALSE
+	if(default_unfasten_wrench(user, tool))
+		update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/microwave/attackby(obj/item/O, mob/living/user, params)
 	if(operating)
 		return
@@ -114,7 +120,7 @@
 		return
 
 	if(dirty < 100)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, O) || default_unfasten_wrench(user, O))
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
 			update_appearance()
 			return
 
@@ -311,7 +317,7 @@
 				pre_success()
 		return
 	time--
-	use_power(500)
+	use_power(active_power_usage)
 	addtimer(CALLBACK(src, .proc/loop, type, time, wait), wait)
 
 /obj/machinery/microwave/power_change()

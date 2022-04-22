@@ -1,35 +1,40 @@
-// For all of the items that are really just the user's hand used in different ways, mostly (all, really) from emotes
-
-/obj/item/circlegame
-	name = "circled hand"
-	desc = "If somebody looks at this while it's below your waist, you get to bop them."
-	icon_state = "madeyoulook"
+/// For all of the items that are really just the user's hand used in different ways, mostly (all, really) from emotes
+/obj/item/hand_item
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
+
+/obj/item/hand_item/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, TRAIT_GENERIC)
+
+/obj/item/hand_item/circlegame
+	name = "circled hand"
+	desc = "If somebody looks at this while it's below your waist, you get to bop them."
+	icon_state = "madeyoulook"
 	attack_verb_continuous = list("bops")
 	attack_verb_simple = list("bop")
 
-/obj/item/circlegame/Initialize(mapload)
+/obj/item/hand_item/circlegame/Initialize(mapload)
 	. = ..()
 	var/mob/living/owner = loc
 	if(!istype(owner))
 		return
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/ownerExamined)
 
-/obj/item/circlegame/Destroy()
+/obj/item/hand_item/circlegame/Destroy()
 	var/mob/owner = loc
 	if(istype(owner))
 		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 	return ..()
 
-/obj/item/circlegame/dropped(mob/user)
+/obj/item/hand_item/circlegame/dropped(mob/user)
 	UnregisterSignal(user, COMSIG_PARENT_EXAMINE) //loc will have changed by the time this is called, so Destroy() can't catch it
 	// this is a dropdel item.
 	return ..()
 
 /// Stage 1: The mistake is made
-/obj/item/circlegame/proc/ownerExamined(mob/living/owner, mob/living/sucker)
+/obj/item/hand_item/circlegame/proc/ownerExamined(mob/living/owner, mob/living/sucker)
 	SIGNAL_HANDLER
 
 	if(!istype(sucker) || !in_range(owner, sucker))
@@ -37,7 +42,7 @@
 	addtimer(CALLBACK(src, .proc/waitASecond, owner, sucker), 4)
 
 /// Stage 2: Fear sets in
-/obj/item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
+/obj/item/hand_item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
 	if(QDELETED(sucker) || QDELETED(src) || QDELETED(owner))
 		return
 
@@ -49,7 +54,7 @@
 		addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 6)
 
 /// Stage 3A: We face our own failures
-/obj/item/circlegame/proc/selfGottem(mob/living/owner)
+/obj/item/hand_item/circlegame/proc/selfGottem(mob/living/owner)
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
@@ -63,7 +68,7 @@
 	qdel(src)
 
 /// Stage 3B: We face our reckoning (unless we moved away or they're incapacitated)
-/obj/item/circlegame/proc/GOTTEM(mob/living/owner, mob/living/sucker)
+/obj/item/hand_item/circlegame/proc/GOTTEM(mob/living/owner, mob/living/sucker)
 	if(QDELETED(sucker))
 		return
 
@@ -103,16 +108,13 @@
 	qdel(src)
 
 
-/obj/item/noogie
+/obj/item/hand_item/noogie
 	name = "noogie"
 	desc = "Get someone in an aggressive grab then use this on them to ruin their day."
 	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
-	force = 0
-	throwforce = 0
-	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
 
-/obj/item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
+/obj/item/hand_item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
 	if(!istype(target))
 		to_chat(user, span_warning("You don't think you can give this a noogie!"))
 		return
@@ -125,7 +127,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
-	if((target.get_biological_state() != BIO_FLESH_BONE && target.get_biological_state() != BIO_JUST_FLESH) || !the_head.is_organic_limb())
+	if((target.get_biological_state() != BIO_FLESH_BONE && target.get_biological_state() != BIO_JUST_FLESH) || !IS_ORGANIC_LIMB(the_head))
 		to_chat(user, span_warning("You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!"))
 		return
 
@@ -163,7 +165,7 @@
 	noogie_loop(user, target, 0)
 
 /// The actual meat and bones of the noogie'ing
-/obj/item/noogie/proc/noogie_loop(mob/living/carbon/human/user, mob/living/carbon/target, iteration)
+/obj/item/hand_item/noogie/proc/noogie_loop(mob/living/carbon/human/user, mob/living/carbon/target, iteration)
 	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target)
 		return FALSE
 
@@ -199,21 +201,20 @@
 	noogie_loop(user, target, iteration)
 
 
-/obj/item/slapper
+/obj/item/hand_item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
 	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
-	force = 0
-	throwforce = 0
-	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
 	hitsound = 'sound/effects/snap.ogg'
 	/// How many smaller table smacks we can do before we're out
 	var/table_smacks_left = 3
 
-/obj/item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
+/obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
+	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
+
 	if(ishuman(slapped))
 		var/mob/living/carbon/human/human_slapped = slapped
 		human_slapped.dna?.species?.stop_wagging_tail(slapped)
@@ -221,7 +222,7 @@
 
 	var/slap_volume = 50
 	var/datum/status_effect/offering/kiss_check = slapped.has_status_effect(/datum/status_effect/offering)
-	if(kiss_check && istype(kiss_check.offered_item, /obj/item/kisser) && (user in kiss_check.possible_takers))
+	if(kiss_check && istype(kiss_check.offered_item, /obj/item/hand_item/kisser) && (user in kiss_check.possible_takers))
 		user.visible_message(
 			span_danger("[user] scoffs at [slapped]'s advance, winds up, and smacks [slapped.p_them()] hard to the ground!"),
 			span_notice("The nerve! You wind back your hand and smack [slapped] hard enough to knock [slapped.p_them()] over!"),
@@ -270,7 +271,7 @@
 	playsound(slapped, 'sound/weapons/slap.ogg', slap_volume, TRUE, -1)
 	return
 
-/obj/item/slapper/attack_atom(obj/O, mob/living/user, params)
+/obj/item/hand_item/slapper/attack_atom(obj/O, mob/living/user, params)
 	if(!istype(O, /obj/structure/table))
 		return ..()
 
@@ -296,7 +297,7 @@
 		if(table_smacks_left <= 0)
 			qdel(src)
 
-/obj/item/slapper/on_offered(mob/living/carbon/offerer)
+/obj/item/hand_item/slapper/on_offered(mob/living/carbon/offerer)
 	. = TRUE
 
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
@@ -309,7 +310,7 @@
 	offerer.apply_status_effect(/datum/status_effect/offering, src, /atom/movable/screen/alert/give/highfive)
 
 /// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
-/obj/item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+/obj/item/hand_item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	. = TRUE
 
 	var/open_hands_taker
@@ -324,7 +325,7 @@
 		return
 
 	for(var/i in offerer.held_items)
-		var/obj/item/slapper/slap_check = i
+		var/obj/item/hand_item/slapper/slap_check = i
 		if(istype(slap_check))
 			slappers_giver++
 
@@ -347,7 +348,7 @@
 	qdel(src)
 
 /// Gangster secret handshakes.
-/obj/item/slapper/secret_handshake
+/obj/item/hand_item/slapper/secret_handshake
 	name = "Secret Handshake"
 	icon_state = "recruit"
 	icon = 'icons/obj/gang/actions.dmi'
@@ -360,7 +361,7 @@
 
 
 /// Adds the user to the family that this package corresponds to, dispenses the free_clothes of that family, and adds them to the handler if it exists.
-/obj/item/slapper/secret_handshake/proc/add_to_gang(mob/living/user, original_name)
+/obj/item/hand_item/slapper/secret_handshake/proc/add_to_gang(mob/living/user, original_name)
 	var/datum/antagonist/gang/swappin_sides = new gang_to_use()
 	swappin_sides.original_name = original_name
 	swappin_sides.handler = handler
@@ -374,7 +375,7 @@
 		handler.gangbangers += user.mind
 
 /// Checks if the user is trying to use the package of the family they are in, and if not, adds them to the family, with some differing processing depending on whether the user is already a family member.
-/obj/item/slapper/secret_handshake/proc/attempt_join_gang(mob/living/user)
+/obj/item/hand_item/slapper/secret_handshake/proc/attempt_join_gang(mob/living/user)
 	if(!user?.mind)
 		return
 	var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
@@ -387,7 +388,7 @@
 		user.mind.remove_antag_datum(/datum/antagonist/gang)
 	add_to_gang(user, real_name_backup)
 
-/obj/item/slapper/secret_handshake/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+/obj/item/hand_item/slapper/secret_handshake/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	. = TRUE
 	if (!(null in taker.held_items))
 		to_chat(taker, span_warning("You can't get taught the secret handshake if [offerer] has no free hands!"))
@@ -416,21 +417,18 @@
 
 
 
-/obj/item/kisser
+/obj/item/hand_item/kisser
 	name = "kiss"
 	desc = "I want you all to know, everyone and anyone, to seal it with a kiss."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "heart"
 	inhand_icon_state = "nothing"
-	force = 0
-	throwforce = 0
-	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
 	/// The kind of projectile this version of the kiss blower fires
 	var/kiss_type = /obj/projectile/kiss
 	/// TRUE if the user was aiming anywhere but the mouth when they offer the kiss, if it's offered
 	var/cheek_kiss
 
-/obj/item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
@@ -446,7 +444,7 @@
 	blown_kiss.fire()
 	qdel(src)
 
-/obj/item/kisser/on_offered(mob/living/carbon/offerer)
+/obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer)
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
 		return TRUE
 
@@ -456,7 +454,7 @@
 	offerer.apply_status_effect(/datum/status_effect/offering, src)
 	return TRUE
 
-/obj/item/kisser/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+/obj/item/hand_item/kisser/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(offerer))
 	offerer.visible_message("<b>[offerer]</b> gives [taker] \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!!", span_notice("You give [taker] \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!"), ignored_mobs = taker)
 	to_chat(taker, span_nicegreen("[offerer] gives you \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!"))
@@ -474,7 +472,7 @@
 	qdel(src)
 	return TRUE // so the core offering code knows to halt
 
-/obj/item/kisser/death
+/obj/item/hand_item/kisser/death
 	name = "kiss of death"
 	desc = "If looks could kill, they'd be this."
 	color = COLOR_BLACK
@@ -542,7 +540,7 @@
 			other_msg = "stammers softly for a moment before choking on something!"
 			self_msg = "You feel your tongue disappear down your throat as you fight to remember how to make words!"
 			addtimer(CALLBACK(living_target, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
-			living_target.stuttering += rand(5, 15)
+			living_target.adjust_timed_status_effect(rand(10 SECONDS, 30 SECONDS), /datum/status_effect/speech/stutter)
 		if(3)
 			other_msg = "locks up with a stunned look on [living_target.p_their()] face, staring at [firer ? firer : "the ceiling"]!"
 			self_msg = "Your brain completely fails to process what just happened, leaving you rooted in place staring at [firer ? "[firer]" : "the ceiling"] for what feels like an eternity!"

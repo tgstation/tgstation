@@ -45,6 +45,7 @@
 			cached_designs |= d
 
 /obj/machinery/rnd/production/RefreshParts()
+	. = ..()
 	calculate_efficiency()
 
 /obj/machinery/rnd/production/ui_interact(mob/user)
@@ -152,11 +153,11 @@
 	if(materials.on_hold())
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
-	var/power = 1000
+	var/power = active_power_usage
 	amount = clamp(amount, 1, 50)
 	for(var/M in D.materials)
 		power += round(D.materials[M] * amount / 35)
-	power = min(3000, power)
+	power = min(active_power_usage, power)
 	use_power(power)
 	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
 	var/list/efficient_mats = list()

@@ -56,11 +56,11 @@
 		/obj/item/evidencebag = 1,
 		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
 		)
-	belt = /obj/item/pda/warden
+	belt = /obj/item/modular_computer/tablet/pda/warden
 	ears = /obj/item/radio/headset/headset_sec/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/warden
+	head = /obj/item/clothing/head/warden/red
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld

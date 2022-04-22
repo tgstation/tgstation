@@ -749,7 +749,7 @@
 	required_reagents = list(/datum/reagent/consumable/sol_dry = 2, /datum/reagent/consumable/grenadine = 1)
 
 /datum/chemical_reaction/drink/agua_fresca
-	results = list(/datum/reagent/consumable/agua_fresca = 3)
+	results = list(/datum/reagent/consumable/agua_fresca = 10)
 	required_reagents = list(/datum/reagent/consumable/watermelonjuice = 4, /datum/reagent/consumable/ice = 1, /datum/reagent/water = 2, /datum/reagent/consumable/limejuice = 2, /datum/reagent/consumable/menthol = 1)
 
 /datum/chemical_reaction/drink/cinderella

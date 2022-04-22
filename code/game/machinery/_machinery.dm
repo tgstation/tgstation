@@ -107,9 +107,9 @@
 		//1 = use idle_power_usage
 		//2 = use active_power_usage
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = IDLE_POWER_USE
-	var/idle_power_usage = 0
+	var/idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = ACTIVE_POWER_USE
-	var/active_power_usage = 0
+	var/active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	///the current amount of static power usage this machine is taking from its area
 	var/static_power_usage = 0
 	var/power_channel = AREA_USAGE_EQUIP
@@ -607,8 +607,8 @@
 		return attack_hand(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	user.visible_message(span_danger("[user.name] smashes against \the [src.name] with its paws."), null, null, COMBAT_MESSAGE_RANGE)
-	take_damage(4, BRUTE, MELEE, 1)
+	var/damage = take_damage(4, BRUTE, MELEE, 1)
+	user.visible_message(span_danger("[user] smashes [src] with [user.p_their()] paws[damage ? "." : ", without leaving a mark!"]"), null, null, COMBAT_MESSAGE_RANGE)
 
 /obj/machinery/attack_hulk(mob/living/carbon/user)
 	. = ..()
@@ -677,8 +677,20 @@
 	..()
 	RefreshParts()
 
-/obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
-	return
+/obj/machinery/proc/RefreshParts()
+	SHOULD_CALL_PARENT(TRUE)
+	//reset to baseline
+	idle_power_usage = initial(idle_power_usage)
+	active_power_usage = initial(active_power_usage)
+	if(!component_parts || !component_parts.len)
+		return
+	var/parts_energy_rating = 0
+	for(var/obj/item/stock_parts/part in component_parts)
+		parts_energy_rating += part.energy_rating
+
+	idle_power_usage = initial(idle_power_usage) * (1 + parts_energy_rating)
+	active_power_usage = initial(active_power_usage) * (1 + parts_energy_rating)
+	update_current_power_usage()
 
 /obj/machinery/proc/default_pry_open(obj/item/crowbar)
 	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
@@ -967,7 +979,7 @@
 	take_damage(500, BRUTE, MELEE, 1)
 
 /obj/machinery/vv_edit_var(vname, vval)
-	if(vname == "occupant")
+	if(vname == NAMEOF(src, occupant))
 		set_occupant(vval)
 		datum_flags |= DF_VAR_EDITED
 		return TRUE

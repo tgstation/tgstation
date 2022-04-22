@@ -67,6 +67,11 @@
 	/// A reference to our cellular emporium action (which opens the UI for the datum).
 	var/datum/action/innate/cellular_emporium/emporium_action
 
+	/// UI displaying how many chems we have
+	var/atom/movable/screen/ling/chems/lingchemdisplay
+	/// UI displayng our currently active sting
+	var/atom/movable/screen/ling/sting/lingstingdisplay
+
 	/// The name of our "hive" that our ling came from. Flavor.
 	var/hive_name
 
@@ -125,26 +130,56 @@
 	handle_clown_mutation(living_mob, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, .proc/on_login)
 	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, .proc/on_life)
-	living_mob.hud_used?.lingchemdisplay.invisibility = 0
-	living_mob.hud_used?.lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+	RegisterSignal(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_click_sting)
 
-	if(!iscarbon(mob_to_tweak))
-		return
+	if(living_mob.hud_used)
+		var/datum/hud/hud_used = living_mob.hud_used
 
-	var/mob/living/carbon/carbon_mob = mob_to_tweak
-	RegisterSignal(carbon_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_click_sting)
+		lingchemdisplay = new /atom/movable/screen/ling/chems()
+		lingchemdisplay.hud = hud_used
+		hud_used.infodisplay += lingchemdisplay
+
+		lingstingdisplay = new /atom/movable/screen/ling/sting()
+		lingstingdisplay.hud = hud_used
+		hud_used.infodisplay += lingstingdisplay
+
+		hud_used.show_hud(hud_used.hud_version)
+	else
+		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, .proc/on_hud_created)
 
 	// Brains are optional for lings.
-	var/obj/item/organ/brain/our_ling_brain = carbon_mob.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/our_ling_brain = living_mob.getorganslot(ORGAN_SLOT_BRAIN)
 	if(our_ling_brain)
 		our_ling_brain.organ_flags &= ~ORGAN_VITAL
 		our_ling_brain.decoy_override = TRUE
+
+/datum/antagonist/changeling/proc/on_hud_created(datum/source)
+	SIGNAL_HANDLER
+
+	var/datum/hud/ling_hud = owner.current.hud_used
+
+	lingchemdisplay = new
+	lingchemdisplay.hud = ling_hud
+	ling_hud.infodisplay += lingchemdisplay
+
+	lingstingdisplay = new
+	lingstingdisplay.hud = ling_hud
+	ling_hud.infodisplay += lingstingdisplay
+
+	ling_hud.show_hud(ling_hud.hud_version)
 
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/living_mob = mob_override || owner.current
 	handle_clown_mutation(living_mob, removing = FALSE)
 	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
-	living_mob.hud_used?.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
+
+	if(living_mob.hud_used)
+		var/datum/hud/hud_used = living_mob.hud_used
+
+		hud_used.infodisplay -= lingchemdisplay
+		hud_used.infodisplay -= lingstingdisplay
+		QDEL_NULL(lingchemdisplay)
+		QDEL_NULL(lingstingdisplay)
 
 /datum/antagonist/changeling/on_removal()
 	remove_changeling_powers(include_innate = TRUE)
@@ -203,9 +238,6 @@
 /datum/antagonist/changeling/proc/on_life(datum/source, delta_time, times_fired)
 	SIGNAL_HANDLER
 
-	if(!iscarbon(owner.current))
-		return
-
 	// If dead, we only regenerate up to half chem storage.
 	if(owner.current.stat == DEAD)
 		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time, total_chem_storage * 0.5)
@@ -218,7 +250,7 @@
  * Signal proc for [COMSIG_MOB_MIDDLECLICKON] and [COMSIG_MOB_ALTCLICKON].
  * Allows the changeling to sting people with a click.
  */
-/datum/antagonist/changeling/proc/on_click_sting(mob/living/carbon/ling, atom/clicked)
+/datum/antagonist/changeling/proc/on_click_sting(mob/living/ling, atom/clicked)
 	SIGNAL_HANDLER
 
 	if(!chosen_sting || clicked == ling || !istype(ling) || ling.stat != CONSCIOUS)
@@ -238,7 +270,7 @@
 	var/cap_to = isnum(override_cap) ? override_cap : total_chem_storage
 	chem_charges = clamp(chem_charges + amount, 0, cap_to)
 
-	owner.current.hud_used?.lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+	lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
 
 /*
  * Remove changeling powers from the current Changeling's purchased_powers list.
@@ -652,9 +684,11 @@
 
 	chosen_dna.transfer_identity(user, TRUE)
 
-	user.Digitigrade_Leg_Swap(!(DIGITIGRADE in chosen_dna.species?.species_traits))
+	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
+		if(IS_ORGANIC_LIMB(limb))
+			limb.update_limb(is_creating = TRUE)
+
 	user.updateappearance(mutcolor_update = TRUE)
-	user.update_body()
 	user.domutcheck()
 
 	// Get rid of any scars from previous Changeling-ing

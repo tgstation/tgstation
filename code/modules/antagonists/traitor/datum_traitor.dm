@@ -70,11 +70,7 @@
 	if(give_objectives)
 		forge_traitor_objectives()
 
-	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
-
-	pick_employer(faction)
-
-	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
+	pick_employer()
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
@@ -137,8 +133,10 @@
 	owner.special_role = null
 	return ..()
 
-/datum/antagonist/traitor/proc/pick_employer(faction)
+/datum/antagonist/traitor/proc/pick_employer()
+	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
 	var/list/possible_employers = list()
+
 	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
 	switch(faction)
@@ -147,6 +145,7 @@
 		if(FACTION_NANOTRASEN)
 			possible_employers -= GLOB.syndicate_employers
 	employer = pick(possible_employers)
+	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
 /datum/objective/traitor_progression
 	name = "traitor progression"
@@ -326,7 +325,7 @@
 	gloves = /obj/item/clothing/gloves/color/yellow
 	mask = /obj/item/clothing/mask/gas
 	l_hand = /obj/item/melee/energy/sword
-	r_hand = /obj/item/gun/energy/kinetic_accelerator/crossbow
+	r_hand = /obj/item/gun/energy/recharge/ebow
 
 /datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/melee/energy/sword/sword = locate() in H.held_items

@@ -15,30 +15,36 @@
 	var/mob/living/user = usr
 	if(!istype(user))
 		return
-	var/msg
 	if(!can_cast(user))
-		msg = span_warning("You can no longer cast [name]!")
-		remove_ranged_ability(msg)
+		remove_ranged_ability(span_warning("You can no longer cast [name]!"))
 		return
+
 	if(active)
-		msg = span_notice("[deactive_msg]")
-		if(charge_type == "recharge")
-			var/refund_percent = current_amount/projectile_amount
-			charge_counter = charge_max * refund_percent
-			start_recharge()
-		remove_ranged_ability(msg)
 		on_deactivation(user)
 	else
-		msg = span_notice("[active_msg] <B>Left-click to shoot it at a target!</B>")
-		current_amount = projectile_amount
-		add_ranged_ability(user, msg, TRUE)
 		on_activation(user)
 
+/**
+ * Activate the spell for user.
+ */
 /obj/effect/proc_holder/spell/aimed/proc/on_activation(mob/user)
-	return
+	SHOULD_CALL_PARENT(TRUE)
 
+	current_amount = projectile_amount
+	add_ranged_ability(user, span_notice("[active_msg] <B>Left-click to shoot it at a target!</B>"), TRUE)
+
+/**
+ * Deactivate the spell from user.
+ */
 /obj/effect/proc_holder/spell/aimed/proc/on_deactivation(mob/user)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(charge_type == "recharge")
+		var/refund_percent = current_amount / projectile_amount
+		charge_counter = charge_max * refund_percent
+		start_recharge()
+	remove_ranged_ability(span_notice("[deactive_msg]"))
+
 
 /obj/effect/proc_holder/spell/aimed/update_icon()
 	if(!action)
@@ -46,7 +52,7 @@
 
 	. = ..()
 	action.button_icon_state = "[base_icon_state][active]"
-	action.UpdateButtonIcon()
+	action.UpdateButtons()
 
 /obj/effect/proc_holder/spell/aimed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
@@ -144,7 +150,7 @@
 	cooldown_min = 10
 	projectile_amount = 5
 	projectiles_per_fire = 7
-	projectile_type = /obj/projectile/spellcard
+	projectile_type = /obj/projectile/magic/spellcard
 	base_icon_state = "spellcard"
 	action_icon_state = "spellcard0"
 	var/datum/weakref/current_target_weakref
@@ -156,6 +162,7 @@
 	ranged_clickcd_override = TRUE
 
 /obj/effect/proc_holder/spell/aimed/spell_cards/on_activation(mob/M)
+	. = ..()
 	QDEL_NULL(lockon_component)
 	lockon_component = M.AddComponent(/datum/component/lockon_aiming, 5, GLOB.typecache_living, 1, null, CALLBACK(src, .proc/on_lockon_component))
 
@@ -170,6 +177,7 @@
 		M.face_atom(A)
 
 /obj/effect/proc_holder/spell/aimed/spell_cards/on_deactivation(mob/M)
+	. = ..()
 	QDEL_NULL(lockon_component)
 
 /obj/effect/proc_holder/spell/aimed/spell_cards/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)

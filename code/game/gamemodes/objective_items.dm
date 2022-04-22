@@ -113,9 +113,6 @@
 	targetitem = /obj/item/clothing/shoes/clown_shoes
 	excludefromjob = list(JOB_CLOWN, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 
-/obj/item/clothing/shoes/clown_shoes/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/clothing/shoes/clown_shoes)
-
 /datum/objective_item/steal/low_risk/clown_shoes/TargetExists()
 	for(var/mob/player as anything in GLOB.player_list)
 		if(player.stat == DEAD)
@@ -213,9 +210,6 @@
 	difficulty = 5
 	excludefromjob = list(JOB_CAPTAIN)
 
-/obj/item/disk/nuclear/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/disk/nuclear)
-
 /datum/objective_item/steal/nukedisc/check_special_completion(obj/item/disk/nuclear/N)
 	return !N.fake
 
@@ -283,9 +277,6 @@
 	valid_containers = list(/obj/item/nuke_core_container/supermatter)
 	difficulty = 15
 
-/obj/item/nuke_core/supermatter_sliver/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/nuke_core/supermatter_sliver)
-
 /datum/objective_item/steal/supermatter/New()
 	special_equipment += /obj/item/storage/box/syndie_kit/supermatter
 	..()
@@ -303,9 +294,6 @@
 		JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST,
 	)
 
-/obj/item/tank/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/tank)
-
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/tank/T)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
@@ -318,9 +306,6 @@
 	name = "a functional AI"
 	targetitem = /obj/item/aicard
 	difficulty = 20 //beyond the impossible
-
-/obj/item/aicard/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/aicard)
 
 /datum/objective_item/steal/functionalai/check_special_completion(obj/item/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
@@ -353,9 +338,6 @@
 	targetitem = /obj/item/slime_extract
 	difficulty = 3
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
-
-/obj/item/slime_extract/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/slime_extract)
 
 /datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
 	if(E.Uses > 0)
@@ -399,48 +381,30 @@
 	targetitem = /obj/item/gun/energy/e_gun/nuclear
 	difficulty = 10
 
-/obj/item/gun/energy/e_gun/nuclear/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/gun/energy/e_gun/nuclear)
-
 /datum/objective_item/special/ddrill
 	name = "a diamond drill"
 	targetitem = /obj/item/pickaxe/drill/diamonddrill
 	difficulty = 10
-
-/obj/item/pickaxe/drill/diamonddrill/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/pickaxe/drill/diamonddrill)
 
 /datum/objective_item/special/boh
 	name = "a bag of holding"
 	targetitem = /obj/item/storage/backpack/holding
 	difficulty = 10
 
-/obj/item/storage/backpack/holding/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/storage/backpack/holding)
-
 /datum/objective_item/special/hypercell
 	name = "a hyper-capacity power cell"
 	targetitem = /obj/item/stock_parts/cell/hyper
 	difficulty = 5
-
-/obj/item/stock_parts/cell/hyper/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/stock_parts/cell/hyper)
 
 /datum/objective_item/special/laserpointer
 	name = "a laser pointer"
 	targetitem = /obj/item/laser_pointer
 	difficulty = 5
 
-/obj/item/laser_pointer/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/laser_pointer)
-
 /datum/objective_item/special/corgimeat
 	name = "a piece of corgi meat"
 	targetitem = /obj/item/food/meat/slab/corgi
 	difficulty = 5
-
-/obj/item/food/meat/slab/corgi/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/food/meat/slab/corgi)
 
 /datum/objective_item/stack/New()
 	..()
@@ -459,8 +423,6 @@
 	targetitem = /obj/item/stack/sheet/cardboard
 	difficulty = 9001
 
-/obj/item/stack/sheet/cardboard/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/stack/sheet/cardboard)
 
 /datum/objective_item/stack/check_special_completion(obj/item/stack/S)
 	var/target_amount = text2num(name)
@@ -475,23 +437,14 @@
 	targetitem = /obj/item/stack/sheet/mineral/diamond
 	difficulty = 10
 
-/obj/item/stack/sheet/mineral/diamond/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/stack/sheet/mineral/diamond)
-
 /datum/objective_item/stack/gold
 	name = "50 gold bars"
 	targetitem = /obj/item/stack/sheet/mineral/gold
 	difficulty = 15
 
-/obj/item/stack/sheet/mineral/gold/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/stack/sheet/mineral/gold)
-
 /datum/objective_item/stack/uranium
 	name = "25 refined uranium bars"
 	targetitem = /obj/item/stack/sheet/mineral/uranium
 	difficulty = 10
-
-/obj/item/stack/sheet/mineral/uranium/add_stealing_item_objective()
-	ADD_STEAL_ITEM(src, /obj/item/stack/sheet/mineral/uranium)
 
 #undef ADD_STEAL_ITEM

@@ -98,7 +98,7 @@
 	tracked_heretics |= heretic
 
 	// If our heretic's on station, generate some new influences
-	if(ishuman(heretic.current) && is_station_level(heretic.current.z))
+	if(ishuman(heretic.current) && !is_centcom_level(heretic.current.z))
 		generate_new_influences()
 
 	add_to_smashes(heretic)

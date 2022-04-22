@@ -18,6 +18,7 @@
 	icon_keyboard = "id_key"
 	warmup_time = 3 SECONDS
 	circuit = /obj/item/circuitboard/computer/bountypad
+	interface_type = "CivCargoHoldTerminal"
 	///Typecast of an inserted, scanned ID card inside the console, as bounties are held within the ID card.
 	var/obj/item/card/id/inserted_scan_id
 
@@ -142,13 +143,6 @@
 	if(!Adjacent(user))
 		return FALSE
 	id_eject(user, inserted_scan_id)
-
-/obj/machinery/computer/piratepad_control/civilian/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "CivCargoHoldTerminal", name)
-		ui.open()
-
 
 /obj/machinery/computer/piratepad_control/civilian/ui_data(mob/user)
 	var/list/data = list()
@@ -284,8 +278,9 @@
 	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, .proc/on_export)
 
 /obj/item/bounty_cube/Destroy()
-	UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
-	QDEL_NULL(radio)
+	if(radio)
+		UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
+		QDEL_NULL(radio)
 	return ..()
 
 /obj/item/bounty_cube/examine()
@@ -379,7 +374,7 @@
 	addtimer(CALLBACK(src, .proc/launch_payload), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
-	playsound(src, "sparks", 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	switch(uses)
 		if(2)
 			new /obj/machinery/piratepad/civilian(drop_location())

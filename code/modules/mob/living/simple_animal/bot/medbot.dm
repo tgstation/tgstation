@@ -37,7 +37,7 @@
 	/// drop determining variable
 	var/healthanalyzer = /obj/item/healthanalyzer
 	/// drop determining variable
-	var/firstaid = /obj/item/storage/firstaid
+	var/medkit_type = /obj/item/storage/medkit
 	///based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be "tox"
 	var/skin
 	var/mob/living/carbon/patient
@@ -228,7 +228,7 @@
 		to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
 	audible_message(span_danger("[src] buzzes oddly!"))
 	flick("medibot_spark", src)
-	playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(user)
 		oldpatient = user
 
@@ -338,12 +338,12 @@
 	if(!.)
 		return
 
-	if(mode == BOT_TIPPED)
-		handle_panic()
-		return
-
-	if(mode == BOT_HEALING)
-		return
+	switch(mode)
+		if(BOT_TIPPED)
+			handle_panic()
+			return
+		if(BOT_HEALING)
+			return
 
 	if(IsStun() || IsParalyzed())
 		oldpatient = patient
@@ -405,11 +405,11 @@
 		frustration++
 
 	if(bot_mode_flags & BOT_MODE_AUTOPATROL && !(medical_mode_flags & MEDBOT_STATIONARY_MODE) && !patient)
-		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
-			start_patrol()
-
-		if(mode == BOT_PATROL)
-			bot_patrol()
+		switch(mode)
+			if(BOT_IDLE, BOT_START_PATROL)
+				start_patrol()
+			if(BOT_PATROL)
+				bot_patrol()
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	. = FALSE
@@ -540,8 +540,8 @@
 			if(do_mob(src, patient, 20)) //Slightly faster than default tend wounds, but does less HPS
 				if((get_dist(src, patient) <= 1) && (bot_mode_flags & BOT_MODE_ON) && assess_patient(patient))
 					var/healies = heal_amount
-					var/obj/item/storage/firstaid/FA = firstaid
-					if(treatment_method == BRUTE && initial(FA.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
+					var/obj/item/storage/medkit/medkit = medkit_type
+					if(treatment_method == BRUTE && initial(medkit.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
 						healies *= 1.1
 					if(bot_cover_flags & BOT_COVER_EMAGGED)
 						patient.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
@@ -567,19 +567,15 @@
 			tending = FALSE
 
 /mob/living/simple_animal/bot/medbot/explode()
-	bot_mode_flags &= ~BOT_MODE_ON
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
-	drop_part(firstaid, Tsec)
+	drop_part(medkit_type, Tsec)
 	new /obj/item/assembly/prox_sensor(Tsec)
 	drop_part(healthanalyzer, Tsec)
 
 	if(bot_cover_flags & BOT_COVER_EMAGGED && prob(25))
 		playsound(src, 'sound/voice/medbot/insult.ogg', 50)
-
-	do_sparks(3, TRUE, src)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/medbot/proc/declare(crit_patient)
 	if(!COOLDOWN_FINISHED(src, last_patient_message))

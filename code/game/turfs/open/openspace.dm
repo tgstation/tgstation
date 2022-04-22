@@ -19,6 +19,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	pathing_pass_method = TURF_PATHING_PASS_PROC
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -31,7 +32,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
 	overlays += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
-	RegisterSignal(src, COMSIG_ATOM_CREATED, .proc/on_atom_created)
+	RegisterSignal(src, COMSIG_ATOM_INITIALIZED_ON, .proc/on_atom_created)
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()
@@ -39,7 +40,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	AddElement(/datum/element/turf_z_transparency, is_openspace = TRUE)
 
 /turf/open/openspace/ChangeTurf(path, list/new_baseturfs, flags)
-	UnregisterSignal(src, COMSIG_ATOM_CREATED)
+	UnregisterSignal(src, COMSIG_ATOM_INITIALIZED_ON)
 	return ..()
 
 /**
@@ -124,43 +125,14 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	if(!CanBuildHere())
 		return
 	if(istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
-		if(W)
-			to_chat(user, span_warning("There is already a catwalk here!"))
-			return
-		if(L)
-			if(R.use(1))
-				qdel(L)
-				to_chat(user, span_notice("You construct a catwalk."))
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				new/obj/structure/lattice/catwalk(src)
-			else
-				to_chat(user, span_warning("You need two rods to build a catwalk!"))
-			return
-		if(R.use(1))
-			to_chat(user, span_notice("You construct a lattice."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-			ReplaceWithLattice()
-		else
-			to_chat(user, span_warning("You need one rod to build a lattice."))
+		build_with_rods(C, user)
+	else if(istype(C, /obj/item/stack/tile/iron))
+		build_with_floor_tiles(C, user)
+
+/turf/open/openspace/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles)
+	if(!CanCoverUp())
 		return
-	if(istype(C, /obj/item/stack/tile/iron))
-		if(!CanCoverUp())
-			return
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(L)
-			var/obj/item/stack/tile/iron/S = C
-			if(S.use(1))
-				qdel(L)
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				to_chat(user, span_notice("You build a floor."))
-				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			else
-				to_chat(user, span_warning("You need one floor tile to build a floor!"))
-		else
-			to_chat(user, span_warning("The plating is going to need some support! Place iron rods first."))
+	return ..()
 
 /turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(!CanBuildHere())
@@ -186,12 +158,17 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace/rust_heretic_act()
 	return FALSE
 
+/turf/open/openspace/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	if(caller && !caller.can_z_move(DOWN, src, null , ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
+		return TRUE
+	return FALSE
+
 /turf/open/openspace/icemoon
 	name = "ice chasm"
 	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	var/replacement_turf = /turf/open/floor/plating/asteroid/snow/icemoon
+	var/replacement_turf = /turf/open/misc/asteroid/snow/icemoon
 	/// Replaces itself with replacement_turf if the turf below this one is in a no ruins allowed area (usually ruins themselves)
 	var/protect_ruin = TRUE
 	/// If true mineral turfs below this openspace turf will be mined automatically

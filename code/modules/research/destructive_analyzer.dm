@@ -14,11 +14,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/decon_mod = 0
 
 /obj/machinery/rnd/destructive_analyzer/RefreshParts()
+	. = ..()
 	var/T = 0
 	for(var/obj/item/stock_parts/S in component_parts)
 		T += S.rating
 	decon_mod = T
-
 
 /obj/machinery/rnd/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -97,7 +97,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return FALSE
 		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
 		if(destroy_item(loaded_item))
-			stored_research.boost_with_path(SSresearch.techweb_node_by_id(TN.id), dpath)
+			stored_research.boost_with_item(SSresearch.techweb_node_by_id(TN.id), dpath)
 
 	else
 		var/list/point_value = techweb_item_point_check(loaded_item)

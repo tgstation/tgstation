@@ -134,7 +134,7 @@
 	var/allow_movement_on_non_turfs = FALSE
 
 	///Played when someone punches the creature.
-	var/attacked_sound = "punch"
+	var/attacked_sound = SFX_PUNCH
 
 	///If the creature has, and can use, hands.
 	var/dextrous = FALSE
@@ -555,7 +555,7 @@
 			sight = initial(sight)
 		else
 			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = 8
+		see_in_dark = NIGHTVISION_FOV_RANGE
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		return
 

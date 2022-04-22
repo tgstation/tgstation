@@ -144,12 +144,9 @@
 
 /obj/item/clothing/under/rank/chief_medical_officer : /obj/item/clothing/under/rank/medical/chief_medical_officer
 /obj/item/clothing/under/rank/chief_medical_officer/skirt : /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt
-/obj/item/clothing/under/rank/medical : /obj/item/clothing/under/rank/medical/doctor
-/obj/item/clothing/under/rank/medical/blue : /obj/item/clothing/under/rank/medical/doctor/blue
-/obj/item/clothing/under/rank/medical/green : /obj/item/clothing/under/rank/medical/doctor/green
-/obj/item/clothing/under/rank/medical/purple : /obj/item/clothing/under/rank/medical/doctor/purple
-/obj/item/clothing/under/rank/medical/skirt : /obj/item/clothing/under/rank/medical/doctor/skirt
-/obj/item/clothing/under/rank/nursesuit : /obj/item/clothing/under/rank/medical/doctor/nurse
+/obj/item/clothing/under/rank/medical/doctor/blue : /obj/item/clothing/under/rank/medical/scrubs/blue
+/obj/item/clothing/under/rank/medical/doctor/blue : /obj/item/clothing/under/rank/medical/scrubs/green
+/obj/item/clothing/under/rank/medical/doctor/blue : /obj/item/clothing/under/rank/medical/scrubs/purple
 /obj/item/clothing/under/rank/geneticist : /obj/item/clothing/under/rank/rnd/geneticist
 /obj/item/clothing/under/rank/geneticist/skirt : /obj/item/clothing/under/rank/rnd/geneticist/skirt
 /obj/item/clothing/under/rank/virologist : /obj/item/clothing/under/rank/medical/virologist

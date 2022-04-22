@@ -7,6 +7,8 @@
 	device_type = MC_CARD
 
 	var/obj/item/card/id/stored_card
+	var/current_identification = null
+	var/current_job = null
 
 ///What happens when the ID card is removed (or deleted) from the module, through try_eject() or not.
 /obj/item/computer_hardware/card_slot/Exited(atom/movable/gone, direction)
@@ -76,6 +78,10 @@
 	stored_card = I
 	to_chat(user, span_notice("You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	holder.update_appearance()
+
+	current_identification = stored_card.registered_name
+	current_job = stored_card.assignment
 
 	var/holder_loc = holder.loc
 	if(ishuman(holder_loc))
@@ -99,19 +105,22 @@
 
 	to_chat(user, span_notice("You remove the card from \the [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	holder.update_appearance()
+
+	stored_card = null
+	current_identification = null
+	current_job = null
 
 	return TRUE
 
-/obj/item/computer_hardware/card_slot/attackby(obj/item/I, mob/living/user)
-	if(..())
-		return
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(stored_card)
-			to_chat(user, span_notice("You press down on the manual eject button with \the [I]."))
-			try_eject(user)
-			return
-		swap_slot()
-		to_chat(user, span_notice("You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"]."))
+/obj/item/computer_hardware/card_slot/screwdriver_act(mob/living/user, obj/item/tool)
+	if(stored_card)
+		to_chat(user, span_notice("You press down on the manual eject button with [tool]."))
+		try_eject(user)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	swap_slot()
+	to_chat(user, span_notice("You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"]."))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /**
  *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.

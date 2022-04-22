@@ -432,7 +432,7 @@
 "aZ" = (
 /obj/structure/table/glass,
 /obj/machinery/light/directional/north,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -517,7 +517,7 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -614,9 +614,8 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bA" = (
-/obj/machinery/door/airlock/public/glass{
-	req_access_txt = "2"
-	},
+/obj/machinery/door/airlock/public/glass,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bB" = (
@@ -679,9 +678,9 @@
 /area/shuttle/escape)
 "bO" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Cockpit";
-	req_access_txt = "19"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bQ" = (
@@ -692,9 +691,9 @@
 /area/shuttle/escape)
 "bT" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Brig";
-	req_access_txt = "2"
+	name = "Brig"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "xt" = (
@@ -713,6 +712,12 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"XA" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
 
 (1,1,1) = {"
 aa
@@ -806,7 +811,7 @@ bw
 bw
 Lu
 ax
-bD
+XA
 bE
 bc
 "}
