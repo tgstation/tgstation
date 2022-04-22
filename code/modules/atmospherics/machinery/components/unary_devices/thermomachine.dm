@@ -158,8 +158,8 @@
 
 	heat_amount = min(abs(heat_amount), 1e8) * THERMOMACHINE_POWER_CONVERSION
 
-	// This isn't that great, but it produces a nice curve that scales decently well for really hot stuff. It'll do
-	var/power_usage = idle_power_usage + (heat_amount * 0.05) ** 1.05
+	// This produces a nice curve that scales decently well for really hot stuff, and is nice to not fusion. It'll do
+	var/power_usage = idle_power_usage + (heat_amount * 0.05) ** (1.05 - (5e7 * 0.16 / max(heat_amount, 5e7)))
 
 	use_power(power_usage)
 	update_parents()
