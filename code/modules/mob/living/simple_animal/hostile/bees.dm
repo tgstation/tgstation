@@ -183,6 +183,9 @@
 
 /**
  * Handles exposing the target mob to the bees venom and injecting the target with the venom.
+ *
+ * Arguments:
+ * - [target][/mob/living]: The mob that has been stung.
  */
 /mob/living/simple_animal/hostile/bee/proc/on_sting(mob/living/target)
 	var/sting_amt = rand(1, 5)

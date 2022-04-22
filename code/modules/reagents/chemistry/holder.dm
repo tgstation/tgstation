@@ -161,6 +161,9 @@
  * * added_ph - override to force a pH when added
  * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
  * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
+ *
+ * Returns:
+ * * The amount of the reagent that has been added to the reagent mixture.
  */
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = FALSE, override_base_ph = FALSE, ignore_splitting = FALSE)
 	if(!isnum(amount) || !amount)
@@ -186,7 +189,7 @@
 	if(!ignore_splitting && (flags & REAGENT_HOLDER_ALIVE)) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
 		var/adjusted_vol = process_mob_reagent_purity(glob_reagent, amount, added_purity)
 		if(!adjusted_vol) //If we're inverse or FALSE cancel addition
-			return adjusted_vol
+			return amount
 			/* We return true here because of #63301
 			The only cases where this will be false or 0 if its an inverse chem, an impure chem of 0 purity (highly unlikely if even possible), or if glob_reagent is null (which shouldn't happen at all as there's a check for that a few lines up),
 			In the first two cases, we would want to return TRUE so trans_to and other similar methods actually delete the corresponding chemical from the original reagent holder.
