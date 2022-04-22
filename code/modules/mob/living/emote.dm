@@ -28,8 +28,9 @@
 			blush_timer = addtimer(CALLBACK(living_emote, .proc/end_blush, living_user), BLUSH_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/emote/living/blush/proc/end_blush(mob/living/living_user)
-	REMOVE_TRAIT(living_user, TRAIT_BLUSHING, EMOTE_TRAIT)
-	living_user.update_body()
+	if(!QDELETED(living_user))
+		REMOVE_TRAIT(living_user, TRAIT_BLUSHING, EMOTE_TRAIT)
+		living_user.update_body()
 
 #undef BLUSH_DURATION
 
