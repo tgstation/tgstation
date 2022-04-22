@@ -67235,7 +67235,6 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/cafeteria,
 /area/engineering/atmos/pumproom)
 "rCA" = (

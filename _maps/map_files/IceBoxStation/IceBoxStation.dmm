@@ -33634,6 +33634,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/maintenance/department/medical/central)
+"pCJ" = (
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/white,
+/area/medical/cryo)
 "pCU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -39205,6 +39213,10 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"sns" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/closed/wall,
+/area/maintenance/aft/greater)
 "snw" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/mass_driver/trash,
@@ -49312,7 +49324,6 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "xnx" = (
-/obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
 	},
@@ -92157,7 +92168,7 @@ hwG
 gfL
 fra
 etu
-sJF
+pCJ
 bde
 gYq
 aVU
@@ -92412,7 +92423,7 @@ uTe
 bYD
 bYD
 bYD
-bYD
+sns
 bYD
 bYD
 bYD
