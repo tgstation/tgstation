@@ -300,7 +300,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	singular_name = "carp scales"
 	icon_state = "sheet-carp"
 	inhand_icon_state = "sheet-carp"
-	singular_name = "carp scale"
 	merge_type = /obj/item/stack/sheet/animalhide/carp
 
 GLOBAL_LIST_INIT(carp_recipes, list ( \
