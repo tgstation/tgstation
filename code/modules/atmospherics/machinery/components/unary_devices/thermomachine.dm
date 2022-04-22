@@ -59,7 +59,7 @@
 	var/calculated_bin_rating = 0
 	for(var/obj/item/stock_parts/matter_bin/bin in component_parts)
 		calculated_bin_rating += bin.rating
-	heat_capacity = 7500 * ((calculated_bin_rating - 1) ** 2)
+	heat_capacity = 5000 * ((calculated_bin_rating - 1) ** 2)
 
 	var/calculated_laser_rating = 0
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
