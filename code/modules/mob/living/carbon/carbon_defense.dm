@@ -628,7 +628,7 @@
 	check_passout(.)
 
 /mob/living/carbon/proc/check_passout(oxyloss)
-	if(isnull(oxyloss))
+	if(!isnum(oxyloss))
 		return
 	if(oxyloss <= 50)
 		if(getOxyLoss() > 50)
