@@ -582,12 +582,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				standing += eye_overlay
 
 		// blush
-		#define BLUSH_COLOR "#DE5D83"
 		if (HAS_TRAIT(species_human, TRAIT_BLUSHING)) // Caused by either the *blush emote or the "drunk" mood event
 			var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/human_face.dmi', "blush", -BODY_ADJ_LAYER) //should appear behind the eyes
-			blush_overlay.color = BLUSH_COLOR
+			blush_overlay.color = COLOR_BLUSH_PINK
 			standing += blush_overlay
-		#undef BLUSH_COLOR
 
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)
