@@ -31,6 +31,9 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "bt" = (
+/obj/structure/sign/poster/fluff/lizards_gas_payment{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 8
 	},
@@ -49,9 +52,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 10
-	},
-/obj/structure/sign/poster/contraband/lizards_gas_power{
-	pixel_x = 32
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
@@ -235,9 +235,6 @@
 "zz" = (
 /obj/machinery/door/window,
 /obj/structure/cable,
-/obj/structure/sign/poster/contraband/lizards_gas_payment{
-	pixel_x = -32
-	},
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
@@ -407,6 +404,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/structure/sign/poster/fluff/lizards_gas_power{
+	pixel_x = 32
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "MB" = (
@@ -466,7 +466,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Ss" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
-/obj/structure/sign/poster/contraband/lizards_gas_payment{
+/obj/structure/sign/poster/fluff/lizards_gas_payment{
 	pixel_x = -32
 	},
 /turf/open/floor/iron/white/corner{
