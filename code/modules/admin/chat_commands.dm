@@ -41,7 +41,9 @@
 		if(revdata.testmerge.len)
 			msg += "\n"
 			for(var/datum/tgs_revision_information/test_merge/PR as anything in revdata.testmerge)
-				msg += "PR #[PR.number] [PR.title] at [copytext_char(PR.head_commit, 1, 11)].\n<[PR.url]>\n"
+				msg += "PR #[PR.number] [PR.title] at [copytext_char(PR.head_commit, 1, 11)].\n"
+				if (PR.url)
+					msg += "<[PR.url]>\n"
 	return msg.Join("")
 
 /datum/tgs_chat_command/ahelp
