@@ -1805,7 +1805,6 @@
 /area/maintenance/fore)
 "aiM" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
 /obj/structure/closet{
 	name = "chapel locker"
 	},
@@ -1816,7 +1815,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/item/storage/fancy/candle_box,
+/obj/item/clothing/neck/stethoscope,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aiO" = (
@@ -5260,7 +5259,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
 "aBi" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/table/wood,
 /obj/item/folder/white{
 	pixel_y = 3
@@ -6178,6 +6176,8 @@
 /area/hallway/primary/central/fore)
 "aIp" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/item/storage/fancy/candle_box,
+/obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aIr" = (
@@ -7056,10 +7056,6 @@
 	dir = 1
 	},
 /obj/structure/closet/secure_closet/psychology,
-/obj/machinery/computer/med_data/laptop{
-	dir = 1;
-	pixel_y = 4
-	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/psychology)
 "aOm" = (
@@ -7102,22 +7098,8 @@
 /turf/open/floor/iron/dark,
 /area/medical/exam_room)
 "aOx" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/bookcase/random/reference,
-/obj/item/toy/figure/psychologist{
-	pixel_y = 18
-	},
-/turf/open/floor/iron/showroomfloor,
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/carpet,
 /area/medical/psychology)
 "aOz" = (
 /obj/structure/table/glass,
@@ -7223,6 +7205,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/psychology)
 "aPf" = (
@@ -41255,6 +41238,13 @@
 	},
 /turf/open/floor/wood,
 /area/commons/locker)
+"jiq" = (
+/obj/structure/bookcase/random/reference,
+/obj/item/toy/figure/psychologist{
+	pixel_y = 18
+	},
+/turf/open/floor/carpet,
+/area/medical/psychology)
 "jis" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -82892,8 +82882,12 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/light/directional/east,
+/obj/machinery/computer/med_data/laptop{
+	dir = 8;
+	pixel_y = 4
+	},
+/obj/structure/table/wood,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/psychology)
 "wVQ" = (
@@ -107425,7 +107419,7 @@ beM
 cwp
 fEB
 cwp
-cwp
+jiq
 aOx
 wVJ
 rHL
@@ -107681,7 +107675,7 @@ czu
 cwp
 cwq
 usm
-aiM
+cwp
 cwp
 aNC
 aNu
@@ -108451,7 +108445,7 @@ cwq
 dWw
 cwp
 aIp
-aIp
+aiM
 cwp
 cwq
 arI
