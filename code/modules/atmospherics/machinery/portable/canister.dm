@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
 	///Minimum pressure allower for release_pressure var
 	var/can_min_release_pressure = (ONE_ATMOSPHERE * 0.1)
-	///Maximum amount of heat that the canister can handle before taking damage
+	///Maximum amount of external heat that the canister can handle before taking damage
 	var/temperature_resistance = 1000 + T0C
 	///Initial temperature gas mixture
 	var/starter_temp
@@ -418,6 +418,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	window.overlays = window_overlays
 	add_overlay(window)
 
+// Both of these procs handle the external temperature damage.
 /obj/machinery/portable_atmospherics/canister/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > temperature_resistance && !shielding_powered)
 
