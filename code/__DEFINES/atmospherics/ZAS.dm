@@ -27,8 +27,8 @@
 #define TURF_HAS_VALID_ZONE(T) (!istype(T, /turf/open/space) && T:zone && !T:zone:invalid)
 #ifdef MULTIZAS
 
-GLOBAL_REAL(csrfz_check, /list/) = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, NORTHUP, EASTUP, WESTUP, SOUTHUP, NORTHDOWN, EASTDOWN, WESTDOWN, SOUTHDOWN)
-GLOBAL_REAL(gzn_check, /list/) = list(NORTH, SOUTH, EAST, WEST, UP, DOWN)
+GLOBAL_REAL(list/csrfz_check) = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, NORTHUP, EASTUP, WESTUP, SOUTHUP, NORTHDOWN, EASTDOWN, WESTDOWN, SOUTHDOWN)
+GLOBAL_REAL(list/gzn_check) = list(NORTH, SOUTH, EAST, WEST, UP, DOWN)
 
 #define ATMOS_CANPASS_TURF(ret,A,B) \
 	if (A.blocks_air & AIR_BLOCKED || B.blocks_air & AIR_BLOCKED) { \
@@ -72,8 +72,8 @@ GLOBAL_REAL(gzn_check, /list/) = list(NORTH, SOUTH, EAST, WEST, UP, DOWN)
 	}
 #else
 
-GLOBAL_REAL(csrfz_check, /list/) = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
-GLOBAL_REAL(gzn_check, /list/) = list(NORTH, SOUTH, EAST, WEST)
+GLOBAL_REAL_VAR(list/csrfz_check) = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+GLOBAL_REAL_VAR(list/gzn_check) = list(NORTH, SOUTH, EAST, WEST)
 
 #define ATMOS_CANPASS_TURF(ret,A,B) \
 	if (A.blocks_air & AIR_BLOCKED || B.blocks_air & AIR_BLOCKED) { \
