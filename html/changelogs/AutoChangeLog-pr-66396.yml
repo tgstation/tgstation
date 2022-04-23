@@ -1,0 +1,4 @@
+author: "FernandoJ8"
+delete-after: True
+changes: 
+  - bugfix: "fixes the exploit allowing for hundreds of iterations of the convermol failed reaction to occur rapidly with a single beaker"
