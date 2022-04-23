@@ -67,11 +67,11 @@
 
 	if(temp_limit != PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT)
 		temp_damage = air_contents.temperature / temp_limit
-		taking_damage = temp_damage > 0
+		taking_damage = temp_damage > 1
 
 	if(pressure_limit != PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT)
 		pressure_damage = air_contents.return_pressure() / pressure_limit
-		taking_damage = taking_damage || pressure_damage > 0
+		taking_damage = taking_damage || pressure_damage > 1
 
 	if(!taking_damage)
 		return FALSE
