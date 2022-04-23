@@ -219,7 +219,7 @@
 		if(dealer_deck.wielded) // deal a card facedown on the table
 			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
 			if(card)
-				src.attackby(card, user, params)
+				attackby(card, user, params)
 			return
 
 	if(istype(I, /obj/item/riding_offhand))
@@ -266,7 +266,7 @@
 			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
 			if(card)
 				card.Flip()
-				src.attackby(card, user, params)
+				attackby(card, user, params)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	..()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
