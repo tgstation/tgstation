@@ -390,7 +390,7 @@
 
 /turf/proc/TryGetNonDenseNeighbour()
 	for(var/d in GLOB.cardinals)
-	var/turf/T = get_step(src, d)
+		var/turf/T = get_step(src, d)
 	if (T && !turf_contains_dense_objects(T))
 		return T
 
