@@ -579,7 +579,12 @@
 		SEND_SOUND(user, sound('sound/machines/beep.ogg', volume=25))
 		balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
 		set_mouse_pointer()
-		return
+		return COMSIG_MOB_CANCEL_CLICKON
+	if(isAI(user)) //Middle clicks are already handled for AIs via above
+		if(weapons_safety)
+			return //Use AI functions
+		else
+			. = COMSIG_MOB_CANCEL_CLICKON //Use Mech functions
 	if(weapons_safety)
 		return
 	if(modifiers[SHIFT_CLICK]) //Allows things to be examined.
