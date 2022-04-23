@@ -19,10 +19,9 @@
 			cards_to_combine += new_card
 		cards = list() // reset our cards to an empty list
 
-	if(LAZYLEN(cards_to_combine)) // these cards are already initialized
-		for(var/obj/item/toy/singlecard/new_card in cards_to_combine)
-			new_card.forceMove(src)
-			cards += new_card
+	for(var/obj/item/toy/singlecard/new_card in cards_to_combine)
+		new_card.forceMove(src)
+		cards += new_card
 
 	register_context()
 	update_appearance()
