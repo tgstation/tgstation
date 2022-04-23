@@ -1,0 +1,4 @@
+author: "capsaicinz"
+delete-after: True
+changes: 
+  - bugfix: "some stacks that need a singular name now have said singular name"

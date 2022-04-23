@@ -917,3 +917,21 @@
   - rscadd: Thieves now have a low chance to found a thieves guild somewhere in maint.
   - rscadd: Adds a new type of thief, the "All Access Fan"
   - rscdel: Hoarder is disabled and admin only for the moment
+2022-04-23:
+  Ghilker, shield sprite by @SnoopCooper:
+  - expansion: canisters now have a toggle for shielding that will start to consume
+      power if the temperature and pressure go over the labeled one (current limits
+      are higher than old t1 but lower than old t2). Peak draw should be around 25
+      kW with fusion temperatures. Canisters have an internal cell that allows it
+      to hold shielding in areas without power for a time, powercells can be upgraded,
+      removed, replaced.
+  Rhials:
+  - expansion: Glockroaches and Hauberoaches are now accessible through cytology,
+      and have their own respective cell lines to grow them with.
+  TheBoondock:
+  - bugfix: fixes aux base console outputting "span_danger()" in launch sequence
+  YakumoChen:
+  - bugfix: Removed a stacked RPlasmaGlass window on Ice Box
+  Zytolg:
+  - bugfix: Atmos Technicians have finally gotten off their bums and done their jobs-
+      installing vents and scrubbers into atmos.

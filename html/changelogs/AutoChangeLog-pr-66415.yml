@@ -1,0 +1,6 @@
+author: "Vladoricious"
+delete-after: True
+changes: 
+  - qol: "The research scanner in science goggles and similar eyewear no longer requires you to press a button to turn it on! Instead, simply closely examine your target."
+  - bugfix: "The MOD advanced reagent scanner module no longer detects explosions despite being disabled."
+  - code_imp: "Research scanner code cleanup."
