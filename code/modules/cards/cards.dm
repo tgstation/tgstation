@@ -35,10 +35,10 @@
 			card.Flip()
 		card.pixel_x = rand(-16, 16)
 		card.pixel_y = rand(-16, 16)
-		var/matrix/M = matrix()
+		var/matrix/Matrix = matrix()
 		var/angle = pick(0, 90, 180, 270)
-		M.Turn(angle)
-		card.transform = M
+		Matrix.Turn(angle)
+		card.transform = Matrix
 		card.update_appearance()
 
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
