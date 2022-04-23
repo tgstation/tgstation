@@ -300,6 +300,11 @@
 
 /obj/effect/mapping_helpers/airlock/access/any/service/library/get_access()
 	var/list/access_list = ..()
+	access_list += ACCESS_LIBRARY
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/service/theatre/get_access()
+	var/list/access_list = ..()
 	access_list += ACCESS_THEATRE
 	return access_list
 
@@ -394,6 +399,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_ENGINE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/engineering/engine_equipment/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_ENGINE_EQUIP
 	return access_list
 
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction/get_access()
