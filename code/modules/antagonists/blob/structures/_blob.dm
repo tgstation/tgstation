@@ -42,7 +42,7 @@
 	setDir(pick(GLOB.cardinals))
 	update_appearance()
 	if(atmosblock)
-		//air_update_turf(TRUE, TRUE)
+		update_nearby_tiles(TRUE)
 	ConsumeTile()
 	if(!QDELETED(src)) //Consuming our tile can in rare cases cause us to del
 		AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
@@ -69,7 +69,7 @@
 /obj/structure/blob/Destroy()
 	if(atmosblock)
 		atmosblock = FALSE
-		//air_update_turf(TRUE, FALSE)
+		update_nearby_tiles()
 	if(overmind)
 		overmind.all_blobs -= src
 		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now

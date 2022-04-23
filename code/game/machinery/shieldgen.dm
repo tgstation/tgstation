@@ -14,16 +14,15 @@
 /obj/structure/emergency_shield/Initialize(mapload)
 	. = ..()
 	setDir(pick(GLOB.cardinals))
-	//air_update_turf(TRUE, TRUE)
+	update_nearby_tiles(TRUE)
 
 /obj/structure/emergency_shield/Destroy()
-	//air_update_turf(TRUE, FALSE)
+	update_nearby_tiles()
 	. = ..()
 
 /obj/structure/emergency_shield/Move()
-	var/turf/T = loc
-	/*. = ..()
-	move_update_air(T)*/
+	. = ..()
+	update_nearby_tiles()
 
 /obj/structure/emergency_shield/emp_act(severity)
 	. = ..()

@@ -252,9 +252,6 @@
 			var/datum/gas_mixture/filtered_out = new
 			filtered_out.temperature = environment.temperature
 
-			///maximum percentage of the turfs gas we can filter
-			var/removal_ratio =  min(1, volume_rate / environment.volume)
-
 			var/total_moles_to_remove = 0
 			for(var/gas in filter_types & environment.get_gases())
 				total_moles_to_remove += environment.gas[gas]
@@ -300,8 +297,8 @@
 	var/old_scrubbing = scrubbing
 	var/old_filter_length = length(filter_types)
 
-	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas = our_turf?.return_air()
+	//var/turf/open/our_turf = get_turf(src)
+	//var/datum/gas_mixture/turf_gas = our_turf?.return_air()
 
 	var/atom/signal_sender = signal.data["user"]
 

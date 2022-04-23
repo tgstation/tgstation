@@ -131,7 +131,8 @@
 	var/old_type = type
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
-	var/turf/open/mined = ScrapeAway(null, flags)
+	ScrapeAway(null, flags)
+	SSzas.mark_for_update(src)
 	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 	//mined.update_visuals()
@@ -599,7 +600,8 @@
 	var/old_type = type
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
-	var/turf/open/mined = ScrapeAway(null, flags)
+	ScrapeAway(null, flags)
+	SSzas.mark_for_update(src)
 	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
 	//mined.update_visuals()
 
@@ -657,7 +659,8 @@
 	var/old_type = type
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
-	var/turf/open/mined = ScrapeAway(null, flags)
+	ScrapeAway(null, flags)
+	SSzas.mark_for_update(src)
 	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 	//mined.update_visuals()

@@ -65,7 +65,7 @@
 	if(holding)
 		environment = holding.air_contents
 	else
-		environment = loc.return_air()
+		environment = local_turf.return_air()
 
 	if(direction == PUMP_OUT)
 		pressure_delta = target_pressure - environment.return_pressure()

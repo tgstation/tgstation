@@ -154,8 +154,9 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/border = block(locate(max(T.x-1, 1), max(T.y-1, 1),  T.z),
-							locate(min(T.x+width+1, world.maxx), min(T.y+height+1, world.maxy), T.z))
+	/*var/list/border = block(locate(max(T.x-1, 1), max(T.y-1, 1),  T.z),
+							locate(min(T.x+width+1, world.maxx), min(T.y+height+1, world.maxy), T.z))*/
+	stack_trace("This is a reminder that kapu touched this code")
 	/*
 	for(var/L in border)
 		var/turf/turf_to_disable = L

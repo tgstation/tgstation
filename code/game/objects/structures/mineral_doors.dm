@@ -36,17 +36,12 @@
 	//air_update_turf(TRUE, TRUE)
 
 /obj/structure/mineral_door/Destroy()
-	if(!door_opened)
-		//air_update_turf(TRUE, FALSE)
 	. = ..()
+	update_nearby_tiles()
 
 /obj/structure/mineral_door/Move()
-	var/turf/T = loc
 	. = ..()
-	/*
-	if(!door_opened)
-		move_update_air(T)
-	*/
+	update_nearby_tiles()
 
 /obj/structure/mineral_door/Bumped(atom/movable/AM)
 	..()
@@ -106,7 +101,7 @@
 	set_density(FALSE)
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
-	//air_update_turf(TRUE, FALSE)
+	update_nearby_tiles()
 	update_appearance()
 	isSwitchingStates = FALSE
 
@@ -127,7 +122,7 @@
 	set_opacity(TRUE)
 	door_opened = FALSE
 	layer = initial(layer)
-	//air_update_turf(TRUE, TRUE)
+	update_nearby_tiles()
 	update_appearance()
 	isSwitchingStates = FALSE
 
