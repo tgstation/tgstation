@@ -1554,32 +1554,32 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 // Telecommunications Satellite
 
-/area/tcommsat
+/area/station/tcommsat
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering
 	network_root_id = STATION_NETWORK_ROOT // They should of unpluged the router before they left
 
-/area/tcommsat/computer
+/area/station/tcommsat/computer
 	name = "\improper Telecomms Control Room"
 	icon_state = "tcomsatcomp"
 	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
 
-/area/tcommsat/server
+/area/station/tcommsat/server
 	name = "\improper Telecomms Server Room"
 	icon_state = "tcomsatcham"
 
-/area/tcommsat/server/upper
+/area/station/tcommsat/server/upper
 	name = "\improper Upper Telecomms Server Room"
 
 //Telecommunications - On Station
 
-/area/comms
+/area/station/comms
 	name = "\improper Communications Relay"
 	icon_state = "tcomsatcham"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/server
+/area/station/server
 	name = "\improper Messaging Server Room"
 	icon_state = "server"
 	sound_environment = SOUND_AREA_STANDARD_STATION

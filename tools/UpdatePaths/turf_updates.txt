@@ -328,3 +328,16 @@
 /area/science/robotics/lab : /area/station/science/robotics/lab
 /area/science/research : /area/station/science/research
 /area/science/research/abandoned : /area/station/science/research/abandoned
+
+/area/tcommsat : /area/station/tcommsat
+/area/tcommsat/computer : /area/station/tcommsat/computer
+/area/tcommsat/server : /area/station/tcommsat/server
+/area/tcommsat/server/upper : /area/station/tcommsat/server/upper
+
+/area/comms : /area/station/comms
+/area/server : /area/station/server
+
+/area/maintenance/external : /area/station/maintenance/external
+/area/maintenance/external/aft : /area/station/maintenance/external/aft
+/area/maintenance/external/port : /area/station/maintenance/external/port
+/area/maintenance/external/port/bow : /area/station/maintenance/external/port/bow
