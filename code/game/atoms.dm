@@ -1444,13 +1444,13 @@
 		choices += list("[initial(current_option_type.name)]" = option_image)
 
 	var/pick = show_radial_menu(user, src, choices, radius = 36, require_near = TRUE)
+	if(!pick)
+		return
 
 	StartProcessingAtom(user, processed_object, choices_to_options[pick])
 
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
-	if(!chosen_option)
-		return
 	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
 	to_chat(user, span_notice("You start working on [src]."))
 	if(process_item.use_tool(src, user, processing_time, volume=50))
