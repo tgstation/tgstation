@@ -322,8 +322,8 @@
 
 	var/obj/item/modular_computer/tablet/pda/PDA = H.get_item_by_slot(pda_slot)
 	if(istype(PDA))
-		PDA.saved_identification = C.registered_name
-		PDA.saved_job = C.assignment
+		PDA.saved_identification = H.real_name
+		PDA.saved_job = J.title
 
 
 /datum/outfit/job/get_chameleon_disguise_info()

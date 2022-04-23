@@ -209,6 +209,7 @@
 		"dropper",
 		"hemostat",
 		"large_beaker",
+		"pillbottle",
 		"plumbing_rcd",
 		"portable_chem_mixer",
 		"retractor",
