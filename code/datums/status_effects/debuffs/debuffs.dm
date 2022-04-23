@@ -203,7 +203,7 @@
 					healing = 0.2
 
 		var/turf/rest_turf = get_turf(owner)
-		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= 0.2 // switch 0.2 to the LIGHTING_IS_DARK define when Paper DLC gets merged
+		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
 
 		// sleeping with a blindfold or in the dark helps us rest
 		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, BLINDFOLD_TRAIT) || is_sleeping_in_darkness)
