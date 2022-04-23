@@ -1,0 +1,6 @@
+author: "GoblinBackwards"
+delete-after: True
+changes: 
+  - rscadd: "Added a whitelist to blood filters, unless the list is empty they will only remove chems in this whitelist. You can edit the list by using the filter in your hand"
+  - qol: "Blood filter surgery now automatically does a chem scan after each step if you're holding a health analyzer."
+  - qol: "Blood filter surgery now automatically loops if the patient has any filterable chems in them"
