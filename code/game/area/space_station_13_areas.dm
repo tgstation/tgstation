@@ -1092,7 +1092,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //MedBay
 
-/area/medical
+/area/station/medical
 	name = "Medical"
 	icon_state = "medbay"
 	ambience_index = AMBIENCE_MEDICAL
@@ -1101,104 +1101,105 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	min_ambience_cooldown = 90 SECONDS
 	max_ambience_cooldown = 180 SECONDS
 
-/area/medical/abandoned
+/area/station/medical/abandoned
 	name = "\improper Abandoned Medbay"
 	icon_state = "abandoned_medbay"
 	ambientsounds = list('sound/ambience/signal.ogg')
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/medical/medbay/central
+/area/station/medical/medbay/central
 	name = "Medbay Central"
 	icon_state = "med_central"
 
-/area/medical/medbay/lobby
+/area/station/medical/medbay/lobby
 	name = "\improper Medbay Lobby"
 	icon_state = "med_lobby"
 
-	//Medbay is a large area, these additional areas help level out APC load.
-/area/medical/medbay/aft
+//Medbay is a large area, these additional areas help level out APC load.
+
+/area/station/medical/medbay/aft
 	name = "Medbay Aft"
 	icon_state = "med_aft"
 
-/area/medical/storage
+/area/station/medical/storage
 	name = "Medbay Storage"
 	icon_state = "med_storage"
 
-/area/medical/paramedic
+/area/station/medical/paramedic
 	name = "Paramedic Dispatch"
 	icon_state = "paramedic"
 
-/area/medical/office
+/area/station/medical/office
 	name = "\improper Medical Office"
 	icon_state = "med_office"
 
-/area/medical/break_room
+/area/station/medical/break_room
 	name = "\improper Medical Break Room"
 	icon_state = "med_break"
 
-/area/medical/coldroom
+/area/station/medical/coldroom
 	name = "\improper Medical Cold Room"
 	icon_state = "kitchen_cold"
 
-/area/medical/patients_rooms
+/area/station/medical/patients_rooms
 	name = "\improper Patients' Rooms"
 	icon_state = "patients"
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
-/area/medical/patients_rooms/room_a
+/area/station/medical/patients_rooms/room_a
 	name = "Patient Room A"
 	icon_state = "patients"
 
-/area/medical/patients_rooms/room_b
+/area/station/medical/patients_rooms/room_b
 	name = "Patient Room B"
 	icon_state = "patients"
 
-/area/medical/virology
+/area/station/medical/virology
 	name = "Virology"
 	icon_state = "virology"
 
-/area/medical/morgue
+/area/station/medical/morgue
 	name = "\improper Morgue"
 	icon_state = "morgue"
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/medical/chemistry
+/area/station/medical/chemistry
 	name = "Chemistry"
 	icon_state = "chem"
 
-/area/medical/pharmacy
+/area/station/medical/pharmacy
 	name = "\improper Pharmacy"
 	icon_state = "pharmacy"
 
-/area/medical/surgery
+/area/station/medical/surgery
 	name = "\improper Operating Room"
 	icon_state = "surgery"
 
-/area/medical/surgery/fore
+/area/station/medical/surgery/fore
 	name = "\improper Fore Operating Room"
 	icon_state = "foresurgery"
 
-/area/medical/surgery/aft
+/area/station/medical/surgery/aft
 	name = "\improper Aft Operating Room"
 	icon_state = "aftsurgery"
 
-/area/medical/surgery/theatre
+/area/station/medical/surgery/theatre
 	name = "\improper Grand Surgery Theatre"
 	icon_state = "surgerytheatre"
-/area/medical/cryo
+/area/station/medical/cryo
 	name = "Cryogenics"
 	icon_state = "cryo"
 
-/area/medical/exam_room
+/area/station/medical/exam_room
 	name = "\improper Exam Room"
 	icon_state = "exam_room"
 
-/area/medical/treatment_center
+/area/station/medical/treatment_center
 	name = "\improper Medbay Treatment Center"
 	icon_state = "exam_room"
 
-/area/medical/psychology
+/area/station/medical/psychology
 	name = "\improper Psychology Office"
 	icon_state = "psychology"
 	mood_bonus = 3
