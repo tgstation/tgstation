@@ -42,5 +42,8 @@ endmap
 map runtimestation
 endmap
 
+map atmostest
+endmap
+
 map multiz_debug
 endmap

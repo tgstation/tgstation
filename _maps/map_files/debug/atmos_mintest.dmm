@@ -1,9 +1,9 @@
 "aa" = (/turf/open/space/basic,/area/space)
 "ab" = (/turf/closed/wall/r_wall,/area/hallway/primary/central)
 "ac" = (/obj/effect/spawner/structure/window/plasma,/turf/open/floor/plating,/area/hallway/primary/central)
-"ad" = (/obj/machinery/door/poddoor{id = "c1vent"; name = "c1vent"},/turf/open/floor/plating,/area/hallway/primary/central)
-"ae" = (/obj/machinery/door/poddoor{id = "c2vent"; name = "c2vent"},/turf/open/floor/plating,/area/hallway/primary/central)
-"af" = (/obj/machinery/door/poddoor{id = "c3vent"; name = "c3vent"},/turf/open/floor/plating,/area/hallway/primary/central)
+"ad" = (/obj/machinery/door/poddoor{id = "c1vent"; name = "c1vent"},/turf/open/floor/plating,/area/space)
+"ae" = (/obj/machinery/door/poddoor{id = "c2vent"; name = "c2vent"},/turf/open/floor/plating,/area/space)
+"af" = (/obj/machinery/door/poddoor{id = "c3vent"; name = "c3vent"},/turf/open/floor/plating,/area/space)
 "ag" = (/turf/open/floor/iron,/area/hallway/primary/central)
 "ah" = (/turf/open/floor/engine/plasma,/area/hallway/primary/central)
 "ai" = (/turf/open/floor/engine/airless,/area/hallway/primary/central)
@@ -18,7 +18,7 @@
 "ar" = (/obj/machinery/atmospherics/miner/plasma,/turf/open/floor/engine/plasma,/area/hallway/primary/central)
 "as" = (/obj/machinery/atmospherics/miner/n2o,/turf/open/floor/engine/n2o,/area/hallway/primary/central)
 "at" = (/obj/effect/landmark/observer_start,/obj/effect/turf_decal/bot_red,/turf/open/floor/iron,/area/hallway/primary/central)
-"au" = (/obj/effect/turf_decal/trimline,/turf/open/floor/engine/plasma,/area/hallway/primary/central)
+"au" = (/obj/effect/turf_decal/trimline,/obj/machinery/air_sensor/plasma_tank,/turf/open/floor/engine/plasma,/area/hallway/primary/central)
 "av" = (/obj/effect/turf_decal/trimline,/turf/open/floor/engine/airless,/area/hallway/primary/central)
 "aw" = (/obj/effect/turf_decal/trimline,/turf/open/floor/engine/n2o,/area/hallway/primary/central)
 "ax" = (/obj/effect/turf_decal/bot_red,/obj/effect/landmark/start/assistant,/turf/open/floor/iron,/area/hallway/primary/central)
@@ -37,13 +37,13 @@
 "aK" = (/obj/machinery/portable_atmospherics/canister/plasma,/turf/open/floor/iron,/area/hallway/primary/central)
 "aL" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/open/floor/iron,/area/hallway/primary/central)
 "aM" = (/obj/machinery/portable_atmospherics/canister/nitrogen,/turf/open/floor/iron,/area/hallway/primary/central)
-"aN" = (/obj/machinery/door/airlock/public,/turf/open/floor/iron,/area/hallway/primary/central)
+"aN" = (/obj/structure/cable,/obj/machinery/power/rtg/debug,/turf/open/floor/iron,/area/hallway/primary/central)
 "aO" = (/turf/open/floor/iron/red,/area/hallway/primary/central)
 "aP" = (/obj/machinery/meter/turf,/turf/open/floor/iron,/area/hallway/primary/central)
 "aQ" = (/obj/machinery/meter/turf,/turf/open/floor/iron/red,/area/hallway/primary/central)
 "aR" = (/obj/machinery/light/floor,/turf/open/floor/iron/red,/area/hallway/primary/central)
 "aS" = (/obj/machinery/door/airlock/external/glass,/turf/open/floor/plating,/area/hallway/primary/central)
-"aT" = (/obj/structure/cable,/obj/machinery/door/airlock/public,/turf/open/floor/iron,/area/hallway/primary/central)
+"aT" = (/obj/machinery/gravity_generator/main/station,/obj/structure/cable,/turf/open/floor/iron,/area/hallway/primary/central)
 "aU" = (/obj/machinery/light/floor,/turf/open/floor/engine/plasma,/area/hallway/primary/central)
 "aV" = (/obj/machinery/light/floor,/turf/open/floor/engine/airless,/area/hallway/primary/central)
 "aW" = (/obj/machinery/light/floor,/turf/open/floor/engine/n2o,/area/hallway/primary/central)
@@ -75,36 +75,101 @@
 "bw" = (/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 5},/obj/machinery/atmospherics/pipe/smart/simple/general/visible,/turf/open/floor/plating,/area/hallway/primary/central)
 "bx" = (/obj/effect/turf_decal/stripes/red/line,/obj/machinery/atmospherics/pipe/smart/simple/general/visible,/obj/machinery/meter,/turf/open/floor/plating,/area/hallway/primary/central)
 "by" = (/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 9},/obj/machinery/atmospherics/pipe/smart/simple/general/visible,/turf/open/floor/plating,/area/hallway/primary/central)
+"bz" = (/obj/machinery/door/airlock/public/glass,/turf/open/floor/iron,/area/hallway/primary/central)
+"bA" = (/obj/structure/cable,/obj/effect/turf_decal/arrows,/obj/machinery/light/floor,/turf/open/floor/iron,/area/hallway/primary/central)
+"bB" = (/obj/structure/cable,/turf/open/floor/plating,/area/hallway/primary/central)
+"bC" = (/obj/structure/cable,/obj/effect/turf_decal/arrows{icon_state = "arrows"; dir = 4},/turf/open/floor/iron,/area/hallway/primary/central)
+"bD" = (/obj/item/pipe_dispenser,/obj/structure/table/reinforced,/turf/open/floor/iron,/area/hallway/primary/central)
+"bE" = (/obj/item/holosign_creator/atmos,/obj/structure/table/reinforced,/turf/open/floor/iron,/area/hallway/primary/central)
+"bF" = (/obj/machinery/portable_atmospherics/pump,/turf/open/floor/iron,/area/hallway/primary/central)
+"bG" = (/obj/machinery/portable_atmospherics/scrubber,/turf/open/floor/iron,/area/hallway/primary/central)
+"bH" = (/obj/structure/table/reinforced,/obj/item/debug/omnitool,/obj/item/door_remote/omni,/turf/open/floor/iron,/area/hallway/primary/central)
+"bI" = (/obj/machinery/air_sensor/mix_tank,/turf/open/floor/engine/airless,/area/hallway/primary/central)
+"bJ" = (/obj/effect/turf_decal/trimline,/obj/machinery/air_sensor/nitrous_tank,/turf/open/floor/engine/n2o,/area/hallway/primary/central)
+"bK" = (/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output,/turf/open/floor/engine/plasma,/area/hallway/primary/central)
+"bL" = (/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/mix_output,/turf/open/floor/engine/airless,/area/hallway/primary/central)
+"bM" = (/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/nitrous_output,/turf/open/floor/engine/n2o,/area/hallway/primary/central)
+"bN" = (/obj/effect/spawner/structure/window/plasma,/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,/turf/open/floor/plating,/area/hallway/primary/central)
+"bO" = (/obj/effect/spawner/structure/window/plasma,/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,/turf/open/floor/plating,/area/hallway/primary/central)
+"bP" = (/obj/effect/spawner/structure/window/plasma,/obj/machinery/atmospherics/pipe/smart/simple/pink/visible,/turf/open/floor/plating,/area/hallway/primary/central)
+"bQ" = (/obj/machinery/portable_atmospherics/canister/plasma,/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,/turf/open/floor/iron,/area/hallway/primary/central)
+"bR" = (/obj/machinery/computer/atmos_control/plasma_tank,/obj/machinery/light/floor,/turf/open/floor/iron,/area/hallway/primary/central)
+"bS" = (/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,/turf/open/floor/iron,/area/hallway/primary/central)
+"bT" = (/obj/machinery/computer/atmos_control/mix_tank,/obj/machinery/light/floor,/turf/open/floor/iron,/area/hallway/primary/central)
+"bU" = (/obj/machinery/atmospherics/pipe/smart/simple/pink/visible,/turf/open/floor/iron,/area/hallway/primary/central)
+"bV" = (/obj/machinery/computer/atmos_control/nitrous_tank,/obj/machinery/light/floor,/turf/open/floor/iron,/area/hallway/primary/central)
+"bW" = (/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,/turf/open/floor/iron,/area/hallway/primary/central)
+"bX" = (/obj/machinery/atmospherics/components/unary/portables_connector{icon_state = "connector_map-3"; dir = 1},/turf/open/floor/iron,/area/hallway/primary/central)
+"bY" = (/obj/structure/cable,/obj/machinery/door/airlock/public/glass{name = "Power"},/turf/open/floor/iron,/area/hallway/primary/central)
+"bZ" = (/obj/structure/cable,/obj/machinery/door/airlock/public/glass{name = "Main Floor"},/turf/open/floor/iron,/area/hallway/primary/central)
+"ca" = (/obj/machinery/light/floor,/obj/structure/cable,/turf/open/floor/iron,/area/hallway/primary/central)
+"cb" = (/obj/machinery/door/airlock/public/glass{name = "Basic Equipment Tests"},/turf/open/floor/iron,/area/hallway/primary/central)
+"cc" = (/turf/open/floor/iron,/area/space)
+"cd" = (/obj/effect/spawner/structure/window/plasma,/turf/open/floor/plating,/area/space)
+"ce" = (/obj/machinery/door/airlock/public/glass,/turf/open/floor/iron,/area/space)
+"cf" = (/obj/machinery/door/airlock/external/glass,/turf/open/floor/plating,/area/space)
+"cg" = (/turf/closed/wall/r_wall,/area/space)
+"ch" = (/turf/open/space/basic,/area/hallway/primary/central)
+"ci" = (/obj/machinery/atmospherics/components/unary/portables_connector,/turf/open/floor/plating,/area/hallway/primary/central)
+"cj" = (/obj/machinery/atmospherics/components/binary/thermomachine/freezer,/turf/open/floor/plating,/area/hallway/primary/central)
+"ck" = (/obj/machinery/atmospherics/components/binary/thermomachine/heater,/turf/open/floor/plating,/area/hallway/primary/central)
+"cl" = (/obj/machinery/atmospherics/components/unary/portables_connector{icon_state = "connector_map-3"; dir = 1},/turf/open/floor/plating,/area/hallway/primary/central)
+"cm" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple{icon_state = "pipe11-3"; dir = 6},/turf/open/space/basic,/area/space)
+"cn" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple{icon_state = "pipe11-3"; dir = 10},/turf/open/space/basic,/area/space)
+"co" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple,/turf/open/space/basic,/area/space)
+"cp" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple{icon_state = "pipe11-3"; dir = 5},/turf/open/space/basic,/area/space)
+"cq" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple{icon_state = "pipe11-3"; dir = 9},/turf/open/space/basic,/area/space)
+"cr" = (/obj/effect/spawner/structure/window/plasma,/obj/machinery/atmospherics/pipe/heat_exchanging/junction{icon_state = "pipe11-3"; dir = 1},/turf/open/floor/plating,/area/space)
+"cs" = (/obj/structure/table/reinforced,/obj/item/analyzer,/turf/open/floor/iron,/area/hallway/primary/central)
+"ct" = (/obj/effect/landmark/start/assistant,/obj/effect/turf_decal/bot_red,/turf/open/floor/iron,/area/hallway/primary/central)
+"cu" = (/obj/structure/table/reinforced,/obj/item/clothing/glasses/debug,/obj/item/clothing/glasses/debug,/obj/item/clothing/glasses/debug,/obj/item/clothing/glasses/debug,/obj/item/clothing/glasses/debug,/turf/open/floor/iron,/area/hallway/primary/central)
+"cv" = (/obj/structure/table/reinforced,/obj/item/debug/omnitool,/obj/item/debug/omnitool,/obj/item/debug/omnitool,/turf/open/floor/iron,/area/hallway/primary/central)
+"cw" = (/obj/structure/table/reinforced,/obj/item/gun/magic/wand/death/debug,/obj/item/gun/magic/wand/death/debug,/obj/item/gun/magic/wand/resurrection/debug,/obj/item/gun/magic/wand/safety/debug,/obj/item/gun/magic/wand/safety/debug,/turf/open/floor/iron,/area/hallway/primary/central)
+"cx" = (/obj/structure/table/reinforced,/obj/item/mod/control/pre_equipped/debug,/turf/open/floor/iron,/area/hallway/primary/central)
+"cy" = (/obj/structure/table/reinforced,/obj/item/storage/box/debugtools,/obj/item/storage/box/debugtools,/obj/item/storage/box/debugtools,/obj/item/storage/box/debugtools,/obj/item/storage/box/debugtools,/turf/open/floor/iron,/area/hallway/primary/central)
+"cz" = (/obj/structure/cable,/obj/machinery/door/airlock/public/glass{name = "Gravgen"},/turf/open/floor/iron,/area/hallway/primary/central)
+"cA" = (/obj/machinery/light/floor,/turf/open/floor/iron,/area/space)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaababacacacabababadadadabababaeaeaeabababafafafababacababaa
-aaabagagagagagabahahahahahabaiaiaiaiaiabajajajajajabakagabaa
-aaacagalagalagacahahaUahahamaiaiaVaiaianajajaWajajacaoagacaa
-aaacagapaqapagacahaharahahamaiaiaiaiaianajajasajajacataqacaa
-aaacagalapalapacahahauahahamaiavaiavaianajawawawajacaxagacaa
-aaabagagapagayabahahazahahabaiaiaAaiaiabajajaBajajabaCagabaa
-aaababacaTacabababacacacabaDabacacacabaEabacacacababacaNabaa
-aaabagagapagagagagagaFagagagagagaGagagagagagaHagagagagagabaa
-aaacagaIapapapapapapaIapapapapapaIapapapapapaIapapapaqagacaa
-aaabagagagagagagagagagagagagagagagagagagagagagagagagagagabaa
-aaababacacacacacacacacacacabaNaNaNabacacacacacacacacacababaa
-aaabaJaJaJaXaYaZaXbaaZaXbbbcagagagbdaKaKaKaLaLaLaMaMaMbeabaa
-aaacaJbfaJaJaJaJaJbfaJaJaJbgagaqagagagagaqagagagagagaqagacaa
-aaacbhbhbhbibjbkbiblbkbibmbnagagagagagagagagagagagagagagacaa
-aaacagagagagagagagagagagagagagagagagagagagagagagagagagagacaa
-aaacbobpagbqbqagagaqagbrbsbtagaqagagagagaqagagagagagaqagacaa
-aaacboboagbqbqagagagaXbuaJbvaZagagagagagagagagagagagagagacaa
-aaacboboagbqbqagagagagbwbxbyagagagagagagagagagagagagagagacaa
-aaacboboagbqbqagagagagagagagagagagagagagagagagagagagagagacaa
-aaacbobpagbqbqagagaqagagagagagaqagagagagaqagagagagagaqagacaa
-aaabagagagagagagagagagagagagagagagagagagagagagagagagagagabaa
-aaababacaNacabababacacaNacacabababacaNacacabababacaNacababaa
-aaabagagagagagabagagagagagagagabagagagagagagabaOaOaOaOaOabaa
-aaacagagagagagacagagagagagagagacagagagagagagacaOaOaOaOaOacaa
-aaacagaqaPagagaNagagagaPaqagagaNagagaqaPagagaNaOaOaQaRaOaSaa
-aaacagagagagagacagagagagagagagacagagagagagagacaOaOaOaOaOacaa
-aaabagagagagagabagagagagagagagabagagagagagagabaOaOaOaOaOabaa
-aaababacacacabababacacacacacabababacacacacabababacaSacababaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aacgcgcdcdcdcgcgcgadadadcgcgcgaeaeaecgcgcgafafafcgcgcgcdcdcdcgcgaaaaaaaaaaaaaaaa
+aaabagagagagagabaUahahahaUabaVaiaiaiaVabaWajajajaWabaqagagagaqabaacmcncmcnaaaaaa
+aaacagalagalagacahahahahahamaiaiaiaiaianajajajajajacagagagagagacaacocococoaaaaaa
+aaacagaNaqaNagacahaharahahamaiaiaiaiaianajajasajajacagagagagagacaacocococoaaaaaa
+aaacagalapalapacahahauahahamaiavbIavaianajawbJawajacagagaTagagacaacocococoaaaaaa
+aaabagagapagayabaUbKazahaUabaVbLaAaiaVabaWbMaBajaWabaqagapagaqabaacocpcqcoaaaaaa
+aaababacbYacabababbNacacabaDabbOacacabaEabbPacacabababacczacababcgcrcdcdcrcgcgaa
+aaabctagapagakabaKbQaFbRagagagbSaGbTagagagbUaHbVagagaqagapagagaqcsbXaKaKbXaqabaa
+aaacctagapagaoacaKbWagagagagagbSagagagagagbUagagagagagagapagagagagagagagagagabaa
+aaacctagbAagatacaLbXagagagagagbXagagagagagbXagagagagagagapagagagagagagagagagabaa
+aaacctagapagaxacaLagagaqagagagagaqagagagagagaqagagagaqagapagaqagagagaqagagagabaa
+aaacctagbAagaCacaLagagagagagagagagagagagagagagagagagagagapagagagagagagagagagabaa
+aaacctagapagcuacaMagagagagagagagagagagagagagagagagagagagapagagagagagagagagagacaa
+aaacctagbAagcvacaMagagaqagagagagaqagagagagagaqagagagaqagapagaqagagagaqagagagacaa
+aaacctagapagcwacaMagagagagagagagagagagagagagagagagagagagapagagagagagagagagagacaa
+aaacctagbAagcxabbeagagagagagagagaqagagagagagagagagagagagapagagagagagagagagagabaa
+aaacctagapagcyababbDbEaqagagagbBbBbBagagagagaqagagagaqagapagaqagagagaqagagagabaa
+aaacctagbAagagabbFbGbHagagagagagapagagagagagagagagagagagapagagagagagagagagagabaa
+aaacagaIapapbCbZapapaIapapapapapaIapapapapapaIapapapcaapapagaqagagagaqagagagacaa
+aaabagagagagagabagagagagagagagagagagagagagagagagagagagagagagagagagagagagagaqabaa
+aaababacacacabababacacacacabcbcbcbabacacacacacacacacacacabacacacabacacacabababaa
+aaabaJaJaJaXaYaZaXbaaZaXbbbcagagagbdaKaKaKaLaLaLaMaMaMbeacagagagacagagagacchchaa
+aaacaJbfaJaJaJaJaJbfaJaJaJbgagaqagagagagaqagagagagagaqagbzcccAcccecccAcccfaaaaaa
+aaacbhbhbhbibjbkbiblbkbibmbnagagagagagagagagagagagagagagaccccccccdcccccccdaaaaaa
+aaacagagagagagagagagagagagagagagagagagagagagciciagagagagabcdcecdcgcdcecdcgaaaaaa
+aaacbobpagbqbqagagaqagbrbsbtagaqagagagagaqagcjckagagaqagaccccccccdcccccccdaaaaaa
+aaacboboagbqbqagagagaXbuaJbvaZagagagagagagagclclagagagagbzcccAcccecccAcccfaaaaaa
+aaacboboagbqbqagagagagbwbxbyagagagagagagagagagagagagagagaccccccccdcccccccdaaaaaa
+aaacboboagbqbqagagagagagagagagagagagagagagagagagagagagagabcdcecdcgcdcecdcgaaaaaa
+aaacbobpagbqbqagagaqagagagagagaqagagagagaqagagagagagaqagaccccccccccccccccdaaaaaa
+aaabagagagagagagagagagagagagagagagagagagagagagagagagagagbzcccAcccccccAcccfaaaaaa
+aaabagagagagagagagagagagagagagagagagagagagagagagagagagagaccccccccccccccccdaaaaaa
+aaababacbzacabababacacbzacacabababacbzacacabababacbzacababcdcdcdcgcdcdcdcgaaaaaa
+aaabagagagagagabagagagagagagagabagagagagagagabaOaOaOaOaOabaaaaaaaaaaaaaaaaaaaaaa
+aaacagagagagagacagagagagagagagacagagagagagagacaOaOaOaOaOacaaaaaaaaaaaaaaaaaaaaaa
+aaacagaqaPagagbzagagagaPaqagagbzagagaqaPagagbzaOaOaQaRaOaSaaaaaaaaaaaaaaaaaaaaaa
+aaacagagagagagacagagagagagagagacagagagagagagacaOaOaOaOaOacaaaaaaaaaaaaaaaaaaaaaa
+aaabagagagagagabagagagagagagagabagagagagagagabaOaOaOaOaOabaaaaaaaaaaaaaaaaaaaaaa
+aaababacacacabababacacacacacabababacacacacabababacaSacababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
