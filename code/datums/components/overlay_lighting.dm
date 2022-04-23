@@ -111,7 +111,7 @@
 	. = ..()
 	if(directional)
 		RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/on_parent_dir_change)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_parent_moved)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_parent_moved)//TODOKYLER: check this
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_RANGE, .proc/set_range)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_POWER, .proc/set_power)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .proc/set_color)

@@ -40,10 +40,10 @@
 
 /datum/light_source/New(atom/owner, atom/top)
 	source_atom = owner // Set our new owner.
-	LAZYADD(source_atom.light_sources, src)
+	add_to_light_sources(source_atom.light_sources)
 	top_atom = top
 	if (top_atom != source_atom)
-		LAZYADD(top_atom.light_sources, src)
+		add_to_light_sources(top_atom.light_sources)
 
 	source_turf = top_atom
 	pixel_turf = get_turf_pixel(top_atom) || source_turf
@@ -59,10 +59,10 @@
 /datum/light_source/Destroy(force)
 	remove_lum()
 	if (source_atom)
-		LAZYREMOVE(source_atom.light_sources, src)
+		remove_from_light_sources(source_atom.light_sources)
 
 	if (top_atom)
-		LAZYREMOVE(top_atom.light_sources, src)
+		remove_from_light_sources(top_atom.light_sources)
 
 	if (needs_update)
 		SSlighting.sources_queue -= src
@@ -74,6 +74,35 @@
 
 	return ..()
 
+///add this light source to new_atom_host's light_sources list. updating movement registrations as needed
+/datum/light_source/proc/add_to_light_sources(atom/new_atom_host)
+	if(QDELETED(new_atom_host))
+		return FALSE
+
+	LAZYADD(new_atom_host.light_sources, src)
+	if(ismovable(new_atom_host) && new_atom_host == source_atom)
+		RegisterSignal(new_atom_host, COMSIG_MOVABLE_MOVED, .proc/update_host_lights)
+	return TRUE
+
+///remove this light source from old_atom_host's light_sources list, unsetting movement registrations
+/datum/light_source/proc/remove_from_light_sources(atom/old_atom_host)
+	if(QDELETED(old_atom_host))
+		return FALSE
+
+	LAZYREMOVE(old_atom_host.light_sources, src)
+	if(ismovable(old_atom_host) && old_atom_host == source_atom)
+		UnregisterSignal(old_atom_host, COMSIG_MOVABLE_MOVED)
+	return TRUE
+
+///signal handler for when our host atom moves and we need to update our effects
+/datum/light_source/proc/update_host_lights(atom/movable/host)
+	SIGNAL_HANDLER
+
+	if(QDELETED(host))
+		return
+
+	host.update_light()
+
 // Yes this doesn't align correctly on anything other than 4 width tabs.
 // If you want it to go switch everybody to elastic tab stops.
 // Actually that'd be great if you could!
@@ -84,17 +113,17 @@
 		needs_update = level;    \
 
 
-// This proc will cause the light source to update the top atom, and add itself to the update queue.
+/// This proc will cause the light source to update the top atom, and add itself to the update queue.
 /datum/light_source/proc/update(atom/new_top_atom)
 	// This top atom is different.
 	if (new_top_atom && new_top_atom != top_atom)
 		if(top_atom != source_atom && top_atom.light_sources) // Remove ourselves from the light sources of that top atom.
-			LAZYREMOVE(top_atom.light_sources, src)
+			remove_from_light_sources(top_atom.light_sources)
 
 		top_atom = new_top_atom
 
 		if (top_atom != source_atom)
-			LAZYADD(top_atom.light_sources, src) // Add ourselves to the light sources of our new top atom.
+			add_to_light_sources(top_atom.light_sources)
 
 	EFFECT_UPDATE(LIGHTING_CHECK_UPDATE)
 

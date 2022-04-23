@@ -141,7 +141,8 @@
 	if(important_recursive_contents && (important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] || important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
 		SSspatial_grid.force_remove_from_cell(src)
 
-	LAZYCLEARLIST(client_mobs_in_contents)
+	for(var/mob/client_mob as anything in client_mobs_in_contents)
+		remove_client_mob_in_contents(client_mob)
 
 	. = ..()
 
@@ -653,12 +654,12 @@
 /atom/movable/proc/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs, atom/movable/moved_us)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (!inertia_moving && !moved_us)
+	if (!inertia_moving)//not sure about this one
 		newtonian_move(movement_dir)
-	if (client_mobs_in_contents)
-		update_parallax_contents()
-	for (var/datum/light_source/light as anything in light_sources) // Cycle through the light sources on this atom and tell them to update.
-		light.source_atom.update_light()
+	///if (client_mobs_in_contents)//signal-able
+	//	update_parallax_contents()
+	//for (var/datum/light_source/light as anything in light_sources) // Cycle through the light sources on this atom and tell them to update.
+	//	light.source_atom.update_light() //signal-able
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, moved_us)
 
@@ -965,11 +966,11 @@
  * Arguments:
  * * movement_dir - 0 when stopping or any dir when trying to move
  */
-/atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir) & COMSIG_MOVABLE_STOP_SPACEMOVE)
+/atom/movable/proc/Process_Spacemove(movement_dir)
+	if(has_gravity())
 		return TRUE
 
-	if(has_gravity())
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir) & COMSIG_MOVABLE_STOP_SPACEMOVE)
 		return TRUE
 
 	if(pulledby && (pulledby.pulledby != src || moving_from_pull))
@@ -989,7 +990,7 @@
 
 /// Only moves the object if it's under no gravity.
 /// Accepts the direction to move, and if the push should be instant
-/atom/movable/proc/newtonian_move(direction, instant = FALSE)
+/atom/movable/proc/newtonian_move(direction, instant)
 	if(Process_Spacemove(0))
 		return FALSE
 

@@ -710,8 +710,10 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 	lift_master_datum.multitile_tram = TRUE
 
+	var/turf/old_loc = loc
+
 	forceMove(locate(min_x, min_y, z))
-	set_movement_registrations()
+	set_movement_registrations(locs - old_loc)
 
 /obj/structure/industrial_lift/tram/central/proc/find_dimensions(iterations = 3000)
 	message_admins("num turfs: [length(locs)], lower left corner: ([min_x], [min_y]), upper right corner: ([max_x], [max_y])")

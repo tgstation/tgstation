@@ -1,6 +1,7 @@
 /turf/open
 	plane = FLOOR_PLANE
-	var/slowdown = 0 //negative for faster, positive for slower
+	///negative for faster, positive for slower
+	var/slowdown = 0
 
 	var/footstep = null
 	var/barefootstep = null

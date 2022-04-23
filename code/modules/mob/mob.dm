@@ -1340,7 +1340,7 @@
 		CB.Invoke()
 
 	if(canon_client?.movingmob)
-		LAZYREMOVE(canon_client.movingmob.client_mobs_in_contents, src)
+		canon_client.movingmob.remove_client_mob_in_contents(src)
 		canon_client.movingmob = null
 
 	clear_important_client_contents()
