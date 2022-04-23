@@ -1,0 +1,5 @@
+author: "YakumoChen"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a sprite not appearing when you use up canned tomatoes"
+  - bugfix: "Donkfillet has a sprite for real this time"
