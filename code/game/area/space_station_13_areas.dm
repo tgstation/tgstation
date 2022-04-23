@@ -1209,173 +1209,175 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Security
 ///When adding a new area to the security areas, make sure to add it to /datum/bounty/item/security/paperwork as well!
 
-/area/security
+/area/station/security
 	name = "Security"
 	icon_state = "security"
 	ambience_index = AMBIENCE_DANGER
 	airlock_wires = /datum/wires/airlock/security
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/security/office
+/area/station/security/office
 	name = "\improper Security Office"
 	icon_state = "security"
 
-/area/security/lockers
+/area/station/security/lockers
 	name = "\improper Security Locker Room"
 	icon_state = "securitylockerroom"
 
-/area/security/brig
+/area/station/security/brig
 	name = "\improper Brig"
 	icon_state = "brig"
 
-/area/security/holding_cell
+/area/station/security/holding_cell
 	name = "\improper Holding Cell"
 	icon_state = "holding_cell"
 
-/area/security/medical
+/area/station/security/medical
 	name = "\improper Security Medical"
 	icon_state = "security_medical"
 
-/area/security/brig/upper
+/area/station/security/brig/upper
 	name = "\improper Brig Overlook"
 	icon_state = "upperbrig"
 
-/area/security/courtroom
+/area/station/security/courtroom
 	name = "\improper Courtroom"
 	icon_state = "courtroom"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/security/prison
+/area/station/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 
-/area/security/prison/toilet //radproof
+//Rad proof
+/area/station/security/prison/toilet
 	name = "\improper Prison Toilet"
 	icon_state = "sec_prison_safe"
 
-/area/security/prison/safe //radproof
+// Rad proof
+/area/station/security/prison/safe
 	name = "\improper Prison Wing Cells"
 	icon_state = "sec_prison_safe"
 
-/area/security/prison/upper
+/area/station/security/prison/upper
 	name = "\improper Upper Prison Wing"
 	icon_state = "prison_upper"
 
-/area/security/prison/visit
+/area/station/security/prison/visit
 	name = "\improper Prison Visitation Area"
 	icon_state = "prison_visit"
 
-/area/security/prison/rec
+/area/station/security/prison/rec
 	name = "\improper Prison Rec Room"
 	icon_state = "prison_rec"
 
-/area/security/prison/mess
+/area/station/security/prison/mess
 	name = "\improper Prison Mess Hall"
 	icon_state = "prison_mess"
 
-/area/security/prison/work
+/area/station/security/prison/work
 	name = "\improper Prison Work Room"
 	icon_state = "prison_work"
 
-/area/security/prison/shower
+/area/station/security/prison/shower
 	name = "\improper Prison Shower"
 	icon_state = "prison_shower"
 
-/area/security/prison/workout
+/area/station/security/prison/workout
 	name = "\improper Prison Gym"
 	icon_state = "prison_workout"
 
-/area/security/prison/garden
+/area/station/security/prison/garden
 	name = "\improper Prison Garden"
 	icon_state = "prison_garden"
 
-/area/security/processing
+/area/station/security/processing
 	name = "\improper Labor Shuttle Dock"
 	icon_state = "sec_processing"
 
-/area/security/processing/cremation
+/area/station/security/processing/cremation
 	name = "\improper Security Crematorium"
 	icon_state = "sec_cremation"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/security/interrogation
+/area/station/security/interrogation
 	name = "\improper Interrogation Room"
 	icon_state = "interrogation"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/security/warden
+/area/station/security/warden
 	name = "Brig Control"
 	icon_state = "warden"
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
-/area/security/detectives_office
+/area/station/security/detectives_office
 	name = "\improper Detective's Office"
 	icon_state = "detective"
 	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
 
-/area/security/detectives_office/private_investigators_office
+/area/station/security/detectives_office/private_investigators_office
 	name = "\improper Private Investigator's Office"
 	icon_state = "investigate_office"
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
-/area/security/range
+/area/station/security/range
 	name = "\improper Firing Range"
 	icon_state = "firingrange"
 
-/area/security/execution
+/area/station/security/execution
 	icon_state = "execution_room"
 
-/area/security/execution/transfer
+/area/station/security/execution/transfer
 	name = "\improper Transfer Centre"
 	icon_state = "sec_processing"
 
-/area/security/execution/education
+/area/station/security/execution/education
 	name = "\improper Prisoner Education Chamber"
 
-/area/security/checkpoint
+/area/station/security/checkpoint
 	name = "\improper Security Checkpoint"
 	icon_state = "checkpoint"
 
-/area/security/checkpoint/auxiliary
+/area/station/security/checkpoint/auxiliary
 	icon_state = "checkpoint_aux"
 
-/area/security/checkpoint/escape
+/area/station/security/checkpoint/escape
 	icon_state = "checkpoint_esc"
 
-/area/security/checkpoint/supply
+/area/station/security/checkpoint/supply
 	name = "Security Post - Cargo Bay"
 	icon_state = "checkpoint_supp"
 
-/area/security/checkpoint/engineering
+/area/station/security/checkpoint/engineering
 	name = "Security Post - Engineering"
 	icon_state = "checkpoint_engi"
 
-/area/security/checkpoint/medical
+/area/station/security/checkpoint/medical
 	name = "Security Post - Medbay"
 	icon_state = "checkpoint_med"
 
-/area/security/checkpoint/science
+/area/station/security/checkpoint/science
 	name = "Security Post - Science"
 	icon_state = "checkpoint_sci"
 
-/area/security/checkpoint/science/research
+/area/station/security/checkpoint/science/research
 	name = "Security Post - Research Division"
 	icon_state = "checkpoint_res"
 
-/area/security/checkpoint/customs
+/area/station/security/checkpoint/customs
 	name = "Customs"
 	icon_state = "customs_point"
 
-/area/security/checkpoint/customs/auxiliary
+/area/station/security/checkpoint/customs/auxiliary
 	name = "Auxiliary Customs"
 	icon_state = "customs_point_aux"
 
-/area/security/checkpoint/customs/fore
+/area/station/security/checkpoint/customs/fore
 	name = "Fore Customs"
 	icon_state = "customs_point_fore"
 
-/area/security/checkpoint/customs/aft
+/area/station/security/checkpoint/customs/aft
 	name = "Aft Customs"
 	icon_state = "customs_point_aft"
 
