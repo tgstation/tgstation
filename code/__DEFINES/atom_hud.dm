@@ -42,14 +42,13 @@
 //for antag huds. these are used at the /mob level
 #define ANTAG_HUD "20"
 // for fans to identify pins
-#define FAN_HUD "21"
-/// Mech camera HUD
-#define DIAG_CAMERA_HUD "22"
-
-#define NANITE_HUD "23"
-#define DIAG_NANITE_FULL_HUD "24"
-// for gun permit
-#define PERMIT_HUD "25"
+#define FAN_HUD "24"
+//SKYRAT EDIT START
+/// ammo of guns
+#define AMMO_HUD	"25"
+/// if they have a gun permit
+#define PERMIT_HUD "26"
+//SKYRAT EDIT END
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -67,7 +66,7 @@
 #define DATA_HUD_SENTIENT_DISEASE 8
 #define DATA_HUD_AI_DETECT 9
 #define DATA_HUD_FAN 10
-#define DATA_HUD_PERMIT 11
+#define DATA_HUD_PERMIT 11 //SKYRAT EDIT
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

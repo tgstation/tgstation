@@ -95,6 +95,8 @@
 	var/list/fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
 	///if i`1t has an icon for a selector switch indicating current firemode.
 	var/selector_switch_icon = FALSE
+	/// Bitflags for the company that produces the gun, do not give more than one company.
+	var/company_flag
 
 /datum/action/item_action/toggle_safety
 	name = "Toggle Safety"
@@ -585,6 +587,9 @@
 		return remove_gun_attachment(user, tool, bayonet, "unfix")
 
 	else if(pin && user.is_holding(src))
+		if(!pin.can_remove)
+			to_chat(user, span_warning("You can't remove this firing pin!"))
+			return
 		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [tool]."),
 		span_notice("You attempt to remove [pin] from [src]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
 		if(tool.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
@@ -598,6 +603,9 @@
 /obj/item/gun/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(.)
+		return
+	if(!pin.can_remove)
+		to_chat(user, span_warning("You can't remove this firing pin!"))
 		return
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
@@ -617,6 +625,9 @@
 	if(.)
 		return
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if(!pin.can_remove)
+		to_chat(user, span_warning("You can't remove this firing pin!"))
 		return
 	if(pin && user.is_holding(src))
 		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [tool]."),
@@ -797,6 +808,30 @@
 /obj/item/gun/proc/before_firing(atom/target, mob/user)
 	return
 
+/obj/item/gun/examine_more(mob/user)
+	. = ..()
+	switch(company_flag)
+		if(COMPANY_CANTALAN)
+			. += "<br>It has <b>[span_purple("Cantalan Federal Arms")]</b> etched into the grip."
+		if(COMPANY_ARMADYNE)
+			. += "<br>It has <b>[span_red("Armadyne Corporation")]</b> etched into the barrel."
+		if(COMPANY_SCARBOROUGH)
+			. += "<br>It has <b>[span_orange("Scarborough Arms")]</b> stamped onto the grip."
+		if(COMPANY_BOLT)
+			. += "<br>It has <b>[span_yellow("Bolt Fabrications")]</b> stamped onto the reciever."
+		if(COMPANY_OLDARMS)
+			. += "<br>It has <b><i>[span_red("Armadyne Oldarms")]</i></b> etched into the barrel."
+		if(COMPANY_IZHEVSK)
+			. += "<br>It has <b>[span_brown("Izhevsk Coalition")]</b> cut in above the magwell."
+		if(COMPANY_NANOTRASEN)
+			. += "<br>It has <b>[span_blue("Nanotrasen Armories")]</b> etched into the reciever."
+		if(COMPANY_ALLSTAR)
+			. += "<br>It has <b>[span_red("Allstar Lasers Inc.")]</b> stamped on the front grip."
+		if(COMPANY_MICRON)
+			. += "<br>It has <b>[span_cyan("Micron Control Sys.")]</b> cut in above the cell slot."
+		if(COMPANY_INTERDYNE)
+			. += "<br>It has <b>[span_cyan("Interdyne Pharmaceuticals")]</b> stamped onto the barrel."
+
 /////////////
 // ZOOMING //
 /////////////
@@ -857,6 +892,14 @@
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
+
+/obj/item/gun/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if(!pin.can_remove)
+		to_chat(user, span_notice("You short out the gun's firing pin, allowing it to be removed!"))
+		pin.can_remove = TRUE
+		if(!(pin.obj_flags & EMAGGED))
+			pin.obj_flags |= EMAGGED
 
 #undef FIRING_PIN_REMOVAL_DELAY
 #undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

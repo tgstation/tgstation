@@ -1,9 +1,10 @@
 /obj/item/gun/microfusion/mcr01
 	name = "MCR-01"
-	desc = "An advanced, modular energy weapon produced by Allstar Lasers Incorporated. These cutting edge weapons differ from traditional beam weaponry in producing individual bolts, as well as utilizing hotswapped cells rather than being tied to immobile power sources."
+	desc = "An advanced, modular energy weapon produced by Micron Control Systems. These cutting edge weapons differ from traditional beam weaponry in producing individual bolts, as well as utilizing hotswapped cells rather than being tied to immobile power sources."
 	icon_state = "mcr01"
 	inhand_icon_state = "mcr01"
 	shaded_charge = TRUE
+	company_flag = COMPANY_MICRON
 
 /// Gun for cargo crates.
 /obj/item/gun/microfusion/mcr01/advanced
@@ -45,6 +46,13 @@
 
 /obj/item/storage/box/ammo_box/microfusion/advanced/PopulateContents()
 	new /obj/item/storage/bag/ammo(src)
+	new /obj/item/stock_parts/cell/microfusion/advanced(src)
+	new /obj/item/stock_parts/cell/microfusion/advanced(src)
+	new /obj/item/stock_parts/cell/microfusion/advanced(src)
+
+/obj/item/storage/box/ammo_box/microfusion/advanced/bagless
+
+/obj/item/storage/box/ammo_box/microfusion/advanced/bagless/PopulateContents()
 	new /obj/item/stock_parts/cell/microfusion/advanced(src)
 	new /obj/item/stock_parts/cell/microfusion/advanced(src)
 	new /obj/item/stock_parts/cell/microfusion/advanced(src)
