@@ -591,21 +591,9 @@
 
 	//TODO: better messages.
 	switch(index)
-		if(2)
+		if(2, 4, 6, 8, 10, 12)
 			user.balloon_alert_to_viewers("installed [I]")
-		if(4)
-			user.balloon_alert_to_viewers("installed [I]")
-		if(6)
-			user.balloon_alert_to_viewers("installed [I]")
-		if(8)
-			user.balloon_alert_to_viewers("installed [I]")
-		if(10)
-			user.balloon_alert_to_viewers("installed [I]")
-		if(12)
-			user.balloon_alert_to_viewers("installed [I]")
-		if(14)
-			user.balloon_alert_to_viewers("added [I]")
-		if(16)
+		if(14, 16)
 			user.balloon_alert_to_viewers("added [I]")
 	return TRUE
 
@@ -757,7 +745,7 @@
 	// We've already advanced the message step in ..(), so we have to offset by one to make sure we're on the right message
 	if((message_step - 1) == INSERT_ANOMALY_CORE_STEP)
 		if(diff == FORWARD)
-			user.balloon_alert_to_viewers("inserted and secured bluespace anomaly core")
+			user.balloon_alert_to_viewers("inserted bluespace anomaly core")
 	return TRUE
 
 //SAVANNAH-IVANOV
