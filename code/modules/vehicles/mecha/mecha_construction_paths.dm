@@ -317,8 +317,8 @@
 
 	if(!has_weapons_module)
 		if(curr_step == ADD_WEAPONS_CONTROLS_STEP || curr_step == SECURE_WEAPONS_CONTROLS_STEP)
-			message_step += diff*2
-			curr_step += diff*2
+			message_step += diff * 2
+			curr_step += diff * 2
 
 	if(!has_bluespace_crystal)
 		if(curr_step == INSTALL_BLUESPACE_STEP || curr_step == CONNECT_BLUESPACE_STEP || curr_step == ENGAGE_BLUESPACE_STEP)
