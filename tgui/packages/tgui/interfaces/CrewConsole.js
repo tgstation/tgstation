@@ -101,7 +101,7 @@ const CrewTable = (props, context) => {
         <Table.Cell bold collapsing textAlign="center">
           Position
         </Table.Cell>
-        {(
+        {!!data.link_allowed && (
           <Table.Cell bold collapsing textAlign="center">
             Tracking
           </Table.Cell>
