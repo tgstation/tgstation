@@ -12,4 +12,4 @@
 	anomaly_path = /obj/effect/anomaly/delimber
 
 /datum/round_event/anomaly/anomaly_delimber/announce(fake)
-	priority_announce("Localized limb swapping agent. Expected location: [impact_area.name]. Wear biosuits to counter the effects.", "Anomaly Alert")
+	priority_announce("Localized limb swapping agent. Expected location: [impact_area.name]. Wear biosuits to counter the effects. Calculated half-life of %9£$T$%F3 years", "Anomaly Alert")
