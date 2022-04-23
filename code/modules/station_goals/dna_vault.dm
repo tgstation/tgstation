@@ -66,7 +66,7 @@
 	icon_state = "vault"
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 5000
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	pixel_x = -32
 	pixel_y = -64
 	light_range = 3
@@ -220,3 +220,4 @@
 			to_chat(H, span_notice("Your arms move as fast as lightning."))
 			H.next_move_modifier = 0.5
 	power_lottery[H] = list()
+	use_power(active_power_usage)

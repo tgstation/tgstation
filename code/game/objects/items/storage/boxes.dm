@@ -549,15 +549,15 @@
 
 /obj/item/storage/box/pdas/PopulateContents()
 	for(var/i in 1 to 4)
-		new /obj/item/pda(src)
-	new /obj/item/cartridge/head(src)
+		new /obj/item/modular_computer/tablet/pda(src)
+	new /obj/item/computer_hardware/hard_drive/role/head(src)
 
-	var/newcart = pick( /obj/item/cartridge/engineering,
-						/obj/item/cartridge/security,
-						/obj/item/cartridge/medical,
-						/obj/item/cartridge/signal/ordnance,
-						/obj/item/cartridge/quartermaster)
-	new newcart(src)
+	var/new_disk = pick( /obj/item/computer_hardware/hard_drive/role/engineering,
+						/obj/item/computer_hardware/hard_drive/role/security,
+						/obj/item/computer_hardware/hard_drive/role/medical,
+						/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+						/obj/item/computer_hardware/hard_drive/role/quartermaster)
+	new new_disk(src)
 
 /obj/item/storage/box/silver_ids
 	name = "box of spare silver IDs"
@@ -591,9 +591,9 @@
 	illustration = "pda"
 
 /obj/item/storage/box/seccarts/PopulateContents()
-	new /obj/item/cartridge/detective(src)
+	new /obj/item/computer_hardware/hard_drive/role/detective(src)
 	for(var/i in 1 to 6)
-		new /obj/item/cartridge/security(src)
+		new /obj/item/computer_hardware/hard_drive/role/security(src)
 
 /obj/item/storage/box/firingpins
 	name = "box of standard firing pins"
@@ -1155,7 +1155,7 @@
 /obj/item/storage/box/debugtools/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/flashlight/emp/debug=1,\
-		/obj/item/pda=1,\
+		/obj/item/modular_computer/tablet/pda=1,\
 		/obj/item/modular_computer/tablet/preset/advanced=1,\
 		/obj/item/geiger_counter=1,\
 		/obj/item/construction/rcd/combat/admin=1,\
