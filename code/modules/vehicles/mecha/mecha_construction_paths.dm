@@ -322,8 +322,8 @@
 
 	if(!has_bluespace_crystal)
 		if(curr_step == INSTALL_BLUESPACE_STEP || curr_step == CONNECT_BLUESPACE_STEP || curr_step == ENGAGE_BLUESPACE_STEP)
-			message_step += diff*3
-			curr_step += diff*3
+			message_step += diff * 3
+			curr_step += diff * 3
 
 	switch(curr_step)
 		if(ADD_TREADS_STEP)
