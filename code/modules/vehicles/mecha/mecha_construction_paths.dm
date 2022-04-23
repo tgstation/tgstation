@@ -756,7 +756,7 @@
 
 	// We've already advanced the message step in ..(), so we have to offset by one to make sure we're on the right message
 	if((message_step - 1) == INSERT_ANOMALY_CORE_STEP)
-		if(diff==FORWARD)
+		if(diff == FORWARD)
 			user.balloon_alert_to_viewers("inserted and secured bluespace anomaly core")
 	return TRUE
 
