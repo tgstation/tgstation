@@ -361,31 +361,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	next_use_time -= cooldown_time // Basically, ensures that the ability can be used now
 	UpdateButtons()
 
-/// TODO: This is ugly, and should be replaced. Only tesla blast uses it.
-/// Checks if the from_atom has line of sight to the to_atom
-/datum/action/cooldown/spell/proc/los_check(atom/from_atom, atom/to_atom)
-	//Checks for obstacles from A to B
-	var/obj/dummy = new(from_atom.loc)
-	dummy.pass_flags |= PASSTABLE
-	var/turf/previous_step = get_turf(from_atom)
-	var/first_step = TRUE
-	for(var/turf/next_step as anything in (get_line(from_atom, to_atom) - previous_step))
-		if(first_step)
-			for(var/obj/blocker in previous_step)
-				if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1))
-					continue
-				if(blocker.CanPass(dummy, get_dir(previous_step, next_step)))
-					continue
-				return FALSE // Could not leave the first turf.
-			first_step = FALSE
-		for(var/atom/movable/movable as anything in next_step)
-			if(!movable.CanPass(dummy, get_dir(next_step, previous_step)))
-				qdel(dummy)
-				return FALSE
-		previous_step = next_step
-	qdel(dummy)
-	return TRUE
-
 /**
  * Levels the spell up a single level, reducing the cooldown.
  * If bypass_cap is TRUE, will level the spell up past it's set cap.

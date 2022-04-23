@@ -22,7 +22,9 @@
 // Spell type signals
 
 // Pointed
+/// Sent from /datum/action/cooldown/spell/pointed/on_activation() to the caster: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_POINTED_SPELL_ACTIVATED "mob_spell_pointed_active"
+/// Sent from /datum/action/cooldown/spell/pointed/on_deactivation() to the caster: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_POINTED_SPELL_DEACTIVATED "mob_spell_pointed_deactive"
 
 // Pointed projectiles

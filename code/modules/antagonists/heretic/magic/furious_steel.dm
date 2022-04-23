@@ -25,6 +25,11 @@
 	/// A ref to the status effect surrounding our heretic on activation.
 	var/datum/status_effect/protective_blades/blade_effect
 
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/InterceptClickOn(mob/living/caller, params, atom/click_target)
+	if(get_dist(caller, click_target) <= 1) // Let the caster prioritize melee attacks over blade casts
+		return FALSE
+	return ..()
+
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/on_activation(mob/on_who)
 	. = ..()
 	if(!.)
@@ -44,8 +49,7 @@
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/before_cast(atom/cast_on)
 	if(isnull(blade_effect) || !length(blade_effect.blades))
 		return FALSE
-	if(get_dist(owner, cast_on) <= 1) // Let the caster prioritize melee attacks over blade casts
-		return FALSE
+
 	return ..()
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/fire_projectile(mob/living/user, atom/target)

@@ -340,7 +340,7 @@
 		/datum/heretic_knowledge/final/blade_final,
 		/datum/heretic_knowledge/rifle,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/aimed/furious_steel
+	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel/
 	cost = 1
 	route = PATH_BLADE
 
