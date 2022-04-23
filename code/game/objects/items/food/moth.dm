@@ -141,7 +141,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/green_lasagne/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 30, table_required = TRUE)
 
 /obj/item/food/green_lasagne_slice
 	name = "green lasagne al forno slice"
@@ -178,7 +178,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/big_baked_rice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 30, table_required = TRUE)
 
 /obj/item/food/lil_baked_rice
 	name = "lil baked rice"

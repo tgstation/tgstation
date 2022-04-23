@@ -1,4 +1,0 @@
-author: "capsaicinz"
-delete-after: True
-changes: 
-  - bugfix: "metal foam now blocks you from falling down a z-level if it's below you"

@@ -73,7 +73,7 @@
 	return
 
 /// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
-/obj/item/mod/module/proc/on_uninstall()
+/obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is activated
@@ -81,7 +81,7 @@
 	return
 
 /// Called when the MODsuit is deactivated
-/obj/item/mod/module/proc/on_suit_deactivation()
+/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is equipped
@@ -145,7 +145,7 @@
 	return TRUE
 
 /// Called when the module is deactivated
-/obj/item/mod/module/proc/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/proc/on_deactivation(display_message = TRUE, deleting = FALSE)
 	active = FALSE
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
@@ -177,7 +177,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
+	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
 	mod.wearer.update_inv_back()
 	SEND_SIGNAL(src, COMSIG_MODULE_USED)
 	return TRUE

@@ -212,7 +212,6 @@
 /datum/status_effect/grouped/stasis
 	id = "stasis"
 	duration = -1
-	tick_interval = 10
 	alert_type = /atom/movable/screen/alert/status_effect/stasis
 	var/last_dead_time
 
@@ -393,11 +392,13 @@
 	on_remove_on_mob_delete = TRUE
 	///underlay used to indicate that someone is marked
 	var/mutable_appearance/marked_underlay
-	///path for the underlay
-	var/effect_sprite = ""
+	/// icon file for the underlay
+	var/effect_icon = 'icons/effects/eldritch.dmi'
+	/// icon state for the underlay
+	var/effect_icon_state = ""
 
 /datum/status_effect/eldritch/on_creation(mob/living/new_owner, ...)
-	marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite,BELOW_MOB_LAYER)
+	marked_underlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
 	return ..()
 
 /datum/status_effect/eldritch/Destroy()
@@ -437,7 +438,7 @@
 
 //Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
 /datum/status_effect/eldritch/flesh
-	effect_sprite = "emark1"
+	effect_icon_state = "emark1"
 
 /datum/status_effect/eldritch/flesh/on_effect()
 	if(ishuman(owner))
@@ -449,7 +450,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/ash
-	effect_sprite = "emark2"
+	effect_icon_state = "emark2"
 	/// Dictates how much stamina and burn damage the mark will cause on trigger.
 	var/repetitions = 1
 
@@ -471,7 +472,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/rust
-	effect_sprite = "emark3"
+	effect_icon_state = "emark3"
 
 /datum/status_effect/eldritch/rust/on_effect()
 	if(iscarbon(owner))
@@ -499,7 +500,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/void
-	effect_sprite = "emark4"
+	effect_icon_state = "emark4"
 
 /datum/status_effect/eldritch/void/on_effect()
 	var/turf/open/our_turf = get_turf(owner)
@@ -511,6 +512,54 @@
 		carbon_owner.silent += 5
 
 	return ..()
+
+/datum/status_effect/eldritch/blade
+	effect_icon_state = "emark5"
+	/// If set, the owner of the status effect will not be able to leave this area.
+	var/area/locked_to
+
+/datum/status_effect/eldritch/blade/Destroy()
+	locked_to = null
+	return ..()
+
+/datum/status_effect/eldritch/blade/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTED, .proc/on_teleport)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+
+/datum/status_effect/eldritch/blade/on_remove()
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_TELEPORTED, COMSIG_MOVABLE_MOVED))
+	return ..()
+
+/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area
+/datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
+	SIGNAL_HANDLER
+
+	if(!locked_to)
+		return
+
+	if(get_area(destination) == locked_to)
+		return
+
+	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
+
+	source.Stun(1 SECONDS)
+	return COMPONENT_BLOCK_TELEPORT
+
+/// Signal proc for [COMSIG_MOVABLE_MOVED] that blocks any movement out of our locked area
+/datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+
+	if(!locked_to)
+		return
+
+	if(get_area(source) == locked_to)
+		return
+
+	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
+
+	source.Stun(1 SECONDS)
+	source.throw_at(old_loc, 5, 1)
 
 /// A status effect used for specifying confusion on a living mob.
 /// Created automatically with /mob/living/set_confusion.
@@ -1121,10 +1170,94 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
 	alert_type = /atom/movable/screen/alert/status_effect/ghoul
+	/// The new max health value set for the ghoul, if supplied
+	var/new_max_health
+	/// Reference to the master of the ghoul's mind
+	var/datum/mind/master_mind
+	/// An optional callback invoked when a ghoul is made (on_apply)
+	var/datum/callback/on_made_callback
+	/// An optional callback invoked when a goul is unghouled (on_removed)
+	var/datum/callback/on_lost_callback
+
+/datum/status_effect/ghoul/Destroy()
+	master_mind = null
+	QDEL_NULL(on_made_callback)
+	QDEL_NULL(on_lost_callback)
+	return ..()
+
+/datum/status_effect/ghoul/on_creation(
+	mob/living/new_owner,
+	new_max_health,
+	datum/mind/master_mind,
+	datum/callback/on_made_callback,
+	datum/callback/on_lost_callback,
+)
+
+	src.new_max_health = new_max_health
+	src.master_mind = master_mind
+	src.on_made_callback = on_made_callback
+	src.on_lost_callback = on_lost_callback
+
+	. = ..()
+
+	if(master_mind)
+		linked_alert.desc += " You are an eldritch monster reanimated to serve its master, [master_mind]."
+	if(isnum(new_max_health))
+		if(new_max_health > initial(new_owner.maxHealth))
+			linked_alert.desc += " You are stronger in this form."
+		else
+			linked_alert.desc += " You are more fragile in this form."
+
+/datum/status_effect/ghoul/on_apply()
+	if(!ishuman(owner))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = owner
+
+	RegisterSignal(human_target, COMSIG_LIVING_DEATH, .proc/remove_ghoul_status)
+	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
+
+	if(new_max_health)
+		human_target.setMaxHealth(new_max_health)
+		human_target.health = new_max_health
+
+	on_made_callback?.Invoke(human_target)
+	human_target.become_husk(MAGIC_TRAIT)
+	human_target.faction |= FACTION_HERETIC
+
+	if(human_target.mind)
+		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
+		heretic_monster.set_owner(master_mind)
+
+	return TRUE
+
+/datum/status_effect/ghoul/on_remove()
+	remove_ghoul_status()
+	return ..()
+
+/// Removes the ghoul effects from our owner and returns them to normal.
+/datum/status_effect/ghoul/proc/remove_ghoul_status(datum/source)
+	SIGNAL_HANDLER
+
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/human_target = owner
+
+	if(new_max_health)
+		human_target.setMaxHealth(initial(human_target.maxHealth))
+
+	on_lost_callback?.Invoke(human_target)
+	human_target.cure_husk(MAGIC_TRAIT)
+	human_target.faction -= FACTION_HERETIC
+	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
+
+	UnregisterSignal(human_target, COMSIG_LIVING_DEATH)
+	if(!QDELETED(src))
+		qdel(src)
 
 /atom/movable/screen/alert/status_effect/ghoul
 	name = "Flesh Servant"
-	desc = "You are a Ghoul! A eldritch monster reanimated to serve its master."
+	desc = "You are a Ghoul!"
 	icon_state = ALERT_MIND_CONTROL
 
 

@@ -1444,6 +1444,8 @@
 		choices += list("[initial(current_option_type.name)]" = option_image)
 
 	var/pick = show_radial_menu(user, src, choices, radius = 36, require_near = TRUE)
+	if(!pick)
+		return
 
 	StartProcessingAtom(user, processed_object, choices_to_options[pick])
 
