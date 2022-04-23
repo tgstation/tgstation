@@ -289,3 +289,17 @@
 /area/security/checkpoint/customs/auxiliary : /area/station/security/checkpoint/customs/auxiliary
 /area/security/checkpoint/customs/fore : /area/station/security/checkpoint/customs/fore
 /area/security/checkpoint/customs/aft : /area/station/security/checkpoint/customs/aft
+
+/area/cargo : /area/station/cargo
+/area/cargo/sorting : /area/station/cargo/sorting
+/area/cargo/warehouse : /area/station/cargo/warehouse
+/area/cargo/drone_bay : /area/station/cargo/drone_bay
+/area/cargo/warehouse/upper : /area/station/cargo/warehouse/upper
+/area/cargo/office : /area/station/cargo/office
+/area/cargo/storage : /area/station/cargo/storage
+/area/cargo/lobby : /area/station/cargo/lobby
+/area/cargo/qm : /area/station/cargo/qm
+/area/cargo/miningdock : /area/station/cargo/miningdock
+/area/cargo/miningdock/cafeteria : /area/station/cargo/miningdock/cafeteria
+/area/cargo/miningdock/oresilo : /area/station/cargo/miningdock/oresilo
+/area/cargo/miningoffice : /area/station/cargo/miningoffice

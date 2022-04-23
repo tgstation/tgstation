@@ -1393,59 +1393,59 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Cargo
 
-/area/cargo
+/area/station/cargo
 	name = "Quartermasters"
 	icon_state = "quart"
 	airlock_wires = /datum/wires/airlock/service
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/cargo/sorting
+/area/station/cargo/sorting
 	name = "\improper Delivery Office"
 	icon_state = "cargo_delivery"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/cargo/warehouse
+/area/station/cargo/warehouse
 	name = "\improper Warehouse"
 	icon_state = "cargo_warehouse"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/cargo/drone_bay
+/area/station/cargo/drone_bay
 	name = "\improper Drone Bay"
 	icon_state = "cargo_drone"
 
-/area/cargo/warehouse/upper
+/area/station/cargo/warehouse/upper
 	name = "\improper Upper Warehouse"
 
-/area/cargo/office
+/area/station/cargo/office
 	name = "\improper Cargo Office"
 	icon_state = "cargo_office"
 
-/area/cargo/storage
+/area/station/cargo/storage
 	name = "\improper Cargo Bay"
 	icon_state = "cargo_bay"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/cargo/lobby
+/area/station/cargo/lobby
 	name = "\improper Cargo Lobby"
 	icon_state = "cargo_lobby"
 
-/area/cargo/qm
+/area/station/cargo/qm
 	name = "\improper Quartermaster's Office"
 	icon_state = "quart_office"
 
-/area/cargo/miningdock
+/area/station/cargo/miningdock
 	name = "\improper Mining Dock"
 	icon_state = "mining_dock"
 
-/area/cargo/miningdock/cafeteria
+/area/station/cargo/miningdock/cafeteria
 	name = "\improper Mining Cafeteria"
 	icon_state = "mining_cafe"
 
-/area/cargo/miningdock/oresilo
+/area/station/cargo/miningdock/oresilo
 	name = "\improper Mining Ore Silo Storage"
 	icon_state = "mining_silo"
 
-/area/cargo/miningoffice
+/area/station/cargo/miningoffice
 	name = "\improper Mining Office"
 	icon_state = "mining"
 
