@@ -3,7 +3,7 @@
 ///The machine pumps from the turf to the internal tank
 #define PUMP_IN "in"
 ///Maximum settable pressure
-#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 25)
+#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 30)
 ///Minimum settable pressure
 #define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
 ///Defaul pressure, used in the UI to reset the settings
@@ -14,10 +14,6 @@
 	icon_state = "siphon"
 	density = TRUE
 	max_integrity = 250
-	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
-	var/heat_limit = 5000
-	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
-	var/pressure_limit = 50000
 	///Is the machine on?
 	var/on = FALSE
 	///What direction is the machine pumping (in or out)?
@@ -44,11 +40,7 @@
 		. += "siphon-connector"
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
-	var/pressure = air_contents.return_pressure()
-	var/temperature = air_contents.return_temperature()
-	///function used to check the limit of the pumps and also set the amount of damage that the pump can receive, if the heat and pressure are way higher than the limit the more damage will be done
-	if(temperature > heat_limit || pressure > pressure_limit)
-		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
+	if(take_atmos_damage())
 		excited = TRUE
 		return ..()
 
