@@ -200,3 +200,24 @@
 /area/construction : /area/construction
 /area/construction/mining/aux_base : /area/construction/mining/aux_base
 /area/construction/storage_wing : /area/construction/storage_wing
+
+/area/solars : /area/station/solars
+/area/solars/fore : /area/station/solars/fore
+/area/solars/aft : /area/station/solars/aft
+/area/solars/aux/port : /area/station/solars/aux/port
+/area/solars/aux/starboard : /area/station/solars/aux/starboard
+/area/solars/starboard : /area/station/solars/starboard
+/area/solars/starboard/aft : /area/station/solars/starboard/aft
+/area/solars/starboard/fore : /area/station/solars/starboard/fore
+/area/solars/port : /area/station/solars/port
+/area/solars/port/aft : /area/station/solars/port/aft
+/area/solars/port/fore : /area/station/solars/port/fore
+/area/solars/aisat : /area/station/solars/aisat
+
+/area/maintenance/solars : /area/station/maintenance/solars
+/area/maintenance/solars/port : /area/station/maintenance/solars/port
+/area/maintenance/solars/port/aft : /area/station/maintenance/solars/port/aft
+/area/maintenance/solars/port/fore : /area/station/maintenance/solars/port/fore
+/area/maintenance/solars/starboard : /area/station/maintenance/solars/starboard
+/area/maintenance/solars/starboard/aft : /area/station/maintenance/solars/starboard/aft
+/area/maintenance/solars/starboard/fore : /area/station/maintenance/solars/starboard/fore

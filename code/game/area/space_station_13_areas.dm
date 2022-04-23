@@ -1005,7 +1005,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Solars
 
-/area/solars
+/area/station/solars
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	flags_1 = NONE
@@ -1014,48 +1014,48 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	sound_environment = SOUND_AREA_SPACE
 	base_lighting_alpha = 255
 
-/area/solars/fore
+/area/station/solars/fore
 	name = "\improper Fore Solar Array"
 	icon_state = "yellow"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/solars/aft
+/area/station/solars/aft
 	name = "\improper Aft Solar Array"
 	icon_state = "yellow"
 
-/area/solars/aux/port
+/area/station/solars/aux/port
 	name = "\improper Port Bow Auxiliary Solar Array"
 	icon_state = "panelsA"
 
-/area/solars/aux/starboard
+/area/station/solars/aux/starboard
 	name = "\improper Starboard Bow Auxiliary Solar Array"
 	icon_state = "panelsA"
 
-/area/solars/starboard
+/area/station/solars/starboard
 	name = "\improper Starboard Solar Array"
 	icon_state = "panelsS"
 
-/area/solars/starboard/aft
+/area/station/solars/starboard/aft
 	name = "\improper Starboard Quarter Solar Array"
 	icon_state = "panelsAS"
 
-/area/solars/starboard/fore
+/area/station/solars/starboard/fore
 	name = "\improper Starboard Bow Solar Array"
 	icon_state = "panelsFS"
 
-/area/solars/port
+/area/station/solars/port
 	name = "\improper Port Solar Array"
 	icon_state = "panelsP"
 
-/area/solars/port/aft
+/area/station/solars/port/aft
 	name = "\improper Port Quarter Solar Array"
 	icon_state = "panelsAP"
 
-/area/solars/port/fore
+/area/station/solars/port/fore
 	name = "\improper Port Bow Solar Array"
 	icon_state = "panelsFP"
 
-/area/solars/aisat
+/area/station/solars/aisat
 	name = "\improper AI Satellite Solars"
 	icon_state = "yellow"
 
