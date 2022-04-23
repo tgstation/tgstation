@@ -22,7 +22,7 @@
 
 	if(disk_flags & DISK_POWER)
 		progs_to_store += new /datum/computer_file/program/power_monitor(src)
-		progs_to_store += new /datum/computer_file/program/supermatter_monitor(src)
+		//progs_to_store += new /datum/computer_file/program/supermatter_monitor(src)
 
 	if(disk_flags & DISK_ATMOS)
 		progs_to_store += new /datum/computer_file/program/atmosscan(src)
@@ -65,8 +65,8 @@
 	if(disk_flags & DISK_BUDGET)
 		progs_to_store += new /datum/computer_file/program/budgetorders(src)
 
-	if(disk_flags & DISK_STATUS)
-		progs_to_store += new /datum/computer_file/program/status(src)
+	/*if(disk_flags & DISK_STATUS)
+		progs_to_store += new /datum/computer_file/program/status(src)*/
 
 	for (var/datum/computer_file/program/prog in progs_to_store)
 		prog.usage_flags = PROGRAM_ALL
