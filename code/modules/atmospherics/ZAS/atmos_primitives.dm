@@ -82,7 +82,7 @@
 	return power_draw
 
 //Gas 'pumping' proc for the case where the gas flow is passive and driven entirely by pressure differences (but still one-way).
-/proc/pump_gas_passive(var/datum/gas_mixture/source, var/datum/gas_mixture/sink, var/transfer_moles = null)
+/proc/pump_gas_passive(datum/gas_mixture/source, datum/gas_mixture/sink, transfer_moles = null)
 	if (source.total_moles < MINIMUM_MOLES_TO_PUMP) //if we can't transfer enough gas just stop to avoid further processing
 		return -1
 
@@ -482,7 +482,7 @@
 // - Has between 17% and 30% oxygen
 // - Has temperature between -10C and 50C
 // - Has no or only minimal phoron or N2O
-/proc/get_atmosphere_issues(datum/gas_mixture/atmosphere, var/returntext = 0)
+/proc/get_atmosphere_issues(datum/gas_mixture/atmosphere, returntext = 0)
 	var/list/status = list()
 	if(!atmosphere)
 		status.Add("No atmosphere present.")
