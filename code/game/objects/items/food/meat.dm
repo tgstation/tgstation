@@ -941,7 +941,7 @@
 	tastes = list("raw crab" = 1)
 	foodtypes = RAW | MEAT
 
-/obj/item/food/meat/slab/rawcrab/MakeGrillable()
+/obj/item/food/meat/rawcrab/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/crab, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/crab
