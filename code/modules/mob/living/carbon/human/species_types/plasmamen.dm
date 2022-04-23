@@ -65,9 +65,9 @@
 	var/atmos_sealed = TRUE
 	if(CanIgniteMob(H))
 		atmos_sealed = FALSE
-	if(!isclothing(H.wear_suit) || !(H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE))
+	else if(!isclothing(H.wear_suit) || !(H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE))
 		atmos_sealed = FALSE
-	if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & STOPSPRESSUREDAMAGE)))
+	else if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & STOPSPRESSUREDAMAGE)))
 		atmos_sealed = FALSE
 
 	var/flammable_limb = FALSE
@@ -80,9 +80,11 @@
 		return
 
 	var/can_burn = FALSE
-	if(!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves))
+	if(!isclothing(H.w_uniform) || !(H.w_uniform.clothing_flags & PLASMAMAN_PREVENT_IGNITION))
 		can_burn = TRUE
-	else if(!istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) && !HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY))
+	else if(!isclothing(H.gloves))
+		can_burn = TRUE
+	else if(!HAS_TRAIT(H, TRAIT_NOSELFIGNITION_HEAD_ONLY) && (!isclothing(H.head) || !(H.head.clothing_flags & PLASMAMAN_PREVENT_IGNITION)))
 		can_burn = TRUE
 
 	if(!atmos_sealed && can_burn)
