@@ -174,13 +174,15 @@
 	var/color_list = list(
 		list("Yellow", "yellow"),
 		list("Red", "red"),
-		list("White", "white"))
+		list("White", "white"),
+	)
 	/// List of direction options as list(user-friendly label, dir value to return)
 	var/dir_list = list(
-		list("North", 1),
-		list("South", 2),
-		list("East", 4),
-		list("West", 8))
+		list("North", NORTH),
+		list("South", SOUTH),
+		list("East", EAST),
+		list("West", WEST),
+	)
 	/// List of decal options as list(user-friendly label, icon state base value to return)
 	var/decal_list = list(
 		list("Warning Line", "warningline"),
@@ -192,13 +194,14 @@
 		list("Box", "box"),
 		list("Box Corner", "box_corners"),
 		list("Delivery Marker", "delivery"),
-		list("Warning Box", "warn_full"))
+		list("Warning Box", "warn_full"),
+	)
 	// These decals only have a south sprite.
 	var/nondirectional_decals = list(
 		"bot",
 		"box",
 		"delivery",
-		"warn_full"
+		"warn_full",
 	)
 
 /obj/item/airlock_painter/decal/Initialize(mapload)
@@ -267,17 +270,17 @@
 	for(var/decal in decal_list)
 		.["decal_list"] += list(list(
 			"name" = decal[1],
-			"decal" = decal[2]
+			"decal" = decal[2],
 		))
 	for(var/color in color_list)
 		.["color_list"] += list(list(
 			"name" = color[1],
-			"color" = color[2]
+			"color" = color[2],
 		))
 	for(var/dir in dir_list)
 		.["dir_list"] += list(list(
 			"name" = dir[1],
-			"dir" = dir[2]
+			"dir" = dir[2],
 		))
 
 /obj/item/airlock_painter/decal/ui_data(mob/user)
@@ -317,8 +320,11 @@
 	name = "floor_decals"
 	cross_round_cachable = TRUE
 
+	/// The floor icon used for blend_preview_floor()
 	var/preview_floor_icon = 'icons/turf/floors.dmi'
+	/// The floor icon state used for blend_preview_floor()
 	var/preview_floor_state = "floor"
+	/// The associated decal painter type to grab decals, colors, etc from.
 	var/obj/item/airlock_painter/decal/painter_type = /obj/item/airlock_painter/decal
 
 /**
@@ -395,11 +401,11 @@
 		list("Trimline Fill", "trimline_fill"),
 		list("Trimline Fill L", "trimline_fill__8"), // This is a hack that lives in the spritesheet builder and paint_floor
 		list("Trimline End", "trimline_end_fill"),
-		list("Trimline Box", "trimline_box_fill")
+		list("Trimline Box", "trimline_box_fill"),
 	)
 	nondirectional_decals = list(
 		"tile_fourcorners",
-		"trimline_box_fill"
+		"trimline_box_fill",
 	)
 
 	/// The alpha value to paint the tiles at. The decal mapping helper creates tile overlays at alpha 110.
