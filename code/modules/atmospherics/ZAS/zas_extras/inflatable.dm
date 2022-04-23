@@ -185,7 +185,7 @@
 	deflate()
 	return TRUE
 
-/obj/structure/inflatable/attack_generic(var/mob/user, var/damage, var/attack_verb)
+/obj/structure/inflatable/attack_generic(mob/user, damage, attack_verb)
 	. = ..()
 	if(.)
 		user.visible_message("<span class='danger'>[user] [attack_verb] open the [src]!</span>")
@@ -277,7 +277,7 @@
 		icon_state = "door_closed"
 
 
-/obj/structure/inflatable/door/deflate(var/violent=0)
+/obj/structure/inflatable/door/deflate(violent=0)
 	playsound(loc, 'sound/machines/hiss.ogg', 75, 1)
 	if(violent)
 		visible_message("[src] rapidly deflates!")

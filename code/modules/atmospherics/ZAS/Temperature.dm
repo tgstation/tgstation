@@ -4,7 +4,7 @@
 /atom/var/temperature = T20C
 /atom/var/temperature_coefficient = MAX_TEMPERATURE_COEFFICIENT
 
-/atom/movable/Entered(var/atom/movable/atom, var/atom/old_loc)
+/atom/movable/Entered(atom/movable/atom, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	QUEUE_TEMPERATURE_ATOMS(atom)
 

@@ -102,7 +102,7 @@ GLOBAL_REAL(xgm_gas_data, /datum/xgm_gas_data) = new
 	vis_flags = NONE
 	var/gas_id
 
-/obj/effect/gas_overlay/proc/update_alpha_animation(var/new_alpha)
+/obj/effect/gas_overlay/proc/update_alpha_animation(new_alpha)
 	animate(src, alpha = new_alpha)
 	alpha = new_alpha
 	animate(src, alpha = 0.8 * new_alpha, time = 10, easing = SINE_EASING | EASE_OUT, loop = -1)

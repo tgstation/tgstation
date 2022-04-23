@@ -377,7 +377,7 @@
 /turf/open/space/atmos_spawn_air()
 	return
 
-/proc/turf_contains_dense_objects(var/turf/T)
+/proc/turf_contains_dense_objects(turf/T)
 	return T.contains_dense_objects()
 
 /turf/proc/contains_dense_objects()
@@ -389,10 +389,10 @@
 	return 0
 
 /turf/proc/TryGetNonDenseNeighbour()
-  for(var/d in GLOB.cardinals)
-    var/turf/T = get_step(src, d)
-    if (T && !turf_contains_dense_objects(T))
-      return T
+	for(var/d in GLOB.cardinals)
+	var/turf/T = get_step(src, d)
+	if (T && !turf_contains_dense_objects(T))
+		return T
 
 /turf/proc/get_atmos_adjacent_turfs()
 	var/list/adjacent_turfs = list()
