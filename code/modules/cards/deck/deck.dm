@@ -206,7 +206,7 @@
 /obj/item/toy/cards/deck/throw_impact(mob/living/target, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(. || !istype(target)) // was it caught or is the target not a living mob
-		return
+		return .
 
 	if(!throwingdatum?.thrower) // if a mob didn't throw it (need two people to play 52 pickup)
 		return

@@ -18,12 +18,10 @@
 /obj/item/toy/cards/throw_impact(mob/living/target, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(. || !istype(target)) // was it caught or is the target not a living mob
-		return
+		return .
 
 	if(!throwingdatum?.thrower) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
-
-	var/mob/living/thrower = throwingdatum.thrower
 
 	var/has_no_cards = !LAZYLEN(cards)
 	if(has_no_cards)
