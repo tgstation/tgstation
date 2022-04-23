@@ -285,6 +285,7 @@
 
 /obj/item/storage/briefcase/launchpad/Initialize(mapload)
 	pad = new(null, src) //spawns pad in nullspace to hide it from briefcase contents
+	pad.setup_area_power_relationship() // needed because since the pad is spawned in nullspace and has use_power == NO_POWER_USE, the power relationship doesnt get set up, so the machine gets stuck in a NOPOWER state (all nullspaced machines have NOPOWER by default)
 	. = ..()
 
 /obj/item/storage/briefcase/launchpad/Destroy()
