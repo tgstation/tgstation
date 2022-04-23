@@ -285,7 +285,7 @@
 /datum/mood_event/playing_cards/add_effects(param)
 	var/card_players = 1
 	for(var/mob/living/carbon/player in viewers(COMBAT_MESSAGE_RANGE, owner))
-		var/player_has_cards = player.is_holding(/obj/item/toy/singlecard) || player.is_holding(/obj/item/toy/cards/deck) || player.is_holding(/obj/item/toy/cards/cardhand)
+		var/player_has_cards = player.is_holding(/obj/item/toy/singlecard) || player.is_holding_item_of_type(/obj/item/toy/cards)
 		if(player_has_cards)
 			card_players++
 			if(card_players > 5)
