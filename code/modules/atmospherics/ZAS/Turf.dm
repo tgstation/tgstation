@@ -388,11 +388,12 @@
 			return 1
 	return 0
 
+///I literally don't know where this proc came from.
 /turf/proc/TryGetNonDenseNeighbour()
 	for(var/d in GLOB.cardinals)
 		var/turf/T = get_step(src, d)
-	if (T && !turf_contains_dense_objects(T))
-		return T
+		if (T && !turf_contains_dense_objects(T))
+			return T
 
 /turf/proc/get_atmos_adjacent_turfs()
 	var/list/adjacent_turfs = list()
