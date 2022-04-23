@@ -1,11 +1,11 @@
-GLOBAL_REAL(assigned, /image/) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "assigned")
-GLOBAL_REAL(created, /image/) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "created")
-GLOBAL_REAL(merged, /image/) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "merged")
-GLOBAL_REAL(invalid_zone, /image/) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "invalid")
-GLOBAL_REAL(air_blocked, /image/) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "block")
-GLOBAL_REAL(zone_blocked, /image/) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "zoneblock")
-GLOBAL_REAL(blocked, /image/) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "fullblock")
-GLOBAL_REAL(mark, /image/) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "mark")
+GLOBAL_REAL_VAR(image/assigned) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "assigned")
+GLOBAL_REAL_VAR(image/created) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "created")
+GLOBAL_REAL_VAR(image/merged) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "merged")
+GLOBAL_REAL_VAR(image/invalid_zone) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "invalid")
+GLOBAL_REAL_VAR(image/air_blocked) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "block")
+GLOBAL_REAL_VAR(image/zone_blocked) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "zoneblock")
+GLOBAL_REAL_VAR(image/blocked) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "fullblock")
+GLOBAL_REAL_VAR(image/mark) = image('modular_pariah/master_files/icons/testing/Zone.dmi', icon_state = "mark")
 
 /connection_edge/var/dbg_out = 0
 
