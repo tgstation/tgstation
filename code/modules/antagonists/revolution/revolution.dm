@@ -434,7 +434,7 @@
 	if (. == STATION_VICTORY)
 		// If the revolution was quelled, make rev heads unable to be revived through pods
 		for (var/datum/mind/rev_head as anything in ex_headrevs)
-			if(!isnull(rev_head.current))	
+			if(!isnull(rev_head.current))
 				ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
 				rev_head.current.med_hud_set_status()
 
@@ -456,7 +456,7 @@
 				\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 				<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
 		for (var/obj/machinery/taxed_machine as anything in GLOB.production_machines)
-			taxed_machine.RemoveElement(/datum/component/payment)
+			qdel(taxed_machine.GetComponent(/datum/component/boomerang))
 
 		for (var/mob/living/player as anything in GLOB.player_list)
 			var/datum/mind/player_mind = player.mind

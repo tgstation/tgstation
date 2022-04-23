@@ -102,6 +102,7 @@
 		return FALSE
 
 	if(physical_cash_total < total_cost)
+		to_chat(user, span_notice("Insufficient funds. Aborting."))
 		return FALSE
 	for(var/obj/cash_object in counted_money)
 		qdel(cash_object)
