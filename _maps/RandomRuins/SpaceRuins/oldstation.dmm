@@ -6617,6 +6617,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/beta/atmos)
+"Dt" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/template_noop)
 "Dw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6712,6 +6717,12 @@
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/ancientstation/beta/hall)
+"FP" = (
+/obj/machinery/power/rtg/old_station,
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/template_noop)
 "FV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8378,8 +8389,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+FP
+FP
 aa
 dF
 aa
@@ -8428,7 +8439,7 @@ aa
 aa
 aa
 aa
-aa
+Dt
 aa
 dF
 aa

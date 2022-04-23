@@ -199,12 +199,34 @@
 	name = "Syndicate Control Room"
 	icon_state = "syndie-control"
 	static_lighting = TRUE
-	network_root_id = SYNDICATE_NETWORK_ROOT
+
+/area/syndicate_mothership/expansion_bombthreat
+	name = "Syndicate Ordnance Laboratory"
+	icon_state = "syndie-elite"
+	static_lighting = TRUE
+	ambience_index = AMBIENCE_ENGI
+
+/area/syndicate_mothership/expansion_bioterrorism
+	name = "Syndicate Bio-Weapon Laboratory"
+	icon_state = "syndie-elite"
+	static_lighting = TRUE
+	ambience_index = AMBIENCE_MEDICAL
+
+/area/syndicate_mothership/expansion_chemicalwarfare
+	name = "Syndicate Chemical Weapon Manufacturing Plant"
+	icon_state = "syndie-elite"
+	static_lighting = TRUE
+	ambience_index = AMBIENCE_REEBE
+
+/area/syndicate_mothership/expansion_fridgerummage
+	name = "Syndicate Perishables and Foodstuffs Storage"
+	icon_state = "syndie-elite"
+	static_lighting = TRUE
 
 /area/syndicate_mothership/elite_squad
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
-	network_root_id = SYNDICATE_NETWORK_ROOT
+
 //CAPTURE THE FLAG
 
 /area/ctf

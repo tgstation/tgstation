@@ -156,6 +156,7 @@
 /obj/item/mod/control/pre_equipped/nuclear
 	theme = /datum/mod_theme/syndicate
 	applied_cell = /obj/item/stock_parts/cell/hyper
+	req_access = list(ACCESS_SYNDICATE)
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
 		/obj/item/mod/module/magnetic_harness,
@@ -166,6 +167,7 @@
 /obj/item/mod/control/pre_equipped/elite
 	theme = /datum/mod_theme/elite
 	applied_cell = /obj/item/stock_parts/cell/bluespace
+	req_access = list(ACCESS_SYNDICATE)
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
 		/obj/item/mod/module/emp_shield,
@@ -196,6 +198,7 @@
 
 /obj/item/mod/control/pre_equipped/prototype
 	theme = /datum/mod_theme/prototype
+	req_access = list(ACCESS_AWAY_GENERAL)
 	initial_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/welding,
@@ -207,6 +210,7 @@
 /obj/item/mod/control/pre_equipped/responsory
 	theme = /datum/mod_theme/responsory
 	applied_cell = /obj/item/stock_parts/cell/hyper
+	req_access = list(ACCESS_CENT_GENERAL)
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/welding,
@@ -282,6 +286,7 @@
 /obj/item/mod/control/pre_equipped/apocryphal
 	theme = /datum/mod_theme/apocryphal
 	applied_cell = /obj/item/stock_parts/cell/bluespace
+	req_access = list(ACCESS_CENT_SPECOPS)
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/welding,
@@ -293,6 +298,7 @@
 /obj/item/mod/control/pre_equipped/corporate
 	theme = /datum/mod_theme/corporate
 	applied_core = /obj/item/mod/core/infinite
+	req_access = list(ACCESS_CENT_SPECOPS)
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/hat_stabilizer,
@@ -340,10 +346,10 @@
 /obj/item/mod/control/pre_equipped/syndicate_empty
 	theme = /datum/mod_theme/syndicate
 
+/obj/item/mod/control/pre_equipped/syndicate_empty/honkerative
+	applied_skin = "honkerative"
+
 /obj/item/mod/control/pre_equipped/syndicate_empty/elite
 	theme = /datum/mod_theme/elite
 
 INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/syndicate_empty)
-
-/obj/item/mod/control/pre_equipped/syndicate_empty/honkerative
-	applied_skin = "honkerative"

@@ -5,7 +5,7 @@
 	icon_state = "reaction_chamber"
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
-
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	/**
 	* list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
@@ -72,6 +72,8 @@
 	if(!emptying || reagents.is_reacting) //suspend heating/cooling during emptying phase
 		reagents.adjust_thermal_energy((target_temperature - reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume) //keep constant with chem heater
 		reagents.handle_reactions()
+
+	use_power(active_power_usage * delta_time)
 
 /obj/machinery/plumbing/reaction_chamber/power_change()
 	. = ..()
