@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - balance: "Replaced leftover xray injectors that weren't removed from research station with thermal vision."
