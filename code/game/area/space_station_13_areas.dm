@@ -1451,103 +1451,103 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Science
 
-/area/science
+/area/station/science
 	name = "\improper Science Division"
 	icon_state = "science"
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/science/lobby
+/area/station/science/lobby
 	name = "\improper Science Lobby"
 	icon_state = "science_lobby"
 
-/area/science/lower
+/area/station/science/lower
 	name = "\improper Lower Science Division"
 	icon_state = "lower_science"
 
-/area/science/breakroom
+/area/station/science/breakroom
 	name = "\improper Science Break Room"
 	icon_state = "science_breakroom"
 
-/area/science/lab
+/area/station/science/lab
 	name = "Research and Development"
 	icon_state = "research"
 
-/area/science/xenobiology
+/area/station/science/xenobiology
 	name = "\improper Xenobiology Lab"
 	icon_state = "xenobio"
 
-/area/science/xenobiology/hallway
+/area/station/science/xenobiology/hallway
 	name = "\improper Xenobiology Hallway"
 	icon_state = "xenobio_hall"
 
-/area/science/cytology
+/area/station/science/cytology
 	name = "\improper Cytology Lab"
 	icon_state = "cytology"
 
-/area/science/storage
+/area/station/science/storage
 	name = "Ordnance Storage"
 	icon_state = "ord_storage"
 
-/area/science/test_area
+/area/station/science/test_area
 	name = "\improper Ordnance Test Area"
 	icon_state = "ord_test"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
-/area/science/mixing
+/area/station/science/mixing
 	name = "\improper Ordnance Mixing Lab"
 	icon_state = "ord_mix"
 
-/area/science/mixing/chamber
+/area/station/science/mixing/chamber
 	name = "\improper Ordnance Mixing Chamber"
 	icon_state = "ord_mix_chamber"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
-/area/science/mixing/hallway
+/area/station/science/mixing/hallway
 	name = "\improper Ordnance Mixing Hallway"
 	icon_state = "ord_mix_hallway"
 
-/area/science/mixing/launch
+/area/station/science/mixing/launch
 	name = "\improper Ordnance Mixing Launch Site"
 	icon_state = "ord_mix_launch"
 
-/area/science/genetics
+/area/station/science/genetics
 	name = "\improper Genetics Lab"
 	icon_state = "geneticssci"
 
-/area/science/misc_lab
+/area/station/science/misc_lab
 	name = "\improper Testing Lab"
 	icon_state = "ord_misc"
 
-/area/science/misc_lab/range
+/area/station/science/misc_lab/range
 	name = "\improper Research Testing Range"
 	icon_state = "ord_range"
 
-/area/science/server
+/area/station/science/server
 	name = "\improper Research Division Server Room"
 	icon_state = "server"
 
-/area/science/explab
+/area/station/science/explab
 	name = "\improper Experimentation Lab"
 	icon_state = "exp_lab"
 
-/area/science/robotics
+/area/station/science/robotics
 	name = "Robotics"
 	icon_state = "robotics"
 
-/area/science/robotics/mechbay
+/area/station/science/robotics/mechbay
 	name = "\improper Mech Bay"
 	icon_state = "mechbay"
 
-/area/science/robotics/lab
+/area/station/science/robotics/lab
 	name = "\improper Robotics Lab"
 	icon_state = "ass_line"
 
-/area/science/research
+/area/station/science/research
 	name = "\improper Research Division"
 	icon_state = "science"
 
-/area/science/research/abandoned
+/area/station/science/research/abandoned
 	name = "\improper Abandoned Research Lab"
 	icon_state = "abandoned_sci"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
