@@ -456,7 +456,7 @@
 				\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 				<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
 		for (var/obj/machinery/taxed_machine as anything in GLOB.production_machines)
-			qdel(taxed_machine.GetComponent(/datum/component/boomerang))
+			qdel(taxed_machine.GetComponent(/datum/component/payment))
 
 		for (var/mob/living/player as anything in GLOB.player_list)
 			var/datum/mind/player_mind = player.mind
