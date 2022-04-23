@@ -22,6 +22,8 @@
 
 	/// Do we drop a core when we're neutralized?
 	var/drops_core = TRUE
+	///Do we keep on living forever?
+	var/immortal = FALSE
 
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
@@ -55,7 +57,7 @@
 
 /obj/effect/anomaly/process(delta_time)
 	anomalyEffect(delta_time)
-	if(death_time < world.time)
+	if(death_time < world.time && !immortal)
 		if(loc)
 			detonate()
 		qdel(src)
@@ -422,9 +424,10 @@
 /obj/effect/anomaly/delimber
 	name = "delimber anomaly"
 	icon_state = "delimber_anomaly"
-	drops_core = FALSE
+	aSignal = /obj/item/assembly/signaler/anomaly/delimber
+	immortal = TRUE
 	var/ticks = 0
-	var/releasedelay = 8
+	var/releasedelay = 15
 	var/range = 5
 	///Lists for zones and bodyparts to swap and randomize
 	var/static/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -450,6 +453,8 @@
 		l_legs = subtypesof(/obj/item/bodypart/l_leg)
 	if(!r_legs)
 		r_legs = subtypesof(/obj/item/bodypart/r_leg)
+	if(!organs)
+		organs = subtypesof(/obj/item/organ)
 
 /obj/effect/anomaly/delimber/anomalyEffect(delta_time)
 	. = ..()
@@ -460,14 +465,11 @@
 
 	swap_parts(range)
 
-/obj/effect/anomaly/delimber/detonate()
-	swap_parts(range * 3)
-	swap_parts(range * 2)
-	swap_parts(range)
-
 /obj/effect/anomaly/delimber/proc/swap_parts(swap_range)
 	for(var/mob/living/carbon/nearby in range(swap_range, src))
-		if(nearby.wear_suit?.clothing_flags & BIOHAZARDS_SAFE && nearby.head?.clothing_flags & BIOHAZARDS_SAFE)
+		var/obj/item/clothing/suit/wear_suit = nearby.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		var/obj/item/clothing/head/wear_helmet = nearby.get_item_by_slot(ITEM_SLOT_HEAD)
+		if(wear_suit?.armor[BIO] == 100 && wear_helmet?.armor[BIO] == 100)
 			continue //We are protected
 		var/picked_zone = pick(zones)
 		var/obj/item/bodypart/picked_user_part = nearby.get_bodypart(picked_zone)
@@ -488,6 +490,9 @@
 		var/obj/item/bodypart/new_part = new picked_part()
 		new_part.replace_limb(nearby, TRUE)
 		qdel(picked_user_part)
+		var/obj/item/organ/picked_organ = pick(organs)
+		var/obj/item/organ/new_organ = new picked_organ
+		new_organ.Insert(nearby, TRUE, FALSE)
 		nearby.update_body(TRUE)
 		to_chat(nearby, span_notice("Something has changed about you!"))
 

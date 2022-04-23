@@ -11,6 +11,7 @@
 		/obj/effect/anomaly/grav = /obj/item/clothing/suit/armor/reactive/repulse,
 		/obj/effect/anomaly/flux = /obj/item/clothing/suit/armor/reactive/tesla,
 		/obj/effect/anomaly/bluespace = /obj/item/clothing/suit/armor/reactive/teleport,
+		/obj/effect/anomaly/delimber = /obj/item/clothing/suit/armor/reactive/delimbering
 		)
 
 	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
@@ -323,3 +324,87 @@
 
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
+
+//Delimbering
+
+/obj/item/clothing/suit/armor/reactive/delimbering
+	name = "reactive delimbering armor"
+	desc = "An experimental suit of armor with sensitive detectors hooked up to a biohazard release valve. It scrambles the bodies of those around."
+	cooldown_message = span_danger("The connection is currently out of sync... Recalibrating.")
+	emp_message = span_warning("You feel the armor squirm.")
+	var/range = 5
+	///Lists for zones and bodyparts to swap and randomize
+	var/static/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/static/list/chests
+	var/static/list/heads
+	var/static/list/l_arms
+	var/static/list/r_arms
+	var/static/list/l_legs
+	var/static/list/r_legs
+	var/static/list/organs
+
+/obj/item/clothing/suit/armor/reactive/delimbering/Initialize(mapload)
+	. = ..()
+	if(!chests)
+		chests = subtypesof(/obj/item/bodypart/chest)
+	if(!heads)
+		heads = subtypesof(/obj/item/bodypart/head)
+	if(!l_arms)
+		l_arms = subtypesof(/obj/item/bodypart/l_arm)
+	if(!r_arms)
+		r_arms = subtypesof(/obj/item/bodypart/r_arm)
+	if(!l_legs)
+		l_legs = subtypesof(/obj/item/bodypart/l_leg)
+	if(!r_legs)
+		r_legs = subtypesof(/obj/item/bodypart/r_leg)
+	if(!organs)
+		organs = subtypesof(/obj/item/organ)
+
+/obj/item/clothing/suit/armor/reactive/delimbering/cooldown_activation(mob/living/carbon/human/owner)
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(1, 1, src)
+	sparks.start()
+	..()
+
+/obj/item/clothing/suit/armor/reactive/delimbering/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message(span_danger("[src] blocks [attack_text], biohazard body scramble released!"))
+	delimber_pulse(owner, FALSE)
+	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/delimbering/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of biohazard material into [owner] from the surrounding environment!"))
+	delimber_pulse(owner, TRUE)
+	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/delimbering/proc/delimber_pulse(mob/living/carbon/human/owner, can_hit_owner = FALSE)
+	for(var/mob/living/carbon/nearby in range(range, src))
+		if(!can_hit_owner && nearby == owner)
+			continue
+		var/obj/item/clothing/suit/wear_suit = nearby.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		var/obj/item/clothing/head/wear_helmet = nearby.get_item_by_slot(ITEM_SLOT_HEAD)
+		if(wear_suit?.armor[BIO] == 100 && wear_helmet?.armor[BIO] == 100)
+			continue //We are protected
+		var/picked_zone = pick(zones)
+		var/obj/item/bodypart/picked_user_part = nearby.get_bodypart(picked_zone)
+		var/obj/item/bodypart/picked_part
+		switch(picked_zone)
+			if(BODY_ZONE_HEAD)
+				picked_part = pick(heads)
+			if(BODY_ZONE_CHEST)
+				picked_part = pick(chests)
+			if(BODY_ZONE_L_ARM)
+				picked_part = pick(l_arms)
+			if(BODY_ZONE_R_ARM)
+				picked_part = pick(r_arms)
+			if(BODY_ZONE_L_LEG)
+				picked_part = pick(l_legs)
+			if(BODY_ZONE_R_LEG)
+				picked_part = pick(r_legs)
+		var/obj/item/bodypart/new_part = new picked_part()
+		new_part.replace_limb(nearby, TRUE)
+		qdel(picked_user_part)
+		var/obj/item/organ/picked_organ = pick(organs)
+		var/obj/item/organ/new_organ = new picked_organ
+		new_organ.Insert(nearby, TRUE, FALSE)
+		nearby.update_body(TRUE)
+		to_chat(nearby, span_notice("Something has changed about you!"))
