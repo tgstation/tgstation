@@ -139,7 +139,7 @@ const CrewTableEntry = (props, context) => {
         {name}{assignment !== undefined ? ` (${assignment})` : ""}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
-      {oxydam !== undefined ? (
+        {oxydam !== undefined ? (
           <Icon
             name={healthToAttribute(
               oxydam,
