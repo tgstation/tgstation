@@ -882,106 +882,106 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Engineering
 
-/area/engineering
+/area/station/engineering
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/engineering/engine_smes
+/area/station/engineering/engine_smes
 	name = "\improper Engineering SMES"
 	icon_state = "engine_smes"
 
-/area/engineering/main
+/area/station/engineering/main
 	name = "Engineering"
 	icon_state = "engine"
 
-/area/engineering/hallway
+/area/station/engineering/hallway
 	name = "Engineering Hallway"
 	icon_state = "engine_hallway"
 
-/area/engineering/atmos
+/area/station/engineering/atmos
 	name = "Atmospherics"
 	icon_state = "atmos"
 
-/area/engineering/atmos/upper
+/area/station/engineering/atmos/upper
 	name = "Upper Atmospherics"
 
-/area/engineering/atmos/project
+/area/station/engineering/atmos/project
 	name = "\improper Atmospherics Project Room"
 	icon_state = "atmos_projectroom"
 
-/area/engineering/atmos/pumproom
+/area/station/engineering/atmos/pumproom
 	name = "\improper Atmospherics Pumping Room"
 	icon_state = "atmos_pump_room"
 
-/area/engineering/atmos/mix
+/area/station/engineering/atmos/mix
 	name = "\improper Atmospherics Mixing Room"
 	icon_state = "atmos_mix"
 
-/area/engineering/atmos/storage
+/area/station/engineering/atmos/storage
 	name = "\improper Atmospherics Storage Room"
 	icon_state = "atmos_storage"
 
-/area/engineering/atmos/storage/gas
+/area/station/engineering/atmos/storage/gas
 	name = "\improper Atmospherics Gas Storage"
 	icon_state = "atmos_storage_gas"
 
-/area/engineering/atmos/office
+/area/station/engineering/atmos/office
 	name = "\improper Atmospherics Office"
 	icon_state = "atmos_office"
 
-/area/engineering/atmos/hfr_room
+/area/station/engineering/atmos/hfr_room
 	name = "\improper Atmospherics HFR Room"
 	icon_state = "atmos_HFR"
 
-/area/engineering/atmospherics_engine
+/area/station/engineering/atmospherics_engine
 	name = "\improper Atmospherics Engine"
 	icon_state = "atmos_engine"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
-/area/engineering/lobby
+/area/station/engineering/lobby
 	name = "\improper Engineering Lobby"
 	icon_state = "engi_lobby"
 
-/area/engineering/supermatter
+/area/station/engineering/supermatter
 	name = "\improper Supermatter Engine"
 	icon_state = "engine_sm"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/engineering/supermatter/room
+/area/station/engineering/supermatter/room
 	name = "\improper Supermatter Engine Room"
 	icon_state = "engine_sm_room"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
-/area/engineering/break_room
+/area/station/engineering/break_room
 	name = "\improper Engineering Foyer"
 	icon_state = "engine_break"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/engineering/gravity_generator
+/area/station/engineering/gravity_generator
 	name = "\improper Gravity Generator Room"
 	icon_state = "grav_gen"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/engineering/storage
+/area/station/engineering/storage
 	name = "Engineering Storage"
 	icon_state = "engine_storage"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/engineering/storage_shared
+/area/station/engineering/storage_shared
 	name = "Shared Engineering Storage"
 	icon_state = "engine_storage_shared"
 
-/area/engineering/transit_tube
+/area/station/engineering/transit_tube
 	name = "\improper Transit Tube"
 	icon_state = "transit_tube"
 
-/area/engineering/storage/tech
+/area/station/engineering/storage/tech
 	name = "Technical Storage"
 	icon_state = "tech_storage"
 
-/area/engineering/storage/tcomms
+/area/station/engineering/storage/tcomms
 	name = "Telecomms Storage"
 	icon_state = "tcom_storage"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED

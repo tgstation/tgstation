@@ -171,3 +171,32 @@
 /area/service/hydroponics/garden : /area/station/service/hydroponics/garden
 /area/service/hydroponics/garden/abandoned : /area/station/service/hydroponics/garden/abandoned
 /area/service/hydroponics/garden/monastery : /area/station/service/hydroponics/garden/monastery
+
+/area/engineering : /area/station/engineering
+/area/engineering/engine_smes : /area/station/engineering/engine_smes
+/area/engineering/main : /area/station/engineering/main
+/area/engineering/hallway : /area/station/engineering/hallway
+/area/engineering/atmos : /area/station/engineering/atmos
+/area/engineering/atmos/upper : /area/station/engineering/atmos/upper
+/area/engineering/atmos/project : /area/station/engineering/atmos/project
+/area/engineering/atmos/pumproom : /area/station/engineering/atmos/pumproom
+/area/engineering/atmos/mix : /area/station/engineering/atmos/mix
+/area/engineering/atmos/storage : /area/station/engineering/atmos/storage
+/area/engineering/atmos/storage/gas : /area/station/engineering/atmos/storage/gas
+/area/engineering/atmos/office : /area/station/engineering/atmos/office
+/area/engineering/atmos/hfr_room : /area/station/engineering/atmos/hfr_room
+/area/engineering/atmospherics_engine : /area/station/engineering/atmospherics_engine
+/area/engineering/lobby : /area/station/engineering/lobby
+/area/engineering/supermatter : /area/station/engineering/supermatter
+/area/engineering/supermatter/room : /area/station/engineering/supermatter/room
+/area/engineering/break_room : /area/station/engineering/break_room
+/area/engineering/gravity_generator : /area/station/engineering/gravity_generator
+/area/engineering/storage : /area/station/engineering/storage
+/area/engineering/storage_shared : /area/station/engineering/storage_shared
+/area/engineering/transit_tube : /area/station/engineering/transit_tube
+/area/engineering/storage/tech : /area/station/engineering/storage/tech
+/area/engineering/storage/tcomms : /area/station/engineering/storage/tcomms
+
+/area/construction : /area/construction
+/area/construction/mining/aux_base : /area/construction/mining/aux_base
+/area/construction/storage_wing : /area/construction/storage_wing
