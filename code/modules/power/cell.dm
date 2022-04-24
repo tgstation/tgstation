@@ -91,7 +91,7 @@
 	update_appearance()
 
 	// Guns need to process their chamber when we've been charged
-	if(istype(loc, /obj/item/gun))
+	if(isgun(loc))
 		var/obj/item/gun/gun_loc = loc
 		gun_loc.process_chamber()
 
