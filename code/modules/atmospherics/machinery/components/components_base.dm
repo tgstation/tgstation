@@ -9,12 +9,8 @@
 	var/showpipe = TRUE
 	///When the component is on a non default layer should we shift everything? Or just the underlay pipe
 	var/shift_underlay_only = TRUE
-	///Stores the component pipeline
-	var/list/datum/pipeline/parents
 	///If this is queued for a rebuild this var signifies whether parents should be updated after it's done
 	var/update_parents_after_rebuild = FALSE
-	///Stores the component gas mixture
-	var/list/datum/gas_mixture/airs
 	///Handles whether the custom reconcilation handling should be used
 	var/custom_reconcilation = FALSE
 
@@ -113,35 +109,6 @@
 		parents[i] = new /datum/pipeline()
 		to_return += parents[i]
 	return to_return
-
-/**
- * Called by nullify_node(), used to remove the pipeline the component is attached to
- * Arguments:
- * * -reference: the pipeline the component is attached to
- */
-/obj/machinery/atmospherics/components/proc/nullify_pipenet(datum/pipeline/reference)
-	if(!reference)
-		CRASH("nullify_pipenet(null) called by [type] on [COORD(src)]")
-
-	for (var/i in 1 to parents.len)
-		if (parents[i] == reference)
-			reference.other_airs -= airs[i] // Disconnects from the pipeline side
-			parents[i] = null // Disconnects from the machinery side.
-
-	reference.other_atmos_machines -= src
-
-	/**
-	 *  We explicitly qdel pipeline when this particular pipeline
-	 *  is projected to have no member and cause GC problems.
-	 *  We have to do this because components don't qdel pipelines
-	 *  while pipes must and will happily wreck and rebuild everything
-	 * again every time they are qdeleted.
-	 */
-
-	if(!length(reference.other_atmos_machines) && !length(reference.members))
-		if(QDESTROYING(reference))
-			CRASH("nullify_pipenet() called on qdeleting [reference]")
-		qdel(reference)
 
 /obj/machinery/atmospherics/components/return_pipenet_airs(datum/pipeline/reference)
 	var/list/returned_air = list()
