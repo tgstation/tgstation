@@ -24,8 +24,18 @@
 		if(power_changes) //This needs to be here I swear
 			power += projectile.damage * bullet_energy + kiss_power
 			if(!has_been_powered)
-				investigate_log("has been powered for the first time.", INVESTIGATE_ENGINE)
-				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
+				var/fired_from_str = projectile.fired_from ? " with [projectile.fired_from]" : ""
+				investigate_log(
+					projectile.firer \
+						? "has been powered for the first time by [key_name(projectile.firer)][fired_from_str]." \
+						: "has been powered for the first time.",
+					INVESTIGATE_ENGINE
+				)
+				message_admins(
+					projectile.firer \
+						? "[src] [ADMIN_JMP(src)] has been powered for the first time by [ADMIN_FULLMONTY(projectile.firer)][fired_from_str]." \
+						: "[src] [ADMIN_JMP(src)] has been powered for the first time."
+				)
 				has_been_powered = TRUE
 	else if(takes_damage)
 		damage += (projectile.damage * bullet_energy) * clamp((emergency_point - damage) / emergency_point, 0, 1)
