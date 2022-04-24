@@ -935,3 +935,64 @@
   Zytolg:
   - bugfix: Atmos Technicians have finally gotten off their bums and done their jobs-
       installing vents and scrubbers into atmos.
+2022-04-24:
+  Bumtickley00:
+  - qol: The medical techfab can now print pill bottles
+  ErdinyoBarboza:
+  - bugfix: The construction firm has realized they were installing the urinals wrongly
+      and have now fixed them.
+  FernandoJ8:
+  - bugfix: fixes the exploit allowing for hundreds of iterations of the convermol
+      failed reaction to occur rapidly with a single beaker
+  Fikou:
+  - bugfix: fixes the traitor elite nukie suit being id locked
+  Ghilker:
+  - bugfix: increase roundstart power available to SM rooms
+  GoblinBackwards:
+  - rscadd: Added a whitelist to blood filters, unless the list is empty they will
+      only remove chems in this whitelist. You can edit the list by using the filter
+      in your hand
+  - qol: Blood filter surgery now automatically does a chem scan after each step if
+      you're holding a health analyzer.
+  - qol: Blood filter surgery now automatically loops if the patient has any filterable
+      chems in them
+  IndieanaJones:
+  - balance: Regal rats can now pry open airlocks.
+  - balance: Regal rats can see further in the dark now.
+  Mothblocks:
+  - balance: Replaced leftover xray injectors that weren't removed from research station
+      with thermal vision.
+  Rhials:
+  - bugfix: Moves the medical laptop crammed into the Kilostation psych locker to
+      a proper desk. Also expands the Kilostation office area by a single tile, giving
+      a much needed buff to a previously weak role.
+  SmArtKar:
+  - bugfix: Saline solution bottle no longer has a weird sprite that doesnt match
+      up with the reagent overlay
+  TheBoondock:
+  - bugfix: Fixes ghetto tools playing improper sounds when used during surgery step
+      that requires saw
+  - code_imp: add framework for future preop_sound conversion to list()
+  Vladoricious:
+  - qol: The research scanner in science goggles and similar eyewear no longer requires
+      you to press a button to turn it on! Instead, simply closely examine your target.
+  - bugfix: The MOD advanced reagent scanner module no longer detects explosions despite
+      being disabled.
+  - code_imp: Research scanner code cleanup.
+  Y0SH1M4S73R:
+  - bugfix: A couple of ugly-looking diagonal walls in the Hilbert Research Facility
+      have been straightened out.
+  YakumoChen:
+  - bugfix: Fixes a sprite not appearing when you use up canned tomatoes
+  - bugfix: Donkfillet has a sprite for real this time
+  Zytolg:
+  - bugfix: Adds more tape to Deltastation
+  - bugfix: Hijacked Shuttles will now show up at Firebase Balthazord
+  capsaicinz:
+  - bugfix: some stacks that need a singular name now have said singular name
+  - bugfix: stops sausage processing from runtiming, possibly other radials as well(?)
+  kawoppi:
+  - expansion: Blushing now makes your face go a little bit red
+  - expansion: Being drunk flushes your cheeks
+  vincentiusvin:
+  - expansion: remapped kilo's ordnance.

@@ -1,4 +1,0 @@
-author: "Zytolg"
-delete-after: True
-changes: 
-  - bugfix: "Hijacked Shuttles will now show up at Firebase Balthazord"

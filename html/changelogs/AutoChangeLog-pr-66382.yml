@@ -1,4 +1,0 @@
-author: "capsaicinz"
-delete-after: True
-changes: 
-  - bugfix: "stops sausage processing from runtiming, possibly other radials as well(?)"
