@@ -381,14 +381,6 @@
 			return TRUE
 	return FALSE
 
-/obj/machinery/atmospherics/components/binary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
-	if(!istype(multitool))
-		return
-	if(panel_open && !anchored)
-		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
-		to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
-		update_appearance()
-
 /obj/machinery/atmospherics/components/binary/thermomachine/emag_act(mob/user)
 	. = ..()
 	if(!(obj_flags & EMAGGED))
