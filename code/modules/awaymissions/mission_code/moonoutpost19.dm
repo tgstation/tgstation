@@ -34,6 +34,26 @@
 	power_light = FALSE
 	icon_state = "awaycontent6"
 
+//Fluff objects/structures.
+/obj/structure/fluff/meteor
+	name = "meteor"
+	desc = "Khonsu 19 is known for it's relatively high specific gravity, resulting in constant meteor showers and impacts."
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "small"
+	density = TRUE
+
+/obj/structure/fluff/meteor/large
+	name = "large meteor"
+	desc = "Something this large would probably rip a space station in half. It's a good thing it landed here instead!"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "large"
+
+/obj/structure/fluff/meteor/sharp
+	name = "rocky meteor"
+	desc = "A big, rocky ourcrop. More common in space than on a moon like this."
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "sharp"
+
 //Papers
 
 /obj/item/paper/crumpled/awaymissions/moonoutpost19/hastey_note

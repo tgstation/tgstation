@@ -446,7 +446,7 @@
 
 /obj/structure/flora/rock/Initialize(mapload)
 	. = ..()
-	icon_state = "[icon_state][rand(1,3)]"
+	icon_state = "[icon_state][rand(1,4)]"
 
 /obj/structure/flora/rock/attackby(obj/item/attacking_item, mob/user, params)
 	if(!mineResult || attacking_item.tool_behaviour != TOOL_MINING)
@@ -529,6 +529,19 @@
 	density = FALSE
 	pixel_x = -16
 	pixel_y = -16
+
+/obj/structure/flora/rock/pile/largejungle/Initialize(mapload)
+	. = ..()
+	icon_state = "[initial(icon_state)][rand(1,3)]"
+
+/obj/structure/flora/lunar_plant
+	name = "lunar plant"
+	desc= "This seemingly dead plant is actually quite alive, hibernating until sensing living things."
+	icon_state = "cave_plant"
+	icon = 'icons/obj/flora/xenoflora.dmi'
+	density = FALSE
+	light_color = COLOR_WHITE
+	light_range = 2
 
 /obj/structure/flora/rock/pile/largejungle/Initialize(mapload)
 	. = ..()
