@@ -22,6 +22,10 @@
 #define START_PROCESSING(Processor, Datum) if (!(Datum.datum_flags & DF_ISPROCESSING)) {Datum.datum_flags |= DF_ISPROCESSING;Processor.processing += Datum}
 #define STOP_PROCESSING(Processor, Datum) Datum.datum_flags &= ~DF_ISPROCESSING;Processor.processing -= Datum;Processor.currentrun -= Datum
 
+/// Returns true if the MC is initialized and running.
+/// Optional argument init_stage controls what stage the mc must have initializted to count as initialized. Defaults to INITSTAGE_MAX if not specified.
+#define MC_RUNNING(INIT_STAGE...) (Master && Master.processing > 0 && Master.current_runlevel && Master.init_stage_completed == (max(min(INITSTAGE_MAX, ##INIT_STAGE), 1)))
+
 #define MC_LOOP_RTN_NEWSTAGES 1
 #define MC_LOOP_RTN_GRACEFUL_EXIT 2
 

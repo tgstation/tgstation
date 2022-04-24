@@ -4,7 +4,6 @@ SUBSYSTEM_DEF(dbcore)
 	wait = 10 // Not seconds because we're running on SS_TICKER
 	runlevels = RUNLEVEL_INIT|RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	init_order = INIT_ORDER_DBCORE
-	init_stage = INITSTAGE_EARLY
 	priority = FIRE_PRIORITY_DATABASE
 
 	var/failed_connection_timeout = 0
@@ -483,7 +482,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	Close()
 	status = DB_QUERY_STARTED
 	if(async)
-		if(!Master.current_runlevel || Master.processing == 0)
+		if(!MC_RUNNING(SSdbcore.init_stage))
 			SSdbcore.run_query_sync(src)
 		else
 			SSdbcore.queue_query(src)
