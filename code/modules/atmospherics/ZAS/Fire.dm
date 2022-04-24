@@ -41,7 +41,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	return igniting
 
 /zone/proc/process_fire()
-	var/datum/gas_mixture/burn_gas = air.remove_ratio(SSzas.settings.fire_consuption_rate, fire_tiles.len)
+	var/datum/gas_mixture/burn_gas = air.remove_ratio(SSzas.settings.fire_consumption_rate, fire_tiles.len)
 
 	var/firelevel = burn_gas.react(src, fire_tiles, force_burn = 1, no_check = 1)
 
@@ -356,7 +356,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 /datum/gas_mixture/proc/check_combustability(obj/effect/decal/cleanable/oil/liquid)
 	. = 0
 	for(var/g in gas)
-		if(xgm_gas_data.flags[g] & XGM_GAS_OXIDIZER && QUANTIZE(gas[g] * SSzas.settings.fire_consuption_rate) >= 0.1)
+		if(xgm_gas_data.flags[g] & XGM_GAS_OXIDIZER && QUANTIZE(gas[g] * SSzas.settings.fire_consumption_rate) >= 0.1)
 			. = 1
 			break
 
@@ -368,7 +368,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	. = 0
 	for(var/g in gas)
-		if(xgm_gas_data.flags[g] & XGM_GAS_FUEL && QUANTIZE(gas[g] * SSzas.settings.fire_consuption_rate) >= 0.1)
+		if(xgm_gas_data.flags[g] & XGM_GAS_FUEL && QUANTIZE(gas[g] * SSzas.settings.fire_consumption_rate) >= 0.1)
 			. = 1
 			break
 

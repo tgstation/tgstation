@@ -1,9 +1,9 @@
 /datum/zas_controller
 	var/datum/pl_control/plc = new
 
-	var/fire_consuption_rate = 0.25
-	var/fire_consuption_rate_NAME = "Fire - Air Consumption Ratio"
-	var/fire_consuption_rate_DESC = "Ratio of air removed and combusted per tick."
+	var/fire_consumption_rate = 0.25
+	var/fire_consumption_rate_NAME = "Fire - Air Consumption Ratio"
+	var/fire_consumption_rate_DESC = "Ratio of air removed and combusted per tick."
 
 	var/fire_firelevel_multiplier = 25
 	var/fire_firelevel_multiplier_NAME = "Fire - Firelevel Constant"

@@ -177,7 +177,9 @@
 		if(!unsim) //edge of map
 			continue
 
-		var/block = unsim.c_airblock(src)
+		//var/block = unsim.c_airblock(src)
+		var/block
+		ATMOS_CANPASS_TURF(block, src, unsim)
 		if(block & AIR_BLOCKED)
 
 			#ifdef ZASDBG
@@ -187,7 +189,9 @@
 
 			continue
 
-		var/r_block = c_airblock(unsim)
+		//var/r_block = c_airblock(unsim)
+		var/r_block
+		ATMOS_CANPASS_TURF(r_block, unsim, src)
 		if(r_block & AIR_BLOCKED)
 
 			#ifdef ZASDBG
@@ -226,7 +230,7 @@
 						#ifdef ZASDBG
 						if(verbose) log_admin("[d] is zone blocked.")
 
-						//dbg(zone_blocked, d)
+						dbg(zone_blocked, d)
 						#endif
 
 						//Postpone this tile rather than exit, since a connection can still be made.
