@@ -218,7 +218,7 @@ SUBSYSTEM_DEF(fluids)
  * - [node][/obj/effect/particle_effect/fluid]: The node to start processing.
  */
 /datum/controller/subsystem/fluids/proc/start_processing(obj/effect/particle_effect/fluid/node)
-	if (node.datum_flags & DF_ISPROCESSING)
+	if (node.datum_flags & DF_ISPROCESSING || node.effect_bucket)
 		return
 
 	var/bucket_index = rand(1, num_effect_buckets) // Edit this value to make all fluids process effects (at the same time|offset by when they started processing| -> offset by a random amount <- )
@@ -237,12 +237,15 @@ SUBSYSTEM_DEF(fluids)
 		return
 
 	var/bucket_index = node.effect_bucket
+	if(!bucket_index)
+		return
+
 	effect_carousel[bucket_index] -= node
 	if (bucket_index == effect_bucket_index)
 		currently_processing -= node
 
 	node.effect_bucket = null
-	node.datum_flags &= DF_ISPROCESSING
+	node.datum_flags &= ~DF_ISPROCESSING
 
 #undef SS_PROCESSES_SPREADING
 #undef SS_PROCESSES_EFFECTS
