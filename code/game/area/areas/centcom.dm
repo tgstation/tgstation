@@ -7,7 +7,7 @@
 
 /area/centcom
 	name = "CentCom"
-	icon = 'icons/turf/areas_centcomm.dmi'
+	icon = 'icons/turf/areas/areas_centcomm.dmi'
 	icon_state = "centcom"
 	static_lighting = TRUE
 	requires_power = FALSE
