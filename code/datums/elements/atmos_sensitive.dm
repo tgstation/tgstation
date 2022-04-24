@@ -2,7 +2,7 @@
 //It adds the object to a list on SSair to be processed for so long as the object wants to be processed
 //And removes it as soon as the object is no longer interested
 //Don't put it on things that tend to clump into one spot, you will cause lag spikes.
-/datum/element/atmos_sensitive
+/*/datum/element/atmos_sensitive
 	element_flags = ELEMENT_DETACH
 	var/static/list/pass_on = list(COMSIG_TURF_EXPOSE = /atom/proc/check_atmos_process)
 
@@ -81,3 +81,4 @@
 ///What to do when our requirements are no longer met
 /atom/proc/atmos_end()
 	return
+*/

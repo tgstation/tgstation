@@ -84,7 +84,6 @@
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
-	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()
@@ -557,11 +556,6 @@
 	SHOULD_CALL_PARENT(FALSE)
 	var/area/local_area = get_area(src)
 	set_on(local_area.lightswitch && local_area.power_light)
-
-// called when heated
-
-/obj/machinery/light/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 673
 
 /obj/machinery/light/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(prob(max(0, exposed_temperature - 673)))   //0% at <400C, 100% at >500C

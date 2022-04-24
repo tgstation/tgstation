@@ -166,8 +166,6 @@
 
 	set_base_icon()
 
-	AddElement(/datum/element/atmos_sensitive, mapload)
-
 /obj/structure/alien/weeds/Destroy()
 	if(parent_node)
 		UnregisterSignal(parent_node, COMSIG_PARENT_QDELETING)
@@ -244,13 +242,11 @@
  * Called to delete the weed
  */
 /obj/structure/alien/weeds/proc/do_qdel()
-	qdel(src)
-
-/obj/structure/alien/weeds/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 300
+	qdel(src) //WHY THE FUCK DOES THIS EXIST? WHAT THE FUCK?
 
 /obj/structure/alien/weeds/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	take_damage(5, BURN, 0, 0)
+	if(exposed_temperature > T0C + 100)
+		take_damage(5, BURN, 0, 0)
 
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
@@ -353,8 +349,6 @@
 	if(status == BURST)
 		atom_integrity = integrity_failure * max_integrity
 
-	AddElement(/datum/element/atmos_sensitive, mapload)
-
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)
 		if(GROWING)
@@ -426,10 +420,11 @@
 						break
 
 /obj/structure/alien/egg/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 500
+	return exposed_temperature > 500 ? KEEP_ME_GOING : 0
 
 /obj/structure/alien/egg/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	take_damage(5, BURN, 0, 0)
+	if(exposed_temperature > 500)
+		take_damage(5, BURN, 0, 0)
 
 /obj/structure/alien/egg/atom_break(damage_flag)
 	. = ..()

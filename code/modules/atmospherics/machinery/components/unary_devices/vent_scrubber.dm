@@ -194,23 +194,6 @@
 	check_turfs()
 	. = ..()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	if(welded || !is_operational)
-		return FALSE
-	if(!nodes[1] || !on || (!filter_types && scrubbing != SIPHONING))
-		on = FALSE
-		return FALSE
-
-	var/list/changed_gas = air.gas
-
-	if(!changed_gas)
-		return FALSE
-
-	if(scrubbing == SIPHONING || length(filter_types & changed_gas))
-		return TRUE
-
-	return FALSE
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
 	if(welded || !is_operational)
 		return

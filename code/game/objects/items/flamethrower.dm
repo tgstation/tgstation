@@ -220,7 +220,8 @@
 	var/datum/gas_mixture/ptank_mix = ptank.return_air()
 	var/datum/gas_mixture/air_transfer = ptank_mix.remove_ratio(release_amount)
 	//air_transfer.toxins = air_transfer.toxins * 5 // This is me not comprehending the air system. I realize this is retarded and I could probably make it work without fucking it up like this, but there you have it. -- TLE
-	new/obj/effect/decal/cleanable/oil(target,air_transfer.get_by_flag(XGM_GAS_FUEL),get_dir(loc,target))
+	var/obj/effect/decal/cleanable/oil/l_fuel = new(target,air_transfer.get_by_flag(XGM_GAS_FUEL),get_dir(loc,target))
+	l_fuel.reagent_amount = release_amount
 	air_transfer.remove_by_flag(XGM_GAS_FUEL, 0)
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas

@@ -35,7 +35,6 @@
 
 /obj/effect/particle_effect/foam/firefighting/Initialize(mapload)
 	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive)
 
 /obj/effect/particle_effect/foam/firefighting/process()
 	..()
@@ -95,7 +94,6 @@
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
-	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/effect/particle_effect/foam/ComponentInitialize()
 	. = ..()
@@ -192,12 +190,10 @@
 		F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		F.metal = metal
 
-/obj/effect/particle_effect/foam/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 475
-
 /obj/effect/particle_effect/foam/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	if(prob(max(0, exposed_temperature - 475)))   //foam dissolves when heated
-		kill_foam()
+	if(exposed_temperature > 475)
+		if(prob(max(0, exposed_temperature - 475)))   //foam dissolves when heated
+			kill_foam()
 
 
 ///////////////////////////////////////////////

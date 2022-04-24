@@ -389,7 +389,6 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/spacevine/examine(mob/user)
 	. = ..()
@@ -659,16 +658,14 @@
 	if(!index && prob(34 * severity))
 		qdel(src)
 
-/obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)//if you're room temperature you're safe
-
 /obj/structure/spacevine/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (trait_flags & SPACEVINE_COLD_RESISTANT)))
-		can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
-	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(trait_flags & SPACEVINE_HEAT_RESISTANT))
-		qdel(src)
-	else if (exposed_temperature < VINE_FREEZING_POINT && !(trait_flags & SPACEVINE_COLD_RESISTANT))
-		can_spread = FALSE
+	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)
+		if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (trait_flags & SPACEVINE_COLD_RESISTANT)))
+			can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
+		if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(trait_flags & SPACEVINE_HEAT_RESISTANT))
+			qdel(src)
+		else if (exposed_temperature < VINE_FREEZING_POINT && !(trait_flags & SPACEVINE_COLD_RESISTANT))
+			can_spread = FALSE
 
 /obj/structure/spacevine/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

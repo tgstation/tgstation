@@ -60,7 +60,6 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddElement(/datum/element/atmos_sensitive, mapload)
 	update_nearby_tiles(TRUE)
 
 /obj/machinery/door/window/ComponentInitialize()
@@ -75,6 +74,7 @@
 	electronics = null
 	/*var/turf/floor = get_turf(src)
 	floor.air_update_turf(TRUE, FALSE)*/
+	update_nearby_tiles()
 	return ..()
 
 /obj/machinery/door/window/update_icon_state()
@@ -266,11 +266,30 @@
 	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/door/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > T0C + (reinf ? 1600 : 800))
+	return (exposed_temperature > T0C + (reinf ? 1600 : 800)) ? KEEP_ME_GOING : FALSE
 
 /obj/machinery/door/window/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(round(exposed_temperature / 200), BURN, 0, 0)
 
+/obj/machinery/door/window/fire_act(exposed_temperature, exposed_volume)
+	take_damage(round(exposed_temperature / 200), BURN, 0, 0)
+
+/obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	var/initial_damage_percentage = get_integrity_percentage()
+	. = ..()
+	if(.) //received damage
+		if(atom_integrity > 0)
+			playsound(src, get_sfx(SFX_GLASS_CRACK), 100, TRUE)
+			var/damage_percentage = get_integrity_percentage()
+			if (damage_percentage >= 75 && initial_damage_percentage < 75)
+				visible_message(span_warning("\The [src] looks like it's about to shatter!"))
+				playsound(loc, get_sfx(SFX_GLASS_CRACK), 100, 1)
+			else if (damage_percentage >= 50 && initial_damage_percentage < 50)
+				visible_message(span_warning("\The [src] looks seriously damaged!"))
+				playsound(loc, get_sfx(SFX_GLASS_CRACK), 100, 1)
+			else if (damage_percentage >= 25 && initial_damage_percentage < 25)
+				visible_message(span_warning("Cracks begin to appear in \the [src]!"))
+				playsound(loc, get_sfx(SFX_GLASS_CRACK), 100, 1)
 
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !(obj_flags & EMAGGED))

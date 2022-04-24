@@ -57,13 +57,20 @@
 		var/altered_temp = max(temperature + (ATOM_TEMPERATURE_EQUILIBRIUM_CONSTANT * temperature_coefficient * diff_temp), 0)
 		ADJUST_ATOM_TEMPERATURE(src, (diff_temp > 0) ? min(adjust_temp, altered_temp) : max(adjust_temp, altered_temp))
 
-	else if(local_air && should_atmos_process(local_air, local_air.temperature))
+	else if(local_air && (should_atmos_process(local_air, local_air.temperature)))
 		return
 
 	else
 		temperature = adjust_temp
-		flags_1 &= ~ATMOS_IS_PROCESSING_1
 		return PROCESS_KILL
 
 #undef MIN_TEMPERATURE_COEFFICIENT
 #undef MAX_TEMPERATURE_COEFFICIENT
+
+///This is your process() proc
+/atom/proc/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	return
+
+///Return KEEP_ME_GOING if the atom should keep processing regardless of normal conditions.
+/atom/proc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return
