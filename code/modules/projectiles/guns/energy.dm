@@ -3,6 +3,7 @@
 	name = "energy gun"
 	desc = "A basic energy-based gun."
 	icon = 'icons/obj/guns/energy.dmi'
+	blacklisted_wizard = TRUE
 
 	/// What type of power cell this uses
 	var/obj/item/stock_parts/cell/cell

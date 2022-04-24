@@ -22,6 +22,7 @@
 	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	light_on = FALSE
+	blacklisted_wizard = TRUE
 	/// Whether we currently have the flashing overlay.
 	var/flashing = FALSE
 	/// The overlay we use for flashing.

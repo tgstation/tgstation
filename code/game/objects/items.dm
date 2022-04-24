@@ -213,6 +213,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
 	var/override_notes = FALSE
 
+	var/blacklisted_wizard = FALSE
+
 /obj/item/Initialize(mapload)
 
 	if(attack_verb_continuous)
@@ -485,6 +487,16 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			return
 
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
+		return
+
+	if(blacklisted_wizard && IS_WIZARD(user))
+		var/list/disgust_message = list(
+			"You refuse to touch such revolting item!",
+			"The idea of touching electronic devices nauseate you!"
+			"[src] is too repugnant to touch!"
+			"You will never touch this loathsome item!"
+			)
+		to_chat(user, span_warning(pick(disgust_message)))
 		return
 
 	//Heavy gravity makes picking up things very slow.

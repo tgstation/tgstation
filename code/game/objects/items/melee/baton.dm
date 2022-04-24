@@ -399,6 +399,8 @@
 
 	context_living_rmb_active = "Harmful Stun"
 
+	blacklisted_wizard = TRUE
+
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell

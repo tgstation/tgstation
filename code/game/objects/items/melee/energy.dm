@@ -12,6 +12,7 @@
 	bare_wound_bonus = 20
 	stealthy_audio = TRUE
 	w_class = WEIGHT_CLASS_SMALL
+	blacklisted_wizard = TRUE
 
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
