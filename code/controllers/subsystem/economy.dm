@@ -151,7 +151,8 @@ SUBSYSTEM_DEF(economy)
  */
 /datum/controller/subsystem/economy/proc/track_purchase(datum/bank_account/account, price_to_use, vendor)
 	if(!account || !price_to_use || !vendor)
-		return FALSE
+		CRASH("Track purchases was missing an argument! (Account, Price, or Vendor.)")
+
 	audit_log += list(list(
 		"account" = account.account_holder,
 		"cost" = price_to_use,
