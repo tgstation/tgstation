@@ -12,7 +12,8 @@ Replacement syntax example:
     /turf/open/floor/iron/warningline : /obj/effect/turf_decal {dir = @OLD ;tag = @SKIP;icon_state = @SKIP}
     /turf/open/floor/iron/warningline : /obj/effect/turf_decal {@OLD} , /obj/thing {icon_state = @OLD:name; name = "meme"}
     /turf/open/floor/iron/warningline{dir=2} : /obj/thing
-    /turf/open/floor/@SUBTYPES : /turf/open/floor/iron/@SUBTYPES
+Syntax for subtypes also exist, to update a path's type but maintain subtypes:
+    /obj/structure/closet/crate/@SUBTYPES : /obj/structure/new_box/@SUBTYPES {@OLD}
 New paths properties:
     @OLD - if used as property name copies all modified properties from original path to this one
     property = @SKIP - will not copy this property through when global @OLD is used.
