@@ -1,0 +1,4 @@
+author: "carshalash"
+delete-after: True
+changes: 
+  - bugfix: "error in crab pathway. Crab can be grilled again."
