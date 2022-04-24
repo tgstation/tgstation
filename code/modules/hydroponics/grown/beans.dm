@@ -104,3 +104,4 @@
 	icon_state = "jumpingbean"
 	foodtypes = FRUIT
 	tastes = list("bugs" = 1)
+	
