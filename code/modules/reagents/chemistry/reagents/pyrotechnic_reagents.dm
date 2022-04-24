@@ -67,15 +67,18 @@
 		exposed_turf.burn_tile()
 	if(isfloorturf(exposed_turf))
 		for(var/turf/nearby_turf in RANGE_TURFS(1, exposed_turf))
-			if(!locate(/obj/effect/hotspot) in nearby_turf)
-				new /obj/effect/hotspot(nearby_turf)
+			/*if(!locate(/obj/effect/hotspot) in nearby_turf)
+				new /obj/effect/hotspot(nearby_turf)*/
+			nearby_turf.create_fire(1, 10)
 
 /datum/reagent/clf3/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	exposed_mob.adjust_fire_stacks(min(reac_volume/5, 10))
 	exposed_mob.IgniteMob()
-	if(!locate(/obj/effect/hotspot) in exposed_mob.loc)
-		new /obj/effect/hotspot(exposed_mob.loc)
+	//if(!locate(/obj/effect/hotspot) in exposed_mob.loc)
+		//new /obj/effect/hotspot(exposed_mob.loc)
+	var/turf/T = get_turf(exposed_mob)
+	T.create_fire(1, 10)
 
 /datum/reagent/sorium
 	name = "Sorium"

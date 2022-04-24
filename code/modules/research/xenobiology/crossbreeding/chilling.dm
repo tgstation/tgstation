@@ -45,7 +45,8 @@ Chilling extracts:
 	user.visible_message(span_danger("[src] shatters, and lets out a jet of heat!"))
 	for(var/turf/T in orange(get_turf(user),2))
 		if(get_dist(get_turf(user), T) > 1)
-			new /obj/effect/hotspot(T)
+			//new /obj/effect/hotspot(T)
+			T.create_fire(1, 10)
 	..()
 
 /obj/item/slimecross/chilling/purple

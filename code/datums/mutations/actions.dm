@@ -164,7 +164,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/do_turf_cone_effect(turf/target_turf, level)
 	// Further turfs experience less exposed_temperature and exposed_volume
-	new /obj/effect/hotspot(target_turf) // for style
+	target_turf.create_fire(1, 10) // for style
 	target_turf.hotspot_expose(max(500, 900 - (100 * level)), max(50, 200 - (50 * level)), 1)
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath/do_mob_cone_effect(mob/living/target_mob, level)

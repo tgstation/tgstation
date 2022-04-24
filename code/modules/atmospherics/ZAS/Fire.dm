@@ -93,7 +93,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	return 0
 
 //turf/simulated/create_fire(fl) ZASTURF
-/turf/create_fire(fl)
+/turf/open/create_fire(fl, create_own_fuel)
 	if(fire)
 		fire.firelevel = max(fl, fire.firelevel)
 		return 1
@@ -105,6 +105,13 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	SSzas.active_fire_zones |= zone
 
 	var/obj/effect/decal/cleanable/oil/fuel = locate() in src
+	if(create_own_fuel)
+		if(!fuel)
+			fuel = new /obj/effect/decal/cleanable/oil(src)
+			fuel.reagent_amount = create_own_fuel
+		else
+			fuel.reagent_amount += create_own_fuel
+
 	zone.fire_tiles |= src
 	if(fuel) zone.fuel_objs += fuel
 
@@ -145,13 +152,16 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	if(firelevel > 6)
 		icon_state = "3"
-		set_light(1, 2, 7)
+		set_light_power(2)
+		set_light_range(7)
 	else if(firelevel > 2.5)
 		icon_state = "2"
-		set_light(0.7, 2, 5)
+		set_light_power(1.5)
+		set_light_range(5)
 	else
 		icon_state = "1"
-		set_light(0.5, 1, 3)
+		set_light_power(1)
+		set_light_range(3)
 
 	for(var/mob/living/L in loc)
 		L.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure())  //Burn the mobs!
@@ -190,7 +200,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.volume)
 
 	animate(src, color = fire_color(air_contents.temperature), 5)
-	set_light(l_color = color)
+	set_light_color(color)
 
 /obj/effect/hotspot/New(newLoc,fl)
 	..()
@@ -203,8 +213,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	var/datum/gas_mixture/air_contents = loc.return_air()
 	color = fire_color(air_contents.temperature)
-	set_light(0.5, 1, 3, l_color = color)
-
+	set_light_range(3)
+	set_light_power(1)
+	set_light_color(color)
 	firelevel = fl
 	SSzas.active_hotspots.Add(src)
 

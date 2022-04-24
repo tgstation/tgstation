@@ -30,7 +30,9 @@
 		return
 	if(helbital.purity <= 0.25)
 		if(prob(25))
-			new /obj/effect/hotspot(holder.my_atom.loc)
+			//new /obj/effect/hotspot(holder.my_atom.loc)
+			var/turf/T = get_turf(holder.my_atom)
+			T.create_fire(1, 10)
 			holder.remove_reagent(/datum/reagent/medicine/c2/helbital, 2)
 			holder.chem_temp += 5
 			holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The impurity of the reacting helbital is too great causing [holder.my_atom] to let out a hearty burst of flame, evaporating part of the product!"))

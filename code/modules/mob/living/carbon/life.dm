@@ -119,7 +119,7 @@
 	// Pass reagents from the gas into our body.
 	// Presumably if you breathe it you have a specialized metabolism for it, so we drop/ignore breath_type. Also avoids
 	// humans processing thousands of units of oxygen over the course of a round for the sole purpose of poisoning vox.
-	if(lungs)
+	if(lungs && !isnull(breath))
 		var/breath_type = dna?.species?.breathid
 		for(var/gasname in breath.gas - breath_type)
 			var/breathed_product = xgm_gas_data.breathed_product[gasname]

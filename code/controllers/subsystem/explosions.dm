@@ -672,7 +672,8 @@ SUBSYSTEM_DEF(explosions)
 		for(var/thing in flame_turf)
 			if(thing)
 				var/turf/T = thing
-				new /obj/effect/hotspot(T) //Mostly for ambience!
+				//new /obj/effect/hotspot(T) //Mostly for ambience!
+				T.create_fire(2, 25)
 		cost_flameturf = MC_AVERAGE(cost_flameturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 		if (low_turf.len || med_turf.len || high_turf.len)

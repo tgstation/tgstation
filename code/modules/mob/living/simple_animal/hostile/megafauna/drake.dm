@@ -183,7 +183,9 @@
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
 			break
-		var/obj/effect/hotspot/drake_fire_hotspot = new /obj/effect/hotspot(T)
+		//var/obj/effect/hotspot/drake_fire_hotspot = new /obj/effect/hotspot(T)
+		T.create_fire(1, 10)
+		var/obj/effect/hotspot/drake_fire_hotspot = locate() in T
 		if(frozen)
 			drake_fire_hotspot.add_atom_colour(COLOR_BLUE_LIGHT, FIXED_COLOUR_PRIORITY)
 		T.hotspot_expose(DRAKE_FIRE_TEMP,DRAKE_FIRE_EXPOSURE,1)
@@ -332,7 +334,8 @@
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
 	playsound(T, SFX_EXPLOSION, 80, TRUE)
-	new /obj/effect/hotspot(T)
+	//new /obj/effect/hotspot(T)
+	T.create_fire(1, 10)
 	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
