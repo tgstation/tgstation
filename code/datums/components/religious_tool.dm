@@ -171,13 +171,7 @@
  */
 /datum/component/religious_tool/proc/generate_available_sects(mob/user)
 	var/list/sects_to_pick = list()
-	var/human_highpriest = ishuman(user)
-	var/mob/living/carbon/human/highpriest = user
 	for(var/path in subtypesof(/datum/religion_sect))
-		if(human_highpriest && initial(easy_access_sect.invalidating_qualities))
-			var/datum/species/highpriest_species = highpriest.dna.species
-			if(initial(easy_access_sect.invalidating_qualities) in highpriest_species.inherent_traits)
-				continue
 		var/list/sect = list()
 		var/datum/religion_sect/not_a_real_instance_rs = path
 		sect["name"] = initial(not_a_real_instance_rs.name)

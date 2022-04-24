@@ -20,8 +20,6 @@
 	var/alignment = ALIGNMENT_GOOD
 	/// Does this require something before being available as an option?
 	var/starter = TRUE
-	/// species traits that block you from picking
-	var/invalidating_qualities = NONE
 	/// The Sect's 'Mana'
 	var/favor = 0 //MANA!
 	/// The max amount of favor the sect can have
@@ -270,73 +268,6 @@
 	return TRUE
 
 #undef GREEDY_HEAL_COST
-
-/datum/religion_sect/honorbound
-	name = "Honorbound God"
-	quote = "A good, honorable crusade against evil is required."
-	desc = "Your deity requires fair fights from you. You may not attack the unready, the just, or the innocent. \
-	You earn favor by getting others to join the crusade, and you may spend favor to announce a battle, bypassing some conditions to attack."
-	tgui_icon = "scroll"
-	altar_icon_state = "convertaltar-white"
-	alignment = ALIGNMENT_GOOD
-	invalidating_qualities = TRAIT_GENELESS
-	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
-	///people who have agreed to join the crusade, and can be deaconized
-	var/list/possible_crusaders = list()
-	///people who have been offered an invitation, they haven't finished the alert though.
-	var/list/currently_asking = list()
-
-/**
- * Called by deaconize rite, this async'd proc waits for a response on joining the sect.
- * If yes, the deaconize rite can now recruit them instead of just offering invites
- */
-/datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
-	currently_asking += invited
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
-	currently_asking -= invited
-	if(ask == "Yes")
-		possible_crusaders += invited
-
-/datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
-	..()
-	if(!ishuman(new_convert))
-		to_chat(new_convert, span_warning("[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound."))
-		return FALSE
-	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
-		to_chat(new_convert, span_warning("[GLOB.deity] has deemed your species as one that could never show honor."))
-		return FALSE
-	var/datum/dna/holy_dna = new_convert.dna
-	holy_dna.add_mutation(/datum/mutation/human/honorbound)
-
-/datum/religion_sect/burden
-	name = "Punished God"
-	quote = "To feel the freedom, you must first understand captivity."
-	desc = "Incapacitate yourself in any way possible. Bad mutations, lost limbs, traumas, \
-	even addictions. You will learn the secrets of the universe from your defeated shell."
-	tgui_icon = "user-injured"
-	altar_icon_state = "convertaltar-burden"
-	alignment = ALIGNMENT_NEUT
-	invalidating_qualities = TRAIT_GENELESS
-	candle_overlay = FALSE
-
-/datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
-	..()
-	if(!ishuman(new_convert))
-		to_chat(new_convert, span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
-		return
-	if(TRAIT_GENELESS in new_convert.dna.species.inherent_traits)
-		to_chat(new_convert, span_warning("[GLOB.deity] cannot help a species such as yourself comprehend the suffering. You are not burdened."))
-		return
-	var/datum/dna/holy_dna = new_convert.dna
-	holy_dna.add_mutation(/datum/mutation/human/burdened)
-
-/datum/religion_sect/burden/tool_examine(mob/living/carbon/human/burdened) //display burden level
-	if(!ishuman(burdened))
-		return FALSE
-	var/datum/mutation/human/burdened/burdenmut = burdened.dna.check_mutation(/datum/mutation/human/burdened)
-	if(burdenmut)
-		return "You are at burden level [burdenmut.burden_level]/6."
-	return "You are not burdened."
 
 #define MINIMUM_YUCK_REQUIRED 5
 
