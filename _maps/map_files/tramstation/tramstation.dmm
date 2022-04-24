@@ -9630,9 +9630,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_white"
 	},
-/obj/machinery/door/window/left/directional/south{
-	id_tag = "tramdoor"
-	},
+/obj/machinery/door/window/left/tram/directional/south,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "ccG" = (
@@ -20108,9 +20106,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_white"
 	},
-/obj/machinery/door/window/left/directional/north{
-	id_tag = "tramdoor"
-	},
+/obj/machinery/door/window/left/tram/directional/north,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "fML" = (
@@ -26977,9 +26973,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_white"
 	},
-/obj/machinery/door/window/right/directional/north{
-	id_tag = "tramdoor"
-	},
+/obj/machinery/door/window/right/tram/directional/north,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "inl" = (
@@ -32952,9 +32946,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_white"
 	},
-/obj/machinery/door/window/right/directional/south{
-	id_tag = "tramdoor"
-	},
+/obj/machinery/door/window/right/tram/directional/south,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "kuF" = (
