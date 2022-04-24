@@ -96,7 +96,7 @@
 				src,
 				max_range = 3,
 				threshold = RAD_LIGHT_INSULATION,
-				intensity = URANIUM_IRRADIATION_INTENSITY,
+				chance = URANIUM_IRRADIATION_CHANCE,
 				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
 			)
 			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))

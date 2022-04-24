@@ -13,9 +13,9 @@
 #define INTEGRITY_MAX_POWER_NUDGE 1500
 #define INTEGRITY_MIN_NUDGABLE_AMOUNT 0.7
 
-#define RADIATION_INTENSITY_AT_FULL_INTEGRITY 3
-#define RADIATION_INTENSITY_AT_ZERO_INTEGRITY 20
-#define INTENSITY_EQUATION_SLOPE (RADIATION_INTENSITY_AT_ZERO_INTEGRITY - RADIATION_INTENSITY_AT_FULL_INTEGRITY)
+#define RADIATION_CHANCE_AT_FULL_INTEGRITY 0.03
+#define RADIATION_CHANCE_AT_ZERO_INTEGRITY 0.4
+#define CHANCE_EQUATION_SLOPE (RADIATION_CHANCE_AT_ZERO_INTEGRITY - RADIATION_CHANCE_AT_FULL_INTEGRITY)
 
 /obj/machinery/power/supermatter_crystal/proc/emit_radiation()
 	// As power goes up, rads go up.
@@ -44,21 +44,21 @@
 		else
 			threshold = (THRESHOLD_EQUATION_SLOPE * power_factor + 1) ** ((1 / integrity) ** INTEGRITY_EXPONENTIAL_DEGREE)
 
-	// Calculating intensity is done entirely on integrity, so that actively delaminating SMs feel more dangerous
-	var/intensity = (INTENSITY_EQUATION_SLOPE * (1 - integrity)) + RADIATION_INTENSITY_AT_FULL_INTEGRITY
+	// Calculating chance is done entirely on integrity, so that actively delaminating SMs feel more dangerous
+	var/chance = (CHANCE_EQUATION_SLOPE * (1 - integrity)) + RADIATION_CHANCE_AT_FULL_INTEGRITY
 
 	radiation_pulse(
 		src,
 		max_range = 8,
 		threshold = threshold,
-		intensity = intensity,
+		chance = chance * 100,
 	)
 
-#undef INTENSITY_EQUATION_SLOPE
+#undef CHANCE_EQUATION_SLOPE
 #undef INTEGRITY_EXPONENTIAL_DEGREE
 #undef INTEGRITY_MAX_POWER_NUDGE
 #undef INTEGRITY_MIN_NUDGABLE_AMOUNT
 #undef MAX_ACCEPTED_POWER_OUTPUT
-#undef RADIATION_INTENSITY_AT_FULL_INTEGRITY
-#undef RADIATION_INTENSITY_AT_ZERO_INTEGRITY
+#undef RADIATION_CHANCE_AT_FULL_INTEGRITY
+#undef RADIATION_CHANCE_AT_ZERO_INTEGRITY
 #undef THRESHOLD_EQUATION_SLOPE

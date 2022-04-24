@@ -211,7 +211,7 @@
 		src,
 		max_range = 2,
 		threshold = RAD_LIGHT_INSULATION,
-		intensity = URANIUM_IRRADIATION_INTENSITY,
+		chance = URANIUM_IRRADIATION_CHANCE,
 		minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
 	)
 

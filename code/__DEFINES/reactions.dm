@@ -13,6 +13,9 @@
 /// An exponent used to make large volume gas mixtures significantly less likely to release rads. Used to prevent tritfires in distro from irradiating literally the entire station with no warning.
 #define ATMOS_RADIATION_VOLUME_EXP 3
 
+/// Maximum range a radiation pulse is allowed to be from a gas reaction.
+#define GAS_REACTION_MAXIMUM_RADIATION_PULSE_RANGE 20
+
 // Water Vapor:
 /// The temperature required for water vapor to condense.
 #define WATER_VAPOR_CONDENSATION_POINT (T20C + 10)
@@ -85,13 +88,9 @@
 /// The minimum released energy necessary for tritium to release radiation during combustion. (at a mix volume of [CELL_VOLUME]).
 #define TRITIUM_RADIATION_RELEASE_THRESHOLD (FIRE_TRITIUM_ENERGY_RELEASED * TRITIUM_OXYBURN_MULTIPLIER)
 /// A scaling factor for the range of radiation pulses produced by tritium fires.
-#define TRITIUM_RADIATION_RANGE_DIVISOR 4
+#define TRITIUM_RADIATION_RANGE_DIVISOR 1.5
 /// A scaling factor for the irradiation threshold of radiation pulses produced by tritium fires.
 #define TRITIUM_RADIATION_THRESHOLD_BASE 15
-/// A scaling factor for the irradiation intensity from energy released. This is the energy release required to achieve an irradiation intensity of 1.
-#define TRITIUM_RADIATION_INTENSITY_ENERGY_THRESHOLD_BASE 8.4e7
-/// The minimum radiation pulse range from tritium fires.
-#define TRITIUM_MINIMUM_RADIATION_RANGE 6
 
 // - Freon:
 /// The maximum temperature freon can combust at.
@@ -249,8 +248,6 @@
 #define PN_TRITIUM_RAD_RANGE_DIVISOR 1.5
 /// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate converts tritium to hydrogen.
 #define PN_TRITIUM_RAD_THRESHOLD_BASE 15
-/// A scaling factor for the intensity of the radiaion pulses generated when proto-nitrate converts tritium to hydrogen.
-#define PN_TRITIUM_RAD_INTENSITY_DIVISOR 30
 
 /// The minimum temperature proto-nitrate can break BZ down at.
 #define PN_BZASE_MIN_TEMP 260
@@ -264,5 +261,3 @@
 #define PN_BZASE_RAD_RANGE_DIVISOR 1.5
 /// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate breaks down BZ.
 #define PN_BZASE_RAD_THRESHOLD_BASE 15
-/// A scaling factor for the intensity of the radiaion pulses generated when proto-nitrate breaks down BZ.
-#define PN_BZASE_RAD_INTENSITY_DIVISOR 30

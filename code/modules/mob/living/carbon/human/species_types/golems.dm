@@ -395,7 +395,7 @@
 	if(!COOLDOWN_FINISHED(src, radiation_emission_cooldown))
 		return
 	else
-		radiation_pulse(H, max_range = 1, threshold = RAD_VERY_LIGHT_INSULATION, intensity = 0.1)
+		radiation_pulse(H, max_range = 1, threshold = RAD_VERY_LIGHT_INSULATION, chance = 3)
 		COOLDOWN_START(src, radiation_emission_cooldown, 2 SECONDS)
 
 /datum/species/golem/uranium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)

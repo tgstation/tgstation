@@ -34,24 +34,11 @@ Ask Mothblocks if they're around
 #define RAD_EXTREME_INSULATION 0.5 // What rad collectors have
 #define RAD_FULL_INSULATION 0 // Completely stops radiation from coming through
 
-/// The base for the chance of getting irradiated based on intensity. Gives you (1 - base) chance to get irradiated if intensity is 1.
-#define RADIATION_INTENSITY_BASE 0.5
-
-/// A scalar used to automatically set the intensity of a radiation pulse from a given max range if intensity is undefined.
-/// It is set so that a radiation pulse from a distance of the max range of the pulse has a 5% chance to irradiate the target, if nothing blocks the trajectory.
-/// Example: If there was a radiation pulse with range 7 but intensity undefined, the intensity would be set to 4.736.
-/// This pulse would have a 96.25% chance to irradiate the target at the epicenter, 18.55% chance to irradiate 3 turfs away, and 5% chance to irradiate 7 turfs away.
-/// Increasing this value will set the auto intensity to a higher value, and decreasing would set auto intensity to a lower value.
-#define DEFAULT_AUTO_RADIATION_INTENSITY_CONSTANT 0.074
-
-/// Maximum possible automatic set range if range wasn't set.
-#define AUTO_RADIATION_MAXIMUM_RANGE 20
-
-/// The default radiation pulse intensity.
-#define DEFAULT_RADIATION_INTENSITY 0.296
+/// The default chance something can be irradiated
+#define DEFAULT_RADIATION_CHANCE 10
 
 /// The default chance for uranium structures to irradiate
-#define URANIUM_IRRADIATION_INTENSITY DEFAULT_RADIATION_INTENSITY
+#define URANIUM_IRRADIATION_CHANCE DEFAULT_RADIATION_CHANCE
 
 /// The minimum exposure time before uranium structures can irradiate
 #define URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME (3 SECONDS)
