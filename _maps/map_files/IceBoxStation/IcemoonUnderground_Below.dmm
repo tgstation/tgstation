@@ -330,6 +330,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/security/prison/mess)
+"ef" = (
+/obj/machinery/camera/directional/west{
+	network = list("ss13","prison");
+	c_tag = "Security - Permabrig Recreation"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/security/prison/rec)
 "eh" = (
 /obj/structure/chair{
 	dir = 8
@@ -692,6 +699,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/directional/south{
+	c_tag = "Security - Permabrig Meditation";
+	network = list("ss13","prison")
+	},
 /turf/open/floor/iron/cafeteria,
 /area/security/prison/mess)
 "hN" = (
@@ -718,6 +729,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/security/prison/mess)
+"hZ" = (
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/iron/dark/textured,
+/area/security/prison)
 "ie" = (
 /obj/structure/rack,
 /obj/item/clothing/head/soft/blue{
@@ -741,6 +756,11 @@
 /obj/item/clothing/head/soft/red{
 	pixel_x = -5;
 	pixel_y = 7
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Security - Permabrig Workout";
+	network = list("ss13","prison");
+	view_range = 5
 	},
 /turf/open/floor/iron,
 /area/security/prison/workout)
@@ -892,6 +912,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
+"jY" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Security - Permabrig Observation North";
+	network = list("ss13","prison")
+	},
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "jZ" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "labor";
@@ -1014,6 +1041,15 @@
 /obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
+"kP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/directional/west{
+	network = list("ss13","prison");
+	c_tag = "Security - Permabrig Chapel"
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/security/prison/mess)
 "kQ" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/decal/cleanable/dirt,
@@ -1106,6 +1142,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating/snowed/icemoon,
 /area/mine/eva)
+"lC" = (
+/obj/machinery/newscaster/directional/north,
+/turf/open/floor/iron/dark/textured,
+/area/security/prison/rec)
 "lD" = (
 /obj/structure/flora/tree/pine,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -1426,6 +1466,16 @@
 /obj/effect/turf_decal/siding/white,
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
+"po" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/machinery/camera/directional/west{
+	network = list("ss13","prison");
+	c_tag = "Security - Permabrig Lower Hallway East"
+	},
+/turf/open/floor/iron/white,
+/area/security/prison)
 "pC" = (
 /obj/structure/table,
 /obj/item/food/pie/cream,
@@ -1758,6 +1808,16 @@
 /obj/structure/lattice/catwalk,
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
+"tp" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/directional/north{
+	c_tag = "Security - Upper Permabrig Cafeteria";
+	network = list("ss13","prison")
+	},
+/turf/open/floor/iron,
+/area/security/prison/mess)
 "tq" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/iron/dark/textured,
@@ -2811,6 +2871,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/security/prison/workout)
 "Fx" = (
@@ -3596,6 +3657,13 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"No" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Security - Permabrig Chapel";
+	network = list("ss13","prison")
+	},
+/turf/open/floor/carpet,
+/area/security/prison/rec)
 "Nt" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -3771,10 +3839,11 @@
 	},
 /turf/open/floor/wood,
 /area/security/prison/rec)
-"Pr" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/obj/structure/railing,
+"Pw" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Security - Permabrig Observation South";
+	network = sssssssssssss
+	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "PB" = (
@@ -4155,6 +4224,13 @@
 	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
+"Ta" = (
+/obj/machinery/camera/directional/west{
+	network = list("ss13","prison");
+	c_tag = "Security - Permabrig Observation Prep"
+	},
+/turf/open/floor/vault,
+/area/security/prison/rec)
 "Te" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "gulag";
@@ -4273,8 +4349,11 @@
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/mess)
 "UD" = (
-/obj/machinery/light/warm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/camera/directional/north{
+	c_tag = "Security - Upper Permabrig Cafeteria";
+	network = list("ss13","prison")
+	},
 /turf/open/floor/iron/dark/textured,
 /area/security/prison)
 "UE" = (
@@ -4482,6 +4561,10 @@
 "Wr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/directional/south{
+	c_tag = "Security - Permabrig Meditation";
+	network = list("ss13","prison")
+	},
 /turf/open/floor/sepia,
 /area/security/prison/rec)
 "Wt" = (
@@ -27280,7 +27363,7 @@ qI
 qI
 qI
 Dn
-zt
+jY
 zt
 zt
 zt
@@ -28830,7 +28913,7 @@ eh
 eh
 at
 at
-Pr
+fU
 zt
 zt
 zt
@@ -29074,7 +29157,7 @@ GA
 yn
 ES
 pJ
-pJ
+ef
 KR
 pJ
 vV
@@ -29587,7 +29670,7 @@ dJ
 GA
 PB
 ES
-pJ
+lC
 Ku
 OV
 Ap
@@ -30116,7 +30199,7 @@ VP
 at
 at
 fU
-zt
+Pw
 zt
 zt
 zt
@@ -30366,7 +30449,7 @@ pJ
 gH
 Co
 hi
-cI
+No
 Sd
 dS
 ql
@@ -30628,7 +30711,7 @@ vu
 gH
 gH
 cQ
-ul
+Ta
 kk
 VP
 zt
@@ -31389,7 +31472,7 @@ KH
 UD
 NJ
 Jd
-ZB
+hZ
 KH
 KH
 KH
@@ -32423,7 +32506,7 @@ vc
 ct
 of
 dY
-cG
+kP
 cG
 Uy
 RM
@@ -32940,7 +33023,7 @@ VX
 ct
 ct
 ct
-RM
+tp
 Dl
 Dl
 Dl
@@ -33191,7 +33274,7 @@ LH
 LA
 KC
 Qq
-JU
+po
 JU
 mf
 IK

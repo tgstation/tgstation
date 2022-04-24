@@ -668,7 +668,8 @@
 	id = "visitorflash"
 	},
 /obj/machinery/camera/directional/north{
-	c_tag = "Security - Visitation North"
+	c_tag = "Security - Visitation North";
+	network = list("ss13","prison")
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -1668,6 +1669,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/security/brig)
+"eV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/directional/north{
+	c_tag = "Security - Upper Permabrig Hallway Central";
+	network = list("ss13","prison")
+	},
+/turf/open/floor/iron/dark/textured_edge,
+/area/security/prison)
 "eW" = (
 /obj/item/clothing/suit/hooded/wintercoat/science,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -2619,6 +2630,10 @@
 	},
 /obj/item/reagent_containers/glass/bottle/welding_fuel,
 /obj/item/reagent_containers/glass/bottle/welding_fuel,
+/obj/machinery/camera/directional/west{
+	network = list("ss13","prison");
+	c_tag = "Security - Permabrig Cytology"
+	},
 /turf/open/floor/iron/grimy,
 /area/security/prison/work)
 "hA" = (
@@ -3100,6 +3115,16 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"iH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/directional/south{
+	c_tag = "Security - Permabrig Library";
+	network = list("ss13","prison")
+	},
+/turf/open/floor/carpet/red,
+/area/security/prison/work)
 "iI" = (
 /obj/structure/marker_beacon/burgundy{
 	name = "landing marker"
@@ -4873,6 +4898,16 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
+"nW" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/directional/west{
+	network = list("ss13","prison");
+	c_tag = "Security - Upper Permabrig Hallway West"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/security/prison)
 "nX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
@@ -9382,6 +9417,15 @@
 "Bd" = (
 /turf/closed/wall,
 /area/maintenance/department/cargo)
+"Be" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/directional/south{
+	c_tag = "Security - Permabrig Workroom"
+	},
+/turf/open/floor/iron,
+/area/security/prison/work)
 "Bf" = (
 /obj/effect/turf_decal/trimline/green/filled/warning{
 	dir = 1
@@ -11486,6 +11530,13 @@
 "GX" = (
 /turf/open/floor/iron/smooth,
 /area/security/prison)
+"GY" = (
+/obj/machinery/camera/directional/east{
+	network = list("ss13","prison");
+	c_tag = "Security - Permabrig Upper Hallway East"
+	},
+/turf/open/openspace,
+/area/security/prison/workout)
 "Ha" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -15211,6 +15262,13 @@
 	dir = 1
 	},
 /area/medical/chemistry)
+"Rl" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Security - Permabrig Upper Hallway South";
+	network = list("ss13","prison")
+	},
+/turf/open/floor/iron/dark/textured,
+/area/security/prison)
 "Rm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -16541,7 +16599,8 @@
 	dir = 1
 	},
 /obj/machinery/camera/directional/north{
-	c_tag = "Security - Permabrig Forestry"
+	c_tag = "Security - Permabrig Forestry";
+	network = list("ss13","prison")
 	},
 /turf/open/floor/iron,
 /area/security/prison/garden)
@@ -40312,7 +40371,7 @@ wt
 wG
 my
 WZ
-vp
+Be
 iY
 UQ
 FC
@@ -41598,7 +41657,7 @@ kG
 ae
 pq
 BF
-BF
+nW
 BF
 Ra
 ug
@@ -42879,7 +42938,7 @@ Mf
 Sq
 tU
 XO
-wj
+iH
 DX
 mI
 xF
@@ -45194,7 +45253,7 @@ Cf
 yv
 wH
 Si
-mI
+eV
 xF
 sr
 as
@@ -46229,7 +46288,7 @@ Si
 qM
 qM
 Ra
-Ra
+Rl
 Cf
 Cf
 vG
@@ -48537,7 +48596,7 @@ Kb
 LH
 Kb
 Kb
-Kb
+GY
 Kb
 LH
 Kb
