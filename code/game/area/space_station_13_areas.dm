@@ -60,7 +60,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/asteroid
 	name = "\improper Asteroid"
-	icon = 'icons/turf/areas/areas_centcomm.dmi'
+	icon = 'icons/turf/areas/areas_centcom.dmi'
 	icon_state = "asteroid"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
