@@ -2,31 +2,20 @@
 	id = "dizziness"
 	tick_interval = 2 SECONDS
 	alert_type = null
-	/// The strength of the dizziness on us. The stronger the dizzy, the faster it goes away
-	var/dizziness_strength = 1
 
 /datum/status_effect/dizziness/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/dizziness/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/on_rest)
 	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/clear_dizziness)
 	return TRUE
 
 /datum/status_effect/dizziness/on_remove()
-	UnregisterSignal(owner, list(COMSIG_LIVING_SET_BODY_POSITION, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
+	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
 	// In case our client's offset is somewhere wacky from the dizziness effect
 	owner.client?.pixel_x = initial(owner.client?.pixel_x)
 	owner.client?.pixel_y = initial(owner.client?.pixel_y)
-
-/// Signal proc for [COMSIG_LIVING_SET_BODY_POSITION]. Whenever we rest, it depletes faster but is more dizzying
-/datum/status_effect/dizziness/proc/on_rest(mob/living/source)
-	SIGNAL_HANDLER
-
-	dizziness_strength = initial(dizziness_strength)
-	if(source.resting)
-		dizziness_strength *= 5
 
 /// Signal proc that self deletes our dizziness effect
 /datum/status_effect/dizziness/proc/clear_dizziness(datum/source)
@@ -40,15 +29,20 @@
 	if(amount <= 0)
 		return
 
+	// How strong the dizziness effect is on us.
+	// If we're resting, the effect is 5x as strong, but also decays 5x fast.
+	// Meaning effectively, 1 tick is actually dizziness_strength ticks of duration
+	var/dizziness_strength = owner.resting ? 5 : 1
+	var/time_between_ticks = initial(tick_interval)
+
 	// How much time will be left, in seconds, next tick
-	var/next_amount = max((amount - (dizziness_strength * initial(tick_interval))) / 10, 0)
+	var/next_amount = max((amount - (dizziness_strength * time_between_ticks * 0.1)), 0)
 
-	// If we have a high dizziness strength, we subtract from our duration
-	// Meaning if our dizzy effects are stronger, it will also run out faster
-	if(dizziness_strength > 1)
-		duration -= ((dizziness_strength - 1) * initial(tick_interval))
+	// If we have a dizziness strength > 1, we will subtract ticks off of the total duration
+	duration -= ((dizziness_strength - 1) * time_between_ticks)
 
-	// Don't bother animating if they're clientless
+	// Now we can do the actual dizzy effects.
+	// Don't bother animating if they're clientless.
 	if(!owner.client)
 		return
 
