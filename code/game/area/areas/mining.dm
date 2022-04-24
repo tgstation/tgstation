@@ -94,6 +94,7 @@
 /**********************Lavaland Areas**************************/
 
 /area/lavaland
+	icon = 'icons/turf/areas/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE

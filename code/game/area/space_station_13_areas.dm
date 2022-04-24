@@ -990,6 +990,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/construction
 	name = "\improper Construction Area"
+	icon = 'icons/turf/areas/areas_station.dmi'
 	icon_state = "construction"
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_STANDARD_STATION

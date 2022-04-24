@@ -347,6 +347,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /area/hilbertshotel
 	name = "Hilbert's Hotel Room"
+	icon = 'icons/turf/areas/areas_ruins.dmi'
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	has_gravity = TRUE

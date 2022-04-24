@@ -45,6 +45,7 @@
 
 /area/cordon
 	name = "CORDON"
+	icon = 'icons/turf/areas/areas_station.dmi'
 	icon_state = "cordon"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
