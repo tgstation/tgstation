@@ -3,7 +3,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
-	visor_flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
+	visor_flags_cover = MASKCOVERSMOUTH|PEPPERPROOF
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
 	species_exception = list(/datum/species/golem)
@@ -86,7 +86,7 @@
 /obj/item/clothing/mask/bandana/color/purple
 	name = "purple bandana"
 	desc = "A fine purple bandana with nanotech lining."
-	greyscale_colors = "#8019a0"
+	greyscale_colors = "#9900CC"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/bandana/color/green
@@ -135,6 +135,7 @@
 	greyscale_config_up = /datum/greyscale_config/bandstriped_up
 	greyscale_config_worn_up = /datum/greyscale_config/bandstriped_worn_up
 	greyscale_colors = "#2e2e2e#C6C6C6"
+	undyeable = TRUE
 
 /obj/item/clothing/mask/bandana/color/striped/black
 	name = "striped bandana"
@@ -154,6 +155,24 @@
 	greyscale_colors = "#DCDCDC#8019a0"
 	flags_1 = NONE
 
+/obj/item/clothing/mask/bandana/color/striped/engineering
+	name = "striped engineering bandana"
+	desc = "A fine bandana with nanotech lining, a stripe across and engineering colors."
+	greyscale_colors = "#FFDB02#FF8800"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/bandana/color/striped/medical
+	name = "striped medical bandana"
+	desc = "A fine bandana with nanotech lining, a stripe across and medical colors."
+	greyscale_colors = "#DCDCDC#5995BA"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/bandana/color/striped/cargo
+	name = "striped cargo bandana"
+	desc = "A fine bandana with nanotech lining, a stripe across and cargo colors."
+	greyscale_colors = "#967032#5F350B"
+	flags_1 = NONE
+
 /obj/item/clothing/mask/bandana/color/striped/botany
 	name = "striped botany bandana"
 	desc = "A fine bandana with nanotech lining, a stripe across and botany colors."
@@ -170,6 +189,7 @@
 	greyscale_config_up = /datum/greyscale_config/bandskull_up
 	greyscale_config_worn_up = /datum/greyscale_config/bandskull_worn_up
 	greyscale_colors = "#2e2e2e#C6C6C6"
+	undyeable = TRUE
 
 /obj/item/clothing/mask/bandana/color/skull/black
 	desc = "A fine black bandana with nanotech lining and a skull emblem."

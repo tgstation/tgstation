@@ -55,6 +55,7 @@
 					/obj/item/clothing/under/rank/medical/paramedic/skirt = 4,
 					/obj/item/clothing/head/nursehat = 4,
 					/obj/item/clothing/head/beret/medical = 4,
+					/obj/item/clothing/mask/bandana/color/striped/medical = 4,
 					/obj/item/clothing/under/rank/medical/doctor = 4,
 					/obj/item/clothing/under/rank/medical/doctor/skirt = 4,
 					/obj/item/clothing/under/rank/medical/scrubs/blue = 4,
@@ -91,7 +92,7 @@
 					/obj/item/clothing/suit/hazardvest = 3,
 					/obj/item/clothing/shoes/workboots = 3,
 					/obj/item/clothing/head/beret/engi = 3,
-					/obj/item/clothing/mask/bandana/color/gold = 3,
+					/obj/item/clothing/mask/bandana/color/striped/engineering = 3,
 					/obj/item/clothing/head/hardhat = 3,
 					/obj/item/clothing/head/hardhat/weldhat = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
@@ -137,6 +138,7 @@
 		/obj/item/clothing/shoes/sneakers/black = 3,
 		/obj/item/clothing/gloves/fingerless = 3,
 		/obj/item/clothing/head/beret/cargo = 3,
+		/obj/item/clothing/mask/bandana/color/striped/cargo = 3,
 		/obj/item/clothing/head/soft = 3,
 		/obj/item/radio/headset/headset_cargo = 3
 	)
