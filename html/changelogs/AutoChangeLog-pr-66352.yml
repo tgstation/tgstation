@@ -1,4 +1,0 @@
-author: "Fikou, Anturk"
-delete-after: True
-changes: 
-  - bugfix: "ghost alerts now resize to 32x32 if larger"

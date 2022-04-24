@@ -1,0 +1,4 @@
+author: "Bondismyname but I wish it wasnt"
+delete-after: True
+changes: 
+  - bugfix: "Titanium shuttle windows are now properly able to be anchored when created in hand."

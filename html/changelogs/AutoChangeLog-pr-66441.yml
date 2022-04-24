@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "\"Open the Hatch\" surgery step plays a sound that is potentially more accurate to the tool being used."

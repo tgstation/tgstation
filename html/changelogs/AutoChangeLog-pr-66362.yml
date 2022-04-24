@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes two instances where mob references were passed into source status effects improperly"
-  - code_imp: "Updated status effect code to modern style guidelines."

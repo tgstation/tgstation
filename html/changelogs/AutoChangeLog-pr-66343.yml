@@ -1,4 +1,0 @@
-author: "Pandarsenic"
-delete-after: True
-changes: 
-  - bugfix: "IceBox xenobio camera now attaches to a wall instead of floating in the air."

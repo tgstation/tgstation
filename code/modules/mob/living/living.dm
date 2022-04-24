@@ -1631,9 +1631,6 @@
 				return FALSE
 		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
 			return FALSE
-		if(NAMEOF(src, druggy))
-			set_drugginess(var_value)
-			. = TRUE
 		if(NAMEOF(src, resting))
 			set_resting(var_value)
 			. = TRUE

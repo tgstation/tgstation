@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - code_imp: "Optimises pathfinding by removing an unneded istype()"

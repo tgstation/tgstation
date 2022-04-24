@@ -1,0 +1,4 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - bugfix: "The PDA's flashlight action button now updates when the flashlight is toggled."
