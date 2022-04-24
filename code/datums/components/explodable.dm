@@ -33,8 +33,6 @@
 			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/explodable_attack)
 			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 			RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-
-
 	if(SEND_SIGNAL(parent, COMSIG_CONTAINS_STORAGE))
 		RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
 
