@@ -55,6 +55,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/saved_identification = null // next two values are the currently imprinted id and job values
 	var/saved_job = null
 
+	/// Allow people with chunky fingers to use?
+	var/allow_chunky = FALSE
+
 	var/honkamnt = 0 /// honk honk honk honk honk honkh onk honkhnoohnk
 
 	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
@@ -67,6 +70,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
 
 	var/obj/item/paicard/pai = null
+
+	var/datum/action/item_action/toggle_computer_light/light_butt
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
@@ -81,7 +86,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		soundloop = new(src, enabled)
 	if(id)
 		id.UpdateDisplay()
+	if(has_light)
+		light_butt = new(src)
 	update_appearance()
+	register_context()
 	Add_Messenger()
 
 /obj/item/modular_computer/Destroy()
@@ -100,9 +108,18 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	if(istype(pai))
 		QDEL_NULL(pai)
+	if(istype(light_butt))
+		QDEL_NULL(light_butt)
 
 	physical = null
 	return ..()
+
+/obj/item/modular_computer/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, light_butt))
+		toggle_flashlight()
+	else
+		..()
+
 
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
 	if(active_program?.tap(A, user, params))
@@ -282,6 +299,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	. += get_modular_computer_parts_examine(user)
 
+/obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
+	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Job Disk"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/modular_computer/update_icon_state()
 	if(!bypass_state)
 		icon_state = enabled ? icon_state_powered : icon_state_unpowered
@@ -309,6 +334,17 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		ui_interact(user)
 	else
 		turn_on(user)
+
+/obj/item/modular_computer/CtrlShiftClick(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
+	if(!ssd)
+		return
+	if(uninstall_component(ssd, usr))
+		user.put_in_hands(ssd)
 
 /obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
@@ -527,6 +563,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		set_light(comp_light_luminosity, 1, comp_light_color)
 	else
 		set_light(0)
+	update_appearance()
 	return TRUE
 
 /**
@@ -607,6 +644,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	// Insert new hardware
 	if(istype(W, /obj/item/computer_hardware) && upgradable)
 		if(install_component(W, user))
+			playsound(src, 'sound/machines/card_slide.ogg', 50)
 			return
 
 	if(W.tool_behaviour == TOOL_WRENCH)

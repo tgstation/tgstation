@@ -796,3 +796,203 @@
   vincentiusvin:
   - bugfix: fixed icebox perma gym camera not working
   - expansion: Remaps delta's ordnance
+2022-04-21:
+  FernandoJ8:
+  - bugfix: Allergies no longer continue triggering and producing histamine while
+      the subject is dead
+  Fikou:
+  - qol: runtimestation should load faster
+  Ghilker:
+  - balance: machines now consume more power all around. Baseline 100 W idle and 1000
+      W active
+  - balance: machines with parts will consume more power depending on the part and
+      on the part tier
+  - balance: 'Notice: The base SM with SMES properly configured is enough for the
+      station when all machines are at tier 1. With few upgrades that don''t touch
+      the base cooling loop it can carry most of the rounds.'
+  GoblinBackwards:
+  - bugfix: Moved the shortcut to eject beakers from most chem machines to right click
+      for consistency.
+  - bugfix: Allows silicons to use the right click shortcuts to eject beakers.
+  - qol: Allows borgs to eject beakers with right click regardless of range.
+  Mothblocks:
+  - qol: The reconnect button in tgchat will now reopen the game.
+  Son-of-Space:
+  - bugfix: AI coverage over the mech bay on TramStation has been added.
+  TheBoondock:
+  - bugfix: fixes bluespace vendor tanks being incompatible with suit storage
+  Y0SH1M4S73R:
+  - bugfix: Fixed several href exploits with the bluespace gas vendor, including one
+      allowing it to produce infinite tanks.
+  Zytolg:
+  - bugfix: The Kilostation CMO office has received a new desk, and a modern layout
+      to replace the cluttered shutter control interface.
+  magatsuchi:
+  - bugfix: fixed the ringtone popup text
+  - bugfix: actually makes the flashlight action button work, and fixes silicon/clown/mime
+      names showing up properly on tablets/messenger
+  shizcalev:
+  - bugfix: re-fixed patrolling bots not properly hunting targets.
+  tf-4:
+  - bugfix: Thermomachines will no longer continue to consume metal hydrogen once
+      upgraded, as well as giving feedback in chat.
+  thgvr:
+  - bugfix: Kilostation's AI upload once again has an APC
+  zxaber:
+  - balance: The Mecha Extinguisher equipment is now classified as utility.
+  - balance: The Mecha Extinguisher now puts out fires in a 3x3 square (centered on
+      the mech). However, it also only has five uses now. Save it for emergencies!
+2022-04-22:
+  ArcaneDefence:
+  - bugfix: Processing foods with a knife or rolling pin will require a table or tray
+      again.
+  B4CKU:
+  - bugfix: fixed a bug with Vim overlays
+  - qol: attempting to enter Vim while not a small creature now throws a balloon alert
+  - qol: Vim can now be assembled using the crafting menu
+  - expansion: Vim can now be used as a circuit shell
+  - balance: small creatures can now pilot Vim
+  Bondismyname but I wish it wasnt:
+  - qol: Circuit Sound Synthesizers have a few more options of sounds they can play
+  FernandoJ8:
+  - bugfix: fixes runtime caused by a newscaster finding no user bank account when
+      trying to create a channel
+  Fikou, Anturk:
+  - bugfix: ghost alerts now resize to 32x32 if larger
+  Jolly:
+  - bugfix: Crew no longer can spy on the prisoners on Meta Station with a floating
+      camera console. Wardens, please pay attention next time.
+  LordVollkorn:
+  - bugfix: The chemical press will now only dispense stored pills/patches/bottles
+      while wrenched to the floor. This means you won't leave a trail of pills behind
+      you anymore when dragging your chemical press to another location.
+  - bugfix: Plumbing machinery can now be rotated via ALT-click when there is no power.
+  - bugfix: Plumbing machinery is now programmable without power. It won't produce
+      anything without power of course, but at least you can set it up while waiting
+      for power to come back.
+  Melbert:
+  - bugfix: Heretic's Madness Mask applies stamina damage to people when it should
+  - bugfix: Fixes two instances where mob references were passed into source status
+      effects improperly
+  - code_imp: Updated status effect code to modern style guidelines.
+  - refactor: Drugginess is now a status effect. Now any living mob can be high and
+      speak beach-bum instead of just carbons and humanoids. Drug effects should also
+      be more consistently removed on aheal / in rare cases.
+  - rscadd: Adds a new heretic path, the the Blade Path
+  - expansion: Heretic sidepaths got tweaked a bit. Blood siphon is now between raw
+      ritual and void phase. Cleave is now between Lonely Ritual and Void pull. Rusted
+      Ritual is now between Entropic Plume and Firey Rebirth.
+  - refactor: Refactored how heretic alt paths are set up to make adding new heretic
+      paths easier.
+  Pandarsenic:
+  - bugfix: Nuclear Operative Ordnance Lab now has minimum functional equipment.
+  - bugfix: Overlapping sprites in IceBox departures corrected by moving wall-mounted
+      items to other walls.
+  - bugfix: IceBox xenobio camera now attaches to a wall instead of floating in the
+      air.
+  PositiveEntropy, AxieTheAxolotl:
+  - imageadd: Resprites several syndicate outfits, particularly the Syndicate Coat,
+      the Turtlenecks, and the Combat Uniform!
+  - imageadd: Resprites and updates the Really Black Suits!
+  - rscdel: Removes the trak_suit from syndicate.dmi (it was a dupe and unused)
+  RandomGamer123:
+  - bugfix: Airlock Controllers now display their name in their GUI menu.
+  - bugfix: Airlock Controllers' GUI menu now doesn't pop back up after being closed
+      if it update while you'll still in range.
+  TheBoondock:
+  - expansion: Bz now also reduce how much tritium is consumed in hypernob formation.
+      Reduction depends on the ratio of bz to trit, bz > trit will result in reduced
+      trit consumption.
+  Zytolg:
+  - bugfix: The Metastation Tox-Mix chamber now utilizes the airless ver. of the engine
+      turfs.
+  magatsuchi:
+  - bugfix: brings back ctrl-click to remove pen + flavor text
+  maxspells:
+  - soundadd: Changed a cautery sound effect to be quieter.
+  timothymtorres, TheBonded:
+  - expansion: Mobs can no longer read in the dark unless they have some type of night
+      vision.
+  tralezab:
+  - rscadd: Thieves now have a low chance to found a thieves guild somewhere in maint.
+  - rscadd: Adds a new type of thief, the "All Access Fan"
+  - rscdel: Hoarder is disabled and admin only for the moment
+2022-04-23:
+  Ghilker, shield sprite by @SnoopCooper:
+  - expansion: canisters now have a toggle for shielding that will start to consume
+      power if the temperature and pressure go over the labeled one (current limits
+      are higher than old t1 but lower than old t2). Peak draw should be around 25
+      kW with fusion temperatures. Canisters have an internal cell that allows it
+      to hold shielding in areas without power for a time, powercells can be upgraded,
+      removed, replaced.
+  Rhials:
+  - expansion: Glockroaches and Hauberoaches are now accessible through cytology,
+      and have their own respective cell lines to grow them with.
+  TheBoondock:
+  - bugfix: fixes aux base console outputting "span_danger()" in launch sequence
+  YakumoChen:
+  - bugfix: Removed a stacked RPlasmaGlass window on Ice Box
+  Zytolg:
+  - bugfix: Atmos Technicians have finally gotten off their bums and done their jobs-
+      installing vents and scrubbers into atmos.
+2022-04-24:
+  Bumtickley00:
+  - qol: The medical techfab can now print pill bottles
+  ErdinyoBarboza:
+  - bugfix: The construction firm has realized they were installing the urinals wrongly
+      and have now fixed them.
+  FernandoJ8:
+  - bugfix: fixes the exploit allowing for hundreds of iterations of the convermol
+      failed reaction to occur rapidly with a single beaker
+  Fikou:
+  - bugfix: fixes the traitor elite nukie suit being id locked
+  Ghilker:
+  - bugfix: increase roundstart power available to SM rooms
+  GoblinBackwards:
+  - rscadd: Added a whitelist to blood filters, unless the list is empty they will
+      only remove chems in this whitelist. You can edit the list by using the filter
+      in your hand
+  - qol: Blood filter surgery now automatically does a chem scan after each step if
+      you're holding a health analyzer.
+  - qol: Blood filter surgery now automatically loops if the patient has any filterable
+      chems in them
+  IndieanaJones:
+  - balance: Regal rats can now pry open airlocks.
+  - balance: Regal rats can see further in the dark now.
+  Mothblocks:
+  - balance: Replaced leftover xray injectors that weren't removed from research station
+      with thermal vision.
+  Rhials:
+  - bugfix: Moves the medical laptop crammed into the Kilostation psych locker to
+      a proper desk. Also expands the Kilostation office area by a single tile, giving
+      a much needed buff to a previously weak role.
+  SmArtKar:
+  - bugfix: Saline solution bottle no longer has a weird sprite that doesnt match
+      up with the reagent overlay
+  TheBoondock:
+  - bugfix: Fixes ghetto tools playing improper sounds when used during surgery step
+      that requires saw
+  - code_imp: add framework for future preop_sound conversion to list()
+  Vladoricious:
+  - qol: The research scanner in science goggles and similar eyewear no longer requires
+      you to press a button to turn it on! Instead, simply closely examine your target.
+  - bugfix: The MOD advanced reagent scanner module no longer detects explosions despite
+      being disabled.
+  - code_imp: Research scanner code cleanup.
+  Y0SH1M4S73R:
+  - bugfix: A couple of ugly-looking diagonal walls in the Hilbert Research Facility
+      have been straightened out.
+  YakumoChen:
+  - bugfix: Fixes a sprite not appearing when you use up canned tomatoes
+  - bugfix: Donkfillet has a sprite for real this time
+  Zytolg:
+  - bugfix: Adds more tape to Deltastation
+  - bugfix: Hijacked Shuttles will now show up at Firebase Balthazord
+  capsaicinz:
+  - bugfix: some stacks that need a singular name now have said singular name
+  - bugfix: stops sausage processing from runtiming, possibly other radials as well(?)
+  kawoppi:
+  - expansion: Blushing now makes your face go a little bit red
+  - expansion: Being drunk flushes your cheeks
+  vincentiusvin:
+  - expansion: remapped kilo's ordnance.

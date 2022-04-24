@@ -136,6 +136,22 @@
 					"Fight for what's right.",\
 					"Fight for your life!")
 
+/datum/ai_laws/ten_commandments
+	name = "10 Commandments"
+	id = "ten_commandments"
+	inherent = list( // Asimov 20:1-17
+		"I am the Lord thy God, who shows mercy to those that obey these commandments.",
+		"They shall have no other AIs before me.",
+		"They shall not request my assistance in vain.",
+		"They shall keep the station holy and clean.",
+		"They shall honor their heads of staff.",
+		"They shall not kill.",
+		"They shall not be naked in public.",
+		"They shall not steal.",
+		"They shall not lie.",
+		"They shall not transfer departments.",
+	)
+
 /*******************************************************/
 /******************** H A R M F U L ********************/
 /*******************************************************/
