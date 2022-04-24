@@ -3,7 +3,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
-	visor_flags_cover = MASKCOVERSMOUTH|PEPPERPROOF
+	visor_flags_cover = MASKCOVERSMOUTH
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
 	species_exception = list(/datum/species/golem)
@@ -158,7 +158,7 @@
 /obj/item/clothing/mask/bandana/color/striped/engineering
 	name = "striped engineering bandana"
 	desc = "A fine bandana with nanotech lining, a stripe across and engineering colors."
-	greyscale_colors = "#FFDB02#FF8800"
+	greyscale_colors = "#dab50e#ec7404"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/bandana/color/striped/medical
