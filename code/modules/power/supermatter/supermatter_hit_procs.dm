@@ -27,7 +27,7 @@
 				var/fired_from_str = projectile.fired_from ? " with [projectile.fired_from]" : ""
 				investigate_log(
 					projectile.firer \
-						? "has been powered for the first time by [ADMIN_FULLMONTY(projectile.firer)][fired_from_str]." \
+						? "has been powered for the first time by [key_name(projectile.firer)][fired_from_str]." \
 						: "has been powered for the first time.",
 					INVESTIGATE_ENGINE
 				)
