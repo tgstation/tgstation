@@ -160,6 +160,12 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	gas_type = GAS_CO2
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#4e4c48"
+
+/obj/machinery/portable_atmospherics/canister/carbon_monoxide
+	name = "Carbon monoxide canister"
+	gas_type = GAS_CO
+	greyscale_config = /datum/greyscale_config/canister
+	greyscale_colors = "#808080"
 /*
 /obj/machinery/portable_atmospherics/canister/freon
 	name = "Freon canister"

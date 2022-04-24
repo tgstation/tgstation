@@ -174,7 +174,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
 
 	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
-	var/breathid = "o2"
+	var/breathid = GAS_OXYGEN
 
 	///What anim to use for dusting
 	var/dust_anim = "dust-h"

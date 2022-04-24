@@ -2353,6 +2353,7 @@
 #include "code\modules\atmospherics\machinery\pipes\heat_exchange\manifold4w.dm"
 #include "code\modules\atmospherics\ZAS\Connection.dm"
 #include "code\modules\atmospherics\ZAS\ConnectionGroup.dm"
+#include "code\modules\atmospherics\ZAS\zas_extras\gas_reagents.dm"
 #include "code\modules\atmospherics\ZAS\ConnectionManager.dm"
 #include "code\modules\atmospherics\ZAS\ZAS_Settings.dm"
 #include "code\modules\atmospherics\ZAS\Debug.dm"

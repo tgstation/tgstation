@@ -167,7 +167,7 @@ GLOBAL_DATUM_INIT(contamination_overlay, /image, image('modular_pariah/master_fi
 	. = ..()
 	//Items that are in plasma, but not on a mob, can still be contaminated.
 	if(istype(I) && SSzas && SSzas.settings?.plc.cloth_contamination && I.can_contaminate())
-		var/datum/gas_mixture/env = return_air(1)
+		var/datum/gas_mixture/env = return_air()
 		if(!env)
 			return
 		for(var/g in env.gas)

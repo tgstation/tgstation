@@ -103,6 +103,23 @@
 		GAS_CO2 = new/datum/tlv(-1, -1, 5, 10),
 		GAS_PLASMA = new/datum/tlv/dangerous,
 		GAS_N2O = new/datum/tlv/dangerous,
+		GAS_METHYL_BROMIDE = new/datum/tlv/dangerous,
+		GAS_METHANE = new/datum/tlv/dangerous,
+		GAS_HYDROGEN = new/datum/tlv/dangerous,
+		GAS_CHLORINE = new/datum/tlv/dangerous,
+		GAS_CO = new/datum/tlv/dangerous,
+		GAS_NO2 = new/datum/tlv/dangerous,
+		GAS_XENON = new/datum/tlv/dangerous,
+		GAS_TRITIUM = new/datum/tlv/dangerous,
+		GAS_DEUTERIUM = new/datum/tlv/dangerous,
+		GAS_METHANE = new/datum/tlv(-1, -1, 1000, 1000),
+		GAS_HELIUM = new/datum/tlv(-1, -1, 1000, 1000),
+		GAS_KRYPTON = new/datum/tlv(-1, -1, 1000, 1000),
+		GAS_NEON = new/datum/tlv(-1, -1, 1000, 1000),
+		GAS_NO = new/datum/tlv(-1, -1, 1000, 1000),
+		GAS_STEAM = new/datum/tlv(-1, -1, 1000, 1000),
+		GAS_SULFUR = new/datum/tlv(-1, -1, 1000, 1000),
+		GAS_ARGON = new/datum/tlv(-1, -1, 1000, 1000),
 	)
 	/* // Breathable air.
 		"pressure" = new/datum/tlv(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are hazard_min, warning_min, warning_max, hazard_max

@@ -4,7 +4,6 @@
 	specific_heat = 20	// J/(mol*K)
 	molar_mass = 0.032	// kg/mol
 	flags = XGM_GAS_OXIDIZER | XGM_GAS_FUSION_FUEL
-	breathed_product = /datum/reagent/oxygen
 	symbol_html = "O<sub>2</sub>"
 	symbol = "O2"
 
@@ -36,7 +35,7 @@
 
 /datum/xgm_gas/phoron
 	id = GAS_PLASMA
-	name = "Phoron"
+	name = "Plasma"
 
 	//Note that this has a significant impact on TTV yield.
 	//Because it is so high, any leftover phoron soaks up a lot of heat and drops the yield pressure.
@@ -131,7 +130,6 @@
 	specific_heat = 80	// J/(mol*K)
 	molar_mass = 0.004	// kg/mol
 	flags = XGM_GAS_FUSION_FUEL
-	//breathed_product = /datum/reagent/helium
 	symbol_html = "He"
 	symbol = "He"
 
@@ -165,7 +163,7 @@
 	name = "Xenon"
 	specific_heat = 3	// J/(mol*K)
 	molar_mass = 0.054	// kg/mol
-	//breathed_product = /datum/reagent/nitrous_oxide/xenon
+	breathed_product = /datum/reagent/nitrous_oxide/xenon
 	symbol_html = "Xe"
 	symbol = "Xe"
 
@@ -198,8 +196,8 @@
 	molar_mass = 0.017	// kg/mol
 	tile_overlay = "chlorine"
 	overlay_limit = 0.1
-	flags = XGM_GAS_CONTAMINANT
-	//breathed_product = /datum/reagent/toxin/chlorine
+	flags = XGM_GAS_OXIDIZER
+	breathed_product = /datum/reagent/chlorine
 	symbol_html = "Cl"
 	symbol = "Cl"
 
@@ -210,16 +208,14 @@
 	overlay_limit = 0.5
 	specific_heat = 30	// J/(mol*K)
 	molar_mass = 0.020	// kg/mol
-	breathed_product =     /datum/reagent/water
-	condensation_product = /datum/reagent/water
-	condensation_point =   308.15 // 35C. Dew point is ~20C but this is better for gameplay considerations.
+	breathed_product = /datum/reagent/water
+	condensation_point = 308.15 // 35C. Dew point is ~20C but this is better for gameplay considerations.
 	symbol_html = "H<sub>2</sub>O"
 	symbol = "H2O"
 
 /datum/xgm_gas/sulfurdioxide
 	id = GAS_SULFUR
 	name = "Sulfur Dioxide"
-
 	specific_heat = 30	// J/(mol*K)
 	molar_mass = 0.044	// kg/mol
 	symbol_html = "SO<sub>2</sub>"
@@ -228,7 +224,6 @@
 /datum/xgm_gas/ammonia
 	id = GAS_AMMONIA
 	name = "Ammonia"
-
 	specific_heat = 20	// J/(mol*K)
 	molar_mass = 0.017	// kg/mol
 	breathed_product = /datum/reagent/ammonia
@@ -240,6 +235,6 @@
 	name = "Carbon Monoxide"
 	specific_heat = 30	// J/(mol*K)
 	molar_mass = 0.028	// kg/mol
-	//breathed_product = /datum/reagent/carbon_monoxide
+	breathed_product = /datum/reagent/carbon_monoxide
 	symbol_html = "CO"
 	symbol = "CO"
