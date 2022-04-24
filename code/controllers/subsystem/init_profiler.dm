@@ -5,6 +5,7 @@
 SUBSYSTEM_DEF(init_profiler)
 	name = "Init Profiler"
 	init_order = INIT_ORDER_INIT_PROFILER
+	init_stage = INITSTAGE_EARLY
 	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/init_profiler/Initialize()
