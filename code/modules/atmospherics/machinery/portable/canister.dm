@@ -429,7 +429,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	return (exposed_temperature > temperature_resistance && !shielding_powered)
 
 /obj/machinery/portable_atmospherics/canister/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	take_damage(5, BURN, 0)
+	if(exposed_temperature > heat_limit)
+		take_damage(5, BURN, 0)
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if((flags_1 & NODECONSTRUCT_1))
@@ -606,7 +607,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			transfer_moles = min(transfer_moles, (release_pressure/air_contents.volume)*air_contents.total_moles) //flow rate limit
 
 			pump_gas_passive(air_contents, environment, transfer_moles)
-			//air_update_turf(FALSE, FALSE)
 
 	air_contents.react()
 

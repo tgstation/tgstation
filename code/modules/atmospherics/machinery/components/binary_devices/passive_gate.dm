@@ -63,7 +63,7 @@ Passive gate is similar to the regular pump except:
 	pressure_delta = input_starting_pressure - target_pressure
 
 	var/transfer_moles = (target_pressure/air1.volume)*air1.total_moles
-	transfer_moles = calculate_transfer_moles(air1, air2, pressure_delta)
+	transfer_moles = min(transfer_moles, calculate_transfer_moles(air1, air2, pressure_delta))
 	if(pump_gas_passive(air1, air2, calculate_transfer_moles(air1, air2, pressure_delta)) >= 0)//pump_gas() will return a negative number if no flow occurred
 		update_parents()
 
