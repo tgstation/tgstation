@@ -390,6 +390,8 @@
 /obj/item/clothing/mask/gas/prop
 	name = "prop gas mask"
 	desc = "A prop gas mask designed for appearance. Unlike a normal gas mask this does not filter gasses or protect against pepper spray."
+	icon_state = "gas_prop"
+	inhand_icon_state = "gas_prop"
 	flags_cover = MASKCOVERSMOUTH
 	has_fov = FALSE
 
