@@ -467,9 +467,7 @@
 
 /obj/effect/anomaly/delimber/proc/swap_parts(swap_range)
 	for(var/mob/living/carbon/nearby in range(swap_range, src))
-		var/obj/item/clothing/suit/wear_suit = nearby.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-		var/obj/item/clothing/head/wear_helmet = nearby.get_item_by_slot(ITEM_SLOT_HEAD)
-		if(wear_suit?.armor[BIO] == 100 && wear_helmet?.armor[BIO] == 100)
+		if(nearby.run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [src]!") >= 100)
 			continue //We are protected
 		var/picked_zone = pick(zones)
 		var/obj/item/bodypart/picked_user_part = nearby.get_bodypart(picked_zone)
