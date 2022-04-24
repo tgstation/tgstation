@@ -5,10 +5,10 @@
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "w" = (
 /turf/closed/wall,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "A" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/graffiti{
@@ -16,27 +16,27 @@
 	spawn_loot_chance = 25
 	},
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "E" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "F" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "K" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "S" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12"
@@ -44,12 +44,12 @@
 /obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "X" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/foamtank,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 
 (1,1,1) = {"
 a
