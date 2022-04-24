@@ -17,13 +17,6 @@
 
 // Computer and Tablet Parts
 //Processors.
-
-/datum/export/modular_part/processor
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "processor board"
-	export_types = list(/obj/item/computer_hardware/processor_unit)
-	include_subtypes = FALSE
-
 /datum/export/modular_part/processor/small
 	cost = CARGO_CRATE_VALUE * 0.1
 	unit_name = "microprocessor"
@@ -42,14 +35,13 @@
 	export_types = list(/obj/item/computer_hardware/processor_unit/photonic/small)
 	include_subtypes = FALSE
 
+/datum/export/modular_part/processor/standard
+	cost = CARGO_CRATE_VALUE * 0.2
+	unit_name = "processor board"
+	export_types = list(/obj/item/computer_hardware/processor_unit)
+	include_subtypes = TRUE
+
 //Batteries.
-
-/datum/export/modular_part/battery
-	cost = CARGO_CRATE_VALUE * 0.75
-	unit_name = "computer battery"
-	export_types = list(/obj/item/stock_parts/cell/computer)
-	include_subtypes = FALSE
-
 /datum/export/modular_part/battery/advanced
 	cost = CARGO_CRATE_VALUE * 1.5
 	unit_name = "advanced computer battery"
@@ -74,14 +66,13 @@
 	export_types = list(/obj/item/stock_parts/cell/computer/nano)
 	include_subtypes = FALSE
 
+/datum/export/modular_part/battery/standard
+	cost = CARGO_CRATE_VALUE * 0.75
+	unit_name = "computer battery"
+	export_types = list(/obj/item/stock_parts/cell/computer)
+	include_subtypes = TRUE
+
 //Hard Drives.
-
-/datum/export/modular_part/harddrive
-	cost = CARGO_CRATE_VALUE * 0.4
-	unit_name = "hard disk drive"
-	export_types = list(/obj/item/computer_hardware/hard_drive)
-	include_subtypes = FALSE
-
 /datum/export/modular_part/harddrive/advanced
 	cost = CARGO_CRATE_VALUE * 0.6
 	unit_name = "advanced hard disk drive"
@@ -112,14 +103,32 @@
 	export_types = list(/obj/item/computer_hardware/hard_drive/micro)
 	include_subtypes = FALSE
 
+/datum/export/modular_part/harddrive/standard
+	cost = CARGO_CRATE_VALUE * 0.4
+	unit_name = "hard disk drive"
+	export_types = list(/obj/item/computer_hardware/hard_drive)
+	include_subtypes = TRUE
 
-//Networking/Card Parts
-/datum/export/modular_part/networkcard
+//Networking Parts
+/datum/export/modular_part/networkcard/advanced
+	cost = CARGO_CRATE_VALUE * 0.5
+	unit_name = "advanced network card"
+	export_types = list(/obj/item/computer_hardware/network_card/advanced)
+	include_subtypes = FALSE
+
+/datum/export/modular_part/networkcard/wired
+	cost = CARGO_CRATE_VALUE
+	unit_name = "wired network card"
+	export_types = list(/obj/item/computer_hardware/network_card/wired)
+	include_subtypes = FALSE
+
+/datum/export/modular_part/networkcard/standard
 	cost = CARGO_CRATE_VALUE * 0.25
-	unit_name = "computer network card"
+	unit_name = "network card"
 	export_types = list(/obj/item/computer_hardware/network_card)
 	include_subtypes = TRUE
 
+//Card Parts
 /datum/export/modular_part/idcard
 	cost = CARGO_CRATE_VALUE * 0.1
 	unit_name = "computer ID card slot"
@@ -134,7 +143,7 @@
 
 //Miscellaneous Parts
 /datum/export/modular_part/misc
-	cost = CARGO_CRATE_VALUE * 0.075
+	cost = CARGO_CRATE_VALUE * 0.1
 	unit_name = "miscellaneous computer part"
 	export_types = list(/obj/item/computer_hardware)
 	include_subtypes = TRUE
