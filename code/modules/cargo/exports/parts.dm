@@ -88,6 +88,26 @@
 	export_types = list(/obj/item/computer_hardware/battery)
 	include_subtypes = TRUE
 
+//Data Disks
+
+/datum/export/modular_part/portabledrive/advanced
+	cost = CARGO_CRATE_VALUE * 0.4
+	unit_name = "advanced data disk"
+	export_types = list(/obj/item/computer_hardware/hard_drive/portable/advanced)
+	include_subtypes = FALSE
+
+/datum/export/modular_part/portabledrive/super
+	cost = CARGO_CRATE_VALUE * 0.6
+	unit_name = "super data disk"
+	export_types = list(/obj/item/computer_hardware/hard_drive/portable/super)
+	include_subtypes = FALSE
+
+/datum/export/modular_part/portabledrive/standard
+	cost = CARGO_CRATE_VALUE * 0.2
+	unit_name = "data disk"
+	export_types = list(/obj/item/computer_hardware/hard_drive/portable)
+	include_subtypes = TRUE
+
 //Hard Drives
 
 /datum/export/modular_part/harddrive/advanced
@@ -144,26 +164,6 @@
 	cost = CARGO_CRATE_VALUE * 0.25
 	unit_name = "network card"
 	export_types = list(/obj/item/computer_hardware/network_card)
-	include_subtypes = TRUE
-
-//Data Disks
-
-/datum/export/modular_part/portabledrive/advanced
-	cost = CARGO_CRATE_VALUE * 0.4
-	unit_name = "advanced data disk"
-	export_types = list(/obj/item/computer_hardware/hard_drive/portable/advanced)
-	include_subtypes = FALSE
-
-/datum/export/modular_part/portabledrive/super
-	cost = CARGO_CRATE_VALUE * 0.6
-	unit_name = "super data disk"
-	export_types = list(/obj/item/computer_hardware/hard_drive/portable/super)
-	include_subtypes = FALSE
-
-/datum/export/modular_part/portabledrive/standard
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "data disk"
-	export_types = list(/obj/item/computer_hardware/hard_drive/portable)
 	include_subtypes = TRUE
 
 //Miscellaneous Parts
