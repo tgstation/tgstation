@@ -59,7 +59,6 @@
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
 		icon_state = initial(icon_state)
-		updateUsrDialog()
 	else if(!user.combat_mode)
 		to_chat(user, span_warning("You can't put [P] in [src]!"))
 	else
@@ -99,7 +98,6 @@
 			var/obj/item/content = locate(params["ref"]) in src
 			if(istype(content) && in_range(src, usr))
 				usr.put_in_hands(content)
-				updateUsrDialog()
 				icon_state = "[initial(icon_state)]-open"
 				addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
 
@@ -121,21 +119,6 @@
 			to_chat(user, span_notice("You pull \a [I] out of [src] at random."))
 			return
 	to_chat(user, span_notice("You find nothing in [src]."))
-
-
-/obj/structure/filingcabinet/Topic(href, href_list)
-	if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(usr)))
-		return
-	if(href_list["retrieve"])
-		usr << browse("", "window=filingcabinet") // Close the menu
-
-		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
-		if(istype(P) && in_range(src, usr))
-			usr.put_in_hands(P)
-			updateUsrDialog()
-			icon_state = "[initial(icon_state)]-open"
-			addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
-
 
 /*
  * Security Record Cabinets

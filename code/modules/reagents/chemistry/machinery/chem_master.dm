@@ -146,7 +146,7 @@
 			return
 		replace_beaker(user, B)
 		to_chat(user, span_notice("You add [B] to [src]."))
-		updateUsrDialog()
+		ui_interact(user)
 		update_appearance()
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
@@ -156,7 +156,7 @@
 			return
 		bottle = I
 		to_chat(user, span_notice("You add [I] into the dispenser slot."))
-		updateUsrDialog()
+		ui_interact(user)
 	else
 		return ..()
 
