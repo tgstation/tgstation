@@ -152,7 +152,7 @@
 		else if(human.satiety < 0)
 			human.satiety++
 			if(DT_PROB(round(-human.satiety/77), delta_time))
-				human.Jitter(5)
+				human.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			hunger_rate = 3 * HUNGER_FACTOR
 		hunger_rate *= human.physiology.hunger_mod
 		human.adjust_nutrition(-hunger_rate * delta_time)

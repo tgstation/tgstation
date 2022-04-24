@@ -253,7 +253,7 @@
 /datum/reagent/medicine/rezadone/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustToxLoss(1 * REM * delta_time, 0)
 	M.Dizzy(5 * REM * delta_time)
-	M.Jitter(5 * REM * delta_time)
+	M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 	..()
 	. = TRUE
 
@@ -555,7 +555,7 @@
 		var/obj/item/I = M.get_active_held_item()
 		if(I && M.dropItemToGround(I))
 			to_chat(M, span_notice("Your hands spaz out and you drop what you were holding!"))
-			M.Jitter(10)
+			M.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 
 	M.AdjustAllImmobility(-20 * REM * delta_time * normalise_creation_purity())
 	M.adjustStaminaLoss(-1 * REM * delta_time * normalise_creation_purity(), FALSE)
@@ -630,7 +630,7 @@
 	if(DT_PROB(18, delta_time))
 		M.drop_all_held_items()
 		M.Dizzy(2)
-		M.Jitter(2)
+		M.set_timed_status_effect(4 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	..()
 
 
@@ -774,14 +774,14 @@
 	M.losebreath = 0
 	if(DT_PROB(10, delta_time))
 		M.Dizzy(5)
-		M.Jitter(5)
+		M.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	..()
 
 /datum/reagent/medicine/atropine/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustToxLoss(0.5 * REM * delta_time, 0)
 	. = TRUE
 	M.Dizzy(1 * REM * delta_time)
-	M.Jitter(1 * REM * delta_time)
+	M.set_timed_status_effect(2 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	..()
 
 /datum/reagent/medicine/epinephrine
@@ -1214,7 +1214,7 @@
 	..()
 	metabolizer.AdjustAllImmobility(-20 * REM * delta_time)
 	metabolizer.adjustStaminaLoss(-10 * REM * delta_time, 0)
-	metabolizer.Jitter(10 * REM * delta_time)
+	metabolizer.set_timed_status_effect(20 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 	metabolizer.Dizzy(10 * REM * delta_time)
 	return TRUE
 
@@ -1230,7 +1230,7 @@
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	L.Dizzy(0)
-	L.Jitter(0)
+	L.remove_status_effect(/datum/status_effect/jitter)
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/metabolizer, delta_time, times_fired)
 	metabolizer.adjustToxLoss(1 * REM * delta_time, 0)
@@ -1327,7 +1327,7 @@
 		overdose_threshold = overdose_threshold + ((rand(-10, 10) / 10) * REM * delta_time) // for extra fun
 		metabolizer.AdjustAllImmobility(-5 * REM * delta_time)
 		metabolizer.adjustStaminaLoss(-0.5 * REM * delta_time, 0)
-		metabolizer.Jitter(1)
+		metabolizer.set_timed_status_effect(1 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 		metabolization_rate = 0.005 * REAGENTS_METABOLISM * rand(5, 20) // randomizes metabolism between 0.02 and 0.08 per second
 		. = TRUE
 	..()

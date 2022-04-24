@@ -18,7 +18,7 @@
 				if(ears)
 					ears.adjustEarDamage(0, 30)
 				C.add_confusion(25)
-				C.Jitter(50)
+				C.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			else
 				SEND_SOUND(C, sound('sound/effects/screech.ogg'))
 

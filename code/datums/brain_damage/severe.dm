@@ -187,17 +187,15 @@
 				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
 			addtimer(CALLBACK(owner, /mob/living/carbon.proc/vomit, high_stress), 50) //blood vomit if high stress
 		if(2)
-			if(!high_stress)
-				to_chat(owner, span_warning("You can't stop shaking..."))
-				owner.dizziness += 20
-				owner.add_confusion(20)
-				owner.Jitter(20)
-			else
+			owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			owner.dizziness += 20
+			owner.add_confusion(20)
+
+			if(high_stress)
 				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
-				owner.dizziness += 20
-				owner.add_confusion(20)
-				owner.Jitter(20)
 				owner.adjustStaminaLoss(50)
+			else
+				to_chat(owner, span_warning("You can't stop shaking..."))
 
 		if(3, 4)
 			if(!high_stress)
