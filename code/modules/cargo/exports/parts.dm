@@ -16,7 +16,8 @@
 	export_types = list(/obj/item/circuitboard/computer/solar_control)
 
 // Computer and Tablet Parts
-//Processors.
+//Processors
+
 /datum/export/modular_part/processor/small
 	cost = CARGO_CRATE_VALUE * 0.1
 	unit_name = "microprocessor"
@@ -24,13 +25,13 @@
 	include_subtypes = FALSE
 
 /datum/export/modular_part/processor/photonic
-	cost = CARGO_CRATE_VALUE * 0.5
+	cost = CARGO_CRATE_VALUE * 1.2
 	unit_name = "photonic processor board"
 	export_types = list(/obj/item/computer_hardware/processor_unit/photonic)
 	include_subtypes = FALSE
 
 /datum/export/modular_part/processor/photonic/small
-	cost = CARGO_CRATE_VALUE * 0.25
+	cost = CARGO_CRATE_VALUE * 0.6
 	unit_name = "photonic microprocessor"
 	export_types = list(/obj/item/computer_hardware/processor_unit/photonic/small)
 	include_subtypes = FALSE
@@ -41,38 +42,54 @@
 	export_types = list(/obj/item/computer_hardware/processor_unit)
 	include_subtypes = TRUE
 
-//Batteries.
+//Batteries
+
 /datum/export/modular_part/battery/advanced
-	cost = CARGO_CRATE_VALUE * 1.5
+	cost = CARGO_CRATE_VALUE * 0.6
 	unit_name = "advanced computer battery"
 	export_types = list(/obj/item/stock_parts/cell/computer/advanced)
 	include_subtypes = FALSE
 
 /datum/export/modular_part/battery/super
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 0.8
 	unit_name = "super computer battery"
 	export_types = list(/obj/item/stock_parts/cell/computer/super)
 	include_subtypes = FALSE
 
 /datum/export/modular_part/battery/micro
-	cost = CARGO_CRATE_VALUE * 0.5
+	cost = CARGO_CRATE_VALUE * 0.2
 	unit_name = "micro computer battery"
 	export_types = list(/obj/item/stock_parts/cell/computer/micro)
 	include_subtypes = FALSE
 
 /datum/export/modular_part/battery/nano
-	cost = CARGO_CRATE_VALUE * 0.3
+	cost = CARGO_CRATE_VALUE * 0.1
 	unit_name = "nano computer battery"
 	export_types = list(/obj/item/stock_parts/cell/computer/nano)
 	include_subtypes = FALSE
 
 /datum/export/modular_part/battery/standard
-	cost = CARGO_CRATE_VALUE * 0.75
+	cost = CARGO_CRATE_VALUE * 0.4
 	unit_name = "computer battery"
 	export_types = list(/obj/item/stock_parts/cell/computer)
 	include_subtypes = TRUE
 
-//Hard Drives.
+//Other Power Parts
+
+/datum/export/modular_part/apc_link
+	cost = CARGO_CRATE_VALUE * 0.5
+	unit_name = "area power connector"
+	export_types = list(/obj/item/computer_hardware/recharger/apc_recharger)
+	include_subtypes = TRUE
+
+/datum/export/modular_part/controller
+	cost = CARGO_CRATE_VALUE * 0.1
+	unit_name = "power cell controller"
+	export_types = list(/obj/item/computer_hardware/battery)
+	include_subtypes = TRUE
+
+//Hard Drives
+
 /datum/export/modular_part/harddrive/advanced
 	cost = CARGO_CRATE_VALUE * 0.6
 	unit_name = "advanced hard disk drive"
@@ -110,6 +127,7 @@
 	include_subtypes = TRUE
 
 //Networking Parts
+
 /datum/export/modular_part/networkcard/advanced
 	cost = CARGO_CRATE_VALUE * 0.5
 	unit_name = "advanced network card"
@@ -128,9 +146,30 @@
 	export_types = list(/obj/item/computer_hardware/network_card)
 	include_subtypes = TRUE
 
-//Card Parts
+//Data Disks
+
+/datum/export/modular_part/portabledrive/advanced
+	cost = CARGO_CRATE_VALUE * 0.4
+	unit_name = "advanced data disk"
+	export_types = list(/obj/item/computer_hardware/hard_drive/portable/advanced)
+	include_subtypes = FALSE
+
+/datum/export/modular_part/portabledrive/super
+	cost = CARGO_CRATE_VALUE * 0.6
+	unit_name = "super data disk"
+	export_types = list(/obj/item/computer_hardware/hard_drive/portable/super)
+	include_subtypes = FALSE
+
+/datum/export/modular_part/portabledrive/standard
+	cost = CARGO_CRATE_VALUE * 0.2
+	unit_name = "data disk"
+	export_types = list(/obj/item/computer_hardware/hard_drive/portable)
+	include_subtypes = TRUE
+
+//Miscellaneous Parts
+
 /datum/export/modular_part/idcard
-	cost = CARGO_CRATE_VALUE * 0.1
+	cost = CARGO_CRATE_VALUE * 0.2
 	unit_name = "computer ID card slot"
 	export_types = list(/obj/item/computer_hardware/card_slot)
 	include_subtypes = TRUE
@@ -141,7 +180,24 @@
 	export_types = list(/obj/item/computer_hardware/ai_slot)
 	include_subtypes = TRUE
 
-//Miscellaneous Parts
+/datum/export/modular_part/miniprinter
+	cost = CARGO_CRATE_VALUE * 0.2
+	unit_name = "miniprinter"
+	export_types = list(/obj/item/computer_hardware/printer/mini)
+	include_subtypes = TRUE
+
+/datum/export/modular_part/sensorpackage
+	cost = CARGO_CRATE_VALUE * 0.2
+	unit_name = "sensor package"
+	export_types = list(/obj/item/computer_hardware/sensorpackage)
+	include_subtypes = TRUE
+
+/datum/export/modular_part/integratedsignaler
+	cost = CARGO_CRATE_VALUE * 0.2
+	unit_name = "integrated computer signaler"
+	export_types = list(/obj/item/computer_hardware/radio_card)
+	include_subtypes = TRUE
+
 /datum/export/modular_part/misc
 	cost = CARGO_CRATE_VALUE * 0.1
 	unit_name = "miscellaneous computer part"
