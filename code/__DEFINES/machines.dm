@@ -27,7 +27,11 @@
 #define IDLE_POWER_USE 1
 #define ACTIVE_POWER_USE 2
 
-#define BASE_MACHINE_IDLE_CONSUMPTION 100
+///Multiplier to offset the current power consumption
+#define POWER_CONSUMPTION_GLOBAL_MULTIPLIER 1
+///Base global power consumption for idling machines
+#define BASE_MACHINE_IDLE_CONSUMPTION 100 * POWER_CONSUMPTION_GLOBAL_MULTIPLIER
+///Base global power consumption for active machines
 #define BASE_MACHINE_ACTIVE_CONSUMPTION (BASE_MACHINE_IDLE_CONSUMPTION * 10)
 
 /// Bitflags for a machine's preferences on when it should start processing. For use with machinery's `processing_flags` var.
