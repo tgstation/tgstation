@@ -1,0 +1,5 @@
+author: "EthanRockss"
+delete-after: True
+changes: 
+  - rscadd: "Added prop gas masks for both default and atmos"
+  - rscadd: "Added gas masks to autodrobe"
