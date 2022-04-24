@@ -1,22 +1,13 @@
-/*
-//////////////////////////////////////
-Eternal Youth
-
-	Moderate stealth boost.
-	Increases resistance tremendously.
-	Increases stage speed tremendously.
-	Reduces transmission tremendously.
-	Critical Level.
-
-BONUS
-	Gives you immortality and eternal youth!!!
-	Can be used to buff your virus
-
-//////////////////////////////////////
+/*Eternal Youth
+ * Greatly increases stealth
+ * Tremendous increase to resistance
+ * Tremendous increase to stage speed
+ * Tremendous reduction to transmissibility
+ * Critical level
+ * Bonus: Can be used to buff your virus
 */
 
 /datum/symptom/youth
-
 	name = "Eternal Youth"
 	desc = "The virus becomes symbiotically connected to the cells in the host's body, preventing and reversing aging. \
 	The virus, in turn, becomes more resistant, spreads faster, and is harder to spot, although it doesn't thrive as well without a host."
