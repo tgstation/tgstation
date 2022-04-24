@@ -33,7 +33,9 @@
 	if (!revdata)
 		msg += "No revision information found."
 	else
-		msg += "Revision '[copytext_char(revdata.commit, 1, 11)]' compiled on '[revdata.date]'"
+		msg += "Revision '[copytext_char(revdata.commit, 1, 9)]'
+		if (revdata.date)
+			msg += "compiled on '[revdata.date]'"
 		
 		if(revdata.originmastercommit)
 			msg += ", from origin commit: <[CONFIG_GET(string/githuburl)]/commit/[revdata.originmastercommit]>"
@@ -41,7 +43,7 @@
 		if(revdata.testmerge.len)
 			msg += "\n"
 			for(var/datum/tgs_revision_information/test_merge/PR as anything in revdata.testmerge)
-				msg += "PR #[PR.number] [PR.title] at [copytext_char(PR.head_commit, 1, 11)].\n"
+				msg += "PR #[PR.number] at [copytext_char(PR.head_commit, 1, 9)] [PR.title].\n"
 				if (PR.url)
 					msg += "<[PR.url]>\n"
 	return msg.Join("")
