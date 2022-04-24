@@ -33,7 +33,7 @@
 	if (!revdata)
 		msg += "No revision information found."
 	else
-		msg += "Revision '[copytext_char(revdata.commit, 1, 9)]'
+		msg += "Revision [copytext_char(revdata.commit, 1, 9)]"
 		if (revdata.date)
 			msg += "compiled on '[revdata.date]'"
 		
