@@ -49,7 +49,7 @@
 	name = "raw hallucination core"
 	desc = "The raw core of a hallucination anomaly, makes your head spin."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/hallucination
-	icon_state = "rawcore_bluespace"
+	icon_state = "rawcore_hallucination"
 
 /obj/item/raw_anomaly_core/random
 	name = "random raw core"
