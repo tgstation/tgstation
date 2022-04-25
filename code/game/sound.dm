@@ -272,4 +272,6 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 				soundin = pick('sound/effects/treechop1.ogg', 'sound/effects/treechop2.ogg', 'sound/effects/treechop3.ogg')
 			if(SFX_ROCK_TAP)
 				soundin = pick('sound/effects/rocktap1.ogg', 'sound/effects/rocktap2.ogg', 'sound/effects/rocktap3.ogg')
+			if(SFX_GLASS_CRACK)
+				soundin = pick('sound/effects/glass_crack1.ogg', 'sound/effects/glass_crack2.ogg', 'sound/effects/glass_crack3.ogg', 'sound/effects/glass_crack4.ogg')
 	return soundin

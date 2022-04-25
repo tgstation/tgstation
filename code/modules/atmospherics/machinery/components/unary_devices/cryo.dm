@@ -287,13 +287,11 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 	var/datum/gas_mixture/air1 = airs[1]
 
-	/* PARIAH EDIT REMOVAL - HUGBOX BARGAGE
 	if(!nodes[1] || !airs[1] || !air1.gas.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		var/msg = "Insufficient cryogenic gas, shutting down."
 		radio.talk_into(src, msg, radio_channel)
 		set_on(FALSE)
 		return
-	*/
 
 	if(occupant)
 		var/mob/living/mob_occupant = occupant

@@ -20,3 +20,7 @@
 /obj/machinery/atmospherics/components/unary/proc/assign_uid_vents()
 	uid = num2text(gl_uid++)
 	return uid
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_QDEL_FORCE //Yes im lazy

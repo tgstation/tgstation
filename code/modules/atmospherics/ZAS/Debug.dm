@@ -10,7 +10,7 @@ GLOBAL_REAL_VAR(obj/effect/zasdbg/mark/zasdbgovl_mark) = new
 /connection_edge/var/dbg_out = 0
 
 /obj/effect/zasdbg
-	icon = 'modular_pariah/master_files/icons/testing/Zone.dmi'
+	icon = 'icons/testing/Zone.dmi'
 	invisibility = INVISIBILITY_OBSERVER
 
 /obj/effect/zasdbg/assigned

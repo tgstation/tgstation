@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(contamination_overlay, /image, image('modular_pariah/master_files/icons/effects/contamination.dmi'))
+GLOBAL_DATUM_INIT(contamination_overlay, /image, image('icons/effects/contamination.dmi'))
 
 /datum/pl_control
 	var/plasma_dmg = 3

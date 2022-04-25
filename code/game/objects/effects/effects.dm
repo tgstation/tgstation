@@ -62,6 +62,5 @@
 /obj/effect/dummy/singularity_act()
 	return
 
-//PARIAH EDIT - PLASMA CONTAMINATION
 /obj/effect/contaminate()
 	return

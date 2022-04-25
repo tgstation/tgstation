@@ -1,7 +1,7 @@
 /obj/item/inflatable
 	name = "inflatable"
 	w_class = WEIGHT_CLASS_NORMAL
-	icon = 'modular_pariah/master_files/icons/obj/inflatable.dmi'
+	icon = 'icons/obj/inflatable.dmi'
 	max_integrity = 10
 	var/deploy_path = null
 
@@ -52,7 +52,7 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = 0
-	icon = 'modular_pariah/master_files/icons/obj/inflatable.dmi'
+	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "wall"
 	can_atmos_pass = CANPASS_DENSITY
 	max_integrity = 10
@@ -294,7 +294,7 @@
 /obj/item/inflatable/torn
 	name = "torn inflatable wall"
 	desc = "A folded membrane which rapidly expands into a large cubical shape on activation. It is too torn to be usable."
-	icon = 'modular_pariah/master_files/icons/obj/inflatable.dmi'
+	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "folded_wall_torn"
 
 /obj/item/inflatable/torn/attack_self(mob/user)
@@ -304,7 +304,7 @@
 /obj/item/inflatable/door/torn
 	name = "torn inflatable door"
 	desc = "A folded membrane which rapidly expands into a simple door on activation. It is too torn to be usable."
-	icon = 'modular_pariah/master_files/icons/obj/inflatable.dmi'
+	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "folded_door_torn"
 
 /obj/item/inflatable/door/torn/attack_self(mob/user)

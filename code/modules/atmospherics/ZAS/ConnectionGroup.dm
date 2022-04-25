@@ -170,7 +170,7 @@ Class Procs:
 			repelled = A.movables()
 
 		if(REALTIMEOFDAY > last_woosh + 2 SECONDS)
-			playsound(pick(connecting_turfs), 'modular_pariah/master_files/sound/effects/space_wind_big.ogg', 100, TRUE, null, pressure_affected = FALSE)
+			playsound(pick(connecting_turfs), 'sound/effects/space_wind_big.ogg', 100, TRUE, null, pressure_affected = FALSE)
 			last_woosh = REALTIMEOFDAY
 
 		flow(attracted, abs(differential), 0)
