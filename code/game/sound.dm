@@ -76,7 +76,7 @@
 				. += listening_mob
 
 	else //these sounds don't carry through walls
-		listeners = override_hearers || hearers(maxdistance, turf_source)
+		listeners = override_hearers || get_hearers_in_view(maxdistance, turf_source)
 
 		if(above_turf && istransparentturf(above_turf))
 			listeners += get_hearers_in_view(maxdistance, above_turf)
@@ -160,7 +160,7 @@
 			sound_to_use.echo[3] = 0 //Room setting, 0 means normal reverb
 			sound_to_use.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
 
-	send_sound(src, sound_to_use)
+	SEND_SOUND(src, sound_to_use)
 
 ///TODOKYLER: only let this exist for part of the tm to benchmark it
 /proc/send_sound(target, sound)

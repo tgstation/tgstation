@@ -73,7 +73,6 @@
 		return
 
 	var/atom/movable/movable_parent = parent
-	movable_parent.inertia_moving = FALSE
 	movable_parent.setDir(old_dir)
 	if(movable_parent.Process_Spacemove(0))
 		glide_to_halt(visual_delay)
@@ -92,7 +91,7 @@
 	if(!isturf(movable_parent.loc))
 		qdel(src)
 		return
-	if(movable_parent.inertia_moving) //This'll be handled elsewhere
+	if(movable_parent.inertia_moving) //This'll be handled elsewhere //TODOKYLER: check if this logic sti
 		return
 	if(!movable_parent.Process_Spacemove(0))
 		return
