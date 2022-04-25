@@ -134,26 +134,28 @@
 	if(!source_loc)
 		return
 
-	///cache for sanic speed (lists are references anyways)
-	var/static/list/cached_footsteps = GLOB.footstep
+	//cache for sanic speed (lists are references anyways)
+	var/static/list/footstep_sounds = GLOB.footstep
+	///list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
 	var/list/heard_clients
 
 	if ((source.wear_suit?.body_parts_covered | source.w_uniform?.body_parts_covered | source.shoes?.body_parts_covered) & FEET)
 		// we are wearing shoes
 
-		heard_clients = playsound(source_loc, pick(cached_footsteps[source_loc.footstep][1]),
-			cached_footsteps[source_loc.footstep][2] * volume * volume_multiplier,
+		heard_clients = playsound(source_loc, pick(footstep_sounds[source_loc.footstep][1]),
+			footstep_sounds[source_loc.footstep][2] * volume * volume_multiplier,
 			TRUE,
-			cached_footsteps[source_loc.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+			footstep_sounds[source_loc.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, override_hearers = source.closeby_client_mobs)
 	else
 		if(source.dna.species.special_step_sounds)
-			heard_clients = playsound(source_loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
+			heard_clients = playsound(source_loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary, override_hearers = source.closeby_client_mobs)
 		else
-			var/static/list/cached_barefootsteps = GLOB.barefootstep
-			heard_clients = playsound(source_loc, pick(cached_barefootsteps[source_loc.barefootstep][1]),
-				cached_barefootsteps[source_loc.barefootstep][2] * volume * volume_multiplier,
+			var/static/list/bare_footstep_sounds = GLOB.barefootstep
+
+			heard_clients = playsound(source_loc, pick(bare_footstep_sounds[source_loc.barefootstep][1]),
+				bare_footstep_sounds[source_loc.barefootstep][2] * volume * volume_multiplier,
 				TRUE,
-				cached_barefootsteps[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+				bare_footstep_sounds[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, override_hearers = source.closeby_client_mobs)
 
 	if(heard_clients)
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)

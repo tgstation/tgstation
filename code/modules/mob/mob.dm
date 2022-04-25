@@ -38,6 +38,12 @@
 	if(observers?.len)
 		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
+
+	for(var/mob/adjacent_client_mob as anything in closeby_client_mobs)
+		LAZYREMOVE(adjacent_client_mob.closeby_client_mobs, src)
+
+	closeby_client_mobs = null
+
 	qdel(hud_used)
 	QDEL_LIST(client_colours)
 	ghostize() //False, since we're deleting it currently
