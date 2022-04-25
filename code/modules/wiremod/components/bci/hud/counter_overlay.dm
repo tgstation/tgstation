@@ -78,7 +78,7 @@
 		counter,
 		owner,
 	)
-	alt_appearance.add_hud_to_mob(owner)
+	alt_appearance.show_to(owner)
 
 	counter_appearance = WEAKREF(alt_appearance)
 
@@ -103,7 +103,7 @@
 			number,
 			owner,
 		)
-		number_alt_appearance.add_hud_to_mob(owner)
+		number_alt_appearance.show_to(owner)
 
 		numbers += WEAKREF(number_alt_appearance)
 

@@ -164,7 +164,7 @@
 /mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
 	GLOB.bots_list += src
-	
+
 	path_hud = new /datum/atom_hud/data/bot_path()
 	for(var/hud in path_hud.hud_icons) // You get to see your own path
 		set_hud_image_active(hud, exclusive_hud = path_hud)
@@ -191,10 +191,10 @@
 	//If a bot has its own HUD (for player bots), provide it.
 	if(!isnull(data_hud_type))
 		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
-		datahud.add_hud_to_mob(src)
+		datahud.show_to(src)
 	if(path_hud)
 		path_hud.add_atom_to_hud(src)
-		path_hud.add_hud_to_mob(src)
+		path_hud.show_to(src)
 
 
 /mob/living/simple_animal/bot/Destroy()

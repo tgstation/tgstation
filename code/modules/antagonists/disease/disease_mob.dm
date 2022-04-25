@@ -66,7 +66,7 @@ the new instance inside the host to be updated to the template's stats.
 	SSdisease.archive_diseases[disease_template.GetDiseaseID()] = disease_template //important for stuff that uses disease IDs
 
 	var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_SENTIENT_DISEASE]
-	my_hud.add_hud_to_mob(src)
+	my_hud.show_to(src)
 
 	browser = new /datum/browser(src, "disease_menu", "Adaptation Menu", 1000, 770, src)
 

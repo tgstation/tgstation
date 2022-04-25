@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 	for(var/mob in GLOB.player_list)
 		if(mobShouldSee(mob))
-			add_hud_to_mob(mob)
+			show_to(mob)
 
 /datum/atom_hud/alternate_appearance/Destroy()
 	GLOB.active_alternate_appearances -= src
@@ -41,7 +41,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/proc/onNewMob(mob/M)
 	if(mobShouldSee(M))
-		add_hud_to_mob(M)
+		show_to(M)
 
 /datum/atom_hud/alternate_appearance/proc/mobShouldSee(mob/M)
 	return FALSE
@@ -80,7 +80,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	target.set_hud_image_active(appearance_key, exclusive_hud = src)
 
 	if((options & AA_TARGET_SEE_APPEARANCE) && ismob(target))
-		add_hud_to_mob(target)
+		show_to(target)
 	if(add_ghost_version)
 		var/image/ghost_image = image(icon = I.icon , icon_state = I.icon_state, loc = I.loc)
 		ghost_image.override = FALSE

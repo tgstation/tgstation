@@ -15,7 +15,7 @@
 	. = ..()
 	if(. && !HAS_TRAIT(H, TRAIT_MEDICAL_HUD))
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-		hud.add_hud_to_mob(H)
+		hud.show_to(H)
 		ADD_TRAIT(H, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT)
 
 /obj/vehicle/sealed/mecha/medical/odysseus/remove_occupant(mob/living/carbon/human/H)
@@ -30,4 +30,4 @@
 	if(. && !HAS_TRAIT(M, TRAIT_MEDICAL_HUD))
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 		var/mob/living/brain/B = M.brainmob
-		hud.add_hud_to_mob(B)
+		hud.show_to(B)

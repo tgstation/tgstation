@@ -31,8 +31,8 @@
 		return
 	to_chat(user, "You roll the balaclava over your face, and a data display appears before your eyes.")
 	ADD_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-	H.add_hud_to_mob(user)
+	var/datum/atom_hud/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.show_to(user)
 	voice_unknown = TRUE
 
 /obj/item/clothing/mask/infiltrator/dropped(mob/living/carbon/human/user)

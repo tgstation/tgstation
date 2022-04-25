@@ -130,33 +130,33 @@ GLOBAL_LIST_INIT(huds, list(
 		else
 			break
 
-///apply this atom_hud to new_mob_user
-/datum/atom_hud/proc/add_hud_to_mob(mob/new_mob_user)
-	if(!new_mob_user)
+///show this hud to the passed in user
+/datum/atom_hud/proc/show_to(mob/new_viewer)
+	if(!new_viewer)
 		return
 
-	var/turf/their_turf = get_turf(new_mob_user)
+	var/turf/their_turf = get_turf(new_viewer)
 	if(!their_turf)
 		return
 
-	if(!hud_users[their_turf.z][new_mob_user])
-		hud_users[their_turf.z][new_mob_user] = TRUE
-		hud_users_all_z_levels[new_mob_user] = 1
+	if(!hud_users[their_turf.z][new_viewer])
+		hud_users[their_turf.z][new_viewer] = TRUE
+		hud_users_all_z_levels[new_viewer] = 1
 
-		RegisterSignal(new_mob_user, COMSIG_PARENT_QDELETING, .proc/unregister_atom, override = TRUE) //both hud users and hud atoms use these signals
-		RegisterSignal(new_mob_user, COMSIG_MOVABLE_Z_CHANGED, .proc/on_atom_or_user_z_level_changed, override = TRUE)
+		RegisterSignal(new_viewer, COMSIG_PARENT_QDELETING, .proc/unregister_atom, override = TRUE) //both hud users and hud atoms use these signals
+		RegisterSignal(new_viewer, COMSIG_MOVABLE_Z_CHANGED, .proc/on_atom_or_user_z_level_changed, override = TRUE)
 
-		if(next_time_allowed[new_mob_user] > world.time)
-			if(!queued_to_see[new_mob_user])
-				addtimer(CALLBACK(src, .proc/show_hud_images_after_cooldown, new_mob_user), next_time_allowed[new_mob_user] - world.time)
-				queued_to_see[new_mob_user] = TRUE
+		if(next_time_allowed[new_viewer] > world.time)
+			if(!queued_to_see[new_viewer])
+				addtimer(CALLBACK(src, .proc/show_hud_images_after_cooldown, new_viewer), next_time_allowed[new_viewer] - world.time)
+				queued_to_see[new_viewer] = TRUE
 
 		else
-			next_time_allowed[new_mob_user] = world.time + ADD_HUD_TO_COOLDOWN
+			next_time_allowed[new_viewer] = world.time + ADD_HUD_TO_COOLDOWN
 			for(var/atom/hud_atom_to_add as anything in get_hud_atoms_for_z_level(their_turf.z))
-				add_atom_to_single_mob_hud(new_mob_user, hud_atom_to_add)
+				add_atom_to_single_mob_hud(new_viewer, hud_atom_to_add)
 	else
-		hud_users_all_z_levels[new_mob_user] += 1 //increment the number of times this hud has been added to this hud user
+		hud_users_all_z_levels[new_viewer] += 1 //increment the number of times this hud has been added to this hud user
 
 ///removes everyone of this hud's atom images from former_hud_user
 /datum/atom_hud/proc/remove_hud_from_mob(mob/former_hud_user, absolute = FALSE)

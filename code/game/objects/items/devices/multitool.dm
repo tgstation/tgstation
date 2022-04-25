@@ -107,7 +107,7 @@
 		ai_detect_plane.alpha = 64
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
 		if(!hud.hud_users[user])
-			hud.add_hud_to_mob(user)
+			hud.show_to(user)
 		eye.eye_user = user
 		eye.setLoc(get_turf(src))
 

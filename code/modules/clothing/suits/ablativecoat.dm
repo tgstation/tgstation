@@ -40,7 +40,7 @@
 	var/mob/living/carbon/user = loc
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
-	hud.add_hud_to_mob(user)
+	hud.show_to(user)
 	balloon_alert(user, "you put on the hood, and enable the hud")
 	return ..()
 

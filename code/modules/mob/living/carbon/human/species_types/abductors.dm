@@ -28,7 +28,7 @@
 /datum/species/abductor/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	abductor_hud.add_hud_to_mob(C)
+	abductor_hud.show_to(C)
 
 	C.set_safe_hunger_level()
 

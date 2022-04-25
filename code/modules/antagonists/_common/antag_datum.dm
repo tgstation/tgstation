@@ -424,7 +424,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	// Add HUDs that they couldn't see before
 	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
 		if (antag_hud.mobShouldSee(owner.current))
-			antag_hud.add_hud_to_mob(owner.current)
+			antag_hud.show_to(owner.current)
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom

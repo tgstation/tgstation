@@ -119,7 +119,7 @@
 			medHUD = !medHUD
 			if(medHUD)
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
-				med.add_hud_to_mob(src)
+				med.show_to(src)
 			else
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
 				med.remove_hud_from_mob(src)
@@ -147,7 +147,7 @@
 			secHUD = !secHUD
 			if(secHUD)
 				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-				sec.add_hud_to_mob(src)
+				sec.show_to(src)
 			else
 				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
 				sec.remove_hud_from_mob(src)
