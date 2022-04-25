@@ -18436,7 +18436,7 @@
 /area/station/engineering/lobby)
 "hUC" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
+/obj/machinery/door/poddoor/shutters/window{
 	id = "stationawaygate";
 	name = "Gateway Access Shutters"
 	},

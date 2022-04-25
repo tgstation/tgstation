@@ -178,7 +178,7 @@
 		/obj/item/food/doughslice = 1,
 		/datum/reagent/consumable/cream = 5,
 		/obj/item/food/cheese/wedge = 1,
-		/obj/item/food/meat/rawcrab = 1
+		/obj/item/food/meat/slab/rawcrab = 1
 	)
 	result = /obj/item/food/crab_rangoon
 	subcategory = CAT_MISCFOOD
