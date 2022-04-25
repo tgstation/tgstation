@@ -14,8 +14,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/silicon = 20)
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	/// The machine we're building.
 	var/build_path = null
-	///determines if the circuit board originated from a vendor off station or not.
+	/// Determines if the circuit board originated from a vendor off station or not.
 	var/onstation = TRUE
 
 /obj/item/circuitboard/Initialize(mapload)
@@ -62,14 +63,19 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 */
 
 /obj/item/circuitboard/machine
-	var/needs_anchored = TRUE // Whether this machine must be anchored to be constructed.
-	var/list/req_components // Components required by the machine.
-							// Example: list(/obj/item/stock_parts/matter_bin = 5)
+	/// Whether this machine must be anchored to be constructed.
+	var/needs_anchored = TRUE
+	/**
+	 * Components required by the machine.
+	 * Example: list(/obj/item/stock_parts/matter_bin = 5) */
+	var/list/req_components
+	/**
+	 * Default replacements for req_components, to be used in apply_default_parts instead of req_components types
+	 * Example: list(/obj/item/stock_parts/matter_bin = /obj/item/stock_parts/matter_bin/super)
+	 */
+	var/list/def_components
 
-	var/list/def_components // Default replacements for req_components, to be used in apply_default_parts instead of req_components types
-							// Example: list(/obj/item/stock_parts/matter_bin = /obj/item/stock_parts/matter_bin/super)
-
-// Applies the default parts defined by the circuit board when the machine is created
+/// Applies the default parts defined by the circuit board when the machine is created
 /obj/item/circuitboard/machine/apply_default_parts(obj/machinery/machine)
 	if(!req_components)
 		return

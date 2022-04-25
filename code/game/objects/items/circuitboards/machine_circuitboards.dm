@@ -1,9 +1,9 @@
-//Command
+// Command
 
 /obj/item/circuitboard/machine/bsa/back
 	name = "Bluespace Artillery Generator (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/bsa/back //No freebies!
+	build_path = /obj/machinery/bsa/back // No freebies!
 	req_components = list(
 		/obj/item/stock_parts/capacitor/quadratic = 5,
 		/obj/item/stack/cable_coil = 2)
@@ -27,13 +27,13 @@
 /obj/item/circuitboard/machine/dna_vault
 	name = "DNA Vault (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/dna_vault //No freebies!
+	build_path = /obj/machinery/dna_vault // No freebies!
 	req_components = list(
 		/obj/item/stock_parts/capacitor/super = 5,
 		/obj/item/stock_parts/manipulator/pico = 5,
 		/obj/item/stack/cable_coil = 2)
 
-//Engineering
+// Engineering
 
 /obj/item/circuitboard/machine/announcement_system
 	name = "Announcement System (Machine Board)"
@@ -352,7 +352,7 @@
 		/obj/item/stack/sheet/glass = 10,
 		/obj/item/stack/sheet/plasteel = 5)
 
-//Generic
+// Generic
 
 /obj/item/circuitboard/machine/circuit_imprinter
 	name = "Circuit Imprinter (Machine Board)"
@@ -377,7 +377,7 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/holopad
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
-	needs_anchored = FALSE //wew lad
+	needs_anchored = FALSE // wew lad
 	var/secure = FALSE
 
 /obj/item/circuitboard/machine/holopad/multitool_act(mob/living/user, obj/item/tool)
@@ -449,7 +449,7 @@
 /obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/smartfridge)
 	build_path = smartfridge.base_build_path
 	if(!fridges_name_paths.Find(build_path, fridges_name_paths))
-		name = "[initial(smartfridge.name)] (Machine Board)" //if it's a unique type, give it a unique name.
+		name = "[initial(smartfridge.name)] (Machine Board)" // if it's a unique type, give it a unique name.
 		is_special_type = TRUE
 	return ..()
 
@@ -607,7 +607,7 @@
 		/obj/item/stock_parts/micro_laser = 1
 	)
 
-//Medical
+// Medical
 
 /obj/item/circuitboard/machine/chem_dispenser
 	name = "Chem Dispenser (Machine Board)"
@@ -821,7 +821,7 @@
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 	build_path = /obj/machinery/rnd/production/techfab/department/medical
 
-//Science
+// Science
 
 /obj/item/circuitboard/machine/circuit_imprinter/department/science
 	name = "Departmental Circuit Imprinter - Science (Machine Board)"
@@ -953,7 +953,7 @@
 	build_path = /obj/machinery/mechpad
 	req_components = list()
 
-//Security
+// Security
 
 /obj/item/circuitboard/machine/protolathe/department/security
 	name = "Departmental Protolathe - Security (Machine Board)"
@@ -972,7 +972,7 @@
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
 	build_path = /obj/machinery/rnd/production/techfab/department/security
 
-//Service
+// Service
 
 /obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator (Machine Board)"
@@ -1152,7 +1152,7 @@
 	req_components = list(
 		/obj/item/stock_parts/card_reader = 1)
 
-//Supply
+// Supply
 
 /obj/item/circuitboard/machine/mining_equipment_vendor
 	name = "Mining Equipment Vendor (Machine Board)"
@@ -1221,7 +1221,7 @@
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/scanning_module = 1)
 
-//Misc
+// Misc
 /obj/item/circuitboard/machine/sheetifier
 	name = "Sheet-meister 2000 (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY

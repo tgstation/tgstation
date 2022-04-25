@@ -1,4 +1,4 @@
-//Command
+// Command
 
 /obj/item/circuitboard/computer/aiupload
 	name = "AI Upload (Computer Board)"
@@ -14,12 +14,7 @@
 	name = "Bluespace Artillery Controls (Computer Board)"
 	build_path = /obj/machinery/computer/bsa_control
 
-//obj/item/circuitboard/computer/shield
-// name = "Shield Control (Computer Board)"
-// greyscale_colors = CIRCUIT_COLOR_COMMAND
-// build_path = /obj/machinery/computer/stationshield
-
-//Engineering
+// Engineering
 
 /obj/item/circuitboard/computer/apc_control
 	name = "\improper Power Flow Control Console (Computer Board)"
@@ -195,12 +190,12 @@
 	build_path = /obj/machinery/computer/message_monitor
 
 /obj/item/circuitboard/computer/powermonitor
-	name = "Power Monitor (Computer Board)"  //name fixed 250810
+	name = "Power Monitor (Computer Board)"  // name fixed #250810
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/monitor
 
 /obj/item/circuitboard/computer/powermonitor/secret
-	name = "Outdated Power Monitor (Computer Board)" //Variant used on ruins to prevent them from showing up on PDA's.
+	name = "Outdated Power Monitor (Computer Board)" // Variant used on ruins to prevent them from showing up on PDA's.
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/monitor/secret
 
@@ -210,7 +205,7 @@
 	build_path = /obj/machinery/computer/sat_control
 
 /obj/item/circuitboard/computer/solar_control
-	name = "Solar Control (Computer Board)"  //name fixed 250810
+	name = "Solar Control (Computer Board)"  // name fixed #250810
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/solar_control
 
@@ -224,7 +219,7 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/turbine_computer
 
-//Generic
+// Generic
 
 /obj/item/circuitboard/computer/arcade/amputation
 	name = "Mediborg's Amputation Adventure (Computer Board)"
@@ -241,7 +236,7 @@
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/arcade/orion_trail
 
-/obj/item/circuitboard/computer/holodeck// Not going to let people get this, but it's just here for future
+/obj/item/circuitboard/computer/holodeck // Not going to let people get this, but it's just here for future
 	name = "Holodeck Control (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/holodeck
@@ -336,7 +331,7 @@
 	name = "Tram Controls (Computer Board)"
 	build_path = /obj/machinery/computer/tram_controls
 
-//Medical
+// Medical
 
 /obj/item/circuitboard/computer/crew
 	name = "Crew Monitoring Console (Computer Board)"
@@ -420,7 +415,7 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/mechpad
 
-//Security
+// Security
 
 /obj/item/circuitboard/computer/labor_shuttle
 	name = "Labor Shuttle (Computer Board)"
@@ -462,14 +457,14 @@
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
 	build_path = /obj/machinery/computer/camera_advanced/syndie
 
-//Service
+// Service
 
 /obj/item/circuitboard/computer/chef_order
 	name = "Produce Orders Console (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/computer/chef_order
 
-//Supply
+// Supply
 
 /obj/item/circuitboard/computer/cargo
 	name = "Supply Console (Computer Board)"
