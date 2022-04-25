@@ -466,7 +466,7 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
 		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
 		user.dropItemToGround(src, TRUE)
-		user.Dizzy(30)
+		user.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		user.Paralyze(100)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
@@ -488,7 +488,7 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(user, span_cultlarge("\"I wouldn't advise that.\""))
 		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
 		user.dropItemToGround(src, TRUE)
-		user.Dizzy(30)
+		user.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		user.Paralyze(100)
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
@@ -503,7 +503,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(user.stat != DEAD && !IS_CULTIST(user) && slot == ITEM_SLOT_EYES)
 		to_chat(user, span_cultlarge("\"You want to be blind, do you?\""))
 		user.dropItemToGround(src, TRUE)
-		user.Dizzy(30)
+		user.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		user.Paralyze(100)
 		user.blind_eyes(30)
 
@@ -1077,12 +1077,12 @@ Striking a noncultist, however, will tear their flesh."}
 
 		if(target.can_block_magic() || IS_CULTIST(target))
 			target.visible_message(span_warning("[src] bounces off of [target], as if repelled by an unseen force!"))
-			return 
+			return
 		if(IS_CULTIST(target) && target.put_in_active_hand(src))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
 			target.visible_message(span_warning("[target] catches [src] out of the air!"))
 			return
-		if(!..())			
+		if(!..())
 			target.Paralyze(30)
 			if(D?.thrower)
 				for(var/mob/living/Next in orange(2, T))

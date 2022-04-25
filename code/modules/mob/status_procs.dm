@@ -1,18 +1,6 @@
 //Here are the procs used to modify status effects of a mob.
 
 /**
- * Set the dizzyness of a mob to a passed in amount
- *
- * Except if dizziness is already higher in which case it does nothing
- */
-/mob/proc/Dizzy(amount)
-	dizziness = max(dizziness,amount,0)
-
-///FOrce set the dizzyness of a mob
-/mob/proc/set_dizziness(amount)
-	dizziness = max(amount, 0)
-
-/**
 * Set drowsyness of a mob to passed value
 */
 /mob/proc/set_drowsyness(amount)

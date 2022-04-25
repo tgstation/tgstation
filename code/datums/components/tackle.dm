@@ -247,10 +247,14 @@
 	var/attack_mod = 0
 
 	// DE-FENSE
-	if(target.drunkenness > 60) // drunks are easier to knock off balance
+
+	// Drunks are easier to knock off balance
+	var/target_drunkenness = target.get_drunk_amount()
+	if(target_drunkenness > 60)
 		defense_mod -= 3
-	else if(target.drunkenness > 30)
+	else if(target_drunkenness > 30)
 		defense_mod -= 1
+
 	if(HAS_TRAIT(target, TRAIT_CLUMSY))
 		defense_mod -= 2
 	if(HAS_TRAIT(target, TRAIT_FAT)) // chonkers are harder to knock over
@@ -291,11 +295,12 @@
 
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
-
-	if(sacker.drunkenness > 60) // you're far too drunk to hold back!
+	var/sacker_drunkenness = sacker.get_drunk_amount()
+	if(sacker_drunkenness > 60) // you're far too drunk to hold back!
 		attack_mod += 1
-	else if(sacker.drunkenness > 30) // if you're only a bit drunk though, you're just sloppy
+	else if(sacker_drunkenness > 30) // if you're only a bit drunk though, you're just sloppy
 		attack_mod -= 1
+
 	if(HAS_TRAIT(sacker, TRAIT_CLUMSY))
 		attack_mod -= 2
 	if(HAS_TRAIT(sacker, TRAIT_DWARF))

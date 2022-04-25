@@ -106,8 +106,6 @@
 	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
 	/// Drowsyness level of the mob
 	var/drowsyness = 0//Carbon
-	/// Dizziness level of the mob
-	var/dizziness = 0//Carbon
 	/// Hunger level of the mob
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
 	/// Satiation level of the mob

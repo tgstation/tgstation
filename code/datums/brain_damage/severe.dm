@@ -188,7 +188,7 @@
 			addtimer(CALLBACK(owner, /mob/living/carbon.proc/vomit, high_stress), 50) //blood vomit if high stress
 		if(2)
 			owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-			owner.dizziness += 20
+			owner.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
 			owner.add_confusion(20)
 
 			if(high_stress)
