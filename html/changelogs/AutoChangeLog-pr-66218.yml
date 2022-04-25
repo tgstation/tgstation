@@ -1,0 +1,4 @@
+author: "Fikou, sprite modified by Zhost"
+delete-after: True
+changes: 
+  - qol: "the sniper rifle has a new zoom system, activated by right-clicking"
