@@ -69,7 +69,7 @@ export type OperatorData = {
   mecha_flags: number;
   internal_damage: number;
   internal_damage_keys: string[];
-  airtank_present: boolean;
+  airtank_present: BooleanLike;
   air_source: string;
   mechflag_keys: string[];
   cabin_dangerous_highpressure: number;
