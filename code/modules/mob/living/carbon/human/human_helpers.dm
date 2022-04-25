@@ -211,11 +211,14 @@
 	var/t_He = p_they(TRUE)
 	var/t_his = p_their()
 	var/t_is = p_are()
-	//This checks to see if the body is revivable
-	if(key || !getorgan(/obj/item/organ/brain) || ghost?.can_reenter_corpse)
-		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
-	else
-		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
+	if(key || !getorgan(/obj/item/organ/brain))
+		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...") //Default death message
+	//The death mob has a brain and no client/player that is assigned to the mob
+	if(!ghost?.can_reenter_corpse)  //And there is no ghost that could reenter the body
+		//There is no way this mob can in any normal way get a player, so they lost the will to live
+		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has lost the will to live...")
+	//This mob has a ghost linked that could still reenter the body, so the soul only departed
+	return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed, but the link is not yet fully broken...")
 
 ///copies over clothing preferences like underwear to another human
 /mob/living/carbon/human/proc/copy_clothing_prefs(mob/living/carbon/human/destination)
