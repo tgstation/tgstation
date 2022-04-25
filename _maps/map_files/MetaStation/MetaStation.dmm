@@ -21884,11 +21884,11 @@
 /area/science/robotics/lab)
 "gKg" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters/window{
 	id = "gateshutter";
 	name = "Gateway Access Shutter"
 	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/command/gateway)
 "gKu" = (

@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "Adds an APC and area to the lowest level of the mining station on IceBoxstation"
