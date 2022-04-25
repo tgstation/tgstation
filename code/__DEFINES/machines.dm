@@ -73,7 +73,6 @@
 #define MC_CHARGE "CHARGE"
 #define MC_AI "AI"
 #define MC_SENSORS "SENSORS"
-#define MC_SIGNALER "SIGNALER"
 #define MC_IDENTIFY "IDENTIFY"
 
 //NTNet stuff, for modular computers

@@ -12,7 +12,12 @@
 		/datum/computer_file/program/budgetorders,
 	)
 
-/obj/item/modular_computer/tablet/pda/captain
+/obj/item/modular_computer/tablet/pda/heads/Initialize(mapload)
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
+	install_component(new /obj/item/computer_hardware/card_slot/secondary)
+
+/obj/item/modular_computer/tablet/pda/heads/captain
 	name = "captain PDA"
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#FFD55B"
@@ -84,7 +89,7 @@
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/phys_scanner/chemistry,
-		/datum/computer_file/program/signaler,
+		/datum/computer_file/program/signal_commander,
 	)
 
 /**
@@ -152,7 +157,7 @@
 	greyscale_colors = "#FAFAFA#000099#B347BC"
 	default_applications = list(
 		/datum/computer_file/program/atmosscan,
-		/datum/computer_file/program/signaler,
+		/datum/computer_file/program/signal_commander,
 	)
 
 /obj/item/modular_computer/tablet/pda/roboticist
