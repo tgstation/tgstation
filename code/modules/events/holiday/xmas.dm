@@ -3,6 +3,7 @@
 	icon = 'icons/obj/christmas.dmi'
 	icon_state = "cracker"
 	desc = "Directions for use: Requires two people, one to pull each end."
+	/// The crack state of the toy. If set to 1, you can no longer crack it by attacking.
 	var/cracked = 0
 
 /obj/item/toy/xmas_cracker/attack(mob/target, mob/user)
@@ -47,7 +48,9 @@
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 
+	/// Christmas tree, no presents included.
 	var/festive_tree = /obj/structure/flora/tree/pine/xmas
+	/// Christmas tree, presents included.
 	var/christmas_tree = /obj/structure/flora/tree/pine/xmas/presents
 
 /obj/effect/spawner/xmastree/Initialize(mapload)
