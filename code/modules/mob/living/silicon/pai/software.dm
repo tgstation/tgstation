@@ -122,7 +122,7 @@
 				med.show_to(src)
 			else
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
-				med.remove_hud_from_mob(src)
+				med.hide_from(src)
 		if("newscaster")
 			newscaster.ui_interact(src)
 		if("photography_module")
@@ -150,7 +150,7 @@
 				sec.show_to(src)
 			else
 				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-				sec.remove_hud_from_mob(src)
+				sec.hide_from(src)
 		if("universal_translator")
 			if(!languages_granted)
 				grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)

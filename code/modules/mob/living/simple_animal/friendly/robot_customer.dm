@@ -61,7 +61,7 @@
 
 /mob/living/simple_animal/robot_customer/MouseExited(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.remove_hud_from_mob(usr)
+	hud_to_show_on_hover?.hide_from(usr)
 
 /mob/living/simple_animal/robot_customer/update_overlays()
 	. = ..()

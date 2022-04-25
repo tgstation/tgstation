@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 /datum/atom_hud/Destroy()
 	for(var/mob/mob as anything in hud_users_all_z_levels)
-		remove_hud_from_mob(mob)
+		hide_from(mob)
 
 	for(var/atom/atom as anything in hud_atoms_all_z_levels)
 		remove_atom_from_hud(atom)
@@ -158,35 +158,35 @@ GLOBAL_LIST_INIT(huds, list(
 	else
 		hud_users_all_z_levels[new_viewer] += 1 //increment the number of times this hud has been added to this hud user
 
-///removes everyone of this hud's atom images from former_hud_user
-/datum/atom_hud/proc/remove_hud_from_mob(mob/former_hud_user, absolute = FALSE)
-	if(!former_hud_user || !hud_users_all_z_levels[former_hud_user])
+///Hides the images in this hud from former_viewer
+///If absolute is set to true, this will forcefully remove the hud, even if sources in theory remain
+/datum/atom_hud/proc/hide_from(mob/former_viewer, absolute = FALSE)
+	if(!former_viewer || !hud_users_all_z_levels[former_viewer])
 		return
 
-	var/turf/their_turf = get_turf(former_hud_user)
+	var/turf/their_turf = get_turf(former_viewer)
 	if(!their_turf)
 		return
 
-	hud_users_all_z_levels[former_hud_user] -= 1//decrement number of sources for this hud on this user (bad way to track i know)
+	hud_users_all_z_levels[former_viewer] -= 1//decrement number of sources for this hud on this user (bad way to track i know)
 
-	if (absolute || hud_users_all_z_levels[former_hud_user] <= 0)//if forced or there arent any sources left, remove the user
+	if (absolute || hud_users_all_z_levels[former_viewer] <= 0)//if forced or there arent any sources left, remove the user
 
-		if(!hud_atoms_all_z_levels[former_hud_user])//make sure we arent unregistering changes on a mob thats also a hud atom for this hud
-			UnregisterSignal(former_hud_user, COMSIG_MOVABLE_Z_CHANGED)
-			UnregisterSignal(former_hud_user, COMSIG_PARENT_QDELETING)
+		if(!hud_atoms_all_z_levels[former_viewer])//make sure we arent unregistering changes on a mob thats also a hud atom for this hud
+			UnregisterSignal(former_viewer, COMSIG_MOVABLE_Z_CHANGED)
+			UnregisterSignal(former_viewer, COMSIG_PARENT_QDELETING)
 
-		hud_users[their_turf.z] -= former_hud_user
-		hud_users_all_z_levels -= former_hud_user
+		hud_users[their_turf.z] -= former_viewer
+		hud_users_all_z_levels -= former_viewer
 
-		if(next_time_allowed[former_hud_user])
-			next_time_allowed -= former_hud_user
+		if(next_time_allowed[former_viewer])
+			next_time_allowed -= former_viewer
 
-		if(queued_to_see[former_hud_user])
-			queued_to_see -= former_hud_user
-
+		if(queued_to_see[former_viewer])
+			queued_to_see -= former_viewer
 		else
 			for(var/atom/hud_atom as anything in get_hud_atoms_for_z_level(their_turf.z))
-				remove_atom_from_single_hud(former_hud_user, hud_atom)
+				remove_atom_from_single_hud(former_viewer, hud_atom)
 
 /// add new_hud_atom to this hud
 /datum/atom_hud/proc/add_atom_to_hud(atom/new_hud_atom)
@@ -320,7 +320,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 /datum/atom_hud/proc/unregister_atom(datum/source, force)
 	SIGNAL_HANDLER
-	remove_hud_from_mob(source, TRUE)
+	hide_from(source, TRUE)
 	remove_atom_from_hud(source)
 
 /datum/atom_hud/proc/hide_single_atomhud_from(mob/hud_user, atom/hidden_atom)

@@ -38,8 +38,8 @@
 /obj/item/clothing/mask/infiltrator/dropped(mob/living/carbon/human/user)
 	to_chat(user, "You pull off the balaclava, and the mask's internal hud system switches off quietly.")
 	REMOVE_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-	H.remove_hud_from_mob(user)
+	var/datum/atom_hud/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
+	diag_hud.hide_from(user)
 	voice_unknown = FALSE
 	return ..()
 

@@ -20,8 +20,8 @@
 
 /obj/vehicle/sealed/mecha/medical/odysseus/remove_occupant(mob/living/carbon/human/H)
 	if(isliving(H) && HAS_TRAIT_FROM(H, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT))
-		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-		hud.remove_hud_from_mob(H)
+		var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		med_hud.hide_from(H)
 		REMOVE_TRAIT(H, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT)
 	return ..()
 

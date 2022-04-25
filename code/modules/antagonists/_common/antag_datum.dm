@@ -220,7 +220,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/mob/living/current = owner.current
 	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
 		if (!antag_hud.mobShouldSee(current))
-			antag_hud.remove_hud_from_mob(current)
+			antag_hud.hide_from(current)
 
 	qdel(src)
 

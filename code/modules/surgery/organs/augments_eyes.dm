@@ -26,7 +26,7 @@
 /obj/item/organ/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special = 0)
 	if(HUD_type)
 		var/datum/atom_hud/hud = GLOB.huds[HUD_type]
-		hud.remove_hud_from_mob(eye_owner)
+		hud.hide_from(eye_owner)
 	if(HUD_trait)
 		REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 	..()

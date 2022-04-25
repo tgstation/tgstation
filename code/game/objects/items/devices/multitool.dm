@@ -116,7 +116,7 @@
 		var/atom/movable/screen/plane_master/camera_static/ai_detect_plane = user.hud_used.plane_masters["[CAMERA_STATIC_PLANE]"]
 		ai_detect_plane.alpha = 255
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
-		hud.remove_hud_from_mob(user)
+		hud.hide_from(user)
 		if(eye)
 			eye.setLoc(null)
 			eye.eye_user = null
