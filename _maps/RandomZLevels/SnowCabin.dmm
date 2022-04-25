@@ -705,13 +705,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
-"cu" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
-	dir = 1
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/white,
-/area/awaymission/cabin)
 "cv" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
@@ -955,16 +948,6 @@
 "dl" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/snow_cabin,
-/area/awaymission/cabin/snowforest/sovietsurface)
-"dm" = (
-/obj/structure/table/reinforced,
-/obj/item/modular_computer/tablet/pda/syndicate{
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/virus/mime;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: My partner has left to help those Nanotrasen fucks three days ago. They said that a distress signal came from down south and they had to check it out. How fucking long does it take to investigate a mining outpost? Either those Nanotrasen fuckers betrayed us or something really did go wrong. Either way, I'm leaving before this becomes an issue for me and anyone else here. That dumb idiot."
-	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dn" = (
@@ -3560,19 +3543,6 @@
 	},
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
-"nb" = (
-/obj/effect/turf_decal/weather/snow,
-/obj/item/modular_computer/tablet/pda/syndicate{
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/virus/clown;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: DO NOT GO SOUTH."
-	},
-/obj/effect/decal/remains/human{
-	color = "#72e4fa"
-	},
-/turf/open/floor/iron/dark/snowdin,
-/area/awaymission/cabin/caves)
 "nc" = (
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/wall/ice,
@@ -4211,6 +4181,13 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"Aj" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 1
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/white,
+/area/awaymission/cabin)
 "Ao" = (
 /obj/structure/flora/rock/icy{
 	desc = "A mountain rock."
@@ -4347,6 +4324,19 @@
 /obj/structure/light_construct/directional/south,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"GA" = (
+/obj/effect/turf_decal/weather/snow,
+/obj/item/modular_computer/tablet/pda/syndicate{
+	loaded_cartridge = /obj/item/computer_hardware/hard_drive/virus/clown;
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
+	name = "soviet tablet";
+	note = "TRANSLATED TO GALACTIC COMMON: DO NOT GO SOUTH."
+	},
+/obj/effect/decal/remains/human{
+	color = "#72e4fa"
+	},
+/turf/open/floor/iron/dark/snowdin,
+/area/awaymission/cabin/caves)
 "GN" = (
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4390,6 +4380,16 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"IA" = (
+/obj/structure/table/reinforced,
+/obj/item/modular_computer/tablet/pda/syndicate{
+	loaded_cartridge = /obj/item/computer_hardware/hard_drive/virus/mime;
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
+	name = "soviet tablet";
+	note = "TRANSLATED TO GALACTIC COMMON: My partner has left to help those Nanotrasen fucks three days ago. They said that a distress signal came from down south and they had to check it out. How fucking long does it take to investigate a mining outpost? Either those Nanotrasen fuckers betrayed us or something really did go wrong. Either way, I'm leaving before this becomes an issue for me and anyone else here. That dumb idiot."
+	},
+/turf/open/floor/plating/snowed/snow_cabin,
+/area/awaymission/cabin/snowforest/sovietsurface)
 "IU" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -18329,7 +18329,7 @@ mU
 mU
 mU
 mJ
-nb
+GA
 mW
 mW
 ab
@@ -33921,7 +33921,7 @@ nS
 an
 bF
 bQ
-cu
+Aj
 hp
 Wz
 hp
@@ -42446,7 +42446,7 @@ Xa
 Xa
 Xa
 dc
-dm
+IA
 di
 dG
 dP

@@ -6059,16 +6059,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
-"nk" = (
-/obj/structure/table,
-/obj/item/computer_hardware/hard_drive/small/ordnance,
-/obj/item/computer_hardware/hard_drive/small/ordnance,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/cafeteria{
-	dir = 5;
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/research)
 "nl" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/cafeteria{
@@ -7681,12 +7671,6 @@
 /area/awaymission/undergroundoutpost45/research)
 "qk" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/research)
-"ql" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
@@ -11568,6 +11552,16 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"AH" = (
+/obj/structure/table,
+/obj/item/computer_hardware/hard_drive/small/ordnance,
+/obj/item/computer_hardware/hard_drive/small/ordnance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/cafeteria{
+	dir = 5;
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/research)
 "Bh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -11765,6 +11759,12 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
+"ER" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
+/turf/open/floor/iron/dark{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/research)
 "Fd" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/command/glass{
@@ -38063,7 +38063,7 @@ kP
 lH
 gy
 kd
-nk
+AH
 nO
 ox
 pd
@@ -38839,7 +38839,7 @@ nQ
 oz
 pf
 gy
-ql
+ER
 qT
 rC
 hc

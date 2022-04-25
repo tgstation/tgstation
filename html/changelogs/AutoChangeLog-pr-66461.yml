@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Fixed spawn ruins admin debug verb's ruin ordering being not separated by type"
