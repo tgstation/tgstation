@@ -15,8 +15,6 @@
 	icon_state = "oven_off"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/oven
 	processing_flags = START_PROCESSING_MANUALLY
@@ -84,6 +82,7 @@
 			visible_message(span_danger("You smell a burnt smell coming from [src]!"))
 	set_smoke_state(worst_cooked_food_state)
 	update_appearance()
+	use_power(active_power_usage)
 
 
 /obj/machinery/oven/attackby(obj/item/I, mob/user, params)
@@ -172,11 +171,10 @@
 	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
 		return
 
-/obj/machinery/oven/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I, 2 SECONDS)
-	return TRUE
-
+/obj/machinery/oven/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool, time = 2 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/plate/oven_tray
 	name = "oven tray"

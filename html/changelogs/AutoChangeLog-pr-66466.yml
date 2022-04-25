@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "Moved firelocks in KiloStation dorms to not overlap posters."

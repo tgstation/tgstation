@@ -136,7 +136,7 @@ Consuming extracts:
 	name = "water cookie"
 	desc = "A transparent blue cookie. Constantly dripping wet."
 	icon_state = "blue"
-	taste = /datum/reagent/water
+	taste = "water"
 
 /obj/item/slime_cookie/blue/do_effect(mob/living/M, mob/user)
 	M.apply_status_effect(/datum/status_effect/watercookie)

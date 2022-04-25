@@ -45,6 +45,10 @@
 	name = "Syndicate Infiltrator EVA"
 
 /area/shuttle/syndicate/hallway
+	name = "Syndicate Infiltrator Hall"
+
+/area/shuttle/syndicate/engineering
+	name = "Syndicate Infiltrator Engineering"
 
 /area/shuttle/syndicate/airlock
 	name = "Syndicate Infiltrator Airlock"

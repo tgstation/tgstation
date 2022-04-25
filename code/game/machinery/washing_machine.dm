@@ -224,6 +224,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		qdel(color_source)
 		color_source = null
 	update_appearance()
+	use_power(active_power_usage)
 
 /obj/item/proc/dye_item(dye_color, dye_key_override)
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
@@ -329,10 +330,14 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(panel_open)
 		. += "wm_panel"
 
-/obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
-	if(panel_open && !busy && default_unfasten_wrench(user, W))
-		return
+/obj/machinery/washing_machine/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!panel_open || busy)
+		return FALSE
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
 	if(default_deconstruction_screwdriver(user, null, null, W))
 		update_appearance()
 		return

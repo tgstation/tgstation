@@ -5,9 +5,7 @@
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "lpad-idle"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 200
-	active_power_usage = 2500
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 	hud_possible = list(DIAG_LAUNCHPAD_HUD)
 	circuit = /obj/item/circuitboard/machine/launchpad
 	var/icon_teleport = "lpad-beam"
@@ -26,11 +24,12 @@
 	var/teleport_beam = "sm_arc_supercharged"
 
 /obj/machinery/launchpad/RefreshParts()
-	var/E = 0
+	. = ..()
+	var/max_range_multiplier = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		E += M.rating
+		max_range_multiplier += M.rating
 	range = initial(range)
-	range *= E
+	range *= max_range_multiplier
 
 /obj/machinery/launchpad/Initialize(mapload)
 	. = ..()
@@ -165,11 +164,11 @@
 		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
-	use_power(1000)
+	use_power(active_power_usage)
 
 	var/turf/source = target
 	var/list/log_msg = list()
-	log_msg += ": [alternate_log_name || key_name(user)] triggered a teleport "
+	log_msg += "[alternate_log_name || key_name(user)] triggered a teleport "
 
 	if(sending)
 		source = dest
@@ -222,7 +221,7 @@
 	if (first)
 		log_msg += "nothing"
 	log_msg += " [sending ? "to" : "from"] [target_x], [target_y], [z] ([A ? A.name : "null area"])"
-	investigate_log(log_msg.Join(), INVESTIGATE_TELESCI)
+	log_game(log_msg.Join())
 	updateDialog()
 
 //Starts in the briefcase. Don't spawn this directly, or it will runtime when closing.
@@ -232,9 +231,7 @@
 	icon_state = "blpad-idle"
 	icon_teleport = "blpad-beam"
 	anchored = FALSE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 0
-	active_power_usage = 0
+	use_power = NO_POWER_USE
 	teleport_speed = 20
 	range = 8
 	stationary = FALSE

@@ -203,7 +203,7 @@
 	QDEL_NULL(access_card)
 	return ..()
 
-/mob/living/simple_animal/bot/proc/check_access(mob/living/user)
+/mob/living/simple_animal/bot/proc/check_access(mob/living/user, obj/item/card/id)
 	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
 		return TRUE
 	if(!maints_access_required) // No requirements to access it.
@@ -211,13 +211,13 @@
 	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
 		return TRUE
 
-	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-	if(!id_card || !id_card.access)
+	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
+
+	if(!used_id || !used_id.access)
 		return FALSE
-	id_card = id_card.GetID()
 
 	for(var/requested_access in maints_access_required)
-		if(requested_access in id_card.access)
+		if(requested_access in used_id.access)
 			return TRUE
 	return FALSE
 

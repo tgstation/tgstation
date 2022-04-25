@@ -175,8 +175,8 @@
 /obj/item/food/meat/rawbacon,
 /obj/item/food/meat/rawcutlet,
 /obj/item/food/meat/rawcutlet,
-/obj/item/food/meat/rawcrab,
-/obj/item/food/meat/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
+/obj/item/food/meat/slab/rawcrab,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "dc" = (
@@ -288,8 +288,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
 	},
-/obj/item/bedsheet/dorms,
-/obj/structure/bed,
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "hy" = (
