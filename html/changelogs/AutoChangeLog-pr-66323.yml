@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes: 
-  - bugfix: "fixes aux base console outputting \"span_danger()\" in launch sequence"

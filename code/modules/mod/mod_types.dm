@@ -153,6 +153,18 @@
 		/obj/item/mod/module/dna_lock,
 	)
 
+/obj/item/mod/control/pre_equipped/traitor_elite
+	theme = /datum/mod_theme/elite
+	applied_cell = /obj/item/stock_parts/cell/bluespace
+	initial_modules = list(
+		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/dna_lock,
+	)
+
 /obj/item/mod/control/pre_equipped/nuclear
 	theme = /datum/mod_theme/syndicate
 	applied_cell = /obj/item/stock_parts/cell/hyper
