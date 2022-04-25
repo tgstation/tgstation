@@ -21,6 +21,10 @@
 	. = ..()
 	store_file(new /datum/computer_file/program/records/security(src))
 
+/obj/item/computer_hardware/hard_drive/small/command/hop/install_default_programs()
+	. = ..()
+	store_file(new /datum/computer_file/program/records/security(src))
+
 /obj/item/computer_hardware/hard_drive/small/command/ce/install_default_programs()
 	. = ..()
 	store_file(new /datum/computer_file/program/power_monitor(src))

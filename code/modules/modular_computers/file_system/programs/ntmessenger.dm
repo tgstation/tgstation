@@ -185,14 +185,13 @@
 	data["sortByJob"] = sort_by_job
 	data["isSilicon"] = is_silicon
 	data["photo"] = photo_path
-	data["canSpam"] = CanSpam()
 
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	if(card_slot)
 		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : ""
 		data["canSpam"] = ACCESS_LAWYER in id_card.access
 
-	var/obj/item/computer_hardware/hard_drive/role/disk = computer.all_components[MC_HDD_JOB]
+	var/obj/item/computer_hardware/hard_drive/virus/disk = computer.all_components[MC_HDD_JOB]
 	if(disk)
 		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/virus)
 		data["sending_virus"] = sending_virus

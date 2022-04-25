@@ -66,7 +66,7 @@
 	data["disk"] = null
 
 	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-	var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
+	var/obj/item/computer_hardware/hard_drive/ssd = all_components[MC_HDD_JOB]
 	data["cardholder"] = FALSE
 
 	if(cardholder)
@@ -176,7 +176,7 @@
 			var/prog = params["name"]
 			var/is_disk = params["is_disk"]
 			var/datum/computer_file/program/P = null
-			var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
+			var/obj/item/computer_hardware/hard_drive/ssd = all_components[MC_HDD_JOB]
 			var/mob/user = usr
 
 			if(hard_drive && !is_disk)
@@ -243,8 +243,8 @@
 					if(uninstall_component(portable_drive, usr))
 						user.put_in_hands(portable_drive)
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
-				if("job disk")
-					var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
+				if("remove_disk")
+					var/obj/item/computer_hardware/hard_drive/ssd = all_components[MC_HDD_JOB]
 					if(!ssd)
 						return
 					if(uninstall_component(ssd, usr))

@@ -169,9 +169,9 @@ export const NtosMain = (props, context) => {
             buttons={(
               <Button
                 icon="eject"
-                content="Eject Job Disk"
+                content="Eject Disk"
                 disabled={!disk_name}
-                onClick={() => act('PC_Eject_Disk', { name: "job disk" })} />
+                onClick={() => act('PC_Eject_Disk', { name: "remove_disk" })} />
             )}>
             <Table>
               {disk_programs.map(program => (

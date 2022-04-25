@@ -36,7 +36,7 @@
 	name = "head of security PDA"
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#EA3232#0000CC"
-	default_applications += list(
+	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/robocontrol,
@@ -48,7 +48,7 @@
 	name = "chief engineer PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#D99A2E#69DBF3#FAFAFA"
-	default_applications += list(
+	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/robocontrol,
@@ -63,7 +63,7 @@
 	name = "chief medical officer PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
-	default_applications += list(
+	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/robocontrol,
@@ -321,7 +321,6 @@
 
 /obj/item/modular_computer/tablet/pda/curator
 	name = "curator PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/curator
 	greyscale_config = null
 	greyscale_colors = null
 	icon_state = "pda-library"

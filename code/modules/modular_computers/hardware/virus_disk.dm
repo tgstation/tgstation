@@ -50,13 +50,7 @@
 		to_chat(user, span_notice("ERROR: Out of charges."))
 		return
 
-	var/difficulty = 0
-	var/obj/item/computer_hardware/hard_drive/role/disk = target.all_components[MC_HDD_JOB]
-
-	if(disk)
-		difficulty += bit_count(disk.disk_flags & (DISK_MED | DISK_SEC | DISK_POWER | DISK_MANIFEST))
-		if(disk.disk_flags & DISK_MANIFEST)
-			difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
+	var/difficulty = target.get_detomatix_difficulty()
 	if(SEND_SIGNAL(target, COMSIG_TABLET_CHECK_DETONATE) & COMPONENT_TABLET_NO_DETONATE || prob(difficulty * 15))
 		user.show_message(span_danger("ERROR: Target could not be bombed."), MSG_VISUAL)
 		charges--

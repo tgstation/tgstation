@@ -10329,11 +10329,11 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/aft)
 "cLe" = (
-/obj/item/computer_hardware/hard_drive/role/engineering,
-/obj/item/computer_hardware/hard_drive/role/engineering,
-/obj/item/computer_hardware/hard_drive/role/engineering,
+/obj/item/computer_hardware/hard_drive/small/engineering,
+/obj/item/computer_hardware/hard_drive/small/engineering,
+/obj/item/computer_hardware/hard_drive/small/engineering,
 /obj/structure/table/reinforced,
-/obj/item/computer_hardware/hard_drive/role/atmos,
+/obj/item/computer_hardware/hard_drive/small/atmos,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
@@ -32531,7 +32531,7 @@
 "kMr" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/table/wood,
-/obj/item/computer_hardware/hard_drive/role/detective,
+/obj/item/computer_hardware/hard_drive/detective,
 /obj/item/folder/red{
 	pixel_x = -7;
 	pixel_y = 6
@@ -32539,8 +32539,8 @@
 /obj/item/folder/red{
 	pixel_x = -7
 	},
-/obj/item/computer_hardware/hard_drive/role/detective,
-/obj/item/computer_hardware/hard_drive/role/detective,
+/obj/item/computer_hardware/hard_drive/detective,
+/obj/item/computer_hardware/hard_drive/detective,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
@@ -44218,9 +44218,9 @@
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/small/ordnance,
+/obj/item/computer_hardware/hard_drive/small/ordnance,
+/obj/item/computer_hardware/hard_drive/small/ordnance,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "oRu" = (
@@ -49749,9 +49749,9 @@
 	pixel_x = -10;
 	pixel_y = 9
 	},
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/small/quartermaster,
+/obj/item/computer_hardware/hard_drive/small/quartermaster,
+/obj/item/computer_hardware/hard_drive/small/quartermaster,
 /turf/open/floor/wood,
 /area/cargo/qm)
 "qWo" = (
@@ -51202,7 +51202,7 @@
 	},
 /obj/item/pen,
 /obj/item/taperecorder,
-/obj/item/computer_hardware/hard_drive/role/lawyer,
+/obj/item/computer_hardware/hard_drive/lawyer,
 /obj/machinery/button/door/directional/south{
 	id = "lawyer_shutters";
 	name = "law office shutter control";
@@ -53908,9 +53908,9 @@
 /area/service/chapel/funeral)
 "sEP" = (
 /obj/structure/table/glass,
-/obj/item/computer_hardware/hard_drive/role/medical,
-/obj/item/computer_hardware/hard_drive/role/medical,
-/obj/item/computer_hardware/hard_drive/role/chemistry,
+/obj/item/computer_hardware/hard_drive/small/medical,
+/obj/item/computer_hardware/hard_drive/small/medical,
+/obj/item/computer_hardware/hard_drive/small/chemistry,
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/vending/wallmed/directional/west,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{

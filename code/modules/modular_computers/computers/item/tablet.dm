@@ -73,6 +73,17 @@
 
 	remove_pen(user)
 
+///Finds how hard it is to send a virus to this tablet, checking all programs downloaded.
+/obj/item/modular_computer/tablet/proc/get_detomatix_difficulty()
+	var/detomatix_difficulty
+
+	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+	if(hdd)
+		for(var/datum/computer_file/program/downloaded_apps as anything in hdd.stored_files)
+			detomatix_difficulty += downloaded_apps.detomatix_resistance
+
+	return detomatix_difficulty
+
 /obj/item/modular_computer/tablet/proc/tab_no_detonate()
 	SIGNAL_HANDLER
 	return COMPONENT_TABLET_NO_DETONATE
