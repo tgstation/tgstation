@@ -178,7 +178,8 @@
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
 
-/datum/outfit/mr_runtime
+/// Used primarily by the outfit_sanity unit test, in-hand merging used to cause runtimes 3% of the time. See #66313 and #60901
+/datum/outfit/stacks_in_hands
 	name = "Mr. Runtime"
 
 	uniform = /obj/item/clothing/under/suit/tuxedo
