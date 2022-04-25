@@ -94,6 +94,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 //turf/simulated/create_fire(fl) ZASTURF
 /turf/open/create_fire(fl, create_own_fuel)
+	if(!simulated)
+		return
 	if(fire)
 		fire.firelevel = max(fl, fire.firelevel)
 		return 1

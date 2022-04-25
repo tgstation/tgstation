@@ -178,7 +178,7 @@
 	if(QDELETED(src))
 		return AIR_ALLOWED
 	if(get_dir(loc, T) == dir)
-		return density ? AIR_BLOCKED : ZONE_BLOCKED
+		return density ? (AIR_BLOCKED|ZONE_BLOCKED) : ZONE_BLOCKED
 	else
 		return ZONE_BLOCKED
 

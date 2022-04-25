@@ -54,7 +54,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/snowed/cavern
-	initial_gas = "n2=82;plasma=24;TEMP=120"
+	temperature = 120
 
 /turf/open/floor/plating/snowed/icemoon
 	initial_gas = ICEMOON_DEFAULT_ATMOS

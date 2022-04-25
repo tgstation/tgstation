@@ -82,6 +82,8 @@ SUBSYSTEM_DEF(zas)
 	//A reference to the global var
 	var/datum/xgm_gas_data/gas_data
 
+	var/datum/gas_mixture/lavaland_atmos
+
 	//Geometry lists
 	var/list/zones = list()
 	var/list/edges = list()
@@ -157,12 +159,15 @@ SUBSYSTEM_DEF(zas)
 	var/simulated_turf_count = 0
 	//for(var/turf/simulated/S) ZASTURF
 	for(var/turf/S)
-		if(istype(S, /turf/open/space))
+		if(!S.simulated)
 			continue
 		simulated_turf_count++
 		S.update_air_properties()
 
 		CHECK_TICK
+
+	///LAVALAND SETUP
+	fuck_lavaland()
 
 	to_chat(world, span_boldannounce("ZAS:\n - Total Simulated Turfs: [simulated_turf_count]\n - Total Zones: [zones.len]\n - Total Edges: [edges.len]\n - Total Active Edges: [active_edges.len ? "<span class='danger'>[active_edges.len]</span>" : "None"]\n - Total Unsimulated Turfs: [world.maxx*world.maxy*world.maxz - simulated_turf_count]"))
 
@@ -383,7 +388,8 @@ SUBSYSTEM_DEF(zas)
 	if(block & AIR_BLOCKED) return
 
 	var/direct = !(block & ZONE_BLOCKED)
-	var/space = istype(B, /turf/open/space)
+	//var/space = istype(B, /turf/open/space)
+	var/space = !B.simulated
 
 	if(!space)
 		if(min(A.zone.contents.len, B.zone.contents.len) < ZONE_MIN_SIZE || (direct && (equivalent_pressure(A.zone,B.zone) || times_fired == 0)))
@@ -494,3 +500,63 @@ SUBSYSTEM_DEF(zas)
 		active_edges -= E
 	if(processing_edges)
 		processing_edges -= E
+
+/datum/controller/subsystem/zas/proc/fuck_lavaland()
+	var/list/restricted_gases = list()
+	///No funny gasses allowed
+	for(var/gas in xgm_gas_data.gases)
+		if(xgm_gas_data.flags[gas] & (XGM_GAS_CONTAMINANT|XGM_GAS_FUEL|XGM_GAS_OXIDIZER))
+			restricted_gases |= gas
+
+	var/list/viable_gases = GLOB.all_gases - restricted_gases - GAS_XENON //TODO: add XGM_GAS_DANGEROUS
+	var/datum/gas_mixture/mix_real = new
+	var/list/mix_list = list()
+	var/num_gases = rand(1, 3)
+	var/list/chosen_gases = list()
+	var/target_pressure = rand(HAZARD_LOW_PRESSURE + 10, LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1)
+	var/temp = rand(BODYTEMP_COLD_DAMAGE_LIMIT + 1, 350)
+	var/pressure_scalar = target_pressure / (LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1)
+
+	///Choose our gases
+	for(var/iter in 1 to num_gases)
+		chosen_gases += pick_n_take(viable_gases)
+
+	mix_real.gas = chosen_gases
+	for(var/gas in mix_real.gas)
+		mix_real.gas[gas] = 1 //So update values doesn't cull it
+
+	mix_real.temperature = temp
+
+	///This is where the fun begins...
+	var/amount
+	var/gastype
+	while(mix_real.return_pressure() < target_pressure)
+		gastype = pick(chosen_gases)
+
+		amount = rand(5,10)
+		amount *= rand(50, 200) / 100
+		amount *= pressure_scalar
+		amount = CEILING(amount, 0.1)
+
+		mix_real.gas[gastype] += amount
+		mix_real.update_values()
+
+	while(mix_real.return_pressure() > target_pressure)
+		mix_real.gas[gastype] -= mix_real.gas[gastype] * 0.1
+		mix_real.update_values()
+
+	mix_real.gas[gastype] = FLOOR(mix_real.gas[gastype], 0.1)
+
+	for(var/gas_id in mix_real.gas)
+		mix_list[gas_id] = mix_real.gas[gas_id]
+
+	var/list/lavaland_z_levels = SSmapping.levels_by_trait(ZTRAIT_MINING) //God I hope this is never more than one
+	for(var/zlev in lavaland_z_levels)
+		for(var/turf/T in block(locate(1,1,zlev), locate(world.maxx, world.maxy, zlev)))
+			if(!T.simulated)
+				T.initial_gas = mix_list
+				T.temperature = mix_real.temperature
+			CHECK_TICK
+
+	lavaland_atmos = mix_real
+	to_chat(world, span_boldannounce("ZAS: Lavaland contains [num_gases] [num_gases > 1? "gases" : "gas"], with a pressure of [mix_real.return_pressure()] kpa."))

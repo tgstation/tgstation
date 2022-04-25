@@ -113,8 +113,8 @@
 	if(QDELETED(src))
 		return AIR_ALLOWED
 	if(block_air_zones)
-		return density ? AIR_BLOCKED : ZONE_BLOCKED
-	return density ? AIR_BLOCKED : AIR_ALLOWED
+		return density ? (AIR_BLOCKED|ZONE_BLOCKED) : ZONE_BLOCKED
+	return density ? (AIR_BLOCKED|ZONE_BLOCKED) : AIR_ALLOWED
 
 /**
  * Signal handler for checking if we notify our surrounding that access requirements are lifted accordingly to a newly set security level

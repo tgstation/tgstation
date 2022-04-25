@@ -125,7 +125,7 @@
 			//var/turf/simulated/T = get_step(src, dir) ZASTURF
 			var/turf/T = get_step(src, dir)
 			//if (!istype(T)) ZASTURF
-			if (istype(T, /turf/open/space))
+			if (istype(T, /turf/open/space) || !T.simulated)
 				. &= ~dir
 				continue
 
@@ -139,6 +139,8 @@
 
 //turf/simulated/update_air_properties() ZAS
 /turf/open/update_air_properties()
+	if(!simulated)
+		return ..()
 
 	if(zone && zone.invalid) //this turf's zone is in the process of being rebuilt
 		c_copy_air() //not very efficient :(
@@ -320,11 +322,16 @@
 
 ///turf/simulated/assume_air(datum/gas_mixture/giver) ZASTURF
 /turf/assume_air(datum/gas_mixture/giver)
+	if(!simulated)
+		return
 	var/datum/gas_mixture/my_air = return_air()
 	my_air.merge(giver)
 
 //turf/simulated/assume_gas(gasid, moles, temp = null) ZASTURF
 /turf/proc/assume_gas(gasid, moles, temp = null)
+	if(!simulated)
+		return
+
 	var/datum/gas_mixture/my_air = return_air()
 
 	if(isnull(temp))
@@ -337,6 +344,14 @@
 //turf/simulated/return_air() ZASTURF
 /turf/return_air()
 	RETURN_TYPE(/datum/gas_mixture)
+	if(!simulated)
+		var/datum/gas_mixture/GM = new
+
+		if(initial_gas)
+			GM.gas = initial_gas.Copy()
+		GM.temperature = temperature
+		GM.update_values()
+
 	if(zone)
 		if(!zone.invalid)
 			SSzas.mark_zone_update(zone)
@@ -370,6 +385,8 @@
 
 //turf/simulated/proc/atmos_spawn_air(gas_id, amount, initial_temperature) ZASTURF
 /turf/proc/atmos_spawn_air(gas_id, amount, initial_temperature)
+	if(!simulated)
+		return
 	var/datum/gas_mixture/new_gas = new
 	var/datum/gas_mixture/existing_gas = return_air()
 	if(isnull(initial_temperature))

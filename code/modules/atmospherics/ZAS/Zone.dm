@@ -106,7 +106,7 @@ Class Procs:
 	c_invalidate()
 	//for(var/turf/simulated/T in contents) ZASTURF
 	for(var/turf/T in contents)
-		if(istype(T, /turf/open/space))
+		if(!T.simulated)
 			continue
 		into.add(T)
 		T.update_graphic(graphic_remove = air.graphic)
@@ -127,7 +127,7 @@ Class Procs:
 	#ifdef ZASDBG
 	//for(var/turf/simulated/T in contents) ZASTURF
 	for(var/turf/T in contents)
-		if(!istype(T, /turf/open/space))
+		if(!T.simulated)
 			T.dbg(invalid_zone)
 	#endif
 
@@ -136,7 +136,7 @@ Class Procs:
 	c_invalidate()
 	//for(var/turf/simulated/T in contents) ZASTURF
 	for(var/turf/T in contents)
-		if(istype(T, /turf/open/space))
+		if(!T.simulated)
 			continue
 		T.update_graphic(graphic_remove = air.graphic) //we need to remove the overlays so they're not doubled when the zone is rebuilt
 		//T.dbg(invalid_zone)
@@ -163,7 +163,8 @@ Class Procs:
 	if(air.check_tile_graphic(graphic_add, graphic_remove))
 		//for(var/turf/simulated/T in contents)
 		for(var/turf/open/T in contents)
-			T.update_graphic(graphic_add, graphic_remove)
+			if(T.simulated)
+				T.update_graphic(graphic_add, graphic_remove)
 		graphic_add.len = 0
 		graphic_remove.len = 0
 
@@ -193,6 +194,8 @@ Class Procs:
 		last_air_temperature = air.temperature
 		//for(var/turf/simulated/T in contents) ZASTURF
 		for(var/turf/T in contents)
+			if(!T.simulated)
+				continue
 			for(var/check_atom in T.contents)
 				var/atom/checking = check_atom
 				if(checking.simulated)
@@ -219,7 +222,7 @@ Class Procs:
 			to_chat(M, "[E:air:return_pressure()]kPa")
 
 	to_chat(M, "Zone Edges: [zone_edges]")
-	to_chat(M, "Space Edges: [space_edges] ([space_coefficient] connections)")
+	to_chat(M, "Space Edges: [space_edges] ([space_coefficient] connections)\n")
 
 	//for(var/turf/T in unsimulated_contents)
 //		to_chat(M, "[T] at ([T.x],[T.y])")

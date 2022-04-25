@@ -120,10 +120,10 @@
 	handle_gas_override(breather, breath, gas_breathed)
 
 	//Partial pressures in our breath
-	var/O2_moles = breath.get_gas(GAS_OXYGEN)
-	var/N2_moles = breath.get_gas(GAS_NITROGEN)
-	var/plasma_moles = breath.get_gas(GAS_PLASMA)
-	var/CO2_moles = breath.get_gas(GAS_CO2)
+	var/O2_moles = breath.gas[GAS_OXYGEN]
+	var/N2_moles = breath.gas[GAS_NITROGEN]
+	var/plasma_moles = breath.gas[GAS_PLASMA]
+	var/CO2_moles = breath.gas[GAS_CO2]
 
 	var/O2_pp = breath.get_breath_partial_pressure(O2_moles)//+(8*breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES]))
 	var/N2_pp = breath.get_breath_partial_pressure(N2_moles)

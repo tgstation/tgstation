@@ -14,6 +14,8 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+	simulated = FALSE //OHHH HELLLL NAW
+
 	/// Base turf type to be created by the tunnel
 	var/turf_type = /turf/open/misc/asteroid
 	/// Probability floor has a different icon state
@@ -190,7 +192,6 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	name = "icy snow"
 	desc = "Looks colder."
 	baseturfs = /turf/open/misc/asteroid/snow/ice
-	initial_gas = "n2=82;plasma=24;TEMP=120"
 	floor_variance = 0
 	icon_state = "snow-ice"
 	base_icon_state = "snow-ice"
@@ -215,7 +216,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	initial_gas = AIRLESS_ATMOS
 
 /turf/open/misc/asteroid/snow/temperatre
-	initial_gas = "o2=22;n2=82;TEMP=255.37"
+	temperature = 255.37
 
 //Used in SnowCabin.dm
 /turf/open/misc/asteroid/snow/snow_cabin
