@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	/// Visual object for handling the viscontents
 	var/obj/effect/gateway_portal_effect/portal_visuals
 	/// Overlay of the lights. They light up fully when it charges fully.
-	var/mutable_appearance/light_overlay
+	var/image/light_overlay
 
 /obj/machinery/gateway/Initialize(mapload)
 	generate_destination()
@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	for(var/datum/gateway_destination/destination as anything in GLOB.gateway_destinations)
 		if(!destination.is_available())
 			continue
-		light_overlay = mutable_appearance(icon, "portal_light")
+		light_overlay = image(icon, "portal_light")
 		light_overlay.alpha = 0
 		add_overlay(light_overlay)
 		animate(light_overlay, 3 SECONDS, alpha = 255)
