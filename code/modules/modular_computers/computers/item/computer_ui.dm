@@ -96,7 +96,15 @@
 			if(prog in idle_threads)
 				running = TRUE
 
-			data["disk_programs"] += list(list("name" = prog.filename, "desc" = prog.filedesc, "running" = running, "icon" = prog.program_icon, "alert" = prog.alert_pending))
+			data["disk_programs"] += list(
+				list(
+					"name" = prog.filename,
+					"desc" = prog.filedesc,
+					"running" = running,
+					"icon" = prog.program_icon,
+					"alert" = prog.alert_pending,
+				),
+			)
 
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
