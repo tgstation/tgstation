@@ -762,6 +762,7 @@
 #include "code\datums\components\rename.dm"
 #include "code\datums\components\rot.dm"
 #include "code\datums\components\rotation.dm"
+#include "code\datums\components\scope.dm"
 #include "code\datums\components\shell.dm"
 #include "code\datums\components\shielded.dm"
 #include "code\datums\components\shrink.dm"
