@@ -91,7 +91,7 @@
 	if(HAS_TRAIT(breather, TRAIT_NOBREATH))
 		return
 
-	if(!breath || (breath.total_moles() == 0))
+	if(!breath || (breath.total_moles == 0))
 		if(breather.reagents.has_reagent(crit_stabilizing_reagent, needs_metabolizing = TRUE))
 			return
 		if(breather.health >= breather.crit_threshold)
