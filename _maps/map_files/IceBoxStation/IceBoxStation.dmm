@@ -36088,6 +36088,12 @@
 "qNy" = (
 /turf/closed/wall,
 /area/engineering/atmos/storage/gas)
+"qNE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/processing)
 "qNG" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -81713,7 +81719,7 @@ gQb
 gQb
 aiV
 iKP
-iKP
+cPP
 hIX
 qVz
 itl
@@ -81969,7 +81975,7 @@ gQb
 gQb
 gQb
 aiV
-cPP
+qNE
 iKP
 hIX
 hIX

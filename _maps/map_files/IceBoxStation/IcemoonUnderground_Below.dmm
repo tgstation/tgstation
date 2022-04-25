@@ -2498,6 +2498,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/obj/structure/sign/painting/large,
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -4362,10 +4363,6 @@
 	dir = 1
 	},
 /area/mine/eva/lower)
-"Ui" = (
-/obj/structure/sign/painting/large,
-/turf/closed/wall,
-/area/security/prison/rec)
 "Um" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Showers"
@@ -4750,6 +4747,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/structure/sign/painting/large,
 /turf/open/floor/wood,
 /area/security/prison/rec)
 "Xq" = (
@@ -27750,7 +27748,7 @@ qI
 zM
 HY
 HY
-HY
+zt
 HY
 Ia
 zt
@@ -29546,7 +29544,7 @@ tu
 Kl
 Kl
 Xo
-Ui
+eM
 jY
 oc
 dr
@@ -30317,7 +30315,7 @@ vI
 pH
 pH
 Bd
-Ui
+eM
 Jj
 Cj
 xs
