@@ -516,7 +516,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	icon_state = "aspev_syndie"
 
 /obj/structure/sign/poster/contraband/microwave
-	name = "How To Charge Your PDA" // here you go kyler
+	name = "How To Charge Your PDA"
 	desc = "A perfectly legitimate poster that seems to advertise the very real and genuine method of charging your PDA in the future: microwaves."
 	icon_state = "microwave"
 
