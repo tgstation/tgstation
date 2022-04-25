@@ -200,7 +200,7 @@
 	if(our_area)
 		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 
-	if(HAS_TRAIT(src, TRAIT_AREA_SENSITIVE)) // If we for some reason have not lost our area sensitivity, there's no reason to set it back up
+	if(HAS_TRAIT_FROM(src, TRAIT_AREA_SENSITIVE, INNATE_TRAIT)) // If we for some reason have not lost our area sensitivity, there's no reason to set it back up
 		return FALSE
 
 	become_area_sensitive(INNATE_TRAIT)
