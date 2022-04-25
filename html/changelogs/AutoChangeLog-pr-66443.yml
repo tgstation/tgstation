@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - bugfix: "fixed bug where you wouldn't receive msg notifications without opening your messenger app first"

@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes some improper and bugged balloon alerts."
-  - code_imp: "Adds a grep to prevent malformed balloon alert calls."

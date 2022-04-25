@@ -1,4 +1,0 @@
-author: "capsaicinz"
-delete-after: True
-changes: 
-  - bugfix: "curator PDAs will now properly display their screen overlays."

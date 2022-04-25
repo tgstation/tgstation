@@ -1,4 +1,0 @@
-author: "JoshAdamPowell"
-delete-after: True
-changes: 
-  - bugfix: "Random Item now accurately describes how much it costs."

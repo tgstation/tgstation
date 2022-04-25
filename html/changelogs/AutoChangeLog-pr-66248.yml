@@ -1,5 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - rscadd: "Added a tile sprayer to paint the corner and edge colors of floors."
-  - qol: "Made the UI for decal painters more visual."
