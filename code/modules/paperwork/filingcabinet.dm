@@ -30,7 +30,6 @@
 /obj/structure/filingcabinet/filingcabinet //not changing the path to avoid unnecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
 
-
 /obj/structure/filingcabinet/Initialize(mapload)
 	. = ..()
 	if(mapload)
@@ -86,7 +85,6 @@
 
 	return data
 
-
 /obj/structure/filingcabinet/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -100,13 +98,12 @@
 				usr.put_in_hands(content)
 				icon_state = "[initial(icon_state)]-open"
 				addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
-
+				return TRUE
 
 /obj/structure/filingcabinet/attack_tk(mob/user)
 	if(anchored)
 		return attack_self_tk(user)
 	return ..()
-
 
 /obj/structure/filingcabinet/attack_self_tk(mob/user)
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
