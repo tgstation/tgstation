@@ -30,6 +30,7 @@
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/job_management,
 	)
 
 /obj/item/modular_computer/tablet/pda/heads/hos
