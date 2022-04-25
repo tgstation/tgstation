@@ -592,6 +592,10 @@
 /obj/machinery/atmospherics/proc/paint(paint_color)
 	return FALSE
 
+/**
+ * Disconnects all nodes from ourselves, remove us from the node's nodes.
+ * Nullify our parent pipenet
+ */
 /obj/machinery/atmospherics/proc/disconnect_nodes()
 	for(var/i in 1 to device_type)
 		var/obj/machinery/atmospherics/node = nodes[i]
@@ -602,6 +606,10 @@
 		if(parents[i])
 			nullify_pipenet(parents[i])
 
+/**
+ * Connects all nodes to ourselves, add us to the node's nodes.
+ * Calls atmos_init() on the node and on us.
+ */
 /obj/machinery/atmospherics/proc/connect_nodes()
 	atmos_init()
 	for(var/i in 1 to device_type)
@@ -612,6 +620,12 @@
 			node.add_member(src)
 	SSair.add_to_rebuild_queue(src)
 
+/**
+ * Easy way to toggle nodes connection and disconnection.
+ *
+ * Arguments:
+ * * disconnect - if TRUE, disconnects all nodes. If FALSE, connects all nodes.
+ */
 /obj/machinery/atmospherics/proc/change_nodes_connection(disconnect)
 	if(disconnect)
 		disconnect_nodes()
