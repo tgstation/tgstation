@@ -74,12 +74,12 @@
 /datum/atom_hud/ai_detector
 	hud_icons = list(AI_DETECT_HUD)
 
-/datum/atom_hud/ai_detector/add_hud_to_mob(mob/M)
+/datum/atom_hud/ai_detector/show_to(mob/new_viewer)
 	..()
-	if(M && (hud_users.len == 1))
-		for(var/V in GLOB.aiEyes)
-			var/mob/camera/ai_eye/E = V
-			E.update_ai_detect_hud()
+	if(!new_viewer || hud_users.len != 1)
+		return
+	for(var/mob/camera/ai_eye/eye as anything in GLOB.aiEyes)
+		eye.update_ai_detect_hud()
 
 /* MED/SEC/DIAG HUD HOOKS */
 

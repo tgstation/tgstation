@@ -163,7 +163,7 @@ the new instance inside the host to be updated to the template's stats.
 	if(!mind.has_antag_datum(/datum/antagonist/disease))
 		mind.add_antag_datum(/datum/antagonist/disease)
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medsensor.add_hud_to_mob(src)
+	medsensor.show_to(src)
 
 /mob/camera/disease/proc/pick_name()
 	var/static/list/taken_names
