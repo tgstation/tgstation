@@ -780,7 +780,7 @@
 /datum/reagent/medicine/atropine/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustToxLoss(0.5 * REM * delta_time, 0)
 	. = TRUE
-	M.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
+	M.set_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/dizziness, only_if_higher = TRUE)
 	M.Jitter(1 * REM * delta_time)
 	..()
 
