@@ -232,7 +232,7 @@
 						#ifdef ZASDBG
 						if(verbose) log_admin("[d] is zone blocked.")
 
-						dbg(zone_blocked, d)
+						dbg(zasdbgovl_zone_blocked, d)
 						#endif
 
 						//Postpone this tile rather than exit, since a connection can still be made.
@@ -244,7 +244,7 @@
 						sim.zone.add(src)
 
 						#ifdef ZASDBG
-						dbg(assigned)
+						dbg(zasdbgovl_assigned)
 						if(verbose) log_admin("Added to [zone]")
 						#endif
 
@@ -273,7 +273,7 @@
 		newzone.add(src)
 
 	#ifdef ZASDBG
-		dbg(created)
+		dbg(zasdbgovl_created)
 
 	ASSERT(zone)
 	#endif

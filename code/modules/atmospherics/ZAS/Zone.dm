@@ -111,7 +111,7 @@ Class Procs:
 		into.add(T)
 		T.update_graphic(graphic_remove = air.graphic)
 		#ifdef ZASDBG
-		T.dbg(merged)
+		T.dbg(zasdbgovl_merged)
 		#endif
 
 	//rebuild the old zone's edges so that they will be possessed by the new zone
@@ -128,7 +128,7 @@ Class Procs:
 	//for(var/turf/simulated/T in contents) ZASTURF
 	for(var/turf/T in contents)
 		if(!T.simulated)
-			T.dbg(invalid_zone)
+			T.dbg(zasdbgovl_invalid_zone)
 	#endif
 
 /zone/proc/rebuild()
