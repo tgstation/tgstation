@@ -514,7 +514,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 				span_userdanger("[user] stuns you with [src]!"))
 			target.Jitter(20)
 			target.set_confusion(max(10, target.get_confusion()))
-			target.stuttering = max(8, target.stuttering)
+			target.set_timed_status_effect(16 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 			SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_STUNRESISTANCE) ? 0.1 : 1))
 		if(BATON_SLEEP)

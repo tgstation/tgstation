@@ -6,7 +6,7 @@
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
 	initial_language_holder = /datum/language_holder/synthetic
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
 	deathsound = 'sound/voice/borg_deathsound.ogg'
@@ -47,7 +47,8 @@
 
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
-	var/obj/item/pda/ai/aiPDA
+
+	var/obj/item/modular_computer/tablet/integrated/modularInterface
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
@@ -71,11 +72,34 @@
 	QDEL_NULL(radio)
 	QDEL_NULL(aicamera)
 	QDEL_NULL(builtInCamera)
-	QDEL_NULL(aiPDA)
 	laws?.owner = null //Laws will refuse to die otherwise.
 	QDEL_NULL(laws)
 	GLOB.silicon_mobs -= src
 	return ..()
+
+/mob/living/silicon/proc/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
+	modularInterface.layer = ABOVE_HUD_PLANE
+	modularInterface.plane = ABOVE_HUD_PLANE
+	modularInterface.saved_identification = real_name || name
+	if(istype(src, /mob/living/silicon/robot))
+		modularInterface.saved_job = "Cyborg"
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated/borg)
+	if(istype(src, /mob/living/silicon/ai))
+		modularInterface.saved_job = "AI"
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated)
+	if(istype(src, /mob/living/silicon/pai))
+		modularInterface.saved_job = "pAI Messenger"
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated)
+
+/mob/living/silicon/robot/model/syndicate/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
+		modularInterface.saved_identification = real_name
+		modularInterface.saved_job = "Cyborg"
+	return ..()
+
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -403,3 +427,38 @@
 
 /mob/living/silicon/on_standing_up()
 	return // Silicons are always standing by default.
+
+/**
+ * Records an IC event log entry in the cyborg's internal tablet.
+ *
+ * Creates an entry in the borglog list of the cyborg's internal tablet (if it's a borg), listing the current
+ * in-game time followed by the message given. These logs can be seen by the cyborg in their
+ * BorgUI tablet app. By design, logging fails if the cyborg is dead.
+ *
+ * (This used to be in robot.dm. It's in here now.)
+ *
+ * Arguments:
+ * arg1: a string containing the message to log.
+ */
+/mob/living/silicon/proc/logevent(string = "")
+	if(!string)
+		return
+	if(stat == DEAD) //Dead silicons log no longer
+		return
+	if(!modularInterface)
+		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
+		create_modularInterface()
+	var/mob/living/silicon/robot/robo = modularInterface.borgo
+	if(istype(robo))
+		modularInterface.borglog += "[station_time_timestamp()] - [string]"
+	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
+	if(program)
+		program.force_full_update()
+
+/// Same as the normal character name replacement, but updates the contents of the modular interface.
+/mob/living/silicon/fully_replace_character_name(oldname, newname)
+	. = ..()
+	if(!modularInterface)
+		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
+		create_modularInterface()
+	modularInterface.saved_identification = newname

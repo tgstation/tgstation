@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
 
 /proc/log_traitor(text)
-	if (CONFIG_GET(flag/log_econ))
+	if (CONFIG_GET(flag/log_traitor))
 		WRITE_LOG(GLOB.world_game_log, "TRAITOR: [text]")
 
 /proc/log_manifest(ckey, datum/mind/mind, mob/body, latejoin = FALSE)

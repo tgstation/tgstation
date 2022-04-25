@@ -1,5 +1,0 @@
-author: "capsaicinz"
-delete-after: True
-changes: 
-  - spellcheck: "fixed an error in the chilling black extract's description."
-  - code_imp: "the 'random' subtype of golems no longer exists, and is now effectively replaced by picking from all subtypes of the golem species."

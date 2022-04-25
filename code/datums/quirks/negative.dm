@@ -342,7 +342,7 @@
 
 	var/lums = holder_turf.get_lumcount()
 
-	if(lums > 0.2)
+	if(lums > LIGHTING_TILE_IS_DARK)
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
 		return
 
@@ -542,26 +542,13 @@
 					to_chat(quirker, span_danger("You feel self-conscious and stop talking. You need a moment to recover!"))
 					break
 			if(prob(max(5,(nearby_people*12.5*moodmod)))) //Minimum 1/20 chance of stutter
-				word = html_decode(word)
-				var/leng = length(word)
-				var/stuttered = ""
-				var/newletter = ""
-				var/rawchar = ""
-				var/static/regex/nostutter = regex(@@[aeiouAEIOU ""''()[\]{}.!?,:;_`~-]@)
-				for(var/i = 1, i <= leng, i += length(rawchar))
-					rawchar = newletter = word[i]
-					if(prob(80) && !nostutter.Find(rawchar))
-						if(prob(10))
-							newletter = "[newletter]-[newletter]-[newletter]-[newletter]"
-						else if(prob(20))
-							newletter = "[newletter]-[newletter]-[newletter]"
-						else
-							newletter = "[newletter]-[newletter]"
-					stuttered += newletter
-				sanitize(stuttered)
-				new_message += stuttered
+				// Add a short stutter, THEN treat our word
+				quirker.adjust_timed_status_effect(0.5 SECONDS, /datum/status_effect/speech/stutter)
+				new_message += quirker.treat_message(word)
+
 			else
 				new_message += word
+
 		message = jointext(new_message, " ")
 	var/mob/living/carbon/human/quirker = quirk_holder
 	if(prob(min(50,(0.50*(nearby_people*12.5)*moodmod)))) //Max 50% chance of not talking
@@ -605,7 +592,7 @@
 			quirk_holder.Jitter(10)
 			msg += "causing you to start fidgeting!"
 		if(2)
-			quirk_holder.stuttering = max(3, quirk_holder.stuttering)
+			quirk_holder.set_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 			msg += "causing you to start stuttering!"
 		if(3)
 			quirk_holder.Stun(2 SECONDS)
@@ -805,6 +792,9 @@
 		return
 
 	if(IS_IN_STASIS(quirk_holder))
+		return
+
+	if(quirk_holder.stat == DEAD)
 		return
 
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder

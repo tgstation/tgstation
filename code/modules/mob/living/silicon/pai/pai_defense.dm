@@ -14,13 +14,13 @@
 	//Ask and you shall receive
 	switch(rand(1, 3))
 		if(1)
-			stuttering += 30/severity //temporary, clears in a few ticks after silent is over.
+			adjust_timed_status_effect(1 MINUTES / severity, /datum/status_effect/speech/stutter)
 			to_chat(src, span_danger("Warning: Feedback loop detected in speech module."))
 		if(2)
-			slurring = INFINITY // permanent until speech is fixed through the pAI card UI by someone else.
+			adjust_timed_status_effect(INFINITY, /datum/status_effect/speech/slurring/drunk)
 			to_chat(src, span_danger("Warning: Audio synthesizer CPU stuck."))
 		if(3)
-			derpspeech = 1 // Ditto.
+			adjust_timed_status_effect(INFINITY, /datum/status_effect/speech/stutter/derpspeech)
 			to_chat(src, span_danger("Warning: Vocabulary databank corrupted."))
 	if(prob(40))
 		mind.language_holder.selected_language = get_random_spoken_language()

@@ -983,7 +983,6 @@
 /obj/item/food/pie/cream,
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/light/directional/north,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "dd" = (
@@ -1898,7 +1897,7 @@
 "fG" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Sec - Permabrig Exercise";
-	network = ssssssssssssss
+	network = list("ss13","prison")
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -4870,7 +4869,7 @@
 "nZ" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder,
-/obj/item/cartridge/lawyer,
+/obj/item/computer_hardware/hard_drive/role/lawyer,
 /obj/machinery/computer/security/telescreen/prison{
 	pixel_y = 32
 	},
@@ -5155,7 +5154,6 @@
 	},
 /obj/effect/turf_decal/tile/dark,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -8584,7 +8582,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "yx" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9602,12 +9600,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/security/prison)
-"BH" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/science/xenobiology)
 "BJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -10006,10 +9998,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
-"CQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/maintenance/aft/lesser)
 "CR" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/aft/lesser)
@@ -12458,7 +12446,6 @@
 "Jn" = (
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
-/obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
@@ -13698,10 +13685,6 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/security/prison)
-"MM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall,
-/area/maintenance/aft/lesser)
 "MN" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -15625,16 +15608,9 @@
 "Sc" = (
 /turf/closed/wall/r_wall,
 /area/medical/morgue)
-"Sd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/mineral/random/snow,
-/area/icemoon/underground/unexplored/rivers)
 "Sf" = (
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/caution{
-	pixel_y = 9
-	},
 /turf/open/floor/iron/dark/textured,
 /area/hallway/secondary/service)
 "Sg" = (
@@ -15894,7 +15870,12 @@
 /area/mine/storage)
 "SS" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/spawner/random/entertainment/gambling{
+	pixel_y = 9
+	},
+/obj/item/storage/fancy/donut_box{
+	pixel_x = -6
+	},
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
 "ST" = (
@@ -63368,7 +63349,7 @@ MA
 jq
 zv
 Qv
-BH
+Qv
 Qv
 Wb
 Wb
@@ -63625,7 +63606,7 @@ CR
 CR
 tK
 Qv
-Sd
+As
 Qv
 Wb
 Wb
@@ -63882,7 +63863,7 @@ Wn
 CR
 CR
 CR
-MM
+hM
 CR
 CR
 CR
@@ -64139,7 +64120,7 @@ Xp
 ip
 Fa
 Fa
-CQ
+Fa
 Fa
 Fa
 Fa

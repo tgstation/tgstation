@@ -303,13 +303,13 @@
 	if(harm)
 		weapon.attack(current_target, src)
 	if(ishuman(current_target))
-		current_target.stuttering = 5
+		current_target.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
 		current_target.Paralyze(100)
 		var/mob/living/carbon/human/human_target = current_target
 		threat = human_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 	else
 		current_target.Paralyze(100)
-		current_target.stuttering = 5
+		current_target.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
 		threat = current_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 
 	log_combat(src, target, "stunned")
@@ -332,7 +332,7 @@
 		if(BOT_IDLE) // idle
 			SSmove_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
-			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
+			if((mode == BOT_IDLE) && bot_mode_flags & BOT_MODE_AUTOPATROL) // didn't start hunting during look_for_perp, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
 
 		if(BOT_HUNT) // hunting for perp
