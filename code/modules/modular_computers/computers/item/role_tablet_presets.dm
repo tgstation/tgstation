@@ -14,7 +14,6 @@
 
 /obj/item/modular_computer/tablet/pda/heads/Initialize(mapload)
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
 	install_component(new /obj/item/computer_hardware/card_slot/secondary)
 
 /obj/item/modular_computer/tablet/pda/heads/captain
