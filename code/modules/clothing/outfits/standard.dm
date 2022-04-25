@@ -178,17 +178,6 @@
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
 
-/// Used primarily by the outfit_sanity unit test, in-hand merging used to cause runtimes 3% of the time. See #66313 and #60901
-/datum/outfit/stacks_in_hands
-	name = "Mr. Runtime"
-
-	uniform = /obj/item/clothing/under/suit/tuxedo
-	glasses = /obj/item/clothing/glasses/sunglasses
-	mask = /obj/item/clothing/mask/cigarette/cigar/havana
-	shoes = /obj/item/clothing/shoes/laceup
-	l_hand = /obj/item/stack/spacecash/c1000
-	r_hand = /obj/item/stack/spacecash/c1000
-
 /datum/outfit/tunnel_clown
 	name = "Tunnel Clown"
 
