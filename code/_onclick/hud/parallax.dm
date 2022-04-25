@@ -323,7 +323,7 @@
 	var/turf/posobj = get_turf(C.eye)
 	if(!posobj)
 		return
-	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
+	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT //TODOKYLER: do this when they change z levels
 
 /atom/movable/screen/parallax_layer/planet/update_o()
 	return //Shit won't move

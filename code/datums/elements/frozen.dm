@@ -1,3 +1,4 @@
+///simple element to handle frozen obj's
 /datum/element/frozen
 	element_flags = ELEMENT_DETACH
 

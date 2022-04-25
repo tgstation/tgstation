@@ -356,8 +356,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/atom/firstbump
 	var/canPassSelf = CanPass(mover, get_dir(src, mover))
 	if(canPassSelf || (mover.movement_type & PHASING))
-			if(QDELETED(mover))
-				return FALSE //We were deleted, do not attempt to proceed with movement.
+		for(var/atom/movable/thing as anything in contents)
 			if(thing == mover || thing == mover.loc) // Multi tile objects and moving out of other objects
 				continue
 			if(!thing.Cross(mover))
@@ -377,14 +376,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		mover.Bump(firstbump)
 		return (mover.movement_type & PHASING)
 	return TRUE
-
-/turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	//melting
-	if(isobj(arrived) && air && air.temperature > T0C)
-		var/obj/O = arrived
-		if(O.obj_flags & FROZEN)
-			O.make_unfrozen()
 
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)
