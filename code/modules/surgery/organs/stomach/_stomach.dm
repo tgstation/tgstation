@@ -214,7 +214,7 @@
 				disgusted.add_confusion(2)
 			if(DT_PROB(5, delta_time) && !disgusted.stat)
 				to_chat(disgusted, span_warning("You feel kind of iffy..."))
-			disgusted.jitteriness = max(disgusted.jitteriness - 3, 0)
+			disgusted.adjust_timed_status_effect(-6 SECONDS, /datum/status_effect/jitter)
 		if(disgusted.disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
 				disgusted.add_confusion(2.5)

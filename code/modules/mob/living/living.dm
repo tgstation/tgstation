@@ -844,7 +844,6 @@
 	set_confusion(0)
 	dizziness = 0
 	set_drowsyness(0)
-	jitteriness = 0
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, admin_revive)
 
