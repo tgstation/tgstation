@@ -46,8 +46,8 @@
 	//and following a N/Z ratio of 1.5, the molar mass of a monatomic gas is:
 	molar_mass = 0.405	// kg/mol
 
-	//tile_color = "#ff9940"
-	tile_overlay = "phoron"
+	//tile_overlay = "phoron"
+	tile_overlay = "plasma"
 	overlay_limit = 0.7
 	flags = XGM_GAS_FUEL | XGM_GAS_CONTAMINANT | XGM_GAS_FUSION_FUEL
 	breathed_product = /datum/reagent/toxin/plasma

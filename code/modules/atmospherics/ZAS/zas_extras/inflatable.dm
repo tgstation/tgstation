@@ -313,7 +313,7 @@
 
 /obj/item/storage/briefcase/inflatable
 	name = "inflatable barrier box"
-	desc = "Contains inflatable walls and doors."
+	desc = "Contains inflatable walls and doors. THE SPRITE IS A PLACEHOLDER, OKAY?"
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 150
 	force = 8
