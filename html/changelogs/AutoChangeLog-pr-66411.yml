@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - rscdel: "Removed the concept of ballast from thermomachines, you no longer need some gas to heat in order to cool things."

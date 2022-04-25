@@ -333,7 +333,6 @@
 		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
 			failsafe(user)
 			return COMPONENT_STOP_RINGTONE_CHANGE
-		to_chat(user, span_notice("Unlock failure."))
 		return
 	locked = FALSE
 	interact(null, user)
