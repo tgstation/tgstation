@@ -190,7 +190,7 @@
 	build_path = /obj/machinery/computer/message_monitor
 
 /obj/item/circuitboard/computer/powermonitor
-	name = "Power Monitor (Computer Board)"  // name fixed #250810
+	name = "Power Monitor (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/monitor
 
@@ -205,7 +205,7 @@
 	build_path = /obj/machinery/computer/sat_control
 
 /obj/item/circuitboard/computer/solar_control
-	name = "Solar Control (Computer Board)"  // name fixed #250810
+	name = "Solar Control (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/solar_control
 
