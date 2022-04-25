@@ -25583,10 +25583,10 @@
 "eiN" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/computer_hardware/hard_drive/roboticist,
-/obj/item/computer_hardware/hard_drive/small/ordnance,
-/obj/item/computer_hardware/hard_drive/small/ordnance,
-/obj/item/computer_hardware/hard_drive/small/ordnance,
+/obj/item/computer_hardware/hard_drive/role/roboticist,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
 /obj/item/circuitboard/aicore{
 	pixel_y = 5
 	},
@@ -53081,9 +53081,9 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/folder/yellow,
-/obj/item/computer_hardware/hard_drive/portable/atmos,
-/obj/item/computer_hardware/hard_drive/portable/atmos,
-/obj/item/computer_hardware/hard_drive/portable/atmos,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
 /obj/item/pen/fountain,
 /turf/open/floor/carpet/orange,
 /area/cargo/qm)
@@ -64116,9 +64116,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/computer_hardware/hard_drive/small/engineering,
-/obj/item/computer_hardware/hard_drive/small/engineering,
-/obj/item/computer_hardware/hard_drive/small/atmos,
+/obj/item/computer_hardware/hard_drive/role/engineering,
+/obj/item/computer_hardware/hard_drive/role/engineering,
+/obj/item/computer_hardware/hard_drive/role/atmos,
 /obj/item/folder,
 /obj/item/stamp/ce,
 /turf/open/floor/iron/dark,
@@ -66729,7 +66729,7 @@
 	pixel_x = 5
 	},
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/lawyer,
+/obj/item/computer_hardware/hard_drive/role/lawyer,
 /obj/effect/turf_decal/bot,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron/dark,
@@ -78105,10 +78105,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/computer_hardware/hard_drive/small/medical,
-/obj/item/computer_hardware/hard_drive/small/medical,
-/obj/item/computer_hardware/hard_drive/small/medical,
-/obj/item/computer_hardware/hard_drive/small/chemistry,
+/obj/item/computer_hardware/hard_drive/role/medical,
+/obj/item/computer_hardware/hard_drive/role/medical,
+/obj/item/computer_hardware/hard_drive/role/medical,
+/obj/item/computer_hardware/hard_drive/role/chemistry,
 /obj/item/clothing/neck/stethoscope{
 	pixel_y = 5
 	},

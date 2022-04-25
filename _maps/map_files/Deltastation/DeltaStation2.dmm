@@ -32386,9 +32386,9 @@
 /area/security/checkpoint/customs/aft)
 "hih" = (
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/small/ordnance,
-/obj/item/computer_hardware/hard_drive/small/ordnance,
-/obj/item/computer_hardware/hard_drive/small/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
 /obj/machinery/camera/directional/east{
 	c_tag = "Science - Research Director's Office";
 	name = "science camera";
@@ -55054,9 +55054,9 @@
 /area/cargo/storage)
 "nRP" = (
 /obj/structure/table/reinforced,
-/obj/item/computer_hardware/hard_drive/portable/atmos,
-/obj/item/computer_hardware/hard_drive/portable/atmos,
-/obj/item/computer_hardware/hard_drive/portable/atmos,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/role/quartermaster,
 /obj/item/gps/mining,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -69716,9 +69716,9 @@
 "sgF" = (
 /obj/structure/table/glass,
 /obj/item/folder/blue,
-/obj/item/computer_hardware/hard_drive/small/medical,
-/obj/item/computer_hardware/hard_drive/small/medical,
-/obj/item/computer_hardware/hard_drive/small/chemistry,
+/obj/item/computer_hardware/hard_drive/role/medical,
+/obj/item/computer_hardware/hard_drive/role/medical,
+/obj/item/computer_hardware/hard_drive/role/chemistry,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -71791,15 +71791,15 @@
 /turf/open/space,
 /area/space/nearstation)
 "sJJ" = (
-/obj/item/computer_hardware/hard_drive/small/atmos,
-/obj/item/computer_hardware/hard_drive/small/atmos,
-/obj/item/computer_hardware/hard_drive/small/atmos,
+/obj/item/computer_hardware/hard_drive/role/atmos,
+/obj/item/computer_hardware/hard_drive/role/atmos,
+/obj/item/computer_hardware/hard_drive/role/atmos,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/item/computer_hardware/hard_drive/small/engineering,
-/obj/item/computer_hardware/hard_drive/small/engineering,
-/obj/item/computer_hardware/hard_drive/small/engineering,
+/obj/item/computer_hardware/hard_drive/role/engineering,
+/obj/item/computer_hardware/hard_drive/role/engineering,
+/obj/item/computer_hardware/hard_drive/role/engineering,
 /obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)

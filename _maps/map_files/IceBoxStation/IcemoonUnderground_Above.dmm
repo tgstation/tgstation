@@ -4403,7 +4403,7 @@
 "mx" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder,
-/obj/item/computer_hardware/hard_drive/lawyer,
+/obj/item/computer_hardware/hard_drive/role/lawyer,
 /obj/machinery/computer/security/telescreen/prison{
 	pixel_y = 32
 	},
