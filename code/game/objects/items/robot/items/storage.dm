@@ -59,7 +59,7 @@
 	if(!stored)
 		var/itemcheck = FALSE
 		for(var/storable_type in storable)
-			if(istype(atom, storable_typei))
+			if(istype(atom, storable_type))
 				itemcheck = TRUE
 				break
 		if(itemcheck)
