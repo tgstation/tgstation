@@ -99,7 +99,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 // Used by the PDA medical scanner too
-/proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE)
+/proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE, tochat = TRUE)
 	if(user.incapacitated())
 		return
 
@@ -368,7 +368,11 @@
 			render_list += "<span class='notice ml-1'>Detected cybernetic modifications:</span>\n"
 			render_list += "<span class='notice ml-2'>[cyberimp_detect]</span>\n"
 	// we handled the last <br> so we don't need handholding
-	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+
+	if(tochat)
+		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
+	else
+		return(jointext(render_list, ""))
 
 /proc/chemscan(mob/living/user, mob/living/target)
 	if(user.incapacitated())

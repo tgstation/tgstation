@@ -63,6 +63,10 @@
 ///Empty ID define
 #define TIMER_ID_NULL -1
 
+/// Used to trigger object removal from a processing list
+#define PROCESS_KILL 26
+
+
 //! ## Initialization subsystem
 
 ///New should not call Initialize
@@ -165,6 +169,7 @@
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
+#define FIRE_PRIORITY_PING 10
 #define FIRE_PRIORITY_IDLE_NPC 10
 #define FIRE_PRIORITY_SERVER_MAINT 10
 #define FIRE_PRIORITY_RESEARCH 10

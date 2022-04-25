@@ -34,7 +34,8 @@
 	var/stationcargo = TRUE
 	///The account this console processes and displays. Independent from the account the shuttle processes.
 	var/cargo_account = ACCOUNT_CAR
-
+	///Interface name for the ui_interact call for different subtypes.
+	var/interface_type = "Cargo"
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
@@ -89,9 +90,10 @@
 	circuit.configure_machine(src)
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Cargo", name)
+		ui = new(user, src, interface_type, name)
 		ui.open()
 
 /obj/machinery/computer/cargo/ui_data()

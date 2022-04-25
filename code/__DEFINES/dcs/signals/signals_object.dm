@@ -268,10 +268,10 @@
 // /obj/item/pda signals
 
 ///called on pda when the user changes the ringtone: (mob/living/user, new_ringtone)
-#define COMSIG_PDA_CHANGE_RINGTONE "pda_change_ringtone"
+#define COMSIG_TABLET_CHANGE_ID "comsig_tablet_change_id"
 	#define COMPONENT_STOP_RINGTONE_CHANGE (1<<0)
-#define COMSIG_PDA_CHECK_DETONATE "pda_check_detonate"
-	#define COMPONENT_PDA_NO_DETONATE (1<<0)
+#define COMSIG_TABLET_CHECK_DETONATE "pda_check_detonate"
+	#define COMPONENT_TABLET_NO_DETONATE (1<<0)
 
 // /obj/item/radio signals
 
@@ -285,6 +285,9 @@
 
 // /obj/item/gun signals
 
+///called in /obj/item/gun/fire_gun (user, target, flag, params)
+#define COMSIG_GUN_TRY_FIRE "gun_try_fire"
+	#define COMPONENT_CANCEL_GUN_FIRE (1<<0)
 ///called in /obj/item/gun/process_fire (src, target, params, zone_override)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
@@ -337,6 +340,15 @@
 
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
+
+// /obj/vehicle/sealed/car/vim signals
+
+///from /datum/action/vehicle/sealed/noise/chime/Trigger(): ()
+#define COMSIG_VIM_CHIME_USED "vim_chime_used"
+///from /datum/action/vehicle/sealed/noise/buzz/Trigger(): ()
+#define COMSIG_VIM_BUZZ_USED "vim_buzz_used"
+///from /datum/action/vehicle/sealed/headlights/vim/Trigger(): (headlights_on)
+#define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
 
 // /obj/vehicle/sealed/mecha signals
 

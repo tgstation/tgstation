@@ -1,3 +1,10 @@
+/* Mind Restoration
+ * Slight stealth reduction
+ * Reduces resistance
+ * Slight increase to stage speed
+ * Greatly decreases transmissibility
+ * Critical level
+*/
 /datum/symptom/mind_restoration
 	name = "Mind Restoration"
 	desc = "The virus strengthens the bonds between neurons, reducing the duration of any ailments of the mind."
