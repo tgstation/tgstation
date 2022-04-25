@@ -440,6 +440,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/area/our_area = get_area(src)
 	var/area/their_area = get_area(our_dest)
 	var/different_areas = our_area != their_area
+	var/turf/mover_old_loc
 
 	if(glide_size != glide_size_override)
 		set_glide_size(glide_size_override)
@@ -462,9 +463,13 @@ GLOBAL_LIST_EMPTY(lifts)
 			//we dont need to call Entered() and Exited() for origin and destination here for each mover because
 			//all of them are considered to be on top of us, so the turfs and anything on them can only perceive us,
 			//which is why the platform itself uses forceMove()
+			mover_old_loc = mover.loc
+
 			our_area.Exited(mover, movement_direction)
 			mover.loc = get_step(mover, movement_direction)
 			their_area.Entered(mover, movement_direction)
+
+			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, TRUE)
 
 	else
 		for(var/atom/movable/mover as anything in movers)
@@ -472,10 +477,13 @@ GLOBAL_LIST_EMPTY(lifts)
 				movers -= mover
 				continue
 
+			mover_old_loc = mover.loc
 			mover.loc = get_step(mover, movement_direction)
 
-	for(var/atom/movable/mover as anything in movers)
-		mover.Moved(get_step(mover, opposite_direction), movement_direction, TRUE, null, src)
+			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, TRUE)
+
+	//for(var/atom/movable/mover as anything in movers)
+	//	mover.Moved(get_step(mover, opposite_direction), movement_direction, TRUE, null, src, TRUE)
 		//tell the movers they moved only after all of them have been moved so they cant react to eachother moving
 
 
