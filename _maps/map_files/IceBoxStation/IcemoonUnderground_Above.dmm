@@ -407,9 +407,6 @@
 /obj/item/stack/license_plates/empty/fifty,
 /turf/open/floor/iron/dark/smooth_half,
 /area/security/prison/work)
-"bi" = (
-/turf/closed/wall/r_wall,
-/area/icemoon/underground/explored)
 "bj" = (
 /obj/machinery/camera{
 	c_tag = "Morgue Hallway"
@@ -1789,13 +1786,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/grimy,
 /area/security/prison/work)
-"fe" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron/dark/textured,
-/area/ai_monitored/security/armory)
 "ff" = (
 /obj/structure/stairs/south,
 /obj/structure/disposalpipe/segment,
@@ -2452,7 +2442,7 @@
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/latex,
 /turf/open/floor/plating,
-/area/security/prison)
+/area/security/prison/safe)
 "gT" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck{
@@ -2515,6 +2505,8 @@
 /area/commons/lounge)
 "ha" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/ai_monitored/security/armory)
 "hb" = (
@@ -2674,7 +2666,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/carpet/black,
-/area/security/prison)
+/area/security/prison/safe)
 "hx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/green/filled/warning{
@@ -2762,7 +2754,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/black,
-/area/security/prison)
+/area/security/prison/safe)
 "hJ" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -3412,7 +3404,7 @@
 /obj/item/bedsheet/black/double,
 /obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/carpet/black,
-/area/security/prison)
+/area/security/prison/safe)
 "jk" = (
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 4
@@ -3981,7 +3973,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/carpet/black,
-/area/security/prison)
+/area/security/prison/safe)
 "kR" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -6721,7 +6713,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/security/prison)
+/area/security/prison/safe)
 "sE" = (
 /obj/machinery/space_heater,
 /obj/structure/disposalpipe/segment{
@@ -7012,6 +7004,7 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "tu" = (
+/obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plating,
 /area/security/prison)
 "tv" = (
@@ -7495,7 +7488,7 @@
 "uM" = (
 /obj/structure/falsewall,
 /turf/open/floor/iron,
-/area/security/prison/visit)
+/area/security/prison/safe)
 "uO" = (
 /obj/effect/spawner/random/structure/tank_holder,
 /obj/effect/decal/cleanable/dirt,
@@ -8477,7 +8470,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/security/prison)
+/area/security/prison/safe)
 "xO" = (
 /turf/closed/wall,
 /area/hallway/primary/central/fore)
@@ -10542,7 +10535,7 @@
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
-/area/security/prison)
+/area/security/prison/safe)
 "DY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -13970,11 +13963,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
 /area/service/chapel)
-"Nt" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/plating,
-/area/security/prison)
 "Nu" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -15112,7 +15100,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/black,
-/area/security/prison)
+/area/security/prison/safe)
 "QE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_large,
@@ -17379,7 +17367,7 @@
 "WL" = (
 /obj/structure/sign/warning/electricshock,
 /turf/closed/wall/r_wall,
-/area/icemoon/underground/explored)
+/area/security/prison/safe)
 "WM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -41770,7 +41758,7 @@ Ra
 ug
 Ki
 tH
-bi
+CD
 kK
 kK
 kK
@@ -42022,12 +42010,12 @@ vV
 VT
 Mw
 ox
-Si
-Si
+Py
+Py
 Py
 yn
 JR
-bi
+CD
 kK
 rm
 dJ
@@ -42284,7 +42272,7 @@ DW
 Py
 Py
 Py
-xx
+CD
 xx
 KF
 KF
@@ -42793,9 +42781,9 @@ aG
 EV
 Mw
 PD
-Si
-Si
-Ex
+Py
+Py
+Py
 FU
 Es
 id
@@ -44338,7 +44326,7 @@ Mu
 as
 ah
 ha
-fe
+nF
 nF
 nF
 nH
@@ -44585,7 +44573,7 @@ Et
 kK
 kK
 kK
-Nt
+Og
 hI
 hw
 kQ
@@ -44842,10 +44830,10 @@ Et
 Et
 kK
 kK
-Cf
+CD
 QD
 jj
-Si
+Py
 xK
 Mw
 ce
@@ -45099,10 +45087,10 @@ ak
 Et
 Jf
 kK
-Cf
-Si
-Si
-Si
+CD
+Py
+Py
+Py
 VT
 Mw
 ce

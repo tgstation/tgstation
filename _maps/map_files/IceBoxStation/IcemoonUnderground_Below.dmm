@@ -171,8 +171,8 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "cb" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/mess)
 "cj" = (
@@ -510,7 +510,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/sepia,
 /area/security/prison/rec)
 "fU" = (
@@ -1152,11 +1151,14 @@
 /area/icemoon/underground/explored)
 "nC" = (
 /obj/machinery/door/airlock{
-	name = "Utility Closet"
+	name = "Perma Overlook Closet"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "perma-overlook"
+	},
 /turf/open/floor/vault,
 /area/security/prison/rec)
 "nD" = (
@@ -1419,7 +1421,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/sign/poster/official/random/directional/north,
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron/white,
 /area/security/prison)
 "pH" = (
@@ -1471,6 +1473,7 @@
 "qx" = (
 /obj/item/hot_potato/harmless/toy,
 /obj/structure/table/wood,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/eighties/red,
 /area/security/prison/safe)
 "qH" = (
@@ -1662,7 +1665,10 @@
 /area/mine/laborcamp)
 "rX" = (
 /obj/machinery/door/airlock{
-	name = "Utility Closet"
+	name = "Perma Overlook Entrance"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "perma-overlook"
 	},
 /turf/open/floor/vault,
 /area/security/prison/rec)
@@ -1843,7 +1849,7 @@
 /area/security/prison/rec)
 "tw" = (
 /obj/machinery/door/airlock{
-	name = "Utility Closet"
+	name = "Perma Overlook Closet"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/vault,
@@ -2216,7 +2222,7 @@
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/security/prison/workout)
@@ -2477,7 +2483,7 @@
 /area/icemoon/underground/explored)
 "AX" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/mess)
 "AY" = (
@@ -2510,6 +2516,11 @@
 /turf/open/floor/iron,
 /area/security/prison/mess)
 "Bi" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
+/obj/structure/mirror/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/toilet)
 "Bj" = (
@@ -2611,6 +2622,7 @@
 /area/security/prison/rec)
 "Cr" = (
 /obj/machinery/microwave,
+/obj/structure/table,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison/mess)
 "Ct" = (
@@ -2923,6 +2935,12 @@
 	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
+"FE" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "FG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3124,6 +3142,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/toilet)
 "HQ" = (
@@ -3993,11 +4012,11 @@
 /area/security/prison)
 "Qo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/directional/west{
 	network = list("ss13","prison");
 	c_tag = "Security - Permabrig Chapel"
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/mess)
 "Qq" = (
@@ -4228,9 +4247,6 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "SK" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/mess)
@@ -4263,12 +4279,14 @@
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "SX" = (
-/obj/item/toy/plush/space_lizard_plushie,
+/obj/item/toy/plush/space_lizard_plushie{
+	name = "Ruins-The-Analog"
+	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "SY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/mess)
 "Te" = (
@@ -4402,12 +4420,6 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/wood,
 /area/security/prison/rec)
-"UI" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/security/prison/workout)
 "UJ" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -4434,7 +4446,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/warm/directional/east,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/prison/workout)
@@ -26717,7 +26728,7 @@ qI
 qI
 qI
 qI
-qI
+zM
 zt
 zt
 zt
@@ -26974,7 +26985,7 @@ qI
 qI
 qI
 qI
-zt
+zM
 zt
 zt
 zt
@@ -27748,7 +27759,7 @@ qI
 zM
 HY
 HY
-zt
+FE
 HY
 Ia
 zt
@@ -34934,7 +34945,7 @@ zt
 zt
 Sq
 mn
-UI
+eP
 xl
 Vn
 CV
