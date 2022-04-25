@@ -1,3 +1,5 @@
+import { BooleanLike } from "common/react";
+
 export const KelvinZeroCelcius = 273.15;
 
 export const InternalDamageToDamagedDesc = {
