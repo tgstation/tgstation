@@ -17174,6 +17174,10 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
+"hle" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/closed/wall,
+/area/service/kitchen/coldroom)
 "hlZ" = (
 /obj/machinery/meter,
 /obj/effect/turf_decal/delivery,
@@ -20354,6 +20358,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /turf/open/floor/iron/dark/corner,
 /area/engineering/atmos)
@@ -24263,6 +24268,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "kJU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -26826,7 +26832,7 @@
 /area/maintenance/starboard/upper)
 "mfd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
 /turf/open/floor/iron/large,
@@ -27948,10 +27954,6 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"mLA" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/turf/closed/wall,
-/area/maintenance/aft/greater)
 "mLE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -30425,6 +30427,13 @@
 	icon_state = "wood-broken4"
 	},
 /area/maintenance/port/fore)
+"nWT" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "nXe" = (
 /obj/structure/chair{
 	dir = 1
@@ -32449,6 +32458,7 @@
 	cycle_id = "atmos-entrance"
 	},
 /obj/machinery/door/firedoor/heavy,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics";
@@ -43623,13 +43633,6 @@
 "usH" = (
 /obj/structure/cable,
 /obj/machinery/duct,
-/obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/cable,
-/obj/machinery/duct,
 /obj/machinery/atmospherics/components/trinary/filter/atmos/co2,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47927,6 +47930,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/engineering/atmos/storage/gas)
 "wBb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -83239,7 +83243,7 @@ fEr
 gkF
 nvH
 sHv
-kJU
+nWT
 hwO
 gDV
 vSa
@@ -89878,7 +89882,7 @@ cZy
 kaF
 dXY
 fEJ
-sEf
+hle
 cfj
 kDt
 ggF
@@ -92476,7 +92480,7 @@ uTe
 bYD
 bYD
 bYD
-mLA
+bYD
 bYD
 bYD
 bYD
