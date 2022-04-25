@@ -76599,16 +76599,16 @@
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "vdJ" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "gatewayshutters";
-	name = "Gateway Chamber Shutters"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/button/door/directional/west{
 	id = "gatewayshutters";
 	name = "Gateway Shutters";
 	req_access_txt = "19"
+	},
+/obj/machinery/door/poddoor/shutters/window{
+	id = "gatewayshutters";
+	name = "Gateway Chamber Shutters"
 	},
 /turf/open/floor/iron/dark,
 /area/command/gateway)

@@ -13848,6 +13848,23 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/central/greater)
+"dIS" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "gatewayshutters";
+	name = "Gateway Chamber Shutters"
+	},
+/obj/machinery/button/door/directional/south{
+	id = "gatewayshutters";
+	name = "Gateway Shutters";
+	req_access_txt = "19"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/command/gateway)
 "dIW" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -31182,9 +31199,21 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/structure/table,
+/obj/item/radio/off{
+	pixel_y = 6
+	},
+/obj/item/radio/off{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/radio/off{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/radio/off,
 /turf/open/floor/iron,
 /area/command/gateway)
 "jSl" = (
@@ -46365,9 +46394,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/radio/intercom/directional/west,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/command/gateway)
 "pov" = (
@@ -54698,8 +54729,11 @@
 /turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "ssT" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 9
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
@@ -65153,6 +65187,7 @@
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
 /obj/item/paper/pamphlet/gateway,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/command/gateway)
 "wnY" = (
@@ -68591,23 +68626,10 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "xwN" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 5
+	dir = 1
 	},
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/structure/table,
-/obj/item/radio/off{
-	pixel_y = 6
-	},
-/obj/item/radio/off{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/radio/off{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/radio/off,
 /turf/open/floor/iron,
 /area/command/gateway)
 "xwT" = (
@@ -153831,7 +153853,7 @@ trK
 cKn
 trK
 ieT
-ieT
+dIS
 ieT
 mVo
 ieT

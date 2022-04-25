@@ -31044,9 +31044,7 @@
 /area/command/bridge)
 "gOY" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/engineering{
-	charge = 2e+006
-	},
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/circuit/green,
 /area/engineering/main)
 "gPa" = (
@@ -46898,13 +46896,13 @@
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/hop)
 "lwc" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "gatewayshutters";
-	name = "Gateway Chamber Shutters"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/window{
+	id = "gatewayshutters";
+	name = "Gateway Chamber Shutters"
 	},
 /turf/open/floor/iron,
 /area/command/gateway)
@@ -63955,9 +63953,7 @@
 /area/maintenance/disposal/incinerator)
 "qyj" = (
 /obj/structure/cable,
-/obj/machinery/power/smes/engineering{
-	charge = 2e+006
-	},
+/obj/machinery/power/smes/engineering,
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/circuit/green,
 /area/engineering/main)
@@ -83519,14 +83515,14 @@
 /turf/open/floor/iron,
 /area/cargo/drone_bay)
 "wnW" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "gatewayshutters";
-	name = "Gateway Chamber Shutters"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/window{
+	id = "gatewayshutters";
+	name = "Gateway Chamber Shutters"
 	},
 /turf/open/floor/iron,
 /area/command/gateway)
