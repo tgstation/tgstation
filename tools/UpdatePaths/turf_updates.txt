@@ -224,6 +224,7 @@
 
 /area/medical : /area/station/medical
 /area/medical/abandoned : /area/station/medical/abandoned
+/area/medical/medbay : /area/station/medical/medbay
 /area/medical/medbay/central : /area/station/medical/medbay/central
 /area/medical/medbay/lobby : /area/station/medical/medbay/lobby
 /area/medical/medbay/aft : /area/station/medical/medbay/aft

@@ -363,7 +363,7 @@
 /area/station/engineering/main)
 "by" = (
 /turf/closed/wall/r_wall,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "bA" = (
 /turf/closed/wall/r_wall,
 /area/station/science)
@@ -507,7 +507,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/medical/medbay)
+/area/station/medical/medbay)
 "bV" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/blue{
@@ -517,7 +517,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/medical/medbay)
+/area/station/medical/medbay)
 "bW" = (
 /obj/machinery/camera/directional/north,
 /obj/effect/turf_decal/tile/blue{
@@ -527,7 +527,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/medical/medbay)
+/area/station/medical/medbay)
 "bX" = (
 /obj/machinery/sleeper/syndie/fullupgrade,
 /obj/effect/turf_decal/tile/blue{
@@ -536,7 +536,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/medical/medbay)
+/area/station/medical/medbay)
 "bY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -595,7 +595,7 @@
 "ck" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cl" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -604,10 +604,10 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cm" = (
 /turf/open/floor/iron,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "co" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/ore_silo,
@@ -660,7 +660,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cw" = (
 /obj/machinery/door/airlock,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -669,17 +669,17 @@
 "cx" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cy" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cz" = (
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -739,7 +739,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -755,7 +755,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 1
 	},
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cI" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -769,7 +769,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cK" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/blue{
@@ -785,7 +785,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/iron/white/corner,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cL" = (
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /obj/item/disk/surgery/debug,
@@ -794,7 +794,7 @@
 	},
 /obj/structure/table/glass,
 /turf/open/floor/iron/white/corner,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "cN" = (
 /turf/closed/wall/r_wall,
 /area/construction)
@@ -1208,7 +1208,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white/corner,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "et" = (
 /turf/closed/wall/r_wall,
 /area/station/cargo/storage)
@@ -1375,7 +1375,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/iron,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "eV" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
@@ -2073,7 +2073,7 @@
 	},
 /obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "qb" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
@@ -2307,7 +2307,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/white/corner,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "EA" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -2316,7 +2316,7 @@
 "EB" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "EG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2449,7 +2449,7 @@
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "NZ" = (
 /obj/machinery/rnd/production/protolathe/department,
 /turf/open/floor/iron,
@@ -2479,7 +2479,7 @@
 	},
 /obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "Rb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2506,7 +2506,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white/corner,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "Td" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/stripes/line{
@@ -2532,7 +2532,7 @@
 	},
 /obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
-/area/medical/medbay)
+/area/station/medical/medbay)
 "Vg" = (
 /obj/machinery/light/directional/south,
 /obj/structure/cable,

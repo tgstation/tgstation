@@ -431,7 +431,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Aft Primary Hallway"
 	icon_state = "hallA"
 
-
+/area/station/hallway/primary/fore
 	name = "\improper Fore Primary Hallway"
 	icon_state = "hallF"
 
