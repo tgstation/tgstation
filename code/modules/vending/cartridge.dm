@@ -12,7 +12,7 @@
 		/obj/item/computer_hardware/hard_drive/portable/security = 10,
 		/obj/item/computer_hardware/hard_drive/portable/ordnance = 10,
 		/obj/item/computer_hardware/hard_drive/portable/quartermaster = 10,
-		/obj/item/computer_hardware/hard_drive/portable/captain = 3,
+		/obj/item/computer_hardware/hard_drive/portable/command/captain = 3,
 		/obj/item/modular_computer/tablet/pda/heads = 10,
 	)
 	refill_canister = /obj/item/vending_refill/cart
