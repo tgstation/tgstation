@@ -441,10 +441,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	if (!job)
 		return FALSE
 
-	if (level == JP_HIGH)
-		var/datum/job/overflow_role = SSjob.overflow_role
-		var/overflow_role_title = initial(overflow_role.title)
+	var/datum/job/overflow_role = SSjob.overflow_role
+	var/overflow_role_title = initial(overflow_role.title)
 
+	if(!istype(job, overflow_role))
+		job_preferences[overflow_role_title] = null
+
+	if (level == JP_HIGH)
 		for(var/other_job in job_preferences)
 			if(job_preferences[other_job] == JP_HIGH)
 				// Overflow role needs to go to NEVER, not medium!
@@ -452,6 +455,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 					job_preferences[other_job] = null
 				else
 					job_preferences[other_job] = JP_MEDIUM
+			if(istype(job, overflow_role))
+				job_preferences[other_job] = null // assistant auto takes over all other jobs so dont even try
 
 	job_preferences[job.title] = level
 
