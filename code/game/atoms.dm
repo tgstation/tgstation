@@ -1337,6 +1337,10 @@
 /atom/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, arrived, old_loc, old_locs)
 	SEND_SIGNAL(arrived, COMSIG_ATOM_ENTERING, src, old_loc, old_locs)
+	abstract_entered(arrived, old_loc, old_locs)
+
+/atom/proc/abstract_entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SEND_SIGNAL(src, COMSIG_ATOM_ABSTRACT_ENTERED, arrived, old_loc, old_locs)
 
 /**
  * An atom is attempting to exit this atom's contents
@@ -1359,6 +1363,10 @@
  */
 /atom/Exited(atom/movable/gone, direction)
 	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, gone, direction)
+	abstract_exited(gone, direction)
+
+/atom/proc/abstract_exited(atom/movable/gone, direction)
+	SEND_SIGNAL(src, COMSIG_ATOM_ABSTRACT_EXITED, gone, direction)
 
 ///Return atom temperature
 /atom/proc/return_temperature()

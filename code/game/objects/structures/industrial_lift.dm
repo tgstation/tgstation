@@ -208,12 +208,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/Destroy()
 	GLOB.lifts.Remove(src)
-	//QDEL_NULL(lift_master_datum) //TODOKYLER: holy fuck
 	lift_master_datum = null
-	/*var/list/border_lift_platforms = lift_platform_expansion()
-	moveToNullspace()
-	for(var/border_lift in border_lift_platforms)
-		lift_master_datum = new(border_lift)*/
 	return ..()
 
 ///set the movement registrations to our current turf so contents moving out of our tile are removed from our movement lists
@@ -435,7 +430,6 @@ GLOBAL_LIST_EMPTY(lifts)
 		return FALSE
 
 	var/turf/our_dest = get_step(src, movement_direction)
-	var/opposite_direction = get_dir(our_dest, loc)
 
 	var/area/our_area = get_area(src)
 	var/area/their_area = get_area(our_dest)
@@ -466,10 +460,12 @@ GLOBAL_LIST_EMPTY(lifts)
 			mover_old_loc = mover.loc
 
 			our_area.Exited(mover, movement_direction)
+			mover_old_loc.abstract_exited(mover, movement_direction)
 			mover.loc = get_step(mover, movement_direction)
+			mover.loc.abstract_entered(mover, mover_old_loc)
 			their_area.Entered(mover, movement_direction)
 
-			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, TRUE)
+			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, FALSE)
 
 	else
 		for(var/atom/movable/mover as anything in movers)
@@ -478,9 +474,11 @@ GLOBAL_LIST_EMPTY(lifts)
 				continue
 
 			mover_old_loc = mover.loc
+			mover_old_loc.abstract_exited(mover, movement_direction)
 			mover.loc = get_step(mover, movement_direction)
+			mover.loc.abstract_entered(mover, mover_old_loc)
 
-			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, TRUE)
+			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, FALSE)
 
 	//for(var/atom/movable/mover as anything in movers)
 	//	mover.Moved(get_step(mover, opposite_direction), movement_direction, TRUE, null, src, TRUE)

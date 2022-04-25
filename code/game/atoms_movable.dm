@@ -651,17 +651,17 @@
  * * The old_locs is an optional argument, in case the moved movable was present in multiple locations before the movement.
  * * moved_us is an optional reference to another object that moves us to our current loc, instead of us being the ones to do it
  **/
-/atom/movable/proc/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs, atom/movable/moved_us)
+/atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, atom/movable/moved_us, momentum_change = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (!inertia_moving)//not sure about this one
+	if (!inertia_moving && momentum_change)//not sure about this one
 		newtonian_move(movement_dir)
 	///if (client_mobs_in_contents)//signal-able
 	//	update_parallax_contents()
 	//for (var/datum/light_source/light as anything in light_sources) // Cycle through the light sources on this atom and tell them to update.
 	//	light.source_atom.update_light() //signal-able
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, moved_us)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
 
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)

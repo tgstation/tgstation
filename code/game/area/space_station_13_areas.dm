@@ -452,6 +452,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/primary/tram
 	name = "\improper Primary Tram"
 
+/area/hallway/primary/tram/tunnel
+	name = "\improper Tram Tunnel"
+
 /area/hallway/primary/tram/left
 	name = "\improper Port Tram Dock"
 	icon_state = "halltramL"

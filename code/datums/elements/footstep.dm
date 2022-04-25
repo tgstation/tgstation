@@ -117,10 +117,10 @@
 		return
 	playsound(source_loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
 
-/datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, atom/movable/moved_us)
+/datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction, forced, list/old_locs, momentum_change)
 	SIGNAL_HANDLER
 
-	if (SHOULD_DISABLE_FOOTSTEPS(source) || (moved_us && (source.loc in moved_us.locs)))
+	if (SHOULD_DISABLE_FOOTSTEPS(source) || !momentum_change)
 		return
 
 	var/volume_multiplier = 1
