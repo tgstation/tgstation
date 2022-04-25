@@ -5643,9 +5643,9 @@
 /area/tdome/observation)
 "pP" = (
 /obj/structure/table/reinforced,
-/obj/item/computer_hardware/hard_drive/small/quartermaster,
-/obj/item/computer_hardware/hard_drive/small/quartermaster,
-/obj/item/computer_hardware/hard_drive/small/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/atmos,
+/obj/item/computer_hardware/hard_drive/portable/atmos,
+/obj/item/computer_hardware/hard_drive/portable/atmos,
 /obj/item/gps/mining,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6

@@ -158,7 +158,7 @@
 					to_chat(usr, span_notice("ERROR: Device has receiving disabled."))
 					return
 				if(sending_virus)
-					var/obj/item/computer_hardware/hard_drive/virus/disk = computer.all_components[MC_HDD_JOB]
+					var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_HDD_JOB]
 					if(istype(disk))
 						disk.send_virus(target, usr)
 						return(UI_UPDATE)
@@ -191,9 +191,9 @@
 		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : ""
 		data["canSpam"] = ACCESS_LAWYER in id_card.access
 
-	var/obj/item/computer_hardware/hard_drive/virus/disk = computer.all_components[MC_HDD_JOB]
+	var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_HDD_JOB]
 	if(disk)
-		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/virus)
+		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/portable/virus)
 		data["sending_virus"] = sending_virus
 
 	return data

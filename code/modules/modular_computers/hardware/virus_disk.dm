@@ -1,15 +1,15 @@
-/obj/item/computer_hardware/hard_drive/virus
+/obj/item/computer_hardware/hard_drive/portable/virus
 	name = "\improper generic virus disk"
 	icon_state = "virusdisk"
 	var/charges = 5
 
-/obj/item/computer_hardware/hard_drive/virus/proc/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_hardware/hard_drive/portable/virus/proc/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
 	return
 
-/obj/item/computer_hardware/hard_drive/virus/clown
+/obj/item/computer_hardware/hard_drive/portable/virus/clown
 	name = "\improper H.O.N.K. disk"
 
-/obj/item/computer_hardware/hard_drive/virus/clown/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_hardware/hard_drive/portable/virus/clown/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
 	if(charges <= 0)
 		to_chat(user, span_notice("ERROR: Out of charges."))
 		return
@@ -21,10 +21,10 @@
 	else
 		to_chat(user, span_notice("ERROR: Could not find device."))
 
-/obj/item/computer_hardware/hard_drive/virus/mime
+/obj/item/computer_hardware/hard_drive/portable/virus/mime
 	name = "\improper sound of silence disk"
 
-/obj/item/computer_hardware/hard_drive/virus/mime/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_hardware/hard_drive/portable/virus/mime/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
 	if(charges <= 0)
 		to_chat(user, span_notice("ERROR: Out of charges."))
 		return
@@ -41,11 +41,11 @@
 	else
 		to_chat(user, span_notice("ERROR: Could not find device."))
 
-/obj/item/computer_hardware/hard_drive/virus/deto
+/obj/item/computer_hardware/hard_drive/portable/virus/deto
 	name = "\improper D.E.T.O.M.A.T.I.X. disk"
 	charges = 6
 
-/obj/item/computer_hardware/hard_drive/virus/deto/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_hardware/hard_drive/portable/virus/deto/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
 	if(charges <= 0)
 		to_chat(user, span_notice("ERROR: Out of charges."))
 		return
@@ -75,13 +75,13 @@
 			ADD_TRAIT(target, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference)
 			addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference), 10 SECONDS)
 
-/obj/item/computer_hardware/hard_drive/virus/frame
+/obj/item/computer_hardware/hard_drive/portable/virus/frame
 	name = "\improper F.R.A.M.E. disk"
 
 	var/telecrystals = 0
 	var/current_progression = 0
 
-/obj/item/computer_hardware/hard_drive/virus/frame/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_hardware/hard_drive/portable/virus/frame/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
 	if(charges <= 0)
 		to_chat(user, span_notice("ERROR: Out of charges."))
 		return
@@ -120,7 +120,7 @@
 	else
 		to_chat(user, span_notice("ERROR: Could not find device."))
 
-/obj/item/computer_hardware/hard_drive/virus/frame/attackby(obj/item/I, mob/user, params)
+/obj/item/computer_hardware/hard_drive/portable/virus/frame/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	if(istype(I, /obj/item/stack/telecrystal))
 		if(!charges)

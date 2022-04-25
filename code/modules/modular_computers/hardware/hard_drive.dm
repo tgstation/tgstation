@@ -191,7 +191,7 @@
 	store_file(messenger)
 
 // Syndicate variant - very slight better
-/obj/item/computer_hardware/hard_drive/small/syndicate
+/obj/item/computer_hardware/hard_drive/portable/syndicate
 	desc = "An efficient SSD for portable devices developed by a rival organisation."
 	power_usage = 8
 	max_capacity = 70

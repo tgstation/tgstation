@@ -63720,8 +63720,8 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/item/computer_hardware/hard_drive/small/quartermaster,
-/obj/item/computer_hardware/hard_drive/small/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/atmos,
+/obj/item/computer_hardware/hard_drive/portable/atmos,
 /obj/item/clipboard,
 /turf/open/floor/iron,
 /area/cargo/qm)

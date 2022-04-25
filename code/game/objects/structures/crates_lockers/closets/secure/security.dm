@@ -29,7 +29,7 @@
 	..()
 	new /obj/item/storage/bag/garment/hop(src)
 	new /obj/item/storage/lockbox/medal/service(src)
-	new /obj/item/computer_hardware/hard_drive/small/command/hop(src)
+	new /obj/item/computer_hardware/hard_drive/portable/command/hop(src)
 	new /obj/item/radio/headset/heads/hop(src)
 	new /obj/item/storage/box/ids(src)
 	new /obj/item/storage/box/ids(src)
@@ -51,7 +51,7 @@
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
 
-	new /obj/item/computer_hardware/hard_drive/small/command/hos(src)
+	new /obj/item/computer_hardware/hard_drive/portable/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/storage/bag/garment/hos(src)
 	new /obj/item/storage/lockbox/medal/sec(src)

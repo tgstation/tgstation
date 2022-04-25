@@ -49749,9 +49749,9 @@
 	pixel_x = -10;
 	pixel_y = 9
 	},
-/obj/item/computer_hardware/hard_drive/small/quartermaster,
-/obj/item/computer_hardware/hard_drive/small/quartermaster,
-/obj/item/computer_hardware/hard_drive/small/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/atmos,
+/obj/item/computer_hardware/hard_drive/portable/atmos,
+/obj/item/computer_hardware/hard_drive/portable/atmos,
 /turf/open/floor/wood,
 /area/cargo/qm)
 "qWo" = (

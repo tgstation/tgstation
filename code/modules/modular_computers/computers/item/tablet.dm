@@ -122,7 +122,7 @@
 
 	if(T)
 		T.hotspot_expose(700,125)
-		if(istype(all_components[MC_HDD_JOB], /obj/item/computer_hardware/hard_drive/virus/deto))
+		if(istype(all_components[MC_HDD_JOB], /obj/item/computer_hardware/hard_drive/portable/virus/deto))
 			explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 4)
 		else
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
