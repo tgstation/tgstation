@@ -21,12 +21,14 @@ GLOBAL_LIST_INIT(huds, list(
 ))
 
 /datum/atom_hud
-	///associative list of the form: list(z level = list(hud atom)). tracks what hud atoms for this hud exists in what z level so we can only give users
+	///associative list of the form: list(z level = list(hud atom)).
+	///tracks what hud atoms for this hud exists in what z level so we can only give users
 	///the hud images that they can actually see.
 	var/list/atom/hud_atoms = list()
 
 	///associative list of the form: list(z level = list(hud user client mobs)).
-	///tracks users of this hud by z level so when they change z's we can adjust what images they see from this hud.
+	///tracks mobs that can "see" us
+	// by z level so when they change z's we can adjust what images they see from this hud.
 	var/list/hud_users = list()
 
 	///used for signal tracking purposes, associative list of the form: list(hud atom = TRUE) that isnt separated by z level
@@ -45,8 +47,9 @@ GLOBAL_LIST_INIT(huds, list(
 	var/list/queued_to_see = list()
 	/// huduser = list(atoms with their hud hidden) - aka everyone hates targeted invisiblity
 	var/list/hud_exceptions = list()
-	///whether or not this atom_hud type updates the global huds_by_category list. some subtypes cant work like this since theyre supposed to "belong" to
-	/// one target atom each. it will still go in the other global hud lists.
+	///whether or not this atom_hud type updates the global huds_by_category list.
+	///some subtypes cant work like this since theyre supposed to "belong" to
+	///one target atom each. it will still go in the other global hud lists.
 	var/uses_global_hud_category = TRUE
 
 /datum/atom_hud/New()
