@@ -2,6 +2,7 @@
 /obj/item/computer_hardware/hard_drive/role/chemistry : /obj/item/computer_hardware/hard_drive/portable/chemistry
 /obj/item/computer_hardware/hard_drive/role/engineering : /obj/item/computer_hardware/hard_drive/portable/engineering
 /obj/item/computer_hardware/hard_drive/role/atmos : /obj/item/computer_hardware/hard_drive/portable/atmos
+/obj/item/computer_hardware/hard_drive/role/signal : /obj/item/computer_hardware/hard_drive/portable/ordnance
 /obj/item/computer_hardware/hard_drive/role/signal/ordnance : /obj/item/computer_hardware/hard_drive/portable/ordnance
 /obj/item/computer_hardware/hard_drive/role/quartermaster : /obj/item/computer_hardware/hard_drive/portable/quartermaster
 /obj/item/computer_hardware/hard_drive/role/rd : /obj/item/computer_hardware/hard_drive/portable/command/rd

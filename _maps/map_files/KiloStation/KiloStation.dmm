@@ -25583,10 +25583,9 @@
 "eiN" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/computer_hardware/hard_drive/role/roboticist,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
 /obj/item/circuitboard/aicore{
 	pixel_y = 5
 	},
@@ -28698,8 +28697,8 @@
 /obj/machinery/button/door/directional/south{
 	id = "ordnancemix";
 	name = "Ordnance Lab Access";
-	req_access_txt = "8";
-	pixel_x = 24
+	pixel_x = 24;
+	req_access_txt = "8"
 	},
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -32105,8 +32104,8 @@
 /area/maintenance/port/greater)
 "gus" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	piping_layer = 2;
-	dir = 8
+	dir = 8;
+	piping_layer = 2
 	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
@@ -32635,17 +32634,17 @@
 	name = "Lil Pump"
 	},
 /obj/machinery/camera/directional/west{
-	network = list("ss13","rd");
+	c_tag = "Ordnance Mixing Lab";
 	name = "science camera";
-	c_tag = "Ordnance Mixing Lab"
+	network = list("ss13","rd")
 	},
 /obj/machinery/airalarm/mixingchamber{
 	dir = 8;
 	pixel_x = -28
 	},
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
-	pixel_y = 32;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 32
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/science/mixing/chamber)
@@ -42106,9 +42105,9 @@
 	dir = 8
 	},
 /obj/machinery/button/door/directional/west{
-	pixel_y = 8;
 	id = "ordnancemix";
 	name = "Ordnance Lab Access";
+	pixel_y = 8;
 	req_access_txt = "8"
 	},
 /obj/structure/disposalpipe/trunk{
@@ -53081,9 +53080,9 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/folder/yellow,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
 /obj/item/pen/fountain,
 /turf/open/floor/carpet/orange,
 /area/cargo/qm)
@@ -64116,9 +64115,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/computer_hardware/hard_drive/role/engineering,
-/obj/item/computer_hardware/hard_drive/role/engineering,
-/obj/item/computer_hardware/hard_drive/role/atmos,
+/obj/item/computer_hardware/hard_drive/portable/engineering,
+/obj/item/computer_hardware/hard_drive/portable/engineering,
+/obj/item/computer_hardware/hard_drive/portable/atmos,
 /obj/item/folder,
 /obj/item/stamp/ce,
 /turf/open/floor/iron/dark,
@@ -66729,7 +66728,6 @@
 	pixel_x = 5
 	},
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/role/lawyer,
 /obj/effect/turf_decal/bot,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron/dark,
@@ -78105,10 +78103,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/computer_hardware/hard_drive/role/medical,
-/obj/item/computer_hardware/hard_drive/role/medical,
-/obj/item/computer_hardware/hard_drive/role/medical,
-/obj/item/computer_hardware/hard_drive/role/chemistry,
+/obj/item/computer_hardware/hard_drive/portable/medical,
+/obj/item/computer_hardware/hard_drive/portable/medical,
+/obj/item/computer_hardware/hard_drive/portable/medical,
+/obj/item/computer_hardware/hard_drive/portable/chemistry,
 /obj/item/clothing/neck/stethoscope{
 	pixel_y = 5
 	},

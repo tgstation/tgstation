@@ -4403,7 +4403,6 @@
 "mx" = (
 /obj/structure/table/wood,
 /obj/item/taperecorder,
-/obj/item/computer_hardware/hard_drive/role/lawyer,
 /obj/machinery/computer/security/telescreen/prison{
 	pixel_y = 32
 	},
@@ -14052,8 +14051,8 @@
 /area/icemoon/underground/explored)
 "NV" = (
 /obj/machinery/button/door/directional/east{
-	name = "Privacy Shutters";
-	id = "kanyewest"
+	id = "kanyewest";
+	name = "Privacy Shutters"
 	},
 /obj/structure/chair/office{
 	dir = 8
