@@ -108,9 +108,6 @@
 			blur_eyes(effect * hit_percent)
 		if(EFFECT_DROWSY)
 			adjust_drowsyness(effect * hit_percent)
-		if(EFFECT_JITTER)
-			if((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
-				jitteriness = max(jitteriness,(effect * hit_percent))
 	return TRUE
 
 /**
@@ -156,6 +153,9 @@
 
 	if(stamina)
 		apply_damage(stamina, STAMINA, null, blocked)
+
+	if(jitter && (status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+		adjust_timed_status_effect(jitter, /datum/status_effect/jitter)
 
 	if(slur)
 		adjust_timed_status_effect(slur, /datum/status_effect/speech/slurring/drunk)
