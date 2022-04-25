@@ -211,6 +211,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
 #define TRAIT_TOXINLOVER "toxinlover"
+/// Gets a mood boost from being in the hideout.
+#define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
 #define TRAIT_NOBREATH "no_breath"
@@ -242,6 +244,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PRESENT_VISION "present-vision"
 #define TRAIT_DISK_VERIFIER "disk-verifier"
 #define TRAIT_NOMOBSWAP "no-mob-swap"
+/// Can examine IDs to see if they are roundstart.
+#define TRAIT_ID_APPRAISER "id_appraiser"
 /// Gives us turf, mob and object vision through walls
 #define TRAIT_XRAY_VISION "xray_vision"
 /// Gives us mob vision through walls and slight night vision
@@ -254,6 +258,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NEGATES_GRAVITY "negates_gravity"
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
+/// Lets us scan machine parts and tech unlocks
+#define TRAIT_RESEARCH_SCANNER "research_scanner"
 /// Can weave webs into cloth
 #define TRAIT_WEB_WEAVER "web_weaver"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
@@ -359,6 +365,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DONT_WRITE_MEMORY "dont_write_memory"
 /// This mob can be painted with the spraycan
 #define TRAIT_SPRAY_PAINTABLE "spray_paintable"
+/// This person is blushing
+#define TRAIT_BLUSHING "blushing"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
@@ -812,6 +820,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define AI_ANCHOR_TRAIT "ai_anchor"
 /// Trait from [/datum/antagonist/nukeop/clownop]
 #define CLOWNOP_TRAIT "clownop"
+/// Trait from [/datum/antagonist/thief]
+#define THIEF_TRAIT "thief"
 
 ///Traits given by station traits
 #define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
@@ -829,6 +839,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
 
+/// Denotes that this id card was given via the job outfit, aka the first ID this player got.
+#define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
 /// ID cards with this trait will attempt to forcibly occupy the front-facing ID card slot in wallets.
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
 /// Traits granted to items due to their chameleon properties.
