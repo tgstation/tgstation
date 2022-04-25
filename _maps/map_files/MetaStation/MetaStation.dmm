@@ -2686,6 +2686,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/cargo_technician,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "aDL" = (
@@ -7559,6 +7560,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "bUY" = (
@@ -41560,6 +41562,10 @@
 	pixel_y = 21
 	},
 /obj/effect/turf_decal/stripes/full,
+/obj/machinery/camera/directional/north{
+	c_tag = "Cargo - Warehouse";
+	name = "cargo camera"
+	},
 /turf/open/floor/plating,
 /area/cargo/warehouse)
 "nSp" = (
