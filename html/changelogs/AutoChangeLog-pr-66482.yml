@@ -1,0 +1,4 @@
+author: "lnGoror"
+delete-after: True
+changes: 
+  - bugfix: "fixed a krokodil zombie transformation"
