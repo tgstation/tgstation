@@ -26,11 +26,7 @@
 
 /datum/supermatter_delamination/proc/spawn_overtime()
 
-<<<<<<< HEAD
-	var/list/anomaly_types = list(FLUX_ANOMALY = 75, HALLUCINATION_ANOMALY = 45, GRAVITATIONAL_ANOMALY = 25, PYRO_ANOMALY = 5)
-=======
-	var/list/anomaly_types = list(FLUX_ANOMALY = 75, GRAVITATIONAL_ANOMALY = 55, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
->>>>>>> master
+	var/list/anomaly_types = list(FLUX_ANOMALY = 65, GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
 	var/list/anomaly_places = GLOB.generic_event_spawns
 
 	var/current_spawn = rand(5 SECONDS, 10 SECONDS)
