@@ -36,7 +36,6 @@
 		tracker.marksman.face_atom(tracker.given_turf)
 	animate(tracker.marksman.client, 0.2 SECONDS, easing = SINE_EASING, flags = EASE_OUT, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
 
-/// Stop zooming if the item the component is on moves from it's place.
 /datum/component/scope/proc/on_move(atom/movable/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
 
@@ -44,7 +43,6 @@
 		return
 	stop_zooming(tracker.marksman)
 
-/// Start/Stop zooming when someone right-clicks.
 /datum/component/scope/proc/on_secondary_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
 
@@ -54,7 +52,6 @@
 		start_zooming(user)
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
-/// We hijack gunfiring to find our target to shoot instead.
 /datum/component/scope/proc/on_gun_fire(obj/item/gun/source, mob/living/user, atom/target, flag, params)
 	SIGNAL_HANDLER
 
@@ -63,13 +60,17 @@
 	INVOKE_ASYNC(source, /obj/item/gun.proc/fire_gun, get_target(tracker.given_turf), user)
 	return COMPONENT_CANCEL_GUN_FIRE
 
-/// We tell on examine about scoping in.
 /datum/component/scope/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	examine_list += span_notice("You can scope in with <b>right-click</b>.")
 
-/// We find the best target to hit on a given turf.
+/**
+ * We find and return the best target to hit on a given turf.
+ *
+ * Arguments:
+ * * target_turf: The turf we are looking for targets on.
+*/
 /datum/component/scope/proc/get_target(turf/target_turf)
 	var/list/object_targets = list()
 	var/list/non_dense_targets = list()
@@ -94,7 +95,12 @@
 		return unimportant_object
 	return target_turf
 
-/// We start zooming by hiding the mouse pointer, adding our tracker overlay and starting our processing.
+/**
+ * We start zooming by hiding the mouse pointer, adding our tracker overlay and starting our processing.
+ *
+ * Arguments:
+ * * user: The mob we are starting zooming on.
+*/
 /datum/component/scope/proc/start_zooming(mob/user)
 	if(!user.client)
 		return
@@ -108,7 +114,12 @@
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/stop_zooming)
 	START_PROCESSING(SSfastprocess, src)
 
-/// We stop zooming, canceling processing, resetting stuff back to normal and deleting our tracker.
+/**
+ * We stop zooming, canceling processing, resetting stuff back to normal and deleting our tracker.
+ *
+ * Arguments:
+ * * user: The mob we are canceling zooming on.
+*/
 /datum/component/scope/proc/stop_zooming(mob/user)
 	SIGNAL_HANDLER
 
