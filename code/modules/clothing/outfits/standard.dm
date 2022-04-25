@@ -178,6 +178,16 @@
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
 
+/datum/outfit/mr_runtime
+	name = "Mr. Runtime"
+
+	uniform = /obj/item/clothing/under/suit/tuxedo
+	glasses = /obj/item/clothing/glasses/sunglasses
+	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	shoes = /obj/item/clothing/shoes/laceup
+	l_hand = /obj/item/stack/spacecash/c1000
+	r_hand = /obj/item/stack/spacecash/c1000
+
 /datum/outfit/tunnel_clown
 	name = "Tunnel Clown"
 
