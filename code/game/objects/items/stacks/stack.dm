@@ -449,7 +449,7 @@
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
-	if(ismob(loc) && !inhand) // no merging with items that arent on the ground or in the backpack (aka, item slots)
+	if(ismob(loc) && !inhand) // no merging with items that are on the mob
 		return FALSE
 	return TRUE
 
