@@ -361,6 +361,7 @@
 			return
 		replace_beaker(user, container)
 		to_chat(user, span_notice("You add [container] to [src]'s water bath."))
+		ui_interact(user)
 		return
 	//Dropper tools
 	if(beaker)
