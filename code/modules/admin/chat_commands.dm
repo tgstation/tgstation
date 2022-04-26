@@ -28,21 +28,19 @@
 	var/list/msg = list("")
 	msg += "BYOND Server Version: [world.byond_version].[world.byond_build] (Compiled with: [DM_VERSION].[DM_BUILD])\n"
 
-	// Revision information
-	var/datum/getrev/revdata = GLOB.revdata
-	if (!revdata)
+	if (!GLOB.revdata)
 		msg += "No revision information found."
 	else
-		msg += "Revision [copytext_char(revdata.commit, 1, 9)]"
-		if (revdata.date)
-			msg += " compiled on '[revdata.date]'"
+		msg += "Revision [copytext_char(GLOB.revdata.commit, 1, 9)]"
+		if (GLOB.revdata.date)
+			msg += " compiled on '[GLOB.revdata.date]'"
 		
-		if(revdata.originmastercommit)
-			msg += ", from origin commit: <[CONFIG_GET(string/githuburl)]/commit/[revdata.originmastercommit]>"
+		if(GLOB.revdata.originmastercommit)
+			msg += ", from origin commit: <[CONFIG_GET(string/githuburl)]/commit/[GLOB.revdata.originmastercommit]>"
 
-		if(revdata.testmerge.len)
+		if(GLOB.revdata.testmerge.len)
 			msg += "\n"
-			for(var/datum/tgs_revision_information/test_merge/PR as anything in revdata.testmerge)
+			for(var/datum/tgs_revision_information/test_merge/PR as anything in GLOB.revdata.testmerge)
 				msg += "PR #[PR.number] at [copytext_char(PR.head_commit, 1, 9)] [PR.title].\n"
 				if (PR.url)
 					msg += "<[PR.url]>\n"
