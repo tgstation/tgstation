@@ -316,7 +316,7 @@
 			psy_overlay = TRUE
 
 		// If they are immune to supermatter hallucinations.
-		if (HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+		if (HAS_TRAIT(seen_by_sm, TRAIT_MADNESS_IMMUNE) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_MADNESS_IMMUNE)))
 			continue
 
 		// Blind people don't get supermatter hallucinations.
@@ -370,7 +370,7 @@
 
 	if(prob(5))
 		supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
-	if(power > POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
+	if(prob(5))
 		supermatter_anomaly_gen(src, HALLUCINATION_ANOMALY, rand(5, 10))
 	if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
 		supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))

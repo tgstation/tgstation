@@ -337,12 +337,12 @@
 /obj/item/clothing/suit/armor/reactive/hallucinating/dropped(mob/user)
 	..()
 	if(istype(user))
-		REMOVE_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE, "reactive_hallucinating_armor")
+		REMOVE_TRAIT(user, TRAIT_MADNESS_IMMUNE, "reactive_hallucinating_armor")
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/equipped(mob/user, slot)
 	..()
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
-		ADD_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE, "reactive_hallucinating_armor")
+		ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, "reactive_hallucinating_armor")
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -351,12 +351,12 @@
 	..()
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], sending out mind pulses!"))
+	owner.visible_message(span_danger("[src] blocks [attack_text], sending out mental pulses!"))
 	hallucination_pulse(owner)
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of mind energy into [owner] from the surrounding environment!"))
+	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of mental energy into [owner] from the surrounding environment!"))
 	owner.hallucination += 100
 	owner.hallucination = clamp(owner.hallucination, 0, 300)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
@@ -366,7 +366,7 @@
 	var/turf/location = get_turf(owner)
 	for(var/mob/living/carbon/human/near in view(location, range))
 		// If they are immune to hallucinations.
-		if (HAS_TRAIT(near, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (near.mind && HAS_TRAIT(near.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+		if (HAS_TRAIT(near, TRAIT_MADNESS_IMMUNE) || (near.mind && HAS_TRAIT(near.mind, TRAIT_MADNESS_IMMUNE)))
 			continue
 
 		// Everyone else gets hallucinations.

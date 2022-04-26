@@ -423,6 +423,7 @@
 	name = "hallucination anomaly"
 	icon_state = "blueshatter2"
 	aSignal = /obj/item/assembly/signaler/anomaly/hallucination
+	/// Time passed since the last effect, increased by delta_time of the SSobj
 	var/ticks = 0
 	/// How many seconds between each small hallucination pulses
 	var/release_delay = 5
@@ -442,10 +443,10 @@
 	if(istype(our_turf))
 		hallucination_pulse(our_turf, 10)
 
-/obj/effect/anomaly/hallucination/proc/hallucination_pulse(turf/location, range)
+/obj/effect/anomaly/hallucination/proc/hallucination_pulse(turf/open/location, range)
 	for(var/mob/living/carbon/human/near in view(location, range))
 		// If they are immune to hallucinations.
-		if (HAS_TRAIT(near, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (near.mind && HAS_TRAIT(near.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+		if (HAS_TRAIT(near, TRAIT_MADNESS_IMMUNE) || (near.mind && HAS_TRAIT(near.mind, TRAIT_MADNESS_IMMUNE)))
 			continue
 
 		// Blind people don't get hallucinations.

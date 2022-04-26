@@ -105,7 +105,7 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	inhand_icon_state = "meson"
-	clothing_traits = list(TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 	darkness_view = 2
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -537,7 +537,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = FALSE
 	vision_flags = SEE_TURFS
-	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MADNESS_IMMUNE)
 	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
 	var/xray = FALSE
 
