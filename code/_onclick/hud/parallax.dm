@@ -7,12 +7,12 @@
 
 	if(!length(C.parallax_layers_cached))
 		C.parallax_layers_cached = list()
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, C.view)
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, C.view)
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, C.view)
+		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, screenmob)
+		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, screenmob)
+		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, screenmob)
 		if(SSparallax.random_layer)
-			C.parallax_layers_cached += new SSparallax.random_layer
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, C.view)
+			C.parallax_layers_cached += new SSparallax.random_layer(null, screenmob)
+		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, screenmob)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -195,10 +195,6 @@
 	C.last_parallax_shift = world.time
 
 	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in C.parallax_layers)
-		parallax_layer.update_status(screenmob)
-		if (parallax_layer.view_sized != C.view)
-			parallax_layer.update_o(C.view)
-
 		if(parallax_layer.absolute)
 			parallax_layer.offset_x = -(posobj.x - SSparallax.planet_x_offset) * parallax_layer.speed
 			parallax_layer.offset_y = -(posobj.y - SSparallax.planet_y_offset) * parallax_layer.speed
@@ -240,11 +236,20 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
-/atom/movable/screen/parallax_layer/Initialize(mapload, view)
+/atom/movable/screen/parallax_layer/Initialize(mapload, mob/owner)
 	. = ..()
-	if (!view)
-		view = world.view
+	var/client/boss = owner?.client
+	if(!boss)
+		return INITIALIZE_HINT_QDEL
+
+	// I do not want to know bestie
+	var/view = boss.view || world.view
 	update_o(view)
+	RegisterSignal(boss, COMSIG_VIEW_SET, .proc/on_view_change)
+
+/atom/movable/screen/parallax_layer/proc/on_view_change(datum/source, new_size)
+	SIGNAL_HANDLER
+	update_o(new_size)
 
 /atom/movable/screen/parallax_layer/proc/update_o(view)
 	if (!view)
@@ -264,9 +269,6 @@
 	cut_overlays()
 	add_overlay(new_overlays)
 	view_sized = view
-
-/atom/movable/screen/parallax_layer/proc/update_status(mob/M)
-	return
 
 /atom/movable/screen/parallax_layer/layer_1
 	icon_state = "layer1"
@@ -291,7 +293,7 @@
 /atom/movable/screen/parallax_layer/random/space_gas
 	icon_state = "space_gas"
 
-/atom/movable/screen/parallax_layer/random/space_gas/Initialize(mapload, view)
+/atom/movable/screen/parallax_layer/random/space_gas/Initialize(mapload, mob/owner)
 	. = ..()
 	src.add_atom_colour(SSparallax.random_parallax_color, ADMIN_COLOUR_PRIORITY)
 
@@ -305,9 +307,26 @@
 	speed = 3
 	layer = 30
 
-/atom/movable/screen/parallax_layer/planet/update_status(mob/M)
-	var/client/C = M.client
-	var/turf/posobj = get_turf(C.eye)
+/atom/movable/screen/parallax_layer/planet/Initialize(mapload, mob/owner)
+	. = ..()
+	if(!owner.client)
+		return
+	var/static/list/connections = list(
+		COMSIG_MOVABLE_Z_CHANGED = .proc/on_z_change,
+		COMSIG_MOB_LOGOUT = .proc/on_mob_logout,
+	)
+	AddComponent(/datum/component/connect_mob_behalf, owner.client, connections)
+	on_z_change(owner)
+
+/atom/movable/screen/parallax_layer/planet/proc/on_mob_logout(mob/source)
+	SIGNAL_HANDLER
+	var/client/boss = source.canon_client
+	on_z_change(boss.mob)
+
+/atom/movable/screen/parallax_layer/planet/proc/on_z_change(mob/source)
+	SIGNAL_HANDLER
+	var/client/boss = source.client
+	var/turf/posobj = get_turf(boss?.eye)
 	if(!posobj)
 		return
 	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
