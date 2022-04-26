@@ -7,6 +7,10 @@
 /obj/structure/fluff/fokoff_sign,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"ae" = (
+/obj/item/radio/intercom/prison/directional/south,
+/turf/open/floor/iron/dark,
+/area/security/prison/rec)
 "aj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -171,7 +175,9 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "cb" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge{
+	req_access = "0"
+	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/mess)
@@ -542,6 +548,7 @@
 "fZ" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/east,
+/obj/item/clothing/head/saints,
 /turf/open/floor/iron/dark/textured,
 /area/security/prison)
 "ge" = (
@@ -844,11 +851,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/eva/lower)
-"jD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/head/saints,
-/turf/open/floor/iron,
-/area/security/prison/workout)
 "jP" = (
 /obj/structure/toilet/greyscale{
 	dir = 1;
@@ -1846,6 +1848,7 @@
 /area/mine/laborcamp/security)
 "sX" = (
 /obj/structure/table/wood,
+/obj/item/radio/intercom/prison,
 /turf/open/floor/wood,
 /area/security/prison/rec)
 "sZ" = (
@@ -2022,6 +2025,10 @@
 "uC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
+	},
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_y = 32
 	},
 /turf/open/floor/vault,
 /area/security/prison/rec)
@@ -2698,8 +2705,17 @@
 /obj/structure/chair/pew/left,
 /turf/open/floor/wood,
 /area/security/prison/rec)
+"Ck" = (
+/obj/machinery/camera/directional/west{
+	network = list("ss13","prison");
+	c_tag = "Security - Permabrig Lower Hallway Stairwell"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/security/prison)
 "Cr" = (
-/obj/machinery/microwave,
+/obj/machinery/microwave{
+	pixel_y = 7
+	},
 /obj/structure/table,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison/mess)
@@ -3086,15 +3102,13 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "Gk" = (
-/obj/structure/table,
 /obj/structure/window/reinforced/spawner/west,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
+/obj/structure/table/reinforced,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison/mess)
 "Gm" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -3299,7 +3313,6 @@
 /turf/open/floor/stone,
 /area/mine/eva/lower)
 "IF" = (
-/obj/structure/table,
 /obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -3
 	},
@@ -3308,6 +3321,8 @@
 	},
 /obj/structure/window/reinforced/spawner/west,
 /obj/item/knife/plastic,
+/obj/structure/table/reinforced,
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison/mess)
 "IG" = (
@@ -3427,6 +3442,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/item/radio/intercom/prison/directional/west,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -3584,13 +3600,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/security/prison/rec)
-"Le" = (
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/textured,
-/area/security/prison/workout)
 "Lg" = (
 /obj/structure/table,
 /obj/structure/reagent_dispensers/servingdish,
@@ -3959,6 +3968,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/item/radio/intercom/prison/directional/west,
 /turf/open/floor/iron,
 /area/security/prison/mess)
 "NY" = (
@@ -4023,6 +4033,9 @@
 "ON" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/contraband/permabrig_gear,
+/obj/structure/sign/warning/coldtemp{
+	pixel_x = -32
+	},
 /turf/open/floor/vault,
 /area/security/prison/rec)
 "OT" = (
@@ -4373,12 +4386,22 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "SK" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat{
+	req_access = "0"
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/mess)
 "SN" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/west,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official,
 /turf/open/floor/iron/dark/textured,
 /area/security/prison)
 "SP" = (
@@ -4559,12 +4582,6 @@
 	dir = 9
 	},
 /area/security/prison)
-"UN" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/textured,
-/area/security/prison/workout)
 "UQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -5031,10 +5048,8 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "YA" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
 /obj/structure/sign/poster/official/random/directional/south,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark/textured,
 /area/security/prison/workout)
 "YB" = (
@@ -30737,7 +30752,7 @@ UE
 ZD
 SG
 Or
-dD
+ae
 jh
 rX
 jh
@@ -31008,11 +31023,11 @@ zt
 zt
 zt
 zt
-yt
-yt
-yt
-qI
-qI
+zt
+zt
+zt
+zt
+fI
 zt
 qI
 qI
@@ -31266,10 +31281,10 @@ zt
 zt
 zt
 zt
-yt
-yt
-qI
-qI
+zt
+zt
+zt
+Zs
 qI
 qI
 qI
@@ -31523,10 +31538,10 @@ zt
 zt
 zt
 zt
-yt
-yt
-qI
-qI
+zt
+zt
+zt
+Zs
 qI
 qI
 qI
@@ -31780,10 +31795,10 @@ zt
 zt
 zt
 zt
-yt
-yt
-qI
-qI
+zt
+zt
+zt
+Zs
 qI
 qI
 qI
@@ -32038,9 +32053,9 @@ zt
 zt
 zt
 fI
-ut
-qI
-qI
+Zs
+Zs
+fI
 qI
 qI
 qI
@@ -32786,7 +32801,7 @@ MB
 MB
 Ei
 Fh
-rj
+Ck
 rj
 aE
 zu
@@ -34065,7 +34080,7 @@ zt
 zt
 SR
 Sq
-jD
+mn
 If
 mz
 oz
@@ -34074,8 +34089,8 @@ Gm
 Gm
 Gm
 Gm
-Le
-UN
+ei
+sb
 YA
 zu
 ke

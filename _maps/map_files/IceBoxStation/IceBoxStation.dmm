@@ -8603,8 +8603,12 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/aft)
 "daP" = (
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2,
-/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4,
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/security/processing)
 "dbe" = (
@@ -14917,6 +14921,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "glg" = (
@@ -36436,7 +36441,7 @@
 	pixel_x = -6;
 	pixel_y = 9
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "qVb" = (
@@ -78620,7 +78625,7 @@ agn
 lsm
 vAx
 gld
-aIF
+agn
 mxL
 qSJ
 uJF
