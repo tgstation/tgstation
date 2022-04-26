@@ -1,0 +1,4 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - bugfix: "trying to store a plasma cutter while holding plasma should no longer blow you up."

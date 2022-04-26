@@ -24,7 +24,6 @@
 		return COMPONENT_INCOMPATIBLE
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/explodable_attack)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/detonate)
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
 	if(ismovable(parent))
@@ -34,6 +33,8 @@
 			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/explodable_attack)
 			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 			RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	if(SEND_SIGNAL(parent, COMSIG_CONTAINS_STORAGE))
+		RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
 
 	if (devastation_range)
 		src.devastation_range = devastation_range
@@ -48,6 +49,7 @@
 	src.uncapped = uncapped
 	src.delete_after = delete_after
 
+/// Explode if our parent is a storage place and something with high heat is inserted in.
 /datum/component/explodable/proc/explodable_insert_item(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 

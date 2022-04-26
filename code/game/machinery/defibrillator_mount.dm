@@ -181,7 +181,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	desc = "Holds defibrillators. You can grab the paddles if one is mounted. This PENLITE variant also allows for slow, passive recharging of the defibrillator."
 	icon_state = "penlite_mount"
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 1
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
 
@@ -203,7 +202,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	if(!C || !is_operational)
 		return PROCESS_KILL
 	if(C.charge < C.maxcharge)
-		use_power(50 * delta_time)
+		use_power(active_power_usage * delta_time)
 		C.give(40 * delta_time)
 		defib.update_power()
 

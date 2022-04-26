@@ -211,6 +211,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
 
+	///Unique cookie given by admins through prayers
+	var/species_cookie = /obj/item/food/cookie
+
 	///For custom overrides for species ass images
 	var/icon/ass_image
 
@@ -577,6 +580,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if((EYECOLOR in species_traits) && eye_organ)
 					eye_overlay.color = species_human.eye_color
 				standing += eye_overlay
+
+		// blush
+		if (HAS_TRAIT(species_human, TRAIT_BLUSHING)) // Caused by either the *blush emote or the "drunk" mood event
+			var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/human_face.dmi', "blush", -BODY_ADJ_LAYER) //should appear behind the eyes
+			blush_overlay.color = COLOR_BLUSH_PINK
+			standing += blush_overlay
 
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)
@@ -961,7 +970,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!disable_warning)
 					to_chat(H, span_warning("The [I.name] is too big to attach!")) //should be src?
 				return FALSE
-			if( istype(I, /obj/item/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
+			if( istype(I, /obj/item/modular_computer/tablet) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_HANDCUFFED)

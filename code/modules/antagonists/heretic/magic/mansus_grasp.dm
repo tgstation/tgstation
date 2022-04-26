@@ -3,11 +3,12 @@
 	desc = "A touch spell that lets you channel the power of the Old Gods through your grip."
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 	school = SCHOOL_EVOCATION
-	charge_max = 100
+	charge_max = 10 SECONDS
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mansus_grasp"
 	action_background_icon_state = "bg_ecult"
+	antimagic_flags = NONE // no casting restriction but there is a can_block_magic check in afterattack to allow antimagic
 
 /obj/item/melee/touch_attack/mansus_fist
 	name = "Mansus Grasp"
@@ -38,9 +39,14 @@
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!proximity_flag || !isliving(target) || !IS_HERETIC(user) || target == user)
 		return
-	if(ishuman(target) && antimagic_check(target, user))
-		return ..()
-
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		if(human_target.can_block_magic())
+			human_target.visible_message(
+				span_danger("The spell bounces off of [target]!"),
+				span_danger("The spell bounces off of you!"),
+			)
+			return ..()
 	if(!on_mob_hit(target, user))
 		return
 
@@ -63,20 +69,6 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /**
- * Checks if the [target] has some form of anti-magic.
- *
- * Returns TRUE If the attack was blocked. FALSE otherwise.
- */
-/obj/item/melee/touch_attack/mansus_fist/proc/antimagic_check(mob/living/carbon/human/target, mob/living/carbon/user)
-	if(target.anti_magic_check())
-		target.visible_message(
-			span_danger("The spell bounces off of [target]!"),
-			span_danger("The spell bounces off of you!"),
-		)
-		return TRUE
-	return FALSE
-
-/**
  * Called with [hit] is successfully hit by a mansus grasp by [heretic].
  *
  * Sends signal COMSIG_HERETIC_MANSUS_GRASP_ATTACK.
@@ -87,9 +79,10 @@
 	if(SEND_SIGNAL(heretic, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, hit) & COMPONENT_BLOCK_CHARGE_USE)
 		return FALSE
 
-	hit.adjustBruteLoss(10)
+	hit.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	if(iscarbon(hit))
 		var/mob/living/carbon/carbon_hit = hit
+		carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		carbon_hit.AdjustKnockdown(5 SECONDS)
 		carbon_hit.adjustStaminaLoss(80)
 
@@ -113,7 +106,7 @@
 			playsound(carbon_user, 'sound/effects/wounds/sizzle1.ogg', 70, vary = TRUE)
 			if(prob(50))
 				carbon_user.emote("scream")
-				carbon_user.stuttering += 13
+				carbon_user.adjust_timed_status_effect(26 SECONDS, /datum/status_effect/speech/stutter)
 
 		on_mob_hit(user, user)
 

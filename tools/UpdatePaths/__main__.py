@@ -12,6 +12,8 @@ Replacement syntax example:
     /turf/open/floor/iron/warningline : /obj/effect/turf_decal {dir = @OLD ;tag = @SKIP;icon_state = @SKIP}
     /turf/open/floor/iron/warningline : /obj/effect/turf_decal {@OLD} , /obj/thing {icon_state = @OLD:name; name = "meme"}
     /turf/open/floor/iron/warningline{dir=2} : /obj/thing
+Syntax for subtypes also exist, to update a path's type but maintain subtypes:
+    /obj/structure/closet/crate/@SUBTYPES : /obj/structure/new_box/@SUBTYPES {@OLD}
 New paths properties:
     @OLD - if used as property name copies all modified properties from original path to this one
     property = @SKIP - will not copy this property through when global @OLD is used.
@@ -73,7 +75,7 @@ def update_path(dmm_data, replacement_string, verbose=False):
             print("Looking for subtypes of", old_path)
         subtypes = r"(?:/\w+)*"
 
-    replacement_pattern = re.compile(rf"(?P<path>{re.escape(old_path)}{subtypes})\s*(:?{{(?P<props>.*)}})?$")
+    replacement_pattern = re.compile(rf"(?P<path>{re.escape(old_path)}(?P<subtype>{subtypes}))\s*(:?{{(?P<props>.*)}})?$")
 
     def replace_def(match):
         if match['props']:
@@ -95,8 +97,12 @@ def update_path(dmm_data, replacement_string, verbose=False):
         for new_path, new_props in new_paths:
             if new_path == "@OLD":
                 out = match.group('path')
+            elif new_path.endswith("/@SUBTYPES"):
+                path_start = new_path[:-len("/@SUBTYPES")]
+                out = path_start + match.group('subtype')
             else:
                 out = new_path
+
             out_props = dict()
             for prop_name, prop_value in new_props.items():
                 if prop_name == "@OLD":

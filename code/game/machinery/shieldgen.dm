@@ -265,8 +265,6 @@
 	req_access = list(ACCESS_TELEPORTER)
 	flags_1 = CONDUCT_1
 	use_power = NO_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 50
 	max_integrity = 300
 	var/active = FALSE
 	var/locked = TRUE

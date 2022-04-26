@@ -23,7 +23,7 @@
 
 	user.do_attack_animation(M)
 	M.Paralyze(100)
-	M.apply_effect(EFFECT_STUTTER, 5)
+	M.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
 
 	M.visible_message(span_danger("[user] prods [M] with [src]!"), \
 					span_userdanger("[user] prods you with [src]!"))
@@ -327,12 +327,12 @@
 			switch(bang_effect)
 				if(1)
 					C.add_confusion(5)
-					C.stuttering += 10
+					C.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter)
 					C.Jitter(10)
 				if(2)
 					C.Paralyze(40)
 					C.add_confusion(10)
-					C.stuttering += 15
+					C.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/stutter)
 					C.Jitter(25)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
@@ -925,6 +925,8 @@
 /// Secondary attack spills the content of the beaker.
 /obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
 	var/obj/item/reagent_containers/stored_beaker = stored
+	if(!stored_beaker)
+		return ..()
 	stored_beaker.SplashReagents(drop_location(user))
 	loc.visible_message(span_notice("[user] spills the contents of [stored_beaker] all over the ground."))
 	. = ..()

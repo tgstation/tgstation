@@ -105,7 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Newscaster", name)
+		ui = new(user, src, "PhysicalNewscaster", name)
 		ui.open()
 	alert = FALSE //We're checking our messages!
 	update_icon()
@@ -655,7 +655,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			existing_authors += GLOB.news_network.redacted_text
 		else
 			existing_authors += iterated_feed_channel.author
-	if((current_user?.account_holder == "Unknown") || (current_user.account_holder in existing_authors) || isnull(current_user?.account_holder))
+	if(!current_user?.account_holder || current_user.account_holder == "Unknown" || (current_user.account_holder in existing_authors))
 		creating_channel = FALSE
 		tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
 		return TRUE

@@ -24,8 +24,18 @@
 		if(power_changes) //This needs to be here I swear
 			power += projectile.damage * bullet_energy + kiss_power
 			if(!has_been_powered)
-				investigate_log("has been powered for the first time.", INVESTIGATE_ENGINE)
-				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
+				var/fired_from_str = projectile.fired_from ? " with [projectile.fired_from]" : ""
+				investigate_log(
+					projectile.firer \
+						? "has been powered for the first time by [key_name(projectile.firer)][fired_from_str]." \
+						: "has been powered for the first time.",
+					INVESTIGATE_ENGINE
+				)
+				message_admins(
+					projectile.firer \
+						? "[src] [ADMIN_JMP(src)] has been powered for the first time by [ADMIN_FULLMONTY(projectile.firer)][fired_from_str]." \
+						: "[src] [ADMIN_JMP(src)] has been powered for the first time."
+				)
 				has_been_powered = TRUE
 	else if(takes_damage)
 		damage += (projectile.damage * bullet_energy) * clamp((emergency_point - damage) / emergency_point, 0, 1)
@@ -245,6 +255,49 @@
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 	Consume(hit_object)
 
+/obj/machinery/power/supermatter_crystal/Bump(atom/bumped_atom)
+	. = ..()
+	if(isturf(bumped_atom))
+		var/turf/bumped_turf = bumped_atom
+		var/bumped_name = "\the [bumped_atom]"
+		var/bumped_text = span_danger("\The [src] smacks into [bumped_name] and [bumped_atom.p_they()] rapidly flashes to ash!")
+		if(!bumped_turf.Melt())
+			return
+
+		visible_message(
+			bumped_text,
+			null,
+			span_hear("You hear a loud crack as you are washed with a wave of heat.")
+		)
+		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+
+		var/suspicion = null
+		if (fingerprintslast)
+			suspicion = "- and was last touched by [fingerprintslast]"
+			message_admins("\The [src] has consumed [bumped_name][suspicion].")
+		investigate_log("has consumed [bumped_name][suspicion].")
+
+		radiation_pulse(src, max_range = 6, threshold = 0.2, chance = 50)
+		return
+
+	if(isliving(bumped_atom))
+		visible_message(
+			span_danger("\The [src] slams into \the [bumped_atom] inducing a resonance... [bumped_atom.p_their()] body starts to glow and burst into flames before flashing into dust!"),
+			span_userdanger("\The [src] slams into you as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
+			span_hear("You hear an unearthly noise as a wave of heat washes over you.")
+		)
+	else if(isobj(bumped_atom) && !iseffect(bumped_atom))
+		visible_message(
+			span_danger("\The [src] smacks into \the [bumped_atom] and [bumped_atom.p_they()] rapidly flashes to ash."),
+			null,
+			span_hear("You hear a loud crack as you are washed with a wave of heat.")
+		)
+	else
+		return
+
+	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	Consume(bumped_atom)
+
 /obj/machinery/power/supermatter_crystal/intercept_zImpact(list/falling_movables, levels)
 	. = ..()
 	for(var/atom/movable/hit_object as anything in falling_movables)
@@ -252,15 +305,17 @@
 	. |= FALL_STOP_INTERCEPTING | FALL_INTERCEPTED
 
 /obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/consumed_object)
+	var/object_size
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
+		object_size = consumed_mob.mob_size + 2
 		if(consumed_mob.status_flags & GODMODE)
 			return
 		message_admins("[src] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.dust(force = TRUE)
 		if(power_changes)
-			matter_power += 200
+			matter_power += 100 * object_size
 		if(takes_damage && is_clown_job(consumed_mob.mind?.assigned_role))
 			damage += rand(-300, 300) // HONK
 			damage = max(damage, 0)
@@ -274,11 +329,13 @@
 				message_admins("[src] has consumed [consumed_object], [suspicion] [ADMIN_JMP(src)].")
 			investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_ENGINE)
 		qdel(consumed_object)
-	if(!iseffect(consumed_object) && power_changes)
-		matter_power += 200
+	if(!iseffect(consumed_object) && isitem(consumed_object) && power_changes)
+		var/obj/item/consumed_item = consumed_object
+		object_size = consumed_item.w_class
+		matter_power += 70 * object_size
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(src, max_range = 6, threshold = 0.3, chance = 30)
+	radiation_pulse(src, max_range = 6, threshold = 1.2 / object_size, chance = 10 * object_size)
 	for(var/mob/living/near_mob in range(10))
 		investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_ENGINE)
 		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))

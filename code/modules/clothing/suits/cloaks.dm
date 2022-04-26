@@ -71,7 +71,7 @@
 	name = "drake armour"
 	icon_state = "dragon"
 	desc = "A suit of armour fashioned from the remains of an ash drake."
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe, /obj/item/spear)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/pickaxe, /obj/item/spear)
 	armor = list(MELEE = 65, BULLET = 15, LASER = 40, ENERGY = 40, BOMB = 70, BIO = 60, FIRE = 100, ACID = 100)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -98,7 +98,7 @@
 	name = "godslayer armour"
 	icon_state = "godslayer"
 	desc = "A suit of armour fashioned from the remnants of a knight's armor, and parts of a wendigo."
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe, /obj/item/spear)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/pickaxe, /obj/item/spear)
 	armor = list(MELEE = 50, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 50, FIRE = 100, ACID = 100)
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/godslayer

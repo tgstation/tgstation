@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "TramStation's Medbay's White Medkits actually have stuff in them now."
-  - bugfix: "TramStation's Surgery Rooms are now actually named appropriately. The person who mixed up their starship directions is being executed at noon."

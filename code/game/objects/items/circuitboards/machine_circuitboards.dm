@@ -198,21 +198,29 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/port_gen/pacman/super
 
-/obj/item/circuitboard/machine/power_compressor
-	name = "Power Compressor (Machine Board)"
+/obj/item/circuitboard/machine/turbine_compressor
+	name = "Turbine - Inlet Compressor (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/compressor
+	build_path = /obj/machinery/power/turbine/inlet_compressor/constructed
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/manipulator = 6)
+		/obj/item/stack/sheet/iron = 5)
 
-/obj/item/circuitboard/machine/power_turbine
-	name = "Power Turbine (Machine Board)"
+/obj/item/circuitboard/machine/turbine_rotor
+	name = "Turbine - Core Rotor (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine
+	build_path = /obj/machinery/power/turbine/core_rotor/constructed
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/capacitor = 6)
+		/obj/item/stack/sheet/iron = 5)
+
+/obj/item/circuitboard/machine/turbine_stator
+	name = "Turbine - Turbine Outlet (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/turbine/turbine_outlet/constructed
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/iron = 5)
 
 /obj/item/circuitboard/machine/protolathe/department/engineering
 	name = "Departmental Protolathe - Engineering (Machine Board)"
@@ -263,7 +271,7 @@
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/atmospherics/components/binary/thermomachine/freezer
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	var/pipe_layer = PIPING_LAYER_DEFAULT
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
@@ -597,15 +605,6 @@
 		/obj/item/stock_parts/card_reader = 1,
 		/obj/item/stock_parts/scanning_module = 1,
 		/obj/item/stock_parts/micro_laser = 1
-	)
-
-/obj/item/circuitboard/machine/accounting
-	name = "Account Registration Device (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/accounting
-	req_components = list(
-		/obj/item/stock_parts/card_reader = 1,
-		/obj/item/stock_parts/scanning_module = 1
 	)
 
 //Medical
