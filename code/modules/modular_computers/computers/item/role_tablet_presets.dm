@@ -8,6 +8,7 @@
 	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 	)
@@ -31,6 +32,7 @@
 	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/records/security,
@@ -44,6 +46,7 @@
 	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/records/security,
@@ -56,6 +59,7 @@
 	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/atmosscan,
@@ -71,6 +75,7 @@
 	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/phys_scanner/all,
@@ -85,6 +90,7 @@
 	default_applications = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/phys_scanner/chemistry,
