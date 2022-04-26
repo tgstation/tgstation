@@ -19573,7 +19573,7 @@
 "jnF" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/security/processing)
+/area/station/security/processing)
 "jnG" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue{
@@ -23497,7 +23497,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/security/processing)
+/area/station/security/processing)
 "lep" = (
 /obj/structure/bed/dogbed/ian,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -30544,7 +30544,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/security/processing)
+/area/station/security/processing)
 "opS" = (
 /obj/machinery/door/airlock{
 	id_tag = "Dorm3";
@@ -34104,7 +34104,7 @@
 "pYB" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
-/area/security/processing)
+/area/station/security/processing)
 "pYH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -39356,7 +39356,7 @@
 /area/station/command/teleporter)
 "szZ" = (
 /turf/open/floor/plating,
-/area/security/processing)
+/area/station/security/processing)
 "sAd" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Library Art Gallery"
@@ -43326,7 +43326,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/security/processing)
+/area/station/security/processing)
 "uso" = (
 /obj/item/stack/sheet/iron/five,
 /turf/open/floor/plating,
@@ -44568,7 +44568,7 @@
 "uYB" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured,
-/area/security/processing)
+/area/station/security/processing)
 "uYL" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table,
@@ -48929,7 +48929,7 @@
 	space_dir = 1
 	},
 /turf/open/floor/iron/dark/textured,
-/area/security/processing)
+/area/station/security/processing)
 "xdE" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -50911,7 +50911,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "ydt" = (
 /turf/open/floor/iron/dark,
-/area/security/processing)
+/area/station/security/processing)
 "ydu" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/barsign,
@@ -81228,7 +81228,7 @@ jnk
 jnk
 jnk
 src
-aiT
+ciP
 jnF
 pYB
 qnc
@@ -81485,7 +81485,7 @@ gQb
 gQb
 gQb
 gQb
-aiV
+ybl
 opN
 usa
 qnc
@@ -81742,7 +81742,7 @@ gQb
 gQb
 gQb
 gQb
-aiV
+ybl
 opN
 szZ
 qnc
@@ -81999,7 +81999,7 @@ gQb
 gQb
 gQb
 gQb
-aiV
+ybl
 lei
 opN
 qnc
@@ -82256,8 +82256,8 @@ hOT
 uXB
 uXB
 uXB
-aiV
-aiT
+ybl
+ciP
 sOb
 ybl
 jMf
@@ -82513,7 +82513,7 @@ jnk
 jnk
 jnk
 cwi
-aiV
+ybl
 uYB
 gFi
 lFo
@@ -83027,7 +83027,7 @@ jnk
 jnk
 jnk
 cwi
-aiV
+ybl
 uYB
 lFo
 tyD
