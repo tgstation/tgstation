@@ -156,6 +156,44 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	custom_materials = list(/datum/material/glass=400)
 
+/obj/item/knife/shiv/plasma
+	name = "plasma shiv"
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "plasmashiv"
+	inhand_icon_state = "plasmashiv"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	desc = "A makeshift plasma glass shiv."
+	force = 9
+	throwforce = 13
+	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
+	custom_materials = list(/datum/material/glass=400, /datum/material/plasma=200)
+
+/obj/item/knife/shiv/titanium
+	name = "titanium shiv"
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "titaniumshiv"
+	inhand_icon_state = "titaniumshiv"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	desc = "A makeshift titanium infused glass shiv."
+	force = 8
+	throwforce = 14
+	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
+	custom_materials = list(/datum/material/glass=400, /datum/material/titanium=200)
+
+/obj/item/knife/shiv/plastitanium
+	name = "plastitanium shiv"
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "plastitaniumshiv"
+	inhand_icon_state = "plastitaniumshiv"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	desc = "A makeshift titanium infused plasma glass shiv."
+	throwforce = 15
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 0, FIRE = 75, ACID = 75)
+	custom_materials = list(/datum/material/glass=400, /datum/material/alloy/plastitanium=200)
+
 /obj/item/knife/shiv/carrot
 	name = "carrot shiv"
 	icon_state = "carrotshiv"

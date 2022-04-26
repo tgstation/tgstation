@@ -106,7 +106,7 @@
 	init_flags = MATERIAL_INIT_MAPLOAD
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 0.8, ENERGY = 0.8, BOMB = 0.5, BIO = 1.2, FIRE = 0.8, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/titaniumglass
-	shard_type = /obj/item/shard
+	shard_type = /obj/item/shard/titanium
 	value_per_unit = 0.04
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/titanium=0.5)
@@ -125,7 +125,7 @@
 	integrity_modifier = 1.1
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1.2, ENERGY = 1.2, BOMB = 0.5, BIO = 1.2, FIRE = 2, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/plastitaniumglass
-	shard_type = /obj/item/shard/plasma
+	shard_type = /obj/item/shard/plastitanium
 	value_per_unit = 0.125
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/glass=1, /datum/material/alloy/plastitanium=0.5)
