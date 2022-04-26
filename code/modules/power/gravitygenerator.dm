@@ -333,7 +333,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/proc/complete_state_update()
 	update_appearance()
 	update_list()
-	updateUsrDialog()
 
 // Set the state of the gravity.
 /obj/machinery/gravity_generator/main/proc/set_state(new_state)
@@ -369,8 +368,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
 				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
-
-			updateDialog()
 
 			var/overlay_state = null
 			switch(charge_count)

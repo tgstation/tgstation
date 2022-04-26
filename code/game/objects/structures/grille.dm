@@ -168,7 +168,7 @@
 
 /obj/structure/grille/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
 	. = !density
-	if(istype(caller))
+	if(caller)
 		. = . || (caller.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/wirecutter_act(mob/living/user, obj/item/tool)

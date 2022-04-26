@@ -69,10 +69,10 @@
 	target_acc.transfer_money(card.registered_account, cost + extra_fees)
 	card.registered_account.bank_card_talk("[cost + extra_fees] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
+	SSeconomy.track_purchase(card.registered_account, cost + extra_fees, parent)
 
 /datum/component/payment/proc/change_cost(datum/source, new_cost)
 	SIGNAL_HANDLER
-
 	if(!isnum(new_cost))
 		CRASH("change_cost called with variable new_cost as not a number.")
 	cost = new_cost
