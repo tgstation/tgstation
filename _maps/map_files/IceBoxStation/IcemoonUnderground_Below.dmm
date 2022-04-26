@@ -860,10 +860,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/toilet)
-"jR" = (
-/obj/structure/table,
-/turf/open/floor/iron,
-/area/security/prison/mess)
 "jU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -32556,7 +32552,7 @@ zu
 fJ
 JX
 Ne
-jR
+zO
 tF
 iA
 zt
