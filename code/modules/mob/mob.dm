@@ -1119,7 +1119,7 @@
 	else if(istype(writing_instrument, /obj/item/toy/crayon))
 		writing_instrument_requires_gravity = FALSE
 
-	if(!has_gravity() && writing_instrument_requires_gravity)
+	if(writing_instrument_requires_gravity && !has_gravity())
 		to_chat(src, span_warning("You try to write, but the [writing_instrument] doesn't work in zero gravity!"))
 		return FALSE
 
