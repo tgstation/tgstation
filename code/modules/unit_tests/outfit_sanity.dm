@@ -8,6 +8,17 @@
 	outfit_item.on_outfit_equip(H, FALSE, ##slot_name); \
 }
 
+/// See #66313 and #60901. outfit_sanity used to runtime whenever you had two mergable sheets in either hand. Previously, this only had a 3% chance of occuring. Now 100%.
+/datum/outfit/stacks_in_hands
+	name = "Mr. Runtime"
+
+	uniform = /obj/item/clothing/under/suit/tuxedo
+	glasses = /obj/item/clothing/glasses/sunglasses
+	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	shoes = /obj/item/clothing/shoes/laceup
+	l_hand = /obj/item/stack/spacecash/c1000
+	r_hand = /obj/item/stack/spacecash/c1000
+
 /datum/unit_test/outfit_sanity/Run()
 	var/mob/living/carbon/human/H = allocate(/mob/living/carbon/human)
 
