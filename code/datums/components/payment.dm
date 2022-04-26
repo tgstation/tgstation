@@ -33,6 +33,7 @@
 	transaction_style = _style
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE, .proc/change_cost)
+	RegisterSignal(parent, COMSIG_REVOLUTION_TAX_REMOVAL, .proc/clean_up)
 
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/target, extra_fees = 0)
 	SIGNAL_HANDLER
@@ -153,12 +154,16 @@
 	log_econ("[total_cost] credits were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")
 	idcard.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
-	SSeconomy.track_purchase(card.registered_account, cost + extra_fees, parent)
+	SSeconomy.track_purchase(idcard.registered_account, total_cost, parent)
 	return TRUE
 
-
-/datum/component/payment/proc/change_cost(datum/source, new_cost)
+/**
+ * Attempts to remove the payment component, currently when the crew wins a revolution.
+ * * datum/source: source of the signal.
+ */
+/datum/component/payment/proc/clean_up(datum/source)
 	SIGNAL_HANDLER
-	if(!isnum(new_cost))
-		CRASH("change_cost called with variable new_cost as not a number.")
-	cost = new_cost
+	target_acc = null
+	qdel(src)
+	return
+
