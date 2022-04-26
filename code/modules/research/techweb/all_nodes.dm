@@ -1333,6 +1333,7 @@
 		"pepperspray",
 		"seclite",
 		"zipties",
+		"inspector",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
