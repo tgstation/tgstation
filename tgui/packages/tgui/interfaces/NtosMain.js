@@ -29,7 +29,7 @@ export const NtosMain = (props, context) => {
       width={400}
       height={500}>
       <NtosWindow.Content scrollable>
-        {(!!has_light || !!removable_media.length) && (
+        {Boolean(has_light || removable_media.length) && (
           <Section>
             <Stack>
               {!!has_light && (
