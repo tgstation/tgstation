@@ -398,6 +398,7 @@
 /obj/item/clothing/mask/gas/atmosprop
 	name = "prop atmospheric gas mask"
 	desc = "A prop atmospheric gas mask designed for appearance. Unlike a normal atmospheric gas mask this does not filter gasses or protect against pepper spray."
+	worn_icon_state = "gas_prop_atmos"
 	icon_state = "gas_atmos"
 	inhand_icon_state = "gas_atmos"
 	flags_cover = MASKCOVERSMOUTH
