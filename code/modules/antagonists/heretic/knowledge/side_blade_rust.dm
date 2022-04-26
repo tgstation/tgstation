@@ -71,6 +71,7 @@
 		/obj/item/stack/sheet/animalhide = 1,
 		/obj/item/ammo_casing = 3,
 	)
+	result_atoms = list(/obj/item/ammo_box/a762/lionhunter)
 	cost = 1
 	route = PATH_SIDE
 	/// A list of calibers we will accept for "ballistic ammo casings".
