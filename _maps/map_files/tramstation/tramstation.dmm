@@ -7657,7 +7657,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "buJ" = (
@@ -18767,7 +18766,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "fut" = (
@@ -19392,10 +19390,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/east,
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "fDi" = (
@@ -23008,13 +23006,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"gSv" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron/white,
-/area/medical/medbay/central)
 "gSy" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -28839,7 +28830,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -31553,6 +31543,12 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"jWn" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/light/directional/south,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/white,
+/area/medical/medbay/central)
 "jWp" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -33929,6 +33925,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "kPs" = (
@@ -43966,13 +43963,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
-"owA" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/white,
-/area/medical/medbay/central)
 "owD" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/structure/disposalpipe/segment{
@@ -64780,7 +64770,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "wfS" = (
@@ -166925,8 +166914,8 @@ wbe
 eLP
 xZI
 oXo
-ths
 lub
+ths
 lub
 ibq
 lub
@@ -167436,7 +167425,7 @@ ePS
 ePS
 pDg
 wbe
-eYt
+jWn
 uht
 uht
 rmN
@@ -169506,7 +169495,7 @@ uht
 uht
 uht
 uht
-owA
+pDg
 tIL
 mTJ
 cWZ
@@ -170009,7 +169998,7 @@ wbe
 eLP
 vQp
 vFX
-gSv
+pVY
 pVY
 pVY
 ygy
