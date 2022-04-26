@@ -414,7 +414,6 @@
 		to_chat(M, span_notice("You shake [src] trying to pick [p_them()] up!"))
 		to_chat(src, span_notice("[M] shakes you to get you up!"))
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
-		SEND_SIGNAL(src, COMSIG_CARBON_HEADPAT, M)
 		M.visible_message(span_notice("[M] gives [src] a pat on the head to make [p_them()] feel better!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, span_notice("You give [src] a pat on the head to make [p_them()] feel better!"))
@@ -424,7 +423,6 @@
 			to_chat(M, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
 
 	else if ((M.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.getorgan(/obj/item/organ/tail)))
-		SEND_SIGNAL(src, COMSIG_CARBON_TAILPULL, M)
 		M.visible_message(span_notice("[M] pulls on [src]'s tail!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, span_notice("You pull on [src]'s tail!"))
@@ -435,8 +433,6 @@
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "tailpulled", /datum/mood_event/tailpulled)
 
 	else
-		SEND_SIGNAL(src, COMSIG_CARBON_HUGGED, M)
-		SEND_SIGNAL(M, COMSIG_CARBON_HUG, M, src)
 		M.visible_message(span_notice("[M] hugs [src] to make [p_them()] feel better!"), \
 					null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, span_notice("You hug [src] to make [p_them()] feel better!"))
@@ -476,6 +472,8 @@
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(M, span_warning("[src] looks visibly upset as you hug [p_them()]."))
 
+	SEND_SIGNAL(src, COMSIG_CARBON_HUGGED, M)
+	SEND_SIGNAL(M, COMSIG_CARBON_HUG, M, src)
 	adjust_status_effects_on_shake_up()
 	set_resting(FALSE)
 	if(body_position != STANDING_UP && !resting && !buckled && !HAS_TRAIT(src, TRAIT_FLOORED))
