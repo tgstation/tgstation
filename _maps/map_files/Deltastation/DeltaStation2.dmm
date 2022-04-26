@@ -27259,7 +27259,7 @@
 "fMI" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/camera/directional/west{
-	c_tag = "Library Backroom";
+	c_tag = "Library Backroom 1";
 	name = "library camera"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -67001,6 +67001,11 @@
 /area/medical/medbay/central)
 "rtJ" = (
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/camera/directional/west{
+	c_tag = "Library Backroom 2";
+	name = "library camera";
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/service/library)
 "rtN" = (
@@ -83169,6 +83174,11 @@
 "wjE" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/south,
+/obj/machinery/camera/directional/west{
+	c_tag = "Library Backroom 3";
+	name = "library camera";
+	dir = 2
+	},
 /turf/open/floor/iron/dark,
 /area/service/library)
 "wkb" = (
