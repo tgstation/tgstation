@@ -213,7 +213,7 @@
 				return
 			to_chat(ethereal, span_notice("You receive some charge from the APC."))
 			stomach.adjust_charge(APC_POWER_GAIN)
-			cell.charge -= APC_POWER_GAIN
+			cell.use(APC_POWER_GAIN)
 		return
 
 	if(cell.charge >= cell.maxcharge - APC_POWER_GAIN)
@@ -232,7 +232,7 @@
 	if(istype(stomach))
 		to_chat(ethereal, span_notice("You transfer some power to the APC."))
 		stomach.adjust_charge(-APC_POWER_GAIN)
-		cell.charge += APC_POWER_GAIN
+		cell.give(APC_POWER_GAIN)
 	else
 		to_chat(ethereal, span_warning("You can't transfer power to the APC!"))
 

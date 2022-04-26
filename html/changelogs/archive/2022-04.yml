@@ -1046,3 +1046,35 @@
   magatsuchi:
   - bugfix: fixed bug where you wouldn't receive msg notifications without opening
       your messenger app first
+2022-04-26:
+  Cenrus:
+  - bugfix: Removed a stray pixel in the energy shield module sprite
+  Fikou:
+  - bugfix: gateway lights work
+  Fikou, sprite modified by Zhost:
+  - qol: the sniper rifle has a new zoom system, activated by right-clicking
+  Ghilker:
+  - balance: diminished the number of anomalies spawned after the SM delamination
+  LemonInTheDark:
+  - rscdel: Removed the concept of ballast from thermomachines, you no longer need
+      some gas to heat in order to cool things.
+  MacBlaze1:
+  - bugfix: fixed ethereal feeding breaking APC charging
+  RandomGamer123:
+  - bugfix: Fixed spawn ruins admin debug verb's ruin ordering being not separated
+      by type
+  - bugfix: Removes a way to easily detect the presence of PDA uplinks
+  - bugfix: Grinders no longer consume 10x more energy than they are supposed to
+  Son-of-Space:
+  - bugfix: fixed wonky safe placement on Kilostation bridge
+  - bugfix: Moved firelocks in KiloStation dorms to not overlap posters.
+  - bugfix: Fixed the kilostation whiteship so that it fully spawns
+  - bugfix: Adds an APC and area to the lowest level of the mining station on IceBoxstation
+  TheBonded:
+  - bugfix: Fixed a very rare chance for the pressure on lavaland and icebox to be
+      just low enough for wings to not work. Ra'Sep rejoice!
+  lnGoror:
+  - bugfix: fixed a krokodil zombie transformation
+  vincentiusvin:
+  - bugfix: trying to store a plasma cutter while holding plasma should no longer
+      blow you up.

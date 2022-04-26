@@ -54,17 +54,15 @@
 	return ..()
 
 /obj/machinery/rnd/server/power_change()
-	. = ..()
 	refresh_working()
-	return
+	return ..()
 
 /obj/machinery/rnd/server/proc/refresh_working()
 	if(machine_stat & EMPED || research_disabled || machine_stat & NOPOWER)
 		working = FALSE
-		update_use_power(NO_POWER_USE)
 	else
 		working = TRUE
-		update_use_power(ACTIVE_POWER_USE)
+	update_current_power_usage()
 	update_appearance()
 
 /obj/machinery/rnd/server/emp_act()
