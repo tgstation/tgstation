@@ -169,17 +169,17 @@
 	var/turf/posobj = get_turf(C.eye)
 	if(!posobj)
 		return
-	var/area/areaobj = posobj.loc
 
+	var/area/areaobj = posobj.loc
 	// Update the movement direction of the parallax if necessary (for shuttles)
 	set_parallax_movedir(areaobj.parallax_movedir, FALSE, screenmob)
 
-	var/force
+	var/force = FALSE
 	if(!C.previous_turf || (C.previous_turf.z != posobj.z))
 		C.previous_turf = posobj
 		force = TRUE
 
-	if (!force && world.time < C.last_parallax_shift+C.parallax_throttle)
+	if (!force && world.time < C.last_parallax_shift + C.parallax_throttle)
 		return
 
 	//Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
@@ -194,24 +194,45 @@
 	C.previous_turf = posobj
 	C.last_parallax_shift = world.time
 
-	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in C.parallax_layers)
-		if(parallax_layer.absolute)
-			parallax_layer.offset_x = -(posobj.x - SSparallax.planet_x_offset) * parallax_layer.speed
-			parallax_layer.offset_y = -(posobj.y - SSparallax.planet_y_offset) * parallax_layer.speed
-		else
-			parallax_layer.offset_x -= offset_x * parallax_layer.speed
-			parallax_layer.offset_y -= offset_y * parallax_layer.speed
+	var/largest_change = max(abs(offset_x), abs(offset_y))
+	var/max_allowed_dist = (C.parallax_throttle / world.tick_lag) + 1
+	// If we aren't already moving/don't allow parallax, have made some movement, and that movement was smaller then our "glide" size, animate
+	var/run_parralax = (last_delay && !areaobj.parallax_movedir && C.dont_animate_parallax <= world.time && largest_change <= max_allowed_dist)
 
-			if(parallax_layer.offset_x > 240)
+	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in C.parallax_layers)
+		var/our_speed = parallax_layer.speed
+		var/change_x
+		var/change_y
+		if(parallax_layer.absolute)
+			// We use change here so the typically large absolute objects (just lavaland for now) don't jitter so much
+			change_x = (posobj.x - SSparallax.planet_x_offset) * our_speed + parallax_layer.offset_x
+			change_y = (posobj.y - SSparallax.planet_y_offset) * our_speed + parallax_layer.offset_y
+		else
+			change_x = offset_x * our_speed
+			change_y = offset_y * our_speed
+
+			// This is how we tile parralax sprites
+			// It doesn't use change because we really don't want to animate this
+			if(parallax_layer.offset_x - change_x > 240)
 				parallax_layer.offset_x -= 480
-			if(parallax_layer.offset_x < -240)
+			else if(parallax_layer.offset_x - change_x < -240)
 				parallax_layer.offset_x += 480
-			if(parallax_layer.offset_y > 240)
+			if(parallax_layer.offset_y - change_y > 240)
 				parallax_layer.offset_y -= 480
-			if(parallax_layer.offset_y < -240)
+			else if(parallax_layer.offset_y - change_y < -240)
 				parallax_layer.offset_y += 480
 
-		parallax_layer.screen_loc = "CENTER-7:[round(parallax_layer.offset_x,1)],CENTER-7:[round(parallax_layer.offset_y,1)]"
+		// Now that we have our offsets, let's do our positioning
+		parallax_layer.offset_x -= change_x
+		parallax_layer.offset_y -= change_y
+
+		parallax_layer.screen_loc = "CENTER-7:[round(parallax_layer.offset_x, 1)],CENTER-7:[round(parallax_layer.offset_y, 1)]"
+
+		// We're going to use a transform to "glide" that last movement out, so it looks nicer
+		// Don't do any animates if we're not actually moving enough distance yeah? thanks lad
+		if(run_parralax && (largest_change * our_speed > 1))
+			parallax_layer.transform = matrix(1,0,change_x, 0,1,change_y)
+			animate(parallax_layer, transform=matrix(), time = last_delay)
 
 /atom/movable/proc/update_parallax_contents()
 	for(var/mob/client_mob as anything in client_mobs_in_contents)
@@ -235,7 +256,6 @@
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-
 /atom/movable/screen/parallax_layer/Initialize(mapload, mob/owner)
 	. = ..()
 	var/client/boss = owner?.client
@@ -255,9 +275,12 @@
 	if (!view)
 		view = world.view
 
+	var/static/parallax_scaler = world.icon_size / 480
+
+	// Turn the view size into a grid of correctly scaled overlays
 	var/list/viewscales = getviewsize(view)
-	var/countx = CEILING((viewscales[1]/2)/(480/world.icon_size), 1)+1
-	var/county = CEILING((viewscales[2]/2)/(480/world.icon_size), 1)+1
+	var/countx = CEILING((viewscales[1] / 2) * parallax_scaler, 1) + 1
+	var/county = CEILING((viewscales[2] / 2) * parallax_scaler, 1) + 1
 	var/list/new_overlays = new
 	for(var/x in -countx to countx)
 		for(var/y in -county to county)
