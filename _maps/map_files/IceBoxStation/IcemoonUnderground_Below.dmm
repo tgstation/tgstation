@@ -4750,7 +4750,7 @@
 "Wb" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Security - Permabrig Observation South";
-	network = sssssssssssss
+	network = list("ss13","prison")
 	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
