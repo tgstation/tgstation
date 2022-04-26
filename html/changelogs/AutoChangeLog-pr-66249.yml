@@ -1,0 +1,4 @@
+author: "timothymtorres, TheBonded"
+delete-after: True
+changes: 
+  - bugfix: "Fixes prescription glasses not clearing blurry vison"
