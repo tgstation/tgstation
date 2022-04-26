@@ -166,7 +166,8 @@
 	sortTim(our_scoops, cmp = /proc/cmp_text_asc)
 
 	//Make sure the flavors and number of scoops match.
-	return compare_list(our_scoops, icecream_order.wanted_flavors)
+	if(compare_list(our_scoops, icecream_order.wanted_flavors))
+		return COMPONENT_CORRECT_ORDER
 
 /datum/component/ice_cream_holder/proc/sell_ice_cream(obj/item/source, mob/living/simple_animal/robot_customer/sold_to, obj/item/container)
 	SIGNAL_HANDLER

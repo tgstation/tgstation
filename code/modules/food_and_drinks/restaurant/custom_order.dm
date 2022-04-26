@@ -15,7 +15,8 @@
 
 ///Whether or not the order is correct. Only relevant if dispense_order didn't return another object.
 /datum/custom_order/proc/is_correct_order(obj/item/object_used)
-	return SEND_SIGNAL(object_used, COMSIG_ITEM_IS_CORRECT_CUSTOM_ORDER, src)
+	if(SEND_SIGNAL(object_used, COMSIG_ITEM_IS_CORRECT_CUSTOM_ORDER, src) & COMPONENT_CORRECT_ORDER)
+		return TRUE
 
 /// Returns the appearance of the order that appears when hovering over the mob with the cursor
 /datum/custom_order/proc/get_order_appearance()
