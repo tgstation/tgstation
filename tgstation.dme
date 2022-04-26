@@ -2816,6 +2816,7 @@
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_soup.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_spaghetti.dm"
 #include "code\modules\food_and_drinks\restaurant\_venue.dm"
+#include "code\modules\food_and_drinks\restaurant\custom_order.dm"
 #include "code\modules\food_and_drinks\restaurant\generic_venues.dm"
 #include "code\modules\food_and_drinks\restaurant\customers\_customer.dm"
 #include "code\modules\games\cas.dm"
