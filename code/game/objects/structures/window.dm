@@ -433,7 +433,7 @@
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message(span_notice("[user] digs into the heated security screws and starts removing them..."),
 										span_notice("You dig into the heated screws hard and they start turning..."))
-				if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
+				if(tool.use_tool(src, user, 5 SECONDS, volume = 50))
 					state = RWINDOW_BOLTS_OUT
 					to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
 			else if (tool.tool_behaviour)
@@ -452,7 +452,7 @@
 			if(tool.tool_behaviour == TOOL_WRENCH)
 				user.visible_message(span_notice("[user] starts unfastening \the [src] from the frame..."),
 					span_notice("You start unfastening the bolts from the frame..."))
-				if(tool.use_tool(src, user, 5 SECONDS, volume = 50))
+				if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
 					to_chat(user, span_notice("You unscrew the bolts from the frame and the window pops loose."))
 					state = WINDOW_OUT_OF_FRAME
 					set_anchored(FALSE)
