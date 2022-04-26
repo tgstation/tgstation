@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "The 3rd Level of IceBox is now counted as being a part of the station."
