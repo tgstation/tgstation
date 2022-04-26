@@ -47,6 +47,13 @@
 	var/list/mob_type_blacklist_typecache
 	/// Types that can use this emote regardless of their state.
 	var/list/mob_type_ignore_stat_typecache
+	/**
+	 * Assoc list containing alt mob emotes
+	 *
+	 * Example:
+	 * list(/type/of/mob = "emote")
+	 */
+	var/list/mob_alt_emotes
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
 	var/stat_allowed = CONSCIOUS
 	/// Sound to play when emote is called.
@@ -203,6 +210,11 @@
 		. = message_monkey
 	else if(isanimal(user) && message_simple)
 		. = message_simple
+	if (mob_alt_emotes)
+		for (var/mob_type in mob_alt_emotes)
+			if (istype(user, mob_type))
+				. = mob_alt_emotes[mob_type]
+				break
 
 /**
  * Replaces the %t in the message in message_param by params.

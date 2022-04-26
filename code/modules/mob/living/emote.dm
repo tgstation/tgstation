@@ -141,6 +141,10 @@
 	key_third_person = "flaps"
 	message = "flaps their wings."
 	hands_use_check = TRUE
+	mob_alt_emotes = list(
+		/mob/living/carbon/human/species/moth = "flaps their wings.",
+		/mob/living/carbon/human = "flaps their arms up and down, like an idiot.",
+	)
 	var/wing_time = 20
 
 /datum/emote/living/flap/run_emote(mob/user, params, type_override, intentional)
@@ -163,6 +167,10 @@
 	message = "flaps their wings ANGRILY!"
 	hands_use_check = TRUE
 	wing_time = 10
+	mob_alt_emotes = list(
+		/mob/living/carbon/human/species/moth = "flaps their wings ANGRILY!",
+		/mob/living/carbon/human = "violently flails their arms around!",
+	)
 
 /datum/emote/living/frown
 	key = "frown"
