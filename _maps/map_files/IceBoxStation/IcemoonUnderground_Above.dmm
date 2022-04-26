@@ -8582,7 +8582,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "yx" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9600,12 +9600,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/security/prison)
-"BH" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/science/xenobiology)
 "BJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -10004,10 +9998,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
-"CQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/maintenance/aft/lesser)
 "CR" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/aft/lesser)
@@ -13695,10 +13685,6 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron,
 /area/security/prison)
-"MM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall,
-/area/maintenance/aft/lesser)
 "MN" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -15622,10 +15608,6 @@
 "Sc" = (
 /turf/closed/wall/r_wall,
 /area/medical/morgue)
-"Sd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/mineral/random/snow,
-/area/icemoon/underground/unexplored/rivers)
 "Sf" = (
 /obj/effect/turf_decal/caution/stand_clear,
 /obj/effect/turf_decal/stripes/line,
@@ -63367,7 +63349,7 @@ MA
 jq
 zv
 Qv
-BH
+Qv
 Qv
 Wb
 Wb
@@ -63624,7 +63606,7 @@ CR
 CR
 tK
 Qv
-Sd
+As
 Qv
 Wb
 Wb
@@ -63881,7 +63863,7 @@ Wn
 CR
 CR
 CR
-MM
+hM
 CR
 CR
 CR
@@ -64138,7 +64120,7 @@ Xp
 ip
 Fa
 Fa
-CQ
+Fa
 Fa
 Fa
 Fa
