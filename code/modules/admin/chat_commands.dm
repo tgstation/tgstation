@@ -35,7 +35,7 @@
 	else
 		msg += "Revision [copytext_char(revdata.commit, 1, 9)]"
 		if (revdata.date)
-			msg += "compiled on '[revdata.date]'"
+			msg += " compiled on '[revdata.date]'"
 		
 		if(revdata.originmastercommit)
 			msg += ", from origin commit: <[CONFIG_GET(string/githuburl)]/commit/[revdata.originmastercommit]>"
