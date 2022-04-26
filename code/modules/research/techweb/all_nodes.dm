@@ -181,6 +181,7 @@
 		"spade",
 		"spraycan",
 		"swab",
+		"tile_sprayer",
 		"tscanner",
 		"welding_helmet",
 		"welding_tool",

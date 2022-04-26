@@ -446,7 +446,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(anchored)
 		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
 		update_appearance()
-		updateUsrDialog()
 	else
 		to_chat(user, span_warning("You must first secure [src]."))
 	return TRUE
@@ -477,7 +476,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(compartmentLoadAccessCheck(user) && !user.combat_mode)
 		if(canLoadItem(I))
 			loadingAttempt(I,user)
-			updateUsrDialog() //can't put this on the proc above because we spam it below
 
 		if(istype(I, /obj/item/storage/bag)) //trays USUALLY
 			var/obj/item/storage/T = I
@@ -496,7 +494,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 				to_chat(user, span_warning("[src] refuses some items!"))
 			if(loaded)
 				to_chat(user, span_notice("You insert [loaded] dishes into [src]'s compartment."))
-				updateUsrDialog()
 	else
 		. = ..()
 		if(tiltable && !tilted && I.force)
@@ -1208,7 +1205,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(isliving(usr))
 				vend_act(usr, params["item"])
 			vend_ready = TRUE
-			updateUsrDialog()
 			return TRUE
 
 /obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)

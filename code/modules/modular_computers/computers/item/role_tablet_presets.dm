@@ -210,7 +210,6 @@
 	greyscale_colors = null
 	icon_state = "pda-library"
 	insert_type = /obj/item/pen/fountain
-	display_overlays = FALSE
 
 /obj/item/modular_computer/tablet/pda/curator/Initialize(mapload)
 	. = ..()
