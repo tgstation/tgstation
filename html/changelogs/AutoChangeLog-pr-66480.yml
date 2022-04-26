@@ -1,4 +1,0 @@
-author: "Cenrus"
-delete-after: True
-changes: 
-  - bugfix: "Removed a stray pixel in the energy shield module sprite"
