@@ -1920,6 +1920,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "aKV" = (
@@ -6022,6 +6023,12 @@
 /obj/structure/cable,
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
+"cfp" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/security/warden)
 "cfv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Firefighting Equipment";
@@ -11713,6 +11720,7 @@
 "eGQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/brig/upper)
 "eGW" = (
@@ -20619,6 +20627,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
+"iYc" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/dark/textured,
+/area/security/warden)
 "iYj" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/chair/stool/directional/south,
@@ -26261,6 +26275,13 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
+"lRN" = (
+/obj/effect/turf_decal/tile/red/full,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/security/checkpoint/auxiliary)
 "lRP" = (
 /obj/structure/closet/crate/critter,
 /turf/open/floor/plating,
@@ -27771,6 +27792,7 @@
 "mJH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured,
 /area/security/warden)
 "mJP" = (
@@ -36098,6 +36120,7 @@
 "qQS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "qQV" = (
@@ -39513,6 +39536,9 @@
 /area/maintenance/starboard/fore)
 "suE" = (
 /obj/effect/turf_decal/tile/red/full,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/security/checkpoint/auxiliary)
 "suH" = (
@@ -44870,6 +44896,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured,
 /area/security/medical)
 "uXt" = (
@@ -45172,6 +45199,12 @@
 	},
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
+"vhX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/white/textured,
+/area/security/medical)
 "vid" = (
 /obj/machinery/firealarm/directional/north,
 /obj/structure/cable,
@@ -50442,6 +50475,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured,
 /area/security/warden)
 "xOt" = (
@@ -77511,7 +77545,7 @@ hCj
 sch
 mRQ
 wWP
-mJH
+iYc
 mJH
 xOn
 qQS
@@ -77769,7 +77803,7 @@ hCj
 hCj
 oFu
 rLW
-rLW
+cfp
 whX
 agt
 qQS
@@ -80097,7 +80131,7 @@ cEs
 cEs
 cEs
 lxm
-suE
+lRN
 wTW
 suE
 lxm
@@ -81110,7 +81144,7 @@ gQb
 gQb
 hIX
 cSp
-rXK
+vhX
 uWM
 eGQ
 feP
