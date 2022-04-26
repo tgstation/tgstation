@@ -14,10 +14,12 @@
 
 /obj/projectile/bullet/incendiary/Move()
 	. = ..()
-	if(!location || !leaves_fire_trail)
-		return
 
+	if(!leaves_fire_trail)
+		return
 	var/turf/location = get_turf(src)
+	if(!location)
+		return
 	new /obj/effect/hotspot(location)
 	location.hotspot_expose(700, 50, 1)
 
