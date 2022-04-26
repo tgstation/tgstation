@@ -112,6 +112,7 @@
 #include "code\__DEFINES\memory_defines.dm"
 #include "code\__DEFINES\mergers.dm"
 #include "code\__DEFINES\mob_spawn.dm"
+#include "code\__DEFINES\mobfactions.dm"
 #include "code\__DEFINES\mobs.dm"
 #include "code\__DEFINES\mod.dm"
 #include "code\__DEFINES\monkeys.dm"
