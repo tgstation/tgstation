@@ -18766,6 +18766,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "fut" = (
@@ -31543,12 +31544,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"jWn" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/light/directional/south,
-/obj/machinery/firealarm/directional/south,
-/turf/open/floor/iron/white,
-/area/medical/medbay/central)
 "jWp" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -167425,7 +167420,7 @@ ePS
 ePS
 pDg
 wbe
-jWn
+eYt
 uht
 uht
 rmN
