@@ -164,6 +164,10 @@
 /atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE)
 	if(!istype(A) || !get_turf(A) || A == src)
 		return
+	if (HAS_TRAIT(A, TRAIT_ORBITING_FORBIDDEN))
+		// Stealth-mins have an empty name, don't want "You cannot orbit   at this time."
+		to_chat(src, span_notice("You cannot orbit ["[A]" || "them"] at this time."))
+		return
 	orbit_target = A
 	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 

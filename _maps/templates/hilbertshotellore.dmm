@@ -24,6 +24,10 @@
 /obj/structure/table/wood,
 /obj/structure/showcase/machinery/tv,
 /obj/machinery/light/small/directional/north,
+/obj/effect/overlay{
+	icon_state = "television_broken";
+	icon = 'icons/obj/computer.dmi'
+	},
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "ag" = (
@@ -67,9 +71,10 @@
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "ap" = (
-/obj/structure/bed,
-/obj/item/bedsheet/random,
-/turf/open/indestructible/hotelwood,
+/turf/open/space/bluespace{
+	density = 1;
+	can_atmos_pass = 0
+	},
 /area/hilbertshotel)
 "aq" = (
 /obj/structure/chair/comfy/brown{
@@ -100,11 +105,7 @@
 /obj/structure/closet/cabinet{
 	anchored = 1
 	},
-/turf/open/indestructible/hotelwood,
-/area/hilbertshotel)
-"ax" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/mod/module/eradication_lock,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "ay" = (
@@ -136,7 +137,7 @@
 /turf/open/indestructible/hoteltile,
 /area/hilbertshotel)
 "aF" = (
-/obj/machinery/door/window/northleft,
+/obj/machinery/door/window/left/directional/north,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "aG" = (
@@ -251,9 +252,7 @@
 /area/hilbertshotel)
 "aY" = (
 /obj/structure/chair/stool/bar/directional/south,
-/obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/vomit,
-/obj/effect/mob_spawn/corpse/human/doctorhilbert,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "aZ" = (
@@ -273,10 +272,6 @@
 	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/hoteltile,
-/area/hilbertshotel)
-"bc" = (
-/obj/effect/decal/cleanable/blood,
 /turf/open/indestructible/hoteltile,
 /area/hilbertshotel)
 "bd" = (
@@ -328,7 +323,7 @@
 /area/hilbertshotel)
 "bl" = (
 /obj/structure/table/reinforced,
-/obj/item/paper/crumpled/bloody/docsdeathnote,
+/obj/item/paper/crumpled/ruins/hotel_note,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "Mn" = (
@@ -358,13 +353,13 @@ aa
 aa
 ab
 ab
-ab
+ap
 ab
 ab
 as
 ab
 ab
-ab
+ap
 ab
 ab
 ab
@@ -380,17 +375,17 @@ ak
 ad
 aL
 an
-ad
+ap
 aF
 be
 aQ
-aG
+ap
 ab
 aa
 "}
 (4,1,1) = {"
 aa
-ab
+ap
 ae
 ad
 al
@@ -402,7 +397,7 @@ aH
 ad
 aL
 aG
-ab
+ap
 aa
 "}
 (5,1,1) = {"
@@ -426,7 +421,7 @@ aa
 aa
 ab
 ae
-ad
+ap
 aM
 aq
 ad
@@ -435,13 +430,13 @@ aA
 bk
 bf
 bf
-aG
-ab
+ap
+ap
 aa
 "}
 (7,1,1) = {"
 aa
-ab
+ap
 aW
 aL
 am
@@ -459,9 +454,9 @@ aa
 (8,1,1) = {"
 aa
 ab
+ap
 ab
-ab
-ab
+ap
 ar
 ab
 ab
@@ -487,7 +482,7 @@ bb
 bh
 aI
 bj
-ab
+ap
 aa
 "}
 (10,1,1) = {"
@@ -497,13 +492,13 @@ ah
 ad
 aL
 aL
-ad
+ap
 ab
-aZ
+ap
 aZ
 aC
 aZ
-aZ
+ap
 ab
 aa
 "}
@@ -515,7 +510,7 @@ ad
 ad
 aL
 av
-ab
+ap
 aD
 aC
 aN
@@ -528,7 +523,7 @@ aa
 aa
 ab
 Mn
-ad
+ap
 aL
 ad
 aw
@@ -543,15 +538,15 @@ aa
 "}
 (13,1,1) = {"
 aa
-ab
-ad
+ap
+ap
 ad
 aL
-ad
+ap
 ad
 ab
 aC
-bc
+aC
 aZ
 aZ
 aC
@@ -561,7 +556,7 @@ aa
 (14,1,1) = {"
 aa
 ab
-ax
+aL
 aj
 ap
 aU
@@ -571,13 +566,16 @@ ba
 bd
 aP
 aK
-aC
+ap
 ab
 aa
 "}
 (15,1,1) = {"
 aa
 ab
+ap
+ab
+ap
 ab
 ab
 ab
@@ -585,10 +583,7 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
+ap
 ab
 aa
 "}

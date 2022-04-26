@@ -6,7 +6,7 @@
 /obj/machinery/door/firedoor
 	name = "firelock"
 	desc = "Apply crowbar."
-	icon = 'icons/obj/doors/Doorfireglass.dmi'
+	icon = 'icons/obj/doors/doorfireglass.dmi'
 	icon_state = "door_open"
 	opacity = FALSE
 	density = FALSE
@@ -37,14 +37,16 @@
 	var/list/affecting_areas
 	///For the few times we affect only the area we're actually in. Set during Init. If we get moved, we don't update, but this is consistant with fire alarms and also kinda funny so call it intentional.
 	var/area/my_area
+	///List of problem turfs with bad temperature
+	var/list/turf/issue_turfs
 	///Tracks if the firelock is being held open by a crowbar. If so, we don't close until they walk away
 	var/being_held_open = FALSE
-
 	///Type of alarm when active. See code/defines/firealarm.dm for the list. This var being null means there is no alarm.
 	var/alarm_type = null
 	///The merger_id and merger_typecache variables are used to make rows of firelocks activate at the same time.
 	var/merger_id = "firelocks"
 	var/static/list/merger_typecache
+
 	///Overlay object for the warning lights. This and some plane settings allows the lights to glow in the dark.
 	var/mutable_appearance/warn_lights
 
@@ -61,25 +63,23 @@
 	. = ..()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop = new(src, FALSE)
-	AddElement(/datum/element/atmos_sensitive, mapload)
 	CalculateAffectingAreas()
 	my_area = get_area(src)
-	var/static/list/loc_connections = list(
-		COMSIG_TURF_EXPOSE = .proc/check_atmos,
-	)
-
-	AddElement(/datum/element/connect_loc, loc_connections)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 
-	check_atmos()
+	if(prob(0.004) && icon == 'icons/obj/doors/doorfireglass.dmi')
+		base_icon_state = "sus"
+		desc += " This one looks a bit sus..."
 
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
-	GetMergeGroup(merger_id, allowed_types = merger_typecache)
-
+	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/merger_adding)
+	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/merger_removing)
+	GetMergeGroup(merger_id, merger_typecache)
+	register_adjacent_turfs(src)
 /**
  * Sets the offset for the warning lights.
  *
@@ -107,29 +107,45 @@
 	else
 		. += span_notice("The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.")
 
-/obj/machinery/door/firedoor/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/machinery/door/firedoor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if (isnull(held_item))
-		if (density)
-			// This should be LMB/RMB one day
-			if (user.combat_mode)
-				context[SCREENTIP_CONTEXT_LMB] = "Knock"
-			else
-				context[SCREENTIP_CONTEXT_LMB] = "Bash"
+	if(!isliving(user))
+		return .
 
+	var/mob/living/living_user = user
+
+	if (isnull(held_item))
+		if(density)
+			if(isalienadult(living_user) || issilicon(living_user))
+				context[SCREENTIP_CONTEXT_LMB] = "Open"
+				return CONTEXTUAL_SCREENTIP_SET
+			if(!living_user.combat_mode)
+				if(ishuman(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Knock"
+					return CONTEXTUAL_SCREENTIP_SET
+			else
+				if(ismonkey(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Attack"
+					return CONTEXTUAL_SCREENTIP_SET
+				if(ishuman(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Bash"
+					return CONTEXTUAL_SCREENTIP_SET
+		else if(issilicon(living_user))
+			context[SCREENTIP_CONTEXT_LMB] = "Close"
 			return CONTEXTUAL_SCREENTIP_SET
-		else
-			return .
+		return .
+
+	if(!Adjacent(src, living_user))
+		return .
 
 	switch (held_item.tool_behaviour)
 		if (TOOL_CROWBAR)
-			if (density)
+			if (!density)
 				context[SCREENTIP_CONTEXT_LMB] = "Close"
 			else if (!welded)
 				context[SCREENTIP_CONTEXT_LMB] = "Hold open"
 				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
-
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
 			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"
@@ -183,30 +199,86 @@
 		for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 			fire_panel.set_status()
 
-/obj/machinery/door/firedoor/proc/check_atmos(datum/source)
+/obj/machinery/door/firedoor/proc/merger_adding(obj/machinery/door/firedoor/us, datum/merger/new_merger)
+	SIGNAL_HANDLER
+	if(new_merger.id != merger_id)
+		return
+	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/refresh_shared_turfs)
+
+/obj/machinery/door/firedoor/proc/merger_removing(obj/machinery/door/firedoor/us, datum/merger/old_merger)
+	SIGNAL_HANDLER
+	if(old_merger.id != merger_id)
+		return
+	UnregisterSignal(old_merger, COMSIG_MERGER_REFRESH_COMPLETE)
+
+/obj/machinery/door/firedoor/proc/refresh_shared_turfs(datum/source, list/leaving_members, list/joining_members)
+	SIGNAL_HANDLER
+	var/datum/merger/temp_group = source
+	if(temp_group.origin != src)
+		return
+	var/list/shared_problems = list() // We only want to do this once, this is a nice way of pulling that off
+	for(var/obj/machinery/door/firedoor/firelock as anything in temp_group.members)
+		firelock.issue_turfs = shared_problems
+		for(var/dir in GLOB.cardinals)
+			var/turf/checked_turf = get_step(get_turf(firelock), dir)
+			if(!checked_turf)
+				continue
+			process_results(checked_turf)
+
+/obj/machinery/door/firedoor/proc/register_adjacent_turfs(atom/loc)
+	for(var/dir in GLOB.cardinals)
+		var/turf/checked_turf = get_step(get_turf(loc), dir)
+
+		if(!checked_turf)
+			continue
+		process_results(checked_turf)
+		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
+		RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
+
+
+/obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/loc)
+	for(var/dir in GLOB.cardinals)
+		var/turf/checked_turf = get_step(get_turf(loc), dir)
+
+		if(!checked_turf)
+			continue
+
+		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
+		UnregisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
+
+/obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
+	var/datum/gas_mixture/environment = checked_turf.return_air()
+
+	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		return FIRELOCK_ALARM_TYPE_HOT
+	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+		return FIRELOCK_ALARM_TYPE_COLD
+	return
+
+/obj/machinery/door/firedoor/proc/process_results(datum/source)
+	SIGNAL_HANDLER
+
 	if(!COOLDOWN_FINISHED(src, detect_cooldown))
 		return
-	if(alarm_type)
+	if(alarm_type == FIRELOCK_ALARM_TYPE_GENERIC)
 		return
+
 	for(var/area/place in affecting_areas)
 		if(!place.fire_detect) //if any area is set to disable detection
 			return
 
-	var/turf/my_turf = source
-	if(!my_turf)
-		my_turf = get_turf(src)
+	var/turf/checked_turf = source
+	var/result = check_atmos(checked_turf)
 
-	var/datum/gas_mixture/environment = my_turf.return_air()
-	var/result
+	if(result && TURF_SHARES(checked_turf))
+		issue_turfs |= checked_turf
+		if(!alarm_type)
+			start_activation_process(result)
+	else
+		issue_turfs -= checked_turf
+		if(!length(issue_turfs) && alarm_type)
+			start_deactivation_process()
 
-	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		result = FIRELOCK_ALARM_TYPE_HOT
-	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
-		result = FIRELOCK_ALARM_TYPE_COLD
-	if(!result)
-		return
-
-	start_activation_process(result)
 
 /**
  * Begins activation process of us and our neighbors.
@@ -226,7 +298,18 @@
 	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		buddylock.activate(code)
-
+/**
+ * Begins deactivation process of us and our neighbors.
+ *
+ * This proc will call reset() on every fire lock (including us) listed
+ * in the merge group datum. sets our alarm type to null, signifying no alarm.
+ */
+/obj/machinery/door/firedoor/proc/start_deactivation_process()
+	soundloop.stop()
+	is_playing_alarm = FALSE
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
+	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
+		buddylock.reset()
 
 /**
  * Proc that handles activation of the firelock and all this details
@@ -268,6 +351,8 @@
 		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 				fire_panel.set_status()
+			if(place == my_area)
+				place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 			place.unset_fire_alarm_effects()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop.stop()
@@ -326,32 +411,33 @@
 			span_warning("You bash [src]!"))
 		playsound(src, bash_sound, 100, TRUE)
 
-/obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
+/obj/machinery/door/firedoor/wrench_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
-	if(operating)
-		return
-	if(welded)
-		if(C.tool_behaviour == TOOL_WRENCH)
-			if(boltslocked)
-				to_chat(user, span_notice("There are screws locking the bolts in place!"))
-				return
-			C.play_tool_sound(src)
-			user.visible_message(span_notice("[user] starts undoing [src]'s bolts..."), \
-				span_notice("You start unfastening [src]'s floor bolts..."))
-			if(!C.use_tool(src, user, DEFAULT_STEP_TIME))
-				return
-			playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
-			user.visible_message(span_notice("[user] unfastens [src]'s bolts."), \
-				span_notice("You undo [src]'s floor bolts."))
-			deconstruct(TRUE)
-			return
-		if(C.tool_behaviour == TOOL_SCREWDRIVER)
-			user.visible_message(span_notice("[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts."), \
+	if(operating || !welded)
+		return FALSE
+
+	if(boltslocked)
+		to_chat(user, span_notice("There are screws locking the bolts in place!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	tool.play_tool_sound(src)
+	user.visible_message(span_notice("[user] starts undoing [src]'s bolts..."), \
+		span_notice("You start unfastening [src]'s floor bolts..."))
+	if(!tool.use_tool(src, user, DEFAULT_STEP_TIME))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
+	user.visible_message(span_notice("[user] unfastens [src]'s bolts."), \
+		span_notice("You undo [src]'s floor bolts."))
+	deconstruct(TRUE)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/door/firedoor/screwdriver_act(mob/living/user, obj/item/tool)
+	if(operating || !welded)
+		return FALSE
+	user.visible_message(span_notice("[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts."), \
 				span_notice("You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts."))
-			C.play_tool_sound(src)
-			boltslocked = !boltslocked
-			return
-	return ..()
+	tool.play_tool_sound(src)
+	boltslocked = !boltslocked
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
 	return
@@ -439,9 +525,9 @@
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
 		if("opening")
-			flick("door_opening", src)
+			flick("[base_icon_state]_opening", src)
 		if("closing")
-			flick("door_closing", src)
+			flick("[base_icon_state]_closing", src)
 
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
@@ -511,6 +597,11 @@
 			new /obj/item/electronics/firelock (targetloc)
 	qdel(src)
 
+/obj/machinery/door/firedoor/Moved(atom/oldloc)
+	. = ..()
+	unregister_adjacent_turfs(oldloc)
+	register_adjacent_turfs(src)
+
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
 	density = TRUE
@@ -529,12 +620,6 @@
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
-
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = .proc/on_exit,
-	)
-
-	AddElement(/datum/element/connect_loc, loc_connections)
 	adjust_lights_starting_offset()
 
 /obj/machinery/door/firedoor/border_only/adjust_lights_starting_offset()
@@ -559,6 +644,9 @@
 	. = ..()
 	if(!(border_dir == dir)) //Make sure looking at appropriate border
 		return TRUE
+
+/obj/machinery/door/firedoor/border_only/CanAStarPass(obj/item/card/id/ID, to_dir)
+	return !density || (dir != to_dir)
 
 /obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER

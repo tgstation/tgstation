@@ -7,7 +7,7 @@
 	icon_state = "navbeacon0-f"
 	base_icon_state = "navbeacon"
 	name = "navigation beacon"
-	desc = "A radio beacon used for bot navigation and crew wayfinding."
+	desc = "A radio beacon used for bot navigation."
 	layer = LOW_OBJ_LAYER
 	max_integrity = 500
 	armor = list(MELEE = 70, BULLET = 70, LASER = 70, ENERGY = 70, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
@@ -18,21 +18,11 @@
 	var/location = "" // location response text
 	var/list/codes // assoc. list of transponder codes
 	var/codes_txt = "" // codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
-	var/wayfinding = FALSE
 
 	req_one_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
 
 /obj/machinery/navbeacon/Initialize(mapload)
 	. = ..()
-
-	if(wayfinding)
-		if(!location)
-			var/obj/machinery/door/airlock/A = locate(/obj/machinery/door/airlock) in loc
-			if(A)
-				location = A.name
-			else
-				location = get_area(src)
-		codes_txt += "wayfinding=[location]"
 
 	set_codes()
 
@@ -74,7 +64,6 @@
 		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
 	GLOB.deliverybeacons -= src
 	GLOB.deliverybeacontags -= location
-	GLOB.wayfindingbeacons -= src
 
 /obj/machinery/navbeacon/proc/glob_lists_register(init=FALSE)
 	if(!init)
@@ -88,8 +77,6 @@
 	if(codes["delivery"])
 		GLOB.deliverybeacons += src
 		GLOB.deliverybeacontags += location
-	if(codes["wayfinding"])
-		GLOB.wayfindingbeacons += src
 
 // update the icon_state
 /obj/machinery/navbeacon/update_icon_state()
@@ -109,7 +96,7 @@
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
-	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/pda))
+	else if (istype(I, /obj/item/card/id) || istype(I, /obj/item/modular_computer/tablet))
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked

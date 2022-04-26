@@ -111,16 +111,19 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules."))
 		to_chat(src, span_warning("\"[message]\""))
 		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
+		log_filter("IC", message, filter_result)
 		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
 
 	if(soft_filter_result && !filterproof)
 		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+			log_filter("Soft IC", message, filter_result)
 			return
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
 		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+		log_filter("Soft IC (Passed)", message, filter_result)
 
 	var/list/message_mods = list()
 	var/original_message = message
@@ -433,21 +436,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 
 /mob/living/proc/treat_message(message)
-
 	if(HAS_TRAIT(src, TRAIT_UNINTELLIGIBLE_SPEECH))
 		message = unintelligize(message)
 
-	if(derpspeech)
-		message = derpspeech(message, stuttering)
-
-	if(stuttering)
-		message = stutter(message)
-
-	if(slurring)
-		message = slur(message)
-
-	if(cultslurring)
-		message = cultslur(message)
+	SEND_SIGNAL(src, COMSIG_LIVING_TREAT_MESSAGE, args)
 
 	message = capitalize(message)
 
@@ -488,12 +480,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		. = "[verb_whisper] in [p_their()] last breath"
 	else if(message_mods[MODE_SING])
 		. = verb_sing
-	else if(stuttering)
+	else if(has_status_effect(/datum/status_effect/speech/stutter))
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
 			. = "shakily signs"
 		else
 			. = "stammers"
-	else if(derpspeech)
+	else if(has_status_effect(/datum/status_effect/speech/stutter/derpspeech))
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
 			. = "incoherently signs"
 		else

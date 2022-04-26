@@ -51,6 +51,9 @@
 			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
 
+/obj/structure/railing/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 /obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(!anchored)
@@ -83,8 +86,8 @@
 	return TRUE
 
 /obj/structure/railing/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
-	if (to_dir & dir)
-		return FALSE
+	if(!(to_dir & dir))
+		return TRUE
 	return ..()
 
 /obj/structure/railing/proc/on_exit(datum/source, atom/movable/leaving, direction)

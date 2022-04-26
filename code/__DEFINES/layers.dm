@@ -201,6 +201,8 @@
 
 #define ADMIN_POPUP_LAYER 1
 
+///Layer for screentips
+#define SCREENTIP_LAYER 4
 
 ///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
 #define SPLASHSCREEN_PLANE 9999
@@ -213,3 +215,4 @@
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
+#define PLANE_MASTERS_COLORBLIND "plane_masters_colorblind"

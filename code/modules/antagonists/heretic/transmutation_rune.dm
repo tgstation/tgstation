@@ -1,9 +1,9 @@
-
+/// The heretic's rune, which they use to complete transmutation rituals.
 /obj/effect/heretic_rune
-	name = "Generic rune"
+	name = "transmutation rune"
 	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid."
-	anchored = TRUE
 	icon_state = ""
+	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
@@ -40,15 +40,25 @@
 	return TRUE
 
 /**
- * Wrapper for do_rituals to ensure is_in_use
- * is enabled and disabled before and after.
+ * Attempt to begin a ritual, giving them an input list to chose from.
+ * Also ensures is_in_use is enabled and disabled before and after.
  */
 /obj/effect/heretic_rune/proc/try_rituals(mob/living/user)
 	is_in_use = TRUE
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	do_rituals(user, flatten_list(heretic_datum.researched_knowledge))
+	var/list/rituals = heretic_datum.get_rituals()
+	if(!length(rituals))
+		loc.balloon_alert(user, "no rituals available!")
+		is_in_use = FALSE
+		return
 
+	var/chosen = tgui_input_list(user, "Chose a ritual to attempt.", "Chose a Ritual", rituals)
+	if(!chosen || !istype(rituals[chosen], /datum/heretic_knowledge) || QDELETED(src) || QDELETED(user) || QDELETED(heretic_datum))
+		is_in_use = FALSE
+		return
+
+	do_ritual(user, rituals[chosen])
 	is_in_use = FALSE
 
 /**
@@ -60,12 +70,10 @@
  *
  * returns TRUE if any rituals passed succeeded, FALSE if they all failed.
  */
-/obj/effect/heretic_rune/proc/do_rituals(mob/living/user, list/knowledge_list)
-	if(!length(knowledge_list))
-		CRASH("[type] do_rituals called without any passed knowledge!")
+/obj/effect/heretic_rune/proc/do_ritual(mob/living/user, datum/heretic_knowledge/ritual)
 
+	// Collect all nearby valid atoms over the rune for processing in rituals.
 	var/list/atom/movable/atoms_in_range = list()
-
 	for(var/atom/close_atom as anything in range(1, src))
 		if(!ismovable(close_atom))
 			continue
@@ -76,80 +84,101 @@
 
 		atoms_in_range += close_atom
 
-	for(var/datum/heretic_knowledge/knowledge as anything in knowledge_list)
+	// A copy of our requirements list.
+	// We decrement the values of to determine if enough of each key is present.
+	var/list/requirements_list = ritual.required_atoms.Copy()
+	// A list of all atoms we've selected to use in this recipe.
+	var/list/selected_atoms = list()
 
-		// It's not a ritual, we don't care.
-		if(!LAZYLEN(knowledge.required_atoms))
-			continue
+	// Do the snowflake check to see if we can continue or not.
+	// selected_atoms is passed and can be modified by this proc.
+	if(!ritual.recipe_snowflake_check(user, atoms_in_range, selected_atoms, loc))
+		return FALSE
 
-		// A copy of our requirements list.
-		// We decrement the values of to determine if enough of each key is present.
-		var/list/requirements_list = knowledge.required_atoms.Copy()
-		// A list of all atoms we've selected to use in this recipe.
-		var/list/selected_atoms = list()
-
-		// Do the snowflake check to see if we can continue or not.
-		// selected_atoms is passed and can be modified by this proc.
-		if(!knowledge.recipe_snowflake_check(user, atoms_in_range, selected_atoms, loc))
-			continue
-
-		// Now go through all our nearby atoms and see which are good for our ritual.
-		for(var/atom/nearby_atom as anything in atoms_in_range)
-			// Go through all of our required atoms
-			for(var/req_type in requirements_list)
-				// We already have enough of this type, skip
-				if(requirements_list[req_type] <= 0)
-					continue
-				if(!istype(nearby_atom, req_type))
-					continue
-
-				// This item is a valid type.
-				// Add it to our selected atoms list
-				// and decrement the value of our requirements list
-				selected_atoms |= nearby_atom
-				requirements_list[req_type]--
-
-		// All of the atoms have been checked, let's see if the ritual was successful
-		var/requirements_fulfilled = TRUE
+	// Now go through all our nearby atoms and see which are good for our ritual.
+	for(var/atom/nearby_atom as anything in atoms_in_range)
+		// Go through all of our required atoms
 		for(var/req_type in requirements_list)
+			// We already have enough of this type, skip
 			if(requirements_list[req_type] <= 0)
 				continue
+			if(!istype(nearby_atom, req_type))
+				continue
 
-			// One if our requirements wasn't entirely filled
-			// This ritual failed, move on to the next one
-			requirements_fulfilled = FALSE
-			break
+			// This item is a valid type. Add it to our selected atoms list.
+			selected_atoms |= nearby_atom
+			// If it's a stack, we gotta see if it has more than one inside,
+			// as our requirements may want more than one item of a stack
+			if(isstack(nearby_atom))
+				var/obj/item/stack/picked_stack = nearby_atom
+				requirements_list[req_type] -= picked_stack.amount // Can go negative, but doesn't matter. Negative = fulfilled
 
-		if(!requirements_fulfilled)
+			// Otherwise, just add the mark down the item as fulfilled x1
+			else
+				requirements_list[req_type]--
+
+	// All of the atoms have been checked, let's see if the ritual was successful
+	var/list/what_are_we_missing = list()
+	for(var/atom/req_type as anything in requirements_list)
+		var/number_of_things = requirements_list[req_type]
+		// <= 0 means it's fulfilled, skip
+		if(number_of_things <= 0)
 			continue
 
-		// If we made it here, the ritual succeeded
-		// Do the animations and feedback
-		flick("[icon_state]_active", src)
-		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
+		// > 0 means it's unfilfilled - the ritual has failed, we should tell them why
+		// Lets format the thing they're missing and put it into our list
+		var/formatted_thing = "[number_of_things] [initial(req_type.name)]\s"
+		if(ispath(req_type, /mob/living/carbon/human))
+			// If we need a human, there is a high likelihood we actually need a (dead) body
+			formatted_thing = "[number_of_things] [number_of_things > 1 ? "bodies":"body"]"
 
-		// We temporarily make all of our chosen atoms invisible,
-		// as some rituals may sleep, and we don't want people
-		// to be able to run off with ritual items.
-		for(var/atom/to_disappear as anything in selected_atoms)
-			to_disappear.invisibility = INVISIBILITY_ABSTRACT
+		what_are_we_missing += formatted_thing
 
-		// on_finished_recipe may sleep in the case of some rituals like summons.
-		if(knowledge.on_finished_recipe(user, selected_atoms, loc))
-			knowledge.cleanup_atoms(selected_atoms)
+	if(length(what_are_we_missing))
+		// Let them know it screwed up
+		loc.balloon_alert(user, "ritual failed, missing components!")
+		// Then let them know what they're missing
+		to_chat(user, span_hierophant_warning("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
+		return FALSE
 
-		// Re-appear anything left in the list
-		for(var/atom/to_appear as anything in selected_atoms)
-			to_appear.invisibility = initial(to_appear.invisibility)
+	// If we made it here, the ritual had all necessary components, and we can try to cast it.
+	// This doesn't necessarily mean the ritual will succeed, but it's valid!
+	// Do the animations and associated feedback.
+	flick("[icon_state]_active", src)
+	playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
 
+	// - We temporarily make all of our chosen atoms invisible, as some rituals may sleep,
+	// and we don't want people to be able to run off with ritual items.
+	// - We make a duplicate list here to ensure that all atoms are correctly un-invisibled by the end.
+	// Some rituals may remove atoms from the selected_atoms list, and not consume them.
+	var/list/initial_selected_atoms = selected_atoms.Copy()
+	for(var/atom/to_disappear as anything in selected_atoms)
+		to_disappear.invisibility = INVISIBILITY_ABSTRACT
+
+	// All the components have been invisibled, time to actually do the ritual. Call on_finished_recipe
+	// (Note: on_finished_recipe may sleep in the case of some rituals like summons, which expect ghost candidates.)
+	// - If the ritual was success (Returned TRUE), proceede to clean up the atoms involved in the ritual. The result has already been spawned by this point.
+	// - If the ritual failed for some reason (Returned FALSE), likely due to no ghosts taking a role or an error, we shouldn't clean up anything, and reset.
+	var/ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc)
+	if(ritual_result)
+		ritual.cleanup_atoms(selected_atoms)
+
+	// Clean up done, re-appear anything that hasn't been deleted.
+	for(var/atom/to_appear as anything in initial_selected_atoms)
+		if(QDELETED(to_appear))
+			continue
+		to_appear.invisibility = initial(to_appear.invisibility)
+
+	// And finally, give some user feedback
+	// No feedback is given on failure here -
+	// the ritual itself should handle it (providing specifics as to why it failed)
+	if(ritual_result)
 		loc.balloon_alert(user, "ritual complete")
-		return TRUE
 
-	loc.balloon_alert(user, "ritual failed!")
-	return FALSE
+	return ritual_result
 
+/// A 3x3 heretic rune. The kind heretics actually draw in game.
 /obj/effect/heretic_rune/big
-	name = "transmutation rune"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "eldritch_rune1"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right

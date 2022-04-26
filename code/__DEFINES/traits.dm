@@ -211,6 +211,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
 #define TRAIT_TOXINLOVER "toxinlover"
+/// Gets a mood boost from being in the hideout.
+#define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
 #define TRAIT_NOBREATH "no_breath"
@@ -231,6 +233,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Can hear observers
 #define TRAIT_SIXTHSENSE "sixth_sense"
 #define TRAIT_FEARLESS "fearless"
+/// Ignores darkness for hearing
+#define TRAIT_HEAR_THROUGH_DARKNESS "hear_through_darkness"
 /// These are used for brain-based paralysis, where replacing the limb won't fix it
 #define TRAIT_PARALYSIS_L_ARM "para-l-arm"
 #define TRAIT_PARALYSIS_R_ARM "para-r-arm"
@@ -240,6 +244,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PRESENT_VISION "present-vision"
 #define TRAIT_DISK_VERIFIER "disk-verifier"
 #define TRAIT_NOMOBSWAP "no-mob-swap"
+/// Can examine IDs to see if they are roundstart.
+#define TRAIT_ID_APPRAISER "id_appraiser"
 /// Gives us turf, mob and object vision through walls
 #define TRAIT_XRAY_VISION "xray_vision"
 /// Gives us mob vision through walls and slight night vision
@@ -252,6 +258,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NEGATES_GRAVITY "negates_gravity"
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
+/// Lets us scan machine parts and tech unlocks
+#define TRAIT_RESEARCH_SCANNER "research_scanner"
 /// Can weave webs into cloth
 #define TRAIT_WEB_WEAVER "web_weaver"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
@@ -355,6 +363,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ELITE_CHALLENGER "elite_challenger"
 /// For living mobs. It signals that the mob shouldn't have their data written in an external json for persistence.
 #define TRAIT_DONT_WRITE_MEMORY "dont_write_memory"
+/// This mob can be painted with the spraycan
+#define TRAIT_SPRAY_PAINTABLE "spray_paintable"
+/// This person is blushing
+#define TRAIT_BLUSHING "blushing"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
@@ -395,6 +407,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// If something has been engraved/cannot be engraved
 #define TRAIT_NOT_ENGRAVABLE "not_engravable"
 
+/// Whether or not orbiting is blocked or not
+#define TRAIT_ORBITING_FORBIDDEN "orbiting_forbidden"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -412,12 +427,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This mob can strip other mobs.
 #define TRAIT_CAN_STRIP "can_strip"
+/// Can use the nuclear device's UI, regardless of a lack of hands
+#define TRAIT_CAN_USE_NUKE "can_use_nuke"
 
 // If present on a mob or mobmind, allows them to "suplex" an immovable rod
 // turning it into a glorified potted plant, and giving them an
 // achievement. Can also be used on rod-form wizards.
 // Normally only present in the mind of a Research Director.
 #define TRAIT_ROD_SUPLEX "rod_suplex"
+
+/// This mob is currently in rod form.
+#define TRAIT_ROD_FORM "rod_form"
 
 //SKILLS
 #define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"
@@ -453,6 +473,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Used for limbs.
 #define TRAIT_DISABLED_BY_WOUND "disabled-by-wound"
 
+/// Mobs with this trait can't send the mining shuttle console when used outside the station itself
+#define TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION "forbid_mining_shuttle_console_outside_station"
 
 //important_recursive_contents traits
 /*
@@ -633,7 +655,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// The item is magically cursed
 #define CURSED_ITEM_TRAIT(item_type) "cursed_item_[item_type]"
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
+/// A trait given by any status effect
 #define STATUS_EFFECT_TRAIT "status-effect"
+/// A trait given by a specific status effect (not sure why we need both but whatever!)
+#define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
+
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
 /// inherited from the mask
@@ -773,6 +799,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define EXPIRED_LIFE_TRAIT "expired_life"
 /// Trait given to an atom/movable when they orbit something.
 #define ORBITING_TRAIT "orbiting"
+/// From the item_scaling element
+#define ITEM_SCALING_TRAIT "item_scaling"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -792,6 +820,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define AI_ANCHOR_TRAIT "ai_anchor"
 /// Trait from [/datum/antagonist/nukeop/clownop]
 #define CLOWNOP_TRAIT "clownop"
+/// Trait from [/datum/antagonist/thief]
+#define THIEF_TRAIT "thief"
 
 ///Traits given by station traits
 #define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
@@ -809,6 +839,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
 
+/// Denotes that this id card was given via the job outfit, aka the first ID this player got.
+#define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
 /// ID cards with this trait will attempt to forcibly occupy the front-facing ID card slot in wallets.
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
 /// Traits granted to items due to their chameleon properties.
@@ -816,6 +848,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This human wants to see the color of their glasses, for some reason
 #define TRAIT_SEE_GLASS_COLORS "see_glass_colors"
+
+/// this mob is under the effects of the power chord
+#define TRAIT_POWER_CHORD "power_chord"
 
 // Radiation defines
 
@@ -841,3 +876,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This mob heals from cult pylons.
 #define TRAIT_HEALS_FROM_CULT_PYLONS "heals_from_cult_pylons"
+
+/// Ignore Crew monitor Z levels
+#define TRAIT_MULTIZ_SUIT_SENSORS "multiz_suit_sensors"
+
+/// Ignores body_parts_covered during the add_fingerprint() proc. Works both on the person and the item in the glove slot.
+#define TRAIT_FINGERPRINT_PASSTHROUGH "fingerprint_passthrough"

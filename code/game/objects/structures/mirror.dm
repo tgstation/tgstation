@@ -49,7 +49,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 	hairdresser.hairstyle = new_style
 
-	hairdresser.update_hair()
+	hairdresser.update_hair(is_creating = TRUE)
 
 /obj/structure/mirror/examine_status(mob/user)
 	if(broken)
@@ -81,7 +81,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 		return
 	icon_state = "mirror_broke"
 	if(!mapload)
-		playsound(src, "shatter", 70, TRUE)
+		playsound(src, SFX_SHATTER, 70, TRUE)
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE
@@ -216,7 +216,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return TRUE
 					amazed_human.gender = FEMALE
-					amazed_human.body_type = FEMALE
+					amazed_human.physique = FEMALE
 					to_chat(amazed_human, span_notice("Man, you feel like a woman!"))
 				else
 					return TRUE
@@ -226,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return TRUE
 					amazed_human.gender = MALE
-					amazed_human.body_type = MALE
+					amazed_human.physique = MALE
 					to_chat(amazed_human, span_notice("Whoa man, you feel like a man!"))
 				else
 					return TRUE

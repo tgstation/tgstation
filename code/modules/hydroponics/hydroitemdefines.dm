@@ -171,6 +171,7 @@
 	if(scanned_tray.myseed)
 		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
 		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
+		returned_message += "- Plant Health: [span_notice("[scanned_tray.plant_health]")]\n"
 		returned_message += scan_plant_stats(scanned_tray.myseed)
 	else
 		returned_message += span_bold("No plant found.\n")
@@ -534,7 +535,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src, "desecration" ,50, TRUE, -1)
+			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
@@ -570,6 +571,37 @@
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/// Secateurs can be used to style podperson "hair"
+/obj/item/secateurs/attack(mob/trimmed, mob/living/trimmer)
+	if(ispodperson(trimmed))
+		var/mob/living/carbon/human/pod = trimmed
+		var/location = trimmer.zone_selected
+		if((location in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !pod.get_bodypart(BODY_ZONE_HEAD))
+			to_chat(trimmer, span_warning("[pod] [pod.p_do()]n't have a head!"))
+			return
+		if(location == BODY_ZONE_HEAD && !trimmer.combat_mode)
+			if(!trimmer.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				return
+			var/new_style = tgui_input_list(trimmer, "Select a hairstyle", "Grooming", GLOB.pod_hair_list)
+			if(isnull(new_style))
+				return
+			trimmer.visible_message(
+				span_notice("[trimmer] tries to change [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
+				span_notice("You try to change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
+			)
+			if(new_style && do_after(trimmer, 6 SECONDS, target = pod))
+				trimmer.visible_message(
+					span_notice("[trimmer] successfully changes [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
+					span_notice("You successfully change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
+				)
+
+				var/datum/species/pod/species = pod.dna?.species
+				species?.change_hairstyle(pod, new_style)
+		else
+			return ..()
+	else
+		return ..()
 
 /obj/item/geneshears
 	name = "Botanogenetic Plant Shears"

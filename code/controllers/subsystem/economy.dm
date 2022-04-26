@@ -46,6 +46,11 @@ SUBSYSTEM_DEF(economy)
 	var/bounty_modifier = 1
 	///The modifier multiplied to the value of cargo pack prices.
 	var/pack_price_modifier = 1
+	/**
+	 * A list of strings containing a basic transaction history of purchases on the station.
+	 * Added to any time when player accounts purchase something.
+	 */
+	var/list/audit_log = list()
 
 	/// Total value of exported materials.
 	var/export_total = 0
@@ -63,9 +68,9 @@ SUBSYSTEM_DEF(economy)
 		mail_blocked = TRUE
 	for(var/dep_id in department_accounts)
 		if(dep_id == ACCOUNT_CAR) //cargo starts with NOTHING
-			new /datum/bank_account/department(dep_id, 0)
+			new /datum/bank_account/department(dep_id, 0, player_account = FALSE)
 			continue
-		new /datum/bank_account/department(dep_id, budget_to_hand_out)
+		new /datum/bank_account/department(dep_id, budget_to_hand_out, player_account = FALSE)
 	return ..()
 
 /datum/controller/subsystem/economy/Recover()
@@ -121,8 +126,8 @@ SUBSYSTEM_DEF(economy)
 		if(!is_station_level(V.z))
 			continue
 		V.reset_prices(V.product_records, V.coin_records)
-	earning_report = "Sector Economic Report<br /> Sector vendor prices is currently at [SSeconomy.inflation_value()*100]%.<br /> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br /> That's all from the <i>Nanotrasen Economist Division</i>."
-	GLOB.news_network.SubmitArticle(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = FALSE)
+	earning_report = "<b>Sector Economic Report</b><br><br> Sector vendor prices is currently at <b>[SSeconomy.inflation_value()*100]%</b>.<br><br> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br><br> That's all from the <i>Nanotrasen Economist Division</i>."
+	GLOB.news_network.submit_article(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = FALSE)
 
 /**
  * Proc that returns a value meant to shift inflation values in vendors, based on how much money exists on the station.
@@ -136,3 +141,20 @@ SUBSYSTEM_DEF(economy)
 		return 1
 	inflation_value = max(round(((station_total / bank_accounts_by_id.len) / station_target), 0.1), 1.0)
 	return inflation_value
+
+/**
+ * Proc that adds a set of strings and ints to the audit log, tracked by the economy SS.
+ *
+ * * account: The bank account of the person purchasing the item.
+ * * price_to_use: The cost of the purchase made for this transaction.
+ * * vendor: The object or structure medium that is charging the user. For Vending machines that's the machine, for payment component that's the parent, cargo that's the crate, etc.
+ */
+/datum/controller/subsystem/economy/proc/track_purchase(datum/bank_account/account, price_to_use, vendor)
+	if(!account || !price_to_use || !vendor)
+		CRASH("Track purchases was missing an argument! (Account, Price, or Vendor.)")
+
+	audit_log += list(list(
+		"account" = account.account_holder,
+		"cost" = price_to_use,
+		"vendor" = vendor,
+	))

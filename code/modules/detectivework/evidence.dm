@@ -32,6 +32,10 @@
 		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
 		return TRUE //begone infinite storage ghosts, begone from me
 
+	if(HAS_TRAIT(I, TRAIT_NO_STORAGE_INSERT))
+		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
+		return TRUE
+
 	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, span_warning("You find putting an evidence bag in another evidence bag to be slightly absurd."))
 		return TRUE //now this is podracing

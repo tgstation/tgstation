@@ -61,7 +61,7 @@
 	switch(stat)
 		if(CONSCIOUS, SOFT_CRIT)
 			if(HAS_TRAIT(src, TRAIT_BLIND) || eye_blind)
-				throw_alert("blind", /atom/movable/screen/alert/blind)
+				throw_alert(ALERT_BLIND, /atom/movable/screen/alert/blind)
 				do_set_blindness(TRUE)
 			else
 				do_set_blindness(FALSE)
@@ -78,7 +78,7 @@
 		// You are blind why should you be able to make out details like color, only shapes near you
 		add_client_colour(/datum/client_colour/monochrome/blind)
 	else
-		clear_alert("blind")
+		clear_alert(ALERT_BLIND)
 		clear_fullscreen("blind")
 		remove_client_colour(/datum/client_colour/monochrome/blind)
 
@@ -112,14 +112,6 @@
 		game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(clamp(eye_blurry * 0.1, 0.6, 3)))
 	else
 		game_plane_master_controller.remove_filter("eye_blur")
-
-///Adjust the drugginess of a mob
-/mob/proc/adjust_drugginess(amount)
-	return
-
-///Set the drugginess of a mob
-/mob/proc/set_drugginess(amount)
-	return
 
 ///Adjust the disgust level of a mob
 /mob/proc/adjust_disgust(amount)

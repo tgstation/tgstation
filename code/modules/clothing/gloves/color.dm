@@ -14,6 +14,12 @@
 	cut_type = /obj/item/clothing/gloves/cut
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 
+/obj/item/clothing/gloves/color/yellow/heavy
+	name = "ceramic-lined insulated gloves"
+	desc = "A cheaper make of the standard insulated gloves, using internal ceramic lining to make up for the sub-par rubber material. The extra weight makes them more bulky to use."
+	slowdown = 1
+	w_class = WEIGHT_CLASS_NORMAL
+
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
 	desc = "What is the number one problem facing our station today?"
@@ -88,7 +94,7 @@
 	name = "fingerless insulated gloves"
 	icon_state = "yellowcut"
 	inhand_icon_state = "ygloves"
-	transfer_prints = TRUE
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
 /obj/item/clothing/gloves/cut/heirloom
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
@@ -110,13 +116,13 @@
 	desc = "Plain black gloves without fingertips for the hard working."
 	icon_state = "fingerless"
 	inhand_icon_state = "fingerless"
-	transfer_prints = TRUE
 	strip_delay = 40
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	custom_price = PAYCHECK_ASSISTANT * 1.5
 	undyeable = TRUE
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
@@ -214,8 +220,7 @@
 	inhand_icon_state = "latex"
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
-	clothing_traits = list(TRAIT_QUICK_CARRY)
-	transfer_prints = TRUE
+	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/latex/nitrile
@@ -224,7 +229,6 @@
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
-	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/infiltrator
 	name = "infiltrator gloves"
@@ -235,7 +239,6 @@
 	permeability_coefficient = 0.3
 	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/latex/engineering
 	name = "tinker's gloves"
@@ -260,3 +263,8 @@
 	desc = "Breathable red gloves for expert handling of a pen and notebook."
 	icon_state = "aerostatic_gloves"
 	inhand_icon_state = "aerostatic_gloves"
+
+/obj/item/clothing/gloves/maid
+	name = "maid arm covers"
+	desc = "Cylindrical looking tubes that go over your arm, weird."
+	icon_state = "maid_arms"

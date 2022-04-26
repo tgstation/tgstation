@@ -167,7 +167,7 @@
 	var/design_choice = tgui_alert(ninja, "Please choose your desired suit design.",,list("Original","New Age"))
 	switch(design_choice)
 		if("Original")
-			icon_state = ninja.body_type == "female" ? "s-ninjanf" : "s-ninjan"
+			icon_state = ninja.physique == "female" ? "s-ninjanf" : "s-ninjan"
 			ninja.gloves.icon_state = "s-ninjan"
 			ninja.gloves.inhand_icon_state = "s-ninjan"
 		if("New Age")

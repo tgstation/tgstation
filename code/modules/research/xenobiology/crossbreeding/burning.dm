@@ -116,13 +116,13 @@ Burning extracts:
 
 /obj/item/slimecross/burning/darkblue
 	colour = "dark blue"
-	effect_desc = "Expels a burst of chilling smoke while also filling you with cryoxadone."
+	effect_desc = "Expels a burst of chilling smoke while also filling you with regenerative jelly."
 
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
 	user.visible_message(span_danger("[src] releases a burst of chilling smoke!"))
 	var/datum/reagents/R = new/datum/reagents(100)
 	R.add_reagent(/datum/reagent/consumable/frostoil, 40)
-	user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,10)
+	user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
 	var/datum/effect_system/smoke_spread/chem/smoke = new
 	smoke.set_up(R, 7, get_turf(user))
 	smoke.start()
@@ -157,7 +157,7 @@ Burning extracts:
 		if(L != user)
 			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
 			new /obj/effect/particle_effect/sparks(get_turf(L))
-			playsound(get_turf(L), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(get_turf(L), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	..()
 
 /obj/item/slimecross/burning/sepia

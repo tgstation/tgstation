@@ -9,15 +9,16 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /proc/init_gaslist_cache()
-	. = list()
+	var/list/gases = list()
 	for(var/id in GLOB.meta_gas_info)
 		var/list/cached_gas = new(3)
 
-		.[id] = cached_gas
+		gases[id] = cached_gas
 
 		cached_gas[MOLES] = 0
 		cached_gas[ARCHIVE] = 0
 		cached_gas[GAS_META] = GLOB.meta_gas_info[id]
+	return gases
 
 /datum/gas_mixture
 	var/list/gases
@@ -25,10 +26,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/tmp/temperature_archived = 0
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
-	/// The fire key contains information that might determine the volume of hotspots.
+	/// Tells us what reactions have happened in our gasmix. Assoc list of reaction - moles reacted pair.
 	var/list/reaction_results
-	/// Used for analyzer feedback - not initialized until its used
-	var/list/analyzer_results
 	/// Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
 	var/gc_share = FALSE
 
@@ -164,6 +163,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		ASSERT_GAS(giver_id, src)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
+	SEND_SIGNAL(src, COMSIG_GASMIX_MERGED)
 	return TRUE
 
 ///Proportionally removes amount of gas from the gas_mixture.
@@ -186,6 +186,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
 
+	SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED)
 	return removed
 
 ///Proportionally removes amount of gas from the gas_mixture.
@@ -208,6 +209,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	garbage_collect()
 
+	SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED)
 	return removed
 
 ///Removes an amount of a specific gas from the gas_mixture.
@@ -534,6 +536,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	if(.) //If we changed the mix to any degree
 		garbage_collect()
+		SEND_SIGNAL(src, COMSIG_GASMIX_REACTED)
 
 
 /**

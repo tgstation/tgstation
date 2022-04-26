@@ -8,7 +8,7 @@
 	icon_state = "core_off"
 	circuit = /obj/item/circuitboard/machine/HFR_core
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 50
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	///Vars for the state of the icon of the object (open, off, active)
 	icon_state_open = "core_open"
 	icon_state_off = "core_off"
@@ -171,7 +171,7 @@
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
-	
+
 	RegisterSignal(src.loc, COMSIG_ATOM_ENTERED, .proc/on_entered)
 
 	for(var/atom/movable/movable_object in src.loc)

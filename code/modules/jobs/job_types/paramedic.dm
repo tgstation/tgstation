@@ -24,7 +24,7 @@
 		/datum/job_department/medical,
 		)
 
-	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
+	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom)
 
 	mail_goodies = list(
 		/obj/item/reagent_containers/hypospray/medipen = 20,
@@ -55,7 +55,7 @@
 	head = /obj/item/clothing/head/soft/paramedic
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
 	shoes = /obj/item/clothing/shoes/sneakers/blue
-	l_pocket = /obj/item/pda/medical
+	l_pocket = /obj/item/modular_computer/tablet/pda/medical
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

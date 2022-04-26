@@ -42,6 +42,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	data["is_funmin"] = is_funmin
 	return data
 
+#define THUNDERDOME_TEMPLATE_FILE "admin_thunderdome.dmm"
 /datum/secrets_menu/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -159,8 +160,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
-			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
-			template.copy_contents_to(thunderdome)
+			var/datum/map_template/thunderdome_template = SSmapping.map_templates[THUNDERDOME_TEMPLATE_FILE]
+			var/turf/thunderdome_corner = locate(thunderdome.x - 3, thunderdome.y - 1, 1) // have to do a little bit of coord manipulation to get it in the right spot
+			thunderdome_template.load(thunderdome_corner)
 		if("set_name")
 			var/new_name = input(holder, "Please input a new name for the station.", "What?", "") as text|null
 			if(!new_name)
@@ -293,7 +295,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(SUMMON_GUNS, holder, survivor_probability)
+			summon_guns(holder, survivor_probability)
+
 		if("magic")
 			if(!is_funmin)
 				return
@@ -305,24 +308,25 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(SUMMON_MAGIC, holder, survivor_probability)
+			summon_magic(holder, survivor_probability)
+
 		if("events")
 			if(!is_funmin)
 				return
-			if(!SSevents.wizardmode)
-				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
-					summonevents()
-					SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Activate"))
-
-			else
+			if(SSevents.wizardmode)
 				switch(tgui_alert(usr,"What would you like to do?",,list("Intensify Summon Events","Turn Off Summon Events","Nothing")))
 					if("Intensify Summon Events")
-						summonevents()
+						summon_events(holder)
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Intensify"))
 					if("Turn Off Summon Events")
 						SSevents.toggleWizardmode()
 						SSevents.resetFrequency()
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Disable"))
+			else
+				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
+					summon_events(holder)
+					SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Activate"))
+
 		if("eagles")
 			if(!is_funmin)
 				return
@@ -586,6 +590,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		E.processing = TRUE
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
+#undef THUNDERDOME_TEMPLATE_FILE
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE

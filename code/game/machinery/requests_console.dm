@@ -30,6 +30,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp_off"
 	base_icon_state = "req_comp"
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
 	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
 	var/list/messages = list() //List of all messages
 	var/departmentType = 0 //bitflag
@@ -279,7 +280,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 			var/mob/living/L = usr
 			message = L.treat_message(message)
 		minor_announce(message, "[department] Announcement:", html_encode = FALSE)
-		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
+		GLOB.news_network.submit_article(message, department, "Station Announcements", null)
 		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 		deadchat_broadcast(" made a station announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)

@@ -286,6 +286,7 @@
 			if(O)
 				O.setDir(usr.dir)
 			use(recipe.req_amount * multiplier)
+			usr.investigate_log("[key_name(usr)] crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 			if(recipe.applies_mats && LAZYLEN(mats_per_unit))
 				if(isstack(O))
@@ -337,6 +338,11 @@
 	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
 		to_chat(usr, span_warning("There is another [recipe.title] here!"))
 		return FALSE
+
+	if(recipe.on_tram)
+		if(!locate(/obj/structure/industrial_lift/tram) in dest_turf)
+			to_chat(usr, span_warning("\The [recipe.title] must be constructed on a tram floor!"))
+			return FALSE
 
 	if(recipe.on_floor)
 		if(!isfloorturf(dest_turf))
@@ -434,13 +440,16 @@
  *
  * Arguments:
  * - [check][/obj/item/stack]: The stack to check for mergeability.
+ * - [inhand][boolean]: Whether or not the stack to check should act like it's in a mob's hand.
  */
-/obj/item/stack/proc/can_merge(obj/item/stack/check)
+/obj/item/stack/proc/can_merge(obj/item/stack/check, inhand = FALSE)
 	if(!istype(check, merge_type))
 		return FALSE
 	if(mats_per_unit ~! check.mats_per_unit) // ~! in case of lists this operator checks only keys, but not values
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
+		return FALSE
+	if(ismob(loc) && !inhand) // no merging with items that are on the mob
 		return FALSE
 	return TRUE
 
@@ -499,7 +508,7 @@
 		INVOKE_ASYNC(src, .proc/merge, arrived)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(can_merge(hitting))
+	if(can_merge(hitting, inhand = TRUE))
 		merge(hitting)
 	. = ..()
 
@@ -550,7 +559,7 @@
 	is_zero_amount(delete_if_zero = TRUE)
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
-	if(can_merge(W))
+	if(can_merge(W, inhand = TRUE))
 		var/obj/item/stack/S = W
 		if(merge(S))
 			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
@@ -580,12 +589,13 @@
 	var/time = 0
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
+	var/on_tram = FALSE
 	var/placement_checks = FALSE
 	var/applies_mats = FALSE
 	var/trait_booster = null
 	var/trait_modifier = 1
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, on_tram = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -594,6 +604,7 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
+	src.on_tram = on_tram
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
 	src.trait_booster = trait_booster

@@ -170,6 +170,10 @@
 /turf/open/floor/mineral/plastitanium/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+//Used in SnowCabin.dm
+/turf/open/floor/mineral/plastitanium/red/snow_cabin
+	temperature = 180
+
 /turf/open/floor/mineral/plastitanium/red/brig
 	name = "brig floor"
 
@@ -213,7 +217,7 @@
 
 /turf/open/floor/mineral/bananium/proc/squeak()
 	if(sound_cooldown < world.time)
-		playsound(src, "clownstep", 50, TRUE)
+		playsound(src, SFX_CLOWN_STEP, 50, TRUE)
 		sound_cooldown = world.time + 10
 
 /turf/open/floor/mineral/bananium/airless

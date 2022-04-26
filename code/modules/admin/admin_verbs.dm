@@ -162,6 +162,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/set_dynex_scale,
 	/client/proc/cmd_display_del_log,
 	/client/proc/outfit_manager,
+	/client/proc/open_colorblind_test,
 	/client/proc/generate_wikichem_list,
 	/client/proc/modify_goals,
 	/client/proc/debug_huds,
@@ -462,32 +463,52 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		return
 
 	if(holder.fakekey)
-		holder.fakekey = null
-		if(isobserver(mob))
-			mob.invisibility = initial(mob.invisibility)
-			mob.alpha = initial(mob.alpha)
-			if(mob.mind)
-				if(mob.mind.ghostname)
-					mob.name = mob.mind.ghostname
-				else
-					mob.name = mob.mind.name
-			else
-				mob.name = mob.real_name
-			mob.mouse_opacity = initial(mob.mouse_opacity)
+		disable_stealth_mode()
 	else
-		var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
-		if(!new_key)
-			return
-		holder.fakekey = new_key
-		createStealthKey()
-		if(isobserver(mob))
-			mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
-			mob.alpha = 0 //JUUUUST IN CASE
-			mob.name = " "
-			mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-	message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+		enable_stealth_mode()
+
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+#define STEALTH_MODE_TRAIT "stealth_mode"
+
+/client/proc/enable_stealth_mode()
+	var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
+	if(!new_key)
+		return
+	holder.fakekey = new_key
+	createStealthKey()
+	if(isobserver(mob))
+		mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
+		mob.alpha = 0 //JUUUUST IN CASE
+		mob.name = " "
+		mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
+	QDEL_NULL(mob.orbiters)
+
+	log_admin("[key_name(usr)] has turned stealth mode ON")
+	message_admins("[key_name_admin(usr)] has turned stealth mode ON")
+
+/client/proc/disable_stealth_mode()
+	holder.fakekey = null
+	if(isobserver(mob))
+		mob.invisibility = initial(mob.invisibility)
+		mob.alpha = initial(mob.alpha)
+		if(mob.mind)
+			if(mob.mind.ghostname)
+				mob.name = mob.mind.ghostname
+			else
+				mob.name = mob.mind.name
+		else
+			mob.name = mob.real_name
+		mob.mouse_opacity = initial(mob.mouse_opacity)
+
+	REMOVE_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
+
+	log_admin("[key_name(usr)] has turned stealth mode OFF")
+	message_admins("[key_name_admin(usr)] has turned stealth mode OFF")
+
+#undef STEALTH_MODE_TRAIT
 
 /client/proc/drop_bomb()
 	set category = "Admin.Fun"
@@ -593,7 +614,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
-	reloadAllCardFiles(SStrading_card_game.card_files, SStrading_card_game.card_directory)
+	SStrading_card_game.reloadAllCardFiles()
 
 /client/proc/validate_cards()
 	set name = "Validate Cards"
@@ -603,8 +624,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
-	var/message = checkCardpacks(SStrading_card_game.card_packs)
-	message += checkCardDatums()
+	var/message = SStrading_card_game.checkCardpacks(SStrading_card_game.card_packs)
+	message += SStrading_card_game.checkCardDatums()
 	if(message)
 		message_admins(message)
 
@@ -620,12 +641,12 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as null|num
 	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as null|num
 	var/guar = input("Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system") as null|num
-	checkCardDistribution(pack, batchSize, batchCount, guar)
+	SStrading_card_game.checkCardDistribution(pack, batchSize, batchCount, guar)
 
 /client/proc/print_cards()
 	set name = "Print Cards"
 	set category = "Debug"
-	printAllCards()
+	SStrading_card_game.printAllCards()
 
 /client/proc/give_spell(mob/spell_recipient in GLOB.mob_list)
 	set category = "Admin.Fun"

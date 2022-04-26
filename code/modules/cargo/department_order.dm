@@ -33,6 +33,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		department_delivery_areas = list(/area/hallway/primary/central) //if this doesn't exist like honestly fuck your map man
 
 /obj/machinery/computer/department_orders/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "DepartmentOrders")
@@ -113,11 +114,14 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		return
 
 	. = TRUE
-	var/id = text2path(params["id"])
+	var/id = params["id"]
+	id = text2path(id) || id
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(!pack)
 		say("Something went wrong!")
 		CRASH("requested supply pack id \"[id]\" not found!")
+	if(pack.hidden || pack.DropPodOnly || pack.special)
+		return
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"
 	var/ckey = usr.ckey

@@ -39,7 +39,7 @@
 	return FALSE
 
 /obj/item/mod/core/proc/update_charge_alert()
-	mod.wearer.clear_alert("mod_charge")
+	mod.wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 
 /obj/item/mod/core/infinite
 	name = "MOD infinite core"
@@ -123,20 +123,20 @@
 /obj/item/mod/core/standard/update_charge_alert()
 	var/obj/item/stock_parts/cell/charge_source = charge_source()
 	if(!charge_source)
-		mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocell)
+		mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocell)
 		return
 	var/remaining_cell = charge_amount() / max_charge_amount()
 	switch(remaining_cell)
 		if(0.75 to INFINITY)
-			mod.wearer.clear_alert("mod_charge")
+			mod.wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 		if(0.5 to 0.75)
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 1)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell, 1)
 		if(0.25 to 0.5)
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 2)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell, 2)
 		if(0.01 to 0.25)
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 3)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell, 3)
 		else
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/emptycell)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/emptycell)
 
 /obj/item/mod/core/standard/proc/install_cell(new_cell)
 	cell = new_cell
@@ -263,9 +263,9 @@
 /obj/item/mod/core/ethereal/update_charge_alert()
 	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
 	if(charge_source)
-		mod.wearer.clear_alert("mod_charge")
+		mod.wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 		return
-	mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocell)
+	mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocell)
 
 /obj/item/mod/core/plasma
 	name = "MOD plasma core"
@@ -313,15 +313,15 @@
 	var/remaining_plasma = charge_amount() / max_charge_amount()
 	switch(remaining_plasma)
 		if(0.75 to INFINITY)
-			mod.wearer.clear_alert("mod_charge")
+			mod.wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 		if(0.5 to 0.75)
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell/plasma, 1)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell/plasma, 1)
 		if(0.25 to 0.5)
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell/plasma, 2)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell/plasma, 2)
 		if(0.01 to 0.25)
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell/plasma, 3)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell/plasma, 3)
 		else
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/emptycell/plasma)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/emptycell/plasma)
 
 /obj/item/mod/core/plasma/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
 	SIGNAL_HANDLER

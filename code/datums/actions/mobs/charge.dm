@@ -23,17 +23,17 @@
 
 /datum/action/cooldown/mob_cooldown/charge/New(Target, delay, past, distance, speed, damage, destroy)
 	. = ..()
-	if(delay)
+	if(!isnull(delay))
 		charge_delay = delay
-	if(past)
+	if(!isnull(past))
 		charge_past = past
-	if(distance)
+	if(!isnull(distance))
 		charge_distance = distance
-	if(speed)
+	if(!isnull(speed))
 		charge_speed = speed
-	if(damage)
+	if(!isnull(damage))
 		charge_damage = damage
-	if(destroy)
+	if(!isnull(destroy))
 		destroy_objects = destroy
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
@@ -61,6 +61,7 @@
 		SSmove_manager.stop_looping(charger)
 
 	charging += charger
+	actively_moving = FALSE
 	SEND_SIGNAL(owner, COMSIG_STARTED_CHARGE)
 	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump)
 	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
@@ -101,6 +102,7 @@
 	var/atom/movable/charger = source.moving
 	UnregisterSignal(charger, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_STATCHANGE))
 	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
+	actively_moving = FALSE
 	charging -= charger
 
 /datum/action/cooldown/mob_cooldown/charge/proc/stat_changed(mob/source, new_stat, old_stat)
@@ -182,10 +184,13 @@
 /datum/action/cooldown/mob_cooldown/charge/basic_charge
 	name = "Basic Charge"
 	cooldown_time = 6 SECONDS
+	charge_delay = 1.5 SECONDS
 	charge_distance = 4
+	var/shake_duration = 1 SECONDS
+	var/shake_pixel_shift = 15
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/do_charge_indicator(atom/charger, atom/charge_target)
-	charger.Shake(15, 15, 1 SECONDS)
+	charger.Shake(shake_pixel_shift, shake_pixel_shift, shake_duration)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/hit_target(atom/movable/source, atom/target, damage_dealt)
 	var/mob/living/living_source
@@ -270,7 +275,7 @@
 		our_clone.alpha = 127.5
 		our_clone.move_through_mob = owner
 		our_clone.spawn_blood = spawn_blood
-		do_charge(our_clone, target_atom, delay, past)
+		INVOKE_ASYNC(src, .proc/do_charge, our_clone, target_atom, delay, past)
 	if(use_self)
 		do_charge(owner, target_atom, delay, past)
 

@@ -2211,6 +2211,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"acorn@npm:^8.5.0":
+  version: 8.7.0
+  resolution: "acorn@npm:8.7.0"
+  bin:
+    acorn: bin/acorn
+  checksum: e0f79409d68923fbf1aa6d4166f3eedc47955320d25c89a20cc822e6ba7c48c5963d5bc657bc242d68f7a4ac9faf96eef033e8f73656da6c640d4219935fdfd0
+  languageName: node
+  linkType: hard
+
 "agent-base@npm:6, agent-base@npm:^6.0.2":
   version: 6.0.2
   resolution: "agent-base@npm:6.0.2"
@@ -7646,6 +7655,16 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"source-map-support@npm:~0.5.20":
+  version: 0.5.21
+  resolution: "source-map-support@npm:0.5.21"
+  dependencies:
+    buffer-from: ^1.0.0
+    source-map: ^0.6.0
+  checksum: 43e98d700d79af1d36f859bdb7318e601dfc918c7ba2e98456118ebc4c4872b327773e5a1df09b0524e9e5063bb18f0934538eace60cca2710d1fa687645d137
+  languageName: node
+  linkType: hard
+
 "source-map@npm:^0.5.0":
   version: 0.5.7
   resolution: "source-map@npm:0.5.7"
@@ -8068,6 +8087,20 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
+"terser@npm:^5.12.1":
+  version: 5.12.1
+  resolution: "terser@npm:5.12.1"
+  dependencies:
+    acorn: ^8.5.0
+    commander: ^2.20.0
+    source-map: ~0.7.2
+    source-map-support: ~0.5.20
+  bin:
+    terser: bin/terser
+  checksum: dd33af5d87a1159bcc38f354707505f1449a33d1491c512e9536f11fea7c3474cdc40e2e5fdf75f58658cfaab8ef47cb7454acd6406b2ce487675cb1978c6275
+  languageName: node
+  linkType: hard
+
 "terser@npm:^5.7.0":
   version: 5.7.1
   resolution: "terser@npm:5.7.1"
@@ -8153,6 +8186,7 @@ resolve@^2.0.0-next.3:
   dependencies:
     core-js: ^3.16.1
     regenerator-runtime: ^0.13.9
+    terser: ^5.12.1
     unfetch: ^4.2.0
   languageName: unknown
   linkType: soft

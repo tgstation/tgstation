@@ -32,15 +32,16 @@
 	callTime = 250;
 	can_move_docking_ports = 1;
 	dir = 8;
-	dwidth = 11;
-	height = 17;
+	dwidth = 14;
+	height = 23;
 	id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Salvage Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	width = 33
+	width = 16;
+	dheight = 18
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
@@ -158,8 +159,6 @@
 	pixel_y = 8
 	},
 /obj/item/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000;
 	pixel_x = 3;
 	pixel_y = -1
 	},
@@ -938,10 +937,6 @@
 "bK" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/crew)
-"bL" = (
-/obj/structure/sign/poster/contraband/random,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/abandoned/crew)
 "bM" = (
 /obj/structure/sign/warning/fire,
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -1018,7 +1013,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bar)
 "bX" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
@@ -1026,7 +1023,10 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/item/bedsheet/brown,
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "bY" = (
@@ -1044,6 +1044,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/item/bedsheet/brown,
 /obj/effect/decal/cleanable/greenglow,
+/obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "ca" = (
@@ -1155,9 +1156,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light/small/directional/west,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -1724,9 +1723,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
 /obj/effect/spawner/random/maintenance/two,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "NF" = (
@@ -1991,7 +1988,7 @@ ah
 aJ
 be
 bx
-bL
+bK
 bX
 co
 cF
@@ -2027,7 +2024,7 @@ at
 aL
 bg
 by
-bL
+bK
 bZ
 cp
 cH

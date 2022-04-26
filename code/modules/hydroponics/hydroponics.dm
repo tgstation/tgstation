@@ -8,7 +8,6 @@
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
-	idle_power_usage = 5000
 	use_power = NO_POWER_USE
 	///The amount of water in the tray (max 100)
 	var/waterlevel = 100
@@ -161,6 +160,7 @@
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/hydroponics))
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
+	. = ..()
 	var/tmp_capacity = 0
 	for (var/obj/item/stock_parts/matter_bin/M in component_parts)
 		tmp_capacity += M.rating
@@ -173,7 +173,7 @@
 
 /obj/machinery/hydroponics/constructable/examine(mob/user)
 	. = ..()
-	. += span_notice("Use <b>Ctrl-Click</b> to activate autogrow. <b>Alt-Click</b> to empty the tray's nutrients.")
+	. += span_notice("Use <b>Ctrl-Click</b> to activate autogrow. <b>RMB</b> to empty the tray's nutrients.")
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Tray efficiency at <b>[rating*100]%</b>.")
 
@@ -461,7 +461,7 @@
 
 	self_sustaining = new_value
 
-	update_use_power(self_sustaining ? IDLE_POWER_USE : NO_POWER_USE)
+	update_use_power(self_sustaining ? ACTIVE_POWER_USE : NO_POWER_USE)
 	update_appearance()
 
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SELFSUSTAINING, new_value)
@@ -719,6 +719,11 @@
 	else if(myseed)
 		visible_message(span_warning("The pests seem to behave oddly in [myseed.name] tray, but quickly settle down..."))
 
+/obj/machinery/hydroponics/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
 	if(IS_EDIBLE(O) || istype(O, /obj/item/reagent_containers))  // Syringe stuff (and other reagent containers now too)
@@ -873,9 +878,6 @@
 			SEND_SIGNAL(O, COMSIG_TRY_STORAGE_INSERT, G, user, TRUE)
 		return
 
-	else if(default_unfasten_wrench(user, O))
-		return
-
 	else if(istype(O, /obj/item/shovel/spade))
 		if(!myseed && !weedlevel)
 			to_chat(user, span_warning("[src] doesn't have any plants or weeds!"))
@@ -975,7 +977,12 @@
 	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
 
 /obj/machinery/hydroponics/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
+/obj/machinery/hydroponics/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!anchored)
 		update_appearance()
 		return FALSE
@@ -983,6 +990,7 @@
 	if(warning == "Yes" && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		reagents.clear_reagents()
 		to_chat(user, span_warning("You empty [src]'s nutrient tank."))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * Update Tray Proc

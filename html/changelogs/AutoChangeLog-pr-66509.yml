@@ -1,0 +1,4 @@
+author: "BebeYoshi"
+delete-after: True
+changes: 
+  - rscadd: "Adds more health HUDs, nitrile gloves and medical belts to locker in Tramstation medbay"

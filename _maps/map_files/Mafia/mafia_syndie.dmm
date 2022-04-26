@@ -54,25 +54,6 @@
 /obj/mafia_game_board,
 /turf/open/floor/plating,
 /area/mafia)
-"l" = (
-/obj/structure/closet/syndicate{
-	desc = "A storage closet for syndicate conflict resolution operatives.";
-	name = "red closet"
-	},
-/obj/item/clothing/under/syndicate/tacticool,
-/obj/item/clothing/under/syndicate/tacticool/skirt,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/mafia)
 "m" = (
 /obj/structure/closet/syndicate{
 	desc = "A storage closet for syndicate conflict resolution operatives.";
@@ -80,16 +61,7 @@
 	},
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/under/syndicate/tacticool/skirt,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/mafia)
 "n" = (
@@ -446,7 +418,7 @@ c
 c
 d
 w
-l
+m
 o
 p
 n
@@ -620,7 +592,7 @@ w
 c
 d
 w
-l
+m
 p
 w
 p

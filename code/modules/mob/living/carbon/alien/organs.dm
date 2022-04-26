@@ -139,10 +139,10 @@
 
 	owner.jitteriness += 30
 	owner.add_confusion(30)
-	owner.stuttering += 30
+	owner.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/stutter)
 
 	recent_queen_death = TRUE
-	owner.throw_alert("alien_noqueen", /atom/movable/screen/alert/alien_vulnerable)
+	owner.throw_alert(ALERT_XENO_NOQUEEN, /atom/movable/screen/alert/alien_vulnerable)
 	addtimer(CALLBACK(src, .proc/clear_queen_death), QUEEN_DEATH_DEBUFF_DURATION)
 
 
@@ -153,7 +153,7 @@
 	if(!owner) //In case the xeno is butchered or subjected to surgery after death.
 		return
 	to_chat(owner, span_noticealien("The pain of the queen's death is easing. You begin to hear the hivemind again."))
-	owner.clear_alert("alien_noqueen")
+	owner.clear_alert(ALERT_XENO_NOQUEEN)
 
 #undef QUEEN_DEATH_DEBUFF_DURATION
 

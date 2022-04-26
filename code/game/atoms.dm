@@ -227,7 +227,7 @@
 	flags_1 |= INITIALIZED_1
 
 	if(loc)
-		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
+		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
 	if(greyscale_config && greyscale_colors)
 		update_greyscale()
@@ -326,7 +326,7 @@
 	var/a_incidence_s = abs(incidence_s)
 	if(a_incidence_s > 90 && a_incidence_s < 270)
 		return FALSE
-	if((ricocheting_projectile.flag in list(BULLET, BOMB)) && ricocheting_projectile.ricochet_incidence_leeway)
+	if((ricocheting_projectile.armor_flag in list(BULLET, BOMB)) && ricocheting_projectile.ricochet_incidence_leeway)
 		if((a_incidence_s < 90 && a_incidence_s < 90 - ricocheting_projectile.ricochet_incidence_leeway) || (a_incidence_s > 270 && a_incidence_s -270 > ricocheting_projectile.ricochet_incidence_leeway))
 			return FALSE
 	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
@@ -563,17 +563,19 @@
 /**
  * React to a hit by a projectile object
  *
- * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile
+ * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile.
  *
  * @params
- * P - projectile
+ * hitting_projectile - projectile
  * def_zone - zone hit
  * piercing_hit - is this hit piercing or normal?
  */
 /atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
-	var/armor = check_projectile_armor(def_zone, hitting_projectile)
-	. = hitting_projectile.on_hit(src, armor, def_zone, piercing_hit)
+	// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
+	// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
+	var/visual_armor_check = check_projectile_armor(def_zone, hitting_projectile)
+	. = hitting_projectile.on_hit(src, visual_armor_check, def_zone, piercing_hit)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -670,6 +672,9 @@
  * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
  */
 /atom/proc/examine_more(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
+
 	. = list()
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
 
@@ -1439,6 +1444,8 @@
 		choices += list("[initial(current_option_type.name)]" = option_image)
 
 	var/pick = show_radial_menu(user, src, choices, radius = 36, require_near = TRUE)
+	if(!pick)
+		return
 
 	StartProcessingAtom(user, processed_object, choices_to_options[pick])
 
@@ -1765,6 +1772,7 @@
 	filters = null
 
 /atom/proc/intercept_zImpact(list/falling_movables, levels = 1)
+	SHOULD_CALL_PARENT(TRUE)
 	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, falling_movables, levels)
 
 /// Sets the custom materials for an item.
@@ -2111,9 +2119,14 @@
 		if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || (flags_1 & NO_SCREENTIPS_1))
 			active_hud.screentip_text.maptext = ""
 		else
+			active_hud.screentip_text.maptext_y = 0
+			var/lmb_rmb_line = ""
+			var/ctrl_lmb_alt_lmb_line = ""
+			var/shift_lmb_ctrl_shift_lmb_line = ""
+			var/extra_lines = 0
 			var/extra_context = ""
 
-			if (isliving(user))
+			if (isliving(user) || isovermind(user) || isaicamera(user))
 				var/obj/item/held_item = user.get_active_held_item()
 
 				if ((flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1) || (held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS))
@@ -2129,19 +2142,41 @@
 						var/rmb_text = (SCREENTIP_CONTEXT_RMB in context) ? "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]" : ""
 
 						if (lmb_text)
-							extra_context = lmb_text
+							lmb_rmb_line = lmb_text
 							if (rmb_text)
-								extra_context += " | [rmb_text]"
+								lmb_rmb_line += " | [rmb_text]"
 						else if (rmb_text)
-							extra_context = rmb_text
+							lmb_rmb_line = rmb_text
 
-						// Ctrl-LMB and (in the future) Alt-LMB on another
+						// Ctrl-LMB, Alt-LMB on one line...
+						if (lmb_rmb_line != "")
+							lmb_rmb_line += "<br>"
+							extra_lines++
 						if (SCREENTIP_CONTEXT_CTRL_LMB in context)
-							if (extra_context != "")
-								extra_context += "<br>"
-							extra_context += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+							ctrl_lmb_alt_lmb_line += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+						if (SCREENTIP_CONTEXT_ALT_LMB in context)
+							if (ctrl_lmb_alt_lmb_line != "")
+								ctrl_lmb_alt_lmb_line += " | "
+							ctrl_lmb_alt_lmb_line += "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB]]"
 
-						extra_context = "<br><span style='font-size: 7px'>[extra_context]</span>"
+						// Shift-LMB, Ctrl-Shift-LMB on one line...
+						if (ctrl_lmb_alt_lmb_line != "")
+							ctrl_lmb_alt_lmb_line += "<br>"
+							extra_lines++
+						if (SCREENTIP_CONTEXT_SHIFT_LMB in context)
+							shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB]]"
+						if (SCREENTIP_CONTEXT_CTRL_SHIFT_LMB in context)
+							if (shift_lmb_ctrl_shift_lmb_line != "")
+								shift_lmb_ctrl_shift_lmb_line += " | "
+							shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
+
+						if (shift_lmb_ctrl_shift_lmb_line != "")
+							extra_lines++
+
+						if(extra_lines)
+							extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_alt_lmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+							//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
+							active_hud.screentip_text.maptext_y = -10 + (extra_lines - 1) * -9
 
 			if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
 				active_hud.screentip_text.maptext = ""
@@ -2159,3 +2194,21 @@
 		new /datum/merger(id, allowed_types, src)
 		candidate = mergers[id]
 	return candidate
+
+/**
+ * This proc is used for telling whether something can pass by this atom in a given direction, for use by the pathfinding system.
+ *
+ * Trying to generate one long path across the station will call this proc on every single object on every single tile that we're seeing if we can move through, likely
+ * multiple times per tile since we're likely checking if we can access said tile from multiple directions, so keep these as lightweight as possible.
+ *
+ * For turfs this will only be used if pathing_pass_method is TURF_PATHING_PASS_PROC
+ *
+ * Arguments:
+ * * ID- An ID card representing what access we have (and thus if we can open things like airlocks or windows to pass through them). The ID card's physical location does not matter, just the reference
+ * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
+ * * caller- The movable we're checking pass flags for, if we're making any such checks
+ **/
+/atom/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	if(caller && (caller.pass_flags & pass_flags_self))
+		return TRUE
+	. = !density

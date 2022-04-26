@@ -273,7 +273,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_flags = THICKMATERIAL
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/pickaxe)
 
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
@@ -587,6 +587,7 @@
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
 	faction = list()
+	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
 	/// Blood level, used for movement and abilities in a soulscythe
 	var/blood_level = MAX_BLOOD_LEVEL
 
@@ -602,7 +603,7 @@
 /obj/projectile/soulscythe
 	name = "soulslash"
 	icon_state = "soulslash"
-	flag = MELEE //jokair
+	armor_flag = MELEE //jokair
 	damage = 15
 	light_range = 1
 	light_power = 1
@@ -755,7 +756,7 @@
 	hitsound = 'sound/weapons/sear.ogg'
 	var/turf_type = /turf/open/lava/smooth/weak
 	var/transform_string = "lava"
-	var/reset_turf_type = /turf/open/floor/plating/asteroid/basalt
+	var/reset_turf_type = /turf/open/misc/asteroid/basalt
 	var/reset_string = "basalt"
 	var/create_cooldown = 10 SECONDS
 	var/create_delay = 3 SECONDS
