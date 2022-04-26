@@ -33,7 +33,7 @@ export const NtosMain = (props, context) => {
           <Section>
             <Stack>
               {!!has_light && (
-                <>
+                <Stack.Item grow>
                   <Button
                     width="144px"
                     icon="lightbulb"
@@ -47,7 +47,7 @@ export const NtosMain = (props, context) => {
                     Color:
                     <ColorBox ml={1} color={comp_light_color} />
                   </Button>
-                </>
+                </Stack.Item>
               )}
               {removable_media.map(device => (
                 <Stack.Item key={device}>
