@@ -13,6 +13,7 @@
 #define DISK_JANI (1<<10)
 #define DISK_SEC (1<<11)
 #define DISK_BUDGET (1<<12)
+#define DISK_SCI (1<<13)
 
 // Used to stringify message targets before sending the signal datum.
 #define STRINGIFY_PDA_TARGET(name, job) "[name] ([job])"

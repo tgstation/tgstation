@@ -89,6 +89,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(has_light)
 		light_butt = new(src)
 	update_appearance()
+	register_context()
 	Add_Messenger()
 
 /obj/item/modular_computer/Destroy()
@@ -298,6 +299,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	. += get_modular_computer_parts_examine(user)
 
+/obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
+	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Job Disk"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/modular_computer/update_icon_state()
 	if(!bypass_state)
 		icon_state = enabled ? icon_state_powered : icon_state_unpowered
@@ -325,6 +334,17 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		ui_interact(user)
 	else
 		turn_on(user)
+
+/obj/item/modular_computer/CtrlShiftClick(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
+	if(!ssd)
+		return
+	if(uninstall_component(ssd, usr))
+		user.put_in_hands(ssd)
 
 /obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
@@ -544,6 +564,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	else
 		set_light(0)
 	update_appearance()
+	if(light_butt)
+		update_action_buttons(force = TRUE) // must force if just the overlays changed.
 	return TRUE
 
 /**
@@ -624,6 +646,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	// Insert new hardware
 	if(istype(W, /obj/item/computer_hardware) && upgradable)
 		if(install_component(W, user))
+			playsound(src, 'sound/machines/card_slide.ogg', 50)
 			return
 
 	if(W.tool_behaviour == TOOL_WRENCH)

@@ -153,4 +153,12 @@
 	log_econ("[total_cost] credits were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")
 	idcard.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
+	SSeconomy.track_purchase(card.registered_account, cost + extra_fees, parent)
 	return TRUE
+
+
+/datum/component/payment/proc/change_cost(datum/source, new_cost)
+	SIGNAL_HANDLER
+	if(!isnum(new_cost))
+		CRASH("change_cost called with variable new_cost as not a number.")
+	cost = new_cost
