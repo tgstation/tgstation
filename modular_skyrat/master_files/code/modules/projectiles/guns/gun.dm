@@ -76,11 +76,6 @@
 	var/flight_y_offset = 0
 
 	//Zooming
-	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
-	var/zoomed = FALSE //Zoom toggle
-	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
-	var/zoom_out_amt = 0
-	var/datum/action/toggle_scope_zoom/azoom
 	var/pb_knockback = 0
 
 	var/safety = FALSE ///Internal variable for keeping track whether the safety is on or off
@@ -119,8 +114,6 @@
 	if(gun_light)
 		alight = new(src)
 
-	build_zooming()
-
 	if(has_gun_safety)
 		safety = TRUE
 		tsafety = new(src)
@@ -153,8 +146,6 @@
 		QDEL_NULL(bayonet)
 	if(chambered) //Not all guns are chambered (EMP'ed energy guns etc)
 		QDEL_NULL(chambered)
-	if(azoom)
-		QDEL_NULL(azoom)
 	if(isatom(suppressed))
 		QDEL_NULL(suppressed)
 	if(tsafety)
@@ -208,11 +199,6 @@
 		. += "It has a <b>bayonet</b> lug on it."
 	if(has_gun_safety)
 		. += "<span>The safety is [safety ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].</span>"
-
-/obj/item/gun/equipped(mob/living/user, slot)
-	. = ..()
-	if(zoomed && user.get_active_held_item() != src)
-		zoom(user, user.dir, FALSE) //we can only stay zoomed in if it's in our hands //yeah and we only unzoom if we're actually zoomed using the gun!!
 
 /obj/item/gun/proc/fire_select()
 	var/mob/living/carbon/human/user = usr
@@ -319,6 +305,8 @@
 	if(QDELETED(target))
 		return
 	if(firing_burst)
+		return
+	if(SEND_SIGNAL(src, COMSIG_GUN_TRY_FIRE, user, target, flag, params) & COMPONENT_CANCEL_GUN_FIRE)
 		return
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
@@ -724,18 +712,9 @@
 
 /obj/item/gun/pickup(mob/user)
 	. = ..()
-	if(azoom)
-		azoom.Grant(user)
 	if(w_class > WEIGHT_CLASS_SMALL && !suppressed)
 		user.visible_message(span_warning("[user] grabs <b>[src]</b>!"),
 		span_warning("You grab [src]!"))
-
-/obj/item/gun/dropped(mob/user)
-	. = ..()
-	if(azoom)
-		azoom.Remove(user)
-	if(zoomed)
-		zoom(user, user.dir, FALSE)
 
 /obj/item/gun/update_overlays()
 	. = ..()

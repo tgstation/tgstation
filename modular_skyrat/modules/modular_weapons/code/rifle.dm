@@ -139,13 +139,14 @@
 	recoil = 1
 	weapon_weight = WEAPON_HEAVY
 	pixel_x = -8
-	zoomable = TRUE
-	zoom_amt = 4
-	zoom_out_amt = 2
 	has_gun_safety = FALSE
 	w_class = WEIGHT_CLASS_BULKY
 	company_flag = COMPANY_CANTALAN
 	dirt_modifier = 0.25
+
+/obj/item/gun/ballistic/automatic/cfa_rifle/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 1.5)
 
 /obj/item/gun/ballistic/automatic/cfa_rifle/empty
 	spawnwithmagazine = FALSE

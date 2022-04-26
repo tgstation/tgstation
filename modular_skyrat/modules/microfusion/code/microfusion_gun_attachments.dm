@@ -448,18 +448,16 @@ DANGER: SNOWFLAKE ZONE
 
 /obj/item/microfusion_gun_attachment/scope/run_attachment(obj/item/gun/microfusion/microfusion_gun)
 	. = ..()
-	if(microfusion_gun.azoom)
+	if(microfusion_gun.GetComponent(/datum/component/scope))
 		return
-
-	microfusion_gun.azoom = new()
-	microfusion_gun.azoom.gun = microfusion_gun
+	microfusion_gun.AddComponent(/datum/component/scope, range_modifier = 1.5)
 	microfusion_gun.update_action_buttons()
 
 /obj/item/microfusion_gun_attachment/scope/remove_attachment(obj/item/gun/microfusion/microfusion_gun)
 	. = ..()
-	if(microfusion_gun.azoom)
-		microfusion_gun.azoom.Remove(microfusion_gun.azoom.owner)
-		QDEL_NULL(microfusion_gun.azoom)
+	var/datum/component_datum = microfusion_gun.GetComponent(/datum/component/scope)
+	if(component_datum)
+		qdel(component_datum)
 	microfusion_gun.update_action_buttons()
 
 /*

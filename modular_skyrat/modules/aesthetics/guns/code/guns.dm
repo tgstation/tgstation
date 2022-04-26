@@ -232,9 +232,6 @@
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 55 //Slightly smaller than standard sniper
 	burst_size = 1
-	zoomable = TRUE
-	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
-	zoom_out_amt = 5
 	slot_flags = ITEM_SLOT_BACK
 	fire_select_modes = list(SELECT_SEMI_AUTOMATIC) //SKYRAT EDIT CHANGE
 	mag_display = TRUE

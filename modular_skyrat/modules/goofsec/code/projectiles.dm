@@ -41,14 +41,15 @@
 	inhand_icon_state = "vintorez"
 	burst_size = 2
 	fire_delay = 4
-	zoomable = TRUE
-	zoom_amt = 7
-	zoom_out_amt = 5
 	fire_sound = null
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hardlight_bullet/vintorez)
 	shaded_charge = TRUE
 	cell_type = /obj/item/stock_parts/cell/super
 	company_flag = COMPANY_OLDARMS
+
+/obj/item/gun/energy/vintorez/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 1.5)
 
 /obj/item/ammo_casing/energy/laser/hardlight_bullet/vintorez
 	name = "hardlight bullet vintorez casing"
@@ -75,9 +76,6 @@
 	worn_icon_state = "norwind_worn"
 	can_bayonet = TRUE
 	can_flashlight = TRUE
-	zoomable = TRUE
-	zoom_amt = 7
-	zoom_out_amt = 5
 	fire_sound = null
 	fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hardlight_bullet/norwind)
@@ -86,6 +84,10 @@
 	shaded_charge = TRUE
 	cell_type = /obj/item/stock_parts/cell/super
 	company_flag = COMPANY_ARMADYNE
+
+/obj/item/gun/energy/norwind/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 1.75)
 
 /obj/item/ammo_casing/energy/laser/hardlight_bullet/norwind
 	name = "hardlight bullet norwind casing"
