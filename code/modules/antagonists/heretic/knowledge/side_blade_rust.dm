@@ -93,7 +93,7 @@
 
 /datum/heretic_knowledge/rifle_ammo/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	for(var/obj/item/ammo_casing/casing in atoms)
-		if(casing.caliber in acceptable_calibers)
+		if(isnull(casing.caliber) || casing.caliber in acceptable_calibers)
 			continue
 
 		// Remove any casings not in in the acceptable_calibers list from atoms
