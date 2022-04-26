@@ -629,14 +629,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		exists[L.ruin_template] = landmark
 
 	var/list/names = list()
+	var/list/themed_names
 	for (var/theme in SSmapping.themed_ruins)
 		names += "---- [theme] ----"
+		themed_names = list()
 		for (var/name in SSmapping.themed_ruins[theme])
 			var/datum/map_template/ruin/ruin = SSmapping.themed_ruins[theme][name]
-			names[name] = list(ruin, theme, list(ruin.default_area))
+			themed_names[name] = list(ruin, theme, list(ruin.default_area))
+		names += sort_list(themed_names)
 
-
-	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in sort_list(names)
+	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in names
 	var/data = names[ruinname]
 	if (!data)
 		return
