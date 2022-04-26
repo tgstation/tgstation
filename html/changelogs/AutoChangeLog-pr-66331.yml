@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - refactor: "Drugginess is now a status effect. Now any living mob can be high and speak beach-bum instead of just carbons and humanoids. Drug effects should also be more consistently removed on aheal / in rare cases."

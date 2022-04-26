@@ -1,0 +1,4 @@
+author: "EthanRockss"
+delete-after: True
+changes: 
+  - bugfix: "Prop atmos mask now uses the correct worn sprite"

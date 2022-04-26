@@ -523,6 +523,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			new /obj/effect/anomaly/grav(local_turf, has_changed_lifespan ? 250 : null, FALSE)
 		if(PYRO_ANOMALY)
 			new /obj/effect/anomaly/pyro(local_turf, has_changed_lifespan ? 200 : null, FALSE)
+		if(VORTEX_ANOMALY)
+			new /obj/effect/anomaly/bhole(local_turf, 20, FALSE)
 
 /obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE)
 	if(QDELETED(zapstart))
