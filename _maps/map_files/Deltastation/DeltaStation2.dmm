@@ -2211,10 +2211,6 @@
 /area/cargo/storage)
 "aCS" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/camera/directional/west{
-	c_tag = "Library Backroom 1";
-	name = "library camera"
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/wood,
 /obj/item/storage/crayons,
@@ -9624,7 +9620,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/camera/directional/west{
-	c_tag = "Library Backroom 3";
+	c_tag = "Library Backroom 1";
 	name = "library camera";
 	dir = 2
 	},
