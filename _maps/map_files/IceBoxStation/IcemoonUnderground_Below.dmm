@@ -655,12 +655,6 @@
 	dir = 1
 	},
 /area/mine/eva/lower)
-"hs" = (
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers/deep)
 "ht" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating,
@@ -25582,7 +25576,7 @@ qI
 qI
 qI
 qI
-hs
+qI
 qI
 qI
 qI
