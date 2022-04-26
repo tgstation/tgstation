@@ -54,7 +54,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	name = "Test Room"
-	icon_state = "storage"
+	icon_state = "test_room"
 
 //EXTRA
 
@@ -170,7 +170,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/
 	name = "Station Areas"
 	icon = 'icons/turf/areas/areas_station.dmi'
-	icon_state = "spacehut"
+	icon_state = "station"
 
 //Maintenance
 
@@ -422,10 +422,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Hallway
 
 /area/station/hallway
+	icon_state = "hall"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
 /area/station/hallway/primary
 	name = "\improper Primary Hallway"
+	icon_state = "hallP"
 
 /area/station/hallway/primary/aft
 	name = "\improper Aft Primary Hallway"
@@ -474,6 +476,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Starboard Tram Dock"
 	icon_state = "halltramR"
 
+/areas/station/hallway/secondary // This shouldn't be used, but it gives an icon for the enviornment tree in the map editor
+	icon_state = "hallS"
+
 /area/station/hallway/secondary/command
 	name = "\improper Command Hallway"
 	icon_state = "bridge_hallway"
@@ -505,7 +510,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/command
 	name = "Command"
-	icon_state = "Bridge"
+	icon_state = "command"
 	ambientsounds = list('sound/ambience/signal.ogg')
 	airlock_wires = /datum/wires/airlock/command
 	sound_environment = SOUND_AREA_STANDARD_STATION
@@ -530,6 +535,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
 
 /area/station/command/heads_quarters
+	icon_state = "heads_quarters"
 
 /area/station/command/heads_quarters/captain
 	name = "\improper Captain's Office"
@@ -883,6 +889,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Engineering
 
 /area/station/engineering
+	icon_state = "engie"
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
@@ -1007,6 +1014,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Solars
 
 /area/station/solars
+	icon_state = "panels"
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	flags_1 = NONE
@@ -1017,12 +1025,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/solars/fore
 	name = "\improper Fore Solar Array"
-	icon_state = "yellow"
+	icon_state = "panelsF"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
 /area/station/solars/aft
 	name = "\improper Aft Solar Array"
-	icon_state = "yellow"
+	icon_state = "panelsAF"
 
 /area/station/solars/aux/port
 	name = "\improper Port Bow Auxiliary Solar Array"
@@ -1058,7 +1066,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/solars/aisat
 	name = "\improper AI Satellite Solars"
-	icon_state = "yellow"
+	icon_state = "panelsAI"
 
 
 //Solar Maint
@@ -1556,6 +1564,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 // Telecommunications Satellite
 
 /area/station/tcommsat
+	icon_state = "tcomsatcham"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 	airlock_wires = /datum/wires/airlock/engineering

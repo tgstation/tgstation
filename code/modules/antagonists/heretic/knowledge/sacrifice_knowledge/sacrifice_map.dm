@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 /area/heretic_sacrifice
 	name = "Mansus"
 	icon = 'icons/turf/areas/areas_centcom.dmi'
-	icon_state = "away"
+	icon_state = "heretic"
 	has_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
