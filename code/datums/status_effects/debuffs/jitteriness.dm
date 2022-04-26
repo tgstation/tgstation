@@ -16,6 +16,20 @@
 	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, id)
 
+/datum/status_effect/jitter/get_examine_text()
+
+	var/time_left_in_seconds = (duration - world.time) / 10
+
+	switch(time_left_in_seconds)
+		if(300 to INFINITY) // 5 minutes - infinity
+			return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] convulsing violently!")
+		if(180 to 300) // 3 minutes - 5 minutes
+			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] extremely jittery.")
+		if(60 to 180) // 1 minutes - 3 minutes
+			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] twitching ever so slightly.")
+
+	return null
+
 /// Removes all of our jitteriness on a signal
 /datum/status_effect/jitter/proc/remove_jitter(datum/source)
 	SIGNAL_HANDLER
@@ -25,7 +39,7 @@
 /datum/status_effect/jitter/tick()
 
 	var/time_left_in_seconds = (duration - world.time) / 10
-	do_jitter_animation(time_left_in_seconds)
+	owner.do_jitter_animation(time_left_in_seconds)
 
 	// Decrease the duration by our resting_modifier, effectively skipping resting_modifier ticks per tick
 	var/resting_modifier = owner.resting ? 5 : 1
