@@ -108,7 +108,7 @@
 
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
-		data["removable_media"] += "removable storage disk"
+		data["removable_media"] += "Eject Disk"
 	var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
 	if(intelliholder?.stored_card)
 		data["removable_media"] += "intelliCard"
@@ -236,7 +236,7 @@
 			var/param = params["name"]
 			var/mob/user = usr
 			switch(param)
-				if("removable storage disk")
+				if("Eject Disk")
 					var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
 					if(!portable_drive)
 						return
