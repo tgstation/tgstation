@@ -400,10 +400,10 @@
 	icon_state = "rwindow"
 	reinf = TRUE
 	heat_resistance = 1600
-	armor = list(MELEE = 80, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, FIRE = 80, ACID = 100)
+	armor = list(MELEE = 20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, FIRE = 80, ACID = 100)
 	max_integrity = 75
 	explosion_block = 1
-	damage_deflection = 11
+	damage_deflection = 10
 	state = RWINDOW_SECURE
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_HEAVY_INSULATION
@@ -413,6 +413,7 @@
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this //Adding a timestamp, I found this in 2020, I hope it's from this year -Lemon
 //2021 AND STILLLL GOING STRONG
 //2022 BABYYYYY ~lewc
+//Easy was here
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
 	switch(state)
 		if(RWINDOW_SECURE)
@@ -421,7 +422,7 @@
 				if(welder.isOn())
 					user.visible_message(span_notice("[user] holds \the [tool] to the security screws on \the [src]..."),
 						span_notice("You begin heating the security screws on \the [src]..."))
-				if(tool.use_tool(src, user, 150, volume = 100))
+				if(tool.use_tool(src, user, 10 SECONDS, volume = 100))
 					to_chat(user, span_notice("The security screws are glowing white hot and look ready to be removed."))
 					state = RWINDOW_BOLTS_HEATED
 					addtimer(CALLBACK(src, .proc/cool_bolts), 300)
@@ -432,29 +433,18 @@
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
 				user.visible_message(span_notice("[user] digs into the heated security screws and starts removing them..."),
 										span_notice("You dig into the heated screws hard and they start turning..."))
-				if(tool.use_tool(src, user, 50, volume = 50))
+				if(tool.use_tool(src, user, 6 SECONDS, volume = 50))
 					state = RWINDOW_BOLTS_OUT
 					to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
 			else if (tool.tool_behaviour)
 				to_chat(user, span_warning("The security screws need to be removed first!"))
 
 		if(RWINDOW_BOLTS_OUT)
-			if(tool.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message(span_notice("[user] wedges \the [tool] into the gap in the frame and starts prying..."),
-										span_notice("You wedge \the [tool] into the gap in the frame and start prying..."))
-				if(tool.use_tool(src, user, 40, volume = 50))
-					state = RWINDOW_POPPED
-					to_chat(user, span_notice("The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut."))
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The gap needs to be pried first!"))
-
-		if(RWINDOW_POPPED)
 			if(tool.tool_behaviour == TOOL_WIRECUTTER)
-				user.visible_message(span_notice("[user] starts cutting the exposed bars on \the [src]..."),
-										span_notice("You start cutting the exposed bars on \the [src]"))
-				if(tool.use_tool(src, user, 20, volume = 50))
-					state = RWINDOW_BARS_CUT
-					to_chat(user, span_notice("The panels falls out of the way exposing the frame bolts."))
+				user.visible_message(span_notice("[user] snips away the exposed bars on \the [src]"),
+										span_notice("You snip away the exposed bars on \the [src], exposing the frame bolts"))
+				tool.play_tool_sound(src, 100)
+				state = RWINDOW_BARS_CUT
 			else if (tool.tool_behaviour)
 				to_chat(user, span_warning("The bars need to be cut first!"))
 
@@ -462,7 +452,7 @@
 			if(tool.tool_behaviour == TOOL_WRENCH)
 				user.visible_message(span_notice("[user] starts unfastening \the [src] from the frame..."),
 					span_notice("You start unfastening the bolts from the frame..."))
-				if(tool.use_tool(src, user, 40, volume = 50))
+				if(tool.use_tool(src, user, 6 SECONDS, volume = 50))
 					to_chat(user, span_notice("You unscrew the bolts from the frame and the window pops loose."))
 					state = WINDOW_OUT_OF_FRAME
 					set_anchored(FALSE)
@@ -488,9 +478,7 @@
 		if(RWINDOW_BOLTS_HEATED)
 			. += span_notice("The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now.")
 		if(RWINDOW_BOLTS_OUT)
-			. += span_notice("The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in.")
-		if(RWINDOW_POPPED)
-			. += span_notice("The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>.")
+			. += span_notice("The screws have been removed, exposing some bars that look like they can be <b>cut</b>.")
 		if(RWINDOW_BARS_CUT)
 			. += span_notice("The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.")
 
