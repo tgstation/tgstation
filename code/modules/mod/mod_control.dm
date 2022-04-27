@@ -76,7 +76,7 @@
 	var/obj/item/mod/core/core
 	/// Associated list of parts (helmet, chestplate, gauntlets, boots) to their unsealed worn layer.
 	var/list/mod_parts = list()
-	/// Associated list of parts that can overslot to their overslot.
+	/// Associated list of parts that can overslot to their overslot (overslot means the part can cover another layer of clothing).
 	var/list/overslotting_parts = list()
 	/// Modules the MOD should spawn with.
 	var/list/initial_modules = list()
@@ -149,7 +149,7 @@
 	for(var/obj/item/mod/module/module as anything in modules)
 		uninstall(module, deleting = TRUE)
 	for(var/obj/item/part as anything in mod_parts)
-		overslotting_parts[part] = null
+		overslotting_parts -= part
 	var/atom/deleting_atom
 	if(!QDELETED(helmet))
 		deleting_atom = helmet
