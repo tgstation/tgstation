@@ -445,6 +445,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BONSAI "bonsai"
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
 #define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
+#define TRAIT_KNOW_POLICE_CODES "know_police_codes"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 /// this skillchip trait lets you wash brains in washing machines to heal them
