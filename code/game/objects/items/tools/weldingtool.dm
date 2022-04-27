@@ -46,9 +46,9 @@
 	/// When fuel was last removed.
 	var/burned_fuel_for = 0
 	/// Activation sound path.
-	var/acti_sound = 'sound/items/welderactivate.ogg'
+	var/activation_sound = 'sound/items/welderactivate.ogg'
 	/// Deactivation sound path.
-	var/deac_sound = 'sound/items/welderdeactivate.ogg'
+	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
 
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
@@ -231,7 +231,7 @@
 	if(welding)
 		if(get_fuel() >= 1)
 			to_chat(user, span_notice("You switch [src] on."))
-			playsound(loc, acti_sound, 50, TRUE)
+			playsound(loc, activation_sound, 50, TRUE)
 			force = 15
 			damtype = BURN
 			hitsound = 'sound/items/welder.ogg'
@@ -242,7 +242,7 @@
 			switched_off(user)
 	else
 		to_chat(user, span_notice("You switch [src] off."))
-		playsound(loc, deac_sound, 50, TRUE)
+		playsound(loc, deactivation_sound, 50, TRUE)
 		switched_off(user)
 
 /// Switches the welder off
