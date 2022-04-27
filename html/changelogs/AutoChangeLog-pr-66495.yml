@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen has declared a recall on all item stacks, due to the fact the fact they kept merging in hands and pockets. All stacks will now instead only merge in your storage containers, or on the floor."

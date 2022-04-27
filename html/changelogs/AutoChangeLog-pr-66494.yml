@@ -1,6 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - qol: "Civilian Bounty Console will now always bring up its UI when you insert the ID."
-  - qol: "Air Alarm and APC will now always bring up its UI when you unlock their controls."
-  - qol: "Portable Chem Mixer, Chem Dispenser, Chem Heater, Improvised Chem Heater, Chem Spectometer and Chem Master will now always bring up their UI when you add or replace beaker to them."

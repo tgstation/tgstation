@@ -28,8 +28,8 @@
 		/obj/item/paicard = 2,
 	)
 	refill_canister = /obj/item/vending_refill/modularpc
-	default_price = PAYCHECK_MEDIUM
-	extra_price = PAYCHECK_HARD
+	default_price = PAYCHECK_CREW
+	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SCI
 
 /obj/item/vending_refill/modularpc

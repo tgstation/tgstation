@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Obsesseds don't fail the hug objective if they headpat/tail pull instead,"

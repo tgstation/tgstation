@@ -1,0 +1,4 @@
+author: "magatsuchi"
+delete-after: True
+changes: 
+  - code_imp: "adds docs for christmas tree spawner and christmas cracker"

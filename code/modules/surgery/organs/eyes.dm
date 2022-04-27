@@ -94,16 +94,23 @@
 		damaged = TRUE
 		if((organ_flags & ORGAN_FAILING))
 			eye_owner.become_blind(EYE_DAMAGE)
-		else if(damage > 30)
-			eye_owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, 2)
-		else
-			eye_owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, 1)
+			return
+
+		var/obj/item/clothing/glasses/eyewear = eye_owner.glasses
+		var/has_prescription_glasses = istype(eyewear) && eyewear.vision_correction
+
+		if(has_prescription_glasses)
+			return
+
+		var/severity = damage > 30 ? 2 : 1
+		eye_owner.overlay_fullscreen("eye_damage", /atom/movable/screen/fullscreen/impaired, severity)
+		return
+
 	//called once since we don't want to keep clearing the screen of eye damage for people who are below 20 damage
-	else if(damaged)
+	if(damaged)
 		damaged = FALSE
 		eye_owner.clear_fullscreen("eye_damage")
 		eye_owner.cure_blind(EYE_DAMAGE)
-	return
 
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"

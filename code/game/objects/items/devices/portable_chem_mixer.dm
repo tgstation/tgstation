@@ -7,8 +7,8 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BELT
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
-	custom_price = PAYCHECK_MEDIUM * 10
-	custom_premium_price = PAYCHECK_MEDIUM * 14
+	custom_price = PAYCHECK_CREW * 10
+	custom_premium_price = PAYCHECK_CREW * 14
 
 	var/obj/item/reagent_containers/beaker = null ///Creating an empty slot for a beaker that can be added to dispense into
 	var/amount = 30 ///The amount of reagent that is to be dispensed currently
