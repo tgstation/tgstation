@@ -30,9 +30,11 @@
 	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, .proc/check_mounting)
 	if(isvehicle(target))
 		RegisterSignal(target, COMSIG_SPEED_POTION_APPLIED, .proc/check_potion)
+	if(ismob(target))
+		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/handle_removal)
 
 /datum/element/ridable/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED))
+	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED, COMSIG_LIVING_DEATH))
 	return ..()
 
 /// Someone is buckling to this movable, which is literally the only thing we care about (other than speed potions)
@@ -143,8 +145,10 @@
 			qdel(O)
 	return TRUE
 
+/datum/element/ridable/proc/handle_removal(datum/source)
+	SIGNAL_HANDLER
 
-
+	Detach(source)
 
 /obj/item/riding_offhand
 	name = "offhand"
