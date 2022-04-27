@@ -42,16 +42,16 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 		/datum/gas/water_vapor = MINIMUM_MOLE_COUNT
 	)
 	factor = list(
-		/datum/gas/water_vapor = "H2O is consumed at 2 reaction rate",
-		/datum/gas/oxygen = "Oxygen is produced at 1 reaction rate",
-		/datum/gas/hydrogen = "H2 is produced at 2 reaction rate",
+		/datum/gas/water_vapor = "2 moles of H2O get consumed",
+		/datum/gas/oxygen = "1 mole of O2 gets produced",
+		/datum/gas/hydrogen = "2 moles of H2 get produced",
 		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
 
 /datum/electrolyzer_reaction/h2o_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power)
 
 	air_mixture.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
-	var/proportion = min(air_mixture.gases[/datum/gas/water_vapor][MOLES], (2.5 * (working_power ** 2)))
+	var/proportion = min(air_mixture.gases[/datum/gas/water_vapor][MOLES] * INVERSE(2), (2.5 * (working_power ** 2)))
 	air_mixture.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2
 	air_mixture.gases[/datum/gas/oxygen][MOLES] += proportion
 	air_mixture.gases[/datum/gas/hydrogen][MOLES] += proportion * 2
@@ -65,8 +65,8 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 		"MAX_TEMP" = 150
 	)
 	factor = list(
-		/datum/gas/hypernoblium = "Hypernoblium is consumed at 1 reaction rate",
-		/datum/gas/antinoblium = "Antinoblium is produced at 0.5 reaction rate",
+		/datum/gas/hypernoblium = "1 mole of Hypernoblium gets consumed",
+		/datum/gas/antinoblium = "0.5 moles of Antinoblium get produced",
 		"Temperature" = "Can only occur under 150 kelvin.",
 		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
@@ -88,10 +88,10 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 		"MAX_TEMP" = 230
 	)
 	factor = list(
-		/datum/gas/carbon_dioxide = "CO2 is consumed at 2 reaction rate",
-		/datum/gas/nitrous_oxide = "N2O is consumed at 1 reaction rate",
-		/datum/gas/halon = "Halon is produced at 1 reaction rate",
-		"Energy" = "300 joules of energy is released per reaction rate",
+		/datum/gas/carbon_dioxide = "2 moles of CO2 get consumed",
+		/datum/gas/nitrous_oxide = "1 mole of N2O gets consumed",
+		/datum/gas/halon = "1 mole of Halon gets produced",
+		"Energy" = "300 joules of energy is released per mole",
 		"Temperature" = "Can only occur under 230 kelvin.",
 		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
