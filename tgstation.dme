@@ -235,7 +235,6 @@
 #include "code\__DEFINES\dcs\signals\signals_radiation.dm"
 #include "code\__DEFINES\dcs\signals\signals_reagent.dm"
 #include "code\__DEFINES\dcs\signals\signals_restaurant.dm"
-#include "code\__DEFINES\dcs\signals\signals_revolution.dm"
 #include "code\__DEFINES\dcs\signals\signals_scangate.dm"
 #include "code\__DEFINES\dcs\signals\signals_screentips.dm"
 #include "code\__DEFINES\dcs\signals\signals_spatial_grid.dm"
