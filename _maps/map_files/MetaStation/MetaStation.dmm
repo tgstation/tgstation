@@ -20919,6 +20919,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain/private)
 "grN" = (
@@ -31827,10 +31828,6 @@
 /obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"kBm" = (
-/obj/item/radio/intercom/directional/south,
-/turf/open/floor/carpet,
-/area/command/heads_quarters/captain/private)
 "kBv" = (
 /obj/machinery/exodrone_launcher,
 /turf/open/floor/plating,
@@ -99221,7 +99218,7 @@ any
 fxE
 qPQ
 idt
-kBm
+gWx
 hbO
 xqZ
 cKh
