@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - qol: "On the mapping end, all of the Supply Departments (and Lavaland) have had their doors reprogrammed to use a mapping helper system, rather than manually editing the access variables on the door itself."
