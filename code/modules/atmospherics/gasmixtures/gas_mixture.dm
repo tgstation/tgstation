@@ -580,7 +580,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/gas_pressure_calculate(datum/gas_mixture/output_air, target_pressure, ignore_temperature = FALSE)
 	// So we dont need to iterate the gaslist multiple times.
 	var/our_moles = total_moles()
-	var/our_pressure = return_pressure()
 	var/output_moles = output_air.total_moles()
 	var/output_pressure = output_air.return_pressure()
 
