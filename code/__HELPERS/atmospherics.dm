@@ -114,6 +114,8 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 					factor_info["tooltip"] = "This reaction has special behaviour when occuring in specific locations."
 				else if(factor == "Hot Ice")
 					factor_info["tooltip"] = "Hot ice are solidified stacks of plasma. Ignition of one will result in a raging fire."
+				else if(factor == "Tips")
+					factor_info["tooltip"] = "Here some of the best insight for this reaction."
 			reaction_info["factors"] += list(factor_info)
 		GLOB.reaction_handbook += list(reaction_info)
 		qdel(reaction)

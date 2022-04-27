@@ -122,6 +122,7 @@
 		/datum/gas/freon = "Freon is produced at 1 mole per tile/pipenet",
 		"Energy" = "Between 100 and 800 joules of energy is absorbed per mole of freon produced",
 		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100] Kelvin to occur",
+		"Tips" = "There is a peak of production at 800 K, then the ratio goes low and start to rise again around 4000 K and it triplicates around 7000 - 8000 K"
 	)
 
 /datum/gas_reaction/nobliumformation/init_factors()
