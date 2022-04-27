@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 25, on_floor = TRUE) \
+	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 20, on_floor = TRUE) \
 ))
 
 /obj/item/stack/sheet/plasmaglass
@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 5, on_floor = TRUE), \
+	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 10, on_floor = TRUE), \
 	new/datum/stack_recipe("reinforced glass tile", /obj/item/stack/tile/rglass, 1, 4, 20) \
 ))
 
@@ -233,8 +233,7 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	. += GLOB.titaniumglass_recipes
 
 GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
-	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
-	new/datum/stack_recipe("plastitanium glass shard", /obj/item/shard/plastitanium, time = 200, on_floor = TRUE) \
+	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE) \
 	))
 
 /obj/item/stack/sheet/plastitaniumglass
@@ -332,20 +331,45 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			to_chat(H, span_warning("[src] cuts into your hand!"))
 			H.apply_damage(force*0.5, BRUTE, hit_hand)
 
-/obj/item/shard/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/L = I
-		L.attackby(src, user)
-	else if(istype(I, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/C = I
-		to_chat(user, span_notice("You begin to wrap the [C] around the [src]..."))
-		if(do_after(user, 35, target = src))
-			var/obj/item/knife/shiv/S = new /obj/item/knife/shiv
-			C.use(1)
-			to_chat(user, span_notice("You wrap the [C] around the [src] forming a makeshift weapon."))
-			remove_item_from_storage(src)
-			qdel(src)
-			user.put_in_hands(S)
+/obj/item/shard/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/lightreplacer = item
+		lightreplacer.attackby(src, user)
+	else if(istype(item, /obj/item/stack/sheet/cloth))
+		var/obj/item/stack/sheet/cloth/cloth = item
+		to_chat(user, span_notice("You begin to wrap the [cloth] around the [src]..."))
+		if(istype(src, /obj/item/shard/plasma))
+			if(do_after(user, 140, target = src))
+				var/obj/item/knife/shiv/plasma/shiv = new /obj/item/knife/shiv/plasma
+				cloth.use(1)
+				to_chat(user, span_notice("You wrap the [cloth] around the [src] forming a makeshift weapon."))
+				remove_item_from_storage(src)
+				qdel(src)
+				user.put_in_hands(shiv)
+		else if(istype(src, /obj/item/shard/titanium))
+			if(do_after(user, 70, target = src))
+				var/obj/item/knife/shiv/titanium/shiv = new /obj/item/knife/shiv/titanium
+				cloth.use(1)
+				to_chat(user, span_notice("You wrap the [cloth] around the [src] forming a makeshift weapon."))
+				remove_item_from_storage(src)
+				qdel(src)
+				user.put_in_hands(shiv)
+		else if(istype(src, /obj/item/shard/plastitanium))
+			if(do_after(user, 70, target = src))
+				var/obj/item/knife/shiv/plastitanium/shiv = new /obj/item/knife/shiv/plastitanium
+				cloth.use(1)
+				to_chat(user, span_notice("You wrap the [cloth] around the [src] forming a makeshift weapon."))
+				remove_item_from_storage(src)
+				qdel(src)
+				user.put_in_hands(shiv)
+		else
+			if(do_after(user, 35, target = src))
+				var/obj/item/knife/shiv/shiv = new /obj/item/knife/shiv
+				cloth.use(1)
+				to_chat(user, span_notice("You wrap the [cloth] around the [src] forming a makeshift weapon."))
+				remove_item_from_storage(src)
+				qdel(src)
+				user.put_in_hands(shiv)
 
 	else
 		return ..()
@@ -382,18 +406,6 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	icon_prefix = "plasma"
 	weld_material = /obj/item/stack/sheet/plasmaglass
 
-/obj/item/shard/plasma/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/C = I
-		to_chat(user, span_notice("You begin to wrap the [C] around the [src]..."))
-		if(do_after(user, 70, target = src))
-			var/obj/item/knife/shiv/plasma/S = new /obj/item/knife/shiv/plasma
-			C.use(1)
-			to_chat(user, span_notice("You wrap the [C] around the [src] forming a makeshift weapon."))
-			remove_item_from_storage(src)
-			qdel(src)
-			user.put_in_hands(S)
-
 /obj/item/shard/titanium
 	name = "bright shard"
 	desc = "A nasty looking shard of titanium infused glass."
@@ -403,18 +415,6 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	custom_materials = list(/datum/material/alloy/titaniumglass=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "titanium"
 	weld_material = /obj/item/stack/sheet/titaniumglass
-
-/obj/item/shard/titanium/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/C = I
-		to_chat(user, span_notice("You begin to wrap the [C] around the [src]..."))
-		if(do_after(user, 70, target = src))
-			var/obj/item/knife/shiv/titanium/S = new /obj/item/knife/shiv/titanium
-			C.use(1)
-			to_chat(user, span_notice("You wrap the [C] around the [src] forming a makeshift weapon."))
-			remove_item_from_storage(src)
-			qdel(src)
-			user.put_in_hands(S)
 
 /obj/item/shard/plastitanium
 	name = "dark shard"
@@ -426,15 +426,3 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	custom_materials = list(/datum/material/alloy/plastitaniumglass=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "plastitanium"
 	weld_material = /obj/item/stack/sheet/plastitaniumglass
-
-/obj/item/shard/plastitanium/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/C = I
-		to_chat(user, span_notice("You begin to wrap the [C] around the [src]..."))
-		if(do_after(user, 140, target = src))
-			var/obj/item/knife/shiv/plastitanium/S = new /obj/item/knife/shiv/plastitanium
-			C.use(1)
-			to_chat(user, span_notice("You wrap the [C] around the [src] forming a makeshift weapon."))
-			remove_item_from_storage(src)
-			qdel(src)
-			user.put_in_hands(S)
