@@ -118,7 +118,7 @@
 
 	//We are now going to move
 	var/add_delay = mob.cached_multiplicative_slowdown
-	mob.add_glide_source(DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? SQRT_2 : 1 ) ), "ourselves") // set it now in case of pulled objects
+	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay * ( (NSCOMPONENT(direct) && EWCOMPONENT(direct)) ? SQRT_2 : 1 ) )) // set it now in case of pulled objects
 	//If the move was recent, count using old_move_delay
 	//We want fractional behavior and all
 	if(old_move_delay + world.tick_lag > world.time)
@@ -151,9 +151,9 @@
 		add_delay *= SQRT_2
 
 	if(visual_delay)
-		mob.add_glide_source(visual_delay, "ourselves")
+		mob.set_glide_size(visual_delay)
 	else
-		mob.add_glide_source(DELAY_TO_GLIDE_SIZE(add_delay), "ourselves")
+		mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
 	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
