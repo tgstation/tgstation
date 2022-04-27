@@ -37092,6 +37092,7 @@
 	name = "Ordnance Lab Maintenance";
 	req_one_access_txt = "47"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/science/storage)
 "lSr" = (
