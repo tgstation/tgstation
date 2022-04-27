@@ -371,5 +371,5 @@
 
 		// Everyone else gets hallucinations.
 		var/dist = sqrt(1 / max(1, get_dist(near, location)))
-		near.hallucination += 100 * dist
-		near.hallucination = clamp(near.hallucination, 0, 300)
+		near.hallucination += 25 * dist
+		near.hallucination = clamp(near.hallucination, 0, 150)

@@ -421,7 +421,7 @@
 
 /obj/effect/anomaly/hallucination
 	name = "hallucination anomaly"
-	icon_state = "blueshatter2"
+	icon_state = "hallucination_anomaly"
 	aSignal = /obj/item/assembly/signaler/anomaly/hallucination
 	/// Time passed since the last effect, increased by delta_time of the SSobj
 	var/ticks = 0
@@ -457,5 +457,12 @@
 		var/dist = sqrt(1 / max(1, get_dist(near, location)))
 		near.hallucination += 50 * dist
 		near.hallucination = clamp(near.hallucination, 0, 150)
+		var/list/messages = list(
+			"You feel your conscious mind fall apart!",
+			"Reality warps around you!",
+			"Something's wispering around you!",
+			"You are going insane!",
+		)
+		to_chat(near, span_warning(pick(messages)))
 
 #undef ANOMALY_MOVECHANCE
