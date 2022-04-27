@@ -118,6 +118,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, .proc/on_light_flags_change)
 	RegisterSignal(parent, COMSIG_ATOM_USED_IN_CRAFT, .proc/on_parent_crafted)
 	RegisterSignal(parent, COMSIG_LIGHT_EATER_QUEUE, .proc/on_light_eater)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_parent_moved)
 	var/atom/movable/movable_parent = parent
 	if(movable_parent.light_flags & LIGHT_ATTACHED)
 		overlay_lighting_flags |= LIGHTING_ATTACHED
@@ -423,7 +424,7 @@
 			cast_directional_light()
 		add_dynamic_lumi()
 	overlay_lighting_flags |= LIGHTING_ON
-	if(current_holder)
+	if(current_holder && current_holder != parent)
 		RegisterSignal(current_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
 	get_new_turfs()
 
