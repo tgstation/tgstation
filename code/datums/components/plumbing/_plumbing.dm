@@ -22,10 +22,10 @@
 	var/recipient_reagents_holder
 	///How do we apply the new reagents to the receiver? Generally doesn't matter, but some stuff, like people, does care if its injected or whatevs
 	var/methods
-	///What color is our demand connect? Also it's not auto-colored so you'll have to make new sprites if its anything other than red, blue, yellow or green
-	var/demand_color = "red"
-	///What color is our supply connect? Also, refrain from pointlessly using non-standard colors unless it's really funny or something
-	var/supply_color = "blue"
+	///What color is our demand connect?
+	var/demand_color = "#ff0000"
+	///What color is our supply connect?
+	var/supply_color = "#0000ff"
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
 /datum/component/plumbing/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
@@ -160,7 +160,6 @@
 
 	for(var/D in GLOB.cardinals)
 		var/color
-		var/direction
 		if(D & initial(demand_connects))
 			color = demand_color
 		else if(D & initial(supply_connects))
@@ -168,25 +167,17 @@
 		else
 			continue
 
+		var/direction = dir2text(D)
+		var/duct_layer = PLUMBING_PIPE_VISIBILE_LAYER + ducting_layer * 0.0003
+
 		var/image/I
-
-		switch(D)
-			if(NORTH)
-				direction = "north"
-			if(SOUTH)
-				direction = "south"
-			if(EAST)
-				direction = "east"
-			if(WEST)
-				direction = "west"
-
 		if(turn_connects)
-			I = image('icons/obj/plumbing/connects.dmi', "[direction]-[color]", layer = AM.layer - 1)
-
+			I = image('icons/obj/plumbing/connects.dmi', "[direction]-[ducting_layer]", layer = duct_layer)
 		else
-			I = image('icons/obj/plumbing/connects.dmi', "[direction]-[color]-s", layer = AM.layer - 1) //color is not color as in the var, it's just the name of the icon_state
+			I = image('icons/obj/plumbing/connects.dmi', "[direction]-[ducting_layer]-s", layer = duct_layer)
 			I.dir = D
 
+		I.color = color
 		I.pixel_x = duct_x
 		I.pixel_y = duct_y
 
@@ -210,7 +201,7 @@
 	for(var/D in GLOB.cardinals)
 		if(D & (demand_connects | supply_connects))
 			for(var/obj/machinery/duct/duct in get_step(parent, D))
-				if(duct.duct_layer == ducting_layer)
+				if(duct.duct_layer & ducting_layer)
 					duct.remove_connects(turn(D, 180))
 					duct.neighbours.Remove(parent)
 					duct.update_appearance()
@@ -226,8 +217,11 @@
 	active = TRUE
 
 	var/atom/movable/AM = parent
-	for(var/obj/machinery/duct/D in AM.loc) //Destroy any ducts under us. Ducts also self-destruct if placed under a plumbing machine. machines disable when they get moved
-		if(D.anchored) //that should cover everything
+	// Destroy any ducts under us on the same layer.
+	// Ducts also self-destruct if placed under a plumbing machine.
+	// Machines disable when they get moved
+	for(var/obj/machinery/duct/D in AM.loc)
+		if(D.anchored && (D.duct_layer & ducting_layer))
 			D.disconnect_duct()
 
 	if(demand_connects)
@@ -243,7 +237,7 @@
 					duct.attempt_connect()
 				else
 					for(var/datum/component/plumbing/plumber as anything in A.GetComponents(/datum/component/plumbing))
-						if(plumber.ducting_layer == ducting_layer)
+						if(plumber.ducting_layer & ducting_layer)
 							direct_connect(plumber, D)
 
 /// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move

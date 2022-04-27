@@ -7,6 +7,7 @@ All the important duct code:
 	name = "fluid duct"
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
+	layer = PLUMBING_PIPE_VISIBILE_LAYER
 
 	use_power = NO_POWER_USE
 
@@ -22,7 +23,7 @@ All the important duct code:
 	var/capacity = 10
 
 	///the color of our duct
-	var/duct_color = null
+	var/duct_color = COLOR_VERY_LIGHT_GRAY
 	///TRUE to ignore colors, so yeah we also connect with other colors without issue
 	var/ignore_colors = FALSE
 	///1,2,4,8,16
@@ -37,46 +38,39 @@ All the important duct code:
 	var/list/neighbours = list()
 	///wheter we just unanchored or drop whatever is in the variable. either is safe
 	var/drop_on_wrench = /obj/item/stack/ducts
+	///Copy color and layer to drop_on_wrench when created. Must be /obj/item/stack/ducts or a subtype if used.
+	var/customize_drop_on_wrench = TRUE
 
-/obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct = "#ffffff", layer_of_duct = DUCT_LAYER_DEFAULT, force_connects)
+/obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct = null, layer_of_duct = null, force_connects, force_ignore_colors)
 	. = ..()
+
+	if(force_connects)
+		connects = force_connects //skip change_connects() because we're still initializing and we need to set our connects at one point
+	if(!lock_layers && layer_of_duct)
+		duct_layer = layer_of_duct
+	if(force_ignore_colors)
+		ignore_colors = force_ignore_colors
+	if(!ignore_colors && color_of_duct)
+		duct_color = color_of_duct
+	if(duct_color)
+		add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 
 	if(no_anchor)
 		active = FALSE
 		set_anchored(FALSE)
 	else if(!can_anchor())
-		qdel(src)
-		CRASH("Overlapping ducts detected")
-
-	if(force_connects)
-		connects = force_connects //skip change_connects() because we're still initializing and we need to set our connects at one point
-	if(!lock_layers)
-		duct_layer = layer_of_duct
-	if(!ignore_colors)
-		duct_color = color_of_duct
-	if(duct_color)
-		add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
+		if(mapload)
+			log_mapping("Overlapping ducts detected at [AREACOORD(src)], unanchoring one.")
+		// Note that qdeling automatically drops a duct stack
+		return INITIALIZE_HINT_QDEL
 
 	handle_layer()
-
-	for(var/obj/machinery/duct/D in loc)
-		if(D == src)
-			continue
-		if(D.duct_layer & duct_layer)
-			return INITIALIZE_HINT_QDEL //If we have company, end it all
 
 	attempt_connect()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 ///start looking around us for stuff to connect to
 /obj/machinery/duct/proc/attempt_connect()
-
-	for(var/atom/movable/AM in loc)
-		for(var/datum/component/plumbing/plumber as anything in AM.GetComponents(/datum/component/plumbing))
-			if(plumber.active)
-				disconnect_duct() //let's not built under plumbing machinery
-				return
-
 	for(var/D in GLOB.cardinals)
 		if(dumb && !(D & connects))
 			continue
@@ -86,15 +80,15 @@ All the important duct code:
 	update_appearance()
 
 ///see if whatever we found can be connected to
-/obj/machinery/duct/proc/connect_network(atom/movable/AM, direction, ignore_color)
+/obj/machinery/duct/proc/connect_network(atom/movable/AM, direction)
 	if(istype(AM, /obj/machinery/duct))
-		return connect_duct(AM, direction, ignore_color)
+		return connect_duct(AM, direction)
 
 	for(var/datum/component/plumbing/plumber as anything in AM.GetComponents(/datum/component/plumbing))
 		. += connect_plumber(plumber, direction) //so that if one is true, all is true. beautiful.
 
 ///connect to a duct
-/obj/machinery/duct/proc/connect_duct(obj/machinery/duct/D, direction, ignore_color)
+/obj/machinery/duct/proc/connect_duct(obj/machinery/duct/D, direction)
 	var/opposite_dir = turn(direction, 180)
 	if(!active || !D.active)
 		return
@@ -139,7 +133,7 @@ All the important duct code:
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/P, direction)
 	var/opposite_dir = turn(direction, 180)
 
-	if(duct_layer != P.ducting_layer)
+	if(!(duct_layer & P.ducting_layer))
 		return FALSE
 
 	if(!P.active)
@@ -164,9 +158,13 @@ All the important duct code:
 	reset_connects(0)
 	update_appearance()
 	if(ispath(drop_on_wrench))
-		new drop_on_wrench(drop_location())
+		var/obj/item/stack/ducts/duct_stack = new drop_on_wrench(drop_location())
+		if(customize_drop_on_wrench)
+			duct_stack.duct_color = GLOB.pipe_color_name[duct_color] || DUCT_COLOR_OMNI
+			duct_stack.duct_layer = GLOB.plumbing_layer_names["[duct_layer]"] || GLOB.plumbing_layer_names["[DUCT_LAYER_DEFAULT]"]
+			duct_stack.add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
 		drop_on_wrench = null
-	if(!QDELETED(src))
+	if(!QDELING(src))
 		qdel(src)
 
 ///Special proc to draw a new connect frame based on neighbours. not the norm so we can support multiple duct kinds
@@ -194,6 +192,7 @@ All the important duct code:
 /obj/machinery/duct/proc/lose_neighbours()
 	for(var/obj/machinery/duct/D in neighbours)
 		D.neighbours.Remove(src)
+		D.generate_connects()
 	neighbours = list()
 
 ///add a connect direction
@@ -239,7 +238,8 @@ All the important duct code:
 ///update the layer we are on
 /obj/machinery/duct/proc/handle_layer()
 	var/offset
-	switch(duct_layer)//it's a bitfield, but it's fine because it only works when there's one layer, and multiple layers should be handled differently
+	//it's a bitfield, but it's fine because ducts themselves are only on one layer
+	switch(duct_layer)
 		if(FIRST_DUCT_LAYER)
 			offset = -10
 		if(SECOND_DUCT_LAYER)
@@ -253,6 +253,7 @@ All the important duct code:
 	pixel_x = offset
 	pixel_y = offset
 
+	layer = initial(layer) + duct_layer * 0.0003
 
 /obj/machinery/duct/set_anchored(anchorvalue)
 	. = ..()
@@ -281,10 +282,11 @@ All the important duct code:
 	if(!T)
 		T = get_turf(src)
 	for(var/obj/machinery/duct/D in T)
-		if(!anchored || D == src)
-			continue
-		for(var/A in GLOB.cardinals)
-			if(A & connects && A & D.connects)
+		if(D.anchored && D != src && (duct_layer & D.duct_layer))
+			return FALSE
+	for(var/obj/machinery/machine in T)
+		for(var/datum/component/plumbing/plumber as anything in machine.GetComponents(/datum/component/plumbing))
+			if(plumber.ducting_layer & duct_layer)
 				return FALSE
 	return TRUE
 
@@ -310,12 +312,12 @@ All the important duct code:
 	var/direction = get_dir(src, D)
 	if(!(direction in GLOB.cardinals))
 		return
-	if(duct_layer != D.duct_layer)
+	if(!(duct_layer & D.duct_layer))
 		return
 
 	add_connects(direction) //the connect of the other duct is handled in connect_network, but do this here for the parent duct because it's not necessary in normal cases
 	add_neighbour(D, direction)
-	connect_network(D, direction, TRUE)
+	connect_network(D, direction)
 	update_appearance()
 
 /obj/item/stack/ducts
@@ -330,19 +332,18 @@ All the important duct code:
 	max_amount = 50
 	item_flags = NOBLUDGEON
 	merge_type = /obj/item/stack/ducts
+	matter_amount = 1
 	///Color of our duct
 	var/duct_color = "omni"
 	///Default layer of our duct
 	var/duct_layer = "Default Layer"
-	///Assoc index with all the available layers. yes five might be a bit much. Colors uses a global by the way
-	var/list/layers = list("Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, "Fourth Layer" = FOURTH_DUCT_LAYER)
 
 /obj/item/stack/ducts/examine(mob/user)
 	. = ..()
 	. += span_notice("It's current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.")
 
 /obj/item/stack/ducts/attack_self(mob/user)
-	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", layers)
+	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)
 	if(new_layer)
 		duct_layer = new_layer
 	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors)
@@ -359,12 +360,18 @@ All the important duct code:
 		if(!D.anchored)
 			add(1)
 			qdel(D)
+			return
+
+		to_chat(user, span_warning("The duct must be unanchored before it can be picked up."))
+		return
+
 	check_attach_turf(target)
 
 /obj/item/stack/ducts/proc/check_attach_turf(atom/target)
-	if(istype(target, /turf/open) && use(1))
+	if(isopenturf(target) && use(1))
 		var/turf/open/open_turf = target
-		new /obj/machinery/duct(open_turf, FALSE, GLOB.pipe_paint_colors[duct_color], layers[duct_layer])
+		var/is_omni = duct_color == DUCT_COLOR_OMNI
+		new /obj/machinery/duct(open_turf, FALSE, GLOB.pipe_paint_colors[duct_color], GLOB.plumbing_layers[duct_layer], null, is_omni)
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/stack/ducts/fifty
