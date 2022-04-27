@@ -1425,6 +1425,11 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
 	update_fire()
 
+// called when something steps onto a mob while we're on fire. override
+/mob/living/proc/on_entered_fire(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+	return
+
 /**
  * Adjust the amount of fire stacks on a mob
  *
@@ -1451,8 +1456,8 @@
 		extinguish_mob()
 
 
-//Share fire evenly between the two mobs
-//Called in MobBump() and Crossed()
+///Share fire evenly between the two mobs
+///Called in MobBump() and Crossed()
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return

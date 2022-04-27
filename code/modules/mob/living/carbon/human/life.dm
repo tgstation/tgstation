@@ -181,17 +181,38 @@
 	thermal_protection = round(thermal_protection)
 	return thermal_protection
 
+// called when something steps onto a human while we're on fire
+/mob/living/carbon/human/on_entered_fire(datum/source, atom/movable/AM)
+	//SIGNAL_HANDLER
+	spreadFire(AM)
+
 /mob/living/carbon/human/IgniteMob()
 	//If have no DNA or can be Ignited, call parent handling to light user
 	//If firestacks are high enough
-	if(!dna || dna.species.CanIgniteMob(src))
-		return ..()
-	. = FALSE //No ignition
+	if(dna && !dna.species.CanIgniteMob(src))
+		return FALSE
+
+	var/already_on_fire = on_fire
+
+	. = ..()
+
+	//in MobBump() we handle other humans being caught on fire when they bump into us, but
+	//we also need to handle them entering into our turf without bumping into us, fire_connections does this
+	if(!already_on_fire && on_fire)
+		AddElement(/datum/element/on_fire_connector, /mob/living/carbon/human)
 
 /mob/living/carbon/human/extinguish_mob()
-	if(!dna || !dna.species.extinguish_mob(src))
-		last_fire_update = null
-		..()
+	if(dna && dna.species.extinguish_mob(src))
+		return FALSE
+
+	last_fire_update = null
+	var/was_on_fire = on_fire
+
+	. = ..()
+
+	if(was_on_fire && !on_fire)
+		RemoveElement(/datum/element/on_fire_connector, /mob/living/carbon/human)
+
 //END FIRE CODE
 
 
