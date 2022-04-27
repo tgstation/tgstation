@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Prevent bullets (most notably those fired aimed at the mouth when intended for executions) from sometimes missing if you're firing at a target diagonally adjacent to you and there's an obstacle (eg. person) between you two."

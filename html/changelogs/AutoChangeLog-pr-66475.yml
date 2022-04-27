@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Turning glasses colors on/off with AltClick now properly tells you that you turned it on or off."

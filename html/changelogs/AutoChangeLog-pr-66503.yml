@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Ensured that the lower levels of Icebox would also get considered during the Map Compile option, so we don't get broken maps in production."
