@@ -583,7 +583,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/output_moles = output_air.total_moles()
 	var/output_pressure = output_air.return_pressure()
 
-	if((our_moles) || (temperature <= 0))
+	if((our_moles <= 0) || (temperature <= 0))
 		return FALSE
 
 	var/pressure_delta = 0
@@ -664,8 +664,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/gas_pressure_quadratic(a, b, c, lower_limit, upper_limit)
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		solution = max(SolveQuadratic(a, b, c))
-		if((solution >= lower_limit) && (solution <= upper_limit)) //SolveQuadratic can return nulls so be careful here
+		solution = max(SolveQuadratic(a, b, c)) 
+		if((solution >= lower_limit) && (solution <= upper_limit)) //SolveQuadratic can return empty lists so be careful here
 			return solution
 	stack_trace("Failed to solve pressure quadratic equation. A: [a]. B: [b]. C:[c]. Current value = [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")
 	return FALSE
@@ -675,7 +675,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/gas_pressure_approximate(a, b, c, lower_limit, upper_limit)
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		/// We need to start off at a reasonably good estimate. For very big numbers the amount of moles is most likely small so better start with lower_limit.
+		/// We need to start off at a reasonably good estimate. We dont want to converge on the negative root so start big.
 		solution = lower_limit
 		for (var/iteration in 1 to ATMOS_PRESSURE_APPROXIMATION_ITERATIONS)
 			var/diff = (a*solution**2 + b*solution + c) / (2*a*solution + b) // f(sol) / f'(sol)
