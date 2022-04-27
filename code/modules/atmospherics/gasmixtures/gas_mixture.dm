@@ -601,12 +601,17 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	// Lower and upper bound for the moles we must transfer to reach the pressure. The answer is bound to be here somewhere.
 	var/pv = target_pressure * output_air.volume
-	var/rt_low = R_IDEAL_GAS_EQUATION * max(temperature, output_air.temperature) // Low refers to the resulting mole, this number is actually higher.
-	var/rt_high = R_IDEAL_GAS_EQUATION * min(temperature, output_air.temperature)
+	/// The PV/R part in the equation we will use later. Counted early because pv/(r*t) might not be equal to pv/r/t, messing our lower and upper limit.
+	var/pvr = pv / R_IDEAL_GAS_EQUATION
 	// These works by assuming our gas has extremely high heat capacity
 	// and the resultant gasmix will hit either the highest or lowest temperature possible.
-	var/lower_limit = max((pv / rt_low) - output_moles, 0)
-	var/upper_limit = (pv / rt_high) - output_moles // In theory this should never go below zero, the pressure_delta check above should account for this.
+
+	/// This is the true lower limit, but numbers still can get lower than this due to floats.
+	var/lower_limit = max((pvr / max(temperature, output_air.temperature)) - output_moles, 0)
+	var/upper_limit = (pvr / min(temperature, output_air.temperature)) - output_moles // In theory this should never go below zero, the pressure_delta check above should account for this.
+
+	lower_limit = max(lower_limit - ATMOS_PRESSURE_ERROR_TOLERANCE, 0)
+	upper_limit += ATMOS_PRESSURE_ERROR_TOLERANCE
 
 	/*
 	 * We have PV=nRT as a nice formula, we can rearrange it into nT = PV/R
@@ -640,9 +645,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/n1 = output_moles
 	var/c1 = output_air.heat_capacity()
 
-	/// The PV/R part in our equation.
-	var/pvr = pv / R_IDEAL_GAS_EQUATION
-
 	/// x^2 in the quadratic
 	var/a_value = w2/n2
 	/// x^1 in the quadratic
@@ -675,8 +677,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/gas_pressure_approximate(a, b, c, lower_limit, upper_limit)
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		/// We need to start off at a reasonably good estimate. We dont want to converge on the negative root so start big.
-		solution = lower_limit
+		// We need to start off at a reasonably good estimate. 
+		// Better start big so we are as far away from the negative root.
+		// There is a significant risk of touching inf though
+		solution = IS_INF_OR_NAN(upper_limit) ? upper_limit : lower_limit
 		for (var/iteration in 1 to ATMOS_PRESSURE_APPROXIMATION_ITERATIONS)
 			var/diff = (a*solution**2 + b*solution + c) / (2*a*solution + b) // f(sol) / f'(sol)
 			solution -= diff // xn+1 = xn - f(sol) / f'(sol)
