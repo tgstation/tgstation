@@ -180,7 +180,10 @@
 	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
 	custom_materials = list(/datum/material/uranium = 4000)
 
+	/// Mutex to prevent infinite recursion when propagating radiation pulses
 	var/active = null
+
+	/// The last time a radiation pulse was performed
 	var/last_event = 0
 
 /obj/structure/tramwall/uranium/attackby(obj/item/W, mob/user, params)
@@ -192,26 +195,21 @@
 	. = ..()
 
 /obj/structure/tramwall/uranium/proc/radiate()
-	if(!active)
-		if(world.time > last_event+15)
-			active = 1
-			radiation_pulse(
-				src,
-				max_range = 2,
-				threshold = RAD_LIGHT_INSULATION,
-				chance = URANIUM_IRRADIATION_CHANCE,
-				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
-			)
-			for(var/turf/closed/wall/mineral/uranium/wall in orange(1,src))
-				wall.radiate()
-			for(var/obj/structure/falsewall/uranium/falsewall in orange(1,src))
-				falsewall.radiate()
-			for(var/obj/structure/tramwall/uranium/tramwall in orange(1,src))
-				tramwall.radiate()
-			last_event = world.time
-			active = null
-			return
-	return
+	if(active)
+		return
+	if(world.time <= last_event + 1.5 SECONDS)
+		return
+	active = TRUE
+	radiation_pulse(
+		src,
+		max_range = 3,
+		threshold = RAD_LIGHT_INSULATION,
+		chance = URANIUM_IRRADIATION_CHANCE,
+		minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+	)
+	propagate_radiation_pulse()
+	last_event = world.time
+	active = FALSE
 
 /obj/structure/tramwall/plasma
 	name = "plasma wall"
@@ -242,11 +240,11 @@
 
 /obj/structure/tramwall/wood/attackby(obj/item/W, mob/user)
 	if(W.get_sharpness() && W.force)
-		var/duration = (48/W.force) * 2 //In seconds, for now.
+		var/duration = ((4.8 SECONDS) / W.force) * 2 //In seconds, for now.
 		if(istype(W, /obj/item/hatchet) || istype(W, /obj/item/fireaxe))
 			duration /= 4 //Much better with hatchets and axes.
-		if(do_after(user, duration*10, target=src)) //Into deciseconds.
-			dismantle(user,FALSE)
+		if(do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
+			dismantle(user, disassembled = FALSE, tool = W)
 			return
 	return ..()
 
@@ -315,12 +313,12 @@
 
 /obj/structure/tramwall/material/update_icon(updates)
 	. = ..()
-	for(var/datum/material/mat in custom_materials)
-		if(mat.alpha < 255)
-			update_trans_underlays()
+	for(var/datum/material/material in custom_materials)
+		if(material.alpha < 255)
+			update_transparency_underlays()
 			return
 
-/obj/structure/tramwall/material/proc/update_trans_underlays()
+/obj/structure/tramwall/material/proc/update_transparency_underlays()
 	underlays.Cut()
 	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = LOW_OBJ_LAYER-0.01)
 	girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR

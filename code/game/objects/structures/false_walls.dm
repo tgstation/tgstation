@@ -179,8 +179,16 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_URANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
+
+	/// Mutex to prevent infinite recursion when propagating radiation pulses
 	var/active = null
+
+	/// The last time a radiation pulse was performed
 	var/last_event = 0
+
+/obj/structure/falsewall/uranium/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, .proc/radiate)
 
 /obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()
@@ -188,29 +196,24 @@
 
 /obj/structure/falsewall/uranium/attack_hand(mob/user, list/modifiers)
 	radiate()
-	. = ..()
+	return ..()
 
 /obj/structure/falsewall/uranium/proc/radiate()
-	if(!active)
-		if(world.time > last_event+15)
-			active = 1
-			radiation_pulse(
-				src,
-				max_range = 2,
-				threshold = RAD_LIGHT_INSULATION,
-				chance = URANIUM_IRRADIATION_CHANCE,
-				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
-			)
-			for(var/turf/closed/wall/mineral/uranium/wall in orange(1,src))
-				wall.radiate()
-			for(var/obj/structure/falsewall/uranium/falsewall in orange(1,src))
-				falsewall.radiate()
-			for(var/obj/structure/tramwall/uranium/tramwall in orange(1,src))
-				tramwall.radiate()
-			last_event = world.time
-			active = null
-			return
-	return
+	if(active)
+		return
+	if(world.time <= last_event + 1.5 SECONDS)
+		return
+	active = TRUE
+	radiation_pulse(
+		src,
+		max_range = 3,
+		threshold = RAD_LIGHT_INSULATION,
+		chance = URANIUM_IRRADIATION_CHANCE,
+		minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+	)
+	propagate_radiation_pulse()
+	last_event = world.time
+	active = FALSE
 /*
  * Other misc falsewall types
  */
