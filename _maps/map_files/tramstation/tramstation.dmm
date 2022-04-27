@@ -7881,7 +7881,6 @@
 	},
 /obj/machinery/newscaster/directional/east,
 /obj/effect/landmark/start/lawyer,
-/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "byD" = (
