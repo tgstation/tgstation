@@ -482,10 +482,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	)
 
 /datum/asset/json/register()
-	var/filename = "[name].json"
+	var/filename = "data/[name].json"
 	fdel(filename)
 	text2file(json_encode(generate()), filename)
-	SSassets.transport.register_asset(filename, fcopy_rsc(filename))
+	SSassets.transport.register_asset("[name].json", fcopy_rsc(filename))
 	fdel(filename)
 
 /// Returns the data that will be JSON encoded
