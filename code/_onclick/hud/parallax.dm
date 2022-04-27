@@ -179,9 +179,6 @@
 		C.previous_turf = posobj
 		force = TRUE
 
-	if (!force && world.time < C.last_parallax_shift + C.parallax_throttle)
-		return
-
 	//Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
 	var/offset_x = posobj.x - C.previous_turf.x
 	var/offset_y = posobj.y - C.previous_turf.y
@@ -189,15 +186,13 @@
 	if(!offset_x && !offset_y && !force)
 		return
 
-	var/last_delay = world.time - C.last_parallax_shift
-	last_delay = min(last_delay, C.parallax_throttle)
+	var/glide_rate = round(world.icon_size / screenmob.glide_size * world.tick_lag, world.tick_lag)
 	C.previous_turf = posobj
-	C.last_parallax_shift = world.time
 
 	var/largest_change = max(abs(offset_x), abs(offset_y))
-	var/max_allowed_dist = (C.parallax_throttle / world.tick_lag) + 1
+	var/max_allowed_dist = (glide_rate / world.tick_lag) + 1
 	// If we aren't already moving/don't allow parallax, have made some movement, and that movement was smaller then our "glide" size, animate
-	var/run_parralax = (last_delay && !areaobj.parallax_movedir && C.dont_animate_parallax <= world.time && largest_change <= max_allowed_dist)
+	var/run_parralax = (glide_rate && !areaobj.parallax_movedir && C.dont_animate_parallax <= world.time && largest_change <= max_allowed_dist)
 
 	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in C.parallax_layers)
 		var/our_speed = parallax_layer.speed
@@ -232,7 +227,7 @@
 		// Don't do any animates if we're not actually moving enough distance yeah? thanks lad
 		if(run_parralax && (largest_change * our_speed > 1))
 			parallax_layer.transform = matrix(1,0,change_x, 0,1,change_y)
-			animate(parallax_layer, transform=matrix(), time = last_delay)
+			animate(parallax_layer, transform=matrix(), time = glide_rate)
 
 /atom/movable/proc/update_parallax_contents()
 	for(var/mob/client_mob as anything in client_mobs_in_contents)

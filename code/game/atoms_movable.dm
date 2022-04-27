@@ -428,13 +428,93 @@
 		pulledby.stop_pulling()
 
 
+/// Need some way of "managing" glide size, since it is often set once a move.
+/// When moves "conflict" with each other's glides we need a way to resolve the conflict, in a clean way.
+/// That and ensure things like move_delay are properly respected, to prevent strange jitter
+/// Will need to think about how to do this best, maybe start with a sources and start/end time system, and work from there?
 /atom/movable/proc/set_glide_size(target = 8)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
-	glide_size = target
+	// Intentional no op for testing, resolve later.
+	return
+
+/atom/movable
+	// The following variables are handled in FUN ways
+	// When they only have one entry, they are a var. if they ever have more, they become lists
+	// This is done in an effort to reduce memory consumption. Come at me bro.
+	/// String or list that stores different sources for glides
+	var/list/glide_sources
+	/// Number or list that stores different glide sizes
+	var/list/glide_sizes
+	/// Number or list that stores target "End times" for glides
+	var/list/glide_delays
+
+/// I'm adding a source and start/end time system to gliding
+/// We start with the naive implementation, optimize into optional lists later
+/// Remember to murder mothblocks
+/atom/movable/proc/add_glide_source(value = 8, source)
+	if(!istext(source)) // You have violated the law
+		CRASH("Listen jerry you passed something that isn't a string as a glide's source. Go do it over again")
+	// How many moves it takes for us to animate over a full tile's distance
+	var/end_target = round(world.icon_size / value * world.tick_lag, world.tick_lag) + world.time
+
+	// If this is a list, we add to it as such
+	// If it's not, we either make it one, or just reset the values
+	// I'm sorry
+	if(islist(glide_sources))
+		var/current_index = glide_sources.Find(source)
+		// If we already have this source
+		if(current_index) // Refresh it
+			glide_sources[current_index] = source
+			glide_sizes[current_index] = value
+			glide_delays[current_index] = end_target
+		else // Otherwise just insert our new info
+			glide_sources += source
+			glide_sizes += value
+			glide_delays += end_target
+	else
+		if(glide_sources != source && glide_delays > world.time) // Become a list brother
+			glide_sources = list(glide_sources, source)
+			glide_sizes = list(glide_sizes, value)
+			glide_delays = list(glide_delays, end_target)
+		else // not a valid readdition? set the values lads
+			glide_sources = source
+			glide_sizes = value
+			glide_delays = end_target
+
+	update_glide_size()
+
+/atom/movable/proc/update_glide_size()
+	var/current_size = 0
+	// If we're operating with a list of delays
+	if(islist(glide_sources))
+		// Iterate all our vars
+		for(var/index in 1 to glide_sources.len)
+			// If the delay is too old, nuke it
+			if(world.time >= glide_delays[index])
+				glide_sources.Cut(index, index + 1)
+				glide_sizes.Cut(index, index + 1)
+				glide_delays.Cut(index, index + 1)
+				continue
+			current_size += glide_sizes[index]
+		//Ok we only have one valid entry, reset to it then
+		var/length = length(glide_sources)
+		if(length <= 1)
+			if(length == 1)
+				glide_sources = glide_sources[1]
+				glide_sizes = glide_sources[1]
+				glide_delays = glide_sources[1]
+			else
+				glide_sources = null
+				glide_sizes = null
+				glide_delays = null
+	else
+		current_size = glide_sizes
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, current_size)
+	glide_size = current_size
 
 	for(var/m in buckled_mobs)
 		var/mob/buckled_mob = m
-		buckled_mob.set_glide_size(target)
+		buckled_mob.set_glide_size(current_size)
 
 /**
  * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
@@ -535,7 +615,7 @@
 	var/atom/oldloc = loc
 	//Early override for some cases like diagonal movement
 	if(glide_size_override)
-		set_glide_size(glide_size_override)
+		add_glide_source(glide_size_override, "ourselves")
 
 	if(loc != newloc)
 		if (!(direct & (direct - 1))) //Cardinal move
@@ -975,7 +1055,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
 		return TRUE
 
-	set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay))
+	add_glide_source(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay), "ourselves")
 	AddComponent(/datum/component/drift, direction, instant)
 
 	return TRUE

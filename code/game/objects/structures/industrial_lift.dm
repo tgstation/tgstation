@@ -304,11 +304,10 @@ GLOBAL_LIST_EMPTY(lifts)
 			//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
 			var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
 			collided.throw_at(throw_target, 200, 4, callback = land_slam)
-
-	set_glide_size(gliding_amount)
+	add_glide_source(gliding_amount, "tram")
 	forceMove(destination)
 	for(var/atom/movable/thing as anything in things_to_move)
-		thing.set_glide_size(gliding_amount) //matches the glide size of the moving platform to stop them from jittering on it.
+		thing.add_glide_source(gliding_amount, "tram") //matches the glide size of the moving platform to stop them from jittering on it.
 		thing.forceMove(destination)
 
 /obj/structure/industrial_lift/proc/use(mob/living/user)
