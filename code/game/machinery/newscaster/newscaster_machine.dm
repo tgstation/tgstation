@@ -51,6 +51,9 @@
 	///Text of the currently written bounty
 	var/bounty_text = ""
 
+/obj/machinery/newscaster/pai/ui_state(mob/user)
+	return GLOB.reverse_contained_state
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 /obj/machinery/newscaster/Initialize(mapload, ndir, building)
@@ -109,7 +112,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		ui.open()
 	alert = FALSE //We're checking our messages!
 	update_icon()
-
 
 /obj/machinery/newscaster/ui_data(mob/user)
 	var/list/data = list()
