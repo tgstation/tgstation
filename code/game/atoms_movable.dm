@@ -33,8 +33,10 @@
 	var/pass_flags = NONE
 	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
-	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
-	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
+	///0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/moving_diagonally = 0
+	///attempt to resume grab after moving instead of before.
+	var/atom/movable/moving_from_pull
 	///Holds information about any movement loops currently running/waiting to run on the movable. Lazy, will be null if nothing's going on
 	var/datum/movement_packet/move_packet
 	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
@@ -443,7 +445,10 @@
  */
 /atom/movable/proc/abstract_move(atom/new_loc)
 	var/atom/old_loc = loc
+	var/direction = get_dir(old_loc, new_loc)
+	old_loc.abstract_exited(src, direction)
 	loc = new_loc
+	new_loc.abstract_entered(src, old_loc)
 	Moved(old_loc)
 
 ////////////////////////////////////////
@@ -654,8 +659,8 @@
 
 	if (!inertia_moving && momentum_change)//not sure about this one
 		newtonian_move(movement_dir)
-	///if (client_mobs_in_contents)//signal-able
-	//	update_parallax_contents()
+	if (client_mobs_in_contents)
+		update_parallax_contents()
 	//for (var/datum/light_source/light as anything in light_sources) // Cycle through the light sources on this atom and tell them to update.
 	//	light.source_atom.update_light() //signal-able
 

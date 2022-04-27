@@ -222,15 +222,11 @@
 		return FALSE
 
 	LAZYADD(client_mobs_in_contents, client_mob)
-	client_mob.RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/update_parallax_contents)
 
 /atom/movable/proc/remove_client_mob_in_contents(mob/client_mob)
 	LAZYREMOVE(client_mobs_in_contents, client_mob)
-	if(!length(client_mobs_in_contents))
-		client_mob?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 /atom/movable/proc/update_parallax_contents()
-	SIGNAL_HANDLER
 	for(var/mob/client_mob as anything in client_mobs_in_contents)
 		if(length(client_mob?.client?.parallax_layers) && client_mob.hud_used)
 			client_mob.hud_used.update_parallax()
