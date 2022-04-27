@@ -158,11 +158,8 @@
 
 /obj/item/knife/shiv/plasma
 	name = "plasma shiv"
-	icon = 'icons/obj/shards.dmi'
 	icon_state = "plasmashiv"
 	inhand_icon_state = "plasmashiv"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A makeshift plasma glass shiv."
 	force = 9
 	throwforce = 13
@@ -171,13 +168,9 @@
 
 /obj/item/knife/shiv/titanium
 	name = "titanium shiv"
-	icon = 'icons/obj/shards.dmi'
 	icon_state = "titaniumshiv"
 	inhand_icon_state = "titaniumshiv"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A makeshift titanium infused glass shiv."
-	force = 8
 	throwforce = 14
 	throw_range = 7
 	wound_bonus = 10
@@ -186,13 +179,11 @@
 
 /obj/item/knife/shiv/plastitanium
 	name = "plastitanium shiv"
-	icon = 'icons/obj/shards.dmi'
 	icon_state = "plastitaniumshiv"
 	inhand_icon_state = "plastitaniumshiv"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A makeshift titanium infused plasma glass shiv."
 	throwforce = 15
+	throw_speed = 4
 	throw_range = 8
 	wound_bonus = 10
 	bare_wound_bonus = 20
