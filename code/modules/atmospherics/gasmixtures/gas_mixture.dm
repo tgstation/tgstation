@@ -652,9 +652,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	/// x^0 in the quadratic
 	var/c_value = (-1*pvr*c1) + n1 * w1
 
-	. = gas_pressure_quadratic(a_value, b_value, c_value, lower_limit, upper_limit)
-	if(.)
-		return
+	//. = gas_pressure_quadratic(a_value, b_value, c_value, lower_limit, upper_limit)
+	//if(.)
+	//	return
 	. = gas_pressure_approximate(a_value, b_value, c_value, lower_limit, upper_limit)
 	if(.)
 		return
@@ -677,10 +677,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/gas_pressure_approximate(a, b, c, lower_limit, upper_limit)
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		// We need to start off at a reasonably good estimate. 
-		// Better start big so we are as far away from the negative root.
-		// There is a significant risk of touching inf though
-		solution = IS_INF_OR_NAN(upper_limit) ? upper_limit : lower_limit
+		// We start at the extrema of the equation, added by a number.
+		// This way we will hopefully always converge on the positive root, while starting at a reasonable number.
+		solution = (-b / (2*a)) + 200
 		for (var/iteration in 1 to ATMOS_PRESSURE_APPROXIMATION_ITERATIONS)
 			var/diff = (a*solution**2 + b*solution + c) / (2*a*solution + b) // f(sol) / f'(sol)
 			solution -= diff // xn+1 = xn - f(sol) / f'(sol)
