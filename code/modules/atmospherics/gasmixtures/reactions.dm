@@ -742,7 +742,7 @@
 /datum/gas_reaction/freonformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/minimal_mole_factor = min(cached_gases[/datum/gas/plasma][MOLES] * 0.6, cached_gases[/datum/gas/bz][MOLES] * 0.1, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 0.3)
+	var/minimal_mole_factor = min(cached_gases[/datum/gas/plasma][MOLES] *  INVERSE(0.6), cached_gases[/datum/gas/bz][MOLES] *  INVERSE(0.1), cached_gases[/datum/gas/carbon_dioxide][MOLES] *  INVERSE(0.3))
 
 	var/equation_first_part = NUM_E ** (-((temperature - 800) / 200) ** 2)
 	var/equation_second_part = 3 / (1 + NUM_E ** (-0.001 * (temperature - 6000)))
