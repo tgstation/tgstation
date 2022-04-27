@@ -45,9 +45,8 @@
 	var/can_off_process = FALSE
 	/// When fuel was last removed.
 	var/burned_fuel_for = 0
-	/// Activation sound path.
+
 	var/activation_sound = 'sound/items/welderactivate.ogg'
-	/// Deactivation sound path.
 	var/deactivation_sound = 'sound/items/welderdeactivate.ogg'
 
 /obj/item/weldingtool/Initialize(mapload)
