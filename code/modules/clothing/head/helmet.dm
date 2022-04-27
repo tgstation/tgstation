@@ -137,7 +137,7 @@
 	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	inhand_icon_state = "blueshift"
-	custom_premium_price = PAYCHECK_HARD
+	custom_premium_price = PAYCHECK_COMMAND
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -234,7 +234,7 @@
 	desc = "A british looking helmet."
 	icon_state = "constable"
 	inhand_icon_state = "constable"
-	custom_price = PAYCHECK_HARD * 1.5
+	custom_price = PAYCHECK_COMMAND * 1.5
 	worn_y_offset = 4
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
