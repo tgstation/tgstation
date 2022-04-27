@@ -258,7 +258,6 @@
 		bloody_feet = mutable_appearance('icons/effects/blood.dmi', "shoeblood", SHOES_LAYER)
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
-	//RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved) //TODOKYLER: dont forget this
 	RegisterSignal(parent, COMSIG_STEP_ON_BLOOD, .proc/on_step_blood)
 	RegisterSignal(parent, COMSIG_CARBON_UNEQUIP_SHOECOVER, .proc/unequip_shoecover)
 	RegisterSignal(parent, COMSIG_CARBON_EQUIP_SHOECOVER, .proc/equip_shoecover)
