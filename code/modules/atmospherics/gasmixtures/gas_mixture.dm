@@ -652,9 +652,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	/// x^0 in the quadratic
 	var/c_value = (-1*pvr*c1) + n1 * w1
 
-	//. = gas_pressure_quadratic(a_value, b_value, c_value, lower_limit, upper_limit)
-	//if(.)
-	//	return
+	. = gas_pressure_quadratic(a_value, b_value, c_value, lower_limit, upper_limit)
+	if(.)
+		return
 	. = gas_pressure_approximate(a_value, b_value, c_value, lower_limit, upper_limit)
 	if(.)
 		return
