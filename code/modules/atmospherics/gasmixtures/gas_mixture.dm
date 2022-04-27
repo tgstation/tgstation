@@ -667,7 +667,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
 		solution = max(SolveQuadratic(a, b, c)) 
-		if((solution >= lower_limit) && (solution <= upper_limit)) //SolveQuadratic can return empty lists so be careful here
+		if((solution > lower_limit) && (solution < upper_limit)) //SolveQuadratic can return empty lists so be careful here
 			return solution
 	stack_trace("Failed to solve pressure quadratic equation. A: [a]. B: [b]. C:[c]. Current value = [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")
 	return FALSE
@@ -684,7 +684,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		for (var/iteration in 1 to ATMOS_PRESSURE_APPROXIMATION_ITERATIONS)
 			var/diff = (a*solution**2 + b*solution + c) / (2*a*solution + b) // f(sol) / f'(sol)
 			solution -= diff // xn+1 = xn - f(sol) / f'(sol)
-			if(abs(diff) < MOLAR_ACCURACY && (solution >= lower_limit) && (solution <= upper_limit))
+			if(abs(diff) < MOLAR_ACCURACY && (solution > lower_limit) && (solution < upper_limit))
 				return solution
 	stack_trace("Newton's Approximation for pressure failed after [ATMOS_PRESSURE_APPROXIMATION_ITERATIONS] iterations. A: [a]. B: [b]. C:[c]. Current value: [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")
 	return FALSE
