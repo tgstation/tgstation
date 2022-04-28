@@ -776,7 +776,7 @@
 	var/list/chameleon_projectile_vars
 
 	/// The badmin mode. Makes your projectiles act like the real deal.
-	var/real_hits
+	var/real_hits = FALSE
 
 /obj/item/gun/energy/laser/chameleon/New()
 	..()
