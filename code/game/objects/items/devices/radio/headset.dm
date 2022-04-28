@@ -32,6 +32,13 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
 	return TOXLOSS
 
+/obj/item/radio/headset/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/headset/say_sec_report))
+		if(HAS_TRAIT(user, TRAIT_KNOW_SECURITY_REPORTS))
+			security_report(user, src)
+		else
+			to_chat(usr, span_warning("Oh no! To radiate a security report, you need to know its form."))
+
 /obj/item/radio/headset/examine(mob/user)
 	. = ..()
 
@@ -112,12 +119,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_sec
 	name = "security radio headset"
+	actions_types = list(/datum/action/item_action/headset/say_sec_report)
 	desc = "This is used by your elite security force."
 	icon_state = "sec_headset"
 	keyslot = new /obj/item/encryptionkey/headset_sec
 
 /obj/item/radio/headset/headset_sec/alt
 	name = "security bowman headset"
+	actions_types = list(/datum/action/item_action/headset/say_sec_report)
 	desc = "This is used by your elite security force. Protects ears from flashbangs."
 	icon_state = "sec_headset_alt"
 	inhand_icon_state = "sec_headset_alt"
@@ -201,12 +210,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/heads/hos
 	name = "\proper the head of security's headset"
+	actions_types = list(/datum/action/item_action/headset/say_sec_report)
 	desc = "The headset of the man in charge of keeping order and protecting the station."
 	icon_state = "com_headset"
 	keyslot = new /obj/item/encryptionkey/heads/hos
 
 /obj/item/radio/headset/heads/hos/alt
 	name = "\proper the head of security's bowman headset"
+	actions_types = list(/datum/action/item_action/headset/say_sec_report)
 	desc = "The headset of the man in charge of keeping order and protecting the station. Protects ears from flashbangs."
 	icon_state = "com_headset_alt"
 	inhand_icon_state = "com_headset_alt"
@@ -355,3 +366,55 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if (command)
 		use_command = !use_command
 		to_chat(user, span_notice("You toggle high-volume mode [use_command ? "on" : "off"]."))
+
+/obj/item/radio/headset/proc/security_report(mob/user, obj/item/radio/headset/radio)
+	//I don't know how to make the presentation more convenient. Let it be like this for now.
+	var/list/options = sort_list(list(
+			"Combat Actions" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "combat"),
+			"Detecting" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "detecting"),
+			"Status" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "status"),
+			"Support Request" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "request")
+		))
+	var/option = show_radial_menu(user, user, options)
+	if(!option)
+		return FALSE
+	switch(option)
+		if("Combat Actions")
+			options = list(
+				"Pursuing the perpetrator" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "pursuing"),
+				"I'm fighting" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "fighting"),
+				"I'm hurt" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "hurt"),
+				"Taking combat losses" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "losses"),
+				"Retreat" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "retreat")
+			)
+		if("Detecting")
+			options = list(
+				"Station damage" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "station_damage"),
+				"Fire" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "fire"),
+				"Depressurization" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "depressurization"),
+				"Criminal trail" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "criminal_trail"),
+				"Corpse" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "corpse"),
+				"Perpetrator" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "perpetrator"),
+				"Dangerous perpetrator" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "dangerous_perpetrator")
+			)
+		if("Status")
+			options = list(
+				"Positive" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "positive"),
+				"Negative" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "negative"),
+				"My location" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "my_loc"),
+				"Busy" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "busy"),
+				"Available" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "available")
+			)
+		if("Support Request")
+			options = list(
+				"Requesting a detective" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "detective_support"),
+				"Requesting combat support" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "combat_support"),
+				"Requesting Engineering assistance" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "engineering_assistance"),
+				"Requesting Medical assistance" = image(icon = 'icons/mob/actions/action_security.dmi', icon_state = "medical_assistance")
+			)
+	var/message = show_radial_menu(user, user, options)
+	if(!message)
+		return FALSE
+	message = "[message]. [get_area(user)]."
+	radio.talk_into(user, "[message]", "Security")
+	user.say(message)
