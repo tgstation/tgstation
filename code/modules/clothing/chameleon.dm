@@ -778,16 +778,14 @@
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits
 
-/obj/item/gun/energy/laser/chameleon/New()
-	..()
+/obj/item/gun/energy/laser/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/gun
 	chameleon_action.chameleon_name = "Gun"
 	chameleon_action.chameleon_blacklist = typesof(/obj/item/gun/magic, /obj/item/gun/energy/minigun)
 	chameleon_action.initialize_disguises()
 
-/obj/item/gun/energy/laser/chameleon/Initialize(mapload)
-	. = ..()
 	recharge_newshot()
 	get_chameleon_projectile(/obj/item/gun/energy/laser)
 
