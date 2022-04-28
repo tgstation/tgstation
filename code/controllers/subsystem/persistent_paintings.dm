@@ -1,7 +1,7 @@
 #define PAINTINGS_DATA_FORMAT_VERSION 2
 
 // Patronage thresholds for paintings. Different cosmetic frames become available as more credits are spent on the patronage.
-#define PATRONAGE_OK_FRAME PAYCHECK_ASSISTANT * 3 // 150 credits, as of early 2022
+#define PATRONAGE_OK_FRAME PAYCHECK_CREW * 3 // 150 credits, as of march 2022
 #define PATRONAGE_NICE_FRAME PATRONAGE_OK_FRAME * 2.5
 #define PATRONAGE_GREAT_FRAME PATRONAGE_NICE_FRAME * 2
 #define PATRONAGE_EXCELLENT_FRAME PATRONAGE_GREAT_FRAME * 2

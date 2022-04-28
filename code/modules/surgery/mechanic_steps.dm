@@ -122,7 +122,7 @@
 		span_notice("[user] begins to open the hatch holders in [target]'s [parse_zone(target_zone)]."))
 	display_pain(target, "The last faint pricks of tactile sensation fade from your [parse_zone(target_zone)] as the hatch is opened.", TRUE)
 
-/datum/surgery_step/mechanic_unwrench/tool_check(mob/user, obj/item/tool)
+/datum/surgery_step/open_hatch/tool_check(mob/user, obj/item/tool)
 	if(tool.usesound)
 		preop_sound = tool.usesound
 

@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Jobs who spawn with tablets not on the belt, have their name and job properly displayed on the tablet, like everyone else."

@@ -25,13 +25,14 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
-	if(LAZYLEN(status_effects))
-		for(var/s in status_effects)
-			var/datum/status_effect/S = s
-			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
-				qdel(S)
-			else
-				S.be_replaced()
+	for(var/datum/status_effect/effect as anything in status_effects)
+		// The status effect calls on_remove when its mob is deleted
+		if(effect.on_remove_on_mob_delete)
+			qdel(effect)
+
+		else
+			effect.be_replaced()
+
 	if(ranged_ability)
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
@@ -1069,30 +1070,35 @@
 	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
-	var/was_weightless = alerts[ALERT_GRAVITY] && istype(alerts[ALERT_GRAVITY], /atom/movable/screen/alert/weightless)
-	var/was_negative = alerts[ALERT_GRAVITY] && istype(alerts[ALERT_GRAVITY], /atom/movable/screen/alert/negative)
+	var/atom/movable/screen/alert/gravity_alert = alerts[ALERT_GRAVITY]
 	switch(gravity)
-		if(NEGATIVE_GRAVITY_RANGE)
-			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/negative)
-			if(!was_negative)
+		if(-INFINITY to NEGATIVE_GRAVITY)
+			if(!istype(gravity_alert, /atom/movable/screen/alert/negative))
+				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/negative)
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
 				flipped_matrix.e = -flipped_matrix.e
 				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT)
 				base_pixel_y += 4
-		if(WEIGHTLESS_RANGE)
-			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
-			if(!was_weightless)
+		if(NEGATIVE_GRAVITY + 0.01 to 0)
+			if(!istype(gravity_alert, /atom/movable/screen/alert/weightless))
+				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
 				ADD_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
-		if(STANDRARD_GRAVITY_RANGE)
-			clear_alert(ALERT_GRAVITY)
-		if(HIGH_GRAVITY_RANGE)
+		if(0.01 to STANDARD_GRAVITY)
+			if(gravity_alert)
+				clear_alert(ALERT_GRAVITY)
+		if(STANDARD_GRAVITY + 0.01 to GRAVITY_DAMAGE_THRESHOLD - 0.01)
 			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/highgravity)
-		if(CRUSHING_GRAVITY_RANGE)
+		if(GRAVITY_DAMAGE_THRESHOLD to INFINITY)
 			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/veryhighgravity)
-	if(!(gravity in WEIGHTLESS_RANGE) && was_weightless)
+
+	// If we had no gravity alert, or the same alert as before, go home
+	if(!gravity_alert || alerts[ALERT_GRAVITY] == gravity_alert)
+		return
+	// By this point we know that we do not have the same alert as we used to
+	if(istype(gravity_alert, /atom/movable/screen/alert/weightless))
 		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
-	if(!(gravity in NEGATIVE_GRAVITY_RANGE) && was_negative)
+	if(istype(gravity_alert, /atom/movable/screen/alert/negative))
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
 		flipped_matrix.e = -flipped_matrix.e
@@ -1392,16 +1398,16 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	if(fire_stacks > 0 && !on_fire)
-		on_fire = TRUE
-		src.visible_message(span_warning("[src] catches fire!"), \
-						span_userdanger("You're set on fire!"))
-		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire)
-		update_fire()
-		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
-		return TRUE
-	return FALSE
+	if(fire_stacks <= 0 || on_fire)
+		return FALSE
+	on_fire = TRUE
+	src.visible_message(span_warning("[src] catches fire!"), \
+					span_userdanger("You're set on fire!"))
+	firelight_ref = WEAKREF(new /obj/effect/dummy/lighting_obj/moblight/fire(src))
+	throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire)
+	update_fire()
+	SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
+	return TRUE
 
 /**
  * Extinguish all fire on the mob
@@ -1414,8 +1420,7 @@
 		return
 	on_fire = FALSE
 	fire_stacks = min(0, fire_stacks) //Makes sure we don't get rid of negative firestacks.
-	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
-		qdel(F)
+	QDEL_NULL(firelight_ref)
 	clear_alert(ALERT_FIRE)
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 	SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
@@ -1630,9 +1635,6 @@
 				return FALSE
 		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
 			return FALSE
-		if(NAMEOF(src, druggy))
-			set_drugginess(var_value)
-			. = TRUE
 		if(NAMEOF(src, resting))
 			set_resting(var_value)
 			. = TRUE

@@ -457,16 +457,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	desc = "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
 	icon_state = "donk_co"
 
-/obj/structure/sign/poster/contraband/lizards_gas_payment
-	name = "Please Pay"
-	desc = "A crudely-made poster asking the reader to please pay for any items they may wish to leave the station with."
-	icon_state = "gas_payment"
-
-/obj/structure/sign/poster/contraband/lizards_gas_power
-	name = "Conserve Power"
-	desc = "A crudely-made poster asking the reader to turn off the power before they leave. Hopefully, it's turned on for their re-opening."
-	icon_state = "gas_power"
-
 /obj/structure/sign/poster/contraband/donk_co/examine_more(mob/user)
 	. = ..()
 	. += span_notice("<i>You browse some of the poster's information...</i>")
@@ -784,5 +774,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 	icon_state = "aspev_delam"
 //End of AspEv posters
 
+/obj/structure/sign/poster/fluff/lizards_gas_payment
+	name = "Please Pay"
+	desc = "A crudely-made poster asking the reader to please pay for any items they may wish to leave the station with."
+	icon_state = "gas_payment"
+
+/obj/structure/sign/poster/fluff/lizards_gas_power
+	name = "Conserve Power"
+	desc = "A crudely-made poster asking the reader to turn off the power before they leave. Hopefully, it's turned on for their re-opening."
+	icon_state = "gas_power"
 
 #undef PLACE_SPEED

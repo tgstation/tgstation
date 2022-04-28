@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "Nullwave Vibrato now works as intended, stacking antimagic duration"
+  - balance: "Nullwave Vibrato stacks 10 seconds of antimagic, every few moments you listen to it."

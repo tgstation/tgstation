@@ -16,6 +16,8 @@
 	var/husk_type = "humanoid"
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
+	/// The mob that "owns" this limb
+	/// DO NOT MODIFY DIRECTLY. Use set_owner()
 	var/mob/living/carbon/owner
 
 	///A bitfield of bodytypes for clothing, surgery, and misc information
@@ -41,6 +43,7 @@
 	var/aux_layer
 	/// bitflag used to check which clothes cover this bodypart
 	var/body_part
+	/// List of obj/item's embedded inside us. Managed by embedded components, do not modify directly
 	var/list/embedded_objects = list()
 	/// are we a hand? if so, which one!
 	var/held_index = 0
@@ -124,6 +127,8 @@
 	var/scars_covered_by_clothes = TRUE
 	/// So we know if we need to scream if this limb hits max damage
 	var/last_maxed
+	/// Our current bleed rate. Cached, update with refresh_bleed_rate()
+	var/cached_bleed_rate = 0
 	/// How much generic bleedstacks we have on this bodypart
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
@@ -144,6 +149,7 @@
 
 	name = "[limb_id] [parse_zone(body_zone)]"
 	update_icon_dropped()
+	refresh_bleed_rate()
 
 /obj/item/bodypart/Destroy()
 	if(owner)
@@ -507,11 +513,10 @@
 
 	if(owner == new_owner)
 		return FALSE //`null` is a valid option, so we need to use a num var to make it clear no change was made.
-	. = owner
+	var/mob/living/carbon/old_owner = owner
 	owner = new_owner
 	var/needs_update_disabled = FALSE //Only really relevant if there's an owner
-	if(.)
-		var/mob/living/carbon/old_owner = .
+	if(old_owner)
 		if(initial(can_be_disabled))
 			if(HAS_TRAIT(old_owner, TRAIT_NOLIMBDISABLE))
 				if(!owner || !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
@@ -520,6 +525,8 @@
 			UnregisterSignal(old_owner, list(
 				SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE),
 				SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
+				SIGNAL_REMOVETRAIT(TRAIT_NOBLEED),
+				SIGNAL_ADDTRAIT(TRAIT_NOBLEED),
 				))
 	if(owner)
 		if(initial(can_be_disabled))
@@ -528,8 +535,15 @@
 				needs_update_disabled = FALSE
 			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE), .proc/on_owner_nolimbdisable_trait_loss)
 			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE), .proc/on_owner_nolimbdisable_trait_gain)
+			// Bleeding stuff
+			RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_NOBLEED), .proc/on_owner_nobleed_loss)
+			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBLEED), .proc/on_owner_nobleed_gain)
+
 		if(needs_update_disabled)
 			update_disabled()
+
+	refresh_bleed_rate()
+	return old_owner
 
 
 ///Proc to change the value of the `can_be_disabled` variable and react to the event of its change.
@@ -615,7 +629,7 @@
 		dmg_overlay_type = initial(dmg_overlay_type)
 		is_husked = FALSE
 
-	if(!dropping_limb && owner.dna?.check_mutation(/datum/mutation/human/hulk)) //Please remove hulk from the game. I beg you.
+	if(!dropping_limb && owner.dna?.check_mutation(/datum/mutation/human/hulk))
 		mutation_color = "#00aa00"
 	else
 		mutation_color = null
@@ -786,42 +800,95 @@
 	drop_organs()
 	return ..()
 
-/**
- * Calculates how much blood this limb is losing per life tick
- *
- * Arguments:
- * * ignore_modifiers - If TRUE, ignore the bleed reduction for laying down and grabbing your limb
- */
-/obj/item/bodypart/proc/get_part_bleed_rate(ignore_modifiers = FALSE)
+/// INTERNAL PROC, DO NOT USE
+/// Properly sets us up to manage an inserted embeded object
+/obj/item/bodypart/proc/_embed_object(obj/item/embed)
+	if(embed in embedded_objects) // go away
+		return
+	// We don't need to do anything with projectile embedding, because it will never reach this point
+	RegisterSignal(embed, COMSIG_ITEM_EMBEDDING_UPDATE, .proc/embedded_object_changed)
+	embedded_objects += embed
+	refresh_bleed_rate()
+
+/// INTERNAL PROC, DO NOT USE
+/// Cleans up any attachment we have to the embedded object, removes it from our list
+/obj/item/bodypart/proc/_unembed_object(obj/item/unembed)
+	UnregisterSignal(unembed, COMSIG_ITEM_EMBEDDING_UPDATE)
+	embedded_objects -= unembed
+	refresh_bleed_rate()
+
+/obj/item/bodypart/proc/embedded_object_changed(obj/item/embedded_source)
+	SIGNAL_HANDLER
+	/// Embedded objects effect bleed rate, gotta refresh lads
+	refresh_bleed_rate()
+
+/// Sets our generic bleedstacks
+/obj/item/bodypart/proc/setBleedStacks(set_to)
+	SHOULD_CALL_PARENT(TRUE)
+	adjustBleedStacks(set_to - generic_bleedstacks)
+
+/// Modifies our generic bleedstacks. You must use this to change the variable
+/// Takes the amount to adjust by, and the lowest amount we're allowed to have post adjust
+/obj/item/bodypart/proc/adjustBleedStacks(adjust_by, minimum = -INFINITY)
+	if(!adjust_by)
+		return
+	var/old_bleedstacks = generic_bleedstacks
+	generic_bleedstacks = max(generic_bleedstacks + adjust_by, minimum)
+
+	// If we've started or stopped bleeding, we need to refresh our bleed rate
+	if((old_bleedstacks <= 0 && generic_bleedstacks > 0) \
+		|| old_bleedstacks > 0 && generic_bleedstacks <= 0)
+		refresh_bleed_rate()
+
+/obj/item/bodypart/proc/on_owner_nobleed_loss(datum/source)
+	SIGNAL_HANDLER
+	refresh_bleed_rate()
+
+/obj/item/bodypart/proc/on_owner_nobleed_gain(datum/source)
+	SIGNAL_HANDLER
+	refresh_bleed_rate()
+
+/// Refresh the cache of our rate of bleeding sans any modifiers
+/// ANYTHING ADDED TO THIS PROC NEEDS TO CALL IT WHEN IT'S EFFECT CHANGES
+/obj/item/bodypart/proc/refresh_bleed_rate()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(HAS_TRAIT(owner, TRAIT_NOBLEED))
-		return
-	if(!IS_ORGANIC_LIMB(src))// maybe in the future we can bleed oil from aug parts, but not now
+	var/old_bleed_rate = cached_bleed_rate
+	cached_bleed_rate = 0
+	if(!owner)
 		return
 
-	var/bleed_rate = 0
+	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || !IS_ORGANIC_LIMB(src))
+		if(cached_bleed_rate != old_bleed_rate)
+			update_part_wound_overlay()
+		return
+
 	if(generic_bleedstacks > 0)
-		bleed_rate += 0.5
+		cached_bleed_rate += 0.5
 
-	//We want an accurate reading of .len
-	list_clear_nulls(embedded_objects)
 	for(var/obj/item/embeddies in embedded_objects)
 		if(!embeddies.isEmbedHarmless())
-			bleed_rate += 0.25
+			cached_bleed_rate += 0.25
 
 	for(var/datum/wound/iter_wound as anything in wounds)
-		bleed_rate += iter_wound.blood_flow
+		cached_bleed_rate += iter_wound.blood_flow
 
-	if(!ignore_modifiers)
-		if(owner.body_position == LYING_DOWN)
-			bleed_rate *= 0.75
-		if(grasped_by)
-			bleed_rate *= 0.7
-
-	if(!bleed_rate)
+	if(!cached_bleed_rate)
 		QDEL_NULL(grasped_by)
 
+	// Our bleed overlay is based directly off bleed_rate, so go aheead and update that would you?
+	if(cached_bleed_rate != old_bleed_rate)
+		update_part_wound_overlay()
+
+	return cached_bleed_rate
+
+/// Returns our bleed rate, taking into account laying down and grabbing the limb
+/obj/item/bodypart/proc/get_modified_bleed_rate()
+	var/bleed_rate = cached_bleed_rate
+	if(owner.body_position == LYING_DOWN)
+		bleed_rate *= 0.75
+	if(grasped_by)
+		bleed_rate *= 0.7
 	return bleed_rate
 
 // how much blood the limb needs to be losing per tick (not counting laying down/self grasping modifiers) to get the different bleed icons
@@ -838,8 +905,8 @@
 			owner.update_wound_overlays()
 		return FALSE
 
-	var/bleed_rate = get_part_bleed_rate(ignore_modifiers = TRUE)
-	var/new_bleed_icon
+	var/bleed_rate = cached_bleed_rate
+	var/new_bleed_icon = null
 
 	switch(bleed_rate)
 		if(-INFINITY to BLEED_OVERLAY_LOW)
@@ -859,7 +926,7 @@
 
 	if(new_bleed_icon != bleed_overlay_icon)
 		bleed_overlay_icon = new_bleed_icon
-		return TRUE
+		owner.update_wound_overlays()
 
 #undef BLEED_OVERLAY_LOW
 #undef BLEED_OVERLAY_MED

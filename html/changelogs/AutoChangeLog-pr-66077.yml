@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - qol: "Change AI upload lawsets to be randomized"
-  - code_imp: "Reorganize AI lawset code and remove deprecated malfunction code"

@@ -1,6 +1,5 @@
 /obj/projectile/magic/spell
 	name = "custom spell projectile"
-	var/list/ignored_factions //Do not hit these
 	var/trigger_range = 0 //How far we do we need to be to hit
 	var/linger = FALSE //Can't hit anything but the intended target
 
@@ -37,14 +36,9 @@
 	QDEL_IN(trail, trail_lifespan)
 
 /obj/projectile/magic/spell/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
-	. = ..()
 	if(linger && target != original)
 		return FALSE
-	if(ismob(target) && !direct_target) //Unsure about the direct target, i guess it could always skip these.
-		var/mob/M = target
-		if(ignored_factions?.len && faction_check(M.faction,ignored_factions))
-			return FALSE
-
+	return ..()
 
 //NEEDS MAJOR CODE CLEANUP.
 

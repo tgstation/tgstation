@@ -331,6 +331,12 @@
 	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
 	cost = 6
 
+/datum/uplink_item/ammo/sniper/marksman
+	name = ".50 Marksman Magazine"
+	desc = "A 5-round magazine of marksman ammo designed for use with .50 sniper rifles. Blast your enemies with instant shots!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
+	cost = 5
+
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"
 	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
@@ -595,6 +601,12 @@
 			and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, an antiprojectile armor booster and a Tesla energy array."
 	item = /obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded
 	cost = 140
+
+/datum/uplink_item/support/turretbox
+	name = "Disposable Sentry Gun"
+	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
+	item = /obj/item/storage/toolbox/emergency/turret/nukie
+	cost = 16
 
 /datum/uplink_item/stealthy_tools/combatbananashoes
 	name = "Combat Banana Shoes"
