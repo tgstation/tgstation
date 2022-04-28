@@ -1,0 +1,4 @@
+author: "Cenrus"
+delete-after: True
+changes: 
+  - bugfix: "Fixed lionhunter ammo sidepath"
