@@ -796,7 +796,7 @@
 
 /**
  * Description: Resets the currently loaded chameleon variables, essentially resetting it to brand new.
- * Arguements: []
+ * Arguments: []
  */
 /obj/item/gun/energy/laser/chameleon/proc/reset_chameleon_vars()
 	chameleon_projectile_vars = list()
@@ -815,7 +815,7 @@
 
 /**
  * Description: Sets what gun we should be mimicking.
- * Arguements: [obj/item/gun/gun_to_set (the gun we're trying to mimic), passthrough (whether or not we're setting ammo too)]
+ * Arguments: [obj/item/gun/gun_to_set (the gun we're trying to mimic), passthrough (whether or not we're setting ammo too)]
  */
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_gun(obj/item/gun/gun_to_set, passthrough = TRUE)
 	if(!istype(gun_to_set))
@@ -858,7 +858,7 @@
 
 /**
  * Description: Sets the ammo type our gun should have.
- * Arguements: [obj/item/ammo_casing/cartridge (the ammo_casing we're trying to copy), passthrough (whether or not we're the loaded projectile too)]
+ * Arguments: [obj/item/ammo_casing/cartridge (the ammo_casing we're trying to copy), passthrough (whether or not we're the loaded projectile too)]
  */
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/cartridge, passthrough = TRUE)
 	if(!istype(cartridge))
@@ -871,7 +871,7 @@
 
 /**
  * Description: Sets the current projectile variables for our chameleon gun.
- * Arguements: [obj/projectile/cham_projectile (the projectile we're trying to copy)]
+ * Arguments: [obj/projectile/cham_projectile (the projectile we're trying to copy)]
  */
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_projectile(obj/projectile/cham_projectile)
 	if(!istype(cham_projectile))
@@ -920,7 +920,7 @@
 
 /**
  * Description: Resets our chameleon variables, then resets the entire gun to mimic the given guntype.
- * Arguements: [guntype (the gun we're copying, pathtyped to obj/item/gun)]
+ * Arguments: [guntype (the gun we're copying, pathtyped to obj/item/gun)]
  */
 /obj/item/gun/energy/laser/chameleon/proc/get_chameleon_projectile(guntype)
 	reset_chameleon_vars()
