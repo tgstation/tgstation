@@ -1,0 +1,5 @@
+author: "ErdinyoBarboza"
+delete-after: True
+changes: 
+  - bugfix: "Adds proper cycling to DeltaStation RnD Circuit-Toxin area."
+  - bugfix: "Removes a duplicate APC from DeltaStation brig."
