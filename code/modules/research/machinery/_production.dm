@@ -172,8 +172,9 @@
 		if(!reagents.has_reagent(R, D.reagents_list[R]*print_quantity/coeff))
 			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
 			return FALSE
-	var/total_cost = LATHE_TAX
+	var/total_cost = 0
 	if(is_station_level(z) && isliving(usr)) //We don't block purchases off station Z.
+		total_cost = LATHE_TAX
 		var/mob/living/user = usr
 		var/obj/item/card/id/card = user.get_idcard(TRUE)
 		if(!card && istype(user.pulling, /obj/item/card/id))
@@ -182,10 +183,10 @@
 			var/datum/bank_account/our_acc = card.registered_account
 			if(our_acc.account_job && SSeconomy.get_dep_account(our_acc.account_job?.paycheck_department) == SSeconomy.get_dep_account(payment_department))
 				total_cost = 0 //We are not charging crew for printing their own supplies and equipment.
-	if(attempt_charge(src, usr, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
+	if(attempt_charge(src, usr, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE) //note that, as of the time of the writing of this comment, attempt_charge() returns false if you're a silicon, so even if a silicon is dragging a card, they (currently) can't make the card pay the tax instead of their cell. they can still get the departmental discount, though.
 		return FALSE
 
-	if(iscyborg(usr))
+	if(iscyborg(usr) && total_cost) //don't charge borgs for items that are supposed to be taxless
 		var/mob/living/silicon/robot/borg = usr
 		if(!borg.cell)
 			return
