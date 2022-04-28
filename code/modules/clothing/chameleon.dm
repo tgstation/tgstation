@@ -884,7 +884,7 @@
 
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/guns/projectiles.dmi', "icon_state" = "laser")
 
-	var/default_state = !isnull(cham_projectile.icon_state) ? cham_projectile.icon_state : "laser"
+	var/default_state = isnull(cham_projectile.icon_state) ? "laser" : cham_projectile.icon_state
 
 	chameleon_projectile_vars["name"] = cham_projectile.name
 	chameleon_projectile_vars["icon"] = cham_projectile.icon
