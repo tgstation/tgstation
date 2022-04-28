@@ -789,6 +789,10 @@
 	recharge_newshot()
 	get_chameleon_projectile(/obj/item/gun/energy/laser)
 
+/obj/item/gun/energy/laser/chameleon/Destroy()
+	. = ..()
+	chameleon_projectile_vars.Cut()
+
 /obj/item/gun/energy/laser/chameleon/emp_act(severity)
 	return
 
@@ -815,7 +819,7 @@
  * Description: Sets what gun we should be mimicking.
  * Arguments: [obj/item/gun/gun_to_set (the gun we're trying to mimic), passthrough (whether or not we're setting ammo too)]
  */
-/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_gun(obj/item/gun/gun_to_set, passthrough = TRUE)
+/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_gun(obj/item/gun/gun_to_set)
 	if(!istype(gun_to_set))
 		stack_trace("[gun_to_set] is not a valid typepath.")
 		return FALSE
@@ -826,46 +830,44 @@
 	inhand_x_dimension = gun_to_set.inhand_x_dimension
 	inhand_y_dimension = gun_to_set.inhand_y_dimension
 
-	if(passthrough)
-		if(istype(gun_to_set, /obj/item/gun/ballistic))
-			var/obj/item/gun/ballistic/ball_gun = gun_to_set
-			var/obj/item/ammo_box/ball_ammo = new ball_gun.mag_type(gun_to_set)
-			qdel(ball_gun)
+	if(istype(gun_to_set, /obj/item/gun/ballistic))
+		var/obj/item/gun/ballistic/ball_gun = gun_to_set
+		var/obj/item/ammo_box/ball_ammo = new ball_gun.mag_type(gun_to_set)
+		qdel(ball_gun)
 
-			if(!istype(ball_ammo) || !ball_ammo.ammo_type)
-				qdel(ball_ammo)
-				return FALSE
+		if(!istype(ball_ammo) || !ball_ammo.ammo_type)
+			qdel(ball_ammo)
+			return FALSE
 
-			var/obj/item/ammo_casing/ball_cartridge = new ball_ammo.ammo_type(gun_to_set)
-			set_chameleon_ammo(ball_cartridge)
+		var/obj/item/ammo_casing/ball_cartridge = new ball_ammo.ammo_type(gun_to_set)
+		set_chameleon_ammo(ball_cartridge)
 
-		else if(istype(gun_to_set, /obj/item/gun/magic))
-			var/obj/item/gun/magic/magic_gun = gun_to_set
-			var/obj/item/ammo_casing/magic_cartridge = new magic_gun.ammo_type(gun_to_set)
-			set_chameleon_ammo(magic_cartridge)
+	else if(istype(gun_to_set, /obj/item/gun/magic))
+		var/obj/item/gun/magic/magic_gun = gun_to_set
+		var/obj/item/ammo_casing/magic_cartridge = new magic_gun.ammo_type(gun_to_set)
+		set_chameleon_ammo(magic_cartridge)
 
-		else if(istype(gun_to_set, /obj/item/gun/energy))
-			var/obj/item/gun/energy/energy_gun = gun_to_set
-			if(islist(energy_gun.ammo_type) && energy_gun.ammo_type.len)
-				var/obj/item/ammo_casing/energy_cartridge = energy_gun.ammo_type[1]
-				set_chameleon_ammo(energy_cartridge)
+	else if(istype(gun_to_set, /obj/item/gun/energy))
+		var/obj/item/gun/energy/energy_gun = gun_to_set
+		if(islist(energy_gun.ammo_type) && energy_gun.ammo_type.len)
+			var/obj/item/ammo_casing/energy_cartridge = energy_gun.ammo_type[1]
+			set_chameleon_ammo(energy_cartridge)
 
-		else if(istype(gun_to_set, /obj/item/gun/syringe))
-			var/obj/item/ammo_casing/syringe_cartridge = new /obj/item/ammo_casing/syringegun(src)
-			set_chameleon_ammo(syringe_cartridge)
+	else if(istype(gun_to_set, /obj/item/gun/syringe))
+		var/obj/item/ammo_casing/syringe_cartridge = new /obj/item/ammo_casing/syringegun(src)
+		set_chameleon_ammo(syringe_cartridge)
 
 /**
  * Description: Sets the ammo type our gun should have.
  * Arguments: [obj/item/ammo_casing/cartridge (the ammo_casing we're trying to copy), passthrough (whether or not we're the loaded projectile too)]
  */
-/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/cartridge, passthrough = TRUE)
+/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/cartridge)
 	if(!istype(cartridge))
 		stack_trace("[cartridge] is not a valid typepath.")
 		return FALSE
 
-	if(passthrough)
-		var/obj/projectile/proj = cartridge.loaded_projectile
-		set_chameleon_projectile(proj)
+	var/obj/projectile/proj = cartridge.loaded_projectile
+	set_chameleon_projectile(proj)
 
 /**
  * Description: Sets the current projectile variables for our chameleon gun.
