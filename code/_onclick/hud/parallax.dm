@@ -194,7 +194,7 @@
 	// If we aren't already moving/don't allow parallax, have made some movement, and that movement was smaller then our "glide" size, animate
 	var/run_parralax = (glide_rate && !areaobj.parallax_movedir && C.dont_animate_parallax <= world.time && largest_change <= max_allowed_dist)
 
-d	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in C.parallax_layers)
+	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in C.parallax_layers)
 		var/our_speed = parallax_layer.speed
 		var/change_x
 		var/change_y
