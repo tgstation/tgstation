@@ -203,8 +203,8 @@
 
 /datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
 	if(istype(target, /obj/item/gun/energy/laser/chameleon))
-		var/obj/item/gun/energy/laser/chameleon/cham_gun = target
-		cham_gun.get_chameleon_projectile(picked_item)
+		var/obj/item/gun/energy/laser/chameleon/chameleon_gun = target
+		chameleon_gun.get_chameleon_projectile(picked_item)
 	if(isliving(user))
 		var/mob/living/C = user
 		if(C.stat != CONSCIOUS)
@@ -776,7 +776,7 @@
 	var/list/chameleon_projectile_vars
 
 	/// The badmin mode. Makes your projectiles act like the real deal.
-	var/real_hits
+	var/real_hits = FALSE
 
 /obj/item/gun/energy/laser/chameleon/Initialize()
 	. = ..()
