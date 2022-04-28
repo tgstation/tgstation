@@ -33,7 +33,6 @@
 /// Module is compatible with "Medical" Exosuit modelsm - Odysseus
 #define EXOSUIT_MODULE_MEDICAL EXOSUIT_MODULE_ODYSSEUS
 /// Module is compatible with all mechs
-#define EXOSUIT_MODULE_ALL EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_MEDICAL
 
 /// Module is standard in use
 #define MODULE_GENERAL "General"

@@ -21,7 +21,7 @@
 	///Bitflag. Determines the range of the equipment.
 	var/range = MECHA_MELEE
 	/// Bitflag. Used by exosuit fabricator to assign sub-categories based on which exosuits can equip this.
-	var/mech_flags = EXOSUIT_MODULE_ALL
+	var/mech_flags = ALL
 	///boolean: FALSE if this equipment can not be removed/salvaged
 	var/detachable = TRUE
 	///Boolean: whether we can equip this equipment through the mech UI or the cycling ability
