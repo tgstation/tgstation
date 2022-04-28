@@ -49601,6 +49601,9 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 5
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "qAt" = (
