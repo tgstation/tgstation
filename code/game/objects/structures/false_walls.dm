@@ -415,10 +415,10 @@
 	. = ..()
 	for(var/datum/material/mat in custom_materials)
 		if(mat.alpha < 255)
-			update_trans_underlays()
+			update_transparency_underlays()
 			return
 
-/obj/structure/falsewall/material/proc/update_trans_underlays()
+/obj/structure/falsewall/material/proc/update_transparency_underlays()
 	underlays.Cut()
 	var/girder_icon_state = "displaced"
 	if(opening)
