@@ -180,7 +180,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/fleshmend
 
 /datum/status_effect/fleshmend/tick()
-	if(owner.on_fire)
+	if(owner.is_on_fire())
 		linked_alert.icon_state = "fleshmend_fire"
 		return
 	else

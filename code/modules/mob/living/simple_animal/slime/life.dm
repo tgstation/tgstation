@@ -123,7 +123,7 @@
 		divisor = 5
 
 	if(temp_delta < 0) // It is cold here
-		if(!on_fire) // Do not reduce body temp when on fire
+		if(!is_on_fire()) // Do not reduce body temp when on fire
 			adjust_bodytemperature(clamp((temp_delta / divisor) * delta_time, temp_delta, 0))
 	else // This is a hot place
 		adjust_bodytemperature(clamp((temp_delta / divisor) * delta_time, 0, temp_delta))

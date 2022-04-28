@@ -47,6 +47,6 @@
 /mob/living/simple_animal/hostile/guardian/fire/proc/collision_ignite(AM as mob|obj)
 	if(isliving(AM))
 		var/mob/living/M = AM
-		if(!hasmatchingsummoner(M) && M != summoner && M.fire_stacks < 7)
+		if(!hasmatchingsummoner(M) && M != summoner && M.get_fire_stacks() < 7)
 			M.set_fire_stacks(7)
-			M.IgniteMob()
+			M.ignite_mob()

@@ -398,7 +398,7 @@
 		Paralyze(60)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if(on_fire)
+	if(is_on_fire())
 		to_chat(M, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
 

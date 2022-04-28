@@ -242,7 +242,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		return
 
 	var/mob/living/mob_occupant = occupant
-	if(mob_occupant.on_fire)
+	if(mob_occupant.is_on_fire())
 		mob_occupant.extinguish_mob()
 	if(!check_nap_violations())
 		return

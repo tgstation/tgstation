@@ -360,7 +360,7 @@
 		var/temp_delta = areatemp - bodytemperature
 		if(abs(temp_delta) > 5)
 			if(temp_delta < 0)
-				if(!on_fire)
+				if(!is_on_fire())
 					adjust_bodytemperature(clamp(temp_delta * delta_time / 10, temp_delta, 0))
 			else
 				adjust_bodytemperature(clamp(temp_delta * delta_time / 10, 0, temp_delta))
@@ -490,10 +490,7 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/handle_fire(delta_time, times_fired)
-	return TRUE
-
-/mob/living/simple_animal/IgniteMob()
+/mob/living/simple_animal/ignite_mob()
 	return FALSE
 
 /mob/living/simple_animal/extinguish_mob()

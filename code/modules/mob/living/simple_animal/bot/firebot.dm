@@ -148,7 +148,7 @@
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))
 		var/mob/living/M = target
-		if(M.on_fire || (bot_cover_flags & BOT_COVER_EMAGGED && !M.on_fire))
+		if(M.is_on_fire() || (bot_cover_flags & BOT_COVER_EMAGGED && !M.is_on_fire()))
 			return TRUE
 
 	else if(isturf(target))

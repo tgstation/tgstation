@@ -20,7 +20,7 @@
 	human_user.extinguish_mob()
 
 	for(var/mob/living/carbon/target in view(7, user))
-		if(!target.mind || !target.client || target.stat == DEAD || !target.on_fire || IS_HERETIC_OR_MONSTER(target))
+		if(!target.mind || !target.client || target.stat == DEAD || !target.is_on_fire() || IS_HERETIC_OR_MONSTER(target))
 			continue
 		//This is essentially a death mark, use this to finish your opponent quicker.
 		if(HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(target, TRAIT_NODEATH))

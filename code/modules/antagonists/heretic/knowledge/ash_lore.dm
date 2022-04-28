@@ -146,7 +146,7 @@
 		return
 
 	target.adjust_fire_stacks(1)
-	target.IgniteMob()
+	target.ignite_mob()
 
 /datum/heretic_knowledge/spell/flame_birth
 	name = "Nightwater's Rebirth"
@@ -191,7 +191,7 @@
 	if(!.)
 		return
 
-	if(sacrifice.on_fire)
+	if(sacrifice.is_on_fire())
 		return TRUE
 	if(HAS_TRAIT_FROM(sacrifice, TRAIT_HUSK, BURN))
 		return TRUE

@@ -7,7 +7,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(fire_stacks)
-		M.IgniteMob()
+		M.ignite_mob()
 
 /obj/projectile/bullet/incendiary/Move()
 	. = ..()

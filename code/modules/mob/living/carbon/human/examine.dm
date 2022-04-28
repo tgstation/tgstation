@@ -216,9 +216,9 @@
 				msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
 
 
-	if(fire_stacks > 0)
+	if(get_fire_stacks() > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
-	if(fire_stacks < 0)
+	if(get_fire_stacks() < 0)
 		msg += "[t_He] look[p_s()] a little soaked.\n"
 
 

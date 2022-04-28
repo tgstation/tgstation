@@ -211,7 +211,7 @@
 		if(chosen_sacrifice.stat != DEAD)
 			to_chat(user, span_warning("You can only sacrifice dead bodies, this one is still alive!"))
 			return FALSE
-		if(!chosen_sacrifice.on_fire)
+		if(!chosen_sacrifice.is_on_fire())
 			to_chat(user, span_warning("This corpse needs to be on fire to be sacrificed!"))
 			return FALSE
 		return ..()
@@ -222,7 +222,7 @@
 		to_chat(user, span_warning("The right sacrifice is no longer on the altar!"))
 		chosen_sacrifice = null
 		return FALSE
-	if(!chosen_sacrifice.on_fire)
+	if(!chosen_sacrifice.is_on_fire())
 		to_chat(user, span_warning("The sacrifice is no longer on fire, it needs to burn until the end of the rite!"))
 		chosen_sacrifice = null
 		return FALSE

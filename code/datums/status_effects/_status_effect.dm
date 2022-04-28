@@ -78,12 +78,12 @@
 // Status effect process. Handles adjusting it's duration and ticks.
 // If you're adding processed effects, put them in [proc/tick]
 // instead of extending / overriding ththe process() proc.
-/datum/status_effect/process(delta_time)
+/datum/status_effect/process(delta_time, times_fired)
 	if(QDELETED(owner))
 		qdel(src)
 		return
 	if(tick_interval < world.time)
-		tick()
+		tick(delta_time, times_fired)
 		tick_interval = world.time + initial(tick_interval)
 	if(duration != -1 && duration < world.time)
 		qdel(src)
@@ -94,7 +94,7 @@
 	return TRUE
 
 /// Called every tick from process().
-/datum/status_effect/proc/tick()
+/datum/status_effect/proc/tick(delta_time, times_fired)
 	return
 
 /// Called whenever the buff expires or is removed (qdeleted)

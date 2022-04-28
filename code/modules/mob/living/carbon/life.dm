@@ -551,7 +551,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(stat != DEAD) // If you are dead your body does not stabilize naturally
 		natural_bodytemperature_stabilization(environment, delta_time, times_fired)
 
-	if(!on_fire || areatemp > bodytemperature) // If we are not on fire or the area is hotter
+	if(!is_on_fire() || areatemp > bodytemperature) // If we are not on fire or the area is hotter
 		adjust_bodytemperature((areatemp - bodytemperature), use_insulation=TRUE, use_steps=TRUE)
 
 /**
@@ -597,7 +597,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			// but will reduce the amount of heat we get from the environment
 			natural_change = (1 / (thermal_protection + 1)) * natural_change
 	else // It is cold here
-		if(!on_fire) // If on fire ignore ignore local temperature in cold areas
+		if(!is_on_fire()) // If on fire ignore ignore local temperature in cold areas
 			if(bodytemperature < get_body_temp_normal())
 				// Our bodytemp is below normal, insulation helps us retain body heat
 				// and will reduce the heat we lose to the environment
@@ -739,7 +739,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /////////////
 /mob/living/carbon/proc/check_cremation(delta_time, times_fired)
 	//Only cremate while actively on fire
-	if(!on_fire)
+	if(!is_on_fire())
 		return
 
 	//Only starts when the chest has taken full damage
