@@ -39,7 +39,7 @@
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	w_class = WEIGHT_CLASS_NORMAL
-	inhand_icon_state = "laser"
+	inhand_icon_state = null
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
 	ammo_x_offset = 3
@@ -87,7 +87,7 @@
 	desc = "An advanced laser cannon that does more damage the farther away the target is."
 	icon_state = "lasercannon"
 	inhand_icon_state = "laser"
-	worn_icon_state = "laser"
+	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags_1 = CONDUCT_1
@@ -119,7 +119,7 @@
 	desc = "A high-power laser gun capable of expelling concentrated X-ray blasts that pass through multiple soft targets and heavier materials."
 	icon_state = "xray"
 	w_class = WEIGHT_CLASS_BULKY
-	inhand_icon_state = "laser"
+	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 	ammo_x_offset = 3
 
@@ -159,7 +159,7 @@
 	name = "nanite pistol"
 	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit globs of angry robots into the bad guys."
 	icon_state = "infernopistol"
-	inhand_icon_state = "laser"
+	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite)
 	shaded_charge = TRUE
 	ammo_x_offset = 1

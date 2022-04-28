@@ -772,20 +772,8 @@
 	automatic_charge_overlays = FALSE
 	can_select = FALSE
 
-	/// The vars we want copied over to our projectile.
-	var/list/projectile_copy_vars
 	/// The vars copied over to our projectile on fire.
 	var/list/chameleon_projectile_vars
-
-	/// The vars we want copied over to our gun.
-	var/list/gun_copy_vars
-	/// The vars copied over to our projectile on selection.
-	var/list/chameleon_gun_vars
-
-	/// The vars we want copied over to our ammo.
-	var/list/ammo_copy_vars
-	/// The vars copied over to our ammo on selection.
-	var/list/chameleon_ammo_vars
 
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits
@@ -800,16 +788,6 @@
 
 /obj/item/gun/energy/laser/chameleon/Initialize(mapload)
 	. = ..()
-
-	projectile_copy_vars = list("name", "icon", "icon_state", "speed", "color", "hitsound", "impact_effect_type", "range", "suppressed", "hitsound_wall", "pass_flags")
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/guns/projectiles.dmi', "icon_state" = "laser")
-
-	gun_copy_vars = list("fire_sound", "burst_size", "fire_delay", "inhand_x_dimension", "inhand_y_dimension")
-	chameleon_gun_vars = list()
-
-	ammo_copy_vars = list("firing_effect_type")
-	chameleon_ammo_vars = list()
-
 	recharge_newshot()
 	get_chameleon_projectile(/obj/item/gun/energy/laser)
 
@@ -821,16 +799,16 @@
  * Arguements: []
  */
 /obj/item/gun/energy/laser/chameleon/proc/reset_chameleon_vars()
-	chameleon_ammo_vars = list()
-	chameleon_gun_vars = list()
 	chameleon_projectile_vars = list()
 
 	if(chambered)
-		for(var/cham_var in ammo_copy_vars)
-			chambered.vars[cham_var] = initial(chambered.vars[cham_var])
+		chambered.firing_effect_type = initial(chambered.firing_effect_type)
 
-	for(var/cham_var in gun_copy_vars)
-		vars[cham_var] = initial(vars[cham_var])
+	fire_sound = initial(fire_sound)
+	burst_size = initial(burst_size)
+	fire_delay = initial(fire_delay)
+	inhand_x_dimension = initial(inhand_x_dimension)
+	inhand_y_dimension = initial(inhand_y_dimension)
 
 	QDEL_NULL(chambered.loaded_projectile)
 	chambered.newshot()
@@ -844,10 +822,11 @@
 		stack_trace("[gun_to_set] is not a valid typepath.")
 		return FALSE
 
-	for(var/gun_variable in gun_copy_vars)
-		if(vars[gun_variable] && gun_to_set.vars.Find(gun_variable)) // Make sure both us and the gun has that variable.
-			chameleon_gun_vars[gun_variable] = gun_to_set.vars[gun_variable] // Set it to the chameleon gun vars.
-			vars[gun_variable] = gun_to_set.vars[gun_variable] // Set it to the actual gun.
+	fire_sound = gun_to_set.fire_sound
+	burst_size = gun_to_set.burst_size
+	fire_delay = gun_to_set.fire_delay
+	inhand_x_dimension = gun_to_set.inhand_x_dimension
+	inhand_y_dimension = gun_to_set.inhand_y_dimension
 
 	if(passthrough)
 		if(istype(gun_to_set, /obj/item/gun/ballistic))
@@ -886,10 +865,6 @@
 		stack_trace("[cartridge] is not a valid typepath.")
 		return FALSE
 
-	for(var/cham_variable in ammo_copy_vars)
-		if(cartridge.vars.Find(cham_variable))
-			chameleon_ammo_vars[cham_variable] = cartridge.vars[cham_variable]
-
 	if(passthrough)
 		var/obj/projectile/proj = cartridge.loaded_projectile
 		set_chameleon_projectile(proj)
@@ -902,21 +877,45 @@
 	if(!istype(cham_projectile))
 		stack_trace("[cham_projectile] is not a valid typepath.")
 		return FALSE
+
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/guns/projectiles.dmi', "icon_state" = "laser")
 
-	for(var/proj_variable in projectile_copy_vars)
-		if(cham_projectile.vars.Find(proj_variable))
-			chameleon_projectile_vars[proj_variable] = cham_projectile.vars[proj_variable]
+	var/default_state = !isnull(cham_projectile.icon_state) ? cham_projectile.icon_state : "laser"
+
+	chameleon_projectile_vars["name"] = cham_projectile.name
+	chameleon_projectile_vars["icon"] = cham_projectile.icon
+	chameleon_projectile_vars["icon_state"] = default_state
+	chameleon_projectile_vars["speed"] = cham_projectile.speed
+	chameleon_projectile_vars["color"] = cham_projectile.color
+	chameleon_projectile_vars["hitsound"] = cham_projectile.hitsound
+	chameleon_projectile_vars["impact_effect_type"] = cham_projectile.impact_effect_type
+	chameleon_projectile_vars["range"] = cham_projectile.range
+	chameleon_projectile_vars["suppressed"] = cham_projectile.suppressed
+	chameleon_projectile_vars["hitsound_wall"] = cham_projectile.hitsound_wall
+	chameleon_projectile_vars["pass_flags"] = cham_projectile.pass_flags
 
 	if(istype(chambered, /obj/item/ammo_casing/energy/chameleon))
 		var/obj/item/ammo_casing/energy/chameleon/cartridge = chambered
+
+		cartridge.loaded_projectile.name = cham_projectile.name
+		cartridge.loaded_projectile.icon = cham_projectile.icon
+		cartridge.loaded_projectile.icon_state = default_state
+		cartridge.loaded_projectile.speed = cham_projectile.speed
+		cartridge.loaded_projectile.color = cham_projectile.color
+		cartridge.loaded_projectile.hitsound = cham_projectile.hitsound
+		cartridge.loaded_projectile.impact_effect_type = cham_projectile.impact_effect_type
+		cartridge.loaded_projectile.range = cham_projectile.range
+		cartridge.loaded_projectile.suppressed = cham_projectile.suppressed
+		cartridge.loaded_projectile.hitsound_wall =	cham_projectile.hitsound_wall
+		cartridge.loaded_projectile.pass_flags = cham_projectile.pass_flags
 
 		cartridge.projectile_vars = chameleon_projectile_vars.Copy()
 
 	if(real_hits)
 		qdel(chambered.loaded_projectile)
 		chambered.projectile_type = cham_projectile.type
-		chambered.newshot()
+
+	qdel(cham_projectile)
 
 
 /**
