@@ -35404,6 +35404,7 @@
 	dir = 8
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "lnR" = (
@@ -47624,7 +47625,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/machinery/computer/med_data,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
@@ -165895,7 +165895,7 @@ bPi
 nio
 lwN
 ole
-eLP
+gOn
 ogT
 vhd
 bHn
@@ -170006,7 +170006,7 @@ ayd
 ayd
 nbz
 pMl
-gOn
+eLP
 wbe
 eLP
 vQp
