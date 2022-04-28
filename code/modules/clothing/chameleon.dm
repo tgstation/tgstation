@@ -857,6 +857,10 @@
 		var/obj/item/ammo_casing/syringe_cartridge = new /obj/item/ammo_casing/syringegun(src)
 		set_chameleon_ammo(syringe_cartridge)
 
+	else
+		var/obj/item/ammo_casing/default_cartridge = new /obj/item/ammo_casing(src)
+		set_chameleon_ammo(default_cartridge)
+
 /**
  * Description: Sets the ammo type our gun should have.
  * Arguments: [obj/item/ammo_casing/cartridge (the ammo_casing we're trying to copy), passthrough (whether or not we're the loaded projectile too)]
