@@ -223,6 +223,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		)
 		//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 	implants = list(/obj/item/implant/mindshield)
+	skillchips = list(/obj/item/skillchip/job/security)
 
 /datum/outfit/job/security/mod
 	name = "Security Officer (MODsuit)"

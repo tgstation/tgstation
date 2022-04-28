@@ -70,3 +70,4 @@
 
 	box = /obj/item/storage/box/survival/security
 	implants = list(/obj/item/implant/mindshield)
+	skillchips = list(/obj/item/skillchip/job/security)
