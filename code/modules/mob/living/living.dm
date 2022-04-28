@@ -1492,6 +1492,8 @@
 	if(wet_status)
 		return -wet_status.stacks
 
+	return 0
+
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()
 /mob/living/proc/spreadFire(mob/living/spread_to)
