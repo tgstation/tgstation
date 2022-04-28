@@ -246,3 +246,6 @@
 	var/datum/client_interface/mock_client
 
 	var/interaction_range = 1 //how far a mob has to be to interact with something, defaulted to 1 tile
+
+	///how much gravity is slowing us down
+	var/gravity_slowdown = 0

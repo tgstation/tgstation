@@ -367,10 +367,12 @@
 /// Update the gravity status of this mob
 /mob/proc/update_gravity(has_gravity, override=FALSE)
 	var/speed_change = max(0, has_gravity - STANDARD_GRAVITY)
-	if(!speed_change)
+	if(!speed_change && gravity_slowdown)
 		remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
-	else
+		gravity_slowdown = 0
+	else if(gravity_slowdown != speed_change)
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown=speed_change)
+		gravity_slowdown = speed_change
 
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth
