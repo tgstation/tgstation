@@ -446,10 +446,8 @@
 /atom/movable/proc/abstract_move(atom/new_loc)
 	var/atom/old_loc = loc
 	var/direction = get_dir(old_loc, new_loc)
-	old_loc.abstract_exited(src, direction)
 	loc = new_loc
-	new_loc.abstract_entered(src, old_loc)
-	Moved(old_loc)
+	Moved(old_loc, direction)
 
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
@@ -653,18 +651,22 @@
  * * The forced flag indicates whether this was a forced move, which skips many checks of regular movement.
  * * The old_locs is an optional argument, in case the moved movable was present in multiple locations before the movement.
  * * moved_us is an optional reference to another object that moves us to our current loc, instead of us being the ones to do it
+ * * momentum_change represents whether this movement is due to a "new" force if TRUE or an already "existing" force if FALSE
  **/
 /atom/movable/proc/Moved(atom/old_loc, movement_dir, forced, list/old_locs, atom/movable/moved_us, momentum_change = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (!inertia_moving && momentum_change)//not sure about this one
+	if (!inertia_moving && momentum_change)
 		newtonian_move(movement_dir)
 	if (client_mobs_in_contents)
 		update_parallax_contents()
-	//for (var/datum/light_source/light as anything in light_sources) // Cycle through the light sources on this atom and tell them to update.
-	//	light.source_atom.update_light() //signal-able
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
+
+	if(old_loc)
+		SEND_SIGNAL(old_loc, COMSIG_ATOM_ABSTRACT_EXITED, src, movement_dir)
+	if(loc)
+		SEND_SIGNAL(loc, COMSIG_ATOM_ABSTRACT_ENTERED, src, old_loc, old_locs)
 
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
@@ -691,39 +693,13 @@
 		if(start_cell != end_cell)
 			//go through all of our recursive contents that care about the grid and tell them theyve changed grid cells
 			for(var/atom/movable/target in important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] | important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
-				target.on_grid_cell_change(end_cell, start_cell)
+				target?.on_grid_cell_change(end_cell, start_cell)
 
 	return TRUE
 
 ///called when moving from one spatial grid cell to another
 /atom/movable/proc/on_grid_cell_change(datum/spatial_grid_cell/new_cell, datum/spatial_grid_cell/old_cell)
 	return
-
-/mob/on_grid_cell_change(datum/spatial_grid_cell/new_cell, datum/spatial_grid_cell/old_cell)//TODOKYLER: move this
-	if(!client)
-		return
-
-	var/list/new_closeby_cells = SSspatial_grid.get_block_of_cells(src, 1)
-
-	var/list/new_closeby_client_mobs = list()
-
-	for(var/datum/spatial_grid_cell/cell as anything in new_closeby_cells)
-		new_closeby_client_mobs += cell.client_contents
-
-	if(closeby_client_mobs)
-		//client mobs that used to be adjacent but arent any more
-		for(var/mob/non_adjacent_client_mob as anything in closeby_client_mobs - new_closeby_client_mobs)
-			LAZYREMOVE(non_adjacent_client_mob.closeby_client_mobs, src)
-
-	//client mobs that were not adjacent previously but are now
-	for(var/mob/newly_adjacent_client_mob as anything in new_closeby_client_mobs - closeby_client_mobs)
-		LAZYADD(newly_adjacent_client_mob.closeby_client_mobs, src)
-
-	if(length(new_closeby_client_mobs))
-		closeby_client_mobs = new_closeby_client_mobs
-
-	else
-		closeby_client_mobs = null
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()

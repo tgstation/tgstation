@@ -1337,10 +1337,6 @@
 /atom/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, arrived, old_loc, old_locs)
 	SEND_SIGNAL(arrived, COMSIG_ATOM_ENTERING, src, old_loc, old_locs)
-	abstract_entered(arrived, old_loc, old_locs)
-
-/atom/proc/abstract_entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	SEND_SIGNAL(src, COMSIG_ATOM_ABSTRACT_ENTERED, arrived, old_loc, old_locs)
 
 /**
  * An atom is attempting to exit this atom's contents
@@ -1363,10 +1359,6 @@
  */
 /atom/Exited(atom/movable/gone, direction)
 	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, gone, direction)
-	abstract_exited(gone, direction)
-
-/atom/proc/abstract_exited(atom/movable/gone, direction)
-	SEND_SIGNAL(src, COMSIG_ATOM_ABSTRACT_EXITED, gone, direction)
 
 ///Return atom temperature
 /atom/proc/return_temperature()
@@ -1927,13 +1919,6 @@
 	base_pixel_y = new_value
 
 	pixel_y = pixel_y + base_pixel_y - .
-
-/turf
-	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
-	var/force_no_gravity = FALSE
-
-/turf/open/space//TODOKYLER: LOOK FOR THIS
-	force_no_gravity = TRUE
 
 /**
  * Returns true if this atom has gravity for the passed in turf

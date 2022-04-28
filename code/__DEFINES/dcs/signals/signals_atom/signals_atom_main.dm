@@ -45,7 +45,7 @@
 #define COMSIG_ATOM_SMOOTHED_ICON "atom_smoothed_icon"
 ///from base of atom/Entered(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ENTERED "atom_entered"
-///from base of atom/abstract_entered(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+///from base of atom/movable/Moved(): (atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ABSTRACT_ENTERED "atom_abstract_entered"
 /// Sent from the atom that just Entered src. From base of atom/Entered(): (/atom/destination, atom/old_loc, list/atom/old_locs)
 #define COMSIG_ATOM_ENTERING "atom_entering"
@@ -54,7 +54,7 @@
 	#define COMPONENT_ATOM_BLOCK_EXIT (1<<0)
 ///from base of atom/Exited(): (atom/movable/gone, direction)
 #define COMSIG_ATOM_EXITED "atom_exited"
-///from base of atom/abstract_exited(): (atom/movable/gone, direction)
+///from base of atom/movable/Moved(): (atom/movable/gone, direction)
 #define COMSIG_ATOM_ABSTRACT_EXITED "atom_abstract_exited"
 ///from base of atom/Bumped(): (/atom/movable)
 #define COMSIG_ATOM_BUMPED "atom_bumped"
