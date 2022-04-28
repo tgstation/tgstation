@@ -7698,7 +7698,6 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "buD" = (
-/obj/machinery/medical_kiosk,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
@@ -17638,7 +17637,7 @@
 /area/science/xenobiology)
 "eYt" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/machinery/light/directional/south,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "eYw" = (
@@ -18775,7 +18774,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "fut" = (
@@ -19749,13 +19748,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/catwalk_floor,
 /area/hallway/primary/tram/right)
-"fHy" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/iron/white,
-/area/medical/medbay/central)
 "fHE" = (
 /turf/open/floor/iron,
 /area/cargo/office)
@@ -23911,6 +23903,7 @@
 	},
 /obj/machinery/status_display/evac/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/surgery/fore)
 "hjq" = (
@@ -24765,6 +24758,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/surgery/aft)
 "hxf" = (
@@ -26818,6 +26812,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "ims" = (
@@ -28862,7 +28857,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
@@ -32567,6 +32561,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tcommsat/computer)
+"kpA" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/white,
+/area/medical/medbay/central)
 "kpF" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
@@ -35404,6 +35403,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
+"lnP" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/iron/white,
+/area/medical/medbay/central)
 "lnR" = (
 /obj/structure/railing{
 	dir = 1
@@ -36085,6 +36091,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
+"lBI" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/white,
+/area/medical/medbay/central)
 "lBU" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/door/airlock/external{
@@ -36118,7 +36131,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/machinery/firealarm/directional/west,
 /obj/structure/closet/emcloset,
 /obj/machinery/camera/directional/south{
 	c_tag = "Medical - Virology Airlock";
@@ -42332,9 +42344,6 @@
 	pixel_x = 22;
 	pixel_y = -9
 	},
-/obj/machinery/firealarm/directional/east{
-	pixel_y = 5
-	},
 /turf/open/floor/iron/white,
 /area/medical/surgery/fore)
 "nQY" = (
@@ -43353,7 +43362,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -43923,13 +43931,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
-"owA" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 1
-	},
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/white,
-/area/medical/medbay/central)
 "owD" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/structure/disposalpipe/segment{
@@ -47624,7 +47625,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/computer/med_data,
 /turf/open/floor/iron/white,
@@ -51562,7 +51562,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
-/obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/camera/directional/east{
 	c_tag = "Medical - Surgery B";
 	network = list("ss13","medbay")
@@ -55207,9 +55206,6 @@
 	pixel_x = 22;
 	pixel_y = 9
 	},
-/obj/machinery/firealarm/directional/east{
-	pixel_y = -5
-	},
 /turf/open/floor/iron/white,
 /area/medical/surgery/aft)
 "sAN" = (
@@ -56213,7 +56209,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Medical - Main West";
 	network = list("ss13","medbay")
@@ -63736,6 +63731,7 @@
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "vKB" = (
@@ -64790,7 +64786,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "wfS" = (
@@ -165643,7 +165639,7 @@ jiw
 ebJ
 lwN
 juZ
-pVY
+lnP
 aso
 tQD
 akR
@@ -166420,10 +166416,10 @@ nhp
 vFX
 pVY
 pVY
-fHy
+gSv
 sUS
 aoE
-pVY
+lBI
 kEO
 pVY
 xXh
@@ -166932,7 +166928,7 @@ wbe
 eLP
 xZI
 oXo
-ths
+wih
 lub
 lub
 ibq
@@ -169499,7 +169495,7 @@ ePS
 ePS
 vdZ
 wbe
-eYt
+kpA
 uht
 uht
 oBA
@@ -169513,7 +169509,7 @@ uht
 uht
 uht
 uht
-owA
+pDg
 tIL
 mTJ
 cWZ
@@ -170016,7 +170012,7 @@ wbe
 eLP
 vQp
 vFX
-gSv
+pVY
 pVY
 pVY
 ygy
@@ -170534,7 +170530,7 @@ lub
 tuj
 cwd
 oVx
-lub
+ths
 wih
 lub
 tuj
