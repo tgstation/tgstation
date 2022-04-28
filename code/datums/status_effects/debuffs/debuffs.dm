@@ -524,18 +524,53 @@
 
 /datum/status_effect/eldritch/blade/on_apply()
 	. = ..()
+	RegisterSignal(owner, COMSIG_MOVABLE_PRE_THROW, .proc/on_pre_throw)
 	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTED, .proc/on_teleport)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /datum/status_effect/eldritch/blade/on_remove()
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_TELEPORTED, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(owner, list(
+		COMSIG_MOVABLE_PRE_THROW,
+		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_MOVED,
+	))
+
 	return ..()
+
+/// Signal proc for [COMSIG_MOVABLE_PRE_THROW] that prevents people from escaping our locked area via throw
+/datum/status_effect/eldritch/blade/proc/on_pre_throw(mob/living/source, list/throw_args)
+	SIGNAL_HANDLER
+
+	if(!locked_to)
+		return
+
+	// They've not in the area currently,
+	// so we'll choose not to act on them
+	if(get_area(source) != locked_to)
+		return
+
+	var/atom/throw_dest = throw_args[1]
+	if(get_area(throw_dest) == locked_to)
+		return
+
+	var/mob/thrower = throw_args[4]
+	if(istype(thrower))
+		to_chat(thrower, span_hypnophrase("An otherworldly force prevents you from throwing [source] out of [get_area_name(locked_to)]!"))
+
+	to_chat(source, span_hypnophrase("An otherworldly force prevents you from being thrown out of [get_area_name(locked_to)]!"))
+
+	return COMPONENT_CANCEL_THROW
 
 /// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area
 /datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
 	SIGNAL_HANDLER
 
 	if(!locked_to)
+		return
+
+	// They've managed to escape the area somehow,
+	// so we'll choose not to act on them
+	if(get_area(source) != locked_to)
 		return
 
 	if(get_area(destination) == locked_to)
@@ -553,13 +588,29 @@
 	if(!locked_to)
 		return
 
+	// If the movement's forced, let's just let it happen
+	if(forced)
+		return
+
 	if(get_area(source) == locked_to)
+		return
+
+	// If old_loc isn't in our locked area, it means they've
+	// somehow completely escaped our area and are moving around outside it.
+	// So we'll choose not to act on them in the meanwhile
+	if(get_area(old_loc) != locked_to)
+		return
+
+	// Let's also not mess with heretics dragging a potential victim
+	if(ismob(source.pulledby) && IS_HERETIC(source.pulledby))
 		return
 
 	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
 
+	var/turf/further_behind_old_loc = get_edge_target_turf(old_loc, REVERSE_DIR(movement_dir))
+
 	source.Stun(1 SECONDS)
-	source.throw_at(old_loc, 5, 1)
+	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
 
 /// A status effect used for specifying confusion on a living mob.
 /// Created automatically with /mob/living/set_confusion.
