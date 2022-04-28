@@ -265,7 +265,7 @@
 		for(var/obj/item/part as anything in mod_parts)
 			seal_part(part, seal = FALSE)
 	for(var/obj/item/part as anything in mod_parts)
-		conceal(null, part)
+		retract(null, part)
 	if(active)
 		finish_activation(on = FALSE)
 	unset_wearer()
@@ -438,7 +438,7 @@
 	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc == src)
 			continue
-		conceal(null, part)
+		retract(null, part)
 	return ..()
 
 /obj/item/mod/control/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
@@ -673,7 +673,7 @@
 		uninstall(part)
 		return
 	if(part in mod_parts)
-		conceal(wearer, part)
+		retract(wearer, part)
 		if(active)
 			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
 		return
@@ -695,6 +695,13 @@
 	if(QDELETED(src))
 		return
 	qdel(src)
+
+/obj/item/mod/control/proc/on_overslot_exit(datum/source, atom/movable/overslot, direction)
+	SIGNAL_HANDLER
+
+	if(overslot != overslotting_parts[source])
+		return
+	overslotting_parts[source] = null
 
 /obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER
