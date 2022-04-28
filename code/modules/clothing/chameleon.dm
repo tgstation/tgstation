@@ -867,7 +867,7 @@
  */
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/cartridge)
 	if(!istype(cartridge))
-		stack_trace("[cartridge] is not a valid typepath.")
+		stack_trace("[cartridge] is not a valid ammo casing.")
 		return FALSE
 
 	var/obj/projectile/proj = cartridge.loaded_projectile
