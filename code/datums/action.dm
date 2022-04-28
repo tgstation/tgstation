@@ -918,3 +918,7 @@
 	item_target.layer = old_layer
 	item_target.plane = old_plane
 	current_button.appearance_cache = item_target.appearance
+
+/datum/action/item_action/headset/say_sec_report
+	name = "Security report"
+	desc = "Opens a menu of quick crime reports with your location."
