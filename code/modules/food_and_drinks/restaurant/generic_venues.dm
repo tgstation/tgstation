@@ -82,7 +82,7 @@
 		/datum/customer_data/malfunction = 1,
 	)
 
-/datum/venue/bar/order_food/get_food_appearance(order)
+/datum/venue/bar/get_food_appearance(order)
 	var/glass_visual
 	var/datum/reagent/reagent_to_order = order
 
