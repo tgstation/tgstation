@@ -3,7 +3,7 @@
 
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/specops_officer
-	uniform = /obj/item/clothing/under/syndicate
+	uniform = /obj/item/clothing/under/rank/centcom/commander
 	suit = /obj/item/clothing/suit/space/officer
 	back = /obj/item/storage/backpack/satchel/leather
 	belt = /obj/item/gun/energy/pulse/pistol/m1911
@@ -231,7 +231,7 @@
 	id = /obj/item/card/id/advanced/chameleon/black
 	id_trim = /datum/id_trim/reaper_assassin
 	uniform = /obj/item/clothing/under/suit/black
-	belt = /obj/item/pda/heads
+	belt = /obj/item/modular_computer/tablet/pda/heads
 	ears = /obj/item/radio/headset
 	gloves = /obj/item/clothing/gloves/color/black
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -252,15 +252,14 @@
 		qdel(briefcase_item)
 	for(var/i = 3 to 0 step -1)
 		SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/stack/spacecash/c1000, null, TRUE, TRUE)
-	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/energy/kinetic_accelerator/crossbow, null, TRUE, TRUE)
+	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/energy/recharge/ebow, null, TRUE, TRUE)
 	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/gun/ballistic/revolver/mateba, null, TRUE, TRUE)
 	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/ammo_box/a357, null, TRUE, TRUE)
 	SEND_SIGNAL(sec_briefcase, COMSIG_TRY_STORAGE_INSERT, new /obj/item/grenade/c4/x4, null, TRUE, TRUE)
 
-	var/obj/item/pda/heads/pda = H.belt
-	pda.owner = H.real_name
-	pda.ownjob = "Reaper"
-	pda.update_label()
+	var/obj/item/modular_computer/tablet/pda/heads/pda = H.belt
+	pda.saved_identification = H.real_name
+	pda.saved_job = "Reaper"
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -273,11 +272,11 @@
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/commander
 	uniform = /obj/item/clothing/under/rank/centcom/commander
-	suit = /obj/item/clothing/suit/armor/bulletproof
+	suit = /obj/item/clothing/suit/armor/centcom_formal
 	back = /obj/item/storage/backpack/satchel/leather
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	ears = /obj/item/radio/headset/headset_cent/commander
-	glasses = /obj/item/clothing/glasses/eyepatch
+	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
 	head = /obj/item/clothing/head/centhat
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba

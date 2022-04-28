@@ -34,7 +34,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/turf/T = get_turf(mob)
 	if(!isturf(T))
 		return
-	atmosanalyzer_scan(usr, T, TRUE)
+	atmos_scan(user=usr, target=T, tool=null, silent=TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
@@ -139,10 +139,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		id.update_icon()
 
 		if(worn)
-			if(istype(worn, /obj/item/pda))
-				var/obj/item/pda/PDA = worn
-				PDA.id = id
-				id.forceMove(PDA)
+			if(istype(worn, /obj/item/modular_computer/tablet/pda))
+				var/obj/item/modular_computer/tablet/pda/PDA = worn
+				var/obj/item/computer_hardware/card_slot/card = PDA.all_components[MC_CARD]
+
+				if(card)
+					card.try_insert(id)
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
 				W.front_id = id
@@ -627,14 +629,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		exists[L.ruin_template] = landmark
 
 	var/list/names = list()
+	var/list/themed_names
 	for (var/theme in SSmapping.themed_ruins)
 		names += "---- [theme] ----"
+		themed_names = list()
 		for (var/name in SSmapping.themed_ruins[theme])
 			var/datum/map_template/ruin/ruin = SSmapping.themed_ruins[theme][name]
-			names[name] = list(ruin, theme, list(ruin.default_area))
+			themed_names[name] = list(ruin, theme, list(ruin.default_area))
+		names += sort_list(themed_names)
 
-
-	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in sort_list(names)
+	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in names
 	var/data = names[ruinname]
 	if (!data)
 		return

@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/gun/magic/staff/honk,
 		/obj/item/instrument/bikehorn,
 		/obj/item/megaphone/clown,
-		/obj/item/pda/clown,
+		/obj/item/modular_computer/tablet/pda/clown,
 		/obj/item/pneumatic_cannon/pie,
 		/obj/item/stack/ore/bananium,
 		/obj/item/stack/tile/mineral/bananium,
@@ -493,7 +493,6 @@ GLOBAL_LIST_INIT(phobia_species, list(
 	"conspiracies" = typecacheof(list(
 		/datum/species/abductor,
 		/datum/species/lizard,
-		/datum/species/synth,
 	)),
 	"insects" = typecacheof(list(
 		/datum/species/fly,

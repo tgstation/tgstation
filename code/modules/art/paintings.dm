@@ -64,8 +64,18 @@
 	var/framed_offset_x = 11
 	var/framed_offset_y = 10
 
-	pixel_x = 10
-	pixel_y = 9
+	/**
+	 * How big the grid cells that compose the painting are in the UI.
+	 * This impacts the size of the UI, so smaller values are generally better for bigger canvases and viceversa
+	 */
+	var/pixels_per_unit = 24
+
+	pixel_x = 11
+	pixel_y = 10
+	base_pixel_x = 11
+	base_pixel_y = 10
+
+	custom_premium_price = PAYCHECK_CREW
 
 /obj/item/canvas/Initialize(mapload)
 	. = ..()
@@ -104,6 +114,10 @@
 		ui_interact(user)
 	else
 		return ..()
+
+/obj/item/canvas/ui_static_data(mob/user)
+	. = ..()
+	.["px_per_unit"] = pixels_per_unit
 
 /obj/item/canvas/ui_data(mob/user)
 	. = ..()
@@ -287,15 +301,8 @@
 		var/obj/item/toy/crayon/crayon = painting_implement
 		return crayon.paint_color
 	else if(istype(painting_implement, /obj/item/pen))
-		var/obj/item/pen/P = painting_implement
-		switch(P.colour)
-			if("black")
-				return "#000000"
-			if("blue")
-				return "#0000ff"
-			if("red")
-				return "#ff0000"
-		return P.colour
+		var/obj/item/pen/pen = painting_implement
+		return pen.colour
 	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/reagent_containers/glass/rag))
 		return canvas_color
 
@@ -333,8 +340,10 @@
 	icon_state = "19x19"
 	width = 19
 	height = 19
-	pixel_x = 6
-	pixel_y = 9
+	pixel_x = 7
+	pixel_y = 7
+	base_pixel_x = 7
+	base_pixel_y = 7
 	framed_offset_x = 7
 	framed_offset_y = 7
 
@@ -343,8 +352,10 @@
 	icon_state = "23x19"
 	width = 23
 	height = 19
-	pixel_x = 4
-	pixel_y = 10
+	pixel_x = 5
+	pixel_y = 7
+	base_pixel_x = 5
+	base_pixel_y = 7
 	framed_offset_x = 5
 	framed_offset_y = 7
 
@@ -354,20 +365,70 @@
 	width = 23
 	height = 23
 	pixel_x = 5
-	pixel_y = 9
+	pixel_y = 5
+	base_pixel_x = 5
+	base_pixel_y = 5
 	framed_offset_x = 5
 	framed_offset_y = 5
 
 /obj/item/canvas/twentyfour_twentyfour
 	name = "canvas (AI Universal Standard)"
-	desc = "Besides being very large, the AI can accept these as a display from their internal database after you've hung it up."
+	desc = "Besides being almost too large for a standard frame, the AI can accept these as a display from their internal database after you've hung it up."
 	icon_state = "24x24"
 	width = 24
 	height = 24
-	pixel_x = 2
-	pixel_y = 1
+	pixel_x = 4
+	pixel_y = 4
+	base_pixel_x = 4
+	base_pixel_y = 4
 	framed_offset_x = 4
 	framed_offset_y = 4
+
+/obj/item/canvas/thirtysix_twentyfour
+	name = "canvas (36x24)"
+	desc = "A very large canvas to draw out your soul on. You'll need a larger frame to put it on a wall."
+	icon_state = "24x24" //The vending spritesheet needs the icons to be 32x32. We'll set the actual icon on Initialize.
+	width = 36
+	height = 24
+	pixel_x = -4
+	pixel_y = 4
+	base_pixel_x = -4
+	base_pixel_y = 4
+	framed_offset_x = 14
+	framed_offset_y = 4
+	pixels_per_unit = 20
+	w_class = WEIGHT_CLASS_BULKY
+
+	custom_premium_price = PAYCHECK_CREW * 1.25
+
+/obj/item/canvas/thirtysix_twentyfour/Initialize()
+	. = ..()
+	AddElement(/datum/element/item_scaling, 1, 0.8)
+	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon_state = "36x24"
+
+/obj/item/canvas/fortyfive_twentyseven
+	name = "canvas (45x27)"
+	desc = "The largest canvas available on the space market. You'll need a larger frame to put it on a wall."
+	icon_state = "24x24" //Ditto
+	width = 45
+	height = 27
+	pixel_x = -8
+	pixel_y = 2
+	base_pixel_x = -8
+	base_pixel_y = 2
+	framed_offset_x = 9
+	framed_offset_y = 4
+	pixels_per_unit = 18
+	w_class = WEIGHT_CLASS_BULKY
+
+	custom_premium_price = PAYCHECK_CREW * 1.75
+
+/obj/item/canvas/fortyfive_twentyseven/Initialize()
+	. = ..()
+	AddElement(/datum/element/item_scaling, 1, 0.7)
+	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon_state = "45x27"
 
 /obj/item/wallframe/painting
 	name = "painting frame"
@@ -392,6 +453,14 @@
 	///Description set when canvas is added.
 	var/desc_with_canvas
 	var/persistence_id
+	/// The list of canvas types accepted by this frame
+	var/list/accepted_canvas_types = list(
+		/obj/item/canvas,
+		/obj/item/canvas/nineteen_nineteen,
+		/obj/item/canvas/twentythree_nineteen,
+		/obj/item/canvas/twentythree_twentythree,
+		/obj/item/canvas/twentyfour_twentyfour,
+	)
 
 /obj/structure/sign/painting/Initialize(mapload, dir, building)
 	. = ..()
@@ -425,27 +494,41 @@
 	. = ..()
 	if(current_canvas)
 		current_canvas.forceMove(drop_location())
-		current_canvas = null
 		to_chat(user, span_notice("You remove the painting from the frame."))
-		update_appearance()
 		return TRUE
+
+/obj/structure/sign/painting/Exited(atom/movable/movable, atom/newloc)
+	. = ..()
+	if(movable == current_canvas)
+		current_canvas = null
+		update_appearance()
 
 /obj/structure/sign/painting/AltClick(mob/user)
 	. = ..()
 	if(current_canvas?.can_select_frame(user))
 		INVOKE_ASYNC(current_canvas, /obj/item/canvas.proc/select_new_frame, user)
 
-/obj/structure/sign/painting/proc/frame_canvas(mob/user,obj/item/canvas/new_canvas)
+/obj/structure/sign/painting/proc/frame_canvas(mob/user, obj/item/canvas/new_canvas)
+	if(!(new_canvas.type in accepted_canvas_types))
+		to_chat(user, span_warning("[new_canvas] won't fit in this frame."))
+		return FALSE
 	if(user.transferItemToLoc(new_canvas,src))
 		current_canvas = new_canvas
 		if(!current_canvas.finalized)
 			current_canvas.finalize(user)
 		to_chat(user,span_notice("You frame [current_canvas]."))
-	update_appearance()
+		update_appearance()
+		return TRUE
+	return FALSE
 
 /obj/structure/sign/painting/proc/try_rename(mob/user)
 	if(current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title))
 		current_canvas.try_rename(user)
+
+/obj/structure/sign/painting/update_icon_state(updates=ALL)
+	. = ..()
+	// Stops the frame icon_state from poking out behind the paintings. we have proper frame overlays in artstuff.dmi.
+	icon = current_canvas?.generated_icon ? null : initial(icon)
 
 /obj/structure/sign/painting/update_name(updates)
 	name = current_canvas ? "painting - [current_canvas.painting_metadata.title]" : initial(name)
@@ -453,10 +536,6 @@
 
 /obj/structure/sign/painting/update_desc(updates)
 	desc = current_canvas ? desc_with_canvas : initial(desc)
-	return ..()
-
-/obj/structure/sign/painting/update_icon_state()
-	icon_state = "[base_icon_state]-[current_canvas?.generated_icon ? "overlay" : "empty"]"
 	return ..()
 
 /obj/structure/sign/painting/update_overlays()
@@ -478,10 +557,10 @@
  */
 /obj/structure/sign/painting/proc/load_persistent()
 	if(!persistence_id)
-		return
+		return FALSE
 	var/list/valid_paintings = SSpersistent_paintings.get_paintings_with_tag(persistence_id)
 	if(!length(valid_paintings))
-		return //aborts loading anything this category has no usable paintings
+		return FALSE //aborts loading anything this category has no usable paintings
 	var/datum/painting/painting = pick(valid_paintings)
 	var/png = "data/paintings/images/[painting.md5].png"
 	var/icon/I = new(png)
@@ -491,6 +570,8 @@
 	for(var/T in typesof(/obj/item/canvas))
 		new_canvas = T
 		if(initial(new_canvas.width) == w && initial(new_canvas.height) == h)
+			if(!(new_canvas in accepted_canvas_types))
+				CRASH("Found painting with canvas size not compatible with this frame. Canvas type: [new_canvas]")
 			new_canvas = new T(src)
 			break
 	if(!istype(new_canvas))
@@ -504,6 +585,7 @@
 	current_canvas = new_canvas
 	current_canvas.update_appearance()
 	update_appearance()
+	return TRUE
 
 /obj/structure/sign/painting/proc/save_persistent()
 	if(!persistence_id || !current_canvas || current_canvas.no_save || current_canvas.painting_metadata.loaded_from_json)
@@ -537,6 +619,103 @@
 		for(var/y in 1 to height)
 			grid[x][y] = I.GetPixel(x,h-y)
 
+/obj/item/wallframe/painting/large
+	name = "large painting frame"
+	desc = "The perfect showcase for your favorite deathtrap memories. Make sure you have enough space to mount this one to the wall."
+	custom_materials = list(/datum/material/wood = 4000)
+	icon_state = "frame-large-empty"
+	result_path = /obj/structure/sign/painting/large
+	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
+
+/obj/item/wallframe/painting/large/try_build(turf/on_wall, mob/user)
+	. = ..()
+	if(!.)
+		return
+	var/our_dir = get_dir(user, on_wall)
+	var/check_dir = our_dir & (EAST|WEST) ? NORTH : EAST
+	var/turf/closed/wall/second_wall = get_step(on_wall, check_dir)
+	if(!istype(second_wall) || !user.CanReach(second_wall))
+		to_chat(user, span_warning("You need a reachable wall to the [check_dir == EAST ? "right" : "left"] of this one to mount this frame!"))
+		return FALSE
+	if(check_wall_item(second_wall, our_dir, wall_external))
+		to_chat(user, span_warning("There's already an item on the wall to the [check_dir == EAST ? "right" : "left"] of this one!"))
+		return FALSE
+
+/obj/item/wallframe/painting/large/after_attach(obj/object)
+	. = ..()
+	var/obj/structure/sign/painting/large/our_frame = object
+	our_frame.finalize_size()
+
+/obj/structure/sign/painting/large
+	icon = 'icons/obj/artstuff_64x64.dmi'
+	custom_materials = list(/datum/material/wood = 4000)
+	accepted_canvas_types = list(
+		/obj/item/canvas/thirtysix_twentyfour,
+		/obj/item/canvas/fortyfive_twentyseven,
+	)
+
+/obj/structure/sign/painting/large/Initialize(mapload)
+	. = ..()
+	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
+	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
+	if(mapload)
+		finalize_size()
+
+/**
+ * This frame is visually put between two wall turfs and it has an icon that's bigger than 32px, and because
+ * of the way it's designed, the pixel_shift variable from the wallframe item won't do.
+ * Also we want higher bounds so it actually covers an extra wall turf, so that it can count toward check_wall_item calls for
+ * that wall turf.
+ */
+/obj/structure/sign/painting/large/proc/finalize_size()
+	switch(dir)
+		if(SOUTH)
+			pixel_y = -32
+			bound_width = 64
+		if(NORTH)
+			bound_width = 64
+		if(WEST)
+			// Totally intended so that the frame sprite doesn't spill behind the wall and get partly covered by the darkness plane.
+			// Ditto for the ones below.
+			pixel_x = -29
+			bound_height = 64
+		if(EAST)
+			bound_height = 64
+
+/obj/structure/sign/painting/large/frame_canvas(mob/user, obj/item/canvas/new_canvas)
+	. = ..()
+	if(.)
+		set_painting_offsets()
+
+/obj/structure/sign/painting/large/load_persistent()
+	. = ..()
+	if(.)
+		set_painting_offsets()
+
+/obj/structure/sign/painting/large/proc/set_painting_offsets()
+	switch(dir)
+		if(EAST)
+			transform = transform.Turn(90)
+			pixel_x += 29
+			pixel_y += 29
+		if(WEST)
+			transform = transform.Turn(-90)
+		if(NORTH)
+			pixel_y += 29
+
+/obj/structure/sign/painting/large/Exited(atom/movable/movable, atom/newloc)
+	if(movable == current_canvas)
+		switch(dir)
+			if(EAST)
+				transform = transform.Turn(-90)
+				pixel_x -= 29
+				pixel_y -= 29
+			if(WEST)
+				transform = transform.Turn(90)
+			if(NORTH)
+				pixel_y -= 29
+	return ..()
+
 //Presets for art gallery mapping, for paintings to be shared across stations
 /obj/structure/sign/painting/library
 	name = "\improper Public Painting Exhibit mounting"
@@ -555,6 +734,19 @@
 	desc = "For art pieces deemed too subversive or too illegal to be shared outside of curators."
 	desc_with_canvas = "A painting hung away from lesser minds."
 	persistence_id = "library_private"
+
+/obj/structure/sign/painting/large/library
+	name = "\improper Large Painting Exhibit mounting"
+	desc = "For the bulkier art pieces, hand-picked by the curator."
+	desc_with_canvas = "A curated, large piece of art (or \"art\"). Hopefully the price of the canvas was worth it."
+	persistence_id = "library_large"
+
+/obj/structure/sign/painting/large/library_private
+	name = "\improper Private Painting Exhibit mounting"
+	desc = "For the privier and less tasteful compositions that oughtn't to be shown in a parlor nor to the masses."
+	desc_with_canvas = "A painting that oughn't to be shown to the less open-minded commoners."
+	persistence_id = "library_large_private"
+
 
 #define AVAILABLE_PALETTE_SPACE 14 // Enough to fill two radial menu pages
 

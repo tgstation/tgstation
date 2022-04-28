@@ -20,6 +20,8 @@
 #define META_GAS_ID 6
 ///Power of the gas when used in the current iteration of fusion
 #define META_GAS_FUSION_POWER 7
+///Short description of the gas.
+#define META_GAS_DESC 8
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)
@@ -135,6 +137,9 @@
 #define FIRE_SPREAD_RADIOSITY_SCALE 0.85
 ///Helper for small fires to grow
 #define FIRE_GROWTH_RATE 40000
+
+///Multiplier for the temperature shared to other turfs
+#define COLD_FIRE_SPREAD_RADIOSITY_SCALE 0.95
 
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))

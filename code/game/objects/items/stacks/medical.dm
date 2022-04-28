@@ -83,17 +83,20 @@
 	if(!affecting) //Missing limb?
 		to_chat(user, span_warning("[C] doesn't have \a [parse_zone(user.zone_selected)]!"))
 		return FALSE
-	if(affecting.status != BODYPART_ORGANIC) //Limb must be organic to be healed - RR
+	if(!IS_ORGANIC_LIMB(affecting)) //Limb must be organic to be healed - RR
 		to_chat(user, span_warning("[src] won't work on a robotic limb!"))
 		return FALSE
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
-		user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [C]'s [affecting.name].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [C]'s [affecting.name].</span></span>")
+		user.visible_message(
+			span_infoplain(span_green("[user] applies [src] on [C]'s [parse_zone(affecting.body_zone)].")),
+			span_infoplain(span_green("You apply [src] on [C]'s [parse_zone(affecting.body_zone)]."))
+		)
 		var/previous_damage = affecting.get_damage()
 		if(affecting.heal_damage(brute, burn))
 			C.update_damage_overlays()
 		post_heal_effects(max(previous_damage - affecting.get_damage(), 0), C, user)
 		return TRUE
-	to_chat(user, span_warning("[C]'s [affecting.name] can not be healed with [src]!"))
+	to_chat(user, span_warning("[C]'s [parse_zone(affecting.body_zone)] can not be healed with [src]!"))
 	return FALSE
 
 ///Override this proc for special post heal effects.
@@ -128,7 +131,7 @@
 	max_amount = 12
 	amount = 6
 	grind_results = list(/datum/reagent/cellulose = 2)
-	custom_price = PAYCHECK_ASSISTANT * 2
+	custom_price = PAYCHECK_CREW * 2
 	absorption_rate = 0.125
 	absorption_capacity = 5
 	splint_factor = 0.7

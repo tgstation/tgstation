@@ -133,6 +133,11 @@
 	id = "comp_speech"
 	build_path = /obj/item/circuit_component/speech
 
+/datum/design/component/laserpointer
+	name = "Laser Pointer Component"
+	id = "comp_laserpointer"
+	build_path = /obj/item/circuit_component/laserpointer
+
 /datum/design/component/timepiece
 	name = "Timepiece Component"
 	id = "comp_timepiece"
@@ -392,7 +397,7 @@
 	build_path = /obj/item/circuit_component/id_getter
 
 /datum/design/component/id_info_reader
-	name = "ID Getter Component"
+	name = "ID Info Reader Component"
 	id = "comp_id_info_reader"
 	build_path = /obj/item/circuit_component/id_info_reader
 

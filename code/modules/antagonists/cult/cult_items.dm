@@ -758,16 +758,17 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/halberd/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)
 	if(isliving(hit_atom))
-		var/mob/living/L = hit_atom
-		if(IS_CULTIST(L))
+		var/mob/living/target = hit_atom
+
+		if(IS_CULTIST(target) && target.put_in_active_hand(src))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
-			if(L.put_in_active_hand(src))
-				L.visible_message(span_warning("[L] catches [src] out of the air!"))
-			else
-				L.visible_message(span_warning("[src] bounces off of [L], as if repelled by an unseen force!"))
-		else if(!..())
-			if(!L.anti_magic_check())
-				L.Paralyze(50)
+			target.visible_message(span_warning("[target] catches [src] out of the air!"))
+			return
+		if(target.can_block_magic() || IS_CULTIST(target))
+			target.visible_message(span_warning("[src] bounces off of [target], as if repelled by an unseen force!"))
+			return
+		if(!..())
+			target.Paralyze(50)
 			break_halberd(T)
 	else
 		..()
@@ -805,14 +806,13 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "Call the bloody halberd back to your hand!"
 	background_icon_state = "bg_demon"
 	button_icon_state = "bloodspear"
+	default_button_position = "6:157,4:-2"
 	var/obj/item/melee/cultblade/halberd/halberd
 	var/cooldown = 0
 
 /datum/action/innate/cult/halberd/Grant(mob/user, obj/blood_halberd)
 	. = ..()
 	halberd = blood_halberd
-	button.screen_loc = "6:157,4:-2"
-	button.moved = "6:157,4:-2"
 
 /datum/action/innate/cult/halberd/Activate()
 	if(owner == halberd.loc || cooldown > world.time)
@@ -1073,22 +1073,23 @@ Striking a noncultist, however, will tear their flesh."}
 	var/turf/T = get_turf(hit_atom)
 	var/datum/thrownthing/D = throwingdatum
 	if(isliving(hit_atom))
-		var/mob/living/L = hit_atom
-		if(IS_CULTIST(L))
+		var/mob/living/target = hit_atom
+
+		if(target.can_block_magic() || IS_CULTIST(target))
+			target.visible_message(span_warning("[src] bounces off of [target], as if repelled by an unseen force!"))
+			return 
+		if(IS_CULTIST(target) && target.put_in_active_hand(src))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
-			if(L.put_in_active_hand(src))
-				L.visible_message(span_warning("[L] catches [src] out of the air!"))
-			else
-				L.visible_message(span_warning("[src] bounces off of [L], as if repelled by an unseen force!"))
-		else if(!..())
-			if(!L.anti_magic_check())
-				L.Paralyze(30)
-				if(D?.thrower)
-					for(var/mob/living/Next in orange(2, T))
-						if(!Next.density || IS_CULTIST(Next))
-							continue
-						throw_at(Next, 3, 1, D.thrower)
-						return
-					throw_at(D.thrower, 7, 1, null)
+			target.visible_message(span_warning("[target] catches [src] out of the air!"))
+			return
+		if(!..())			
+			target.Paralyze(30)
+			if(D?.thrower)
+				for(var/mob/living/Next in orange(2, T))
+					if(!Next.density || IS_CULTIST(Next))
+						continue
+					throw_at(Next, 3, 1, D.thrower)
+					return
+				throw_at(D.thrower, 7, 1, null)
 	else
 		..()

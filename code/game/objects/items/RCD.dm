@@ -167,7 +167,7 @@ RLD
 		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
-	if(!silo_mats || !silo_mats.mat_container)
+	if(!silo_mats || !silo_mats.mat_container || !silo_link)
 		if(silo_link)
 			to_chat(user, span_alert("Connected silo link is invalid. Reconnect to silo via multitool."))
 			return FALSE
@@ -227,7 +227,7 @@ RLD
 	worn_icon_state = "RCD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_premium_price = PAYCHECK_HARD * 10
+	custom_premium_price = PAYCHECK_COMMAND * 10
 	max_matter = 160
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON

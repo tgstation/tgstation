@@ -9,7 +9,7 @@
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
 	desc = "A pair of black shoes."
-	custom_price = PAYCHECK_ASSISTANT
+	custom_price = PAYCHECK_CREW
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT

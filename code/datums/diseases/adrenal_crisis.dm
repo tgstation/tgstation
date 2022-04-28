@@ -29,7 +29,7 @@
 				affected_mob.Unconscious(40)
 
 			if(DT_PROB(10, delta_time))
-				affected_mob.slurring += 7
+				affected_mob.adjust_timed_status_effect(14 SECONDS, /datum/status_effect/speech/slurring/drunk)
 
 			if(DT_PROB(7, delta_time))
 				affected_mob.Dizzy(10)

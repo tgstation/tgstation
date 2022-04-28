@@ -121,8 +121,7 @@
 /area/shuttle/labor)
 "W" = (
 /obj/machinery/door/airlock/titanium{
-	name = "Labor Shuttle Airlock";
-	req_access_txt = "2"
+	name = "Labor Shuttle Airlock"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)

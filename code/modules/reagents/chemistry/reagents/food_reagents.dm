@@ -996,7 +996,7 @@
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
 	if(isabductor(M))
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "ET_pieces", /datum/mood_event/et_pieces, name)
-		M.set_drugginess(15 * REM * delta_time)
+		M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	..()
 
 /datum/reagent/consumable/vinegar

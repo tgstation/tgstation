@@ -1,7 +1,7 @@
 #define PAINTINGS_DATA_FORMAT_VERSION 2
 
 // Patronage thresholds for paintings. Different cosmetic frames become available as more credits are spent on the patronage.
-#define PATRONAGE_OK_FRAME PAYCHECK_ASSISTANT * 3 // 150 credits, as of early 2022
+#define PATRONAGE_OK_FRAME PAYCHECK_CREW * 3 // 150 credits, as of march 2022
 #define PATRONAGE_NICE_FRAME PATRONAGE_OK_FRAME * 2.5
 #define PATRONAGE_GREAT_FRAME PATRONAGE_NICE_FRAME * 2
 #define PATRONAGE_EXCELLENT_FRAME PATRONAGE_GREAT_FRAME * 2
@@ -170,7 +170,13 @@ SUBSYSTEM_DEF(persistent_paintings)
 			pdata["ref"] = REF(painting)
 			. += list(pdata)
 		else
-			. += list(list("title" = painting.title, "creator" = painting.creator_name, "md5" = painting.md5,"ref" = REF(painting)))
+			. += list(list(
+				"title" = painting.title,
+				"creator" = painting.creator_name,
+				"md5" = painting.md5,
+				"ref" = REF(painting),
+				"ratio" = painting.width/painting.height,
+				))
 
 /// Returns paintings with given tag.
 /datum/controller/subsystem/persistent_paintings/proc/get_paintings_with_tag(tag_name)

@@ -32,7 +32,7 @@
 		new /datum/data/mining_equipment("Tracking Implant Kit", /obj/item/storage/box/minertracker, 600),
 		new /datum/data/mining_equipment("Jaunter", /obj/item/wormhole_jaunter, 750),
 		new /datum/data/mining_equipment("Kinetic Crusher", /obj/item/kinetic_crusher, 750),
-		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/gun/energy/kinetic_accelerator, 750),
+		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/gun/energy/recharge/kinetic_accelerator, 750),
 		new /datum/data/mining_equipment("Advanced Scanner", /obj/item/t_scanner/adv_mining_scanner, 800),
 		new /datum/data/mining_equipment("Resonator", /obj/item/resonator, 800),
 		new /datum/data/mining_equipment("Luxury Medipen", /obj/item/reagent_containers/hypospray/medipen/survival/luxury, 1000),
@@ -42,11 +42,11 @@
 		new /datum/data/mining_equipment("Mining Conscription Kit", /obj/item/storage/backpack/duffelbag/mining_conscript, 1500),
 		new /datum/data/mining_equipment("Space Cash", /obj/item/stack/spacecash/c1000, 2000),
 		new /datum/data/mining_equipment("Diamond Pickaxe", /obj/item/pickaxe/diamond, 2000),
+		new /datum/data/mining_equipment("Kheiral Cuffs", /obj/item/kheiral_cuffs, 2000),
 		new /datum/data/mining_equipment("Super Resonator", /obj/item/resonator/upgraded, 2500),
 		new /datum/data/mining_equipment("Jump Boots", /obj/item/clothing/shoes/bhop, 2500),
 		new /datum/data/mining_equipment("Ice Hiking Boots", /obj/item/clothing/shoes/winterboots/ice_boots, 2500),
 		new /datum/data/mining_equipment("Mining MODsuit", /obj/item/mod/control/pre_equipped/mining, 2500),
-		new /datum/data/mining_equipment("Kheiral Cuffs", /obj/item/kheiral_cuffs, 2750),
 		new /datum/data/mining_equipment("Luxury Shelter Capsule", /obj/item/survivalcapsule/luxury, 3000),
 		new /datum/data/mining_equipment("Luxury Bar Capsule", /obj/item/survivalcapsule/luxuryelite, 10000),
 		new /datum/data/mining_equipment("Nanotrasen Minebot", /mob/living/simple_animal/hostile/mining_drone, 800),
@@ -273,6 +273,6 @@
 	new /obj/item/encryptionkey/headset_mining(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/card/id/advanced/mining(src)
-	new /obj/item/gun/energy/kinetic_accelerator(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)

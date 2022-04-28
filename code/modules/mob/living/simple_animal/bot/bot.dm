@@ -203,7 +203,7 @@
 	QDEL_NULL(access_card)
 	return ..()
 
-/mob/living/simple_animal/bot/proc/check_access(mob/living/user)
+/mob/living/simple_animal/bot/proc/check_access(mob/living/user, obj/item/card/id)
 	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
 		return TRUE
 	if(!maints_access_required) // No requirements to access it.
@@ -211,13 +211,13 @@
 	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
 		return TRUE
 
-	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-	if(!id_card || !id_card.access)
+	var/obj/item/card/id/used_id = id || user.get_idcard(TRUE)
+
+	if(!used_id || !used_id.access)
 		return FALSE
-	id_card = id_card.GetID()
 
 	for(var/requested_access in maints_access_required)
-		if(requested_access in id_card.access)
+		if(requested_access in used_id.access)
 			return TRUE
 	return FALSE
 
@@ -318,7 +318,7 @@
 			call_mode()
 			return FALSE
 		if(BOT_SUMMON) //Called to a location
-			bot_summon()
+			summon_step()
 			return FALSE
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
@@ -785,8 +785,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 			mode = BOT_SUMMON
 			speak("Responding.", radio_channel)
 
-			calc_summon_path()
-
 		if("ejectpai")
 			ejectpairemote(user)
 	return
@@ -812,9 +810,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 			return
 		else
 			to_chat(src, span_warning("Unidentified control sequence received:[command]"))
-
-/mob/living/simple_animal/bot/proc/bot_summon() // summoned to PDA
-	summon_step()
 
 // calculates a path to the current destination
 // given an optional turf to avoid

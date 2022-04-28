@@ -1,6 +1,6 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
-	name = "Lizardperson"
+	name = "\improper Lizardperson"
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
 	say_mod = "hisses"
@@ -22,6 +22,7 @@
 	heatmod = 0.67
 	payday_modifier = 0.75
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	species_cookie = /obj/item/food/meat/slab
 	attack_verb = "slash"
 	attack_effect = ATTACK_EFFECT_CLAW
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -35,11 +36,22 @@
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
 	wings_icons = list("Dragon")
 	species_language_holder = /datum/language_holder/lizard
+	digitigrade_customization = DIGITIGRADE_OPTIONAL
+
 	// Lizards are coldblooded and can stand a greater temperature range than humans
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 20) // This puts lizards 10 above lavaland max heat for ash lizards.
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
 	ass_image = 'icons/ass/asslizard.png'
+
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/lizard,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/lizard,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/lizard,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/lizard,
+	)
 
 /// Lizards are cold blooded and do not stabilize body temperature naturally
 /datum/species/lizard/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
@@ -169,8 +181,7 @@ Lizard subspecies: ASHWALKERS
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = SPECIES_LIZARD_ASH
-	limbs_id = "lizard"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE,HAS_FLESH,HAS_BONE)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAS_FLESH,HAS_BONE)
 	mutantlungs = /obj/item/organ/lungs/ashwalker
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
@@ -179,14 +190,14 @@ Lizard subspecies: ASHWALKERS
 		TRAIT_VIRUSIMMUNE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
-
+	digitigrade_customization = DIGITIGRADE_FORCED
+	examine_limb_id = SPECIES_LIZARD
 /*
 Lizard subspecies: SILVER SCALED
 */
 /datum/species/lizard/silverscale
 	name = "Silver Scale"
 	id = SPECIES_LIZARD_SILVER
-	limbs_id = "lizard"
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
@@ -203,6 +214,7 @@ Lizard subspecies: SILVER SCALED
 	mutanttongue = /obj/item/organ/tongue/lizard/silver
 	armor = 10 //very light silvery scales soften blows
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
+	examine_limb_id = SPECIES_LIZARD
 	///stored mutcolor for when we turn back off of a silverscale.
 	var/old_mutcolor
 	///stored eye color for when we turn back off of a silverscale.
