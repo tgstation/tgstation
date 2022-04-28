@@ -192,7 +192,7 @@
 
 /obj/structure/tramwall/uranium/attack_hand(mob/user, list/modifiers)
 	radiate()
-	. = ..()
+	return ..()
 
 /obj/structure/tramwall/uranium/proc/radiate()
 	SIGNAL_HANDLER
