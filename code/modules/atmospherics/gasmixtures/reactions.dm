@@ -552,22 +552,31 @@
 /datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/pressure = air.return_pressure()
-	var/volume = air.return_volume()
-	var/pressure_effciency = 1/pressure
-	var/ratio_efficency = min(cached_gases[/datum/gas/nitrous_oxide][MOLES]/cached_gases[/datum/gas/plasma][MOLES],1)
-	var/bz_formed = min(pressure_effciency*ratio_efficency*volume/100, cached_gases[/datum/gas/nitrous_oxide][MOLES], cached_gases[/datum/gas/plasma][MOLES]*INVERSE(2))
+	// This slows down in relation to pressure, very quickly. Please don't expect it to be anything more then a snail
 
-	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - bz_formed < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2 * bz_formed) < 0) || bz_formed <= 0)
+	// Bigger is better for these two values.
+	var/pressure_efficiency = (0.1 * ONE_ATMOSPHERE) / pressure // More pressure = more bad
+	var/ratio_efficiency = min(cached_gases[/datum/gas/nitrous_oxide][MOLES] / cached_gases[/datum/gas/plasma][MOLES], 1) // Malus to production if more plasma than n2o.
+
+	var/reaction_efficency = min(pressure_efficiency * ratio_efficiency, cached_gases[/datum/gas/nitrous_oxide][MOLES], cached_gases[/datum/gas/plasma][MOLES] * INVERSE(2))
+
+	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2 * reaction_efficency) < 0) || reaction_efficency <= 0) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
 	ASSERT_GAS(/datum/gas/bz, air)
-	cached_gases[/datum/gas/bz][MOLES] += bz_formed
-	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= 0.4 bz_formed
-	cached_gases[/datum/gas/plasma][MOLES] -= 0.8 * bz_formed
+	if (reaction_efficency == cached_gases[/datum/gas/nitrous_oxide][MOLES])
+		ASSERT_GAS(/datum/gas/oxygen, air)
+		cached_gases[/datum/gas/bz][MOLES] += (reaction_efficency * 2.5) - min(pressure, 0.5)
+		cached_gases[/datum/gas/oxygen][MOLES] += min(pressure, 0.5)
+	else
+		cached_gases[/datum/gas/bz][MOLES] += reaction_efficency * 2.5
 
-	SET_REACTION_RESULTS(bz_formed)
-	var/energy_released = bz_formed * BZ_FORMATION_ENERGY
+	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
+	cached_gases[/datum/gas/plasma][MOLES] -= 2 * reaction_efficency
+
+	SET_REACTION_RESULTS(reaction_efficency)
+	var/energy_released = 2 * reaction_efficency * FIRE_CARBON_ENERGY_RELEASED
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air.temperature = max(((air.temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)
