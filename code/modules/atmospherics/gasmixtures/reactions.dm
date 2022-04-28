@@ -563,7 +563,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	ASSERT_GAS(/datum/gas/bz, air)
 	cached_gases[/datum/gas/bz][MOLES] += bz_formed
-	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= 0.4 bz_formed
+	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= 0.4 * bz_formed
 	cached_gases[/datum/gas/plasma][MOLES] -= 0.8 * bz_formed
 
 	SET_REACTION_RESULTS(bz_formed)
