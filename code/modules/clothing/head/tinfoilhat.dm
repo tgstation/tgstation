@@ -12,7 +12,13 @@
 /obj/item/clothing/head/foilhat/Initialize(mapload)
 	. = ..()
 	if(!warped)
-		AddComponent(/datum/component/anti_magic, FALSE, FALSE, TRUE, ITEM_SLOT_HEAD,  6, TRUE, null, CALLBACK(src, .proc/warp_up))
+		AddComponent(/datum/component/anti_magic, \
+			antimagic_flags = MAGIC_RESISTANCE_MIND, \
+			inventory_flags = ITEM_SLOT_HEAD, \
+			charges = 6, \
+			drain_antimagic = CALLBACK(src, .proc/drain_antimagic), \
+			expiration = CALLBACK(src, .proc/warp_up) \
+		)
 	else
 		warp_up()
 
@@ -43,6 +49,10 @@
 	if(paranoia)
 		QDEL_NULL(paranoia)
 	UnregisterSignal(user, COMSIG_HUMAN_SUICIDE_ACT)
+
+/// When the foilhat is drained an anti-magic charge.
+/obj/item/clothing/head/foilhat/proc/drain_antimagic(mob/user)
+	to_chat(user, span_warning("[src] crumples slightly. Something is trying to get inside your mind!"))
 
 /obj/item/clothing/head/foilhat/proc/warp_up()
 	name = "scorched tinfoil hat"
@@ -90,5 +100,5 @@
 	user.say(pick(conspiracy_line), forced=type)
 	var/obj/item/organ/brain/brain = user.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.damage = BRAIN_DAMAGE_DEATH
+		brain.setOrganDamage(BRAIN_DAMAGE_DEATH)
 	return OXYLOSS

@@ -454,8 +454,12 @@
 	},
 /area/ruin/plasma_facility/operations)
 "gD" = (
-/obj/structure/bed,
-/obj/item/bedsheet/black,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/black{
+	dir = 4
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},

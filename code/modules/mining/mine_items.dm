@@ -61,7 +61,7 @@
 	new /obj/item/storage/bag/plants(src)
 	new /obj/item/storage/bag/ore(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
-	new /obj/item/gun/energy/kinetic_accelerator(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
@@ -84,7 +84,12 @@
 		to_chat(user, span_warning("You get a feeling that leaving the station might be a REALLY dumb idea..."))
 		dumb_rev_heads += user.mind
 		return
-	. = ..()
+
+	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z))
+		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
+		return
+
+	return ..()
 
 /obj/machinery/computer/shuttle/mining/common
 	name = "lavaland shuttle console"

@@ -291,9 +291,7 @@
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
 	if(data["misc"] >= (25 SECONDS)) // 10 units
-		if(!M.stuttering)
-			M.stuttering = 1
-		M.stuttering = min(M.stuttering + (2 * delta_time), 10)
+		M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
 		M.Dizzy(5)
 		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
 			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
@@ -307,7 +305,7 @@
 			M.mind.remove_antag_datum(/datum/antagonist/cult)
 			M.Unconscious(100)
 		M.jitteriness = 0
-		M.stuttering = 0
+		M.remove_status_effect(/datum/status_effect/speech/stutter)
 		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
 		return
 	holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * delta_time) //fixed consumption to prevent balancing going out of whack
@@ -499,7 +497,7 @@
 							break
 				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
 					exposed_human.dna.features["mcolor"] = newcolor
-			exposed_human.regenerate_icons()
+			exposed_human.update_body(is_creating = TRUE)
 
 		if((methods & INGEST) && show_message)
 			to_chat(exposed_mob, span_notice("That tasted horrible."))
@@ -521,7 +519,7 @@
 			N.skin_tone = "orange"
 		else if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "#ff8800"
-		N.regenerate_icons()
+		N.update_body(is_creating = TRUE)
 		if(DT_PROB(3.5, delta_time))
 			if(N.w_uniform)
 				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
@@ -653,9 +651,19 @@
 	name = "Golem Mutation Toxin"
 	description = "A crystal toxin."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/golem/random
+	race = /datum/species/golem
 	taste_description = "rocks"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/mutationtoxin/golem/on_mob_metabolize()
+	var/static/list/random_golem_types
+	random_golem_types = subtypesof(/datum/species/golem) - type
+	for(var/i in random_golem_types)
+		var/datum/species/golem/golem = i
+		if(!initial(golem.random_eligible))
+			random_golem_types -= golem
+	race = pick(random_golem_types)
+	..()
 
 /datum/reagent/mutationtoxin/abductor
 	name = "Abductor Mutation Toxin"
@@ -1499,11 +1507,12 @@
 	L.SetSleeping(10)
 	return ..()
 
-/datum/reagent/healium/on_mob_life(mob/living/L, delta_time, times_fired)
-	. = ..()
-	L.adjustFireLoss(-2 * REM * delta_time, FALSE)
-	L.adjustToxLoss(-5 * REM * delta_time, FALSE)
-	L.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+/datum/reagent/healium/on_mob_life(mob/living/breather, delta_time, times_fired)
+	breather.adjustFireLoss(-2 * REM * delta_time, FALSE)
+	breather.adjustToxLoss(-5 * REM * delta_time, FALSE)
+	breather.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+	..()
+	return TRUE
 
 /datum/reagent/halon
 	name = "Halon"
@@ -1524,6 +1533,22 @@
 	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
 	return ..()
 
+/datum/reagent/zauker
+	name = "Zauker"
+	description = "An unstable gas that is toxic to all living beings."
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "bitter"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/zauker/on_mob_life(mob/living/breather, delta_time, times_fired)
+	breather.adjustBruteLoss(6 * REM * delta_time, FALSE)
+	breather.adjustOxyLoss(1 * REM * delta_time, FALSE)
+	breather.adjustFireLoss(2 * REM * delta_time, FALSE)
+	breather.adjustToxLoss(2 * REM * delta_time, FALSE)
+	..()
+	return TRUE
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
