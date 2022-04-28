@@ -34974,9 +34974,6 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = -8
 	},
-/obj/machinery/firealarm/directional/west{
-	pixel_y = 5
-	},
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
 "lfk" = (
@@ -42012,6 +42009,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
 "nMb" = (
