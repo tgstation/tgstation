@@ -51,33 +51,36 @@
 		return FALSE
 
 	var/client/C = screenmob.client
+	// Default to HIGH
+	var/parallax_selection = PARALLAX_HIGH
 	if(C.prefs)
-		var/pref = C.prefs.read_preference(/datum/preference/choiced/parallax)
-		if (isnull(pref))
-			pref = PARALLAX_HIGH
-		switch(pref)
-			if (PARALLAX_INSANE)
-				C.parallax_throttle = FALSE
-				C.parallax_layers_max = 5
-				return TRUE
+		parallax_selection = C.prefs.read_preference(/datum/preference/choiced/parallax)
+		if (!parallax_selection)
+			parallax_selection = PARALLAX_HIGH
 
-			if (PARALLAX_MED)
-				C.parallax_throttle = PARALLAX_DELAY_MED
-				C.parallax_layers_max = 3
-				return TRUE
+	switch(parallax_selection)
+		if (PARALLAX_INSANE)
+			C.parallax_layers_max = 5
+			C.do_parallax_animations = TRUE
+			return TRUE
 
-			if (PARALLAX_LOW)
-				C.parallax_throttle = PARALLAX_DELAY_LOW
-				C.parallax_layers_max = 1
-				return TRUE
+		if(PARALLAX_HIGH)
+			C.parallax_layers_max = 4
+			C.do_parallax_animations = TRUE
+			return TRUE
 
-			if (PARALLAX_DISABLE)
-				return FALSE
+		if (PARALLAX_MED)
+			C.parallax_layers_max = 3
+			C.do_parallax_animations = TRUE
+			return TRUE
 
-	//This is high parallax.
-	C.parallax_throttle = PARALLAX_DELAY_DEFAULT
-	C.parallax_layers_max = 4
-	return TRUE
+		if (PARALLAX_LOW)
+			C.parallax_layers_max = 1
+			C.do_parallax_animations = FALSE
+			return TRUE
+
+		if (PARALLAX_DISABLE)
+			return FALSE
 
 /datum/hud/proc/update_parallax_pref(mob/viewmob)
 	remove_parallax(viewmob)
@@ -192,7 +195,7 @@
 	var/largest_change = max(abs(offset_x), abs(offset_y))
 	var/max_allowed_dist = (glide_rate / world.tick_lag) + 1
 	// If we aren't already moving/don't allow parallax, have made some movement, and that movement was smaller then our "glide" size, animate
-	var/run_parralax = (glide_rate && !areaobj.parallax_movedir && C.dont_animate_parallax <= world.time && largest_change <= max_allowed_dist)
+	var/run_parralax = (C.do_parallax_animations && glide_rate && !areaobj.parallax_movedir && C.dont_animate_parallax <= world.time && largest_change <= max_allowed_dist)
 
 	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in C.parallax_layers)
 		var/our_speed = parallax_layer.speed
