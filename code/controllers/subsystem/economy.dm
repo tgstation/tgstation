@@ -88,6 +88,7 @@ SUBSYSTEM_DEF(economy)
 		var/datum/bank_account/bank_account = bank_accounts_by_id[account]
 		if(bank_account?.account_job && !ispath(bank_account.account_job))
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
+		bank_account.payday(1)
 		station_total += bank_account.account_balance
 	station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
 	if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))

@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - balance: "Getting your eardrums blown out will now properly have a low chance to make you go fully deaf, until you find some earmuffs or get a transplant"
-  - refactor: "Cached some redundant operations in Life(), speeding it up by ~22%. I know that doesn't mean much to you, but cpu time go brrr ok?"

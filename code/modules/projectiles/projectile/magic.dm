@@ -16,7 +16,7 @@
 	if(istype(target) && target.can_block_magic(antimagic_flags, antimagic_charge_cost))
 		visible_message(span_warning("[src] fizzles on contact with [target]!"))
 		return PROJECTILE_DELETE_WITHOUT_HITTING
-			
+
 /obj/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
@@ -24,7 +24,7 @@
 /obj/projectile/magic/death/on_hit(mob/living/target)
 	. = ..()
 	if(!isliving(target))
-		return 
+		return
 
 	if(target.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
 		if(target.revive(full_heal = TRUE, admin_revive = TRUE))
@@ -46,7 +46,7 @@
 /obj/projectile/magic/resurrection/on_hit(mob/living/target)
 	. = ..()
 	if(!isliving(target))
-		return 
+		return
 
 	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
 		target.death()
@@ -317,7 +317,7 @@
 /obj/projectile/magic/antimagic/on_hit(mob/living/target)
 	. = ..()
 	if(isliving(target))
-		target.apply_status_effect(/datum/status_effect/antimagic)
+		target.apply_status_effect(/datum/status_effect/song/antimagic)
 
 /obj/projectile/magic/fetch
 	name = "bolt of fetching"
@@ -347,7 +347,7 @@
 	if(isliving(target))
 		if(!target.mind)
 			return
-			
+
 		to_chat(target, span_danger("Your body feels drained and there is a burning pain in your chest."))
 		target.maxHealth -= 20
 		target.health = min(target.health, target.maxHealth)
@@ -464,7 +464,7 @@
 	if(ismob(target))
 		//between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 		target.take_overall_damage(0, 10)
-		
+
 	var/turf/T = get_turf(target)
 	explosion(T, devastation_range = -1, heavy_impact_range = exp_heavy, light_impact_range = exp_light, flame_range = exp_fire, flash_range = exp_flash, adminlog = FALSE, explosion_cause = src)
 
