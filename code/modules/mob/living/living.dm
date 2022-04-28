@@ -1459,7 +1459,6 @@
 /mob/living/proc/set_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks, override_fire_type = FORCE_FIRE_OVERRIDE, remove_wet_stacks = TRUE)
 	if(stacks < 0) //Shouldn't happen, ever
 		CRASH("set_fire_stacks recieved negative [stacks] fire stacks")
-		return
 
 	if(remove_wet_stacks)
 		remove_status_effect(/datum/status_effect/fire_handler/wet_stacks)
@@ -1473,7 +1472,6 @@
 /mob/living/proc/set_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks, override_wet_type = FORCE_FIRE_OVERRIDE, remove_fire_stacks = TRUE)
 	if(stacks < 0)
 		CRASH("set_wet_stacks recieved negative [stacks] wet stacks")
-		return
 
 	if(remove_fire_stacks)
 		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks)

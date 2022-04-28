@@ -1328,9 +1328,13 @@
 	alert_type = null
 	status_type = STATUS_EFFECT_MULTIPLE //Custom code
 	on_remove_on_mob_delete = TRUE
+	/// Current amount of stacks we have
 	var/stacks
+	/// Maximum of stacks that we could possibly get
 	var/stack_limit = 20
+	/// What status effect type do we merge with
 	var/our_type
+	/// What status effect type do we remove uppon being applied
 	var/enemy_type
 
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, override_type = NO_FIRE_OVERRIDE, forced = FALSE)
@@ -1394,10 +1398,15 @@
 	our_type = /datum/status_effect/fire_handler/fire_stacks
 	enemy_type = /datum/status_effect/fire_handler/wet_stacks
 
+	/// If we're on fire
 	var/on_fire = FALSE
+	/// Type for our alert
 	var/fire_alert_type = /atom/movable/screen/alert/fire
+	/// A weakref to the mob light emitter
 	var/datum/weakref/firelight_ref
+	/// Type of mob light emitter we use when on fire
 	var/firelight_type = /obj/effect/dummy/lighting_obj/moblight/fire
+	/// Stores current fire overlay icon state, for optimisation purposes
 	var/last_icon_state
 
 /datum/status_effect/fire_handler/fire_stacks/tick(delta_time, times_fired)
@@ -1499,9 +1508,8 @@
 	if(leg_clothes)
 		burning_items |= leg_clothes
 
-	for(var/X in burning_items)
-		var/obj/item/I = X
-		I.fire_act((stacks * 25 * delta_time)) //damage taken is reduced to 2% of this value by fire_act()
+	for(var/obj/item/burning in burning_items)
+		burning.fire_act((stacks * 25 * delta_time)) //damage taken is reduced to 2% of this value by fire_act()
 
 /datum/status_effect/fire_handler/fire_stacks/proc/ignite(silent = FALSE)
 	if(HAS_TRAIT(owner, TRAIT_NOFIRE))
