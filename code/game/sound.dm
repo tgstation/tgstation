@@ -45,7 +45,7 @@
 
 	var/turf/turf_source = get_turf(source)
 
-	if (!turf_source)
+	if (!turf_source || !soundin || !vol)
 		return
 
 	//allocate a channel if necessary now so its the same for everyone
@@ -84,7 +84,7 @@
 		if(below_turf && istransparentturf(turf_source))
 			listeners += get_hearers_in_view(maxdistance, below_turf)
 
-		for(var/mob/listening_mob as anything in listeners | SSmobs.dead_players_by_zlevel[source_z])//observers always hear through walls
+		for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[source_z])//observers always hear through walls
 			if(get_dist(listening_mob, turf_source) <= maxdistance)
 				listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb)
 				. += listening_mob
@@ -161,10 +161,6 @@
 			sound_to_use.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
 
 	SEND_SOUND(src, sound_to_use)
-
-///TODOKYLER: only let this exist for part of the tm to benchmark it
-/proc/send_sound(target, sound)
-	SEND_SOUND(target, sound)
 
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, channel = 0, pressure_affected = FALSE, sound/S)
 	if(!S)
