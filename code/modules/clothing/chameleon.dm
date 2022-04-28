@@ -867,7 +867,7 @@
  */
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/cartridge)
 	if(!istype(cartridge))
-		stack_trace("[cartridge] is not a valid typepath.")
+		stack_trace("[cartridge] is not a valid ammo casing.")
 		return FALSE
 
 	var/obj/projectile/proj = cartridge.loaded_projectile
@@ -884,7 +884,7 @@
 
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/guns/projectiles.dmi', "icon_state" = "laser")
 
-	var/default_state = !isnull(cham_projectile.icon_state) ? cham_projectile.icon_state : "laser"
+	var/default_state = isnull(cham_projectile.icon_state) ? "laser" : cham_projectile.icon_state
 
 	chameleon_projectile_vars["name"] = cham_projectile.name
 	chameleon_projectile_vars["icon"] = cham_projectile.icon
