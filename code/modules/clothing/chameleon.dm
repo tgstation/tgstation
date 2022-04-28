@@ -817,7 +817,7 @@
 
 /**
  * Description: Sets what gun we should be mimicking.
- * Arguments: [obj/item/gun/gun_to_set (the gun we're trying to mimic), passthrough (whether or not we're setting ammo too)]
+ * Arguments: [obj/item/gun/gun_to_set (the gun we're trying to mimic)]
  */
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_gun(obj/item/gun/gun_to_set)
 	if(!istype(gun_to_set))
@@ -863,7 +863,7 @@
 
 /**
  * Description: Sets the ammo type our gun should have.
- * Arguments: [obj/item/ammo_casing/cartridge (the ammo_casing we're trying to copy), passthrough (whether or not we're the loaded projectile too)]
+ * Arguments: [obj/item/ammo_casing/cartridge (the ammo_casing we're trying to copy)]
  */
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/cartridge)
 	if(!istype(cartridge))
