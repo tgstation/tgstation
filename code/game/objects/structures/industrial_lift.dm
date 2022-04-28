@@ -111,16 +111,16 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, is_border_platform = (x == min_x || y == max_y))
+					lift_platform?.travel(going)
 			else if (going & SOUTH)
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, is_border_platform = (x == min_x || y == min_y))
+					lift_platform?.travel(going)
 			else
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, is_border_platform = (x == min_x))
+					lift_platform?.travel(going)
 	else
 		//Go along the X axis from max to min, from right to left
 		for(var/x in max_x to min_x step -1)
@@ -128,18 +128,18 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, is_border_platform = (x == max_x || y == max_y))
+					lift_platform?.travel(going)
 
 			else if (going & SOUTH)
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, is_border_platform = (x == max_x || y == min_y))
+					lift_platform?.travel(going)
 
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, is_border_platform = (x == max_x))
+					lift_platform?.travel(going)
 
 	set_controls(UNLOCKED)
 
@@ -289,7 +289,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			continue
 		. += neighbor
 
-/obj/structure/industrial_lift/proc/travel(going, is_border_platform = FALSE)
+/obj/structure/industrial_lift/proc/travel(going)
 	var/list/things_to_move = lift_load
 	var/turf/destination
 	if(!isturf(going))
@@ -438,6 +438,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	if(glide_size != glide_size_override)
 		set_glide_size(glide_size_override)
+
 	forceMove(our_dest)
 	if(loc != our_dest || QDELETED(src))//check if our movement succeeded, if it didnt then the movers cant be moved
 		return FALSE
@@ -460,9 +461,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			mover_old_loc = mover.loc
 
 			our_area.Exited(mover, movement_direction)
-			mover_old_loc.abstract_exited(mover, movement_direction)
 			mover.loc = get_step(mover, movement_direction)
-			mover.loc.abstract_entered(mover, mover_old_loc)
 			their_area.Entered(mover, movement_direction)
 
 			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, FALSE)
@@ -474,19 +473,11 @@ GLOBAL_LIST_EMPTY(lifts)
 				continue
 
 			mover_old_loc = mover.loc
-			mover_old_loc.abstract_exited(mover, movement_direction)
 			mover.loc = get_step(mover, movement_direction)
-			mover.loc.abstract_entered(mover, mover_old_loc)
 
 			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, FALSE)
 
-	//for(var/atom/movable/mover as anything in movers)
-	//	mover.Moved(get_step(mover, opposite_direction), movement_direction, TRUE, null, src, TRUE)
-		//tell the movers they moved only after all of them have been moved so they cant react to eachother moving
-
-
 	return TRUE
-
 
 /obj/structure/industrial_lift/proc/use(mob/living/user)
 	if(!isliving(user) || !in_range(src, user) || user.combat_mode)
@@ -653,10 +644,6 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/obj/effect/landmark/tram/from_where
 	var/travel_direction
 
-GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
-
-/obj/structure/industrial_lift/tram/central
-	appearance_flags = PIXEL_SCALE //no TILE_BOUND since we're multitile
 	var/width = 0
 	var/height = 0
 
@@ -665,6 +652,11 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 	var/min_y = INFINITY
 	var/max_y = 0
+
+GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
+
+/obj/structure/industrial_lift/tram/central
+	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're multitile
 
 /obj/structure/industrial_lift/tram/central/Initialize(mapload)
 	if(GLOB.central_tram)
@@ -681,12 +673,26 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	. = ..()
 	find_our_location()
 
-	for(var/obj/structure/industrial_lift/tram/other_lift as anything in lift_master_datum.lift_platforms)
+	create_multitile_tram()
+
+//assume from now on that the tram becoming multitile is the bottom left corner
+/obj/structure/industrial_lift/tram/proc/create_multitile_tram()
+	for(var/obj/structure/industrial_lift/other_lift as anything in lift_master_datum.lift_platforms)
+		if(other_lift.z != z)
+			continue
+
 		min_x = min(min_x, other_lift.x)
 		max_x = max(max_x, other_lift.x)
 
 		min_y = min(min_y, other_lift.y)
 		max_y = max(max_y, other_lift.y)
+
+	var/turf/bottom_left_loc = locate(min_x, min_y, z)
+	var/obj/structure/industrial_lift/tram/loc_corner_lift = locate() in bottom_left_loc
+
+	if(loc_corner_lift != src)
+		stack_trace("trying to create a multitile industrial_lift using a platform not in the bottom left corner, this creates problems")
+		return loc_corner_lift.create_multitile_tram()
 
 	width = (max_x - min_x) + 1
 	height = (max_y - min_y) + 1
@@ -696,16 +702,31 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 	//multitile movement code assumes our loc is on the lower left corner of our bounding box
 
-	var/x_offset = round(width / 2) * world.icon_size
-	var/y_offset = round(height / 2) * world.icon_size
+	var/first_x = 0
+	var/first_y = 0
 
-	var/matrix/new_transform = new()
-	new_transform.Scale(width, height)
-	new_transform.Translate(x_offset, y_offset)
-	transform = new_transform
+	var/last_x = max_x - min_x
+	var/last_y = max_y - min_y
+
+	for(var/y in first_y to last_y)
+
+		var/y_pixel_offset = world.icon_size * y
+
+		for(var/x in first_x to last_x)
+			if(!x && !y)//we assume that the lower left corner is us
+				continue
+			var/turf/lift_turf = locate(x + min_x, y + min_y, z)
+			var/obj/structure/industrial_lift/other_lift = locate() in lift_turf
+
+			var/x_pixel_offset = world.icon_size * x
+
+			other_lift.pixel_x = x_pixel_offset
+			other_lift.pixel_y = y_pixel_offset
+
+			overlays += other_lift
 
 	for(var/obj/structure/industrial_lift/other_lift in lift_master_datum.lift_platforms)
-		if(other_lift == src)
+		if(other_lift == src || other_lift.z != z)
 			continue
 
 		lift_master_datum.lift_platforms -= other_lift
@@ -718,7 +739,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 	var/turf/old_loc = loc
 
-	forceMove(locate(min_x, min_y, z))
+	forceMove(locate(min_x, min_y, z))//move to the lower left corner
 	set_movement_registrations(locs - old_loc)
 
 /obj/structure/industrial_lift/tram/central/proc/find_dimensions(iterations = 3000)
