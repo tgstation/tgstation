@@ -29,6 +29,19 @@
 	select_name = "practice"
 	harmful = FALSE
 
+/obj/item/ammo_casing/energy/chameleon
+	projectile_type = /obj/projectile/energy/chameleon
+	e_cost = 0
+	var/list/projectile_vars = list()
+
+/obj/item/ammo_casing/energy/chameleon/ready_proj()
+	. = ..()
+	if(!loaded_projectile)
+		newshot()
+	for(var/cham_variable in projectile_vars)
+		if(loaded_projectile.vars.Find(cham_variable))
+			loaded_projectile.vars[cham_variable] = projectile_vars[cham_variable] // Here, we're basically checking for any chameleon variables about the ammo passed, then setting them here.
+
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/projectile/beam/scatter
 	pellets = 5

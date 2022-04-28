@@ -202,6 +202,9 @@
 		update_item(chameleon_list[picked_name])
 
 /datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
+	if(istype(target, /obj/item/gun/energy/laser/chameleon))
+		var/obj/item/gun/energy/laser/chameleon/cham_gun = target
+		cham_gun.get_chameleon_projectile(picked_item)
 	if(isliving(user))
 		var/mob/living/C = user
 		if(C.stat != CONSCIOUS)
@@ -760,3 +763,168 @@
 /obj/item/clothing/neck/chameleon/broken/Initialize(mapload)
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
+
+/obj/item/gun/energy/laser/chameleon
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+	ammo_type = list(/obj/item/ammo_casing/energy/chameleon)
+	pin = /obj/item/firing_pin
+	automatic_charge_overlays = FALSE
+	can_select = FALSE
+
+	/// The vars we want copied over to our projectile.
+	var/list/projectile_copy_vars
+	/// The vars copied over to our projectile on fire.
+	var/list/chameleon_projectile_vars
+
+	/// The vars we want copied over to our gun.
+	var/list/gun_copy_vars
+	/// The vars copied over to our projectile on selection.
+	var/list/chameleon_gun_vars
+
+	/// The vars we want copied over to our ammo.
+	var/list/ammo_copy_vars
+	/// The vars copied over to our ammo on selection.
+	var/list/chameleon_ammo_vars
+
+	/// The badmin mode. Makes your projectiles act like the real deal.
+	var/real_hits
+
+/obj/item/gun/energy/laser/chameleon/New()
+	..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/gun
+	chameleon_action.chameleon_name = "Gun"
+	chameleon_action.chameleon_blacklist = typesof(/obj/item/gun/magic, /obj/item/gun/energy/minigun)
+	chameleon_action.initialize_disguises()
+
+/obj/item/gun/energy/laser/chameleon/Initialize(mapload)
+	. = ..()
+
+	projectile_copy_vars = list("name", "icon", "icon_state", "speed", "color", "hitsound", "impact_effect_type", "range", "suppressed", "hitsound_wall", "pass_flags")
+	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/guns/projectiles.dmi', "icon_state" = "laser")
+
+	gun_copy_vars = list("fire_sound", "burst_size", "fire_delay", "inhand_x_dimension", "inhand_y_dimension")
+	chameleon_gun_vars = list()
+
+	ammo_copy_vars = list("firing_effect_type")
+	chameleon_ammo_vars = list()
+
+	recharge_newshot()
+	get_chameleon_projectile(/obj/item/gun/energy/laser)
+
+/obj/item/gun/energy/laser/chameleon/emp_act(severity)
+	return
+
+/**
+ * Description: Resets the currently loaded chameleon variables, essentially resetting it to brand new.
+ * Arguements: []
+ */
+/obj/item/gun/energy/laser/chameleon/proc/reset_chameleon_vars()
+	chameleon_ammo_vars = list()
+	chameleon_gun_vars = list()
+	chameleon_projectile_vars = list()
+
+	if(chambered)
+		for(var/cham_var in ammo_copy_vars)
+			chambered.vars[cham_var] = initial(chambered.vars[cham_var])
+
+	for(var/cham_var in gun_copy_vars)
+		vars[cham_var] = initial(vars[cham_var])
+
+	QDEL_NULL(chambered.loaded_projectile)
+	chambered.newshot()
+
+/**
+ * Description: Sets what gun we should be mimicking.
+ * Arguements: [obj/item/gun/gun_to_set (the gun we're trying to mimic), passthrough (whether or not we're setting ammo too)]
+ */
+/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_gun(obj/item/gun/gun_to_set, passthrough = TRUE)
+	if(!istype(gun_to_set))
+		stack_trace("[gun_to_set] is not a valid typepath.")
+		return FALSE
+
+	for(var/gun_variable in gun_copy_vars)
+		if(vars[gun_variable] && gun_to_set.vars.Find(gun_variable)) // Make sure both us and the gun has that variable.
+			chameleon_gun_vars[gun_variable] = gun_to_set.vars[gun_variable] // Set it to the chameleon gun vars.
+			vars[gun_variable] = gun_to_set.vars[gun_variable] // Set it to the actual gun.
+
+	if(passthrough)
+		if(istype(gun_to_set, /obj/item/gun/ballistic))
+			var/obj/item/gun/ballistic/ball_gun = gun_to_set
+			var/obj/item/ammo_box/ball_ammo = new ball_gun.mag_type(gun_to_set)
+			qdel(ball_gun)
+
+			if(!istype(ball_ammo) || !ball_ammo.ammo_type)
+				qdel(ball_ammo)
+				return FALSE
+
+			var/obj/item/ammo_casing/ball_cartridge = new ball_ammo.ammo_type(gun_to_set)
+			set_chameleon_ammo(ball_cartridge)
+
+		else if(istype(gun_to_set, /obj/item/gun/magic))
+			var/obj/item/gun/magic/magic_gun = gun_to_set
+			var/obj/item/ammo_casing/magic_cartridge = new magic_gun.ammo_type(gun_to_set)
+			set_chameleon_ammo(magic_cartridge)
+
+		else if(istype(gun_to_set, /obj/item/gun/energy))
+			var/obj/item/gun/energy/energy_gun = gun_to_set
+			if(islist(energy_gun.ammo_type) && energy_gun.ammo_type.len)
+				var/obj/item/ammo_casing/energy_cartridge = energy_gun.ammo_type[1]
+				set_chameleon_ammo(energy_cartridge)
+
+		else if(istype(gun_to_set, /obj/item/gun/syringe))
+			var/obj/item/ammo_casing/syringe_cartridge = new /obj/item/ammo_casing/syringegun(src)
+			set_chameleon_ammo(syringe_cartridge)
+
+/**
+ * Description: Sets the ammo type our gun should have.
+ * Arguements: [obj/item/ammo_casing/cartridge (the ammo_casing we're trying to copy), passthrough (whether or not we're the loaded projectile too)]
+ */
+/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/cartridge, passthrough = TRUE)
+	if(!istype(cartridge))
+		stack_trace("[cartridge] is not a valid typepath.")
+		return FALSE
+
+	for(var/cham_variable in ammo_copy_vars)
+		if(cartridge.vars.Find(cham_variable))
+			chameleon_ammo_vars[cham_variable] = cartridge.vars[cham_variable]
+
+	if(passthrough)
+		var/obj/projectile/proj = cartridge.loaded_projectile
+		set_chameleon_projectile(proj)
+
+/**
+ * Description: Sets the current projectile variables for our chameleon gun.
+ * Arguements: [obj/projectile/cham_projectile (the projectile we're trying to copy)]
+ */
+/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_projectile(obj/projectile/cham_projectile)
+	if(!istype(cham_projectile))
+		stack_trace("[cham_projectile] is not a valid typepath.")
+		return FALSE
+	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/guns/projectiles.dmi', "icon_state" = "laser")
+
+	for(var/proj_variable in projectile_copy_vars)
+		if(cham_projectile.vars.Find(proj_variable))
+			chameleon_projectile_vars[proj_variable] = cham_projectile.vars[proj_variable]
+
+	if(istype(chambered, /obj/item/ammo_casing/energy/chameleon))
+		var/obj/item/ammo_casing/energy/chameleon/cartridge = chambered
+
+		cartridge.projectile_vars = chameleon_projectile_vars.Copy()
+
+	if(real_hits)
+		qdel(chambered.loaded_projectile)
+		chambered.projectile_type = cham_projectile.type
+		chambered.newshot()
+
+
+/**
+ * Description: Resets our chameleon variables, then resets the entire gun to mimic the given guntype.
+ * Arguements: [guntype (the gun we're copying, pathtyped to obj/item/gun)]
+ */
+/obj/item/gun/energy/laser/chameleon/proc/get_chameleon_projectile(guntype)
+	reset_chameleon_vars()
+	var/obj/item/gun/new_gun = new guntype(src)
+	set_chameleon_gun(new_gun)
+	qdel(new_gun)
