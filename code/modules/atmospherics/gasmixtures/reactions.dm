@@ -565,7 +565,6 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	ASSERT_GAS(/datum/gas/bz, air)
-<<<<<<< HEAD
 	if (reaction_efficency == cached_gases[/datum/gas/nitrous_oxide][MOLES])
 		ASSERT_GAS(/datum/gas/oxygen, air)
 		cached_gases[/datum/gas/bz][MOLES] += (reaction_efficency * 2.5) - min(pressure, 0.5)
@@ -575,11 +574,6 @@
 
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
 	cached_gases[/datum/gas/plasma][MOLES] -= 2 * reaction_efficency
-=======
-	cached_gases[/datum/gas/bz][MOLES] += bz_formed
-	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= 0.4 * bz_formed
-	cached_gases[/datum/gas/plasma][MOLES] -= 0.8 * bz_formed
->>>>>>> b6c423cd6f4efa8a3b8f8971ee004de247d24a94
 
 	SET_REACTION_RESULTS(reaction_efficency)
 	var/energy_released = 2 * reaction_efficency * FIRE_CARBON_ENERGY_RELEASED
