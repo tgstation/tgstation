@@ -345,10 +345,10 @@
 					mutatespecie()
 					myseed.set_instability(myseed.instability/2)
 			if(myseed.instability >= 40)
-				if(prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/never_mutate)) //No hardmutation if Prosophobic Inclination trait is present.
+				if(prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No hardmutation if Symbiotic Resilience trait is present.
 					hardmutate()
 			if(myseed.instability >= 20 )
-				if(prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/never_mutate)) //No mutation if Prosophobic Inclination trait is present.
+				if(prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No mutation if Symbiotic Resilience trait is present.
 					mutate()
 
 //Health & Age///////////////////////////////////////////////////////////
