@@ -395,7 +395,7 @@
 			helium_speech = FALSE
 			UnregisterSignal(owner, COMSIG_MOB_SAY)
 		gas_breathed = breath_gases[/datum/gas/helium][MOLES]
-		breath_gases[/datum/gas/helium][MOLES]-=gas_breathed
+		breath_gases[/datum/gas/helium][MOLES] -= gas_breathed
 
 	// Miasma
 		if (breath_gases[/datum/gas/miasma] && suffers_miasma)
