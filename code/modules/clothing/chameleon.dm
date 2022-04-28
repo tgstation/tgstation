@@ -870,56 +870,56 @@
 		stack_trace("[cartridge] is not a valid ammo casing.")
 		return FALSE
 
-	var/obj/projectile/proj = cartridge.loaded_projectile
-	set_chameleon_projectile(proj)
+	var/obj/projectile/projectile = cartridge.loaded_projectile
+	set_chameleon_projectile(projectile)
 
 /**
  * Description: Sets the current projectile variables for our chameleon gun.
- * Arguments: [obj/projectile/cham_projectile (the projectile we're trying to copy)]
+ * Arguments: [obj/projectile/template_projectile (the projectile we're trying to copy)]
  */
-/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_projectile(obj/projectile/cham_projectile)
-	if(!istype(cham_projectile))
-		stack_trace("[cham_projectile] is not a valid typepath.")
+/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_projectile(obj/projectile/template_projectile)
+	if(!istype(template_projectile))
+		stack_trace("[template_projectile] is not a valid typepath.")
 		return FALSE
 
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/guns/projectiles.dmi', "icon_state" = "laser")
 
-	var/default_state = isnull(cham_projectile.icon_state) ? "laser" : cham_projectile.icon_state
+	var/default_state = isnull(template_projectile.icon_state) ? "laser" : template_projectile.icon_state
 
-	chameleon_projectile_vars["name"] = cham_projectile.name
-	chameleon_projectile_vars["icon"] = cham_projectile.icon
+	chameleon_projectile_vars["name"] = template_projectile.name
+	chameleon_projectile_vars["icon"] = template_projectile.icon
 	chameleon_projectile_vars["icon_state"] = default_state
-	chameleon_projectile_vars["speed"] = cham_projectile.speed
-	chameleon_projectile_vars["color"] = cham_projectile.color
-	chameleon_projectile_vars["hitsound"] = cham_projectile.hitsound
-	chameleon_projectile_vars["impact_effect_type"] = cham_projectile.impact_effect_type
-	chameleon_projectile_vars["range"] = cham_projectile.range
-	chameleon_projectile_vars["suppressed"] = cham_projectile.suppressed
-	chameleon_projectile_vars["hitsound_wall"] = cham_projectile.hitsound_wall
-	chameleon_projectile_vars["pass_flags"] = cham_projectile.pass_flags
+	chameleon_projectile_vars["speed"] = template_projectile.speed
+	chameleon_projectile_vars["color"] = template_projectile.color
+	chameleon_projectile_vars["hitsound"] = template_projectile.hitsound
+	chameleon_projectile_vars["impact_effect_type"] = template_projectile.impact_effect_type
+	chameleon_projectile_vars["range"] = template_projectile.range
+	chameleon_projectile_vars["suppressed"] = template_projectile.suppressed
+	chameleon_projectile_vars["hitsound_wall"] = template_projectile.hitsound_wall
+	chameleon_projectile_vars["pass_flags"] = template_projectile.pass_flags
 
 	if(istype(chambered, /obj/item/ammo_casing/energy/chameleon))
 		var/obj/item/ammo_casing/energy/chameleon/cartridge = chambered
 
-		cartridge.loaded_projectile.name = cham_projectile.name
-		cartridge.loaded_projectile.icon = cham_projectile.icon
+		cartridge.loaded_projectile.name = template_projectile.name
+		cartridge.loaded_projectile.icon = template_projectile.icon
 		cartridge.loaded_projectile.icon_state = default_state
-		cartridge.loaded_projectile.speed = cham_projectile.speed
-		cartridge.loaded_projectile.color = cham_projectile.color
-		cartridge.loaded_projectile.hitsound = cham_projectile.hitsound
-		cartridge.loaded_projectile.impact_effect_type = cham_projectile.impact_effect_type
-		cartridge.loaded_projectile.range = cham_projectile.range
-		cartridge.loaded_projectile.suppressed = cham_projectile.suppressed
-		cartridge.loaded_projectile.hitsound_wall =	cham_projectile.hitsound_wall
-		cartridge.loaded_projectile.pass_flags = cham_projectile.pass_flags
+		cartridge.loaded_projectile.speed = template_projectile.speed
+		cartridge.loaded_projectile.color = template_projectile.color
+		cartridge.loaded_projectile.hitsound = template_projectile.hitsound
+		cartridge.loaded_projectile.impact_effect_type = template_projectile.impact_effect_type
+		cartridge.loaded_projectile.range = template_projectile.range
+		cartridge.loaded_projectile.suppressed = template_projectile.suppressed
+		cartridge.loaded_projectile.hitsound_wall =	template_projectile.hitsound_wall
+		cartridge.loaded_projectile.pass_flags = template_projectile.pass_flags
 
 		cartridge.projectile_vars = chameleon_projectile_vars.Copy()
 
 	if(real_hits)
 		qdel(chambered.loaded_projectile)
-		chambered.projectile_type = cham_projectile.type
+		chambered.projectile_type = template_projectile.type
 
-	qdel(cham_projectile)
+	qdel(template_projectile)
 
 
 /**
