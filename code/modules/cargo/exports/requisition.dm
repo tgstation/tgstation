@@ -1,6 +1,7 @@
 // Approved requisition.
+// +30 credits flat
 /datum/export/requisition
-	cost = CARGO_CRATE_VALUE * 0.25
+	cost = CARGO_CRATE_VALUE * 0.15
 	k_elasticity = 0
 	unit_name = "approved requisition"
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/requisition)
