@@ -330,7 +330,7 @@
 
 /atom/movable/screen/parallax_layer/planet/Initialize(mapload, mob/owner)
 	. = ..()
-	if(!owner.client)
+	if(!owner?.client)
 		return
 	var/static/list/connections = list(
 		COMSIG_MOVABLE_Z_CHANGED = .proc/on_z_change,

@@ -27,6 +27,7 @@
 	UnregisterSignal(tracked, COMSIG_PARENT_QDELETING)
 
 	tracked = null
+	tracked_mob = null
 
 /datum/component/connect_mob_behalf/proc/handle_tracked_qdel()
 	SIGNAL_HANDLER
@@ -34,7 +35,10 @@
 
 /datum/component/connect_mob_behalf/proc/update_signals()
 	unregister_signals()
-	if(!tracked) // Please do not ask, thanks
+	// Yes this is a runtime silencer
+	// We could be in a position where logout is sent to two things, one thing intercepts it, then deletes the client's new mob
+	// It's rare, and the same check in connect_loc_behalf is more fruitful, but it's still worth doing
+	if(QDELETED(tracked?.mob))
 		return
 	tracked_mob = tracked.mob
 	RegisterSignal(tracked_mob, COMSIG_MOB_LOGOUT, .proc/on_logout)
