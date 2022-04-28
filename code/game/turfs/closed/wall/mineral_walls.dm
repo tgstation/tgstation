@@ -97,6 +97,7 @@
 	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, .proc/radiate)
 
 /turf/closed/wall/mineral/uranium/proc/radiate()
+	SIGNAL_HANDLER
 	if(active)
 		return
 	if(world.time <= last_event + 1.5 SECONDS)
