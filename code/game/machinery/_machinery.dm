@@ -143,6 +143,8 @@
 	var/last_used_time = 0
 	/// Mobtype of last user. Typecast to [/mob/living] for initial() usage
 	var/mob/living/last_user_mobtype
+	///Multiplier for power consumption.
+	var/machine_power_rectifier = 1
 
 /obj/machinery/Initialize(mapload)
 	if(!armor)
