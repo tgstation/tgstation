@@ -61493,7 +61493,6 @@
 /area/engineering/atmos/storage/gas)
 "pNe" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "pNm" = (
@@ -78690,6 +78689,7 @@
 	},
 /obj/item/rack_parts,
 /obj/effect/spawner/random/engineering/tool,
+/obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron,
 /area/maintenance/fore)
 "uOD" = (
