@@ -204,7 +204,7 @@
 /datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
 	if(istype(target, /obj/item/gun/energy/laser/chameleon))
 		var/obj/item/gun/energy/laser/chameleon/chameleon_gun = target
-		chameleon_gun.get_chameleon_projectile(picked_item)
+		chameleon_gun.set_chameleon_disguise(picked_item)
 	if(isliving(user))
 		var/mob/living/C = user
 		if(C.stat != CONSCIOUS)
@@ -787,7 +787,7 @@
 	chameleon_action.initialize_disguises()
 
 	recharge_newshot()
-	get_chameleon_projectile(/obj/item/gun/energy/laser)
+	set_chameleon_disguise(/obj/item/gun/energy/laser)
 
 /obj/item/gun/energy/laser/chameleon/Destroy()
 	. = ..()
@@ -821,7 +821,7 @@
  */
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_gun(obj/item/gun/gun_to_set)
 	if(!istype(gun_to_set))
-		stack_trace("[gun_to_set] is not a valid typepath.")
+		stack_trace("[gun_to_set] is not a valid gun.")
 		return FALSE
 
 	fire_sound = gun_to_set.fire_sound
@@ -879,7 +879,7 @@
  */
 /obj/item/gun/energy/laser/chameleon/proc/set_chameleon_projectile(obj/projectile/template_projectile)
 	if(!istype(template_projectile))
-		stack_trace("[template_projectile] is not a valid typepath.")
+		stack_trace("[template_projectile] is not a valid projectile.")
 		return FALSE
 
 	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/guns/projectiles.dmi', "icon_state" = "laser")
@@ -926,7 +926,7 @@
  * Description: Resets our chameleon variables, then resets the entire gun to mimic the given guntype.
  * Arguments: [guntype (the gun we're copying, pathtyped to obj/item/gun)]
  */
-/obj/item/gun/energy/laser/chameleon/proc/get_chameleon_projectile(guntype)
+/obj/item/gun/energy/laser/chameleon/proc/set_chameleon_disguise(guntype)
 	reset_chameleon_vars()
 	var/obj/item/gun/new_gun = new guntype(src)
 	set_chameleon_gun(new_gun)
