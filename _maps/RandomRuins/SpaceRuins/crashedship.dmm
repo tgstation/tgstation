@@ -144,9 +144,6 @@
 "fQ" = (
 /turf/open/floor/iron,
 /area/awaymission/bmpship/aft)
-"fW" = (
-/turf/closed/mineral/random,
-/area/template_noop)
 "fY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -2790,11 +2787,11 @@ kc
 kc
 kc
 kc
-fW
-fW
-fW
-fW
-fW
+Au
+Au
+Au
+Au
+Au
 kc
 kc
 kc
@@ -2819,9 +2816,9 @@ kc
 kc
 kc
 kc
-fW
-fW
-fW
+Au
+Au
+Au
 kc
 kc
 kc

@@ -117,4 +117,5 @@
 #define ICE_CREAM_BLAND "bland"
 
 #define DEFAULT_MAX_ICE_CREAM_SCOOPS 3
-
+// the vertical distance in pixels from an ice cream scoop and another.
+#define ICE_CREAM_SCOOP_OFFSET 4

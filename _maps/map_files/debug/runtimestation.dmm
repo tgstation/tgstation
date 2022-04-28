@@ -2103,11 +2103,6 @@
 /obj/machinery/door/airlock/shell,
 /turf/open/floor/iron/dark,
 /area/construction)
-"sE" = (
-/obj/structure/cable,
-/obj/machinery/power/rtg/debug,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "sH" = (
 /obj/structure/table,
 /obj/item/storage/box/shipping,
@@ -2235,6 +2230,11 @@
 	},
 /turf/open/floor/engine,
 /area/hallway/secondary/entry)
+"yN" = (
+/obj/structure/cable,
+/obj/machinery/power/rtg/debug,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "zo" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -6636,11 +6636,11 @@ aa
 aa
 ae
 ab
-sE
-sE
-sE
-sE
-sE
+yN
+yN
+yN
+yN
+yN
 ab
 bv
 bI
@@ -6728,11 +6728,11 @@ aa
 aa
 ae
 ab
-sE
+yN
 an
-sE
+yN
 an
-sE
+yN
 ab
 bv
 BG
@@ -6820,11 +6820,11 @@ aa
 aa
 ae
 ab
-sE
+yN
 an
 ao
 an
-sE
+yN
 ab
 bv
 bJ

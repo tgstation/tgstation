@@ -603,6 +603,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/inspector
+	name = "N-Spect Scanner"
+	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then prints an encrypted report regarding the maintenance of the station. Definitely not giving you cancer."
+	id = "inspector"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/uranium = 2000)
+	build_path = /obj/item/inspector
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/plumbing_rcd
 	name = "Plumbing Constructor"
 	id = "plumbing_rcd"
