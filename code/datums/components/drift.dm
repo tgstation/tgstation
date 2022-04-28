@@ -91,7 +91,7 @@
 	if(!isturf(movable_parent.loc))
 		qdel(src)
 		return
-	if(movable_parent.inertia_moving) //This'll be handled elsewhere //TODOKYLER: check if this logic sti
+	if(movable_parent.inertia_moving)
 		return
 	if(!movable_parent.Process_Spacemove(0))
 		return
