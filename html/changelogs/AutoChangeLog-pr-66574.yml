@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "fixes overslots being permanently lost if you switched modsuit skin"
+  - bugfix: "fixes golems/monkeys keeping modsuits on if switched race from different species"
