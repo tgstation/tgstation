@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(fluids)
 	/// The amount of time before a fluid node is created and when it spreads.
 	var/spread_wait = 1 SECONDS
 	/// The number of buckets in the spread carousel.
-	var/tmp/num_spread_buckets
+	var/num_spread_buckets
 	/// The set of buckets containing fluid nodes to spread.
 	var/list/spread_carousel
 	/// The index of the spread carousel bucket currently being processed.
