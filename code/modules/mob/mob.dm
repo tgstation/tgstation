@@ -1102,6 +1102,29 @@
 /mob/proc/is_literate()
 	return FALSE
 
+/// Can this mob write
+/mob/proc/can_write(obj/writing_instrument)
+	if(!istype(writing_instrument, /obj/item/pen) && !istype(writing_instrument, /obj/item/toy/crayon))
+		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+
+	if(!is_literate())
+		to_chat(src, span_warning("You don't know how to write."))
+		return FALSE
+
+	var/obj/item/pen/pen = writing_instrument
+	var/writing_instrument_requires_gravity
+
+	if(istype(pen))
+		writing_instrument_requires_gravity = pen.requires_gravity
+	else if(istype(writing_instrument, /obj/item/toy/crayon))
+		writing_instrument_requires_gravity = FALSE
+
+	if(writing_instrument_requires_gravity && !has_gravity())
+		to_chat(src, span_warning("You try to write, but the [writing_instrument] doesn't work in zero gravity!"))
+		return FALSE
+
+	return TRUE
+
 /**
  * Checks if there is enough light where the mob is located
  *

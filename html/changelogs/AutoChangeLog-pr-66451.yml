@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "Mobs no longer think that turfs with railings are occupied and will propperly pathfind through them"

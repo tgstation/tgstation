@@ -147,7 +147,7 @@
 	desc = "A janitorial cleaner backpack with nozzle to clean blood and graffiti."
 	icon_state = "waterbackpackjani"
 	inhand_icon_state = "waterbackpackjani"
-	custom_price = PAYCHECK_EASY * 5
+	custom_price = PAYCHECK_CREW * 5
 
 /obj/item/watertank/janitor/Initialize(mapload)
 	. = ..()
@@ -178,7 +178,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "pepperbackpacksec"
 	inhand_icon_state = "pepperbackpacksec"
-	custom_price = PAYCHECK_MEDIUM * 2
+	custom_price = PAYCHECK_CREW * 2
 	volume = 1000
 
 /obj/item/watertank/pepperspray/Initialize(mapload)

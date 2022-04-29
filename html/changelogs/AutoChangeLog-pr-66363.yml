@@ -1,4 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes: 
-  - admin: "Activating the Supermatter with a projectile now logs who did it and with what weapon."

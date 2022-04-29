@@ -3,7 +3,7 @@
 	body_parts_covered = GROIN|LEGS
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 	icon = 'icons/obj/clothing/under/shorts_pants.dmi'
 	worn_icon = 'icons/mob/clothing/under/shorts_pants.dmi'
 	species_exception = list(/datum/species/golem)
@@ -17,7 +17,7 @@
 	name = "Must Hang jeans"
 	desc = "Made in the finest space jeans factory this side of Alpha Centauri."
 	icon_state = "jeansmustang"
-	custom_price = PAYCHECK_EASY * 3
+	custom_price = PAYCHECK_CREW * 3
 
 /obj/item/clothing/under/pants/blackjeans
 	name = "black jeans"

@@ -82,7 +82,7 @@
 	spawn_type = /obj/item/food/donut/plain
 	is_open = TRUE
 	appearance_flags = KEEP_TOGETHER
-	custom_premium_price = PAYCHECK_HARD * 1.75
+	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
@@ -184,7 +184,7 @@
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
-	custom_price = PAYCHECK_MEDIUM
+	custom_price = PAYCHECK_CREW
 	age_restricted = TRUE
 	contents_tag = "cigarette"
 	///for cigarette overlay
@@ -386,7 +386,7 @@
 	base_icon_state = "cig_paper_pack"
 	contents_tag = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
-	custom_price = PAYCHECK_PRISONER
+	custom_price = PAYCHECK_LOWER
 
 /obj/item/storage/fancy/rollingpapers/ComponentInitialize()
 	. = ..()

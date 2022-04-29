@@ -143,7 +143,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	matter_amount = 4
 	cost = 500
 	source = /datum/robot_energy_storage/iron
-	tram_wall_type = /obj/structure/tramwall
 
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
