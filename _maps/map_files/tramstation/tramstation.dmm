@@ -10765,13 +10765,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
-"cEp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/maintenance/port/fore)
 "cER" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -86976,9 +86969,9 @@ alo
 alo
 alo
 inp
-cEp
-cEp
-cEp
+hRV
+hRV
+hRV
 hRV
 ahI
 yee
