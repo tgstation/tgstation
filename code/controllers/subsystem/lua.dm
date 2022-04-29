@@ -27,9 +27,6 @@ SUBSYSTEM_DEF(lua)
 	/// Auxtools runs procs as usr = null. We use this to proxy `usr` whenever its relevant.
 	var/mob/lua_usr
 
-	/// A flag used to determine if any DM code currently being executed was called from lua
-	var/in_lua_stack = FALSE
-
 /datum/controller/subsystem/lua/Initialize(start_timeofday)
 	try
 		AUXTOOLS_CHECK(AUXLUA)

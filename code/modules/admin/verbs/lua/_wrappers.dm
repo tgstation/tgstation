@@ -18,10 +18,3 @@
 	else
 		SSlua.gc_guard = HandleUserlessProcCall("lua", GLOBAL_PROC, proc_name, arguments)
 	return SSlua.gc_guard
-
-/proc/wrap_lua_require(modname)
-	var/list/paths = CONFIG_GET(str_list/lua_path)
-	for(var/path in paths)
-		path = replacetext(path, "?", modname)
-		if(fexists(path))
-			return file2text(path)

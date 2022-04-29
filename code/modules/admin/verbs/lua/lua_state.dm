@@ -19,9 +19,9 @@
 		return FALSE
 
 /datum/lua_state/CanProcCall(procname)
-	if(SSlua.in_lua_stack) //No calling auxlua hooks from lua code
+	if(IsAdminAdvancedProcCall()) //No calling auxlua hooks from lua code
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/lua_state/New(_name)
 	if(SSlua.initialized != TRUE)
@@ -47,9 +47,7 @@
 /datum/lua_state/proc/load_script(script)
 	var/tmp_usr = SSlua.lua_usr
 	SSlua.lua_usr = usr
-	SSlua.in_lua_stack = TRUE
 	var/result = __lua_load(internal_id, script)
-	SSlua.in_lua_stack = FALSE
 	SSlua.lua_usr = tmp_usr
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "input")
@@ -60,18 +58,14 @@
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
 	var/tmp_usr = SSlua.lua_usr
 	SSlua.lua_usr = usr
-	SSlua.in_lua_stack = TRUE
 	var/result = __lua_call(internal_id, function, call_args)
-	SSlua.in_lua_stack = FALSE
 	SSlua.lua_usr = tmp_usr
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = islist(function) ? jointext(function, ".") : function)
 	return handle_result(result)
 
 /datum/lua_state/proc/awaken()
-	SSlua.in_lua_stack = TRUE
 	var/result = __lua_awaken(internal_id)
-	SSlua.in_lua_stack = FALSE
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "An attempted awaken")
 	return handle_result(result)
@@ -79,9 +73,7 @@
 /// Prefer calling SSlua.queue_resume over directly calling this
 /datum/lua_state/proc/resume(index, ...)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
-	SSlua.in_lua_stack = TRUE
 	var/result = __lua_resume(internal_id, index, call_args)
-	SSlua.in_lua_stack = FALSE
 	if(istext(result))
 		result = list("status" = "error", "param" = result, "name" = "An attempted resume")
 	return handle_result(result)
