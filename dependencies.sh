@@ -19,3 +19,6 @@ export SPACEMAN_DMM_VERSION=suite-1.7.1
 
 # Python version for mapmerge and other tools
 export PYTHON_VERSION=3.7.9
+
+#auxlua git tag
+export AUXLUA_VERSION=0.1.0-beta.1
