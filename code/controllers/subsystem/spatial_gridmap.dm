@@ -131,7 +131,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			if(movable_turf)
 				enter_cell(movable, movable_turf)
 
-			UnregisterSignal(movable, COMSIG_PARENT_PREQDELETED)
+			UnregisterSignal(movable, COMSIG_PARENT_QDELETING)
 			waiting_to_add_by_type[channel_type] -= movable
 
 	pregenerate_more_oranges_ears(NUMBER_OF_PREGENERATED_ORANGES_EARS)
@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 ///add a movable to the pre init queue for whichever type is specified so that when the subsystem initializes they get added to the grid
 /datum/controller/subsystem/spatial_grid/proc/enter_pre_init_queue(atom/movable/waiting_movable, type)
-	RegisterSignal(waiting_movable, COMSIG_PARENT_PREQDELETED, .proc/queued_item_deleted, override = TRUE)
+	RegisterSignal(waiting_movable, COMSIG_PARENT_QDELETING, .proc/queued_item_deleted, override = TRUE)
 	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldnt know about eachother
 	waiting_to_add_by_type[type] += waiting_movable
 
@@ -156,11 +156,11 @@ SUBSYSTEM_DEF(spatial_grid)
 				waiting_movable_is_in_other_queues = TRUE
 
 		if(!waiting_movable_is_in_other_queues)
-			UnregisterSignal(movable_to_remove, COMSIG_PARENT_PREQDELETED)
+			UnregisterSignal(movable_to_remove, COMSIG_PARENT_QDELETING)
 
 		return
 
-	UnregisterSignal(movable_to_remove, COMSIG_PARENT_PREQDELETED)
+	UnregisterSignal(movable_to_remove, COMSIG_PARENT_QDELETING)
 	for(var/type in waiting_to_add_by_type)
 		waiting_to_add_by_type[type] -= movable_to_remove
 
