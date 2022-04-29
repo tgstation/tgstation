@@ -414,7 +414,6 @@
 	if(!right_leg_mask_cache[right_leg_mask_key])
 		return
 	left_leg_icon.Blend(right_leg_mask_cache[right_leg_mask_key], ICON_MULTIPLY)
-	// left_leg_icon.Blend(right_leg_mask_cache[right_leg_mask_key], ICON_MULTIPLY)
 	left_leg_icon = fcopy_rsc(left_leg_icon)
 	return image(left_leg_icon, left_leg_icon_state, layer = -BODYPARTS_LAYER)
 	// return image(right_leg_mask_cache[right_leg_mask_key], left_leg_icon_state, layer = -BODYPARTS_LAYER)
@@ -424,7 +423,12 @@
 	if(!right_leg_image)
 		return
 	var/icon/right_leg_icon = icon(icon = right_leg_image.icon, icon_state = right_leg_image.icon_state)
-	// right_leg_icon.MapColors(1,1,1,0, 1,1,1,0, 1,1,1,0, 1,1,1,1)
+	right_leg_icon.SetIntensity(255)
+	// I hate the MapColors documentation. Basically, what we do here is that we invert the mask
+	// by using none of the original colors, and then the fourth clump is actually the alpha of
+	// each of the original colors, which we multiply by 255 and subtract a value of 255 to the result
+	// for the matching pixels, while starting with a base color of white everywhere.
+	right_leg_icon.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 255,255,255,-255, 1,1,1,1)
 	var/icon/crop_mask_icon = icon(icon = 'icons/mob/left_leg_mask_base.dmi', icon_state = "mask_base")
 	crop_mask_icon.Blend(right_leg_icon, ICON_MULTIPLY)
 	var/icon/new_mask_icon = icon(icon = 'icons/mob/left_leg_mask_base.dmi', icon_state = "mask_rest")
