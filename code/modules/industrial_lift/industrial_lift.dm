@@ -1,167 +1,3 @@
-
-//Booleans in arguments are confusing, so I made them defines.
-#define LOCKED 1
-#define UNLOCKED 0
-
-///Collect and command
-/datum/lift_master
-	var/list/lift_platforms
-	/// Typepath list of what to ignore smashing through, controls all lifts
-	var/static/list/ignored_smashthroughs = list(
-		/obj/machinery/power/supermatter_crystal,
-		/obj/structure/holosign,
-		/obj/machinery/field,
-	)
-
-	var/multitile_tram = FALSE
-
-/datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
-	Rebuild_lift_plaform(lift_platform)
-	ignored_smashthroughs = typecacheof(ignored_smashthroughs)
-
-/datum/lift_master/Destroy()
-	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
-		lift_platform.lift_master_datum = null
-	lift_platforms = null
-	return ..()
-
-/datum/lift_master/proc/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
-	if(new_lift_platform in lift_platforms)
-		return
-	new_lift_platform.lift_master_datum = src
-	LAZYADD(lift_platforms, new_lift_platform)
-	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
-
-/datum/lift_master/proc/remove_lift_platforms(obj/structure/industrial_lift/old_lift_platform)
-	SIGNAL_HANDLER
-
-	if(!(old_lift_platform in lift_platforms))
-		return
-	old_lift_platform.lift_master_datum = null
-	LAZYREMOVE(lift_platforms, old_lift_platform)
-	UnregisterSignal(old_lift_platform, COMSIG_PARENT_QDELETING)
-
-///Collect all bordered platforms via a simple floodfill algorithm. allows multiz trams because its funny
-/datum/lift_master/proc/Rebuild_lift_plaform(obj/structure/industrial_lift/base_lift_platform)
-	add_lift_platforms(base_lift_platform)
-	var/list/possible_expansions = list(base_lift_platform)
-
-	while(possible_expansions.len)
-		for(var/obj/structure/industrial_lift/borderline as anything in possible_expansions)
-			var/list/result = borderline.lift_platform_expansion(src)
-			if(length(result))
-				for(var/obj/structure/industrial_lift/lift_platform as anything in result)
-					if(lift_platforms.Find(lift_platform))
-						continue
-					add_lift_platforms(lift_platform)
-					possible_expansions |= lift_platform
-
-			possible_expansions -= borderline
-
-/**
- * Moves the lift UP or DOWN, this is what users invoke with their hand.
- * This is a SAFE proc, ensuring every part of the lift moves SANELY.
- * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
- * Arguments:
- * going - UP or DOWN directions, where the lift should go. Keep in mind by this point checks of whether it should go up or down have already been done.
- * user - Whomever made the lift movement.
- */
-/datum/lift_master/proc/MoveLift(going, mob/user)
-	set_controls(LOCKED)
-	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
-		lift_platform.travel(going)
-	set_controls(UNLOCKED)
-
-/**
- * Moves the lift, this is what users invoke with their hand.
- * This is a SAFE proc, ensuring every part of the lift moves SANELY.
- * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
- */
-/datum/lift_master/proc/MoveLiftHorizontal(going, z)
-	if(SStramprocess.profile)
-		world.Profile(PROFILE_START)
-	var/max_x = 1
-	var/max_y = 1
-	var/min_x = world.maxx
-	var/min_y = world.maxy
-
-	set_controls(LOCKED)
-
-	if(multitile_tram)
-		var/obj/structure/industrial_lift/tram/central/tram_platform = lift_platforms[1]
-		if(!tram_platform)
-			return FALSE
-
-		tram_platform.travel(going, TRUE)
-		if(SStramprocess.profile)
-			world.Profile(PROFILE_STOP)
-		return
-
-	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
-		max_x = max(max_x, lift_platform.x)
-		max_y = max(max_y, lift_platform.y)
-		min_x = min(min_x, lift_platform.x)
-		min_y = min(min_y, lift_platform.y)
-
-	//This must be safe way to border tile to tile move of bordered platforms, that excludes platform overlapping.
-	if( going & WEST )
-		//Go along the X axis from min to max, from left to right
-		for(var/x in min_x to max_x)
-			if( going & NORTH )
-				//Go along the Y axis from max to min, from up to down
-				for(var/y in max_y to min_y step -1)
-					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
-			else if (going & SOUTH)
-				//Go along the Y axis from min to max, from down to up
-				for(var/y in min_y to max_y)
-					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
-			else
-				for(var/y in min_y to max_y)
-					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
-	else
-		//Go along the X axis from max to min, from right to left
-		for(var/x in max_x to min_x step -1)
-			if( going & NORTH )
-				//Go along the Y axis from max to min, from up to down
-				for(var/y in max_y to min_y step -1)
-					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
-
-			else if (going & SOUTH)
-				for(var/y in min_y to max_y)
-					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
-
-			else
-				//Go along the Y axis from min to max, from down to up
-				for(var/y in min_y to max_y)
-					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
-
-	set_controls(UNLOCKED)
-
-///Check destination turfs
-/datum/lift_master/proc/Check_lift_move(check_dir)
-	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
-		var/turf/T = get_step_multiz(lift_platform, check_dir)
-		if(!T)//the edges of multi-z maps
-			return FALSE
-		if(check_dir == UP && !istype(T, /turf/open/openspace)) // We don't want to go through the ceiling!
-			return FALSE
-		if(check_dir == DOWN && !istype(get_turf(lift_platform), /turf/open/openspace)) // No going through the floor!
-			return FALSE
-	return TRUE
-
-/**
- * Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.
- */
-/datum/lift_master/proc/set_controls(state)
-	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
-		lift_platform.controls_locked = state
-
 GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift
@@ -180,6 +16,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	smoothing_groups = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
 	canSmoothWith = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
 
 	var/id = null //ONLY SET THIS TO ONE OF THE LIFT'S PARTS. THEY'RE CONNECTED! ONLY ONE NEEDS THE SIGNAL!
 	///if true, the elevator works through floors
@@ -281,6 +118,8 @@ GLOBAL_LIST_EMPTY(lifts)
 			explosion(tram_part, devastation_range = rand(0, 1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
 		qdel(tram_part)
 
+///walking algorithm that returns an unordered list of all lift platforms adjacent to us.
+///does return platforms directly above or below us as well
 /obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/lift_master_datum)
 	. = list()
 	for(var/direction in GLOB.cardinals_multiz)
@@ -296,10 +135,12 @@ GLOBAL_LIST_EMPTY(lifts)
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
+		going = get_dir_multiz(loc, going)
 
 	var/x_offset = ROUND_UP(bound_width / 32) - 1 //how many tiles our horizontally farthest edge is from us
 	var/y_offset = ROUND_UP(bound_height / 32) - 1 //how many tiles our vertically farthest edge is from us
 
+	//the x coordinate of the edge furthest from our future destination, which would be our right hand side
 	var/back_edge_x = destination.x + x_offset//if we arent multitile this should just be destination.x
 	var/top_edge_y = destination.y + y_offset
 
@@ -627,7 +468,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 /obj/structure/industrial_lift/tram
 	name = "tram"
-	desc = "A tram for traversing the station."
+	desc = "A tram for tramversing the station."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "titanium_yellow"
 	base_icon_state = null
@@ -655,9 +496,6 @@ GLOBAL_LIST_EMPTY(lifts)
 
 GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
-/obj/structure/industrial_lift/tram/central
-	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're multitile
-
 /obj/structure/industrial_lift/tram/central/Initialize(mapload)
 	if(GLOB.central_tram)
 		return INITIALIZE_HINT_QDEL
@@ -675,7 +513,12 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
 	create_multitile_tram()
 
-//assume from now on that the tram becoming multitile is the bottom left corner
+/obj/structure/industrial_lift/tram/central/Destroy()
+	GLOB.central_tram = null
+	return ..()
+
+///make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them.
+///the tram becoming multitile should be in the bottom left corner
 /obj/structure/industrial_lift/tram/proc/create_multitile_tram()
 	for(var/obj/structure/industrial_lift/other_lift as anything in lift_master_datum.lift_platforms)
 		if(other_lift.z != z)
@@ -742,19 +585,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	forceMove(locate(min_x, min_y, z))//move to the lower left corner
 	set_movement_registrations(locs - old_loc)
 
-/obj/structure/industrial_lift/tram/central/proc/find_dimensions(iterations = 3000)
-	message_admins("num turfs: [length(locs)], lower left corner: ([min_x], [min_y]), upper right corner: ([max_x], [max_y])")
-
-	var/overlay = /obj/effect/overlay/ai_detect_hud
-	var/list/turfs = list()
-
-	for(var/turf/our_turf as anything in locs)
-		new overlay(our_turf)
-		turfs += our_turf
-
-	addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
-
-/obj/structure/industrial_lift/tram/central/proc/clear_turfs(list/turfs_to_clear, iterations)
+/obj/structure/industrial_lift/tram/proc/clear_turfs(list/turfs_to_clear, iterations)
 	for(var/turf/our_old_turf as anything in turfs_to_clear)
 		var/obj/effect/overlay/ai_detect_hud/hud = locate() in our_old_turf
 		if(hud)
@@ -774,9 +605,18 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	if(iterations)
 		addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
 
-/obj/structure/industrial_lift/tram/central/Destroy()
-	GLOB.central_tram = null
-	return ..()
+///debug proc to highlight the locs of the tram
+/obj/structure/industrial_lift/tram/proc/find_dimensions(iterations = 100)
+	message_admins("num turfs: [length(locs)], lower left corner: ([min_x], [min_y]), upper right corner: ([max_x], [max_y])")
+
+	var/overlay = /obj/effect/overlay/ai_detect_hud
+	var/list/turfs = list()
+
+	for(var/turf/our_turf as anything in locs)
+		new overlay(our_turf)
+		turfs += our_turf
+
+	addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
 
 /**
  * Finds the location of the tram
@@ -840,7 +680,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	travel_direction = get_dir(from_where, to_where)
 	travel_distance = get_dist(from_where, to_where)
 
-	lift_master_datum.set_controls(LOCKED)
+	lift_master_datum.set_controls(LIFT_PLATFORM_LOCKED)
 	//first movement is immediate
 	for(var/obj/structure/industrial_lift/tram/other_tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		if(other_tram_part.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
@@ -867,67 +707,6 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	visible_message(span_notice("[src]'s controls are now unlocked."))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
-		lift_master_datum.set_controls(UNLOCKED)
-
-GLOBAL_LIST_EMPTY(tram_landmarks)
-
-/obj/effect/landmark/tram
-	name = "tram destination" //the tram buttons will mention this.
-	icon_state = "tram"
-	/// The ID of that particular destination.
-	var/destination_id
-	/// Icons for the tgui console to list out for what is at this location
-	var/list/tgui_icons = list()
-
-/obj/effect/landmark/tram/Initialize(mapload)
-	. = ..()
-	GLOB.tram_landmarks += src
-
-/obj/effect/landmark/tram/Destroy()
-	GLOB.tram_landmarks -= src
-	return ..()
+		lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)
 
 
-/obj/effect/landmark/tram/left_part
-	name = "West Wing"
-	destination_id = "left_part"
-	tgui_icons = list("Arrivals" = "plane-arrival", "Command" = "bullhorn", "Security" = "gavel")
-
-/obj/effect/landmark/tram/middle_part
-	name = "Central Wing"
-	destination_id = "middle_part"
-	tgui_icons = list("Service" = "cocktail", "Medical" = "plus", "Engineering" = "wrench")
-
-/obj/effect/landmark/tram/right_part
-	name = "East Wing"
-	destination_id = "right_part"
-	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
-
-/obj/structure/grille/tram
-
-/obj/structure/grille/tram/Initialize(mapload)
-	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive, mapload)
-
-/obj/structure/window/reinforced/shuttle/tram
-
-/obj/structure/window/reinforced/shuttle/tram/Initialize(mapload, direct)
-	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive, mapload)
-
-/obj/structure/shuttle/engine/propulsion/in_wall/tram
-	opacity = FALSE//if this has opacity, then every movement of the tram causes lighting updates
-
-/obj/machinery/door/window/left/tram
-/obj/machinery/door/window/right/tram
-
-/obj/machinery/door/window/left/tram/Initialize(mapload, set_dir, unres_sides)
-	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive, mapload)
-
-/obj/machinery/door/window/right/tram/Initialize(mapload, set_dir, unres_sides)
-	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive, mapload)
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/left/tram, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/right/tram, 0)

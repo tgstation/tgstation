@@ -18,6 +18,10 @@
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
 	material_flags = MATERIAL_EFFECTS
+	//make SURE that none of these walls have opacity, otherwise every movement of the tram will cause lighting updates
+	//and overload SSlighting
+	opacity = FALSE
+
 	var/mineral = /obj/item/stack/sheet/iron
 	var/mineral_amount = 2
 	var/tram_wall_type = /obj/structure/tramwall

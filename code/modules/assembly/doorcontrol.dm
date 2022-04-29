@@ -196,7 +196,7 @@
 		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
 		return
 	lift.visible_message(span_notice("[src] clinks and whirrs into automated motion, locking controls."))
-	lift.lift_master_datum.set_controls(LOCKED)
+	lift.lift_master_datum.set_controls(LIFT_PLATFORM_LOCKED)
 	///The z level to which the elevator should travel
 	var/targetZ = (abs(loc.z)) //The target Z (where the elevator should move to) is not our z level (we are just some assembly in nullspace) but actually the Z level of whatever we are contained in (e.g. elevator button)
 	///The amount of z levels between the our and targetZ
@@ -212,7 +212,7 @@
 			return
 		lift.lift_master_datum.MoveLift(direction, null)
 	lift.visible_message(span_notice("[src] clicks, ready to be manually operated again."))
-	lift.lift_master_datum.set_controls(UNLOCKED)
+	lift.lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)
 
 #undef FLOOR_TRAVEL_TIME
 
