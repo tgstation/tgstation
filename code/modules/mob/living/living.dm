@@ -1427,15 +1427,15 @@
  * * fire_type: type Type of fire status effect that we apply, should be subtype of /datum/status_effect/fire_handler/fire_stacks
  */
 
-/mob/living/proc/adjust_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks, override_fire_type = NO_FIRE_OVERRIDE)
+/mob/living/proc/adjust_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks)
 	if(stacks < 0)
 		stacks = max(-fire_stacks, stacks)
-	apply_status_effect(fire_type, stacks, override_fire_type)
+	apply_status_effect(fire_type, stacks)
 
-/mob/living/proc/adjust_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks, override_wet_type = NO_FIRE_OVERRIDE)
+/mob/living/proc/adjust_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks)
 	if(stacks < 0)
 		stacks = max(fire_stacks, stacks)
-	apply_status_effect(wet_type, stacks, override_wet_type)
+	apply_status_effect(wet_type, stacks)
 
 /**
  * Set the fire stacks on a mob
@@ -1449,7 +1449,7 @@
  * * remove_wet_stacks: bool If we remove all wet stacks upon doing this
  */
 
-/mob/living/proc/set_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks, override_fire_type = FORCE_FIRE_OVERRIDE, remove_wet_stacks = TRUE)
+/mob/living/proc/set_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks, remove_wet_stacks = TRUE)
 	if(stacks < 0) //Shouldn't happen, ever
 		CRASH("set_fire_stacks recieved negative [stacks] fire stacks")
 
@@ -1460,9 +1460,9 @@
 		remove_status_effect(fire_type)
 		return
 
-	apply_status_effect(fire_type, stacks, override_fire_type, TRUE)
+	apply_status_effect(fire_type, stacks, TRUE)
 
-/mob/living/proc/set_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks, override_wet_type = FORCE_FIRE_OVERRIDE, remove_fire_stacks = TRUE)
+/mob/living/proc/set_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks, remove_fire_stacks = TRUE)
 	if(stacks < 0)
 		CRASH("set_wet_stacks recieved negative [stacks] wet stacks")
 
@@ -1473,7 +1473,7 @@
 		remove_status_effect(wet_type)
 		return
 
-	apply_status_effect(wet_type, stacks, override_wet_type, TRUE)
+	apply_status_effect(wet_type, stacks, TRUE)
 
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()
@@ -1494,13 +1494,13 @@
 			set_fire_stacks(firesplit, fire_type)
 			spread_to.set_fire_stacks(firesplit, fire_type)
 		else
-			set_fire_stacks(fire_stacks / 2, fire_status.type)
-			spread_to.set_fire_stacks(fire_stacks, fire_status.type)
+			adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
+			spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
 			if(spread_to.ignite_mob())
 				log_game("[key_name(src)] bumped into [key_name(spread_to)] and set them on fire")
 	else if(their_fire_status && their_fire_status.on_fire)
-		spread_to.set_fire_stacks(spread_to.fire_stacks / 2, their_fire_status.type)
-		set_fire_stacks(spread_to.fire_stacks, their_fire_status.type)
+		spread_to.adjust_fire_stacks(-spread_to.fire_stacks / 2, their_fire_status.type)
+		adjust_fire_stacks(spread_to.fire_stacks, their_fire_status.type)
 		ignite_mob()
 
 //Mobs on Fire end

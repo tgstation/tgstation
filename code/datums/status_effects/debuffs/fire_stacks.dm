@@ -1,19 +1,29 @@
 /datum/status_effect/fire_handler
 	duration = -1
 	alert_type = null
-	status_type = STATUS_EFFECT_MULTIPLE //Custom code
+	status_type = STATUS_EFFECT_REFRESH //Custom code
 	on_remove_on_mob_delete = TRUE
 	tick_interval = 2 SECONDS
 	/// Current amount of stacks we have
 	var/stacks
 	/// Maximum of stacks that we could possibly get
 	var/stack_limit = 20
-	/// What status effect type do we remove uppon being applied
-	var/enemy_type
+	/// What status effect types do we remove uppon being applied. These are just deleted without any deduction from our or their stacks when forced.
+	var/list/enemy_types = list()
+	/// What status effect types do we merge into if they exist. Ignored when forced.
+	var/list/merge_types = list()
+	/// What status effect types do we override if they exist. These are simply deleted when forced.
+	var/list/override_types = list()
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
 
-/datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, override_type = NO_FIRE_OVERRIDE, forced = FALSE)
+/datum/status_effect/fire_handler/refresh(mob/living/new_owner, new_stacks, forced = FALSE)
+	if(forced)
+		set_stacks(new_stacks)
+	else
+		adjust_stacks(new_stacks)
+
+/datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
 	if(isanimal(owner))
 		qdel(src)
 		return
@@ -21,58 +31,47 @@
 	owner = new_owner
 	set_stacks(new_stacks)
 
-	var/datum/status_effect/fire_handler/our_status = owner.has_status_effect(type)
-	var/datum/status_effect/fire_handler/enemy_status = owner.has_status_effect(enemy_type)
+	for(var/enemy_type in enemy_types)
+		var/datum/status_effect/fire_handler/enemy_effect = owner.has_status_effect(enemy_type)
+		if(enemy_effect)
+			if(forced)
+				qdel(enemy_effect)
+				continue
 
-	if(enemy_status)
-		adjust_stacks(-enemy_status.stacks)
-		enemy_status.adjust_stacks(-new_stacks)
-		if(enemy_status.stacks <= 0)
-			qdel(enemy_status)
+			var/cur_stacks = stacks
+			adjust_stacks(-enemy_effect.stacks * enemy_effect.stack_modifier / stack_modifier)
+			enemy_effect.adjust_stacks(-cur_stacks * stack_modifier / enemy_effect.stack_modifier)
+			if(enemy_effect.stacks <= 0)
+				qdel(enemy_effect)
 
-		if(stacks <= 0)
-			qdel(src)
-			return
-
-	if(our_status)
-		switch(override_type)
-			if(NO_FIRE_OVERRIDE)
-				if(forced)
-					our_status.set_stacks(stacks)
-				else
-					our_status.adjust_stacks(stacks)
+			if(stacks <= 0)
 				qdel(src)
 				return
-			if(CONDITIONAL_FIRE_OVERRIDE)
-				if(stacks > our_status.stacks)
-					if(!forced)
-						adjust_stacks(our_status.stacks)
-					on_reapplying_stacks(our_status)
-					qdel(our_status)
-				else
-					if(forced)
-						our_status.set_stacks(stacks)
-					else
-						our_status.adjust_stacks(stacks)
-					qdel(src)
-					return
-			if(FORCE_FIRE_OVERRIDE)
-				if(!forced)
-					adjust_stacks(our_status.stacks)
-				on_reapplying_stacks(our_status)
-				qdel(our_status)
 
-	return ..()
+	if(!forced)
+		var/list/merge_effects = list()
+		for(var/merge_type in merge_types)
+			var/datum/status_effect/fire_handler/merge_effect = owner.has_status_effect(merge_type)
+			if(merge_effect)
+				merge_effects += merge_effects
 
-/**
- * Used whenever we're overriding another firestacks status effect
- *
- * Arguments:
- * - our_status: Status effect that we're going to remove
- *
- */
+		if(LAZYLEN(merge_effects))
+			for(var/datum/status_effect/fire_handler/merge_effect in merge_effects)
+				merge_effect.adjust_stacks(stacks * stack_modifier / merge_effect.stack_modifier / LAZYLEN(merge_effects))
+			qdel(src)
 
-/datum/status_effect/fire_handler/proc/on_reapplying_stacks(datum/status_effect/fire_handler/our_status)
+	for(var/override_type in override_types)
+		var/datum/status_effect/fire_handler/override_effect = owner.has_status_effect(override_type)
+		if(override_effect)
+			if(forced)
+				qdel(override_effect)
+				continue
+
+			adjust_stacks(override_effect.stacks)
+			qdel(override_effect)
+
+	. = ..()
+	cache_stacks()
 
 /**
  * Setter and adjuster procs for firestacks
@@ -84,11 +83,30 @@
 
 /datum/status_effect/fire_handler/proc/set_stacks(new_stacks)
 	stacks = max(0, min(stack_limit, new_stacks))
-	owner.fire_stacks = stacks * stack_modifier
+	cache_stacks()
 
 /datum/status_effect/fire_handler/proc/adjust_stacks(new_stacks)
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
-	owner.fire_stacks = stacks * stack_modifier
+	cache_stacks()
+
+/**
+ * Refresher for mob's fire_stacks
+ */
+
+/datum/status_effect/fire_handler/proc/cache_stacks()
+	owner.fire_stacks = 0
+	var/was_on_fire = owner.on_fire
+	owner.on_fire = FALSE
+	owner.clear_alert(ALERT_FIRE)
+	for(var/fire_type in subtypesof(/datum/status_effect/fire_handler))
+		var/datum/status_effect/fire_handler/possible_fire = owner.has_status_effect(fire_type)
+		if(possible_fire)
+			owner.fire_stacks += possible_fire.stacks * possible_fire.stack_modifier
+			if(istype(possible_fire))
+				var/datum/status_effect/fire_handler/fire_stacks/our_fire = possible_fire
+				if(our_fire.on_fire)
+					owner.on_fire = TRUE
+					owner.throw_alert(ALERT_FIRE, our_fire.fire_alert_type)
 
 /**
  * Used to update owner's effect overlay
@@ -99,7 +117,7 @@
 /datum/status_effect/fire_handler/fire_stacks
 	id = "fire_stacks" //fire_stacks and wet_stacks should have different IDs or else has_status_effect won't work
 
-	enemy_type = /datum/status_effect/fire_handler/wet_stacks
+	enemy_types = list(/datum/status_effect/fire_handler/wet_stacks)
 	stack_modifier = 1
 
 	/// If we're on fire
@@ -258,15 +276,14 @@
 		return FALSE
 
 	on_fire = TRUE
-	owner.on_fire = TRUE
 	if(!silent)
 		owner.visible_message(span_warning("[owner] catches fire!"), span_userdanger("You're set on fire!"))
-	owner.throw_alert(ALERT_FIRE, fire_alert_type)
 
 	if(firelight_type)
 		firelight_ref = WEAKREF(new firelight_type(owner))
 
 	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
+	cache_stacks()
 	update_overlay()
 
 /**
@@ -279,10 +296,10 @@
 		if(firelight && !QDELETED(firelight))
 			qdel(firelight)
 
-	owner.clear_alert(ALERT_FIRE)
-	owner.on_fire = FALSE
+	on_fire = FALSE
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
+	cache_stacks()
 	update_overlay()
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
@@ -341,13 +358,6 @@
 /datum/status_effect/fire_handler/fire_stacks/proc/get_special_icon()
 	return
 
-/datum/status_effect/fire_handler/fire_stacks/on_reapplying_stacks(datum/status_effect/fire_handler/fire_stacks/our_status)
-	if(!istype(our_status))
-		return
-
-	if(our_status.on_fire)
-		ignite(silent = TRUE)
-
 /datum/status_effect/fire_handler/fire_stacks/on_apply()
 	. = ..()
 	update_overlay()
@@ -355,7 +365,7 @@
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"
 
-	enemy_type = /datum/status_effect/fire_handler/fire_stacks
+	enemy_types = list(/datum/status_effect/fire_handler/fire_stacks)
 	stack_modifier = -1
 
 /datum/status_effect/fire_handler/wet_stacks/tick(delta_time)

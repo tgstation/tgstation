@@ -39,7 +39,3 @@
 
 #define STASIS_ASCENSION_EFFECT "heretic_ascension"
 
-/// For fire and wet stacks
-#define NO_FIRE_OVERRIDE 0 //If there's a different fire type, don't override and just add your stacks to it
-#define CONDITIONAL_FIRE_OVERRIDE 1 //If there's a different fire type, override only if you have more fire stacks than it
-#define FORCE_FIRE_OVERRIDE 2 //If there's a different fire type, always override it
