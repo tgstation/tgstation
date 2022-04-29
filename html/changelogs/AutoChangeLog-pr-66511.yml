@@ -1,5 +1,0 @@
-author: "Pandarsenic"
-delete-after: True
-changes: 
-  - qol: "Added vent/scrubber pair to the Icebox security entryway and the warden's backdoor to the armory."
-  - bugfix: "Icebox Brig Medical now has a wire connecting it to the powernet."

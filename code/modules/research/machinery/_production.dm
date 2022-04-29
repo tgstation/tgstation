@@ -1,3 +1,4 @@
+
 /obj/machinery/rnd/production
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
@@ -28,6 +29,7 @@
 	cached_designs = list()
 	update_designs()
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
+	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_CLINICAL, TRUE)
 	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
 
@@ -131,13 +133,13 @@
 /obj/machinery/rnd/production/proc/efficient_with(path)
 	return !ispath(path, /obj/item/stack/sheet) && !ispath(path, /obj/item/stack/ore/bluespace_crystal)
 
-/obj/machinery/rnd/production/proc/user_try_print_id(id, amount)
+/obj/machinery/rnd/production/proc/user_try_print_id(id, print_quantity)
 	if(!id)
 		return FALSE
-	if(istext(amount))
-		amount = text2num(amount)
-	if(isnull(amount))
-		amount = 1
+	if(istext(print_quantity))
+		print_quantity = text2num(print_quantity)
+	if(isnull(print_quantity))
+		print_quantity = 1
 	var/datum/design/D = stored_research.researched_designs[id] ? SSresearch.techweb_design_by_id(id) : null
 	if(!istype(D))
 		return FALSE
@@ -154,32 +156,51 @@
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 	var/power = active_power_usage
-	amount = clamp(amount, 1, 50)
+	print_quantity = clamp(print_quantity, 1, 50)
 	for(var/M in D.materials)
-		power += round(D.materials[M] * amount / 35)
+		power += round(D.materials[M] * print_quantity / 35)
 	power = min(active_power_usage, power)
 	use_power(power)
 	var/coeff = efficient_with(D.build_path) ? efficiency_coeff : 1
 	var/list/efficient_mats = list()
 	for(var/MAT in D.materials)
 		efficient_mats[MAT] = D.materials[MAT]/coeff
-	if(!materials.mat_container.has_materials(efficient_mats, amount))
-		say("Not enough materials to complete prototype[amount > 1? "s" : ""].")
+	if(!materials.mat_container.has_materials(efficient_mats, print_quantity))
+		say("Not enough materials to complete prototype[print_quantity > 1? "s" : ""].")
 		return FALSE
 	for(var/R in D.reagents_list)
-		if(!reagents.has_reagent(R, D.reagents_list[R]*amount/coeff))
-			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
+		if(!reagents.has_reagent(R, D.reagents_list[R]*print_quantity/coeff))
+			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
 			return FALSE
-	materials.mat_container.use_materials(efficient_mats, amount)
-	materials.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
+	var/total_cost = LATHE_TAX
+	if(is_station_level(z) && isliving(usr)) //We don't block purchases off station Z.
+		var/mob/living/user = usr
+		var/obj/item/card/id/card = user.get_idcard(TRUE)
+		if(!card && istype(user.pulling, /obj/item/card/id))
+			card = user.pulling
+		if(card)
+			var/datum/bank_account/our_acc = card.registered_account
+			if(our_acc.account_job && SSeconomy.get_dep_account(our_acc.account_job?.paycheck_department) == SSeconomy.get_dep_account(payment_department))
+				total_cost = 0 //We are not charging crew for printing their own supplies and equipment.
+	if(attempt_charge(src, usr, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
+		return FALSE
+
+	if(iscyborg(usr))
+		var/mob/living/silicon/robot/borg = usr
+		if(!borg.cell)
+			return
+		borg.cell.use(SILICON_LATHE_TAX)
+
+	materials.mat_container.use_materials(efficient_mats, print_quantity)
+	materials.silo_log(src, "built", -print_quantity, "[D.name]", efficient_mats)
 	for(var/R in D.reagents_list)
-		reagents.remove_reagent(R, D.reagents_list[R]*amount/coeff)
+		reagents.remove_reagent(R, D.reagents_list[R]*print_quantity/coeff)
 	busy = TRUE
 	if(production_animation)
 		flick(production_animation, src)
 	var/timecoeff = D.lathe_time_factor / efficiency_coeff
-	addtimer(CALLBACK(src, .proc/reset_busy), (30 * timecoeff * amount) ** 0.5)
-	addtimer(CALLBACK(src, .proc/do_print, D.build_path, amount, efficient_mats, D.dangerous_construction), (32 * timecoeff * amount) ** 0.8)
+	addtimer(CALLBACK(src, .proc/reset_busy), (30 * timecoeff * print_quantity) ** 0.5)
+	addtimer(CALLBACK(src, .proc/do_print, D.build_path, print_quantity, efficient_mats, D.dangerous_construction), (32 * timecoeff * print_quantity) ** 0.8)
 	return TRUE
 
 /obj/machinery/rnd/production/proc/search(string)
