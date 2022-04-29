@@ -95,7 +95,6 @@
 
 /datum/status_effect/fire_handler/proc/cache_stacks()
 	owner.fire_stacks = 0
-	var/was_on_fire = owner.on_fire
 	owner.on_fire = FALSE
 	owner.clear_alert(ALERT_FIRE)
 	for(var/fire_type in subtypesof(/datum/status_effect/fire_handler))
