@@ -44793,10 +44793,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/maintenance/radshelter/civil)
-"oKU" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/solars/port/aft)
 "oKW" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -64717,11 +64713,6 @@
 /obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/crew_quarters/dorms)
-"weB" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/space/basic,
-/area/solars/port/aft)
 "weC" = (
 /obj/machinery/camera/emp_proof{
 	c_tag = "Secure - Telecomms Server Room";
@@ -155412,7 +155403,7 @@ sub
 sub
 sub
 sub
-jwD
+gNY
 uwO
 aYr
 aYr
@@ -156937,14 +156928,14 @@ dDG
 dDG
 unm
 gNY
-jwD
-jwD
-jwD
-jwD
-jwD
-jwD
-jwD
-jwD
+gNY
+gNY
+gNY
+gNY
+gNY
+gNY
+gNY
+gNY
 jKT
 uaT
 jKT
@@ -157453,12 +157444,12 @@ dDG
 dDG
 dDG
 unm
-jwD
-jwD
-jwD
-jwD
-jwD
-jwD
+gNY
+gNY
+gNY
+gNY
+gNY
+gNY
 jKT
 uaT
 jKT
@@ -157710,12 +157701,12 @@ dDG
 dDG
 wgT
 wgT
-weB
-weB
-weB
-weB
-weB
-oKU
+mxQ
+mxQ
+mxQ
+mxQ
+mxQ
+uaT
 uaT
 uaT
 mxQ
@@ -157970,9 +157961,9 @@ dDG
 dDG
 dDG
 unm
-jwD
-jwD
-jwD
+gNY
+gNY
+gNY
 jKT
 uaT
 jKT
@@ -158484,9 +158475,9 @@ dDG
 dDG
 dDG
 unm
-jwD
-jwD
-jwD
+gNY
+gNY
+gNY
 jKT
 uaT
 jKT
@@ -158744,7 +158735,7 @@ dDG
 dDG
 aYr
 aYr
-jwD
+gNY
 aYr
 aYr
 mxQ
@@ -159258,7 +159249,7 @@ dDG
 dDG
 aYr
 aYr
-jwD
+gNY
 aYr
 aYr
 mxQ
@@ -159513,10 +159504,10 @@ dDG
 dDG
 dDG
 unm
-jwD
-jwD
+gNY
+gNY
 jKT
-oKU
+uaT
 jKT
 mxQ
 jKT
@@ -159773,7 +159764,7 @@ dDG
 aYr
 aYr
 jKT
-oKU
+uaT
 jKT
 uaT
 jKT
@@ -160030,7 +160021,7 @@ dDG
 aYr
 aYr
 jKT
-oKU
+uaT
 jKT
 uaT
 jKT
@@ -160285,10 +160276,10 @@ aRN
 wgT
 wgT
 wgT
-oKU
-oKU
-weB
-oKU
+uaT
+uaT
+mxQ
+uaT
 mxQ
 mxQ
 mxQ
@@ -161057,10 +161048,10 @@ dDG
 dDG
 dDG
 unm
-jwD
-jwD
+gNY
+gNY
 jKT
-oKU
+uaT
 jKT
 uaT
 jKT
@@ -161316,7 +161307,7 @@ dDG
 dDG
 dDG
 aYr
-jwD
+gNY
 aYr
 aYr
 aYr
@@ -161572,9 +161563,9 @@ dDG
 dDG
 dDG
 unm
-hnE
-hnE
-hnE
+sub
+sub
+sub
 sub
 sub
 sub
