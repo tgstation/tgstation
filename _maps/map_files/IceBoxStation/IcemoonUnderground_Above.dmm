@@ -1171,7 +1171,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/cargo/drone_bay)
+/area/station/cargo/drone_bay)
 "acZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1287,7 +1287,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/cargo/drone_bay)
+/area/station/cargo/drone_bay)
 "adl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -1843,7 +1843,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cargo/warehouse)
+/area/station/cargo/warehouse)
 "aez" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
@@ -5054,7 +5054,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/area/station/maintenance/department/cargo)
 "ami" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating,
@@ -7538,7 +7538,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cargo/warehouse)
+/area/station/cargo/warehouse)
 "ash" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -9350,7 +9350,7 @@
 	req_access_txt = "48"
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/cargo)
+/area/station/maintenance/department/cargo)
 "awM" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -13175,7 +13175,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth,
-/area/cargo/drone_bay)
+/area/station/cargo/drone_bay)
 "aGu" = (
 /turf/open/openspace/icemoon/keep_below,
 /area/maintenance/department/medical/morgue)
@@ -14225,7 +14225,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
-/area/cargo/storage)
+/area/station/cargo/storage)
 "aIR" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
@@ -15702,7 +15702,7 @@
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
-/area/maintenance/department/cargo)
+/area/station/maintenance/department/cargo)
 "aMz" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Chemistry Maintenance";
@@ -16411,7 +16411,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth_large,
-/area/cargo/warehouse)
+/area/station/cargo/warehouse)
 "aOo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -19647,7 +19647,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
-/area/cargo/warehouse)
+/area/station/cargo/warehouse)
 "aVS" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -20995,7 +20995,7 @@
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
-/area/maintenance/department/cargo)
+/area/station/maintenance/department/cargo)
 "aZo" = (
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
