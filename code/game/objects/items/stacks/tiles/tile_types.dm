@@ -92,7 +92,7 @@
 	to_chat(user, span_notice("You begin replacing the floor with the tile..."))
 	if(!do_after(user, 3 SECONDS, target_plating))
 		return
-	if(!target_plating)
+	if(!istype(target_plating))
 		return
 	if(!use(1))
 		return
