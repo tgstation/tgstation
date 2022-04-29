@@ -94,19 +94,6 @@
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
-"q" = (
-/obj/docking_port/mobile{
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp";
-	name = "labor camp shuttle";
-	width = 9;
-	port_direction = 4
-	},
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/labor)
 "r" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced{
@@ -122,6 +109,15 @@
 "W" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Labor Shuttle Airlock"
+	},
+/obj/docking_port/mobile{
+	dir = 4;
+	dwidth = 6;
+	height = 5;
+	id = "laborcamp";
+	name = "labor camp shuttle";
+	width = 9;
+	port_direction = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
@@ -177,7 +173,7 @@ b
 a
 a
 a
-q
+b
 a
 a
 "}
