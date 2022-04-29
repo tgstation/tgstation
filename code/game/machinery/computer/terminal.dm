@@ -12,6 +12,7 @@
 	var/tguitheme = "hackerman"
 
 /obj/machinery/computer/terminal/ui_interact(mob/user, datum/tgui/ui)
+	..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Terminal", name) //The paper tgui file scares me, so new type of UI
