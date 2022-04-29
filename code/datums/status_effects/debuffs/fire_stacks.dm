@@ -84,7 +84,7 @@
 
 /datum/status_effect/fire_handler/proc/set_stacks(new_stacks)
 	stacks = max(0, min(stack_limit, new_stacks))
-	owner.fire_stacks = 0 * stack_modifier
+	owner.fire_stacks = stacks * stack_modifier
 
 /datum/status_effect/fire_handler/proc/adjust_stacks(new_stacks)
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
