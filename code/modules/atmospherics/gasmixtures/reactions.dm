@@ -553,17 +553,17 @@
 	var/list/cached_gases = air.gases
 	var/pressure = air.return_pressure()
 	var/volume = air.return_volume()
-	var/pressure_effciency = 1/pressure
-	var/ratio_efficency = min(cached_gases[/datum/gas/nitrous_oxide][MOLES]/cached_gases[/datum/gas/plasma][MOLES],1)
-	var/bz_formed = min(pressure_effciency*ratio_efficency*volume/100, cached_gases[/datum/gas/nitrous_oxide][MOLES], cached_gases[/datum/gas/plasma][MOLES]*INVERSE(2))
+	var/environment_effciency = volume/pressure
+	var/ratio_efficency = min(cached_gases[/datum/gas/nitrous_oxide][MOLES]/cached_gases[/datum/gas/plasma][MOLES], 1)
+	var/bz_formed = min(0.01 * ratio_efficency * environment_effciency, cached_gases[/datum/gas/nitrous_oxide][MOLES] * INVERSE(0.4), cached_gases[/datum/gas/plasma][MOLES] * INVERSE(0.8))
 
-	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - bz_formed < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2 * bz_formed) < 0) || bz_formed <= 0)
+	if (cached_gases[/datum/gas/nitrous_oxide][MOLES] - bz_formed < 0  || cached_gases[/datum/gas/plasma][MOLES] - (2 * bz_formed) < 0 || bz_formed <= 0)
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
 	ASSERT_GAS(/datum/gas/bz, air)
 	cached_gases[/datum/gas/bz][MOLES] += bz_formed
-	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= 0.4 bz_formed
+	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= 0.4 * bz_formed
 	cached_gases[/datum/gas/plasma][MOLES] -= 0.8 * bz_formed
 
 	SET_REACTION_RESULTS(bz_formed)
