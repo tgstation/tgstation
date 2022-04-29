@@ -19,19 +19,18 @@
 		return
 
 	owner = new_owner
-	stacks = new_stacks
+	set_stacks(new_stacks)
 
 	var/datum/status_effect/fire_handler/our_status = owner.has_status_effect(type)
 	var/datum/status_effect/fire_handler/enemy_status = owner.has_status_effect(enemy_type)
 
 	if(enemy_status)
-		stacks -= enemy_status.stacks
-		enemy_status.stacks -= new_stacks
+		adjust_stacks(-enemy_status.stacks)
+		enemy_status.adjust_stacks(-new_stacks)
 		if(enemy_status.stacks <= 0)
 			qdel(enemy_status)
 
 		if(stacks <= 0)
-			enemy_status.recalculate_firestacks()
 			qdel(src)
 			return
 
@@ -39,37 +38,30 @@
 		switch(override_type)
 			if(NO_FIRE_OVERRIDE)
 				if(forced)
-					our_status.stacks = min(stacks, stack_limit)
+					our_status.set_stacks(stacks)
 				else
-					our_status.stacks = min(our_status.stacks + stacks, stack_limit)
-				our_status.recalculate_firestacks()
+					our_status.adjust_stacks(stacks)
 				qdel(src)
 				return
 			if(CONDITIONAL_FIRE_OVERRIDE)
 				if(stacks > our_status.stacks)
-					if(forced)
-						stacks = min(stacks, stack_limit)
-					else
-						stacks = min(stacks + our_status.stacks, stack_limit)
+					if(!forced)
+						adjust_stacks(our_status.stacks)
 					on_reapplying_stacks(our_status)
 					qdel(our_status)
 				else
 					if(forced)
-						our_status.stacks = min(stacks, stack_limit)
+						our_status.set_stacks(stacks)
 					else
-						our_status.stacks = min(our_status.stacks + stacks, stack_limit)
-					our_status.recalculate_firestacks()
+						our_status.adjust_stacks(stacks)
 					qdel(src)
 					return
 			if(FORCE_FIRE_OVERRIDE)
-				if(forced)
-					stacks = min(stacks, stack_limit)
-				else
-					stacks = min(stacks + our_status.stacks, stack_limit)
+				if(!forced)
+					adjust_stacks(our_status.stacks)
 				on_reapplying_stacks(our_status)
 				qdel(our_status)
 
-	recalculate_firestacks()
 	return ..()
 
 /**
@@ -83,11 +75,20 @@
 /datum/status_effect/fire_handler/proc/on_reapplying_stacks(datum/status_effect/fire_handler/our_status)
 
 /**
- * Recalculates owner's cached firestacks
+ * Setter and adjuster procs for firestacks
+ *
+ * Arguments:
+ * - new_stacks
+ *
  */
 
-/datum/status_effect/fire_handler/proc/recalculate_firestacks()
-	owner.fire_stacks = max(0, stacks) * stack_modifier
+/datum/status_effect/fire_handler/proc/set_stacks(new_stacks)
+	stacks = max(0, min(stack_limit, new_stacks))
+	owner.fire_stacks = 0 * stack_modifier
+
+/datum/status_effect/fire_handler/proc/adjust_stacks(new_stacks)
+	stacks = max(0, min(stack_limit, stacks + new_stacks))
+	owner.fire_stacks = stacks * stack_modifier
 
 /**
  * Used to update owner's effect overlay
@@ -120,12 +121,10 @@
 	if(!on_fire || isanimal(owner))
 		return TRUE
 
-	stacks -= 0.05 * delta_time
+	adjust_stacks(-0.05 * delta_time)
 
 	if(iscyborg(owner))
-		stacks -= 0.5 * delta_time
-
-	recalculate_firestacks()
+		adjust_stacks(-0.5 * delta_time)
 
 	if(stacks <= 0)
 		qdel(src)
@@ -289,9 +288,8 @@
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)
 		extinguish()
-	stacks = 0
+	set_stacks(0)
 	update_overlay()
-	recalculate_firestacks()
 
 /datum/status_effect/fire_handler/fire_stacks/update_overlay()
 	if(iscyborg(owner))
@@ -361,7 +359,6 @@
 	stack_modifier = -1
 
 /datum/status_effect/fire_handler/wet_stacks/tick(delta_time)
-	stacks -= 0.5 * delta_time
-	recalculate_firestacks()
+	adjust_stacks(-0.5 * delta_time)
 	if(stacks <= 0)
 		qdel(src)
