@@ -10,7 +10,7 @@
 	var/stack_limit = 20
 	/// What status effect type do we remove uppon being applied
 	var/enemy_type
-	/// For how much firestacks does one our stack could
+	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
 
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, override_type = NO_FIRE_OVERRIDE, forced = FALSE)
