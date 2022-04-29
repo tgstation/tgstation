@@ -581,6 +581,13 @@
 	volume = 100
 	isGlass = FALSE
 
+/obj/item/reagent_containers/food/drinks/shaker/Initialize(mapload)
+	. = ..()
+	if(prob(10))
+		name = "\improper NanoTrasen 20th Anniversary Shaker"
+		desc += " It has an emblazoned NanoTrasen logo on it."
+		icon_state = "shaker_n"
+
 /obj/item/reagent_containers/food/drinks/flask
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
