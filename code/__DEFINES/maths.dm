@@ -44,8 +44,8 @@
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
 
-// Increments a value and wraps it if it exceeds some maximum. Used to circularly iterate through lists.
-#define WRAP_INC(val, max) (((val) % (max)) + 1)
+/// Increments a value and wraps it if it exceeds some value. Can be used to circularly iterate through a list through `idx = WRAP_UP(idx, length_of_list)`.
+#define WRAP_UP(val, max) (((val) % (max)) + 1)
 
 // Real modulus that handles decimals
 #define MODULUS(x, y) ( (x) - FLOOR(x, y))

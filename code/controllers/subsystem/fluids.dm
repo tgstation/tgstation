@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(fluids)
 
 	MC_SPLIT_TICK // Start processing fluid spread:
 	if(!resumed_spreading)
-		spread_bucket_index = (spread_bucket_index % num_spread_buckets) + 1
+		spread_bucket_index = WRAP_UP(spread_bucket_index, num_spread_buckets)
 		currently_spreading = spread_carousel[spread_bucket_index]
 		spread_carousel[spread_bucket_index] = list() // Reset the bucket so we don't process an _entire station's worth of foam_ spreading every 2 ticks when the foam flood event happens.
 		resumed_spreading = TRUE
@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(fluids)
 
 	MC_SPLIT_TICK // Start processing fluid effects:
 	if(!resumed_effect_processing)
-		effect_bucket_index = (effect_bucket_index % num_effect_buckets) + 1
+		effect_bucket_index = WRAP_UP(effect_bucket_index, num_effect_buckets)
 		var/list/tmp_list = effect_carousel[effect_bucket_index]
 		currently_processing = tmp_list.Copy()
 		resumed_effect_processing = TRUE
