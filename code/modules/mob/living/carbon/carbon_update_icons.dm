@@ -237,12 +237,48 @@
 	update_wound_overlays()
 	var/list/needs_update = list()
 	var/limb_count_update = FALSE
+	var/obj/item/bodypart/r_leg/right_leg
+	var/obj/item/bodypart/l_leg/left_leg
+	var/old_right_leg_key
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
+
+		if(limb.body_zone == BODY_ZONE_L_LEG)
+			left_leg = limb
+			continue // Legs are handled separately
+
 		var/old_key = icon_render_keys?[limb.body_zone] //Checks the mob's icon render key list for the bodypart
 		icon_render_keys[limb.body_zone] = (limb.is_husked) ? limb.generate_husk_key().Join() : limb.generate_icon_key().Join() //Generates a key for the current bodypart
+
+		if(limb.body_zone == BODY_ZONE_R_LEG)
+			right_leg = limb
+			old_right_leg_key = old_key
+			continue // Legs are handled separately
+
 		if(!(icon_render_keys[limb.body_zone] == old_key)) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
+
+
+
+	// Here we handle legs differently, because legs are a mess due to layering code. So we got to process the right leg first. Thanks BYOND.
+	var/list/right_leg_icon // yes it's actually a list, bet you didn't expect that, now did you?
+	if(right_leg)
+		if(!(icon_render_keys[right_leg.body_zone] == old_right_leg_key))
+			right_leg_icon = right_leg.get_limb_icon()
+			limb_icon_cache[icon_render_keys[right_leg.body_zone]] = right_leg_icon
+		else
+			right_leg_icon = limb_icon_cache[icon_render_keys[right_leg.body_zone]]
+
+	if(left_leg)
+		var/old_left_leg_key = icon_render_keys?[left_leg.body_zone]
+		var/right_leg_mask_key = right_leg?.generate_mask_key().Join()
+		left_leg.right_leg_mask_key = right_leg ? right_leg_mask_key : null
+		if(right_leg_mask_key && right_leg_icon)
+			left_leg.right_leg_mask_cache[right_leg_mask_key] = generate_right_leg_mask(right_leg_icon[1], right_leg_mask_key)
+		icon_render_keys[left_leg.body_zone] = left_leg.is_husked ? left_leg.generate_husk_key().Join() : left_leg.generate_icon_key().Join()
+
+		if(!(icon_render_keys[left_leg.body_zone] == old_left_leg_key))
+			limb_icon_cache[icon_render_keys[left_leg.body_zone]] = left_leg.get_limb_icon()
 
 
 	var/list/missing_bodyparts = get_missing_limbs()
@@ -302,6 +338,27 @@
 
 	return .
 
+/**
+ * Generates a cache key for masks (mainly only used for right legs now, but perhaps in the future...).
+ *
+ * This is exactly like generate_icon_key(), except that it doesn't add `"-[draw_color]"`
+ * to the returned list under any circumstance. Why? Because it (generate_icon_key()) is
+ * a proc that gets called a ton and I don't want this to affect its performance.
+ */
+/obj/item/bodypart/proc/generate_mask_key()
+	RETURN_TYPE(/list)
+	. = list()
+	if(is_dimorphic)
+		. += "[limb_gender]-"
+	. += "[limb_id]"
+	. += "-[body_zone]"
+	for(var/obj/item/organ/external/external_organ as anything in external_organs)
+		if(!external_organ.can_draw_on_bodypart(owner))
+			continue
+		. += "-[external_organ.generate_icon_cache()]"
+
+	return .
+
 ///Generates a cache key specifically for husks
 /obj/item/bodypart/proc/generate_husk_key()
 	RETURN_TYPE(/list)
@@ -335,3 +392,43 @@
 		. += "-HAIR_HIDDEN"
 
 	return .
+
+/obj/item/bodypart/l_leg/generate_icon_key()
+	RETURN_TYPE(/list)
+	. = ..()
+	if(right_leg_mask_key) // We do this so we can cache the versions with and without a mask, for when there's no right leg.
+		. += "-[right_leg_mask_key]"
+
+	return .
+
+/**
+ * This proc serves as a way to ensure that left legs don't overlap above right legs when their dir is EAST on a mob.
+ *
+ * It's caching the mask used (the leg is cached on its own), to ensure that icons are generated as rarely as can be.
+ */
+/obj/item/bodypart/l_leg/proc/generate_masked_left_leg(left_leg_icon_file, left_leg_icon_state)
+	if(!right_leg_mask_key || !right_leg_mask_cache[right_leg_mask_key] || !left_leg_icon_file || !left_leg_icon_state)
+		return
+
+	var/icon/left_leg_icon = icon(left_leg_icon_file, left_leg_icon_state)
+	if(!right_leg_mask_cache[right_leg_mask_key])
+		return
+	left_leg_icon.Blend(right_leg_mask_cache[right_leg_mask_key], ICON_MULTIPLY)
+	// left_leg_icon.Blend(right_leg_mask_cache[right_leg_mask_key], ICON_MULTIPLY)
+	left_leg_icon = fcopy_rsc(left_leg_icon)
+	return image(left_leg_icon, left_leg_icon_state, layer = -BODYPARTS_LAYER)
+	// return image(right_leg_mask_cache[right_leg_mask_key], left_leg_icon_state, layer = -BODYPARTS_LAYER)
+
+
+/proc/generate_right_leg_mask(image/right_leg_image, right_leg_mask_key)
+	if(!right_leg_image)
+		return
+	var/icon/right_leg_icon = icon(icon = right_leg_image.icon, icon_state = right_leg_image.icon_state)
+	// right_leg_icon.MapColors(1,1,1,0, 1,1,1,0, 1,1,1,0, 1,1,1,1)
+	var/icon/crop_mask_icon = icon(icon = 'icons/mob/left_leg_mask_base.dmi', icon_state = "mask_base")
+	crop_mask_icon.Blend(right_leg_icon, ICON_MULTIPLY)
+	var/icon/new_mask_icon = icon(icon = 'icons/mob/left_leg_mask_base.dmi', icon_state = "mask_rest")
+	new_mask_icon.Blend(crop_mask_icon, ICON_OR)
+	// return right_leg_icon
+	// return crop_mask_icon
+	return new_mask_icon
