@@ -33,10 +33,10 @@
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multi_z(turf/our_turf)
 	var/turf/below_turf = our_turf.below()
-	if(below_turf)
+	if(below_turf) // If we actually have somethign below us, display it.
 		our_turf.vis_contents += below_turf
 	else
-		our_turf.vis_contents.Cut()
+		our_turf.vis_contents.len = 0 // Nuke the list
 		add_baseturf_underlay(our_turf)
 
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
