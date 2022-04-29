@@ -782,7 +782,7 @@
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/gun
-	chameleon_action.chameleon_name = "gun"
+	chameleon_action.chameleon_name = "Gun"
 	chameleon_action.chameleon_blacklist = typesof(/obj/item/gun/magic, /obj/item/gun/energy/minigun)
 	chameleon_action.initialize_disguises()
 
