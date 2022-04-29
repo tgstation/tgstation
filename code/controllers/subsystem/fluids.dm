@@ -23,9 +23,6 @@ SUBSYSTEM_DEF(fluids)
 	flags = SS_BACKGROUND|SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME|RUNLEVEL_POSTGAME
 
-	/// What this subsystem processes. Yes, it's called 'case' entirely because of 'switch() case: '.
-	var/case = NONE
-
 	// Fluid spread processing:
 	/// The amount of time before a fluid node is created and when it spreads.
 	var/spread_wait = 1 SECONDS
@@ -56,10 +53,8 @@ SUBSYSTEM_DEF(fluids)
 
 /datum/controller/subsystem/fluids/Initialize(start_timeofday)
 	initialize_waits()
-	if (case & SS_PROCESSES_SPREADING)
-		initialize_spread_handling()
-	if (case & SS_PROCESSES_EFFECTS)
-		initialize_effect_handling()
+	initialize_spread_handling()
+	initialize_effect_handling()
 	return ..()
 
 /**
@@ -68,37 +63,24 @@ SUBSYSTEM_DEF(fluids)
  * Ensures that the subsystem's fire wait evenly splits the spread and effect waits.
  */
 /datum/controller/subsystem/fluids/proc/initialize_waits()
-	case = NONE
-	if (spread_wait > 0)
-		case |= SS_PROCESSES_SPREADING
-	if (effect_wait > 0)
-		case |= SS_PROCESSES_EFFECTS
+	if (spread_wait <= 0)
+		WARNING("[src] has the invalid spread wait [spread_wait].")
+		spread_wait = 1 SECONDS
+	if (effect_wait <= 0)
+		WARNING("[src] has the invalid effect wait [effect_wait].")
+		spread_wait = 1 SECONDS
 
-	switch (case)
-		if (SS_PROCESSES_SPREADING|SS_PROCESSES_EFFECTS)
-			wait = Gcd(wait, Gcd(spread_wait, effect_wait))
-		if (SS_PROCESSES_SPREADING)
-			if (spread_wait > wait)
-				spread_wait = wait * round(spread_wait / wait, 1)
-			else
-				wait = spread_wait
-			effect_wait = wait
-		if (SS_PROCESSES_EFFECTS)
-			if (effect_wait > wait)
-				effect_wait = wait * round(effect_wait / wait, 1)
-			else
-				wait = effect_wait
-			spread_wait = wait // It needs to be _something_ to prevent runtimes.
-			stack_trace("[src] is a fluid subsystem that does not process fluid spread. Just make it a regular subsystem please.")
-		else
-			spread_wait = wait
-			flags |= SS_NO_FIRE
-			stack_trace("[src] is a fluid subsystem without any purpose. Cull it soon please.")
+	// Sets the overall wait of the subsystem to evenly divide both the effect and spread waits.
+	wait = Gcd(spread_wait, effect_wait)
 
 /**
  * Initializes the carousel used to process fluid spreading.
+ *
+ * Synchronizes the spread delta time with the actual target spread tick rate.
+ * Builds the carousel buckets used to queue spreads.
  */
-/datum/controller/subsystem/fluids/proc/initialize_spread_handling()
+/datum/controller/subsystem/fluids/proc/initialize_spread_carousel()
+	// Make absolutely certain that the spread wait is in sync with the target spread tick rate.
 	num_spread_buckets = round(spread_wait / wait)
 	spread_wait = wait * num_spread_buckets
 
@@ -111,8 +93,12 @@ SUBSYSTEM_DEF(fluids)
 
 /**
  * Initializes the carousel used to process fluid effects.
+ *
+ * Synchronizes the spread delta time with the actual target spread tick rate.
+ * Builds the carousel buckets used to bubble processing.
  */
-/datum/controller/subsystem/fluids/proc/initialize_effect_handling()
+/datum/controller/subsystem/fluids/proc/initialize_effect_carousel()
+	// Make absolutely certain that the effect wait is in sync with the target effect tick rate.
 	num_effect_buckets = round(effect_wait / wait)
 	effect_wait = wait * num_effect_buckets
 
