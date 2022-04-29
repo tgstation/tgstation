@@ -122,6 +122,10 @@
 
 		if(my_card)
 			var/obj/item/card/id/player_card = W
+			if(istype(player_card, /obj/item/card/id/departmental_budget)) // Are they using a department ID
+				say("You cannot gamble with the department budget!")
+				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
+				return FALSE
 			if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
 				say("You do not have the funds to play! Lower your bet or get more money.")
 				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
@@ -150,8 +154,8 @@
 					potential_payout_mult = ROULETTE_SIMPLE_PAYOUT
 			var/potential_payout = chosen_bet_amount * potential_payout_mult
 
-			if(!check_bartender_funds(potential_payout))
-				return FALSE  //bartender is too poor
+			if(!check_owner_funds(potential_payout))
+				return FALSE  //owner is too poor
 
 			if(last_anti_spam > world.time) //do not cheat me
 				return FALSE
@@ -339,7 +343,7 @@
 
 
 ///Returns TRUE if the owner has enough funds to payout
-/obj/machinery/roulette/proc/check_bartender_funds(payout)
+/obj/machinery/roulette/proc/check_owner_funds(payout)
 	if(my_card.registered_account.account_balance >= payout)
 		return TRUE //We got the betting amount
 	say("The bank account of [my_card.registered_account.account_holder] does not have enough funds to pay out the potential prize, contact them to fill up their account or lower your bet!")
