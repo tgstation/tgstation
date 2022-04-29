@@ -416,12 +416,6 @@
 /obj/effect/immortality_talisman/singularity_pull()
 	return
 
-/obj/effect/immortality_talisman/Destroy(force)
-	if(!can_destroy && !force)
-		return QDEL_HINT_LETMELIVE
-	else
-		. = ..()
-
 /obj/effect/immortality_talisman/void
 	vanish_description = "is dragged into the void"
 
