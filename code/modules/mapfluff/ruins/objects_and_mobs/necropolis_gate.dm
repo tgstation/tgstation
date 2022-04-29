@@ -54,7 +54,7 @@
 
 /obj/structure/necropolis_gate/Destroy(force)
 	qdel(sight_blocker)
-	. = ..()
+	return ..()
 
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
@@ -155,7 +155,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/necropolis_gate/legion_gate/Destroy(force)
 	if(GLOB.necropolis_gate == src)
 		GLOB.necropolis_gate = null
-	. = ..()
+	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user, list/modifiers)
