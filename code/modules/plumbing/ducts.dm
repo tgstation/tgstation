@@ -303,22 +303,25 @@ All the important duct code:
 	if(!istype(A, /obj/machinery/duct))
 		return
 	var/obj/machinery/duct/D = A
-	var/obj/item/I = user.get_active_held_item()
-	if(I?.tool_behaviour != TOOL_WRENCH)
-		to_chat(user, span_warning("You need to be holding a wrench in your active hand to do that!"))
-		return
 	if(get_dist(src, D) != 1)
 		return
 	var/direction = get_dir(src, D)
 	if(!(direction in GLOB.cardinals))
 		return
 	if(!(duct_layer & D.duct_layer))
+		to_chat(user, span_warning("The ducts must be on the same layer to connect them!"))
+		return
+	var/obj/item/I = user.get_active_held_item()
+	if(I?.tool_behaviour != TOOL_WRENCH)
+		to_chat(user, span_warning("You need to be holding a wrench in your active hand to do that!"))
 		return
 
 	add_connects(direction) //the connect of the other duct is handled in connect_network, but do this here for the parent duct because it's not necessary in normal cases
 	add_neighbour(D, direction)
 	connect_network(D, direction)
 	update_appearance()
+	I.play_tool_sound(src)
+	to_chat(user, span_notice("You connect the two plumbing ducts."))
 
 /obj/item/stack/ducts
 	name = "stack of duct"
@@ -343,10 +346,10 @@ All the important duct code:
 	. += span_notice("It's current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.")
 
 /obj/item/stack/ducts/attack_self(mob/user)
-	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)
+	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers, duct_layer)
 	if(new_layer)
 		duct_layer = new_layer
-	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors)
+	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors, duct_color)
 	if(new_color)
 		duct_color = new_color
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)
