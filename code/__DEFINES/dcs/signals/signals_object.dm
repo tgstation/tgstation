@@ -399,3 +399,9 @@
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
 
+/// Sent from /obj/effect/proc_holder/spell/targeted/charge/cast(), to the item in hand being charged: (obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+#define COMSIG_ITEM_MAGICALLY_CHARGED "item_magic_charged"
+	/// Returns if an item was successfuly recharged
+	#define COMPONENT_ITEM_CHARGED (1 << 0)
+	/// Returns if the item had a negative side effect occur while recharging
+	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
