@@ -9,11 +9,11 @@
 	/// Maximum of stacks that we could possibly get
 	var/stack_limit = 20
 	/// What status effect types do we remove uppon being applied. These are just deleted without any deduction from our or their stacks when forced.
-	var/list/enemy_types = list()
+	var/list/enemy_types
 	/// What status effect types do we merge into if they exist. Ignored when forced.
-	var/list/merge_types = list()
+	var/list/merge_types
 	/// What status effect types do we override if they exist. These are simply deleted when forced.
-	var/list/override_types = list()
+	var/list/override_types
 	/// For how much firestacks does one our stack count
 	var/stack_modifier = 1
 
@@ -95,17 +95,22 @@
 
 /datum/status_effect/fire_handler/proc/cache_stacks()
 	owner.fire_stacks = 0
+	var/was_on_fire = owner.on_fire
 	owner.on_fire = FALSE
-	owner.clear_alert(ALERT_FIRE)
-	for(var/fire_type in subtypesof(/datum/status_effect/fire_handler))
-		var/datum/status_effect/fire_handler/possible_fire = owner.has_status_effect(fire_type)
-		if(possible_fire)
-			owner.fire_stacks += possible_fire.stacks * possible_fire.stack_modifier
-			if(istype(possible_fire))
-				var/datum/status_effect/fire_handler/fire_stacks/our_fire = possible_fire
-				if(our_fire.on_fire)
-					owner.on_fire = TRUE
-					owner.throw_alert(ALERT_FIRE, our_fire.fire_alert_type)
+	for(var/datum/status_effect/fire_handler/possible_fire in owner.status_effects)
+		owner.fire_stacks += possible_fire.stacks * possible_fire.stack_modifier
+
+		if(!istype(possible_fire, /datum/status_effect/fire_handler/fire_stacks))
+			continue
+
+		var/datum/status_effect/fire_handler/fire_stacks/our_fire = possible_fire
+		if(our_fire.on_fire)
+			owner.on_fire = TRUE
+
+	if(was_on_fire && !owner.on_fire)
+		owner.clear_alert(ALERT_FIRE)
+	else if(!was_on_fire && owner.on_fire)
+		owner.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire)
 
 /**
  * Used to update owner's effect overlay
@@ -121,8 +126,6 @@
 
 	/// If we're on fire
 	var/on_fire = FALSE
-	/// Type for our alert
-	var/fire_alert_type = /atom/movable/screen/alert/fire
 	/// A weakref to the mob light emitter
 	var/datum/weakref/firelight_ref
 	/// Type of mob light emitter we use when on fire
