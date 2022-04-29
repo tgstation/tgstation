@@ -1171,3 +1171,26 @@
   - bugfix: Cleaned up some pipes lying around in the Lavaland Syndicate base supermatter.
   vincentiusvin:
   - bugfix: fixed unpowered tram ordnance apc
+2022-04-29:
+  ErdinyoBarboza:
+  - bugfix: Adds proper cycling to DeltaStation RnD Circuit-Toxin area.
+  - bugfix: Removes a duplicate APC from DeltaStation brig.
+  Ghommie:
+  - bugfix: Fixed the moth costumers for the restaurant venue not showing up.
+  - bugfix: Fixed bar venue customer bots.
+  GoldenAlpharex:
+  - bugfix: The mining augments are now visible once again.
+  JohnFulpWillard:
+  - bugfix: Jobs who spawn with tablets not on the belt, have their name and job properly
+      displayed on the tablet, like everyone else.
+  OperativeLyn:
+  - bugfix: Moved an intercom in Metastation's captain's office to prevent overlapping
+      visible to ghosts.
+  PositiveEntropy:
+  - imageadd: Resprites most crates and the trash cart!
+  YakumoChen:
+  - rscdel: Tramstation's Medbay has had some budget cuts on their fire alarms.
+  tralezab:
+  - bugfix: Nullwave Vibrato now works as intended, stacking antimagic duration
+  - balance: Nullwave Vibrato stacks 10 seconds of antimagic, every few moments you
+      listen to it.
