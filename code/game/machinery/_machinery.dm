@@ -146,6 +146,8 @@
 	/// Do we want to hook into on_enter_area and on_exit_area?
 	/// Disables some optimizations
 	var/always_area_sensitive = FALSE
+	///Multiplier for power consumption.
+	var/machine_power_rectifier = 1
 
 /obj/machinery/Initialize(mapload)
 	if(!armor)

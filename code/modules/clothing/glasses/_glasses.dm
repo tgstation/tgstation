@@ -74,10 +74,10 @@
 
 		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
 			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-			to_chat(human_user, span_notice("You will now see glasses colors."))
+			to_chat(human_user, span_notice("You will no longer see glasses colors."))
 		else
 			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-			to_chat(human_user, span_notice("You will no longer see glasses colors."))
+			to_chat(human_user, span_notice("You will now see glasses colors."))
 		human_user.update_glasses_color(src, TRUE)
 	else
 		return ..()

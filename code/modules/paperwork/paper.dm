@@ -237,9 +237,12 @@
 		P.attackby(src, user)
 		return
 	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+		if(!user.can_write(P))
+			return
 		if(get_info_length() >= MAX_PAPER_LENGTH) // Sheet must have less than 5000 charaters
 			to_chat(user, span_warning("This sheet of paper is full!"))
 			return
+
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))

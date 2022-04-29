@@ -184,7 +184,6 @@
 	..()
 	if(A == beaker)
 		beaker = null
-		updateUsrDialog()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_deconstruction()
 	if(beaker)

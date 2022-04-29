@@ -170,7 +170,7 @@
 			return
 		replace_beaker(user, B)
 		to_chat(user, span_notice("You add [B] to [src]."))
-		updateUsrDialog()
+		ui_interact(user)
 		update_appearance()
 		return
 
