@@ -98,7 +98,7 @@ const CrewTable = (props, context) => {
         <Table.Cell bold collapsing textAlign="center">
           Vitals
         </Table.Cell>
-        <Table.Cell bold collapsing textAlign="center">
+        <Table.Cell bold textAlign="center">
           Position
         </Table.Cell>
         {!!data.link_allowed && (
