@@ -191,7 +191,7 @@
 	if(!.)
 		return
 
-	if(sacrifice.is_on_fire())
+	if(sacrifice.on_fire)
 		return TRUE
 	if(HAS_TRAIT_FROM(sacrifice, TRAIT_HUSK, BURN))
 		return TRUE

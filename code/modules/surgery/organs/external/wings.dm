@@ -212,7 +212,7 @@
 /obj/item/organ/external/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
 	SIGNAL_HANDLER
 
-	if(!burnt && human.bodytemperature >= 800 && human.get_fire_stacks() > 0) //do not go into the extremely hot light. you will not survive
+	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(human, span_danger("Your precious wings burn to a crisp!"))
 		SEND_SIGNAL(human, COMSIG_ADD_MOOD_EVENT, "burnt_wings", /datum/mood_event/burnt_wings)
 

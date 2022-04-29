@@ -103,7 +103,7 @@
 		temp_delta *= (1 - occupied_space.contents_thermal_insulation)
 
 	if(temp_delta < 0) // it is cold here
-		if(!is_on_fire()) // do not reduce body temp when on fire
+		if(!on_fire) // do not reduce body temp when on fire
 			adjust_bodytemperature(max(max(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX) * delta_time, temp_delta))
 	else // this is a hot place
 		adjust_bodytemperature(min(min(temp_delta / BODYTEMP_DIVISOR, BODYTEMP_HEATING_MAX) * delta_time, temp_delta))

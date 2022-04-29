@@ -454,8 +454,8 @@
 /datum/symptom/heal/water/CanHeal(datum/disease/advance/A)
 	. = 0
 	var/mob/living/M = A.affected_mob
-	if(M.get_fire_stacks() < 0)
-		M.adjust_fire_stacks(min(absorption_coeff, -M.get_fire_stacks()))
+	if(M.fire_stacks < 0)
+		M.adjust_fire_stacks(min(absorption_coeff, -M.fire_stacks))
 		. += power
 	if(M.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
 		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)

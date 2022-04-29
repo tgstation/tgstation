@@ -64,7 +64,7 @@
 			if(400 to 460)
 				apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 			if(460 to INFINITY)
-				if(is_on_fire())
+				if(on_fire)
 					apply_damage(HEAT_DAMAGE_LEVEL_3 * delta_time, BURN)
 				else
 					apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)

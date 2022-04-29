@@ -218,7 +218,7 @@
 				power = 3
 			else
 				power = 5
-		if(M.is_on_fire())
+		if(M.on_fire)
 			power *= 2
 
 		M.adjustOxyLoss(-2 * power * REM * delta_time, FALSE)

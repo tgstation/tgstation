@@ -133,7 +133,7 @@
 
 /datum/species/golem/plasma/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.bodytemperature > 750)
-		if(!boom_warning && H.is_on_fire())
+		if(!boom_warning && H.on_fire)
 			to_chat(H, span_userdanger("You feel like you could blow up at any moment!"))
 			boom_warning = TRUE
 	else
@@ -141,11 +141,11 @@
 			to_chat(H, span_notice("You feel more stable."))
 			boom_warning = FALSE
 
-	if(H.bodytemperature > 850 && H.is_on_fire() && prob(25))
+	if(H.bodytemperature > 850 && H.on_fire && prob(25))
 		explosion(H, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
 		if(H)
 			H.gib()
-	if(H.get_fire_stacks() < 2) //flammable
+	if(H.fire_stacks < 2) //flammable
 		H.adjust_fire_stacks(0.5 * delta_time)
 	..()
 
@@ -169,7 +169,7 @@
 /datum/action/innate/ignite/Activate()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		if(H.get_fire_stacks())
+		if(H.fire_stacks)
 			to_chat(owner, span_notice("You ignite yourself!"))
 		else
 			to_chat(owner, span_warning("You try to ignite yourself, but fail!"))
@@ -825,14 +825,14 @@
 	return golem_name
 
 /datum/species/golem/cloth/spec_life(mob/living/carbon/human/H)
-	if(H.get_fire_stacks() < 1)
+	if(H.fire_stacks < 1)
 		H.adjust_fire_stacks(1) //always prone to burning
 	..()
 
 /datum/species/golem/cloth/spec_death(gibbed, mob/living/carbon/human/H)
 	if(gibbed)
 		return
-	if(H.is_on_fire())
+	if(H.on_fire)
 		H.visible_message(span_danger("[H] burns into ash!"))
 		H.dust(just_ash = TRUE)
 		return

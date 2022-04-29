@@ -23,7 +23,7 @@
 	if(!istype(H))
 		return
 
-	if(H.is_on_fire())
+	if(H.on_fire)
 		if(extinguishes_left)
 			if(next_extinguish > world.time)
 				return
@@ -123,7 +123,7 @@
 	if(!istype(H))
 		return
 
-	if(H.is_on_fire())
+	if(H.on_fire)
 		if(extinguishes_left)
 			if(next_extinguish > world.time)
 				return

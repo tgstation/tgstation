@@ -1479,7 +1479,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// Changes to the skin temperature based on the area
 	var/area_skin_diff = area_temp - humi.bodytemperature
-	if(!humi.is_on_fire() || area_skin_diff > 0)
+	if(!humi.on_fire || area_skin_diff > 0)
 		// change rate of 0.05 as area temp has large impact on the surface
 		var/area_skin_change = get_temp_change_amount(area_skin_diff, 0.05 * delta_time)
 
@@ -1496,7 +1496,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		humi.adjust_bodytemperature(area_skin_change)
 
 	// Core to skin temp transfer, when not on fire
-	if(!humi.is_on_fire())
+	if(!humi.on_fire)
 		// Get the changes to the skin from the core temp
 		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
 		// change rate of 0.045 to reflect temp back to the skin at the slight higher rate then core to skin
@@ -1585,8 +1585,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Body temperature is too hot, and we do not have resist traits
 	// Apply some burn damage to the body
 	if(humi.coretemperature > bodytemp_heat_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTHEAT))
-		var/firemodifier = humi.get_fire_stacks() / 50
-		if (!humi.is_on_fire()) // We are not on fire, reduce the modifier
+		var/firemodifier = humi.fire_stacks / 50
+		if (!humi.on_fire) // We are not on fire, reduce the modifier
 			firemodifier = min(firemodifier, 0)
 
 		// this can go below 5 at log 2.5

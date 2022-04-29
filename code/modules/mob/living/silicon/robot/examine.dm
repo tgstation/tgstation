@@ -20,9 +20,9 @@
 			. += span_warning("<B>It looks severely burnt and heat-warped!</B>")
 	if (health < -maxHealth*0.5)
 		. += span_warning("It looks barely operational.")
-	if (get_fire_stacks() < 0)
+	if (fire_stacks < 0)
 		. += span_warning("It's covered in water.")
-	else if (get_fire_stacks() > 0)
+	else if (fire_stacks > 0)
 		. += span_warning("It's coated in something flammable.")
 
 	if(opened)

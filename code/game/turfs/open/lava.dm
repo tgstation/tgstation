@@ -56,7 +56,7 @@
 		var/mob/living/L = gone
 		if(!islava(get_step(src, direction)))
 			REMOVE_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-		if(!L.is_on_fire())
+		if(!L.on_fire)
 			L.update_fire()
 
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)

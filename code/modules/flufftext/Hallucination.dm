@@ -1474,7 +1474,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/fire/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE
 	..()
-	target.set_fire_stacks(max(target.get_fire_stacks(), 0.1)) //Placebo flammability
+	target.set_fire_stacks(max(target.fire_stacks, 0.1)) //Placebo flammability
 	fire_overlay = image('icons/mob/onfire.dmi', target, "human_burning", ABOVE_MOB_LAYER)
 	if(target.client)
 		target.client.images += fire_overlay
@@ -1498,7 +1498,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		qdel(src)
 		return
 
-	if(target.get_fire_stacks() <= 0)
+	if(target.fire_stacks <= 0)
 		clear_fire()
 
 	time_spent += delta_time

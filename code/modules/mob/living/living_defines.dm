@@ -54,6 +54,10 @@
 	var/last_special = 0 ///Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/timeofdeath = 0
 
+	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
+	var/on_fire = FALSE
+	var/fire_stacks = 0
+
 	/**
 	  * Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	  *

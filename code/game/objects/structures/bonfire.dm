@@ -127,7 +127,7 @@
 	//Not currently burning, let's see if we can ignite it.
 	if(isliving(entered))
 		var/mob/living/burning_body = entered
-		if(burning_body.is_on_fire())
+		if(burning_body.on_fire)
 			start_burning()
 			visible_message(span_notice("[entered] runs over [src], starting its fire!"))
 

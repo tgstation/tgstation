@@ -21,17 +21,17 @@
 	var/obj/item/reagent_containers/syringe/syringe = allocate(/obj/item/reagent_containers/syringe)
 
 	// INGEST
-	TEST_ASSERT_EQUAL(human.get_fire_stacks(), 0, "Human has fire stacks before taking phlogiston")
+	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human has fire stacks before taking phlogiston")
 	drink.reagents.add_reagent(/datum/reagent/phlogiston, 10)
 	drink.attack(human, human)
-	TEST_ASSERT_EQUAL(human.get_fire_stacks(), 1, "Human does not have fire stacks after taking phlogiston")
+	TEST_ASSERT_EQUAL(human.fire_stacks, 1, "Human does not have fire stacks after taking phlogiston")
 	human.Life(SSMOBS_DT)
-	TEST_ASSERT(human.get_fire_stacks() > 1, "Human fire stacks did not increase after life tick")
+	TEST_ASSERT(human.fire_stacks > 1, "Human fire stacks did not increase after life tick")
 
 	// TOUCH
 	dropper.reagents.add_reagent(/datum/reagent/water, 1)
 	dropper.afterattack(human, human, TRUE)
-	TEST_ASSERT_EQUAL(human.get_fire_stacks(), 0, "Human still has fire stacks after touching water")
+	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human still has fire stacks after touching water")
 
 	// VAPOR
 	TEST_ASSERT_EQUAL(human.drowsyness, 0, "Human is drowsy at the start of testing")

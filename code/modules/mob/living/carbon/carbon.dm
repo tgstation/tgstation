@@ -257,7 +257,7 @@
 	visible_message(span_danger("[src] rolls on the floor, trying to put [p_them()]self out!"), \
 		span_notice("You stop, drop, and roll!"))
 	sleep(30)
-	if(get_fire_stacks() <= 0 && !QDELETED(src))
+	if(fire_stacks <= 0 && !QDELETED(src))
 		visible_message(span_danger("[src] successfully extinguishes [p_them()]self!"), \
 			span_notice("You extinguish yourself."))
 	return

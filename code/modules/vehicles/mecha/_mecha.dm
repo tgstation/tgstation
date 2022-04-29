@@ -541,7 +541,7 @@
 	if(enclosed || mecha_flags & SILICON_PILOT)
 		return
 	for(var/mob/living/cookedalive as anything in occupants)
-		if(cookedalive.get_fire_stacks() < 5)
+		if(cookedalive.fire_stacks < 5)
 			cookedalive.adjust_fire_stacks(1)
 			cookedalive.ignite_mob()
 

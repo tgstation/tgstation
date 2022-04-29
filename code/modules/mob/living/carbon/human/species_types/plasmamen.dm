@@ -69,22 +69,22 @@
 		if(IS_ORGANIC_LIMB(found_bodypart) && (found_bodypart.limb_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
 			flammable_limb = TRUE
 			break
-	if(!flammable_limb && !H.is_on_fire()) //Allows their suit to attempt to autoextinguish if augged and on fire
+	if(!flammable_limb && !H.on_fire) //Allows their suit to attempt to autoextinguish if augged and on fire
 		return
 	if(!atmos_sealed && (!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves)))
 		var/datum/gas_mixture/environment = H.loc.return_air()
 		if(environment?.total_moles())
 			if(environment.gases[/datum/gas/hypernoblium] && (environment.gases[/datum/gas/hypernoblium][MOLES]) >= 5)
-				if(H.is_on_fire() && H.get_fire_stacks() > 0)
+				if(H.on_fire && H.fire_stacks > 0)
 					H.adjust_fire_stacks(-10 * delta_time)
 			else if(!HAS_TRAIT(H, TRAIT_NOFIRE) && !HAS_TRAIT(H, TRAIT_NOSELFIGNITION))
 				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
 					H.adjust_fire_stacks(0.25 * delta_time)
-					if(!H.is_on_fire() && H.get_fire_stacks() > 0)
+					if(!H.on_fire && H.fire_stacks > 0)
 						H.visible_message(span_danger("[H]'s body reacts with the atmosphere and bursts into flames!"),span_userdanger("Your body reacts with the atmosphere and bursts into flame!"))
 					H.ignite_mob()
 					internal_fire = TRUE
-	else if(H.get_fire_stacks())
+	else if(H.fire_stacks)
 		var/obj/item/clothing/under/plasmaman/P = H.w_uniform
 		if(istype(P))
 			P.Extinguish(H)

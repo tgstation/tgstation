@@ -1018,7 +1018,7 @@
 		loc.container_resist_act(src)
 
 	else if(mobility_flags & MOBILITY_MOVE)
-		if(is_on_fire())
+		if(on_fire)
 			resist_fire() //stop, drop, and roll
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
@@ -1391,7 +1391,7 @@
 
 //Mobs on Fire
 /mob/living/proc/ignite_mob()
-	if(get_fire_stacks() <= 0)
+	if(fire_stacks <= 0)
 		return FALSE
 
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
@@ -1399,12 +1399,6 @@
 		return FALSE
 
 	return fire_status.ignite()
-
-/mob/living/proc/is_on_fire()
-	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
-	if(!fire_status || !fire_status.on_fire)
-		return FALSE
-	return TRUE
 
 /mob/living/proc/update_fire()
 	var/datum/status_effect/fire_handler/fire_handler = has_status_effect(/datum/status_effect/fire_handler)
@@ -1422,7 +1416,6 @@
 	if(!fire_status || !fire_status.on_fire)
 		return
 	remove_status_effect(/datum/status_effect/fire_handler/fire_stacks)
-	SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
 
 /**
  * Adjust the amount of fire stacks on a mob
@@ -1436,12 +1429,12 @@
 
 /mob/living/proc/adjust_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks, override_fire_type = NO_FIRE_OVERRIDE)
 	if(stacks < 0)
-		stacks = max(-get_fire_stacks(), stacks)
+		stacks = max(-fire_stacks, stacks)
 	apply_status_effect(fire_type, stacks, override_fire_type)
 
 /mob/living/proc/adjust_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks, override_wet_type = NO_FIRE_OVERRIDE)
 	if(stacks < 0)
-		stacks = max(get_fire_stacks(), stacks)
+		stacks = max(fire_stacks, stacks)
 	apply_status_effect(wet_type, stacks, override_wet_type)
 
 /**
@@ -1482,18 +1475,6 @@
 
 	apply_status_effect(wet_type, stacks, override_wet_type, TRUE)
 
-/mob/living/proc/get_fire_stacks()
-	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
-	var/datum/status_effect/fire_handler/wet_stacks/wet_status = has_status_effect(/datum/status_effect/fire_handler/wet_stacks)
-
-	if(fire_status)
-		return fire_status.stacks //We should NEVER have both fire AND wet stacks at the same time
-
-	if(wet_status)
-		return -wet_status.stacks
-
-	return 0
-
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()
 /mob/living/proc/spreadFire(mob/living/spread_to)
@@ -1508,18 +1489,18 @@
 	var/datum/status_effect/fire_handler/fire_stacks/their_fire_status = spread_to.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(fire_status && fire_status.on_fire)
 		if(their_fire_status && their_fire_status.on_fire)
-			var/firesplit = (get_fire_stacks() + spread_to.get_fire_stacks()) / 2
-			var/fire_type = (spread_to.get_fire_stacks() > get_fire_stacks()) ? their_fire_status.type : fire_status.type
+			var/firesplit = (fire_stacks + spread_to.fire_stacks) / 2
+			var/fire_type = (spread_to.fire_stacks > fire_stacks) ? their_fire_status.type : fire_status.type
 			set_fire_stacks(firesplit, fire_type)
 			spread_to.set_fire_stacks(firesplit, fire_type)
 		else
-			set_fire_stacks(get_fire_stacks() / 2, fire_status.type)
-			spread_to.set_fire_stacks(get_fire_stacks(), fire_status.type)
+			set_fire_stacks(fire_stacks / 2, fire_status.type)
+			spread_to.set_fire_stacks(fire_stacks, fire_status.type)
 			if(spread_to.ignite_mob())
 				log_game("[key_name(src)] bumped into [key_name(spread_to)] and set them on fire")
 	else if(their_fire_status && their_fire_status.on_fire)
-		spread_to.set_fire_stacks(spread_to.get_fire_stacks() / 2, their_fire_status.type)
-		set_fire_stacks(spread_to.get_fire_stacks(), their_fire_status.type)
+		spread_to.set_fire_stacks(spread_to.fire_stacks / 2, their_fire_status.type)
+		set_fire_stacks(spread_to.fire_stacks, their_fire_status.type)
 		ignite_mob()
 
 //Mobs on Fire end
