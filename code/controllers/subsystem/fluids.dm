@@ -19,12 +19,12 @@
  */
 SUBSYSTEM_DEF(fluids)
 	name = "Fluid"
-	wait = 0.1 SECONDS
+	wait = 0 // Will be autoset to whatever makes the most sense given the spread and effect waits.
 	flags = SS_BACKGROUND|SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME|RUNLEVEL_POSTGAME
 
 	// Fluid spread processing:
-	/// The amount of time before a fluid node is created and when it spreads.
+	/// The amount of time (in deciseconds) before a fluid node is created and when it spreads.
 	var/spread_wait = 1 SECONDS
 	/// The number of buckets in the spread carousel.
 	var/num_spread_buckets
@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(fluids)
 	var/resumed_spreading
 
 	// Fluid effect processing:
-	/// The amount of time between effect processing ticks for each fluid node.
+	/// The amount of time (in deciseconds) between effect processing ticks for each fluid node.
 	var/effect_wait = 1 SECONDS
 	/// The number of buckets in the effect carousel.
 	var/num_effect_buckets
@@ -71,7 +71,14 @@ SUBSYSTEM_DEF(fluids)
 		spread_wait = 1 SECONDS
 
 	// Sets the overall wait of the subsystem to evenly divide both the effect and spread waits.
-	wait = Gcd(spread_wait, effect_wait)
+	var/max_wait = Gcd(spread_wait, effect_wait)
+	if (max_wait < wait || wait <= 0)
+		wait = max_wait
+	else
+		// If the wait of the subsystem overall is set to a valid value make the actual wait of the subsystem evenly divide that as well.
+		// Makes effect bubbling possible with identical spread and effect waits.
+		wait = Gcd(wait, max_wait)
+
 
 /**
  * Initializes the carousel used to process fluid spreading.
@@ -249,5 +256,6 @@ FLUID_SUBSYSTEM_DEF(smoke)
 /// The subsystem responsible for processing foam propagation and effects.
 FLUID_SUBSYSTEM_DEF(foam)
 	name = "Foam"
+	wait = 0.1 SECONDS // Makes effect bubbling work with foam.
 	spread_wait = 0.2 SECONDS
 	effect_wait = 0.2 SECONDS
