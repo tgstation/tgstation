@@ -74,9 +74,8 @@
 /obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
-	// This shouldn't be runnable if we're not being held by a mob,
-	// or if we're not within an objecting being held by a mob,
-	// but just in case.
+	// This shouldn't be running if we're not being held by a mob,
+	// or if we're not within an object being held by a mob, but just in case...
 	if(!ismovable(loc))
 		return
 
