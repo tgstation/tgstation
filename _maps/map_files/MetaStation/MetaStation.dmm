@@ -24158,6 +24158,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light_switch/directional/east,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/ce,
 /turf/open/floor/iron{
 	dir = 1
 	},
