@@ -3,8 +3,6 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 
-	///how many times a this movable had movement procs called on it since Moved() was last called
-	var/move_stacks = 0
 	var/last_move = null
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
@@ -501,7 +499,6 @@
 	var/atom/oldloc = loc
 	var/area/oldarea = get_area(oldloc)
 	var/area/newarea = get_area(newloc)
-	move_stacks++
 
 	loc = newloc
 
