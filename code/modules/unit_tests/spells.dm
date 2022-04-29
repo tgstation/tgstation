@@ -4,7 +4,7 @@
  */
 /datum/unit_test/actions_moved_on_mind_transfer
 
-/datum/unit_test/actiosn_moved_on_mind_transfer/Run()
+/datum/unit_test/actions_moved_on_mind_transfer/Run()
 
 	var/mob/living/carbon/human/wizard = allocate(/mob/living/carbon/human)
 	var/mob/living/simple_animal/pet/dog/corgi/wizard_dog = allocate(/mob/living/simple_animal/pet/dog/corgi)

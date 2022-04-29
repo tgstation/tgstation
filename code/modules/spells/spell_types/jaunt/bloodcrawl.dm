@@ -185,7 +185,7 @@
 
 /**
  * Consumes the [victim] from the [jaunter], fully healing them
- * and calling on_victim_consumed if successful.
+ * and calling [proc/on_victim_consumed] if successful.
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/proc/consume_victim(mob/living/victim, mob/living/jaunter)
 	on_victim_start_consume(victim, jaunter)
@@ -193,7 +193,7 @@
 	for(var/i in 1 to 3)
 		playsound(get_turf(src), consume_sound, 50, TRUE)
 		if(!do_after(jaunter, 3 SECONDS, victim))
-			to_chat(jaunter, span_danger("Your meal is interrupted!"))
+			to_chat(jaunter, span_danger("You lose your victim!"))
 			return FALSE
 		if(QDELETED(src))
 			return FALSE
