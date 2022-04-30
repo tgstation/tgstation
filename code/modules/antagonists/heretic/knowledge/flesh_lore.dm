@@ -151,7 +151,7 @@
 		if(body.stat != DEAD)
 			continue
 		if(!IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
-			to_chat(user, span_hierophant("[body] is not in a valid state to be made into a ghoul."))
+			to_chat(user, span_hierophant_warning("[body] is not in a valid state to be made into a ghoul."))
 			continue
 
 		// We'll select any valid bodies here. If they're clientless, we'll give them a new one.
