@@ -1765,8 +1765,14 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Mh" = (
-/obj/machinery/computer/terminal/ruins/romans_emails{
-	dir = 8
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out old messages.";
+	dir = 8;
+	name = "broken terminal"
+	},
+/obj/item/paper/fluff/ruins/romans_emails{
+	pixel_x = -10;
+	pixel_y = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
