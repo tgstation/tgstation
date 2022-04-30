@@ -1,4 +1,0 @@
-author: "OperativeLyn"
-delete-after: True
-changes: 
-  - bugfix: "Removed some useless catwalk tiles, cables and pipes in TramStation maintenance."
