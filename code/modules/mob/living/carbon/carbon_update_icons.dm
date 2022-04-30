@@ -444,14 +444,9 @@
 /proc/generate_left_leg_mask(image/left_leg_image)
 	if(!left_leg_image)
 		return
-	var/icon/left_leg_icon = icon(icon = left_leg_image.icon, icon_state = left_leg_image.icon_state)
-	// I hate the MapColors documentation. Basically, what we do here is that we invert the mask
-	// by using none of the original colors, and then the fourth clump is actually the alpha of
-	// each of the original colors, which we multiply by 255 and subtract a value of 255 to the result
-	// for the matching pixels, while starting with a base color of white everywhere.
-	left_leg_icon.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 255,255,255,-255, 1,1,1,1)
+	var/icon/left_leg_alpha_mask = generate_icon_alpha_mask(left_leg_image.icon, left_leg_image.icon_state)
 	var/icon/crop_mask_icon = icon(icon = 'icons/mob/left_leg_mask_base.dmi', icon_state = "mask_base")
-	crop_mask_icon.Blend(left_leg_icon, ICON_MULTIPLY)
+	crop_mask_icon.Blend(left_leg_alpha_mask, ICON_MULTIPLY)
 	var/icon/new_mask_icon = icon(icon = 'icons/mob/left_leg_mask_base.dmi', icon_state = "mask_rest")
 	new_mask_icon.Blend(crop_mask_icon, ICON_OR)
 	return new_mask_icon
