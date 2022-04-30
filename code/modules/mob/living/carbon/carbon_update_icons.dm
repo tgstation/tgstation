@@ -421,6 +421,7 @@
  * Returns the `/image` of the right leg that was masked, or `null` if the mask didn't exist.
  */
 /obj/item/bodypart/r_leg/proc/generate_masked_right_leg(right_leg_icon_file, right_leg_icon_state, image_dir)
+	RETURN_TYPE(/image)
 	if(!left_leg_mask_key || !left_leg_mask_cache[left_leg_mask_key] || !right_leg_icon_file || !right_leg_icon_state)
 		return
 
@@ -444,6 +445,7 @@
  * Returns the generated left leg mask as an `/icon`, or `null` if no left_leg_image is provided.
  */
 /proc/generate_left_leg_mask(image/left_leg_image)
+	RETURN_TYPE(/icon)
 	if(!left_leg_image)
 		return
 	var/icon/left_leg_alpha_mask = generate_icon_alpha_mask(left_leg_image.icon, left_leg_image.icon_state)
