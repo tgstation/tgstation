@@ -426,8 +426,6 @@
 		return
 
 	var/icon/right_leg_icon = icon(right_leg_icon_file, right_leg_icon_state)
-	if(!left_leg_mask_cache[left_leg_mask_key])
-		return
 	right_leg_icon.Blend(left_leg_mask_cache[left_leg_mask_key], ICON_MULTIPLY)
 	return image(right_leg_icon, right_leg_icon_state, layer = -BODYPARTS_LAYER, dir = image_dir)
 
