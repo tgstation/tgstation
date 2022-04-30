@@ -3767,6 +3767,10 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"ka" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/science/mixing/hallway)
 "kb" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Security - Permabrig Upper Hallway South";
@@ -8387,7 +8391,7 @@
 "wt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
-/area/science/mixing/chamber)
+/area/maintenance/starboard/aft)
 "wu" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -11318,6 +11322,9 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/commons/dorms/laundry)
+"EI" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/starboard/aft)
 "EJ" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
 /obj/machinery/light/directional/east,
@@ -66314,7 +66321,7 @@ kK
 kK
 kK
 kK
-Ue
+ka
 dZ
 vq
 pa
@@ -66571,7 +66578,7 @@ kK
 kK
 kK
 kK
-Ue
+ka
 dZ
 Rd
 dz
@@ -69393,15 +69400,15 @@ ak
 ak
 AA
 kK
-Er
-Er
-Er
-Er
+EI
+EI
+EI
+EI
 wt
-Er
-DL
+EI
+EI
 On
-DL
+EI
 DL
 DL
 Er

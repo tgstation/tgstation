@@ -21235,9 +21235,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/command/heads_quarters/hop)
-"jtU" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors/nospawn)
 "jue" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/west{
@@ -24466,7 +24463,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/science/breakroom)
 "lah" = (
 /obj/effect/decal/cleanable/dirt,
@@ -41494,6 +41491,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white,
 /area/science/mixing/hallway)
 "tIQ" = (
@@ -109580,7 +109578,7 @@ bun
 bOJ
 bgx
 jnk
-jtU
+gQb
 gQb
 gQb
 gQb
@@ -111629,7 +111627,7 @@ gQb
 gQb
 gQb
 gQb
-jtU
+gQb
 gQb
 gQb
 gQb
