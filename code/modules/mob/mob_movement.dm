@@ -344,14 +344,6 @@
 	var/turf/turf = get_turf(src)
 	return !isgroundlessturf(turf) && HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY)
 
-/mob/newtonian_move(direction, instant = FALSE)
-	. = ..()
-	if(!.) //Only do this if we're actually going somewhere
-		return
-	if(!client)
-		return
-	client.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay) //Make sure moving into a space move looks like a space move
-
 /// Called when this mob slips over, override as needed
 /mob/proc/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
 	mind?.add_memory(MEMORY_SLIPPED, list(DETAIL_WHAT_BY = O, DETAIL_PROTAGONIST = src), story_value = STORY_VALUE_OKAY)

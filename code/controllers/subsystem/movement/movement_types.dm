@@ -77,6 +77,18 @@
 /datum/move_loop/proc/set_delay(new_delay)
 	delay =  max(new_delay, world.tick_lag)
 
+///Pauses the move loop for some passed in period
+///This functionally means shifting its timer up, and clearing it from its current bucket
+/datum/move_loop/proc/pause_for(time)
+	if(!controller || !running) //No controller or not running? go away
+		return
+	//Dequeue us from our current bucket
+	controller.dequeue_loop(src)
+	//Offset our timer
+	timer = world.time + time
+	//Now requeue us with our new target start time
+	controller.queue_loop(src)
+
 /datum/move_loop/process()
 	var/old_delay = delay //The signal can sometimes change delay
 

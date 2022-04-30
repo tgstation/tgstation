@@ -975,7 +975,6 @@
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
 		return TRUE
 
-	set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay))
 	AddComponent(/datum/component/drift, direction, instant)
 
 	return TRUE

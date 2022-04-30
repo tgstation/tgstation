@@ -16,6 +16,12 @@
 ///from base of atom/movable/newtonian_move(): (inertia_direction)
 #define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
 	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)
+///from datum/component/drift/apply_initial_visuals(): ()
+#define COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT "movable_drift_visual_attempt"
+	#define DRIFT_VISUAL_FAILED (1<<0)
+///from datum/component/drift/allow_final_movement(): ()
+#define COMSIG_MOVABLE_DRIFT_BLOCK_INPUT "movable_drift_block_input"
+	#define DRIFT_ALLOW_INPUT (1<<0)
 ///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
 #define COMSIG_MOVABLE_IMPACT "movable_impact"
 	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH (1<<0) //if true, flip if the impact will push what it hits

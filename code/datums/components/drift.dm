@@ -5,6 +5,12 @@
 	var/atom/inertia_last_loc
 	var/old_dir
 	var/datum/move_loop/move/drifting_loop
+	///Should we ignore the next glide rate input we get?
+	///This is to some extent a hack around the order of operations
+	///Around COMSIG_MOVELOOP_POSTPROCESS. I'm sorry lad
+	var/ignore_next_glide = FALSE
+	///Have we been delayed? IE: active, but not working right this second?
+	var/delayed = FALSE
 	var/block_inputs_until
 
 /datum/component/drift/Initialize(direction, instant = FALSE)
@@ -28,6 +34,7 @@
 	RegisterSignal(drifting_loop, COMSIG_PARENT_QDELETING, .proc/loop_death)
 	if(drifting_loop.running)
 		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
+	apply_initial_visuals()
 
 /datum/component/drift/Destroy()
 	inertia_last_loc = null
@@ -37,6 +44,24 @@
 	var/atom/movable/movable_parent = parent
 	movable_parent.inertia_moving = FALSE
 	return ..()
+
+/datum/component/drift/proc/apply_initial_visuals()
+	// If something "somewhere" doesn't want us to apply our glidesize delays, don't
+	if(SEND_SIGNAL(parent, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT) & DRIFT_VISUAL_FAILED)
+		return
+
+	// Ignore the next glide because it's literally just us
+	ignore_next_glide = TRUE
+	var/atom/movable/movable_parent = parent
+	var/move_delay = movable_parent.inertia_move_delay
+	movable_parent.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(move_delay, SSspacedrift.visual_delay))
+	if(ismob(parent))
+		var/mob/mob_parent = parent
+		//Ok this is slightly weird, but basically, we need to force the client to glide at our rate
+		//Make sure moving into a space move looks like a space move essentially
+		//There is an inbuilt assumption that gliding will be added as a part of a move call, but eh
+		//It's ok if it's not, it's just important if it is.
+		mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(move_delay, SSspacedrift.visual_delay)
 
 /datum/component/drift/proc/newtonian_impulse(datum/source, inertia_direction)
 	SIGNAL_HANDLER
@@ -53,18 +78,23 @@
 	inertia_last_loc = movable_parent.loc
 	RegisterSignal(movable_parent, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 	RegisterSignal(movable_parent, COMSIG_MOVABLE_NEWTONIAN_MOVE, .proc/newtonian_impulse)
+	// We will use glide size to intuit how long to delay our loop's next move for
+	// This way you can't ride two movements at once while drifting, since that'd be dumb as fuck
+	RegisterSignal(movable_parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/handle_glidesize_update)
 
 /datum/component/drift/proc/drifting_stop()
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
 	movable_parent.inertia_moving = FALSE
-	UnregisterSignal(movable_parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_NEWTONIAN_MOVE))
+	ignore_next_glide = FALSE
+	UnregisterSignal(movable_parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_NEWTONIAN_MOVE, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
 
 /datum/component/drift/proc/before_move(datum/source)
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
 	movable_parent.inertia_moving = TRUE
 	old_dir = movable_parent.dir
+	delayed = FALSE
 
 /datum/component/drift/proc/after_move(datum/source, succeeded, visual_delay)
 	SIGNAL_HANDLER
@@ -80,6 +110,7 @@
 		return
 
 	inertia_last_loc = movable_parent.loc
+	ignore_next_glide = TRUE
 
 /datum/component/drift/proc/loop_death(datum/source)
 	SIGNAL_HANDLER
@@ -98,6 +129,24 @@
 		return
 	qdel(src)
 
+/// We're going to take the passed in glide size
+/// and use it to manually delay our loop for that period
+/// to allow the other movement to complete
+/datum/component/drift/proc/handle_glidesize_update(datum/source, glide_size)
+	SIGNAL_HANDLER
+	// If we aren't drifting, or this is us, fuck off
+	var/atom/movable/movable_parent = parent
+	if(!drifting_loop || movable_parent.inertia_moving)
+		return
+	// If we are drifting, but this set came from the moveloop itself, drop the input
+	// I'm sorry man
+	if(ignore_next_glide)
+		ignore_next_glide = FALSE
+		return
+	var/glide_delay = round(world.icon_size / glide_size, 1) * world.tick_lag
+	drifting_loop.pause_for(glide_delay)
+	delayed = TRUE
+
 /datum/component/drift/proc/glide_to_halt(glide_for)
 	if(!ismob(parent))
 		qdel(src)
@@ -105,7 +154,8 @@
 
 	var/mob/mob_parent = parent
 	var/client/our_client = mob_parent.client
-	if(!our_client)
+	// If we're not active, don't do the glide because it'll look dumb as fuck
+	if(!our_client || delayed)
 		qdel(src)
 		return
 
@@ -115,5 +165,8 @@
 	RegisterSignal(parent, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/allow_final_movement)
 
 /datum/component/drift/proc/allow_final_movement(datum/source)
+	// Some things want to allow movement out of spacedrift, we should let them
+	if(SEND_SIGNAL(parent, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT) & DRIFT_ALLOW_INPUT)
+		return
 	if(world.time < block_inputs_until)
 		return COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE

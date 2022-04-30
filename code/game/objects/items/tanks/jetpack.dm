@@ -80,6 +80,8 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
 	RegisterSignal(user, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
+	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT, .proc/block_starting_visuals)
+	RegisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT, .proc/ignore_ending_block)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 	return TRUE
@@ -94,6 +96,8 @@
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 		UnregisterSignal(user, COMSIG_MOVABLE_SPACEMOVE)
+		UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT)
+		UnregisterSignal(user, COMSIG_MOVABLE_DRIFT_BLOCK_INPUT)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
@@ -138,6 +142,16 @@
 	ion_trail.generate_effect()
 
 	return TRUE
+
+/// Basically, tell the drift component not to do its starting visuals, because they look dumb for us
+/obj/item/tank/jetpack/proc/block_starting_visuals(datum/source)
+	SIGNAL_HANDLER
+	return DRIFT_VISUAL_FAILED
+
+/// If we're on, don't let the drift component block movements at the end since we can speed
+/obj/item/tank/jetpack/proc/ignore_ending_block(datum/source)
+	SIGNAL_HANDLER
+	return DRIFT_ALLOW_INPUT
 
 /obj/item/tank/jetpack/suicide_act(mob/user)
 	if (istype(user, /mob/living/carbon/human/))
