@@ -423,6 +423,16 @@
 	return image(right_leg_icon, right_leg_icon_state, layer = -BODYPARTS_LAYER)
 
 
+/**
+ * The proc that handles generating left leg masks at runtime.
+ * It basically creates an icon that are all white on all dirs except WEST, where there's a cutout
+ * of the left leg that needed to be masked.
+ *
+ * It does /not/ cache the mask itself, and as such, the caching must be done manually (which it is, look up in update_body_parts()).
+ *
+ * Arguments:
+ * * image/left_leg_image - `image` of the left leg that we need to create a mask out of.
+ */
 /proc/generate_left_leg_mask(image/left_leg_image)
 	if(!left_leg_image)
 		return
