@@ -36336,6 +36336,22 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
+"hPA" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/disposalpipe/junction/flip{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/central/fore)
 "hPE" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -36887,7 +36903,7 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Ordnance Test Lab";
 	name = "science camera";
-	network = list("ss13", "rd")
+	network = list("ss13","rd")
 	},
 /obj/item/radio/intercom/directional/east,
 /obj/structure/sign/poster/random/directional/north,
@@ -43894,6 +43910,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/corner,
 /area/hallway/primary/central/fore)
 "klb" = (
@@ -45375,12 +45394,14 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/structure/disposalpipe/junction{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
 "kJD" = (
@@ -82752,6 +82773,9 @@
 /obj/machinery/disposal/bin,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/corner,
 /area/hallway/primary/central/fore)
 "xbQ" = (
@@ -82868,7 +82892,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Ordnance Storage";
 	name = "science camera";
-	network = list("ss13", "rd")
+	network = list("ss13","rd")
 	},
 /turf/open/floor/iron/dark,
 /area/science/storage)
@@ -115711,7 +115735,7 @@ oCG
 cfM
 tmu
 wKA
-dSV
+hPA
 qrA
 vVq
 iaC
