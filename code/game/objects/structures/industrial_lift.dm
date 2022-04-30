@@ -432,7 +432,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST)
 		)
 
-	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = FALSE)
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user, loc), require_near = TRUE, tooltips = FALSE)
 	if (!in_range(src, user))
 		return  // nice try
 

@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "Water slime cookie no longer tastes like /datum/reagent/water"
