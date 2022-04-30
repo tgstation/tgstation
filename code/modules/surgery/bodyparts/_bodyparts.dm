@@ -758,7 +758,7 @@
 	if(body_zone == BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/r_leg/leg = src
 		var/limb_overlays = limb.overlays
-		var/image/new_limb = leg.generate_masked_right_leg(limb.icon, limb.icon_state)
+		var/image/new_limb = leg.generate_masked_right_leg(limb.icon, limb.icon_state, image_dir)
 		if(new_limb)
 			limb = new_limb
 			limb.overlays = limb_overlays

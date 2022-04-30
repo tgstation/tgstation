@@ -415,10 +415,12 @@
  * Arguments:
  * * right_leg_icon_file - The icon file of the right leg overlay we're trying to apply a mask to.
  * * right_leg_icon_state - The icon_state of the right leg overlay we're trying to apply a mask to.
+ * * image_dir - The direction applied to the icon, only meant for when the leg is dropped, so it remains
+ * facing SOUTH all the time.
  *
  * Returns the `/image` of the right leg that was masked, or `null` if the mask didn't exist.
  */
-/obj/item/bodypart/r_leg/proc/generate_masked_right_leg(right_leg_icon_file, right_leg_icon_state)
+/obj/item/bodypart/r_leg/proc/generate_masked_right_leg(right_leg_icon_file, right_leg_icon_state, image_dir)
 	if(!left_leg_mask_key || !left_leg_mask_cache[left_leg_mask_key] || !right_leg_icon_file || !right_leg_icon_state)
 		return
 
@@ -426,7 +428,7 @@
 	if(!left_leg_mask_cache[left_leg_mask_key])
 		return
 	right_leg_icon.Blend(left_leg_mask_cache[left_leg_mask_key], ICON_MULTIPLY)
-	return image(right_leg_icon, right_leg_icon_state, layer = -BODYPARTS_LAYER)
+	return image(right_leg_icon, right_leg_icon_state, layer = -BODYPARTS_LAYER, dir = image_dir)
 
 
 /**
