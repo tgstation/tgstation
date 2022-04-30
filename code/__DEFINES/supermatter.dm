@@ -95,6 +95,8 @@
 #define FLUX_ANOMALY "flux_anomaly"
 #define PYRO_ANOMALY "pyro_anomaly"
 #define DELIMBER_ANOMALY "delimber_anomaly"
+#define HALLUCINATION_ANOMALY "hallucination_anomaly"
+#define VORTEX_ANOMALY "vortex_anomaly"
 
 //If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
 #define SUPERMATTER_DELAM_PERCENT 5

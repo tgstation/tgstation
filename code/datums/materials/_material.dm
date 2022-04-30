@@ -92,6 +92,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	else if(istype(source, /turf)) //turfs
 		on_applied_turf(source, amount, material_flags)
 
+	source.update_appearance()
+
 	source.mat_update_desc(src)
 
 ///This proc is called when a material updates an object's description

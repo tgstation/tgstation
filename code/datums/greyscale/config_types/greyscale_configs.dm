@@ -512,3 +512,8 @@
 	name = "Worn Skull Bandana Up"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandskull_worn_up.json'
+
+/datum/greyscale_config/material_airlock
+	name = "Material Airlock"
+	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
+	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'

@@ -143,6 +143,8 @@
 	var/last_used_time = 0
 	/// Mobtype of last user. Typecast to [/mob/living] for initial() usage
 	var/mob/living/last_user_mobtype
+	///Multiplier for power consumption.
+	var/machine_power_rectifier = 1
 
 /obj/machinery/Initialize(mapload)
 	if(!armor)
@@ -935,7 +937,10 @@
 				. += "It appears heavily damaged."
 			if(0 to 25)
 				. += span_warning("It's falling apart!")
-	if(user.research_scanner && component_parts)
+
+/obj/machinery/examine_more(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) && component_parts)
 		. += display_parts(user, TRUE)
 
 //called on machinery construction (i.e from frame to machinery) but not on initialization

@@ -78,7 +78,7 @@
 	return null
 
 /**
- * Reteurns a list of all status effects that share the passed effect type's ID
+ * Returns a list of all status effects that share the passed effect type's ID
  *
  * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
  *
