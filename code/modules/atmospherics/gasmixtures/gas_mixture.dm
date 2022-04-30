@@ -583,11 +583,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/output_moles = output_air.total_moles()
 	var/output_pressure = output_air.return_pressure()
 
-	if((our_moles <= 0) || (temperature <= 0))
+	if(our_moles <= 0 || temperature <= 0)
 		return FALSE
 
 	var/pressure_delta = 0
-	if((output_air.temperature <= 0) || (output_moles <= 0))
+	if(output_air.temperature <= 0 || output_moles <= 0)
 		ignore_temperature = TRUE
 		pressure_delta = target_pressure
 	else
@@ -667,7 +667,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
 		solution = max(SolveQuadratic(a, b, c)) 
-		if((solution > lower_limit) && (solution < upper_limit)) //SolveQuadratic can return empty lists so be careful here
+		if(solution > lower_limit && solution < upper_limit) //SolveQuadratic can return empty lists so be careful here
 			return solution
 	stack_trace("Failed to solve pressure quadratic equation. A: [a]. B: [b]. C:[c]. Current value = [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")
 	return FALSE
