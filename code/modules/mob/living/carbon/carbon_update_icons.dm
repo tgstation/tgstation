@@ -409,7 +409,14 @@
 /**
  * This proc serves as a way to ensure that right legs don't overlap above left legs when their dir is WEST on a mob.
  *
- * It's caching the mask used (the leg is cached on its own), to ensure that icons are generated as rarely as can be.
+ * It's using the `left_leg_mask_cache` to avoid generating a new mask when unnecessary, which means that there needs to be one
+ * for the proc to return anything.
+ *
+ * Arguments:
+ * * right_leg_icon_file - The icon file of the right leg overlay we're trying to apply a mask to.
+ * * right_leg_icon_state - The icon_state of the right leg overlay we're trying to apply a mask to.
+ *
+ * Returns the `image` of the right leg that was masked.
  */
 /obj/item/bodypart/r_leg/proc/generate_masked_right_leg(right_leg_icon_file, right_leg_icon_state)
 	if(!left_leg_mask_key || !left_leg_mask_cache[left_leg_mask_key] || !right_leg_icon_file || !right_leg_icon_state)
