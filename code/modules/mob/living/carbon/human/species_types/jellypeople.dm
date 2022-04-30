@@ -445,7 +445,7 @@
 	name = "Luminescent"
 	plural_form = null
 	id = SPECIES_LUMINESCENT
-	examine_limb_id = SPECIES_JELLYPERSON
+	examine_limb_id = SPECIES_LUMINESCENT
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/luminescent,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/luminescent,
