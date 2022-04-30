@@ -401,13 +401,13 @@
 /obj/item/bodypart/r_leg/generate_icon_key()
 	RETURN_TYPE(/list)
 	. = ..()
-	if(left_leg_mask_key) // We do this so we can cache the versions with and without a mask, for when there's no leftt leg.
+	if(left_leg_mask_key) // We do this so we can cache the versions with and without a mask, for when there's no left leg.
 		. += "-[left_leg_mask_key]"
 
 	return .
 
 /**
- * This proc serves as a way to ensure that right legs don't overlap above leftt legs when their dir is WEST on a mob.
+ * This proc serves as a way to ensure that right legs don't overlap above left legs when their dir is WEST on a mob.
  *
  * It's caching the mask used (the leg is cached on its own), to ensure that icons are generated as rarely as can be.
  */
