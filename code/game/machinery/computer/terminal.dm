@@ -19,7 +19,7 @@
 		ui.open()
 
 /obj/machinery/computer/terminal/ui_static_data(mob/user)
-	. = list(
+	return list(
 		"text" = info,
 		"uppertext" = upperinfo,
 		"tguitheme" = tguitheme,
