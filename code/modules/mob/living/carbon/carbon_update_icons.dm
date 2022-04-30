@@ -447,8 +447,11 @@
 	if(!left_leg_image)
 		return
 	var/icon/left_leg_alpha_mask = generate_icon_alpha_mask(left_leg_image.icon, left_leg_image.icon_state)
+	// Right here, we use the crop_mask_icon to single out the WEST sprite of the mask we just created above.
 	var/icon/crop_mask_icon = icon(icon = 'icons/mob/left_leg_mask_base.dmi', icon_state = "mask_base")
 	crop_mask_icon.Blend(left_leg_alpha_mask, ICON_MULTIPLY)
+	// Then, we add (with ICON_OR) that singled-out WEST mask to a template mask that has the NORTH,
+	// SOUTH and EAST dirs as full white squares, to finish our WEST-directional mask.
 	var/icon/new_mask_icon = icon(icon = 'icons/mob/left_leg_mask_base.dmi', icon_state = "mask_rest")
 	new_mask_icon.Blend(crop_mask_icon, ICON_OR)
 	return new_mask_icon
