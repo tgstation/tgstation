@@ -53,8 +53,8 @@ SUBSYSTEM_DEF(fluids)
 
 /datum/controller/subsystem/fluids/Initialize(start_timeofday)
 	initialize_waits()
-	initialize_spread_handling()
-	initialize_effect_handling()
+	initialize_spread_carousel()
+	initialize_effect_carousel()
 	return ..()
 
 /**
