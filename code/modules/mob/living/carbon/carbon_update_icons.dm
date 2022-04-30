@@ -259,30 +259,8 @@
 			needs_update += limb
 
 
-
 	// Here we handle legs differently, because legs are a mess due to layering code. So we got to process the left leg first. Thanks BYOND.
-	var/list/left_leg_icon // yes it's actually a list, bet you didn't expect that, now did you?
-	var/leg_need_redrawn = FALSE
-	if(left_leg)
-		if(!(icon_render_keys[left_leg.body_zone] == old_left_leg_key))
-			left_leg_icon = left_leg.get_limb_icon()
-			limb_icon_cache[icon_render_keys[left_leg.body_zone]] = left_leg_icon
-			leg_need_redrawn = TRUE
-		else
-			left_leg_icon = limb_icon_cache[icon_render_keys[left_leg.body_zone]]
-
-	if(right_leg)
-		var/old_right_leg_key = icon_render_keys?[right_leg.body_zone]
-		var/left_leg_mask_key = left_leg?.generate_mask_key().Join()
-		right_leg.left_leg_mask_key = left_leg ? left_leg_mask_key : null
-		if(left_leg_mask_key && !right_leg.left_leg_mask_cache[left_leg_mask_key] && left_leg_icon)
-			right_leg.left_leg_mask_cache[left_leg_mask_key] = generate_left_leg_mask(left_leg_icon[1], left_leg_mask_key)
-		icon_render_keys[right_leg.body_zone] = right_leg.is_husked ? right_leg.generate_husk_key().Join() : right_leg.generate_icon_key().Join()
-
-		if(!(icon_render_keys[right_leg.body_zone] == old_right_leg_key))
-			limb_icon_cache[icon_render_keys[right_leg.body_zone]] = right_leg.get_limb_icon()
-			leg_need_redrawn = TRUE
-
+	var/legs_need_redrawn = update_legs(right_leg, left_leg, old_left_leg_key)
 
 	var/list/missing_bodyparts = get_missing_limbs()
 	if(((dna ? dna.species.max_bodypart_count : BODYPARTS_DEFAULT_MAXIMUM) - icon_render_keys.len) != missing_bodyparts.len) //Checks to see if the target gained or lost any limbs.
@@ -290,7 +268,7 @@
 		for(var/missing_limb in missing_bodyparts)
 			icon_render_keys -= missing_limb //Removes dismembered limbs from the key list
 
-	if(!needs_update.len && !limb_count_update && !leg_need_redrawn)
+	if(!needs_update.len && !limb_count_update && !legs_need_redrawn)
 		return
 
 
@@ -312,6 +290,45 @@
 
 	apply_overlay(BODYPARTS_LAYER)
 
+
+/**
+ * Here we update the legs separately from the other bodyparts. Thanks BYOND for so little support for dir layering.
+ *
+ * Arguments:
+ * * right_leg - Right leg that we might need to update. Can be null.
+ * * left_leg - Left leg that we might need to update. Can be null.
+ * * old_left_leg_key - The icon_key of the left_leg, passed here to avoid having to re-generate it in this proc.
+ *
+ * Returns a boolean, TRUE if the legs need to be redrawn, FALSE if they do not need to be redrawn.
+ * Necessary so that we can ensure that modifications of legs cause overlay updates.
+ */
+/mob/living/carbon/proc/update_legs(obj/item/bodypart/r_leg/right_leg, obj/item/bodypart/l_leg/left_leg, old_left_leg_key)
+	var/list/left_leg_icon // yes it's actually a list, bet you didn't expect that, now did you?
+	var/legs_need_redrawn = FALSE
+	if(left_leg)
+		// We regenerate the look of the left legif it isn't already cached, we don't if not.
+		if(!(icon_render_keys[left_leg.body_zone] == old_left_leg_key))
+			left_leg_icon = left_leg.get_limb_icon()
+			limb_icon_cache[icon_render_keys[left_leg.body_zone]] = left_leg_icon
+			legs_need_redrawn = TRUE
+		else
+			left_leg_icon = limb_icon_cache[icon_render_keys[left_leg.body_zone]]
+
+	if(right_leg)
+		var/old_right_leg_key = icon_render_keys?[right_leg.body_zone]
+		var/left_leg_mask_key = left_leg?.generate_mask_key().Join() // We generate a new mask key, to see if it changed.
+		right_leg.left_leg_mask_key = left_leg ? left_leg_mask_key : null
+		// We regenerate the left_leg_mask in case that it doesn't exist yet.
+		if(left_leg_mask_key && !right_leg.left_leg_mask_cache[left_leg_mask_key] && left_leg_icon)
+			right_leg.left_leg_mask_cache[left_leg_mask_key] = generate_left_leg_mask(left_leg_icon[1], left_leg_mask_key)
+		// We generate a new icon_render_key, which also takes into account the left_leg_mask_key so we cache the masked versions of the limbs too.
+		icon_render_keys[right_leg.body_zone] = right_leg.is_husked ? right_leg.generate_husk_key().Join() : right_leg.generate_icon_key().Join()
+
+		if(!(icon_render_keys[right_leg.body_zone] == old_right_leg_key))
+			limb_icon_cache[icon_render_keys[right_leg.body_zone]] = right_leg.get_limb_icon()
+			legs_need_redrawn = TRUE
+
+	return legs_need_redrawn
 
 
 /////////////////////////
@@ -349,6 +366,8 @@
  * This is exactly like generate_icon_key(), except that it doesn't add `"-[draw_color]"`
  * to the returned list under any circumstance. Why? Because it (generate_icon_key()) is
  * a proc that gets called a ton and I don't want this to affect its performance.
+ *
+ * Returns a list of strings.
  */
 /obj/item/bodypart/proc/generate_mask_key()
 	RETURN_TYPE(/list)
