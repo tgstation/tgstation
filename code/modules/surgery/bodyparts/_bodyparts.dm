@@ -757,10 +757,6 @@
 
 	if(body_zone == BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/r_leg/leg = src
-		// if(leg.right_leg_mask_cache[leg.right_leg_mask_key])
-			// limb = leg.right_leg_mask_cache[leg.right_leg_mask_key]
-			// limb = image(icon = leg.right_leg_mask_cache[leg.right_leg_mask_key])
-			// limb.filters = filter(type = "alpha", icon = leg.right_leg_mask_cache[leg.right_leg_mask_key])
 		var/limb_overlays = limb.overlays
 		var/image/new_limb = leg.generate_masked_right_leg(limb.icon, limb.icon_state)
 		if(new_limb)
