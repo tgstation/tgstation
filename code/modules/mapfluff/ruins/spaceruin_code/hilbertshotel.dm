@@ -585,8 +585,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	In the meantime, I've taken to assembling the first prototype of the device. By exploiting the pocket's ability to create an infinite region of space within a finite area, I've made... well, I suppose it could be called a "Pocket Dimension". Within, I've created a nifty system that recursively produces subspace rooms, spatially linking them to any of the infinite points on the pocket's surface. Fiona says it's akin to a hotel, and I'm inclined to agree.<br>
 	Hilbert's Hotel. I like the sound of that.<br>"}
 
-
-/obj/machinery/computer/terminal/ruins/romans_emails
+/obj/item/paper/fluff/ruins/romans_emails
+	name = "e-mail readout - 14.05.2558"
 	info = {"Logs of Roman P.<br>
 	<h4>New Job</h4><br>
 	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
