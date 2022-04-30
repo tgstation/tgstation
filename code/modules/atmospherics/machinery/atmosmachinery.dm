@@ -61,11 +61,6 @@
 	///keeps the name of the object from being overridden if it's vareditted.
 	var/override_naming
 
-	///Stores the parent pipeline, used in components
-	var/list/datum/pipeline/parents
-	///Stores the gasmix for each node, used in components
-	var/list/datum/gas_mixture/airs
-
 /obj/machinery/atmospherics/LateInitialize()
 	. = ..()
 	update_name()
@@ -144,35 +139,6 @@
 	var/obj/machinery/atmospherics/node_machine = nodes[i]
 	node_machine.disconnect(src)
 	nodes[i] = null
-
-/**
- * Called by nullify_node(), used to remove the pipeline the component is attached to
- * Arguments:
- * * -reference: the pipeline the component is attached to
- */
-/obj/machinery/atmospherics/proc/nullify_pipenet(datum/pipeline/reference)
-	if(!reference)
-		CRASH("nullify_pipenet(null) called by [type] on [COORD(src)]")
-
-	for (var/i in 1 to parents.len)
-		if (parents[i] == reference)
-			reference.other_airs -= airs[i] // Disconnects from the pipeline side
-			parents[i] = null // Disconnects from the machinery side.
-
-	reference.other_atmos_machines -= src
-
-	/**
-	 *  We explicitly qdel pipeline when this particular pipeline
-	 *  is projected to have no member and cause GC problems.
-	 *  We have to do this because components don't qdel pipelines
-	 *  while pipes must and will happily wreck and rebuild everything
-	 * again every time they are qdeleted.
-	 */
-
-	if(!length(reference.other_atmos_machines) && !length(reference.members))
-		if(QDESTROYING(reference))
-			CRASH("nullify_pipenet() called on qdeleting [reference]")
-		qdel(reference)
 
 /**
  * Getter for node_connects
@@ -591,43 +557,3 @@
  */
 /obj/machinery/atmospherics/proc/paint(paint_color)
 	return FALSE
-
-/**
- * Disconnects all nodes from ourselves, remove us from the node's nodes.
- * Nullify our parent pipenet
- */
-/obj/machinery/atmospherics/proc/disconnect_nodes()
-	for(var/i in 1 to device_type)
-		var/obj/machinery/atmospherics/node = nodes[i]
-		if(node)
-			if(src in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
-				node.disconnect(src)
-			nodes[i] = null
-		if(parents[i])
-			nullify_pipenet(parents[i])
-
-/**
- * Connects all nodes to ourselves, add us to the node's nodes.
- * Calls atmos_init() on the node and on us.
- */
-/obj/machinery/atmospherics/proc/connect_nodes()
-	atmos_init()
-	for(var/i in 1 to device_type)
-		var/obj/machinery/atmospherics/node = nodes[i]
-		node = nodes[1]
-		if(node)
-			node.atmos_init()
-			node.add_member(src)
-	SSair.add_to_rebuild_queue(src)
-
-/**
- * Easy way to toggle nodes connection and disconnection.
- *
- * Arguments:
- * * disconnect - if TRUE, disconnects all nodes. If FALSE, connects all nodes.
- */
-/obj/machinery/atmospherics/proc/change_nodes_connection(disconnect)
-	if(disconnect)
-		disconnect_nodes()
-		return
-	connect_nodes()
