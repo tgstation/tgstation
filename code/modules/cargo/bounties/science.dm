@@ -93,3 +93,34 @@
 		return FALSE
 	return TRUE
 
+
+//******Anomaly Cores******
+/datum/bounty/item/science/ref_anomaly_bluespace
+	name = "Refined Bluespace Core"
+	description = "We need a bluespace core to fit in a Phazon, ship us one, please."
+	reward = CARGO_CRATE_VALUE * 15
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/bluespace = TRUE)
+
+/datum/bounty/item/science/ref_anomaly_flux
+	name = "Refined Flux Core"
+	description = "We're trying to make a tesla cannon to handle some moths, ship us a flux core, please."
+	reward = CARGO_CRATE_VALUE * 15
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/flux = TRUE)
+
+/datum/bounty/item/science/ref_anomaly_pyro
+	name = "Refined Pyroclastic Core"
+	description = "We need to study a refined pyroclastic core, please send one."
+	reward = CARGO_CRATE_VALUE * 15
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/pyro = TRUE)
+
+/datum/bounty/item/science/ref_anomaly_grav
+	name = "Refined Gravitational Core"
+	description = "Central R&D is trying to discover a way to make mechs float, send over a gravitational core."
+	reward = CARGO_CRATE_VALUE * 15
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/grav = TRUE)
+
+/datum/bounty/item/science/ref_anomaly_vortex
+	name = "Refined Vortex Core"
+	description = "We're going to throw a vortex core into a wormhole to see what happens. Send one."
+	reward = CARGO_CRATE_VALUE * 15
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/vortex = TRUE)

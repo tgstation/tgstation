@@ -179,13 +179,6 @@
 	required_count = 5
 	wanted_types = list(/obj/item/toy/figure = TRUE)
 
-/datum/bounty/item/assistant/dead_mice
-	name = "Dead Mice"
-	description = "Station 14 ran out of freeze-dried mice. Ship some fresh ones so their janitor doesn't go on strike."
-	reward = CARGO_CRATE_VALUE * 10
-	required_count = 5
-	wanted_types = list(/obj/item/food/deadmouse = TRUE)
-
 /datum/bounty/item/assistant/paper_bin
 	name = "Paper Bins"
 	description = "Our accounting division is all out of paper. We need a new shipment immediately."

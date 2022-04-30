@@ -76,4 +76,6 @@
 		if(12)
 			var/subtype = pick(subtypesof(/datum/bounty/item/botany))
 			return new subtype
-
+		if(14)
+			var/subtype = pick(subtypesof(/datum/bounty/item/atmospherics))
+			return new subtype
