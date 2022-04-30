@@ -416,7 +416,7 @@
  * * right_leg_icon_file - The icon file of the right leg overlay we're trying to apply a mask to.
  * * right_leg_icon_state - The icon_state of the right leg overlay we're trying to apply a mask to.
  *
- * Returns the `image` of the right leg that was masked.
+ * Returns the `/image` of the right leg that was masked.
  */
 /obj/item/bodypart/r_leg/proc/generate_masked_right_leg(right_leg_icon_file, right_leg_icon_state)
 	if(!left_leg_mask_key || !left_leg_mask_cache[left_leg_mask_key] || !right_leg_icon_file || !right_leg_icon_state)
@@ -438,6 +438,8 @@
  *
  * Arguments:
  * * image/left_leg_image - `image` of the left leg that we need to create a mask out of.
+ *
+ * Returns the generated left leg mask as an `/icon`.
  */
 /proc/generate_left_leg_mask(image/left_leg_image)
 	if(!left_leg_image)
