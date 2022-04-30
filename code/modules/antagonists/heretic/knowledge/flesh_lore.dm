@@ -148,7 +148,9 @@
 		return FALSE
 
 	for(var/mob/living/carbon/human/body in atoms)
-		if(body.stat != DEAD || !IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
+		if(body.stat != DEAD)
+			continue
+		if(!IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
 			to_chat(user, span_hierophant("[body] is not in a valid state to be made into a ghoul."))
 			continue
 
