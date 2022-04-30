@@ -1,12 +1,8 @@
-/* In this file:
- *
- * Plating
- * Airless
- * Airless plating
- * Engine floor
- * Foam plating
+/**
+ * PLATINGS
+ * 
+ * Handle interaction with tiles and lets you put stuff on top of it.
  */
-
 /turf/open/floor/plating
 	name = "plating"
 	icon_state = "plating"
@@ -20,6 +16,11 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	var/attachment_holes = TRUE
+
+	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
+	/// And if our baseturfs are compatible.
+	/// See [/obj/item/stack/tile/proc/place_tile].
+	var/allow_replacement = TRUE
 
 /turf/open/floor/plating/setup_broken_states()
 	return list("platingdmg1", "platingdmg2", "platingdmg3")
@@ -68,8 +69,7 @@
 					to_chat(user, span_warning("Someone is buckled to \the [O]! Unbuckle [M] to move \him out of the way."))
 					return
 			var/obj/item/stack/tile/tile = C
-			tile.place_tile(src)
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			tile.place_tile(src, user)
 		else
 			if(!iscyborg(user))
 				to_chat(user, span_warning("This section is too damaged to support a tile! Use a welding tool to fix the damage."))
