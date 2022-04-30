@@ -6064,7 +6064,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "brigentrance"
+	cycle_id = "brigentrance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron,
@@ -7031,7 +7031,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "brigoutpost"
+	cycle_id = "brigoutpost"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron/dark/textured_edge{
@@ -8016,8 +8016,8 @@
 "cNy" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/button/door{
-	id = "Secure Gate";
-	name = "Cell Shutters";
+	id = "Interrogation";
+	name = "Interrogation Shutters";
 	pixel_x = -22
 	},
 /turf/open/floor/iron/dark/textured,
@@ -10133,7 +10133,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "brigoutpost"
+	cycle_id = "brigoutpost"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron/dark/textured_edge{
@@ -14203,10 +14203,6 @@
 /turf/open/floor/iron,
 /area/command/bridge)
 "fVq" = (
-/obj/machinery/button/flasher{
-	id = "cell4";
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
@@ -15820,7 +15816,9 @@
 /turf/open/floor/iron,
 /area/commons/vacant_room/commissary)
 "gJd" = (
-/obj/machinery/door/airlock/security/glass,
+/obj/machinery/door/airlock/security/glass{
+	name = "Interrogation"
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19066,7 +19064,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "brigoutpost"
+	cycle_id = "brigoutpost"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron/dark/textured_edge{
@@ -23380,7 +23378,7 @@
 "kok" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "armory";
-	name = "Armoury Shutter"
+	name = "Armory Shutter"
 	},
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory/upper)
@@ -24473,7 +24471,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock/maintenance{
+	name = "Vestibule Maintenance"
+	},
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
 /turf/open/floor/plating,
 /area/security/processing)
@@ -26329,7 +26329,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "brigentrance"
+	cycle_id = "brigentrance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron,
@@ -27197,7 +27197,7 @@
 /area/engineering/storage_shared)
 "mqQ" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Brig Control"
+	name = "Armory"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/structure/cable,
@@ -27598,7 +27598,9 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "mDz" = (
-/obj/machinery/door/airlock/security/glass,
+/obj/machinery/door/airlock/security/glass{
+	name = "Labor Shuttle Dock"
+	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31678,7 +31680,7 @@
 /area/science/robotics/mechbay)
 "oFu" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Brig Control"
+	name = "Armory"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/door/firedoor,
@@ -37228,7 +37230,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "brigentrance"
+	cycle_id = "brigentrance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron,
@@ -43844,7 +43846,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "brigoutpost"
+	cycle_id = "brigoutpost"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron/dark/textured_edge{
@@ -45005,7 +45007,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	id_tag = "brigentrance"
+	cycle_id = "brigentrance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron,
@@ -48742,7 +48744,7 @@
 /area/science/misc_lab)
 "wWP" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Brig Control"
+	name = "Armory"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/structure/cable,

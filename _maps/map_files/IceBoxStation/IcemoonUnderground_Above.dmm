@@ -15693,9 +15693,6 @@
 	req_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "cargo-warehouse-external"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "Engineering-External"
 	},
 /turf/open/floor/iron/smooth,
