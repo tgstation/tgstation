@@ -417,7 +417,7 @@
 	// Archive current health for damage cap purposes
 	critical_threshold_proximity_archived = critical_threshold_proximity
 
-	//reset damage check vars
+	//reset damage check flags
 	warning_damage_flags &= HYPERTORUS_FLAG_EMPED
 
 	// If we're operating at an extreme power level, take increasing damage for the amount of fusion mass over a low threshold
