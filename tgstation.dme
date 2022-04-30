@@ -3829,6 +3829,7 @@
 #include "code\modules\projectiles\projectile\bullets\sniper.dm"
 #include "code\modules\projectiles\projectile\bullets\special.dm"
 #include "code\modules\projectiles\projectile\energy\_energy.dm"
+#include "code\modules\projectiles\projectile\energy\chameleon.dm"
 #include "code\modules\projectiles\projectile\energy\decloner.dm"
 #include "code\modules\projectiles\projectile\energy\ebow.dm"
 #include "code\modules\projectiles\projectile\energy\net_snare.dm"
