@@ -370,7 +370,7 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	emped = TRUE
+	warning_damage_flags |= HYPERTORUS_FLAG_EMPED
 
 
 /**
@@ -379,7 +379,7 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/send_radio_explanation()
 
-	if(emped)
+	if(warning_damage_flags & HYPERTORUS_FLAG_EMPED)
 		var/list/characters = list()
 		characters += GLOB.alphabet
 		characters += GLOB.alphabet_upper
@@ -390,13 +390,13 @@
 		radio.talk_into(src, "[message]", engineering_channel)
 		return
 
-	if(high_power_damage)
+	if(warning_damage_flags & HYPERTORUS_FLAG_HIGH_POWER_DAMAGE)
 		radio.talk_into(src, "Warning! Shield destabilizing due to excessive power!", engineering_channel)
-	if(iron_content_damage)
+	if(warning_damage_flags & HYPERTORUS_FLAG_IRON_CONTENT_DAMAGE)
 		radio.talk_into(src, "Warning! Iron shards are damaging the internal core shielding!", engineering_channel)
-	if(high_fuel_mix_mole)
+	if(warning_damage_flags & HYPERTORUS_FLAG_HIGH_FUEL_MIX_MOLE)
 		radio.talk_into(src, "Warning! Fuel mix moles reaching critical levels!", engineering_channel)
-	if(iron_content_increasing)
+	if(warning_damage_flags & HYPERTORUS_FLAG_IRON_CONTENT_INCREASE)
 		radio.talk_into(src, "Warning! Iron amount inside the core is increasing!", engineering_channel)
 
 /**

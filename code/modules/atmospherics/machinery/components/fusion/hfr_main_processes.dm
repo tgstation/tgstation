@@ -418,16 +418,13 @@
 	critical_threshold_proximity_archived = critical_threshold_proximity
 
 	//reset damage check vars
-	high_power_damage = FALSE
-	iron_content_damage = FALSE
-	high_fuel_mix_mole = FALSE
-	iron_content_increasing = FALSE
+	warning_damage_flags &= HYPERTORUS_FLAG_EMPED
 
 	// If we're operating at an extreme power level, take increasing damage for the amount of fusion mass over a low threshold
 	if(power_level >= HYPERTORUS_OVERFULL_MIN_POWER_LEVEL)
 		var/overfull_damage_taken = HYPERTORUS_OVERFULL_MOLAR_SLOPE * internal_fusion.total_moles() + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * coolant_temperature + HYPERTORUS_OVERFULL_CONSTANT
 		critical_threshold_proximity = max(critical_threshold_proximity + max(overfull_damage_taken * delta_time, 0), 0)
-		high_power_damage = TRUE
+		warning_damage_flags |= HYPERTORUS_FLAG_HIGH_POWER_DAMAGE
 
 	// If we're running on a thin fusion mix, heal up
 	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES && power_level <= 5)
@@ -441,7 +438,7 @@
 
 	critical_threshold_proximity += max(iron_content - HYPERTORUS_MAX_SAFE_IRON, 0) * delta_time
 	if(iron_content - HYPERTORUS_MAX_SAFE_IRON > 0)
-		iron_content_damage = TRUE
+		warning_damage_flags |= HYPERTORUS_FLAG_IRON_CONTENT_DAMAGE
 
 	// Apply damage cap
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (delta_time * DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
@@ -450,12 +447,12 @@
 	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
 		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
 		critical_threshold_proximity = max(critical_threshold_proximity + min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MAX_DAMAGE), 0) * delta_time
-		high_fuel_mix_mole = TRUE
+		warning_damage_flags |= HYPERTORUS_FLAG_HIGH_FUEL_MIX_MOLE
 
 	// High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
 	if(power_level > 4 && prob(IRON_CHANCE_PER_FUSION_LEVEL * power_level))//at power level 6 is 100%
 		iron_content += IRON_ACCUMULATED_PER_SECOND * delta_time
-		iron_content_increasing = TRUE
+		warning_damage_flags |= HYPERTORUS_FLAG_IRON_CONTENT_INCREASE
 	if(iron_content > 0 && power_level <= 4 && prob(25 / (power_level + 1)))
 		iron_content = max(iron_content - 0.01 * delta_time, 0)
 	iron_content = clamp(iron_content, 0, 1)
