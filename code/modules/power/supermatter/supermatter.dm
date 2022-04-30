@@ -304,7 +304,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
 	. = ..()
-	var/immune = HAS_TRAIT(user, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (user.mind && HAS_TRAIT(user.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE))
+	var/immune = HAS_TRAIT(user, TRAIT_MADNESS_IMMUNE) || (user.mind && HAS_TRAIT(user.mind, TRAIT_MADNESS_IMMUNE))
 	if(isliving(user) && !immune && (get_dist(user, src) < HALLUCINATION_RANGE(power)))
 		. += span_danger("You get headaches just from looking at it.")
 
@@ -517,12 +517,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 	switch(type)
 		if(FLUX_ANOMALY)
-			var/obj/effect/anomaly/flux/flux = new(local_turf, has_changed_lifespan ? 300 : null, FALSE)
+			var/obj/effect/anomaly/flux/flux = new(local_turf, has_changed_lifespan ? rand(250, 350) : null, FALSE)
 			flux.explosive = !has_changed_lifespan
 		if(GRAVITATIONAL_ANOMALY)
-			new /obj/effect/anomaly/grav(local_turf, has_changed_lifespan ? 250 : null, FALSE)
+			new /obj/effect/anomaly/grav(local_turf, has_changed_lifespan ? rand(200, 300) : null, FALSE)
 		if(PYRO_ANOMALY)
-			new /obj/effect/anomaly/pyro(local_turf, has_changed_lifespan ? 200 : null, FALSE)
+			new /obj/effect/anomaly/pyro(local_turf, has_changed_lifespan ? rand(150, 250) : null, FALSE)
+		if(HALLUCINATION_ANOMALY)
+			new /obj/effect/anomaly/hallucination(local_turf, has_changed_lifespan ? rand(150, 250) : null, FALSE)
 		if(VORTEX_ANOMALY)
 			new /obj/effect/anomaly/bhole(local_turf, 20, FALSE)
 
