@@ -19,6 +19,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
 
 	var/id = null //ONLY SET THIS TO ONE OF THE LIFT'S PARTS. THEY'RE CONNECTED! ONLY ONE NEEDS THE SIGNAL!
+	///ID used to determine what lift types we can merge with
+	var/lift_id = "base"
 	///if true, the elevator works through floors
 	var/pass_through_floors = FALSE
 	///if true, the lift cannot be manually moved.
@@ -33,6 +35,16 @@ GLOBAL_LIST_EMPTY(lifts)
 	///what glide_size we set our moving contents to.
 	var/glide_size_override = 8
 
+	///how many tiles this platform extends on the x axis
+	var/width = 1
+	///how many tiles this platform extends on the y axis (north-south not up-down, that would be the z axis)
+	var/height = 1
+
+	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag
+	var/horizontal_speed = 0.5
+	///decisecond delay between vertical movements. cannot make the tram move faster than 1 movement per world.tick_lag
+	var/vertical_speed = 0.5
+
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
 	GLOB.lifts.Add(src)
@@ -40,6 +52,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
 	set_movement_registrations()
 
+	//since lift_master datums find all connected platforms when an industrial lift first creates it and then
+	//sets those platforms' lift_master_datum to itself, this check will only evaluate to true once per tram platform
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
 
@@ -87,16 +101,102 @@ GLOBAL_LIST_EMPTY(lifts)
 	LAZYADD(lift_load, AM)
 	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
 
-/obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
-	. = ..()
-	if(travelling)
-		on_changed_glide_size(AM, AM.glide_size)
-
-
+///signal handler for COMSIG_MOVABLE_UPDATE_GLIDE_SIZE: when a movable in lift_load changes its glide_size independently.
+///adds that movable to a lazy list, movables in that list have their glide_size updated when the tram next moves
 /obj/structure/industrial_lift/proc/on_changed_glide_size(atom/movable/moving_contents, new_glide_size)
 	SIGNAL_HANDLER
 	if(new_glide_size != glide_size_override)
 		LAZYADD(changed_gliders, moving_contents)
+
+///make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them.
+///the tram becoming multitile should be in the bottom left corner
+/obj/structure/industrial_lift/proc/create_multitile_tram()
+	var/min_x = INFINITY
+	var/max_x = 0
+
+	var/min_y = INFINITY
+	var/max_y = 0
+
+	for(var/obj/structure/industrial_lift/other_lift as anything in lift_master_datum.lift_platforms)
+		if(other_lift.z != z)
+			continue
+
+		min_x = min(min_x, other_lift.x)
+		max_x = max(max_x, other_lift.x)
+
+		min_y = min(min_y, other_lift.y)
+		max_y = max(max_y, other_lift.y)
+
+	var/turf/bottom_left_loc = locate(min_x, min_y, z)
+	var/obj/structure/industrial_lift/loc_corner_lift = locate() in bottom_left_loc
+
+	if(loc_corner_lift != src)
+		//the loc of a multitile object must always be the lower left corner
+		return loc_corner_lift.create_multitile_tram()
+
+	width = (max_x - min_x) + 1
+	height = (max_y - min_y) + 1
+
+	bound_width = bound_width * width
+	bound_height = bound_height * height
+
+	//multitile movement code assumes our loc is on the lower left corner of our bounding box
+
+	var/first_x = 0
+	var/first_y = 0
+
+	var/last_x = max(max_x - min_x, 0)
+	var/last_y = max(max_y - min_y, 0)
+
+	///list of turfs we dont go over. if for whatever reason we encounter an already multitile lift platform
+	///we add all of its locs to this list so we dont add that lift platform multiple times as we iterate through its locs
+	var/list/locs_to_skip = locs.Copy()
+
+	for(var/y in first_y to last_y)
+
+		var/y_pixel_offset = world.icon_size * y
+
+		for(var/x in first_x to last_x)
+
+			var/x_pixel_offset = world.icon_size * x
+
+			var/turf/lift_turf = locate(x + min_x, y + min_y, z)
+
+			if(!lift_turf)
+				continue
+
+			if(lift_turf in locs_to_skip)
+				continue
+
+			var/obj/structure/industrial_lift/other_lift = locate() in lift_turf
+
+			if(!other_lift)
+				continue
+
+			locs_to_skip += other_lift.locs.Copy()//make sure we never go over multitile platforms multiple times
+
+			other_lift.pixel_x = x_pixel_offset
+			other_lift.pixel_y = y_pixel_offset
+
+			overlays += other_lift
+
+	//now we vore all the other lifts connected to us on our z level
+	for(var/obj/structure/industrial_lift/other_lift in lift_master_datum.lift_platforms)
+		if(other_lift == src || other_lift.z != z)
+			continue
+
+		lift_master_datum.lift_platforms -= other_lift
+		if(other_lift.lift_load)
+			LAZYOR(lift_load, other_lift.lift_load)
+
+		qdel(other_lift)
+
+	lift_master_datum.multitile_tram = TRUE
+
+	var/turf/old_loc = loc
+
+	forceMove(locate(min_x, min_y, z))//move to the lower left corner
+	set_movement_registrations(locs - old_loc)
 
 /**
  * Signal for when the tram runs into a field of which it cannot go through.
@@ -124,7 +224,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	. = list()
 	for(var/direction in GLOB.cardinals_multiz)
 		var/obj/structure/industrial_lift/neighbor = locate() in get_step_multiz(src, direction)
-		if(!neighbor)
+		if(!neighbor || neighbor.lift_id != lift_id)
 			continue
 		. += neighbor
 
@@ -416,6 +516,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	name = "transport platform"
 	desc = "A lightweight platform. It moves in any direction, except up and down."
 	color = "#5286b9ff"
+	lift_id = "debug"
 
 /obj/structure/industrial_lift/debug/use(mob/user)
 	if (!in_range(src, user))
@@ -477,6 +578,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	canSmoothWith = null
 	//kind of a centerpiece of the station, so pretty tough to destroy
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	lift_id = "tram"
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
 	var/travel_distance = 0
@@ -485,14 +587,10 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/obj/effect/landmark/tram/from_where
 	var/travel_direction
 
-	var/width = 0
-	var/height = 0
-
-	var/min_x = INFINITY
-	var/max_x = 0
-
-	var/min_y = INFINITY
-	var/max_y = 0
+/obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
+	. = ..()
+	if(travelling)
+		on_changed_glide_size(AM, AM.glide_size)
 
 GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 
@@ -516,74 +614,6 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 /obj/structure/industrial_lift/tram/central/Destroy()
 	GLOB.central_tram = null
 	return ..()
-
-///make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them.
-///the tram becoming multitile should be in the bottom left corner
-/obj/structure/industrial_lift/tram/proc/create_multitile_tram()
-	for(var/obj/structure/industrial_lift/other_lift as anything in lift_master_datum.lift_platforms)
-		if(other_lift.z != z)
-			continue
-
-		min_x = min(min_x, other_lift.x)
-		max_x = max(max_x, other_lift.x)
-
-		min_y = min(min_y, other_lift.y)
-		max_y = max(max_y, other_lift.y)
-
-	var/turf/bottom_left_loc = locate(min_x, min_y, z)
-	var/obj/structure/industrial_lift/tram/loc_corner_lift = locate() in bottom_left_loc
-
-	if(loc_corner_lift != src)
-		stack_trace("trying to create a multitile industrial_lift using a platform not in the bottom left corner, this creates problems")
-		return loc_corner_lift.create_multitile_tram()
-
-	width = (max_x - min_x) + 1
-	height = (max_y - min_y) + 1
-
-	bound_width = bound_width * width
-	bound_height = bound_height * height
-
-	//multitile movement code assumes our loc is on the lower left corner of our bounding box
-
-	var/first_x = 0
-	var/first_y = 0
-
-	var/last_x = max_x - min_x
-	var/last_y = max_y - min_y
-
-	for(var/y in first_y to last_y)
-
-		var/y_pixel_offset = world.icon_size * y
-
-		for(var/x in first_x to last_x)
-			if(!x && !y)//we assume that the lower left corner is us
-				continue
-			var/turf/lift_turf = locate(x + min_x, y + min_y, z)
-			var/obj/structure/industrial_lift/other_lift = locate() in lift_turf
-
-			var/x_pixel_offset = world.icon_size * x
-
-			other_lift.pixel_x = x_pixel_offset
-			other_lift.pixel_y = y_pixel_offset
-
-			overlays += other_lift
-
-	for(var/obj/structure/industrial_lift/other_lift in lift_master_datum.lift_platforms)
-		if(other_lift == src || other_lift.z != z)
-			continue
-
-		lift_master_datum.lift_platforms -= other_lift
-		if(other_lift.lift_load)
-			LAZYOR(lift_load, other_lift.lift_load)
-
-		qdel(other_lift)
-
-	lift_master_datum.multitile_tram = TRUE
-
-	var/turf/old_loc = loc
-
-	forceMove(locate(min_x, min_y, z))//move to the lower left corner
-	set_movement_registrations(locs - old_loc)
 
 /obj/structure/industrial_lift/tram/proc/clear_turfs(list/turfs_to_clear, iterations)
 	for(var/turf/our_old_turf as anything in turfs_to_clear)
