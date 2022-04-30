@@ -1,0 +1,7 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - rscdel: "Removed adding glass floors to plating"
+  - balance: "Allows you to replace plating with glass floors instead. 3 second timer."
+  - rscdel: "Removed deconstructing the glass floors. No replacement for this one, use a rcd."
+  - bugfix: "Fixed metastation glassfloor spawning a weird turf when crowbarred."
