@@ -17,6 +17,9 @@
 		if(!current)
 			to_chat(user, span_alert("You haven't selected anything to transmit laws to!"))
 			return
+		if(world.time - SSticker.round_start_time <= 5 MINUTES)
+			to_chat(user, span_alert("Upload failed! Central Command has disabled uploading right away to prevent severe NT policy breaks."))
+			return
 		if(!can_upload_to(current))
 			to_chat(user, span_alert("Upload failed! Check to make sure [current.name] is functioning properly."))
 			current = null
