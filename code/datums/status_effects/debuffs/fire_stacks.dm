@@ -59,6 +59,7 @@
 			for(var/datum/status_effect/fire_handler/merge_effect in merge_effects)
 				merge_effect.adjust_stacks(stacks * stack_modifier / merge_effect.stack_modifier / LAZYLEN(merge_effects))
 			qdel(src)
+			return
 
 	for(var/override_type in override_types)
 		var/datum/status_effect/fire_handler/override_effect = owner.has_status_effect(override_type)
@@ -141,10 +142,10 @@
 	if(!on_fire || isanimal(owner))
 		return TRUE
 
-	adjust_stacks(-0.05 * delta_time)
-
 	if(iscyborg(owner))
-		adjust_stacks(-0.5 * delta_time)
+		adjust_stacks(-0.55 * delta_time)
+	else
+		adjust_stacks(-0.05 * delta_time)
 
 	if(stacks <= 0)
 		qdel(src)
@@ -202,10 +203,11 @@
 
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
 		victim.adjust_bodytemperature(5.5 * delta_time)
-	else
-		victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * delta_time)
-		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
-		victim.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = victim), story_value = STORY_VALUE_OKAY)
+		return
+
+	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * delta_time)
+	SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
+	victim.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = victim), story_value = STORY_VALUE_OKAY)
 
 /**
  * Handles clothing burning
