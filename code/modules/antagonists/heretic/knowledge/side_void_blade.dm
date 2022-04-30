@@ -31,11 +31,15 @@
 
 	for(var/mob/living/carbon/human/body in atoms)
 		if(body.stat != DEAD || !IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
+			to_chat(user, span_hierophant("[body] is not in a valid state to be made into a ghoul."))
+			continue
+		if(!body.mind || (!body.client && !body.mind.get_ghost(ghosts_with_clients = TRUE)))
+			to_chat(user, span_hierophant("[body] is mindless and cannot be made into a ghoul."))
 			continue
 
-		if(body.mind?.get_ghost(ghosts_with_clients = TRUE))
-			selected_atoms += body
-			return TRUE
+		// We will only accept valid bodies with a mind, or with a ghost connected that used to control the body
+		selected_atoms += body
+		return TRUE
 
 	loc.balloon_alert(user, "ritual failed, no valid body!")
 	return FALSE
@@ -55,11 +59,12 @@
 
 	selected_atoms -= soon_to_be_ghoul
 	make_risen(user, soon_to_be_ghoul)
+	return TRUE
 
 /// Make [victim] into a shattered risen ghoul.
 /datum/heretic_knowledge/limited_amount/risen_corpse/proc/make_risen(mob/living/user, mob/living/carbon/human/victim)
 	log_game("[key_name(user)] created a shattered risen out of [key_name(victim)].")
-	message_admins("[ADMIN_LOOKUPFLW(user)] shattered risen out of [ADMIN_LOOKUPFLW(victim)].")
+	message_admins("[ADMIN_LOOKUPFLW(user)] created a shattered risen, [ADMIN_LOOKUPFLW(victim)].")
 
 	victim.apply_status_effect(
 		/datum/status_effect/ghoul,
