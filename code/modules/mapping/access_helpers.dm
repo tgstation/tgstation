@@ -72,6 +72,7 @@
 	var/list/access_list = ..()
 	access_list += list(ACCESS_HEADS, ACCESS_MAINT_TUNNELS)
 	return access_list
+
 // -------------------- Engineering access helpers
 /obj/effect/mapping_helpers/airlock/access/any/engineering
 	icon_state = "access_helper_eng"
@@ -103,7 +104,7 @@
 
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental/get_access()
 	var/list/access_list = ..()
-	access_list += list(ACCESS_ENGINE,ACCESS_MAINT_TUNNELS)
+	access_list += list(ACCESS_ENGINE, ACCESS_MAINT_TUNNELS)
 	return access_list
 
 /obj/effect/mapping_helpers/airlock/access/any/engineering/external/get_access()
