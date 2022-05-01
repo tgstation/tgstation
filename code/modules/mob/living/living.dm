@@ -1511,9 +1511,12 @@
  * * on_fire: If we're lit on fire
  * * last_icon_state: Holds last fire overlay icon state, used for optimization
  * * suffix: Suffix for the fire icon state for special fire types
+ *
+ * This should return last_icon_state for the fire status efect
  */
 
 /mob/living/proc/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+	return last_icon_state
 
 /**
  * Handles effects happening when mob is on normal fire
@@ -1525,6 +1528,7 @@
  */
 
 /mob/living/proc/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	return
 
 //Mobs on Fire end
 
