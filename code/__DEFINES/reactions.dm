@@ -96,8 +96,10 @@
 // - Freon:
 /// The maximum temperature freon can combust at.
 #define FREON_MAXIMUM_BURN_TEMPERATURE 283
-/// The minimum temperature freon can combust at.
+///Minimum temperature allowed for the burn to go at max speed, we would have negative pressure otherwise
 #define FREON_LOWER_TEMPERATURE 60
+///Terminal temperature after wich we stop the reaction
+#define FREON_TERMINAL_TEMPERATURE 20
 /// Multiplier for freonfire with O2 moles * FREON_OXYGEN_FULLBURN for the maximum fuel consumption
 #define FREON_OXYGEN_FULLBURN 10
 /// The maximum fraction of the freon in a mix that can combust each reaction tick.

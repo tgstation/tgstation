@@ -25,6 +25,9 @@
 		/obj/item/clothing/head/beret/black = 3,
 		/obj/item/clothing/head/kippah = 3,
 		/obj/item/clothing/head/taqiyahred = 3,
+		/obj/item/clothing/mask/bandana/color = 3,
+		/obj/item/clothing/mask/bandana/color/striped = 3,
+		/obj/item/clothing/mask/bandana/color/skull = 3,
 		/obj/item/clothing/gloves/fingerless = 2,
 		/obj/item/clothing/neck/scarf/pink = 3,
 		/obj/item/clothing/neck/scarf/red = 3,
@@ -205,8 +208,8 @@
 		/obj/item/instrument/piano_synth/headphones/spacepods = 1
 	)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = PAYCHECK_ASSISTANT * 0.7 //Default of
-	extra_price = PAYCHECK_HARD
+	default_price = PAYCHECK_CREW * 0.7 //Default of
+	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
 	light_mask = "wardrobe-light-mask"
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN

@@ -1147,8 +1147,12 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cZ" = (
-/obj/structure/bed,
-/obj/item/bedsheet/syndie,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/syndie{
+	dir = 4
+	},
 /obj/machinery/button/door/directional/north{
 	id = "awaydorm4";
 	name = "Door Bolt Control";
@@ -1337,8 +1341,12 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "ds" = (
-/obj/structure/bed,
-/obj/item/bedsheet/syndie,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/syndie{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	heat_capacity = 1e+006
@@ -2885,11 +2893,8 @@
 /area/awaymission/moonoutpost19/research)
 "hr" = (
 /obj/structure/table,
-/obj/item/cartridge/signal/ordnance,
-/obj/item/cartridge/signal/ordnance{
-	pixel_x = -4;
-	pixel_y = 2
-	},
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -4811,8 +4816,12 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lK" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -5304,8 +5313,12 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "na" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -5583,8 +5596,12 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nH" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains. The skeleton is laid out on its side and there seems to have been no sign of struggle.";
 	layer = 4.1

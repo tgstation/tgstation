@@ -95,7 +95,7 @@ no power level overlay is currently in the overlays list.
 		span_notice("You turn on [src]."),
 		span_hear("You hear heavy droning."))
 	turn_on()
-	investigate_log("<font color='green'>activated</font> by [key_name(user)].", INVESTIGATE_SINGULO)
+	investigate_log("activated by [key_name(user)].", INVESTIGATE_ENGINE)
 
 	add_fingerprint(user)
 
@@ -120,10 +120,10 @@ no power level overlay is currently in the overlays list.
 
 	return ..()
 
-/obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/wrench)
-	..()
-	default_unfasten_wrench(user, wrench)
-	return TRUE
+/obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/welder)
 	. = ..()
@@ -237,7 +237,7 @@ no power level overlay is currently in the overlays list.
 	else
 		visible_message(span_danger("The [name] shuts down!"), span_hear("You hear something shutting down."))
 		turn_off()
-		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
+		investigate_log("ran out of power and DEACTIVATED.", INVESTIGATE_ENGINE)
 		power = 0
 		check_power_level()
 		return FALSE
