@@ -112,6 +112,9 @@
 	icon_state = "book[rand(1, maximum_book_state)]"
 
 /obj/item/book/attack_self(mob/user)
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return
 	if(!user.can_read(src))
 		return
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))

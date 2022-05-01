@@ -43,7 +43,7 @@
 /area/shuttle/abandoned/engine)
 "ag" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
-/obj/machinery/portable_atmospherics/canister/tier_2,
+/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)

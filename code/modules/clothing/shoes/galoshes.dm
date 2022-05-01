@@ -10,7 +10,7 @@
 	resistance_flags = NONE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 40, ACID = 75)
 	can_be_bloody = FALSE
-	custom_price = PAYCHECK_EASY * 3
+	custom_price = PAYCHECK_CREW * 3
 	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/galoshes/dry

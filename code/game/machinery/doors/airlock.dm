@@ -389,15 +389,12 @@
 		if(secondsMainPowerLost>0)
 			if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 				secondsMainPowerLost -= 1
-				updateDialog()
 			cont = TRUE
 		if(secondsBackupPowerLost>0)
 			if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
 				secondsBackupPowerLost -= 1
-				updateDialog()
 			cont = TRUE
 	spawnPowerRestoreRunning = FALSE
-	updateDialog()
 	update_appearance()
 
 /obj/machinery/door/airlock/proc/loseMainPower()
@@ -761,31 +758,11 @@
 			return
 
 		secondsElectrified--
-		updateDialog()
 	// This is to protect against changing to permanent, mid loop.
 	if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
 		set_electrified(MACHINE_NOT_ELECTRIFIED)
 	else
 		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)
-	updateDialog()
-
-/obj/machinery/door/airlock/Topic(href, href_list, nowindow = 0)
-	// If you add an if(..()) check you must first remove the var/nowindow parameter.
-	// Otherwise it will runtime with this kind of error: null.Topic()
-	if(!nowindow)
-		..()
-	if(!usr.canUseTopic(src) && !isAdminGhostAI(usr))
-		return
-	add_fingerprint(usr)
-
-	if((in_range(src, usr) && isturf(loc)) && panel_open)
-		usr.set_machine(src)
-
-	add_fingerprint(usr)
-	if(!nowindow)
-		updateUsrDialog()
-	else
-		updateDialog()
 
 /obj/machinery/door/airlock/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open && detonated)
@@ -1383,6 +1360,15 @@
 	if(atom_integrity < (0.75 * max_integrity))
 		update_appearance()
 
+/obj/machinery/door/airlock/proc/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
+	assembly.heat_proof_finished = heat_proof //tracks whether there's rglass in
+	assembly.set_anchored(TRUE)
+	assembly.glass = glass
+	assembly.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
+	assembly.created_name = name
+	assembly.previous_assembly = previous_airlock
+	assembly.update_name()
+	assembly.update_appearance()
 
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -1392,14 +1378,7 @@
 		else
 			A = new /obj/structure/door_assembly(loc)
 			//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
-		A.heat_proof_finished = heat_proof //tracks whether there's rglass in
-		A.set_anchored(TRUE)
-		A.glass = glass
-		A.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
-		A.created_name = name
-		A.previous_assembly = previous_airlock
-		A.update_name()
-		A.update_appearance()
+		prepare_deconstruction_assembly(A)
 
 		if(!disassembled)
 			A?.update_integrity(A.max_integrity * 0.5)

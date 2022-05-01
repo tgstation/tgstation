@@ -18,7 +18,7 @@
 	addiction_types = list(/datum/addiction/hallucinogens = 10) //4 per 2 seconds
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.set_drugginess(15 * REM * delta_time)
+	M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	if(isturf(M.loc) && !isspaceturf(M.loc) && !HAS_TRAIT(M, TRAIT_IMMOBILIZED) && DT_PROB(5, delta_time))
 		step(M, pick(GLOB.cardinals))
 	if(DT_PROB(3.5, delta_time))
@@ -118,8 +118,12 @@
 	if(current_cycle == 35 && creation_purity <= 0.6)
 		if(!istype(M.dna.species, /datum/species/human/krokodil_addict))
 			to_chat(M, span_userdanger("Your skin falls off easily!"))
-			M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
+			var/mob/living/carbon/human/H = M
+			H.facial_hairstyle = "Shaved"
+			H.hairstyle = "Bald"
+			H.update_hair() // makes you loose hair as well
 			M.set_species(/datum/species/human/krokodil_addict)
+			M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M, delta_time, times_fired)

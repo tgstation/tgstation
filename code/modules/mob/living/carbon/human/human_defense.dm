@@ -807,10 +807,9 @@
 
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()
-		for(var/i in bodyparts)
-			var/obj/item/bodypart/BP = i
-			if(BP.get_part_bleed_rate())
-				bleeding_limbs += BP
+		for(var/obj/item/bodypart/part as anything in bodyparts)
+			if(part.get_modified_bleed_rate())
+				bleeding_limbs += part
 
 		var/num_bleeds = LAZYLEN(bleeding_limbs)
 		var/bleed_text = "<span class='danger'>You are bleeding from your"
