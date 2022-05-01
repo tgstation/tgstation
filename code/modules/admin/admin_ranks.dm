@@ -7,9 +7,9 @@ GLOBAL_PROTECT(protected_ranks)
 /datum/admin_rank
 	var/name = "NoRank"
 	var/rights = R_DEFAULT
-	var/exclude_rights = 0
-	var/include_rights = 0
-	var/can_edit_rights = 0
+	var/exclude_rights = NONE
+	var/include_rights = NONE
+	var/can_edit_rights = NONE
 
 /datum/admin_rank/New(init_name, init_rights, init_exclude_rights, init_edit_rights)
 	if(IsAdminAdvancedProcCall())
