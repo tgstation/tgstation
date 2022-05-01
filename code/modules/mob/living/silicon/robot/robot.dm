@@ -983,3 +983,17 @@
 
 /mob/living/silicon/robot/proc/untip_roleplay()
 	to_chat(src, span_notice("Your frustration has empowered you! You can now right yourself faster!"))
+
+/mob/living/silicon/robot/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+	var/fire_icon = "generic_burning[suffix]"
+	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/onfire.dmi', fire_icon)
+	if(stacks && on_fire)
+		if(last_icon_state != fire_icon)
+			add_overlay(fire_overlay)
+			last_icon_state = fire_icon
+	else
+		if(last_icon_state)
+			cut_overlay(fire_overlay)
+			last_icon_state = null
+
+	return last_icon_state

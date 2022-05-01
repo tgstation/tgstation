@@ -1414,3 +1414,24 @@
 	our_splatter.blood_dna_info = get_blood_dna_list()
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
+
+/mob/living/carbon/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+	var/fire_icon = "generic_burning[suffix]"
+
+	if((stacks > 0 && on_fire) || HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE))
+		if(fire_icon == last_icon_state)
+			return last_icon_state
+
+		remove_overlay(FIRE_LAYER)
+		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER)
+		new_fire_overlay.appearance_flags = RESET_COLOR
+		overlays_standing[FIRE_LAYER] = new_fire_overlay
+		apply_overlay(FIRE_LAYER)
+		last_icon_state = fire_icon
+
+	else if(last_icon_state)
+		remove_overlay(FIRE_LAYER)
+		apply_overlay(FIRE_LAYER)
+		last_icon_state = null
+
+	return last_icon_state

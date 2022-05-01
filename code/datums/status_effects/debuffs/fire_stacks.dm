@@ -172,7 +172,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/victim = owner
 		SEND_SIGNAL(victim, COMSIG_HUMAN_BURNING)
-		burn_stuff(delta_time, times_fired)
+		victim.burn_clothing(delta_time, times_fired, stacks)
 		var/no_protection = FALSE
 		if(victim.dna && victim.dna.species)
 			no_protection = victim.dna.species.handle_fire(victim, delta_time, times_fired, no_protection)
@@ -208,64 +208,6 @@
 	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * delta_time)
 	SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 	victim.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = victim), story_value = STORY_VALUE_OKAY)
-
-/**
- * Handles clothing burning
- *
- * Arguments:
- * - delta_time
- * - times_fired
- *
- */
-
-/datum/status_effect/fire_handler/proc/burn_stuff(delta_time, times_fired)
-	var/mob/living/carbon/human/victim = owner
-	//the fire tries to damage the exposed clothes and items
-	var/list/burning_items = list()
-	var/obscured = victim.check_obscured_slots(TRUE)
-	//HEAD//
-
-	if(victim.glasses && !(obscured & ITEM_SLOT_EYES))
-		burning_items += victim.glasses
-	if(victim.wear_mask && !(obscured & ITEM_SLOT_MASK))
-		burning_items += victim.wear_mask
-	if(victim.wear_neck && !(obscured & ITEM_SLOT_NECK))
-		burning_items += victim.wear_neck
-	if(victim.ears && !(obscured & ITEM_SLOT_EARS))
-		burning_items += victim.ears
-	if(victim.head)
-		burning_items += victim.head
-
-	//CHEST//
-	if(victim.w_uniform && !(obscured & ITEM_SLOT_ICLOTHING))
-		burning_items += victim.w_uniform
-	if(victim.wear_suit)
-		burning_items += victim.wear_suit
-
-	//ARMS & HANDS//
-	var/obj/item/clothing/arm_clothes = null
-	if(victim.gloves && !(obscured & ITEM_SLOT_GLOVES))
-		arm_clothes = victim.gloves
-	else if(victim.wear_suit && ((victim.wear_suit.body_parts_covered & HANDS) || (victim.wear_suit.body_parts_covered & ARMS)))
-		arm_clothes = victim.wear_suit
-	else if(victim.w_uniform && ((victim.w_uniform.body_parts_covered & HANDS) || (victim.w_uniform.body_parts_covered & ARMS)))
-		arm_clothes = victim.w_uniform
-	if(arm_clothes)
-		burning_items |= arm_clothes
-
-	//LEGS & FEET//
-	var/obj/item/clothing/leg_clothes = null
-	if(victim.shoes && !(obscured & ITEM_SLOT_FEET))
-		leg_clothes = victim.shoes
-	else if(victim.wear_suit && ((victim.wear_suit.body_parts_covered & FEET) || (victim.wear_suit.body_parts_covered & LEGS)))
-		leg_clothes = victim.wear_suit
-	else if(victim.w_uniform && ((victim.w_uniform.body_parts_covered & FEET) || (victim.w_uniform.body_parts_covered & LEGS)))
-		leg_clothes = victim.w_uniform
-	if(leg_clothes)
-		burning_items |= leg_clothes
-
-	for(var/obj/item/burning in burning_items)
-		burning.fire_act((stacks * 25 * delta_time)) //damage taken is reduced to 2% of this value by fire_act()
 
 /**
  * Handles mob ignition, should be the only way to set on_fire to TRUE
@@ -313,55 +255,7 @@
 	update_overlay()
 
 /datum/status_effect/fire_handler/fire_stacks/update_overlay()
-	if(iscyborg(owner))
-		var/fire_icon = "generic_burning[get_special_icon()]"
-		var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/onfire.dmi', fire_icon)
-		if(stacks && on_fire)
-			if(last_icon_state != fire_icon)
-				owner.add_overlay(fire_overlay)
-				last_icon_state = fire_icon
-		else
-			if(last_icon_state)
-				owner.cut_overlay(fire_overlay)
-				last_icon_state = null
-		return TRUE
-
-	if(!iscarbon(owner))
-		return FALSE
-
-	var/mob/living/carbon/victim = owner
-	var/fire_icon = "generic_burning[get_special_icon()]"
-	if(ishuman(victim) && stacks > HUMAN_FIRE_STACK_ICON_NUM)
-		var/mob/living/carbon/human/human_victim = victim
-		if(human_victim.dna && human_victim.dna.species)
-			fire_icon = "[human_victim.dna.species.fire_overlay][get_special_icon()]"
-		else
-			fire_icon = "human_burning[get_special_icon()]"
-
-	if((stacks > 0 && on_fire) || HAS_TRAIT(victim, TRAIT_PERMANENTLY_ONFIRE))
-		if(fire_icon == last_icon_state)
-			return TRUE
-
-		victim.remove_overlay(FIRE_LAYER)
-		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER)
-		new_fire_overlay.appearance_flags = RESET_COLOR
-		victim.overlays_standing[FIRE_LAYER] = new_fire_overlay
-		victim.apply_overlay(FIRE_LAYER)
-		last_icon_state = fire_icon
-
-	else if(last_icon_state)
-		victim.remove_overlay(FIRE_LAYER)
-		victim.apply_overlay(FIRE_LAYER)
-		last_icon_state = null
-
-	return TRUE
-
-/**
- * Should return a suffix for custom fire icons, made for inheritance reasons
- */
-
-/datum/status_effect/fire_handler/fire_stacks/proc/get_special_icon()
-	return
+	last_icon_state = owner.update_fire_overlay(stacks, on_fire, last_icon_state)
 
 /datum/status_effect/fire_handler/fire_stacks/on_apply()
 	. = ..()

@@ -1503,6 +1503,18 @@
 		adjust_fire_stacks(spread_to.fire_stacks, their_fire_status.type)
 		ignite_mob()
 
+/**
+ * Sets fire overlay of the mob.
+ *
+ * Vars:
+ * * stacks: Current amount of fire_stacks
+ * * on_fire: If we're lit on fire
+ * * last_icon_state: Holds last fire overlay icon state, used for optimization
+ * * suffix: Suffix for the fire icon state for special fire types
+ */
+
+/mob/living/proc/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+
 //Mobs on Fire end
 
 // used by secbot and monkeys Crossed
