@@ -394,6 +394,7 @@
 	inhand_icon_state = "gas_prop"
 	clothing_flags = NONE
 	flags_cover = MASKCOVERSMOUTH
+	resistance_flags = FLAMMABLE
 	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/atmosprop
@@ -403,4 +404,5 @@
 	inhand_icon_state = "gas_atmos"
 	clothing_flags = NONE
 	flags_cover = MASKCOVERSMOUTH
+	resistance_flags = FLAMMABLE
 	has_fov = FALSE
