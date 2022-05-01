@@ -65,9 +65,6 @@
 		return FALSE
 	return TRUE
 
-/*
- * Book
- */
 /obj/item/book
 	name = "book"
 	icon = 'icons/obj/library.dmi'
@@ -106,23 +103,6 @@
 /obj/item/book/proc/on_read(mob/user)
 	if(book_data?.content)
 		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-
-		if(ishuman(user))
-			var/mob/living/carbon/human/reader = user
-			LAZYINITLIST(reader.book_titles_read)
-			var/has_not_read_book = isnull(reader.book_titles_read[starting_title])
-			var/is_book_manual = istype(src, /obj/item/book/manual)
-
-			if(has_not_read_book && !is_book_manual) // any new books give bonus mood except for boring manuals zzzzz
-				if(HAS_TRAIT(reader, TRAIT_BOOKWORM))
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "reading_excited", /datum/mood_event/reading_excited)
-				else
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "reading", /datum/mood_event/reading)
-			if(is_book_manual && reader.drowsyness) // manuals are so boring they put us to sleep if we are already drowsy
-				to_chat(user, span_warning("As you are reading the boring [src], you suddenly doze off!"))
-				reader.AdjustSleeping(100)
-			reader.book_titles_read[starting_title] = TRUE
-
 		onclose(user, "book")
 	else
 		to_chat(user, span_notice("This book is completely blank!"))
@@ -132,14 +112,21 @@
 	icon_state = "book[rand(1, maximum_book_state)]"
 
 /obj/item/book/attack_self(mob/user)
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return
 	if(!user.can_read(src))
 		return
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
 	on_read(user)
 
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))
 		if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
+			return
+		if(user.is_blind())
+			to_chat(user, span_warning("As you are trying to write on the book, you suddenly feel very stupid!"))
 			return
 		if(unique)
 			to_chat(user, span_warning("These pages don't seem to take the ink well! Looks like you can't modify it."))

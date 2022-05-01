@@ -13,6 +13,8 @@
 	var/botcount = 0
 	///Access granted by the used to summon robots.
 	var/list/current_access = list()
+	///Whether or not this is the cartridge program version.
+	var/cart_mode = FALSE
 	var/list/drone_ping_types = list(
 		"Low",
 		"Medium",
@@ -27,20 +29,23 @@
 	var/list/botlist = list()
 	var/list/mulelist = list()
 
+	var/obj/item/computer_hardware/hard_drive/role/job_disk = computer ? computer.all_components[MC_HDD_JOB] : null
 	var/obj/item/computer_hardware/card_slot/card_slot = computer ? computer.all_components[MC_CARD] : null
-	var/obj/item/card/id/id_card = card_slot?.stored_card
 	data["have_id_slot"] = !!card_slot
 	if(computer)
-		data["has_id"] = !!id_card
-		data["id_owner"] = id_card ? id_card.registered_name : "No Card Inserted."
-		data["access_on_card"] = id_card ? id_card.access : null
+		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : ""
+		data["id_owner"] = id_card
+	if(cart_mode && job_disk)
+		data["id_owner"] = "JOB DISK OVERRIDE"
 
 	botcount = 0
 
 	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
 		if(simple_bot.z != zlevel || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
-		if(computer && !simple_bot.check_access(user, id_card)) // Only check Bots we can access
+		if(computer && !simple_bot.check_access(user) && !cart_mode) // Only check Bots we can access)
+			continue
+		if(!(simple_bot.bot_type in job_disk.bot_access) && cart_mode)
 			continue
 		var/list/newbot = list(
 			"name" = simple_bot.name,

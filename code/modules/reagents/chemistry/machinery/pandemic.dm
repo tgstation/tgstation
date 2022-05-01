@@ -9,8 +9,6 @@
 	icon_state = "pandemic0"
 	icon_keyboard = null
 	base_icon_state = "pandemic"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
 
@@ -37,10 +35,20 @@
 			. += "It has a beaker inside it."
 		. += span_info("Alt-click to eject [is_close ? beaker : "the beaker"].")
 
-/obj/machinery/computer/pandemic/AltClick(mob/user)
+/obj/machinery/computer/pandemic/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(user.canUseTopic(src, BE_CLOSE))
-		eject_beaker()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
+		return
+	eject_beaker()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/computer/pandemic/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/obj/machinery/computer/pandemic/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/computer/pandemic/handle_atom_del(atom/A)
 	if(A == beaker)
@@ -144,6 +152,7 @@
 		update_appearance()
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Pandemic", name)
@@ -210,6 +219,7 @@
 			if(!istype(A) || !A.mutable)
 				to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
 				return
+			use_power(active_power_usage)
 			A = A.Copy()
 			var/list/data = list("viruses" = list(A))
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
@@ -225,6 +235,7 @@
 		if("create_vaccine_bottle")
 			if (wait)
 				return
+			use_power(active_power_usage)
 			var/id = params["index"]
 			var/datum/disease/D = SSdisease.archive_diseases[id]
 			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())

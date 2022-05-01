@@ -360,7 +360,7 @@
 	attack_verb_continuous = list("shears", "snips")
 	attack_verb_simple = list("shear", "snip")
 	sharpness = SHARP_EDGED
-	custom_premium_price = PAYCHECK_MEDIUM * 14
+	custom_premium_price = PAYCHECK_CREW * 14
 
 /obj/item/shears/attack(mob/living/amputee, mob/living/user)
 	if(!iscarbon(amputee) || user.combat_mode)
@@ -453,3 +453,40 @@
 	attack_verb_simple = list("pump", "siphon")
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
+	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
+	var/list/whitelist = list()
+
+/obj/item/blood_filter/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BloodFilter", name)
+		ui.open()
+
+/obj/item/blood_filter/ui_data(mob/user)
+	var/list/data = list()
+	var/list/chem_names = list()
+	for(var/key in whitelist)
+		chem_names += whitelist[key]
+	data["whitelist"] = chem_names
+	return data
+
+/obj/item/blood_filter/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	. = TRUE
+	switch(action)
+		if("add")
+			var/new_chem_name = params["name"]
+			var/chem_id = get_chem_id(new_chem_name)
+			if(!chem_id || !new_chem_name)
+				to_chat(usr, span_warning("No such known reagent exists!"))
+				return
+			if(!(chem_id in whitelist))
+				whitelist[chem_id] = new_chem_name
+
+
+		if("remove")
+			var/chem_name = params["reagent"]
+			var/chem_id = get_chem_id(chem_name)
+			whitelist -= chem_id

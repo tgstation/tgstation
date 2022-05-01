@@ -110,7 +110,6 @@
 			sort_tag = dest_tagger.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
-
 	else if(istype(item, /obj/item/pen))
 		if(!user.can_write(item))
 			return

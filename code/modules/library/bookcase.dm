@@ -2,9 +2,6 @@
 #define BOOKCASE_ANCHORED 1
 #define BOOKCASE_FINISHED 2
 
-/*
- * Bookcase
- */
 /obj/structure/bookcase
 	name = "bookcase"
 	icon = 'icons/obj/library.dmi'

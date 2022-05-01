@@ -39,6 +39,7 @@
 	wires = new /datum/wires/tesla_coil(src)
 
 /obj/machinery/power/energy_accumulator/tesla_coil/RefreshParts()
+	. = ..()
 	var/power_multiplier = 0
 	zap_cooldown = 100
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)

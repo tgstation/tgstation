@@ -1,15 +1,3 @@
-/// Scan only
-#define SCAN_ONLY 0
-/// Scan and set buffer
-#define SET_BUFFER 1
-/// Scan and attempt to check in
-#define CHECK_IN 2
-/// Scan and attempt to add to inventory
-#define ADD_INVENTORY 3
-
-/*
- * Barcode Scanner
- */
 /obj/item/barcodescanner
 	name = "barcode scanner"
 	icon = 'icons/obj/library.dmi'
@@ -18,27 +6,27 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	/// A weakref to our associated computer - Modes SET_BUFFER to ADD_INVENTORY use this
+	/// A weakref to our associated computer - Modes 1 to 3 use this
 	var/datum/weakref/computer_ref
 	/// Currently scanned book
 	var/datum/book_info/book_data
-	/// Mode for the scanner
-	var/mode = SCAN_ONLY
+	/// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
+	var/mode = 0
 
 /obj/item/barcodescanner/attack_self(mob/user)
 	mode += 1
-	if(mode > ADD_INVENTORY)
-		mode = SCAN_ONLY
+	if(mode > 3)
+		mode = 0
 	to_chat(user, "[src] Status Display:")
 	var/modedesc
 	switch(mode)
-		if(SCAN_ONLY)
+		if(0)
 			modedesc = "Scan book to local buffer."
-		if(SET_BUFFER)
+		if(1)
 			modedesc = "Scan book to local buffer and set associated computer buffer to match."
-		if(CHECK_IN)
+		if(2)
 			modedesc = "Scan book to local buffer, attempt to check in scanned book."
-		if(ADD_INVENTORY)
+		if(3)
 			modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 		else
 			modedesc = "ERROR"
@@ -48,8 +36,3 @@
 	else
 		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
 	to_chat(user, "\n")
-
-#undef SCAN_ONLY
-#undef SET_BUFFER
-#undef CHECK_IN
-#undef ADD_INVENTORY

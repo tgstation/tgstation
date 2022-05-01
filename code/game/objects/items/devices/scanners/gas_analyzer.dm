@@ -1,7 +1,7 @@
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."
 	name = "gas analyzer"
-	custom_price = PAYCHECK_ASSISTANT * 0.9
+	custom_price = PAYCHECK_LOWER * 0.9
 	icon = 'icons/obj/device.dmi'
 	icon_state = "analyzer"
 	inhand_icon_state = "analyzer"
