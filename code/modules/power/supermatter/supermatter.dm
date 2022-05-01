@@ -250,6 +250,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/freonbonus = 0
 	///Can the crystal trigger the station wide anomaly spawn?
 	var/anomaly_event = TRUE
+	///Starting color of the crystal's zap effect
+	var/color_power_zap = "#ff6464ee"
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
