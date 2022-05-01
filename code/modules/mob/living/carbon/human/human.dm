@@ -768,7 +768,8 @@
 	return ..()
 
 /mob/living/carbon/human/is_nearsighted()
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+	. = ..() 
+	if(!.)
 		return FALSE
 
 	var/obj/item/clothing/glasses/eyewear = glasses
