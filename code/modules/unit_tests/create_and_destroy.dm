@@ -96,7 +96,7 @@
 			//We change it back to prevent pain, please don't ask
 			spawn_at.ChangeTurf(/turf/open/floor/wood, /turf/baseturf_skipover)
 			if(baseturf_count != length(spawn_at.baseturfs))
-				Fail("[type_path] changed the amount of baseturfs we have [baseturf_count] -> [length(spawn_at.baseturfs)]")
+				TEST_FAIL("[type_path] changed the amount of baseturfs we have [baseturf_count] -> [length(spawn_at.baseturfs)]")
 				baseturf_count = length(spawn_at.baseturfs)
 		else
 			var/atom/creation = new type_path(spawn_at)
@@ -143,7 +143,7 @@
 			break
 
 		if(world.time > start_time + time_needed + 30 MINUTES) //If this gets us gitbanned I'm going to laugh so hard
-			Fail("Something has gone horribly wrong, the garbage queue has been processing for well over 30 minutes. What the hell did you do")
+			TEST_FAIL("Something has gone horribly wrong, the garbage queue has been processing for well over 30 minutes. What the hell did you do")
 			break
 
 		//Immediately fire the gc right after
@@ -156,21 +156,21 @@
 	for(var/path in cache_for_sonic_speed)
 		var/datum/qdel_item/item = cache_for_sonic_speed[path]
 		if(item.failures)
-			Fail("[item.name] hard deleted [item.failures] times out of a total del count of [item.qdels]")
+			TEST_FAIL("[item.name] hard deleted [item.failures] times out of a total del count of [item.qdels]")
 		if(item.no_respect_force)
-			Fail("[item.name] failed to respect force deletion [item.no_respect_force] times out of a total del count of [item.qdels]")
+			TEST_FAIL("[item.name] failed to respect force deletion [item.no_respect_force] times out of a total del count of [item.qdels]")
 		if(item.no_hint)
-			Fail("[item.name] failed to return a qdel hint [item.no_hint] times out of a total del count of [item.qdels]")
+			TEST_FAIL("[item.name] failed to return a qdel hint [item.no_hint] times out of a total del count of [item.qdels]")
 
 	cache_for_sonic_speed = SSatoms.BadInitializeCalls
 	for(var/path in cache_for_sonic_speed)
 		var/fails = cache_for_sonic_speed[path]
 		if(fails & BAD_INIT_NO_HINT)
-			Fail("[path] didn't return an Initialize hint")
+			TEST_FAIL("[path] didn't return an Initialize hint")
 		if(fails & BAD_INIT_QDEL_BEFORE)
-			Fail("[path] qdel'd in New()")
+			TEST_FAIL("[path] qdel'd in New()")
 		if(fails & BAD_INIT_SLEPT)
-			Fail("[path] slept during Initialize()")
+			TEST_FAIL("[path] slept during Initialize()")
 
 	SSticker.delay_end = FALSE
 	//This shouldn't be needed, but let's be polite
