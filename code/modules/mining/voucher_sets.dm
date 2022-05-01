@@ -1,3 +1,9 @@
+/**
+ * # Voucher Set
+ *
+ * A set consisting of a various equipment that can be then used as a reward for redeeming a mining voucher.
+ *
+ */
 /datum/voucher_set
 	/// Name of the set
 	var/name
