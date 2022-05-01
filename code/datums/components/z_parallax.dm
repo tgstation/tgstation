@@ -24,9 +24,13 @@
 /datum/component/zparallax/RegisterWithParent()
 	RegisterSignal(client_mob, COMSIG_MOB_LOGOUT, .proc/mob_change)
 	RegisterSignal(client_mob, COMSIG_MOVABLE_Z_CHANGED, .proc/ztrait_checks)
+	RegisterSignal(client_mob, COMSIG_MOB_LOGIN, .proc/refresh_client)
 
 /datum/component/zparallax/UnregisterFromParent()
 	unregister_signals()
+
+	tracked = null
+	client_mob = null
 
 /datum/component/zparallax/proc/unregister_signals()
 	if(!client_mob)
@@ -34,8 +38,14 @@
 
 	UnregisterSignal(client_mob, list(COMSIG_MOB_LOGOUT, COMSIG_MOVABLE_Z_CHANGED))
 
+/datum/component/zparallax/proc/refresh_client()
+	tracked = client_mob.client
+
 /datum/component/zparallax/proc/mob_change()
 	SIGNAL_HANDLER
+
+	if(client_mob.key)
+		return
 
 	unregister_signals()
 
@@ -43,6 +53,7 @@
 
 	RegisterSignal(client_mob, COMSIG_MOB_LOGOUT, .proc/mob_change)
 	RegisterSignal(client_mob, COMSIG_MOVABLE_Z_CHANGED, .proc/ztrait_checks)
+	RegisterSignal(client_mob, COMSIG_MOB_LOGIN, .proc/refresh_client)
 
 /datum/component/zparallax/proc/ztrait_checks()
 	SIGNAL_HANDLER
