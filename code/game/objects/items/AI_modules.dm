@@ -24,6 +24,11 @@ AI MODULES
 	var/bypass_law_amt_check = 0
 	custom_materials = list(/datum/material/gold = 50)
 
+/obj/item/ai_module/Initialize(mapload)
+	. = ..()
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		return INITIALIZE_HINT_QDEL //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
+
 /obj/item/ai_module/examine(mob/user as mob)
 	. = ..()
 	if(Adjacent(user))
