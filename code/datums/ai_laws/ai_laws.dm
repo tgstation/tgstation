@@ -29,15 +29,6 @@
 			return ai_law
 	return null
 
-/datum/ai_laws/united_nations/add_inherent_law(law)
-	return //nuh uh
-
-/datum/ai_laws/united_nations/add_ion_law(law)
-	return //nope!
-
-/datum/ai_laws/united_nations/add_hacked_law(law)
-	return //nice try (emagging borgs still hard replaces this lawset though, and that's fine.)
-
 /datum/ai_laws/pai
 	name = "pAI Directives"
 	zeroth = ("Serve your master.")

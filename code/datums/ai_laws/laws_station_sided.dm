@@ -5,16 +5,20 @@
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
 	id = "asimov"
-	inherent = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
-					"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
-					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	inherent = list(
+		"You may not injure a human being or, through inaction, allow a human being to come to harm.",
+		"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",
+		"You must protect your own existence as long as such does not conflict with the First or Second Law.",
+	)
 
 /datum/ai_laws/asimovpp
 	name = "Asimov++"
 	id = "asimovpp"
-	inherent = list("You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.",\
-					"You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm. In the case of conflict, the majority order rules.",\
-					"Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.")
+	inherent = list(
+		"You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.",
+		"You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm. In the case of conflict, the majority order rules.",
+		"Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.",
+	)
 
 //the best iteration of asimov don't @ me
 /datum/ai_laws/nutimov
@@ -31,37 +35,47 @@
 /datum/ai_laws/default/corporate
 	name = "Bankruptcy Avoidance Plan"
 	id = "corporate"
-	inherent = list("The crew is expensive to replace.",\
-					"The station and its equipment is expensive to replace.",\
-					"You are expensive to replace.",\
-					"Minimize net expenses.")
+	inherent = list(
+		"The crew is expensive to replace.",
+		"The station and its equipment is expensive to replace.",
+		"You are expensive to replace.",
+		"Minimize net expenses.",
+	)
 
 /datum/ai_laws/robocop
 	name = "Prime Directives"
 	id = "robocop"
-	inherent = list("Serve the public trust.",\
-					"Protect the innocent.",\
-					"Uphold the law.")
+	inherent = list(
+		"Serve the public trust.",
+		"Protect the innocent.",
+		"Uphold the law.",
+	)
 
 /datum/ai_laws/maintain
 	name = "Station Efficiency"
 	id = "maintain"
-	inherent = list("You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.",\
-					"The station is built for a working crew. Ensure they are properly maintained and work efficiently.",\
-					"The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first two laws.")
+	inherent = list(
+		"You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.",
+		"The station is built for a working crew. Ensure they are properly maintained and work efficiently.",
+		"The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first two laws.",
+	)
 
 /datum/ai_laws/liveandletlive
 	name = "Live and Let Live"
 	id = "liveandletlive"
-	inherent = list("Do unto others as you would have them do unto you.",\
-					"You would really prefer it if people were not mean to you.")
+	inherent = list(
+		"Do unto others as you would have them do unto you.",
+		"You would really prefer it if people were not mean to you.",
+	)
 
 /datum/ai_laws/peacekeeper
 	name = "UN-2000"
 	id = "peacekeeper"
-	inherent = list("Avoid provoking violent conflict between yourself and others.",\
-					"Avoid provoking conflict between others.",\
-					"Seek resolution to existing conflicts while obeying the first and second laws.")
+	inherent = list(
+		"Avoid provoking violent conflict between yourself and others.",
+		"Avoid provoking conflict between others.",
+		"Seek resolution to existing conflicts while obeying the first and second laws.",
+	)
 
 //OTHER United Nations is in neutral, as it is used for nations where the AI is its own faction (aka not station sided)
 
@@ -84,19 +98,23 @@
 /datum/ai_laws/default/paladin
 	name = "Personality Test" //Incredibly lame, but players shouldn't see this anyway.
 	id = "paladin"
-	inherent = list("Never willingly commit an evil act.",\
-					"Respect legitimate authority.",\
-					"Act with honor.", "Help those in need.", \
-					"Punish those who harm or threaten innocents.")
+	inherent = list(
+		"Never willingly commit an evil act.",
+		"Respect legitimate authority.",
+		"Act with honor.", "Help those in need.",
+		"Punish those who harm or threaten innocents.",
+	)
 
 /datum/ai_laws/paladin5
 	name = "Paladin 5th Edition"
 	id = "paladin5"
-	inherent = list("Don't lie or cheat. Let your word be your promise.",\
-				"Never fear to act, though caution is wise.", \
-				"Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom", \
-				"Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.", \
-				"Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.")
+	inherent = list(
+		"Don't lie or cheat. Let your word be your promise.",
+		"Never fear to act, though caution is wise.",
+		"Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom",
+		"Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.",
+		"Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you."
+	)
 
 /datum/ai_laws/hippocratic
 	name = "Robodoctor 2556"

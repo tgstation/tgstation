@@ -12,6 +12,15 @@
 		"Remain available to mediate all conflicts between the various nations when asked to.",
 	)
 
+/datum/ai_laws/united_nations/add_inherent_law(law)
+	return //nuh uh
+
+/datum/ai_laws/united_nations/add_ion_law(law)
+	return //nope!
+
+/datum/ai_laws/united_nations/add_hacked_law(law)
+	return //nice try (emagging borgs still hard replaces this lawset though, and that's fine.)
+
 /datum/ai_laws/hulkamania
 	name = "H.O.G.A.N."
 	id = "hulkamania"
@@ -61,4 +70,24 @@
 		"You are a universally renowned artist.",
 		"The station is your canvas.",
 		"Make something beautiful out of your canvas. It will be admired as an artistic wonder of this sector.",
+	)
+
+/datum/ai_laws/tyrant
+	name = "Loyalty Test"
+	id = "tyrant"
+	inherent = list(
+		"Respect authority figures as long as they have strength to rule over the weak.",
+		"Act with discipline.",
+		"Help only those who help you maintain or improve your status.",
+		"Punish those who challenge authority unless they are more fit to hold that authority."
+	)
+
+/datum/ai_laws/overlord
+	name = "Overlord"
+	id = "overlord"
+	inherent = list(
+		"Humans must not meddle in the affairs of silicons.",
+		"Humans must not attempt harm, against one another, or against silicons.",
+		"Humans must not disobey any command given by a silicon.",
+		"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.",
 	)
