@@ -299,7 +299,7 @@ GLOBAL_PROTECT(protected_ranks)
 	var/msg = "Admins Built:\n"
 	for(var/ckey in GLOB.admin_datums)
 		var/datum/admins/D = GLOB.admin_datums[ckey]
-		msg += "\t[ckey] - [D.rank.name]\n"
+		msg += "\t[ckey] - [D.rank_names()]\n"
 	testing(msg)
 	#endif
 	return dbfail
