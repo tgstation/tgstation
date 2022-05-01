@@ -1100,7 +1100,7 @@
 
 /// Is this mob affected by nearsight
 /mob/proc/is_nearsighted()
-	return FALSE
+	return HAS_TRAIT(src, TRAIT_NEARSIGHT)
 
 /// This mob is abile to read books
 /mob/proc/is_literate()
