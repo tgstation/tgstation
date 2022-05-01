@@ -12,6 +12,8 @@
 	///Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
 
+	var/specific_lift_id = MAIN_STATION_TRAM
+
 /obj/machinery/computer/tram_controls/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/tram_controls))
@@ -19,7 +21,6 @@
 
 /obj/machinery/computer/tram_controls/LateInitialize()
 	. = ..()
-	//find the tram, late so the tram is all... set up so when this is called? i'm seriously stupid and 90% of what i do consists of barely educated guessing :)
 	find_tram()
 
 /**
@@ -28,15 +29,17 @@
  * Locates tram parts in the lift global list after everything is done.
  */
 /obj/machinery/computer/tram_controls/proc/find_tram()
-	tram_ref = WEAKREF(GLOB.central_tram)
+	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
+		if(lift.specific_lift_id == specific_lift_id)
+			tram_ref = WEAKREF(lift)
 
 /obj/machinery/computer/tram_controls/ui_state(mob/user)
 	return GLOB.not_incapacitated_state
 
 /obj/machinery/computer/tram_controls/ui_status(mob/user,/datum/tgui/ui)
-	var/obj/structure/industrial_lift/tram/central/tram_part = tram_ref?.resolve()
+	var/datum/lift_master/tram/tram = tram_ref?.resolve()
 
-	if(tram_part?.travelling)
+	if(tram?.travelling)
 		return UI_CLOSE
 	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
@@ -49,11 +52,11 @@
 		ui.open()
 
 /obj/machinery/computer/tram_controls/ui_data(mob/user)
-	var/obj/structure/industrial_lift/tram/central/tram_part = tram_ref?.resolve()
+	var/datum/lift_master/tram/tram_lift = tram_ref?.resolve()
 	var/list/data = list()
-	data["moving"] = tram_part?.travelling
-	data["broken"] = tram_part ? FALSE : TRUE
-	var/obj/effect/landmark/tram/current_loc = tram_part?.from_where
+	data["moving"] = tram_lift?.travelling
+	data["broken"] = tram_lift ? FALSE : TRUE
+	var/obj/effect/landmark/tram/current_loc = tram_lift?.from_where
 	if(current_loc)
 		data["tram_location"] = current_loc.name
 	return data
@@ -99,12 +102,10 @@
 
 /// Attempts to sends the tram to the given destination
 /obj/machinery/computer/tram_controls/proc/try_send_tram(obj/effect/landmark/tram/to_where)
-	var/obj/structure/industrial_lift/tram/central/tram_part = tram_ref?.resolve()
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(!tram_part)
 		return FALSE
-	if(tram_part.travelling)
-		return FALSE
-	if(tram_part.controls_locked) // someone else started
+	if(tram_part.controls_locked) // someone else started already
 		return FALSE
 	tram_part.tram_travel(to_where)
 	return TRUE
@@ -138,12 +139,12 @@
 	. = ..()
 	if (istype(shell, /obj/machinery/computer/tram_controls))
 		computer = shell
-		var/obj/structure/industrial_lift/tram/central/tram_part = computer.tram_ref?.resolve()
+		var/datum/lift_master/tram/tram_part = computer.tram_ref?.resolve()
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_set_travelling)
 		RegisterSignal(tram_part, COMSIG_TRAM_TRAVEL, .proc/on_tram_travel)
 
 /obj/item/circuit_component/tram_controls/unregister_usb_parent(atom/movable/shell)
-	var/obj/structure/industrial_lift/tram/central/tram_part = computer.tram_ref?.resolve()
+	var/datum/lift_master/tram/tram_part = computer.tram_ref?.resolve()
 	computer = null
 	UnregisterSignal(tram_part, list(COMSIG_TRAM_SET_TRAVELLING, COMSIG_TRAM_TRAVEL))
 	return ..()
