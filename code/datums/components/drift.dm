@@ -13,7 +13,8 @@
 	var/delayed = FALSE
 	var/block_inputs_until
 
-/datum/component/drift/Initialize(direction, instant = FALSE)
+/// Accepts three args. The direction to drift in, if the drift is instant or not, and if it's not instant, the delay on the start
+/datum/component/drift/Initialize(direction, instant = FALSE, start_delay = 0)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
@@ -34,7 +35,16 @@
 	RegisterSignal(drifting_loop, COMSIG_PARENT_QDELETING, .proc/loop_death)
 	if(drifting_loop.running)
 		drifting_start(drifting_loop) // There's a good chance it'll autostart, gotta catch that
-	apply_initial_visuals()
+
+	var/visual_delay = movable_parent.inertia_move_delay
+
+	// Start delay is essentially a more granular version of instant
+	// Isn't used in the standard case, just for things that have odd wants
+	if(!instant && start_delay)
+		drifting_loop.pause_for(start_delay)
+		visual_delay = start_delay
+
+	apply_initial_visuals(visual_delay)
 
 /datum/component/drift/Destroy()
 	inertia_last_loc = null
@@ -45,7 +55,7 @@
 	movable_parent.inertia_moving = FALSE
 	return ..()
 
-/datum/component/drift/proc/apply_initial_visuals()
+/datum/component/drift/proc/apply_initial_visuals(visual_delay)
 	// If something "somewhere" doesn't want us to apply our glidesize delays, don't
 	if(SEND_SIGNAL(parent, COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT) & DRIFT_VISUAL_FAILED)
 		return
@@ -53,15 +63,14 @@
 	// Ignore the next glide because it's literally just us
 	ignore_next_glide = TRUE
 	var/atom/movable/movable_parent = parent
-	var/move_delay = movable_parent.inertia_move_delay
-	movable_parent.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(move_delay, SSspacedrift.visual_delay))
+	movable_parent.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay))
 	if(ismob(parent))
 		var/mob/mob_parent = parent
 		//Ok this is slightly weird, but basically, we need to force the client to glide at our rate
 		//Make sure moving into a space move looks like a space move essentially
 		//There is an inbuilt assumption that gliding will be added as a part of a move call, but eh
 		//It's ok if it's not, it's just important if it is.
-		mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(move_delay, SSspacedrift.visual_delay)
+		mob_parent.client?.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(visual_delay, SSspacedrift.visual_delay)
 
 /datum/component/drift/proc/newtonian_impulse(datum/source, inertia_direction)
 	SIGNAL_HANDLER
@@ -81,13 +90,15 @@
 	// We will use glide size to intuit how long to delay our loop's next move for
 	// This way you can't ride two movements at once while drifting, since that'd be dumb as fuck
 	RegisterSignal(movable_parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/handle_glidesize_update)
+	// If you stop pulling something mid drift, I want it to retain that momentum
+	RegisterSignal(movable_parent, COMSIG_ATOM_NO_LONGER_PULLING, .proc/stopped_pulling)
 
 /datum/component/drift/proc/drifting_stop()
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
 	movable_parent.inertia_moving = FALSE
 	ignore_next_glide = FALSE
-	UnregisterSignal(movable_parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_NEWTONIAN_MOVE, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
+	UnregisterSignal(movable_parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_NEWTONIAN_MOVE, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, COMSIG_ATOM_NO_LONGER_PULLING))
 
 /datum/component/drift/proc/before_move(datum/source)
 	SIGNAL_HANDLER
@@ -119,6 +130,9 @@
 
 /datum/component/drift/proc/handle_move(datum/source, old_loc)
 	SIGNAL_HANDLER
+	// This can happen, because signals once sent cannot be stopped
+	if(QDELETED(src))
+		return
 	var/atom/movable/movable_parent = parent
 	if(!isturf(movable_parent.loc))
 		qdel(src)
@@ -146,6 +160,12 @@
 	var/glide_delay = round(world.icon_size / glide_size, 1) * world.tick_lag
 	drifting_loop.pause_for(glide_delay)
 	delayed = TRUE
+
+/// If we're pulling something and stop, we want it to continue at our rate and such
+/datum/component/drift/proc/stopped_pulling(datum/source, atom/movable/was_pulling)
+	SIGNAL_HANDLER
+	var/next_move_in = drifting_loop.timer - world.time
+	was_pulling.newtonian_move(drifting_loop.direction, start_delay = next_move_in)
 
 /datum/component/drift/proc/glide_to_halt(glide_for)
 	if(!ismob(parent))

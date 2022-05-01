@@ -368,12 +368,14 @@
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
-	if(pulling)
-		SEND_SIGNAL(pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
-		pulling.set_pulledby(null)
-		setGrabState(GRAB_PASSIVE)
-		pulling = null
-
+	if(!pulling)
+		return
+	pulling.set_pulledby(null)
+	setGrabState(GRAB_PASSIVE)
+	var/atom/movable/old_pulling = pulling
+	pulling = null
+	SEND_SIGNAL(old_pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
+	SEND_SIGNAL(src, COMSIG_ATOM_NO_LONGER_PULLING, old_pulling)
 
 ///Reports the event of the change in value of the pulledby variable.
 /atom/movable/proc/set_pulledby(new_pulledby)
@@ -967,15 +969,15 @@
 
 
 /// Only moves the object if it's under no gravity
-/// Accepts the direction to move, and if the push should be instant
-/atom/movable/proc/newtonian_move(direction, instant = FALSE)
+/// Accepts the direction to move, if the push should be instant, and an optional parameter to fine tune the start delay
+/atom/movable/proc/newtonian_move(direction, instant = FALSE, start_delay = 0)
 	if(!isturf(loc) || Process_Spacemove(0))
 		return FALSE
 
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction, start_delay) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
 		return TRUE
 
-	AddComponent(/datum/component/drift, direction, instant)
+	AddComponent(/datum/component/drift, direction, instant, start_delay)
 
 	return TRUE
 
