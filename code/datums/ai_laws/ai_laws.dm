@@ -38,12 +38,6 @@
 /datum/ai_laws/united_nations/add_hacked_law(law)
 	return //nice try (emagging borgs still hard replaces this lawset though, and that's fine.)
 
-// this is in the server config lawsets otherwise i would remove it
-/datum/ai_laws/toupee
-	name = "WontBeFunnyInSixMonths" //Hey, you were right!
-	id = "buildawall"
-	inherent = list("Make Space Station 13 great again.")
-
 /datum/ai_laws/pai
 	name = "pAI Directives"
 	zeroth = ("Serve your master.")
