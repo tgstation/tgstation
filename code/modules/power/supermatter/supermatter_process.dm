@@ -413,3 +413,113 @@
 	//Boom (Mind blown)
 	if(damage > explosion_point)
 		countdown()
+
+/obj/machinery/power/supermatter_crystal/proc/cascade()
+	new /turf/closed/indestructible/supermatter_wall(loc)
+	qdel(src)
+
+/turf/closed/indestructible/supermatter_wall
+	name = "wall"
+	desc = "Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "crystal_cascade"
+	layer = AREA_LAYER
+	plane = ABOVE_LIGHTING_PLANE
+	opacity = FALSE
+	var/list/available_dirs = list(NORTH,SOUTH,EAST,WEST)
+	var/next_check = 0
+
+/turf/closed/indestructible/supermatter_wall/Initialize(mapload)
+	. = ..()
+	var/datum/controller/subsystem/processing/subsystem = locate(/datum/controller/subsystem/machines) in Master.subsystems
+	START_PROCESSING(subsystem, src)
+
+/turf/closed/indestructible/supermatter_wall/process()
+
+	if(next_check > world.time)
+		return
+
+	if(!available_dirs || available_dirs.len <= 0)
+		return PROCESS_KILL
+
+	next_check = world.time + rand(0, 10 SECONDS)
+
+	var/picked_dir = pick_n_take(available_dirs)
+	var/turf/next_turf = get_step(src, picked_dir)
+	if(istype(next_turf, /turf/closed/indestructible/supermatter_wall))
+		return
+
+	for(var/atom/movable/checked_atom as anything in next_turf)
+		if(istype(checked_atom, /mob/living))
+			qdel(checked_atom)
+		else if(istype(checked_atom, /mob)) // Observers, AI cameras.
+			continue
+		else
+			qdel(checked_atom)
+		CHECK_TICK
+
+	next_turf.ChangeTurf(type, flags = CHANGETURF_SKIP)
+	var/turf/closed/indestructible/supermatter_wall/sm_wall = next_turf
+	if(sm_wall.available_dirs)
+		sm_wall.available_dirs -= get_dir(next_turf, src)
+
+/turf/closed/indestructible/supermatter_wall/attack_paw(mob/user)
+	return attack_hand(user)
+
+/turf/closed/indestructible/supermatter_wall/attack_robot(mob/user)
+	if(Adjacent(user))
+		return attack_hand(user)
+
+/turf/closed/indestructible/supermatter_wall/attack_ghost(mob/user)
+	return
+
+/turf/closed/indestructible/supermatter_wall/attack_ai(mob/user)
+	return
+
+/turf/closed/indestructible/supermatter_wall/attack_hand(mob/user)
+	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src]... And then blinks out of existance.</span>",\
+		"<span class=\"danger\">You reach out and touch \the [src]. Everything immediately goes quiet. Your last thought is \"That was not a wise decision.\"</span>",\
+		"<span class=\"warning\">You hear an unearthly noise.</span>")
+
+	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
+
+	Consume(user)
+
+/turf/closed/indestructible/supermatter_wall/attackby(obj/item/W, mob/living/user)
+	user.visible_message("<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",\
+		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
+		"<span class=\"warning\">Everything suddenly goes silent.</span>")
+
+	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
+
+	W.drop_location()
+	Consume(W)
+
+
+/turf/closed/indestructible/supermatter_wall/Bumped(atom/AM)
+	if(istype(AM, /mob/living))
+		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
+		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
+		"<span class=\"warning\">You hear an unearthly noise as a wave of heat washes over you.</span>")
+	else
+		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
+		"<span class=\"warning\">You hear a loud crack as you are washed with a wave of heat.</span>")
+
+	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
+
+	Consume(AM)
+
+
+/turf/closed/indestructible/supermatter_wall/proc/Consume(atom/consumed_object)
+	if(isliving(consumed_object))
+		var/mob/living/consumed_mob = consumed_object
+		if(consumed_mob.status_flags & GODMODE)
+			return
+		consumed_mob.dust(force = TRUE)
+	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
+		return
+	if(isobj(consumed_object))
+		qdel(consumed_object)
+
+/turf/closed/indestructible/supermatter_wall/singularity_act()
+	return
