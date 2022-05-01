@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	///Player controlled var that set the release pressure of the canister
 	var/release_pressure = ONE_ATMOSPHERE
 	///Maximum pressure allowed for release_pressure var
-	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
+	var/can_max_release_pressure = TANK_LEAK_PRESSURE
 	///Minimum pressure allower for release_pressure var
 	var/can_min_release_pressure = (ONE_ATMOSPHERE * 0.1)
 	///Maximum amount of external heat that the canister can handle before taking damage
