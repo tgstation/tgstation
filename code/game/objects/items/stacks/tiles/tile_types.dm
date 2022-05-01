@@ -974,7 +974,7 @@
 	name = "fake ice"
 	singular_name = "fake ice tile"
 	desc = "A piece of tile with a convincing ice pattern."
-	icon_state = "tile_diamond"
+	icon_state = "tile_ice"
 	inhand_icon_state = "tile-diamond"
 	turf_type = /turf/open/floor/fakeice
 	resistance_flags = FLAMMABLE

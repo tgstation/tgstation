@@ -775,7 +775,7 @@
 /turf/open/floor/fakeice
 	desc = "Is it marble, polished to a mirror finish? Or just really, really grippy ice?"
 	icon = 'icons/turf/floors/ice_turf.dmi'
-	icon_state = "ice_turf-255"
+	icon_state = "ice_turf-0"
 	base_icon_state = "ice_turf-0"
 
 /turf/open/floor/fakespace
