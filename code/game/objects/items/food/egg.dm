@@ -87,20 +87,25 @@
 
 /obj/item/food/egg/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 
-	if(istype(target,/obj/machinery/griddle))
+	if(istype(target, /obj/machinery/griddle))
 
 		var/atom/broken_egg = new /obj/item/food/rawegg(target.loc)
-		broken_egg.pixel_x = src.pixel_x
-		broken_egg.pixel_y = src.pixel_y
+		broken_egg.pixel_x = pixel_x
+		broken_egg.pixel_y = pixel_y
 		playsound(get_turf(user), 'sound/items/sheath.ogg', 40, TRUE)
 		reagents.copy_to(broken_egg,reagents.total_volume)
 
 		var/obj/machinery/griddle/hit_griddle = target
-		hit_griddle.AddToGrill(broken_egg,user)
+		hit_griddle.AddToGrill(broken_egg, user)
 		to_chat(user, "You crack [src] open onto [target].")
 
 		qdel(src)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 
 /obj/item/food/egg/blue
@@ -129,7 +134,7 @@
 
 /obj/item/food/friedegg
 	name = "fried egg"
-	desc = "A fried egg, would go well with a touch of salt and pepper."
+	desc = "A fried egg. Would go well with a touch of salt and pepper."
 	icon_state = "friedegg"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/eggyolk = 2 , /datum/reagent/consumable/nutriment/vitamin = 2)
 	bite_consumption = 1
