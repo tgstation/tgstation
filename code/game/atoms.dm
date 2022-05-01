@@ -1954,7 +1954,9 @@
 		//cut so we can reuse the list, this is ok since forced gravity movers are exceedingly rare compared to all other movement
 		return max_grav
 
-	return !gravity_turf.force_no_gravity && SSmapping.gravity_by_z_level["[gravity_turf.z]"]
+	var/area/turf_area = gravity_turf.loc
+
+	return !gravity_turf.force_no_gravity && (SSmapping.gravity_by_z_level["[gravity_turf.z]"] || turf_area.has_gravity)
 
 /**
  * Causes effects when the atom gets hit by a rust effect from heretics

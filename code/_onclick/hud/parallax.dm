@@ -217,15 +217,6 @@
 
 		parallax_layer.screen_loc = "CENTER-7:[round(parallax_layer.offset_x,1)],CENTER-7:[round(parallax_layer.offset_y,1)]"
 
-/atom/movable/proc/add_client_mob_in_contents(mob/client_mob)
-	if(QDELETED(client_mob) || !client_mob.client)
-		return FALSE
-
-	LAZYADD(client_mobs_in_contents, client_mob)
-
-/atom/movable/proc/remove_client_mob_in_contents(mob/client_mob)
-	LAZYREMOVE(client_mobs_in_contents, client_mob)
-
 /atom/movable/proc/update_parallax_contents()
 	for(var/mob/client_mob as anything in client_mobs_in_contents)
 		if(length(client_mob?.client?.parallax_layers) && client_mob.hud_used)

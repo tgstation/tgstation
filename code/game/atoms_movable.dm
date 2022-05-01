@@ -141,8 +141,7 @@
 	if(important_recursive_contents && (important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] || important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
 		SSspatial_grid.force_remove_from_cell(src)
 
-	for(var/mob/client_mob as anything in client_mobs_in_contents)
-		remove_client_mob_in_contents(client_mob)
+	LAZYCLEARLIST(client_mobs_in_contents)
 
 	. = ..()
 
