@@ -375,6 +375,8 @@ AI MODULES
 
 /obj/item/ai_module/core/round_default_laws/Initialize(mapload)
 	. = ..()
+	if(!GLOB.round_default_lawset)
+		GLOB.round_default_lawset = setup_round_default_laws()
 	var/datum/ai_laws/default_laws = new GLOB.round_default_lawset()
 	name = "'[default_laws.name]' Core AI Module"
 	laws = default_laws.inherent
