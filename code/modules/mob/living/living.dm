@@ -1524,7 +1524,7 @@
  * * fire_handler: Current fire status effect that called the proc
  */
 
-/mob/living/proc/update_fire_overlay(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+/mob/living/proc/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 
 //Mobs on Fire end
 
