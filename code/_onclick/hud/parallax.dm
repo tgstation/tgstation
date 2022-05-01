@@ -55,6 +55,8 @@
 		var/pref = C.prefs.read_preference(/datum/preference/choiced/parallax)
 		if (isnull(pref))
 			pref = PARALLAX_HIGH
+		if(SSmapping.level_trait(viewmob.z, ZTRAIT_NOPARALLAX))
+			return FALSE
 		switch(pref)
 			if (PARALLAX_INSANE)
 				C.parallax_throttle = FALSE
