@@ -141,6 +141,7 @@
 #define VV_HK_MOD_QUIRKS "quirkmod"
 #define VV_HK_SET_SPECIES "setspecies"
 #define VV_HK_PURRBATION "purrbation"
+#define VV_HK_SET_HEIGHT "setheight"
 
 // misc
 #define VV_HK_SPACEVINE_PURGE "spacevine_purge"

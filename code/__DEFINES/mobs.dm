@@ -562,6 +562,13 @@
 #define SIGN_TRAIT_BLOCKED 3
 #define SIGN_CUFFED 4
 
+/// Height defines
+#define HUMANHEIGHT_SHORTEST "shortest height"
+#define HUMANHEIGHT_SHORT    "short height"
+#define HUMANHEIGHT_MEDIUM   "medium height"
+#define HUMANHEIGHT_TALL     "tall height"
+#define HUMANHEIGHT_TALLEST  "tallest height"
+
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays
 #define TOTAL_LAYERS 32 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
