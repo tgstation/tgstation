@@ -19,7 +19,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.tracked = tracked
-	src.atomic = tracked.mob
+	atomic = tracked.mob
 
 	RegisterSignal(atomic, COMSIG_MOB_LOGOUT, .proc/mob_change)
 	RegisterSignal(atomic, COMSIG_MOVABLE_Z_CHANGED, .proc/ztrait_checks)
