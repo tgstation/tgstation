@@ -1034,7 +1034,7 @@
 
 	if((stacks > 0 && on_fire) || HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE))
 		if(fire_icon == last_icon_state)
-			return TRUE
+			return last_icon_state
 
 		remove_overlay(FIRE_LAYER)
 		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER)
@@ -1047,3 +1047,5 @@
 		remove_overlay(FIRE_LAYER)
 		apply_overlay(FIRE_LAYER)
 		last_icon_state = null
+
+	return last_icon_state
