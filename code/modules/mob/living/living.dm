@@ -1515,6 +1515,17 @@
 
 /mob/living/proc/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
 
+/**
+ * Handles effects happening when mob is on normal fire
+ *
+ * Vars:
+ * * delta_time
+ * * times_fired
+ * * fire_handler: Current fire status effect that called the proc
+ */
+
+/mob/living/proc/update_fire_overlay(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+
 //Mobs on Fire end
 
 // used by secbot and monkeys Crossed

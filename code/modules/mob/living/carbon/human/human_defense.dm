@@ -1049,3 +1049,11 @@
 		last_icon_state = null
 
 	return last_icon_state
+
+/mob/living/carbon/human/update_fire_overlay(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	SEND_SIGNAL(src, COMSIG_HUMAN_BURNING)
+	burn_clothing(delta_time, times_fired, fire_handler.stacks)
+	var/no_protection = FALSE
+	if(dna && dna.species)
+		no_protection = dna.species.handle_fire(src, delta_time, times_fired, no_protection)
+	fire_handler.harm_human(delta_time, times_fired, no_protection)

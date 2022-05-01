@@ -168,18 +168,8 @@
  *
  */
 
-/datum/status_effect/fire_handler/proc/deal_damage(delta_time, times_fired)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/victim = owner
-		SEND_SIGNAL(victim, COMSIG_HUMAN_BURNING)
-		victim.burn_clothing(delta_time, times_fired, stacks)
-		var/no_protection = FALSE
-		if(victim.dna && victim.dna.species)
-			no_protection = victim.dna.species.handle_fire(victim, delta_time, times_fired, no_protection)
-		harm_human(delta_time, times_fired, no_protection)
-
-	if(isalien(owner))
-		owner.adjust_bodytemperature(BODYTEMP_HEATING_MAX * 0.5 * delta_time)
+/datum/status_effect/fire_handler/fire_stacks/proc/deal_damage(delta_time, times_fired)
+	owner.on_fire_stack(delta_time, times_fired, src)
 
 	var/turf/location = get_turf(owner)
 	location.hotspot_expose(700, 25 * delta_time, TRUE)
@@ -194,7 +184,7 @@
  *
  */
 
-/datum/status_effect/fire_handler/proc/harm_human(delta_time, times_fired, no_protection = FALSE)
+/datum/status_effect/fire_handler/fire_stacks/proc/harm_human(delta_time, times_fired, no_protection = FALSE)
 	var/mob/living/carbon/human/victim = owner
 	var/thermal_protection = victim.get_thermal_protection()
 
