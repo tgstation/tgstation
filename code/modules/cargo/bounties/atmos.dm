@@ -1,6 +1,6 @@
 /datum/bounty/item/atmospherics
 	name = "Full Tank of Pluoxium"
-	description = "CentCom RnD is researching extra compact internals. Ship us a tank full of Pluoxium and you'll be compensated."
+	description = "CentCom RnD is researching extra compact internals. Ship us a tank full of Pluoxium and you'll be compensated. (20 Moles)"
 	reward = CARGO_CRATE_VALUE * 15
 	wanted_types = list(/obj/item/tank = TRUE)
 	var/moles_required = 20 // A full tank is 28 moles, but CentCom ignores that fact.
