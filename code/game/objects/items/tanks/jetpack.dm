@@ -121,10 +121,14 @@
 	SIGNAL_HANDLER
 	ion_trail.oldposition = get_turf(src)
 
-/obj/item/tank/jetpack/proc/spacemove_react(mob/user, movement_dir)
+// This should react to intentional movements
+// The movement dir at least. Stabilizers can do what they do currently
+/obj/item/tank/jetpack/proc/spacemove_react(mob/user, movement_dir, continuous_move)
 	SIGNAL_HANDLER
 
-	if(on && (movement_dir || stabilizers))
+	if(!on)
+		return
+	if((!continuous_move && movement_dir) || stabilizers)
 		return COMSIG_MOVABLE_STOP_SPACEMOVE
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)

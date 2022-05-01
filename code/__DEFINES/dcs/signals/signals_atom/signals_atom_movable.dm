@@ -87,6 +87,6 @@
 #define COMSIG_BUCKLED_CAN_Z_MOVE "ridden_pre_can_z_move"
 	#define COMPONENT_RIDDEN_STOP_Z_MOVE 1
 	#define COMPONENT_RIDDEN_ALLOW_Z_MOVE 2
-/// from base of atom/movable/Process_Spacemove(): (movement_dir)
+/// from base of atom/movable/Process_Spacemove(): (movement_dir, continuous_move)
 #define COMSIG_MOVABLE_SPACEMOVE "spacemove"
 	#define COMSIG_MOVABLE_STOP_SPACEMOVE (1<<0)

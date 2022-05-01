@@ -160,10 +160,14 @@
 
 	ion_trail.oldposition = get_turf(src)
 
-/obj/item/mod/module/jetpack/proc/spacemove_react(mob/user, movement_dir)
+// Oh jesus fikou why
+// Why man why
+/obj/item/mod/module/jetpack/proc/spacemove_react(mob/user, movement_dir, continuous_move)
 	SIGNAL_HANDLER
 
-	if(active && (stabilizers || movement_dir))
+	if(!active)
+		return
+	if((!continuous_move && movement_dir) || stabilizers)
 		return COMSIG_MOVABLE_STOP_SPACEMOVE
 
 /obj/item/mod/module/jetpack/proc/allow_thrust()

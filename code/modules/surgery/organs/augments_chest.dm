@@ -196,10 +196,13 @@
 	SIGNAL_HANDLER
 	ion_trail.oldposition = get_turf(owner)
 
-/obj/item/organ/cyberimp/chest/thrusters/proc/spacemove_react(mob/user, movement_dir)
+// Holy mother of christ what did I do to deserve this fate
+/obj/item/organ/cyberimp/chest/thrusters/proc/spacemove_react(mob/user, movement_dir, continuous_move)
 	SIGNAL_HANDLER
 
-	if(on && movement_dir)
+	if(!on)
+		return
+	if(!continuous_move && movement_dir)
 		return COMSIG_MOVABLE_STOP_SPACEMOVE
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num)

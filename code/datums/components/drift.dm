@@ -116,7 +116,7 @@
 	var/atom/movable/movable_parent = parent
 	movable_parent.inertia_moving = FALSE
 	movable_parent.setDir(old_dir)
-	if(movable_parent.Process_Spacemove(0))
+	if(movable_parent.Process_Spacemove(drifting_loop.direction, continuous_move = TRUE))
 		glide_to_halt(visual_delay)
 		return
 
@@ -139,7 +139,7 @@
 		return
 	if(movable_parent.inertia_moving) //This'll be handled elsewhere
 		return
-	if(!movable_parent.Process_Spacemove(0))
+	if(!movable_parent.Process_Spacemove(drifting_loop.direction, continuous_move = TRUE))
 		return
 	qdel(src)
 
@@ -164,7 +164,8 @@
 /// If we're pulling something and stop, we want it to continue at our rate and such
 /datum/component/drift/proc/stopped_pulling(datum/source, atom/movable/was_pulling)
 	SIGNAL_HANDLER
-	var/next_move_in = drifting_loop.timer - world.time
+	// This does mean it falls very slightly behind, but otherwise they'll potentially run into us
+	var/next_move_in = drifting_loop.timer - world.time + world.tick_lag
 	was_pulling.newtonian_move(drifting_loop.direction, start_delay = next_move_in)
 
 /datum/component/drift/proc/glide_to_halt(glide_for)
