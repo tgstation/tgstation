@@ -10,7 +10,7 @@
 	var/caching = FALSE
 
 	var/client/tracked
-	var/mob/atomic
+	var/mob/client_mob
 
 /datum/component/zparallax/Initialize(client/tracked)
 	. = ..()
@@ -19,37 +19,44 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.tracked = tracked
-	atomic = tracked.mob
+	client_mob = tracked.mob
 
-	RegisterSignal(atomic, COMSIG_MOB_LOGOUT, .proc/mob_change)
-	RegisterSignal(atomic, COMSIG_MOVABLE_Z_CHANGED, .proc/ztrait_checks)
+/datum/component/zparallax/RegisterWithParent()
+	RegisterSignal(client_mob, COMSIG_MOB_LOGOUT, .proc/mob_change)
+	RegisterSignal(client_mob, COMSIG_MOVABLE_Z_CHANGED, .proc/ztrait_checks)
 
-/datum/component/zparallax/proc/unregister_signals()
-	if(!atomic)
-		return
-
-	UnregisterSignal(atomic, COMSIG_MOB_LOGOUT)
-	UnregisterSignal(atomic, COMSIG_MOVABLE_Z_CHANGED)
-
-/datum/component/zparallax/proc/mob_change()
+/datum/component/zparallax/UnregisterFromParent()
 	unregister_signals()
 
-	atomic = tracked.mob
+/datum/component/zparallax/proc/unregister_signals()
+	if(!client_mob)
+		return
 
-	RegisterSignal(atomic, COMSIG_MOB_LOGOUT, .proc/mob_change)
-	RegisterSignal(atomic, COMSIG_MOVABLE_Z_CHANGED, .proc/ztrait_checks)
+	UnregisterSignal(client_mob, list(COMSIG_MOB_LOGOUT, COMSIG_MOVABLE_Z_CHANGED))
+
+/datum/component/zparallax/proc/mob_change()
+	SIGNAL_HANDLER
+
+	unregister_signals()
+
+	client_mob = tracked.mob
+
+	RegisterSignal(client_mob, COMSIG_MOB_LOGOUT, .proc/mob_change)
+	RegisterSignal(client_mob, COMSIG_MOVABLE_Z_CHANGED, .proc/ztrait_checks)
 
 /datum/component/zparallax/proc/ztrait_checks()
-	atomic = tracked.movingmob
-	var/parallax = SSmapping.level_trait(atomic.z, ZTRAIT_NOPARALLAX)
-	var/datum/hud/chud = atomic.hud_used
+	SIGNAL_HANDLER
+
+	client_mob = tracked.movingmob
+	var/parallax = SSmapping.level_trait(client_mob.z, ZTRAIT_NOPARALLAX)
+	var/datum/hud/hud = client_mob.hud_used
 
 	if(tracked.prefs.read_preference(/datum/preference/choiced/parallax) == PARALLAX_DISABLE)
 		return
 
 	if(!parallax)
-		chud.create_parallax(atomic)
+		hud.create_parallax(client_mob)
 		return
 	else
-		chud.remove_parallax(atomic)
+		hud.remove_parallax(client_mob)
 		return
