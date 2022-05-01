@@ -32,7 +32,8 @@
 		M.laws_sanity_check()
 		if(M.stat != DEAD && !M.incapacitated())
 			if(prob(replaceLawsetChance))
-				M.laws.pick_weighted_lawset()
+				var/datum/ai_laws/ion_lawset = pick_weighted_lawset()
+				M.laws.inherent = ion_lawset.inherent
 
 			if(prob(removeRandomLawChance))
 				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))

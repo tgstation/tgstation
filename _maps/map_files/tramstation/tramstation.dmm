@@ -39007,7 +39007,7 @@
 /obj/structure/sign/plaques/kiddie{
 	pixel_y = -32
 	},
-/obj/item/ai_module/core/full/asimov,
+/obj/item/ai_module/core/round_default_laws,
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
 "mDX" = (

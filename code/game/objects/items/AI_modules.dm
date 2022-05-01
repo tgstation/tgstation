@@ -20,14 +20,14 @@ AI MODULES
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	custom_materials = list(/datum/material/gold = 50)
 	var/list/laws = list()
 	var/bypass_law_amt_check = 0
-	custom_materials = list(/datum/material/gold = 50)
 
 /obj/item/ai_module/Initialize(mapload)
 	. = ..()
 	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI) && is_station_level(z))
-		return INITIALIZE_HINT_QDEL //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
+		return handle_unique_ai()
 
 /obj/item/ai_module/examine(mob/user as mob)
 	. = ..()
@@ -37,6 +37,10 @@ AI MODULES
 /obj/item/ai_module/attack_self(mob/user as mob)
 	..()
 	show_laws(user)
+
+///what this module should do if it is mapload spawning on a unique AI station trait round.
+/obj/item/ai_module/proc/handle_unique_ai()
+	return INITIALIZE_HINT_QDEL //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
 
 /obj/item/ai_module/proc/show_laws(mob/user as mob)
 	if(laws.len)
@@ -309,6 +313,9 @@ AI MODULES
 	desc = "An AI Module for removing all non-core laws."
 	bypass_law_amt_check = 1
 
+/obj/item/ai_module/reset/handle_unique_ai()
+	return
+
 /obj/item/ai_module/reset/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()
 	if(law_datum.owner)
@@ -346,12 +353,11 @@ AI MODULES
 	. = ..()
 	if(!law_id)
 		return
-	var/datum/ai_laws/D = new
-	var/lawtype = D.lawid_to_type(law_id)
+	var/lawtype = lawid_to_type(law_id)
 	if(!lawtype)
 		return
-	D = new lawtype
-	laws = D.inherent
+	var/datum/ai_laws/core_laws = new lawtype
+	laws = core_laws.inherent
 
 /obj/item/ai_module/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow) //These boards replace inherent laws.
 	if(law_datum.owner)
@@ -363,6 +369,18 @@ AI MODULES
 	..()
 
 /******************** Asimov ********************/
+
+/obj/item/ai_module/core/round_default_laws
+	name = "Default Laws" //gets renamed
+
+/obj/item/ai_module/core/round_default_laws/Initialize(mapload)
+	. = ..()
+	var/datum/ai_laws/default_laws = new GLOB.round_default_lawset()
+	name = "'[default_laws.name]' Core AI Module"
+	laws = default_laws.inherent
+
+/obj/item/ai_module/core/round_default_laws/handle_unique_ai()
+	return
 
 /obj/item/ai_module/core/full/asimov
 	name = "'Asimov' Core AI Module"

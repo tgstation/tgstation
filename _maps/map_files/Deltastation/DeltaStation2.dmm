@@ -5821,7 +5821,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/status_display/evac/directional/south,
-/obj/item/ai_module/core/full/asimov{
+/obj/item/ai_module/core/round_default_laws{
 	pixel_x = -3;
 	pixel_y = -3
 	},

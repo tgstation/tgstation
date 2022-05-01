@@ -40499,7 +40499,7 @@
 	},
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/light/cold/directional/west,
-/obj/item/ai_module/core/full/asimov,
+/obj/item/ai_module/core/round_default_laws,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

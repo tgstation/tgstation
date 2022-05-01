@@ -912,7 +912,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-//Yes, nodes have their own initialize (thanks kev!) but this should trigger before initialize just fine.
+//Any kind of point adjustment needs to happen before SSresearch sets up the whole node tree, it gets cached
 /datum/techweb_node/ai/New()
 	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))

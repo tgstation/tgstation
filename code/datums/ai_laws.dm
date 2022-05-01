@@ -1,5 +1,63 @@
 #define AI_LAWS_ASIMOV "asimov"
 
+///What lawset type is considered the "default" ones. In most cases, this is just asimov, but a few circumstances change that.
+///Requires config, which isn't loaded at the time global vars init, so setup_round_default_laws is called by the first request to use this global.
+GLOBAL_VAR(round_default_lawset)
+
+/proc/setup_round_default_laws()
+	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
+
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		return pick_weighted_lawset()
+
+	switch(CONFIG_GET(number/default_laws))
+		if(0) //plain ol' asimov
+			return /datum/ai_laws/default/asimov
+		if(1) //custom configged laws
+			return /datum/ai_laws/custom
+		if(2) //random laws
+			var/list/randlaws = list()
+			for(var/lpath in subtypesof(/datum/ai_laws))
+				var/datum/ai_laws/L = lpath
+				if(initial(L.id) in law_ids)
+					randlaws += lpath
+			var/datum/ai_laws/lawtype
+			if(randlaws.len)
+				lawtype = pick(randlaws)
+			else
+				lawtype = pick(subtypesof(/datum/ai_laws/default))
+
+			return lawtype
+
+		if(3) //random WEIGHTED laws :)
+			return pick_weighted_lawset()
+
+/proc/pick_weighted_lawset()
+	var/datum/ai_laws/lawtype
+	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		law_weights -= AI_LAWS_ASIMOV
+	while(!lawtype && law_weights.len)
+		var/possible_id = pick_weight(law_weights)
+		lawtype = lawid_to_type(possible_id)
+		if(!lawtype)
+			law_weights -= possible_id
+			WARNING("Bad lawid in game_options.txt: [possible_id]")
+
+	if(!lawtype)
+		WARNING("No LAW_WEIGHT entries.")
+		lawtype = /datum/ai_laws/default/asimov
+
+	return lawtype
+
+/proc/lawid_to_type(lawid)
+	var/all_ai_laws = subtypesof(/datum/ai_laws)
+	for(var/al in all_ai_laws)
+		var/datum/ai_laws/ai_law = al
+		if(initial(ai_law.id) == lawid)
+			return ai_law
+	return null
+
 /datum/ai_laws
 	var/name = "Unknown Laws"
 	var/zeroth = null
@@ -11,7 +69,7 @@
 	var/mob/living/silicon/owner
 	var/id = DEFAULT_AI_LAWID
 
-/datum/ai_laws/Destroy(force=FALSE, ...)
+/datum/ai_laws/Destroy(force = FALSE, ...)
 	if(!QDELETED(owner)) //Stopgap to help with laws randomly being lost. This stack_trace will hopefully help find the real issues.
 		if(force) //Unless we're forced...
 			stack_trace("AI law datum for [owner] has been forcefully destroyed incorrectly; the owner variable should be cleared first!")
@@ -21,13 +79,6 @@
 	owner = null
 	return ..()
 
-/datum/ai_laws/proc/lawid_to_type(lawid)
-	var/all_ai_laws = subtypesof(/datum/ai_laws)
-	for(var/al in all_ai_laws)
-		var/datum/ai_laws/ai_law = al
-		if(initial(ai_law.id) == lawid)
-			return ai_law
-	return null
 
 /*******************************************************/
 /******************** H A R M L E S S ******************/
@@ -263,56 +314,10 @@
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_laws_config()
-	var/list/law_ids = CONFIG_GET(keyed_list/random_laws)
-
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
-		pick_weighted_lawset()
-		return
-
-	switch(CONFIG_GET(number/default_laws))
-		if(0)
-			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-		if(1)
-			var/datum/ai_laws/templaws = new /datum/ai_laws/custom()
-			inherent = templaws.inherent
-		if(2)
-			var/list/randlaws = list()
-			for(var/lpath in subtypesof(/datum/ai_laws))
-				var/datum/ai_laws/L = lpath
-				if(initial(L.id) in law_ids)
-					randlaws += lpath
-			var/datum/ai_laws/lawtype
-			if(randlaws.len)
-				lawtype = pick(randlaws)
-			else
-				lawtype = pick(subtypesof(/datum/ai_laws/default))
-
-			var/datum/ai_laws/templaws = new lawtype()
-			inherent = templaws.inherent
-
-		if(3)
-			pick_weighted_lawset()
-
-/datum/ai_laws/proc/pick_weighted_lawset()
-	var/datum/ai_laws/lawtype
-	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
-		law_weights -= AI_LAWS_ASIMOV
-	while(!lawtype && law_weights.len)
-		var/possible_id = pick_weight(law_weights)
-		lawtype = lawid_to_type(possible_id)
-		if(!lawtype)
-			law_weights -= possible_id
-			WARNING("Bad lawid in game_options.txt: [possible_id]")
-
-	if(!lawtype)
-		WARNING("No LAW_WEIGHT entries.")
-		lawtype = /datum/ai_laws/default/asimov
-
-	var/datum/ai_laws/templaws = new lawtype()
-	inherent = templaws.inherent
+	if(!GLOB.round_default_lawset)
+		GLOB.round_default_lawset = setup_round_default_laws()
+	var/datum/ai_laws/default_laws = new GLOB.round_default_lawset()
+	inherent = default_laws.inherent
 
 /datum/ai_laws/proc/get_law_amount(groups)
 	var/law_amount = 0
