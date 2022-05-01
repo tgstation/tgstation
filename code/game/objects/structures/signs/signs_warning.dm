@@ -167,7 +167,7 @@
 /obj/structure/sign/warning/gasmask
 	name = "\improper CONTAMINATED AIR sign"
 	sign_change_name = "Warning - Contaminated Air"
-	desc = "A sign that warns of dangerous particulates or gasses in the air, instructing you to wear a filtration device."
+	desc = "A sign that warns of dangerous particulates or gasses in the air, instructing you to wear internals."
 	icon_state = "gasmask"
 	is_editable = TRUE
 

@@ -16,7 +16,6 @@
 :cl:
 add: Added new mechanics or gameplay changes
 add: Added more things
-expansion: Expands content of an existing feature
 del: Removed old things
 qol: made something easier to use
 balance: rebalanced something

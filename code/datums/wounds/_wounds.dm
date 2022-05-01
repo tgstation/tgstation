@@ -364,6 +364,24 @@
 /datum/wound/proc/on_stasis(delta_time, times_fired)
 	return
 
+/// Sets our blood flow
+/datum/wound/proc/set_blood_flow(set_to)
+	adjust_blood_flow(set_to - blood_flow)
+
+/// Use this to modify blood flow. You must use this to change the variable
+/// Takes the amount to adjust by, and the lowest amount we're allowed to have post adjust
+/datum/wound/proc/adjust_blood_flow(adjust_by, minimum = 0)
+	if(!adjust_by)
+		return
+	var/old_flow = blood_flow
+	blood_flow = max(blood_flow + adjust_by, minimum)
+
+	if(old_flow == blood_flow)
+		return
+
+	/// Update our bleed rate
+	limb.refresh_bleed_rate()
+
 /// Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood
 /datum/wound/proc/drag_bleed_amount()
 	return

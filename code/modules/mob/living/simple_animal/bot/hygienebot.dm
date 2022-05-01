@@ -50,6 +50,8 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+	ADD_TRAIT(src, TRAIT_SPRAY_PAINTABLE, INNATE_TRAIT)
+
 /mob/living/simple_animal/bot/hygienebot/explode()
 	new /obj/effect/particle_effect/foam(loc)
 
@@ -92,6 +94,8 @@
 	if(washing)
 		do_wash(loc)
 		for(var/AM in loc)
+			if (AM == src)
+				continue
 			do_wash(AM)
 		if(isopenturf(loc) && !(bot_cover_flags & BOT_COVER_EMAGGED))
 			var/turf/open/tile = loc
