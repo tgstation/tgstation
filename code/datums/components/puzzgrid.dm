@@ -14,6 +14,7 @@
 	var/datum/callback/on_fail_callback
 
 	var/time_to_finish
+	var/timer_id
 
 	var/list/all_answers
 	var/list/selected_answers = list()
@@ -42,14 +43,30 @@
 	all_answers = puzzgrid.answers.Copy()
 
 	if (!isnull(timer))
-		addtimer(CALLBACK(src, .proc/out_of_time), timer)
-		time_to_finish = world.time + timer
+		update_timer(timer)
+
+/datum/component/puzzgrid/Destroy(force, silent)
+	deltimer(timer_id)
+
+	QDEL_NULL(puzzgrid)
+	QDEL_NULL(on_victory_callback)
+	QDEL_NULL(on_fail_callback)
+	QDEL_LIST(solved_groups)
+
+	return ..()
 
 /datum/component/puzzgrid/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 
 /datum/component/puzzgrid/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
+
+/// Public proc, updates the timer
+/datum/component/puzzgrid/proc/update_timer(time_left)
+	deltimer(timer_id)
+
+	timer_id = addtimer(CALLBACK(src, .proc/out_of_time), time_left, TIMER_STOPPABLE)
+	time_to_finish = world.time + time_left
 
 /datum/component/puzzgrid/proc/on_attack_hand(atom/source, mob/user)
 	SIGNAL_HANDLER
