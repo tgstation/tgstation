@@ -326,34 +326,35 @@
 				last_icon_state = null
 		return TRUE
 
-	if(iscarbon(owner))
-		var/mob/living/carbon/victim = owner
-		var/fire_icon = "generic_burning[get_special_icon()]"
-		if(ishuman(victim) && stacks > HUMAN_FIRE_STACK_ICON_NUM)
-			var/mob/living/carbon/human/human_victim = victim
-			if(human_victim.dna && human_victim.dna.species)
-				fire_icon = "[human_victim.dna.species.fire_overlay][get_special_icon()]"
-			else
-				fire_icon = "human_burning[get_special_icon()]"
+	if(!iscarbon(owner))
+		return FALSE
 
-		if((stacks > 0 && on_fire) || HAS_TRAIT(victim, TRAIT_PERMANENTLY_ONFIRE))
-			if(fire_icon == last_icon_state)
-				return TRUE
+	var/mob/living/carbon/victim = owner
+	var/fire_icon = "generic_burning[get_special_icon()]"
+	if(ishuman(victim) && stacks > HUMAN_FIRE_STACK_ICON_NUM)
+		var/mob/living/carbon/human/human_victim = victim
+		if(human_victim.dna && human_victim.dna.species)
+			fire_icon = "[human_victim.dna.species.fire_overlay][get_special_icon()]"
+		else
+			fire_icon = "human_burning[get_special_icon()]"
 
-			victim.remove_overlay(FIRE_LAYER)
-			var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER)
-			new_fire_overlay.appearance_flags = RESET_COLOR
-			victim.overlays_standing[FIRE_LAYER] = new_fire_overlay
-			victim.apply_overlay(FIRE_LAYER)
-			last_icon_state = fire_icon
+	if((stacks > 0 && on_fire) || HAS_TRAIT(victim, TRAIT_PERMANENTLY_ONFIRE))
+		if(fire_icon == last_icon_state)
+			return TRUE
 
-		else if(last_icon_state)
-			victim.remove_overlay(FIRE_LAYER)
-			victim.apply_overlay(FIRE_LAYER)
-			last_icon_state = null
+		victim.remove_overlay(FIRE_LAYER)
+		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER)
+		new_fire_overlay.appearance_flags = RESET_COLOR
+		victim.overlays_standing[FIRE_LAYER] = new_fire_overlay
+		victim.apply_overlay(FIRE_LAYER)
+		last_icon_state = fire_icon
 
-		return TRUE
-	return FALSE
+	else if(last_icon_state)
+		victim.remove_overlay(FIRE_LAYER)
+		victim.apply_overlay(FIRE_LAYER)
+		last_icon_state = null
+
+	return TRUE
 
 /**
  * Should return a suffix for custom fire icons, made for inheritance reasons
