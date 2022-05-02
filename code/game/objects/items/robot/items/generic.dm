@@ -96,7 +96,7 @@
 			else if(ishuman(attacked_mob))
 				if(user.body_position == LYING_DOWN)
 					user.visible_message(span_notice("[user] shakes [attacked_mob] trying to get [attacked_mob.p_them()] up!"), \
-									span_notice("You shake [attacked_mob] trying to get [mob.p_them()] up!"))
+									span_notice("You shake [attacked_mob] trying to get [attacked_mob.p_them()] up!"))
 				else
 					user.visible_message(span_notice("[user] hugs [attacked_mob] to make [attacked_mob.p_them()] feel better!"), \
 							span_notice("You hug [attacked_mob] to make [attacked_mob.p_them()] feel better!"))
@@ -119,8 +119,8 @@
 				else
 					user.visible_message(span_warning("[user] hugs [attacked_mob] in a firm bear-hug! [attacked_mob] looks uncomfortable..."), \
 							span_warning("You hug [attacked_mob] firmly to make [attacked_mob.p_them()] feel better! [attacked_mob] looks uncomfortable..."))
-				if(mob.resting)
-					mob.set_resting(FALSE, TRUE)
+				if(attacked_mob.resting)
+					attacked_mob.set_resting(FALSE, TRUE)
 			else
 				user.visible_message(span_warning("[user] bops [attacked_mob] on the head!"), \
 						span_warning("You bop [attacked_mob] on the head!"))
