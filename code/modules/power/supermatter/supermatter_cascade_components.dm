@@ -12,8 +12,7 @@
 /turf/closed/indestructible/supermatter_wall/Initialize(mapload)
 	. = ..()
 	icon_state = "crystal_cascade_[rand(1,6)]"
-	var/datum/controller/subsystem/processing/subsystem = locate(/datum/controller/subsystem/machines) in Master.subsystems
-	START_PROCESSING(subsystem, src)
+	START_PROCESSING(SSmachines, src)
 
 /turf/closed/indestructible/supermatter_wall/process()
 
