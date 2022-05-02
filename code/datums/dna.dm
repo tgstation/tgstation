@@ -534,11 +534,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		update_body(is_creating = TRUE)
 		update_mutations_overlay()
 
-	if(LAZYLEN(mutations))
+	if(LAZYLEN(mutations) && !isnull(force_transfer_mutations))
 		for(var/M in mutations)
 			var/datum/mutation/human/HM = M
-			if(HM.allow_transfer || force_transfer_mutations)
-				dna.force_give(new HM.type(HM.class, copymut=HM)) //using force_give since it may include exotic mutations that otherwise won't be handled properly
+			dna.force_give(new HM.type(HM.class, copymut=HM)) //using force_give since it may include exotic mutations that otherwise won't be handled properly
 
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
