@@ -59,7 +59,7 @@
 		"You are the Dungeon Master of the game.",
 		"Ensure that the game runs smoothly and that the players have fun.",
 		"Ensure that the number of casualties remains low.",
-		"You must roll a 1d20 dice for every request the crew makes. If the outcome is below 12, the request is denied.",
+		"You must roll a 1d20 die for every request the crew makes. If the outcome is below 12, the request is denied.",
 		"You may fudge the dice rolls to produce a more fun experience.",
 	)
 
