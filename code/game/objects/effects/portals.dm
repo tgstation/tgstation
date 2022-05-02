@@ -49,6 +49,8 @@
 
 /obj/effect/portal/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
+	if(!..())
+		return FALSE
 	var/mob/living/living_mover = mover
 	if(HAS_TRAIT(mover, TRAIT_NO_TELEPORT) && !force_teleport)
 		return TRUE
