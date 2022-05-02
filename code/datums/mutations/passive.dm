@@ -16,7 +16,7 @@
 	name = "Clever"
 	desc = "Causes the subject to feel just a little bit smarter."
 	quality = POSITIVE
-	instability = 5
+	instability = 20
 
 /datum/mutation/human/clever/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
