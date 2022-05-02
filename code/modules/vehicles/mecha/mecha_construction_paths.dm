@@ -323,6 +323,8 @@
 
 	skip_extra_steps(diff, forward)
 
+	var/curr_step = forward ? message_step : (message_step - 1)
+
 	switch(curr_step)
 		if(ADD_TREADS_STEP)
 			user.balloon_alert_to_viewers("[forward ? "added" : "removed"] tread systems")
