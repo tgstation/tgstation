@@ -30,52 +30,53 @@
  */
 /proc/random_bounty(guided = 0)
 	var/bounty_num
-	if(guided && (guided != CIV_JOB_RANDOM))
-		bounty_num = guided
-	else
-		bounty_num = rand(1,12)
-	switch(bounty_num)
-		if(1)
-			var/subtype = pick(subtypesof(/datum/bounty/item/assistant))
-			return new subtype
-		if(2)
-			var/subtype = pick(subtypesof(/datum/bounty/item/mech))
-			return new subtype
-		if(3)
-			var/subtype = pick(subtypesof(/datum/bounty/item/chef))
-			return new subtype
-		if(4)
-			var/subtype = pick(subtypesof(/datum/bounty/item/security))
-			return new subtype
-		if(5)
-			if(rand(2) == 1)
-				return new /datum/bounty/reagent/simple_drink
-			return new /datum/bounty/reagent/complex_drink
-		if(6)
-			if(rand(2) == 1)
-				return new /datum/bounty/reagent/chemical_simple
-			return new /datum/bounty/reagent/chemical_complex
-		if(7)
-			var/subtype = pick(subtypesof(/datum/bounty/virus))
-			return new subtype
-		if(8)
-			if(rand(2) == 1)
-				var/subtype = pick(subtypesof(/datum/bounty/item/science))
-				return new subtype
-			var/subtype = pick(subtypesof(/datum/bounty/item/slime))
-			return new subtype
-		if(9)
-			var/subtype = pick(subtypesof(/datum/bounty/item/engineering))
-			return new subtype
-		if(10)
-			var/subtype = pick(subtypesof(/datum/bounty/item/mining))
-			return new subtype
-		if(11)
-			var/subtype = pick(subtypesof(/datum/bounty/item/medical))
-			return new subtype
-		if(12)
-			var/subtype = pick(subtypesof(/datum/bounty/item/botany))
-			return new subtype
-		if(13)
-			var/subtype = pick(subtypesof(/datum/bounty/item/atmospherics))
-			return new subtype
+	var/chosen_type
+	var/bounty_succeeded = FALSE
+	var/datum/bounty/item/bounty_ref
+	while(!bounty_succeeded)
+		if(guided && (guided != CIV_JOB_RANDOM))
+			bounty_num = guided
+		else
+			bounty_num = rand(1,13)
+		switch(bounty_num)
+			if(1)
+				chosen_type = pick(subtypesof(/datum/bounty/item/assistant))
+			if(2)
+				chosen_type = pick(subtypesof(/datum/bounty/item/mech))
+			if(3)
+				chosen_type = pick(subtypesof(/datum/bounty/item/chef))
+			if(4)
+				chosen_type = pick(subtypesof(/datum/bounty/item/security))
+			if(5)
+				if(prob(50))
+					chosen_type = /datum/bounty/reagent/simple_drink
+				else
+					chosen_type = /datum/bounty/reagent/complex_drink
+			if(6)
+				if(prob(50))
+					chosen_type = /datum/bounty/reagent/chemical_simple
+				else
+					chosen_type = /datum/bounty/reagent/chemical_complex
+			if(7)
+				chosen_type = pick(subtypesof(/datum/bounty/virus))
+			if(8)
+				if(prob(50))
+					chosen_type = pick(subtypesof(/datum/bounty/item/science/ref_anomaly))
+				else
+					chosen_type = pick(subtypesof(/datum/bounty/item/slime))
+			if(9)
+				chosen_type = pick(subtypesof(/datum/bounty/item/engineering))
+			if(10)
+				chosen_type = pick(subtypesof(/datum/bounty/item/mining))
+			if(11)
+				chosen_type = pick(subtypesof(/datum/bounty/item/medical))
+			if(12)
+				chosen_type = pick(subtypesof(/datum/bounty/item/botany))
+			if(13)
+				chosen_type = pick(subtypesof(/datum/bounty/item/atmospherics))
+		bounty_ref = new chosen_type
+		if(bounty_ref.can_get())
+			bounty_succeeded = TRUE
+		else
+			qdel(bounty_ref)
+	return bounty_ref

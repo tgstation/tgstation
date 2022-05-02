@@ -1,10 +1,12 @@
 /datum/bounty/item/atmospherics
-	name = "Full Tank of Pluoxium"
-	description = "CentCom RnD is researching extra compact internals. Ship us a tank full of Pluoxium and you'll be compensated. (20 Moles)"
+	name = "Gas Parent"
+	description = "Shit's broken if you see this."
 	reward = CARGO_CRATE_VALUE * 15
 	wanted_types = list(/obj/item/tank = TRUE)
-	var/moles_required = 20 // A full tank is 28 moles, but CentCom ignores that fact.
-	var/gas_type = /datum/gas/pluoxium
+	/// How many moles are needed to fufill the bounty?
+	var/moles_required = 20
+	/// Typepath of the gas datum required to fufill the bounty
+	var/gas_type
 
 /datum/bounty/item/atmospherics/applies_to(obj/O)
 	if(!..())
@@ -14,6 +16,11 @@
 	if(!our_mix.gases[gas_type])
 		return FALSE
 	return our_mix.gases[gas_type][MOLES] >= moles_required
+
+/datum/bounty/item/atmospherics/pluox_tank
+	name = "Full Tank of Pluoxium"
+	description = "CentCom RnD is researching extra compact internals. Ship us a tank full of Pluoxium and you'll be compensated. (20 Moles)"
+	gas_type = /datum/gas/pluoxium
 
 /datum/bounty/item/atmospherics/nitrium_tank
 	name = "Full Tank of Nitrium"
