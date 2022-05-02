@@ -312,7 +312,6 @@ Difficulty: Hard
 	name = "Polar Bear Form"
 	desc = "Take on the shape of a polar bear."
 	invocation = "RAAAAAAAAWR!"
-	convert_damage = FALSE
 	shapeshift_type = /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
 
 /obj/item/crusher_trophy/wendigo_horn

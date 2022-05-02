@@ -1,8 +1,8 @@
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
 	create_reagents(1000, REAGENT_HOLDER_ALIVE)
-	assign_bodypart_ownership()
 	update_body_parts() //to update the carbon's new bodyparts appearance
+	register_context()
 
 	// Carbons cannot taste anything without a tongue; the tongue organ removes this on Insert
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
@@ -84,6 +84,12 @@
 
 	return ..()
 
+/mob/living/carbon/CtrlShiftClick(mob/user)
+	..()
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		carbon_user.give(src)
+
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/hurt = TRUE
@@ -114,7 +120,7 @@
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""]!"))
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
-
+		log_combat(src, victim, "crashed into")
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -841,15 +847,29 @@
 	if(handcuffed)
 		drop_all_held_items()
 		stop_pulling()
-		throw_alert("handcuffed", /atom/movable/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
+		throw_alert(ALERT_HANDCUFFED, /atom/movable/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
 	else
-		clear_alert("handcuffed")
+		clear_alert(ALERT_HANDCUFFED)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
+/mob/living/carbon/heal_and_revive(heal_to = 75, revive_message)
+	// We can't heal them if they're missing a heart
+	if(needs_heart() && !getorganslot(ORGAN_SLOT_HEART))
+		return FALSE
+
+	// We can't heal them if they're missing their lungs
+	if(!HAS_TRAIT(src, TRAIT_NOBREATH) && !getorganslot(ORGAN_SLOT_LUNGS))
+		return FALSE
+
+	// And we can't heal them if they're missing their liver
+	if(!getorganslot(ORGAN_SLOT_LIVER))
+		return FALSE
+
+	return ..()
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
@@ -908,20 +928,18 @@
 		if (heart.organ_flags & ORGAN_FAILING)
 			return DEFIB_FAIL_FAILING_HEART
 
-	// Carbons with HARS do not need a brain
-	if (!dna?.check_mutation(/datum/mutation/human/headless))
-		var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
+	var/obj/item/organ/brain/current_brain = getorgan(/obj/item/organ/brain)
 
-		if (QDELETED(BR))
-			return DEFIB_FAIL_NO_BRAIN
+	if (QDELETED(current_brain))
+		return DEFIB_FAIL_NO_BRAIN
 
-		if (BR.organ_flags & ORGAN_FAILING)
-			return DEFIB_FAIL_FAILING_BRAIN
+	if (current_brain.organ_flags & ORGAN_FAILING)
+		return DEFIB_FAIL_FAILING_BRAIN
 
-		if (BR.suicided || BR.brainmob?.suiciding)
-			return DEFIB_FAIL_NO_INTELLIGENCE
+	if (current_brain.suicided || current_brain.brainmob?.suiciding)
+		return DEFIB_FAIL_NO_INTELLIGENCE
 
-	if(key && key[1] == "@") // Adminghosts (#61870)
+	if(key && key[1] == "@") // Adminghosts
 		return DEFIB_NOGRAB_AGHOST
 
 	return DEFIB_POSSIBLE
@@ -979,6 +997,7 @@
 ///Proc to hook behavior on bodypart additions.
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	bodyparts += new_bodypart
+	new_bodypart.set_owner(src)
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
@@ -994,7 +1013,6 @@
 ///Proc to hook behavior on bodypart removals.
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
 	bodyparts -= old_bodypart
-
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs - 1)
@@ -1011,6 +1029,17 @@
 		var/obj/item/organ/I = X
 		I.Insert(src)
 
+/// Takes an organ to slot in, and the slot to put it in, and puts in inside our lists properly
+/// To be called once the organ is actually inside us. NOT a helper proc
+/mob/living/carbon/proc/slot_in_organ(obj/item/organ/insert, slot)
+	internal_organs |= insert
+	internal_organs_slot[slot] = insert
+	/// internal_organs_slot must ALWAYS be ordered in the same way as organ_process_order
+	/// Otherwise life processing breaks down
+	sortTim(internal_organs_slot, /proc/cmp_organ_slot_asc)
+
+/proc/cmp_organ_slot_asc(slot_a, slot_b)
+	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
@@ -1028,43 +1057,52 @@
 	if(href_list[VV_HK_MODIFY_BODYPART])
 		if(!check_rights(R_SPAWN))
 			return
-		var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
+		var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("replace","remove")
 		if(!edit_action)
 			return
 		var/list/limb_list = list()
-		if(edit_action == "remove" || edit_action == "augment")
-			for(var/obj/item/bodypart/B in bodyparts)
+		if(edit_action == "remove")
+			for(var/obj/item/bodypart/B as anything in bodyparts)
 				limb_list += B.body_zone
-			if(edit_action == "remove")
 				limb_list -= BODY_ZONE_CHEST
 		else
-			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-			for(var/obj/item/bodypart/B in bodyparts)
-				limb_list -= B.body_zone
-		var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in sort_list(limb_list)
+			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
+		var/result = input(usr, "Please choose which bodypart to [edit_action]","[capitalize(edit_action)] Bodypart") as null|anything in sort_list(limb_list)
 		if(result)
 			var/obj/item/bodypart/BP = get_bodypart(result)
+			var/list/limbtypes = list()
+			switch(result)
+				if(BODY_ZONE_CHEST)
+					limbtypes = typesof(/obj/item/bodypart/chest)
+				if(BODY_ZONE_R_ARM)
+					limbtypes = typesof(/obj/item/bodypart/r_arm)
+				if(BODY_ZONE_L_ARM)
+					limbtypes = typesof(/obj/item/bodypart/l_arm)
+				if(BODY_ZONE_HEAD)
+					limbtypes = typesof(/obj/item/bodypart/head)
+				if(BODY_ZONE_L_LEG)
+					limbtypes = typesof(/obj/item/bodypart/l_leg)
+				if(BODY_ZONE_R_LEG)
+					limbtypes = typesof(/obj/item/bodypart/r_leg)
 			switch(edit_action)
 				if("remove")
 					if(BP)
-						BP.drop_limb()
+						BP.drop_limb(special = TRUE)
+						admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [parse_zone(BP.body_zone)]")
 					else
 						to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
-				if("add")
-					if(BP)
-						to_chat(usr, span_boldwarning("[src] already has such bodypart."))
+						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+				if("replace")
+					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
+					var/obj/item/bodypart/new_bp = new limb2add()
+
+					if(new_bp.replace_limb(src, special = TRUE))
+						admin_ticket_log("key_name_admin(usr)] has replaced [src]'s [BP.type] with [new_bp.type]")
+						qdel(BP)
 					else
-						if(!regenerate_limb(result))
-							to_chat(usr, span_boldwarning("[src] cannot have such bodypart."))
-				if("augment")
-					if(ishuman(src))
-						if(BP)
-							BP.change_bodypart_status(BODYPART_ROBOTIC, TRUE, TRUE)
-						else
-							to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
-					else
-						to_chat(usr, span_boldwarning("Only humans can be augmented."))
-		admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src]")
+						to_chat(usr, "Failed to replace bodypart! They might be incompatible.")
+						admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
+
 	if(href_list[VV_HK_MAKE_AI])
 		if(!check_rights(R_SPAWN))
 			return
@@ -1193,17 +1231,15 @@
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
-	for(var/i in bodyparts)
-		var/obj/item/bodypart/BP = i
-		if(BP.get_bleed_rate())
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		if(part.get_modified_bleed_rate())
 			return TRUE
 
 /// get our total bleedrate
 /mob/living/carbon/proc/get_total_bleed_rate()
 	var/total_bleed_rate = 0
-	for(var/i in bodyparts)
-		var/obj/item/bodypart/BP = i
-		total_bleed_rate += BP.get_bleed_rate()
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		total_bleed_rate += part.get_modified_bleed_rate()
 
 	return total_bleed_rate
 
@@ -1364,10 +1400,10 @@
 		return SIGN_HANDS_FULL // These aren't booleans
 	if(exit_left && exit_right)//Can't sign with no arms!
 		return SIGN_ARMLESS
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
-		return SIGN_TRAIT_BLOCKED
 	if(handcuffed) // Cuffed, usually will show visual effort to sign
 		return SIGN_CUFFED
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
+		return SIGN_TRAIT_BLOCKED
 	if(length(empty_indexes) == 1 || exit_left || exit_right) // One arm gone
 		return SIGN_ONE_HAND
 

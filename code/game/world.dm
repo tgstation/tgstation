@@ -154,6 +154,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
+	GLOB.filter_log = "[GLOB.log_directory]/filters.log"
 
 	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
 
@@ -378,6 +379,10 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+
+/world/Profile(command, type, format)
+	if((command & PROFILE_STOP) || !global.config?.loaded || !CONFIG_GET(flag/forbid_all_profiling))
+		. = ..()
 
 #undef OVERRIDE_LOG_DIRECTORY_PARAMETER
 #undef NO_INIT_PARAMETER

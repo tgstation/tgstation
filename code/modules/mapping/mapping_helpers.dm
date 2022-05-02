@@ -57,27 +57,27 @@
 
 /obj/effect/baseturf_helper/asteroid
 	name = "asteroid baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid
+	baseturf = /turf/open/misc/asteroid
 
 /obj/effect/baseturf_helper/asteroid/airless
 	name = "asteroid airless baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/airless
+	baseturf = /turf/open/misc/asteroid/airless
 
 /obj/effect/baseturf_helper/asteroid/basalt
 	name = "asteroid basalt baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/basalt
+	baseturf = /turf/open/misc/asteroid/basalt
 
 /obj/effect/baseturf_helper/asteroid/snow
 	name = "asteroid snow baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/snow
+	baseturf = /turf/open/misc/asteroid/snow
 
 /obj/effect/baseturf_helper/beach/sand
 	name = "beach sand baseturf editor"
-	baseturf = /turf/open/floor/plating/beach/sand
+	baseturf = /turf/open/misc/beach/sand
 
 /obj/effect/baseturf_helper/beach/water
 	name = "water baseturf editor"
-	baseturf = /turf/open/floor/plating/beach/water
+	baseturf = /turf/open/water/beach
 
 /obj/effect/baseturf_helper/lava
 	name = "lava baseturf editor"
@@ -101,17 +101,57 @@
 //airlock helpers
 /obj/effect/mapping_helpers/airlock
 	layer = DOOR_HELPER_LAYER
+	late = TRUE
 
 /obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
 		return
+
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(!airlock)
 		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
 	else
 		payload(airlock)
+
+/obj/effect/mapping_helpers/airlock/LateInitialize()
+	. = ..()
+	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
+	if(!airlock)
+		qdel(src)
+		return
+	if(airlock.cyclelinkeddir)
+		airlock.cyclelinkairlock()
+	if(airlock.closeOtherId)
+		airlock.update_other_id()
+	if(airlock.abandoned)
+		var/outcome = rand(1,100)
+		switch(outcome)
+			if(1 to 9)
+				var/turf/here = get_turf(src)
+				for(var/turf/closed/T in range(2, src))
+					here.PlaceOnTop(T.type)
+					qdel(src)
+					return
+				here.PlaceOnTop(/turf/closed/wall)
+				qdel(src)
+				return
+			if(9 to 11)
+				airlock.lights = FALSE
+				airlock.locked = TRUE
+			if(12 to 15)
+				airlock.locked = TRUE
+			if(16 to 23)
+				airlock.welded = TRUE
+			if(24 to 30)
+				airlock.panel_open = TRUE
+	if(airlock.cutAiWire)
+		wires.cut(WIRE_AI)
+	if(airlock.autoname)
+		name = get_area_name(src, TRUE)
+	update_appearance()
+	qdel(src)
 
 /obj/effect/mapping_helpers/airlock/proc/payload(obj/machinery/door/airlock/payload)
 	return
@@ -174,6 +214,16 @@
 		log_mapping("[src] at [AREACOORD(src)] tried to cut the ai wire on [airlock] but it's already cut!")
 	else
 		airlock.cutAiWire = TRUE
+
+/obj/effect/mapping_helpers/airlock/autoname
+	name = "airlock autoname helper"
+	icon_state = "airlock_autoname"
+
+/obj/effect/mapping_helpers/airlock/autoname/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.autoname)
+		log_mapping("[src] at [AREACOORD(src)] tried to autoname the [airlock] but it's already autonamed!")
+	else
+		airlock.autoname = TRUE
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
@@ -538,12 +588,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
 		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
 		qdel(src)
+		return
 	if(locate(/obj/machinery/door/airlock) in turf)
 		var/obj/machinery/door/airlock/found_airlock = locate(/obj/machinery/door/airlock) in turf
 		if(note_path)
 			found_airlock.note = note_path
 			found_airlock.update_appearance()
 			qdel(src)
+			return
 		if(note_info)
 			var/obj/item/paper/paper = new /obj/item/paper(src)
 			if(note_name)
@@ -553,8 +605,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			paper.forceMove(found_airlock)
 			found_airlock.update_appearance()
 			qdel(src)
+			return
 		log_mapping("[src] at [x],[y] had no note_path or note_info, cannot place paper note.")
 		qdel(src)
+		return
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
 	qdel(src)
 

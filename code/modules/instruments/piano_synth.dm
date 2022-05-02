@@ -24,7 +24,7 @@
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = PAYCHECK_ASSISTANT * 2.5
+	custom_price = PAYCHECK_CREW * 2.5
 	instrument_range = 1
 	circuit_type = /obj/item/circuit_component/synth/headphones
 	shell_capacity = SHELL_CAPACITY_TINY
@@ -32,8 +32,8 @@
 /obj/item/instrument/piano_synth/headphones/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	RegisterSignal(src, COMSIG_SONG_START, .proc/start_playing)
-	RegisterSignal(src, COMSIG_SONG_END, .proc/stop_playing)
+	RegisterSignal(src, COMSIG_INSTRUMENT_START, .proc/start_playing)
+	RegisterSignal(src, COMSIG_INSTRUMENT_END, .proc/stop_playing)
 
 /**
  * Called by a component signal when our song starts playing.
@@ -59,7 +59,7 @@
 	slot_flags = ITEM_SLOT_EARS
 	strip_delay = 100 //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
-	custom_premium_price = PAYCHECK_ASSISTANT * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
+	custom_premium_price = PAYCHECK_CREW * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
 
 /obj/item/circuit_component/synth
 	display_name = "Synthesizer"
@@ -120,15 +120,15 @@
 /obj/item/circuit_component/synth/register_shell(atom/movable/shell)
 	. = ..()
 	synth = shell
-	RegisterSignal(synth, COMSIG_SONG_START, .proc/on_song_start)
-	RegisterSignal(synth, COMSIG_SONG_END, .proc/on_song_end)
-	RegisterSignal(synth, COMSIG_SONG_SHOULD_STOP_PLAYING, .proc/continue_if_autoplaying)
+	RegisterSignal(synth, COMSIG_INSTRUMENT_START, .proc/on_song_start)
+	RegisterSignal(synth, COMSIG_INSTRUMENT_END, .proc/on_song_end)
+	RegisterSignal(synth, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING, .proc/continue_if_autoplaying)
 
 /obj/item/circuit_component/synth/unregister_shell(atom/movable/shell)
 	if(synth.song.music_player == src)
 		synth.song.stop_playing()
 	synth = null
-	UnregisterSignal(synth, list(COMSIG_SONG_START, COMSIG_SONG_END, COMSIG_SONG_SHOULD_STOP_PLAYING))
+	UnregisterSignal(synth, list(COMSIG_INSTRUMENT_START, COMSIG_INSTRUMENT_END, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING))
 	return ..()
 
 /obj/item/circuit_component/synth/proc/start_playing(datum/port/input/port)

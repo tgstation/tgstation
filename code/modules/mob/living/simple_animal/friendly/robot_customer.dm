@@ -34,7 +34,8 @@
 	ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO] = customer_info
 	ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE] = attending_venue
 	ai_controller.blackboard[BB_CUSTOMER_PATIENCE] = customer_info.total_patience
-	icon_state = customer_info.base_icon
+	icon = customer_info.base_icon
+	icon_state = customer_info.base_icon_state
 	name = "[pick(customer_info.name_prefixes)]-bot"
 	color = rgb(rand(80,255), rand(80,255), rand(80,255))
 	update_icon()
@@ -93,4 +94,11 @@
 	. = ..()
 	if(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])
 		var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-		. += span_notice("Their order was: \"[attending_venue.order_food_line(ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER])].\"")
+		var/wanted_item = ai_controller.blackboard[BB_CUSTOMER_CURRENT_ORDER]
+		var/order
+		if(istype(wanted_item, /datum/custom_order))
+			var/datum/custom_order/custom_order = wanted_item
+			order = custom_order.get_order_line(attending_venue)
+		else
+			order = attending_venue.order_food_line(wanted_item)
+		. += span_notice("Their order was: \"[order].\"")

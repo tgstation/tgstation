@@ -217,6 +217,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/nv_sci_goggles
+	name = "Night Vision Science Goggles"
+	desc = "Goggles that lets the user see in the dark and recognize chemical compounds at a glance."
+	id = "nv_scigoggles"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/plasma = 350, /datum/material/uranium = 1000)
+	build_path = /obj/item/clothing/glasses/science/night
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/roastingstick
 	name = "Advanced Roasting Stick"
 	desc = "A roasting stick for cooking sausages in exotic ovens."
@@ -590,6 +600,16 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 100)
 	build_path = /obj/item/evidencebag
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/inspector
+	name = "N-Spect Scanner"
+	desc = "Central Command-issued inspection device. Performs inspections according to Nanotrasen protocols when activated, then prints an encrypted report regarding the maintenance of the station. Definitely not giving you cancer."
+	id = "inspector"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/uranium = 2000)
+	build_path = /obj/item/inspector
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 

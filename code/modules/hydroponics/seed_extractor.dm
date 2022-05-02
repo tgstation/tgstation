@@ -67,7 +67,29 @@
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
+/obj/machinery/seed_extractor/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	register_context()
+
+/obj/machinery/seed_extractor/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+
+	if(held_item?.get_plant_seed())
+		context[SCREENTIP_CONTEXT_LMB] = "Make seeds"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/storage/bag/plants) && (locate(/obj/item/seeds) in held_item.contents))
+		context[SCREENTIP_CONTEXT_LMB] = "Store seeds"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
 /obj/machinery/seed_extractor/RefreshParts()
+	. = ..()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_seeds = initial(max_seeds) * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -78,15 +100,17 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Extracting <b>[seed_multiplier] to [seed_multiplier * 4]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]</b> seeds.")
 
+/obj/machinery/seed_extractor/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/seed_extractor/attackby(obj/item/O, mob/living/user, params)
 
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
 		return
 
 	if(default_pry_open(O))
-		return
-
-	if(default_unfasten_wrench(user, O))
 		return
 
 	if(default_deconstruction_crowbar(O))
@@ -112,7 +136,6 @@
 	else if (istype(O, /obj/item/seeds))
 		if(add_seed(O))
 			to_chat(user, span_notice("You add [O] to [src.name]."))
-			updateUsrDialog()
 		return
 	else if(!user.combat_mode)
 		to_chat(user, span_warning("You can't extract any seeds from \the [O.name]!"))

@@ -16,6 +16,7 @@
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_OFFLINE
 
+	use_power = NO_POWER_USE
 	var/minimum_timer = 90
 	var/timer_set = 90
 	var/maximum_timer = 60000
@@ -209,11 +210,9 @@
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
-	if (isnull(new_timer))
+	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)))
-		return
-	timer_set = round(new_timer)
+	timer_set = new_timer
 	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
 	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
 	if(choice != "Yes")
@@ -332,7 +331,6 @@
 		holder.delayedlittle = FALSE
 		holder.explode_now = FALSE
 		holder.update_appearance()
-		holder.updateDialog()
 		STOP_PROCESSING(SSfastprocess, holder)
 
 /obj/item/bombcore/training/detonate()

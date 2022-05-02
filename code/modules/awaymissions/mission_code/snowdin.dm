@@ -5,7 +5,8 @@
 	icon_state = "awaycontent1"
 	requires_power = FALSE
 	static_lighting = FALSE
-
+	base_lighting_alpha = 255
+	
 /area/awaymission/snowdin/outside
 	name = "Snowdin Tundra Plains"
 	icon_state = "awaycontent25"
@@ -15,6 +16,7 @@
 	icon_state = "awaycontent2"
 	requires_power = TRUE
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 
 /area/awaymission/snowdin/post/medbay
 	name = "Snowdin Outpost - Medbay"
@@ -97,11 +99,13 @@
 	name = "Snowdin Igloos"
 	icon_state = "awaycontent14"
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 
 /area/awaymission/snowdin/cave
 	name = "Snowdin Caves"
 	icon_state = "awaycontent15"
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 
 /area/awaymission/snowdin/cave/cavern
 	name = "Snowdin Depths"
@@ -116,17 +120,20 @@
 	name = "Snowdin Main Base"
 	icon_state = "awaycontent16"
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 	requires_power = TRUE
 
 /area/awaymission/snowdin/dungeon1
 	name = "Snowdin Depths"
 	icon_state = "awaycontent17"
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 
 /area/awaymission/snowdin/sekret
 	name = "Snowdin Operations"
 	icon_state = "awaycontent18"
 	static_lighting = TRUE
+	base_lighting_alpha = 0
 	requires_power = TRUE
 
 /area/shuttle/snowdin/elevator1
@@ -190,15 +197,15 @@
 		return
 	var/mob/living/carbon/human/burn_human = burn_living
 	var/datum/species/burn_species = burn_human.dna.species
-	if(istype(burn_species, /datum/species/plasmaman) || istype(burn_species, /datum/species/android) || istype(burn_species, /datum/species/synth)) //ignore plasmamen/robotic species
+	if(istype(burn_species, /datum/species/plasmaman) || istype(burn_species, /datum/species/android)) //ignore plasmamen/robotic species
 		return
 
 	var/list/plasma_parts = list()//a list of the organic parts to be turned into plasma limbs
 	var/list/robo_parts = list()//keep a reference of robotic parts so we know if we can turn them into a plasmaman
 	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
-		if(burn_limb.status == BODYPART_ORGANIC && burn_limb.species_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
+		if(IS_ORGANIC_LIMB(burn_limb) && burn_limb.limb_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
 			plasma_parts += burn_limb
-		if(burn_limb.status == BODYPART_ROBOTIC)
+		if(!IS_ORGANIC_LIMB(burn_limb))
 			robo_parts += burn_limb
 
 	burn_human.adjustToxLoss(15)

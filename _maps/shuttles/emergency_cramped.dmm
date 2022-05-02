@@ -31,13 +31,13 @@
 "g" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/book/manual/random,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "h" = (
-/obj/machinery/door/window/southleft,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "i" = (

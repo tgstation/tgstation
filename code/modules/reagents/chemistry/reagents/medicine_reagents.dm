@@ -7,7 +7,6 @@
 // where all the reagents related to medicine go.
 
 /datum/reagent/medicine
-	name = "Medicine"
 	taste_description = "bitterness"
 	failed_chem = /datum/reagent/impurity/healing/medicine_failure
 
@@ -84,8 +83,9 @@
 	M.dizziness = 0
 	M.disgust = 0
 	M.drowsyness = 0
-	M.stuttering = 0
-	M.slurring = 0
+	// Remove all speech related status effects
+	for(var/effect in typesof(/datum/status_effect/speech))
+		M.remove_status_effect(effect)
 	M.jitteriness = 0
 	M.hallucination = 0
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
@@ -162,18 +162,19 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
-	if(M.bodytemperature < T0C)
-		M.adjustOxyLoss(-3 * power * REM * delta_time, 0)
-		M.adjustBruteLoss(-power * REM * delta_time, 0)
-		M.adjustFireLoss(-power * REM * delta_time, 0)
-		M.adjustToxLoss(-power * REM * delta_time, 0, TRUE) //heals TOXINLOVERs
-		M.adjustCloneLoss(-power * REM * delta_time, 0)
-		for(var/i in M.all_wounds)
-			var/datum/wound/iter_wound = i
-			iter_wound.on_xadone(power * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-		REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
-		. = TRUE
+	if(M.IsSleeping() || M.IsUnconscious())
+		var/power = -0.00003 * (M.bodytemperature ** 2) + 3
+		if(M.bodytemperature < T0C)
+			M.adjustOxyLoss(-3 * power * REM * delta_time, 0)
+			M.adjustBruteLoss(-power * REM * delta_time, 0)
+			M.adjustFireLoss(-power * REM * delta_time, 0)
+			M.adjustToxLoss(-power * REM * delta_time, 0, TRUE) //heals TOXINLOVERs
+			M.adjustCloneLoss(-power * REM * delta_time, 0)
+			for(var/i in M.all_wounds)
+				var/datum/wound/iter_wound = i
+				iter_wound.on_xadone(power * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+			REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
+			. = TRUE
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
 
@@ -296,7 +297,7 @@
 
 /datum/reagent/medicine/oxandrolone/overdose_process(mob/living/M, delta_time, times_fired)
 	if(M.getFireLoss()) //It only makes existing burns worse
-		M.adjustFireLoss(4.5 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC) // it's going to be healing either 4 or 0.5
+		M.adjustFireLoss(4.5 * REM * delta_time, FALSE, FALSE, BODYTYPE_ORGANIC) // it's going to be healing either 4 or 0.5
 		. = TRUE
 	..()
 
@@ -339,8 +340,8 @@
 		holder.add_reagent(/datum/reagent/consumable/sugar, 1)
 		holder.remove_reagent(/datum/reagent/medicine/salglu_solution, 0.5)
 	if(DT_PROB(18, delta_time))
-		M.adjustBruteLoss(0.5, FALSE, FALSE, BODYPART_ORGANIC)
-		M.adjustFireLoss(0.5, FALSE, FALSE, BODYPART_ORGANIC)
+		M.adjustBruteLoss(0.5, FALSE, FALSE, BODYTYPE_ORGANIC)
+		M.adjustFireLoss(0.5, FALSE, FALSE, BODYTYPE_ORGANIC)
 		. = TRUE
 	..()
 
@@ -407,8 +408,8 @@
 /datum/reagent/medicine/omnizine/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustToxLoss(1.5 * REM * delta_time, FALSE)
 	M.adjustOxyLoss(1.5 * REM * delta_time, FALSE)
-	M.adjustBruteLoss(1.5 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC)
-	M.adjustFireLoss(1.5 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustBruteLoss(1.5 * REM * delta_time, FALSE, FALSE, BODYTYPE_ORGANIC)
+	M.adjustFireLoss(1.5 * REM * delta_time, FALSE, FALSE, BODYTYPE_ORGANIC)
 	..()
 	. = TRUE
 
@@ -505,7 +506,7 @@
 
 /datum/reagent/medicine/sal_acid/overdose_process(mob/living/M, delta_time, times_fired)
 	if(M.getBruteLoss()) //It only makes existing bruises worse
-		M.adjustBruteLoss(4.5 * REM * delta_time, FALSE, FALSE, BODYPART_ORGANIC) // it's going to be healing either 4 or 0.5
+		M.adjustBruteLoss(4.5 * REM * delta_time, FALSE, FALSE, BODYTYPE_ORGANIC) // it's going to be healing either 4 or 0.5
 		. = TRUE
 	..()
 
@@ -986,13 +987,13 @@
 	ph = 4
 	purity = REAGENT_STANDARD_PURITY
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	inverse_chem_val 	= 0.35
-	inverse_chem		= /datum/reagent/inverse/antihol
+	inverse_chem_val = 0.35
+	inverse_chem = /datum/reagent/inverse/antihol
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = 0
 	M.set_drowsyness(0)
-	M.slurring = 0
+	M.remove_status_effect(/datum/status_effect/speech/slurring/drunk)
 	M.set_confusion(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	M.adjustToxLoss(-0.2 * REM * delta_time, 0)
@@ -1185,6 +1186,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	ph = 4.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	harmful = TRUE
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
@@ -1339,7 +1341,7 @@
 	switch(overdose_progress)
 		if(1 to 40)
 			M.jitteriness = min(M.jitteriness + (1 * REM * delta_time), 10)
-			M.stuttering = min(M.stuttering + (1 * REM * delta_time), 10)
+			M.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
 			M.Dizzy(5 * REM * delta_time)
 			if(DT_PROB(30, delta_time))
 				M.losebreath++
@@ -1347,7 +1349,7 @@
 			M.adjustOxyLoss(0.1 * REM * delta_time, 0)
 			M.adjustStaminaLoss(0.1 * REM * delta_time, 0)
 			M.jitteriness = min(M.jitteriness + (1 * REM * delta_time), 20)
-			M.stuttering = min(M.stuttering + (1 * REM * delta_time), 20)
+			M.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 40 SECONDS)
 			M.Dizzy(10 * REM * delta_time)
 			if(DT_PROB(30, delta_time))
 				M.losebreath++
@@ -1525,7 +1527,7 @@
 		if(!was_working)
 			to_chat(M, span_green("You can feel your flowing blood start thickening!"))
 			was_working = TRUE
-		bloodiest_wound.blood_flow = max(0, bloodiest_wound.blood_flow - (clot_rate * REM * delta_time))
+		bloodiest_wound.adjust_blood_flow(-clot_rate * REM * delta_time)
 	else if(was_working)
 		was_working = FALSE
 

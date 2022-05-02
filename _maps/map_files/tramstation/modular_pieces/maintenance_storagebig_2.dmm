@@ -1,0 +1,216 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/maintenance/port/central)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/central)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/central)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 5
+	},
+/obj/item/storage/toolbox/electrical,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/central)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "General Storage Access";
+	req_one_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/structure/cable,
+/obj/modular_map_connector,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/port/central)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/central)
+"q" = (
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = 32
+	},
+/turf/template_noop,
+/area/template_noop)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/maintenance/port/central)
+"u" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "General Storage Access";
+	req_one_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/port/central)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/maintenance/port/central)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/central)
+"D" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/toolbox/emergency,
+/turf/open/floor/iron/smooth_edge{
+	dir = 1
+	},
+/area/maintenance/port/central)
+"F" = (
+/turf/closed/wall,
+/area/maintenance/port/central)
+"J" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/port/central)
+"N" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/maintenance/port/central)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
+/area/maintenance/port/central)
+"U" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/port/central)
+"Y" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth_corner,
+/area/maintenance/port/central)
+"Z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/central)
+
+(1,1,1) = {"
+F
+F
+F
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+F
+Y
+N
+O
+y
+a
+a
+"}
+(3,1,1) = {"
+F
+d
+p
+p
+p
+a
+q
+"}
+(4,1,1) = {"
+F
+D
+J
+J
+J
+n
+a
+"}
+(5,1,1) = {"
+F
+r
+J
+p
+g
+a
+a
+"}
+(6,1,1) = {"
+F
+F
+u
+U
+F
+a
+a
+"}
+(7,1,1) = {"
+F
+k
+J
+p
+A
+a
+a
+"}
+(8,1,1) = {"
+F
+i
+J
+Z
+i
+a
+a
+"}
+(9,1,1) = {"
+F
+F
+F
+F
+F
+a
+a
+"}

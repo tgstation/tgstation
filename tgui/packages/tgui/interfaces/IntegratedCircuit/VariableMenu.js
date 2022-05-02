@@ -94,6 +94,7 @@ export class VariableMenu extends Component {
                             onMouseDown={(e) =>
                               handleMouseDownSetter(e, val.name)}
                             color={val.color}
+                            disabled={!!val.is_list}
                             tooltip={
                               multiline`
                             Drag me onto the circuit's grid

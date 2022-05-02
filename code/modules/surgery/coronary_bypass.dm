@@ -28,6 +28,9 @@
 		/obj/item/knife = 45,
 		/obj/item/shard = 25)
 	time = 16
+	preop_sound = 'sound/surgery/scalpel1.ogg'
+	success_sound = 'sound/surgery/scalpel2.ogg'
+	failure_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/incise_heart/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to make an incision in [target]'s heart..."),
@@ -43,7 +46,7 @@
 				span_notice("Blood pools around the incision in [target_human]'s heart."),
 				"")
 			var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
-			target_bodypart.generic_bleedstacks += 10
+			target_bodypart.adjustBleedStacks(10)
 			target_human.adjustBruteLoss(10)
 	return ..()
 
@@ -54,7 +57,7 @@
 			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
 			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"))
 		var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
-		target_bodypart.generic_bleedstacks += 10
+		target_bodypart.adjustBleedStacks(10)
 		target_human.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
 		target_human.adjustBruteLoss(10)
 
@@ -67,6 +70,9 @@
 		/obj/item/stack/package_wrap = 15,
 		/obj/item/stack/cable_coil = 5)
 	time = 90
+	preop_sound = 'sound/surgery/hemostat1.ogg'
+	success_sound = 'sound/surgery/hemostat1.ogg'
+	failure_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/coronary_bypass/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to graft a bypass onto [target]'s heart..."),
@@ -94,5 +100,5 @@
 		display_pain(target, "Your chest burns; you feel like you're going insane!")
 		target_human.adjustOrganLoss(ORGAN_SLOT_HEART, 20)
 		var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
-		target_bodypart.generic_bleedstacks += 30
+		target_bodypart.adjustBleedStacks(30)
 	return FALSE

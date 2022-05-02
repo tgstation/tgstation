@@ -87,6 +87,13 @@
 	icon_state = "nosmoking"
 	is_editable = TRUE
 
+/obj/structure/sign/warning/yessmoking/circle
+	name = "\improper YES SMOKING sign"
+	sign_change_name = "Warning - Yes Smoking Alt"
+	desc = "A warning sign which reads 'YES SMOKING'."
+	icon_state = "yessmoking"
+	is_editable = TRUE
+
 /obj/structure/sign/warning/radiation
 	name = "\improper HAZARDOUS RADIATION sign"
 	sign_change_name = "Warning - Radiation"
@@ -160,7 +167,7 @@
 /obj/structure/sign/warning/gasmask
 	name = "\improper CONTAMINATED AIR sign"
 	sign_change_name = "Warning - Contaminated Air"
-	desc = "A sign that warns of dangerous particulates or gasses in the air, instructing you to wear a filtration device."
+	desc = "A sign that warns of dangerous particulates or gasses in the air, instructing you to wear internals."
 	icon_state = "gasmask"
 	is_editable = TRUE
 

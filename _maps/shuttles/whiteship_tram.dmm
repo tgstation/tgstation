@@ -43,7 +43,7 @@
 /area/shuttle/abandoned/engine)
 "ag" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
-/obj/machinery/portable_atmospherics/canister/tier_2,
+/obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
@@ -238,7 +238,7 @@
 "aK" = (
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/structure/crate_empty,
-/obj/effect/spawner/random/medical/firstaid_rare,
+/obj/effect/spawner/random/medical/medkit_rare,
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/salad,
 /obj/effect/spawner/random/maintenance/two,
@@ -265,7 +265,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
 "aP" = (
-/obj/machinery/door/window/westright,
+/obj/machinery/door/window/right/directional/west,
 /obj/effect/turf_decal/arrows/red{
 	dir = 8
 	},
@@ -322,7 +322,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/abandoned/engine)
 "ba" = (
-/obj/machinery/door/window/westleft,
+/obj/machinery/door/window/left/directional/west,
 /obj/effect/turf_decal/arrows/red{
 	dir = 8
 	},
@@ -330,7 +330,7 @@
 /turf/open/floor/mineral/titanium/white/airless,
 /area/shuttle/abandoned/cargo)
 "bb" = (
-/obj/machinery/door/window/eastright,
+/obj/machinery/door/window/right/directional/east,
 /obj/effect/turf_decal/arrows/red{
 	dir = 4
 	},
@@ -422,7 +422,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
 "br" = (
-/obj/machinery/door/window/westleft,
+/obj/machinery/door/window/left/directional/west,
 /obj/effect/turf_decal/arrows/red{
 	dir = 8
 	},
@@ -1052,7 +1052,7 @@
 /turf/open/floor/plastic,
 /area/shuttle/abandoned/bridge)
 "dA" = (
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /obj/effect/turf_decal/arrows/red{
 	dir = 4
 	},
@@ -1071,7 +1071,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "gq" = (
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /obj/effect/turf_decal/arrows/red{
 	dir = 4
 	},
@@ -1283,7 +1283,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/obj/machinery/door/window/brigdoor/northleft,
+/obj/machinery/door/window/brigdoor/left/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -1449,7 +1449,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/bridge)
 "WR" = (
-/obj/machinery/door/window/westright,
+/obj/machinery/door/window/right/directional/west,
 /obj/effect/turf_decal/arrows/red{
 	dir = 8
 	},

@@ -5,9 +5,6 @@
 "ab" = (
 /turf/closed/mineral/random/low_chance,
 /area/ruin/unpowered/no_grav)
-"ac" = (
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
 "af" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/kitchen)
@@ -128,7 +125,7 @@
 "aE" = (
 /obj/machinery/power/apc/away{
 	name = "Recycling APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -633,7 +630,7 @@
 "bN" = (
 /obj/machinery/power/apc/away{
 	name = "Kitchen APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
@@ -781,7 +778,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Hydroponics APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -790,7 +787,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/away{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -1105,7 +1102,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Storage APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1184,25 +1181,6 @@
 /obj/item/healthanalyzer,
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/gauze,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/deepstorage/armory)
-"dc" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/deepstorage/armory)
-"dd" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/brute{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/brute,
-/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "de" = (
@@ -1507,7 +1485,7 @@
 	},
 /obj/machinery/power/apc/away{
 	name = "Main Area APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
@@ -1564,7 +1542,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Armory APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -1795,23 +1773,12 @@
 /obj/machinery/power/apc/away{
 	dir = 1;
 	name = "Airlock Control APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"eN" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/pill_bottle/multiver,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/deepstorage/armory)
 "eO" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/combat{
@@ -2062,8 +2029,7 @@
 /obj/machinery/power/apc/away{
 	dir = 8;
 	name = "Power and Atmospherics APC";
-	pixel_x = -25;
-	pixel_y = 1
+	pixel_x = -25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2100,10 +2066,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "fC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
-	dir = 8;
-	id_tag = "o2_out_bunker";
-	name = "oxygen out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "deepo2";
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2115,7 +2080,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Dormitory APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2149,14 +2114,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fJ" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	input_tag = "o2_in_bunker";
-	name = "Oxygen Supply Control";
-	output_tag = "o2_out_bunker";
-	sensors = list("o2_sensor_bunker" = "Tank")
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("deepo2" = "Oxygen Supply");
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fK" = (
@@ -2166,7 +2128,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fL" = (
 /obj/machinery/air_sensor{
-	id_tag = "o2_sensor_bunker"
+	chamber_id = "deepo2"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2306,13 +2268,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
-"gd" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 8;
-	id = "n2_in_bunker"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/deepstorage/power)
 "ge" = (
 /obj/machinery/door/airlock{
 	name = "Personal Dorm"
@@ -2407,10 +2362,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
-	dir = 8;
-	id_tag = "n2_out_bunker";
-	name = "nitrogen out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "deepn2";
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2463,19 +2417,16 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gC" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	input_tag = "n2_in_bunker";
-	name = "Nitrogen Supply Control";
-	output_tag = "n2_out_bunker";
-	sensors = list("n2_sensor_bunker" = "Tank")
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("deepn2" = "Nitrogen Supply");
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gD" = (
 /obj/machinery/air_sensor{
-	id_tag = "n2_sensor_bunker"
+	chamber_id = "deepn2"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2529,9 +2480,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 8;
-	id = "o2_in_bunker"
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "deepn2";
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2761,6 +2712,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
+"qm" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "deepo2";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/deepstorage/power)
 "rz" = (
 /obj/machinery/conveyor{
 	dir = 6;
@@ -2772,6 +2730,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+"wK" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/medkit/regular,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/deepstorage/armory)
 "Bb" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -2785,6 +2752,17 @@
 	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
+"Ht" = (
+/obj/structure/table,
+/obj/item/storage/medkit/toxin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/pill_bottle/multiver,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/deepstorage/armory)
 "Ik" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2792,6 +2770,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
+"Iy" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"Mp" = (
+/obj/structure/table,
+/obj/item/storage/medkit/brute{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/medkit/brute,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/deepstorage/armory)
 "Rs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -2866,7 +2857,7 @@ aa
 ab
 aa
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -2894,9 +2885,9 @@ ab
 aa
 aa
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 aa
@@ -2921,8 +2912,8 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -2947,8 +2938,8 @@ aa
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 aa
@@ -2973,9 +2964,9 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
 aa
 aa
@@ -3025,9 +3016,9 @@ ab
 aa
 aa
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
 ab
 ab
@@ -3069,12 +3060,12 @@ aa
 aa
 ab
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
-ac
-ac
+Iy
+Iy
 aa
 aa
 aa
@@ -3121,19 +3112,19 @@ ab
 aa
 ab
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 aa
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3173,19 +3164,19 @@ ab
 aa
 ab
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -3230,13 +3221,13 @@ ab
 ab
 ab
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -3430,7 +3421,7 @@ aa
 aa
 aa
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -3482,7 +3473,7 @@ aa
 aa
 aa
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -3521,8 +3512,8 @@ ab
 aa
 aa
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 "}
@@ -3534,7 +3525,7 @@ ab
 aa
 aa
 aa
-ac
+Iy
 ab
 ab
 ab
@@ -3573,20 +3564,20 @@ ab
 aa
 aa
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 "}
 (16,1,1) = {"
 aa
 ab
-ac
+Iy
 ab
 aa
 aa
 aa
-ac
+Iy
 ab
 ab
 ab
@@ -3624,9 +3615,9 @@ ab
 ab
 aa
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
 aa
 "}
@@ -3634,12 +3625,12 @@ aa
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3676,22 +3667,22 @@ ab
 ab
 aa
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 "}
 (18,1,1) = {"
 aa
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3728,22 +3719,22 @@ ab
 ab
 aa
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 "}
 (19,1,1) = {"
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3773,7 +3764,7 @@ cp
 ab
 ab
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -3793,8 +3784,8 @@ ab
 aa
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3825,9 +3816,9 @@ cp
 cp
 cp
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -3845,8 +3836,8 @@ ab
 aa
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3876,10 +3867,10 @@ fT
 gz
 gH
 gQ
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -3928,11 +3919,11 @@ fT
 gz
 gI
 gQ
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -3982,10 +3973,10 @@ cp
 cp
 ab
 ab
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 aa
@@ -4036,8 +4027,8 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 aa
@@ -4088,8 +4079,8 @@ fp
 fp
 fp
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 aa
@@ -4140,8 +4131,8 @@ gZ
 gZ
 fp
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 aa
@@ -4192,9 +4183,9 @@ gZ
 ha
 fp
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 aa
 aa
@@ -4245,8 +4236,8 @@ fp
 fp
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -4257,7 +4248,7 @@ aa
 (29,1,1) = {"
 aa
 ab
-ac
+Iy
 ab
 aa
 aa
@@ -4298,7 +4289,7 @@ fp
 ab
 ab
 ab
-ac
+Iy
 aa
 aa
 aa
@@ -4309,9 +4300,9 @@ aa
 (30,1,1) = {"
 ab
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
 aa
 ab
@@ -4350,7 +4341,7 @@ fp
 ab
 ab
 ab
-ac
+Iy
 aa
 aa
 aa
@@ -4362,8 +4353,8 @@ aa
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 ab
@@ -4402,7 +4393,7 @@ fp
 ab
 ab
 ab
-ac
+Iy
 ab
 aa
 aa
@@ -4414,8 +4405,8 @@ aa
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 ab
@@ -4437,7 +4428,7 @@ dt
 dN
 ef
 ev
-eN
+Ht
 fb
 fo
 fA
@@ -4454,8 +4445,8 @@ fp
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -4484,7 +4475,7 @@ sL
 sL
 cx
 aQ
-dc
+wK
 du
 dO
 po
@@ -4506,8 +4497,8 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -4536,7 +4527,7 @@ bR
 sL
 cy
 aQ
-dd
+Mp
 dv
 dP
 eh
@@ -4546,7 +4537,7 @@ fb
 fp
 fC
 fL
-gd
+qm
 fp
 gv
 gD
@@ -4558,8 +4549,8 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -4610,9 +4601,9 @@ ab
 ab
 ab
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
 aa
 aa
@@ -4663,8 +4654,8 @@ aa
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 aa
@@ -4696,8 +4687,8 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 fd
 ab
 ab
@@ -4748,7 +4739,7 @@ ab
 ab
 ab
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -4797,10 +4788,10 @@ ab
 ab
 ab
 ab
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -4849,7 +4840,7 @@ ab
 ab
 ab
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -4882,7 +4873,7 @@ aa
 aa
 aa
 aa
-ac
+Iy
 ab
 aa
 aa
@@ -4898,17 +4889,15 @@ ab
 ab
 ab
 ab
-ac
+Iy
 ab
-ac
-ac
+Iy
+Iy
 ab
-ac
-ac
-ac
-ac
-ab
-ab
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -4916,8 +4905,10 @@ ab
 ab
 ab
 ab
-ac
-ac
+ab
+ab
+Iy
+Iy
 aa
 aa
 aa
@@ -4934,10 +4925,10 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 aa
 aa
 ab
@@ -4949,16 +4940,16 @@ ab
 ab
 ab
 ab
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 aa
 aa
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -4968,16 +4959,16 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 aa
 aa
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -4986,10 +4977,10 @@ aa
 aa
 ab
 ab
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 aa
 aa
 aa
@@ -5001,35 +4992,35 @@ aa
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 aa
 aa
@@ -5039,8 +5030,8 @@ aa
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 aa
@@ -5053,8 +5044,8 @@ aa
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 aa
@@ -5062,12 +5053,12 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 aa
 ab
@@ -5078,9 +5069,9 @@ aa
 aa
 ab
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 aa
@@ -5091,8 +5082,8 @@ aa
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -5114,13 +5105,13 @@ ab
 ab
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 aa
 aa
 aa
@@ -5143,8 +5134,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa

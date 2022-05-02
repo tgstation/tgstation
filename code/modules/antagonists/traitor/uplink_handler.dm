@@ -38,6 +38,8 @@
 	var/list/potential_duplicate_objectives = list()
 	/// The role that this uplink handler is associated to.
 	var/assigned_role
+	/// The species this uplink handler is associated to.
+	var/assigned_species
 	/// Whether this is in debug mode or not. If in debug mode, allows all purchases
 	var/debug_mode = FALSE
 
@@ -60,8 +62,11 @@
 
 		if(length(to_purchase.restricted_roles) && !(assigned_role in to_purchase.restricted_roles))
 			return FALSE
+		if(length(to_purchase.restricted_species) && !(assigned_species in to_purchase.restricted_species))
+			return FALSE
 
-	var/stock = item_stock[to_purchase] || INFINITY
+	var/current_stock = item_stock[to_purchase]
+	var/stock = current_stock != null? current_stock : INFINITY
 	if(telecrystals < to_purchase.cost || stock <= 0 || (has_progression && progression_points < to_purchase.progression_minimum))
 		return FALSE
 
@@ -71,13 +76,13 @@
 	if(!can_purchase_item(user, to_purchase))
 		return
 
-	if(to_purchase.limited_stock != -1 && !(to_purchase.type in item_stock))
+	if(to_purchase.limited_stock != -1 && !(to_purchase in item_stock))
 		item_stock[to_purchase] = to_purchase.limited_stock
 
 	telecrystals -= to_purchase.cost
 	to_purchase.purchase(user, src)
 
-	if(to_purchase.type in item_stock)
+	if(to_purchase in item_stock)
 		item_stock[to_purchase] -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))
@@ -172,9 +177,9 @@
 
 /// Updates the objectives on the uplink and deletes
 /datum/uplink_handler/proc/update_objectives()
-	var/list/potential_objectives_copy = potential_objectives.Copy()
-	for(var/datum/traitor_objective/objective as anything in potential_objectives_copy)
-		if(progression_points > objective.progression_maximum && !objective.forced)
+	var/list/objectives_copy = potential_objectives + active_objectives
+	for(var/datum/traitor_objective/objective as anything in objectives_copy)
+		if(progression_points > objective.progression_maximum && !objective.forced && objective.objective_state != OBJECTIVE_STATE_ACTIVE)
 			objective.fail_objective(trigger_update = FALSE)
 			continue
 		objective.update_progression_reward()

@@ -101,10 +101,24 @@
 
 /obj/item/grenade/chem_grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE
+	if(dud_flags & GRENADE_USED)
+		balloon_alert(user, span_notice("resetting trigger..."))
+		if (do_after(user, 2 SECONDS, src))
+			balloon_alert(user, span_notice("trigger reset"))
+			dud_flags &= ~GRENADE_USED
+		return
+
 	if(stage == GRENADE_WIRED)
 		if(beakers.len)
 			stage_change(GRENADE_READY)
 			to_chat(user, span_notice("You lock the [initial(name)] assembly."))
+			tool.play_tool_sound(src, 25)
+		else if(landminemode)
+			landminemode.timing = FALSE
+			if(!landminemode.secured)
+				landminemode.toggle_secure()
+			landminemode.toggle_scan(FALSE)
+			to_chat(user, span_notice("You disarm the [landminemode.name]."))
 			tool.play_tool_sound(src, 25)
 		else
 			to_chat(user, span_warning("You need to add at least one beaker before locking the [initial(name)] assembly!"))
@@ -112,7 +126,6 @@
 		det_time = det_time == 50 ? 30 : 50 //toggle between 30 and 50
 		if(landminemode)
 			landminemode.time = det_time * 0.1 //overwrites the proxy sensor activation timer
-
 		tool.play_tool_sound(src, 25)
 		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 	else
@@ -197,9 +210,9 @@
 			continue
 		reagent_string += " ([exploded_beaker.name] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ");"
 	if(landminemode)
-		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]")
+		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]", message_admins = !dud_flags)
 	else
-		log_bomber(user, "primed a", src, "containing:[reagent_string]")
+		log_bomber(user, "primed a", src, "containing:[reagent_string]", message_admins = !dud_flags)
 
 /obj/item/grenade/chem_grenade/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	log_grenade(user) //Inbuilt admin procs already handle null users
@@ -224,6 +237,9 @@
 		return
 
 	. = ..()
+	if(!.)
+		return
+
 	var/list/datum/reagents/reactants = list()
 	for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
 		reactants += glass_beaker.reagents
@@ -251,7 +267,9 @@
 	threatscale = 1.1 // 10% more effective.
 
 /obj/item/grenade/chem_grenade/large/detonate(mob/living/lanced_by)
-	if(stage != GRENADE_READY)
+	if(stage != GRENADE_READY || dud_flags)
+		active = FALSE
+		update_appearance()
 		return FALSE
 
 
@@ -340,17 +358,16 @@
 	if (active)
 		return
 	var/newspread = tgui_input_number(user, "Please enter a new spread amount", "Grenade Spread", 5, 100, 5)
-	if(isnull(newspread))
+	if(!newspread || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
-	newspread = round(newspread)
-	unit_spread = clamp(newspread, 5, 100)
+	unit_spread = newspread
 	to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))
 	..()
 
 /obj/item/grenade/chem_grenade/adv_release/detonate(mob/living/lanced_by)
-	if(stage != GRENADE_READY)
+	if(stage != GRENADE_READY || dud_flags)
+		active = FALSE
+		update_appearance()
 		return
 
 	var/total_volume = 0

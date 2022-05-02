@@ -113,7 +113,7 @@
 
 /datum/holiday/valentines
 	name = VALENTINES
-	begin_day = 14
+	begin_day = 13
 	end_day = 15
 	begin_month = FEBRUARY
 
@@ -414,6 +414,16 @@
 
 /datum/holiday/indigenous/getStationPrefix()
 	return pick("Endangered language", "Word", "Language", "Language revitalization", "Potato", "Corn")
+	
+// AUGUST
+
+/datum/holiday/ukraine
+	name = "Independence Day of Ukraine"
+	begin_month = AUGUST
+	begin_day = 24
+
+/datum/holiday/indigenous/getStationPrefix()
+	return pick("Kyiv", "Ukraine")
 
 // SEPTEMBER
 

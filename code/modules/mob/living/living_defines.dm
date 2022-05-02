@@ -4,7 +4,6 @@
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
-	plane = GAME_PLANE_FOV_HIDDEN
 
 	hud_type = /datum/hud/living
 
@@ -77,6 +76,8 @@
 	var/tod = null
 
 	var/on_fire = FALSE ///The "Are we on fire?" var
+	/// Weak reference to the light our fire is causing, if there is one
+	var/datum/weakref/firelight_ref
 	var/fire_stacks = 0 ///Tracks how many stacks of fire we have on, max is usually 20
 
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
@@ -125,12 +126,6 @@
 
 	var/list/status_effects ///a list of all status effects the mob has
 	var/druggy = 0
-
-	//Speech
-	var/stuttering = 0
-	var/slurring = 0
-	var/cultslurring = 0
-	var/derpspeech = 0
 
 	var/list/implants = null
 

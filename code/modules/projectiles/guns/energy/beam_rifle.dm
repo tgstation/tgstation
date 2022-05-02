@@ -196,7 +196,9 @@
 	else
 		P.color = rgb(0, 255, 0)
 	var/turf/curloc = get_turf(src)
-	var/turf/targloc = get_turf(current_user.client.mouseObject)
+
+	var/atom/target_atom = current_user.client.mouse_object_ref?.resolve()
+	var/turf/targloc = get_turf(target_atom)
 	if(!istype(targloc))
 		if(!istype(curloc))
 			return
@@ -293,7 +295,9 @@
 	process_aim()
 	if(aiming_time_left <= aiming_time_fire_threshold && check_user())
 		sync_ammo()
-		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
+		var/atom/target = M.client.mouse_object_ref?.resolve()
+		if(target)
+			afterattack(target, M, FALSE, M.client.mouseParams, passthrough = TRUE)
 	stop_aiming()
 	QDEL_LIST(current_tracers)
 	return ..()
@@ -382,7 +386,7 @@
 	HS_BB.do_pierce = do_pierce
 	HS_BB.gun = host
 
-/obj/item/ammo_casing/energy/beam_rifle/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread)
+/obj/item/ammo_casing/energy/beam_rifle/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
 	var/turf/curloc = get_turf(user)
 	if(!istype(curloc) || !loaded_projectile)
 		return FALSE
@@ -414,7 +418,7 @@
 	hitsound = 'sound/effects/explosion3.ogg'
 	damage = 0 //Handled manually.
 	damage_type = BURN
-	flag = ENERGY
+	armor_flag = ENERGY
 	range = 150
 	jitter = 10
 	var/obj/item/gun/energy/beam_rifle/gun
@@ -487,7 +491,7 @@
 	if(nodamage)
 		return FALSE
 	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
-	if(!piercing_hit)
+	if(!do_pierce)
 		AOE(get_turf(target) || get_turf(src))
 	if(!QDELETED(target))
 		handle_impact(target)

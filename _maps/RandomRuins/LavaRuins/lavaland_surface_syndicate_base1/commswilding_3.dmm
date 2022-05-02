@@ -32,15 +32,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/telecomms)
-"h" = (
-/obj/structure/railing,
-/obj/effect/mapping_helpers/no_lava,
-/obj/effect/turf_decal/stripes/line,
-/obj/item/clothing/gloves/tackler/offbrand{
-	desc = "For a different kind of tackle fishing."
-	},
-/turf/open/floor/plating/lavaland_atmos,
-/area/template_noop)
 "j" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -57,7 +48,7 @@
 	},
 /obj/machinery/power/apc/syndicate{
 	name = "Telecommunications APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -129,7 +120,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/pda/chameleon/broken{
+/obj/item/modular_computer/tablet/pda/chameleon/broken{
 	pixel_x = 5;
 	pixel_y = 4
 	},
@@ -289,7 +280,7 @@ o
 b
 w
 K
-h
+v
 "}
 (4,1,1) = {"
 G

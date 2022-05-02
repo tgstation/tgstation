@@ -33,7 +33,7 @@
 	},
 /obj/machinery/power/apc/syndicate{
 	name = "Telecommunications APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /turf/open/floor/wood,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -54,7 +54,7 @@
 /obj/machinery/telecomms/relay/preset/ruskie{
 	use_power = 0
 	},
-/obj/machinery/door/window/brigdoor/southleft{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	req_access_txt = "150"
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,

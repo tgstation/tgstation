@@ -108,6 +108,7 @@
 	name = "Look Out, Sir!"
 	desc = "Either awarded for making the ultimate sacrifice for your comrades, or a really dumb attempt at grenade jumping."
 	database_id = MEDAL_LOOKOUTSIR
+	icon = "martyr" // purple heart on an explosive danger warning sign (well, sort of)
 
 /datum/award/achievement/misc/gottem
 	name = "HA, GOTTEM"
@@ -150,6 +151,12 @@
 	desc = "Place of a different being, different time. Everything ends there... but maybe it is just the beginning?"
 	database_id = MEDAL_VOID_ASCENSION
 	icon = "voidascend"
+
+/datum/award/achievement/misc/blade_ascension
+	name = "Silver and Steel"
+	desc = "You've become the master of all duellists - the paragon of blades."
+	database_id = MEDAL_BLADE_ASCENSION
+	icon = "bladeascend"
 
 /datum/award/achievement/misc/toolbox_soul
 	name = "SOUL'd Out"

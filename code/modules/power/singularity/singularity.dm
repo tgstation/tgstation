@@ -36,6 +36,8 @@
 	var/move_self = TRUE
 	///If the singularity has eaten a supermatter shard and can go to stage six
 	var/consumed_supermatter = FALSE
+	/// How long it's been since the singulo last acted, in seconds
+	var/time_since_act = 0
 
 	flags_1 = SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -46,7 +48,7 @@
 
 	energy = starting_energy
 
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSsinguloprocess, src)
 	SSpoints_of_interest.make_point_of_interest(src)
 
 	var/datum/component/singularity/new_component = AddComponent(
@@ -76,7 +78,7 @@
 
 
 /obj/singularity/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSsinguloprocess, src)
 	return ..()
 
 /obj/singularity/attack_tk(mob/user)
@@ -135,7 +137,7 @@
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			if(current_size <= STAGE_TWO)
-				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_SINGULO)
+				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_ENGINE)
 				qdel(src)
 				return
 
@@ -146,6 +148,10 @@
 			energy -= round(((energy + 1) / 4), 1)
 
 /obj/singularity/process(delta_time)
+	time_since_act += delta_time
+	if(time_since_act < 2)
+		return
+	time_since_act = 0
 	if(current_size >= STAGE_TWO)
 		if(prob(event_chance))
 			event()
@@ -251,7 +257,7 @@
 		resolved_singularity.singularity_size = current_size
 
 	if(current_size == allowed_size)
-		investigate_log("<font color='red'>grew to size [current_size]</font>", INVESTIGATE_SINGULO)
+		investigate_log("grew to size [current_size].", INVESTIGATE_ENGINE)
 		return TRUE
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
@@ -260,7 +266,7 @@
 
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)
-		investigate_log("collapsed.", INVESTIGATE_SINGULO)
+		investigate_log("collapsed.", INVESTIGATE_ENGINE)
 		qdel(src)
 		return FALSE
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
@@ -329,10 +335,10 @@
 	var/dir2 = 0
 	var/dir3 = 0
 	switch(direction)
-		if(NORTH||SOUTH)
+		if(NORTH, SOUTH)
 			dir2 = 4
 			dir3 = 8
-		if(EAST||WEST)
+		if(EAST, WEST)
 			dir2 = 1
 			dir3 = 2
 	var/turf/other_turf = considered_turf
@@ -424,7 +430,7 @@
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)
 	var/dist = max((current_size - 2),1)
-	investigate_log("has been destroyed by another singularity.", INVESTIGATE_SINGULO)
+	investigate_log("has been destroyed by another singularity.", INVESTIGATE_ENGINE)
 	explosion(
 		src,
 		devastation_range = dist,

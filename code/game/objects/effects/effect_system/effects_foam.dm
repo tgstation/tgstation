@@ -12,7 +12,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
-	plane = ABOVE_GAME_PLANE
+	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = NO_STEPS
@@ -20,9 +20,10 @@
 	var/lifetime = 40
 	var/reagent_divisor = 7
 	var/static/list/blacklisted_turfs = typecacheof(list(
-	/turf/open/space/transit,
-	/turf/open/chasm,
-	/turf/open/lava))
+		/turf/open/space/transit,
+		/turf/open/chasm,
+		/turf/open/lava,
+	))
 	var/slippery_foam = TRUE
 
 /obj/effect/particle_effect/foam/firefighting
@@ -92,7 +93,7 @@
 
 /obj/effect/particle_effect/foam/Initialize(mapload)
 	. = ..()
-	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //limited by the size of the reagent holder anyway. Works without instant possibly edit in future
+	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -225,7 +226,7 @@
 /datum/effect_system/foam_spread/New()
 	..()
 	chemholder = new()
-	chemholder.create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
+	chemholder.create_reagents(1000, NO_REACT)
 
 /datum/effect_system/foam_spread/Destroy()
 	QDEL_NULL(chemholder)
@@ -270,12 +271,14 @@
 	opacity = TRUE // changed in New()
 	anchored = TRUE
 	layer = EDGED_TURF_LAYER
+	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."
 	gender = PLURAL
 	max_integrity = 20
 	can_atmos_pass = ATMOS_PASS_DENSITY
+	obj_flags = CAN_BE_HIT | BLOCK_Z_IN_DOWN | BLOCK_Z_IN_UP
 	///Var used to prevent spamming of the construction sound
 	var/next_beep = 0
 
@@ -313,7 +316,7 @@
 	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
 		platingmodifier = 0.7
 		if(next_beep <= world.time)
-			next_beep = world.time + 10
+			next_beep = world.time + 1 SECONDS
 			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
@@ -323,7 +326,7 @@
 	var/obj/item/stack/sheet/sheet_for_plating = W
 	if(istype(sheet_for_plating, /obj/item/stack/sheet/iron))
 		if(sheet_for_plating.get_amount() < 2)
-			to_chat(user, span_warning("You need two sheets of iron to finish a wall!"))
+			to_chat(user, span_warning("You need two sheets of iron to finish a wall on [src]!"))
 			return
 		to_chat(user, span_notice("You start adding plating to the foam structure..."))
 		if (do_after(user, 40*platingmodifier, target = src))
@@ -331,7 +334,7 @@
 				return
 			to_chat(user, span_notice("You add the plating."))
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall)
+			T.PlaceOnTop(/turf/closed/wall/metal_foam_base)
 			transfer_fingerprints_to(T)
 			qdel(src)
 		return

@@ -7,6 +7,9 @@
 /// Fallback time if none of the config entries are set for USE_LOW_LIVING_HOUR_INTERN
 #define INTERN_THRESHOLD_FALLBACK_HOURS 15
 
+/// Max time interval between projecting holopays
+#define HOLOPAY_PROJECTION_INTERVAL 7 SECONDS
+
 /* Cards
  * Contains:
  * DATA CARD
@@ -59,8 +62,28 @@
 	var/registered_name = null
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
-	/// Linked paystand.
-	var/obj/machinery/paystand/my_store
+
+	/// Linked holopay.
+	var/obj/structure/holopay/my_store
+	/// Cooldown between projecting holopays
+	COOLDOWN_DECLARE(last_holopay_projection)
+	/// List of logos available for holopay customization - via font awesome 5
+	var/static/list/available_logos = list("angry", "ankh", "bacon", "band-aid", "cannabis", "cat", "cocktail", "coins", "comments-dollar",
+	"cross", "cut", "dog", "donate", "dna", "fist-raised", "flask", "glass-cheers", "glass-martini-alt", "hamburger", "hand-holding-usd",
+	"hat-wizard", "head-side-cough-slash", "heart", "heart-broken",  "laugh-beam", "leaf", "money-check-alt", "music", "piggy-bank",
+	"pizza-slice", "prescription-bottle-alt", "radiation", "robot", "smile", "skull-crossbones", "smoking", "space-shuttle", "tram",
+	"trash", "user-ninja", "utensils", "wrench")
+	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
+	var/holopay_fee = 0
+	/// The holopay icon chosen by the user
+	var/holopay_logo = "donate"
+	/// Maximum forced fee. It's unlikely for a user to encounter this type of money, much less pay it willingly.
+	var/holopay_max_fee = 5000
+	/// Minimum forced fee for holopay stations. Registers as "pay what you want."
+	var/holopay_min_fee = 0
+	/// The holopay name chosen by the user
+	var/holopay_name = "holographic pay stand"
+
 	/// Registered owner's age.
 	var/registered_age = 30
 
@@ -82,6 +105,11 @@
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
+	var/datum/bank_account/blank_bank_account = new /datum/bank_account("Unassigned", player_account = FALSE)
+	registered_account = blank_bank_account
+	blank_bank_account.account_job = new /datum/job/unassigned
+	registered_account.replaceable = TRUE
+
 	// Applying the trim updates the label and icon, so don't do this twice.
 	if(ispath(trim))
 		SSid_access.apply_trim_to_card(src, trim)
@@ -89,13 +117,15 @@
 		update_label()
 		update_icon()
 
+	register_context()
+
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 
 /obj/item/card/id/Destroy()
 	if (registered_account)
 		registered_account.bank_cards -= src
-	if (my_store && my_store.my_card == src)
-		my_store.my_card = null
+	if (my_store)
+		QDEL_NULL(my_store)
 	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
@@ -383,6 +413,123 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name][minor]."), span_notice("You show \the [src.name][minor]."))
 	add_fingerprint(user)
 
+/obj/item/card/id/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!proximity_flag || !check_allowed_items(target) || !isfloorturf(target))
+		return
+	try_project_paystand(user, target)
+
+/obj/item/card/id/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	try_project_paystand(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/card/id/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item != src)
+		return
+
+	context[SCREENTIP_CONTEXT_LMB] = "Show ID"
+	context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
+	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
+		balloon_alert(user, "still recharging")
+		return
+	if(!registered_account || !registered_account.account_job)
+		balloon_alert(user, "no account")
+		to_chat(user, span_warning("You need a valid bank account to do this."))
+		return
+	/// Determines where the holopay will be placed based on tile contents
+	var/turf/projection
+	var/turf/step_ahead = get_step(user, user.dir)
+	var/turf/user_loc = user.loc
+	if(target && can_proj_holopay(target))
+		projection = target
+	else if(can_proj_holopay(step_ahead))
+		projection = step_ahead
+	else if(can_proj_holopay(user_loc))
+		projection = user_loc
+	if(!projection)
+		balloon_alert(user, "no space")
+		to_chat(user, span_warning("You need to be standing on or near an open tile to do this."))
+		return
+	/// Success: Valid tile for holopay placement
+	if(my_store)
+		my_store.dissipate()
+	var/obj/structure/holopay/new_store = new(projection)
+	if(new_store?.assign_card(projection, src))
+		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
+		playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
+		my_store = new_store
+
+/**
+ * Determines whether a new holopay can be placed on the given turf.
+ * Checks if there are dense contents, too many contents, or another
+ * holopay already exists on the turf.
+ *
+ * Arguments:
+ * * turf/target - The target turf to be checked for dense contents
+ * Returns:
+ * * TRUE if the target is a valid holopay location, FALSE otherwise.
+ */
+/obj/item/card/id/proc/can_proj_holopay(turf/target)
+	if(!isfloorturf(target))
+		return FALSE
+	if(target.density)
+		return FALSE
+	if(length(target.contents) > 5)
+		return FALSE
+	for(var/obj/checked_obj in target.contents)
+		if(checked_obj.density)
+			return FALSE
+		if(istype(checked_obj, /obj/structure/holopay))
+			return FALSE
+	return TRUE
+
+/**
+ * Setter for the shop logo on linked holopays
+ *
+ * Arguments:
+ * * new_logo - The new logo to be set.
+ */
+/obj/item/card/id/proc/set_holopay_logo(new_logo)
+	if(!available_logos.Find(new_logo))
+		CRASH("User input a holopay shop logo that didn't exist.")
+	holopay_logo = new_logo
+
+/**
+ * Setter for changing the force fee on a holopay.
+ *
+ * Arguments:
+ * * new_fee - The new fee to be set.
+ */
+/obj/item/card/id/proc/set_holopay_fee(new_fee)
+	if(!isnum(new_fee))
+		CRASH("User input a non number into the holopay fee field.")
+	if(new_fee < holopay_min_fee || new_fee > holopay_max_fee)
+		CRASH("User input a number outside of the valid range into the holopay fee field.")
+	holopay_fee = new_fee
+
+/**
+ * Setter for changing the holopay name.
+ *
+ * Arguments:
+ * * new_name - The new name to be set.
+ */
+/obj/item/card/id/proc/set_holopay_name(name)
+	if(length(name) < 3 || length(name) > MAX_NAME_LEN)
+		to_chat(usr, span_warning("Must be between 3 - 42 characters."))
+	else
+		holopay_name = html_encode(trim(name, MAX_NAME_LEN))
+
+
 /obj/item/card/id/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(.)
@@ -483,39 +630,41 @@
 /obj/item/card/id/proc/set_new_account(mob/living/user)
 	. = FALSE
 	var/datum/bank_account/old_account = registered_account
-
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		return FALSE
 	var/new_bank_id = tgui_input_number(user, "Enter your account ID number", "Account Reclamation", 111111, 999999, 111111)
-	if(isnull(new_bank_id))
-		return
-	if(!alt_click_can_use_id(user))
-		return
-	if(registered_account && registered_account.account_id == new_bank_id)
+	if(!new_bank_id || QDELETED(user) || QDELETED(src) || issilicon(user) || !alt_click_can_use_id(user) || loc != user)
+		return FALSE
+	if(registered_account?.account_id == new_bank_id)
 		to_chat(user, span_warning("The account ID was already assigned to this card."))
-		return
+		return FALSE
 	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[new_bank_id]"]
 	if(isnull(account))
 		to_chat(user, span_warning("The account ID number provided is invalid."))
-		return
+		return FALSE
 	if(old_account)
 		old_account.bank_cards -= src
+		account.account_balance += old_account.account_balance
 	account.bank_cards += src
 	registered_account = account
-	to_chat(user, span_notice("The provided account has been linked to this ID card."))
+	to_chat(user, span_notice("The provided account has been linked to this ID card. It contains [account.account_balance] credits."))
 	return TRUE
 
 /obj/item/card/id/AltClick(mob/living/user)
 	if(!alt_click_can_use_id(user))
 		return
-	if(!registered_account)
+	if(!registered_account || registered_account.replaceable)
 		set_new_account(user)
 		return
 	if (registered_account.being_dumped)
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return
-	var/amount_to_remove = round(tgui_input_number(user, "How much do you want to withdraw?", "Withdraw Funds", 1, registered_account.account_balance, 1))
-	if(isnull(amount_to_remove))
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the ID to continue!"))
 		return
-	if(amount_to_remove < 1 || amount_to_remove > registered_account.account_balance)
+	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] cr)", "Withdraw Funds", max_value = registered_account.account_balance)
+	if(!amount_to_remove || QDELETED(user) || QDELETED(src) || issilicon(user) || loc != user)
 		return
 	if(!alt_click_can_use_id(user))
 		return
@@ -534,34 +683,37 @@
 	. = ..()
 	if(registered_account)
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+	if(HAS_TRAIT(user, TRAIT_ID_APPRAISER))
+		. += HAS_TRAIT(src, TRAIT_JOB_FIRST_ID_CARD) ? span_boldnotice("Hmm... yes, this ID was issued from Central Command!") : span_boldnotice("This ID was created in this sector, not by Central Command.")
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
 
 /obj/item/card/id/examine_more(mob/user)
-	var/list/msg = list(span_notice("<i>You examine [src] closer, and note the following...</i>"))
+	. = ..()
+	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
 	if(registered_age)
-		msg += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[span_danger("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""]"
+		. += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[span_danger("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""]"
 	if(mining_points)
-		msg += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
-		msg += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				msg += "The [D.account_holder] reports a balance of [D.account_balance] cr."
-		msg += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
-		msg += span_info("You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.")
+				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
+		. += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
+		. += span_info("You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.")
 		if(registered_account.civilian_bounty)
-			msg += "<span class='info'><b>There is an active civilian bounty.</b>"
-			msg += span_info("<i>[registered_account.bounty_text()]</i>")
-			msg += span_info("Quantity: [registered_account.bounty_num()]")
-			msg += span_info("Reward: [registered_account.bounty_value()]")
+			. += "<span class='info'><b>There is an active civilian bounty.</b>"
+			. += span_info("<i>[registered_account.bounty_text()]</i>")
+			. += span_info("Quantity: [registered_account.bounty_num()]")
+			. += span_info("Reward: [registered_account.bounty_value()]")
 		if(registered_account.account_holder == user.real_name)
-			msg += span_boldnotice("If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.")
+			. += span_boldnotice("If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.")
 	else
-		msg += span_info("There is no registered account linked to this card. Alt-Click to add one.")
+		. += span_info("There is no registered account linked to this card. Alt-Click to add one.")
 
-	return msg
+	return .
 
 /obj/item/card/id/GetAccess()
 	return access.Copy()
@@ -589,17 +741,21 @@
 
 	if(is_intern)
 		if(assignment)
-			assignment_string = (assignment in SSjob.head_of_staff_jobs) ? " ([assignment]-in-Training)" : " (Intern [assignment])"
+			assignment_string = trim?.intern_alt_name || "Intern [assignment]"
 		else
-			assignment_string = " (Intern)"
+			assignment_string = "Intern"
 	else
-		assignment_string = " ([assignment])"
+		assignment_string = assignment
 
-	name = "[name_string][assignment_string]"
+	name = "[name_string] ([assignment_string])"
 
 /// Returns the trim assignment name.
 /obj/item/card/id/proc/get_trim_assignment()
 	return trim?.assignment || assignment
+
+/// Returns the trim sechud icon state.
+/obj/item/card/id/proc/get_trim_sechud_icon_state()
+	return trim?.sechud_icon_state || SECHUD_UNKNOWN
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
@@ -693,8 +849,10 @@
 	var/trim_icon_override
 	/// If this is set, will manually override the icon state for the trim. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_state_override
-	/// If this is set, will manually override the trim's assignmment for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
+	/// If this is set, will manually override the trim's assignmment as it appears in the crew monitor and elsewhere. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_assignment_override
+	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
+	var/sechud_icon_state_override = null
 
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
@@ -721,7 +879,7 @@
 	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) * 60) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) * 60) || INTERN_THRESHOLD_FALLBACK_HOURS * 60
 	var/playtime = user.client.get_exp_living(pure_numeric = TRUE)
 
-	if((intern_threshold >= playtime) && (user.mind?.assigned_role.title in SSjob.station_jobs))
+	if((intern_threshold >= playtime) && (user.mind?.assigned_role.job_flags & JOB_CAN_BE_INTERN))
 		is_intern = TRUE
 		update_label()
 		return
@@ -753,7 +911,7 @@
 /obj/item/card/id/advanced/Moved(atom/OldLoc, Dir)
 	. = ..()
 
-	if(istype(OldLoc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
+	if(istype(OldLoc, /obj/item/storage/wallet))
 		UnregisterSignal(OldLoc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	if(istype(OldLoc, /obj/item/computer_hardware/card_slot))
@@ -765,7 +923,7 @@
 			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
 			UnregisterSignal(slot_holder, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-	if(istype(loc, /obj/item/pda) || istype(loc, /obj/item/storage/wallet))
+	if(istype(loc, /obj/item/storage/wallet))
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
 		RegisterSignal(loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
@@ -796,11 +954,16 @@
 /obj/item/card/id/advanced/get_trim_assignment()
 	if(trim_assignment_override)
 		return trim_assignment_override
-	else if(ispath(trim))
+
+	if(ispath(trim))
 		var/datum/id_trim/trim_singleton = SSid_access.trim_singletons_by_path[trim]
 		return trim_singleton.assignment
 
 	return ..()
+
+/// Returns the trim sechud icon state.
+/obj/item/card/id/advanced/get_trim_sechud_icon_state()
+	return sechud_icon_state_override || ..()
 
 /obj/item/card/id/advanced/silver
 	name = "silver identification card"
@@ -848,7 +1011,7 @@
 	icon_state = "card_centcom"
 	worn_icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
-	registered_name = "Central Command"
+	registered_name = JOB_CENTCOM
 	registered_age = null
 	trim = /datum/id_trim/centcom
 	wildcard_slots = WILDCARD_LIMIT_CENTCOM
@@ -861,31 +1024,31 @@
 	trim = /datum/id_trim/centcom/ert
 
 /obj/item/card/id/advanced/centcom/ert
-	registered_name = "Emergency Response Team Commander"
+	registered_name = JOB_ERT_COMMANDER
 	trim = /datum/id_trim/centcom/ert/commander
 
 /obj/item/card/id/advanced/centcom/ert/security
-	registered_name = "Security Response Officer"
+	registered_name = JOB_ERT_OFFICER
 	trim = /datum/id_trim/centcom/ert/security
 
 /obj/item/card/id/advanced/centcom/ert/engineer
-	registered_name = "Engineering Response Officer"
+	registered_name = JOB_ERT_ENGINEER
 	trim = /datum/id_trim/centcom/ert/engineer
 
 /obj/item/card/id/advanced/centcom/ert/medical
-	registered_name = "Medical Response Officer"
+	registered_name = JOB_ERT_MEDICAL_DOCTOR
 	trim = /datum/id_trim/centcom/ert/medical
 
 /obj/item/card/id/advanced/centcom/ert/chaplain
-	registered_name = "Religious Response Officer"
+	registered_name = JOB_ERT_CHAPLAIN
 	trim = /datum/id_trim/centcom/ert/chaplain
 
 /obj/item/card/id/advanced/centcom/ert/janitor
-	registered_name = "Janitorial Response Officer"
+	registered_name = JOB_ERT_JANITOR
 	trim = /datum/id_trim/centcom/ert/janitor
 
 /obj/item/card/id/advanced/centcom/ert/clown
-	registered_name = "Entertainment Response Officer"
+	registered_name = JOB_ERT_CLOWN
 	trim = /datum/id_trim/centcom/ert/clown
 
 /obj/item/card/id/advanced/black
@@ -899,7 +1062,7 @@
 /obj/item/card/id/advanced/black/deathsquad
 	name = "\improper Death Squad ID"
 	desc = "A Death Squad ID card."
-	registered_name = "Death Commando"
+	registered_name = JOB_ERT_DEATHSQUAD
 	trim = /datum/id_trim/centcom/deathsquad
 	wildcard_slots = WILDCARD_LIMIT_DEATHSQUAD
 
@@ -980,7 +1143,10 @@
 	..()
 	var/list/id_access = C.GetAccess()
 	if(!(ACCESS_BRIG in id_access))
-		return
+		return FALSE
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		return FALSE
 	if(timed)
 		timed = FALSE
 		time_to_assign = initial(time_to_assign)
@@ -989,9 +1155,9 @@
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(isnull(choice) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	time_to_assign = round(choice)
+	if(!choice || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
+		return FALSE
+	time_to_assign = choice
 	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
 	timed = TRUE
 
@@ -1265,7 +1431,7 @@
 
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
 	if(isliving(user) && user.mind)
-		var/popup_input = tgui_alert(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
+		var/popup_input = tgui_input_list(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
 		if(user.incapacitated())
 			return
 		if(!user.is_holding(src))
@@ -1287,7 +1453,10 @@
 
 				var/change_trim = tgui_alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", list("Yes", "No"))
 				if(change_trim == "Yes")
-					var/list/blacklist = typecacheof(type) + typecacheof(/obj/item/card/id/advanced/simple_bot)
+					var/list/blacklist = typecacheof(list(
+						type,
+						/obj/item/card/id/advanced/simple_bot,
+					))
 					var/list/trim_list = list()
 					for(var/trim_path in typesof(/datum/id_trim))
 						if(blacklist[trim_path])
@@ -1308,8 +1477,10 @@
 					assignment = target_occupation
 
 				var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", AGE_MIN, AGE_MAX, AGE_MIN)
+				if(QDELETED(user) || QDELETED(src) || !user.canUseTopic(user, BE_CLOSE, NO_DEXTERITY, NO_TK))
+					return
 				if(new_age)
-					registered_age = round(new_age)
+					registered_age = new_age
 
 				if(tgui_alert(user, "Activate wallet ID spoofing, allowing this card to force itself to occupy the visible ID slot in wallets?", "Wallet ID Spoofing", list("Yes", "No")) == "Yes")
 					ADD_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)

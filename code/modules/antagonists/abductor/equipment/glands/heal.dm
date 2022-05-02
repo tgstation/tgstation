@@ -53,7 +53,7 @@
 		if(!limb)
 			replace_limb(zone)
 			return
-		if((limb.get_damage() >= (limb.max_damage / 2)) || (limb.status == BODYPART_ROBOTIC))
+		if((limb.get_damage() >= (limb.max_damage / 2)) || (!IS_ORGANIC_LIMB(limb)))
 			replace_limb(zone, limb)
 			return
 
@@ -72,7 +72,7 @@
 		return
 
 	var/obj/item/bodypart/chest/chest = owner.get_bodypart(BODY_ZONE_CHEST)
-	if((chest.get_damage() >= (chest.max_damage / 4)) || (chest.status == BODYPART_ROBOTIC))
+	if((chest.get_damage() >= (chest.max_damage / 4)) || (!IS_ORGANIC_LIMB(chest)))
 		replace_chest(chest)
 		return
 
@@ -170,7 +170,7 @@
 /obj/item/organ/heart/gland/heal/proc/replace_limb(body_zone, obj/item/bodypart/limb)
 	if(limb)
 		owner.visible_message(span_warning("[owner]'s [limb.name] suddenly detaches from [owner.p_their()] body!"), span_userdanger("Your [limb.name] suddenly detaches from your body!"))
-		playsound(owner, "desecration", 50, TRUE, -1)
+		playsound(owner, SFX_DESECRATION, 50, TRUE, -1)
 		limb.drop_limb()
 	else
 		to_chat(owner, span_warning("You feel a weird tingle in your [parse_zone(body_zone)]... even if you don't have one."))
@@ -208,7 +208,7 @@
 		addtimer(CALLBACK(src, .proc/keep_replacing_blood), 30)
 
 /obj/item/organ/heart/gland/heal/proc/replace_chest(obj/item/bodypart/chest/chest)
-	if(chest.status == BODYPART_ROBOTIC)
+	if(!IS_ORGANIC_LIMB(chest))
 		owner.visible_message(span_warning("[owner]'s [chest.name] rapidly expels its mechanical components, replacing them with flesh!"), span_userdanger("Your [chest.name] rapidly expels its mechanical components, replacing them with flesh!"))
 		playsound(owner, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE)
 		var/list/dirs = GLOB.alldirs.Copy()

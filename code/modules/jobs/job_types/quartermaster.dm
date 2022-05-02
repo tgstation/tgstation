@@ -14,7 +14,7 @@
 	outfit = /datum/outfit/job/quartermaster
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
@@ -29,8 +29,7 @@
 		/obj/item/circuitboard/machine/emitter = 3
 	)
 	rpg_title = "Steward"
-	job_type_flags = JOB_STATION_JOB
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/quartermaster
@@ -39,10 +38,7 @@
 
 	id_trim = /datum/id_trim/job/quartermaster
 	uniform = /obj/item/clothing/under/rank/cargo/qm
-	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/cargo/quartermaster = 1,
-		)
-	belt = /obj/item/pda/quartermaster
+	belt = /obj/item/modular_computer/tablet/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sneakers/brown

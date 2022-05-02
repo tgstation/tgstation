@@ -15,7 +15,7 @@ the new instance inside the host to be updated to the template's stats.
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = FALSE
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	invisibility = INVISIBILITY_OBSERVER
 	see_invisible = SEE_INVISIBLE_LIVING
 	layer = BELOW_MOB_LAYER
@@ -135,6 +135,8 @@ the new instance inside the host to be updated to the template's stats.
 			last_move_tick = world.time
 
 /mob/camera/disease/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	if(freemove)
+		return ..()
 	return FALSE
 
 /mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())

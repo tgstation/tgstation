@@ -42,6 +42,12 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_ckey_dsc(client/a, client/b)
 	return sorttext(a.ckey, b.ckey)
 
+/proc/cmp_playtime_asc(client/a, client/b)
+	return cmp_numeric_asc(a.get_exp_living(TRUE), b.get_exp_living(TRUE))
+
+/proc/cmp_playtime_dsc(client/a, client/b)
+	return cmp_numeric_asc(a.get_exp_living(TRUE), b.get_exp_living(TRUE))
+
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return initial(b.init_order) - initial(a.init_order) //uses initial() so it can be used on types
 
@@ -122,11 +128,11 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
 
-/proc/cmp_pdaname_asc(obj/item/pda/A, obj/item/pda/B)
-	return sorttext(B.owner, A.owner)
+/proc/cmp_pdaname_asc(obj/item/modular_computer/A, obj/item/modular_computer/B)
+	return sorttext(B?.saved_identification, A?.saved_identification)
 
-/proc/cmp_pdajob_asc(obj/item/pda/A, obj/item/pda/B)
-	return sorttext(B.ownjob, A.ownjob)
+/proc/cmp_pdajob_asc(obj/item/modular_computer/A, obj/item/modular_computer/B)
+	return sorttext(B?.saved_job, A?.saved_job)
 
 /proc/cmp_num_string_asc(A, B)
 	return text2num(A) - text2num(B)
@@ -157,3 +163,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	rhs = ispath(B, /datum/reagent) ? 0 : 1
 
 	return lhs - rhs
+
+/// Orders heretic knowledge by priority
+/proc/cmp_heretic_knowledge(datum/heretic_knowledge/knowledge_a, datum/heretic_knowledge/knowledge_b)
+	return initial(knowledge_b.priority) - initial(knowledge_a.priority)

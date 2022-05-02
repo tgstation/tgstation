@@ -119,6 +119,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	timer_ids.Cut()
 	return ..()
 
+/datum/reagent/inverse/helgrasp/heretic
+	name = "Grasp of the Mansus"
+	description = "The Hand of the Mansus is at your neck."
+	metabolization_rate = 1 * REM
+	tox_damage = 0
+
 //libital
 //Impure
 //Simply reduces your alcohol tolerance, kinda simular to prohol
@@ -520,6 +526,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ADD_TRAIT(owner, TRAIT_NODEATH, type)
 	owner.set_stat(CONSCIOUS) //This doesn't touch knocked out
 	owner.updatehealth()
+	owner.update_sight()
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, STAT_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
 	owner.set_resting(FALSE)//Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
@@ -535,7 +542,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
 	//Following is for those brought back from the dead only
 	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
-		iter_wound.blood_flow += (1-creation_purity)
+		iter_wound.adjust_blood_flow(1-creation_purity)
 	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
 	owner.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
@@ -577,6 +584,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
+	owner.update_sight()
 
 /*				Non c2 medicines 				*/
 

@@ -14,7 +14,7 @@
 	throw_range = 5
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	armour_penetration = 35
 	light_system = MOVABLE_LIGHT
 	light_range = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
@@ -62,7 +62,7 @@
 
 	wielded = FALSE
 	w_class = initial(w_class)
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	STOP_PROCESSING(SSobj, src)
 	set_light_on(FALSE)
 

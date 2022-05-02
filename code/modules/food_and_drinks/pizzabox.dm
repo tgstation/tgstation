@@ -150,17 +150,12 @@
 				update_appearance()
 				return
 			else
-				bomb_timer = tgui_input_number(user, "Set the timer for [bomb].", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
-
-				if (isnull(bomb_timer))
+				bomb_timer = tgui_input_number(user, "Set the bomb timer", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
+				if(!bomb_timer || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
-
-				bomb_timer = round(bomb_timer)
 				bomb_defused = FALSE
-
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
 				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
-
 				to_chat(user, span_warning("You trap [src] with [bomb]."))
 				update_appearance()
 	else if(boxes.len)
@@ -220,8 +215,7 @@
 			to_chat(user, span_warning("[src] already has a bomb in it!"))
 	else if(istype(I, /obj/item/pen))
 		if(!open)
-			if(!user.is_literate())
-				to_chat(user, span_notice("You scribble illegibly on [src]!"))
+			if(!user.can_write(I))
 				return
 			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
@@ -363,6 +357,7 @@
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	if(ishuman(user))
 		attune_pizza(user)
+		to_chat(user, span_notice("Another pizza immediately appears in the box, what the hell?"))
 	return ..()
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/nommer) //tonight on "proc names I never thought I'd type"

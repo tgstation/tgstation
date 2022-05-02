@@ -9,7 +9,7 @@
 	summon_lifespan = 300
 	charge_max = 300
 	clothes_req = FALSE
-	antimagic_allowed = TRUE
+	antimagic_flags = NONE
 	range = 0
 	cast_sound = null
 	human_req = TRUE
@@ -39,7 +39,7 @@
 	summon_lifespan = 250
 	charge_max = 300
 	clothes_req = FALSE
-	antimagic_allowed = TRUE
+	antimagic_flags = NONE
 	range = 0
 	cast_sound = null
 	human_req = TRUE
@@ -77,7 +77,7 @@
 	summon_lifespan = 500
 	charge_max = 300
 	clothes_req = FALSE
-	antimagic_allowed = TRUE
+	antimagic_flags = NONE
 	range = 0
 	cast_sound = null
 	human_req = TRUE
@@ -112,7 +112,7 @@
 	panel = "Mime"
 	clothes_req = FALSE
 	human_req = TRUE
-	antimagic_allowed = TRUE
+	antimagic_flags = NONE
 	charge_max = 3000
 	range = -1
 	include_user = TRUE
@@ -156,7 +156,7 @@
 	charge_max = 600
 	sound = null
 	clothes_req = FALSE
-	antimagic_allowed = TRUE
+	antimagic_flags = NONE
 	range = -1
 	include_user = TRUE
 
@@ -176,12 +176,12 @@
 
 /obj/effect/proc_holder/spell/aimed/finger_guns
 	name = "Finger Guns"
-	desc = "Shoot up to three mimed bullets from your fingers that damage and mute their targets."
+	desc = "Shoot up to three mimed bullets from your fingers that damage and mute their targets. Can't be used if you have something in your hands."
 	school = SCHOOL_MIME
 	panel = "Mime"
 	charge_max = 300
 	clothes_req = FALSE
-	antimagic_allowed = TRUE
+	antimagic_flags = NONE
 	invocation_type = INVOCATION_EMOTE
 	invocation_emote_self = span_danger("You fire your finger gun!")
 	range = 20
@@ -203,6 +203,9 @@
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't properly point your fingers while incapacitated."))
 		return
+	if(owner.get_active_held_item())
+		to_chat(owner, span_warning("You can't properly fire your finger guns with something in your hand."))
+		return
 	if(usr?.mind)
 		if(!usr.mind.miming)
 			to_chat(usr, span_warning("You must dedicate yourself to silence first!"))
@@ -213,6 +216,9 @@
 	..()
 
 /obj/effect/proc_holder/spell/aimed/finger_guns/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(caller.get_active_held_item())
+		to_chat(caller, span_warning("You can't properly fire your finger guns with something in your hand."))
+		return
 	if(caller.incapacitated())
 		to_chat(caller, span_warning("You can't properly point your fingers while incapacitated."))
 		if(charge_type == "recharge")

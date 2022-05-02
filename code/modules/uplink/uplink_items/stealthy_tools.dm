@@ -92,3 +92,37 @@
 	item = /obj/item/clothing/shoes/chameleon/noslip
 	cost = 2
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+// High progression cost
+
+/datum/uplink_item/stealthy_tools/telecomm_blackout
+	name = "Disable Telecomms"
+	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
+	item = /obj/effect/gibspawner/generic
+	surplus = 0
+	progression_minimum = 30 MINUTES
+	limited_stock = 1
+	cost = 4
+	restricted = TRUE
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/stealthy_tools/telecomm_blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	var/datum/round_event_control/event = locate(/datum/round_event_control/communications_blackout) in SSevents.control
+	event.runEvent()
+	return source //For log icon
+
+/datum/uplink_item/stealthy_tools/blackout
+	name = "Trigger Stationwide Blackout"
+	desc = "When purchased, a virus will be uploaded to the engineering processing servers to force a routine power grid check, forcing all APCs on the station to be temporarily disabled."
+	item = /obj/effect/gibspawner/generic
+	surplus = 0
+	progression_minimum = 40 MINUTES
+	limited_stock = 1
+	cost = 6
+	restricted = TRUE
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/stealthy_tools/blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	var/datum/round_event_control/event = locate(/datum/round_event_control/grid_check) in SSevents.control
+	event.runEvent()
+	return source //For log icon

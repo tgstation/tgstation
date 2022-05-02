@@ -118,6 +118,9 @@
 /// log economy actions
 /datum/config_entry/flag/log_econ
 
+/// log traitor objectives
+/datum/config_entry/flag/log_traitor
+
 /// log admin chat messages
 /datum/config_entry/flag/log_adminchat
 	protection = CONFIG_ENTRY_LOCKED
@@ -218,10 +221,6 @@
 
 /datum/config_entry/flag/allow_holidays
 
-/datum/config_entry/number/tick_limit_mc_init //SSinitialization throttling
-	default = TICK_LIMIT_MC_INIT_DEFAULT
-	min_val = 0 //oranges warned us
-	integer = FALSE
 
 /datum/config_entry/flag/admin_legacy_system //Defines whether the server uses the legacy admin system with admins.txt or the SQL system
 	protection = CONFIG_ENTRY_LOCKED
@@ -543,7 +542,7 @@
 
 /datum/config_entry/flag/resume_after_initializations/ValidateAndSet(str_val)
 	. = ..()
-	if(. && Master.current_runlevel)
+	if(. && MC_RUNNING())
 		world.sleep_offline = !config_entry_value
 
 /datum/config_entry/number/rounds_until_hard_restart
@@ -596,14 +595,21 @@
 /datum/config_entry/string/urgent_ahelp_message
 	default = "This ahelp is urgent!"
 
+/datum/config_entry/string/ahelp_message
+	default = ""
+
 /datum/config_entry/string/urgent_ahelp_user_prompt
 	default = "There are no admins currently on. Do not press the button below if your ahelp is a joke, a request or a question. Use it only for cases of obvious grief."
 
-/datum/config_entry/string/adminhelp_webhook_url
+/datum/config_entry/string/urgent_adminhelp_webhook_url
+
+/datum/config_entry/string/regular_adminhelp_webhook_url
 
 /datum/config_entry/string/adminhelp_webhook_pfp
 
 /datum/config_entry/string/adminhelp_webhook_name
+
+/datum/config_entry/string/adminhelp_ahelp_link
 
 /datum/config_entry/flag/cache_assets
 	default = TRUE
@@ -615,3 +621,7 @@
 	default = 5
 	min_val = 0
 	integer = TRUE
+
+/datum/config_entry/flag/forbid_all_profiling
+
+/datum/config_entry/flag/forbid_admin_profiling

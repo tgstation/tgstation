@@ -100,7 +100,10 @@
 		/obj/item/clothing/suit/poncho = 1,
 		/obj/item/clothing/suit/poncho/green = 1,
 		/obj/item/clothing/suit/poncho/red = 1,
+		/obj/item/clothing/head/maidheadband = 1,
 		/obj/item/clothing/under/costume/maid = 1,
+		/obj/item/clothing/gloves/maid = 1,
+		/obj/item/clothing/neck/maid = 1,
 		/obj/item/clothing/under/rank/civilian/janitor/maid = 1,
 		/obj/item/clothing/glasses/cold=1,
 		/obj/item/clothing/glasses/heat=1,
@@ -131,7 +134,10 @@
 		/obj/item/clothing/suit/changshan_blue = 1,
 		/obj/item/clothing/suit/cheongsam_red = 1,
 		/obj/item/clothing/suit/cheongsam_blue = 1,
-		/obj/item/gohei = 1
+		/obj/item/gohei = 1,
+		/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
+		/obj/item/clothing/mask/gas/prop = 4,
+		/obj/item/clothing/mask/gas/atmosprop = 3,
 	)
 	contraband = list(
 		/obj/item/clothing/suit/judgerobe = 1,
@@ -160,8 +166,8 @@
 		/obj/item/storage/belt/cummerbund = 1
 	)
 	refill_canister = /obj/item/vending_refill/autodrobe
-	default_price = PAYCHECK_ASSISTANT * 0.8 //Default of 40.
-	extra_price = PAYCHECK_HARD
+	default_price = PAYCHECK_CREW * 0.8 //Default of 40.
+	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask="theater-light-mask"
 

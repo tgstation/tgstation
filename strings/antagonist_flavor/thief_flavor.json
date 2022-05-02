@@ -1,4 +1,8 @@
 {
+	"All Access Fan": {
+		"goal": "The maintenance scrawlings speak of a legend who collected all the ids, and ascended to Accessia, land of the... well, the scrawlings got a little too hard to read. But fuck it, you're going to collect them ALL. Even if that makes you a complete asshole. Examine IDs to see if they're from Central Command, thus good to steal!",
+		"introduction": "You're going to collect All the Access today."
+	},
 	"Black Market Outfitter": {
 		"goal": "You've tapped into the black market, and it turns out you could get rich quick introducing some of Nanotrasen's guns to the dark web!",
 		"introduction": "You're a Black Market Outfitter."
@@ -17,7 +21,7 @@
 	},
 	"Organ Market Collector": {
 		"goal": "Nanotrasen has top of the line medical resources handy, which means you could be making a pretty penny slipping some organs out of medical.",
-		"introduction": "You're am Organ Market Collector."
+		"introduction": "You're an Organ Market Collector."
 	},
 	"Thief": {
 		"goal": "For one reason or another, you're looking to steal something expensive today, and you've found a good target.",

@@ -49,12 +49,10 @@
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
 
+
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC 1
 #define ORGAN_ROBOTIC 2
-
-#define BODYPART_ORGANIC 1
-#define BODYPART_ROBOTIC 2
 
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
@@ -63,7 +61,62 @@
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
 
+//Bodypart change blocking flags
+///Bodypart does not get replaced during set_species()
+#define BP_BLOCK_CHANGE_SPECIES (1<<0)
 
+//Bodytype defines for how things can be worn, surgery, and other misc things.
+///The limb is organic
+#define BODYTYPE_ORGANIC (1<<0)
+///The limb is robotic
+#define BODYTYPE_ROBOTIC (1<<1)
+///The limb fits the human mold
+#define BODYTYPE_HUMANOID (1<<2)
+///The limb is digitigrade
+#define BODYTYPE_DIGITIGRADE (1<<3) //Cancer
+///The limb fits the monkey mold
+#define BODYTYPE_MONKEY (1<<4)
+///The limb is snouted
+#define BODYTYPE_SNOUTED (1<<5)
+
+//Defines for Species IDs
+#define SPECIES_ABDUCTOR "abductor"
+#define SPECIES_ANDROID "android"
+#define SPECIES_DULLAHAN "dullahan"
+#define SPECIES_ETHEREAL "ethereal"
+#define SPECIES_FELINE "felinid"
+#define SPECIES_FLYPERSON "fly"
+#define SPECIES_HUMAN "human"
+#define SPECIES_JELLYPERSON "jelly"
+#define SPECIES_SLIMEPERSON "slime"
+#define SPECIES_LUMINESCENT "luminescent"
+#define SPECIES_STARGAZER "stargazer"
+#define SPECIES_LIZARD "lizard"
+#define SPECIES_LIZARD_ASH "ashwalker"
+#define SPECIES_LIZARD_SILVER "silverscale"
+#define SPECIES_NIGHTMARE "nightmare"
+#define SPECIES_MONKEY "monkey"
+#define SPECIES_MOTH "moth"
+#define SPECIES_MUSHROOM "mush"
+#define SPECIES_PLASMAMAN "plasmaman"
+#define SPECIES_PODPERSON "pod"
+#define SPECIES_SHADOW "shadow"
+#define SPECIES_SKELETON "skeleton"
+#define SPECIES_SNAIL "snail"
+#define SPECIES_VAMPIRE "vampire"
+#define SPECIES_ZOMBIE "zombie"
+#define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
+#define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
+
+//See: datum/species/var/digitigrade_customization
+///The species does not have digitigrade legs in generation.
+#define DIGITIGRADE_NEVER 0
+///The species can have digitigrade legs in generation
+#define DIGITIGRADE_OPTIONAL 1
+///The species is forced to have digitigrade legs in generation.
+#define DIGITIGRADE_FORCED 2
+
+//TODO: Remove entirely in favor of the BODYTYPE system
 ///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
 #define HUMAN_BODY (1 << 0)
 #define MONKEY_BODY (1 << 1)
@@ -511,65 +564,67 @@
 
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays
-#define TOTAL_LAYERS 31 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS 32 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 31 
+#define MUTATIONS_LAYER 32
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 30
+#define BODY_BEHIND_LAYER 31
 /// Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODYPARTS_LAYER 29
+#define BODYPARTS_LAYER 30
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 28
+#define BODY_ADJ_LAYER 29
 /// Underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_LAYER 27
+#define BODY_LAYER 28
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 26
+#define FRONT_MUTATIONS_LAYER 27
 /// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 25
+#define DAMAGE_LAYER 26
 /// Jumpsuit clothing layer
-#define UNIFORM_LAYER 24
+#define UNIFORM_LAYER 25
 /// ID card layer (might be deprecated)
-#define ID_LAYER 23
+#define ID_LAYER 24
 /// ID card layer
-#define ID_CARD_LAYER 22
+#define ID_CARD_LAYER 23
 /// Hands body part layer (or is this for the arm? not sure...)
-#define HANDS_PART_LAYER 21
+#define HANDS_PART_LAYER 22
 /// Gloves layer
-#define GLOVES_LAYER 20
+#define GLOVES_LAYER 21
 /// Shoes layer
-#define SHOES_LAYER 19
+#define SHOES_LAYER 20
 /// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 18
+#define EARS_LAYER 19
 /// Suit layer (armor, hardsuits, etc.)
-#define SUIT_LAYER 17
+#define SUIT_LAYER 18
 /// Glasses layer
-#define GLASSES_LAYER 16
+#define GLASSES_LAYER 17
 /// Belt layer
-#define BELT_LAYER 15 //Possible make this an overlay of somethign required to wear a belt?
+#define BELT_LAYER 16 //Possible make this an overlay of somethign required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
-#define SUIT_STORE_LAYER 14
+#define SUIT_STORE_LAYER 15
 /// Neck layer (for wearing ties and bedsheets)
-#define NECK_LAYER 13
+#define NECK_LAYER 14
 /// Back layer (for backpacks and equipment on your back)
-#define BACK_LAYER 12
+#define BACK_LAYER 13
 /// Hair layer (mess with the fro and you got to go!)
-#define HAIR_LAYER 11 //TODO: make part of head layer?
+#define HAIR_LAYER 12 //TODO: make part of head layer?
 /// Facemask layer (gas masks, breath masks, etc.)
-#define FACEMASK_LAYER 10
+#define FACEMASK_LAYER 11
 /// Head layer (hats, helmets, etc.)
-#define HEAD_LAYER 9
+#define HEAD_LAYER 10
 /// Handcuff layer (when your hands are cuffed)
-#define HANDCUFF_LAYER 8
+#define HANDCUFF_LAYER 9
 /// Legcuff layer (when your feet are cuffed)
-#define LEGCUFF_LAYER 7
+#define LEGCUFF_LAYER 8
 /// Hands layer (for the actual hand, not the arm... I think?)
-#define HANDS_LAYER 6
+#define HANDS_LAYER 7
 /// Body front layer. Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
-#define BODY_FRONT_LAYER 5
+#define BODY_FRONT_LAYER 6
 /// Special body layer that actually require to be above the hair (e.g. lifted welding goggles)
-#define ABOVE_BODY_FRONT_GLASSES_LAYER 4
+#define ABOVE_BODY_FRONT_GLASSES_LAYER 5
 /// Special body layer for the rare cases where something on the head needs to be above everything else (e.g. flowers)
-#define ABOVE_BODY_FRONT_HEAD_LAYER 3
+#define ABOVE_BODY_FRONT_HEAD_LAYER 4
+/// Bleeding wound icons
+#define WOUND_LAYER 3
 /// Blood cult ascended halo layer, because there's currently no better solution for adding/removing
 #define HALO_LAYER 2
 /// Fire layer when you're on fire
@@ -601,8 +656,8 @@
 
 //used by canUseTopic()
 /// If silicons need to be next to the atom to use this
-#define BE_CLOSE TRUE 
-/// If other mobs (monkeys, aliens, etc) can use this 
+#define BE_CLOSE TRUE
+/// If other mobs (monkeys, aliens, etc) can use this
 #define NO_DEXTERITY TRUE // I had to change 20+ files because some non-dnd-playing fuckchumbis can't spell "dexterity"
 // If telekinesis you can use it from a distance
 #define NO_TK TRUE

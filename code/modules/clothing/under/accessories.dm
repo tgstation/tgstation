@@ -8,7 +8,7 @@
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_SMALL
 	/// Whether or not the accessory displays through suits and the like.
-	var/above_suit = FALSE
+	var/above_suit = TRUE
 	/// TRUE if shown as a small icon in corner, FALSE if overlayed
 	var/minimize_when_attached = TRUE
 	/// Whether the accessory has any storage to apply to the clothing it's attached to.
@@ -92,8 +92,8 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/accessory/AltClick(mob/user)
-	if(initial(above_suit) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+/obj/item/clothing/accessory/attack_self_secondary(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 		return
@@ -103,8 +103,7 @@
 /obj/item/clothing/accessory/examine(mob/user)
 	. = ..()
 	. += span_notice("\The [src] can be attached to a uniform. Alt-click to remove it once attached.")
-	if(initial(above_suit))
-		. += span_notice("\The [src] can be worn above or below your suit. Alt-click to toggle.")
+	. += span_notice("\The [src] can be worn above or below your suit. Right-click to toggle.")
 
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
@@ -231,18 +230,16 @@
 	icon_state = "gold"
 	medaltype = "medal-gold"
 	custom_materials = list(/datum/material/gold=1000)
-	
+
 /obj/item/clothing/accessory/medal/med_medal
 	name = "exemplary performance medal"
 	desc = "A medal awarded to those who have shown distinguished conduct, performance, and initiative within the medical department."
 	icon_state = "med_medal"
-	above_suit = TRUE
 
 /obj/item/clothing/accessory/medal/med_medal2
 	name = "excellence in medicine medal"
 	desc = "A medal awarded to those who have shown legendary performance, competence, and initiative beyond all expectations within the medical department."
 	icon_state = "med_medal2"
-	above_suit = TRUE
 
 /obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
@@ -421,7 +418,6 @@
 	name = "skull codpiece"
 	desc = "A skull shaped ornament, intended to protect the important things in life."
 	icon_state = "skull"
-	above_suit = TRUE
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
 	attachment_slot = GROIN
 
@@ -429,7 +425,6 @@
 	name = "Sinew Skirt"
 	desc = "For the last time. IT'S A KILT not a skirt."
 	icon_state = "skilt"
-	above_suit = TRUE
 	minimize_when_attached = FALSE
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
 	attachment_slot = GROIN
@@ -438,7 +433,6 @@
 	name = "Allergy dogtag"
 	desc = "Dogtag with a list of your allergies"
 	icon_state = "allergy"
-	above_suit = FALSE
 	minimize_when_attached = TRUE
 	attachment_slot = CHEST
 	///Display message
@@ -472,4 +466,6 @@
 						"Asexual Pride" = "pride_ace",
 						"Non-binary Pride" = "pride_enby",
 						"Transgender Pride" = "pride_trans",
+						"Intersex Pride" = "pride_intersex",
+						"Lesbian Pride" = "pride_lesbian",
 						)

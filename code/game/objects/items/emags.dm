@@ -99,7 +99,7 @@
 
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
-	to_chat(user, span_notice("You use [src]. It now has [charges] charges remaining."))
+	to_chat(user, span_notice("You use [src]. It now has [charges] charge[charges == 1 ? "" : "s"] remaining."))
 	charge_timers.Add(addtimer(CALLBACK(src, .proc/recharge), charge_time, TIMER_STOPPABLE))
 
 /obj/item/card/emag/doorjack/proc/recharge(mob/user)
@@ -138,6 +138,8 @@
 	worn_icon_state = "battlecruisercaller"
 	///whether we have called the battlecruiser
 	var/used = FALSE
+	/// The battlecruiser team that the battlecruiser will get added to
+	var/datum/team/battlecruiser/team
 
 /obj/item/card/emag/battlecruiser/proc/use_charge(mob/user)
 	used = TRUE

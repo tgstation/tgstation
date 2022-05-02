@@ -384,7 +384,7 @@
 		return
 
 	var/list/all_contents = traitor_mob.get_all_contents()
-	var/obj/item/pda/PDA = locate() in all_contents
+	var/obj/item/modular_computer/tablet/pda/PDA = locate() in all_contents
 	var/obj/item/radio/R = locate() in all_contents
 	var/obj/item/pen/P
 
@@ -431,16 +431,20 @@
 	if(!new_uplink)
 		CRASH("Uplink creation failed.")
 	new_uplink.setup_unlock_code()
+	new_uplink.uplink_handler.owner = traitor_mob.mind
+	new_uplink.uplink_handler.assigned_role = traitor_mob.mind.assigned_role.title
+	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
 	if(uplink_loc == R)
 		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features."
 	else if(uplink_loc == PDA)
-		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ringtone select to unlock its hidden features."
+		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
 	else if(uplink_loc == P)
 		unlock_text = "Your Uplink is cunningly disguised as your [P.name]. Simply twist the top of the pen [english_list(new_uplink.unlock_code)] from its starting position to unlock its hidden features."
 	new_uplink.unlock_text = unlock_text
 	if(!silent)
 		to_chat(traitor_mob, span_boldnotice(unlock_text))
-	antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
+	if(antag_datum)
+		antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
 
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
@@ -478,6 +482,7 @@
 
 	if(href_list["add_antag"])
 		add_antag_wrapper(text2path(href_list["add_antag"]),usr)
+
 	if(href_list["remove_antag"])
 		var/datum/antagonist/A = locate(href_list["remove_antag"]) in antag_datums
 		if(!istype(A))
@@ -485,8 +490,15 @@
 			return
 		A.admin_remove(usr)
 
+	if(href_list["open_antag_vv"])
+		var/datum/antagonist/to_vv = locate(href_list["open_antag_vv"]) in antag_datums
+		if(!istype(to_vv))
+			to_chat(usr, span_warning("Invalid antagonist ref to be vv'd."))
+			return
+		usr.client?.debug_variables(to_vv)
+
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.station_jobs)
+		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.name_occupations)
 		if(isnull(new_role))
 			return
 		var/datum/job/new_job = SSjob.GetJob(new_role)
@@ -698,7 +710,8 @@
 					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
 					log_admin("[key_name(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
 			if("uplink")
-				if(!give_uplink(antag_datum = has_antag_datum(/datum/antagonist/traitor)))
+				var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
+				if(!give_uplink(antag_datum = traitor_datum || null))
 					to_chat(usr, span_danger("Equipping a syndicate failed!"))
 					log_admin("[key_name(usr)] tried and failed to give [current] an uplink.")
 				else
@@ -825,7 +838,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		S.updateButtonIcon()
+		S.updateButtons()
 		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)

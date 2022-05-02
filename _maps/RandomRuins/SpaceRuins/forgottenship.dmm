@@ -327,7 +327,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Syndicate Cargo Pod APC";
-	pixel_y = 32;
+	pixel_y = 25;
 	start_charge = 0
 	},
 /obj/structure/cable,
@@ -435,7 +435,7 @@
 	},
 /obj/item/toy/nuke,
 /obj/item/clothing/under/chameleon,
-/obj/item/pda/chameleon,
+/obj/item/modular_computer/tablet/pda/chameleon,
 /obj/item/clothing/mask/chameleon,
 /obj/item/card/id/advanced/chameleon,
 /turf/open/floor/mineral/plastitanium,
@@ -444,7 +444,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Syndicate Forgotten Ship APC";
-	pixel_y = 32;
+	pixel_y = 25;
 	start_charge = 0
 	},
 /obj/structure/cable,

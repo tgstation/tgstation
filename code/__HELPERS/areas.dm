@@ -87,15 +87,19 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 		var/turf/thing = turfs[i]
 		var/area/old_area = thing.loc
 		newA.contents += thing
-		thing.change_area(old_area, newA)
+		thing.transfer_area_lighting(old_area, newA)
 
 	newA.reg_in_areas_in_z()
+
+	if(!isarea(area_choice) && newA.static_lighting)
+		newA.create_area_lighting_objects()
 
 	var/list/firedoors = oldA.firedoors
 	for(var/door in firedoors)
 		var/obj/machinery/door/firedoor/FD = door
 		FD.CalculateAffectingAreas()
 
+	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, oldA, creator)
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
 	return TRUE
 

@@ -122,7 +122,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	for(var/datum/space_level/z_level as anything in SSmapping.z_list)
 		propogate_spatial_grid_to_new_z(null, z_level)
-		CHECK_TICK_HIGH_PRIORITY
+		CHECK_TICK
 
 	//go through the pre init queue for anything waiting to be let in the grid
 	for(var/channel_type in waiting_to_add_by_type)
@@ -349,8 +349,13 @@ SUBSYSTEM_DEF(spatial_grid)
 ///find the spatial map cell that target belongs to, then add target's important_recusive_contents to it.
 ///make sure to provide the turf new_target is "in"
 /datum/controller/subsystem/spatial_grid/proc/enter_cell(atom/movable/new_target, turf/target_turf)
-	if(!target_turf || !new_target?.important_recursive_contents)
-		CRASH("/datum/controller/subsystem/spatial_grid/proc/enter_cell() was given null arguments or a new_target without important_recursive_contents!")
+	if(!initialized)
+		return
+	if(QDELETED(new_target))
+		CRASH("qdeleted or null target trying to enter the spatial grid!")
+
+	if(!target_turf || !new_target.important_recursive_contents)
+		CRASH("null turf loc or a new_target without important_recursive_contents trying to enter the spatial grid!")
 
 	var/x_index = ROUND_UP(target_turf.x / SPATIAL_GRID_CELLSIZE)
 	var/y_index = ROUND_UP(target_turf.y / SPATIAL_GRID_CELLSIZE)

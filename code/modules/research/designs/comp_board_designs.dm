@@ -141,6 +141,7 @@
 	name = "Computer Design (Robotics Control Console)"
 	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
 	id = "robocontrol"
+	materials = list(/datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/circuitboard/computer/robotics
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
@@ -305,3 +306,12 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/exodrone_console
 	category = list("Computer Boards")
+
+/datum/design/board/accounting_console
+	name = "Computer Design (Account Lookup Console)"
+	desc = "Allows for the construction of circuit boards used to assess the wealth of crewmates on station."
+	id = "account_console"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/computer/accounting
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

@@ -30,17 +30,6 @@
 	TECHWEB_POINT_TYPE_GENERIC = "General Research",\
 	)
 
-/// The maximum amount of cash you can get from toxins experiments.
-#define TECHWEB_BOMB_CASHCAP 50000
-/// The range required to generate any cash from toxins experiments.
-#define TECHWEB_BOMB_MIN_RANGE (GLOB.MAX_EX_LIGHT_RANGE)
-/// The range required to produce the maximum amount of cash from toxins experiments.
-#define TECHWEB_BOMB_MAX_RANGE 300
-/// A constant used to scale the cash produced by toxins experiments.
-#define TECHWEB_BOMB_SCALE_CONST 300000
-/// A constant used to scale the cash produced by toxins experiments.
-#define TECHWEB_BOMB_SCALE_DIVISOR 1500
-
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 52.3
 
@@ -64,7 +53,9 @@
 #define CELL_LINE_TABLE_COW "cell_line_cow_table"
 #define CELL_LINE_TABLE_MOONICORN "cell_line_moonicorn_table"
 #define CELL_LINE_TABLE_GELATINOUS "cell_line_gelatinous_table"
+#define CELL_LINE_TABLE_GLOCKROACH "cell_line_glockroach_table"
 #define CELL_LINE_TABLE_GRAPE "cell_line_grape_table"
+#define CELL_LINE_TABLE_HAUBEROACH "cell_line_hauberoach_table"
 #define CELL_LINE_TABLE_MEGACARP "cell_line_megacarp_table"
 #define CELL_LINE_TABLE_MOUSE "cell_line_mouse_table"
 #define CELL_LINE_TABLE_PINE "cell_line_pine_table"

@@ -20,7 +20,7 @@
 		/datum/job_department/security,
 		)
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
 	mind_traits = list(TRAIT_DONUT_LOVER)
@@ -41,8 +41,7 @@
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey)
 	rpg_title = "Thiefcatcher"
-	job_type_flags = JOB_STATION_JOB
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/detective
@@ -55,10 +54,9 @@
 	backpack_contents = list(
 		/obj/item/detective_scanner = 1,
 		/obj/item/melee/baton = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
 		/obj/item/storage/box/evidence = 1,
 		)
-	belt = /obj/item/pda/detective
+	belt = /obj/item/modular_computer/tablet/pda/detective
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/fedora/det_hat

@@ -82,18 +82,13 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /// Description for drone listing, describes location and current status
 /obj/item/exodrone/proc/ui_description()
-	if(location)
-		switch(drone_status)
-			if(EXODRONE_TRAVEL)
-				return "Traveling back to station."
-			else
-				return "Exploring [location.display_name()]"
-	else
-		switch(drone_status)
-			if(EXODRONE_TRAVEL)
-				return "Traveling to exploration site."
-			else
-				return "Idle."
+	switch(drone_status)
+		if(EXODRONE_TRAVEL)
+			return travel_target ? "Traveling to [travel_target.display_name()]." : "Traveling back to station."
+		if(EXODRONE_EXPLORATION, EXODRONE_ADVENTURE, EXODRONE_BUSY)
+			return "Exploring [location?.display_name() || "ERROR"]." // better safe than sorry.
+		if(EXODRONE_IDLE)
+			return "Idle."
 
 /// Starts travel for site, does not validate if it's possible
 /obj/item/exodrone/proc/launch_for(datum/exploration_site/target_site)

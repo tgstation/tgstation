@@ -13,6 +13,7 @@
 	wound_bonus = CANT_WOUND // can't wound by default
 	generic_canpass = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
@@ -93,6 +94,8 @@
 	var/ricochet_auto_aim_angle = 30
 	/// the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle
 	var/ricochet_incidence_leeway = 40
+	/// Can our ricochet autoaim hit our firer?
+	var/ricochet_shoots_firer = TRUE
 
 	///If the object being hit can pass ths damage on to something else, it should not do it for this bullet
 	var/force_hit = FALSE
@@ -132,7 +135,7 @@
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
 	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
-	var/flag = BULLET
+	var/armor_flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
 	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
@@ -142,21 +145,27 @@
 	var/decayedRange //stores original range
 	var/reflect_range_decrease = 5 //amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
-		//Effects
+	// Status effects applied on hit
 	var/stun = 0
 	var/knockdown = 0
 	var/paralyze = 0
 	var/immobilize = 0
 	var/unconscious = 0
-	var/stutter = 0
-	var/slur = 0
 	var/eyeblur = 0
 	var/drowsy = 0
-	var/stamina = 0
 	var/jitter = 0
+	/// Extra stamina damage applied on projectile hit (in addition to the main damage)
+	var/stamina = 0
+	/// Stuttering applied on projectile hit
+	var/stutter = 0 SECONDS
+	/// Slurring applied on projectile hit
+	var/slur = 0 SECONDS
+
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
+	/// We ignore mobs with these factions.
+	var/list/ignored_factions
 
 	///If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used for embedding items (bullets) in targets
 	var/shrapnel_type
@@ -318,7 +327,7 @@
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		best_angle += NICE_SHOT_RICOCHET_BONUS
 	for(var/mob/living/L in range(ricochet_auto_aim_range, src.loc))
-		if(L.stat == DEAD || !is_in_sight(src, L))
+		if(L.stat == DEAD || !is_in_sight(src, L) || (!ricochet_shoots_firer && L == firer))
 			continue
 		var/our_angle = abs(closer_angle_difference(Angle, get_angle(src.loc, L.loc)))
 		if(our_angle < best_angle)
@@ -451,32 +460,27 @@
  * 4. Turf
  * 5. Nothing
  */
-/obj/projectile/proc/select_target(turf/T, atom/target, atom/bumped)
+/obj/projectile/proc/select_target(turf/our_turf, atom/target, atom/bumped)
 	// 1. original
 	if(can_hit_target(original, TRUE, FALSE, original == bumped))
 		return original
-	var/list/atom/possible = list() // let's define these ONCE
-	var/list/atom/considering = list()
+	var/list/atom/considering = list()  // let's define this ONCE
 	// 2. mobs
-	possible = typecache_filter_list(T, GLOB.typecache_living) // living only
-	for(var/i in possible)
-		if(!can_hit_target(i, i == original, TRUE, i == bumped))
-			continue
-		considering += i
+	for(var/mob/living/iter_possible_target in our_turf)
+		if(can_hit_target(iter_possible_target, iter_possible_target == original, TRUE, iter_possible_target == bumped))
+			considering += iter_possible_target
 	if(considering.len)
-		var/mob/living/M = pick(considering)
-		return M.lowest_buckled_mob()
-	considering.len = 0
+		var/mob/living/hit_living = pick(considering)
+		return hit_living.lowest_buckled_mob()
 	// 3. objs and other dense things
-	for(var/i in T.contents)
-		if(!can_hit_target(i, i == original, TRUE, i == bumped))
-			continue
-		considering += i
+	for(var/i in our_turf)
+		if(can_hit_target(i, i == original, TRUE, i == bumped))
+			considering += i
 	if(considering.len)
 		return pick(considering)
 	// 4. turf
-	if(can_hit_target(T, T == original, TRUE, T == bumped))
-		return T
+	if(can_hit_target(our_turf, our_turf == original, TRUE, our_turf == bumped))
+		return our_turf
 	// 5. nothing
 		// (returns null)
 
@@ -493,6 +497,10 @@
 	if(!ignore_source_check && firer)
 		var/mob/M = firer
 		if((target == firer) || ((target == firer.loc) && ismecha(firer.loc)) || (target in firer.buckled_mobs) || (istype(M) && (M.buckled == target)))
+			return FALSE
+	if(ignored_factions?.len && ismob(target) && !direct_target)
+		var/mob/target_mob = target
+		if(faction_check(target_mob.faction, ignored_factions))
 			return FALSE
 	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
@@ -610,10 +618,10 @@
 	return FALSE
 
 /obj/projectile/proc/check_ricochet_flag(atom/A)
-	if((flag in list(ENERGY, LASER)) && (A.flags_ricochet & RICOCHET_SHINY))
+	if((armor_flag in list(ENERGY, LASER)) && (A.flags_ricochet & RICOCHET_SHINY))
 		return TRUE
 
-	if((flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
+	if((armor_flag in list(BOMB, BULLET)) && (A.flags_ricochet & RICOCHET_HARD))
 		return TRUE
 
 	return FALSE
@@ -953,12 +961,10 @@
 	var/ty = (text2num(screen_loc_Y[1]) - 1) * world.icon_size + text2num(screen_loc_Y[2])
 
 	//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
-	var/list/screenview = getviewsize(user.client.view)
-	var/screenviewX = screenview[1] * world.icon_size
-	var/screenviewY = screenview[2] * world.icon_size
+	var/list/screenview = view_to_pixels(user.client.view)
 
-	var/ox = round(screenviewX/2) - user.client.pixel_x //"origin" x
-	var/oy = round(screenviewY/2) - user.client.pixel_y //"origin" y
+	var/ox = round(screenview[1] / 2) - user.client.pixel_x //"origin" x
+	var/oy = round(screenview[2] / 2) - user.client.pixel_y //"origin" y
 	angle = ATAN2(tx - oy, ty - ox)
 	return list(angle, p_x, p_y)
 

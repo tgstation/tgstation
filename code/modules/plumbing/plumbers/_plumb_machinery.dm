@@ -8,8 +8,7 @@
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	icon_state = "pump"
 	density = TRUE
-	active_power_usage = 30
-	use_power = ACTIVE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 7.5
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///Plumbing machinery is always gonna need reagents, so we might aswell put it here
 	var/buffer = 50
@@ -21,19 +20,20 @@
 	. = ..()
 	set_anchored(bolt)
 	create_reagents(buffer, reagent_flags)
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
-
-/obj/machinery/plumbing/proc/can_be_rotated(mob/user,rotation_type)
-	return !anchored
+	AddComponent(/datum/component/simple_rotation)
+	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
 /obj/machinery/plumbing/examine(mob/user)
 	. = ..()
 	. += span_notice("The maximum volume display reads: <b>[reagents.maximum_volume] units</b>.")
 
-/obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+/obj/machinery/plumbing/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
+/obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
 	to_chat(user, span_notice("You start furiously plunging [name]."))

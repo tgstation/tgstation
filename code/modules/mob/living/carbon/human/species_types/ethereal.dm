@@ -1,5 +1,5 @@
 /datum/species/ethereal
-	name = "Ethereal"
+	name = "\improper Ethereal"
 	id = SPECIES_ETHEREAL
 	attack_verb = "burn"
 	attack_sound = 'sound/weapons/etherealhit.ogg'
@@ -17,6 +17,7 @@
 	damage_overlay_type = "" //We are too cool for regular damage overlays
 	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR, HAIR, FACEHAIR, HAS_FLESH, HAS_BONE) // i mean i guess they have blood so they can have wounds too
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	species_cookie = /obj/item/food/energybar
 	species_language_holder = /datum/language_holder/ethereal
 	sexes = FALSE //no fetish content allowed
 	toxic_food = NONE
@@ -27,6 +28,16 @@
 	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
 	hair_color = "fixedmutcolor"
 	hair_alpha = 140
+
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/ethereal,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/ethereal,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/ethereal,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/ethereal,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/ethereal,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ethereal,
+	)
+
 	var/current_color
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
@@ -37,6 +48,8 @@
 	var/static/g2 = 164
 	var/static/b2 = 149
 	var/obj/effect/dummy/lighting_obj/ethereal_light
+
+
 
 /datum/species/ethereal/Destroy(force)
 	if(ethereal_light)
@@ -63,6 +76,12 @@
 	var/obj/item/organ/heart/ethereal/ethereal_heart = C.getorganslot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
 
+	//The following code is literally only to make admin-spawned ethereals not be black.
+	C.dna.features["mcolor"] = C.dna.features["ethcolor"] //Ethcolor and Mut color are both dogshit and i hate them
+	for(var/obj/item/bodypart/limb as anything in C.bodyparts)
+		if(limb.limb_id == SPECIES_ETHEREAL)
+			limb.update_limb(is_creating = TRUE)
+
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
 	UnregisterSignal(C, COMSIG_ATOM_EMP_ACT)
@@ -82,6 +101,9 @@
 
 /datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/H)
 	. = ..()
+	if(!ethereal_light)
+		return
+
 	if(H.stat != DEAD && !EMPeffect)
 		var/healthpercent = max(H.health, 0) / 100
 		if(!emageffect)
@@ -92,8 +114,7 @@
 	else
 		ethereal_light.set_light_on(FALSE)
 		fixed_mut_color = rgb(128,128,128)
-	H.update_body()
-	H.update_hair() // This should fix the ethereal hair not changing with body, no clue as to why hair is not in update_body but okay
+	H.update_body(is_creating = TRUE)
 
 /datum/species/ethereal/proc/on_emp_act(mob/living/carbon/human/H, severity)
 	SIGNAL_HANDLER
@@ -149,6 +170,53 @@
 	return features
 
 /datum/species/ethereal/get_scream_sound(mob/living/carbon/human/ethereal)
-	return pick('sound/voice/ethereal/ethereal_scream_1.ogg',
-				'sound/voice/ethereal/ethereal_scream_2.ogg',
-				'sound/voice/ethereal/ethereal_scream_3.ogg')
+	return pick(
+		'sound/voice/ethereal/ethereal_scream_1.ogg',
+		'sound/voice/ethereal/ethereal_scream_2.ogg',
+		'sound/voice/ethereal/ethereal_scream_3.ogg',
+	)
+
+/datum/species/ethereal/get_species_description()
+	return "Coming from the planet of Sprout, the theocratic ethereals are \
+		separated socially by caste, and espouse a dogma of aiding the weak and \
+		downtrodden."
+
+/datum/species/ethereal/get_species_lore()
+	return list(
+		"Ethereals are a species native to the planet Sprout. \
+		When they were originally discovered, they were at a medieval level of technological progression, \
+		but due to their natural acclimation with electricity, they felt easy among the large NanoTrasen installations.",
+	)
+
+/datum/species/ethereal/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "bolt",
+			SPECIES_PERK_NAME = "Shockingly Tasty",
+			SPECIES_PERK_DESC = "Ethereals can feed on electricity from APCs, and do not otherwise need to eat.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "lightbulb",
+			SPECIES_PERK_NAME = "Disco Ball",
+			SPECIES_PERK_DESC = "Ethereals passively generate their own light.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "gem",
+			SPECIES_PERK_NAME = "Crystal Core",
+			SPECIES_PERK_DESC = "The Ethereal's heart will encase them in crystal should they die, returning them to life after a time - \
+				at the cost of a permanent brain trauma.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "biohazard",
+			SPECIES_PERK_NAME = "Starving Artist",
+			SPECIES_PERK_DESC = "Ethereals take toxin damage while starving.",
+		),
+	)
+
+	return to_add

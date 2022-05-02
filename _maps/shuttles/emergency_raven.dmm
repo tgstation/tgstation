@@ -319,9 +319,9 @@
 /area/shuttle/escape/brig)
 "aS" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Cockpit";
-	req_access_txt = "19"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "aT" = (
@@ -479,9 +479,9 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Holding Area";
-	req_access_txt = "2"
+	name = "Holding Area"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/brig)
 "bl" = (
@@ -549,9 +549,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/medical/glass{
-	name = "Escape Shuttle Infirmary";
-	req_one_access_txt = "2;19"
+	name = "Escape Shuttle Infirmary"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bp" = (
@@ -618,9 +618,9 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/command/glass{
-	name = "Cockpit";
-	req_one_access_txt = "2;19"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "by" = (
@@ -785,11 +785,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bN" = (
@@ -1496,12 +1496,12 @@
 /area/shuttle/escape)
 "db" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = -4;
 	pixel_y = 3
 	},
@@ -1811,6 +1811,8 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Emergency Shutle Engineering"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/atmos,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dB" = (

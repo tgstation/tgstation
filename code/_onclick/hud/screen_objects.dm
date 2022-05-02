@@ -72,16 +72,17 @@
 		M.swap_hand()
 	return 1
 
-/atom/movable/screen/skills
-	name = "skills"
+/atom/movable/screen/navigate
+	name = "navigate"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "skills"
-	screen_loc = ui_skill_menu
+	icon_state = "navigate"
+	screen_loc = ui_navigate_menu
 
-/atom/movable/screen/skills/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.mind.print_levels(H)
+/atom/movable/screen/navigate/Click()
+	if(!isliving(usr))
+		return TRUE
+	var/mob/living/navigator = usr
+	navigator.navigate()
 
 /atom/movable/screen/craft
 	name = "crafting menu"
@@ -132,7 +133,7 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 
-	if(usr.incapacitated(ignore_stasis = TRUE))
+	if(usr.incapacitated(IGNORE_STASIS))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -573,6 +574,7 @@
 	if(choice != hud.mymob.zone_selected)
 		hud.mymob.zone_selected = choice
 		update_appearance()
+		SEND_SIGNAL(user, COMSIG_MOB_SELECTED_ZONE_SET, choice)
 
 	return TRUE
 

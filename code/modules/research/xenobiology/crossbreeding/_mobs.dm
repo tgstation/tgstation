@@ -11,7 +11,7 @@ Slimecrossing Mobs
 	action_icon_state = "transformslime"
 	cooldown_min = 0
 	charge_max = 0
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	shapeshift_type = /mob/living/simple_animal/slime/transformedslime
 	convert_damage = TRUE
 	convert_damage_type = CLONE

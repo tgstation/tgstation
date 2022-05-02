@@ -129,7 +129,7 @@
 	ridable_atom.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	ridable_atom.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	qdel(speed_potion)
-	return SPEED_POTION_SUCCESSFUL
+	return SPEED_POTION_STOP
 
 /// Remove all of the relevant [riding offhand items][/obj/item/riding_offhand] from the target
 /datum/element/ridable/proc/unequip_buckle_inhands(mob/living/carbon/user, atom/movable/target_movable)

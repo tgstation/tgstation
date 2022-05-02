@@ -1,0 +1,156 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/punching_bag,
+/turf/open/floor/plating,
+/area/maintenance/starboard/lesser)
+"f" = (
+/obj/item/food/deadmouse{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/food/deadmouse{
+	pixel_x = -9
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/plating,
+/area/maintenance/starboard/lesser)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/obj/structure/falsewall,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/starboard/lesser)
+"q" = (
+/obj/structure/table,
+/obj/item/toy/talking/owl,
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/food/deadmouse/moldy,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/maintenance/starboard/lesser)
+"A" = (
+/obj/structure/sign/poster/official/the_owl{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"N" = (
+/obj/structure/bed/maint,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"Q" = (
+/turf/closed/wall,
+/area/maintenance/starboard/lesser)
+"S" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/suit/toggle/owlwings,
+/obj/item/clothing/under/costume/owl,
+/obj/item/clothing/mask/gas/owl_mask,
+/turf/open/floor/plating,
+/area/maintenance/starboard/lesser)
+"T" = (
+/obj/item/food/deadmouse{
+	pixel_x = 7;
+	pixel_y = 16
+	},
+/obj/item/food/deadmouse{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+"V" = (
+/obj/structure/flora/tree/pine{
+	desc = "A coniferous pine tree. How the hell did they manage to fit this in here?"
+	},
+/obj/item/food/deadmouse{
+	pixel_x = -13;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/starboard/lesser)
+
+(1,1,1) = {"
+Q
+Q
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+Q
+p
+S
+q
+u
+x
+a
+"}
+(3,1,1) = {"
+Q
+A
+p
+u
+p
+p
+m
+"}
+(4,1,1) = {"
+Q
+N
+u
+l
+u
+u
+a
+"}
+(5,1,1) = {"
+Q
+V
+T
+d
+f
+p
+a
+"}
+(6,1,1) = {"
+Q
+Q
+Q
+Q
+a
+a
+a
+"}
