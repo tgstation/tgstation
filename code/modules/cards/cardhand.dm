@@ -57,11 +57,6 @@
 
 	return NONE
 
-/** TODO let someone select a card from the cardhand using the radial menu
-/obj/item/toy/cards/cardhand/on_offered(mob/living/carbon/offerer)
-/obj/item/toy/cards/cardhand/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
-**/
-
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))
 		return
