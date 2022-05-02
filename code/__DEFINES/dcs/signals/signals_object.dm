@@ -297,6 +297,27 @@
 ///called in /obj/item/gun/ballistic/process_chamber (casing)
 #define COMSIG_CASING_EJECTED "casing_ejected"
 
+// Jetpack things
+// Please kill me
+
+//called in /obj/item/tank/jetpack/proc/turn_on() : ()
+#define COMSIG_JETPACK_ACTIVATED "jetpack_activated"
+	#define JETPACK_ACTIVATION_FAILED (1<<0)
+//called in /obj/item/tank/jetpack/proc/turn_off() : ()
+#define COMSIG_JETPACK_DEACTIVATED "jetpack_deactivated"
+
+//called in /obj/item/mod/module/jetpack/proc/on_activation() : ()
+#define COMSIG_JETMODULE_ACTIVATED "jetmodule_activated"
+	#define JETMODULE_ACTIVATION_FAILED (1<<0)
+//called in /obj/item/mod/module/jetpack/proc/on_deactivation() : ()
+#define COMSIG_JETMODULE_DEACTIVATED "jetmodule_deactivated"
+
+//called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
+#define COMSIG_THRUSTER_ACTIVATED "jetmodule_activated"
+	#define THRUSTER_ACTIVATION_FAILED (1<<0)
+//called in /obj/item/organ/cyberimp/chest/thrusters/proc/toggle() : ()
+#define COMSIG_THRUSTER_DEACTIVATED "jetmodule_deactivated"
+
 // /obj/effect/proc_holder/spell signals
 
 ///called from /obj/effect/proc_holder/spell/cast_check (src)
