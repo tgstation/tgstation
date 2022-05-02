@@ -17,6 +17,8 @@
 	desc = "Causes the subject to feel just a little bit smarter."
 	quality = POSITIVE
 	instability = 20
+	text_gain_indication = "<span class='danger'>You feel a little bit smarter.</span>"
+	text_lose_indication = "<span class='danger'>Your mind feels a little bit foggy.</span>"
 
 /datum/mutation/human/clever/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
