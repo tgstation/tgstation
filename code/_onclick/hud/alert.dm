@@ -419,7 +419,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 
 	var/mob/living/living_owner = owner
-	var/confirm = tgui_alert(usr ,"Are you sure you want to succumb to death?", "Goodnight, Sweet Prince", list("Yes", "No"))
+	var/confirm = tgui_alert(usr, "Are you sure you want to succumb to death?", "Goodnight, Sweet Prince", list("Yes", "No"))
 
 	if(confirm != "Yes" || !CAN_SUCCUMB(living_owner))
 		return
