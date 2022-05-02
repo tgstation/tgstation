@@ -148,6 +148,10 @@
 /datum/element/ridable/proc/handle_removal(datum/source)
 	SIGNAL_HANDLER
 
+	var/atom/movable/ridden = source
+	ridden.can_buckle = FALSE
+	ridden.unbuckle_all_mobs()
+
 	Detach(source)
 
 /obj/item/riding_offhand
