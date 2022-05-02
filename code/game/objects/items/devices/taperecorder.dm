@@ -163,13 +163,13 @@
 	set category = "Object"
 
 	if(!can_use(usr))
-			return
-		if(!mytape || mytape.unspooled)
-			return
-		if(recording)
-			return
-		if(playing)
-			return
+		return
+	if(!mytape || mytape.unspooled)
+		return
+	if(recording)
+		return
+	if(playing)
+		return
 
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 
@@ -444,24 +444,15 @@
 	//Let's not add infinite amounts of overlays when our fire_act is called repeatedly
 	if(!unspooled)
 		add_overlay("ribbonoverlay")
-	unspooled = TRUE
+		unspooled = TRUE
+	return
 
 /obj/item/tape/proc/respool()
-	cut_overlay("ribbonoverlay")
-	unspooled = FALSE
+	if (unspooled)
+		cut_overlay("ribbonoverlay")
+		unspooled = FALSE
+	return
 
-/obj/item/tape/proc/wipeproc()
-	used_capacity = 0
-	storedinfo = new
-	timestamp = new
-
-/obj/item/tape/verb/wipeverb()
-	set name = "Wipe Tape"
-	if(unspooled)
-		to_chat(usr, "<span class='notice'>You scrub the magnetic strip clean of its contents.")
-		wipeproc()
-	else if(!unspooled)
-		to_chat(usr, "<span class='notice'>You need to pull out the tape's magnetic strips first.")
 
 /obj/item/tape/proc/tapeflip()
 	//first we save a copy of our current side
@@ -489,25 +480,6 @@
 	if(tool.use_tool(src, user, 120))
 		to_chat(user, span_notice("You wind the tape back in."))
 		respool()
-
-/obj/item/tape/AltClick(mob/user)
-	. = ..()
-	if (firstFlip)
-		to_chat(usr, "<span class='notice'>You flip the tape so you can record on the clean magnetic strip.</span>")
-		firstFlip = FALSE
-	else
-		to_chat(usr, "<span class='notice'>You flip the tape back around.</span>")
-	tapeflip()
-
-/obj/item/tape/verb/flipVerb()
-//adding this verb too just so players know it's an option.
-	set name = "Flip Tape"
-	if (firstFlip)
-		to_chat(usr, "<span class='notice'>You flip the tape so you can record on the clean magnetic strip</span>")
-		firstFlip = FALSE
-	else
-		to_chat(usr, "<span class='notice'>You flip the tape back around.</span>")
-	tapeflip()
 
 
 //Random colour tapes
