@@ -289,16 +289,30 @@
 		)
 	)
 
+/// Steps must be checked for sequentially, in case we skip into another state we don't want
+/// However, if we're doing a deconstruction step (backwards) we need to check in a different order
+/datum/component/construction/mecha/proc/skip_extra_steps(diff, forward)
+	var/on_valid_step = FALSE
 
-/datum/component/construction/unordered/mecha_chassis/ripley
-	result = /datum/component/construction/mecha/ripley
-	steps = list(
-		/obj/item/mecha_parts/part/ripley_torso,
-		/obj/item/mecha_parts/part/ripley_left_arm,
-		/obj/item/mecha_parts/part/ripley_right_arm,
-		/obj/item/mecha_parts/part/ripley_left_leg,
-		/obj/item/mecha_parts/part/ripley_right_leg
-	)
+	while (!on_valid_step)
+		var/next_step = forward ? message_step : (message_step - 1)
+
+		// Some variables for what step we're on to keep the if statements reasonably long
+		var/on_weapons_step = next_step == ADD_WEAPONS_CONTROLS_STEP || next_step == SECURE_WEAPONS_CONTROLS_STEP
+		var/on_bluespace_step = next_step == INSTALL_BLUESPACE_STEP || next_step == CONNECT_BLUESPACE_STEP || next_step == ENGAGE_BLUESPACE_STEP
+
+		// Skip over steps we're not doing!
+		if(!has_treads && next_step == ADD_TREADS_STEP)
+			message_step += diff
+
+		else if(!has_weapons_module && on_weapons_step)
+			message_step += diff * 2
+
+		else if(!has_bluespace_crystal && on_bluespace_step)
+			message_step += diff * 3
+
+		else
+			on_valid_step = TRUE
 
 /// Generic mech construction messages
 /datum/component/construction/mecha/custom_action(obj/item/I, mob/living/user, diff)
@@ -306,24 +320,8 @@
 		return FALSE
 
 	var/forward = (diff == FORWARD)
-	// Because of the way construction works, going backwards requires an offset to properly
-	// calculate which step we're on
-	var/curr_step = forward ? message_step : (message_step - 1)
 
-	// Skip over steps we're not doing!
-	if(!has_treads && curr_step == ADD_TREADS_STEP)
-		message_step += diff
-		curr_step += diff
-
-	if(!has_weapons_module)
-		if(curr_step == ADD_WEAPONS_CONTROLS_STEP || curr_step == SECURE_WEAPONS_CONTROLS_STEP)
-			message_step += diff * 2
-			curr_step += diff * 2
-
-	if(!has_bluespace_crystal)
-		if(curr_step == INSTALL_BLUESPACE_STEP || curr_step == CONNECT_BLUESPACE_STEP || curr_step == ENGAGE_BLUESPACE_STEP)
-			message_step += diff * 3
-			curr_step += diff * 3
+	skip_extra_steps(diff, forward)
 
 	switch(curr_step)
 		if(ADD_TREADS_STEP)
@@ -383,6 +381,16 @@
 	return TRUE
 
 //RIPLEY
+/datum/component/construction/unordered/mecha_chassis/ripley
+	result = /datum/component/construction/mecha/ripley
+	steps = list(
+		/obj/item/mecha_parts/part/ripley_torso,
+		/obj/item/mecha_parts/part/ripley_left_arm,
+		/obj/item/mecha_parts/part/ripley_right_arm,
+		/obj/item/mecha_parts/part/ripley_left_leg,
+		/obj/item/mecha_parts/part/ripley_right_leg
+	)
+
 /datum/component/construction/mecha/ripley
 	result = /obj/vehicle/sealed/mecha/working/ripley
 	base_icon = "ripley"
