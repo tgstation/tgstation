@@ -35,8 +35,6 @@
 	var/detonation_timer
 	var/explode_now = FALSE
 
-	var/datum/component/puzzgrid/puzzgrid_component
-
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
 	. = (payload in src) && (active || ignore_active)
 	if(.)
@@ -56,7 +54,6 @@
 		detonation_timer = null
 		next_beep = null
 		countdown.stop()
-		QDEL_NULL(puzzgrid_component)
 		if(payload in src)
 			payload.defuse()
 		return
@@ -97,7 +94,6 @@
 /obj/machinery/syndicatebomb/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(countdown)
-	QDEL_NULL(puzzgrid_component)
 	end_processing()
 	return ..()
 
@@ -138,10 +134,6 @@
 	return TRUE
 
 /obj/machinery/syndicatebomb/screwdriver_act(mob/living/user, obj/item/tool)
-	if (active && isnull(puzzgrid_component))
-		balloon_alert(user, "it's protected, you'll have to defuse it the hard way!")
-		return TRUE
-
 	tool.play_tool_sound(src, 50)
 	open_panel = !open_panel
 	update_appearance()
@@ -210,20 +202,9 @@
 	begin_processing()
 	countdown.start()
 	next_beep = world.time + 10
-	open_panel = FALSE
-	set_detonation_timer(timer_set * 1 SECONDS)
+	detonation_timer = world.time + (timer_set * 10)
 	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
 	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
-
-	var/datum/puzzgrid/puzzgrid = create_random_puzzgrid()
-	if (!isnull(puzzgrid))
-		puzzgrid_component = AddComponent( \
-			/datum/component/puzzgrid, \
-			puzzgrid, \
-			timer_set * (1 SECONDS), \
-			on_victory_callback = VARSET_CALLBACK(src, active, FALSE), \
-			on_fail_callback = CALLBACK(src, .proc/try_detonate), \
-		)
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	if(!user.canUseTopic(src, !issilicon(user)))
@@ -249,11 +230,6 @@
 	if(payload && !istype(payload, /obj/item/bombcore/training))
 		log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
 		payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
-
-/// Set the time until detonation
-/obj/machinery/syndicatebomb/proc/set_detonation_timer(extra_time)
-	detonation_timer = world.time + extra_time
-	puzzgrid_component?.update_timer(extra_time)
 
 ///Bomb Subtypes///
 
@@ -580,7 +556,7 @@
 	if(timer < world.time)
 		for(var/obj/machinery/syndicatebomb/B in GLOB.machines)
 			if(B.active)
-				B.set_detonation_timer(BUTTON_DELAY)
+				B.detonation_timer = world.time + BUTTON_DELAY
 				detonated++
 			existent++
 		playsound(user, 'sound/machines/click.ogg', 20, TRUE)
