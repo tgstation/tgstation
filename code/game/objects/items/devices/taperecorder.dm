@@ -74,6 +74,7 @@
 	if(!playing && !recording)
 		icons_available += list("Record" = image(radial_icon_file,"record"))
 		icons_available += list("Play" = image(radial_icon_file,"play"))
+		icons_available += list("Wipe" = image(radial_icon_file,"erase"))
 		if(canprint && mytape?.storedinfo.len)
 			icons_available += list("Print Transcript" = image(radial_icon_file,"print"))
 
@@ -264,6 +265,16 @@
 				print_transcript()
 			if("Eject")
 				eject(user)
+			if("Wipe")
+				wipeproc()
+
+
+/obj/item/taperecorder/proc/wipeproc()
+	mytape.used_capacity = 0
+	mytape.storedinfo = new
+	mytape.timestamp = new
+	to_chat(usr, span_warning("This side of the tape has been wiped."))
+
 
 /obj/item/taperecorder/verb/print_transcript()
 	set name = "Print Transcript"
@@ -334,7 +345,11 @@
 	var/unspooled = FALSE
 	var/list/icons_available = list()
 	var/radial_icon_file = 'icons/hud/radial_tape.dmi'
+<<<<<<< Updated upstream
 	var/firstFlip = TRUE
+=======
+	var/firstflip = TRUE
+>>>>>>> Stashed changes
 
 /obj/item/tape/fire_act(exposed_temperature, exposed_volume)
 	unspool()
@@ -355,9 +370,12 @@
 /obj/item/tape/proc/update_available_icons()
 	icons_available = list()
 
+	icons_available += list("Flip tape" = image(radial_icon_file,"tape_flip"))
+
 	if(!unspooled)
 		icons_available += list("Unwind tape" = image(radial_icon_file,"tape_unwind"))
-	icons_available += list("Flip tape" = image(radial_icon_file,"tape_flip"))
+	if (unspooled)
+		icons_available += list("Wipe" = image(radial_icon_file,"tape_unwind"))
 
 /obj/item/tape/attack_self(mob/user)
 	update_available_icons()
@@ -372,6 +390,10 @@
 				tapeflip()
 				to_chat(user, span_notice("You turn \the [src] over."))
 				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', 70, FALSE)
+			if("Wipe tape")
+				if(loc != user)
+					return
+				wipeproc()
 			if("Unwind tape")
 				if(loc != user)
 					return
@@ -382,6 +404,25 @@
 	if(prob(50))
 		tapeflip()
 	. = ..()
+
+/obj/item/tape/proc/wipeproc()
+	used_capacity = 0
+	storedinfo = new
+	timestamp = new
+
+/obj/item/tape/AltClick(mob/user)
+	. = ..()
+	if (!unspooled)
+		if (firstflip)
+			to_chat(usr, "<span class='notice'>You flip the tape so you can record on the clean magnetic strip.</span>")
+			firstflip = FALSE
+		else
+			to_chat(usr, "<span class='notice'>You flip the tape back around.</span>")
+		tapeflip()
+
+	if (unspooled)
+		to_chat(usr, "<span class='notice'>You scrub the magnetic strip clean of its contents.")
+		wipeproc()
 
 /obj/item/tape/proc/unspool()
 	//Let's not add infinite amounts of overlays when our fire_act is called repeatedly
