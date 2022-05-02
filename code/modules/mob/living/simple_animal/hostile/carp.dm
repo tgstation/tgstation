@@ -88,7 +88,9 @@
 /mob/living/simple_animal/hostile/carp/revive(full_heal, admin_revive)
 	if (tamed)
 		var/datum/weakref/friendref = ai_controller.blackboard[BB_HOSTILE_FRIEND]
-		tamed(friendref.resolve())
+		var/mob/living/friend = friendref?.resolve()
+		if(friend)
+			tamed(friend)
 	return ..()
 
 /mob/living/simple_animal/hostile/carp/death(gibbed)
