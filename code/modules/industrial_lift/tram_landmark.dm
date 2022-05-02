@@ -31,3 +31,10 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	name = "East Wing"
 	destination_id = "right_part"
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
+
+/obj/effect/landmark/lift_id
+	name = "lift id setter"
+	icon_state = "lift_id"
+
+	///what specific id we give to the tram we're placed on, should explicitely set this if its a subtype, or weird things might happen
+	var/specific_lift_id = MAIN_STATION_TRAM

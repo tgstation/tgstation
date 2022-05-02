@@ -1,7 +1,16 @@
-///Collect and command
+///associative list of the form: list(lift_id = list(all lift_master datums attached to lifts of that type))
+GLOBAL_LIST_EMPTY(active_lifts_by_type)
+
+///coordinate and control movement across linked industrial_lift's. allows moving large single multitile platforms and many 1 tile platforms.
+///also is capable of linking platforms across linked z levels
 /datum/lift_master
-	///the /obj/structure/industrial_lift instances handled by us.
-	var/list/lift_platforms
+	///the lift platforms we consider as part of this lift. ordered in order of lowest z level to highest z level after init
+	var/list/obj/structure/industrial_lift/lift_platforms
+
+	var/list/datum/lift_level/levels
+
+	var/datum/lift_level/primary_level
+
 	/// Typepath list of what to ignore smashing through, controls all lifts
 	var/static/list/ignored_smashthroughs = list(
 		/obj/machinery/power/supermatter_crystal,
@@ -9,30 +18,42 @@
 		/obj/machinery/field,
 	)
 
-	///whether the lift handled by this lift_master datum is multitile as opposed to nxm platforms
-	var/multitile_tram = FALSE
+	///whether the lift handled by this lift_master datum is multitile as opposed to nxm platforms per z level
+	var/multitile_platform = FALSE
+
 	///lift platforms have already been sorted in order of z level.
 	var/z_sorted = FALSE
 
-	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag
-	var/horizontal_speed = 0.5
+	///lift_id taken from our base lift platform, used to put us into GLOB.active_lifts_by_type
+	var/lift_id = BASIC_LIFT_ID
 
-	///decisecond delay between vertical movement. cannot make the tram move faster than 1 movement per world.tick_lag
-	var/vertical_speed = 0.5
+	///overridable ID string to link control units to this specific lift_master datum. created by placing a lift id landmark object
+	///somewhere on the tram, if its anywhere on the tram we'll find it in init and set this to whatever it specifies
+	var/specific_lift_id
+	///what directions we're allowed to move
+	var/allowed_travel_directions = ALL
+
+	///if true, the lift cannot be manually moved.
+	var/controls_locked = FALSE
 
 /datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
+	lift_id = lift_platform.lift_id
 	Rebuild_lift_plaform(lift_platform)
 	ignored_smashthroughs = typecacheof(ignored_smashthroughs)
 
-	horizontal_speed = lift_platform.horizontal_speed
-	vertical_speed = lift_platform.vertical_speed
-
 	order_platforms_by_z_level()
+
+	LAZYADDASSOCLIST(GLOB.active_lifts_by_type, lift_id, src)
 
 /datum/lift_master/Destroy()
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 		lift_platform.lift_master_datum = null
 	lift_platforms = null
+
+	LAZYREMOVEASSOC(GLOB.active_lifts_by_type, lift_id, src)
+	if(isnull(GLOB.active_lifts_by_type))
+		GLOB.active_lifts_by_type = list()//im lazy
+
 	return ..()
 
 /datum/lift_master/proc/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
@@ -41,6 +62,11 @@
 	new_lift_platform.lift_master_datum = src
 	LAZYADD(lift_platforms, new_lift_platform)
 	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
+
+	var/obj/effect/landmark/lift_id/id_giver = locate() in new_lift_platform.loc
+	if(id_giver)
+		specific_lift_id = id_giver.specific_lift_id
+		qdel(id_giver)//we dont need it now
 
 	if(z_sorted)//make sure we dont lose z ordering if we get additional platforms after init
 		order_platforms_by_z_level()
@@ -54,6 +80,8 @@
 	old_lift_platform.lift_master_datum = null
 	LAZYREMOVE(lift_platforms, old_lift_platform)
 	UnregisterSignal(old_lift_platform, COMSIG_PARENT_QDELETING)
+	if(!length(lift_platforms))
+		qdel(src)
 
 ///Collect all bordered platforms via a simple floodfill algorithm. allows multiz trams because its funny
 /datum/lift_master/proc/Rebuild_lift_plaform(obj/structure/industrial_lift/base_lift_platform)
@@ -73,7 +101,7 @@
 
 			possible_expansions -= borderline
 
-///orders the lift platforms in order of lowest z level to highest z level
+///orders the lift platforms in order of lowest z level to highest z level.
 /datum/lift_master/proc/order_platforms_by_z_level()
 	//contains nested lists for every z level in the world. why? because its really easy to sort
 	var/list/platforms_by_z = list()
@@ -108,8 +136,20 @@
  */
 /datum/lift_master/proc/MoveLift(going, mob/user)
 	set_controls(LIFT_PLATFORM_LOCKED)
-	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
-		lift_platform.travel(going)
+	//lift_platforms are sorted in order of lowest z to highest z, so going upwards we need to move them in reverse order to not collide
+	if(going == UP)
+		var/obj/structure/industrial_lift/platform_to_move
+		var/current_index = length(lift_platforms)
+
+		while(current_index > 0)
+			platform_to_move = lift_platforms[current_index]
+			current_index--
+
+			platform_to_move.travel(going)
+
+	else if(going == DOWN)
+		for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
+			lift_platform.travel(going)
 	set_controls(LIFT_PLATFORM_UNLOCKED)
 
 /**
@@ -120,22 +160,24 @@
 /datum/lift_master/proc/MoveLiftHorizontal(going)
 	if(SStramprocess.profile)
 		world.Profile(PROFILE_START)
+
+	set_controls(LIFT_PLATFORM_LOCKED)
+
+	if(multitile_platform)
+		for(var/obj/structure/industrial_lift/platform_to_move as anything in lift_platforms)
+			platform_to_move.travel(going)
+
+		set_controls(LIFT_PLATFORM_UNLOCKED)
+		if(SStramprocess.profile)
+			world.Profile(PROFILE_STOP)
+		return
+
 	var/max_x = 0
 	var/max_y = 0
 	var/max_z = 0
 	var/min_x = world.maxx
 	var/min_y = world.maxy
 	var/min_z = world.maxz
-
-	set_controls(LIFT_PLATFORM_LOCKED)
-
-	if(multitile_tram)
-		for(var/obj/structure/industrial_lift/platform_to_move as anything in lift_platforms)
-			tram_platform.travel(going)
-
-		if(SStramprocess.profile)
-			world.Profile(PROFILE_STOP)
-		return
 
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 		max_z = max(max_z, lift_platform.z)
@@ -209,5 +251,4 @@
  * Sets all lift parts's controls_locked variable. Used to prevent moving mid movement, or cooldowns.
  */
 /datum/lift_master/proc/set_controls(state)
-	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
-		lift_platform.controls_locked = state
+	controls_locked = state

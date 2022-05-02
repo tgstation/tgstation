@@ -20,59 +20,61 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	var/id = null //ONLY SET THIS TO ONE OF THE LIFT'S PARTS. THEY'RE CONNECTED! ONLY ONE NEEDS THE SIGNAL!
 	///ID used to determine what lift types we can merge with
-	var/lift_id = "base"
+	var/lift_id = BASIC_LIFT_ID
+
 	///if true, the elevator works through floors
 	var/pass_through_floors = FALSE
-	///if true, the lift cannot be manually moved.
-	var/controls_locked = FALSE
+
 	///what movables on our platform that we are moving
 	var/list/atom/movable/lift_load
+
+	///what glide_size we set our moving contents to.
+	var/glide_size_override = 8
 	///lazy list of movables inside lift_load who had their glide_size changed since our last movement.
 	///used so that we dont have to change the glide_size of every object every movement, which scales to cost more than you'd think
 	var/list/atom/movable/changed_gliders
-	///master datum that controls our movement
+
+	///master datum that controls our movement. in general /industrial_lift subtypes control moving themselves, and
+	/// /datum/lift_master instances control moving the entire tram and any behavior associated with that.
 	var/datum/lift_master/lift_master_datum
-	///what glide_size we set our moving contents to.
-	var/glide_size_override = 8
+	///what subtype of /datum/lift_master to create for itself if no other platform on this tram has created one yet.
+	///very important for some behaviors since
+	var/lift_master_type = /datum/lift_master
 
 	///how many tiles this platform extends on the x axis
 	var/width = 1
 	///how many tiles this platform extends on the y axis (north-south not up-down, that would be the z axis)
 	var/height = 1
 
-	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag
-	var/horizontal_speed = 0.5
-	///decisecond delay between vertical movements. cannot make the tram move faster than 1 movement per world.tick_lag
-	var/vertical_speed = 0.5
-
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
 	GLOB.lifts.Add(src)
 
-	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
 	set_movement_registrations()
 
 	//since lift_master datums find all connected platforms when an industrial lift first creates it and then
 	//sets those platforms' lift_master_datum to itself, this check will only evaluate to true once per tram platform
 	if(!lift_master_datum)
-		lift_master_datum = new(src)
+		lift_master_datum = new lift_master_type(src)
 
 /obj/structure/industrial_lift/Destroy()
 	GLOB.lifts.Remove(src)
 	lift_master_datum = null
 	return ..()
 
-///set the movement registrations to our current turf so contents moving out of our tile are removed from our movement lists
+
+///set the movement registrations to our current turf(s) so contents moving out of our tile(s) are removed from our movement lists
 /obj/structure/industrial_lift/proc/set_movement_registrations(list/turfs_to_set)
 	for(var/turf/turf_loc as anything in turfs_to_set || locs)
 		RegisterSignal(turf_loc, COMSIG_ATOM_EXITED, .proc/UncrossedRemoveItemFromLift)
 		RegisterSignal(turf_loc, COMSIG_ATOM_ENTERED, .proc/AddItemOnLift)
 
-///unset our movement registrations from our tile so we dont register to the contents being moved from us
+///unset our movement registrations from turfs that no longer contain us (or every loc if turfs_to_unset is unspecified)
 /obj/structure/industrial_lift/proc/unset_movement_registrations(list/turfs_to_unset)
 	var/static/list/registrations = list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED)
 	for(var/turf/turf_loc as anything in turfs_to_unset || locs)
 		UnregisterSignal(turf_loc, registrations)
+
 
 /obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
@@ -101,6 +103,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	LAZYADD(lift_load, AM)
 	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
 
+
 ///signal handler for COMSIG_MOVABLE_UPDATE_GLIDE_SIZE: when a movable in lift_load changes its glide_size independently.
 ///adds that movable to a lazy list, movables in that list have their glide_size updated when the tram next moves
 /obj/structure/industrial_lift/proc/on_changed_glide_size(atom/movable/moving_contents, new_glide_size)
@@ -108,9 +111,10 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(new_glide_size != glide_size_override)
 		LAZYADD(changed_gliders, moving_contents)
 
-///make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them.
-///the tram becoming multitile should be in the bottom left corner
-/obj/structure/industrial_lift/proc/create_multitile_tram()
+
+///make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them. makes movement more efficient.
+///the platform becoming multitile should be in the bottom left corner since thats assumed to be the loc of multitile objects
+/obj/structure/industrial_lift/proc/create_multitile_platform()
 	var/min_x = INFINITY
 	var/max_x = 0
 
@@ -132,10 +136,14 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	if(loc_corner_lift != src)
 		//the loc of a multitile object must always be the lower left corner
-		return loc_corner_lift.create_multitile_tram()
+		return loc_corner_lift.create_multitile_platform()
 
 	width = (max_x - min_x) + 1
 	height = (max_y - min_y) + 1
+
+	///list of turfs we dont go over. if for whatever reason we encounter an already multitile lift platform
+	///we add all of its locs to this list so we dont add that lift platform multiple times as we iterate through its locs
+	var/list/locs_to_skip = locs.Copy()
 
 	bound_width = bound_width * width
 	bound_height = bound_height * height
@@ -147,10 +155,6 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	var/last_x = max(max_x - min_x, 0)
 	var/last_y = max(max_y - min_y, 0)
-
-	///list of turfs we dont go over. if for whatever reason we encounter an already multitile lift platform
-	///we add all of its locs to this list so we dont add that lift platform multiple times as we iterate through its locs
-	var/list/locs_to_skip = locs.Copy()
 
 	for(var/y in first_y to last_y)
 
@@ -191,35 +195,15 @@ GLOBAL_LIST_EMPTY(lifts)
 
 		qdel(other_lift)
 
-	lift_master_datum.multitile_tram = TRUE
+	lift_master_datum.multitile_platform = TRUE
 
 	var/turf/old_loc = loc
 
 	forceMove(locate(min_x, min_y, z))//move to the lower left corner
 	set_movement_registrations(locs - old_loc)
 
-/**
- * Signal for when the tram runs into a field of which it cannot go through.
- * Stops the train's travel fully, sends a message, and destroys the train.
- * Arguments:
- * bumped_atom - The atom this tram bumped into
- */
-/obj/structure/industrial_lift/proc/GracefullyBreak(atom/bumped_atom)
-	SIGNAL_HANDLER
-
-	if(istype(bumped_atom, /obj/machinery/field))
-		return
-
-	bumped_atom.visible_message(span_userdanger("[src] crashes into the field violently!"))
-	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_master_datum.lift_platforms)
-		tram_part.travel_distance = 0
-		tram_part.set_travelling(FALSE)
-		if(prob(15) || locate(/mob/living) in tram_part.lift_load) //always go boom on people on the track
-			explosion(tram_part, devastation_range = rand(0, 1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
-		qdel(tram_part)
-
-///walking algorithm that returns an unordered list of all lift platforms adjacent to us.
-///does return platforms directly above or below us as well
+///returns an unordered list of all lift platforms adjacent to us. used so our lift_master_datum can control all connected platforms.
+///includes platforms directly above or below us as well. only includes platforms with an identical lift_id to our own.
 /obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/lift_master_datum)
 	. = list()
 	for(var/direction in GLOB.cardinals_multiz)
@@ -228,6 +212,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			continue
 		. += neighbor
 
+///main proc for moving the lift in the direction [going]. handles horizontal and/or vertical movement for multi platformed lifts and multitile lifts.
 /obj/structure/industrial_lift/proc/travel(going)
 	var/list/things_to_move = lift_load
 	var/turf/destination
@@ -279,8 +264,8 @@ GLOBAL_LIST_EMPTY(lifts)
 				var/turf/closed/wall/C = dest_turf
 				do_sparks(2, FALSE, C)
 				C.dismantle_wall(devastated = TRUE)
-				for(var/mob/M in urange(8, src))
-					shake_camera(M, 2, 3)
+				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(src, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
+					shake_camera(client_mob, 2, 3)
 				playsound(C, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
 	else
@@ -433,7 +418,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		to_chat(user, span_warning("[src] doesn't seem to able to move anywhere!"))
 		add_fingerprint(user)
 		return
-	if(controls_locked)
+	if(lift_master_datum.controls_locked)
 		to_chat(user, span_warning("[src] has its controls locked! It must already be trying to do something!"))
 		add_fingerprint(user)
 		return
@@ -516,7 +501,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	name = "transport platform"
 	desc = "A lightweight platform. It moves in any direction, except up and down."
 	color = "#5286b9ff"
-	lift_id = "debug"
+	lift_id = DEBUG_LIFT_ID
 
 /obj/structure/industrial_lift/debug/use(mob/user)
 	if (!in_range(src, user))
@@ -578,95 +563,35 @@ GLOBAL_LIST_EMPTY(lifts)
 	canSmoothWith = null
 	//kind of a centerpiece of the station, so pretty tough to destroy
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	lift_id = "tram"
+	lift_id = TRAM_LIFT_ID
+	lift_master_type = /datum/lift_master/tram
+
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
-	var/travel_distance = 0
-	/// For finding the landmark initially - should be the exact same as the landmark's destination id.
+
+	//the following are only used to give to the lift_master datum when it's first created
+
+	/// For finding the landmark initially - should be the exact same as the landmark's destination id. only used to give to the lift_master
 	var/initial_id = "middle_part"
-	var/obj/effect/landmark/tram/from_where
-	var/travel_direction
+
+	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the lift_master
+	var/horizontal_speed = 0.5
 
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()
 	if(travelling)
 		on_changed_glide_size(AM, AM.glide_size)
 
-GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
-
 /obj/structure/industrial_lift/tram/central/Initialize(mapload)
-	if(GLOB.central_tram)
-		return INITIALIZE_HINT_QDEL
-
-	. = ..()
-
-	SStramprocess.can_fire = TRUE
-	GLOB.central_tram = src
-
+	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/industrial_lift/tram/central/LateInitialize()
-	. = ..()
-	find_our_location()
-
-	create_multitile_tram()
-
-/obj/structure/industrial_lift/tram/central/Destroy()
-	GLOB.central_tram = null
-	return ..()
-
-/obj/structure/industrial_lift/tram/proc/clear_turfs(list/turfs_to_clear, iterations)
-	for(var/turf/our_old_turf as anything in turfs_to_clear)
-		var/obj/effect/overlay/ai_detect_hud/hud = locate() in our_old_turf
-		if(hud)
-			qdel(hud)
-
-	var/overlay = /obj/effect/overlay/ai_detect_hud
-
-	for(var/turf/our_turf as anything in locs)
-		new overlay(our_turf)
-
-	iterations--
-
-	var/list/turfs = list()
-	for(var/turf/our_turf as anything in locs)
-		turfs += our_turf
-
-	if(iterations)
-		addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
-
-///debug proc to highlight the locs of the tram
-/obj/structure/industrial_lift/tram/proc/find_dimensions(iterations = 100)
-	message_admins("num turfs: [length(locs)], lower left corner: ([min_x], [min_y]), upper right corner: ([max_x], [max_y])")
-
-	var/overlay = /obj/effect/overlay/ai_detect_hud
-	var/list/turfs = list()
-
-	for(var/turf/our_turf as anything in locs)
-		new overlay(our_turf)
-		turfs += our_turf
-
-	addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
-
-/**
- * Finds the location of the tram
- *
- * The initial_id is assumed to the be the landmark the tram is built on in the map
- * and where the tram will set itself to be on roundstart.
- * The central tram piece goes further into this by actually checking the contents of the turf its on
- * for a tram landmark when it docks anywhere. This assures the tram actually knows where it is after docking,
- * even in the worst cast scenario.
- */
-/obj/structure/industrial_lift/tram/proc/find_our_location()
-	for(var/obj/effect/landmark/tram/our_location in GLOB.landmarks_list)
-		if(our_location.destination_id == initial_id)
-			from_where = our_location
-			break
+	create_multitile_platform()
 
 /obj/structure/industrial_lift/tram/proc/set_travelling(travelling)
 	if (src.travelling == travelling)
 		return
-
 
 	for(var/atom/movable/glider as anything in lift_load)
 		if(travelling)
@@ -682,17 +607,19 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 /obj/structure/industrial_lift/tram/use(mob/user) //dont click the floor dingus we use computers now
 	return
 
-/obj/structure/industrial_lift/tram/process(delta_time)
+/*
+/obj/structure/industrial_lift/tram/process(delta_time)//TODOKYLER: remove
 	if(!travel_distance)
 		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
 		return PROCESS_KILL
 	else
 		travel_distance--
-		lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(SStramprocess.wait))
+		lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(SStramprocess.wait))*/
 
 /obj/structure/industrial_lift/tram/set_currently_z_moving()
 	return FALSE //trams can never z fall and shouldnt waste any processing time trying to do so
 
+/*
 /**
  * Handles moving the tram
  *
@@ -718,13 +645,13 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 		SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
 
 		other_tram_part.from_where = to_where
-		other_tram_part.glide_size_override = DELAY_TO_GLIDE_SIZE(SStramprocess.wait)
+		other_tram_part.glide_size_override = DELAY_TO_GLIDE_SIZE(horizontal_speed)
 		other_tram_part.set_travelling(TRUE)
 
 	lift_master_datum.MoveLiftHorizontal(travel_direction, z)
 	travel_distance--
 
-	START_PROCESSING(SStramprocess, src)
+	START_PROCESSING(SStramprocess, src)*/
 
 /**
  * Handles unlocking the tram controls for use after moving
@@ -739,4 +666,35 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 		tram_part.set_travelling(FALSE)
 		lift_master_datum.set_controls(LIFT_PLATFORM_UNLOCKED)
 
+///debug proc to highlight the locs of the tram platform
+/obj/structure/industrial_lift/tram/proc/find_dimensions(iterations = 100)
+	message_admins("num turfs: [length(locs)]")
 
+	var/overlay = /obj/effect/overlay/ai_detect_hud
+	var/list/turfs = list()
+
+	for(var/turf/our_turf as anything in locs)
+		new overlay(our_turf)
+		turfs += our_turf
+
+	addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
+
+/obj/structure/industrial_lift/tram/proc/clear_turfs(list/turfs_to_clear, iterations)
+	for(var/turf/our_old_turf as anything in turfs_to_clear)
+		var/obj/effect/overlay/ai_detect_hud/hud = locate() in our_old_turf
+		if(hud)
+			qdel(hud)
+
+	var/overlay = /obj/effect/overlay/ai_detect_hud
+
+	for(var/turf/our_turf as anything in locs)
+		new overlay(our_turf)
+
+	iterations--
+
+	var/list/turfs = list()
+	for(var/turf/our_turf as anything in locs)
+		turfs += our_turf
+
+	if(iterations)
+		addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
