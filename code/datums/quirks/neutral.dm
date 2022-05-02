@@ -221,7 +221,7 @@
 	if(!istype(removed))
 		return
 
-	// Eyes were removed, remove heterochromia from the human holder and bid them adiou
+	// Eyes were removed, remove heterochromia from the human holder and bid them adieu
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.eye_color_heterochromatic = FALSE
 	human_holder.eye_color_right = initial(human_holder.eye_color_right)
