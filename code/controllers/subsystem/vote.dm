@@ -4,20 +4,35 @@ SUBSYSTEM_DEF(vote)
 	flags = SS_KEEP_TIMING|SS_NO_INIT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
-	/// A list of all possible choices for the current vote. Strings
-	var/list/choices = list()
-	/// An assoc list of [vote choices] to [ckeys who have voted for it].
-	var/list/choice_by_ckey = list()
 	/// A list of all generated action buttons
 	var/list/datum/action/generated_actions = list()
-	/// String name of whoever initiated the vote. Usually an admin's key, but can be anything (ex: "the server", "automated vote")
+	/// All votes that we can possible vote for.
+	var/list/datum/vote/possible_votes = list()
+	/// The vote we're currently voting on.
+	var/datum/vote/current_vote
+	/// String name of whoever initiated the vote.
+	/// Usually an admin's key, but can be anything (ex: "the server", "automated vote")
 	var/initiator
-	var/mode
-	var/question
+	/// The world time the current vote started.
 	var/started_time
+	/// The time remaining in the current vote.
 	var/time_remaining
+
+
 	var/list/voted = list()
 	var/list/voting = list()
+
+/datum/controller/subsystem/vote/Initialize(start_timeofday)
+	for(var/vote_type as anything in subtypesof(/datum/vote))
+		var/datum/vote/vote = new vote_type()
+		if(!vote.is_accessible_vote())
+			qdel(vote)
+			continue
+
+		possible_votes += vote
+
+	return ..()
+
 
 // Called by master_controller
 /datum/controller/subsystem/vote/fire()
@@ -29,12 +44,13 @@ SUBSYSTEM_DEF(vote)
 		SStgui.close_uis(src)
 		reset()
 
+/// Resets all of our vars after votes conclude.
 /datum/controller/subsystem/vote/proc/reset()
-	choices.Cut()
-	choice_by_ckey.Cut()
+
+	current_vote?.reset()
+	current_vote = null
 	initiator = null
-	mode = null
-	question = null
+
 	time_remaining = 0
 	voted.Cut()
 	voting.Cut()
@@ -50,6 +66,7 @@ SUBSYSTEM_DEF(vote)
 		total_votes += votes
 		if(votes > greatest_votes)
 			greatest_votes = votes
+
 	//default-vote for everyone who didn't vote
 	if(!CONFIG_GET(flag/default_no_vote) && choices.len)
 		var/list/non_voters = GLOB.directory.Copy()
@@ -270,34 +287,38 @@ SUBSYSTEM_DEF(vote)
 	if(.)
 		return
 
-	var/upper_admin = FALSE
-	if(usr.client.holder)
-		if(check_rights_for(usr.client, R_ADMIN))
-			upper_admin = TRUE
+	var/is_upper_admin = check_rights_for(usr?.client, R_ADMIN)
 
 	switch(action)
 		if("cancel")
-			if(usr.client.holder)
+			if(usr.client?.holder)
 				usr.log_message("[key_name_admin(usr)] cancelled a vote.", LOG_ADMIN)
 				message_admins("[key_name_admin(usr)] has cancelled the current vote.")
 				reset()
+
 		if("toggle_restart")
-			if(usr.client.holder && upper_admin)
+			if(usr.client?.holder && is_upper_admin)
 				CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))
+
 		if("toggle_map")
 			if(usr.client.holder && upper_admin)
 				CONFIG_SET(flag/allow_vote_map, !CONFIG_GET(flag/allow_vote_map))
+
 		if("restart")
 			if(CONFIG_GET(flag/allow_vote_restart) || usr.client.holder)
 				initiate_vote("restart",usr.key)
+
 		if("map")
 			if(CONFIG_GET(flag/allow_vote_map) || usr.client.holder)
 				initiate_vote("map",usr.key)
+
 		if("custom")
-			if(usr.client.holder)
-				initiate_vote("custom",usr.key)
+			if(usr.client?.holder)
+				initiate_vote("custom", usr.key)
+
 		if("vote")
 			submit_vote(round(text2num(params["index"])))
+
 	return TRUE
 
 /datum/controller/subsystem/vote/proc/remove_action_buttons()
@@ -311,25 +332,30 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/ui_close(mob/user)
 	voting -= user.client?.ckey
 
+/// The action that allows clients to vote on the current ... vote.
 /datum/action/vote
 	name = "Vote!"
 	button_icon_state = "vote"
 
-/datum/action/vote/Trigger(trigger_flags)
-	if(owner)
-		owner.vote()
-		remove_from_client()
-		Remove(owner)
-
 /datum/action/vote/IsAvailable()
 	return TRUE
+
+/datum/action/vote/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+
+	owner.vote()
+	remove_from_client()
+	Remove(owner)
 
 /datum/action/vote/proc/remove_from_client()
 	if(!owner)
 		return
+
 	if(owner.client)
-		owner.client.player_details.player_actions -= src
+		owner.client?.player_details.player_actions -= src
+
 	else if(owner.ckey)
-		var/datum/player_details/P = GLOB.player_details[owner.ckey]
-		if(P)
-			P.player_actions -= src
+		var/datum/player_details/associated_details = GLOB.player_details[owner.ckey]
+		associated_details?.player_actions -= src
