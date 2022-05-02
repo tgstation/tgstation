@@ -22630,19 +22630,6 @@
 "deb" = (
 /turf/closed/wall/r_wall,
 /area/engineering/gravity_generator)
-"deB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/white{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/service/hydroponics/garden)
 "deD" = (
 /obj/structure/closet/secure_closet/evidence,
 /obj/effect/turf_decal/tile/neutral,
@@ -23036,11 +23023,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/maintenance/port/greater)
-"dmG" = (
-/obj/machinery/hydroponics/soil,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/grass,
-/area/service/hydroponics/garden)
 "dmX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -27396,7 +27378,6 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -42063,7 +42044,6 @@
 /area/engineering/supermatter/room)
 "jEk" = (
 /obj/machinery/hydroponics/soil,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/grass,
 /area/service/hydroponics/garden)
 "jEq" = (
@@ -47454,6 +47434,7 @@
 "luB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -52839,9 +52820,6 @@
 "nfT" = (
 /obj/structure/table,
 /obj/machinery/newscaster/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -55114,6 +55092,7 @@
 	req_access_txt = "12"
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/maintenance/fore)
 "nWP" = (
@@ -55548,6 +55527,7 @@
 "oeB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -62179,9 +62159,6 @@
 	department = "Garden";
 	name = "Garden Requests Console"
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -67540,7 +67517,6 @@
 /turf/open/floor/iron/dark,
 /area/engineering/supermatter)
 "rUm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass,
@@ -69893,16 +69869,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
-"sHF" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/corner{
-	dir = 4
-	},
-/area/hallway/primary/fore)
 "sHP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -69978,7 +69944,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "sJt" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/stalkybush,
@@ -76448,10 +76413,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
-"vas" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/grass,
-/area/service/hydroponics/garden)
 "vaK" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/photocopier,
@@ -83115,11 +83076,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics/garden)
-"xlw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/open/floor/grass,
-/area/service/hydroponics/garden)
 "xmd" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/neutral,
@@ -84983,6 +84939,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics/garden)
 "xQt" = (
@@ -85675,6 +85632,9 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/service/hydroponics/garden)
 "ycs" = (
@@ -110328,7 +110288,7 @@ dJZ
 ddR
 lqX
 otJ
-sHF
+bkz
 bkz
 pRz
 otJ
@@ -110585,7 +110545,7 @@ adH
 adQ
 uLk
 sbb
-deB
+xLG
 sbb
 rSp
 xLG
@@ -111099,9 +111059,9 @@ adQ
 adH
 qiG
 jcQ
-vas
+jvI
 gYC
-xlw
+veI
 eOV
 cPC
 cPC
@@ -111356,7 +111316,7 @@ xMn
 xFl
 kTW
 vGY
-dmG
+jEk
 lUC
 jEk
 jcQ
@@ -111613,7 +111573,7 @@ vZx
 sCD
 veI
 cWR
-dmG
+jEk
 dER
 jEk
 eBE
@@ -111870,7 +111830,7 @@ oEs
 xFl
 kTW
 kbt
-dmG
+jEk
 nAd
 jEk
 lnE

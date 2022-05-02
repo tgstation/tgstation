@@ -26,6 +26,11 @@
 	name = "incendiary slug"
 	damage = 20
 
+/obj/projectile/bullet/incendiary/shotgun/no_trail
+	name = "precision incendiary slug"
+	damage = 35
+	leaves_fire_trail = FALSE
+
 /obj/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
 	damage = 5
