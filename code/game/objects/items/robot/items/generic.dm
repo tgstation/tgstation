@@ -18,27 +18,27 @@
 	/// Cost to use the stun arm
 	var/charge_cost = 1000
 
-/obj/item/borg/stun/attack(mob/living/mob, mob/living/user)
-	if(ishuman(mob))
-		var/mob/living/carbon/human/human = mob
-		if(human.check_shields(src, 0, "[mob]'s [name]", MELEE_ATTACK))
-			playsound(mob, 'sound/weapons/genhit.ogg', 50, TRUE)
+/obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
+	if(ishuman(attacked_mob))
+		var/mob/living/carbon/human/human = attacked_mob
+		if(human.check_shields(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
+			playsound(attacked_mob, 'sound/weapons/genhit.ogg', 50, TRUE)
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
 		if(!robot_user.cell.use(charge_cost))
 			return
 
-	user.do_attack_animation(mob)
-	mob.Paralyze(100)
-	mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+	user.do_attack_animation(attacked_mob)
+	attacked_mob.Paralyze(100)
+	attacked_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
 
-	mob.visible_message(span_danger("[user] prods [mob] with [src]!"), \
+	attacked_mob.visible_message(span_danger("[user] prods [attacked_mob] with [src]!"), \
 					span_userdanger("[user] prods you with [src]!"))
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
-	log_combat(user, mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
+	log_combat(user, attacked_mob, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
 
 /obj/item/borg/cyborghug
 	name = "hugging module"
@@ -76,90 +76,84 @@
 		if(HUG_MODE_CRUSH)
 			to_chat(user, "<span class='warningplain'>ERROR: ARM ACTUATORS OVERLOADED.</span>")
 
-/obj/item/borg/cyborghug/attack(mob/living/mob, mob/living/silicon/robot/user, params)
-	if(mob == user)
+/obj/item/borg/cyborghug/attack(mob/living/attacked_mob, mob/living/silicon/robot/user, params)
+	if(attacked_mob == user)
+		return
+	if(attacked_mob.health < 0)
 		return
 	switch(mode)
 		if(HUG_MODE_NICE)
-			if(mob.health < 0)
-				return
-			if(isanimal(mob))
+			if(isanimal(attacked_mob))
 				var/list/modifiers = params2list(params)
 				if (!user.combat_mode && !LAZYACCESS(modifiers, RIGHT_CLICK))
-					mob.attack_hand(user, modifiers) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
+					attacked_mob.attack_hand(user, modifiers) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
 				return
 			if(user.zone_selected == BODY_ZONE_HEAD)
-				user.visible_message(span_notice("[user] playfully boops [mob] on the head!"), \
-								span_notice("You playfully boop [mob] on the head!"))
-				user.do_attack_animation(mob, ATTACK_EFFECT_BOOP)
+				user.visible_message(span_notice("[user] playfully boops [attacked_mob] on the head!"), \
+								span_notice("You playfully boop [attacked_mob] on the head!"))
+				user.do_attack_animation(attacked_mob, ATTACK_EFFECT_BOOP)
 				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
-			else if(ishuman(mob))
+			else if(ishuman(attacked_mob))
 				if(user.body_position == LYING_DOWN)
-					user.visible_message(span_notice("[user] shakes [mob] trying to get [mob.p_them()] up!"), \
-									span_notice("You shake [mob] trying to get [mob.p_them()] up!"))
+					user.visible_message(span_notice("[user] shakes [attacked_mob] trying to get [attacked_mob.p_them()] up!"), \
+									span_notice("You shake [attacked_mob] trying to get [mob.p_them()] up!"))
 				else
-					user.visible_message(span_notice("[user] hugs [mob] to make [mob.p_them()] feel better!"), \
-							span_notice("You hug [mob] to make [mob.p_them()] feel better!"))
-				if(mob.resting)
-					mob.set_resting(FALSE, TRUE)
+					user.visible_message(span_notice("[user] hugs [attacked_mob] to make [attacked_mob.p_them()] feel better!"), \
+							span_notice("You hug [attacked_mob] to make [attacked_mob.p_them()] feel better!"))
+				if(attacked_mob.resting)
+					attacked_mob.set_resting(FALSE, TRUE)
 			else
-				user.visible_message(span_notice("[user] pets [mob]!"), \
-						span_notice("You pet [mob]!"))
+				user.visible_message(span_notice("[user] pets [attacked_mob]!"), \
+						span_notice("You pet [attacked_mob]!"))
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		if(HUG_MODE_HUG)
-			if(mob.health < 0)
-				return
-			if(ishuman(mob))
-				mob.adjust_status_effects_on_shake_up()
-				if(mob.body_position == LYING_DOWN)
-					user.visible_message(span_notice("[user] shakes [mob] trying to get [mob.p_them()] up!"), \
-									span_notice("You shake [mob] trying to get [mob.p_them()] up!"))
+			if(ishuman(attacked_mob))
+				attacked_mob.adjust_status_effects_on_shake_up()
+				if(attacked_mob.body_position == LYING_DOWN)
+					user.visible_message(span_notice("[user] shakes [attacked_mob] trying to get [attacked_mob.p_them()] up!"), \
+									span_notice("You shake [attacked_mob] trying to get [attacked_mob.p_them()] up!"))
 				else if(user.zone_selected == BODY_ZONE_HEAD)
-					user.visible_message(span_warning("[user] bops [mob] on the head!"), \
-									span_warning("You bop [mob] on the head!"))
-					user.do_attack_animation(mob, ATTACK_EFFECT_PUNCH)
+					user.visible_message(span_warning("[user] bops [attacked_mob] on the head!"), \
+									span_warning("You bop [attacked_mob] on the head!"))
+					user.do_attack_animation(attacked_mob, ATTACK_EFFECT_PUNCH)
 				else
-					user.visible_message(span_warning("[user] hugs [mob] in a firm bear-hug! [mob] looks uncomfortable..."), \
-							span_warning("You hug [mob] firmly to make [mob.p_them()] feel better! [mob] looks uncomfortable..."))
+					user.visible_message(span_warning("[user] hugs [attacked_mob] in a firm bear-hug! [attacked_mob] looks uncomfortable..."), \
+							span_warning("You hug [attacked_mob] firmly to make [attacked_mob.p_them()] feel better! [attacked_mob] looks uncomfortable..."))
 				if(mob.resting)
 					mob.set_resting(FALSE, TRUE)
 			else
-				user.visible_message(span_warning("[user] bops [mob] on the head!"), \
-						span_warning("You bop [mob] on the head!"))
+				user.visible_message(span_warning("[user] bops [attacked_mob] on the head!"), \
+						span_warning("You bop [attacked_mob] on the head!"))
 			playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE, -1)
 		if(HUG_MODE_SHOCK)
 			if (!COOLDOWN_FINISHED(src, shock_cooldown))
 				return
-			if (mob.health < 0)
-				return
-			if(ishuman(mob))
-				mob.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
-				user.visible_message(span_userdanger("[user] electrocutes [mob] with [user.p_their()] touch!"), \
-					span_danger("You electrocute [mob] with your touch!"))
+			if(ishuman(attacked_mob))
+				attacked_mob.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
+				user.visible_message(span_userdanger("[user] electrocutes [attacked_mob] with [user.p_their()] touch!"), \
+					span_danger("You electrocute [attacked_mob] with your touch!"))
 			else
-				if(!iscyborg(mob))
-					mob.adjustFireLoss(10)
-					user.visible_message(span_userdanger("[user] shocks [mob]!"), \
-						span_danger("You shock [mob]!"))
+				if(!iscyborg(attacked_mob))
+					attacked_mob.adjustFireLoss(10)
+					user.visible_message(span_userdanger("[user] shocks [attacked_mob]!"), \
+						span_danger("You shock [attacked_mob]!"))
 				else
-					user.visible_message(span_userdanger("[user] shocks [mob]. It does not seem to have an effect"), \
-						span_danger("You shock [mob] to no effect."))
+					user.visible_message(span_userdanger("[user] shocks [attacked_mob]. It does not seem to have an effect"), \
+						span_danger("You shock [attacked_mob] to no effect."))
 			playsound(loc, 'sound/effects/sparks2.ogg', 50, TRUE, -1)
 			user.cell.charge -= 500
 			COOLDOWN_START(src, shock_cooldown, HUG_SHOCK_COOLDOWN)
 		if(HUG_MODE_CRUSH)
 			if (!COOLDOWN_FINISHED(src, crush_cooldown))
 				return
-			if (mob.health < 0)
-				return
-			if(ishuman(mob))
-				user.visible_message(span_userdanger("[user] crushes [mob] in [user.p_their()] grip!"), \
-					span_danger("You crush [mob] in your grip!"))
+			if(ishuman(attacked_mob))
+				user.visible_message(span_userdanger("[user] crushes [attacked_mob] in [user.p_their()] grip!"), \
+					span_danger("You crush [attacked_mob] in your grip!"))
 			else
-				user.visible_message(span_userdanger("[user] crushes [mob]!"), \
-						span_danger("You crush [mob]!"))
+				user.visible_message(span_userdanger("[user] crushes [attacked_mob]!"), \
+						span_danger("You crush [attacked_mob]!"))
 			playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE, -1)
-			mob.adjustBruteLoss(15)
+			attacked_mob.adjustBruteLoss(15)
 			user.cell.charge -= 300
 			COOLDOWN_START(src, crush_cooldown, HUG_CRUSH_COOLDOWN)
 

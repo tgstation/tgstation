@@ -43,36 +43,36 @@
 	check_amount()
 
 ///Dispenses a lollipop
-/obj/item/borg/lollipop/proc/dispense(atom/atom, mob/user)
+/obj/item/borg/lollipop/proc/dispense(atom/atom_dispensed_to, mob/user)
 	if(candy <= 0)
 		to_chat(user, span_warning("No treats left in storage!"))
 		return FALSE
-	var/turf/turf = get_turf(atom)
-	if(!turf || !istype(turf) || !isopenturf(turf))
+	var/turf/turf_to_dispense_to = get_turf(atom_dispensed_to)
+	if(!turf_to_dispense_to || !isopenturf(turf_to_dispense_to))
 		return FALSE
-	if(isobj(atom))
-		var/obj/obj = atom
-		if(obj.density)
+	if(isobj(atom_dispensed_to))
+		var/obj/obj_dispensed_to = atom_dispensed_to
+		if(obj_dispensed_to.density)
 			return FALSE
 
 	var/obj/item/food_item
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE)
-			food_item = new /obj/item/food/lollipop/cyborg(turf)
+			food_item = new /obj/item/food/lollipop/cyborg(turf_to_dispense_to)
 		if(DISPENSE_ICECREAM_MODE)
-			food_item = new /obj/item/food/icecream(turf, list(ICE_CREAM_VANILLA))
+			food_item = new /obj/item/food/icecream(turf_to_dispense_to, list(ICE_CREAM_VANILLA))
 			food_item.desc = "Eat the ice cream."
 
 	var/into_hands = FALSE
-	if(ismob(atom))
-		var/mob/mob = atom
-		into_hands = mob.put_in_hands(food_item)
+	if(ismob(atom_dispensed_to))
+		var/mob/mob_dispensed_to = atom_dispensed_to
+		into_hands = mob_dispensed_to.put_in_hands(food_item)
 
 	candy--
 	check_amount()
 
 	if(into_hands)
-		user.visible_message(span_notice("[user] dispenses a treat into the hands of [atom]."), span_notice("You dispense a treat into the hands of [atom]."), span_hear("You hear a click."))
+		user.visible_message(span_notice("[user] dispenses a treat into the hands of [atom_dispensed_to]."), span_notice("You dispense a treat into the hands of [atom_dispensed_to]."), span_hear("You hear a click."))
 	else
 		user.visible_message(span_notice("[user] dispenses a treat."), span_notice("You dispense a treat."), span_hear("You hear a click."))
 
