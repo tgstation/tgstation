@@ -3123,6 +3123,7 @@
 #include "code\modules\mining\ores_coins.dm"
 #include "code\modules\mining\satchel_ore_boxdm.dm"
 #include "code\modules\mining\shelters.dm"
+#include "code\modules\mining\voucher_sets.dm"
 #include "code\modules\mining\equipment\explorer_gear.dm"
 #include "code\modules\mining\equipment\kheiral_cuffs.dm"
 #include "code\modules\mining\equipment\kinetic_crusher.dm"
