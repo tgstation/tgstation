@@ -224,19 +224,3 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
-
-/datum/quirk/item_quirk/bookworm
-	name = "Bookworm"
-	desc = "You have a love for reading books. Anytime you read a new book you become happy."
-	icon = "book"
-	value = 4
-	mob_trait = TRAIT_BOOKWORM
-	gain_text = "<span class='notice'>You love reading new books.</span>"
-	lose_text = "<span class='danger'>You grow tired of reading books.</span>"
-	mood_quirk = TRUE
-	medical_record_text = "Patient demonstrates a high IQ and a passion for learning."
-	
-/datum/quirk/item_quirk/bookworm/add_unique()
-	give_item_to_holder(/obj/item/book/random, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
-	give_item_to_holder(/obj/item/storage/bag/books, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
-	

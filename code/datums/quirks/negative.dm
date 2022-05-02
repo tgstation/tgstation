@@ -850,7 +850,7 @@
 	icon = "box-open"
 	value = -4
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
-	hardcore_value = 3
+	hardcore_value = 5
 	processing_quirk = TRUE
 
 /datum/quirk/claustrophobia/remove()
@@ -899,7 +899,7 @@
 	name = "Illiterate"
 	desc = "You dropped out of school and are unable to read or write. This affects reading, writing, using computers and other electronics."
 	icon = "graduation-cap"
-	value = -6
+	value = -8
 	mob_trait = TRAIT_ILLITERATE
 	medical_record_text = "Patient has a low IQ and is not literate."
-	hardcore_value = 5
+	hardcore_value = 8

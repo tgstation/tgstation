@@ -110,13 +110,13 @@
 	return list("gasmixes" = last_gasmix_data)
 
 /obj/item/analyzer/attack_self(mob/user, modifiers)
-	if(user.stat != CONSCIOUS || !user.can_read(src))
+	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
 
 	atmos_scan(user=user, target=get_turf(src), tool=src, silent=FALSE)
 
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
-	if(user.stat != CONSCIOUS || !user.can_read(src))
+	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
 		return
 
 	ui_interact(user)

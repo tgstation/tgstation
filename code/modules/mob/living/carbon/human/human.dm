@@ -767,21 +767,6 @@
 	heat_exposure_stacks = 0
 	return ..()
 
-/mob/living/carbon/human/is_nearsighted()
-	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		return FALSE
-		
-	// we should prolly delete this if it's not needed
-	//if(!src.glasses)
-	//	return TRUE	
-	
-	// we should probably double check this code logic to make sure it works...
-	var/obj/item/clothing/glasses/eyewear = src.glasses
-	if(eyewear && istype(eyewear) && eyewear.vision_correction)
-		return FALSE
-		
-	return TRUE
-
 /mob/living/carbon/human/is_literate()
 	return !HAS_TRAIT(src, TRAIT_ILLITERATE)
 

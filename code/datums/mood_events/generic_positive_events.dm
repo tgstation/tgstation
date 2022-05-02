@@ -45,14 +45,9 @@
 /datum/mood_event/maintenance_adaptation/add_effects()
 	description = "[GLOB.deity] has helped me adapt to the maintenance shafts!"
 
-/datum/mood_event/reading
+/datum/mood_event/book_nerd
 	description = "I have recently read a book."
 	mood_change = 1
-	timeout = 5 MINUTES
-
-/datum/mood_event/reading_excited
-	description = "I was excited to read a book recently."
-	mood_change = 3
 	timeout = 5 MINUTES
 
 /datum/mood_event/exercise
