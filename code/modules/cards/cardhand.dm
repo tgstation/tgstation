@@ -98,7 +98,7 @@
 		var/obj/item/toy/cards/deck/dealer_deck = weapon
 		if(!dealer_deck.wielded) // recycle cardhand into deck (if unwielded)
 			dealer_deck.insert(src)
-			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
+			user.balloon_alert_to_viewers("puts card in deck")
 			return
 		card = dealer_deck.draw(user)
 

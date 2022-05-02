@@ -153,7 +153,7 @@
 		var/obj/item/toy/cards/deck/dealer_deck = item
 		if(!dealer_deck.wielded) // recycle card into deck (if unwielded)
 			dealer_deck.insert(src)
-			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
+			user.balloon_alert_to_viewers("puts card in deck")
 			return
 		card = dealer_deck.draw(user)
 
@@ -166,7 +166,7 @@
 
 		if(istype(item, /obj/item/toy/cards/deck))
 			// only decks cause a balloon alert
-			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
+			user.balloon_alert_to_viewers("deals a card")
 
 		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location(), list(src, card))
 		new_cardhand.pixel_x = pixel_x
@@ -233,7 +233,7 @@
 
 	Flip()
 	if(isturf(src.loc)) // only display tihs message when flipping in a visible spot like on a table
-		user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
+		user.balloon_alert_to_viewers("flips a card")
 
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))

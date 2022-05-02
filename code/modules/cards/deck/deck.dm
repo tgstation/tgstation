@@ -115,7 +115,7 @@
 	COOLDOWN_START(src, shuffle_cooldown, shuffle_time)
 	cards = shuffle(cards)
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-	user.balloon_alert_to_viewers("shuffles the deck", vision_distance = COMBAT_MESSAGE_RANGE)
+	user.balloon_alert_to_viewers("shuffles the deck")
 	addtimer(CALLBACK(src, .proc/CardgameEvent, user), 60 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /// This checks if nearby mobs are playing a cardgame and triggers a mood and memory
@@ -157,7 +157,7 @@
 		card.Flip()
 	card.pickup(user)
 	user.put_in_hands(card)
-	user.balloon_alert_to_viewers("draws a card", vision_distance = COMBAT_MESSAGE_RANGE)
+	user.balloon_alert_to_viewers("draws a card")
 
 /obj/item/toy/cards/deck/attack_hand_secondary(mob/living/user, list/modifiers)
 	attack_hand(user, modifiers, flip_card = TRUE)
@@ -198,7 +198,7 @@
 	if(istype(item, /obj/item/toy/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
 		insert(item)
 		var/card_grammar = istype(item, /obj/item/toy/singlecard) ? "card" : "cards"
-		user.balloon_alert_to_viewers("puts [card_grammar] in deck", vision_distance = COMBAT_MESSAGE_RANGE)
+		user.balloon_alert_to_viewers("puts [card_grammar] in deck")
 		return
 	return ..()
 
