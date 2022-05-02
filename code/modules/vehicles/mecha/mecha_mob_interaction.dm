@@ -57,7 +57,7 @@
 	UnregisterSignal(current_occupant, COMSIG_LIVING_DEATH)
 	UnregisterSignal(current_occupant, COMSIG_MOB_CLICKON)
 	UnregisterSignal(current_occupant, COMSIG_MOB_MIDDLECLICKON)
-	UnregisterSignal(current_occupantM, COMSIG_MOB_SAY)
+	UnregisterSignal(current_occupant, COMSIG_MOB_SAY)
 	current_occupant.clear_alert(ALERT_CHARGE)
 	current_occupant.clear_alert(ALERT_MECH_DAMAGE)
 	if(current_occupant.client)
