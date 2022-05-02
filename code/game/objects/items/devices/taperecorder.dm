@@ -130,7 +130,9 @@
 	set name = "Eject Tape"
 	set category = "Object"
 
-	if(!can_use(usr) || !mytape)
+	if(!can_use(usr))
+		return
+	if(!mytape)
 		return
 	eject(usr)
 
@@ -160,8 +162,14 @@
 	set name = "Start Recording"
 	set category = "Object"
 
-	if(!can_use(usr) || recording || playing || !mytape || mytape.unspooled)
-		return
+	if(!can_use(usr))
+			return
+		if(!mytape || mytape.unspooled)
+			return
+		if(recording)
+			return
+		if(playing)
+			return
 
 	playsound(src, 'sound/items/taperecorder/taperecorder_play.ogg', 50, FALSE)
 
@@ -210,7 +218,13 @@
 	set name = "Play Tape"
 	set category = "Object"
 
-	if(!can_use(usr) || recording || playing || !mytape || mytape.unspooled)
+	if(!can_use(usr))
+		return
+	if(!mytape || mytape.unspooled)
+		return
+	if(recording)
+		return
+	if(playing)
 		return
 
 	playing = TRUE
@@ -280,10 +294,16 @@
 	set name = "Print Transcript"
 	set category = "Object"
 
-	if(!mytape.storedinfo.len || !mytape || !can_use(usr) || recording || playing)
+	if(!mytape.storedinfo.len)
+		return
+	if(!can_use(usr))
+		return
+	if(!mytape)
 		return
 	if(!canprint)
 		to_chat(usr, span_warning("The recorder can't print that fast!"))
+		return
+	if(recording || playing)
 		return
 
 	say("Transcript printed.")
@@ -311,9 +331,9 @@
 	if(!mytape || mytape.unspooled || recording || playing)
 		return
 	else
-		mytape.used_capacity = 0;
-		mytape.storedinfo = new;
-		mytape.timestamp = new;
+		mytape.used_capacity = 0
+		mytape.storedinfo = new
+		mytape.timestamp = new
 		to_chat(usr, "<span class='notice'>You wipe this side of the tape entirely.")
 
 /obj/item/tape
@@ -345,11 +365,7 @@
 	var/unspooled = FALSE
 	var/list/icons_available = list()
 	var/radial_icon_file = 'icons/hud/radial_tape.dmi'
-<<<<<<< Updated upstream
-	var/firstFlip = TRUE
-=======
 	var/firstflip = TRUE
->>>>>>> Stashed changes
 
 /obj/item/tape/fire_act(exposed_temperature, exposed_volume)
 	unspool()
@@ -435,12 +451,12 @@
 	unspooled = FALSE
 
 /obj/item/tape/proc/wipeproc()
-	used_capacity = 0;
-	storedinfo = new;
-	timestamp = new;
+	used_capacity = 0
+	storedinfo = new
+	timestamp = new
 
 /obj/item/tape/verb/wipeverb()
-	set name = "Wipe Tape";
+	set name = "Wipe Tape"
 	if(unspooled)
 		to_chat(usr, "<span class='notice'>You scrub the magnetic strip clean of its contents.")
 		wipeproc()
@@ -485,7 +501,7 @@
 
 /obj/item/tape/verb/flipVerb()
 //adding this verb too just so players know it's an option.
-	set name = "Flip Tape";
+	set name = "Flip Tape"
 	if (firstFlip)
 		to_chat(usr, "<span class='notice'>You flip the tape so you can record on the clean magnetic strip</span>")
 		firstFlip = FALSE
