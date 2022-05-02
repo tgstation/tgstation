@@ -173,7 +173,7 @@
 
 	say("Issue resolved. Have a nice day!")
 	inserted_bomb.toggle_valve(tank_to_target)
-	eject_bomb()
+	eject_bomb(force = TRUE)
 	timeout_timer = addtimer(CALLBACK(src, .proc/timeout_test), COMPRESSION_TEST_TIME, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_NO_HASH_WAIT) // Actually start the test so they can't just put the bomb back in.
 
 /**
@@ -258,8 +258,8 @@
 	reaction_increment += 1
 
 /// We dont allow incomplete valves to go in but do code in checks for incomplete valves. Just in case.
-/obj/machinery/research/anomaly_refinery/proc/eject_bomb(mob/user)
-	if(!inserted_bomb || active)
+/obj/machinery/research/anomaly_refinery/proc/eject_bomb(mob/user, force = FALSE)
+	if(!inserted_bomb || (active & !force))
 		return
 	if(user)
 		user.put_in_hands(inserted_bomb)
