@@ -421,7 +421,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/mob/living/living_owner = owner
 	var/confirm = tgui_alert(usr ,"Are you sure you want to succumb to death?", "Goodnight, Sweet Prince", list("Yes", "No"))
 
-	if(!confirm || !CAN_SUCCUMB(living_owner))
+	if(confirm != "Yes" || !CAN_SUCCUMB(living_owner))
 		return
 
 	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Final Words")
