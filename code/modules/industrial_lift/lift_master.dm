@@ -4,12 +4,9 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 ///coordinate and control movement across linked industrial_lift's. allows moving large single multitile platforms and many 1 tile platforms.
 ///also is capable of linking platforms across linked z levels
 /datum/lift_master
-	///the lift platforms we consider as part of this lift. ordered in order of lowest z level to highest z level after init
+	///the lift platforms we consider as part of this lift. ordered in order of lowest z level to highest z level after init.
+	///(the sorting algorithm sucks btw)
 	var/list/obj/structure/industrial_lift/lift_platforms
-
-	var/list/datum/lift_level/levels
-
-	var/datum/lift_level/primary_level
 
 	/// Typepath list of what to ignore smashing through, controls all lifts
 	var/static/list/ignored_smashthroughs = list(
@@ -158,7 +155,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
 /datum/lift_master/proc/MoveLiftHorizontal(going)
-	if(SStramprocess.profile)
+	if(SStramprocess.profile)//TODOKYLER: get rid of this and the profile var
 		world.Profile(PROFILE_START)
 
 	set_controls(LIFT_PLATFORM_LOCKED)

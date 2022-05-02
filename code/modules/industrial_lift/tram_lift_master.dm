@@ -51,6 +51,8 @@
 	if(!linked_lift || !(linked_lift in lift_platforms))
 		CRASH("a tram was unable to link to a starting landmark because the landmark wasnt on the tram!")
 
+	from_where = linked_landmark
+
 	SStramprocess.can_fire = TRUE
 
 	//ok we found it on our turf, now we know how we're orientated
@@ -88,8 +90,6 @@
 	if(to_where == from_where)
 		return
 
-	//TODOKYLER: make the tram console say when its called
-
 	travel_direction = get_dir(from_where, to_where)
 	travel_distance = get_dist(from_where, to_where)
 	from_where = to_where
@@ -112,7 +112,7 @@
 	if(!travel_distance)
 		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
 		return PROCESS_KILL
-	else if(world.time <= next_move)
+	else if(world.time >= next_move)
 		next_move = world.time + horizontal_speed
 		travel_distance--
 		MoveLiftHorizontal(travel_direction)
@@ -125,7 +125,6 @@
  * Tram finds its location at this point before fully unlocking controls to the user.
  */
 /datum/lift_master/tram/proc/unlock_controls()
-	//visible_message(span_notice("[src]'s controls are now unlocked.")) //TODOKYLER: make the control console say this
 	set_travelling(FALSE)
 	set_controls(LIFT_PLATFORM_UNLOCKED)
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_platforms) //only thing everyone needs to know is the new location.

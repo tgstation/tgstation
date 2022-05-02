@@ -32,6 +32,10 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	destination_id = "right_part"
 	tgui_icons = list("Departures" = "plane-departure", "Cargo" = "box", "Science" = "flask")
 
+/**
+ * lift_id landmarks. used to map in specific_lift_id to trams. when the trams lift_master encounters one on a trams tile
+ * it sets its specific_lift_id to that landmark. allows you to have multiple trams and multiple controls linking to their specific tram
+ */
 /obj/effect/landmark/lift_id
 	name = "lift id setter"
 	icon_state = "lift_id"

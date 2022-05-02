@@ -2864,7 +2864,6 @@
 #include "code\modules\hydroponics\grown\weeds\nettle.dm"
 #include "code\modules\hydroponics\grown\weeds\starthistle.dm"
 #include "code\modules\industrial_lift\industrial_lift.dm"
-#include "code\modules\industrial_lift\lift_level.dm"
 #include "code\modules\industrial_lift\lift_master.dm"
 #include "code\modules\industrial_lift\tram_controls.dm"
 #include "code\modules\industrial_lift\tram_landmark.dm"

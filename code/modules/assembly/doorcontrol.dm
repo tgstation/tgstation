@@ -181,13 +181,13 @@
 	name = "elevator controller"
 	desc = "A small device used to call elevators to the current floor."
 
-/obj/item/assembly/control/elevator/activate() //TODOKYLER: make the buttons generic
+/obj/item/assembly/control/elevator/activate()
 	if(cooldown)
 		return
 	cooldown = TRUE
 	var/datum/lift_master/lift
 	for(var/datum/lift_master/possible_match as anything in GLOB.active_lifts_by_type[BASIC_LIFT_ID])
-		if(possible_match.specific_lift_id != id || !check_z(possible_match) || possible_match.controls_locked)//TODOKYLER: make this unmatch if its z level is incorrect
+		if(possible_match.specific_lift_id != id || !check_z(possible_match) || possible_match.controls_locked)
 			continue
 
 		lift = possible_match
@@ -198,9 +198,8 @@
 		return
 
 	var/obj/structure/industrial_lift/target = lift.lift_platforms[1]
-	var/target_z = target.z //TODOKYLER: do this right
+	var/target_z = target.z
 
-	//lift.visible_message(span_notice("[src] clinks and whirrs into automated motion, locking controls.")) //TODOKYLER: fix
 	lift.set_controls(LIFT_PLATFORM_LOCKED)
 	///The z level to which the elevator should travel
 	var/targetZ = (abs(loc.z)) //The target Z (where the elevator should move to) is not our z level (we are just some assembly in nullspace) but actually the Z level of whatever we are contained in (e.g. elevator button)
@@ -217,7 +216,6 @@
 		if(QDELETED(lift) || QDELETED(src))//elevator control or button gone = don't go up anymore
 			return
 		lift.MoveLift(direction, null)
-	//lift.visible_message(span_notice("[src] clicks, ready to be manually operated again.")) //TODOKYLER: fix
 	lift.set_controls(LIFT_PLATFORM_UNLOCKED)
 
 ///check if any of the lift platforms are already here

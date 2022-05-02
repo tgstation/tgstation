@@ -607,51 +607,8 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/tram/use(mob/user) //dont click the floor dingus we use computers now
 	return
 
-/*
-/obj/structure/industrial_lift/tram/process(delta_time)//TODOKYLER: remove
-	if(!travel_distance)
-		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
-		return PROCESS_KILL
-	else
-		travel_distance--
-		lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(SStramprocess.wait))*/
-
 /obj/structure/industrial_lift/tram/set_currently_z_moving()
 	return FALSE //trams can never z fall and shouldnt waste any processing time trying to do so
-
-/*
-/**
- * Handles moving the tram
- *
- * Tells the individual tram parts where to actually go and has an extra safety check
- * incase multiple inputs get through, preventing conflicting directions and the tram
- * literally ripping itself apart. The proc handles the first move before the subsystem
- * takes over to keep moving it in process()
- */
-/obj/structure/industrial_lift/tram/proc/tram_travel(obj/effect/landmark/tram/to_where)
-	if(to_where == from_where)
-		return
-
-	visible_message(span_notice("[src] has been called to the [to_where]!"))
-
-	travel_direction = get_dir(from_where, to_where)
-	travel_distance = get_dist(from_where, to_where)
-
-	lift_master_datum.set_controls(LIFT_PLATFORM_LOCKED)
-	//first movement is immediate
-	for(var/obj/structure/industrial_lift/tram/other_tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
-		if(other_tram_part.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
-			return //we don't care to undo locked controls, though, as that will resolve itself
-		SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
-
-		other_tram_part.from_where = to_where
-		other_tram_part.glide_size_override = DELAY_TO_GLIDE_SIZE(horizontal_speed)
-		other_tram_part.set_travelling(TRUE)
-
-	lift_master_datum.MoveLiftHorizontal(travel_direction, z)
-	travel_distance--
-
-	START_PROCESSING(SStramprocess, src)*/
 
 /**
  * Handles unlocking the tram controls for use after moving

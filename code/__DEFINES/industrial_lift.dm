@@ -7,7 +7,7 @@
 //lift_id's
 ///basic lift_id, goes up and down
 #define BASIC_LIFT_ID "base"
-///tram lift_id, goes left and right
+///tram lift_id, goes left and right or north and south. maybe one day be able to turn and go up/down as well
 #define TRAM_LIFT_ID "tram"
 ///debug lift_id
 #define DEBUG_LIFT_ID "debug"

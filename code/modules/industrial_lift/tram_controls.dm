@@ -108,6 +108,7 @@
 	if(tram_part.controls_locked) // someone else started already
 		return FALSE
 	tram_part.tram_travel(to_where)
+	visible_message("The tram has been called to [to_where.name]")
 	return TRUE
 
 /obj/item/circuit_component/tram_controls
