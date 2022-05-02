@@ -31,3 +31,17 @@
 
 /datum/status_effect/song/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+
+/datum/status_effect/song/power_consonance
+	id = "power chord"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 10 SECONDS
+	examine_text = "<span class='notice'>They seem to be covered in an energetic, yellow aura.</span>"
+	aura_desc = "energetic"
+
+/datum/status_effect/song/power_consonance/on_apply()
+	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/power_consonance)
+	return ..()
+
+/datum/status_effect/song/power_consonance/on_remove()
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_consonance)

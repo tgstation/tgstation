@@ -139,7 +139,7 @@
 			continue
 		to_chat(listener, span_notice("You feel recharged!"))
 		playsound(listener, 'sound/weapons/fwoosh.ogg', 75, FALSE)
-		charge_target.adjust_charge(ETHEREAL_CHARGE_FULL)
+		charge_target.crystal_charge = ETHEREAL_CHARGE_FULL
 
 /datum/religion_rites/song_tuner/lullaby
 	name = "Spiritual Lullaby"
