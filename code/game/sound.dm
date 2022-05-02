@@ -37,9 +37,8 @@
  * pressure_affected - Whether or not difference in pressure affects the sound (E.g. if you can hear in space).
  * ignore_walls - Whether or not the sound can pass through walls.
  * falloff_distance - Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
- * override_hearers - input list given to playsound() to skip searching for other client mobs and save cpu. it will still search above and below if the z levels are linked.
  */
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, use_reverb = TRUE, list/override_hearers)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent = SOUND_FALLOFF_EXPONENT, frequency = null, channel = 0, pressure_affected = TRUE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, use_reverb = TRUE)
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
 
@@ -62,7 +61,7 @@
 	var/turf/below_turf = SSmapping.get_turf_below(turf_source)
 
 	if(ignore_walls)
-		listeners = override_hearers || SSspatial_grid.orthogonal_range_search(turf_source, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, maxdistance)
+		listeners = SSspatial_grid.orthogonal_range_search(turf_source, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, maxdistance)
 
 		if(above_turf && istransparentturf(above_turf))
 			listeners += SSspatial_grid.orthogonal_range_search(above_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, maxdistance)
@@ -76,7 +75,7 @@
 				. += listening_mob
 
 	else //these sounds don't carry through walls
-		listeners = override_hearers || get_hearers_in_view(maxdistance, turf_source)
+		listeners = get_hearers_in_view(maxdistance, turf_source)
 
 		if(above_turf && istransparentturf(above_turf))
 			listeners += get_hearers_in_view(maxdistance, above_turf)

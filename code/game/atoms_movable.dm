@@ -671,31 +671,20 @@
 		on_changed_z_level(old_turf, new_turf)
 
 	if(HAS_SPATIAL_GRID_CONTENTS(src))
-		var/datum/spatial_grid_cell/start_cell
-		var/datum/spatial_grid_cell/end_cell
 		if(old_turf && new_turf && (old_turf.z != new_turf.z \
 			|| ROUND_UP(old_turf.x / SPATIAL_GRID_CELLSIZE) != ROUND_UP(new_turf.x / SPATIAL_GRID_CELLSIZE) \
 			|| ROUND_UP(old_turf.y / SPATIAL_GRID_CELLSIZE) != ROUND_UP(new_turf.y / SPATIAL_GRID_CELLSIZE)))
 
-			start_cell = SSspatial_grid.exit_cell(src, old_turf)
-			end_cell = SSspatial_grid.enter_cell(src, new_turf)
+			SSspatial_grid.exit_cell(src, old_turf)
+			SSspatial_grid.enter_cell(src, new_turf)
 
 		else if(old_turf && !new_turf)
-			start_cell = SSspatial_grid.exit_cell(src, old_turf)
+			SSspatial_grid.exit_cell(src, old_turf)
 
 		else if(new_turf && !old_turf)
-			end_cell = SSspatial_grid.enter_cell(src, new_turf)
-
-		if(start_cell != end_cell)
-			//go through all of our recursive contents that care about the grid and tell them theyve changed grid cells
-			for(var/atom/movable/target in important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] | important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
-				target?.on_grid_cell_change(end_cell, start_cell)
+			SSspatial_grid.enter_cell(src, new_turf)
 
 	return TRUE
-
-///called when moving from one spatial grid cell to another
-/atom/movable/proc/on_grid_cell_change(datum/spatial_grid_cell/new_cell, datum/spatial_grid_cell/old_cell)
-	return
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()
@@ -839,7 +828,6 @@
 
 	if(our_turf && SSspatial_grid.initialized)
 		SSspatial_grid.enter_cell(src, our_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
-		on_grid_cell_change(SSspatial_grid.get_cell_of(src))
 	else if(our_turf && !SSspatial_grid.initialized)
 		SSspatial_grid.enter_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
@@ -849,7 +837,6 @@
 
 	if(our_turf && SSspatial_grid.initialized)
 		SSspatial_grid.exit_cell(src, our_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
-		on_grid_cell_change(null)
 	else if(our_turf && !SSspatial_grid.initialized)
 		SSspatial_grid.remove_from_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 

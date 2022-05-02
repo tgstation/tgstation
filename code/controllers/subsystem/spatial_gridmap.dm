@@ -130,7 +130,6 @@ SUBSYSTEM_DEF(spatial_grid)
 			var/turf/movable_turf = get_turf(movable)
 			if(movable_turf)
 				enter_cell(movable, movable_turf)
-				movable.on_grid_cell_change(get_cell_of(movable))
 
 			UnregisterSignal(movable, COMSIG_PARENT_PREQDELETED)
 			waiting_to_add_by_type[channel_type] -= movable

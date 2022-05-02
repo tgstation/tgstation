@@ -145,17 +145,17 @@
 		heard_clients = playsound(source_loc, pick(footstep_sounds[source_loc.footstep][1]),
 			footstep_sounds[source_loc.footstep][2] * volume * volume_multiplier,
 			TRUE,
-			footstep_sounds[source_loc.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, override_hearers = source.closeby_client_mobs)
+			footstep_sounds[source_loc.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
 	else
 		if(source.dna.species.special_step_sounds)
-			heard_clients = playsound(source_loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary, override_hearers = source.closeby_client_mobs)
+			heard_clients = playsound(source_loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
 		else
 			var/static/list/bare_footstep_sounds = GLOB.barefootstep
 
 			heard_clients = playsound(source_loc, pick(bare_footstep_sounds[source_loc.barefootstep][1]),
 				bare_footstep_sounds[source_loc.barefootstep][2] * volume * volume_multiplier,
 				TRUE,
-				bare_footstep_sounds[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary, override_hearers = source.closeby_client_mobs)
+				bare_footstep_sounds[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
 
 	if(heard_clients)
 		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
