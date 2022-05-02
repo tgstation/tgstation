@@ -17,7 +17,6 @@
 	var/list/species_allowed //to restrict mutation to only certain species
 	var/health_req //minimum health required to acquire the mutation
 	var/limb_req //required limbs to acquire this mutation
-	var/time_coeff = 1 //coefficient for timed mutations
 	var/datum/dna/dna
 	var/mob/living/carbon/human/owner
 	var/instability = 0 //instability the holder gets when the mutation is not native
