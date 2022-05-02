@@ -232,7 +232,7 @@
 		return
 
 	Flip()
-	if(isturf(src)) // only display tihs message when flipping in a visible spot like on a table
+	if(isturf(src.loc)) // only display tihs message when flipping in a visible spot like on a table
 		user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
