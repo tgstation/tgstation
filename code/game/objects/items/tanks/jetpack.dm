@@ -99,7 +99,7 @@
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, use_fuel = TRUE)
 	if((num < 0.005 || air_contents.total_moles() < num))
-		turn_off()
+		turn_off(get_user())
 		return FALSE
 
 	// We've got the gas, it's chill
@@ -108,7 +108,7 @@
 
 	var/datum/gas_mixture/removed = remove_air(num)
 	if(removed.total_moles() < 0.005)
-		turn_off()
+		turn_off(get_user())
 		return FALSE
 
 	var/turf/T = get_turf(src)
