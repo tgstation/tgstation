@@ -7,7 +7,6 @@
 	var/desc = "A mutation."
 	var/locked
 	var/quality
-	var/lowest_value = 256 * 8
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/static/list/visual_indicators = list()
