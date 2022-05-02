@@ -116,21 +116,50 @@ at the cost of risking a vicious bite.**/
 	name = "strange structure"
 	desc = "What is this? Who put it on this station? And why does it eminate <span class='hypnophrase'>pants energy?</span>"
 	icon_state = "altar"
-	cultist_examine_message = "Even you don't understand the eldritch magic behind this."
+	cult_examine_tip = "Even you don't understand the eldritch magic behind this."
 	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
 	break_sound = 'sound/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_range = 2
+	use_cooldown_duration = 1 MINUTES
 	/// Color of the pants that will come out
 	var/pants_color = COLOR_WHITE
 	/// Stage of the pants making process
 	var/status = ALTAR_INACTIVE
 
 /obj/structure/destructible/cult/pants_altar/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/melee/cultblade/dagger) && is_cultist(user) && status)
+	if(istype(I, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user) && status)
 		to_chat(user, "<span class='notice'>[src] is creating something, you can't move it!</span>")
 		return
 	return ..()
+
+/obj/structure/destructible/cult/pants_altar/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	var/list/altar_options = list(
+		"Change Color" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_recolor"),
+		"Create Artefact" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_create")
+	)
+	var/altar_result = show_radial_menu(user, src, altar_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	switch(altar_result)
+		if("Change Color")
+			var/chosen_color = input(usr, "", "Choose Color", pants_color) as color|null
+			if(!isnull(chosen_color) && user.canUseTopic(src, BE_CLOSE))
+				pants_color = chosen_color
+		if("Create Artefact")
+			if(!COOLDOWN_FINISHED(src, use_cooldown_duration))
+				to_chat(usr, "<span class='warning'>[src] is not ready to create something new yet...</span>")
+				return
+			pants_stageone()
+	return TRUE
+
+/obj/structure/destructible/cult/pants_altar/update_icon_state()
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, use_cooldown_duration))
+		icon_state = "altar_off"
+	else
+		icon_state = "altar"
 
 /obj/structure/destructible/cult/pants_altar/update_overlays()
 	. = ..()
@@ -176,47 +205,20 @@ at the cost of risking a vicious bite.**/
 /obj/structure/destructible/cult/pants_altar/proc/pants_create()
 	status = ALTAR_INACTIVE
 	update_icon()
-	visible_message("<span class='warning'>[src] eminates a flash of light and creates... a pants?</span>")
+	visible_message("<span class='warning'>[src] eminates a flash of light and creates... pants?</span>")
 	for(var/mob/living/mob in viewers(7, src))
 		mob.flash_act()
 	var/obj/item/clothing/under/pants/altar/pants = new(get_turf(src))
 	pants.add_atom_colour(pants_color, ADMIN_COLOUR_PRIORITY)
-	COOLDOWN_START(src, cooldowntime, 1 MINUTES)
+	COOLDOWN_START(src, use_cooldown_duration, 1 MINUTES)
+	addtimer(CALLBACK(src, /atom.proc/update_icon), 1 MINUTES + 0.1 SECONDS)
+	update_icon()
 
-/obj/structure/destructible/cult/pants_altar/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "pants", name)
-		ui.open()
-
-/obj/structure/destructible/cult/pants_altar/ui_data()
-	var/list/data = list()
-	data["pants_color"] = pants_color
-
-	return data
-
-/obj/structure/destructible/cult/pants_altar/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-	if(!Adjacent(usr))
-		return
-	if(!anchored)
-		to_chat(usr, "<span class='notice'>[src] is unanchored!</span>")
-		return
-	if(status)
-		return
-	usr.set_machine(src)
-	switch(action)
-		if("color")
-			var/chosen_color = input(usr, "", "Choose Color", pants_color) as color|null
-			if (!isnull(chosen_color) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
-				pants_color = chosen_color
-		if("create")
-			if(!COOLDOWN_FINISHED(src, cooldowntime))
-				to_chat(usr, "<span class='warning'>[src] is not ready to create something new yet...</span>")
-				return
-			pants_stageone()
+/obj/structure/destructible/cult/pants_altar/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
 	return TRUE
 
 /obj/item/clothing/under/pants/altar
