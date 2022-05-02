@@ -35,3 +35,8 @@
   - bugfix: Fixed metastation glassfloor spawning a weird turf when crowbarred.
   - bugfix: Fixed plasma sheets and it's derivatives exploding you for being shot
       at.
+2022-05-02:
+  Ryll/Shaps:
+  - balance: Armored bounty hunters are no longer being issued flamethrowers. Instead,
+      they are now issued dual-tube shotguns filled with rubbershot and trailless
+      incendiary slugs, as well as a 9mm Makarov loaded with fire bullets.
