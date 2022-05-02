@@ -53,6 +53,8 @@
 				var/obj/item/clothing/glasses/glass = carbon_me.glasses
 				if(glass.vision_correction)
 					return
+		if((rel_x >= NEARSIGHTNESS_FOV_BLINDNESS || rel_x <= -NEARSIGHTNESS_FOV_BLINDNESS) || (rel_y >= NEARSIGHTNESS_FOV_BLINDNESS || rel_y <= -NEARSIGHTNESS_FOV_BLINDNESS))
+			return FALSE
 
 /// Updates the applied FOV value and applies the handler to client if able
 /mob/living/proc/update_fov()
