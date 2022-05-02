@@ -1,0 +1,21 @@
+author: "timothymtorres, san7890, axietheaxolotl"
+delete-after: True
+changes: 
+  - rscadd: "Adds haunted tarot deck that allows the user the ability to see and communicate with the dead.  Can be found in maint loot as a rare item."
+  - rscadd: "Adds blank card decks to games vendor.  These can be written on with a pen or crayon."
+  - soundadd: "Adds a public domain cardflip.ogg from freesound.org that is used when drawing a card."
+  - qol: "Cards, decks, and cardhands have new hotkeys.  Decks are now a 2 handed wielded object."
+  - qol: "Add card ruleset to Wiz-Off at the top of the deck."
+  - bugfix: "Holodeck card decks are now spawned as syndicate deck to convey that they can do damage if safeties are overridden."
+  - bugfix: "Any holodeck items have their force and throwforce damage nerfed to zero while the safeties are on."
+  - bugfix: "Fix xray trait to appear on mobs that equip xray glasses or have xray eye augmentation.
+expansion: Playing cards with other people gives a mood event and is added to memory
+expansion: Syndicate card decks can be shuffled faster than normal decks.
+expansion: People with the supernatural phobia will now be terrified of tarot card decks.
+expansion: NT has outlawed the use of x-ray vision, science goggles combined with invisible ink, or using pens or crayons to gain an unfair advantage while playing card games during recreational time."
+  - code_imp: "Moved the card deck code to it's own files and folder."
+  - rscdel: "Remove CAS decks from random deck spawner (you need both decks to play so only having one spawn was bleh)"
+  - refactor: "Cards have been refactored and a lot of deprecated code has been removed."
+  - imagedel: "Remove old cardhand icons that were unused."
+  - imageadd: "Add some new blank/scribble card icons."
+  - imageadd: "Add new clown and mime joker cards to standard decks curtesy of axietheaxolotl (Viro on discord)"
