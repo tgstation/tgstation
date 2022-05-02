@@ -102,7 +102,7 @@ jobs:
         run: |
           bash tools/ci/install_byond.sh
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING
+          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS
       - name: Run Tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup

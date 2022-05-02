@@ -49,10 +49,18 @@
 #define TEST_DEFAULT 1
 #define TEST_DEL_WORLD INFINITY
 
-/// Change color to red on ANSI terminal output. As unit tests are usually output to consoles, this should be fine.
+/// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
+#ifdef ANSICOLORS
 #define TEST_OUTPUT_RED(text) "\x1B\x5B1;31m[text]\x1B\x5B0m"
-/// Change color to green on ANSI terminal output. As unit tests are usually output to consoles, this should be fine.
+#else
+#define TEST_OUTPUT_RED(text) (text)
+#endif
+/// Change color to green on ANSI terminal output, if enabled with -DANSICOLORS.
+#ifdef ANSICOLORS
 #define TEST_OUTPUT_GREEN(text) "\x1B\x5B1;32m[text]\x1B\x5B0m"
+#else
+#define TEST_OUTPUT_GREEN(text) (text)
+#endif
 
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
