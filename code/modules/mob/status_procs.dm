@@ -113,14 +113,6 @@
 	else
 		game_plane_master_controller.remove_filter("eye_blur")
 
-///Adjust the drugginess of a mob
-/mob/proc/adjust_drugginess(amount)
-	return
-
-///Set the drugginess of a mob
-/mob/proc/set_drugginess(amount)
-	return
-
 ///Adjust the disgust level of a mob
 /mob/proc/adjust_disgust(amount)
 	return

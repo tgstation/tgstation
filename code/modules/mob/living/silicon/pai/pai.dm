@@ -168,7 +168,7 @@
 	atmos_analyzer = new /obj/item/analyzer(src)
 	signaler = new /obj/item/assembly/signaler/internal(src)
 	hostscan = new /obj/item/healthanalyzer(src)
-	newscaster = new /obj/machinery/newscaster(src)
+	newscaster = new /obj/machinery/newscaster/pai(src)
 	if(!aicamera)
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
 		aicamera.flash_enabled = TRUE
@@ -183,6 +183,8 @@
 	if(!holoform)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
+
+	return INITIALIZE_HINT_LATELOAD
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(atmos_analyzer)
@@ -199,6 +201,10 @@
 		card.update_appearance()
 	GLOB.pai_list -= src
 	return ..()
+
+/mob/living/silicon/pai/LateInitialize()
+	. = ..()
+	modularInterface.saved_identification = name
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()

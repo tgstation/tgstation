@@ -39,6 +39,13 @@
 		explode(usr, from_message_menu = TRUE)
 		return
 
+/obj/item/modular_computer/tablet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove pen"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()
 
@@ -52,7 +59,20 @@
 			inserted_item = W
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
+	if(istype(W, /obj/item/paper))
+		var/obj/item/paper/paper = W
+
+		to_chat(user, span_notice("You scan \the [W] into \the [src]."))
+		note = paper.info
+
 /obj/item/modular_computer/tablet/AltClick(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	remove_pen(user)
+
+/obj/item/modular_computer/tablet/CtrlClick(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -247,12 +267,14 @@
 // Round start tablets
 
 /obj/item/modular_computer/tablet/pda
+	icon = 'icons/obj/modular_pda.dmi'
 	icon_state = "pda"
 
 	greyscale_config = /datum/greyscale_config/tablet
 	greyscale_colors = "#999875#a92323"
 
 	bypass_state = TRUE
+	allow_chunky = TRUE
 
 	var/default_disk = 0
 

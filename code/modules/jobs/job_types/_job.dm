@@ -61,16 +61,20 @@
 	/// Experience type granted by playing in this job.
 	var/exp_granted_type = ""
 
-	var/paycheck = PAYCHECK_MINIMAL
+	///How much money does this crew member make in a single paycheck? Note that passive paychecks are capped to PAYCHECK_CREW in regular gameplay after roundstart.
+	var/paycheck = PAYCHECK_CREW
+	///Which department does this paycheck pay from?
 	var/paycheck_department = ACCOUNT_CIV
 
-	var/list/mind_traits // Traits added to the mind of the mob assigned this job
+	/// Traits added to the mind of the mob assigned this job
+	var/list/mind_traits
 
 	///Lazylist of traits added to the liver of the mob assigned this job (used for the classic "cops heal from donuts" reaction, among others)
 	var/list/liver_traits = null
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
+	///What types of bounty tasks can this job recieve past the default?
 	var/bounty_types = CIV_JOB_BASIC
 
 	/// Goodies that can be received via the mail system.
@@ -170,21 +174,13 @@
 		for(var/i in roundstart_experience)
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
-	var/obj/item/modular_computer/tablet/pda/PDA = spawned.get_item_by_slot(ITEM_SLOT_BELT)
-	if(istype(PDA))
-		var/obj/item/computer_hardware/identifier/id = PDA.all_components[MC_IDENTIFY]
-
-		if(id)
-			id.UpdateDisplay()
-
-
 /datum/job/proc/announce_job(mob/living/joining_mob)
 	if(head_announce)
 		announce_head(joining_mob, head_announce)
 
 
 //Used for a special check of whether to allow a client to latejoin as this job.
-/datum/job/proc/special_check_latejoin(client/C)
+/datum/job/proc/special_check_latejoin(client/latejoin)
 	return TRUE
 
 
@@ -213,14 +209,14 @@
 		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/_addtimer, CALLBACK(pick(GLOB.announcement_systems), /obj/machinery/announcement_system/proc/announce, "NEWHEAD", H.real_name, H.job, channels), 1))
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
-/datum/job/proc/player_old_enough(client/C)
-	if(available_in_days(C) == 0)
+/datum/job/proc/player_old_enough(client/player)
+	if(!player || !available_in_days(player))
 		return TRUE //Available in 0 days = available right now = player is old enough to play.
 	return FALSE
 
 
-/datum/job/proc/available_in_days(client/C)
-	if(!C)
+/datum/job/proc/available_in_days(client/player)
+	if(!player)
 		return 0
 	if(!CONFIG_GET(flag/use_age_restriction_for_jobs))
 		return 0
@@ -229,7 +225,7 @@
 	if(!isnum(minimal_player_age))
 		return 0
 
-	return max(0, minimal_player_age - C.player_age)
+	return max(0, minimal_player_age - player.player_age)
 
 /datum/job/proc/config_check()
 	return TRUE
@@ -305,24 +301,29 @@
 	if(!J)
 		J = SSjob.GetJob(H.job)
 
-	var/obj/item/card/id/C = H.wear_id
-	if(istype(C))
-		shuffle_inplace(C.access) // Shuffle access list to make NTNet passkeys less predictable
-		C.registered_name = H.real_name
+	var/obj/item/card/id/card = H.wear_id
+	if(istype(card))
+		ADD_TRAIT(card, TRAIT_JOB_FIRST_ID_CARD, ROUNDSTART_TRAIT)
+		shuffle_inplace(card.access) // Shuffle access list to make NTNet passkeys less predictable
+		card.registered_name = H.real_name
 		if(H.age)
-			C.registered_age = H.age
-		C.update_label()
-		C.update_icon()
+			card.registered_age = H.age
+		card.update_label()
+		card.update_icon()
 		var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[H.account_id]"]
 		if(B && B.account_id == H.account_id)
-			C.registered_account = B
-			B.bank_cards += C
+			card.registered_account = B
+			B.bank_cards += card
 		H.sec_hud_set_ID()
 
 	var/obj/item/modular_computer/tablet/pda/PDA = H.get_item_by_slot(pda_slot)
 	if(istype(PDA))
-		PDA.saved_identification = C.registered_name
-		PDA.saved_job = C.assignment
+		PDA.saved_identification = H.real_name
+		PDA.saved_job = J.title
+
+		var/obj/item/computer_hardware/identifier/id = PDA.all_components[MC_IDENTIFY]
+		if(id)
+			id.UpdateDisplay()
 
 
 /datum/outfit/job/get_chameleon_disguise_info()

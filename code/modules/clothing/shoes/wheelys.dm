@@ -65,8 +65,8 @@
 	worn_icon_state = "rollerskates"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/rollerskates
-	custom_premium_price = PAYCHECK_EASY * 5
-	custom_price = PAYCHECK_EASY * 5
+	custom_premium_price = PAYCHECK_CREW * 5
+	custom_price = PAYCHECK_CREW * 5
 
 /obj/item/clothing/shoes/wheelys/skishoes
 	name = "ski shoes"
@@ -77,5 +77,5 @@
 	worn_icon_state = "skishoes"
 	slowdown = SHOES_SLOWDOWN+1
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
-	custom_premium_price = PAYCHECK_EASY * 1.6
-	custom_price = PAYCHECK_EASY * 1.6
+	custom_premium_price = PAYCHECK_CREW * 1.6
+	custom_price = PAYCHECK_CREW * 1.6

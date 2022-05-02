@@ -18,35 +18,29 @@
 	cost = 1
 	route = PATH_SIDE
 
-/datum/heretic_knowledge/rune_carver
-	name = "Carving Knife"
-	desc = "Allows you to transmute a knife, a shard of glass, and a piece of paper to create a Carving Knife. \
-		The Carving Knife allows you to etch difficult to see traps that trigger on heathens who walk overhead. \
-		Also makes for a handy throwing weapon."
-	gain_text = "Etched, carved... eternal. There is power hidden in everything. I can unveil it! \
-		I can carve the monolith to reveal the chains!"
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/void_phase,
-		/datum/heretic_knowledge/summon/raw_prophet,
-	)
-	required_atoms = list(
-		/obj/item/knife = 1,
-		/obj/item/shard = 1,
-		/obj/item/paper = 1,
-	)
-	result_atoms = list(/obj/item/melee/rune_carver)
-	cost = 1
-	route = PATH_SIDE
-
 /datum/heretic_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
 	desc = "Grants you Blood Siphon, a spell that drains a victim of blood and health, transferring it to you. \
 		Also has a chance to transfer wounds from you to the victim."
 	gain_text = "\"No matter the man, we bleed all the same.\" That's what the Marshal told me."
 	next_knowledge = list(
-		/datum/heretic_knowledge/summon/stalker,
-		/datum/heretic_knowledge/spell/voidpull,
+		/datum/heretic_knowledge/spell/void_phase,
+		/datum/heretic_knowledge/summon/raw_prophet,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/blood_siphon
+	cost = 1
+	route = PATH_SIDE
+
+/datum/heretic_knowledge/spell/cleave
+	name = "Blood Cleave"
+	desc = "Grants you Cleave, an area-of-effect targeted spell \
+		that causes heavy bleeding and blood loss to anyone afflicted."
+	gain_text = "At first I didn't understand these instruments of war, but the Priest \
+		told me to use them regardless. Soon, he said, I would know them well."
+	next_knowledge = list(
+		/datum/heretic_knowledge/summon/stalker,
+		/datum/heretic_knowledge/spell/void_pull,
+	)
+	spell_to_add = /obj/effect/proc_holder/spell/pointed/cleave
 	cost = 1
 	route = PATH_SIDE

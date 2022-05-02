@@ -446,7 +446,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(anchored)
 		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
 		update_appearance()
-		updateUsrDialog()
 	else
 		to_chat(user, span_warning("You must first secure [src]."))
 	return TRUE
@@ -477,7 +476,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(compartmentLoadAccessCheck(user) && !user.combat_mode)
 		if(canLoadItem(I))
 			loadingAttempt(I,user)
-			updateUsrDialog() //can't put this on the proc above because we spam it below
 
 		if(istype(I, /obj/item/storage/bag)) //trays USUALLY
 			var/obj/item/storage/T = I
@@ -496,7 +494,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 				to_chat(user, span_warning("[src] refuses some items!"))
 			if(loaded)
 				to_chat(user, span_notice("You insert [loaded] dishes into [src]'s compartment."))
-				updateUsrDialog()
 	else
 		. = ..()
 		if(tiltable && !tilted && I.force)
@@ -777,7 +774,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	. = list()
 	.["onstation"] = onstation
 	.["department"] = payment_department
-	.["jobDiscount"] = VENDING_DISCOUNT
+	.["jobDiscount"] = DEPARTMENT_DISCOUNT
 	.["product_records"] = list()
 	for (var/datum/data/vending_product/R in product_records)
 		var/list/data = list(
@@ -951,7 +948,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			return
 		var/datum/bank_account/account = C.registered_account
 		if(account.account_job && account.account_job.paycheck_department == payment_department)
-			price_to_use = max(round(price_to_use * VENDING_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
+			price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
 		if(coin_records.Find(R) || hidden_records.Find(R))
 			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
 		if(LAZYLEN(R.returned_products))
@@ -965,7 +962,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(D)
 			D.adjust_money(price_to_use)
 			SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-			log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
+			SSeconomy.track_purchase(account, price_to_use, name)
+			log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [R].")
 	if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 		say("Thank you for shopping with [src]!")
 		purchase_message_cooldown = world.time + 5 SECONDS
@@ -1207,7 +1205,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(isliving(usr))
 				vend_act(usr, params["item"])
 			vend_ready = TRUE
-			updateUsrDialog()
 			return TRUE
 
 /obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)
@@ -1298,14 +1295,14 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/item/vending_refill/custom
 	machine_name = "Custom Vendor"
 	icon_state = "refill_custom"
-	custom_premium_price = PAYCHECK_ASSISTANT
+	custom_premium_price = PAYCHECK_CREW
 
 /obj/item/price_tagger
 	name = "price tagger"
 	desc = "This tool is used to set a price for items used in custom vendors."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pricetagger"
-	custom_premium_price = PAYCHECK_ASSISTANT * 0.5
+	custom_premium_price = PAYCHECK_CREW * 0.5
 	///the price of the item
 	var/price = 1
 
