@@ -143,9 +143,7 @@
 	/// Cached icons to show what language the user is speaking
 	var/static/list/language_icons
 
-	// Register client who hears this message
 	var/client/owned_by = owner.client
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_hearer_qdel)
 
 	// Remove spans in the message from things like the recorder
 	var/static/regex/span_check = new(@"<\/?span[^>]*>", "gi")
@@ -204,13 +202,19 @@
 	// Approximate text height
 	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
 	var/measurement = owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH)//resolving it to a var so the macro doesnt call MeasureText() twice
+
+	//fun fact: MeasureText() works by waiting for the client to send back the measurements for the text. meaning it works like a verb
+	//procs like this are called at the last section of hte tick before it ends, meaning if the other portions used up most of it
+	//then everything after this point is likely to overtime. queuing the message completion if the server is overloaded fixes this
 	if(!owned_by || QDELETED(src))
 		return
 
 	var/mheight = WXH_TO_HEIGHT(measurement)
-	SSrunechat.message_queue += CALLBACK(src, .proc/generate_image, target, owner, complete_text, mheight)
-	//queue to the subsystem because when client input returns we're in the verb stage of tick execution which means
-	//generate_image() is very likely to create a lot of overtime.
+	if(TICK_CHECK)
+		SSrunechat.message_queue += CALLBACK(src, .proc/generate_image, target, owner, complete_text, mheight)
+	else
+		generate_image(target, owner, complete_text, mheight)
+
 
 /**
  * actually generates the runechat image for the message spoken by target and heard by owner.
@@ -223,8 +227,10 @@
  */
 /datum/chatmessage/proc/generate_image(atom/target, mob/owner, complete_text, mheight)
 	var/client/owned_by = owner.client
-	if(!owned_by || QDELETED(target) || QDELETED(src))//possible now since generate_image() is called via a queue
+	if(!owned_by || QDELETED(target) || QDELING(src))//possible now since generate_image() is called via a queue
 		return
+
+	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_hearer_qdel)
 
 	var/our_approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
@@ -341,7 +347,7 @@
  * * spans - Additional classes to be added to the message
  */
 /mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, runechat_flags = NONE)
-	if(SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(speaker, TRAIT_BYPASS_MEASURES))
+	if(!client || SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(speaker, TRAIT_BYPASS_MEASURES))
 		return
 
 	// Check for virtual speakers (aka hearing a message through a radio)
@@ -368,14 +374,8 @@
 	message_to_use = SSrunechat.messages_by_creation_string["[text_to_use]-[REF(speaker)]-[message_language]-[list2params(spans)]-[CHAT_MESSAGE_LIFESPAN]-[world.time]"]
 	//if an already existing message already has processed us as a hearer then we have to assume that this is from a new, identical message sent in the same tick
 	//as the already existing one. thats the only time this can happen. if this is the case then null out message_to_use and create a new one
-	if(message_to_use && (src in message_to_use.hearers))
-		message_to_use = null
-
-	if(!message_to_use)//no existing message that does what we need was found, create a new one
-		if(runechat_flags & EMOTE_MESSAGE)//what happens if theres two messages from a speaker?
-			message_to_use = new /datum/chatmessage(text_to_use, speaker, message_language, list("emote", "italics"))
-		else
-			message_to_use = new /datum/chatmessage(text_to_use, speaker, message_language, spans)
+	if(!message_to_use || message_to_use && (client in message_to_use.hearers))
+		message_to_use = new /datum/chatmessage(text_to_use, speaker, message_language, spans)
 
 	message_to_use.prepare_text(text_to_use, speaker, src, message_language, spans)
 
