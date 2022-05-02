@@ -105,3 +105,127 @@ at the cost of risking a vicious bite.**/
 		return
 	hidden_item = I
 	to_chat(user, span_notice("You hide [I] inside the basin."))
+
+#define ALTAR_INACTIVE 0
+#define ALTAR_STAGEONE 1
+#define ALTAR_STAGETWO 2
+#define ALTAR_STAGETHREE 3
+#define ALTAR_TIME 9.5 SECONDS
+
+/obj/structure/destructible/cult/pants_altar
+	name = "strange structure"
+	desc = "What is this? Who put it on this station? And why does it eminate <span class='hypnophrase'>pants energy?</span>"
+	icon_state = "altar"
+	cultist_examine_message = "Even you don't understand the eldritch magic behind this."
+	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
+	break_sound = 'sound/magic/demon_dies.ogg'
+	light_color = LIGHT_COLOR_BLOOD_MAGIC
+	light_range = 2
+	/// Color of the pants that will come out
+	var/pants_color = COLOR_WHITE
+	/// Stage of the pants making process
+	var/status = ALTAR_INACTIVE
+
+/obj/structure/destructible/cult/pants_altar/attackby(obj/I, mob/user, params)
+	if(istype(I, /obj/item/melee/cultblade/dagger) && is_cultist(user) && status)
+		to_chat(user, "<span class='notice'>[src] is creating something, you can't move it!</span>")
+		return
+	return ..()
+
+/obj/structure/destructible/cult/pants_altar/update_overlays()
+	. = ..()
+	var/overlayicon
+	switch(status)
+		if(ALTAR_INACTIVE)
+			return
+		if(ALTAR_STAGEONE)
+			overlayicon = "altar_pants1"
+		if(ALTAR_STAGETWO)
+			overlayicon = "altar_pants2"
+		if(ALTAR_STAGETHREE)
+			overlayicon = "altar_pants3"
+	var/mutable_appearance/pants_overlay = mutable_appearance(icon, overlayicon)
+	pants_overlay.appearance_flags = RESET_COLOR
+	pants_overlay.color = pants_color
+	. += pants_overlay
+
+/obj/structure/destructible/cult/pants_altar/proc/pants_stageone()
+	status = ALTAR_STAGEONE
+	update_icon()
+	visible_message("<span class='warning'>[src] starts creating something...</span>")
+	playsound(src, 'sound/magic/pantsaltar.ogg', 100)
+	addtimer(CALLBACK(src, .proc/pants_stagetwo), ALTAR_TIME)
+
+/obj/structure/destructible/cult/pants_altar/proc/pants_stagetwo()
+	status = ALTAR_STAGETWO
+	update_icon()
+	visible_message("<span class='warning'>You start feeling nauseous...</span>")
+	for(var/mob/living/mob in viewers(7, src))
+		mob.blur_eyes(10)
+		mob.add_confusion(10)
+	addtimer(CALLBACK(src, .proc/pants_stagethree), ALTAR_TIME)
+
+/obj/structure/destructible/cult/pants_altar/proc/pants_stagethree()
+	status = ALTAR_STAGETHREE
+	update_icon()
+	visible_message("<span class='warning'>You start feeling horrible...</span>")
+	for(var/mob/living/mob in viewers(7, src))
+		mob.Dizzy(10)
+	addtimer(CALLBACK(src, .proc/pants_create), ALTAR_TIME)
+
+/obj/structure/destructible/cult/pants_altar/proc/pants_create()
+	status = ALTAR_INACTIVE
+	update_icon()
+	visible_message("<span class='warning'>[src] eminates a flash of light and creates... a pants?</span>")
+	for(var/mob/living/mob in viewers(7, src))
+		mob.flash_act()
+	var/obj/item/clothing/under/pants/altar/pants = new(get_turf(src))
+	pants.add_atom_colour(pants_color, ADMIN_COLOUR_PRIORITY)
+	COOLDOWN_START(src, cooldowntime, 1 MINUTES)
+
+/obj/structure/destructible/cult/pants_altar/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "pants", name)
+		ui.open()
+
+/obj/structure/destructible/cult/pants_altar/ui_data()
+	var/list/data = list()
+	data["pants_color"] = pants_color
+
+	return data
+
+/obj/structure/destructible/cult/pants_altar/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if(!Adjacent(usr))
+		return
+	if(!anchored)
+		to_chat(usr, "<span class='notice'>[src] is unanchored!</span>")
+		return
+	if(status)
+		return
+	usr.set_machine(src)
+	switch(action)
+		if("color")
+			var/chosen_color = input(usr, "", "Choose Color", pants_color) as color|null
+			if (!isnull(chosen_color) && usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
+				pants_color = chosen_color
+		if("create")
+			if(!COOLDOWN_FINISHED(src, cooldowntime))
+				to_chat(usr, "<span class='warning'>[src] is not ready to create something new yet...</span>")
+				return
+			pants_stageone()
+	return TRUE
+
+/obj/item/clothing/under/pants/altar
+	name = "strange pants"
+	desc = "A pair of pants. They do not look natural. They smells like fresh blood."
+	icon_state = "whitepants"
+
+#undef ALTAR_INACTIVE
+#undef ALTAR_STAGEONE
+#undef ALTAR_STAGETWO
+#undef ALTAR_STAGETHREE
+#undef ALTAR_TIME
