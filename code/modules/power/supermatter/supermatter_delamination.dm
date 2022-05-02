@@ -14,7 +14,11 @@
 	///Amount the gasmix will affect the explosion size
 	var/supermatter_gasmix_power_ratio = 0
 
-/datum/supermatter_delamination/New(supermatter_power, supermatter_gas_amount, turf/supermatter_turf, supermatter_explosion_power, supermatter_gasmix_power_ratio, can_spawn_anomalies)
+	var/supermatter_cascade = FALSE
+
+	var/cascade_rift
+
+/datum/supermatter_delamination/New(supermatter_power, supermatter_gas_amount, turf/supermatter_turf, supermatter_explosion_power, supermatter_gasmix_power_ratio, can_spawn_anomalies, supermatter_cascade)
 	. = ..()
 
 	src.supermatter_power = supermatter_power
@@ -22,6 +26,10 @@
 	src.supermatter_turf = supermatter_turf
 	src.supermatter_explosion_power = supermatter_explosion_power
 	src.supermatter_gasmix_power_ratio = supermatter_gasmix_power_ratio
+
+	if(supermatter_cascade)
+		start_universe_ending_cascade()
+		return
 
 	setup_mob_interaction()
 	setup_delamination_type()
@@ -130,3 +138,46 @@
 
 /datum/supermatter_delamination/proc/spawn_anomaly(location, type)
 	supermatter_anomaly_gen(location, type, has_changed_lifespan = FALSE)
+
+/datum/supermatter_delamination/proc/start_universe_ending_cascade()
+	SSshuttle.registerHostileEnvironment(src)
+	SSshuttle.universal_cascade = TRUE
+	SSair.can_fire = FALSE
+	call_explosion()
+	pick_rift_location()
+	warn_crew()
+	supermatter_turf.ChangeTurf(/turf/closed/indestructible/supermatter_wall)
+	for(var/i in 1 to rand(1,3))
+		var/turf/crystal_cascade_location = get_turf(pick(GLOB.generic_event_spawns))
+		crystal_cascade_location.ChangeTurf(/turf/closed/indestructible/supermatter_wall)
+
+/datum/supermatter_delamination/proc/pick_rift_location()
+	var/turf/rift_location = get_turf(pick(GLOB.generic_event_spawns))
+	cascade_rift = new /obj/cascade_portal(rift_location)
+
+/datum/supermatter_delamination/proc/warn_crew()
+	for(var/mob/player in GLOB.alive_player_list)
+		to_chat(player, span_boldannounce("You feel a strange presence in the air around you. You feel unsafe."))
+
+	priority_announce("Unknown harmonance affecting universal substructure, all nearby matter is starting to crystallize.", "The universe is collapsing.")
+	priority_announce("There's been a universe-wide electromagnetic pulse. All of our systems are heavily damaged and many personnel are dead or dying. \
+		We are seeing increasing indications of the universe itself beginning to unravel. \
+		[station_name()], you are the only facility nearby a bluespace rift of unkown origin, which is near the [get_area_name(cascade_rift)]. \
+		You are hereby directed to enter the rift using all means necessary, quite possibly as the last humans alive. \
+		Five minutes before the universe collapses. Good l\[\[###!!!-")
+
+	addtimer(CALLBACK(src, .proc/delta), 10 SECONDS)
+
+	addtimer(CALLBACK(src, .proc/last_message), 4 MINUTES)
+
+	addtimer(CALLBACK(src, .proc/the_end), 5 MINUTES)
+
+/datum/supermatter_delamination/proc/delta()
+	set_security_level("delta")
+
+/datum/supermatter_delamination/proc/last_message()
+	priority_announce("To the remaning humans alive, i hope it was worth it.", " ")
+
+/datum/supermatter_delamination/proc/the_end()
+	SSticker.news_report = SUPERMATTER_CASCADE
+	SSticker.force_ending = 1

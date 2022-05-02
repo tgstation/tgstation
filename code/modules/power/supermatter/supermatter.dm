@@ -83,7 +83,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium,
 		/datum/gas/proto_nitrate,
 		/datum/gas/zauker,
-		/datum/gas/miasma
+		/datum/gas/miasma,
+		/datum/gas/hypernoblium,
+		/datum/gas/antinoblium,
 	)
 	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
 	var/list/gas_comp = list(
@@ -101,6 +103,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = 0,
 		/datum/gas/proto_nitrate = 0,
 		/datum/gas/zauker = 0,
+		/datum/gas/hypernoblium = 0,
+		/datum/gas/antinoblium = 0,
 	)
 	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on the zaps
 	var/list/gas_trans = list(
@@ -130,6 +134,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/healium = HEALIUM_HEAT_PENALTY,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_HEAT_PENALTY,
 		/datum/gas/zauker = ZAUKER_HEAT_PENALTY,
+		/datum/gas/hypernoblium = HYPERNOBLIUM_HEAT_PENALTY,
+		/datum/gas/antinoblium = ANTINOBLIUM_HEAT_PENALTY,
 	)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
 	var/list/gas_resist = list(
@@ -251,6 +257,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Can the crystal trigger the station wide anomaly spawn?
 	var/anomaly_event = TRUE
 
+	var/admin_cascade = FALSE
+
+	var/cascade_initiated = FALSE
+
+	var/atom/movable/warp_effect/warp
+
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	uid = gl_uid++
@@ -287,6 +299,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	update_constants()
 
 /obj/machinery/power/supermatter_crystal/Destroy()
+	if(warp)
+		vis_contents -= warp
+		warp = null
 	investigate_log("has been destroyed.", INVESTIGATE_ENGINE)
 	SSair.stop_processing_machine(src)
 	QDEL_NULL(radio)
@@ -437,13 +452,34 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/delamination_event()
 	var/can_spawn_anomalies = is_station_level(loc.z) && is_main_engine && anomaly_event
-	new /datum/supermatter_delamination(power, combined_gas, get_turf(src), explosion_power, gasmix_power_ratio, can_spawn_anomalies)
+
+	var/is_cascading = check_cascade_requirements(anomaly_event)
+
+	new /datum/supermatter_delamination(power, combined_gas, get_turf(src), explosion_power, gasmix_power_ratio, can_spawn_anomalies, is_cascading)
 	qdel(src)
 
 //this is here to eat arguments
 /obj/machinery/power/supermatter_crystal/proc/call_delamination_event()
 	SIGNAL_HANDLER
 	delamination_event()
+
+/obj/machinery/power/supermatter_crystal/proc/check_cascade_requirements(can_trigger)
+
+	if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT && !cascade_initiated && !admin_cascade && can_trigger)
+		return FALSE
+
+	var/supermatter_cascade = can_trigger
+	var/list/required_gases = list(/datum/gas/hypernoblium, /datum/gas/antinoblium)
+	for(var/gas_path in required_gases)
+		if(gas_comp[gas_path] < 0.4 || combined_gas < MOLE_PENALTY_THRESHOLD)
+			supermatter_cascade = FALSE
+			cascade_initiated = FALSE
+			break
+
+	if(admin_cascade)
+		supermatter_cascade = TRUE
+
+	return supermatter_cascade
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
