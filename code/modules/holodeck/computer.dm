@@ -396,7 +396,6 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		return
 	for(var/obj/item/to_be_nerfed in spawned)
 		to_be_nerfed.damtype = nerf_this ? STAMINA : initial(to_be_nerfed.damtype)
-		to_be_nerfed.force = nerf_this ? 0 : initial(to_be_nerfed.force)
 		to_be_nerfed.throwforce = nerf_this ? 0 : initial(to_be_nerfed.throwforce)
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.safety(nerf_this)
