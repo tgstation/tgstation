@@ -1,14 +1,14 @@
 ///Type of status effect applied by music played by the festival sect. Stacks upon itself, and removes all other song subtypes other than itself.
 /datum/status_effect/song
 	id = "pleaseno"
+	alert_type = null
 	var/aura_desc = "useless, buggy"
 
 /datum/status_effect/song/on_apply()
+	owner.visible_message(span_notice("[owner] is coated with a [aura_desc] aura!"))
 	//removes every other song subtype except itself
 	for(var/overridden_song_type in subtypesof(/datum/status_effect/song) - type)
 		owner.remove_status_effect(overridden_song_type)
-	owner.visible_message(span_notice("[owner] is coated with a [aura_desc] aura!"))
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
 /datum/status_effect/song/on_remove()
@@ -26,21 +26,8 @@
 
 /datum/status_effect/song/antimagic/on_apply()
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
 /datum/status_effect/song/antimagic/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-
-/datum/status_effect/song/power_consonance
-	id = "power chord"
-	status_type = STATUS_EFFECT_REFRESH
-	duration = 10 SECONDS
-	examine_text = "<span class='notice'>They seem to be covered in an energetic, yellow aura.</span>"
-	aura_desc = "energetic"
-
-/datum/status_effect/song/power_consonance/on_apply()
-	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/power_consonance)
-	return ..()
-
-/datum/status_effect/song/power_consonance/on_remove()
-	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_consonance)

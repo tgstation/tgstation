@@ -1,7 +1,7 @@
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."
 	name = "gas analyzer"
-	custom_price = PAYCHECK_ASSISTANT * 0.9
+	custom_price = PAYCHECK_LOWER * 0.9
 	icon = 'icons/obj/device.dmi'
 	icon_state = "analyzer"
 	inhand_icon_state = "analyzer"
@@ -125,7 +125,7 @@
 
 /**
  * Outputs a message to the user describing the target's gasmixes.
- * 
+ *
  * Gets called by analyzer_act, which in turn is called by tool_act.
  * Also used in other chat-based gas scans.
  */
@@ -133,7 +133,7 @@
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
-	
+
 	var/icon = target
 	var/message = list()
 	if(!silent && isliving(user))
@@ -157,7 +157,7 @@
 
 		if(total_moles > 0)
 			message += span_notice("Moles: [round(total_moles, 0.01)] mol")
-				
+
 			var/list/cached_gases = air.gases
 			for(var/id in cached_gases)
 				var/gas_concentration = cached_gases[id][MOLES]/total_moles
@@ -167,7 +167,7 @@
 			message += span_notice("Pressure: [round(pressure, 0.01)] kPa")
 		else
 			message += airs.len > 1 ? span_notice("This node is empty!") : span_notice("[target] is empty!")
-		
+
 		gasmix_data += list(gas_mixture_parser(air, mix_name))
 
 	if(istype(tool))

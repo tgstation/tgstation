@@ -4,7 +4,7 @@
 	icon_state = "cowboy_brown"
 	permeability_coefficient = 0.05 //these are quite tall
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 	var/list/occupants = list()
 	var/max_occupants = 4
 	can_be_tied = FALSE

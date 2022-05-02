@@ -275,7 +275,7 @@
 		our_clone.alpha = 127.5
 		our_clone.move_through_mob = owner
 		our_clone.spawn_blood = spawn_blood
-		do_charge(our_clone, target_atom, delay, past)
+		INVOKE_ASYNC(src, .proc/do_charge, our_clone, target_atom, delay, past)
 	if(use_self)
 		do_charge(owner, target_atom, delay, past)
 
