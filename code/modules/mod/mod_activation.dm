@@ -226,7 +226,7 @@
 		STOP_PROCESSING(SSobj, src)
 	update_speed()
 	update_icon_state()
-	wearer.update_inv_back()
+	wearer.update_clothing(slot_flags)
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.
 /obj/item/mod/control/proc/quick_activation()
