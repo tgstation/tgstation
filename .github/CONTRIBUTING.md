@@ -83,10 +83,10 @@ This should help you understand what you can and can't do with your newfound git
 Things you **CAN** do:
 * Label issues appropriately
 * Close issues when appropriate
+* Label PRs, unless you are goofball.
 
 Things you **CAN'T** do:
 * [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
-* Label PRs, leave that for maintainers to handle.
 
 </details>
 
@@ -156,7 +156,7 @@ You can see each tag and their GBP values [Here](https://github.com/tgstation/tg
 
 If you are porting features/tools from other codebases, you must give them credit where it's due. Typically, crediting them in your pull request and the changelog is the recommended way of doing it. Take note of what license they use though, porting stuff from AGPLv3 and GPLv3 codebases are allowed.
 
-Regarding sprites & sounds, you must credit the artist and possibly the codebase. All /tg/station assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated. However if you are porting assets from GoonStation or usually any assets under the [Creative Commons 3.0 BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/) are to go into the 'goon' folder of the /tg/station codebase.
+Regarding sprites & sounds, you must credit the artist and possibly the codebase. All /tg/station assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
 
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:

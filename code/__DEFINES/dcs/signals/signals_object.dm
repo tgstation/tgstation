@@ -96,6 +96,8 @@
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 /// A mob has just equipped an item. Called on [/mob] from base of [/obj/item/equipped()]: (/obj/item/equipped_item, slot)
 #define COMSIG_MOB_EQUIPPED_ITEM "mob_equipped_item"
+/// A mob has just unequipped an item.
+#define COMSIG_MOB_UNEQUIPPED_ITEM "mob_unequipped_item"
 ///called on [/obj/item] before unequip from base of [mob/proc/doUnEquip]: (force, atom/newloc, no_move, invdrop, silent)
 #define COMSIG_ITEM_PRE_UNEQUIP "item_pre_unequip"
 	///only the pre unequip can be cancelled
@@ -141,6 +143,8 @@
 	#define COMPONENT_HANDLED_GRILLING (1<<0)
 ///Called when an object is turned into another item through grilling ontop of a griddle
 #define COMSIG_GRILL_COMPLETED "item_grill_completed"
+///Called when an object is meant to be grilled through a grill: (atom/fry_object, grill_time)
+#define COMSIG_GRILL_FOOD "item_grill_food"
 //Called when an object is in an oven
 #define COMSIG_ITEM_BAKED "item_baked"
 	#define COMPONENT_HANDLED_BAKING (1<<0)
@@ -213,8 +217,6 @@
 #define COMSIG_ITEM_EXPORTED "item_sold"
 	/// Stops the export from adding the export information to the report, so you can handle it manually.
 	#define COMPONENT_STOP_EXPORT_REPORT (1<<0)
-///called when a wrapped up structure is opened by hand
-#define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"
 ///called when a wrapped up item is opened by hand
 #define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
 ///called when getting the item's exact ratio for cargo's profit.
@@ -266,10 +268,10 @@
 // /obj/item/pda signals
 
 ///called on pda when the user changes the ringtone: (mob/living/user, new_ringtone)
-#define COMSIG_PDA_CHANGE_RINGTONE "pda_change_ringtone"
+#define COMSIG_TABLET_CHANGE_ID "comsig_tablet_change_id"
 	#define COMPONENT_STOP_RINGTONE_CHANGE (1<<0)
-#define COMSIG_PDA_CHECK_DETONATE "pda_check_detonate"
-	#define COMPONENT_PDA_NO_DETONATE (1<<0)
+#define COMSIG_TABLET_CHECK_DETONATE "pda_check_detonate"
+	#define COMPONENT_TABLET_NO_DETONATE (1<<0)
 
 // /obj/item/radio signals
 
@@ -283,6 +285,9 @@
 
 // /obj/item/gun signals
 
+///called in /obj/item/gun/fire_gun (user, target, flag, params)
+#define COMSIG_GUN_TRY_FIRE "gun_try_fire"
+	#define COMPONENT_CANCEL_GUN_FIRE (1<<0)
 ///called in /obj/item/gun/process_fire (src, target, params, zone_override)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
@@ -332,9 +337,20 @@
 ///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"
 	#define COMPONENT_EMBED_SUCCESS (1<<1)
+// FROM [/obj/item/proc/updateEmbedding] sent when an item's embedding properties are changed : ()
+#define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
+
+// /obj/vehicle/sealed/car/vim signals
+
+///from /datum/action/vehicle/sealed/noise/chime/Trigger(): ()
+#define COMSIG_VIM_CHIME_USED "vim_chime_used"
+///from /datum/action/vehicle/sealed/noise/buzz/Trigger(): ()
+#define COMSIG_VIM_BUZZ_USED "vim_buzz_used"
+///from /datum/action/vehicle/sealed/headlights/vim/Trigger(): (headlights_on)
+#define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
 
 // /obj/vehicle/sealed/mecha signals
 

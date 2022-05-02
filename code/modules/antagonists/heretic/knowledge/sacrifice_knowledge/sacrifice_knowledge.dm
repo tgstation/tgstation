@@ -363,16 +363,15 @@
 	SEND_SIGNAL(sac_target, COMSIG_CLEAR_MOOD_EVENT, "shadow_realm")
 
 	// Wherever we end up, we sure as hell won't be able to explain
-	sac_target.slurring += 20
-	sac_target.cultslurring += 20
-	sac_target.stuttering += 20
+	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
+	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
 
 	// They're already back on the station for some reason, don't bother teleporting
 	if(is_station_level(sac_target.z))
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.
-	var/turf/open/floor/safe_turf = find_safe_turf(extended_safety_checks = TRUE)
+	var/turf/open/floor/safe_turf = get_safe_random_station_turf()
 	var/obj/effect/landmark/observer_start/backup_loc = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	if(!safe_turf)
 		safe_turf = get_turf(backup_loc)

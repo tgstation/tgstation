@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "pAIs can now use Newscaster UIs, and all Silicon can now use Newscasters in general (except the Bounty board, as they have no money to payout)."

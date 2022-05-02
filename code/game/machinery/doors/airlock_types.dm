@@ -593,6 +593,34 @@
 	damage_deflection = 5
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 
+
+//////////////////////////////////
+/*
+	Material Airlocks
+*/
+/obj/machinery/door/airlock/material
+	name = "airlock"
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
+	greyscale_config = /datum/greyscale_config/material_airlock
+	assemblytype = /obj/structure/door_assembly/door_assembly_material
+
+/obj/machinery/door/airlock/material/close(forced, force_crush)
+	. = ..()
+	if(!.)
+		return
+	for(var/datum/material/mat in custom_materials)
+		if(mat.alpha < 255)
+			set_opacity(FALSE)
+			break
+
+/obj/machinery/door/airlock/material/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
+	assembly.set_custom_materials(custom_materials)
+	..()
+
+/obj/machinery/door/airlock/material/glass
+	opacity = FALSE
+	glass = TRUE
+
 //////////////////////////////////
 /*
 	Misc Airlocks

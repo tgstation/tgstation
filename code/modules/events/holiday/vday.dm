@@ -68,8 +68,7 @@
 /obj/item/valentine/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on [src]!"))
+		if(!user.can_write(W))
 			return
 		var/recipient = tgui_input_text(user, "Who is receiving this valentine?", "To:", max_length = MAX_NAME_LEN)
 		var/sender = tgui_input_text(user, "Who is sending this valentine?", "From:", max_length = MAX_NAME_LEN)

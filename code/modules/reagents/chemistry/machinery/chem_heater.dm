@@ -15,8 +15,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0b"
 	base_icon_state = "mixer"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 40
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.4
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_heater
 
@@ -61,11 +60,20 @@
 	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
 	return ..()
 
-/obj/machinery/chem_heater/AltClick(mob/living/user)
+/obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
 		return
 	replace_beaker(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/chem_heater/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/obj/machinery/chem_heater/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
@@ -81,6 +89,7 @@
 	return TRUE
 
 /obj/machinery/chem_heater/RefreshParts()
+	. = ..()
 	heater_coefficient = 0.1
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		heater_coefficient *= M.rating
@@ -145,6 +154,8 @@
 			beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * delta_time * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 			beaker.reagents.handle_reactions()
 
+			use_power(active_power_usage * delta_time)
+
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
@@ -159,7 +170,7 @@
 			return
 		replace_beaker(user, B)
 		to_chat(user, span_notice("You add [B] to [src]."))
-		updateUsrDialog()
+		ui_interact(user)
 		update_appearance()
 		return
 

@@ -151,7 +151,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
 	//Server is still intializing.
-	if(!Master.current_runlevel)
+	if(!MC_RUNNING(init_stage))
 		to_chat(usr, span_warning("Cannot start vote, server is not done initializing."))
 		return FALSE
 	var/lower_admin = FALSE

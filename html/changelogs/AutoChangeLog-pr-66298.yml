@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "Adds radio messages to the delaminating HFR to let atmosians know what's wrong with it. Unless the HFR has been emped"

@@ -411,7 +411,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "PQ" = (
-/obj/machinery/door/keycard/icebox/processing,
+/obj/machinery/door/puzzle/keycard/icebox/processing,
 /turf/open/misc/grass,
 /area/ruin/powered/mailroom)
 "Qb" = (
@@ -457,7 +457,7 @@
 /area/ruin/powered/mailroom)
 "TN" = (
 /obj/effect/decal/cleanable/oil,
-/obj/machinery/door/keycard/icebox/office,
+/obj/machinery/door/puzzle/keycard/icebox/office,
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "UB" = (
