@@ -1078,3 +1078,141 @@
   vincentiusvin:
   - bugfix: trying to store a plasma cutter while holding plasma should no longer
       blow you up.
+2022-04-27:
+  ArcaneMusic:
+  - rscadd: The accounting console has been added to the HOP's office, allowing them
+      to track purchases, and bank balances of the crew on station. It's not illegal,
+      it's the competitive advantage!
+  Arkatos:
+  - qol: Civilian Bounty Console will now always bring up its UI when you insert the
+      ID.
+  - qol: Air Alarm and APC will now always bring up its UI when you unlock their controls.
+  - qol: Portable Chem Mixer, Chem Dispenser, Chem Heater, Improvised Chem Heater,
+      Chem Spectometer and Chem Master will now always bring up their UI when you
+      add or replace beaker to them.
+  BebeYoshi:
+  - rscadd: Adds more health HUDs, nitrile gloves and medical belts to locker in Tramstation
+      medbay
+  EthanRockss:
+  - bugfix: Prop atmos mask now uses the correct worn sprite
+  - bugfix: Jumpsuit no longer able to burn while wearing nuke op mod suit
+  GoldenAlpharex:
+  - bugfix: Ensured that the lower levels of Icebox would also get considered during
+      the Map Compile option, so we don't get broken maps in production.
+  JohnFulpWillard:
+  - bugfix: Obsesseds don't fail the hug objective if they headpat/tail pull instead,
+  - bugfix: Turning glasses colors on/off with AltClick now properly tells you that
+      you turned it on or off.
+  LemonInTheDark:
+  - balance: Getting your eardrums blown out will now properly have a low chance to
+      make you go fully deaf, until you find some earmuffs or get a transplant
+  - refactor: Cached some redundant operations in Life(), speeding it up by ~22%.
+      I know that doesn't mean much to you, but cpu time go brrr ok?
+  OperativeLyn:
+  - bugfix: The lit up rocks in the crashed ship space ruin are now dark like the
+      others.
+  Pandarsenic:
+  - qol: Added vent/scrubber pair to the Icebox security entryway and the warden's
+      backdoor to the armory.
+  - bugfix: Icebox Brig Medical now has a wire connecting it to the powernet.
+  RandomGamer123:
+  - bugfix: Prevent bullets (most notably those fired aimed at the mouth when intended
+      for executions) from sometimes missing if you're firing at a target diagonally
+      adjacent to you and there's an obstacle (eg. person) between you two.
+  SingingSpock:
+  - rscadd: N-Spects to the Security techfab (with Basic Security Equipment)
+  Son-of-Space:
+  - bugfix: The 3rd Level of IceBox is now counted as being a part of the station.
+  - rscadd: NT Investors have built a new perma brig on IceBoxStation for the purpose
+      of press releases.
+  SuperNovaa41:
+  - bugfix: RnD servers will no longer permanently stop working when depowered.
+  Y0SH1M4S73R:
+  - bugfix: Stabilized extracts now work when placed inside modsuits
+  magatsuchi:
+  - bugfix: papers are now scannable again after an oversight, and techweb now appears
+      on all head pdas
+  - rscdel: removes round start tablets
+  - bugfix: Nanotrasen has declared a recall on all item stacks, due to the fact the
+      fact they kept merging in hands and pockets. All stacks will now instead only
+      merge in your storage containers, or on the floor.
+  timothymtorres, TheBonded:
+  - bugfix: Fixes prescription glasses not clearing blurry vison
+2022-04-28:
+  ArcaneMusic:
+  - balance: The values of nearly every item purchasable by players has been rebalanced.
+  - balance: Players will now start with less starting money, but will receive a paycheck
+      once every 5 minutes.
+  - balance: The value of gasses exported through the cargo department have been skewed
+      way, WAY down in terms of price.
+  - balance: The Syndicate briefcase of cash now contains now costs 5 TC, up from
+      1 TC, for 5000 credits.
+  - balance: Printing items from lathes on station now costs a fee of 10 credits per
+      item printed if it's from a lathe not under your department.
+  - qol: The payment component has received additional handling for physical credits,
+      as well as pulled credits/ID cards for those without hands.
+  Cenrus:
+  - bugfix: Fixed lionhunter ammo sidepath
+  Ghilker:
+  - balance: removed halon from normal gas reactions, added halon to the electrolyzer
+      reactions by consuming co2 and n2o at low temperature and low pressure
+  JohnFulpWillard:
+  - bugfix: A double light fixture in the law office has been fixed. Enjoy your lights.
+  magatsuchi:
+  - bugfix: notepad app no longer causes a barrage of action cooldown messages
+  - code_imp: adds docs for christmas tree spawner and christmas cracker
+  san7890:
+  - qol: On the mapping end, all of the Supply Departments (and Lavaland) have had
+      their doors reprogrammed to use a mapping helper system, rather than manually
+      editing the access variables on the door itself.
+  sergeirocks100:
+  - imageadd: Cannabis plants have recieved some new sprites.
+  thgvr:
+  - bugfix: Cleaned up some pipes lying around in the Lavaland Syndicate base supermatter.
+  vincentiusvin:
+  - bugfix: fixed unpowered tram ordnance apc
+2022-04-29:
+  ErdinyoBarboza:
+  - bugfix: Adds proper cycling to DeltaStation RnD Circuit-Toxin area.
+  - bugfix: Removes a duplicate APC from DeltaStation brig.
+  Ghommie:
+  - bugfix: Fixed the moth costumers for the restaurant venue not showing up.
+  - bugfix: Fixed bar venue customer bots.
+  GoldenAlpharex:
+  - bugfix: The mining augments are now visible once again.
+  JohnFulpWillard:
+  - bugfix: Jobs who spawn with tablets not on the belt, have their name and job properly
+      displayed on the tablet, like everyone else.
+  OperativeLyn:
+  - bugfix: Moved an intercom in Metastation's captain's office to prevent overlapping
+      visible to ghosts.
+  PositiveEntropy:
+  - imageadd: Resprites most crates and the trash cart!
+  YakumoChen:
+  - rscdel: Tramstation's Medbay has had some budget cuts on their fire alarms.
+  tralezab:
+  - bugfix: Nullwave Vibrato now works as intended, stacking antimagic duration
+  - balance: Nullwave Vibrato stacks 10 seconds of antimagic, every few moments you
+      listen to it.
+2022-04-30:
+  BlueMemesauce:
+  - qol: Location names in Crew Monitor console now stretch if too long again
+  Dragonfruits, with some tweaks by PositiveEntropy:
+  - imageadd: The cargonian wardrobe has now been updated into a tasteful brown!
+  Fikou:
+  - bugfix: fixes overslots being permanently lost if you switched modsuit skin
+  - bugfix: fixes golems/monkeys keeping modsuits on if switched race from different
+      species
+  OperativeLyn:
+  - bugfix: Removed some useless catwalk tiles, cables and pipes in TramStation maintenance.
+  castawaynont:
+  - bugfix: DeltaStation cargo warehouse poster has been moved one tile down
+  san7890:
+  - bugfix: Nanotrasen's Department of "Reality Fixing" has corrected an issue regarding
+      the space on the tiles of the southern solars on TramStation.
+  - bugfix: Nanotrasen will no longer install "Mining" Access Doors in DeltaStation's
+      Cargo Bay.
+  timothymtorres:
+  - qol: Rearrange Delta library gaming room to host D&D parties
+  xyc:
+  - bugfix: tram medbay maint won't sometimes get double stacked cables and piping

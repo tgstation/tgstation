@@ -346,7 +346,7 @@
 	connector_type = null
 	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
-	custom_premium_price = PAYCHECK_ASSISTANT
+	custom_premium_price = PAYCHECK_CREW
 
 /obj/item/stock_parts/cell/emproof
 	name = "\improper EMP-proof cell"

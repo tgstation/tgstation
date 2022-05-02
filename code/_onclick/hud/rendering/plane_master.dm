@@ -279,3 +279,8 @@
 	name = "above HUD plane"
 	plane = ABOVE_HUD_PLANE
 	render_relay_plane = RENDER_PLANE_NON_GAME
+
+/atom/movable/screen/plane_master/splashscreen
+	name = "splashscreen plane"
+	plane = SPLASHSCREEN_PLANE
+	render_relay_plane = RENDER_PLANE_NON_GAME
