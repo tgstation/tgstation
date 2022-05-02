@@ -147,7 +147,6 @@
 	var/is_currently_ejecting = FALSE
 	///Safety for weapons. Won't fire if enabled, and toggled by middle click.
 	var/weapons_safety = FALSE
-	///Mouse pointer. Disables with safety, and turns red if the mech's equipment has been interrupted by EMP
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 
 	var/datum/effect_system/smoke_spread/smoke_system = new
@@ -296,13 +295,35 @@
 	icon_state = get_mecha_occupancy_state()
 	return ..()
 
+/**
+ * Toggles Weapons Safety
+ *
+ * Handles enabling or disabling the safety function.
+ */
+/obj/vehicle/sealed/mecha/proc/set_safety(mob/user)
+	weapons_safety = !weapons_safety
+	SEND_SOUND(user, sound('sound/machines/beep.ogg', volume = 25))
+	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
+	set_mouse_pointer()
+
+/**
+ * Updates the pilot's mouse cursor override.
+ *
+ * If the mech's weapons safety is enabled, there should be no override, and the user gets their regular mouse cursor. If safety
+ * is off but the mech's equipment is disabled (such as by EMP), the cursor should be the red disabled version. Otherwise, if
+ * safety is off and the equipment is functional, the cursor should be the regular green cursor. This proc sets the cursor.
+ * correct and then updates it for each mob in the occupants list.
+ */
 /obj/vehicle/sealed/mecha/proc/set_mouse_pointer()
 	if(weapons_safety)
 		mouse_pointer = ""
-	else if(equipment_disabled)
-		mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
-	else mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
-	for(var/mob/mob_occupant in occupants)
+	else
+		if(equipment_disabled)
+			mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
+		else
+			mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
+
+	for(var/mob/mob_occupant as anything in occupants)
 		mob_occupant.update_mouse_pointer()
 
 //override this proc if you need to split up mecha control between multiple people (see savannah_ivanov.dm)
@@ -575,16 +596,12 @@
 /obj/vehicle/sealed/mecha/proc/on_mouseclick(mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		weapons_safety = !weapons_safety
-		SEND_SOUND(user, sound('sound/machines/beep.ogg', volume=25))
-		balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
-		set_mouse_pointer()
+		set_safety(user)
 		return COMSIG_MOB_CANCEL_CLICKON
-	if(isAI(user)) //Middle clicks are already handled for AIs via above
-		if(weapons_safety)
-			return //Use AI functions
-		else
-			. = COMSIG_MOB_CANCEL_CLICKON //Use Mech functions
+	if(weapons_safety)
+		return
+	if(isAI(user)) //For AIs: If safeties are off, use mech functions. If safeties are on, use AI functions.
+		. = COMSIG_MOB_CANCEL_CLICKON
 	if(weapons_safety)
 		return
 	if(modifiers[SHIFT_CLICK]) //Allows things to be examined.

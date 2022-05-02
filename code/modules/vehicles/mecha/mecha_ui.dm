@@ -270,10 +270,7 @@
 				return
 			name = userinput
 		if("toggle_safety")
-			weapons_safety = !weapons_safety
-			SEND_SOUND(usr, sound('sound/machines/beep.ogg', volume=25))
-			balloon_alert(usr, "equipment [weapons_safety ? "safe" : "ready"]")
-			set_mouse_pointer()
+			set_mouse_pointer(usr)
 			return
 		if("dna_lock")
 			var/mob/living/carbon/user = usr
