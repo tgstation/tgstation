@@ -1,0 +1,4 @@
+author: "castawaynont"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the cabling and piping in the mining lobby on Kilo. The mining shuttle should now charge correctly."
