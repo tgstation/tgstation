@@ -45,6 +45,8 @@
 
 	//if any REAL cards have been inserted into the deck they are moved outside before destroying it
 	for(var/obj/item/toy/singlecard/card in cards)
+		if(card.flags_1 & HOLOGRAM_1)
+			continue
 		cards -= card
 		card.forceMove(drop_location())
 
