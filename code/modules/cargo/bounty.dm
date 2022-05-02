@@ -61,7 +61,7 @@
 				chosen_type = pick(subtypesof(/datum/bounty/virus))
 			if(8)
 				if(prob(50))
-					chosen_type = pick(subtypesof(/datum/bounty/item/science/ref_anomaly))
+					chosen_type = pick(subtypesof(/datum/bounty/item/science))
 				else
 					chosen_type = pick(subtypesof(/datum/bounty/item/slime))
 			if(9)
