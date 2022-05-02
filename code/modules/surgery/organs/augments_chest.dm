@@ -189,7 +189,7 @@
 	icon_state = "[base_icon_state][on ? "-on" : null]"
 	return ..()
 
-/obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num)
+/obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num, use_fuel = TRUE)
 	if(!owner)
 		return FALSE
 
@@ -204,13 +204,16 @@
 
 	// Priority 2: use plasma from internal plasma storage.
 	// (just in case someone would ever use this implant system to make cyber-alien ops with jetpacks and taser arms)
-	if(owner.getPlasma() >= num*100)
-		owner.adjustPlasma(-num*100)
+	if(owner.getPlasma() >= num * 100)
+		if(use_fuel)
+			owner.adjustPlasma(-num * 100)
 		return TRUE
 
 	// Priority 3: use internals tank.
 	var/datum/gas_mixture/internal_mix = owner.internal?.return_air()
 	if(internal_mix && internal_mix.total_moles() > num)
+		if(!use_fuel)
+			return TRUE
 		var/datum/gas_mixture/removed = internal_mix.remove(num)
 		if(removed.total_moles() > 0.005)
 			owner_turf.assume_air(removed)

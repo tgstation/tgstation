@@ -144,7 +144,9 @@
 		if("stabilizers")
 			set_stabilizers(text2num(value))
 
-/obj/item/mod/module/jetpack/proc/allow_thrust()
+/obj/item/mod/module/jetpack/proc/allow_thrust(use_fuel = TRUE)
+	if(!use_fuel)
+		return check_power(use_power_cost)
 	if(!drain_power(use_power_cost))
 		return FALSE
 	return TRUE

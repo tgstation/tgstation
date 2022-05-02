@@ -24,7 +24,7 @@
  * * deactivation_signal - Signal we deactivate on
  * * return_flag - Flag to return if activation fails
  * * get_mover - Callback we use to get the "moving" thing, for trail purposes, alongside signal registration
- * * check_on_move - Callback we call each time we attempt a move, we expect it to retun true if the move is ok, false otherwise
+ * * check_on_move - Callback we call each time we attempt a move, we expect it to retun true if the move is ok, false otherwise. It expects an arg, TRUE if fuel should be consumed, FALSE othewise
  * * effect_type - Type of trail_follow to spawn
  */
 /datum/component/jetpack/Initialize(stabalize, activation_signal, deactivation_signal, return_flag, datum/callback/get_mover, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
@@ -114,7 +114,7 @@
 	if(user.throwing)//You don't must use jet if you thrown
 		return
 	if(length(user.client.keys_held & user.client.movement_keys))//You use jet when press keys. yes.
-		thrust(user)
+		thrust()
 
 /datum/component/jetpack/proc/pre_move_react(mob/user)
 	SIGNAL_HANDLER
@@ -122,14 +122,16 @@
 
 /datum/component/jetpack/proc/spacemove_react(mob/user, movement_dir, continuous_move)
 	SIGNAL_HANDLER
-	if(stabalize)
-		return COMSIG_MOVABLE_STOP_SPACEMOVE
 	if(!continuous_move && movement_dir)
+		return COMSIG_MOVABLE_STOP_SPACEMOVE
+	// Check if we have the fuel to stop this. Do NOT cosume any fuel, just check
+	// This is done because things other then us can use our fuel
+	if(stabalize && check_on_move.Invoke(FALSE))
 		return COMSIG_MOVABLE_STOP_SPACEMOVE
 
 /// Returns true if the thrust went well, false otherwise
-/datum/component/jetpack/proc/thrust(mob/user)
-	if(!check_on_move.Invoke())
+/datum/component/jetpack/proc/thrust()
+	if(!check_on_move.Invoke(TRUE))
 		return FALSE
 	if(!trail)
 		setup_trail()
