@@ -260,7 +260,7 @@
 
 /// We dont allow incomplete valves to go in but do code in checks for incomplete valves. Just in case.
 /obj/machinery/research/anomaly_refinery/proc/eject_bomb(mob/user, force = FALSE)
-	if(!inserted_bomb || (active & !force))
+	if(!inserted_bomb || (active && !force))
 		return
 	if(user)
 		user.put_in_hands(inserted_bomb)
