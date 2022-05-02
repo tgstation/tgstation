@@ -155,9 +155,6 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
 /datum/lift_master/proc/MoveLiftHorizontal(going)
-	if(SStramprocess.profile)//TODOKYLER: get rid of this and the profile var
-		world.Profile(PROFILE_START)
-
 	set_controls(LIFT_PLATFORM_LOCKED)
 
 	if(multitile_platform)
@@ -165,8 +162,6 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			platform_to_move.travel(going)
 
 		set_controls(LIFT_PLATFORM_UNLOCKED)
-		if(SStramprocess.profile)
-			world.Profile(PROFILE_STOP)
 		return
 
 	var/max_x = 0
