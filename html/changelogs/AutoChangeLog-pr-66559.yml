@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - bugfix: "notepad app no longer causes a barrage of action cooldown messages"

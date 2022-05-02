@@ -1,9 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - balance: "The values of nearly every item purchasable by players has been rebalanced."
-  - balance: "Players will now start with less starting money, but will receive a paycheck once every 5 minutes."
-  - balance: "The value of gasses exported through the cargo department have been skewed way, WAY down in terms of price."
-  - balance: "The Syndicate briefcase of cash now contains now costs 5 TC, up from 1 TC, for 5000 credits."
-  - balance: "Printing items from lathes on station now costs a fee of 10 credits per item printed if it's from a lathe not under your department."
-  - qol: "The payment component has received additional handling for physical credits, as well as pulled credits/ID cards for those without hands."
