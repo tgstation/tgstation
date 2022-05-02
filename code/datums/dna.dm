@@ -534,7 +534,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		update_body(is_creating = TRUE)
 		update_mutations_overlay()
 
-	if(LAZYLEN(mutations) && !isnull(force_transfer_mutations))
+	if(LAZYLEN(mutations) && force_transfer_mutations)
 		for(var/datum/mutation/human/mutation as anything in mutations)
 			dna.force_give(new mutation.type(mutation.class, copymut = mutation)) //using force_give since it may include exotic mutations that otherwise won't be handled properly
 
