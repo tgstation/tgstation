@@ -13,7 +13,7 @@
 	var/supermatter_explosion_power = 0
 	///Amount the gasmix will affect the explosion size
 	var/supermatter_gasmix_power_ratio = 0
-
+	///Are we triggering an universal endgame?
 	var/supermatter_cascade = FALSE
 
 	var/cascade_rift

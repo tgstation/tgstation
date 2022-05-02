@@ -6,8 +6,10 @@
 	layer = AREA_LAYER
 	plane = ABOVE_LIGHTING_PLANE
 	opacity = FALSE
+	///All dirs we can expand to
 	var/list/available_dirs = list(NORTH,SOUTH,EAST,WEST,UP,DOWN)
-	var/next_check = 0
+	///Cooldown on the expansion process
+	COOLDOWN_DECLARE(sm_wall_cooldown)
 
 /turf/closed/indestructible/supermatter_wall/Initialize(mapload)
 	. = ..()
@@ -16,13 +18,13 @@
 
 /turf/closed/indestructible/supermatter_wall/process()
 
-	if(next_check > world.time)
+	if(COOLDOWN_FINISHED(src, sm_wall_cooldown))
 		return
 
 	if(!available_dirs || available_dirs.len <= 0)
 		return PROCESS_KILL
 
-	next_check = world.time + rand(0, 5 SECONDS)
+	COOLDOWN_START(src, sm_wall_cooldown, rand(0, 5 SECONDS))
 
 	var/picked_dir = pick_n_take(available_dirs)
 	var/turf/next_turf = get_step_multiz(src, picked_dir)

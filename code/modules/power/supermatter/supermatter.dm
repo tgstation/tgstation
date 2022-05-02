@@ -256,11 +256,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/freonbonus = 0
 	///Can the crystal trigger the station wide anomaly spawn?
 	var/anomaly_event = TRUE
-
+	///If an admin wants a sure cascade with the delamination just set this to true (don't be a badmin)
 	var/admin_cascade = FALSE
-
+	///Has the cascade been triggered?
 	var/cascade_initiated = FALSE
-
+	///Reference to the warp effect
 	var/atom/movable/warp_effect/warp
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
