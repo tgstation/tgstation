@@ -182,6 +182,7 @@
 	icon_state = "plastitaniumshiv"
 	inhand_icon_state = "plastitaniumshiv"
 	desc = "A makeshift titanium infused plasma glass shiv."
+	force = 10
 	throwforce = 15
 	throw_speed = 4
 	throw_range = 8
