@@ -4,8 +4,6 @@
 	var/client/C = screenmob.client
 	if (!apply_parallax_pref(viewmob)) //don't want shit computers to crash when specing someone with insane parallax, so use the viewer's pref
 		return
-	if (SSmapping.level_trait(viewmob.z, ZTRAIT_NOPARALLAX))
-		return
 
 	if(!length(C.parallax_layers_cached))
 		C.parallax_layers_cached = list()

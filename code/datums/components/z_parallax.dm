@@ -55,6 +55,6 @@
 /datum/component/zparallax/proc/ztrait_checks()
 	SIGNAL_HANDLER
 
-	var/datum/hud/hud = tracked.mob.hud_used
+	var/datum/hud/hud = client_mob.hud_used
 
-	hud.update_parallax_pref(tracked.mob)
+	hud.update_parallax_pref(client_mob)
