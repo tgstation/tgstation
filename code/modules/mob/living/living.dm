@@ -1390,6 +1390,10 @@
 	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
 
 //Mobs on Fire
+
+/// Global list that containes cached fire overlays for mobs
+GLOBAL_LIST_EMPTY(fire_appearances)
+
 /mob/living/proc/ignite_mob()
 	if(fire_stacks <= 0)
 		return FALSE
@@ -1493,15 +1497,20 @@
 			var/fire_type = (spread_to.fire_stacks > fire_stacks) ? their_fire_status.type : fire_status.type
 			set_fire_stacks(firesplit, fire_type)
 			spread_to.set_fire_stacks(firesplit, fire_type)
-		else
-			adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
-			spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
-			if(spread_to.ignite_mob())
-				log_game("[key_name(src)] bumped into [key_name(spread_to)] and set them on fire")
-	else if(their_fire_status && their_fire_status.on_fire)
-		spread_to.adjust_fire_stacks(-spread_to.fire_stacks / 2, their_fire_status.type)
-		adjust_fire_stacks(spread_to.fire_stacks, their_fire_status.type)
-		ignite_mob()
+			return
+
+		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
+		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
+		if(spread_to.ignite_mob())
+			log_game("[key_name(src)] bumped into [key_name(spread_to)] and set them on fire")
+		return
+
+	if(!their_fire_status || !their_fire_status.on_fire)
+		return
+
+	spread_to.adjust_fire_stacks(-spread_to.fire_stacks / 2, their_fire_status.type)
+	adjust_fire_stacks(spread_to.fire_stacks, their_fire_status.type)
+	ignite_mob()
 
 /**
  * Sets fire overlay of the mob.
