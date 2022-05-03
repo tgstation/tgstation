@@ -37,14 +37,16 @@
 	var/list/affecting_areas
 	///For the few times we affect only the area we're actually in. Set during Init. If we get moved, we don't update, but this is consistant with fire alarms and also kinda funny so call it intentional.
 	var/area/my_area
+	///List of problem turfs with bad temperature
+	var/list/turf/issue_turfs
 	///Tracks if the firelock is being held open by a crowbar. If so, we don't close until they walk away
 	var/being_held_open = FALSE
-
 	///Type of alarm when active. See code/defines/firealarm.dm for the list. This var being null means there is no alarm.
 	var/alarm_type = null
 	///The merger_id and merger_typecache variables are used to make rows of firelocks activate at the same time.
 	var/merger_id = "firelocks"
 	var/static/list/merger_typecache
+
 	///Overlay object for the warning lights. This and some plane settings allows the lights to glow in the dark.
 	var/mutable_appearance/warn_lights
 
@@ -61,18 +63,10 @@
 	. = ..()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop = new(src, FALSE)
-	AddElement(/datum/element/atmos_sensitive, mapload)
 	CalculateAffectingAreas()
 	my_area = get_area(src)
-	var/static/list/loc_connections = list(
-		COMSIG_TURF_EXPOSE = .proc/check_atmos,
-	)
-
-	AddElement(/datum/element/connect_loc, loc_connections)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
-
-	check_atmos()
 
 	if(prob(0.004) && icon == 'icons/obj/doors/doorfireglass.dmi')
 		base_icon_state = "sus"
@@ -82,8 +76,10 @@
 
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
-	GetMergeGroup(merger_id, allowed_types = merger_typecache)
-
+	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/merger_adding)
+	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/merger_removing)
+	GetMergeGroup(merger_id, merger_typecache)
+	register_adjacent_turfs(src)
 /**
  * Sets the offset for the warning lights.
  *
@@ -203,30 +199,86 @@
 		for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 			fire_panel.set_status()
 
-/obj/machinery/door/firedoor/proc/check_atmos(datum/source)
+/obj/machinery/door/firedoor/proc/merger_adding(obj/machinery/door/firedoor/us, datum/merger/new_merger)
+	SIGNAL_HANDLER
+	if(new_merger.id != merger_id)
+		return
+	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/refresh_shared_turfs)
+
+/obj/machinery/door/firedoor/proc/merger_removing(obj/machinery/door/firedoor/us, datum/merger/old_merger)
+	SIGNAL_HANDLER
+	if(old_merger.id != merger_id)
+		return
+	UnregisterSignal(old_merger, COMSIG_MERGER_REFRESH_COMPLETE)
+
+/obj/machinery/door/firedoor/proc/refresh_shared_turfs(datum/source, list/leaving_members, list/joining_members)
+	SIGNAL_HANDLER
+	var/datum/merger/temp_group = source
+	if(temp_group.origin != src)
+		return
+	var/list/shared_problems = list() // We only want to do this once, this is a nice way of pulling that off
+	for(var/obj/machinery/door/firedoor/firelock as anything in temp_group.members)
+		firelock.issue_turfs = shared_problems
+		for(var/dir in GLOB.cardinals)
+			var/turf/checked_turf = get_step(get_turf(firelock), dir)
+			if(!checked_turf)
+				continue
+			process_results(checked_turf)
+
+/obj/machinery/door/firedoor/proc/register_adjacent_turfs(atom/loc)
+	for(var/dir in GLOB.cardinals)
+		var/turf/checked_turf = get_step(get_turf(loc), dir)
+
+		if(!checked_turf)
+			continue
+		process_results(checked_turf)
+		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
+		RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
+
+
+/obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/loc)
+	for(var/dir in GLOB.cardinals)
+		var/turf/checked_turf = get_step(get_turf(loc), dir)
+
+		if(!checked_turf)
+			continue
+
+		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
+		UnregisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
+
+/obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
+	var/datum/gas_mixture/environment = checked_turf.return_air()
+
+	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		return FIRELOCK_ALARM_TYPE_HOT
+	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+		return FIRELOCK_ALARM_TYPE_COLD
+	return
+
+/obj/machinery/door/firedoor/proc/process_results(datum/source)
+	SIGNAL_HANDLER
+
 	if(!COOLDOWN_FINISHED(src, detect_cooldown))
 		return
-	if(alarm_type)
+	if(alarm_type == FIRELOCK_ALARM_TYPE_GENERIC)
 		return
+
 	for(var/area/place in affecting_areas)
 		if(!place.fire_detect) //if any area is set to disable detection
 			return
 
-	var/turf/my_turf = source
-	if(!my_turf)
-		my_turf = get_turf(src)
+	var/turf/checked_turf = source
+	var/result = check_atmos(checked_turf)
 
-	var/datum/gas_mixture/environment = my_turf.return_air()
-	var/result
+	if(result && TURF_SHARES(checked_turf))
+		issue_turfs |= checked_turf
+		if(!alarm_type)
+			start_activation_process(result)
+	else
+		issue_turfs -= checked_turf
+		if(!length(issue_turfs) && alarm_type)
+			start_deactivation_process()
 
-	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		result = FIRELOCK_ALARM_TYPE_HOT
-	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
-		result = FIRELOCK_ALARM_TYPE_COLD
-	if(!result)
-		return
-
-	start_activation_process(result)
 
 /**
  * Begins activation process of us and our neighbors.
@@ -246,7 +298,18 @@
 	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		buddylock.activate(code)
-
+/**
+ * Begins deactivation process of us and our neighbors.
+ *
+ * This proc will call reset() on every fire lock (including us) listed
+ * in the merge group datum. sets our alarm type to null, signifying no alarm.
+ */
+/obj/machinery/door/firedoor/proc/start_deactivation_process()
+	soundloop.stop()
+	is_playing_alarm = FALSE
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
+	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
+		buddylock.reset()
 
 /**
  * Proc that handles activation of the firelock and all this details
@@ -288,6 +351,8 @@
 		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 				fire_panel.set_status()
+			if(place == my_area)
+				place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 			place.unset_fire_alarm_effects()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop.stop()
@@ -532,6 +597,11 @@
 			new /obj/item/electronics/firelock (targetloc)
 	qdel(src)
 
+/obj/machinery/door/firedoor/Moved(atom/oldloc)
+	. = ..()
+	unregister_adjacent_turfs(oldloc)
+	register_adjacent_turfs(src)
+
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
 	density = TRUE
@@ -550,12 +620,6 @@
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
-
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = .proc/on_exit,
-	)
-
-	AddElement(/datum/element/connect_loc, loc_connections)
 	adjust_lights_starting_offset()
 
 /obj/machinery/door/firedoor/border_only/adjust_lights_starting_offset()

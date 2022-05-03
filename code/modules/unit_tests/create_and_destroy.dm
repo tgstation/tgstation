@@ -23,13 +23,11 @@
 		/obj/structure/holosign/robot_seat,
 		//Singleton
 		/mob/dview,
-		//Requires a circuit url
-		/obj/effect/mapping_helpers/circuit_spawner,
 		//Template type
 		/obj/item/bodypart,
 	)
 	//Say it with me now, type template
-	ignore += typesof(/obj/effect/mapping_helpers/atom_injector)
+	ignore += typesof(/obj/effect/mapping_helpers)
 	//This turf existing is an error in and of itself
 	ignore += typesof(/turf/baseturf_skipover)
 	ignore += typesof(/turf/baseturf_bottom)
@@ -50,8 +48,8 @@
 	//We don't have a pod
 	ignore += typesof(/obj/effect/pod_landingzone_effect)
 	ignore += typesof(/obj/effect/pod_landingzone)
-	//It's a trapdoor to nowhere
-	ignore += typesof(/obj/effect/mapping_helpers/trapdoor_placer)
+	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
+	ignore += typesof(/obj/effect/baseturf_helper)
 	//There's no shapeshift to hold
 	ignore += typesof(/obj/shapeshift_holder)
 	//No tauma to pass in
@@ -88,6 +86,8 @@
 	ignore += typesof(/obj/effect/skyfall_landingzone)
 	//Expects a mob to holderize, we have nothing to give
 	ignore += typesof(/obj/item/clothing/head/mob_holder)
+	//Needs cards passed into the initilazation args
+	ignore += typesof(/obj/item/toy/cards/cardhand)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/baseturf_count = length(spawn_at.baseturfs)

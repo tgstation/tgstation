@@ -331,17 +331,22 @@
 		. |= limb.on_life(delta_time, times_fired)
 
 /mob/living/carbon/proc/handle_organs(delta_time, times_fired)
-	if(stat != DEAD)
-		for(var/organ_slot in GLOB.organ_process_order)
-			var/obj/item/organ/organ = getorganslot(organ_slot)
-			if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
-				organ.on_life(delta_time, times_fired)
-	else
+	if(stat == DEAD)
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/V in internal_organs)
 			var/obj/item/organ/organ = V
 			organ.on_death(delta_time, times_fired) //Needed so organs decay while inside the body.
+		return
+
+	// NOTE: internal_organs_slot is sorted by GLOB.organ_process_order on insertion
+	for(var/slot in internal_organs_slot)
+		// We don't use getorganslot here because we know we have the organ we want, since we're iterating the list containing em already
+		// This code is hot enough that it's just not worth the time
+		var/obj/item/organ/organ = internal_organs_slot[slot]
+		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
+			organ.on_life(delta_time, times_fired)
+
 
 /mob/living/carbon/handle_diseases(delta_time, times_fired)
 	for(var/thing in diseases)
@@ -415,7 +420,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 #define BALLMER_POINTS 5
 
-//this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
+// This updates all special effects that really should be status effect datums: Druggy, Hallucinations, Drunkenness, Mute, etc..
 /mob/living/carbon/handle_status_effects(delta_time, times_fired)
 	..()
 
@@ -458,7 +463,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		adjust_drowsyness(-1 * restingpwr * delta_time)
 		blur_eyes(1 * delta_time)
 		if(DT_PROB(2.5, delta_time))
-			AdjustSleeping(100)
+			AdjustSleeping(10 SECONDS)
 
 	//Jitteriness
 	if(jitteriness)
@@ -467,9 +472,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "jittery", /datum/mood_event/jittery)
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
-
-	if(druggy)
-		adjust_drugginess(-0.5 * delta_time)
 
 	if(silent)
 		silent = max(silent - (0.5 * delta_time), 0)
@@ -482,7 +484,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 			if(DT_PROB(16, delta_time))
-				slurring += 2
+				adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk)
 			jitteriness = max(jitteriness - (1.5 * delta_time), 0)
 			throw_alert(ALERT_DRUNK, /atom/movable/screen/alert/drunk)
 			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
@@ -491,8 +493,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			clear_alert(ALERT_DRUNK)
 			sound_environment_override = SOUND_ENVIRONMENT_NONE
 
-		if(drunkenness >= 11 && slurring < 5)
-			slurring += 0.6 * delta_time
+		if(drunkenness >= 11)
+			var/datum/status_effect/speech/slurring/drunk/already_slurring = has_status_effect(/datum/status_effect/speech/slurring/drunk)
+			if(!already_slurring || already_slurring.duration - world.time <= 10 SECONDS)
+				adjust_timed_status_effect(1.2 SECONDS * delta_time, /datum/status_effect/speech/slurring/drunk)
 
 		if(mind && (is_scientist_job(mind.assigned_role) || is_research_director_job(mind.assigned_role)))
 			if(SSresearch.science_tech)

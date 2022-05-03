@@ -64,6 +64,8 @@
 #define PLASMAMAN_HELMET_EXEMPT (1<<17) //prevents from placing on plasmaman helmet
 /// Prevents plasmamen from igniting when wearing this
 #define PLASMAMAN_PREVENT_IGNITION (1<<18)
+/// Usable as casting clothes by wizards (only matters for suits and headwear)
+#define CASTING_CLOTHES (1<<19)
 
 /// Flags for the organ_flags var on /obj/item/organ
 

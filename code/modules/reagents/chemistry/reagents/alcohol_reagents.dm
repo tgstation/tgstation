@@ -319,7 +319,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_drugginess(50 * REM * delta_time)
+	drinker.set_timed_status_effect(100 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	return ..()
 
 /datum/reagent/consumable/ethanol/gin
@@ -965,7 +965,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 
 /datum/reagent/consumable/ethanol/manhattan_proj/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_drugginess(30 * REM * delta_time)
+	drinker.set_timed_status_effect(1 MINUTES * REM * delta_time, /datum/status_effect/drugginess)
 	return ..()
 
 /datum/reagent/consumable/ethanol/whiskeysoda
@@ -1466,13 +1466,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_price = DRINK_PRICE_HIGH
 
 /datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_drugginess(50 * REM * delta_time)
+	drinker.set_timed_status_effect(100 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_confusion(max(drinker.get_confusion() + (2 * REM * delta_time),0))
 		drinker.Dizzy(10 * REM * delta_time)
-	if (!drinker.slurring)
-		drinker.slurring = 1 * REM * delta_time
-	drinker.slurring += 3 * REM * delta_time
+	drinker.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
 	switch(current_cycle)
 		if(51 to 200)
 			drinker.Sleeping(100 * REM * delta_time)
@@ -1499,14 +1497,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	drinker.dizziness += 1.5 * REM * delta_time
 	switch(current_cycle)
 		if(15 to 45)
-			if(!drinker.slurring)
-				drinker.slurring = 1 * REM * delta_time
-			drinker.slurring += 3 * REM * delta_time
+			drinker.adjust_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
+
 		if(45 to 55)
 			if(DT_PROB(30, delta_time))
 				drinker.set_confusion(max(drinker.get_confusion() + 3, 0))
 		if(55 to 200)
-			drinker.set_drugginess(55 * REM * delta_time)
+			drinker.set_timed_status_effect(110 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 		if(200 to INFINITY)
 			drinker.adjustToxLoss(2 * REM * delta_time, 0)
 			. = TRUE
@@ -1529,7 +1526,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.set_drugginess(50 * REM * delta_time)
+	drinker.set_timed_status_effect(100 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	drinker.dizziness += 2 * REM * delta_time
 	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time, 150)
 	if(DT_PROB(10, delta_time))
@@ -1574,30 +1571,30 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/hippies_delight/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if (!drinker.slurring)
-		drinker.slurring = 1 * REM * delta_time
+	drinker.set_timed_status_effect(1 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk, only_if_higher = TRUE)
+
 	switch(current_cycle)
 		if(1 to 5)
 			drinker.Dizzy(10 * REM * delta_time)
-			drinker.set_drugginess(30 * REM * delta_time)
+			drinker.set_timed_status_effect(1 MINUTES * REM * delta_time, /datum/status_effect/drugginess)
 			if(DT_PROB(5, delta_time))
 				drinker.emote(pick("twitch","giggle"))
 		if(5 to 10)
 			drinker.Jitter(20 * REM * delta_time)
 			drinker.Dizzy(20 * REM * delta_time)
-			drinker.set_drugginess(45 * REM * delta_time)
+			drinker.set_timed_status_effect(1.5 MINUTES * REM * delta_time, /datum/status_effect/drugginess)
 			if(DT_PROB(10, delta_time))
 				drinker.emote(pick("twitch","giggle"))
 		if (10 to 200)
 			drinker.Jitter(40 * REM * delta_time)
 			drinker.Dizzy(40 * REM * delta_time)
-			drinker.set_drugginess(60 * REM * delta_time)
+			drinker.set_timed_status_effect(2 MINUTES * REM * delta_time, /datum/status_effect/drugginess)
 			if(DT_PROB(16, delta_time))
 				drinker.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
 			drinker.Jitter(60 * REM * delta_time)
 			drinker.Dizzy(60 * REM * delta_time)
-			drinker.set_drugginess(75 * REM * delta_time)
+			drinker.set_timed_status_effect(2.5 MINUTES * REM * delta_time, /datum/status_effect/drugginess)
 			if(DT_PROB(23, delta_time))
 				drinker.emote(pick("twitch","giggle"))
 			if(DT_PROB(16, delta_time))
@@ -1632,9 +1629,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.cultslurring = min(drinker.cultslurring + (3 * REM * delta_time), 3)
-	drinker.stuttering = min(drinker.stuttering + (3 * REM * delta_time), 3)
-	..()
+	drinker.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/cult, max_duration = 6 SECONDS)
+	drinker.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter, max_duration = 6 SECONDS)
+	return ..()
 
 /datum/reagent/consumable/ethanol/triple_sec
 	name = "Triple Sec"
@@ -2389,7 +2386,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(drinker.mind?.holy_role)
 		drinker.adjustFireLoss(-2.5 * REM * delta_time, 0)
 		drinker.jitteriness = max(drinker.jitteriness - (1 * REM * delta_time), 0)
-		drinker.stuttering = max(drinker.stuttering - (1 * REM * delta_time), 0)
+		drinker.adjust_timed_status_effect(-2 SECONDS * REM * delta_time, /datum/status_effect/speech/stutter)
 	return ..()
 
 /datum/reagent/consumable/ethanol/blazaam

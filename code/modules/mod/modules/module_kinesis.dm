@@ -66,11 +66,11 @@
 	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
 	soundloop.start()
 
-/obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
-	clear_grab()
+	clear_grab(playsound = !deleting)
 
 /obj/item/mod/module/anomaly_locked/kinesis/process(delta_time)
 	if(!mod.wearer.client || mod.wearer.incapacitated(IGNORE_GRAB))
@@ -97,6 +97,7 @@
 	if(grabbed_atom.Move(next_turf))
 		if(isitem(grabbed_atom) && (mod.wearer in next_turf))
 			var/obj/item/grabbed_item = grabbed_atom
+			clear_grab()
 			grabbed_item.pickup(mod.wearer)
 			mod.wearer.put_in_hands(grabbed_item)
 		return
@@ -219,6 +220,8 @@
 	COOLDOWN_DECLARE(coordinate_cooldown)
 
 /atom/movable/screen/fullscreen/kinesis/proc/on_move(atom/source, atom/oldloc, dir, forced)
+	SIGNAL_HANDLER
+
 	if(given_turf)
 		var/x_offset = source.loc.x - oldloc.x
 		var/y_offset = source.loc.y - oldloc.y

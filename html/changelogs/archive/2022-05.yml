@@ -1,0 +1,114 @@
+2022-05-01:
+  Crushtoe:
+  - bugfix: Fixes Icebox Security's entrance airlock cyclers and the Interrogation
+      shutters.
+  - bugfix: Fixes Icebox Engineering's lower floor EVA airlock cycler.
+  EthanRocks:
+  - bugfix: rare case of being able to spawn off station when returning from shadow
+      realm
+  GoldenAlpharex:
+  - bugfix: Fixed hair not blocking emissives, which ended up creating some rather
+      silly visual glitches at times, in darker areas.
+  Pepsilawn:
+  - bugfix: Security hailers no longer inform you that you used a cryptographic sequencer
+      to emag them when you did not
+  RandomGamer123:
+  - bugfix: The disposals bin in front of the cafeteria on KiloStation now is actually
+      properly connected to the disposals network.
+  SnoopCooper:
+  - rscadd: Breathing helium now makes your speech small
+  carshalash:
+  - bugfix: corrects pathway in sausage and eggs. Now cooked with fried eggs as intended.
+  magatsuchi:
+  - rscadd: Back by popular demand, the Syndicate has re-included their state-of-the-art
+      Chameleon Gun into their chameleon kits, capable of disguising itself as any
+      gun known to man-kind! Lethal rounds not included.
+  the-orange-cow:
+  - spellcheck: Fixed a few insignificant typos.
+  timothymtorres:
+  - bugfix: Fix ghosts not being able to read in the dark
+  vincentiusvin:
+  - rscdel: Removed adding glass floors to plating
+  - balance: Allows you to replace plating with glass floors instead. 3 second timer.
+  - rscdel: Removed deconstructing the glass floors. No replacement for this one,
+      use a rcd.
+  - bugfix: Fixed metastation glassfloor spawning a weird turf when crowbarred.
+  - bugfix: Fixed plasma sheets and it's derivatives exploding you for being shot
+      at.
+2022-05-02:
+  Ryll/Shaps:
+  - balance: Armored bounty hunters are no longer being issued flamethrowers. Instead,
+      they are now issued dual-tube shotguns filled with rubbershot and trailless
+      incendiary slugs, as well as a 9mm Makarov loaded with fire bullets.
+2022-05-03:
+  ArcaneMusic:
+  - bugfix: Drones are exempt from the lathe tax, off and on station.
+  Arkatos and wiki contributors:
+  - qol: Mining voucher redeem selection now uses a radial menu and provides additional
+      information about the voucher sets. Literally years in the making, enjoy!
+  Ghilker:
+  - qol: Adds radio messages to the delaminating HFR to let atmosians know what's
+      wrong with it. Unless the HFR has been emped
+  JohnFulpWillard:
+  - bugfix: pAIs can now use Newscaster UIs, and all Silicon can now use Newscasters
+      in general (except the Bounty board, as they have no money to payout).
+  - bugfix: Drones can no longer give themselves access to machines/wires through
+      consoles.
+  - bugfix: Cayenne can no longer use the nuke from anywhere.
+  SmArtKar:
+  - bugfix: Cryo cell overlay should properly display above mobs now
+  Son-of-Space:
+  - bugfix: Fixed several inconsistent or niche access requirements on MetaStation
+  - qol: Replaced all access requirement vars on doors with mapping helpers on MetaStation
+  Striders13:
+  - bugfix: H.E.C.K. suit now once again prevents your clothes from burning and your
+      hair from sticking out.
+  SuperNovaa41:
+  - bugfix: Fixes an issue with service borg apparatuses getting multiple beakers
+      in it's contents.
+  - bugfix: Fixed being able to ride dead space carp.
+  TiviPlus:
+  - code_imp: changed some backend code for rendering, please report any layering
+      issues on the github
+  Y0SH1M4S73R:
+  - refactor: Wizard casting clothes now use a bitflag instead of a typecache. This
+      allows for nonstandard headwear and suits to be varedited into casting clothes.
+  - balance: The enchanted modsuit's chestplate and helmet must now be deployed in
+      order to cast robed spells.
+  capsaicinz:
+  - rscadd: adds the "how to charge your PDA" poster
+  castawaynont:
+  - bugfix: Fixed the cabling and piping in the mining lobby on Kilo. The mining shuttle
+      should now charge correctly.
+  thgvr:
+  - bugfix: Shuffled around some pipes in KiloStation garden so they are no longer
+      under tables/grass.
+  timothymtorres, san7890, axietheaxolotl:
+  - rscadd: Adds haunted tarot deck that allows the user the ability to see and communicate
+      with the dead.  Can be found in maint loot as a rare item.
+  - rscadd: Adds blank card decks to games vendor.  These can be written on with a
+      pen or crayon.
+  - soundadd: Adds a public domain cardflip.ogg from freesound.org that is used when
+      drawing a card.
+  - qol: Cards, decks, and cardhands have new hotkeys.  Decks are now a 2 handed wielded
+      object.
+  - qol: Add card ruleset to Wiz-Off at the top of the deck.
+  - bugfix: Holodeck card decks are now spawned as syndicate deck to convey that they
+      can do damage if safeties are overridden.
+  - bugfix: Any holodeck items have their force and throwforce damage nerfed to zero
+      while the safeties are on.
+  - bugfix: 'Fix xray trait to appear on mobs that equip xray glasses or have xray
+      eye augmentation. expansion: Playing cards with other people gives a mood event
+      and is added to memory expansion: Syndicate card decks can be shuffled faster
+      than normal decks. expansion: People with the supernatural phobia will now be
+      terrified of tarot card decks. expansion: NT has outlawed the use of x-ray vision,
+      science goggles combined with invisible ink, or using pens or crayons to gain
+      an unfair advantage while playing card games during recreational time.'
+  - code_imp: Moved the card deck code to it's own files and folder.
+  - rscdel: Remove CAS decks from random deck spawner (you need both decks to play
+      so only having one spawn was bleh)
+  - refactor: Cards have been refactored and a lot of deprecated code has been removed.
+  - imagedel: Remove old cardhand icons that were unused.
+  - imageadd: Add some new blank/scribble card icons.
+  - imageadd: Add new clown and mime joker cards to standard decks curtesy of axietheaxolotl
+      (Viro on discord)

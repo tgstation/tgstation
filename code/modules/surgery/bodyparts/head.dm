@@ -236,7 +236,7 @@
 
 			hair_alpha = owner_species.hair_alpha
 			hair_color = human_head_owner.hair_color
-			facial_hair_color = human_head_owner.hair_color
+			facial_hair_color = human_head_owner.facial_hair_color
 			fixed_hair_color = owner_species.fixed_mut_color //Can be null
 			hair_style = human_head_owner.hairstyle
 			facial_hairstyle = human_head_owner.facial_hairstyle
@@ -247,6 +247,7 @@
 				if(sprite_accessory)
 					//Create the overlay
 					facial_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
+					facial_overlay.overlays += emissive_blocker(facial_overlay.icon, facial_overlay.icon_state, alpha = hair_alpha)
 					//Gradients
 					facial_hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_FACIAL_HAIR_KEY)
 					if(facial_hair_gradient_style)
@@ -259,6 +260,7 @@
 				sprite_accessory = GLOB.hairstyles_list[hair_style]
 				if(sprite_accessory)
 					hair_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
+					hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, alpha = hair_alpha)
 					hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_HAIR_KEY)
 					if(hair_gradient_style)
 						hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_HAIR_KEY)
@@ -278,7 +280,7 @@
 					SET_OVERLAY_VALUE(facial_overlay, color, hair_color_source)
 					SET_OVERLAY_VALUE(hair_overlay, color, hair_color_source)
 			else
-				SET_OVERLAY_VALUE(facial_overlay, color, hair_color)
+				SET_OVERLAY_VALUE(facial_overlay, color, facial_hair_color)
 				SET_OVERLAY_VALUE(hair_overlay, color, hair_color)
 		else
 			SET_OVERLAY_VALUE(facial_overlay, color, override_hair_color)

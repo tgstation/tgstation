@@ -178,7 +178,7 @@
 		/obj/item/food/doughslice = 1,
 		/datum/reagent/consumable/cream = 5,
 		/obj/item/food/cheese/wedge = 1,
-		/obj/item/food/meat/rawcrab = 1
+		/obj/item/food/meat/slab/rawcrab = 1
 	)
 	result = /obj/item/food/crab_rangoon
 	subcategory = CAT_MISCFOOD
@@ -236,4 +236,25 @@
 		/obj/item/food/butter = 1
 	)
 	result = /obj/item/food/bechamel_sauce
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/pierogi
+	name = "Pierogi"
+	reqs = list(
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/bun = 1
+	)
+	result = /obj/item/food/pierogi
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/stuffed_cabbage
+	name = "Stuffed cabbage"
+	reqs = list(
+		/obj/item/food/meat/cutlet = 2,
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/tomato = 1
+	)
+	result = /obj/item/food/stuffed_cabbage
 	subcategory = CAT_MISCFOOD

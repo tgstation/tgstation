@@ -13,8 +13,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "HPLC"
 	base_icon_state = "HPLC"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 20
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.2
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_mass_spec
 	///If we're processing reagents or not
@@ -48,6 +47,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	return ..()
 
 /obj/machinery/chem_mass_spec/RefreshParts()
+	. = ..()
 	cms_coefficient = 1
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
 		cms_coefficient /= laser.rating
@@ -89,7 +89,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		replace_beaker(user, BEAKER1, beaker)
 		to_chat(user, span_notice("You add [beaker] to [src]."))
 		update_appearance()
-		updateUsrDialog()
+		ui_interact(user)
 		return
 	..()
 
@@ -109,7 +109,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 			return
 		replace_beaker(user, BEAKER2, beaker)
 		to_chat(user, span_notice("You add [beaker] to [src]."))
-		updateUsrDialog()
+		ui_interact(user)
 		. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	update_appearance()
@@ -306,6 +306,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		return FALSE
 	if(!processing_reagents)
 		return TRUE
+	use_power(active_power_usage)
 	if(progress_time >= delay_time)
 		processing_reagents = FALSE
 		progress_time = 0

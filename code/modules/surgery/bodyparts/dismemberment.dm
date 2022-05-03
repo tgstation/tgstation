@@ -99,8 +99,7 @@
 		scar.victim = null
 		LAZYREMOVE(owner.all_scars, scar)
 
-	var/mob/living/carbon/phantom_owner = owner // so we can still refer to the guy who lost their limb after said limb forgets 'em
-	owner = null
+	var/mob/living/carbon/phantom_owner = set_owner(null) // so we can still refer to the guy who lost their limb after said limb forgets 'em
 
 	for(var/datum/surgery/surgery as anything in phantom_owner.surgeries) //if we had an ongoing surgery on that limb, we stop it.
 		if(surgery.operated_bodypart == src)
@@ -109,8 +108,7 @@
 			break
 
 	for(var/obj/item/embedded in embedded_objects)
-		embedded_objects -= embedded
-		embedded.forceMove(src)
+		embedded.forceMove(src) // It'll self remove via signal reaction, just need to move it
 	if(!phantom_owner.has_embedded_objects())
 		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 		SEND_SIGNAL(phantom_owner, COMSIG_CLEAR_MOOD_EVENT, "embedded")
