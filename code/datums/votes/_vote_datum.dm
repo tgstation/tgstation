@@ -9,6 +9,8 @@
 	var/name
 	/// If supplied, an override question will be displayed instead of the name of the vote.
 	var/override_question
+	/// The sound effect played to everyone when this vote is initiated.
+	var/vote_sound = 'sound/misc/bloop.ogg'
 	/// A list of default choices we have for this vote.
 	var/list/default_choices
 
@@ -35,9 +37,11 @@
 	return !!length(default_choices)
 
 /**
- * Resets our vote to its defualt state.
+ * Resets our vote to its default state.
  */
 /datum/vote/proc/reset()
+	SHOULD_CALL_PARENT(TRUE)
+
 	choices.Cut()
 	choices_by_ckey.Cut()
 	started_time = null
@@ -45,12 +49,13 @@
 
 /**
  * If this vote has a config associated, toggles it between enabled and disabled.
+ * Returns TRUE on a successful toggle, FALSE otherwise
  */
 /datum/vote/proc/toggle_votable(mob/toggler)
-	return
+	return FALSE
 
 /**
- * If this vote has a config associated, returns its value (True or false, usually).
+ * If this vote has a config associated, returns its value (True or False, usually).
  * If it has no config, returns -1.
  */
 /datum/vote/proc/is_config_enabled()
@@ -79,7 +84,12 @@
  *
  * Return FALSE to prevent the vote from being initiated.
  */
-/datum/vote/proc/create_vote()
+/datum/vote/proc/create_vote(mob/vote_creator)
+	SHOULD_CALL_PARENT(TRUE)
+
+	for(var/key in default_choices)
+		choices[key] = 0
+
 	return TRUE
 
 /**
@@ -88,11 +98,10 @@
  * Return a string - the text displayed to the world when the vote is initiated.
  */
 /datum/vote/proc/initiate_vote(initiator, duration)
+	SHOULD_CALL_PARENT(TRUE)
+
 	started_time = world.time
 	time_remaining = round(duration / 10)
-
-	for(var/key in default_choices)
-		choices[key] = 0
 
 	return "[capitalize(name)] vote started by [initiator || "Central Command"]."
 

@@ -37,7 +37,10 @@
 
 		default_choices += capitalize(option)
 
-	return !!length(default_choices)
+	if(!length(default_choices))
+		return FALSE
+
+	return ..()
 
 /datum/vote/custom_vote/initiate_vote(initiator, duration)
 	. = ..()

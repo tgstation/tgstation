@@ -9,10 +9,11 @@
 	)
 
 /datum/vote/restart_vote/toggle_votable(mob/toggler)
-	if(!toggler?.client?.holder)
-		return
+	if(!check_rights_for(toggler?.client, R_ADMIN))
+		return FALSE
 
 	CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))
+	return TRUE
 
 /datum/vote/restart_vote/is_config_enabled()
 	return CONFIG_GET(flag/allow_vote_restart)
@@ -31,6 +32,7 @@
 
 /datum/vote/restart_vote/get_vote_result(list/non_voters)
 	if(!CONFIG_GET(flag/default_no_vote))
+		// Default no votes will add non-voters to "Continue Playing"
 		choices[CHOICE_CONTINUE] += length(non_voters)
 
 	return ..()
@@ -51,7 +53,7 @@
 		SSticker.Reboot("Restart vote successful.", "restart vote", 1)
 		return
 
-	CRASH("[type] wasn't passed a valid winning choice. (Got: [winning_option])")
+	CRASH("[type] wasn't passed a valid winning choice. (Got: [winning_option || "null"])")
 
 #undef CHOICE_RESTART
 #undef CHOICE_CONTINUE

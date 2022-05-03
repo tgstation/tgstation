@@ -13,9 +13,6 @@ SUBSYSTEM_DEF(vote)
 	var/list/datum/vote/possible_votes = list()
 	/// The vote we're currently voting on.
 	var/datum/vote/current_vote
-	/// String name of whoever initiated the vote.
-	/// Usually a ckey, but can be anything (ex: "the server", "automated vote")
-	var/initiator
 	/// A list of all ckeys who have voted for the current vote.
 	var/list/voted = list()
 	/// A list of all ckeys currently voting for the current vote.
@@ -50,7 +47,6 @@ SUBSYSTEM_DEF(vote)
 
 	current_vote?.reset()
 	current_vote = null
-	initiator = null
 
 	for(var/datum/action/vote/voting_action as anything in generated_actions)
 		if(QDELETED(voting_action))
@@ -137,9 +133,7 @@ SUBSYSTEM_DEF(vote)
 	// Check if we have unlimited voting power.
 	// Admin started (or forced) voted will go through even if there's an ongoing vote,
 	// if voting is on cooldown, or regardless if a vote is config disabled (in some cases)
-	var/unlimited_vote_power = forced
-	if(vote_initiator)
-		unlimited_vote_power ||= !!GLOB.admin_datums[vote_initiator.ckey]
+	var/unlimited_vote_power = forced || !!GLOB.admin_datums[vote_initiator?.ckey]
 
 	if(current_vote && !unlimited_vote_power)
 		if(vote_initiator)
@@ -156,9 +150,11 @@ SUBSYSTEM_DEF(vote)
 	else if(istype(vote_type, /datum/vote))
 		to_vote = vote_type
 
-	// If we were passed SOMETHING, see if it's the name of a vote in possible_votes
-	else if(!isnull(vote_type))
+	// If we got neither a path or an instance, it could be a vote name, but is likely just an error / null
+	else
 		to_vote = possible_votes[vote_type]
+		if(!to_vote)
+			stack_trace("Voting initiate_vote was passed an invalid vote type. (Got: [vote_type || "null"])")
 
 	// No valid vote found? No vote
 	if(!istype(to_vote))
@@ -178,13 +174,11 @@ SUBSYSTEM_DEF(vote)
 	if(!to_vote.create_vote(vote_initiator))
 		return FALSE
 
-	// Okay, the vote's happening now, for real.
-	// Set it up.
+	// Okay, the vote's happening now, for real. Set it up.
 	current_vote = to_vote
-	initiator = vote_initiator_name
 
 	var/duration = CONFIG_GET(number/vote_period)
-	var/to_display = current_vote.initiate_vote(initiator, duration)
+	var/to_display = current_vote.initiate_vote(vote_initiator_name, duration)
 
 	log_vote(to_display)
 	to_chat(world, span_infoplain(vote_font("\n[span_bold(to_display)]\n\
@@ -200,8 +194,8 @@ SUBSYSTEM_DEF(vote)
 		new_voter.player_details.player_actions += voting_action
 		generated_actions += voting_action
 
-		if(new_voter.prefs.toggles & SOUND_ANNOUNCEMENTS)
-			SEND_SOUND(new_voter, sound('sound/misc/bloop.ogg'))
+		if(current_vote.vote_sound && (new_voter.prefs.toggles & SOUND_ANNOUNCEMENTS))
+			SEND_SOUND(new_voter, sound(current_vote.vote_sound))
 
 	return TRUE
 
@@ -287,8 +281,7 @@ SUBSYSTEM_DEF(vote)
 			if(!istype(selected))
 				return
 
-			selected.toggle_votable(voter)
-			return TRUE
+			return selected.toggle_votable(voter)
 
 		if("callVote")
 			var/datum/vote/selected = possible_votes[params["voteName"]]
