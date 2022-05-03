@@ -429,8 +429,8 @@
 /area/security/prison/rec)
 "et" = (
 /obj/structure/toilet/greyscale{
-	dir = 1;
-	cistern = 1
+	cistern = 1;
+	dir = 1
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/showroomfloor,
@@ -603,8 +603,8 @@
 /area/icemoon/underground/explored)
 "fL" = (
 /obj/machinery/camera/directional/west{
-	network = list("ss13","prison");
-	c_tag = "Security - Permabrig Recreation"
+	c_tag = "Security - Permabrig Recreation";
+	network = list("ss13","prison")
 	},
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 8
@@ -679,6 +679,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"gJ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron,
+/area/security/prison/mess)
 "gN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/food/pie_smudge,
@@ -944,8 +950,8 @@
 "jf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/directional/west{
-	network = list("ss13","prison");
-	c_tag = "Security - Permabrig Chapel"
+	c_tag = "Security - Permabrig Chapel";
+	network = list("ss13","prison")
 	},
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/showroomfloor,
@@ -1891,6 +1897,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"th" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron,
+/area/security/prison/workout)
 "ti" = (
 /obj/item/storage/box/donkpockets{
 	pixel_y = 5
@@ -2019,6 +2031,12 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
+"uO" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron,
+/area/security/prison/workout)
 "uV" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/fluff/tram_rail{
@@ -2110,6 +2128,7 @@
 "vJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/vault,
 /area/security/prison/rec)
 "wc" = (
@@ -3083,6 +3102,13 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/security/prison/rec)
+"FR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron/dark/side,
+/area/security/prison)
 "FS" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -3408,6 +3434,16 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/mine/eva/lower)
+"Jb" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/wood,
+/area/security/prison/rec)
 "Jf" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -3996,8 +4032,8 @@
 /area/mine/mechbay)
 "Od" = (
 /obj/machinery/camera/directional/west{
-	network = list("ss13","prison");
-	c_tag = "Security - Permabrig Lower Hallway Stairwell"
+	c_tag = "Security - Permabrig Lower Hallway Stairwell";
+	network = list("ss13","prison")
 	},
 /turf/open/floor/iron/dark/textured,
 /area/security/prison)
@@ -4209,12 +4245,12 @@
 	pixel_x = 8
 	},
 /obj/item/clothing/head/soft/blue{
-	pixel_y = 3;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 3
 	},
 /obj/item/clothing/head/soft/blue{
-	pixel_y = 6;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /obj/item/clothing/head/soft/red{
 	pixel_x = -5
@@ -4541,8 +4577,8 @@
 	dir = 8
 	},
 /obj/machinery/camera/directional/west{
-	network = list("ss13","prison");
-	c_tag = "Security - Permabrig Lower Hallway East"
+	c_tag = "Security - Permabrig Lower Hallway East";
+	network = list("ss13","prison")
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -4592,8 +4628,8 @@
 /area/mine/eva/lower)
 "TT" = (
 /obj/machinery/camera/directional/west{
-	network = list("ss13","prison");
-	c_tag = "Security - Permabrig Observation Prep"
+	c_tag = "Security - Permabrig Observation Prep";
+	network = list("ss13","prison")
 	},
 /obj/structure/sign/poster/official/safety_internals{
 	pixel_x = -32
@@ -4943,8 +4979,8 @@
 /area/mine/laborcamp)
 "WZ" = (
 /obj/structure/toilet/greyscale{
-	dir = 1;
-	cistern = 1
+	cistern = 1;
+	dir = 1
 	},
 /obj/effect/spawner/random/entertainment/cigar,
 /obj/machinery/light/small/directional/south,
@@ -29712,7 +29748,7 @@ Yr
 gs
 Sa
 Fc
-ap
+Jb
 ap
 pa
 KT
@@ -32282,7 +32318,7 @@ BO
 QT
 zW
 RS
-bG
+FR
 FI
 he
 Em
@@ -33322,7 +33358,7 @@ CL
 CL
 cp
 Tk
-Tk
+gJ
 Tk
 hT
 Fq
@@ -34592,11 +34628,11 @@ zt
 OH
 hn
 tF
-Mr
+uO
 XB
 VO
 XW
-XW
+th
 BM
 Sq
 Gk
