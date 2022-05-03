@@ -1,7 +1,10 @@
+
+#define vote_font(text) ("<font color='purple'>" + text + "</font>")
+
 SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 1 SECONDS
-	flags = SS_KEEP_TIMING|SS_NO_INIT
+	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	/// A list of all generated action buttons
@@ -32,7 +35,7 @@ SUBSYSTEM_DEF(vote)
 
 // Called by master_controller
 /datum/controller/subsystem/vote/fire()
-	if(!mode)
+	if(!current_vote)
 		return
 	current_vote.time_remaining = round((current_vote.started_time + CONFIG_GET(number/vote_period) - world.time) / 10)
 	if(current_vote.time_remaining < 0)
@@ -44,14 +47,15 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/reset()
 	voted.Cut()
 	voting.Cut()
+
 	current_vote?.reset()
 	current_vote = null
 	initiator = null
 
 	for(var/datum/action/vote/voting_action as anything in generated_actions)
-		if(!QDELETED(voting_action))
-			voting_action.remove_from_client()
-			voting_action.Remove(voting_action.owner)
+		if(QDELETED(voting_action))
+			continue
+		voting_action.Remove(voting_action.owner)
 
 	generated_actions.Cut()
 
@@ -60,7 +64,6 @@ SUBSYSTEM_DEF(vote)
  * Collects all the winners, breaks any ties that occur,
  * prints the results of the vote to the world,
  * and finally follows through with the effects of the vote.
- *
  */
 /datum/controller/subsystem/vote/proc/process_vote_result()
 
@@ -90,18 +93,17 @@ SUBSYSTEM_DEF(vote)
 	var/to_display = current_vote.get_result_text(winners, final_winner, non_voters)
 
 	log_vote(to_display)
-	to_chat(world, span_infoplain(span_purple("\n[to_display]")))
+	to_chat(world, span_infoplain(vote_font("\n[to_display]")))
 
-	// Finally, finailze the vote, doing any effects on vote completion
+	// Finally, doing any effects on vote completion
 	current_vote.finalize_vote(final_winner)
 
 /datum/controller/subsystem/vote/proc/submit_vote(mob/voter, their_vote)
 	if(!current_vote)
 		return
-
-	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
+	if(!voter?.ckey)
 		return
-	if(!voter.ckey)
+	if(CONFIG_GET(flag/no_dead_vote) && voter.stat == DEAD && !voter.client?.holder)
 		return
 
 	// If user has already voted, remove their specific vote
@@ -114,12 +116,27 @@ SUBSYSTEM_DEF(vote)
 
 	current_vote.choices_by_ckey[voter.ckey] = their_vote
 	current_vote.choices[their_vote]++
+	return TRUE
 
-/datum/controller/subsystem/vote/proc/initiate_vote(datum/vote/to_vote, vote_initiator_name, mob/vote_initiator, forced = FALSE)
+/**
+ * Initiates a vote, allowing all players to vote on something.
+ *
+ * * vote_type - The type of vote to initiate. Can be a [/datum/vote] typepath, a [/datum/vote] instance, or the name of a vote datum.
+ * * vote_initiator_name - The ckey (if player initiated) or name that initiated a vote. Ex: "UristMcAdmin", "the server"
+ * * vote_initiator - If a person / mob initiated the vote, this is the mob that did it
+ * * forced - Whether we're forcing the vote to go through regardless of existing votes or other circumstances. Note: If the vote is admin created, forced becomes true regardless.
+ */
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, vote_initiator_name, mob/vote_initiator, forced = FALSE)
+
+	// Even if it's forced we can't vote before we're set up
+	if(!MC_RUNNING(init_stage))
+		if(vote_initiator)
+			to_chat(vote_initiator, span_warning("You cannot start vote now, the server is not done initializing."))
+		return FALSE
 
 	// Check if we have unlimited voting power.
-	// Admins (or forced votes) will be forced through regardless if there's an ongoing vote,
-	// if voting is on cooldown, or regardless if a vote is config disabled in some cases
+	// Admin started (or forced) voted will go through even if there's an ongoing vote,
+	// if voting is on cooldown, or regardless if a vote is config disabled (in some cases)
 	var/unlimited_vote_power = forced
 	if(vote_initiator)
 		unlimited_vote_power ||= !!GLOB.admin_datums[vote_initiator.ckey]
@@ -129,20 +146,40 @@ SUBSYSTEM_DEF(vote)
 			to_chat(vote_initiator, span_warning("There is already a vote in progress! Please wait for it to finish."))
 		return FALSE
 
+	// Get our actual datum
+	var/datum/vote/to_vote
+	// If we were passed a path: find the path in possible_votes
+	if(ispath(vote_type, /datum/vote))
+		to_vote = locate(vote_type) in possible_votes
+
+	// If we were passed an instance: use the instance
+	else if(istype(vote_type, /datum/vote))
+		to_vote = vote_type
+
+	// If we were passed SOMETHING, see if it's the name of a vote in possible_votes
+	else if(!isnull(vote_type))
+		to_vote = possible_votes[vote_type]
+
+	// No valid vote found? No vote
 	if(!istype(to_vote))
 		if(vote_initiator)
 			to_chat(vote_initiator, span_warning("Invalid voting choice."))
 		return FALSE
 
+	// Vote can't be initiated in our circumstances? No vote
 	if(!to_vote.can_be_initiated(vote_initiator, unlimited_vote_power))
 		return FALSE
 
-	// Ensures we're all set to begin
+	// Okay, we're ready to actually create a vote -
+	// Do a reset, just to make sure
 	reset()
 
+	// Try to create the vote. If the creation fails, no vote
 	if(!to_vote.create_vote(vote_initiator))
 		return FALSE
 
+	// Okay, the vote's happening now, for real.
+	// Set it up.
 	current_vote = to_vote
 	initiator = vote_initiator_name
 
@@ -150,10 +187,11 @@ SUBSYSTEM_DEF(vote)
 	var/to_display = current_vote.initiate_vote(initiator, duration)
 
 	log_vote(to_display)
-	to_chat(world, span_infoplain(span_purple("\n[span_bold(to_display)]\n\
+	to_chat(world, span_infoplain(vote_font("\n[span_bold(to_display)]\n\
 		Type <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\n\
 		You have [DisplayTimeText(duration)] to vote.")))
 
+	// And now that it's going, give everyone a voter action
 	for(var/client/new_voter as anything in GLOB.clients)
 		var/datum/action/vote/voting_action = new()
 		voting_action.name = "Vote: [current_vote.override_question || current_vote.name]"
@@ -171,11 +209,11 @@ SUBSYSTEM_DEF(vote)
 	return GLOB.always_state
 
 /datum/controller/subsystem/vote/ui_interact(mob/user, datum/tgui/ui)
-	// Tracks who is voting
+	// Tracks who is currently voting
 	voting |= user.client?.ckey
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Vote")
+		ui = new(user, src, "VotePanel")
 		ui.open()
 
 /datum/controller/subsystem/vote/ui_data(mob/user)
@@ -184,32 +222,46 @@ SUBSYSTEM_DEF(vote)
 	var/is_lower_admin = !!user.client?.holder
 	var/is_upper_admin = check_rights_for(user.client, R_ADMIN)
 
-	data["lower_admin"] = is_lower_admin
-	data["upper_admin"] = is_upper_admin
-	data["voting"] = is_lower_admin ? voting : list()
+	data["user"] = list(
+		"isLowerAdmin" = is_lower_admin,
+		"isUpperAdmin" = is_upper_admin,
+		// What the current user has selected in any ongoing votes.
+		"selectedChoice" = current_vote?.choices_by_ckey[user.client?.ckey],
+	)
 
-	if(current_vote)
-		data["mode"] = current_vote.name
-		data["question"] = current_vote.override_question
-		data["time_remaining"] = current_vote.time_remaining
-		data["selected_choice"] = current_vote.choices_by_ckey[user.client?.ckey]
-		for(var/key in current_vote.choices)
-			data["choices"] += list(list(
-				"name" = key,
-				"votes" = choices[key]
-			))
+	data["voting"]= is_lower_admin ? voting : list()
 
-	else
-		var/list/all_vote_data = list()
-		for(var/vote_name in possible_votes)
-			var/datum/vote/vote = possible_votes[vote_name]
-			all_vote_data += list(list(
-				"name" = vote_name
-				"can_be_initiated" = vote.can_be_initiated()
-				"config" = vote.config_key
-			))
+	var/list/all_vote_data = list()
+	for(var/vote_name in possible_votes)
+		var/datum/vote/vote = possible_votes[vote_name]
+		if(!istype(vote))
+			continue
 
-		data["possible_votes"] = list(all_vote_data)
+		var/list/vote_data = list(
+			"name" = vote_name,
+			"canBeInitiated" = vote.can_be_initiated(forced = is_lower_admin),
+			"config" = vote.is_config_enabled(),
+		)
+
+		if(vote == current_vote)
+			var/list/choices = list()
+			for(var/key in current_vote.choices)
+				choices += list(list(
+					"name" = key,
+					"votes" = current_vote.choices[key],
+				))
+
+			data["currentVote"] = list(
+				"name" = current_vote.name,
+				"question" = current_vote.override_question,
+				"timeRemaining" = current_vote.time_remaining,
+				"choices" = choices,
+				"vote" = vote_data,
+			)
+
+		all_vote_data += list(vote_data)
+
+	data["possibleVotes"] = all_vote_data
 
 	return data
 
@@ -230,23 +282,25 @@ SUBSYSTEM_DEF(vote)
 			reset()
 			return TRUE
 
-		if("toggle_vote")
-			var/datum/vote/selected = possible_votes[params["vote_name"]]
+		if("toggleVote")
+			var/datum/vote/selected = possible_votes[params["voteName"]]
 			if(!istype(selected))
 				return
 
 			selected.toggle_votable(voter)
 			return TRUE
 
-		if("call_vote")
-			var/datum/vote/selected = possible_votes[params["vote_name"]]
+		if("callVote")
+			var/datum/vote/selected = possible_votes[params["voteName"]]
 			if(!istype(selected))
 				return
 
+			// Whether the user actually can initiate this vote is checked in initiate_vote,
+			// meaning you can't spoof initiate a vote you're not supposed to be able to
 			return initiate_vote(selected, voter.key, voter)
 
 		if("vote")
-			return submit_vote(voter, params["vote_option"])
+			return submit_vote(voter, params["voteOption"])
 
 /datum/controller/subsystem/vote/ui_close(mob/user)
 	voting -= user.client?.ckey
@@ -284,3 +338,5 @@ SUBSYSTEM_DEF(vote)
 		associated_details?.player_actions -= src
 
 	return ..()
+
+#undef vote_font

@@ -2,13 +2,34 @@
 #define CHOICE_CONTINUE "Continue Playing"
 
 /datum/vote/restart_vote
+	name = "Restart"
 	default_choices = list(
 		CHOICE_RESTART,
 		CHOICE_CONTINUE,
 	)
-	config_key = "allow_vote_restart"
 
-/datum/vote/restart_vote/get_result(list/non_voters)
+/datum/vote/restart_vote/toggle_votable(mob/toggler)
+	if(!toggler?.client?.holder)
+		return
+
+	CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))
+
+/datum/vote/restart_vote/is_config_enabled()
+	return CONFIG_GET(flag/allow_vote_restart)
+
+/datum/vote/restart_vote/can_be_initiated(mob/by_who, forced)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!forced && !CONFIG_GET(flag/allow_vote_restart))
+		if(by_who)
+			to_chat(by_who, span_warning("Restart voting is disabled."))
+		return FALSE
+
+	return TRUE
+
+/datum/vote/restart_vote/get_vote_result(list/non_voters)
 	if(!CONFIG_GET(flag/default_no_vote))
 		choices[CHOICE_CONTINUE] += length(non_voters)
 

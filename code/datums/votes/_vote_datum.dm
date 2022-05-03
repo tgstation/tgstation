@@ -1,24 +1,18 @@
 
-#define GET_VOTE_CONFIG(key) CONFIG_GET(flag/##key)
-#define SET_VOTE_CONFIG(key, value) CONFIG_SET(flag/##key, value)
-
 /**
  * # Vote Singleton
  *
  * A singleton datum that represents a type of vote for the voting subsystem.
  */
 /datum/vote
-	// Default / overridable values
 	/// The name of the vote.
 	var/name
 	/// If supplied, an override question will be displayed instead of the name of the vote.
 	var/override_question
 	/// A list of default choices we have for this vote.
 	var/list/default_choices
-	/// If this vote's availability is config based, this is it's config key.
-	var/config_key
 
-	// Internal values used when tracking ongoing votes
+	// Internal values used when tracking ongoing votes.
 	// Don't mess with these, change the above values / override procs for subtypes.
 	/// An assoc list of [all choices] to [number of votes in the current running vote].
 	var/list/choices = list()
@@ -41,7 +35,7 @@
 	return !!length(default_choices)
 
 /**
- * Resets our vote to it's defualt state.
+ * Resets our vote to its defualt state.
  */
 /datum/vote/proc/reset()
 	choices.Cut()
@@ -50,20 +44,26 @@
 	time_remaining = null
 
 /**
+ * If this vote has a config associated, toggles it between enabled and disabled.
+ */
+/datum/vote/proc/toggle_votable(mob/toggler)
+	return
+
+/**
+ * If this vote has a config associated, returns its value (True or false, usually).
+ * If it has no config, returns -1.
+ */
+/datum/vote/proc/is_config_enabled()
+	return -1
+
+/**
  * Checks if the passed mob can initiate this vote.
  *
- * Return TRUE if the mob can begin the vote,
- * allowing anyone to actually vote on it.
- * Return FALSE if the mob cannot initiate the vote,
- * such as if the vote is admin only.
+ * Return TRUE if the mob can begin the vote, allowing anyone to actually vote on it.
+ * Return FALSE if the mob cannot initiate the vote.
  */
 /datum/vote/proc/can_be_initiated(mob/by_who, forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-
-	if(!MC_RUNNING(init_stage))
-		if(by_who)
-			to_chat(by_who, span_warning("You cannot start vote now, the server is not done initializing."))
-		return FALSE
 
 	if(started_time)
 		var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
@@ -72,15 +72,21 @@
 				to_chat(by_who, span_warning("A vote was initiated recently. You must wait [DisplayTimeText(next_allowed_time - world.time)] before a new vote can be started!"))
 			return FALSE
 
-
-	if(!forced && config_key && !GET_VOTE_CONFIG(config_key))
-		return FALSE
-
 	return TRUE
 
+/**
+ * Called prior to the vote being initiated.
+ *
+ * Return FALSE to prevent the vote from being initiated.
+ */
 /datum/vote/proc/create_vote()
 	return TRUE
 
+/**
+ * Called when this vote is actually initiated.
+ *
+ * Return a string - the text displayed to the world when the vote is initiated.
+ */
 /datum/vote/proc/initiate_vote(initiator, duration)
 	started_time = world.time
 	time_remaining = round(duration / 10)
@@ -90,16 +96,10 @@
 
 	return "[capitalize(name)] vote started by [initiator || "Central Command"]."
 
-/datum/vote/proc/toggle_votable(mob/toggler)
-	if(!config_key)
-		return
-	if(!check_rights_for(toggler?.client, R_ADMIN))
-		return
-
-	SET_VOTE_CONFIG(config_key, !GET_VOTE_CONFIG(config_key))
-
 /**
  * Gets the result of the vote.
+ *
+ * non_voters - a list of all ckeys who didn't vote in the vote.
  *
  * Returns a list of all options that won.
  * If there were no votes at all, the list will be length = 0, non-null.
@@ -136,6 +136,15 @@
 
 	return winners
 
+/**
+ * Gets the resulting text displayed when the vote is completed.
+ *
+ * all_winners - list of all options that won. Can be multiple, in the event of ties.
+ * real_winner - the option that actually won.
+ * non_voters - a list of all ckeys who didn't vote in the vote.
+ *
+ * Return a formatted string of text to be displayed to everyone.
+ */
 /datum/vote/proc/get_result_text(list/all_winners, real_winner, list/non_voters)
 	if(length(all_winners) <= 0 || !real_winner)
 		return span_bold("Vote Result: Inconclusive - No Votes!")
@@ -144,21 +153,31 @@
 	if(override_question)
 		returned_text += span_bold(override_question)
 	else
-		returned_text += span_bold("[capitalize(name)] Vote")
+		returned_text += span_bold("[capitalize(name)]")
 
 	for(var/option in choices)
 		returned_text += "\n[span_bold(option)]: [choices[option]]"
 
+	returned_text += "\n"
 	returned_text += get_winner_text(all_winners, real_winner, non_voters)
 
 	return returned_text
 
+/**
+ * Gets the text that displays the winning options within the result text.
+ *
+ * all_winners - list of all options that won. Can be multiple, in the event of ties.
+ * real_winner - the option that actually won.
+ * non_voters - a list of all ckeys who didn't vote in the vote.
+ *
+ * Return a formatted string of text to be displayed to everyone.
+ */
 /datum/vote/proc/get_winner_text(list/all_winners, real_winner, list/non_voters)
 	var/returned_text = ""
 	if(length(all_winners) > 1)
 		returned_text += "\n[span_bold("Vote Tied Between:")]"
 		for(var/a_winner in all_winners)
-			text += "\n\t[a_winner]"
+			returned_text += "\n\t[a_winner]"
 
 	returned_text += span_bold("Vote Result: [real_winner]")
 	return returned_text
@@ -169,8 +188,9 @@
 /datum/vote/proc/tiebreaker(list/winners)
 	return pick(winners)
 
+/**
+ * Called when a vote is actually all said and done.
+ * Apply actual vote effects here.
+ */
 /datum/vote/proc/finalize_vote(winning_option)
 	return
-
-#undef GET_VOTE_CONFIG
-#undef SET_VOTE_CONFIG

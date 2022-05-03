@@ -1,5 +1,5 @@
 /datum/vote/map_vote
-	config_key = "allow_vote_map"
+	name = "Map"
 
 /datum/vote/map_vote/New()
 	. = ..()
@@ -12,26 +12,41 @@
 		var/datum/map_config/possible_config = config.maplist[map]
 		if(!possible_config.votable || (possible_config.map_name in SSpersistence.blocked_maps))
 			continue
-		if (possible_config.config_min_users > 0 && GLOB.clients.len < VM.config_min_users)
+		if (possible_config.config_min_users > 0 && GLOB.clients.len < possible_config.config_min_users)
 			continue
-		if (possible_config.config_max_users > 0 && GLOB.clients.len > VM.config_max_users)
+		if (possible_config.config_max_users > 0 && GLOB.clients.len > possible_config.config_max_users)
 			continue
 
 		default_choices += possible_config.map_name
+
+/datum/vote/map_vote/toggle_votable(mob/toggler)
+	if(!toggler?.client?.holder)
+		return
+
+	CONFIG_SET(flag/allow_vote_map, !CONFIG_GET(flag/allow_vote_map))
+
+/datum/vote/map_vote/is_config_enabled()
+	return CONFIG_GET(flag/allow_vote_map)
 
 /datum/vote/map_vote/can_be_initiated(mob/by_who, forced = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	if(!forced && SSmapping.map_voted)
-		if(by_who)
-			to_chat(by_who, span_warning("The next map has already been selected."))
-		return FALSE
+	if(!forced)
+		if(!CONFIG_GET(flag/allow_vote_map))
+			if(by_who)
+				to_chat(by_who, span_warning("Map voting is disabled."))
+			return FALSE
+
+		if(SSmapping.map_voted)
+			if(by_who)
+				to_chat(by_who, span_warning("The next map has already been selected."))
+			return FALSE
 
 	return TRUE
 
-/datum/vote/map_vote/get_result(list/non_voters)
+/datum/vote/map_vote/get_vote_result(list/non_voters)
 	if(!CONFIG_GET(flag/default_no_vote) && !isnull(global.config.defaultmap))
 		for(var/non_voter_ckey in non_voters)
 			var/client/non_voter_client = non_voters[non_voter_ckey]
