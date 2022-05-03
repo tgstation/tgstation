@@ -201,7 +201,7 @@
 		. += span_notice("Charge: [core ? "[get_charge_percent()]%" : "No core"].")
 		. += span_notice("Selected module: [selected_module || "None"].")
 	if(!open && !active)
-		. += span_notice("You could put it on your <b>back</b> to turn it on.")
+		. += span_notice("You could equip it to turn it on.")
 		. += span_notice("You could open the cover with a <b>screwdriver</b>.")
 	else if(open)
 		. += span_notice("You could close the cover with a <b>screwdriver</b>.")
