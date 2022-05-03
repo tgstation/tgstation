@@ -127,8 +127,8 @@ at the cost of risking a vicious bite.**/
 	/// Stage of the pants making process
 	var/status = ALTAR_INACTIVE
 
-/obj/structure/destructible/cult/pants_altar/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user) && status)
+/obj/structure/destructible/cult/pants_altar/attackby(obj/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user) && status)
 		to_chat(user, "<span class='notice'>[src] is creating something, you can't move it!</span>")
 		return
 	return ..()
@@ -182,7 +182,7 @@ at the cost of risking a vicious bite.**/
 	status = ALTAR_STAGEONE
 	update_icon()
 	visible_message("<span class='warning'>[src] starts creating something...</span>")
-	playsound(src, 'sound/magic/pantsaltar.ogg', 100)
+	playsound(src, 'sound/magic/pantsaltar.ogg', 60)
 	addtimer(CALLBACK(src, .proc/pants_stagetwo), ALTAR_TIME)
 
 /obj/structure/destructible/cult/pants_altar/proc/pants_stagetwo()
