@@ -242,6 +242,8 @@
 		var/area/areaobj = get_area(client.eye)
 		hud_used.set_parallax_movedir(areaobj.parallax_movedir, TRUE)
 
+// We need parallax to always pass its args down into initialize, so we immediate init it
+INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer
 	icon = 'icons/effects/parallax.dmi'
 	var/speed = 1
@@ -257,7 +259,7 @@
 /atom/movable/screen/parallax_layer/Initialize(mapload, mob/owner)
 	. = ..()
 	var/client/boss = owner?.client
-	if(!boss)
+	if(!boss) // If this typepath all starts to harddel your culprit is likely this
 		return INITIALIZE_HINT_QDEL
 
 	// I do not want to know bestie
