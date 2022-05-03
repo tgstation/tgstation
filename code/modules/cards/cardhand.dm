@@ -6,7 +6,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	worn_icon_state = "card"
 
-/obj/item/toy/cards/cardhand/Initialize(mapload, list/cards_to_combine)
+/obj/item/toy/cards/cardhand/Initialize(mapload, list/cards_to_combine = list())
 	. = ..()
 
 	if(!LAZYLEN(cards_to_combine) && (mapload && !LAZYLEN(cards)))
