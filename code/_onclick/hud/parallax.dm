@@ -4,6 +4,8 @@
 	var/client/C = screenmob.client
 	if (!apply_parallax_pref(viewmob)) //don't want shit computers to crash when specing someone with insane parallax, so use the viewer's pref
 		return
+	if (SSmapping.level_trait(viewmob.z, ZTRAIT_NOPARALLAX))
+		return
 
 	if(!length(C.parallax_layers_cached))
 		C.parallax_layers_cached = list()
@@ -47,6 +49,8 @@
 /datum/hud/proc/apply_parallax_pref(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 
+	if(SSmapping.level_trait(screenmob.z, ZTRAIT_NOPARALLAX))
+		return FALSE
 	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(viewmob, TRAIT_BYPASS_MEASURES))
 		return FALSE
 
@@ -55,8 +59,6 @@
 		var/pref = C.prefs.read_preference(/datum/preference/choiced/parallax)
 		if (isnull(pref))
 			pref = PARALLAX_HIGH
-		if(SSmapping.level_trait(viewmob.z, ZTRAIT_NOPARALLAX))
-			return FALSE
 		switch(pref)
 			if (PARALLAX_INSANE)
 				C.parallax_throttle = FALSE
@@ -166,6 +168,7 @@
 		animate(transform = matrix(), time = T)
 
 /datum/hud/proc/update_parallax(mob/viewmob)
+	message_admins("ran")
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
 	var/turf/posobj = get_turf(C.eye)

@@ -59,15 +59,6 @@
 	SIGNAL_HANDLER
 
 	client_mob = tracked.movingmob
-	var/parallax = SSmapping.level_trait(client_mob.z, ZTRAIT_NOPARALLAX)
 	var/datum/hud/hud = client_mob.hud_used
 
-	if(tracked.prefs.read_preference(/datum/preference/choiced/parallax) == PARALLAX_DISABLE)
-		return
-
-	if(!parallax)
-		hud.create_parallax(client_mob)
-		return
-	else
-		hud.remove_parallax(client_mob)
-		return
+	hud.update_parallax_pref(client_mob)
