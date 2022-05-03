@@ -235,7 +235,9 @@
 	var/used = mytape.used_capacity //to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
 	for(var/i = 1, used <= max, sleep(playsleepseconds))
-		if(!mytape || playing == FALSE)
+		if(!mytape)
+			break
+		if(playing == FALSE)
 			break
 		if(mytape.storedinfo.len < i)
 			say("End of recording.")
@@ -287,7 +289,7 @@
 	mytape.used_capacity = 0
 	mytape.storedinfo = new
 	mytape.timestamp = new
-	to_chat(usr, span_warning("This side of the tape has been wiped."))
+	to_chat(usr, "<span class='notice'>You wipe this side of the tape entirely.")
 
 
 /obj/item/taperecorder/verb/print_transcript()
@@ -326,15 +328,6 @@
 /obj/item/taperecorder/empty
 	starting_tape_type = null
 
-/obj/item/taperecorder/verb/WipeTapeInRecorder()
-	set name = "Wipe Tape"
-	if(!mytape || mytape.unspooled || recording || playing)
-		return
-	else
-		mytape.used_capacity = 0
-		mytape.storedinfo = new
-		mytape.timestamp = new
-		to_chat(usr, "<span class='notice'>You wipe this side of the tape entirely.")
 
 /obj/item/tape
 	name = "tape"
