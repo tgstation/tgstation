@@ -815,8 +815,8 @@
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
-/obj/item/dnainjector/xraymut,
-/obj/item/dnainjector/xraymut,
+/obj/item/dnainjector/thermal,
+/obj/item/dnainjector/thermal,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "dg" = (

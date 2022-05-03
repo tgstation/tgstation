@@ -1,28 +1,33 @@
 /// Number of paychecks jobs start with at the creation of a new bank account for a player (So at shift-start or game join, but not a blank new account.)
-#define STARTING_PAYCHECKS 7
+#define STARTING_PAYCHECKS 5
 /// How much mail the Economy SS will create per minute, regardless of firing time.
 #define MAX_MAIL_PER_MINUTE 3
 /// Probability of using letters of envelope sprites on all letters.
 #define FULL_CRATE_LETTER_ODDS 70
 
-//Experimental change: These are subject to tweaking based on the /tg/ economy overhaul.
-//Current design direction: Higher paying jobs are vastly outnumbered by lower paying jobs, so anything above medium hurts inflation, common jobs help inflation
-#define PAYCHECK_PRISONER 25
-#define PAYCHECK_ASSISTANT 50
-#define PAYCHECK_MINIMAL 55
-#define PAYCHECK_EASY 60
-#define PAYCHECK_MEDIUM 75
-#define PAYCHECK_HARD 100
-#define PAYCHECK_COMMAND 200
-
+//Current Paycheck values. Altering these changes both the cost of items meant for each paygrade, as well as the passive/starting income of each job.
+///Default paygrade for the Unassigned Job/Unpaid job assignments.
 #define PAYCHECK_ZERO 0
+///Paygrade for Prisoners and Assistants.
+#define PAYCHECK_LOWER 25
+///Paygrade for all regular crew not belonging to PAYGRADE_LOWER or PAYGRADE_COMMAND.
+#define PAYCHECK_CREW 50
+///Paygrade for Heads of Staff.
+#define PAYCHECK_COMMAND 100
 
-#define STATION_TARGET_BUFFER 40
+//How many credits a player is charged if they print something from a departmental lathe they shouldn't have access to.
+#define LATHE_TAX 10
+//How much POWER a borg's cell is taxed if they print something from a departmental lathe.
+#define SILICON_LATHE_TAX 2000
+
+#define STATION_TARGET_BUFFER 25
+
+
 
 #define MAX_GRANT_DPT 500
 
 //What should vending machines charge when you buy something in-department.
-#define VENDING_DISCOUNT 0.2
+#define DEPARTMENT_DISCOUNT 0.2
 
 #define ACCOUNT_CIV "CIV"
 #define ACCOUNT_CIV_NAME "Civil Budget"
