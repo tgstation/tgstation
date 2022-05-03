@@ -901,5 +901,5 @@
 	icon = "graduation-cap"
 	value = -8
 	mob_trait = TRAIT_ILLITERATE
-	medical_record_text = "Patient has a low IQ and is not literate."
+	medical_record_text = "Patient is not literate."
 	hardcore_value = 8
