@@ -5,8 +5,8 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/datum/callback/check_on_move
 	var/datum/callback/get_mover
-	/// If we should stabalize ourselves when not drifting
-	var/stabalize = FALSE
+	/// If we should stabilize ourselves when not drifting
+	var/stabilize = FALSE
 	/// The signal we listen for as an activation
 	var/activation_signal
 	/// The signal we listen for as a de-activation
@@ -19,7 +19,7 @@
 
 /**
  * Arguments:
- * * stabalize - If we should drift when we finish moving, or sit stable in space]
+ * * stabilize - If we should drift when we finish moving, or sit stable in space]
  * * activation_signal - Signal we activate on
  * * deactivation_signal - Signal we deactivate on
  * * return_flag - Flag to return if activation fails
@@ -27,7 +27,7 @@
  * * check_on_move - Callback we call each time we attempt a move, we expect it to retun true if the move is ok, false otherwise. It expects an arg, TRUE if fuel should be consumed, FALSE othewise
  * * effect_type - Type of trail_follow to spawn
  */
-/datum/component/jetpack/Initialize(stabalize, activation_signal, deactivation_signal, return_flag, datum/callback/get_mover, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
+/datum/component/jetpack/Initialize(stabilize, activation_signal, deactivation_signal, return_flag, datum/callback/get_mover, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -40,13 +40,13 @@
 
 	src.check_on_move = check_on_move
 	src.get_mover = get_mover
-	src.stabalize = stabalize
+	src.stabilize = stabilize
 	src.return_flag = return_flag
 	src.activation_signal = activation_signal
 	src.deactivation_signal = deactivation_signal
 	src.effect_type = effect_type
 
-/datum/component/jetpack/InheritComponent(datum/component/component, original, stabalize, activation_signal, deactivation_signal, return_flag, datum/callback/get_mover, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
+/datum/component/jetpack/InheritComponent(datum/component/component, original, stabilize, activation_signal, deactivation_signal, return_flag, datum/callback/get_mover, datum/callback/check_on_move, datum/effect_system/trail_follow/effect_type)
 	UnregisterSignal(parent, src.activation_signal)
 	if(src.deactivation_signal)
 		UnregisterSignal(parent, src.deactivation_signal)
@@ -56,7 +56,7 @@
 
 	src.check_on_move = check_on_move
 	src.get_mover = get_mover
-	src.stabalize = stabalize
+	src.stabilize = stabilize
 	src.activation_signal = activation_signal
 	src.deactivation_signal = deactivation_signal
 	src.effect_type = effect_type
@@ -126,7 +126,7 @@
 		return COMSIG_MOVABLE_STOP_SPACEMOVE
 	// Check if we have the fuel to stop this. Do NOT cosume any fuel, just check
 	// This is done because things other then us can use our fuel
-	if(stabalize && check_on_move.Invoke(FALSE))
+	if(stabilize && check_on_move.Invoke(FALSE))
 		return COMSIG_MOVABLE_STOP_SPACEMOVE
 
 /// Returns true if the thrust went well, false otherwise
