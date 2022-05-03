@@ -34,6 +34,7 @@
 	light_range = 8
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
+	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	///What direction will the mech face when entered/powered on? Defaults to South.
 	var/dir_in = SOUTH
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
@@ -147,7 +148,6 @@
 	var/is_currently_ejecting = FALSE
 	///Safety for weapons. Won't fire if enabled, and toggled by middle click.
 	var/weapons_safety = FALSE
-	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 
 	var/datum/effect_system/smoke_spread/smoke_system = new
 
@@ -602,8 +602,6 @@
 		return
 	if(isAI(user)) //For AIs: If safeties are off, use mech functions. If safeties are on, use AI functions.
 		. = COMSIG_MOB_CANCEL_CLICKON
-	if(weapons_safety)
-		return
 	if(modifiers[SHIFT_CLICK]) //Allows things to be examined.
 		return
 	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled

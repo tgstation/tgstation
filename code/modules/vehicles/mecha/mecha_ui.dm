@@ -270,7 +270,7 @@
 				return
 			name = userinput
 		if("toggle_safety")
-			set_mouse_pointer(usr)
+			set_safety(usr)
 			return
 		if("dna_lock")
 			var/mob/living/carbon/user = usr
