@@ -6,9 +6,6 @@
 /datum/component/zparallax
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	/// If TRUE, disable parallax checking alltogether until we change Z-levels again.
-	var/caching = FALSE
-
 	var/client/tracked
 	var/mob/client_mob
 
@@ -58,7 +55,6 @@
 /datum/component/zparallax/proc/ztrait_checks()
 	SIGNAL_HANDLER
 
-	client_mob = tracked.movingmob
-	var/datum/hud/hud = client_mob.hud_used
+	var/datum/hud/hud = tracked.movingmob.hud_used
 
-	hud.update_parallax_pref(client_mob)
+	hud.update_parallax_pref(tracked.movingmob)
