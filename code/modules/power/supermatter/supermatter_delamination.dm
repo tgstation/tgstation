@@ -176,7 +176,7 @@
 	set_security_level("delta")
 
 /datum/supermatter_delamination/proc/last_message()
-	priority_announce("To the remaning humans alive, i hope it was worth it.", " ")
+	priority_announce("To the remaining humans alive, I hope it was worth it.", " ")
 
 /datum/supermatter_delamination/proc/the_end()
 	SSticker.news_report = SUPERMATTER_CASCADE
