@@ -3893,6 +3893,13 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/aft/lesser)
+"kr" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/iron/dark/textured,
+/area/security/prison)
 "ks" = (
 /turf/open/floor/wood,
 /area/service/lawoffice)
@@ -5123,9 +5130,10 @@
 	dir = 8
 	},
 /obj/machinery/camera/directional/east{
-	network = list("ss13","prison");
-	c_tag = "Security - Permabrig Library Reading Room"
+	c_tag = "Security - Permabrig Library Reading Room";
+	network = list("ss13","prison")
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/carpet/blue,
 /area/security/prison/work)
 "nL" = (
@@ -6255,6 +6263,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison/work)
 "qJ" = (
@@ -8885,8 +8894,8 @@
 /area/mine/storage)
 "xQ" = (
 /obj/machinery/camera/directional/east{
-	network = list("ss13","prison");
-	c_tag = "Security - Permabrig Upper Hallway East"
+	c_tag = "Security - Permabrig Upper Hallway East";
+	network = list("ss13","prison")
 	},
 /turf/open/openspace,
 /area/security/prison)
@@ -9650,6 +9659,10 @@
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/security/prison)
+"zV" = (
+/obj/effect/landmark/start/prisoner,
+/turf/open/floor/carpet/red,
+/area/security/prison/work)
 "zW" = (
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
@@ -12035,8 +12048,8 @@
 /area/maintenance/aft/lesser)
 "GK" = (
 /obj/machinery/door/window/brigdoor/left/directional/north{
-	req_access_txt = "3";
-	name = "Secure Weapons Storage"
+	name = "Secure Weapons Storage";
+	req_access_txt = "3"
 	},
 /turf/open/floor/iron/dark/textured,
 /area/ai_monitored/security/armory)
@@ -12075,8 +12088,8 @@
 /obj/item/reagent_containers/glass/bottle/welding_fuel,
 /obj/item/reagent_containers/glass/bottle/welding_fuel,
 /obj/machinery/camera/directional/west{
-	network = list("ss13","prison");
-	c_tag = "Security - Permabrig Cytology"
+	c_tag = "Security - Permabrig Cytology";
+	network = list("ss13","prison")
 	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/grimy,
@@ -13447,6 +13460,7 @@
 "Kt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron,
 /area/security/prison/work)
 "Ku" = (
@@ -14726,8 +14740,8 @@
 /area/icemoon/underground/explored)
 "NV" = (
 /obj/machinery/button/door/directional/east{
-	name = "Privacy Shutters";
-	id = "kanyewest"
+	id = "kanyewest";
+	name = "Privacy Shutters"
 	},
 /obj/structure/chair/office{
 	dir = 8
@@ -16478,8 +16492,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/directional/west{
-	network = list("ss13","prison");
-	c_tag = "Security - Upper Permabrig Hallway West"
+	c_tag = "Security - Upper Permabrig Hallway West";
+	network = list("ss13","prison")
 	},
 /turf/open/floor/iron/dark/textured,
 /area/security/prison)
@@ -17715,8 +17729,8 @@
 	},
 /obj/machinery/meter,
 /obj/machinery/button/ignition/incinerator/ordmix{
-	pixel_y = 32;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 32
 	},
 /obj/machinery/button/door/incinerator_vent_ordmix{
 	pixel_x = -8;
@@ -43618,7 +43632,7 @@ dq
 vu
 hw
 gt
-Jo
+zV
 gt
 GZ
 UG
@@ -47732,7 +47746,7 @@ mO
 mO
 tI
 kQ
-DZ
+kr
 DZ
 wP
 LJ
