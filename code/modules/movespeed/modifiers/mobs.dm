@@ -72,6 +72,7 @@
 
 /datum/movespeed_modifier/bulky_drag
 	variable = TRUE
+	blacklisted_movetypes = FLOATING
 
 /datum/movespeed_modifier/cold
 	blacklisted_movetypes = FLOATING
