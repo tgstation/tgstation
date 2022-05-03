@@ -974,6 +974,7 @@
 #include "code\datums\elements\spooky.dm"
 #include "code\datums\elements\squish.dm"
 #include "code\datums\elements\strippable.dm"
+#include "code\datums\elements\supermatter_crystal.dm"
 #include "code\datums\elements\swabbable.dm"
 #include "code\datums\elements\tenacious.dm"
 #include "code\datums\elements\tool_flash.dm"
