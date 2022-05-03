@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "A lone disposal pipe segment under a table in the bar on Metastation has been removed."
