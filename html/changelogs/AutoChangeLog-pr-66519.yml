@@ -1,4 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an issue with service borg apparatuses getting multiple beakers in it's contents."

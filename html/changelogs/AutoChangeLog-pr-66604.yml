@@ -1,5 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes: 
-  - refactor: "Wizard casting clothes now use a bitflag instead of a typecache. This allows for nonstandard headwear and suits to be varedited into casting clothes."
-  - balance: "The enchanted modsuit's chestplate and helmet must now be deployed in order to cast robed spells."
