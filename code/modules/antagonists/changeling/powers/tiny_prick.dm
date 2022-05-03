@@ -20,16 +20,24 @@
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = src
 
-	changeling.lingstingdisplay.icon_state = button_icon_state
-	changeling.lingstingdisplay.invisibility = 0
+	if(user.hud_used)
+		var/datum/hud/hud_used = user.hud_used
+		changeling.lingstingdisplay = new /atom/movable/screen/ling/sting()
+		changeling.lingstingdisplay.hud = hud_used
+		hud_used.infodisplay += changeling.lingstingdisplay
+
+		hud_used.show_hud(hud_used.hud_version) //refresh
+		changeling.lingstingdisplay.icon_state = button_icon_state //set icon state
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, span_warning("We retract our sting, we can't sting anyone for now."))
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = null
 
-	changeling.lingstingdisplay.icon_state = null
-	changeling.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+	if(user.hud_used)
+		var/datum/hud/hud_used = user.hud_used
+		hud_used.infodisplay -= changeling.lingstingdisplay
+		QDEL_NULL(changeling.lingstingdisplay)
 
 /mob/living/carbon/proc/unset_sting()
 	if(mind)

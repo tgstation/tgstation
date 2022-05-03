@@ -44,7 +44,6 @@
 /atom/movable/screen/ling/sting
 	name = "current sting"
 	screen_loc = ui_lingstingdisplay
-	invisibility = INVISIBILITY_ABSTRACT
 
 /atom/movable/screen/ling/sting/Click()
 	if(isobserver(usr))

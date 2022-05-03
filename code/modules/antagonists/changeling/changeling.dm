@@ -139,10 +139,6 @@
 		lingchemdisplay.hud = hud_used
 		hud_used.infodisplay += lingchemdisplay
 
-		lingstingdisplay = new /atom/movable/screen/ling/sting()
-		lingstingdisplay.hud = hud_used
-		hud_used.infodisplay += lingstingdisplay
-
 		hud_used.show_hud(hud_used.hud_version)
 	else
 		RegisterSignal(living_mob, COMSIG_MOB_HUD_CREATED, .proc/on_hud_created)
@@ -162,10 +158,6 @@
 	lingchemdisplay.hud = ling_hud
 	ling_hud.infodisplay += lingchemdisplay
 
-	lingstingdisplay = new
-	lingstingdisplay.hud = ling_hud
-	ling_hud.infodisplay += lingstingdisplay
-
 	ling_hud.show_hud(ling_hud.hud_version)
 
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
@@ -176,8 +168,11 @@
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used
 
-		hud_used.infodisplay -= lingchemdisplay
-		hud_used.infodisplay -= lingstingdisplay
+		if(lingchemdisplay)
+			hud_used.infodisplay -= lingchemdisplay
+		if(lingstingdisplay)
+			hud_used.infodisplay -= lingstingdisplay
+
 		QDEL_NULL(lingchemdisplay)
 		QDEL_NULL(lingstingdisplay)
 
@@ -270,7 +265,7 @@
 	var/cap_to = isnum(override_cap) ? override_cap : total_chem_storage
 	chem_charges = clamp(chem_charges + amount, 0, cap_to)
 
-	lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+	lingchemdisplay?.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
 
 /*
  * Remove changeling powers from the current Changeling's purchased_powers list.
