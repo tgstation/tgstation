@@ -190,7 +190,7 @@ Used by the AI doomsday and the self-destruct nuke.
 		C.update_appearance()
 
 /datum/controller/subsystem/mapping/proc/determine_fake_sale()
-	for(length(SSmapping.levels_by_all_traits(list(ZTRAIT_STATION, ZTRAIT_NOPARALLAX))))
+	if(length(SSmapping.levels_by_all_traits(list(ZTRAIT_STATION, ZTRAIT_NOPARALLAX))))
 		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakeice/loaded
 	else
 		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakespace/loaded
