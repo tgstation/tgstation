@@ -14,7 +14,7 @@
 
 /datum/mutation/human/clever
 	name = "Clever"
-	desc = "Causes the subject to feel just a little bit smarter."
+	desc = "Causes the subject to feel just a little bit smarter. Most effective in specimens with low levels of intelligence."
 	quality = POSITIVE
 	instability = 20
 	text_gain_indication = "<span class='danger'>You feel a little bit smarter.</span>"
