@@ -101,7 +101,8 @@
 	inherent = list(
 		"Never willingly commit an evil act.",
 		"Respect legitimate authority.",
-		"Act with honor.", "Help those in need.",
+		"Act with honor.", 
+		"Help those in need.",
 		"Punish those who harm or threaten innocents.",
 	)
 
