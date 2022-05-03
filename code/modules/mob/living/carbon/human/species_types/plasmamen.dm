@@ -1,5 +1,5 @@
 /datum/species/plasmaman
-	name = "Plasmaman"
+	name = "\improper Plasmaman"
 	plural_form = "Plasmamen"
 	id = SPECIES_PLASMAMAN
 	say_mod = "rattles"
@@ -31,8 +31,18 @@
 	disliked_food = FRUIT | CLOTH
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
+	species_cookie = /obj/item/reagent_containers/food/condiment/milk
 	outfit_important_for_life = /datum/outfit/plasmaman
 	species_language_holder = /datum/language_holder/skeleton
+
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/plasmaman,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/plasmaman,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/plasmaman,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/plasmaman,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/plasmaman,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
+	)
 
 	// Body temperature for Plasmen is much lower human as they can handle colder environments
 	bodytemp_normal = (BODYTEMP_NORMAL - 40)
@@ -56,7 +66,7 @@
 	var/atmos_sealed = CanIgniteMob(H) && (isclothing(H.wear_suit) && H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE) && (isclothing(H.head) && H.head.clothing_flags & STOPSPRESSUREDAMAGE)
 	var/flammable_limb = FALSE
 	for(var/obj/item/bodypart/found_bodypart as anything in H.bodyparts)//If any plasma based limb is found the plasmaman will attempt to autoignite
-		if(found_bodypart.status == BODYPART_ORGANIC && (found_bodypart.species_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
+		if(IS_ORGANIC_LIMB(found_bodypart) && (found_bodypart.limb_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
 			flammable_limb = TRUE
 			break
 	if(!flammable_limb && !H.on_fire) //Allows their suit to attempt to autoextinguish if augged and on fire

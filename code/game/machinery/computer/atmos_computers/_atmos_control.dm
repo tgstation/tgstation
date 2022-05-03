@@ -17,8 +17,8 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	/// Which sensors/input/outlets do we want to listen to.
 	/// Assoc of list[chamber_id] = readable_chamber_name
 	var/list/atmos_chambers
-	
-	// The list where received signals about devices are written into. 
+
+	// The list where received signals about devices are written into.
 	// Assoc of list[atmos_chambers_string]
 	var/list/sensor_info
 	var/list/input_info
@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 
 	if(!(tag_data[1] in atmos_chambers))
 		return
-	
+
 	var/list/info_list
 	switch(tag_data[2])
 		if("sensor")
@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 
 	if(isnull(new_id))
 		return FALSE
-	
+
 	atmos_chambers = list()
 	atmos_chambers[new_id] = new_name
 	sensor_info = list()
@@ -122,6 +122,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	return TRUE
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AtmosControlConsole", name)
@@ -133,6 +134,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	data["maxOutput"] = MAX_OUTPUT_PRESSURE
 	data["control"] = control
 	data["reconnecting"] = reconnecting
+	data += return_atmos_handbooks()
 	return data
 
 /obj/machinery/computer/atmos_control/ui_data(mob/user)
@@ -189,7 +191,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 				return FALSE
 			target = clamp(target, 0, MAX_OUTPUT_PRESSURE)
 			signal.data += list("tag" = params["chamber"] + "_out", "set_internal_pressure" = target)
-	
+
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 	return TRUE
 

@@ -15,7 +15,7 @@
 	outfit = /datum/outfit/job/cook
 	plasmaman_outfit = /datum/outfit/plasmaman/chef
 
-	paycheck = PAYCHECK_EASY
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
 	liver_traits = list(TRAIT_CULINARY_METABOLISM)
@@ -94,7 +94,7 @@
 		/obj/item/choice_beacon/ingredient = 1,
 		/obj/item/sharpener = 1,
 	)
-	belt = /obj/item/pda/cook
+	belt = /obj/item/modular_computer/tablet/pda/cook
 	ears = /obj/item/radio/headset/headset_srv
 	head = /obj/item/clothing/head/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian

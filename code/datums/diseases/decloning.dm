@@ -47,7 +47,7 @@
 				affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, 170)
 				affected_mob.adjustCloneLoss(2, FALSE)
 			if(DT_PROB(7.5, delta_time))
-				affected_mob.stuttering += 3
+				affected_mob.adjust_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter)
 		if(5)
 			if(DT_PROB(1, delta_time))
 				affected_mob.emote("itch")

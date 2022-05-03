@@ -361,7 +361,7 @@
 
 /obj/item/immortality_talisman/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE)
+	AddComponent(/datum/component/anti_magic, ALL)
 
 /datum/action/item_action/immortality
 	name = "Immortality"
@@ -467,6 +467,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/book_of_babel/attack_self(mob/user)
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return FALSE
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
@@ -599,7 +602,7 @@
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE, ITEM_SLOT_OCLOTHING)
+	AddComponent(/datum/component/anti_magic, ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
 
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5

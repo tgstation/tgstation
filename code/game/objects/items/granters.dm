@@ -42,6 +42,9 @@
 	if(reading)
 		to_chat(user, span_warning("You're already reading this!"))
 		return FALSE
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return FALSE
 	if(!user.can_read(src))
 		return FALSE
 	if(already_known(user))
@@ -105,13 +108,13 @@
 	to_chat(owner, span_notice("You will now fold origami planes."))
 	button_icon_state = "origami_on"
 	active = TRUE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/innate/origami/Deactivate()
 	to_chat(owner, span_notice("You will no longer fold origami planes."))
 	button_icon_state = "origami_off"
 	active = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 ///SPELLS///
 

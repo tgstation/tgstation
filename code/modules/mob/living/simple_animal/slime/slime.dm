@@ -30,7 +30,7 @@
 	healable = 0
 	melee_damage_lower = 5
 	melee_damage_upper = 25
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 
 	verb_say = "blorbles"
 	verb_ask = "inquisitively blorbles"
@@ -85,7 +85,7 @@
 	var/applied = 0 //How many extracts of the modtype have been applied.
 
 
-/mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
+/mob/living/simple_animal/slime/Initialize(mapload, new_colour=colour, new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
 	ADD_TRAIT(src, TRAIT_CANT_RIDE, INNATE_TRAIT)
@@ -107,6 +107,7 @@
 	add_cell_sample()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/soft_landing)
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)

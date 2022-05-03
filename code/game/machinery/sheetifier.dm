@@ -4,9 +4,6 @@
 	icon = 'icons/obj/machines/sheetifier.dmi'
 	icon_state = "base_machine"
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/sheetifier
 	layer = BELOW_OBJ_LAYER
 	var/busy_processing = FALSE
@@ -44,10 +41,14 @@
 	update_appearance()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all() //Returns all as sheets
+	use_power(active_power_usage)
+
+/obj/machinery/sheetifier/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/sheetifier/attackby(obj/item/I, mob/user, params)
-	if(default_unfasten_wrench(user, I))
-		return
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		update_appearance()
 		return

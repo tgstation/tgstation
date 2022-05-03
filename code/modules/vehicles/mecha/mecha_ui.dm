@@ -80,7 +80,7 @@
 
 /obj/vehicle/sealed/mecha/ui_data(mob/user)
 	var/list/data = list()
-	var/isoperator = (user.loc == src) //maintenance mode outside of mech
+	var/isoperator = (user in occupants) //maintenance mode outside of mech
 	data["isoperator"] = isoperator
 	if(!isoperator)
 		data["name"] = name
@@ -108,7 +108,7 @@
 			data["idcard_access"] += list(list("name" = accessname, "number" = idcode))
 		return data
 	ui_view.appearance = appearance
-	var/datum/gas_mixture/int_tank_air= internal_tank?.return_air()
+	var/datum/gas_mixture/int_tank_air = internal_tank?.return_air()
 	data["name"] = name
 	data["integrity"] = atom_integrity/max_integrity
 	data["power_level"] = cell?.charge
@@ -200,9 +200,12 @@
 	. = ..()
 	if(.)
 		return
-	if(usr.loc != src)
+	if(!(usr in occupants))
 		switch(action)
 			if("stopmaint")
+				if(construction_state > MECHA_LOCKED)
+					to_chat(usr, span_warning("You must end Maintenance Procedures first!"))
+					return
 				mecha_flags &= ~ADDING_MAINT_ACCESS_POSSIBLE
 				ui.close()
 				return FALSE
@@ -255,8 +258,7 @@
 			if("lock_req_edit")
 				mecha_flags &= ~ADDING_ACCESS_POSSIBLE
 		return TRUE
-	if(!(usr in occupants))
-		return
+	//usr is in occupants
 	switch(action)
 		if("changename")
 			var/userinput = tgui_input_text(usr, "Choose a new exosuit name", "Rename exosuit", max_length = MAX_NAME_LEN)

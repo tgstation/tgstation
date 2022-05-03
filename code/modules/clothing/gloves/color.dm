@@ -9,7 +9,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
-	custom_price = PAYCHECK_MEDIUM * 10
+	custom_price = PAYCHECK_CREW * 10
 	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
@@ -120,7 +120,7 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	custom_price = PAYCHECK_ASSISTANT * 1.5
+	custom_price = PAYCHECK_CREW * 1.5
 	undyeable = TRUE
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
@@ -256,10 +256,15 @@
 	desc = "These look pretty fancy."
 	icon_state = "white"
 	inhand_icon_state = "wgloves"
-	custom_price = PAYCHECK_MINIMAL
+	custom_price = PAYCHECK_CREW
 
 /obj/item/clothing/gloves/kim
 	name = "aerostatic gloves"
 	desc = "Breathable red gloves for expert handling of a pen and notebook."
 	icon_state = "aerostatic_gloves"
 	inhand_icon_state = "aerostatic_gloves"
+
+/obj/item/clothing/gloves/maid
+	name = "maid arm covers"
+	desc = "Cylindrical looking tubes that go over your arm, weird."
+	icon_state = "maid_arms"

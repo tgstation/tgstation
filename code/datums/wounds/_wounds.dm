@@ -110,7 +110,7 @@
  * * attack_direction: For bloodsplatters, if relevant
  */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null)
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !L.is_organic_limb() || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED))
+	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !IS_ORGANIC_LIMB(L) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED))
 		qdel(src)
 		return
 
@@ -363,6 +363,24 @@
 /// Called when the patient is undergoing stasis, so that having fully treated a wound doesn't make you sit there helplessly until you think to unbuckle them
 /datum/wound/proc/on_stasis(delta_time, times_fired)
 	return
+
+/// Sets our blood flow
+/datum/wound/proc/set_blood_flow(set_to)
+	adjust_blood_flow(set_to - blood_flow)
+
+/// Use this to modify blood flow. You must use this to change the variable
+/// Takes the amount to adjust by, and the lowest amount we're allowed to have post adjust
+/datum/wound/proc/adjust_blood_flow(adjust_by, minimum = 0)
+	if(!adjust_by)
+		return
+	var/old_flow = blood_flow
+	blood_flow = max(blood_flow + adjust_by, minimum)
+
+	if(old_flow == blood_flow)
+		return
+
+	/// Update our bleed rate
+	limb.refresh_bleed_rate()
 
 /// Used when we're being dragged while bleeding, the value we return is how much bloodloss this wound causes from being dragged. Since it's a proc, you can let bandages soak some of the blood
 /datum/wound/proc/drag_bleed_amount()

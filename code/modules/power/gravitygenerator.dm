@@ -135,7 +135,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/main
 	icon_state = "on_8"
 	idle_power_usage = 0
-	active_power_usage = 3000
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
 	power_channel = AREA_USAGE_ENVIRON
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
@@ -336,7 +336,6 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/main/proc/complete_state_update()
 	update_appearance()
 	update_list()
-	updateUsrDialog()
 
 // Set the state of the gravity.
 /obj/machinery/gravity_generator/main/proc/set_state(new_state)
@@ -372,8 +371,6 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
 				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
-
-			updateDialog()
 
 			var/overlay_state = null
 			switch(charge_count)

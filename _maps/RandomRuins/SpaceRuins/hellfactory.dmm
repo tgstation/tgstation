@@ -9,7 +9,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/hellfactory)
 "ad" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 4
 	},
 /turf/open/floor/plastic,
@@ -340,7 +340,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "bf" = (
-/obj/machinery/door/keycard/office,
+/obj/machinery/door/puzzle/keycard/office,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hellfactoryoffice)
@@ -624,7 +624,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bZ" = (
-/obj/machinery/door/keycard/stockroom,
+/obj/machinery/door/puzzle/keycard/stockroom,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hellfactory)
 "ca" = (
@@ -851,8 +851,12 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cL" = (
-/obj/item/bedsheet/brown,
-/obj/structure/bed,
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cM" = (
@@ -861,7 +865,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "cN" = (
-/obj/machinery/door/keycard/entry,
+/obj/machinery/door/puzzle/keycard/entry,
 /obj/machinery/door/airlock/public,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)

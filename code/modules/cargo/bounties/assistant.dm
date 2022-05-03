@@ -83,7 +83,7 @@
 	name = "Donuts"
 	description = "CentCom's security forces are facing heavy losses against the Syndicate. Ship donuts to raise morale."
 	reward = CARGO_CRATE_VALUE * 6
-	required_count = 10
+	required_count = 6
 	wanted_types = list(/obj/item/food/donut = TRUE)
 
 /datum/bounty/item/assistant/donkpocket

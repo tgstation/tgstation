@@ -104,6 +104,8 @@
 
 	/// Default body temperature
 	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
+	/// Our body temperatue as of the last process, prevents pointless work when handling alerts
+	var/old_bodytemperature = 0
 	/// Drowsyness level of the mob
 	var/drowsyness = 0//Carbon
 	/// Dizziness level of the mob
@@ -149,8 +151,6 @@
 	var/datum/component/storage/active_storage
 	/// Active hud
 	var/datum/hud/hud_used = null
-	/// I have no idea tbh
-	var/research_scanner = FALSE
 
 	/// Is the mob throw intent on
 	var/throw_mode = THROW_MODE_DISABLED
@@ -239,7 +239,7 @@
 	/// A mock client, provided by tests and friends
 	var/datum/client_interface/mock_client
 
-	var/interaction_range = 1 //how far a mob has to be to interact with something, defaulted to 1 tile
+	var/interaction_range = 0 //how far a mob has to be to interact with something without caring about obsctruction, defaulted to 0 tiles
 
 	///how much gravity is slowing us down
 	var/gravity_slowdown = 0

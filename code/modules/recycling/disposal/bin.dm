@@ -224,7 +224,7 @@
 	flush = FALSE
 
 /obj/machinery/disposal/proc/newHolderDestination(obj/structure/disposalholder/H)
-	for(var/obj/item/small_delivery/O in src)
+	for(var/obj/item/delivery/O in src)
 		H.tomail = TRUE
 		return
 
@@ -416,21 +416,19 @@
 				do_flush()
 		flush_count = 0
 
-	updateDialog()
-
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
 		do_flush()
 
 	if(machine_stat & NOPOWER) // won't charge if no power
 		return
 
-	use_power(100) // base power usage
+	use_power(idle_power_usage) // base power usage
 
 	if(!pressure_charging) // if off or ready, no need to charge
 		return
 
 	// otherwise charge
-	use_power(500) // charging power usage
+	use_power(idle_power_usage) // charging power usage
 
 	var/atom/L = loc //recharging from loc turf
 

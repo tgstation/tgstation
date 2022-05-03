@@ -103,4 +103,4 @@
 			bloodiest_wound = iter_wound
 
 	if(bloodiest_wound)
-		bloodiest_wound.blood_flow = max(0, bloodiest_wound.blood_flow - 0.5)
+		bloodiest_wound.set_blood_flow(max(0, bloodiest_wound.blood_flow - 0.5))
