@@ -68159,9 +68159,6 @@
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "ydu" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/gambling,
 /obj/effect/spawner/random/entertainment/gambling,
