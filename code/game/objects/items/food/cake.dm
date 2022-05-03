@@ -481,6 +481,12 @@
 /obj/item/food/cake/pavlova/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlova, 5, 30, table_required = TRUE)
 
+/obj/item/food/cake/pavlova/nuts
+	foodtypes = NUTS | FRUIT | SUGAR
+
+/obj/item/food/cake/pavlova/nuts/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlova/nuts, 5, 30, table_required = TRUE)
+
 /obj/item/food/cakeslice/pavlova
 	name = "pavlova slice"
 	desc = "A cracked slice of pavlova stacked with berries. You even got it sliced in such a way that more berries ended up on your slice, how delightfully devilish."

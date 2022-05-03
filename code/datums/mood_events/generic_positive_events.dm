@@ -272,3 +272,12 @@
 	mood_change = 10
 	timeout = 5 MINUTES
 
+/datum/mood_event/love_reagent
+	description = "This food reminds me of the good ol' days."
+	mood_change = 5
+
+/datum/mood_event/love_reagent/add_effects(duration)
+	if(isnull(duration))
+		return
+
+	timeout = duration

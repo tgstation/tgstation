@@ -449,6 +449,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 /// this skillchip trait lets you wash brains in washing machines to heal them
 #define TRAIT_BRAINWASHING "brainwashing"
+/// Allows chef's to chefs kiss their food, to make them with love
+#define TRAIT_CHEF_KISS "chefs_kiss"
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
 #define TRAIT_MOVE_GROUND "move_ground"
@@ -509,7 +511,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_STORAGE_INSERT "no_storage_insert"
 /// Visible on t-ray scanners if the atom/var/level == 1
 #define TRAIT_T_RAY_VISIBLE "t-ray-visible"
+/// If this item's been grilled
 #define TRAIT_FOOD_GRILLED "food_grilled"
+/// If this item's been made by a chef instead of being map-spawned or admin-spawned or such
+#define TRAIT_FOOD_CHEF_MADE "food_made_by_chef"
 /// The items needs two hands to be carried
 #define TRAIT_NEEDS_TWO_HANDS "needstwohands"
 /// Can't be catched when thrown
