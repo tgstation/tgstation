@@ -36,9 +36,9 @@
 	icon_state = "crystal_cascade_[rand(1,6)]"
 
 	for(var/atom/movable/checked_atom as anything in next_turf)
-		if(istype(checked_atom, /mob/living))
+		if(isliving(checked_atom))
 			qdel(checked_atom)
-		else if(istype(checked_atom, /mob)) // Observers, AI cameras.
+		else if(ismob(checked_atom)) // Observers, AI cameras.
 			continue
 		else if(istype(checked_atom, /obj/cascade_portal))
 			continue
