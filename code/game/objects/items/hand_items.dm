@@ -592,6 +592,7 @@
 /obj/projectile/kiss/chef
 	name = "chef's kiss"
 
+// If our chef's kiss hits a food item, we will improve it with love.
 /obj/projectile/kiss/chef/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
 	if(!IS_EDIBLE(target) || !target.reagents)
@@ -599,15 +600,23 @@
 	if(!firer || !target.Adjacent(firer))
 		return
 
-	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
-		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim this as your's?"))
+	// From here on, no message
+	suppressed = SUPPRESSED_VERY
+
+	if(!HAS_TRAIT_FROM(food, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+		to_chat(firer, span_warning("Wait a second, you didn't make this [food.name]. \
+			How can you claim this as your's?"))
+		return
+	if(food.reagents.has_reagent(/datum/reagent/love))
 		return
 
-	var/amount_nutriment = target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+	var/amount_nutriment = food.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) + \
+		food.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/vitamin) + \
+		food.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/protein)
 	if(!amount_nutriment)
 		return
 
-	target.reagents.add_reagent(/datum/reagent/love, amount_nutriment / 4)
+	food.reagents.add_reagent(/datum/reagent/love, amount_nutriment / 4)
 	firer.visible_message(
 		span_notice("[firer] delivers a chef's kiss over [target]."),
 		span_notice("You deliver a chef kiss over [target], declaring it perfect."),
