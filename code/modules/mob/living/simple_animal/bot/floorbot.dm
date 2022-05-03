@@ -336,7 +336,7 @@
 			if(autotile) //Build the floor and include a tile.
 				if(replacetiles && tilestack)
 					target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)	//make sure a hull is actually below the floor tile
-					tilestack.place_tile(target_turf)
+					tilestack.place_tile(target_turf, src)
 					if(!tilestack)
 						speak("Requesting refill of custom floor tiles to continue replacing.")
 				else
@@ -368,7 +368,7 @@
 			var/area/is_this_maints = get_area(F)
 			if(was_replacing && tilestack)	//turn the tile into plating (if needed), then replace it
 				F = F.make_plating(TRUE) || F
-				tilestack.place_tile(F)
+				tilestack.place_tile(F, src)
 				if(!tilestack)
 					speak("Requesting refill of custom floor tiles to continue replacing.")
 			else if(F.broken || F.burnt)	//repair the tile and reset it to be undamaged (rather than replacing it)

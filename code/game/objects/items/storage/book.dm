@@ -105,13 +105,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 /obj/item/storage/book/bible/proc/check_menu(mob/living/carbon/human/user)
 	if(GLOB.bible_icon_state)
 		return FALSE
-	if(!istype(user))
+	if(!istype(user) || !user.is_holding(src))
 		return FALSE
-	if(!user.is_holding(src))
-		return FALSE
-	if(!user.can_read(src))
-		return FALSE
-	if(user.incapacitated())
+	if(!user.can_read(src) || user.is_blind() || user.incapacitated())
 		return FALSE
 	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
 		return FALSE
