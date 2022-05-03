@@ -93,23 +93,6 @@
 	required_count = 10
 	wanted_types = list(/obj/item/food/donkpocket = TRUE)
 
-/datum/bounty/item/assistant/briefcase
-	name = "Briefcase"
-	description = "Central Command will be holding a business convention this year. Ship a few briefcases in support."
-	reward = CARGO_CRATE_VALUE * 5
-	required_count = 5
-	wanted_types = list(
-		/obj/item/storage/briefcase = TRUE,
-		/obj/item/storage/secure/briefcase = TRUE,
-	)
-
-/datum/bounty/item/assistant/sunglasses
-	name = "Sunglasses"
-	description = "A famous blues duo is passing through the sector, but they've lost their shades and they can't perform. Ship new sunglasses to CentCom to rectify this."
-	reward = CARGO_CRATE_VALUE * 6
-	required_count = 2
-	wanted_types = list(/obj/item/clothing/glasses/sunglasses = TRUE)
-
 /datum/bounty/item/assistant/monkey_hide
 	name = "Monkey Hide"
 	description = "One of the scientists at CentCom is interested in testing products on monkey skin. Your mission is to acquire monkey's hide and ship it."
@@ -186,7 +169,6 @@
 	required_count = 5
 	wanted_types = list(/obj/item/paper_bin = TRUE)
 
-
 /datum/bounty/item/assistant/crayons
 	name = "Crayons"
 	description = "Dr Jones' kid ate all our crayons again. Please send us yours."
@@ -201,3 +183,28 @@
 	required_count = 10
 	include_subtypes = FALSE
 	wanted_types = list(/obj/item/pen = TRUE)
+
+/datum/bounty/item/assistant/water_tank
+	name = "Water Tank"
+	description = "We need more water for our hydroponics bay. Find a water tank and ship it out to us."
+	reward = CARGO_CRATE_VALUE * 5
+	wanted_types = list(/obj/structure/reagent_dispensers/watertank = TRUE)
+
+/datum/bounty/item/assistant/pneumatic_cannon
+	name = "Penumatic Cannon"
+	description = "We're figuring out how hard we can launch supermatter shards out of a pneumatic cannon. Send us one as soon as possible."
+	reward = CARGO_CRATE_VALUE * 4
+	wanted_types = list(/obj/item/pneumatic_cannon/ghetto = TRUE)
+
+/datum/bounty/item/assistant/improvised_shells
+	name = "Improvised Shotgun Shells"
+	description = "Budget cuts are hitting our security deparetment pretty hard. Send some improvised shotgun shells when you can."
+	reward = CARGO_CRATE_VALUE * 4
+	required_count = 5
+	wanted_types = list(/obj/item/ammo_casing/shotgun/improvised = TRUE)
+
+/datum/bounty/item/assistant/flamethrower
+	name = "Flamethrower"
+	description = "We have a moth infestation, send a flamethrower to help deal with the situation."
+	reward = CARGO_CRATE_VALUE * 4
+	wanted_types = list(/obj/item/flamethrower = TRUE)
