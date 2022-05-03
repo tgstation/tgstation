@@ -417,20 +417,19 @@
  * Shows any and all examine text related to any status effects the user has.
  */
 /mob/living/proc/get_status_effect_examinations()
-	RETURN_TYPE(/list)
-	var/list/data = list()
+	var/list/examine_list = list()
 
 	for(var/datum/status_effect/effect as anything in status_effects)
 		var/effect_text = effect.get_examine_text()
 		if(!effect_text)
 			continue
 
-		data += effect_text
+		examine_list += effect_text
 
-	if(!length(data))
+	if(!length(examine_list))
 		return
 
-	return data.Join("\n")
+	return examine_list.Join("\n")
 
 /mob/living/carbon/human/examine_more(mob/user)
 	. = ..()
