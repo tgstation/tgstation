@@ -23,6 +23,7 @@
 	RegisterSignal(client_mob, COMSIG_MOB_LOGIN, .proc/refresh_client)
 
 /datum/component/zparallax/Destroy()
+	. = ..()
 	unregister_signals()
 
 	tracked = null
