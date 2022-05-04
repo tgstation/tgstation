@@ -173,6 +173,9 @@
 	/// used for narcing on underages
 	var/obj/item/radio/Radio
 
+	///Items that the custom vending machine doesn't accept
+	var/list/blacklisted_items = list()
+
 
 /**
  * Initialize the vending machine
@@ -1132,13 +1135,16 @@ GLOBAL_LIST_EMPTY(vending_products)
 	payment_department = NO_FREEBIES
 	light_mask = "custom-light-mask"
 	refill_canister = /obj/item/vending_refill/custom
+	panel_type = "panel20"
+	blacklisted_items = list(
+		/obj/item/disk/nuclear,
+	)
 	/// where the money is sent
 	var/datum/bank_account/linked_account
 	/// max number of items that the custom vendor can hold
 	var/max_loaded_items = 20
 	/// Base64 cache of custom icons.
 	var/list/base64_cache = list()
-	panel_type = "panel20"
 
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE
@@ -1149,18 +1155,21 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(id_card?.registered_account && id_card.registered_account == linked_account)
 		return TRUE
 
-/obj/machinery/vending/custom/canLoadItem(obj/item/I, mob/user)
+/obj/machinery/vending/custom/canLoadItem(obj/item/item_to_insert, mob/user)
 	. = FALSE
-	if(I.flags_1 & HOLOGRAM_1)
+	if(item_to_insert in blacklisted_items)
+		say("[src] does not accept [item_to_insert]!")
+		return
+	if(item_to_insert.flags_1 & HOLOGRAM_1)
 		say("This vendor cannot accept nonexistent items.")
 		return
 	if(loaded_items >= max_loaded_items)
 		say("There are too many items in stock.")
 		return
-	if(istype(I, /obj/item/stack))
+	if(istype(item_to_insert, /obj/item/stack))
 		say("Loose items may cause problems, try to use it inside wrapping paper.")
 		return
-	if(I.custom_price)
+	if(item_to_insert.custom_price)
 		return TRUE
 
 /obj/machinery/vending/custom/ui_interact(mob/user)
