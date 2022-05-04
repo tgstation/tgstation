@@ -83,6 +83,12 @@
  * One important thing to note however is that the movement of the client's eye is handled by the relaymove() proc in /obj/machinery/atmospherics.
  * We move first and then call update. Dont flip this around
  */
+// LEMON TODO
+// Make bright things darker when in the pipes
+// Maybe add a halo?
+// Fix directional input weirdness
+// Smooth movement (is it possible?)
+// Slow down the mob a bit
 /mob/living/proc/update_pipe_vision()
 	// Take the pipe images from the client
 	if (!isnull(client))
@@ -91,26 +97,31 @@
 		pipes_shown.len = 0
 
 	// Give the pipe images to the client
-	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
-		var/list/total_members = list()
-		var/obj/machinery/atmospherics/current_location = loc
-		for(var/datum/pipeline/location_pipeline in current_location.return_pipenets())
-			total_members += location_pipeline.members
-			total_members += location_pipeline.other_atmos_machines
+	if(!HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) || !istype(loc, /obj/machinery/atmospherics) || !(movement_type & VENTCRAWLING))
+		return
 
-		if(!total_members.len)
-			return
+	var/obj/machinery/atmospherics/current_location = loc
+	var/list/our_pipenets = current_location.return_pipenets()
 
-		if(client)
-			for(var/obj/machinery/atmospherics/pipenet_part in total_members)
-				// If the machinery is not in view or is not meant to be seen, continue
-				if(!in_view_range(client.mob, pipenet_part))
-					continue
-				if(!(pipenet_part.vent_movement & VENTCRAWL_CAN_SEE))
-					continue
+	if(!client)
+		return
 
-				if(!pipenet_part.pipe_vision_img)
-					pipenet_part.pipe_vision_img = image(pipenet_part, pipenet_part.loc, dir = pipenet_part.dir)
-					pipenet_part.pipe_vision_img.plane = ABOVE_HUD_PLANE
-				client.images += pipenet_part.pipe_vision_img
-				pipes_shown += pipenet_part.pipe_vision_img
+	// We're getting the smallest "range" arg we can pass to the spatial grid and still get all the stuff we need
+	// We preload a bit more then we need so movement looks ok
+	var/list/view_range = getviewsize(client.view)
+	var/largest_view = (max(view_range[1], view_range[2]) + 1) / 2
+
+	var/list/obj/machinery/atmospherics/display_canidates = SSspatial_grid.orthogonal_range_search(current_location, SPATIAL_GRID_CONTENTS_TYPE_ATMOS, largest_view)
+	for(var/obj/machinery/atmospherics/pipenet_part in display_canidates)
+		// If the machinery is not part of our net or is not meant to be seen, continue
+		var/list/thier_pipenets = pipenet_part.return_pipenets()
+		if(!length(thier_pipenets & our_pipenets))
+			continue
+		if(!(pipenet_part.vent_movement & VENTCRAWL_CAN_SEE))
+			continue
+
+		if(!pipenet_part.pipe_vision_img)
+			pipenet_part.pipe_vision_img = image(pipenet_part, pipenet_part.loc, dir = pipenet_part.dir)
+			pipenet_part.pipe_vision_img.plane = ABOVE_HUD_PLANE
+		client.images += pipenet_part.pipe_vision_img
+		pipes_shown += pipenet_part.pipe_vision_img

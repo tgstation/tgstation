@@ -1606,9 +1606,13 @@
 	return result
 
 /mob/living/reset_perspective(atom/A)
-	if(..())
-		update_sight()
-		update_fullscreen()
+	var/atom/old_eye = client?.eye
+	if(!..())
+		return
+	update_sight()
+	update_fullscreen()
+	// We only want to update pipe vision if we just left a pipe, all other cases are covered elsewhere
+	if(istype(old_eye, /obj/machinery/atmospherics) && !istype(client?.eye, /obj/machinery/atmospherics))
 		update_pipe_vision()
 
 /// Proc used to handle the fullscreen overlay updates, realistically meant for the reset_perspective() proc.

@@ -58,6 +58,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IS_PLAYER_COLORABLE_1 (1<<21)
 /// Whether or not this atom has contextual screentips when hovered OVER
 #define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<22)
+/// Is this atom meant to be managed by the spatial grid system?
+/// You'll need to add more logic then just this, this exists just for the hot checks
+#define SPATIAL_GRID_MANAGED_1 (1<<23)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
