@@ -4,14 +4,10 @@
 	icon_state = "eldritch_necklace"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF
-	clothing_traits = list(TRAIT_ALLOW_HERETIC_CASTING)
 
-/obj/item/clothing/neck/heretic_focus/examine(mob/user)
+/obj/item/clothing/neck/heretic_focus/Initialize(mapload)
 	. = ..()
-	if(!IS_HERETIC(user))
-		return
-
-	. += span_notice("Allows you to cast advanced heretic spells when worn.")
+	AddElement(/datum/element/heretic_focus)
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"
@@ -20,9 +16,12 @@
 	icon_state = "eye_medalion"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	clothing_traits = list(TRAIT_ALLOW_HERETIC_CASTING)
 	/// A secondary clothing trait only applied to heretics.
 	var/heretic_only_trait = TRAIT_THERMAL_VISION
+
+/obj/item/clothing/neck/eldritch_amulet/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/heretic_focus)
 
 /obj/item/clothing/neck/eldritch_amulet/equipped(mob/user, slot)
 	. = ..()

@@ -158,9 +158,20 @@
 
 /datum/component/storage/concrete/pockets/void_cloak
 	quickdraw = TRUE
+	max_combined_w_class = 5 // 2 small items + 1 tiny item, or 1 normal item + 1 small item
 	max_items = 3
 
 /datum/component/storage/concrete/pockets/void_cloak/Initialize()
 	. = ..()
-	var/static/list/exception_cache = typecacheof(list(/obj/item/clothing/neck/heretic_focus, /obj/item/codex_cicatrix))
+	set_holdable(list(
+		/obj/item/melee/sickly_blade,
+		/obj/item/clothing/neck/heretic_focus,
+		/obj/item/codex_cicatrix,
+		/obj/item/food/grown/poppy,
+		/obj/item/ammo_box/a762/lionhunter,
+		/obj/item/organ,
+		/obj/item/bodypart,
+	))
+
+	var/static/list/exception_cache = typecacheof(list(/obj/item/bodypart, /obj/item/melee/sickly_blade))
 	exception_hold = exception_cache

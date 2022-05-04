@@ -2089,6 +2089,7 @@
 #include "code\modules\antagonists\gang\themes.dm"
 #include "code\modules\antagonists\greentext\greentext.dm"
 #include "code\modules\antagonists\heretic\heretic_antag.dm"
+#include "code\modules\antagonists\heretic\heretic_focus.dm"
 #include "code\modules\antagonists\heretic\heretic_knowledge.dm"
 #include "code\modules\antagonists\heretic\heretic_living_heart.dm"
 #include "code\modules\antagonists\heretic\heretic_monsters.dm"
