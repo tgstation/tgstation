@@ -156,7 +156,7 @@ at the cost of risking a vicious bite.**/
 
 /obj/structure/destructible/cult/pants_altar/update_icon_state()
 	. = ..()
-	if(!COOLDOWN_FINISHED(src, use_cooldown_duration))
+	if(!COOLDOWN_FINISHED(src, use_cooldown))
 		icon_state = "altar_off"
 	else
 		icon_state = "altar"
@@ -210,7 +210,7 @@ at the cost of risking a vicious bite.**/
 		mob.flash_act()
 	var/obj/item/clothing/under/pants/altar/pants = new(get_turf(src))
 	pants.add_atom_colour(pants_color, ADMIN_COLOUR_PRIORITY)
-	COOLDOWN_START(src, use_cooldown_duration, 1 MINUTES)
+	COOLDOWN_START(src, use_cooldown, use_cooldown_duration)
 	addtimer(CALLBACK(src, /atom.proc/update_icon), 1 MINUTES + 0.1 SECONDS)
 	update_icon()
 
