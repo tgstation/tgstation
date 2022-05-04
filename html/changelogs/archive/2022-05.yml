@@ -112,3 +112,25 @@
   - imageadd: Add some new blank/scribble card icons.
   - imageadd: Add new clown and mime joker cards to standard decks curtesy of axietheaxolotl
       (Viro on discord)
+2022-05-04:
+  ArcaneDefence:
+  - rscadd: Hey did you know you can charge your tablet by microwaving it?
+  Ghilker:
+  - bugfix: fix oversight with prop gasmasks having some of the features of normal
+      ones but without fov
+  JohnFulpWillard:
+  - bugfix: MODsuit plasma stabilizers no longer protect plasmamen from self-combustion
+      if they aren't wearing an envirosuit or gloves.
+  - bugfix: Icebox no longer spawns Prisoners outside of Permabrig.
+  - bugfix: A lone disposal pipe segment under a table in the bar on Metastation has
+      been removed.
+  castawaynont:
+  - bugfix: removes windows in Kilo's monkey pen in genetics, allowing access to the
+      wallmounts in there.
+  zxaber:
+  - rscadd: 'Mechs now have a weapons safety, which can be toggled with the Middle
+      Mouse button. Don''t worry, it defaults to off. expansion: All mechs now use
+      the mouse reticle, and the reticle is disabled when weapons safety is turned
+      on.'
+  - bugfix: AIs can use mech equipment again. With weapons safety off, equipment is
+      used. With weapons safety on, AI clicks are used.
