@@ -67,8 +67,12 @@
  * user - the person who is attacking with the plant
  * target - the atom which is attacked by the plant
  */
-/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
+/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
+
+	if(!proximity_flag)
+		return FALSE
+	return TRUE
 
 /// Novaflower's attack effects (sets people on fire) + degradation on attack
 /datum/plant_gene/trait/attack/novaflower_attack
@@ -77,6 +81,8 @@
 
 /datum/plant_gene/trait/attack/novaflower_attack/on_plant_attack(obj/item/our_plant, mob/living/target, mob/living/user)
 	. = ..()
+	if(!.)
+		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	to_chat(target, "<span class='danger'>You are lit on fire from the intense heat of [our_plant]!</span>")
@@ -86,8 +92,10 @@
 		log_game("[key_name(user)] set [key_name(target)] on fire with [our_plant] at [AREACOORD(user)]")
 	our_plant.investigate_log("was used by [key_name(user)] to burn [key_name(target)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 
-/datum/plant_gene/trait/attack/novaflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
+/datum/plant_gene/trait/attack/novaflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	if(!.)
+		return
 
 	if(!ismovable(target))
 		return
@@ -101,8 +109,10 @@
 /datum/plant_gene/trait/attack/sunflower_attack
 	name = "Bright Petals"
 
-/datum/plant_gene/trait/attack/sunflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/living/user)
+/datum/plant_gene/trait/attack/sunflower_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	if(!.)
+		return
 
 	if(!ismob(target))
 		return
@@ -117,8 +127,10 @@
 	name = "Sharpened Leaves"
 	force_multiplier = 0.2
 
-/datum/plant_gene/trait/attack/nettle_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user)
+/datum/plant_gene/trait/attack/nettle_attack/after_plant_attack(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	if(!.)
+		return
 
 	if(!ismovable(target))
 		return
