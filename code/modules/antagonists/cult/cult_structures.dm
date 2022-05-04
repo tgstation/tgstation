@@ -10,6 +10,8 @@
 	var/use_cooldown_duration = 5 MINUTES
 	/// If provided, a bonus tip displayed to cultists on examined.
 	var/cult_examine_tip
+	/// The cooldown for when items can be dispensed.
+	COOLDOWN_DECLARE(use_cooldown)
 
 /obj/structure/destructible/cult/examine_status(mob/user)
 	if(IS_CULTIST(user) || isobserver(user))
@@ -83,8 +85,6 @@
 /obj/structure/destructible/cult/item_dispenser
 	/// An associated list of options this structure can make. See setup_options() for format.
 	var/list/options
-	/// The cooldown for when items can be dispensed.
-	COOLDOWN_DECLARE(use_cooldown)
 
 /obj/structure/destructible/cult/item_dispenser/Initialize(mapload)
 	. = ..()
