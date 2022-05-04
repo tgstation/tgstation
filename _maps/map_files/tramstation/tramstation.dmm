@@ -40635,9 +40635,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security)
 "nlh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/modular_map_root/tramstation{
 	key = "maintenance_science_west"
 	},
