@@ -12,7 +12,7 @@ As of April 26th, 2022, the typical Z-levels for a single-level station are:
 3-4: Randomized Space (Ruins)
 5: Mining
 6-11: Randomized Space (Ruins)
-12: Transit Space
+12: Transit/Reserved Space
 
 However, if away missions are enabled:
 12: Away Mission
