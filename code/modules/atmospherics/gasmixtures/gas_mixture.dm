@@ -679,7 +679,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
 		// We start at the extrema of the equation, added by a number.
 		// This way we will hopefully always converge on the positive root, while starting at a reasonable number.
-		solution = (-b / (2*a)) + 200
+		solution = (-b / (2 * a)) + 200
 		for (var/iteration in 1 to ATMOS_PRESSURE_APPROXIMATION_ITERATIONS)
 			var/diff = (a*solution**2 + b*solution + c) / (2*a*solution + b) // f(sol) / f'(sol)
 			solution -= diff // xn+1 = xn - f(sol) / f'(sol)
