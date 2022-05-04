@@ -3,6 +3,7 @@
 	desc = "A amber focusing glass that provides a link to the world beyond. The necklace seems to twitch, but only when you look at it from the corner of your eye."
 	icon_state = "eldritch_necklace"
 	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FIRE_PROOF
 	clothing_traits = list(TRAIT_ALLOW_HERETIC_CASTING)
 
 /obj/item/clothing/neck/heretic_focus/examine(mob/user)
@@ -18,7 +19,9 @@
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "eye_medalion"
 	w_class = WEIGHT_CLASS_SMALL
-	/// Clothing trait only applied to heretics.
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	clothing_traits = list(TRAIT_ALLOW_HERETIC_CASTING)
+	/// A secondary clothing trait only applied to heretics.
 	var/heretic_only_trait = TRAIT_THERMAL_VISION
 
 /obj/item/clothing/neck/eldritch_amulet/equipped(mob/user, slot)

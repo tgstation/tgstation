@@ -67,7 +67,8 @@
 	var/mob/living/carbon/carbon_user = loc
 	to_chat(carbon_user, span_notice("The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!"))
 	item_flags &= ~EXAMINE_SKIP
-	REMOVE_TRAIT(src, TRAIT_NO_STRIP, src)
+	REMOVE_TRAIT(src, TRAIT_NO_STRIP, REF(src))
+	ADD_TRAIT(src, TRAIT_ALLOW_HERETIC_CASTING, REF(src))
 	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/void/MakeHood()
@@ -79,7 +80,8 @@
 		. = ..()
 		to_chat(carbon_user,span_notice("The light shifts around you making the cloak invisible!"))
 		item_flags |= EXAMINE_SKIP
-		ADD_TRAIT(src, TRAIT_NO_STRIP, src)
+		ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
+		REMOVE_TRAIT(src, TRAIT_ALLOW_HERETIC_CASTING, REF(src))
 		return
 
 	to_chat(carbon_user,span_danger("You can't force the hood onto your head!"))
