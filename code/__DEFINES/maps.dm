@@ -29,6 +29,10 @@ called "Mapping", as well as access to the verb "Debug-Z-Levels". Although the i
 presented in this comment is factual for the time it was written for, it's ill-advised
 to trust the words presented within.
 
+We also provide this information to you so that you can have an at-a-glance look at how
+Z-Levels are arranged. It is extremely ill-advised to ever use the location of a Z-Level
+to assign traits to it or use it in coding. Use Z-Traits (ZTRAITs) for these. 
+
 If you want to start toying around with Z-Levels, do not take these words for fact.
 Always compile, always use that verb, and always make sure that it works for what you want to do.
 */
