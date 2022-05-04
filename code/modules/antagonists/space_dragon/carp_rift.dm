@@ -29,7 +29,7 @@
 	if(do_after(dragon.owner.current, 100, target = dragon.owner.current))
 		for(var/obj/structure/carp_rift/c in dragon.owner.current.loc.contents)
 			return
-		var/obj/structure/carp_rift/new_rift = new /obj/structure/carp_rift(dragon.owner.current.loc)
+		var/obj/structure/carp_rift/new_rift = new /obj/structure/carp_rift(get_turf(owner))
 		playsound(dragon.owner.current.loc, 'sound/vehicles/rocketlaunch.ogg', 100, TRUE)
 		dragon.riftTimer = -1
 		new_rift.dragon = dragon
