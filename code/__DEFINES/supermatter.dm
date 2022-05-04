@@ -68,7 +68,7 @@
 #define SEVERE_POWER_PENALTY_THRESHOLD 7000 //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
 #define CRITICAL_POWER_PENALTY_THRESHOLD 9000 //+1 bolt of electricity.
 #define HEAT_PENALTY_THRESHOLD 40 //Higher == Crystal safe operational temperature is higher.
-#define DAMAGE_HARDCAP 0.004
+#define DAMAGE_HARDCAP 0.002
 #define DAMAGE_INCREASE_MULTIPLIER 0.25
 
 

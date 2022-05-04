@@ -135,9 +135,9 @@
 		damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
 	//caps damage rate
-	//Takes the lower number between archived damage + (4) and damage
-	//This means we can only deal 4 damage per function call
-	damage = min(damage_archived + (DAMAGE_HARDCAP * (explosion_point + 100)),damage)
+	//Takes the lower number between archived damage + (1.8) and damage
+	//This means we can only deal 1.8 damage per function call
+	damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
 
 /obj/machinery/power/supermatter_crystal/proc/setup_lists(datum/gas_mixture/removed)
 
