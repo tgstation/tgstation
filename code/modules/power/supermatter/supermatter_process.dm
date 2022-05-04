@@ -114,6 +114,7 @@
 	for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
 		if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
 			damage += clamp((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
+			power += 250
 			has_holes = TRUE
 			break
 
