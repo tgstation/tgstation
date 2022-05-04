@@ -15,6 +15,9 @@
 		stack_trace("Component zparallax has been initialized outside of a client. Deleting.")
 		return COMPONENT_INCOMPATIBLE
 
+	src.tracked = tracked
+	client_mob = tracked.mob
+
 	RegisterSignal(client_mob, COMSIG_MOB_LOGOUT, .proc/mob_change)
 	RegisterSignal(client_mob, COMSIG_MOVABLE_Z_CHANGED, .proc/ztrait_checks)
 	RegisterSignal(client_mob, COMSIG_MOB_LOGIN, .proc/refresh_client)
