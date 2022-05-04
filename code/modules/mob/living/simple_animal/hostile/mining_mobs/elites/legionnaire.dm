@@ -323,10 +323,10 @@
 	var/next_use_time
 
 /obj/item/crusher_trophy/legionnaire_spine/effect_desc()
-	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull"
+	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull."
 
 /obj/item/crusher_trophy/legionnaire_spine/on_mark_detonation(mob/living/target, mob/living/user)
-	if(!rand(1, 100) <= bonus_value || target.stat == DEAD)
+	if(!prob(bonus_value) || target.stat == DEAD)
 		return
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(user.loc)
 	A.GiveTarget(target)
