@@ -1077,10 +1077,10 @@
 /area/icemoon/underground/explored)
 "kx" = (
 /obj/item/storage/book/bible,
-/obj/structure/altar_of_gods,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/security/prison/rec)
 "kG" = (
