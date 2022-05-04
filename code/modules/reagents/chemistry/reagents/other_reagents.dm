@@ -2916,6 +2916,7 @@
 	. = ..()
 	// When we exit the system we'll leave the moodlet based on the amount we had
 	var/duration_of_moodlet = current_cycle * 20 SECONDS
+	SEND_SIGNAL(deleted_from, COMSIG_CLEAR_MOOD_EVENT, "love")
 	SEND_SIGNAL(deleted_from, COMSIG_ADD_MOOD_EVENT, "love", /datum/mood_event/love_reagent, duration_of_moodlet)
 
 /datum/reagent/love/overdose_process(mob/living/metabolizer, delta_time, times_fired)

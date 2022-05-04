@@ -603,21 +603,21 @@
 	// From here on, no message
 	suppressed = SUPPRESSED_VERY
 
-	if(!HAS_TRAIT_FROM(food, TRAIT_FOOD_CHEF_MADE, REF(firer)))
-		to_chat(firer, span_warning("Wait a second, you didn't make this [food.name]. \
+	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. \
 			How can you claim this as your's?"))
 		return
-	if(food.reagents.has_reagent(/datum/reagent/love))
+	if(target.reagents.has_reagent(/datum/reagent/love))
 		return
 
-	var/amount_nutriment = food.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) + \
-		food.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/vitamin) + \
-		food.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/protein)
+	var/amount_nutriment = target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) + \
+		target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/vitamin) + \
+		target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment/protein)
 	if(!amount_nutriment)
 		return
 
-	food.reagents.add_reagent(/datum/reagent/love, amount_nutriment / 4)
+	target.reagents.add_reagent(/datum/reagent/love, amount_nutriment / 4)
 	firer.visible_message(
 		span_notice("[firer] delivers a chef's kiss over [target]."),
-		span_notice("You deliver a chef kiss over [target], declaring it perfect."),
+		span_green("You deliver a chef's kiss over [target], declaring it perfect."),
 	)

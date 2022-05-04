@@ -163,6 +163,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		add_filter("entropic_ray", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 		addtimer(CALLBACK(src, .proc/blow_up), 5 SECONDS)
 	frying = new /obj/item/food/deepfryholder(src, frying_item)
+	ADD_TRAIT(frying, TRAIT_FOOD_CHEF_MADE, REF(user))
 	icon_state = "fryer_on"
 	fry_loop.start()
 

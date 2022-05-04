@@ -1478,7 +1478,9 @@
 	return
 
 /atom/proc/OnCreatedFromProcessing(mob/living/user, obj/item/food, list/chosen_option, atom/original_atom)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+
+	ADD_TRAIT(food, TRAIT_FOOD_CHEF_MADE, REF(user))
 
 //! Tool-specific behavior procs.
 ///

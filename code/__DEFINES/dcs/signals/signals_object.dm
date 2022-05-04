@@ -127,9 +127,10 @@
 ///from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
 	#define COMPONENT_HIT_REACTION_BLOCK (1<<0)
-///called on item when microwaved (): (obj/machinery/microwave/M)
+///called on item when microwaved (): (obj/machinery/microwave/microwave, mob/microwaver)
 #define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"
-	#define COMPONENT_SUCCESFUL_MICROWAVE (1<<0)
+	#define COMPONENT_MICROWAVE_SUCCESS (1<<0)
+	#define COMPONENT_MICROWAVE_BAD_RECIPE (1<<1)
 ///called on item when created through microwaving (): (obj/machinery/microwave/M, cooking_efficiency)
 #define COMSIG_ITEM_MICROWAVE_COOKED "microwave_cooked"
 ///from base of item/sharpener/attackby(): (amount, max)
@@ -138,6 +139,8 @@
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED (1<<1)
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY (1<<2)
 	#define COMPONENT_BLOCK_SHARPEN_MAXED (1<<3)
+///Called when an object is placed onto a griddle
+#define COMSIG_ITEM_GRILL_START "item_griddled_start"
 ///Called when an object is grilled ontop of a griddle
 #define COMSIG_ITEM_GRILLED "item_griddled"
 	#define COMPONENT_HANDLED_GRILLING (1<<0)
@@ -145,6 +148,8 @@
 #define COMSIG_GRILL_COMPLETED "item_grill_completed"
 ///Called when an object is meant to be grilled through a grill: (atom/fry_object, grill_time)
 #define COMSIG_GRILL_FOOD "item_grill_food"
+//Called when an object is inserted into an oven (atom/oven, mob/baker)
+#define COMSIG_ITEM_BAKING_START "item_baking_start"
 //Called when an object is in an oven
 #define COMSIG_ITEM_BAKED "item_baked"
 	#define COMPONENT_HANDLED_BAKING (1<<0)
@@ -398,4 +403,3 @@
 /// from base of /obj/item/slimepotion/speed/afterattack(): (obj/target, /obj/src, mob/user)
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
-

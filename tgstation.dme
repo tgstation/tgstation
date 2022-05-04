@@ -991,6 +991,7 @@
 #include "code\datums\elements\decals\blood.dm"
 #include "code\datums\elements\food\dunkable.dm"
 #include "code\datums\elements\food\food_trash.dm"
+#include "code\datums\elements\food\microwavable.dm"
 #include "code\datums\elements\food\processable.dm"
 #include "code\datums\elements\food\venue_price.dm"
 #include "code\datums\elements\screentips\contextual_screentip_bare_hands.dm"

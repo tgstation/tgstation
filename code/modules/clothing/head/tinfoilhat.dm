@@ -77,10 +77,12 @@
 			return
 	return ..()
 
-/obj/item/clothing/head/foilhat/microwave_act(obj/machinery/microwave/M)
+/obj/item/clothing/head/foilhat/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver)
 	. = ..()
 	if(!warped)
 		warp_up()
+
+
 
 /obj/item/clothing/head/foilhat/proc/call_suicide(datum/source)
 	SIGNAL_HANDLER

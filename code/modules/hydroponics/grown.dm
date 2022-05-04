@@ -89,7 +89,6 @@
 				tastes = tastes,\
 				eatverbs = eatverbs,\
 				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
 				junkiness = junkiness)
 
 /obj/item/food/grown/proc/make_dryable()

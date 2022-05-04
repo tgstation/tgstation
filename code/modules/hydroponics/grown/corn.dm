@@ -21,7 +21,6 @@
 	name = "ear of corn"
 	desc = "Needs some butter!"
 	icon_state = "corn"
-	microwaved_type = /obj/item/food/popcorn
 	trash_type = /obj/item/grown/corncob
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
@@ -31,6 +30,9 @@
 
 /obj/item/food/grown/corn/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/oven_baked_corn, rand(15 SECONDS, 35 SECONDS), TRUE, TRUE)
+
+/obj/item/food/grown/corn/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/popcorn)
 
 /obj/item/grown/corncob
 	name = "corn cob"

@@ -3,8 +3,6 @@
 	category = CAT_FOOD
 
 /datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
-	SHOULD_CALL_PARENT(TRUE)
-
 	ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user))
 
 /datum/crafting_recipe/food/New()

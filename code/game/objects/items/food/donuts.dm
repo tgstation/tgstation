@@ -33,7 +33,6 @@
 				tastes = tastes,\
 				eatverbs = eatverbs,\
 				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
 				junkiness = junkiness,\
 				check_liked = CALLBACK(src, .proc/check_liked))
 

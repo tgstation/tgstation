@@ -517,7 +517,6 @@
 				tastes = tastes,\
 				eatverbs = eatverbs,\
 				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
 				junkiness = junkiness,\
 				on_consume = CALLBACK(src, .proc/OnConsume))
 
@@ -740,7 +739,6 @@
 				tastes = tastes,\
 				eatverbs = eatverbs,\
 				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
 				junkiness = junkiness,\
 				check_liked = CALLBACK(src, .proc/check_liked))
 
@@ -809,11 +807,13 @@
 	name = "curd cheese"
 	desc = "Known by many names throughout human cuisine, curd cheese is useful for a wide variety of dishes."
 	icon_state = "curd_cheese"
-	microwaved_type = /obj/item/food/cheese_curds
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/cream = 1)
 	tastes = list("cream" = 1, "cheese" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/curd_cheese/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/cheese_curds)
 
 /obj/item/food/cheese_curds
 	name = "cheese curds"
@@ -915,11 +915,16 @@
 	icon_state = "ready_donk"
 	trash_type = /obj/item/trash/ready_donk
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	microwaved_type = /obj/item/food/ready_donk/warm
 	tastes = list("food?" = 2, "laziness" = 1)
 	foodtypes = MEAT | JUNKFOOD
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+
+	/// What type of ready-donk are we warmed into?
+	var/warm_type = /obj/item/food/ready_donk/warm
+
+/obj/item/food/ready_donk/make_microwavable()
+	AddElement(/datum/element/microwavable, warm_type)
 
 /obj/item/food/ready_donk/examine_more(mob/user)
 	. = ..()
@@ -934,15 +939,18 @@
 	desc = "A quick Donk-dinner, now with flavour! And it's even hot!"
 	icon_state = "ready_donk_warm"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/omnizine = 3)
-	microwaved_type = null
 	tastes = list("food?" = 2, "laziness" = 1)
+
+	// Don't burn your warn ready donks.
+	warm_type = /obj/item/food/badrecipe
 
 /obj/item/food/ready_donk/mac_n_cheese
 	name = "\improper Ready-Donk: Donk-a-Roni"
 	desc = "Neon-orange mac n' cheese in seconds!"
-	microwaved_type = /obj/item/food/ready_donk/warm/mac_n_cheese
 	tastes = list("cheesy pasta" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD
+
+	warm_type = /obj/item/food/ready_donk/warm/mac_n_cheese
 
 /obj/item/food/ready_donk/warm/mac_n_cheese
 	name = "warm Ready-Donk: Donk-a-Roni"
@@ -954,9 +962,10 @@
 /obj/item/food/ready_donk/donkhiladas
 	name = "\improper Ready-Donk: Donkhiladas"
 	desc = "Donk Co's signature Donkhiladas with Donk sauce, for an 'authentic' taste of Mexico."
-	microwaved_type = /obj/item/food/ready_donk/warm/donkhiladas
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+	warm_type = /obj/item/food/ready_donk/warm/donkhiladas
 
 /obj/item/food/ready_donk/warm/donkhiladas
 	name = "warm Ready-Donk: Donkhiladas"
@@ -982,4 +991,3 @@
 	tastes = list("juicy meat" = 1, "rice" = 1, "cabbage" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	

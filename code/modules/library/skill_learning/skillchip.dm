@@ -464,7 +464,7 @@
 	auto_traits = list(TRAIT_CHEF_KISS)
 	skill_name = "Chef's Kiss"
 	skill_description = "Allows you to kiss food you've created to make them with love."
-	skill_icon = "face-kiss-wink-heart"
+	skill_icon = "cookie"
 	activate_message = span_notice("You recall learning from your grandmother how they baked their cookies with love.")
 	deactivate_message = span_notice("You forget all memories imparted upon you by your grandmother. Were they even your real grandma?")
 

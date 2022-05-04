@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define UNPAINTABLE_1 (1<<15)
 /// Is the thing currently spinning?
 #define IS_SPINNING_1 (1<<16)
+/// If this thing is on top of something, such as a griddle or plate
 #define IS_ONTOP_1 (1<<17)
 #define SUPERMATTER_IGNORES_1 (1<<18)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
