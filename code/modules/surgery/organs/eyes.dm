@@ -193,6 +193,14 @@
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
+/obj/item/organ/eyes/robotic/xray/Insert(mob/living/carbon/eye_owner, special = FALSE)
+	. = ..()
+	ADD_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
+
+/obj/item/organ/eyes/robotic/xray/Remove(mob/living/carbon/eye_owner, special = FALSE)
+	REMOVE_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
+	return ..()
+
 /obj/item/organ/eyes/robotic/thermals
 	name = "thermal eyes"
 	desc = "These cybernetic eye implants will give you thermal vision. Vertical slit pupil included."

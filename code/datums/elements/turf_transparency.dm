@@ -1,7 +1,6 @@
 
 /datum/element/turf_z_transparency
 	element_flags = ELEMENT_DETACH
-	var/is_openspace = FALSE
 
 ///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
 /datum/element/turf_z_transparency/Attach(datum/target, is_openspace = FALSE)
@@ -12,7 +11,7 @@
 	var/turf/our_turf = target
 
 	our_turf.layer = OPENSPACE_LAYER
-	if(is_openspace)
+	if(is_openspace) // openspace and windows have different visual effects but both share this component.
 		our_turf.plane = OPENSPACE_PLANE
 	else
 		our_turf.plane = TRANSPARENT_FLOOR_PLANE
@@ -22,9 +21,6 @@
 
 	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
-	var/turf/below_turf = our_turf.below()
-	if(below_turf)
-		our_turf.vis_contents += below_turf
 	update_multi_z(our_turf)
 
 /datum/element/turf_z_transparency/Detach(datum/source)
@@ -37,8 +33,10 @@
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multi_z(turf/our_turf)
 	var/turf/below_turf = our_turf.below()
-	if(!below_turf)
-		our_turf.vis_contents.len = 0
+	if(below_turf) // If we actually have somethign below us, display it.
+		our_turf.vis_contents += below_turf
+	else
+		our_turf.vis_contents.len = 0 // Nuke the list
 		add_baseturf_underlay(our_turf)
 
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
@@ -68,8 +66,6 @@
 
 ///Called when there is no real turf below this turf
 /datum/element/turf_z_transparency/proc/add_baseturf_underlay(turf/our_turf)
-	if(is_openspace) // we don't ever want our bottom turf to be openspace
-		our_turf.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	var/turf/path = SSmapping.level_trait(our_turf.z, ZTRAIT_BASETURF) || /turf/open/space
 	if(!ispath(path))
 		path = text2path(path)
