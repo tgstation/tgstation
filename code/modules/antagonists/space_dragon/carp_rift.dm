@@ -26,7 +26,7 @@
 			to_chat(dragon.owner.current, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
 			return
 	to_chat(dragon.owner.current, span_warning("You begin to open a rift..."))
-	if(do_after(dragon.owner.current, 100, target = dragon.owner.current))
+	if(do_after(dragon.owner.current, 10 SECONDS, target = dragon.owner.current))
 		if(locate(/obj/structure/carp_rift) in owner.loc))
 			return
 		var/obj/structure/carp_rift/new_rift = new /obj/structure/carp_rift(get_turf(owner))
