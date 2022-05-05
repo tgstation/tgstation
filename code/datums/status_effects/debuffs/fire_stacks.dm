@@ -73,8 +73,6 @@
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
 
-	cache_stacks()
-
 /**
  * Setter and adjuster procs for firestacks
  *
