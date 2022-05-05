@@ -472,7 +472,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_white"
 	},
-/obj/effect/landmark/lift_id/Hilbert,
+/obj/effect/landmark/lift_id/hilbert,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "kO" = (
