@@ -85,8 +85,7 @@
 
 	if(on_fire || HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE))
 		var/fire_override = dna?.species?.fire_overlay
-		if(!fire_override)
-			fire_override = "human"
+		fire_override |= "human"
 		var/mutable_appearance/small_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', "[fire_override]_small_fire", -FIRE_LAYER)
 		small_fire_overlay.appearance_flags = RESET_COLOR
 		overlays_standing[FIRE_LAYER] = small_fire_overlay
