@@ -5,7 +5,7 @@
 	uses = -1
 	icon_state = "mindshock"
 	mind_control_uses = 1
-	mind_control_duration = 6000
+	mind_control_duration = 600
 	var/list/mob/living/carbon/human/broadcasted_mobs = list()
 
 /obj/item/organ/heart/gland/mindshock/activate()
@@ -37,15 +37,16 @@
 		if(H.stat)
 			continue
 
-		broadcasted_mobs += H
-		to_chat(H, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
-		to_chat(H, span_mind_control("[command]"))
+		if(!HAS_TRAIT(H, TRAIT_MINDSHIELD))
+			broadcasted_mobs += H
+			to_chat(H, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
+			to_chat(H, span_mind_control("[command]"))
 
-		message_admins("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
-		log_game("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
+			message_admins("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
+			log_game("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
 
-		var/atom/movable/screen/alert/mind_control/mind_alert = H.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
-		mind_alert.command = command
+			var/atom/movable/screen/alert/mind_control/mind_alert = H.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
+			mind_alert.command = command
 
 	if(LAZYLEN(broadcasted_mobs))
 		active_mind_control = TRUE
