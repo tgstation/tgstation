@@ -417,8 +417,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Entered(atom/movable/arrived, area/old_area)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, arrived, old_area)
-	if(has_gravity)
-		arrived.AddElement(/datum/element/forced_gravity, has_gravity, FALSE, TRUE)
 
 	if(!arrived.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
@@ -443,9 +441,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/Exited(atom/movable/gone, direction)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, gone, direction)
-
-	if(has_gravity)
-		gone.RemoveElement(/datum/element/forced_gravity, has_gravity, FALSE, TRUE)
 
 	if(!gone.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
