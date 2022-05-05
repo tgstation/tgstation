@@ -10,7 +10,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
 	step_energy_drain = 15 //slightly higher energy drain since you movin those wheels FAST
-	armor = list(MELEE = 20, BULLET = 10, LASER = 20, ENERGY = 10, BOMB = 60, BIO = 0, FIRE = 100, ACID = 100) //low armor to compensate for fire protection and speed
+	armor = list(MELEE = 20, BULLET = 10, LASER = 20, ENERGY = 10, BOMB = 60, FIRE = 100, ACID = 100) //low armor to compensate for fire protection and speed
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,

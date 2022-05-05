@@ -9,7 +9,7 @@
 	desc = "An minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer."
 	icon_state = "vim"
 	max_integrity = 50
-	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, FIRE = 80, ACID = 80)
 	enter_delay = 20
 	movedelay = 0.6
 	engine_sound_length = 0.3 SECONDS
@@ -137,7 +137,7 @@
 /obj/item/circuit_component/vim/proc/on_headlights_toggle(datum/source, headlights_on)
 	SIGNAL_HANDLER
 	are_headlights_on.set_output(headlights_on)
-	
+
 /obj/item/circuit_component/vim/proc/on_chime_used()
 	SIGNAL_HANDLER
 	chime.set_output(COMPONENT_SIGNAL)
