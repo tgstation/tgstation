@@ -90,7 +90,7 @@
 		var/mutable_appearance/small_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', "[fire_override]_small_fire", -FIRE_LAYER)
 		small_fire_overlay.appearance_flags = RESET_COLOR
 		overlays_standing[FIRE_LAYER] = small_fire_overlay
-		if(fire_stacks > MOB_BIG_FIRE_THRESHOLD)
+		if(fire_stacks > MOB_BIG_FIRE_STACK_THRESHOLD)
 			var/mutable_appearance/big_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', "[fire_override]_big_fire", -SECONDARY_FIRE_LAYER)
 			big_fire_overlay.appearance_flags = RESET_COLOR
 			overlays_standing[SECONDARY_FIRE_LAYER] = big_fire_overlay

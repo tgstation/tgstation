@@ -165,7 +165,7 @@
 
 	if(!last_fire_update)
 		last_fire_update = fire_stacks
-	if((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM && last_fire_update <= HUMAN_FIRE_STACK_ICON_NUM) || (fire_stacks <= HUMAN_FIRE_STACK_ICON_NUM && last_fire_update > HUMAN_FIRE_STACK_ICON_NUM))
+	if((fire_stacks > MOB_BIG_FIRE_STACK_THRESHOLD && last_fire_update <= MOB_BIG_FIRE_STACK_THRESHOLD) || (fire_stacks <= MOB_BIG_FIRE_STACK_THRESHOLD && last_fire_update > MOB_BIG_FIRE_STACK_THRESHOLD))
 		last_fire_update = fire_stacks
 		update_fire()
 
