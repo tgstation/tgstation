@@ -66,6 +66,8 @@
 #define PLASMAMAN_PREVENT_IGNITION (1<<18)
 /// Usable as casting clothes by wizards (only matters for suits and headwear)
 #define CASTING_CLOTHES (1<<19)
+/// Clothes that block disease (ie. biohood)
+#define DISEASE_IMMUNITY (1<<20)
 
 /// Flags for the organ_flags var on /obj/item/organ
 
