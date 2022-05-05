@@ -7,14 +7,14 @@
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sink{
 	pixel_y = 15
 	},
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -26,7 +26,7 @@
 	pixel_y = 10
 	},
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "s" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -39,13 +39,13 @@
 	pixel_y = 10
 	},
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "u" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/mop,
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -55,15 +55,15 @@
 /obj/machinery/duct,
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "D" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "G" = (
 /turf/closed/wall,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "J" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -77,7 +77,7 @@
 	pixel_y = -4
 	},
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "N" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -87,16 +87,16 @@
 	pixel_y = 6
 	},
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "R" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "S" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "Y" = (
 /obj/machinery/duct,
 /turf/template_noop,
