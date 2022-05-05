@@ -24,6 +24,8 @@
 		adjust_stacks(new_stacks)
 
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
+	. = ..()
+
 	if(isanimal(owner))
 		qdel(src)
 		return
@@ -71,7 +73,6 @@
 			adjust_stacks(override_effect.stacks)
 			qdel(override_effect)
 
-	. = ..()
 	cache_stacks()
 
 /**
