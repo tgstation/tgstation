@@ -205,7 +205,7 @@ at the cost of risking a vicious bite.**/
 /obj/structure/destructible/cult/pants_altar/proc/pants_create()
 	status = ALTAR_INACTIVE
 	update_icon()
-	visible_message("<span class='warning'>[src] eminates a flash of light and creates... pants?</span>")
+	visible_message("<span class='warning'>[src] emits a flash of light and creates... pants?</span>")
 	for(var/mob/living/mob in viewers(7, src))
 		mob.flash_act()
 	var/obj/item/clothing/under/pants/altar/pants = new(get_turf(src))
