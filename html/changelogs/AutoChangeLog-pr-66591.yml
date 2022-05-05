@@ -1,5 +1,0 @@
-author: "Crushtoe"
-delete-after: True
-changes: 
-  - bugfix: "Fixes Icebox Security's entrance airlock cyclers and the Interrogation shutters."
-  - bugfix: "Fixes Icebox Engineering's lower floor EVA airlock cycler."

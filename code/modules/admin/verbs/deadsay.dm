@@ -19,7 +19,7 @@
 
 	if (!msg)
 		return
-	var/rank_name = holder.rank
+	var/rank_name = holder.rank_names()
 	var/admin_name = key
 	if(holder.fakekey)
 		rank_name = pick(strings("admin_nicknames.json", "ranks", "config"))

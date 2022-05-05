@@ -1,0 +1,5 @@
+author: "castawaynont"
+delete-after: True
+changes: 
+  - bugfix: "Delta's virology lobby now has a camera, as intended"
+  - bugfix: "Delta's virology lobby now allows MDs in."

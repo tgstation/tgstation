@@ -140,7 +140,7 @@
 				to_chat(C, span_userdanger("The divine explosion sears you!"))
 				C.Paralyze(40)
 				C.adjust_fire_stacks(5)
-				C.IgniteMob()
+				C.ignite_mob()
 	..()
 
 /datum/chemical_reaction/gunpowder
