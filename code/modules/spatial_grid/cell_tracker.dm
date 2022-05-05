@@ -84,8 +84,8 @@
 		CRASH("/datum/cell_tracker had an invalid location on refresh, ya done fucked")
 	// This is a mild waste of cpu time. Consider optimizing by adding a new helper function to get just the space between two bounds
 	// Assuming it ever becomes a real problem
-	var/list/datum/spatial_grid_cell/inner_window = SSspatial_grid.get_cells_in_bound(center, inner_window_x_radius, inner_window_y_radius)
-	var/list/datum/spatial_grid_cell/outer_window = SSspatial_grid.get_cells_in_bound(center, outer_window_x_radius, outer_window_y_radius)
+	var/list/datum/spatial_grid_cell/inner_window = SSspatial_grid.get_cells_in_bounds(center, inner_window_x_radius, inner_window_y_radius)
+	var/list/datum/spatial_grid_cell/outer_window = SSspatial_grid.get_cells_in_bounds(center, outer_window_x_radius, outer_window_y_radius)
 
 	var/list/datum/spatial_grid_cell/new_cells = inner_window - member_cells
 	// The outer window may contain cells we don't actually have, so we do it like this

@@ -332,10 +332,10 @@ SUBSYSTEM_DEF(spatial_grid)
 
 ///get all grid cells intersecting the bounding box around center with sides of length 2 * range
 /datum/controller/subsystem/spatial_grid/proc/get_cells_in_range(atom/center, range)
-	return get_cells_in_bound(center, range, range)
+	return get_cells_in_bounds(center, range, range)
 
 ///get all grid cells intersecting the bounding box around center with sides of length (2 * range_x, 2 * range_y)
-/datum/controller/subsystem/spatial_grid/proc/get_cells_in_bound(atom/center, range_x, range_y)
+/datum/controller/subsystem/spatial_grid/proc/get_cells_in_bounds(atom/center, range_x, range_y)
 	var/turf/center_turf = get_turf(center)
 
 	var/center_x = center_turf.x
