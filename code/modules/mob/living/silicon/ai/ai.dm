@@ -241,9 +241,8 @@
 			if(istype(A, initial(AM.power_type)))
 				qdel(A)
 
-/mob/living/silicon/ai/IgniteMob()
-	fire_stacks = 0
-	. = ..()
+/mob/living/silicon/ai/ignite_mob()
+	return FALSE
 
 /mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
 	if(client && !C)
