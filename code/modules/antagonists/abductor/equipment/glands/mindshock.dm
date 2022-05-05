@@ -27,7 +27,7 @@
 				if(3)
 					H.hallucination += 60
 		else
-			to_chat(H, span_notice("You hear a faint hum behind you, for just a moment."))
+			to_chat(H, span_notice("You hear a faint hum fill your ears, which quickly dies down."))
 
 /obj/item/organ/heart/gland/mindshock/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
