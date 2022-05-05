@@ -3,6 +3,9 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 /obj/effect/landmark/tram
 	name = "tram destination" //the tram buttons will mention this.
 	icon_state = "tram"
+
+	///the id of the tram we're linked to.
+	var/specific_lift_id = MAIN_STATION_TRAM
 	/// The ID of that particular destination.
 	var/destination_id
 	/// Icons for the tgui console to list out for what is at this location
@@ -10,10 +13,10 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 
 /obj/effect/landmark/tram/Initialize(mapload)
 	. = ..()
-	GLOB.tram_landmarks += src
+	LAZYADDASSOCLIST(GLOB.tram_landmarks, specific_lift_id, src)
 
 /obj/effect/landmark/tram/Destroy()
-	GLOB.tram_landmarks -= src
+	LAZYREMOVEASSOC(GLOB.tram_landmarks, specific_lift_id, src)
 	return ..()
 
 

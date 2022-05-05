@@ -46,6 +46,7 @@
 	return ..()
 
 /obj/machinery/computer/tram_controls/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TramControl", name)
@@ -75,7 +76,7 @@
  */
 /obj/machinery/computer/tram_controls/proc/get_destinations()
 	. = list()
-	for(var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks)
+	for(var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks[specific_lift_id])
 		var/list/this_destination = list()
 		this_destination["name"] = destination.name
 		this_destination["dest_icons"] = destination.tgui_icons
@@ -90,7 +91,7 @@
 	switch (action)
 		if ("send")
 			var/obj/effect/landmark/tram/to_where
-			for (var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks)
+			for (var/obj/effect/landmark/tram/destination as anything in GLOB.tram_landmarks[specific_lift_id])
 				if(destination.destination_id == params["destination"])
 					to_where = destination
 					break
@@ -161,7 +162,7 @@
 		return
 
 	var/destination
-	for(var/obj/effect/landmark/tram/possible_destination as anything in GLOB.tram_landmarks)
+	for(var/obj/effect/landmark/tram/possible_destination as anything in GLOB.tram_landmarks[computer.specific_lift_id])
 		if(possible_destination.name == new_destination.value)
 			destination = possible_destination
 			break

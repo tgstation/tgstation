@@ -46,6 +46,9 @@ GLOBAL_LIST_EMPTY(lifts)
 	///how many tiles this platform extends on the y axis (north-south not up-down, that would be the z axis)
 	var/height = 1
 
+	///if TRUE, this platform will late initialize and then expand to become a multitile object across all other linked platforms on this z level
+	var/create_multitile_platform = FALSE
+
 /obj/structure/industrial_lift/Initialize(mapload)
 	. = ..()
 	GLOB.lifts.Add(src)
@@ -54,8 +57,16 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	//since lift_master datums find all connected platforms when an industrial lift first creates it and then
 	//sets those platforms' lift_master_datum to itself, this check will only evaluate to true once per tram platform
-	if(!lift_master_datum)
+	if(!lift_master_datum && lift_master_type)
 		lift_master_datum = new lift_master_type(src)
+		return INITIALIZE_HINT_LATELOAD
+
+	//if(create_multitile_platform)
+	//	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/industrial_lift/LateInitialize()
+	//after everything is initialized the lift master can order everything
+	lift_master_datum.order_platforms_by_z_level()
 
 /obj/structure/industrial_lift/Destroy()
 	GLOB.lifts.Remove(src)
@@ -114,22 +125,18 @@ GLOBAL_LIST_EMPTY(lifts)
 
 ///make this tram platform multitile, expanding to cover all the tram platforms adjacent to us and deleting them. makes movement more efficient.
 ///the platform becoming multitile should be in the bottom left corner since thats assumed to be the loc of multitile objects
-/obj/structure/industrial_lift/proc/create_multitile_platform()
-	var/min_x = INFINITY
-	var/max_x = 0
+/obj/structure/industrial_lift/proc/create_multitile_platform(min_x, min_y, max_x, max_y, z)
 
-	var/min_y = INFINITY
-	var/max_y = 0
+	if(!(min_x && min_y && max_x && max_y && z))
+		for(var/obj/structure/industrial_lift/other_lift as anything in lift_master_datum.lift_platforms)
+			if(other_lift.z != z)
+				continue
 
-	for(var/obj/structure/industrial_lift/other_lift as anything in lift_master_datum.lift_platforms)
-		if(other_lift.z != z)
-			continue
+			min_x = min(min_x, other_lift.x)
+			max_x = max(max_x, other_lift.x)
 
-		min_x = min(min_x, other_lift.x)
-		max_x = max(max_x, other_lift.x)
-
-		min_y = min(min_y, other_lift.y)
-		max_y = max(max_y, other_lift.y)
+			min_y = min(min_y, other_lift.y)
+			max_y = max(max_y, other_lift.y)
 
 	var/turf/bottom_left_loc = locate(min_x, min_y, z)
 	var/obj/structure/industrial_lift/loc_corner_lift = locate() in bottom_left_loc
@@ -271,6 +278,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	else
 		///potentially finds a spot to throw the victim at for daring to be hit by a tram. is null if we havent found anything to throw
 		var/atom/throw_target
+		var/datum/lift_master/tram/our_lift = lift_master_datum
+		var/collision_lethality = our_lift.collision_lethality
 
 		for(var/turf/dest_turf as anything in entering_locs)
 			///handles any special interactions objects could have with the lift/tram, handled on the item itself
@@ -281,7 +290,8 @@ GLOBAL_LIST_EMPTY(lifts)
 				do_sparks(2, FALSE, collided_wall)
 				collided_wall.dismantle_wall(devastated = TRUE)
 				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(collided_wall, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
-					shake_camera(client_mob, 2, 3)
+					if(get_dist(dest_turf, client_mob) <= 8)
+						shake_camera(client_mob, 2, 3)
 
 				playsound(collided_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
@@ -299,8 +309,8 @@ GLOBAL_LIST_EMPTY(lifts)
 							throw_target = get_edge_target_turf(src, turn(going, pick(45, -45)))
 						visible_message(span_danger("[src] violently rams [victim_structure] out of the way!"))
 						victim_structure.anchored = FALSE
-						victim_structure.take_damage(rand(20, 25))
-						victim_structure.throw_at(throw_target, 200, 4)
+						victim_structure.take_damage(rand(20, 25) * collision_lethality)
+						victim_structure.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality)
 
 			for(var/obj/machinery/victim_machine in dest_turf.contents)
 				if(QDELING(victim_machine))
@@ -319,7 +329,7 @@ GLOBAL_LIST_EMPTY(lifts)
 					continue
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-				var/damage = rand(5, 10)
+				var/damage = rand(5, 10) * collision_lethality
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
 				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
@@ -338,7 +348,7 @@ GLOBAL_LIST_EMPTY(lifts)
 				collided.throw_at()
 				//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
 				var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
-				collided.throw_at(throw_target, 200, 4, callback = land_slam)
+				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)
@@ -563,31 +573,27 @@ GLOBAL_LIST_EMPTY(lifts)
 	canSmoothWith = null
 	//kind of a centerpiece of the station, so pretty tough to destroy
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 	lift_id = TRAM_LIFT_ID
 	lift_master_type = /datum/lift_master/tram
 
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
 
-	//the following are only used to give to the lift_master datum when it's first created
-
-	/// For finding the landmark initially - should be the exact same as the landmark's destination id. only used to give to the lift_master
-	var/initial_id = "middle_part"
+	//the following are only used to give to the lift_master datum when it's first create
 
 	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the lift_master
 	var/horizontal_speed = 0.5
+
+	create_multitile_platform = TRUE
+
+/obj/structure/industrial_lift/tram/central //TODOKYLER: remove cause dumb
+	create_multitile_platform = TRUE
 
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
 	. = ..()
 	if(travelling)
 		on_changed_glide_size(AM, AM.glide_size)
-
-/obj/structure/industrial_lift/tram/central/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/structure/industrial_lift/tram/central/LateInitialize()
-	create_multitile_platform()
 
 /obj/structure/industrial_lift/tram/proc/set_travelling(travelling)
 	if (src.travelling == travelling)

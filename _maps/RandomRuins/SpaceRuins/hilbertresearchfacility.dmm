@@ -324,12 +324,11 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white";
-	initial_id = "middle_part_hilbert"
-	},
 /obj/machinery/door/window/survival_pod{
 	dir = 1
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -467,13 +466,13 @@
 /turf/open/floor/glass,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "kK" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white";
-	initial_id = "middle_part_hilbert"
-	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/obj/effect/landmark/lift_id/Hilbert,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "kO" = (
@@ -664,19 +663,17 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "pE" = (
 /obj/effect/landmark/tram/middle_part/hilbert,
-/obj/structure/industrial_lift/tram/central{
-	icon_state = "titanium_white";
-	initial_id = "middle_part_hilbert";
-	tram_id = "tram_hilbert"
-	},
-/obj/machinery/computer/tram_controls{
-	dir = 8;
-	tram_id = "tram_hilbert"
-	},
 /obj/machinery/light/floor{
 	brightness = 2;
 	bulb_colour = "#deefff";
 	bulb_power = 0.6
+	},
+/obj/machinery/computer/tram_controls{
+	dir = 8;
+	specific_lift_id = "tram_hilbert"
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1659,12 +1656,11 @@
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Kv" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white";
-	initial_id = "middle_part_hilbert"
-	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1673,27 +1669,25 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "KF" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "middle_part_hilbert"
-	},
-/obj/structure/shuttle/engine/propulsion/in_wall{
-	dir = 8;
-	pixel_x = -32
-	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod,
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+	dir = 8;
+	pixel_x = -32
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
+	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "KI" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white";
-	initial_id = "middle_part_hilbert"
-	},
 /obj/machinery/door/window/survival_pod,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "KJ" = (
@@ -1702,18 +1696,17 @@
 /area/ruin/unpowered/no_grav)
 "KK" = (
 /obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "middle_part_hilbert"
-	},
-/obj/structure/shuttle/engine/propulsion/in_wall{
-	dir = 4;
-	pixel_x = 32
-	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
 /obj/structure/window/reinforced/survival_pod,
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+	dir = 4;
+	pixel_x = 32
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
+	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "KL" = (
@@ -1794,19 +1787,18 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "middle_part_hilbert"
-	},
-/obj/structure/shuttle/engine/propulsion/in_wall{
-	dir = 8;
-	pixel_x = -32
-	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
+	},
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+	dir = 8;
+	pixel_x = -32
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -2001,19 +1993,18 @@
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple";
-	initial_id = "middle_part_hilbert"
-	},
-/obj/structure/shuttle/engine/propulsion/in_wall{
-	dir = 4;
-	pixel_x = 32
-	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
+	},
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
+	dir = 4;
+	pixel_x = 32
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)

@@ -60,10 +60,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	LAZYADD(lift_platforms, new_lift_platform)
 	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
 
-	var/obj/effect/landmark/lift_id/id_giver = locate() in new_lift_platform.loc
-	if(id_giver)
-		specific_lift_id = id_giver.specific_lift_id
-		qdel(id_giver)//we dont need it now
+	check_for_landmarks(new_lift_platform)
 
 	if(z_sorted)//make sure we dont lose z ordering if we get additional platforms after init
 		order_platforms_by_z_level()
@@ -97,6 +94,28 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 					possible_expansions |= lift_platform
 
 			possible_expansions -= borderline
+
+///check for any landmarks placed inside the locs of the given lift_platform
+/datum/lift_master/proc/check_for_landmarks(obj/structure/industrial_lift/new_lift_platform)
+	SHOULD_CALL_PARENT(TRUE)
+
+	for(var/turf/platform_loc as anything in new_lift_platform.locs)
+		var/obj/effect/landmark/lift_id/id_giver = locate() in platform_loc
+
+		if(id_giver)
+			set_info_from_id_landmark(id_giver)
+
+///set vars and such given an overriding lift_id landmark
+/datum/lift_master/proc/set_info_from_id_landmark(obj/effect/landmark/lift_id/landmark)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(!istype(landmark, /obj/effect/landmark/lift_id))//lift_master subtypes can want differnet id's than the base type wants
+		return
+
+	if(landmark.specific_lift_id)
+		specific_lift_id = landmark.specific_lift_id
+
+	qdel(landmark)
 
 ///orders the lift platforms in order of lowest z level to highest z level.
 /datum/lift_master/proc/order_platforms_by_z_level()

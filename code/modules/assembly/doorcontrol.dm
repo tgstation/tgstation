@@ -245,7 +245,7 @@
 /obj/item/assembly/control/tram/LateInitialize()
 	. = ..()
 	//find where the tram needs to go to (our destination). only needs to happen the first time
-	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks)
+	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks[specific_lift_id])
 		if(our_destination.destination_id == initial_id)
 			to_where = WEAKREF(our_destination)
 			break

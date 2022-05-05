@@ -16,3 +16,5 @@
 //specific_lift_id's
 ///the specific_lift_id of the main station tram landmark for tramstation that spawns roundstart.
 #define MAIN_STATION_TRAM "main station tram"
+///the specific_lift_id of the tram on the hilbert research station
+#define HILBERT_TRAM "tram_hilbert"

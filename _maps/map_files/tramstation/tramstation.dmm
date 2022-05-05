@@ -14535,13 +14535,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/hallway/primary/tram/center)
-"dWc" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 4
-	},
-/obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/glass/reinforced,
-/area/hallway/primary/tram/center)
 "dWm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -15429,12 +15422,6 @@
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
-"ela" = (
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1
-	},
-/turf/open/floor/glass/reinforced,
-/area/hallway/primary/tram/left)
 "ele" = (
 /turf/closed/wall,
 /area/security/execution/education)
@@ -22371,20 +22358,6 @@
 "gIt" = (
 /turf/closed/wall,
 /area/science/robotics/lab)
-"gIJ" = (
-/obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/glass/reinforced,
-/area/hallway/primary/tram/left)
-"gIO" = (
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/caution/stand_clear/red{
-	dir = 4
-	},
-/turf/open/floor/vault,
-/area/hallway/primary/tram/right)
 "gIP" = (
 /obj/structure/closet/lasertag/blue,
 /obj/effect/turf_decal/tile/blue/full,
@@ -45249,13 +45222,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
-"oVG" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
-/obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/glass/reinforced,
-/area/hallway/primary/tram/left)
 "oWf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -54422,12 +54388,6 @@
 	},
 /turf/open/openspace,
 /area/science/xenobiology)
-"spZ" = (
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1
-	},
-/turf/open/floor/glass/reinforced,
-/area/hallway/primary/tram/center)
 "sqA" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -55266,9 +55226,6 @@
 /turf/open/floor/circuit/green,
 /area/ai_monitored/command/nuke_storage)
 "sFL" = (
-/obj/structure/industrial_lift/tram/central{
-	icon_state = "titanium"
-	},
 /obj/structure/tramwall/titanium{
 	opacity = 0
 	},
@@ -55277,6 +55234,9 @@
 	pixel_x = -32
 	},
 /obj/effect/landmark/tram/middle_part,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
 /turf/open/openspace,
 /area/hallway/primary/tram/tunnel)
 "sFM" = (
@@ -64052,10 +64012,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
-"vUA" = (
-/obj/structure/fluff/tram_rail,
-/turf/open/openspace,
-/area/hallway/primary/tram/left)
 "vUM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4

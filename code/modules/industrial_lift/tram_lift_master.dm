@@ -22,40 +22,28 @@
 
 /datum/lift_master/tram/New(obj/structure/industrial_lift/tram/lift_platform)
 	. = ..()
-	initial_id = lift_platform.initial_id
 	horizontal_speed = lift_platform.horizontal_speed
 
-	find_starting_landmark()
+	check_starting_landmark()
 
 /datum/lift_master/tram/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
 	. = ..()
 	RegisterSignal(new_lift_platform, COMSIG_MOVABLE_BUMP, .proc/gracefully_break)
 
-/datum/lift_master/tram/proc/find_starting_landmark()
-	var/obj/effect/landmark/tram/linked_landmark
-	for(var/obj/effect/landmark/tram/tram_landmark as anything in GLOB.tram_landmarks)
-		if(tram_landmark.destination_id == initial_id)
-			linked_landmark = tram_landmark
-			break
+/datum/lift_master/tram/check_for_landmarks(obj/structure/industrial_lift/tram/new_lift_platform)
+	. = ..()
+	for(var/turf/platform_loc as anything in new_lift_platform.locs)
+		var/obj/effect/landmark/tram/initial_destination = locate() in platform_loc
 
-	if(!linked_landmark)
-		CRASH("a tram was unable to link to a starting landmark because there was no landmark coinciding with its initial_id!")
+		if(initial_destination)
+			from_where = initial_destination
 
-	var/turf/landmark_turf = get_turf(linked_landmark)
-
-	if(!landmark_turf)
-		CRASH("a tram was unable to link to a starting landmark because the landmark was in nullspace!")
-
-	var/obj/structure/industrial_lift/linked_lift = locate() in landmark_turf
-
-	if(!linked_lift || !(linked_lift in lift_platforms))
-		CRASH("a tram was unable to link to a starting landmark because the landmark wasnt on the tram!")
-
-	from_where = linked_landmark
+/datum/lift_master/tram/proc/check_starting_landmark()
+	if(!from_where)
+		CRASH("a tram lift_master was initialized without any tram landmark to give it direction!")
 
 	SStramprocess.can_fire = TRUE
 
-	//ok we found it on our turf, now we know how we're orientated
 	return TRUE
 
 /**
