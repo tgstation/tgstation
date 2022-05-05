@@ -6,7 +6,6 @@
 			return TRUE
 	return FALSE
 
-
 /mob/living/proc/CanContractDisease(datum/disease/D)
 	if(stat == DEAD && !D.process_dead)
 		return FALSE
@@ -25,12 +24,10 @@
 
 	return TRUE
 
-
 /mob/living/proc/ContactContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return FALSE
 	D.try_infect(src)
-
 
 /mob/living/carbon/ContactContractDisease(datum/disease/D, target_zone)
 	if(!CanContractDisease(D))
@@ -55,8 +52,6 @@
 		target_zone = pick(head_ch;BODY_ZONE_HEAD,body_ch;BODY_ZONE_CHEST,hands_ch;BODY_ZONE_L_ARM,feet_ch;BODY_ZONE_L_LEG)
 	else
 		target_zone = check_zone(target_zone)
-
-
 
 	if(ismonkey(src))
 		var/mob/living/carbon/human/M = src
@@ -118,7 +113,6 @@
 		return
 	..()
 
-
 //Proc to use when you 100% want to try to infect someone (ignoreing protective clothing and such), as long as they aren't immune
 /mob/living/proc/ForceContractDisease(datum/disease/D, make_copy = TRUE, del_on_fail = FALSE)
 	if(!CanContractDisease(D))
@@ -130,7 +124,6 @@
 			qdel(D)
 		return FALSE
 	return TRUE
-
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
 	if(dna)
@@ -146,4 +139,6 @@
 	return !is_mouth_covered()
 
 /mob/living/carbon/CanSpreadAirborneDisease()
-	return !((head && (head.flags_cover & HEADCOVERSMOUTH) && (head.armor.getRating(BIO) >= 25)) || (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && (wear_mask.armor.getRating(BIO) >= 25)))
+	var/has_helmet_protection = (head && (head.flags_cover & HEADCOVERSMOUTH) && (head.clothing_flags & DISEASE_IMMUNITY))
+	var/has_mask_protection = (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && (wear_mask.clothing_flags & DISEASE_IMMUNITY))
+	return !(has_helmet_protection || has_mask_protection)
