@@ -13319,9 +13319,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
-"bPJ" = (
-/turf/closed/mineral/random/labormineral,
-/area/hallway/secondary/entry)
 "bPK" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -124985,7 +124982,7 @@ bWq
 piF
 heM
 bWT
-bPJ
+aeu
 bPP
 bUN
 bUN
@@ -125242,7 +125239,7 @@ bWz
 hpx
 cAE
 bSr
-bPJ
+aeu
 fIn
 bUN
 bUN
