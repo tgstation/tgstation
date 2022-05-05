@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - spellcheck: "Wound and combat messages will no longer mention the species of an attacked bodypart when not appropriate"
