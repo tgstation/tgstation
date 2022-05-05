@@ -32428,7 +32428,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/hallway/primary/tram/center)
+/area/hallway/primary/tram/tunnel)
 "kqc" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
@@ -47707,7 +47707,7 @@
 	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
-/area/hallway/primary/tram/center)
+/area/hallway/primary/tram/tunnel)
 "pRI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 6
@@ -61964,7 +61964,7 @@
 /obj/structure/holosign/barrier/atmos/sturdy,
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/vault,
-/area/hallway/primary/tram/left)
+/area/hallway/primary/tram/tunnel)
 "vdz" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
@@ -70605,7 +70605,7 @@
 	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
-/area/hallway/primary/tram/center)
+/area/hallway/primary/tram/tunnel)
 "ykb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
