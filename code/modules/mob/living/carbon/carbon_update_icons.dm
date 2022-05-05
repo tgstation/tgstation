@@ -85,7 +85,7 @@
 
 	if(on_fire || HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE))
 		var/fire_override = dna?.species.fire_overlay
-		fire_override |= "human"
+		fire_override ||= "human"
 		overlays_standing[FIRE_LAYER] = mutable_appearance('icons/mob/onfire.dmi', "[fire_override]_small_fire", -FIRE_LAYER, appearance_flags = RESET_COLOR)
 		if(fire_stacks > MOB_BIG_FIRE_STACK_THRESHOLD)
 			overlays_standing[SECONDARY_FIRE_LAYER] = mutable_appearance('icons/mob/onfire.dmi', "[fire_override]_big_fire", -SECONDARY_FIRE_LAYER, appearance_flags = RESET_COLOR)
