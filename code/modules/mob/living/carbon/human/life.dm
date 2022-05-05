@@ -163,11 +163,7 @@
 	if(dna)
 		. = dna.species.handle_fire(src, delta_time, times_fired) //do special handling based on the mob's species. TRUE = they are immune to the effects of the fire.
 
-	if(!last_fire_update)
-		last_fire_update = fire_stacks
-	if((fire_stacks > MOB_BIG_FIRE_STACK_THRESHOLD && last_fire_update <= MOB_BIG_FIRE_STACK_THRESHOLD) || (fire_stacks <= MOB_BIG_FIRE_STACK_THRESHOLD && last_fire_update > MOB_BIG_FIRE_STACK_THRESHOLD))
-		last_fire_update = fire_stacks
-		update_fire()
+	update_fire()
 
 
 /mob/living/carbon/human/proc/get_thermal_protection()
