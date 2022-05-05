@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Brains from HARS victims in a new HARS body will not be revivable anymore."

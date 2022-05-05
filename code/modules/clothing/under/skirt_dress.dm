@@ -55,21 +55,21 @@
 	desc = "A blue, casual skirt."
 	icon_state = "blueskirt"
 	inhand_icon_state = "b_suit"
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/clothing/under/dress/skirt/red
 	name = "red skirt"
 	desc = "A red, casual skirt."
 	icon_state = "redskirt"
 	inhand_icon_state = "r_suit"
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/clothing/under/dress/skirt/purple
 	name = "purple skirt"
 	desc = "A purple, casual skirt."
 	icon_state = "purpleskirt"
 	inhand_icon_state = "p_suit"
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/clothing/under/dress/skirt/plaid
 	name = "red plaid skirt"
@@ -78,7 +78,7 @@
 	inhand_icon_state = "plaid_red"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/clothing/under/dress/skirt/plaid/blue
 	name = "blue plaid skirt"

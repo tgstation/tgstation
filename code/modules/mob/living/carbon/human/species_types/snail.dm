@@ -1,7 +1,6 @@
 /datum/species/snail
 	name = "Snailperson"
 	id = SPECIES_SNAIL
-	offset_features = list(OFFSET_GLASSES = list(0,4))
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,

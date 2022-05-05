@@ -1507,11 +1507,12 @@
 	L.SetSleeping(10)
 	return ..()
 
-/datum/reagent/healium/on_mob_life(mob/living/L, delta_time, times_fired)
-	. = ..()
-	L.adjustFireLoss(-2 * REM * delta_time, FALSE)
-	L.adjustToxLoss(-5 * REM * delta_time, FALSE)
-	L.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+/datum/reagent/healium/on_mob_life(mob/living/breather, delta_time, times_fired)
+	breather.adjustFireLoss(-2 * REM * delta_time, FALSE)
+	breather.adjustToxLoss(-5 * REM * delta_time, FALSE)
+	breather.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+	..()
+	return TRUE
 
 /datum/reagent/halon
 	name = "Halon"
@@ -2262,7 +2263,8 @@
 	. = ..()
 	if(!istype(exposed_turf))
 		return
-	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 5 SECONDS) //50 deciseconds per unit
+	// We want one spray of this stuff (5u) to take out a wet floor. Feels better that way
+	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 10 SECONDS)
 
 /datum/reagent/drying_agent/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()

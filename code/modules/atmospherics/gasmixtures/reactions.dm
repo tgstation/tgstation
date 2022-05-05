@@ -352,7 +352,7 @@
 
 	var/energy_released = FIRE_TRITIUM_ENERGY_RELEASED * burned_fuel * effect_scale
 	if(location && burned_fuel > TRITIUM_RADIATION_MINIMUM_MOLES && energy_released > TRITIUM_RADIATION_RELEASE_THRESHOLD * (air.volume / CELL_VOLUME) ** ATMOS_RADIATION_VOLUME_EXP && prob(10))
-		radiation_pulse(location, max_range = min(TRITIUM_MINIMUM_RADIATION_RANGE + sqrt(burned_fuel * effect_scale / TRITIUM_OXYBURN_MULTIPLIER) / TRITIUM_RADIATION_RANGE_DIVISOR, 20), threshold = TRITIUM_RADIATION_THRESHOLD_BASE * INVERSE(TRITIUM_RADIATION_THRESHOLD_BASE + (burned_fuel * effect_scale / TRITIUM_OXYBURN_MULTIPLIER)), chance = 100 * (1 - 0.5 ** (energy_released / TRITIUM_RADIATION_CHANCE_ENERGY_THRESHOLD_BASE)))
+		radiation_pulse(location, max_range = min(sqrt(burned_fuel * effect_scale / TRITIUM_OXYBURN_MULTIPLIER) / TRITIUM_RADIATION_RANGE_DIVISOR, GAS_REACTION_MAXIMUM_RADIATION_PULSE_RANGE), threshold = TRITIUM_RADIATION_THRESHOLD_BASE * INVERSE(TRITIUM_RADIATION_THRESHOLD_BASE + (burned_fuel * effect_scale / TRITIUM_OXYBURN_MULTIPLIER)))
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -792,7 +792,8 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	air.assert_gases(/datum/gas/hypernoblium, /datum/gas/bz)
-	cached_gases[/datum/gas/tritium][MOLES] -= 5 * nob_formed
+	var/reduction_factor = clamp(cached_gases[/datum/gas/tritium][MOLES]/(cached_gases[/datum/gas/tritium][MOLES] + cached_gases[/datum/gas/bz][MOLES]), 0.001 , 1) //reduces trit consumption in presence of bz upward to 0.1% reduction
+	cached_gases[/datum/gas/tritium][MOLES] -= 5 * nob_formed * reduction_factor
 	cached_gases[/datum/gas/nitrogen][MOLES] -= 10 * nob_formed
 	cached_gases[/datum/gas/hypernoblium][MOLES] += nob_formed // I'm not going to nitpick, but N20H10 feels like it should be an explosive more than anything.
 	SET_REACTION_RESULTS(nob_formed)
@@ -804,46 +805,6 @@
 
 
 // Halon
-
-/**
- * Halon Formation:
- *
- * Exothermic
- */
-/datum/gas_reaction/halon_formation
-	priority_group = PRIORITY_FORMATION
-	name = "Halon Formation"
-	id = "halon_formation"
-	desc = "Production of halon from BZ and tritium."
-
-/datum/gas_reaction/halon_formation/init_reqs()
-	requirements = list(
-		/datum/gas/bz = MINIMUM_MOLE_COUNT,
-		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
-		"MIN_TEMP" = HALON_FORMATION_MIN_TEMPERATURE,
-		"MAX_TEMP" = HALON_FORMATION_MAX_TEMPERATURE,
-	)
-
-/datum/gas_reaction/halon_formation/react(datum/gas_mixture/air, datum/holder)
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-	var/heat_efficency = min(temperature * 0.01, cached_gases[/datum/gas/tritium][MOLES] * INVERSE(4), cached_gases[/datum/gas/bz][MOLES] * INVERSE(0.25))
-	if (heat_efficency <= 0 || (cached_gases[/datum/gas/tritium][MOLES] - heat_efficency * 4 < 0 ) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
-		return NO_REACTION
-
-	var/old_heat_capacity = air.heat_capacity()
-	ASSERT_GAS(/datum/gas/halon, air)
-	cached_gases[/datum/gas/tritium][MOLES] -= heat_efficency * 4
-	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.25
-	cached_gases[/datum/gas/halon][MOLES] += heat_efficency * 4.25
-
-	SET_REACTION_RESULTS(heat_efficency * 4.25)
-	var/energy_released = heat_efficency * HALON_FORMATION_ENERGY
-	var/new_heat_capacity = air.heat_capacity()
-	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max(((temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)
-	return REACTING
-
 
 /**
  * Halon Combustion:
@@ -1129,7 +1090,7 @@
 	else if(isatom(holder))
 		location = holder
 	if (location && energy_released > PN_BZASE_RAD_RELEASE_THRESHOLD * (air.volume / CELL_VOLUME) ** ATMOS_RADIATION_VOLUME_EXP)
-		radiation_pulse(location, max_range = min(sqrt(produced_amount) / PN_TRITIUM_RAD_RANGE_DIVISOR, 20), threshold = PN_TRITIUM_RAD_THRESHOLD_BASE * INVERSE(PN_TRITIUM_RAD_THRESHOLD_BASE + produced_amount), chance = 50)
+		radiation_pulse(location, max_range = min(sqrt(produced_amount) / PN_TRITIUM_RAD_RANGE_DIVISOR, GAS_REACTION_MAXIMUM_RADIATION_PULSE_RANGE), threshold = PN_TRITIUM_RAD_THRESHOLD_BASE * INVERSE(PN_TRITIUM_RAD_THRESHOLD_BASE + produced_amount))
 
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
@@ -1181,7 +1142,7 @@
 	else if(isatom(holder))
 		location = holder
 	if (location && energy_released > PN_TRITIUM_CONVERSION_RAD_RELEASE_THRESHOLD * (air.volume / CELL_VOLUME) ** ATMOS_RADIATION_VOLUME_EXP)
-		radiation_pulse(location, max_range = min(sqrt(consumed_amount) / PN_BZASE_RAD_RANGE_DIVISOR, 20), threshold = PN_BZASE_RAD_THRESHOLD_BASE * INVERSE(PN_BZASE_RAD_THRESHOLD_BASE + consumed_amount), chance = 50)
+		radiation_pulse(location, max_range = min(sqrt(consumed_amount) / PN_BZASE_RAD_RANGE_DIVISOR, GAS_REACTION_MAXIMUM_RADIATION_PULSE_RANGE), threshold = PN_BZASE_RAD_THRESHOLD_BASE * INVERSE(PN_BZASE_RAD_THRESHOLD_BASE + consumed_amount))
 		for(var/mob/living/carbon/L in location)
 			L.hallucination += consumed_amount
 

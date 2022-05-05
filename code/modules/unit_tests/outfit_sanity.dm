@@ -3,10 +3,21 @@
 	/* We don't check the result of equip_to_slot_or_del because it returns false for random jumpsuits, as they delete themselves on init */ \
 	var/obj/item/outfit_item = H.get_item_by_slot(##slot_name); \
 	if (!outfit_item) { \
-		Fail("[outfit.name]'s [#outfit_key] is invalid! Could not equip a [outfit.##outfit_key] into that slot."); \
+		TEST_FAIL("[outfit.name]'s [#outfit_key] is invalid! Could not equip a [outfit.##outfit_key] into that slot."); \
 	} \
 	outfit_item.on_outfit_equip(H, FALSE, ##slot_name); \
 }
+
+/// See #66313 and #60901. outfit_sanity used to runtime whenever you had two mergable sheets in either hand. Previously, this only had a 3% chance of occuring. Now 100%.
+/datum/outfit/stacks_in_hands
+	name = "Mr. Runtime"
+
+	uniform = /obj/item/clothing/under/suit/tuxedo
+	glasses = /obj/item/clothing/glasses/sunglasses
+	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	shoes = /obj/item/clothing/shoes/laceup
+	l_hand = /obj/item/stack/spacecash/c1000
+	r_hand = /obj/item/stack/spacecash/c1000
 
 /datum/unit_test/outfit_sanity/Run()
 	var/mob/living/carbon/human/H = allocate(/mob/living/carbon/human)
@@ -46,6 +57,6 @@
 				var/number = backpack_contents[path] || 1
 				for (var/_ in 1 to number)
 					if (!H.equip_to_slot_or_del(new path(H), ITEM_SLOT_BACKPACK, TRUE))
-						Fail("[outfit.name]'s backpack_contents are invalid! Couldn't add [path] to backpack.")
+						TEST_FAIL("[outfit.name]'s backpack_contents are invalid! Couldn't add [path] to backpack.")
 
 #undef CHECK_OUTFIT_SLOT
