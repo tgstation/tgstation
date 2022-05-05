@@ -10,8 +10,7 @@
 	icon = null
 	icon_state = null
 
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	///A flag that describes this device type
 	var/hardware_flag = 0
 	///Power usage during last tick

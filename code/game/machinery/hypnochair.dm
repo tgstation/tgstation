@@ -115,6 +115,8 @@
 			"...an annoying buzz in your ears..."\
 		)]</span>")
 
+	use_power(active_power_usage * delta_time)
+
 /obj/machinery/hypnochair/proc/finish_interrogation()
 	interrogating = FALSE
 	STOP_PROCESSING(SSobj, src)
@@ -153,17 +155,17 @@
 		switch(time_diff)
 			if(0 to 100)
 				victim.add_confusion(10)
-				victim.Dizzy(100)
+				victim.set_timed_status_effect(200 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 				victim.blur_eyes(5)
 			if(101 to 200)
 				victim.add_confusion(15)
-				victim.Dizzy(200)
+				victim.set_timed_status_effect(400 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 				victim.blur_eyes(10)
 				if(prob(25))
 					victim.apply_status_effect(/datum/status_effect/trance, rand(50,150), FALSE)
 			if(201 to INFINITY)
 				victim.add_confusion(20)
-				victim.Dizzy(300)
+				victim.set_timed_status_effect(600 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 				victim.blur_eyes(15)
 				if(prob(65))
 					victim.apply_status_effect(/datum/status_effect/trance, rand(50,150), FALSE)

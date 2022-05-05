@@ -35,3 +35,6 @@
 
 /obj/effect/projectile/muzzle/solar
 	icon_state = "muzzle_solar"
+
+/obj/effect/projectile/muzzle/sniper
+	icon_state = "sniper"

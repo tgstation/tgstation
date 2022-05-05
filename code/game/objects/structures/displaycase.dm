@@ -533,7 +533,7 @@
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 			toggle_lock()
 			return
-	if(istype(I, /obj/item/pda))
+	if(istype(I, /obj/item/modular_computer))
 		return TRUE
 	SStgui.update_uis(src)
 	. = ..()

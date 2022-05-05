@@ -291,10 +291,8 @@
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
 	if(data["misc"] >= (25 SECONDS)) // 10 units
-		if(!M.stuttering)
-			M.stuttering = 1
-		M.stuttering = min(M.stuttering + (2 * delta_time), 10)
-		M.Dizzy(5)
+		M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
+		M.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
 			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
 			if(prob(10))
@@ -307,7 +305,7 @@
 			M.mind.remove_antag_datum(/datum/antagonist/cult)
 			M.Unconscious(100)
 		M.jitteriness = 0
-		M.stuttering = 0
+		M.remove_status_effect(/datum/status_effect/speech/stutter)
 		holder.remove_reagent(type, volume) // maybe this is a little too perfect and a max() cap on the statuses would be better??
 		return
 	holder.remove_reagent(type, 1 * REAGENTS_METABOLISM * delta_time) //fixed consumption to prevent balancing going out of whack
@@ -499,7 +497,7 @@
 							break
 				if(ReadHSV(newcolor)[3] >= ReadHSV("#7F7F7F")[3])
 					exposed_human.dna.features["mcolor"] = newcolor
-			exposed_human.regenerate_icons()
+			exposed_human.update_body(is_creating = TRUE)
 
 		if((methods & INGEST) && show_message)
 			to_chat(exposed_mob, span_notice("That tasted horrible."))
@@ -521,7 +519,7 @@
 			N.skin_tone = "orange"
 		else if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "#ff8800"
-		N.regenerate_icons()
+		N.update_body(is_creating = TRUE)
 		if(DT_PROB(3.5, delta_time))
 			if(N.w_uniform)
 				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
@@ -1231,7 +1229,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/cryptobiolin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.Dizzy(1)
+	M.set_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 	M.set_confusion(clamp(M.get_confusion(), 1, 20))
 	..()
 
@@ -1509,11 +1507,12 @@
 	L.SetSleeping(10)
 	return ..()
 
-/datum/reagent/healium/on_mob_life(mob/living/L, delta_time, times_fired)
-	. = ..()
-	L.adjustFireLoss(-2 * REM * delta_time, FALSE)
-	L.adjustToxLoss(-5 * REM * delta_time, FALSE)
-	L.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+/datum/reagent/healium/on_mob_life(mob/living/breather, delta_time, times_fired)
+	breather.adjustFireLoss(-2 * REM * delta_time, FALSE)
+	breather.adjustToxLoss(-5 * REM * delta_time, FALSE)
+	breather.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+	..()
+	return TRUE
 
 /datum/reagent/halon
 	name = "Halon"
@@ -2264,7 +2263,8 @@
 	. = ..()
 	if(!istype(exposed_turf))
 		return
-	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 5 SECONDS) //50 deciseconds per unit
+	// We want one spray of this stuff (5u) to take out a wet floor. Feels better that way
+	exposed_turf.MakeDry(ALL, TRUE, reac_volume * 10 SECONDS)
 
 /datum/reagent/drying_agent/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -2499,8 +2499,7 @@
 /datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.get_confusion() < 6)
 		M.set_confusion(clamp(M.get_confusion() + (3 * REM * delta_time), 0, 5))
-	if(M.dizziness < 6)
-		M.dizziness = clamp(M.dizziness + (3 * REM * delta_time), 0, 5)
+	M.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/dizziness, max_duration = 12 SECONDS)
 	if(DT_PROB(10, delta_time))
 		to_chat(M, "You feel confused and disoriented.")
 	..()

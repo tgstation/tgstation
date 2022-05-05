@@ -46,7 +46,7 @@
 
 	if(owner.health > owner.crit_threshold && prob(4))
 		owner.Jitter(10)
-		owner.Dizzy(5)
+		owner.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		owner.hallucination = min(owner.hallucination + 3, 24)
 
 	if(prob(2))
@@ -103,4 +103,4 @@
 			bloodiest_wound = iter_wound
 
 	if(bloodiest_wound)
-		bloodiest_wound.blood_flow = max(0, bloodiest_wound.blood_flow - 0.5)
+		bloodiest_wound.set_blood_flow(max(0, bloodiest_wound.blood_flow - 0.5))

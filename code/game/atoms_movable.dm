@@ -842,7 +842,7 @@
 	var/turf/our_turf = get_turf(src)
 
 	if(our_turf && SSspatial_grid.initialized)
-		SSspatial_grid.exit_cell(src, our_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
+		SSspatial_grid.remove_single_contents_type(src, our_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 	else if(our_turf && !SSspatial_grid.initialized)
 		SSspatial_grid.remove_from_pre_init_queue(src, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 
