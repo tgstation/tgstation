@@ -199,7 +199,7 @@ at the cost of risking a vicious bite.**/
 	update_icon()
 	visible_message("<span class='warning'>You start feeling horrible...</span>")
 	for(var/mob/living/mob in viewers(7, src))
-		mob.Dizzy(10)
+		mob.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 	addtimer(CALLBACK(src, .proc/pants_create), ALTAR_TIME)
 
 /obj/structure/destructible/cult/pants_altar/proc/pants_create()
