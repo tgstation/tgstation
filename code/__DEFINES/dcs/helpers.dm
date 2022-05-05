@@ -20,9 +20,3 @@
 
 /// A wrapper for _LoadComponent that allows us to pretend we're using normal named arguments
 #define LoadComponent(arguments...) _LoadComponent(list(##arguments))
-
-/atom/proc/dcs_usage()
-
-/proc/list_usage(list/input_list)
-
-/proc/is_assoc_element(list/input_list, index)
