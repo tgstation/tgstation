@@ -365,6 +365,7 @@
 	if(can_be_disabled)
 		update_disabled()
 
+	new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, /proc/cmp_bodypart_by_body_part_asc)
 	synchronize_bodytypes(new_limb_owner)
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()

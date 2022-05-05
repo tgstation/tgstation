@@ -274,7 +274,6 @@
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
-	bodyparts = sort_list(bodyparts, /proc/cmp_bodypart_by_body_part_asc)
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb in needs_update) //Checks to see if the limb needs to be redrawn
 			var/bodypart_icon = limb.get_limb_icon()
