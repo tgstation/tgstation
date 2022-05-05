@@ -83,20 +83,23 @@
  * One important thing to note however is that the movement of the client's eye is handled by the relaymove() proc in /obj/machinery/atmospherics.
  * We move first and then call update. Dont flip this around
  */
-// LEMON TODO
-// Make bright things darker when in the pipes
-// Maybe add a halo?
-// Fix directional input weirdness
-// Smooth movement (is it possible?)
-// Slow down the mob a bit
 /mob/living/proc/update_pipe_vision(full_refresh = FALSE)
+	// We're gonna color the lighting plane to make it darker while ventcrawling, so things look nicer
+	var/atom/movable/screen/plane_master/lighting
+	if(hud_used)
+		lighting = hud_used?.plane_masters["[LIGHTING_PLANE]"]
+
 	// Take away all the pipe images if we're not doing anything with em
 	if(isnull(client) || !HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) || !istype(loc, /obj/machinery/atmospherics) || !(movement_type & VENTCRAWLING))
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
 		pipes_shown.len = 0
 		pipetracker = null
+		lighting?.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#4d4d4d")
 		return
+
+	// This is a bit hacky but it makes the background darker, which has a nice effect
+	lighting?.add_atom_colour("#4d4d4d", TEMPORARY_COLOUR_PRIORITY)
 
 	var/obj/machinery/atmospherics/current_location = loc
 	var/list/our_pipenets = current_location.return_pipenets()
