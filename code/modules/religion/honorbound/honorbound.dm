@@ -37,11 +37,12 @@
 	They will become honorbound like you, and you will gain a massive favor boost!"
 	ritual_length = 30 SECONDS
 	ritual_invocations = list(
-	"A good, honorable crusade against evil is required.",
-	"We need the righteous ...",
-	"... the unflinching ...",
-	"... and the just.",
-	"Sinners must be silenced ...",)
+		"A good, honorable crusade against evil is required.",
+		"We need the righteous ...",
+		"... the unflinching ...",
+		"... and the just.",
+		"Sinners must be silenced ...",
+	)
 	invoke_msg = "... And the code must be upheld!"
 	///the invited crusader
 	var/mob/living/carbon/human/new_crusader

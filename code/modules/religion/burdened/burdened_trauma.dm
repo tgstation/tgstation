@@ -11,7 +11,7 @@
 	var/burden_level = 0
 
 /datum/brain_trauma/special/burdened/on_gain()
-	..()
+	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/organ_added_burden)
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/organ_removed_burden)
 
@@ -40,7 +40,7 @@
 		COMSIG_CARBON_GAIN_TRAUMA,
 		COMSIG_CARBON_LOSE_TRAUMA,
 		))
-	..()
+	return ..()
 
 /**
  * Called by hooked signals whenever burden_level var needs to go up or down by 1.
@@ -53,6 +53,7 @@
 	var/datum/dna/dna = owner?.dna
 	if(!dna)
 		qdel(src)
+		return
 	//adjust burden
 	burden_level = increase ? burden_level + 1 : burden_level - 1
 	if(burden_level < 0) //basically a clamp with a stack on it, because this shouldn't be happening
