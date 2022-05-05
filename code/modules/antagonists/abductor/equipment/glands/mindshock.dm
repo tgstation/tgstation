@@ -4,7 +4,7 @@
 	cooldown_high = 700
 	uses = -1
 	icon_state = "mindshock"
-	mind_control_uses = 1
+	mind_control_uses = 2
 	mind_control_duration = 1200
 	var/list/mob/living/carbon/human/broadcasted_mobs = list()
 
