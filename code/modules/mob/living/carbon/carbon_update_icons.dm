@@ -303,24 +303,23 @@
  * Necessary so that we can ensure that modifications of legs cause overlay updates.
  */
 /mob/living/carbon/proc/update_legs(obj/item/bodypart/r_leg/right_leg, obj/item/bodypart/l_leg/left_leg, old_left_leg_key)
-	var/list/left_leg_icon // yes it's actually a list, bet you didn't expect that, now did you?
+	var/list/left_leg_icons // yes it's actually a list, bet you didn't expect that, now did you?
 	var/legs_need_redrawn = FALSE
 	if(left_leg)
-		// We regenerate the look of the left legif it isn't already cached, we don't if not.
+		// We regenerate the look of the left leg if it isn't already cached, we don't if not.
 		if(!(icon_render_keys[left_leg.body_zone] == old_left_leg_key))
-			left_leg_icon = left_leg.get_limb_icon()
-			limb_icon_cache[icon_render_keys[left_leg.body_zone]] = left_leg_icon
+			limb_icon_cache[icon_render_keys[left_leg.body_zone]] = left_leg.get_limb_icon()
 			legs_need_redrawn = TRUE
-		else
-			left_leg_icon = limb_icon_cache[icon_render_keys[left_leg.body_zone]]
+
+		left_leg_icons = limb_icon_cache[icon_render_keys[left_leg.body_zone]]
 
 	if(right_leg)
 		var/old_right_leg_key = icon_render_keys?[right_leg.body_zone]
 		var/left_leg_mask_key = left_leg?.generate_mask_key().Join() // We generate a new mask key, to see if it changed.
 		right_leg.left_leg_mask_key = left_leg ? left_leg_mask_key : null
 		// We regenerate the left_leg_mask in case that it doesn't exist yet.
-		if(left_leg_mask_key && !right_leg.left_leg_mask_cache[left_leg_mask_key] && left_leg_icon)
-			right_leg.left_leg_mask_cache[left_leg_mask_key] = generate_left_leg_mask(left_leg_icon[1], left_leg_mask_key)
+		if(left_leg_mask_key && !right_leg.left_leg_mask_cache[left_leg_mask_key] && left_leg_icons)
+			right_leg.left_leg_mask_cache[left_leg_mask_key] = generate_left_leg_mask(left_leg_icons[1], left_leg_mask_key)
 		// We generate a new icon_render_key, which also takes into account the left_leg_mask_key so we cache the masked versions of the limbs too.
 		icon_render_keys[right_leg.body_zone] = right_leg.is_husked ? right_leg.generate_husk_key().Join() : right_leg.generate_icon_key().Join()
 
