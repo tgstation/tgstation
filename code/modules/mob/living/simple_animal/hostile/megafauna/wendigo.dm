@@ -211,7 +211,7 @@ Difficulty: Hard
 	animate(src, pixel_z = rand(5, 15), time = 1, loop = 20)
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/dizzy_target in get_hearers_in_view(7, src) - src)
-		dizzy_target.Dizzy(6)
+		dizzy_target.set_timed_status_effect(12 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		to_chat(dizzy_target, span_danger("The wendigo screams loudly!"))
 	SLEEP_CHECK_DEATH(1 SECONDS, src)
 	spiral_attack()
