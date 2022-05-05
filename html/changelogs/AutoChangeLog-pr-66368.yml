@@ -1,5 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - server: "Admin ranks can now be combined with a plus sign (for example, Game Master+Coder). Single admin ranks with a plus sign in their name are no longer supported."
-  - server: "You can no longer edit rank permissions, temporarily or permanently, from the permissions panel. Please use the admin_ranks database table or admin_ranks.txt instead."
