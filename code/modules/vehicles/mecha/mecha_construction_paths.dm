@@ -295,6 +295,8 @@
 	var/on_valid_step = FALSE
 
 	while (!on_valid_step)
+		// Offset the next number if it's a backwards step
+		// to ensure we're checking the correct next step
 		var/next_step = forward ? message_step : (message_step - 1)
 
 		// Some variables for what step we're on to keep the if statements reasonably long
@@ -323,6 +325,9 @@
 
 	skip_extra_steps(diff, forward)
 
+	// An offset is used to condense the printing of messages:
+	// When we advance a step, we display the message (i.e. step 1) and move to the next step (2)
+	// When we move back a step, we decrement the step (step 2 to 1) and then print the backwards message for that step
 	var/curr_step = forward ? message_step : (message_step - 1)
 
 	switch(curr_step)
