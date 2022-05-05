@@ -9,9 +9,9 @@
 		var/is_lone = initial(ruleset.flags) & (LONE_RULESET | HIGH_IMPACT_RULESET)
 
 		if (has_scaling_cost && is_lone)
-			Fail("[ruleset] has a scaling_cost, but is also a lone/highlander ruleset.")
+			TEST_FAIL("[ruleset] has a scaling_cost, but is also a lone/highlander ruleset.")
 		else if (!has_scaling_cost && !is_lone)
-			Fail("[ruleset] has no scaling cost, but is also not a lone/highlander ruleset.")
+			TEST_FAIL("[ruleset] has no scaling cost, but is also not a lone/highlander ruleset.")
 
 /// Verifies that dynamic rulesets have unique antag_flag.
 /datum/unit_test/dynamic_unique_antag_flags
@@ -26,11 +26,11 @@
 		var/antag_flag = initial(ruleset.antag_flag)
 
 		if (isnull(antag_flag))
-			Fail("[ruleset] has a null antag_flag!")
+			TEST_FAIL("[ruleset] has a null antag_flag!")
 			continue
 
 		if (antag_flag in known_antag_flags)
-			Fail("[ruleset] has a non-unique antag_flag [antag_flag] (used by [known_antag_flags[antag_flag]])!")
+			TEST_FAIL("[ruleset] has a non-unique antag_flag [antag_flag] (used by [known_antag_flags[antag_flag]])!")
 			continue
 
 		known_antag_flags[antag_flag] = ruleset

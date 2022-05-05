@@ -32,7 +32,7 @@
 				affected_mob.adjust_timed_status_effect(14 SECONDS, /datum/status_effect/speech/slurring/drunk)
 
 			if(DT_PROB(7, delta_time))
-				affected_mob.Dizzy(10)
+				affected_mob.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 
 			if(DT_PROB(2.5, delta_time))
 				to_chat(affected_mob, span_warning(pick("You feel pain shoot down your legs!", "You feel like you are going to pass out at any moment.", "You feel really dizzy.")))

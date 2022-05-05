@@ -4,9 +4,9 @@
 	if(unique_name)
 		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medhud.add_to_hud(src)
+	medhud.add_atom_to_hud(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -833,7 +833,6 @@
 	bodytemperature = get_body_temp_normal(apply_change=FALSE)
 	set_blindness(0)
 	set_blurriness(0)
-	set_dizziness(0)
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
@@ -842,7 +841,6 @@
 	extinguish_mob()
 	fire_stacks = 0
 	set_confusion(0)
-	dizziness = 0
 	set_drowsyness(0)
 	jitteriness = 0
 	stop_sound_channel(CHANNEL_HEARTBEAT)
