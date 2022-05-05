@@ -2,7 +2,7 @@
 
 /area/station/
 	name = "Station Areas"
-	icon = 'icons/turf/areas/areas_station.dmi'
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "station"
 
 //Maintenance
@@ -830,7 +830,7 @@
 
 /area/construction
 	name = "\improper Construction Area"
-	icon = 'icons/turf/areas/areas_station.dmi'
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "construction"
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_STANDARD_STATION

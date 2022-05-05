@@ -4,7 +4,7 @@
 
 /area/CATEGORY/OR/DESCRIPTOR/NAME   (you can make as many subdivisions as you want)
 	name = "NICE NAME" (not required but makes things really nice)
-	icon = 'ICON FILENAME' (defaults to 'icons/turf/areas_misc.dmi')
+	icon = 'ICON FILENAME' (defaults to 'icons/area_misc.dmi')
 	icon_state = "NAME OF ICON" (defaults to "unknown" (blank))
 	requires_power = FALSE (defaults to true)
 	ambience_index = AMBIENCE_GENERIC   (picks the ambience from an assoc list in ambience.dm)
@@ -60,7 +60,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/asteroid
 	name = "\improper Asteroid"
-	icon = 'icons/turf/areas/areas_centcom.dmi'
+	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "asteroid"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY

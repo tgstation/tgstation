@@ -7,7 +7,7 @@
 
 /area/centcom
 	name = "CentCom"
-	icon = 'icons/turf/areas/areas_centcom.dmi'
+	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "centcom"
 	static_lighting = TRUE
 	requires_power = FALSE
@@ -122,7 +122,7 @@
 
 /area/tdome
 	name = "Thunderdome"
-	icon = 'icons/turf/areas/areas_centcom.dmi'
+	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "thunder"
 	static_lighting = TRUE
 	requires_power = FALSE
@@ -165,7 +165,7 @@
 //Wizard
 /area/wizard_station
 	name = "Wizard's Den"
-	icon = 'icons/turf/areas/areas_centcom.dmi'
+	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "wizards_den"
 	static_lighting = TRUE
 	requires_power = FALSE
@@ -177,7 +177,7 @@
 //Abductors
 /area/abductor_ship
 	name = "Abductor Ship"
-	icon = 'icons/turf/areas/areas_centcom.dmi'
+	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "abductor_ship"
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | NOTELEPORT
@@ -190,7 +190,7 @@
 //Syndicates
 /area/syndicate_mothership
 	name = "Syndicate Mothership"
-	icon = 'icons/turf/areas/areas_centcom.dmi'
+	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "syndie-ship"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
@@ -235,7 +235,7 @@
 
 /area/ctf
 	name = "Capture the Flag"
-	icon = 'icons/turf/areas/areas_centcom.dmi'
+	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "ctf"
 	requires_power = FALSE
 	static_lighting = FALSE
