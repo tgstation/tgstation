@@ -71,9 +71,9 @@
 	if(ownerlimb)
 		ownerlimb.external_organs.Remove(src)
 		ownerlimb.contents.Remove(src)
-		ownerlimb = null
-		if(external_bodytypes)
+		if(external_bodytypes) //Happens after removal from contents, and before ownerlimb is null.
 			ownerlimb.synchronize_bodytypes(organ_owner)
+		ownerlimb = null
 
 	organ_owner.update_body_parts()
 
