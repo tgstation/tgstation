@@ -15,16 +15,19 @@
 	for(var/mob/living/carbon/H in orange(4,T))
 		if(H == owner)
 			continue
-		switch(pick(1,3))
-			if(1)
-				to_chat(H, span_userdanger("You hear a loud buzz in your head, silencing your thoughts!"))
-				H.Stun(50)
-			if(2)
-				to_chat(H, span_warning("You hear an annoying buzz in your head."))
-				H.add_confusion(15)
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
-			if(3)
-				H.hallucination += 60
+		if(!HAS_TRAIT(H, TRAIT_MINDSHIELD))
+			switch(pick(1,3))
+				if(1)
+					to_chat(H, span_userdanger("You hear a loud buzz in your head, silencing your thoughts!"))
+					H.Stun(50)
+				if(2)
+					to_chat(H, span_warning("You hear an annoying buzz in your head."))
+					H.add_confusion(15)
+					H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
+				if(3)
+					H.hallucination += 60
+		else
+			to_chat(H, span_notice("You hear a faint hum behind you, for just a moment."))
 
 /obj/item/organ/heart/gland/mindshock/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
@@ -47,6 +50,8 @@
 
 			var/atom/movable/screen/alert/mind_control/mind_alert = H.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
 			mind_alert.command = command
+		else
+			to_chat(H, span_notice("You hear a low drone as something foreign attempts to enter your mind, but the noise fades after a few moments."))
 
 	if(LAZYLEN(broadcasted_mobs))
 		active_mind_control = TRUE
