@@ -388,9 +388,6 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return TRUE
 
-
-	return intersecting_cell
-
 ///find the cell this movable is associated with and removes it from all lists
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
 	if(!initialized)
