@@ -9,6 +9,6 @@
 	for(var/datum/species/species as anything in subtypesof(/datum/species))
 		var/species_id = initial(species.id)
 		if(gathered_species_ids[species_id])
-			Fail("Duplicate species ID! [species_id] is not unique to a single species.")
+			TEST_FAIL("Duplicate species ID! [species_id] is not unique to a single species.")
 		else
 			gathered_species_ids[species_id] = TRUE

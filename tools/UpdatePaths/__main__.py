@@ -12,9 +12,11 @@ Replacement syntax example:
     /turf/open/floor/iron/warningline : /obj/effect/turf_decal {dir = @OLD ;tag = @SKIP;icon_state = @SKIP}
     /turf/open/floor/iron/warningline : /obj/effect/turf_decal {@OLD} , /obj/thing {icon_state = @OLD:name; name = "meme"}
     /turf/open/floor/iron/warningline{dir=2} : /obj/thing
+    /obj/effect/landmark/start/virologist : @DELETE
 Syntax for subtypes also exist, to update a path's type but maintain subtypes:
     /obj/structure/closet/crate/@SUBTYPES : /obj/structure/new_box/@SUBTYPES {@OLD}
 New paths properties:
+    @DELETE - if used as new path name the old path will be deleted
     @OLD - if used as property name copies all modified properties from original path to this one
     property = @SKIP - will not copy this property through when global @OLD is used.
     property = @OLD - will copy this modified property from original object even if global @OLD is not used
@@ -97,6 +99,10 @@ def update_path(dmm_data, replacement_string, verbose=False):
         for new_path, new_props in new_paths:
             if new_path == "@OLD":
                 out = match.group('path')
+            elif new_path == "@DELETE":
+                if verbose:
+                    print("Deleting match : {0}".format(match.group(0)))
+                return [None]
             elif new_path.endswith("/@SUBTYPES"):
                 path_start = new_path[:-len("/@SUBTYPES")]
                 out = path_start + match.group('subtype')
@@ -135,7 +141,7 @@ def update_path(dmm_data, replacement_string, verbose=False):
     keys = list(dmm_data.dictionary.keys())
     for definition_key in keys:
         def_value = dmm_data.dictionary[definition_key]
-        new_value = tuple(y for x in def_value for y in get_result(x))
+        new_value = tuple(y for x in def_value for y in get_result(x) if y != None)
         if new_value != def_value:
             dmm_data.overwrite_key(definition_key, new_value, bad_keys)
     dmm_data.reassign_bad_keys(bad_keys)

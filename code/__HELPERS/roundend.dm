@@ -716,7 +716,7 @@
 	var/list/sql_admins = list()
 	for(var/i in GLOB.protected_admins)
 		var/datum/admins/A = GLOB.protected_admins[i]
-		sql_admins += list(list("ckey" = A.target, "rank" = A.rank.name))
+		sql_admins += list(list("ckey" = A.target, "rank" = A.rank_names()))
 	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
 	var/datum/db_query/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()
@@ -743,7 +743,7 @@
 			if (!admin)
 				continue
 
-		file_data["admins"][admin_ckey] = admin.rank.name
+		file_data["admins"][admin_ckey] = admin.rank_names()
 
 		if (admin.owner)
 			file_data["connections"][admin_ckey] = list(
