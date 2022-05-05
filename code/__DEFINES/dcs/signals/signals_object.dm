@@ -285,6 +285,9 @@
 
 // /obj/item/gun signals
 
+///called in /obj/item/gun/fire_gun (user, target, flag, params)
+#define COMSIG_GUN_TRY_FIRE "gun_try_fire"
+	#define COMPONENT_CANCEL_GUN_FIRE (1<<0)
 ///called in /obj/item/gun/process_fire (src, target, params, zone_override)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
@@ -334,9 +337,20 @@
 ///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"
 	#define COMPONENT_EMBED_SUCCESS (1<<1)
+// FROM [/obj/item/proc/updateEmbedding] sent when an item's embedding properties are changed : ()
+#define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
+
+// /obj/vehicle/sealed/car/vim signals
+
+///from /datum/action/vehicle/sealed/noise/chime/Trigger(): ()
+#define COMSIG_VIM_CHIME_USED "vim_chime_used"
+///from /datum/action/vehicle/sealed/noise/buzz/Trigger(): ()
+#define COMSIG_VIM_BUZZ_USED "vim_buzz_used"
+///from /datum/action/vehicle/sealed/headlights/vim/Trigger(): (headlights_on)
+#define COMSIG_VIM_HEADLIGHTS_TOGGLED "vim_headlights_toggled"
 
 // /obj/vehicle/sealed/mecha signals
 

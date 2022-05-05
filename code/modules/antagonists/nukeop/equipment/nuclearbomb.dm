@@ -176,7 +176,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /obj/machinery/nuclearbomb/ui_state(mob/user)
 	if(HAS_TRAIT(user, TRAIT_CAN_USE_NUKE))
-		return GLOB.conscious_state
+		return GLOB.physical_state
 	return ..()
 
 /obj/machinery/nuclearbomb/proc/get_nuke_state()

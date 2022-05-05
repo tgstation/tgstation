@@ -297,6 +297,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	desc = "A weapon which disintegrates all organic life in a large area."
 	density = TRUE
 	verb_exclaim = "blares"
+	use_power = NO_POWER_USE
 	var/timing = FALSE
 	var/obj/effect/countdown/doomsday/countdown
 	var/detonation_timer

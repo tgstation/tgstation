@@ -616,7 +616,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "skateboard2"
 	inhand_icon_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
-	custom_premium_price = PAYCHECK_HARD * 5
+	custom_premium_price = PAYCHECK_COMMAND * 5
 
 /obj/item/melee/skateboard/hoverboard
 	name = "hoverboard"

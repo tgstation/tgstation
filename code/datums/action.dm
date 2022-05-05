@@ -265,6 +265,9 @@
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
 
+/datum/action/item_action/toggle_computer_light
+	name = "Toggle Flashlight"
+
 /datum/action/item_action/toggle_gunlight
 	name = "Toggle Gunlight"
 
@@ -457,28 +460,6 @@
 /datum/action/item_action/explosive_implant
 	check_flags = NONE
 	name = "Activate Explosive Implant"
-
-/datum/action/item_action/toggle_research_scanner
-	name = "Toggle Research Scanner"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "scan_mode"
-	var/active = FALSE
-
-/datum/action/item_action/toggle_research_scanner/Trigger(trigger_flags)
-	if(IsAvailable())
-		active = !active
-		if(active)
-			owner.research_scanner++
-		else
-			owner.research_scanner--
-		to_chat(owner, span_notice("[target] research scanner has been [active ? "activated" : "deactivated"]."))
-		return 1
-
-/datum/action/item_action/toggle_research_scanner/Remove(mob/M)
-	if(owner && active)
-		owner.research_scanner--
-		active = FALSE
-	..()
 
 /datum/action/item_action/instrument
 	name = "Use Instrument"

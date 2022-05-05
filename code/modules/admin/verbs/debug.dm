@@ -15,17 +15,6 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-
-/* 21st Sept 2010
-Updated by Skie -- Still not perfect but better!
-Stuff you can't do:
-Call proc /mob/proc/Dizzy() for some player
-Because if you select a player mob as owner it tries to do the proc for
-/mob/living/carbon/human/ instead. And that gives a run-time error.
-But you can call procs that are of type /mob/living/carbon/human/proc/ for that player.
-*/
-
 /client/proc/Cell()
 	set category = "Debug"
 	set name = "Air Status in Location"
@@ -629,14 +618,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		exists[L.ruin_template] = landmark
 
 	var/list/names = list()
+	var/list/themed_names
 	for (var/theme in SSmapping.themed_ruins)
 		names += "---- [theme] ----"
+		themed_names = list()
 		for (var/name in SSmapping.themed_ruins[theme])
 			var/datum/map_template/ruin/ruin = SSmapping.themed_ruins[theme][name]
-			names[name] = list(ruin, theme, list(ruin.default_area))
+			themed_names[name] = list(ruin, theme, list(ruin.default_area))
+		names += sort_list(themed_names)
 
-
-	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in sort_list(names)
+	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in names
 	var/data = names[ruinname]
 	if (!data)
 		return

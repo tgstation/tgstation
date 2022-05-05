@@ -49,6 +49,7 @@
 	return ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
+	. = ..()
 	var/new_volume = REAGENTS_BASE_VOLUME
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		new_volume += REAGENTS_BASE_VOLUME * B.rating
@@ -65,7 +66,6 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		max_range += M.rating
 	max_range = max(3, max_range)
-
 
 /obj/machinery/smoke_machine/on_set_is_operational(old_value)
 	if(old_value) //Turned off
@@ -87,6 +87,7 @@
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
 		smoke.set_up(reagents, setting*3, efficiency, T)
 		smoke.start()
+		use_power(active_power_usage)
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

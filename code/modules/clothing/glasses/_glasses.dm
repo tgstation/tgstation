@@ -74,10 +74,10 @@
 
 		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
 			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-			to_chat(human_user, span_notice("You will now see glasses colors."))
+			to_chat(human_user, span_notice("You will no longer see glasses colors."))
 		else
 			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-			to_chat(human_user, span_notice("You will no longer see glasses colors."))
+			to_chat(human_user, span_notice("You will now see glasses colors."))
 		human_user.update_glasses_color(src, TRUE)
 	else
 		return ..()
@@ -105,7 +105,7 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	inhand_icon_state = "meson"
-	clothing_traits = list(TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
 	darkness_view = 2
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -144,11 +144,10 @@
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
 	inhand_icon_state = "glasses"
-	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
-	clothing_traits = list(TRAIT_REAGENT_SCANNER)
+	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_EYES)
@@ -314,8 +313,7 @@
 	name = "science glasses"
 	icon_state = "sunhudsci"
 	desc = "A pair of tacky purple sunglasses that allow the wearer to recognize various chemical compounds with only a glance."
-	clothing_traits = list(TRAIT_REAGENT_SCANNER)
-	actions_types = list(/datum/action/item_action/toggle_research_scanner)
+	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "black gar glasses"
@@ -450,6 +448,16 @@
 	desc = "A pair of xray goggles manufactured by the Syndicate."
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 
+/obj/item/clothing/glasses/thermal/xray/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_EYES || !istype(user))
+		return
+	ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+
+/obj/item/clothing/glasses/thermal/xray/dropped(mob/living/carbon/human/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+
 /obj/item/clothing/glasses/thermal/syndi //These are now a traitor item, concealed as mesons. -Pete
 	name = "chameleon thermals"
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
@@ -539,7 +547,7 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = FALSE
 	vision_flags = SEE_TURFS
-	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MADNESS_IMMUNE)
 	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
 	var/xray = FALSE
 
@@ -553,11 +561,14 @@
 			H.add_hud_to(user)
 		ADD_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
 		ADD_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+		if(xray)
+			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/debug/dropped(mob/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 	if(ishuman(user))
 		for(var/hud in hudlist)
 			var/datum/atom_hud/H = GLOB.huds[hud]
@@ -568,8 +579,10 @@
 	if(ishuman(user))
 		if(xray)
 			vision_flags -= SEE_MOBS|SEE_OBJS
+			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		else
 			vision_flags += SEE_MOBS|SEE_OBJS
+			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()

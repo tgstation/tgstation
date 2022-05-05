@@ -226,11 +226,6 @@
 		or something covering your eyes."
 	icon_state = ALERT_BLIND
 
-/atom/movable/screen/alert/high
-	name = "High"
-	desc = "Whoa man, you're tripping balls! Careful you don't get addicted... if you aren't already."
-	icon_state = "high"
-
 /atom/movable/screen/alert/hypnosis
 	name = "Hypnosis"
 	desc = "Something's hypnotizing you, but you're not really sure about what."
@@ -248,11 +243,6 @@
 	if(!.)
 		return
 	to_chat(owner, span_mind_control("[command]"))
-
-/atom/movable/screen/alert/drunk
-	name = "Drunk"
-	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
-	icon_state = ALERT_DRUNK
 
 /atom/movable/screen/alert/embeddedobject
 	name = "Embedded Object"

@@ -13,9 +13,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "n" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/barricade/wooden,
@@ -33,15 +30,9 @@
 /area/maintenance/department/medical)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/department/medical)
 "z" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/sign/warning/securearea{
@@ -74,9 +65,6 @@
 /turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "R" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -98,10 +86,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "X" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/department/medical)
