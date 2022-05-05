@@ -166,7 +166,6 @@
 		animate(transform = matrix(), time = T)
 
 /datum/hud/proc/update_parallax(mob/viewmob)
-	message_admins("ran")
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
 	var/turf/posobj = get_turf(C.eye)
