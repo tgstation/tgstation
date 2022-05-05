@@ -114,7 +114,7 @@ at the cost of risking a vicious bite.**/
 
 /obj/structure/destructible/cult/pants_altar
 	name = "strange structure"
-	desc = "What is this? Who put it on this station? And why does it eminate <span class='hypnophrase'>pants energy?</span>"
+	desc = "What is this? Who put it on this station? And why does it emanate <span class='hypnophrase'>strange energy?</span>"
 	icon_state = "altar"
 	cult_examine_tip = "Even you don't understand the eldritch magic behind this."
 	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
@@ -223,7 +223,7 @@ at the cost of risking a vicious bite.**/
 
 /obj/item/clothing/under/pants/altar
 	name = "strange pants"
-	desc = "A pair of pants. They do not look natural. They smells like fresh blood."
+	desc = "A pair of pants. They do not look natural. They smell like fresh blood."
 	icon_state = "whitepants"
 
 #undef ALTAR_INACTIVE
