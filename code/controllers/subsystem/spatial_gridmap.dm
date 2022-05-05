@@ -343,7 +343,8 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(QDELETED(new_target))
 		CRASH("qdeleted or null target trying to enter the spatial grid!")
 
-	if(!target_turf || !(new_target.important_recursive_contents || new_target.flags_1 & SPATIAL_GRID_MANAGED_1))
+	var/list/new_target_contents = new_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
+	if(!target_turf || !(new_target_contents || new_target.flags_1 & SPATIAL_GRID_MANAGED_1))
 		CRASH("null turf loc or a new_target that doesn't support it trying to enter the spatial grid!")
 
 	var/x_index = GET_SPATIAL_INDEX(target_turf.x)
@@ -351,16 +352,16 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/z_index = target_turf.z
 
 	var/datum/spatial_grid_cell/intersecting_cell = grids_by_z_level[z_index][y_index][x_index]
-	if(new_target.important_recursive_contents)
-		if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
-			GRID_CELL_SET(intersecting_cell.client_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+	if(new_target_contents)
+		if(new_target_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
+			GRID_CELL_SET(intersecting_cell.client_contents, new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
-			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
-		if(new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+		if(new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 			GRID_CELL_SET(intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
-			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), new_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 	if(istype(new_target, /obj/machinery/atmospherics))
 		GRID_CELL_SET(intersecting_cell.atmos_contents, new_target)
@@ -378,7 +379,9 @@ SUBSYSTEM_DEF(spatial_grid)
 /datum/controller/subsystem/spatial_grid/proc/exit_cell(atom/movable/old_target, turf/target_turf, exclusive_type)
 	if(!initialized)
 		return
-	if(!target_turf || (!old_target?.important_recursive_contents && !(old_target?.flags_1 & SPATIAL_GRID_MANAGED_1)))
+
+	var/list/old_target_contents = old_target?.important_recursive_contents //cache for sanic speeds (lists are references anyways)
+	if(!target_turf || (!old_target_contents && !(old_target?.flags_1 & SPATIAL_GRID_MANAGED_1)))
 		stack_trace("/datum/controller/subsystem/spatial_grid/proc/exit_cell() was given null arguments or a old_target that doesn't use the spatial grid!")
 		return FALSE
 
@@ -387,17 +390,17 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/z_index = target_turf.z
 
 	var/datum/spatial_grid_cell/intersecting_cell = grids_by_z_level[z_index][y_index][x_index]
-	var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
 
-	if(old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
-		GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+	if(old_target_contents)
+		if(old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+			GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
-		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
-	if(old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
-		GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+		if(old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+			GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
-		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 	if(istype(old_target, /obj/machinery/atmospherics))
 		GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
