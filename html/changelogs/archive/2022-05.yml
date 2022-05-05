@@ -112,3 +112,43 @@
   - imageadd: Add some new blank/scribble card icons.
   - imageadd: Add new clown and mime joker cards to standard decks curtesy of axietheaxolotl
       (Viro on discord)
+2022-05-04:
+  ArcaneDefence:
+  - rscadd: Hey did you know you can charge your tablet by microwaving it?
+  Ghilker:
+  - bugfix: fix oversight with prop gasmasks having some of the features of normal
+      ones but without fov
+  JohnFulpWillard:
+  - bugfix: MODsuit plasma stabilizers no longer protect plasmamen from self-combustion
+      if they aren't wearing an envirosuit or gloves.
+  - bugfix: Icebox no longer spawns Prisoners outside of Permabrig.
+  - bugfix: A lone disposal pipe segment under a table in the bar on Metastation has
+      been removed.
+  castawaynont:
+  - bugfix: removes windows in Kilo's monkey pen in genetics, allowing access to the
+      wallmounts in there.
+  zxaber:
+  - rscadd: 'Mechs now have a weapons safety, which can be toggled with the Middle
+      Mouse button. Don''t worry, it defaults to off. expansion: All mechs now use
+      the mouse reticle, and the reticle is disabled when weapons safety is turned
+      on.'
+  - bugfix: AIs can use mech equipment again. With weapons safety off, equipment is
+      used. With weapons safety on, AI clicks are used.
+2022-05-05:
+  LemonInTheDark:
+  - balance: The janiborg's drying spray bottle will now always clean a wet turf that's
+      been washed once
+  Mothblocks:
+  - server: Admin ranks can now be combined with a plus sign (for example, Game Master+Coder).
+      Single admin ranks with a plus sign in their name are no longer supported.
+  - server: You can no longer edit rank permissions, temporarily or permanently, from
+      the permissions panel. Please use the admin_ranks database table or admin_ranks.txt
+      instead.
+  Pickle-Coding:
+  - balance: The further you are from a radiation pulse, and the more objects that
+      block it, the lower your odds are to get irradiated.
+  - balance: Most radiating emitting things have their radiation pulses functionality
+      changed. Being near them is more dangerous, and being far away is less dangerous.
+  Ryll/Shaps:
+  - spellcheck: Wound and combat messages will no longer mention the species of an
+      attacked bodypart when not appropriate
