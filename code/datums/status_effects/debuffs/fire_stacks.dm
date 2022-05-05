@@ -229,9 +229,7 @@
 
 /datum/status_effect/fire_handler/fire_stacks/proc/extinguish()
 	if(firelight_ref)
-		var/atom/firelight = firelight_ref.resolve()
-		if(firelight && !QDELETED(firelight))
-			qdel(firelight)
+		qdel(firelight_ref)
 
 	on_fire = FALSE
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "on_fire")

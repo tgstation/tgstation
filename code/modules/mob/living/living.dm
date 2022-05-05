@@ -4,9 +4,9 @@
 	if(unique_name)
 		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medhud.add_to_hud(src)
+	medhud.add_atom_to_hud(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -833,7 +833,6 @@
 	bodytemperature = get_body_temp_normal(apply_change=FALSE)
 	set_blindness(0)
 	set_blurriness(0)
-	set_dizziness(0)
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
@@ -841,7 +840,6 @@
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	extinguish_mob()
 	set_confusion(0)
-	dizziness = 0
 	set_drowsyness(0)
 	jitteriness = 0
 	stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -1390,6 +1388,10 @@
 	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
 
 //Mobs on Fire
+
+/// Global list that containes cached fire overlays for mobs
+GLOBAL_LIST_EMPTY(fire_appearances)
+
 /mob/living/proc/ignite_mob()
 	if(fire_stacks <= 0)
 		return FALSE
@@ -1493,15 +1495,20 @@
 			var/fire_type = (spread_to.fire_stacks > fire_stacks) ? their_fire_status.type : fire_status.type
 			set_fire_stacks(firesplit, fire_type)
 			spread_to.set_fire_stacks(firesplit, fire_type)
-		else
-			adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
-			spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
-			if(spread_to.ignite_mob())
-				log_game("[key_name(src)] bumped into [key_name(spread_to)] and set them on fire")
-	else if(their_fire_status && their_fire_status.on_fire)
-		spread_to.adjust_fire_stacks(-spread_to.fire_stacks / 2, their_fire_status.type)
-		adjust_fire_stacks(spread_to.fire_stacks, their_fire_status.type)
-		ignite_mob()
+			return
+
+		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
+		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
+		if(spread_to.ignite_mob())
+			log_game("[key_name(src)] bumped into [key_name(spread_to)] and set them on fire")
+		return
+
+	if(!their_fire_status || !their_fire_status.on_fire)
+		return
+
+	spread_to.adjust_fire_stacks(-spread_to.fire_stacks / 2, their_fire_status.type)
+	adjust_fire_stacks(spread_to.fire_stacks, their_fire_status.type)
+	ignite_mob()
 
 /**
  * Sets fire overlay of the mob.

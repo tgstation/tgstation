@@ -17,9 +17,6 @@
 	var/status_type = STATUS_EFFECT_UNIQUE
 	/// If TRUE, we call [proc/on_remove] when owner is deleted. Otherwise, we call [proc/be_replaced].
 	var/on_remove_on_mob_delete = FALSE
-	/// If defined, this text will appear when the mob is examined
-	/// To use he, she etc. use "SUBJECTPRONOUN" and replace it in the examines themselves
-	var/examine_text
 	/// The typepath to the alert thrown by the status effect when created.
 	/// Status effect "name"s and "description"s are shown to the owner here.
 	var/alert_type = /atom/movable/screen/alert/status_effect
@@ -92,6 +89,11 @@
 /// Returning FALSE will cause it to delete itself during creation instead.
 /datum/status_effect/proc/on_apply()
 	return TRUE
+
+/// Gets and formats examine text associated with our status effect.
+/// Return 'null' to have no examine text appear (default behavior).
+/datum/status_effect/proc/get_examine_text()
+	return null
 
 /// Called every tick from process().
 /datum/status_effect/proc/tick(delta_time, times_fired)

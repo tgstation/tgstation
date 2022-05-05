@@ -8,6 +8,8 @@
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/cards/deck = 5,
 		/obj/item/storage/dice = 10,
+		/obj/item/toy/cards/deck/blank = 3,
+		/obj/item/toy/cards/deck/blank/black = 3,
 		/obj/item/toy/cards/deck/cas = 3,
 		/obj/item/toy/cards/deck/cas/black = 3,
 		/obj/item/toy/cards/deck/kotahi = 3,

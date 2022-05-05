@@ -32,7 +32,7 @@
 			choose_deploy(user)
 			break
 	else
-		conceal(user, part)
+		retract(user, part)
 		for(var/obj/item/checking_part as anything in parts_to_check)
 			if(checking_part.loc == src)
 				continue
@@ -54,7 +54,7 @@
 		if(deploy && part.loc == src)
 			deploy(null, part)
 		else if(!deploy && part.loc != src)
-			conceal(null, part)
+			retract(null, part)
 	wearer.visible_message(span_notice("[wearer]'s [src] [deploy ? "deploys" : "retracts"] its' parts with a mechanical hiss."),
 		span_notice("[src] [deploy ? "deploys" : "retracts"] its' parts with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
@@ -63,11 +63,17 @@
 
 /// Deploys a part of the suit onto the user.
 /obj/item/mod/control/proc/deploy(mob/user, obj/item/part)
+	if(part.loc != src)
+		if(!user)
+			return FALSE
+		balloon_alert(user, "[part.name] already deployed!")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	if(part in overslotting_parts)
 		var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
 		if(overslot)
 			overslotting_parts[part] = overslot
 			wearer.transferItemToLoc(overslot, part, force = TRUE)
+			RegisterSignal(part, COMSIG_ATOM_EXITED, .proc/on_overslot_exit)
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 		if(!user)
@@ -77,11 +83,6 @@
 			span_hear("You hear a mechanical hiss."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return TRUE
-	else if(part.loc != src)
-		if(!user)
-			return FALSE
-		balloon_alert(user, "[part.name] already deployed!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	else
 		if(!user)
 			return FALSE
@@ -89,11 +90,17 @@
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return FALSE
 
-/// Retract a part of the suit from the user
-/obj/item/mod/control/proc/conceal(mob/user, obj/item/part)
+/// Retract a part of the suit from the user.
+/obj/item/mod/control/proc/retract(mob/user, obj/item/part)
+	if(part.loc == src)
+		if(!user)
+			return FALSE
+		balloon_alert(user, "[part.name] already retracted!")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	REMOVE_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 	wearer.transferItemToLoc(part, src, force = TRUE)
 	if(overslotting_parts[part])
+		UnregisterSignal(part, COMSIG_ATOM_EXITED)
 		var/obj/item/overslot = overslotting_parts[part]
 		if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 			wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
