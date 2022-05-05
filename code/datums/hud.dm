@@ -110,10 +110,8 @@ GLOBAL_LIST_INIT(huds, list(
 
 ///returns a list of all hud users in the given z level and linked upper z levels (because hud users in higher z levels can see below)
 /datum/atom_hud/proc/get_hud_users_for_z_level(z_level)
-	if(z_level <= 0)
-		return FALSE
-	if(z_level > length(hud_users))
-		stack_trace("get_hud_atoms_for_z_level() was given a z level index out of bounds of hud_atoms!")
+	if(z_level > length(hud_users) || z_level <= 0)
+		stack_trace("get_hud_atoms_for_z_level() was given a z level index [z_level] out of bounds 1->[length(hud_users)] of hud_atoms!")
 		return FALSE
 
 	. = list()
