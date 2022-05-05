@@ -134,3 +134,21 @@
       on.'
   - bugfix: AIs can use mech equipment again. With weapons safety off, equipment is
       used. With weapons safety on, AI clicks are used.
+2022-05-05:
+  LemonInTheDark:
+  - balance: The janiborg's drying spray bottle will now always clean a wet turf that's
+      been washed once
+  Mothblocks:
+  - server: Admin ranks can now be combined with a plus sign (for example, Game Master+Coder).
+      Single admin ranks with a plus sign in their name are no longer supported.
+  - server: You can no longer edit rank permissions, temporarily or permanently, from
+      the permissions panel. Please use the admin_ranks database table or admin_ranks.txt
+      instead.
+  Pickle-Coding:
+  - balance: The further you are from a radiation pulse, and the more objects that
+      block it, the lower your odds are to get irradiated.
+  - balance: Most radiating emitting things have their radiation pulses functionality
+      changed. Being near them is more dangerous, and being far away is less dangerous.
+  Ryll/Shaps:
+  - spellcheck: Wound and combat messages will no longer mention the species of an
+      attacked bodypart when not appropriate
