@@ -332,6 +332,10 @@ SUBSYSTEM_DEF(spatial_grid)
 
 ///get all grid cells intersecting the bounding box around center with sides of length 2 * range
 /datum/controller/subsystem/spatial_grid/proc/get_cells_in_range(atom/center, range)
+	return get_cells_in_bound(center, range, range)
+
+///get all grid cells intersecting the bounding box around center with sides of length (2 * range_x, 2 * range_y)
+/datum/controller/subsystem/spatial_grid/proc/get_cells_in_bound(atom/center, range_x, range_y)
 	var/turf/center_turf = get_turf(center)
 
 	var/center_x = center_turf.x
@@ -340,12 +344,12 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/list/intersecting_grid_cells = list()
 
 	//the minimum x and y cell indexes to test
-	var/min_x = max(GET_SPATIAL_INDEX(center_x - range), 1)
-	var/min_y = max(GET_SPATIAL_INDEX(center_y - range), 1)//calculating these indices only takes around 2 microseconds
+	var/min_x = max(GET_SPATIAL_INDEX(center_x - range_x), 1)
+	var/min_y = max(GET_SPATIAL_INDEX(center_y - range_y), 1)//calculating these indices only takes around 2 microseconds
 
 	//the maximum x and y cell indexes to test
-	var/max_x = min(GET_SPATIAL_INDEX(center_x + range), cells_on_x_axis)
-	var/max_y = min(GET_SPATIAL_INDEX(center_y + range), cells_on_y_axis)
+	var/max_x = min(GET_SPATIAL_INDEX(center_x + range_x), cells_on_x_axis)
+	var/max_y = min(GET_SPATIAL_INDEX(center_y + range_y), cells_on_y_axis)
 
 	var/list/grid_level = grids_by_z_level[center_turf.z]
 

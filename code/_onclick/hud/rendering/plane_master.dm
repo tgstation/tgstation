@@ -200,6 +200,12 @@
 	name = "parallax whitifier plane master"
 	plane = PLANE_SPACE
 
+/atom/movable/screen/plane_master/pipecrawl
+	name = "pipecrawl plane master"
+	plane = PIPECRAWL_IMAGES_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+
 /atom/movable/screen/plane_master/camera_static
 	name = "camera static plane master"
 	plane = CAMERA_STATIC_PLANE

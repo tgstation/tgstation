@@ -519,7 +519,7 @@
 		user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
 		var/list/pipenetdiff = return_pipenets() ^ target_move.return_pipenets()
 		if(pipenetdiff.len)
-			user.update_pipe_vision()
+			user.update_pipe_vision(full_refresh = TRUE)
 		if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
 			user.last_played_vent = world.time
 			playsound(src, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
