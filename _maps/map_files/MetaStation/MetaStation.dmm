@@ -3186,6 +3186,7 @@
 /area/security/courtroom)
 "aLZ" = (
 /obj/effect/landmark/blobstart,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -7278,6 +7279,10 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron/white,
 /area/science/lobby)
+"bPf" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "bPh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -16583,6 +16588,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/security/prison)
+"eKf" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/maintenance/aft/greater)
 "eKh" = (
 /obj/structure/reagent_dispensers/plumbed,
 /turf/open/floor/plating,
@@ -17398,6 +17407,10 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/wood,
 /area/service/lawoffice)
+"eZr" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/maintenance/aft/lesser)
 "eZU" = (
 /turf/closed/wall/r_wall,
 /area/security/courtroom)
@@ -19143,6 +19156,7 @@
 /area/medical/chemistry)
 "fJH" = (
 /obj/machinery/light/small/broken/directional/north,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/maintenance/aft/lesser)
 "fJL" = (
@@ -25173,6 +25187,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
+"hYI" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "hYT" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -31777,6 +31795,10 @@
 /obj/machinery/syndicatebomb/training,
 /turf/open/floor/iron,
 /area/security/office)
+"kzo" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "kzp" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral,
@@ -33884,6 +33906,12 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
+"lnf" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/fore)
 "lnt" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -39803,6 +39831,7 @@
 /area/engineering/main)
 "njd" = (
 /obj/machinery/light/small/directional/west,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/maintenance/starboard/lesser)
 "njk" = (
@@ -42565,6 +42594,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
+"omP" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/maintenance/fore)
 "omY" = (
 /obj/machinery/light_switch/directional/south,
 /obj/structure/table/wood,
@@ -43455,7 +43490,7 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "oEb" = (
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/maintenance/starboard/greater)
 "oEh" = (
@@ -52513,6 +52548,10 @@
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint/customs)
+"saV" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "sbk" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark/telecomms,
@@ -58260,6 +58299,10 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/port)
+"upU" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "upY" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -60845,6 +60888,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/security/lockers)
+"vrY" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/starboard/fore)
 "vrZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -67928,6 +67977,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/security/office)
+"xYX" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/maintenance/starboard/lesser)
 "xZf" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -84533,7 +84586,7 @@ bqR
 dSM
 cGq
 alK
-aob
+kzo
 rDS
 iuy
 paD
@@ -84552,7 +84605,7 @@ qUR
 mmb
 gLu
 lvY
-bXE
+hYI
 oAe
 cCk
 dux
@@ -87138,7 +87191,7 @@ sYH
 sSE
 txp
 qiL
-far
+eKf
 gZp
 msm
 gZp
@@ -87308,7 +87361,7 @@ xZo
 oaE
 qtK
 xZo
-aRG
+saV
 rQt
 bOJ
 xZo
@@ -88153,7 +88206,7 @@ pdp
 dXY
 rRs
 dux
-bXE
+hYI
 nXg
 uOc
 dPt
@@ -88341,7 +88394,7 @@ dne
 vlm
 aRG
 drQ
-aRG
+saV
 dnu
 dne
 ivz
@@ -88434,7 +88487,7 @@ moM
 gZp
 aSk
 fqu
-far
+eKf
 tKv
 gZp
 lMJ
@@ -91258,7 +91311,7 @@ hdw
 phT
 cqi
 gZp
-far
+eKf
 dTm
 uKu
 gZp
@@ -101793,7 +101846,7 @@ iht
 iht
 wmY
 uJy
-kkO
+eZr
 wrP
 mff
 kkO
@@ -102981,7 +103034,7 @@ seR
 xRw
 aje
 ale
-ahS
+lnf
 agq
 oix
 agq
@@ -103244,7 +103297,7 @@ jkw
 agq
 arA
 aje
-auc
+omP
 aje
 bJl
 agq
@@ -105112,7 +105165,7 @@ juD
 hCo
 hCo
 pPF
-rah
+xYX
 sLo
 lpg
 xPI
@@ -105381,7 +105434,7 @@ mpa
 nOc
 nxf
 jIn
-ciL
+bPf
 dvY
 stN
 bsN
@@ -108385,7 +108438,7 @@ dnh
 tLb
 atd
 dnS
-atd
+vrY
 dnh
 lZd
 ayR
@@ -109925,7 +109978,7 @@ bcO
 dnS
 dnS
 fFV
-dnS
+upU
 dnh
 vLo
 dqT
