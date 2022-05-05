@@ -392,7 +392,9 @@
 	desc = "A prop gas mask designed for appearance. Unlike a normal gas mask this does not filter gasses or protect against pepper spray."
 	icon_state = "gas_prop"
 	inhand_icon_state = "gas_prop"
+	clothing_flags = NONE
 	flags_cover = MASKCOVERSMOUTH
+	resistance_flags = FLAMMABLE
 	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/atmosprop
@@ -401,5 +403,7 @@
 	worn_icon_state = "gas_prop_atmos"
 	icon_state = "gas_atmos"
 	inhand_icon_state = "gas_atmos"
+	clothing_flags = NONE
 	flags_cover = MASKCOVERSMOUTH
+	resistance_flags = FLAMMABLE
 	has_fov = FALSE

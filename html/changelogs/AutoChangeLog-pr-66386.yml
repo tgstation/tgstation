@@ -1,0 +1,9 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - balance: "Pacmans no longer require stock parts (no more upgrade memery)"
+  - balance: "Base pacman power generation changed from 10-40 kW (t1) and 40-160 kW (t4) to 2.5-10 kW"
+  - balance: "Base pacman max held sheets is 10"
+  - balance: "Base pacman sheet consumption speed has been quintupled"
+  - balance: "Super pacman no longer exists, the circuit board now switches between a low production - low consumption mode to high production - high consumption mode and viceversa"
+  - balance: "This new mode has a max held sheet of 5, power generation changed from 30-120kW (t1) and 120-480kW (t4) to 15-60 kW and consumes sheets ~3 times faster than the base pacman"
