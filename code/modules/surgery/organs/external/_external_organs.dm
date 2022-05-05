@@ -74,7 +74,7 @@
 		ownerlimb = null
 
 	if(external_bodytypes)
-		limb.synchronize_bodytypes(reciever)
+		ownerlimb.synchronize_bodytypes(reciever)
 
 	organ_owner.update_body_parts()
 
