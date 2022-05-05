@@ -18,6 +18,10 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	///whether the lift handled by this lift_master datum is multitile as opposed to nxm platforms per z level
 	var/multitile_platform = FALSE
 
+	///taken from our lift platforms. if true we go through each z level of platforms and attempt to make the lowest left corner platform
+	///into one giant multitile object the size of all other platforms on that z level.
+	var/create_multitile_platform = FALSE
+
 	///lift platforms have already been sorted in order of z level.
 	var/z_sorted = FALSE
 
@@ -35,10 +39,10 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 /datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
 	lift_id = lift_platform.lift_id
+	create_multitile_platform = lift_platform.create_multitile_platform
+
 	Rebuild_lift_plaform(lift_platform)
 	ignored_smashthroughs = typecacheof(ignored_smashthroughs)
-
-	order_platforms_by_z_level()
 
 	LAZYADDASSOCLIST(GLOB.active_lifts_by_type, lift_id, src)
 
@@ -133,6 +137,13 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 		platforms_by_z[lift_platform.z] += lift_platform
 
+	if(create_multitile_platform)
+		for(var/list/z_list as anything in platforms_by_z)
+			if(!length(z_list))
+				continue
+
+			create_multitile_platform_for_z_level(z_list)//this will subtract all but one platform from the list
+
 	var/list/output = list()
 
 	for(var/list/z_list as anything in platforms_by_z)
@@ -141,6 +152,50 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	lift_platforms = output
 
 	z_sorted = TRUE
+
+///goes through all platforms in the given list and finds the one in the lower left corner
+/datum/lift_master/proc/create_multitile_platform_for_z_level(list/obj/structure/industrial_lift/platforms_in_z)
+	var/min_x = INFINITY
+	var/max_x = 0
+
+	var/min_y = INFINITY
+	var/max_y = 0
+
+	var/z = 0
+
+	for(var/obj/structure/industrial_lift/lift_to_sort as anything in platforms_in_z)
+		if(!z)
+			if(!lift_to_sort.z)
+				stack_trace("create_multitile_platform_for_z_level() was given a platform in nullspace or not on a turf!")
+				platforms_in_z -= lift_to_sort
+				continue
+
+			z = lift_to_sort.z
+
+		if(z != lift_to_sort.z)
+			stack_trace("create_multitile_platform_for_z_level() was given lifts on different z levels!")
+			platforms_in_z -= lift_to_sort
+			continue
+
+		min_x = min(min_x, lift_to_sort.x)
+		max_x = max(max_x, lift_to_sort.x)
+
+		min_y = min(min_y, lift_to_sort.y)
+		max_y = max(max_y, lift_to_sort.y)
+
+	var/turf/lower_left_corner_loc = locate(min_x, min_y, z)
+	if(!lower_left_corner_loc)
+		CRASH("was unable to find a turf at the lower left corner of this z")
+
+	var/obj/structure/industrial_lift/lower_left_corner_lift = locate() in lower_left_corner_loc
+
+	if(!lower_left_corner_lift)
+		CRASH("there was no lift in the lower left corner of the given lifts")
+
+	platforms_in_z.Cut()
+	platforms_in_z += lower_left_corner_lift//we want to change the list given to us not create a new one. so we do this
+
+	lower_left_corner_lift.create_multitile_platform(min_x, min_y, max_x, max_y, z)
 
 /**
  * Moves the lift UP or DOWN, this is what users invoke with their hand.

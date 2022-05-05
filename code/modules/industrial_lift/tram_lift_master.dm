@@ -7,8 +7,9 @@
 	///if we're travelling, how far do we have to go
 	var/travel_distance = 0
 
-	/// For finding the landmark initially - should be the exact same as the landmark's destination id.
-	var/initial_id = "middle_part"
+	///multiplier on how much damage/force the tram imparts on things it hits
+	var/collision_lethality = 1
+
 	/// reference to the destination landmark we consider ourselves "at". since we potentially span multiple z levels we dont actually
 	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
 	/// and the destination landmark.
@@ -19,6 +20,9 @@
 
 	///the world.time we should next move at. in case our speed is set to less than 1 movement per tick
 	var/next_move = INFINITY
+
+	///whether we have been slowed down automatically
+	var/slowed_down = FALSE
 
 /datum/lift_master/tram/New(obj/structure/industrial_lift/tram/lift_platform)
 	. = ..()
@@ -101,9 +105,22 @@
 		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
 		return PROCESS_KILL
 	else if(world.time >= next_move)
-		next_move = world.time + horizontal_speed
+		var/start_time = TICK_USAGE
 		travel_distance--
 		MoveLiftHorizontal(travel_direction)
+
+		var/duration = TICK_USAGE_TO_MS(start_time)
+		if(slowed_down)
+			if(duration < SStramprocess.max_time / 2)
+				horizontal_speed = initial(horizontal_speed)
+				slowed_down = FALSE
+
+		else if(duration > SStramprocess.max_time)
+			message_admins("The tram at [ADMIN_JMP(lift_platforms[1])] is taking more than [SStramprocess.max_time * 100] milliseconds per movement, halving its movement speed")
+			horizontal_speed = initial(horizontal_speed) * 2
+			slowed_down = TRUE
+
+		next_move = world.time + horizontal_speed
 
 /**
  * Handles unlocking the tram controls for use after moving
