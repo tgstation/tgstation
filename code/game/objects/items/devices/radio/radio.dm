@@ -245,7 +245,7 @@
 		return
 	if(wires.is_cut(WIRE_TX))  // Permacell and otherwise tampered-with radios
 		return
-	if(!talking_movable.IsVocal())
+	if(!talking_movable.can_speak())
 		return
 
 	if(use_command)

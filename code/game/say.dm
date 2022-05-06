@@ -35,8 +35,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
+/// Checks if our movable.. can speak.
 /atom/movable/proc/can_speak()
-	//SHOULD_BE_PURE(TRUE)
 	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list())
@@ -171,9 +171,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/proc/GetVoice()
 	return "[src]" //Returns the atom's name, prepended with 'The' if it's not a proper noun
-
-/atom/movable/proc/IsVocal()
-	return TRUE
 
 /atom/movable/proc/get_alt_name()
 

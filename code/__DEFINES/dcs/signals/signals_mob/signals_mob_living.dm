@@ -89,6 +89,13 @@
 #define COMSIG_LIVING_Z_IMPACT "living_z_impact"
 	#define NO_Z_IMPACT_DAMAGE (1<<0)
 
+/// From mob/living/can_speak_vocal(): (message, allow_mimes)
+#define COMSIG_LIVING_VOCAL_SPEECH_CHECK "living_vocal_speech"
+	/// Return if the mob can always speak, regardless of any other signal returns or checks.
+	#define COMPONENT_CAN_ALWAYS_SPEAK (1<<0)
+	/// Return if the mob cannot speak.
+	#define COMPONENT_CANNOT_SPEAK (1<<1)
+
 /// From mob/living/treat_message(): (list/message_args)
 #define COMSIG_LIVING_TREAT_MESSAGE "living_treat_message"
 

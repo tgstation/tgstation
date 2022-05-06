@@ -343,7 +343,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
-	if(HAS_TRAIT(src, TRAIT_SIGN_LANG))	// Sign language
+
+	if(HAS_TRAIT(src, TRAIT_SIGN_LANG)) // Sign language
 		var/mob/living/carbon/mute = src
 		if(istype(mute))
 			switch(mute.check_signables_state())
@@ -361,6 +362,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				if(SIGN_CUFFED) // Cuffed
 					mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
 					return FALSE
+
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
 			if(QDELETED(player_mob)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
@@ -406,11 +408,16 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/proc/binarycheck()
 	return FALSE
 
-/mob/living/can_speak(message) //For use outside of Say()
-	if(can_speak_basic(message) && can_speak_vocal(message))
-		return TRUE
+/mob/living/can_speak(message)
+	return (can_speak_basic(message) && can_speak_vocal(message))
 
-/mob/living/proc/can_speak_basic(message, ignore_spam = FALSE, forced = FALSE) //Check BEFORE handling of xeno and ling channels
+/**
+ * Checks if our mob can currently use "say", at all.
+ * Used primarily for OOC spam / mote checks.
+ *
+ * Checked BEFORE handling of xeno channels.
+ */
+/mob/living/proc/can_speak_basic(message, ignore_spam = FALSE, forced = FALSE) //Check BEFORE handling of xeno channels
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, span_danger("You cannot speak in IC (muted)."))
@@ -420,20 +427,31 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return TRUE
 
-/mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-	var/mob/living/carbon/human/H = src
+/**
+ * Checks if our mob can currently speak, vocally.
+ * Used priarily for IC mutism checks.
+ *
+ * Checked AFTER handling of xeno channels.
+ */
+/mob/living/proc/can_speak_vocal(message, allow_mimes = FALSE)
+	if(!allow_mimes && mind?.miming)
+		// Mimes are deliberately checked before the signal instead of after.
+		return FALSE
+
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_VOCAL_SPEECH_CHECK, message, allow_mimes)
+	if(sigreturn & COMPONENT_CAN_ALWAYS_SPEAK)
+		return TRUE
+
+	if(sigreturn & COMPONENT_CANNOT_SPEAK)
+		return FALSE
+
 	if(HAS_TRAIT(src, TRAIT_MUTE))
-		return (HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming) //Makes sure mimes can't speak using sign language
+		return FALSE
 
 	if(is_muzzled())
-		return (HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
-
-	if(!IsVocal())
-		return (HAS_TRAIT(src, TRAIT_SIGN_LANG) && !H.mind.miming)
+		return FALSE
 
 	return TRUE
-
-
 
 /mob/living/proc/treat_message(message)
 	if(HAS_TRAIT(src, TRAIT_UNINTELLIGIBLE_SPEECH))

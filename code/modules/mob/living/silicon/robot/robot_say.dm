@@ -1,2 +1,3 @@
-/mob/living/silicon/robot/IsVocal()
-	return !CONFIG_GET(flag/silent_borg)
+// Cyborgs cannot speak if silent AI is on.
+/mob/living/silicon/robot/can_speak_vocal(message)
+	return ..() && !CONFIG_GET(flag/silent_ai)

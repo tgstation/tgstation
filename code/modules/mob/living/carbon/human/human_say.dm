@@ -34,13 +34,11 @@
 		return GetSpecialVoice()
 	return real_name
 
-/mob/living/carbon/human/IsVocal()
-	// how do species that don't breathe talk? magic, that's what.
+/mob/living/carbon/human/can_speak_vocal(message)
 	if(!HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT) && !getorganslot(ORGAN_SLOT_LUNGS))
 		return FALSE
-	if(mind)
-		return !mind.miming
-	return TRUE
+
+	return ..()
 
 /mob/living/carbon/human/proc/SetSpecialVoice(new_voice)
 	if(new_voice)
