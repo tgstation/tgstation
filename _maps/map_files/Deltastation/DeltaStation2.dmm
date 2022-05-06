@@ -1832,8 +1832,8 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/camera/directional/west{
 	c_tag = "Library Backroom 1";
-	name = "library camera";
-	dir = 2
+	dir = 2;
+	name = "library camera"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library)
@@ -62494,7 +62494,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/pen,
 /obj/item/storage/dice,
-/obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "qaR" = (
@@ -75069,6 +75068,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/fancy/candle_box,
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "tHl" = (
@@ -81286,8 +81286,8 @@
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/camera/directional/west{
 	c_tag = "Library Backroom 2";
-	name = "library camera";
-	dir = 1
+	dir = 1;
+	name = "library camera"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library)
