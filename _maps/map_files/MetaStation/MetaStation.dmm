@@ -2666,6 +2666,10 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Ordnance Freezer Chamber Access";
+	req_access_txt = "8"
+	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "aCU" = (
@@ -3850,7 +3854,7 @@
 	sortType = 25
 	},
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "aVa" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/dark,
@@ -3991,6 +3995,11 @@
 	},
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/light/directional/north,
+/obj/machinery/button/door/directional/north{
+	id = "rdordnance";
+	name = "Ordnance Containment Control";
+	req_access_txt = "30"
+	},
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "aWz" = (
@@ -7469,7 +7478,7 @@
 	name = "Burn Chamber Exterior Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/access/any/science/ordnance,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bSS" = (
@@ -8691,9 +8700,6 @@
 /turf/open/floor/plating,
 /area/maintenance/central)
 "cnV" = (
-/obj/structure/sign/warning/securearea{
-	pixel_x = -32
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -8706,7 +8712,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "coi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -9494,7 +9500,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/heavy,
-/obj/effect/mapping_helpers/airlock/access/any/science/ordnance_storage,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance_storage,
 /turf/open/floor/plating,
 /area/science/storage)
 "cAN" = (
@@ -13831,7 +13837,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "dMu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/holopad,
@@ -15541,7 +15547,7 @@
 "eqN" = (
 /obj/structure/rack,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "eqO" = (
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/light/small/directional/north,
@@ -16018,7 +16024,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "eyk" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/rnd_secure_all,
@@ -16342,14 +16348,9 @@
 /turf/open/floor/iron,
 /area/security/office)
 "eEK" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "eEU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -16553,7 +16554,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor/heavy,
-/obj/effect/mapping_helpers/airlock/access/any/science/ordnance,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/plating,
 /area/science/mixing)
 "eIn" = (
@@ -16606,9 +16607,9 @@
 /turf/open/floor/iron/dark,
 /area/security/execution/education)
 "eIK" = (
-/obj/structure/closet/firecloset,
-/turf/open/floor/plating,
-/area/science/mixing/hallway)
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/dark,
+/area/science/mixing)
 "eIP" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/structure/sign/poster/official/safety_eye_protection{
@@ -16640,7 +16641,7 @@
 "eJw" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "eJA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -16794,7 +16795,7 @@
 "eLK" = (
 /obj/structure/closet/bombcloset,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "eLR" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
@@ -17498,15 +17499,12 @@
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "eZr" = (
-/obj/structure/sign/warning/securearea{
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "eZU" = (
 /turf/closed/wall/r_wall,
 /area/security/courtroom)
@@ -20171,7 +20169,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "gbH" = (
 /obj/structure/chair/stool/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -21309,7 +21307,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor/heavy,
-/obj/effect/mapping_helpers/airlock/access/any/science/ordnance,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/plating,
 /area/science/mixing)
 "gxC" = (
@@ -21369,7 +21367,7 @@
 	},
 /obj/structure/closet/bombcloset,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "gyB" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Storage Room"
@@ -22200,6 +22198,10 @@
 	},
 /obj/effect/turf_decal/siding/purple,
 /obj/machinery/newscaster/directional/south,
+/obj/machinery/door/window/right/directional/east{
+	req_access_txt = "8";
+	name = "Ordnance Freezer Chamber Access"
+	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "gSm" = (
@@ -22438,6 +22440,11 @@
 	pixel_y = 9
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/requests_console/directional/west{
+	department = "Ordnance Test Range";
+	departmentType = 5;
+	name = "Test Range Requests Console"
+	},
 /turf/open/floor/iron/dark,
 /area/science/mixing/launch)
 "gVP" = (
@@ -23183,6 +23190,7 @@
 	c_tag = "Science Ordnance Storage";
 	network = list("ss13","rd")
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "hin" = (
@@ -25451,7 +25459,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/any/science/ordnance_storage,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance_storage,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "ibf" = (
@@ -28616,6 +28624,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/iron/dark/airless,
 /area/science/mixing/chamber)
 "jnU" = (
@@ -29267,6 +29276,7 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/white,
 /area/science/mixing/hallway)
 "jyK" = (
@@ -31367,6 +31377,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/science/research)
 "koy" = (
@@ -32572,6 +32585,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/layer2{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/iron/dark/airless,
 /area/science/mixing/chamber)
 "kKj" = (
@@ -36084,15 +36098,15 @@
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "lZH" = (
-/obj/structure/sign/warning/securearea{
-	pixel_x = -32
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/structure/closet/firecloset,
+/obj/structure/sign/warning/securearea{
+	pixel_x = -32
+	},
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "lZJ" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/stripes/line{
@@ -36216,7 +36230,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "mbm" = (
 /obj/effect/landmark/start/paramedic,
 /obj/machinery/duct,
@@ -36534,7 +36548,7 @@
 /obj/effect/spawner/random/clothing/costume,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "mfg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/reagent_dispensers/watertank,
@@ -37785,7 +37799,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/access/any/science/ordnance_storage,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance_storage,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "mBU" = (
@@ -38478,6 +38492,7 @@
 /obj/structure/sign/poster/random/directional/east{
 	pixel_y = 32
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/plating,
 /area/maintenance/aft/lesser)
 "mLC" = (
@@ -39566,6 +39581,7 @@
 	pixel_y = 9
 	},
 /obj/item/raw_anomaly_core/random,
+/obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron/dark,
 /area/science/mixing/launch)
 "nbL" = (
@@ -39889,7 +39905,7 @@
 /area/service/kitchen)
 "nhe" = (
 /obj/machinery/door/poddoor/incinerator_ordmix,
-/turf/open/space/basic,
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "nht" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -40351,11 +40367,6 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/obj/machinery/requests_console/directional/west{
-	department = "Ordnance Test Range";
-	departmentType = 5;
-	name = "Test Range Requests Console"
-	},
 /obj/item/assembly/signaler{
 	pixel_x = 6;
 	pixel_y = 5
@@ -40372,6 +40383,7 @@
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/science/mixing/launch)
 "npp" = (
@@ -42466,7 +42478,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/effect/spawner/random/structure/crate_loot,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "ofK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall/r_wall,
@@ -45828,7 +45840,7 @@
 	pixel_x = 24;
 	pixel_y = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/any/science/ordnance,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "ptF" = (
@@ -46813,8 +46825,11 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "pNi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -50431,7 +50446,7 @@
 	name = "Ordnance Lab"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/access/any/science/ordnance,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/iron/white,
 /area/science/mixing/hallway)
 "rhj" = (
@@ -50464,7 +50479,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/science/ordnance,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/plating,
 /area/science/mixing/launch)
 "rhP" = (
@@ -50722,10 +50737,6 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing/launch)
-"rmm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/science/mixing/hallway)
 "rmt" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 6
@@ -52856,6 +52867,9 @@
 	req_one_access_txt = "12;47"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "scS" = (
@@ -53436,7 +53450,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/access/any/science/ordnance,
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
 /turf/open/floor/iron/white,
 /area/science/mixing/hallway)
 "spA" = (
@@ -55289,9 +55303,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
-"tdx" = (
-/turf/open/floor/plating,
-/area/science/mixing/hallway)
 "tdz" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance,
@@ -55516,6 +55527,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/white,
 /area/science/mixing/hallway)
 "thR" = (
@@ -56505,7 +56517,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "tyZ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
@@ -58326,11 +58338,6 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
-/obj/machinery/button/door/directional/north{
-	id = "rdordnance";
-	name = "Ordnance Containment Control";
-	req_access_txt = "30"
-	},
 /turf/open/floor/iron/white,
 /area/science/storage)
 "ukF" = (
@@ -59701,7 +59708,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/science/general,
+/obj/effect/mapping_helpers/airlock/access/all/science/general,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "uPR" = (
@@ -60449,6 +60456,7 @@
 	c_tag = "Science Ordnance Office";
 	network = list("ss13","rd")
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/grass,
 /area/science/mixing/hallway)
 "vet" = (
@@ -61659,16 +61667,13 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "vCY" = (
-/obj/structure/sign/warning/securearea{
-	pixel_x = -32
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/machinery/light/small/directional/west,
 /obj/effect/spawner/random/trash/bin,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "vDb" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
@@ -62465,6 +62470,7 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/structure/flora/ausbushes/fullgrass,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/grass,
 /area/science/mixing/hallway)
 "vPU" = (
@@ -63587,7 +63593,7 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "wng" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -65368,7 +65374,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "wUr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -66018,6 +66024,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft/lesser)
 "xhO" = (
@@ -67595,7 +67604,7 @@
 "xIX" = (
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
-/area/science/mixing/hallway)
+/area/maintenance/aft/lesser)
 "xJd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -68636,6 +68645,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/camera/directional/east{
+	c_tag = "Science Ordnance Storage";
+	network = list("ss13","rd")
+	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "ygI" = (
@@ -99546,7 +99559,7 @@ wbw
 wbw
 wbw
 wrP
-kkO
+eEK
 wbw
 lMJ
 aaa
@@ -100562,7 +100575,7 @@ pOT
 cyK
 hnc
 nYA
-nYA
+eIK
 nYA
 ovj
 lHb
@@ -101325,18 +101338,18 @@ uLH
 uLH
 uLH
 uLH
-uLH
-uLH
+qBs
+qBs
 cAH
-uLH
-uLH
-uLH
-uLH
-uLH
+qBs
+qBs
+qBs
+qBs
+qBs
 eIm
-uLH
-uLH
-uLH
+qBs
+qBs
+qBs
 qBs
 eSf
 qBs
@@ -101582,17 +101595,17 @@ ktU
 vaJ
 oVD
 fJH
-ktU
+wbw
 cnV
 tyU
 lZH
-eIK
+lRR
 xIX
 eLK
 gyl
-eEK
+fVp
 vCY
-uLH
+qBs
 eJw
 pqd
 pmG
@@ -101848,7 +101861,7 @@ mbj
 mbj
 mbj
 eyd
-rmm
+eTY
 pNc
 eTY
 eTY
@@ -102096,17 +102109,17 @@ ktU
 ghV
 ccZ
 hHW
-ktU
+wbw
 ofF
 wUi
-tdx
-uLH
+kkO
+qBs
 eqN
 eqN
 wmY
 dLV
 eZr
-uLH
+qBs
 mff
 kiY
 dFn
@@ -102353,18 +102366,18 @@ uLH
 tgJ
 oFb
 cXd
-nOc
-dvY
+qBs
+wrP
 scO
-dvY
-nOc
-uLH
-uLH
-uLH
+wrP
+qBs
+qBs
+qBs
+qBs
 rhB
-uLH
-uLH
-uLH
+qBs
+qBs
+qBs
 qBs
 wrP
 wrP
