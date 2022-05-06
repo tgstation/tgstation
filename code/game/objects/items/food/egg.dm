@@ -90,22 +90,24 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
-	if(istype(target, /obj/machinery/griddle))
+	if(!istype(target, /obj/machinery/griddle)){
+		return SECONDARY_ATTACK_CALL_NORMAL
+	}
 
-		var/atom/broken_egg = new /obj/item/food/rawegg(target.loc)
-		broken_egg.pixel_x = pixel_x
-		broken_egg.pixel_y = pixel_y
-		playsound(get_turf(user), 'sound/items/sheath.ogg', 40, TRUE)
-		reagents.copy_to(broken_egg,reagents.total_volume)
+	var/atom/broken_egg = new /obj/item/food/rawegg(target.loc)
+	broken_egg.pixel_x = pixel_x
+	broken_egg.pixel_y = pixel_y
+	playsound(get_turf(user), 'sound/items/sheath.ogg', 40, TRUE)
+	reagents.copy_to(broken_egg,reagents.total_volume)
 
-		var/obj/machinery/griddle/hit_griddle = target
-		hit_griddle.AddToGrill(broken_egg, user)
-		to_chat(user, "You crack [src] open onto [target].")
+	var/obj/machinery/griddle/hit_griddle = target
+	hit_griddle.AddToGrill(broken_egg, user)
+	to_chat(user, "You crack [src] open onto [target].")
 
-		qdel(src)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	qdel(src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	return SECONDARY_ATTACK_CALL_NORMAL
+
 
 
 /obj/item/food/egg/blue
