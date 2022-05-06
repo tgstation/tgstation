@@ -728,7 +728,8 @@
 /area/ruin/space/has_grav/hellfactory)
 "ct" = (
 /obj/machinery/light/built/directional/south,
-/obj/structure/marker_beacon/burgundy/turf/open/floor/iron,
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "cu" = (
 /obj/effect/turf_decal{
@@ -882,7 +883,8 @@
 /area/ruin/space/has_grav/hellfactory)
 "cR" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/burgundy/turf/template_noop,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
 /area/ruin/space/has_grav/hellfactory)
 "cS" = (
 /obj/structure/lattice/catwalk,
@@ -891,7 +893,8 @@
 /area/ruin/space/has_grav/hellfactory)
 "cT" = (
 /obj/machinery/light/broken/directional/south,
-/obj/structure/marker_beacon/burgundy/obj/structure/cable,
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "cV" = (
