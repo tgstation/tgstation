@@ -47,7 +47,6 @@
 	update_fire()
 	update_body_parts()
 
-
 /mob/living/carbon/update_inv_hands()
 	remove_overlay(HANDS_LAYER)
 	if (handcuffed)

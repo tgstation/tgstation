@@ -268,13 +268,16 @@ GLOBAL_PROTECT(protected_ranks)
 				var/admin_ckey = ckey(query_load_admins.item[1])
 				var/admin_rank = query_load_admins.item[2]
 				var/skip
-				if(rank_names[admin_rank] == null)
+
+				var/list/admin_ranks = ranks_from_rank_name(admin_rank)
+
+				if(admin_ranks.len == 0)
 					message_admins("[admin_ckey] loaded with invalid admin rank [admin_rank].")
 					skip = 1
 				if(GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey])
 					skip = 1
 				if(!skip)
-					new /datum/admins(ranks_from_rank_name(admin_rank), admin_ckey)
+					new /datum/admins(admin_ranks, admin_ckey)
 		qdel(query_load_admins)
 	//load admins from backup file
 	if(dbfail)

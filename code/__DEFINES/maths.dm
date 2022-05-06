@@ -1,5 +1,5 @@
 // Remove these once we have Byond implementation.
-#define ISNAN(a) (!(a==a))
+#define ISNAN(a) (a!=a)
 #define ISINF(a) (!ISNAN(a) && ISNAN(a-a))
 #define IS_INF_OR_NAN(a) (ISNAN(a-a))
 // Aight dont remove the rest
