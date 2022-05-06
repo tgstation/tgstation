@@ -194,6 +194,7 @@ All the important duct code:
 /obj/machinery/duct/proc/lose_neighbours()
 	for(var/obj/machinery/duct/D in neighbours)
 		D.neighbours.Remove(src)
+		D.generate_connects()
 	neighbours = list()
 
 ///add a connect direction
