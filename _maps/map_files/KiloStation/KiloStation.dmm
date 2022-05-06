@@ -42499,7 +42499,7 @@
 "jRD" = (
 /obj/structure/flora/rock,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "jRF" = (
 /obj/effect/turf_decal/stripes/line{
