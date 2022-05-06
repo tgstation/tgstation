@@ -99,6 +99,13 @@
 	reward = CARGO_CRATE_VALUE * 3
 	wanted_types = list(/obj/item/stack/sheet/animalhide/monkey = TRUE)
 
+/datum/bounty/item/assistant/dead_mice
+	name = "Dead Mice"
+	description = "Station 14 ran out of freeze-dried mice. Ship some fresh ones so their janitor doesn't go on strike."
+	reward = CARGO_CRATE_VALUE * 10
+	required_count = 5
+	wanted_types = list(/obj/item/food/deadmouse = TRUE)
+
 /datum/bounty/item/assistant/comfy_chair
 	name = "Comfy Chairs"
 	description = "Commander Pat is unhappy with his chair. He claims it hurts his back. Ship some alternatives out to humor him."
