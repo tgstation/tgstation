@@ -72,7 +72,7 @@
 		ckey_to_cooldown[source.ckey] = world.time + input_cooldown
 		addtimer(CALLBACK(src, .proc/end_cooldown, source.ckey), input_cooldown)
 		inputs[message].Invoke()
-		to_chat(source, span_notice("\"[message]\" input accepted. You are now on cooldown for [CEILING(input_cooldown * 0.1, 1)] second\s."))
+		to_chat(source, span_notice("\"[message]\" input accepted. You are now on cooldown for [input_cooldown * 0.1] second\s."))
 		return MOB_DEADSAY_SIGNAL_INTERCEPT
 
 	if(deadchat_mode & DEMOCRACY_MODE)
@@ -88,7 +88,7 @@
 	if(!isnull(result))
 		inputs[result].Invoke()
 		if(!(deadchat_mode & MUTE_DEMOCRACY_MESSAGES))
-			var/message = "<span class='deadsay italics bold'>[parent] has done action [result]!<br>New vote started. It will end in [CEILING(input_cooldown * 0.1, 1)] second\s.</span>"
+			var/message = "<span class='deadsay italics bold'>[parent] has done action [result]!<br>New vote started. It will end in [input_cooldown * 0.1] second\s.</span>"
 			for(var/M in orbiters)
 				to_chat(M, message)
 	else if(!(deadchat_mode & MUTE_DEMOCRACY_MESSAGES))
@@ -194,9 +194,9 @@
 	examine_list += span_notice("[A.p_theyre(TRUE)] currently under deadchat control using the [(deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy"] ruleset!")
 
 	if(deadchat_mode & DEMOCRACY_MODE)
-		examine_list += span_notice("Type a command into chat to vote on an action. This happens once every [CEILING(input_cooldown * 0.1, 1)] second\s.")
+		examine_list += span_notice("Type a command into chat to vote on an action. This happens once every [input_cooldown * 0.1] second\s.")
 	else if(deadchat_mode & ANARCHY_MODE)
-		examine_list += span_notice("Type a command into chat to perform. You may do this once every [CEILING(input_cooldown * 0.1, 1)] second\s.")
+		examine_list += span_notice("Type a command into chat to perform. You may do this once every [input_cooldown * 0.1] second\s.")
 
 	var/extended_examine = "<span class='notice'>Command list:"
 
