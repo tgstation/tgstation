@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(dcbotgonder)
     wait = 15 SECONDS
 
 var/totalPlayers
-var/listeof
 
 /datum/controller/subsystem/dcbotgonder/fire(resumed)
     totalPlayers = LAZYLEN(GLOB.player_list)
