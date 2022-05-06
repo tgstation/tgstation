@@ -31,7 +31,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "aY" = (
-/obj/structure/sign/warning/nosmoking/circle,
+/obj/structure/sign/warning/no_smoking/circle,
 /turf/closed/wall,
 /area/ruin/unpowered/elephant_graveyard)
 "bc" = (
@@ -42,7 +42,7 @@
 /turf/closed/mineral/strong/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "bg" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/graveyard_shuttle)
 "bh" = (
@@ -62,7 +62,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "br" = (
-/obj/structure/sign/warning/nosmoking/circle,
+/obj/structure/sign/warning/no_smoking/circle,
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/graveyard_shuttle)
 "bt" = (
@@ -97,8 +97,8 @@
 /turf/closed/wall,
 /area/ruin/unpowered/elephant_graveyard)
 "bN" = (
-/obj/structure/sign/warning/securearea,
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/mineral/strong/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "bQ" = (

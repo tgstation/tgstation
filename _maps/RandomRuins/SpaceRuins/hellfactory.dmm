@@ -328,7 +328,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bd" = (
-/obj/structure/sign/warning/coldtemp{
+/obj/structure/sign/warning/cold_temp{
 	name = "\improper BLAST FREEZER"
 	},
 /turf/closed/wall/r_wall,
@@ -616,7 +616,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
 "bX" = (
-/obj/structure/sign/warning/chemdiamond,
+/obj/structure/sign/warning/chem_diamond,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hellfactory)
 "bY" = (

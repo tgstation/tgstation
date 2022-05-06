@@ -545,7 +545,7 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "afT" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/security/brig)
 "afU" = (
@@ -1882,7 +1882,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "awe" = (
-/obj/structure/sign/warning/hottemp{
+/obj/structure/sign/warning/hot_temp{
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
@@ -2519,7 +2519,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "aBR" = (
-/obj/structure/sign/warning/coldtemp,
+/obj/structure/sign/warning/cold_temp,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -2718,7 +2718,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -7313,7 +7313,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "bON" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_x = -32
 	},
 /obj/structure/cable,
@@ -9601,7 +9601,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison)
 "cBM" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'BOMB RANGE";
 	name = "BOMB RANGE"
 	},
@@ -10776,7 +10776,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -11381,7 +11381,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "cXC" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/command/nuke_storage)
 "cXH" = (
@@ -12324,7 +12324,7 @@
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	pixel_y = 28
 	},
 /obj/structure/disposalpipe/segment{
@@ -18891,7 +18891,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_x = -32;
 	pixel_y = -32
 	},
@@ -20507,7 +20507,7 @@
 /area/station/maintenance/department/science/xenobiology)
 "ghr" = (
 /obj/structure/lattice,
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_x = 32
 	},
 /turf/open/space/basic,
@@ -21097,7 +21097,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "gts" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -21355,7 +21355,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "gyl" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -22705,7 +22705,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Central Primary Hallway - Fore - AI Upload"
 	},
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'HIGH-POWER TURRETS AHEAD'.";
 	name = "\improper HIGH-POWER TURRETS AHEAD";
 	pixel_y = 32
@@ -23238,7 +23238,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -29358,7 +29358,7 @@
 "jAy" = (
 /obj/effect/landmark/start/station_engineer,
 /obj/machinery/light/directional/west,
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_x = -31
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -31281,7 +31281,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "kmF" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	name = "\improper STAY CLEAR HEAVY MACHINERY"
 	},
 /turf/closed/wall,
@@ -31425,7 +31425,7 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "kpf" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/command/storage/eva)
 "kph" = (
@@ -31516,7 +31516,7 @@
 /area/station/maintenance/disposal/incinerator)
 "krK" = (
 /obj/structure/cable,
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32503,7 +32503,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "kJq" = (
-/obj/structure/sign/warning/nosmoking,
+/obj/structure/sign/warning/no_smoking,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "kJt" = (
@@ -32823,7 +32823,7 @@
 	dir = 8
 	},
 /obj/item/kirbyplants/random,
-/obj/structure/sign/warning/coldtemp{
+/obj/structure/sign/warning/cold_temp{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -34568,7 +34568,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /obj/machinery/camera/directional/north{
@@ -36098,7 +36098,7 @@
 	dir = 1
 	},
 /obj/structure/closet/firecloset,
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
@@ -36678,7 +36678,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "mgT" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology/hallway)
 "mgV" = (
@@ -37088,7 +37088,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "mpa" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall,
 /area/station/science/research)
 "mph" = (
@@ -37147,7 +37147,7 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "mpY" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "mqi" = (
@@ -38685,7 +38685,7 @@
 /area/space/nearstation)
 "mON" = (
 /obj/machinery/light/directional/north,
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/structure/table/glass,
@@ -40013,7 +40013,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "njb" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -41873,7 +41873,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "nUy" = (
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/bot,
@@ -41956,7 +41956,7 @@
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "nWE" = (
-/obj/structure/sign/warning/testchamber,
+/obj/structure/sign/warning/test_chamber,
 /turf/closed/wall,
 /area/station/engineering/atmos)
 "nWF" = (
@@ -42382,7 +42382,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_x = 32;
 	pixel_y = 32
 	},
@@ -43985,7 +43985,7 @@
 /obj/item/reagent_containers/glass/bottle/formaldehyde{
 	pixel_x = 1
 	},
-/obj/structure/sign/warning/chemdiamond{
+/obj/structure/sign/warning/chem_diamond{
 	pixel_y = 32
 	},
 /obj/machinery/light_switch/directional/east,
@@ -44639,7 +44639,7 @@
 	dir = 8;
 	name = "emergency shower"
 	},
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -45047,7 +45047,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/mixing/launch)
 "peC" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/aft)
 "peE" = (
@@ -45500,7 +45500,7 @@
 /area/station/medical/office)
 "pnQ" = (
 /obj/structure/lattice,
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = -32
 	},
 /turf/open/space/basic,
@@ -45566,7 +45566,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "poA" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = -32
 	},
 /obj/structure/table/reinforced,
@@ -46684,7 +46684,7 @@
 "pJK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio8";
 	name = "Xenobio Pen 8 Blast Door"
@@ -47100,7 +47100,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "pSv" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
 "pSB" = (
@@ -48764,7 +48764,7 @@
 /turf/open/floor/wood,
 /area/station/service/theater)
 "qwJ" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/command/teleporter)
 "qwP" = (
@@ -50060,7 +50060,7 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "qZK" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/command/bridge)
 "qZN" = (
@@ -50083,7 +50083,7 @@
 /turf/open/floor/iron/white,
 /area/station/security/prison)
 "ram" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/command/corporate_showroom)
 "raB" = (
@@ -51996,7 +51996,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/station/science/mixing/chamber)
 "rNE" = (
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_x = 32
 	},
 /turf/open/space/basic,
@@ -54041,7 +54041,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "sDQ" = (
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_x = 32
 	},
 /obj/structure/table,
@@ -54466,7 +54466,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/holding_cell)
 "sMJ" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -54668,7 +54668,7 @@
 /turf/open/floor/engine/o2,
 /area/station/engineering/atmos)
 "sRV" = (
-/obj/structure/sign/warning/nosmoking,
+/obj/structure/sign/warning/no_smoking,
 /turf/closed/wall,
 /area/station/engineering/atmos)
 "sSe" = (
@@ -55067,7 +55067,7 @@
 /area/station/service/hydroponics/garden)
 "sYV" = (
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -55337,7 +55337,7 @@
 	name = "test chamber blast door"
 	},
 /obj/structure/cable,
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "teP" = (
@@ -57051,7 +57051,7 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "tKL" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/station/command/gateway)
 "tKT" = (
@@ -57892,7 +57892,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/obj/structure/sign/departments/examroom{
+/obj/structure/sign/departments/maint{
 	color = "#52B4E9";
 	pixel_y = -32
 	},
@@ -58323,7 +58323,7 @@
 "ukw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio1";
 	name = "Xenobio Pen 1 Blast Door"
@@ -58992,7 +58992,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/siding/purple,
-/obj/structure/sign/warning/testchamber{
+/obj/structure/sign/warning/test_chamber{
 	pixel_y = -32
 	},
 /turf/open/floor/iron/white,
@@ -60138,7 +60138,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "uYn" = (
-/obj/structure/sign/warning/coldtemp{
+/obj/structure/sign/warning/cold_temp{
 	name = "\improper CRYOGENICS";
 	pixel_y = 32
 	},
@@ -60291,7 +60291,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "vbm" = (
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = -32
 	},
 /turf/open/space/basic,
@@ -63591,7 +63591,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "wmY" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/stripes/corner,
@@ -64755,7 +64755,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "wIX" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall,
 /area/station/maintenance/port/fore)
 "wJj" = (
@@ -65044,7 +65044,7 @@
 	},
 /area/station/maintenance/aft/lesser)
 "wOh" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/structure/closet/radiation,
@@ -65563,7 +65563,7 @@
 "wXQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "wYa" = (
@@ -65792,7 +65792,7 @@
 /turf/open/space,
 /area/space)
 "xcQ" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall,
 /area/station/maintenance/starboard/fore)
 "xcZ" = (
@@ -68911,7 +68911,7 @@
 "ykR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "ykY" = (

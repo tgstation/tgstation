@@ -5,8 +5,6 @@
 	desc = "A navigational chart of the station."
 	max_integrity = 500
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/map, 32)
-
 /obj/structure/sign/map/left
 	icon_state = "map-left"
 
