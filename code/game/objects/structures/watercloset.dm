@@ -609,13 +609,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	return ..()
 
 
-/obj/structure/water_source/puddle //splishy splashy ^_^
+/obj/structure/water_source/puddle //splishy splashy ^_^ with the fishy
 	name = "puddle"
 	desc = "A fresh water puddle used for washing one's hands and face."
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
-	///splishy splashy with the fishy ^_^
+	/// defines what type of fish can be fished out
 	var/water_type = AQUARIUM_FLUID_FRESHWATER
+	/// chance of not getting a bite when fishing
+	var/fishing_difficulty = 20
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/water_source/puddle/attack_hand(mob/user, list/modifiers)
@@ -625,21 +627,38 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/water_source/puddle/attackby(obj/item/O, mob/user, params)
 	icon_state = "puddle-splash"
+	// fishing
 	if(istype(O, /obj/item/fishing_rod))
 		to_chat(user, span_notice("You cast the line..."))
 		if(do_after(user, 10 SECONDS, target = src))
-			if(prob(60))
+			if(prob(100 - fishing_difficulty))
 				var/fish = random_fish_type(required_fluid = water_type)
 				to_chat(user, span_warning("You catch a fish!"))
 				new fish(get_turf(src))
 			else
 				to_chat(user, span_warning("Not even a nibble."))
+		else
+			to_chat(user, span_notice("You reel it back in."))
 	else
 		. = ..()
 	icon_state = "puddle"
 
 /obj/structure/water_source/puddle/deconstruct(disassembled = TRUE)
 	qdel(src)
+
+/obj/structure/water_source/puddle/salt
+	name = "salt water fishing hole"
+	desc = "A salt water puddle."
+	icon_state = "puddle"
+	water_type = AQUARIUM_FLUID_SALTWATER
+	fishing_difficulty = 30
+
+/obj/structure/water_source/puddle/sulfur
+	name = "sulphuric fishing hole"
+	desc = "A sulphuric puddle."
+	icon_state = "puddle"
+	water_type = AQUARIUM_FLUID_SULPHWATEVER
+	fishing_difficulty = 50
 
 //End legacy sink
 
