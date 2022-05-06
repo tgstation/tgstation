@@ -88,6 +88,8 @@
 	ignore += typesof(/obj/item/clothing/head/mob_holder)
 	//Needs cards passed into the initilazation args
 	ignore += typesof(/obj/item/toy/cards/cardhand)
+	//runtimes if not paired with a landmark
+	ignore += typesof(/obj/structure/industrial_lift)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/baseturf_count = length(spawn_at.baseturfs)
