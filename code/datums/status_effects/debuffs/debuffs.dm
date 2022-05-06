@@ -537,20 +537,29 @@
 
 	return ..()
 
-/// Signal proc for [COMSIG_MOVABLE_PRE_THROW] that prevents people from escaping our locked area via throw
+/// Checks if the movement from moving_from to going_to leaves our [var/locked_to] area. Returns TRUE if so.
+/datum/status_effect/eldritch/blade/proc/is_escaping_locked_area(atom/moving_from, atom/going_to)
+	if(!locked_to)
+		return FALSE
+
+	// If moving_from isn't in our locked area, it means they've
+	// somehow completely escaped, so we'll opt not to act on them.
+	if(get_area(moving_from) != locked_to)
+		return FALSE
+
+	// If going_to is in our locked area,
+	// they're just moving within the area like normal.
+	if(get_area(going_to) == locked_to)
+		return FALSE
+
+	return TRUE
+
+/// Signal proc for [COMSIG_MOVABLE_PRE_THROW] that prevents people from escaping our locked area via throw.
 /datum/status_effect/eldritch/blade/proc/on_pre_throw(mob/living/source, list/throw_args)
 	SIGNAL_HANDLER
 
-	if(!locked_to)
-		return
-
-	// They've not in the area currently,
-	// so we'll choose not to act on them
-	if(get_area(source) != locked_to)
-		return
-
 	var/atom/throw_dest = throw_args[1]
-	if(get_area(throw_dest) == locked_to)
+	if(!is_escaping_locked_area(source, throw_dest))
 		return
 
 	var/mob/thrower = throw_args[4]
@@ -561,19 +570,11 @@
 
 	return COMPONENT_CANCEL_THROW
 
-/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area
+/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area.
 /datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
 	SIGNAL_HANDLER
 
-	if(!locked_to)
-		return
-
-	// They've managed to escape the area somehow,
-	// so we'll choose not to act on them
-	if(get_area(source) != locked_to)
-		return
-
-	if(get_area(destination) == locked_to)
+	if(!is_escaping_locked_area(source, destination))
 		return
 
 	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
@@ -585,24 +586,12 @@
 /datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
 
-	if(!locked_to)
-		return
-
-	// If the movement's forced, let's just let it happen
-	if(forced)
-		return
-
-	if(get_area(source) == locked_to)
-		return
-
-	// If old_loc isn't in our locked area, it means they've
-	// somehow completely escaped our area and are moving around outside it.
-	// So we'll choose not to act on them in the meanwhile
-	if(get_area(old_loc) != locked_to)
-		return
-
-	// Let's also not mess with heretics dragging a potential victim
+	// Let's not mess with heretics dragging a potential victim.
 	if(ismob(source.pulledby) && IS_HERETIC(source.pulledby))
+		return
+
+	// If the movement's forced, just let it happen regardless.
+	if(forced || !is_escaping_locked_area(old_loc, source))
 		return
 
 	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
