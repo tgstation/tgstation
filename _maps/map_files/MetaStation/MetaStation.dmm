@@ -68648,10 +68648,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/camera/directional/east{
-	c_tag = "Science Ordnance Storage";
-	network = list("ss13","rd")
-	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "ygI" = (
