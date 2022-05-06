@@ -196,6 +196,8 @@
 	var/canshock = FALSE
 	var/shockdamage = 20
 	var/explosive = TRUE
+	///Does the anomaly have reduced explosion size?
+	var/reduced_explosion = FALSE
 
 /obj/effect/anomaly/flux/Initialize(mapload, new_lifespan, drops_core = TRUE, _explosive = TRUE)
 	. = ..()
@@ -232,7 +234,8 @@
 
 /obj/effect/anomaly/flux/detonate()
 	if(explosive)
-		explosion(src, devastation_range = 1, heavy_impact_range = 4, light_impact_range = 16, flash_range = 18) //Low devastation, but hits a lot of stuff.
+		var/multiplier = reduced_explosion ? 0.25 : 1
+		explosion(src, devastation_range = 1 * multiplier, heavy_impact_range = 4 * multiplier, light_impact_range = 16 * multiplier, flash_range = 18 * multiplier) //Low devastation, but hits a lot of stuff.
 	else
 		new /obj/effect/particle_effect/sparks(loc)
 
