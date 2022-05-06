@@ -314,7 +314,7 @@
 		probability_table[argkey] = chance_table
 	return pick_weight(probability_table[argkey])
 
-// Freshwater fish
+// Freshwater fish //relevant
 
 /obj/item/fish/goldfish
 	name = "goldfish"

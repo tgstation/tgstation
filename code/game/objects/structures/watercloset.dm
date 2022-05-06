@@ -611,9 +611,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/water_source/puddle //splishy splashy ^_^
 	name = "puddle"
-	desc = "A puddle used for washing one's hands and face."
+	desc = "A fresh water puddle used for washing one's hands and face."
 	icon_state = "puddle"
 	resistance_flags = UNACIDABLE
+	///splishy splashy with the fishy ^_^
+	var/water_type = AQUARIUM_FLUID_FRESHWATER
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/water_source/puddle/attack_hand(mob/user, list/modifiers)
@@ -623,7 +625,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/water_source/puddle/attackby(obj/item/O, mob/user, params)
 	icon_state = "puddle-splash"
-	. = ..()
+	if(istype(O, /obj/item/fishing_rod))
+		to_chat(user, span_notice("You cast the line..."))
+		if(do_after(user, 10 SECONDS, target = src))
+			if(prob(60))
+				var/fish = random_fish_type(required_fluid = water_type)
+				to_chat(user, span_warning("You catch a fish!"))
+				new fish(get_turf(src))
+			else
+				to_chat(user, span_warning("Not even a nibble."))
+	else
+		. = ..()
 	icon_state = "puddle"
 
 /obj/structure/water_source/puddle/deconstruct(disassembled = TRUE)

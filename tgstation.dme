@@ -2219,6 +2219,7 @@
 #include "code\modules\aquarium\aquarium_behaviour.dm"
 #include "code\modules\aquarium\aquarium_kit.dm"
 #include "code\modules\aquarium\fish.dm"
+#include "code\modules\aquarium\fishing_gear.dm"
 #include "code\modules\art\paintings.dm"
 #include "code\modules\art\statues.dm"
 #include "code\modules\assembly\assembly.dm"
