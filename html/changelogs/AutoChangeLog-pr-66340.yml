@@ -1,9 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - refactor: "Drunkenness is now a status effect. The drunk alert should no longer persist on aheals and in some rare cases, and should overrall act a bit more consistently."
-  - refactor: "Dizziness is now a status effect, similar to above. You no longer should be stuck with an off center client view if you get very dizzy."
-  - refactor: "The \"ballmer\" voicelines said by scientists are a liver trait now, instead of hard checking job types."
-  - refactor: "Refactored status effect examine text. Should overall have slightly better grammar and more consistent span uses."
-  - bugfix: "Stabilized dark purple extracts no longer runtime like crazy when not holding an item."
-  - bugfix: "Drunken Resilience should update health more accurately when it's occurring."
