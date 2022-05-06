@@ -46,7 +46,7 @@
 
 	if(owner.health > owner.crit_threshold && prob(4))
 		owner.Jitter(10)
-		owner.Dizzy(5)
+		owner.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		owner.hallucination = min(owner.hallucination + 3, 24)
 
 	if(prob(2))
@@ -61,7 +61,7 @@
  */
 /datum/status_effect/unholy_determination/proc/adjust_all_damages(amount)
 
-	owner.set_fire_stacks(max(owner.fire_stacks - 1, 0))
+	owner.adjust_fire_stacks(-1)
 	owner.losebreath = max(owner.losebreath - 0.5, 0)
 
 	owner.adjustToxLoss(-amount, FALSE, TRUE)

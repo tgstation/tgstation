@@ -11,7 +11,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "f" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -19,7 +19,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "h" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
@@ -28,12 +28,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "o" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "p" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access"
@@ -43,7 +43,7 @@
 	},
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "q" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -51,25 +51,25 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "r" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "s" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "t" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "y" = (
 /turf/template_noop,
 /area/template_noop)
@@ -82,26 +82,26 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "B" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "G" = (
 /turf/closed/wall,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "H" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "M" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access"
@@ -112,14 +112,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "N" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "O" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/vacuum{
@@ -129,12 +129,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 "X" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/smooth,
-/area/maintenance/tram/mid)
+/area/station/maintenance/tram/mid)
 
 (1,1,1) = {"
 y

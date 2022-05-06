@@ -40,3 +40,162 @@
   - balance: Armored bounty hunters are no longer being issued flamethrowers. Instead,
       they are now issued dual-tube shotguns filled with rubbershot and trailless
       incendiary slugs, as well as a 9mm Makarov loaded with fire bullets.
+2022-05-03:
+  ArcaneMusic:
+  - bugfix: Drones are exempt from the lathe tax, off and on station.
+  Arkatos and wiki contributors:
+  - qol: Mining voucher redeem selection now uses a radial menu and provides additional
+      information about the voucher sets. Literally years in the making, enjoy!
+  Ghilker:
+  - qol: Adds radio messages to the delaminating HFR to let atmosians know what's
+      wrong with it. Unless the HFR has been emped
+  JohnFulpWillard:
+  - bugfix: pAIs can now use Newscaster UIs, and all Silicon can now use Newscasters
+      in general (except the Bounty board, as they have no money to payout).
+  - bugfix: Drones can no longer give themselves access to machines/wires through
+      consoles.
+  - bugfix: Cayenne can no longer use the nuke from anywhere.
+  SmArtKar:
+  - bugfix: Cryo cell overlay should properly display above mobs now
+  Son-of-Space:
+  - bugfix: Fixed several inconsistent or niche access requirements on MetaStation
+  - qol: Replaced all access requirement vars on doors with mapping helpers on MetaStation
+  Striders13:
+  - bugfix: H.E.C.K. suit now once again prevents your clothes from burning and your
+      hair from sticking out.
+  SuperNovaa41:
+  - bugfix: Fixes an issue with service borg apparatuses getting multiple beakers
+      in it's contents.
+  - bugfix: Fixed being able to ride dead space carp.
+  TiviPlus:
+  - code_imp: changed some backend code for rendering, please report any layering
+      issues on the github
+  Y0SH1M4S73R:
+  - refactor: Wizard casting clothes now use a bitflag instead of a typecache. This
+      allows for nonstandard headwear and suits to be varedited into casting clothes.
+  - balance: The enchanted modsuit's chestplate and helmet must now be deployed in
+      order to cast robed spells.
+  capsaicinz:
+  - rscadd: adds the "how to charge your PDA" poster
+  castawaynont:
+  - bugfix: Fixed the cabling and piping in the mining lobby on Kilo. The mining shuttle
+      should now charge correctly.
+  thgvr:
+  - bugfix: Shuffled around some pipes in KiloStation garden so they are no longer
+      under tables/grass.
+  timothymtorres, san7890, axietheaxolotl:
+  - rscadd: Adds haunted tarot deck that allows the user the ability to see and communicate
+      with the dead.  Can be found in maint loot as a rare item.
+  - rscadd: Adds blank card decks to games vendor.  These can be written on with a
+      pen or crayon.
+  - soundadd: Adds a public domain cardflip.ogg from freesound.org that is used when
+      drawing a card.
+  - qol: Cards, decks, and cardhands have new hotkeys.  Decks are now a 2 handed wielded
+      object.
+  - qol: Add card ruleset to Wiz-Off at the top of the deck.
+  - bugfix: Holodeck card decks are now spawned as syndicate deck to convey that they
+      can do damage if safeties are overridden.
+  - bugfix: Any holodeck items have their force and throwforce damage nerfed to zero
+      while the safeties are on.
+  - bugfix: 'Fix xray trait to appear on mobs that equip xray glasses or have xray
+      eye augmentation. expansion: Playing cards with other people gives a mood event
+      and is added to memory expansion: Syndicate card decks can be shuffled faster
+      than normal decks. expansion: People with the supernatural phobia will now be
+      terrified of tarot card decks. expansion: NT has outlawed the use of x-ray vision,
+      science goggles combined with invisible ink, or using pens or crayons to gain
+      an unfair advantage while playing card games during recreational time.'
+  - code_imp: Moved the card deck code to it's own files and folder.
+  - rscdel: Remove CAS decks from random deck spawner (you need both decks to play
+      so only having one spawn was bleh)
+  - refactor: Cards have been refactored and a lot of deprecated code has been removed.
+  - imagedel: Remove old cardhand icons that were unused.
+  - imageadd: Add some new blank/scribble card icons.
+  - imageadd: Add new clown and mime joker cards to standard decks curtesy of axietheaxolotl
+      (Viro on discord)
+2022-05-04:
+  ArcaneDefence:
+  - rscadd: Hey did you know you can charge your tablet by microwaving it?
+  Ghilker:
+  - bugfix: fix oversight with prop gasmasks having some of the features of normal
+      ones but without fov
+  JohnFulpWillard:
+  - bugfix: MODsuit plasma stabilizers no longer protect plasmamen from self-combustion
+      if they aren't wearing an envirosuit or gloves.
+  - bugfix: Icebox no longer spawns Prisoners outside of Permabrig.
+  - bugfix: A lone disposal pipe segment under a table in the bar on Metastation has
+      been removed.
+  castawaynont:
+  - bugfix: removes windows in Kilo's monkey pen in genetics, allowing access to the
+      wallmounts in there.
+  zxaber:
+  - rscadd: 'Mechs now have a weapons safety, which can be toggled with the Middle
+      Mouse button. Don''t worry, it defaults to off. expansion: All mechs now use
+      the mouse reticle, and the reticle is disabled when weapons safety is turned
+      on.'
+  - bugfix: AIs can use mech equipment again. With weapons safety off, equipment is
+      used. With weapons safety on, AI clicks are used.
+2022-05-05:
+  LemonInTheDark:
+  - balance: The janiborg's drying spray bottle will now always clean a wet turf that's
+      been washed once
+  Mothblocks:
+  - server: Admin ranks can now be combined with a plus sign (for example, Game Master+Coder).
+      Single admin ranks with a plus sign in their name are no longer supported.
+  - server: You can no longer edit rank permissions, temporarily or permanently, from
+      the permissions panel. Please use the admin_ranks database table or admin_ranks.txt
+      instead.
+  Pickle-Coding:
+  - balance: The further you are from a radiation pulse, and the more objects that
+      block it, the lower your odds are to get irradiated.
+  - balance: Most radiating emitting things have their radiation pulses functionality
+      changed. Being near them is more dangerous, and being far away is less dangerous.
+  Ryll/Shaps:
+  - spellcheck: Wound and combat messages will no longer mention the species of an
+      attacked bodypart when not appropriate
+2022-05-06:
+  Ghilker:
+  - balance: Pacmans no longer require stock parts (no more upgrade memery)
+  - balance: Base pacman power generation changed from 10-40 kW (t1) and 40-160 kW
+      (t4) to 2.5-10 kW
+  - balance: Base pacman max held sheets is 10
+  - balance: Base pacman sheet consumption speed has been quintupled
+  - balance: Super pacman no longer exists, the circuit board now switches between
+      a low production - low consumption mode to high production - high consumption
+      mode and viceversa
+  - balance: This new mode has a max held sheet of 5, power generation changed from
+      30-120kW (t1) and 120-480kW (t4) to 15-60 kW and consumes sheets ~3 times faster
+      than the base pacman
+  GoldenAlpharex:
+  - bugfix: Fixed the female-fitted version of uniform clothes, so that they are fitted
+      for female body types once again.
+  JohnFulpWillard:
+  - bugfix: Icebox's Altar of the Gods was removed, letting Chaplains once again replace
+      their own with a bible if it breaks.
+  Melbert:
+  - refactor: Drunkenness is now a status effect. The drunk alert should no longer
+      persist on aheals and in some rare cases, and should overrall act a bit more
+      consistently.
+  - refactor: Dizziness is now a status effect, similar to above. You no longer should
+      be stuck with an off center client view if you get very dizzy.
+  - refactor: The "ballmer" voicelines said by scientists are a liver trait now, instead
+      of hard checking job types.
+  - refactor: Refactored status effect examine text. Should overall have slightly
+      better grammar and more consistent span uses.
+  - bugfix: Stabilized dark purple extracts no longer runtime like crazy when not
+      holding an item.
+  - bugfix: Drunken Resilience should update health more accurately when it's occurring.
+  Rhials:
+  - bugfix: engineers can now properly access the space loop on Tramstation.
+  SmArtKar:
+  - code_imp: Changed some fire-related procs to be snake_case
+  - refactor: Refactored firestacks into status effects
+  - bugfix: Monkeys no longer have human fire overlay when on fire and instead use
+      the one they're supposed to use.
+  castawaynont:
+  - bugfix: Delta's virology lobby now has a camera, as intended
+  - bugfix: Delta's virology lobby now allows MDs in.
+  - bugfix: removed a section of cabling/piping from tram's medbay maint, preventing
+      cable/pipe double ups.
+  san7890:
+  - qol: IceBoxStation is now contained in one map file, instead of three. This is
+      good for mapping. If things on IceBox break, please make an issue report.

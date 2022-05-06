@@ -1,0 +1,5 @@
+author: "itseasytosee"
+delete-after: True
+changes: 
+  - balance: "You can now pull bulky things in zero gravity at full speed"
+  - bugfix: "The slowdown from neck grabs is now properly negated in zero gravity."

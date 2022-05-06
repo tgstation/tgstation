@@ -74,7 +74,7 @@ Finally we give a longer multi paragraph description of the class and it's detai
 ```
 
 ### Documenting a variable/define
-Give a short explanation of what the variable, in the context of the class, or define is. 
+Give a short explanation of what the variable, in the context of the class, or define is.
 ```
 /// Type path of item to go in suit slot
 var/suit = null
@@ -96,13 +96,13 @@ You can use certain special template variables in DM DOC comments and they will 
 ```
     [DEFINE_NAME] - Expands to a link to the define definition if documented
     [/mob] - Expands to a link to the docs for the /mob class
-    [/mob/proc/Dizzy] - Expands to a link that will take you to the /mob class and anchor you to the dizzy proc docs
+    [/mob/proc/adjust_drunk_effect] - Expands to a link that will take you to the /mob class and anchor you to the adjust_drunk_effect proc docs
     [/mob/var/stat] - Expands to a link that will take you to the /mob class and anchor you to the stat var docs
 ```
 
 You can customise the link name by using `[link name][link shorthand].`
 
-eg. `[see more about dizzy here] [/mob/proc/Dizzy]`
+eg. `[see more about adjust drunk effect here] [/mob/proc/adjust_drunk_effect]`
 
 This is very useful to quickly link to other parts of the autodoc code to expand
 upon a comment made, or reasoning about code

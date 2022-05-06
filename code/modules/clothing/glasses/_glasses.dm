@@ -448,6 +448,16 @@
 	desc = "A pair of xray goggles manufactured by the Syndicate."
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 
+/obj/item/clothing/glasses/thermal/xray/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot != ITEM_SLOT_EYES || !istype(user))
+		return
+	ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+
+/obj/item/clothing/glasses/thermal/xray/dropped(mob/living/carbon/human/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+
 /obj/item/clothing/glasses/thermal/syndi //These are now a traitor item, concealed as mesons. -Pete
 	name = "chameleon thermals"
 	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
@@ -547,27 +557,32 @@
 		return
 	if(ishuman(user))
 		for(var/hud in hudlist)
-			var/datum/atom_hud/H = GLOB.huds[hud]
-			H.add_hud_to(user)
+			var/datum/atom_hud/our_hud = GLOB.huds[hud]
+			our_hud.show_to(user)
 		ADD_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
 		ADD_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+		if(xray)
+			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/debug/dropped(mob/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 	if(ishuman(user))
 		for(var/hud in hudlist)
-			var/datum/atom_hud/H = GLOB.huds[hud]
-			H.remove_hud_from(user)
+			var/datum/atom_hud/our_hud = GLOB.huds[hud]
+			our_hud.hide_from(user)
 
 /obj/item/clothing/glasses/debug/AltClick(mob/user)
 	. = ..()
 	if(ishuman(user))
 		if(xray)
 			vision_flags -= SEE_MOBS|SEE_OBJS
+			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		else
 			vision_flags += SEE_MOBS|SEE_OBJS
+			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
