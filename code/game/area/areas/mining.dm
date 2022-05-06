@@ -1,6 +1,7 @@
 /**********************Mine areas**************************/
 
 /area/mine
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | CULT_PERMITTED
@@ -97,6 +98,7 @@
 /**********************Lavaland Areas**************************/
 
 /area/lavaland
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
@@ -151,6 +153,7 @@
 /**********************Ice Moon Areas**************************/
 
 /area/icemoon
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE

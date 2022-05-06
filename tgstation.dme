@@ -1179,6 +1179,7 @@
 #include "code\game\area\areas\holodeck.dm"
 #include "code\game\area\areas\mining.dm"
 #include "code\game\area\areas\shuttles.dm"
+#include "code\game\area\areas\station.dm"
 #include "code\game\area\areas\ruins\_ruins.dm"
 #include "code\game\area\areas\ruins\icemoon.dm"
 #include "code\game\area\areas\ruins\lavaland.dm"
