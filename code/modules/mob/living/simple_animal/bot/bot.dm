@@ -483,11 +483,11 @@
 //Generalized behavior code, override where needed!
 
 /**
- * Attempt to scan tiles near [src], first by checking adjacent, then nearby.
+ * Attempt to scan tiles near [src], first by checking adjacent, then if a target is still not found, nearby.
  *
  * scan_types - list (of typepaths) that nearby tiles are being scanned for.
- * old_target - what has already been scanned, as to not re-scan.
- * scan_range - how far away from [src] will be scanned.
+ * old_target - what has already been scanned, and will early return at checkscan.
+ * scan_range - how far away from [src] will be scanned, if nothing is found directly adjacent.
  */
 /mob/living/simple_animal/bot/proc/scan(list/scan_types, old_target, scan_range = DEFAULT_SCAN_RANGE)
 	var/turf/current_turf = get_turf(src)
