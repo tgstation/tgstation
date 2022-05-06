@@ -170,7 +170,7 @@
 	name = "titanium shiv"
 	icon_state = "titaniumshiv"
 	inhand_icon_state = "titaniumshiv"
-	desc = "A makeshift titanium infused glass shiv."
+	desc = "A makeshift titanium-infused glass shiv."
 	throwforce = 14
 	throw_range = 7
 	wound_bonus = 10
@@ -181,7 +181,7 @@
 	name = "plastitanium shiv"
 	icon_state = "plastitaniumshiv"
 	inhand_icon_state = "plastitaniumshiv"
-	desc = "A makeshift titanium infused plasma glass shiv."
+	desc = "A makeshift titanium-infused plasma glass shiv."
 	force = 10
 	throwforce = 15
 	throw_speed = 4

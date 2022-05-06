@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			if(do_after(user, 140, target = src))
 				var/obj/item/knife/shiv/plasma/shiv = new /obj/item/knife/shiv/plasma
 				cloth.use(1)
-				to_chat(user, span_notice("You wrap the [cloth] around the [src] forming a makeshift weapon."))
+				to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
 				remove_item_from_storage(src)
 				qdel(src)
 				user.put_in_hands(shiv)
@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			if(do_after(user, 70, target = src))
 				var/obj/item/knife/shiv/titanium/shiv = new /obj/item/knife/shiv/titanium
 				cloth.use(1)
-				to_chat(user, span_notice("You wrap the [cloth] around the [src] forming a makeshift weapon."))
+				to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
 				remove_item_from_storage(src)
 				qdel(src)
 				user.put_in_hands(shiv)
@@ -358,7 +358,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			if(do_after(user, 70, target = src))
 				var/obj/item/knife/shiv/plastitanium/shiv = new /obj/item/knife/shiv/plastitanium
 				cloth.use(1)
-				to_chat(user, span_notice("You wrap the [cloth] around the [src] forming a makeshift weapon."))
+				to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
 				remove_item_from_storage(src)
 				qdel(src)
 				user.put_in_hands(shiv)
@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			if(do_after(user, 35, target = src))
 				var/obj/item/knife/shiv/shiv = new /obj/item/knife/shiv
 				cloth.use(1)
-				to_chat(user, span_notice("You wrap the [cloth] around the [src] forming a makeshift weapon."))
+				to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
 				remove_item_from_storage(src)
 				qdel(src)
 				user.put_in_hands(shiv)
