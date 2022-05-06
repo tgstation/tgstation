@@ -89,14 +89,11 @@
 /obj/machinery/atmospherics/Initialize(mapload)
 	if(mapload && name != initial(name))
 		override_naming = TRUE
-	flags_1 |= SPATIAL_GRID_MANAGED_1
-	if(!isturf(loc))
-		return ..()
-
-	if(SSspatial_grid.initialized)
-		SSspatial_grid.enter_cell(src, loc)
-	else //SSspatial_grid isnt init'd yet, add ourselves to the queue
-		SSspatial_grid.enter_pre_init_queue(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
+	var/turf/turf_loc = null
+	if(isturf(loc))
+		turf_loc = loc
+	SSspatial_grid.add_grid_awareness(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
+	SSspatial_grid.add_grid_membership(src, turf_loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	return ..()
 
 /obj/machinery/atmospherics/Destroy()

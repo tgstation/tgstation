@@ -16,10 +16,7 @@
 #define SPATIAL_GRID_CONTENTS_TYPE_ATMOS "spatial_grid_contents_type_atmos"
 
 ///whether movable is itself or containing something which should be in one of the spatial grid channels.
-#define HAS_SPATIAL_GRID_CONTENTS(movable) ((\
-	movable.important_recursive_contents && (\
-	movable.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE] || movable.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]))\
-	|| movable.flags_1 & SPATIAL_GRID_MANAGED_1)
+#define HAS_SPATIAL_GRID_CONTENTS(movable) (movable.spatial_grid_key)
 
 // macros meant specifically to add/remove movables from the internal lists of /datum/spatial_grid_cell,
 // when empty they become references to a single list in SSspatial_grid and when filled they become their own list
