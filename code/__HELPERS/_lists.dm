@@ -134,6 +134,7 @@
 	} while(FALSE)
 
 #define SORT_FIRST_INDEX(list) (list[1])
+#define SORT_COMPARE_DIRECTLY(thing) (thing)
 #define SORT_VAR_NO_TYPE(varname) var/varname
 /****
 	* Even more custom binary search sorted insert, using defines instead of vars
