@@ -1,7 +1,7 @@
 ///each cell in a spatial_grid is this many turfs in length and width
 #define SPATIAL_GRID_CELLSIZE 17
 ///Takes a coordinate, and spits out the spatial grid index (x or y) it's inside
-#define GET_SPATIAL_INDEX(chord) ROUND_UP((chord) / SPATIAL_GRID_CELLSIZE)
+#define GET_SPATIAL_INDEX(coord) ROUND_UP((coord) / SPATIAL_GRID_CELLSIZE)
 #define SPATIAL_GRID_CELLS_PER_SIDE(world_bounds) GET_SPATIAL_INDEX(world_bounds)
 
 #define SPATIAL_GRID_CHANNELS 2
