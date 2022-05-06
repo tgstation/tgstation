@@ -96,11 +96,6 @@
 /obj/structure/sign/warning/explosives,
 /turf/closed/wall,
 /area/ruin/unpowered/elephant_graveyard)
-"bN" = (
-/obj/structure/sign/warning/secure_area,
-/obj/structure/sign/warning/secure_area,
-/turf/closed/mineral/strong/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "bQ" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/cobweb,
@@ -1441,7 +1436,7 @@ nX
 bf
 bf
 bf
-bN
+bf
 gB
 bf
 bf
