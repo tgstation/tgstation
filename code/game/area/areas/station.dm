@@ -260,23 +260,23 @@
 
 /area/station/hallway/primary
 	name = "\improper Primary Hallway"
-	icon_state = "hallP"
+	icon_state = "primaryhall"
 
 /area/station/hallway/primary/aft
 	name = "\improper Aft Primary Hallway"
-	icon_state = "hallA"
+	icon_state = "afthall"
 
 /area/station/hallway/primary/fore
 	name = "\improper Fore Primary Hallway"
-	icon_state = "hallF"
+	icon_state = "forehall"
 
 /area/station/hallway/primary/starboard
 	name = "\improper Starboard Primary Hallway"
-	icon_state = "hallS"
+	icon_state = "starboardhall"
 
 /area/station/hallway/primary/port
 	name = "\improper Port Primary Hallway"
-	icon_state = "hallP"
+	icon_state = "porthall"
 
 /area/station/hallway/primary/central
 	name = "\improper Central Primary Hallway"
@@ -310,7 +310,7 @@
 	icon_state = "halltramR"
 
 /area/station/hallway/secondary // This shouldn't be used, but it gives an icon for the enviornment tree in the map editor
-	icon_state = "hallS"
+	icon_state = "secondaryhall"
 
 /area/station/hallway/secondary/command
 	name = "\improper Command Hallway"
