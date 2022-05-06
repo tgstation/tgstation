@@ -66,6 +66,8 @@
  * our_plant - our plant, that we're attacking with
  * user - the person who is attacking with the plant
  * target - the atom which is attacked by the plant
+ *
+ * return TRUE if plant attack is acceptable, otherwise FALSE to early return subtypes.
  */
 /datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
