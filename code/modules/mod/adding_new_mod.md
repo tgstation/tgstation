@@ -223,22 +223,10 @@ As we have an usable module, we want to set a cooldown time. All modules are als
 	var/brain_damage_healed = 25
 ```
 
-Now, we want to override the on_use proc for our new effect. We want to make sure the use checks passed from parent. You can read about most procs and variables by reading [this](modules/_module.dm)
+Now, we want to override the on_use proc for our new effect. You can read about most procs and variables by reading [this](modules/_module.dm). We want to put our special code, a basic effect of healing all mobs nearby for their brain damage and creating a beam to them.
 
 ```dm
 /obj/item/mod/module/neuron_healer/on_use()
-	. = ..()
-	if(!.)
-		return
-```
-
-After this, we want to put our special code, a basic effect of healing all mobs nearby for their brain damage and creating a beam to them.
-
-```dm
-/obj/item/mod/module/neuron_healer/on_use()
-	. = ..()
-	if(!.)
-		return
 	for(var/mob/living/carbon/carbon_mob in range(5, src))
 		if(carbon_mob == mod.wearer)
 			continue

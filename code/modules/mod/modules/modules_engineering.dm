@@ -200,9 +200,6 @@
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
 /obj/item/mod/module/constructor/on_use()
-	. = ..()
-	if(!.)
-		return
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_power_cost)
 

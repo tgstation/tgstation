@@ -7,7 +7,7 @@
 		the surface of the suit, useful for storing various bits, and or bobs."
 	icon_state = "storage"
 	complexity = 3
-	incompatible_modules = list(/obj/item/mod/module/storage)
+	incompatible_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/plate_compression)
 	/// The storage component of the module.
 	var/datum/component/storage/concrete/storage
 	/// Max weight class of items in the storage.
@@ -266,10 +266,8 @@
 	set_light_on(active)
 
 /obj/item/mod/module/flashlight/on_process(delta_time)
-	. = ..()
-	if(!.)
-		return
 	active_power_cost = base_power * light_range
+	return ..()
 
 /obj/item/mod/module/flashlight/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()
@@ -601,3 +599,28 @@
 
 /obj/item/mod/module/signlang_radio/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+
+///Plate Compression
+/obj/item/mod/module/plate_compression
+	name = "MOD plate compression module"
+	desc = "A module that keeps the suit in a very tightly fit state, lowering the overall size. \
+		Due to the pressure on all the parts, typical storage modules do not fit."
+	icon_state = "plate_compression"
+	complexity = 2
+	incompatible_modules = list(/obj/item/mod/module/plate_compression, /obj/item/mod/module/storage)
+	var/new_size = WEIGHT_CLASS_NORMAL
+	var/old_size
+
+/obj/item/mod/module/plate_compression/on_install()
+	old_size = mod.w_class
+	mod.w_class = new_size
+
+/obj/item/mod/module/plate_compression/on_uninstall(deleting = FALSE)
+	mod.w_class = old_size
+	old_size = null
+	if(!mod.loc)
+		return
+	var/datum/component/storage/holding_storage = mod.loc.GetComponent(/datum/component/storage)
+	if(!holding_storage || holding_storage.max_w_class >= mod.w_class)
+		return
+	mod.forceMove(drop_location())

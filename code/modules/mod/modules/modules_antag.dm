@@ -286,3 +286,23 @@
 
 /obj/projectile/bullet/incendiary/backblast/flamethrower
 	range = 6
+
+/obj/item/mod/module/power_kick
+
+/obj/item/mod/module/chameleon
+	name = "MOD chameleon module"
+	desc = "A module using chameleon technology to disguise the suit as another object."
+	icon_state = "chameleon"
+	complexity = 2
+	incompatible_modules = list(/obj/item/mod/module/chameleon)
+	var/list/possible_disguises
+	var/current_disguise
+
+/obj/item/mod/module/chameleon/on_install()
+	possible_disguises = typesof(get_path_by_slot(mod.slot_flags))
+
+/obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
+	possible_disguises = null
+
+/obj/item/mod/module/chameleon/on_use()
+	. = ..()

@@ -148,9 +148,6 @@
 	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
 
 /obj/item/mod/module/pepper_shoulders/on_use()
-	. = ..()
-	if(!.)
-		return
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 	var/datum/reagents/capsaicin_holder = new(10)
 	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)

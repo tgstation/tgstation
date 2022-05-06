@@ -68,29 +68,6 @@
 	if(HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		. += span_notice("Complexity level: [complexity]")
 
-/// Called from MODsuit's install() proc, so when the module is installed.
-/obj/item/mod/module/proc/on_install()
-	return
-
-/// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
-/obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
-	return
-
-/// Called when the MODsuit is activated
-/obj/item/mod/module/proc/on_suit_activation()
-	return
-
-/// Called when the MODsuit is deactivated
-/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
-	return
-
-/// Called when the MODsuit is equipped
-/obj/item/mod/module/proc/on_equip()
-	return
-
-/// Called when the MODsuit is unequipped
-/obj/item/mod/module/proc/on_unequip()
-	return
 
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
@@ -166,16 +143,16 @@
 /obj/item/mod/module/proc/on_use()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		balloon_alert(mod.wearer, "on cooldown!")
-		return FALSE
+		return
 	if(!check_power(use_power_cost))
 		balloon_alert(mod.wearer, "not enough charge!")
-		return FALSE
+		return
 	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
 		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
-		return FALSE
+		return
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
-		return FALSE
+		return
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
 	mod.wearer.update_inv_back()
@@ -206,10 +183,39 @@
 		on_active_process(delta_time)
 	else
 		drain_power(idle_power_cost * delta_time)
+		on_inactive_process(delta_time)
 	return TRUE
+
+/// Called on the MODsuit's process if it is an inactive module
+/obj/item/mod/module/proc/on_inactive_process(delta_time)
+	return
 
 /// Called on the MODsuit's process if it is an active module
 /obj/item/mod/module/proc/on_active_process(delta_time)
+	return
+
+/// Called from MODsuit's install() proc, so when the module is installed.
+/obj/item/mod/module/proc/on_install()
+	return
+
+/// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
+/obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
+	return
+
+/// Called when the MODsuit is activated
+/obj/item/mod/module/proc/on_suit_activation()
+	return
+
+/// Called when the MODsuit is deactivated
+/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
+	return
+
+/// Called when the MODsuit is equipped
+/obj/item/mod/module/proc/on_equip()
+	return
+
+/// Called when the MODsuit is unequipped
+/obj/item/mod/module/proc/on_unequip()
 	return
 
 /// Drains power from the suit charge

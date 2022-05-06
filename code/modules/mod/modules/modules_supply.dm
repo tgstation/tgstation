@@ -18,9 +18,6 @@
 	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay_state = FALSE)
 
 /obj/item/mod/module/gps/on_use()
-	. = ..()
-	if(!.)
-		return
 	attack_self(mod.wearer)
 
 ///Hydraulic Clamp - Lets you pick up and drop crates.
@@ -202,9 +199,6 @@
 	ores += ore
 
 /obj/item/mod/module/orebag/on_use()
-	. = ..()
-	if(!.)
-		return
 	for(var/obj/item/ore as anything in ores)
 		ore.forceMove(drop_location())
 		ores -= ore

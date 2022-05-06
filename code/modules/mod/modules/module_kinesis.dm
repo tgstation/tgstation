@@ -243,11 +243,11 @@
 	var/list/view = getviewsize(kinesis_user.client.view)
 	icon_x *= view[1]/FULLSCREEN_OVERLAY_RESOLUTION_X
 	icon_y *= view[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y
-	var/our_x = round(icon_x / world.icon_size)
-	var/our_y = round(icon_y / world.icon_size)
+	var/our_x = round(icon_x / world.icon_size, 1)
+	var/our_y = round(icon_y / world.icon_size, 1)
 	var/mob_x = kinesis_user.x
 	var/mob_y = kinesis_user.y
 	var/mob_z = kinesis_user.z
 	given_turf = locate(mob_x+our_x-round(view[1]/2),mob_y+our_y-round(view[2]/2),mob_z)
-	given_x = round(icon_x - world.icon_size * our_x)
-	given_y = round(icon_y - world.icon_size * our_y)
+	given_x = round(icon_x - world.icon_size * our_x, 1)
+	given_y = round(icon_y - world.icon_size * our_y, 1)
