@@ -22992,10 +22992,7 @@
 	},
 /area/maintenance/department/medical/central)
 "hpx" = (
-/obj/structure/marker_beacon{
-	icon_state = "markerburgundy-on"
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
+/obj/structure/marker_beacon/burgundy/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "hpB" = (
 /obj/structure/window/reinforced/spawner/north,
