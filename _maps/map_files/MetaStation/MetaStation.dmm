@@ -16347,10 +16347,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/office)
-"eEK" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plating,
-/area/maintenance/aft/lesser)
 "eEU" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -38492,7 +38488,6 @@
 /obj/structure/sign/poster/random/directional/east{
 	pixel_y = 32
 	},
-/obj/machinery/light/floor,
 /turf/open/floor/plating,
 /area/maintenance/aft/lesser)
 "mLC" = (
@@ -50737,6 +50732,10 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing/launch)
+"rmm" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plating,
+/area/maintenance/aft/lesser)
 "rmt" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 6
@@ -55303,6 +55302,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
+"tdx" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
+/area/maintenance/aft/lesser)
 "tdz" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance,
@@ -99301,7 +99304,7 @@ evd
 wIK
 kkO
 kkO
-kkO
+rmm
 mLw
 wbw
 lMJ
@@ -99559,7 +99562,7 @@ wbw
 wbw
 wbw
 wrP
-eEK
+tdx
 wbw
 lMJ
 aaa
