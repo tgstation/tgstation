@@ -9,4 +9,3 @@ var/listeof
     listeof = list(GLOB.player_list)
     totalPlayers = LAZYLEN(GLOB.player_list)
     world.Export("http://localhost:22422/[totalPlayers]",1,null)
-	//world.Export("http://localhost:22522/[listeof]",1,null)
