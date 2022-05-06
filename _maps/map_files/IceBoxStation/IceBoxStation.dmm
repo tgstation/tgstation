@@ -18792,8 +18792,8 @@
 "gam" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Office";
-	id_tag = "cargooffice"
+	id_tag = "cargooffice";
+	name = "Cargo Office"
 	},
 /obj/effect/landmark/navigate_destination,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -18958,10 +18958,10 @@
 /area/station/security/prison/safe)
 "gcP" = (
 /obj/item/storage/book/bible,
-/obj/structure/altar_of_gods,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table/wood,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/rec)
 "gcV" = (
@@ -34887,8 +34887,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Quartermaster";
-	id_tag = "Quatermaster"
+	id_tag = "Quatermaster";
+	name = "Quartermaster"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -37754,8 +37754,8 @@
 "mfp" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Office";
-	id_tag = "cargooffice"
+	id_tag = "cargooffice";
+	name = "Cargo Office"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -48925,12 +48925,12 @@
 	pixel_y = 3
 	},
 /obj/item/stamp/hos{
-	pixel_y = 6;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 6
 	},
 /obj/machinery/recharger{
-	pixel_y = -1;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/camera/directional/west{
@@ -58155,8 +58155,8 @@
 /area/station/security/warden)
 "sQa" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	id_tag = "innercargo"
+	id_tag = "innercargo";
+	name = "Cargo Bay"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -59866,8 +59866,8 @@
 /area/station/commons/locker)
 "ttT" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	id_tag = "innercargo"
+	id_tag = "innercargo";
+	name = "Cargo Bay"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

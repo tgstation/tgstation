@@ -19528,7 +19528,7 @@
 /area/station/commons/fitness/recreation)
 "fEy" = (
 /obj/machinery/door/airlock/external{
-	req_access_txt = "10;24"
+	req_one_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -39860,7 +39860,7 @@
 /area/station/hallway/secondary/entry)
 "mVK" = (
 /obj/machinery/door/airlock/external{
-	req_access_txt = "10;24"
+	req_one_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
