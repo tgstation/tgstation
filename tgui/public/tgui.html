@@ -475,6 +475,17 @@ Byond.sendMessage('ready');
 </script>
 
 <style>
+/* Blink polyfill, originally authored on /tg/ by @iamgoofball */
+blink {
+  animation: 1s linear infinite condemned-blink-effect;
+}
+
+@keyframes condemned-blink-effect {
+  0% { visibility: hidden; }
+  50% { visibility: hidden; }
+  100% { visibility: visible; }
+}
+
 .FatalError {
   display: none;
   position: absolute;

@@ -7,9 +7,9 @@ GLOBAL_PROTECT(protected_ranks)
 /datum/admin_rank
 	var/name = "NoRank"
 	var/rights = R_DEFAULT
-	var/exclude_rights = 0
-	var/include_rights = 0
-	var/can_edit_rights = 0
+	var/exclude_rights = NONE
+	var/include_rights = NONE
+	var/can_edit_rights = NONE
 
 /datum/admin_rank/New(init_name, init_rights, init_exclude_rights, init_edit_rights)
 	if(IsAdminAdvancedProcCall())
@@ -199,6 +199,33 @@ GLOBAL_PROTECT(protected_ranks)
 	testing(msg)
 	#endif
 
+/// Converts a rank name (such as "Coder+Moth") into a list of /datum/admin_rank
+/proc/ranks_from_rank_name(rank_name)
+	var/list/rank_names = splittext(rank_name, "+")
+	var/list/ranks = list()
+
+	for (var/datum/admin_rank/rank as anything in GLOB.admin_ranks)
+		if (rank.name in rank_names)
+			rank_names -= rank.name
+			ranks += rank
+
+			if (rank_names.len == 0)
+				break
+
+	if (rank_names.len > 0)
+		log_config("Admin rank names were invalid: [jointext(ranks, ", ")]")
+
+	return ranks
+
+/// Takes a list of rank names and joins them with +
+/proc/join_admin_ranks(list/datum/admin_rank/ranks)
+	var/list/names = list()
+
+	for (var/datum/admin_rank/rank as anything in ranks)
+		names += rank.name
+
+	return jointext(names, "+")
+
 /proc/load_admins(no_update)
 	var/dbfail
 	if(!CONFIG_GET(flag/admin_legacy_system) && !SSdbcore.Connect())
@@ -224,8 +251,12 @@ GLOBAL_PROTECT(protected_ranks)
 	//ckeys listed in admins.txt are always made admins before sql loading is attempted
 	var/admins_text = file2text("[global.config.directory]/admins.txt")
 	var/regex/admins_regex = new(@"^(?!#)(.+?)\s+=\s+(.+)", "gm")
+
 	while(admins_regex.Find(admins_text))
-		new /datum/admins(rank_names[admins_regex.group[2]], ckey(admins_regex.group[1]), FALSE, TRUE)
+		var/admin_key = admins_regex.group[1]
+		var/admin_rank = admins_regex.group[2]
+		new /datum/admins(ranks_from_rank_name(admin_rank), ckey(admin_key), force_active = FALSE, protected = TRUE)
+
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
 		var/datum/db_query/query_load_admins = SSdbcore.NewQuery("SELECT ckey, `rank` FROM [format_table_name("admin")] ORDER BY `rank`")
 		if(!query_load_admins.Execute())
@@ -237,13 +268,16 @@ GLOBAL_PROTECT(protected_ranks)
 				var/admin_ckey = ckey(query_load_admins.item[1])
 				var/admin_rank = query_load_admins.item[2]
 				var/skip
-				if(rank_names[admin_rank] == null)
+
+				var/list/admin_ranks = ranks_from_rank_name(admin_rank)
+
+				if(admin_ranks.len == 0)
 					message_admins("[admin_ckey] loaded with invalid admin rank [admin_rank].")
 					skip = 1
 				if(GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey])
 					skip = 1
 				if(!skip)
-					new /datum/admins(rank_names[admin_rank], admin_ckey)
+					new /datum/admins(admin_ranks, admin_ckey)
 		qdel(query_load_admins)
 	//load admins from backup file
 	if(dbfail)
@@ -263,30 +297,12 @@ GLOBAL_PROTECT(protected_ranks)
 					skip = TRUE
 			if(skip)
 				continue
-			new /datum/admins(rank_names[backup_file_json["admins"]["[J]"]], ckey("[J]"))
+			new /datum/admins(ranks_from_rank_name(backup_file_json["admins"]["[J]"]), ckey("[J]"))
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
 	for(var/ckey in GLOB.admin_datums)
 		var/datum/admins/D = GLOB.admin_datums[ckey]
-		msg += "\t[ckey] - [D.rank.name]\n"
+		msg += "\t[ckey] - [D.rank_names()]\n"
 	testing(msg)
 	#endif
 	return dbfail
-
-#ifdef TESTING
-/client/verb/changerank(newrank in GLOB.admin_ranks)
-	if(holder)
-		holder.rank = newrank
-	else
-		holder = new /datum/admins(newrank, ckey)
-	remove_admin_verbs()
-	holder.associate(src)
-
-/client/verb/changerights(newrights as num)
-	if(holder)
-		holder.rank.rights = newrights
-	else
-		holder = new /datum/admins("testing", newrights, ckey)
-	remove_admin_verbs()
-	holder.associate(src)
-#endif

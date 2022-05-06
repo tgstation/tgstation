@@ -26,6 +26,7 @@
 		/obj/item/seeds/garlic = 3,
 		/obj/item/seeds/grape = 3,
 		/obj/item/seeds/grass = 3,
+		/obj/item/seeds/greenbean = 3,
 		/obj/item/seeds/herbs = 3,
 		/obj/item/seeds/korta_nut = 3,
 		/obj/item/seeds/lemon = 3,
@@ -66,8 +67,8 @@
 		/obj/item/reagent_containers/spray/waterflower = 1
 	)
 	refill_canister = /obj/item/vending_refill/hydroseeds
-	default_price = PAYCHECK_PRISONER
-	extra_price = PAYCHECK_ASSISTANT
+	default_price = PAYCHECK_LOWER
+	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/hydroseeds

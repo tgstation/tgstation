@@ -11,7 +11,7 @@
 
 	icon = 'icons/obj/card.dmi'
 	icon_state = "data_3"
-	custom_price = PAYCHECK_MEDIUM * 3
+	custom_price = PAYCHECK_CREW * 3
 	w_class = WEIGHT_CLASS_SMALL
 
 	/// Traits automatically granted by this chip, optional. Lazylist.

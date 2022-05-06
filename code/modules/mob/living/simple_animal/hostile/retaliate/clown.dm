@@ -152,7 +152,7 @@
 	if(!bunch_turf)
 		return
 	if(!owner.CanReach(bunch_turf) || !isopenturf(bunch_turf))
-		owner.balloon_alert("can't do that here!")
+		owner.balloon_alert(owner, "can't do that here!")
 		return
 	activating = TRUE
 	if(!do_after(owner, 1 SECONDS))
@@ -514,5 +514,3 @@
 	projected_morsel.throw_at(target, 8, 2, pouch_owner)
 	flick("glutton_mouth", pouch_owner)
 	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)
-
-

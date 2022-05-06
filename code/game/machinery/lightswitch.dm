@@ -6,6 +6,7 @@
 	base_icon_state = "light"
 	desc = "Make dark."
 	power_channel = AREA_USAGE_LIGHT
+	use_power = NO_POWER_USE
 	/// Set this to a string, path, or area instance to control that area
 	/// instead of the switch's location.
 	var/area/area = null

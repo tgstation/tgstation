@@ -27,6 +27,9 @@
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
 
+/obj/item/gun/ballistic/automatic/pistol/fire_mag
+	mag_type = /obj/item/ammo_box/magazine/m9mm/fire
+
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
 	. = ..()
 	var/obj/item/suppressor/S = new(src)

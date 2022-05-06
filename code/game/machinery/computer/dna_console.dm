@@ -55,9 +55,6 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/scan_consolenew
 
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 400
 	light_color = LIGHT_COLOR_BLUE
 
 	/// Link to the techweb's stored research. Used to retrieve stored mutations
@@ -236,6 +233,7 @@
 	stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	// Most of ui_interact is spent setting variables for passing to the tgui
 	//  interface.
 	// We can also do some general state processing here too as it's a good
@@ -431,6 +429,7 @@
 			scrambleready = world.time + SCRAMBLE_TIMEOUT
 			to_chat(usr,span_notice("DNA scrambled."))
 			scanner_occupant.AddComponent(/datum/component/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2))
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
 		// Check whether a specific mutation is eligible for discovery within the
@@ -564,7 +563,7 @@
 
 			// Check if we cracked a mutation
 			check_discovery(alias)
-
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
 		// Apply a chromosome to a specific mutation.
@@ -598,7 +597,7 @@
 				if(CM.can_apply(HM) && (CM.name == params["chromo"]))
 					stored_chromosomes -= CM
 					CM.apply(HM)
-
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
 		// Attempt overwriting Base DNA : The pairs are instead the top row vs the top row of the new code.
@@ -734,6 +733,7 @@
 				//Not sure what this does but it seems to be a sanity check and this needs a sanity check
 				scanner_occupant.domutcheck()
 
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 
 			return
 
@@ -814,7 +814,7 @@
 					injectorready = world.time + INJECTOR_TIMEOUT * 5 * (1 - 0.1 * connected_scanner.precision_coeff)
 				else
 					injectorready = world.time + INJECTOR_TIMEOUT * 5
-
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
 		// Save a mutation to the console's storage buffer.
@@ -1025,6 +1025,7 @@
 			var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(result_path)
 			stored_research.discovered_mutations += result_path
 			say("Successfully mutated [HM.name].")
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
 		// Combines two mutations from the disk to try and create a new mutation
@@ -1087,6 +1088,7 @@
 			var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(result_path)
 			stored_research.discovered_mutations += result_path
 			say("Successfully mutated [HM.name].")
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
 		// Sets the Genetic Makeup pulse strength.
@@ -1322,7 +1324,7 @@
 			//  ready timer.
 			if(I)
 				injectorready = world.time + INJECTOR_TIMEOUT
-
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
 		// Applies a genetic makeup buffer to the scanner occupant
@@ -1359,6 +1361,7 @@
 			var/type = params["type"]
 
 			apply_genetic_makeup(type, buffer_slot)
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
 		// Applies a genetic makeup buffer to the next scanner occupant. This sets
@@ -1424,6 +1427,7 @@
 			genetic_damage_pulse_timer = world.time + (pulse_duration*10)
 			genetic_damage_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
 			begin_processing()
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
 		// Cancels the delayed action - In this context it is not the genetic damage
@@ -1584,6 +1588,7 @@
 			A.copy_mutation(HM)
 			injector_selection[adv_inj] += A
 			to_chat(usr,span_notice("Mutation successfully added to advanced injector."))
+			connected_scanner.use_power(connected_scanner.active_power_usage)
 			return
 
 		// Deletes a mutation from an advanced injector

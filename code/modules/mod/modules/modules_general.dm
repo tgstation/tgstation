@@ -466,10 +466,10 @@
 ///Plasma Stabilizer - Prevents plasmamen from igniting in the suit
 /obj/item/mod/module/plasma_stabilizer
 	name = "MOD plasma stabilizer module"
-	desc = "This system essentially forms an atmosphere of its' own inside the suit, \
-		safely ejecting oxygen from the inside and allowing the wearer, a plasmaman, \
-		to have their internal plasma circulate around them somewhat like a sauna. \
-		This prevents them from self-igniting, and leads to greater comfort overall. \
+	desc = "This system essentially forms an atmosphere of its own, within the suit, \
+		efficiently and quickly preventing oxygen from causing the user's head to burst into flame. \
+		This allows plasmamen to safely remove their helmet, allowing for easier \
+		equipping of any MODsuit-related equipment, or otherwise. \
 		The purple glass of the visor seems to be constructed for nostalgic purposes."
 	icon_state = "plasma_stabilizer"
 	complexity = 1
@@ -478,10 +478,10 @@
 	overlay_state_inactive = "module_plasma"
 
 /obj/item/mod/module/plasma_stabilizer/on_equip()
-	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
 
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
-	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION_HEAD_ONLY, MOD_TRAIT)
 
 
 //Finally, https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real:

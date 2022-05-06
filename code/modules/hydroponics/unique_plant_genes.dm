@@ -81,7 +81,7 @@
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	to_chat(target, "<span class='danger'>You are lit on fire from the intense heat of [our_plant]!</span>")
 	target.adjust_fire_stacks(our_seed.potency / 20)
-	if(target.IgniteMob())
+	if(target.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(target)] on fire with [our_plant] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(target)] on fire with [our_plant] at [AREACOORD(user)]")
 	our_plant.investigate_log("was used by [key_name(user)] to burn [key_name(target)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
