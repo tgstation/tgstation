@@ -769,7 +769,7 @@
 						// This relies on a nice property of the linked recursive and gridmap types
 						// They're defined in relation to each other, so they have the same value
 						SSspatial_grid.remove_grid_awareness(location, channel)
-			UNSETEMPTY(recursive_contents[channel])
+			ASSOC_UNSETEMPTY(recursive_contents, channel)
 			UNSETEMPTY(location.important_recursive_contents)
 
 /atom/movable/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -827,7 +827,7 @@
 		recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE] -= src
 		if(!length(recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
 			SSspatial_grid.remove_grid_awareness(location, SPATIAL_GRID_CONTENTS_TYPE_HEARING)
-		UNSETEMPTY(recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+		ASSOC_UNSETEMPTY(recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 		UNSETEMPTY(location.important_recursive_contents)
 
 ///allows this movable to know when it has "entered" another area no matter how many movable atoms its stuffed into, uses important_recursive_contents
@@ -874,7 +874,7 @@
 		recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] -= src
 		if(!length(recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]))
 			SSspatial_grid.remove_grid_awareness(movable_loc, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
-		UNSETEMPTY(recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
+		ASSOC_UNSETEMPTY(recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		UNSETEMPTY(movable_loc.important_recursive_contents)
 
 ///Sets the anchored var and returns if it was sucessfully changed or not.
