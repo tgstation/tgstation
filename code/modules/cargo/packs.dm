@@ -2922,13 +2922,14 @@
 
 /datum/supply_pack/vending/wardrobes/general
 	name = "General Wardrobes Supply Crate"
-	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe, JaniDrobe, ChapDrobe."
+	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe, JaniDrobe, ChapDrobe, and FishDrobe."
 	cost = CARGO_CRATE_VALUE * 7.5
 	contains = list(/obj/item/vending_refill/wardrobe/curator_wardrobe,
 					/obj/item/vending_refill/wardrobe/bar_wardrobe,
 					/obj/item/vending_refill/wardrobe/chef_wardrobe,
 					/obj/item/vending_refill/wardrobe/jani_wardrobe,
-					/obj/item/vending_refill/wardrobe/chap_wardrobe)
+					/obj/item/vending_refill/wardrobe/chap_wardrobe,
+					/obj/item/vending_refill/wardrobe/fish_wardrobe)
 	crate_name = "general wardrobes vendor refills"
 
 /datum/supply_pack/vending/wardrobes/hydroponics
