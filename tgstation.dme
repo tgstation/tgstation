@@ -144,6 +144,7 @@
 #include "code\__DEFINES\religion.dm"
 #include "code\__DEFINES\research.dm"
 #include "code\__DEFINES\resonator.dm"
+#include "code\__DEFINES\worker.dm"
 #include "code\__DEFINES\robots.dm"
 #include "code\__DEFINES\role_preferences.dm"
 #include "code\__DEFINES\roundend.dm"
