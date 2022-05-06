@@ -3268,11 +3268,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
-"aNs" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/medical/medbay/lobby)
 "aNw" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -93858,7 +93853,7 @@ cED
 aWf
 iJw
 ndO
-aNs
+mzW
 pMU
 wXM
 tAR
