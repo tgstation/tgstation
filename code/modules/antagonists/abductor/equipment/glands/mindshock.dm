@@ -1,11 +1,11 @@
 /obj/item/organ/heart/gland/mindshock
 	abductor_hint = "neural crosstalk uninhibitor. The abductee emits a disrupting psychic wave every so often. This will either stun, cause hallucinations or deal random brain damage to people nearby."
-	cooldown_low = 400
-	cooldown_high = 700
+	cooldown_low = 40 SECONDS
+	cooldown_high = 70 SECONDS
 	uses = -1
 	icon_state = "mindshock"
 	mind_control_uses = 2
-	mind_control_duration = 1200
+	mind_control_duration = 120 SECONDS
 	var/list/mob/living/carbon/human/broadcasted_mobs = list()
 
 /obj/item/organ/heart/gland/mindshock/activate()
@@ -15,19 +15,20 @@
 	for(var/mob/living/carbon/H in orange(4,T))
 		if(H == owner)
 			continue
-		if(!HAS_TRAIT(H, TRAIT_MINDSHIELD))
-			switch(pick(1,3))
-				if(1)
-					to_chat(H, span_userdanger("You hear a loud buzz in your head, silencing your thoughts!"))
-					H.Stun(50)
-				if(2)
-					to_chat(H, span_warning("You hear an annoying buzz in your head."))
-					H.add_confusion(15)
-					H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
-				if(3)
-					H.hallucination += 60
-		else
+		if(HAS_TRAIT(H, TRAIT_MINDSHIELD))
 			to_chat(H, span_notice("You hear a faint hum fill your ears, which quickly dies down."))
+			continue
+
+		switch(pick(1,3))
+			if(1)
+				to_chat(H, span_userdanger("You hear a loud buzz in your head, silencing your thoughts!"))
+				H.Stun(50)
+			if(2)
+				to_chat(H, span_warning("You hear an annoying buzz in your head."))
+				H.add_confusion(15)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
+			if(3)
+				H.hallucination += 60
 
 /obj/item/organ/heart/gland/mindshock/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
@@ -40,18 +41,19 @@
 		if(H.stat)
 			continue
 
-		if(!HAS_TRAIT(H, TRAIT_MINDSHIELD))
-			broadcasted_mobs += H
-			to_chat(H, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
-			to_chat(H, span_mind_control("[command]"))
-
-			message_admins("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
-			log_game("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
-
-			var/atom/movable/screen/alert/mind_control/mind_alert = H.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
-			mind_alert.command = command
-		else
+		if(HAS_TRAIT(H, TRAIT_MINDSHIELD))
 			to_chat(H, span_notice("You hear a low drone as something foreign attempts to enter your mind, but the noise fades after a few moments."))
+			continue
+
+		broadcasted_mobs += H
+		to_chat(H, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
+		to_chat(H, span_mind_control("[command]"))
+
+		message_admins("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
+		log_game("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
+
+		var/atom/movable/screen/alert/mind_control/mind_alert = H.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
+		mind_alert.command = command
 
 	if(LAZYLEN(broadcasted_mobs))
 		active_mind_control = TRUE
