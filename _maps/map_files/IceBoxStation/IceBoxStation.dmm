@@ -20766,12 +20766,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "gHe" = (
-/obj/machinery/firealarm/directional/west,
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "gHg" = (
@@ -230587,7 +230583,7 @@ dnq
 gOy
 gvo
 pKV
-gHe
+rjR
 rjR
 pUX
 pTB
@@ -231103,7 +231099,7 @@ mgj
 mZS
 mgV
 crc
-mgj
+gHe
 mVb
 bep
 qcu
@@ -237734,7 +237730,7 @@ rVy
 lEj
 fCW
 nUg
-xQG
+dKP
 ykw
 ybD
 kfc
@@ -238762,7 +238758,7 @@ nsO
 eWB
 kkl
 rEP
-dKP
+xQG
 ykw
 jpE
 gnL
