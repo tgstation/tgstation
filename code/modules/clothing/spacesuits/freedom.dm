@@ -7,6 +7,7 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
+	clothing_flags = DISEASE_IMMUNITY
 
 /obj/item/clothing/suit/space/freedom
 	name = "eagle suit"

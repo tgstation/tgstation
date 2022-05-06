@@ -104,7 +104,7 @@
 	inhand_icon_state = "helmetalt"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 30, ENERGY = 25, BOMB = 50, FIRE = 40, ACID = 50, WOUND = 20)
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STOPSPRESSUREDAMAGE|PLASMAMAN_HELMET_EXEMPT|DISEASE_IMMUNITY
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	can_flashlight = TRUE
 	dog_fashion = null
@@ -218,7 +218,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
+	clothing_flags = STOPSPRESSUREDAMAGE|PLASMAMAN_HELMET_EXEMPT|DISEASE_IMMUNITY
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
@@ -254,6 +254,7 @@
 	name = "\improper Thunderdome helmet"
 	desc = "<i>'Let the battle commence!'</i>"
 	flags_inv = HIDEEARS|HIDEHAIR
+	clothing_flags = DISEASE_IMMUNITY
 	icon_state = "thunderdome"
 	inhand_icon_state = "thunderdome"
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, FIRE = 90, ACID = 90)
@@ -387,6 +388,7 @@
 	desc = "100% bear."
 	icon_state = "rus_ushanka"
 	inhand_icon_state = "rus_ushanka"
+	clothing_flags = DISEASE_IMMUNITY
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT

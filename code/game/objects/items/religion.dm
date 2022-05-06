@@ -303,7 +303,8 @@
 	desc = "A religious-looking hat."
 	icon_state = null
 	flags_1 = 0
-	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, FIRE = 60, ACID = 60) //religion protects you from disease, honk.
+	clothing_flags = DISEASE_IMMUNITY //religion protects you from disease, honk.
+	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, FIRE = 60, ACID = 60)
 	worn_y_offset = 6
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red

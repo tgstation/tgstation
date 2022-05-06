@@ -7,4 +7,5 @@
 	armor = list(MELEE = 60, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 100, FIRE = 100, ACID = 100)
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_flags = DISEASE_IMMUNITY
 	cell = /obj/item/stock_parts/cell/hyper

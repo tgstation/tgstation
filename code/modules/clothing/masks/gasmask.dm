@@ -157,6 +157,7 @@
 	inhand_icon_state = "gas_mask"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 2,ENERGY = 2, BOMB = 0, FIRE = 0, ACID = 0)
 	has_fov = FALSE
+	clothing_flags = DISEASE_IMMUNITY
 	flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/syndicate
