@@ -64188,13 +64188,6 @@
 /area/hallway/primary/fore)
 "qYe" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 1;
-	piping_layer = 2
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8;
 	piping_layer = 2
 	},
