@@ -1415,7 +1415,7 @@
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
 
-/mob/living/carbon/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+/mob/living/carbon/update_fire_overlay(stacks, on_fire, last_icon_state)
 	var/fire_icon = "generic_burning[suffix]"
 
 	if(!GLOB.fire_appearances[fire_icon])

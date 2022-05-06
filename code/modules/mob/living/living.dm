@@ -1522,7 +1522,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * This should return last_icon_state for the fire status efect
  */
 
-/mob/living/proc/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+/mob/living/proc/update_fire_overlay(stacks, on_fire, last_icon_state)
 	return last_icon_state
 
 /**

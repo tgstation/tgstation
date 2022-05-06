@@ -984,13 +984,11 @@
 /mob/living/silicon/robot/proc/untip_roleplay()
 	to_chat(src, span_notice("Your frustration has empowered you! You can now right yourself faster!"))
 
-/mob/living/silicon/robot/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	var/fire_icon = "generic_burning[suffix]"
+/mob/living/silicon/robot/update_fire_overlay(stacks, on_fire, last_icon_state)
+	var/fire_icon = "generic_fire"
 
 	if(!GLOB.fire_appearances[fire_icon])
-		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER)
-		new_fire_overlay.appearance_flags = RESET_COLOR
-		GLOB.fire_appearances[fire_icon] = new_fire_overlay
+		GLOB.fire_appearances[fire_icon] = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER, appearance_flags = RESET_COLOR)
 
 	if(stacks && on_fire)
 		if(last_icon_state == fire_icon)
