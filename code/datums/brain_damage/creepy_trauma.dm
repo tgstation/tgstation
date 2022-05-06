@@ -103,7 +103,7 @@
 			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 		if(81 to 100)
 			INVOKE_ASYNC(owner, /mob.proc/emote, "cough")
-			owner.dizziness += 10
+			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
 			owner.adjust_disgust(5)
 			to_chat(owner, span_userdanger("You gag and swallow a bit of bile..."))
 

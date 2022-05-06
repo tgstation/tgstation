@@ -129,10 +129,8 @@
 				stuffed = FALSE
 			else
 				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
-				if(iscarbon(user))
-					var/mob/living/carbon/C = user
-					if(C.drunkenness < 50)
-						C.drunkenness = min(C.drunkenness + 20, 50)
+				user.adjust_drunk_effect(20, up_to = 50)
+
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
 				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))

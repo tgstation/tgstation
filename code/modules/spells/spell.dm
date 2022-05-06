@@ -197,17 +197,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		var/mob/living/carbon/human/H = user
 
-		var/static/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard))
-		if(clothes_req) //clothes check
-			var/passes_req = FALSE
-			if(istype(H.back, /obj/item/mod/control))
-				var/obj/item/mod/control/mod = H.back
-				if(istype(mod.theme, /datum/mod_theme/enchanted))
-					passes_req = TRUE
-			if(!passes_req && !is_type_in_typecache(H.wear_suit, casting_clothes))
+		if(clothes_req)
+			if(!(H.wear_suit?.clothing_flags & CASTING_CLOTHES))
 				to_chat(H, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
-			if(!passes_req && !is_type_in_typecache(H.head, casting_clothes))
+			if(!(H.head?.clothing_flags & CASTING_CLOTHES))
 				to_chat(H, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
 	else

@@ -294,7 +294,7 @@
 	if(isliving(mover))
 		var/mob/living/fire_walker = mover
 		fire_walker.adjust_fire_stacks(5)
-		fire_walker.IgniteMob()
+		fire_walker.ignite_mob()
 
 /obj/structure/legionnaire_bonfire/Destroy()
 	if(myowner != null)
