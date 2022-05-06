@@ -482,6 +482,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	if(admin_cascade || has_destabilizing_crystal)
 		supermatter_cascade = TRUE
+		cascade_initiated = TRUE
 
 	return supermatter_cascade
 
