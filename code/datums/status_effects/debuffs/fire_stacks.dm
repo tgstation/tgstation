@@ -83,10 +83,12 @@
 
 /datum/status_effect/fire_handler/proc/set_stacks(new_stacks)
 	stacks = max(0, min(stack_limit, new_stacks))
+	update_overlay()
 	cache_stacks()
 
 /datum/status_effect/fire_handler/proc/adjust_stacks(new_stacks)
 	stacks = max(0, min(stack_limit, stacks + new_stacks))
+	update_overlay()
 	cache_stacks()
 
 /**
@@ -132,6 +134,7 @@
 	var/firelight_type = /obj/effect/dummy/lighting_obj/moblight/fire
 
 /datum/status_effect/fire_handler/fire_stacks/tick(delta_time, times_fired)
+	update_overlay()
 	if(stacks <= 0)
 		qdel(src)
 		return TRUE
@@ -154,7 +157,6 @@
 		return TRUE
 
 	deal_damage(delta_time, times_fired)
-	update_overlay()
 
 /**
  * Proc that handles damage dealing and all special effects

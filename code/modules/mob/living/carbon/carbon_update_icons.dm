@@ -87,7 +87,7 @@
 			GLOB.fire_appearances[fire_icon] = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER, appearance_flags = RESET_COLOR)
 		overlays_standing[FIRE_LAYER] = GLOB.fire_appearances[fire_icon]
 		apply_overlay(FIRE_LAYER)
-		if(fire_stacks > MOB_BIG_FIRE_STACK_THRESHOLD)
+		if(stacks > MOB_BIG_FIRE_STACK_THRESHOLD)
 			var/secondary_fire_icon = "[dna?.species.fire_overlay || "human"]_big_fire"
 			if(!GLOB.fire_appearances[secondary_fire_icon])
 				GLOB.fire_appearances[secondary_fire_icon] = mutable_appearance('icons/mob/onfire.dmi', secondary_fire_icon, -SECONDARY_FIRE_LAYER, appearance_flags = RESET_COLOR)
