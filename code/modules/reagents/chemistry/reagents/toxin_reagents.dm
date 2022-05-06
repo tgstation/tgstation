@@ -424,7 +424,7 @@
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_fire_stacks(2 * REM * delta_time)
-	M.IgniteMob()
+	M.ignite_mob()
 	return ..()
 
 /datum/reagent/toxin/chloralhydrate

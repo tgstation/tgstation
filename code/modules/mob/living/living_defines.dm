@@ -54,6 +54,10 @@
 	var/last_special = 0 ///Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/timeofdeath = 0
 
+	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
+	var/on_fire = FALSE
+	var/fire_stacks = 0
+
 	/**
 	  * Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	  *
@@ -74,11 +78,6 @@
 
 	/// Time of death
 	var/tod = null
-
-	var/on_fire = FALSE ///The "Are we on fire?" var
-	/// Weak reference to the light our fire is causing, if there is one
-	var/datum/weakref/firelight_ref
-	var/fire_stacks = 0 ///Tracks how many stacks of fire we have on, max is usually 20
 
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 

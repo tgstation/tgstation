@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Medical coagulants work as they are expected to now, but the difference shouldn't be very noticeable, since their primarily function worked anyways"

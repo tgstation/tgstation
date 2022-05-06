@@ -395,7 +395,7 @@
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.set_fire_stacks(min(M.fire_stacks + (1.5 * delta_time), 5))
-	M.IgniteMob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
+	M.ignite_mob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
 	M.adjustToxLoss(0.5*delta_time, 0)
 	M.adjustFireLoss(0.5*delta_time, 0) //Hence the other damages... ain't I a bastard?
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5*delta_time, 150)

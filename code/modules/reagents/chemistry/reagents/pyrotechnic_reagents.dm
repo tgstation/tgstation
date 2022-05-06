@@ -73,7 +73,7 @@
 /datum/reagent/clf3/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	exposed_mob.adjust_fire_stacks(min(reac_volume/5, 10))
-	exposed_mob.IgniteMob()
+	exposed_mob.ignite_mob()
 	if(!locate(/obj/effect/hotspot) in exposed_mob.loc)
 		new /obj/effect/hotspot(exposed_mob.loc)
 
@@ -185,7 +185,7 @@
 	exposed_mob.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*exposed_mob.fire_stacks, 0.3)
 	exposed_mob.adjustFireLoss(burndmg, 0)
-	exposed_mob.IgniteMob()
+	exposed_mob.ignite_mob()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	metabolizer.adjust_fire_stacks(1 * REM * delta_time)

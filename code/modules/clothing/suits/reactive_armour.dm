@@ -152,8 +152,8 @@
 	for(var/mob/living/carbon/carbon_victim in range(6, owner))
 		if(carbon_victim != owner)
 			carbon_victim.adjust_fire_stacks(8)
-			carbon_victim.IgniteMob()
-	owner.set_fire_stacks(-20)
+			carbon_victim.ignite_mob()
+	owner.set_wet_stacks(20)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
@@ -161,7 +161,7 @@
 	owner.visible_message(span_danger("[src] just makes [attack_text] worse by spewing molten death on [owner]!"))
 	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
 	owner.adjust_fire_stacks(12)
-	owner.IgniteMob()
+	owner.ignite_mob()
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return FALSE
 
