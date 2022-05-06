@@ -424,7 +424,7 @@
 			cast_directional_light()
 		add_dynamic_lumi()
 	overlay_lighting_flags |= LIGHTING_ON
-	if(current_holder && current_holder != parent)
+	if(current_holder && current_holder != parent && current_holder != parent_attached_to)
 		RegisterSignal(current_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
 	get_new_turfs()
 
