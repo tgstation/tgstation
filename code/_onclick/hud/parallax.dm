@@ -47,6 +47,8 @@
 /datum/hud/proc/apply_parallax_pref(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 
+	if(SSmapping.level_trait(screenmob.z, ZTRAIT_NOPARALLAX))
+		return FALSE
 	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(viewmob, TRAIT_BYPASS_MEASURES))
 		return FALSE
 

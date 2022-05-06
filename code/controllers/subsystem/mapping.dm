@@ -67,6 +67,7 @@ SUBSYSTEM_DEF(mapping)
 			config = old_config
 	initialize_biomes()
 	loadWorld()
+	determine_fake_sale()
 	repopulate_sorted_areas()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
@@ -188,6 +189,13 @@ Used by the AI doomsday and the self-destruct nuke.
 	for(var/N in nuke_tiles)
 		var/turf/open/floor/circuit/C = N
 		C.update_appearance()
+
+/datum/controller/subsystem/mapping/proc/determine_fake_sale()
+	if(length(SSmapping.levels_by_all_traits(list(ZTRAIT_STATION, ZTRAIT_NOPARALLAX))))
+		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakeice/loaded
+	else
+		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakespace/loaded
+
 
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
