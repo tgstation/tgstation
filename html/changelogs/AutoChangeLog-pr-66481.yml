@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "Made the tank compressor input pipe green color to be in line with the current atmos machines color scheme, increased by 100 kPa the window for tank ejection to allow more flexibility when filling up the tank"
+  - code_imp: "cleaned up some of the code for disconnecting pipes and removed repeated code"
