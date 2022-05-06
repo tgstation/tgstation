@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "atmos techs can once again re-enter the engineering lobby and lathe room"
