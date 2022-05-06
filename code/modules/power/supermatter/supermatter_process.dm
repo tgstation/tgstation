@@ -94,6 +94,9 @@
 	//Tells the engi team to get their butt in gear
 	handle_emergency_alerts()
 
+	if(damage == 0 && has_destabilizing_crystal)
+		has_destabilizing_crystal = FALSE
+
 	return TRUE
 
 /obj/machinery/power/supermatter_crystal/proc/handle_crystal_sounds()

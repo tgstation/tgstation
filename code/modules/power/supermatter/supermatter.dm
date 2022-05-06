@@ -258,10 +258,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/anomaly_event = TRUE
 	///If an admin wants a sure cascade with the delamination just set this to true (don't be a badmin)
 	var/admin_cascade = FALSE
+	///Do we have a destabilizing crystal attached?
+	var/has_destabilizing_crystal = FALSE
 	///Has the cascade been triggered?
 	var/cascade_initiated = FALSE
 	///Reference to the warp effect
-	var/atom/movable/warp_effect/warp
+	var/atom/movable/supermatter_warp_effect/warp
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
@@ -478,7 +480,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			cascade_initiated = FALSE
 			break
 
-	if(admin_cascade)
+	if(admin_cascade || has_destabilizing_crystal)
 		supermatter_cascade = TRUE
 
 	return supermatter_cascade
@@ -700,6 +702,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/overlay/psy/shard
 	icon_state = "psy_shard"
+
+/atom/movable/supermatter_warp_effect
+	plane = GRAVITY_PULSE_PLANE
+	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
+	icon = 'icons/effects/light_overlays/light_352.dmi'
+	icon_state = "light"
+	pixel_x = -176
+	pixel_y = -176
 
 #undef BIKE
 #undef COIL

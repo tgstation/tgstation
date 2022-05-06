@@ -967,3 +967,13 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/area/target_area = get_area(target)
 
 	return (istype(user_area, dropoff) && istype(target_area, dropoff))
+
+/datum/objective/end_reality
+	name = "end reality"
+	explanation_text = "End this known reality by causing a supermatter cascade. Cause the cascade by either gas or the (not)-provided destabilization crystal."
+	martyr_compatible = TRUE
+
+/datum/objective/end_reality/check_completion()
+	if(GLOB.cascade_delamination == TRUE)
+		return TRUE
+	return FALSE

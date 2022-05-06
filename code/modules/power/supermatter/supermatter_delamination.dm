@@ -1,3 +1,5 @@
+GLOBAL_VAR_INIT(cascade_delamination, FALSE)
+
 /datum/supermatter_delamination
 	///Power amount of the SM at the moment of death
 	var/supermatter_power = 0
@@ -28,6 +30,7 @@
 	src.supermatter_gasmix_power_ratio = supermatter_gasmix_power_ratio
 
 	if(supermatter_cascade)
+		GLOB.cascade_delamination = TRUE
 		start_universe_ending_cascade()
 		return
 

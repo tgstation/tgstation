@@ -6,6 +6,9 @@
 	layer = AREA_LAYER
 	plane = ABOVE_LIGHTING_PLANE
 	opacity = FALSE
+	light_power = 1
+	light_range = 7
+	light_color = COLOR_VIVID_YELLOW
 	///All dirs we can expand to
 	var/list/available_dirs = list(NORTH,SOUTH,EAST,WEST,UP,DOWN)
 	///Cooldown on the expansion process
@@ -24,6 +27,7 @@
 		return
 
 	if(!available_dirs || available_dirs.len <= 0)
+		light_range = 0
 		return PROCESS_KILL
 
 	COOLDOWN_START(src, sm_wall_cooldown, rand(0, 5 SECONDS))
@@ -82,7 +86,6 @@
 	light_color = COLOR_RED
 	light_power = 0.7
 	light_range = 15
-	light_range = 6
 	move_resist = INFINITY
 	pixel_x = -96
 	pixel_y = -96
