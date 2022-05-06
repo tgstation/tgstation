@@ -34,12 +34,6 @@
 		return GetSpecialVoice()
 	return real_name
 
-/mob/living/carbon/human/can_speak_vocal(message)
-	if(!HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT) && !getorganslot(ORGAN_SLOT_LUNGS))
-		return FALSE
-
-	return ..()
-
 /mob/living/carbon/human/proc/SetSpecialVoice(new_voice)
 	if(new_voice)
 		special_voice = new_voice

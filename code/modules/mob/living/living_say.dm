@@ -173,28 +173,25 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			return
 		COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
 
-	if(!can_speak_basic(original_message, ignore_spam, forced))
-		return
 
 	language = message_mods[LANGUAGE_EXTENSION]
 
 	if(!language)
 		language = get_selected_language()
-	var/mob/living/carbon/human/H = src
-	if(!can_speak_vocal(message))
-		if(H.mind?.miming)
+
+	if(!can_speak(original_message, ignore_spam, forced))
+		if(mind?.miming)
 			if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
 				to_chat(src, span_warning("You stop yourself from signing in favor of the artform of mimery!"))
-				return
 			else
 				to_chat(src, span_green("Your vow of silence prevents you from speaking!"))
-				return
+
 		else
 			to_chat(src, span_warning("You find yourself unable to speak!"))
-			return
+
+		return
 
 	var/message_range = 7
-
 	var/succumbed = FALSE
 
 	// If there's a custom say emote it gets logged differently.
@@ -408,32 +405,35 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/proc/binarycheck()
 	return FALSE
 
-/mob/living/can_speak(message)
-	return (can_speak_basic(message) && can_speak_vocal(message))
-
 /**
- * Checks if our mob can currently use "say", at all.
- * Used primarily for OOC spam / mote checks.
+ * Checks if our mob can speak. If they cannot speak for some reason,
+ * will likely give them a feedback message as to why.
  *
- * Checked BEFORE handling of xeno channels.
+ * Primarily contains OOC checks (admin muted, config, etc).
+ *
+ * Used in [proc/say] and other methods of speech (radios) after a mob has inputted something.
+ * If you just want to check if a mob is able to speak in character, use [proc/can_speak_vocal] instead.
  */
-/mob/living/proc/can_speak_basic(message, ignore_spam = FALSE, forced = FALSE) //Check BEFORE handling of xeno channels
-	if(client)
-		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, span_danger("You cannot speak in IC (muted)."))
-			return FALSE
-		if(!(ignore_spam || forced) && client.handle_spam_prevention(message,MUTE_IC))
-			return FALSE
+/mob/living/can_speak(message, ignore_spam = FALSE, forced = FALSE)
+	if(client?.prefs.muted & MUTE_IC)
+		to_chat(src, span_danger("You cannot speak IC (muted)."))
+		return FALSE
+	if(!(ignore_spam || forced) && client?.handle_spam_prevention(message, MUTE_IC))
+		return FALSE
 
-	return TRUE
+	return can_speak_vocal()
 
 /**
  * Checks if our mob can currently speak, vocally.
- * Used priarily for IC mutism checks.
+ *
+ * Primarily contains IC checks (mute trait).
+ *
+ * Do not include feedback messages here,
+ * as this is used as a general check if "can this mob speak?" in many places.
  *
  * Checked AFTER handling of xeno channels.
  */
-/mob/living/proc/can_speak_vocal(message, allow_mimes = FALSE)
+/mob/living/can_speak_vocal(allow_mimes = FALSE)
 	if(!allow_mimes && mind?.miming)
 		// Mimes are excluded deliberately before the signal, instead of after.
 		return FALSE
@@ -453,6 +453,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return TRUE
 
+/**
+ * Treats the message according to traits, flags, status effects, whatever's set on the mob. Example: Stuttering.
+ * Also handles captilization of the message.
+ */
 /mob/living/proc/treat_message(message)
 	if(HAS_TRAIT(src, TRAIT_UNINTELLIGIBLE_SPEECH))
 		message = unintelligize(message)

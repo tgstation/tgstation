@@ -110,7 +110,7 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animal/hostile/statue/can_speak_vocal(message)
+/mob/living/simple_animal/hostile/statue/can_speak_vocal(allow_mimes = FALSE)
 	return FALSE // We're a statue, of course we can't talk.
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)

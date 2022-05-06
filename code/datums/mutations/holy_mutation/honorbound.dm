@@ -233,13 +233,13 @@
 			to_chat(user, span_warning("Too many people to declare! Pick ONE!"))
 		return FALSE
 	var/declaration_message = "[targets[1]]! By the divine light of [GLOB.deity], You are an evil of this world that must be wrought low!"
-	if(!user.can_speak(declaration_message))
+	if(!user.can_speak_vocal())
 		to_chat(user, span_warning("You can't get the declaration out!"))
 		return FALSE
 	if(!can_target(targets[1], user, silent))
 		return FALSE
 	GLOB.religious_sect.adjust_favor(-150, user)
-	user.say(declaration_message)
+	user.say(declaration_message, forced = name)
 	honormut.guilty(targets[1], declaration = TRUE)
 	return TRUE
 
