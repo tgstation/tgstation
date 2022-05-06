@@ -462,6 +462,19 @@
 	config_job = "scientist"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_RD, ACCESS_CHANGE_IDS)
 	job = /datum/job/scientist
+	
+/datum/id_trim/job/brig_physician
+	assignment = "Brig Physician"
+	trim_state = "trim_securityofficer"
+	sechud_icon_state = SECHUD_SECURITY_OFFICER
+	extra_access = list(ACCESS_FORENSICS, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE)
+	minimal_access = list(ACCESS_BRIG, ACCESS_COURT, ACCESS_SECURITY, ACCESS_BRIG_ENTRANCE, ACCESS_MECH_SECURITY,
+					ACCESS_MINERAL_STOREROOM, ACCESS_WEAPONS)
+	/// List of bonus departmental accesses that departmental sec officers get.
+	var/department_access = list()
+	config_job = "brig_physician"
+	template_access = list(ACCESS_CAPTAIN, ACCESS_HOS, ACCESS_CHANGE_IDS)
+	job = /datum/job/brig_physician	
 
 /// Sec officers have departmental variants. They each have their own trims with bonus departmental accesses.
 /datum/id_trim/job/security_officer
