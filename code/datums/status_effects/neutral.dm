@@ -391,7 +391,7 @@
 					do_sparks(5,FALSE,alt_clone)
 					alt_clone.emote("spin")
 					owner.emote("spin")
-					var/static/list/say_phrases = strings(EIGENSTASIUM_FILE, "lines")
+					var/list/say_phrases = strings(EIGENSTASIUM_FILE, "lines")
 					alt_clone.say(pick(say_phrases))
 				if(2)
 					phase_3_cycle = 0 //counter
