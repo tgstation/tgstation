@@ -130,8 +130,6 @@
 	var/datum/weakref/firelight_ref
 	/// Type of mob light emitter we use when on fire
 	var/firelight_type = /obj/effect/dummy/lighting_obj/moblight/fire
-	/// Stores current fire overlay icon state, for optimisation purposes
-	var/last_icon_state
 
 /datum/status_effect/fire_handler/fire_stacks/tick(delta_time, times_fired)
 	if(stacks <= 0)
@@ -242,7 +240,7 @@
 	update_overlay()
 
 /datum/status_effect/fire_handler/fire_stacks/update_overlay()
-	last_icon_state = owner.update_fire_overlay(stacks, on_fire, last_icon_state)
+	owner.update_fire_overlay(stacks, on_fire)
 
 /datum/status_effect/fire_handler/fire_stacks/on_apply()
 	. = ..()
