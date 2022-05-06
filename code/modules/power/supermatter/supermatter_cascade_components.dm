@@ -20,7 +20,7 @@
 
 /turf/closed/indestructible/supermatter_wall/process()
 
-	if(COOLDOWN_FINISHED(src, sm_wall_cooldown))
+	if(!COOLDOWN_FINISHED(src, sm_wall_cooldown))
 		return
 
 	if(!available_dirs || available_dirs.len <= 0)
