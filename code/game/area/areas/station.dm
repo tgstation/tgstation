@@ -280,7 +280,7 @@
 
 /area/station/hallway/primary/central
 	name = "\improper Central Primary Hallway"
-	icon_state = "hallC"
+	icon_state = "centralhall"
 
 /area/station/hallway/primary/central/fore
 	name = "\improper Fore Central Primary Hallway"
@@ -292,7 +292,7 @@
 
 /area/station/hallway/primary/upper
 	name = "\improper Upper Central Primary Hallway"
-	icon_state = "hallC"
+	icon_state = "centralhall"
 
 /area/station/hallway/primary/tram
 	name = "\improper Primary Tram"
