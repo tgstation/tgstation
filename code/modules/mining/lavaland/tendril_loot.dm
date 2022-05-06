@@ -780,7 +780,7 @@
 	living_target.Jitter(5 SECONDS)
 	to_chat(living_target, span_warning("You've been staggered!"))
 	living_target.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
-	addtimer(CALLBACK(living_target, /atom/.proc/remove_filter, "scan"), 30 SECONDS)
+	addtimer(CALLBACK(living_target, /datum/.proc/remove_filter, "scan"), 30 SECONDS)
 	ranged_ability_user.playsound_local(get_turf(ranged_ability_user), 'sound/magic/smoke.ogg', 50, TRUE)
 	balloon_alert(ranged_ability_user, "[living_target] scanned")
 	COOLDOWN_START(src, scan_cooldown, cooldown_time)

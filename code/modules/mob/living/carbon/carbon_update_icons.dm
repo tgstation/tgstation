@@ -213,7 +213,28 @@
 /mob/living/carbon/proc/update_hud_back(obj/item/I)
 	return
 
-
+/// Update the height of a carbon mob
+/mob/living/carbon/proc/update_height(mutable_appearance/appearance)
+	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi',"Cut1")
+	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi',"Cut2")
+	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi',"Cut3")
+	var/static/icon/lenghten_legs_mask = icon('icons/effects/cut.dmi',"Cut4")
+	appearance.remove_filter(list("Cut_Torso","Cut_Legs","Lenghten_Legs","Lenghten_Torso","Gnome_Cut_Torso","Gnome_Cut_Legs"))
+	if(HAS_TRAIT(src, TRAIT_DWARF))
+		appearance.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
+		appearance.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
+	else
+		switch(height)
+			if(CARBONHEIGHT_SHORTEST)
+				appearance.add_filter("Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
+				appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+			if(CARBONHEIGHT_SHORT)
+				appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
+			if(CARBONHEIGHT_TALL)
+				appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
+			if(CARBONHEIGHT_TALLEST)
+				appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
+				appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
 
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
@@ -233,6 +254,7 @@
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
+// TODO: update height
 	update_damage_overlays()
 	update_wound_overlays()
 	var/list/needs_update = list()
@@ -268,6 +290,8 @@
 
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
+		for (var/mutable_appearance/appearance in new_limbs)
+			update_height(appearance)
 
 	apply_overlay(BODYPARTS_LAYER)
 

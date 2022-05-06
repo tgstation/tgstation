@@ -873,17 +873,17 @@
 		if(!check_rights(R_SPAWN))
 			return
 		var/static/list/options = list(
-			HUMANHEIGHT_SHORTEST,
-			HUMANHEIGHT_SHORT,
-			HUMANHEIGHT_MEDIUM,
-			HUMANHEIGHT_TALL,
-			HUMANHEIGHT_TALLEST
+			CARBONHEIGHT_SHORTEST,
+			CARBONHEIGHT_SHORT,
+			CARBONHEIGHT_MEDIUM,
+			CARBONHEIGHT_TALL,
+			CARBONHEIGHT_TALLEST
 		)
 		var/result = input(usr, "Please choose a new height","Height") as null|anything in options
 		if(result)
 			admin_ticket_log("[key_name_admin(usr)] has set the height of [src] to [result]")
 			height = result
-			update_body()
+			regenerate_icons()
 
 /mob/living/carbon/human/limb_attack_self()
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]

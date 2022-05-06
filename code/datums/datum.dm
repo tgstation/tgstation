@@ -51,6 +51,10 @@
 	*/
 	var/list/cooldowns
 
+
+	/// List for handling persistent filters.
+	var/list/filter_data
+
 #ifdef REFERENCE_TRACKING
 	var/running_find_references
 	var/last_find_references = 0
@@ -265,3 +269,64 @@
 		return
 	SEND_SIGNAL(source, COMSIG_CD_RESET(index), S_TIMER_COOLDOWN_TIMELEFT(source, index))
 	TIMER_COOLDOWN_END(source, index)
+
+/datum/proc/add_filter(name,priority,list/params)
+	LAZYINITLIST(filter_data)
+	var/list/copied_parameters = params.Copy()
+	copied_parameters["priority"] = priority
+	filter_data[name] = copied_parameters
+	update_filters()
+
+/datum/proc/update_filters()
+	var/atom/atom_cast = src // this works with even images
+	atom_cast.filters = null
+	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
+	for(var/f in filter_data)
+		var/list/data = filter_data[f]
+		var/list/arguments = data.Copy()
+		arguments -= "priority"
+		atom_cast.filters += filter(arglist(arguments))
+	UNSETEMPTY(filter_data)
+
+/datum/proc/transition_filter(name, time, list/new_params, easing, loop)
+	var/filter = get_filter(name)
+	if(!filter)
+		return
+
+	var/list/old_filter_data = filter_data[name]
+
+	var/list/params = old_filter_data.Copy()
+	for(var/thing in new_params)
+		params[thing] = new_params[thing]
+
+	animate(filter, new_params, time = time, easing = easing, loop = loop)
+	for(var/param in params)
+		filter_data[name][param] = params[param]
+
+/datum/proc/change_filter_priority(name, new_priority)
+	if(!filter_data || !filter_data[name])
+		return
+
+	filter_data[name]["priority"] = new_priority
+	update_filters()
+
+/datum/proc/get_filter(name)
+	if(filter_data && filter_data[name])
+		var/atom/atom_cast = src // this works with even images
+		return atom_cast.filters[filter_data.Find(name)]
+
+/datum/proc/remove_filter(name_or_names)
+	if(!filter_data)
+		return
+
+	var/list/names = islist(name_or_names) ? name_or_names : list(name_or_names)
+
+	for(var/name in names)
+		if(filter_data[name])
+			filter_data -= name
+	update_filters()
+
+/datum/proc/clear_filters()
+	var/atom/atom_cast = src // this works with even images
+	filter_data = null
+	atom_cast.filters = null

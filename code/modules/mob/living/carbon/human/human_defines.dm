@@ -17,9 +17,6 @@
 	var/hair_color = "#000000"
 	var/hairstyle = "Bald"
 
-	/// Height of the human
-	var/height = HUMANHEIGHT_MEDIUM
-
 	///Colours used for hair and facial hair gradients.
 	var/list/grad_color
 	///Styles used for hair and facial hair gradients.

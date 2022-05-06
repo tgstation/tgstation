@@ -665,6 +665,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(standing.len)
 		species_human.overlays_standing[BODY_LAYER] = standing
+		for (var/mutable_appearance/appearance in standing)
+			species_human.update_height(appearance)
 
 	species_human.apply_overlay(BODY_LAYER)
 	handle_mutant_bodyparts(species_human)

@@ -46,6 +46,9 @@
 	///only used by humans.
 	var/obj/item/clothing/ears = null
 
+	/// Height of the mob, only used by humans.
+	var/height = CARBONHEIGHT_MEDIUM
+
 	/// Carbon
 	var/datum/dna/dna = null
 	///last mind to control this mob, for blood-based cloning
