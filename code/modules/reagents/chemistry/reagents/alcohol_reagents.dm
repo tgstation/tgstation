@@ -1354,7 +1354,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(ishuman(drinker) && drinker.mind?.miming)
-		drinker.silent = max(drinker.silent, MIMEDRINK_SILENCE_DURATION)
+		drinker.set_timed_status_effect(MIMEDRINK_SILENCE_DURATION, /datum/status_effect/silenced, only_if_higher = TRUE)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	return ..() || .
@@ -2096,7 +2096,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(ishuman(drinker) && drinker.mind?.miming)
-		drinker.silent = max(drinker.silent, MIMEDRINK_SILENCE_DURATION)
+		drinker.set_timed_status_effect(MIMEDRINK_SILENCE_DURATION, /datum/status_effect/silenced, only_if_higher = TRUE)
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	return ..()

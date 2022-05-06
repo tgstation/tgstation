@@ -132,7 +132,7 @@
 	//Vars for n2o and healium induced euphorias.
 	var/n2o_euphoria = EUPHORIA_LAST_FLAG
 	var/healium_euphoria = EUPHORIA_LAST_FLAG
-	
+
 	//Handle subtypes' breath processing
 	handle_gas_override(breather,breath_gases, gas_breathed)
 
@@ -332,7 +332,8 @@
 			breather.adjustFireLoss(15)
 			if (prob(freon_pp/2))
 				to_chat(breather, span_alert("Your throat closes up!"))
-				breather.silent = max(breather.silent, 3)
+				breather.set_timed_status_effect(6 SECONDS, /datum/status_effect/silenced, only_if_higher = TRUE)
+
 		else
 			breather.adjustFireLoss(freon_pp/4)
 		gas_breathed = breath_gases[/datum/gas/freon][MOLES]

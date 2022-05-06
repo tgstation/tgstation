@@ -497,10 +497,7 @@
 	var/turf/open/our_turf = get_turf(owner)
 	our_turf.TakeTemperature(-40)
 	owner.adjust_bodytemperature(-20)
-
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.silent += 5
+	owner.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/silenced)
 
 	return ..()
 

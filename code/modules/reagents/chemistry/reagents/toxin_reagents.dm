@@ -518,7 +518,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.silent = max(M.silent, 3 * REM * normalise_creation_purity() * delta_time)
+	// Gain approximately 12 seconds * creation purity seconds of silence every metabolism tick.
+	M.set_timed_status_effect(6 SECONDS * REM * normalise_creation_purity() * delta_time, /datum/status_effect/silenced, only_if_higher = TRUE)
 	..()
 
 /datum/reagent/toxin/staminatoxin

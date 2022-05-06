@@ -79,7 +79,7 @@
 	var/turf/open/target_turf = get_turf(carbon_target)
 	target_turf.TakeTemperature(-20)
 	carbon_target.adjust_bodytemperature(-40)
-	carbon_target.silent += 5
+	carbon_target.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/silenced)
 
 /datum/heretic_knowledge/cold_snap
 	name = "Aristocrat's Way"
@@ -224,7 +224,7 @@
 	for(var/mob/living/carbon/close_carbon in view(5, source))
 		if(IS_HERETIC_OR_MONSTER(close_carbon))
 			continue
-		close_carbon.silent += 1
+		close_carbon.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/silenced)
 		close_carbon.adjust_bodytemperature(-20)
 
 	var/turf/open/source_turf = get_turf(source)

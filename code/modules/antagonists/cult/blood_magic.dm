@@ -441,7 +441,7 @@
 				silicon_target.emp_act(EMP_HEAVY)
 			else if(iscarbon(target))
 				var/mob/living/carbon/carbon_target = target
-				carbon_target.silent += 6
+				carbon_target.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/silenced)
 				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/stutter)
 				carbon_target.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/slurring/cult)
 				carbon_target.Jitter(1.5 SECONDS)
@@ -523,7 +523,7 @@
 			if(!C.handcuffed)
 				C.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult/used(C))
 				C.update_handcuffed()
-				C.silent += 5
+				C.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/silenced)
 				to_chat(user, span_notice("You shackle [C]."))
 				log_combat(user, C, "shackled")
 				uses--

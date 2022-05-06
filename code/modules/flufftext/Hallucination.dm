@@ -1428,8 +1428,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	target.set_screwyhud(SCREWYHUD_DEAD)
-	target.Paralyze(300)
-	target.silent += 10
+	target.Paralyze(30 SECONDS)
+	target.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/silenced)
+
 	to_chat(target, span_deadsay("<b>[target.real_name]</b> has died at <b>[get_area_name(target)]</b>."))
 
 	var/delay = 0
@@ -1451,10 +1452,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	addtimer(CALLBACK(src, .proc/cleanup), delay + rand(70, 90))
 
 /datum/hallucination/death/proc/cleanup()
-	if (target)
+	if(!QDELETED(target))
 		target.set_screwyhud(SCREWYHUD_NONE)
 		target.SetParalyzed(0)
-		target.silent = FALSE
+		target.remove_status_effect(/datum/status_effect/silenced)
+
 	qdel(src)
 
 #define RAISE_FIRE_COUNT 3

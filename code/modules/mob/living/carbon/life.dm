@@ -440,9 +440,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
 
-	if(silent)
-		silent = max(silent - (0.5 * delta_time), 0)
-
 	if(hallucination)
 		handle_hallucinations(delta_time, times_fired)
 

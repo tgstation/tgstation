@@ -458,7 +458,7 @@
 	speaker.verb_sing = initial(verb_sing)
 	speaker.verb_yell = initial(verb_yell)
 	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	UnregisterSignal(signer, COMSIG_LIVING_VOCAL_SPEECH_CHECK)
+	UnregisterSignal(speaker, COMSIG_LIVING_VOCAL_SPEECH_CHECK)
 
 /// Signal proc for [COMSIG_LIVING_VOCAL_SPEECH_CHECK]
 /// Sign languagers can always speak regardless of they're mute (as long as they're not mimes)

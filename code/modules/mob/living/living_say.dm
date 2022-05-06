@@ -435,7 +435,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
  */
 /mob/living/proc/can_speak_vocal(message, allow_mimes = FALSE)
 	if(!allow_mimes && mind?.miming)
-		// Mimes are deliberately checked before the signal instead of after.
+		// Mimes are excluded deliberately before the signal, instead of after.
 		return FALSE
 
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_VOCAL_SPEECH_CHECK, message, allow_mimes)

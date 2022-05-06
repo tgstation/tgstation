@@ -250,9 +250,10 @@
 
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional)
 	. = ..()
-	if(. && iscarbon(user))
-		var/mob/living/carbon/C = user
-		return !C.silent
+	if(!.)
+		return
+
+	return user.can_speak_vocal(allow_mimes = TRUE)
 
 /datum/emote/living/laugh/get_sound(mob/living/user)
 	if(ishuman(user))
