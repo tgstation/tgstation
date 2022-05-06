@@ -500,7 +500,7 @@
 	if(methods & INGEST)
 		taste(source)
 
-	var/touch_protection = (methods & VAPOR) ? getarmor(def_zone, BIO) / 100 : 0
+	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) / 100 : 0
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
 	for(var/reagent in reagents)
 		var/datum/reagent/R = reagent
