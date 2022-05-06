@@ -97,18 +97,18 @@
 /datum/component/infective/proc/try_infect_equipped(datum/source, mob/living/L, slot)
 	SIGNAL_HANDLER
 
-	var/old_permeability
+	var/old_bio_armor
 	if(isitem(parent))
-		//if you are putting an infective item on, it obviously will not protect you, so set its permeability high enough that it will never block ContactContractDisease()
+		//if you are putting an infective item on, it obviously will not protect you, so set its bio armor low enough that it will never block ContactContractDisease()
 		var/obj/item/I = parent
-		old_permeability = I.permeability_coefficient
-		I.permeability_coefficient = 1.01
+		old_bio_armor = I.armor.getRating(BIO)
+		I.armor.setRating(bio = -1)
 
 	try_infect(L, slot2body_zone(slot))
 
 	if(isitem(parent))
 		var/obj/item/I = parent
-		I.permeability_coefficient = old_permeability
+		I.armor.setRating(bio = old_bio_armor)
 
 /datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
