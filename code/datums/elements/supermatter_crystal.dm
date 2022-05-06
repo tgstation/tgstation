@@ -1,29 +1,26 @@
-/datum/element/supermatter_crystal
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+/datum/component/supermatter_crystal
 
 	var/datum/callback/tool_act_callback
 	var/datum/callback/consume_callback
 
-/datum/element/supermatter_crystal/Attach(datum/target, datum/callback/tool_act_callback, datum/callback/consume_callback)
-	. = ..()
+/datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback)
 
-	RegisterSignal(target, COMSIG_ATOM_BLOB_ACT, .proc/blob_hit)
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_PAW, .proc/paw_hit)
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_ANIMAL, .proc/animal_hit)
-	RegisterSignal(target, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_hit)
-	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, .proc/unarmed_hit)
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/hand_hit)
-	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/attackby_hit)
-	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), .proc/tool_hit)
-	RegisterSignal(target, COMSIG_ATOM_BUMPED, .proc/bumped_hit)
-	RegisterSignal(target, COMSIG_MOVABLE_BUMP, .proc/bump_hit)
-	RegisterSignal(target, COMSIG_ATOM_INTERCEPT_Z_FALL, .proc/intercept_z_fall)
+	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, .proc/blob_hit)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, .proc/paw_hit)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/animal_hit)
+	RegisterSignal(parent, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_hit)
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, .proc/unarmed_hit)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/hand_hit)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_hit)
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), .proc/tool_hit)
+	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/bumped_hit)
+	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/bump_hit)
+	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_Z_FALL, .proc/intercept_z_fall)
 
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
-/datum/element/supermatter_crystal/Detach(datum/target)
+/datum/component/supermatter_crystal/UnregisterFromParent(force, silent)
 	var/list/signals_to_remove = list(
 		COMSIG_ATOM_BLOB_ACT,
 		COMSIG_ATOM_ATTACK_PAW,
@@ -38,10 +35,9 @@
 		COMSIG_ATOM_INTERCEPT_Z_FALL,
 	)
 
-	UnregisterSignal(target, signals_to_remove)
-	return ..()
+	UnregisterSignal(parent, signals_to_remove)
 
-/datum/element/supermatter_crystal/proc/blob_hit(datum/source, obj/structure/blob/blob)
+/datum/component/supermatter_crystal/proc/blob_hit(datum/source, obj/structure/blob/blob)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
 	if(!blob || isspaceturf(atom_source)) //does nothing in space
@@ -57,14 +53,14 @@
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 		consume(atom_source, blob)
 
-/datum/element/supermatter_crystal/proc/paw_hit(datum/source, mob/user, list/modifiers)
+/datum/component/supermatter_crystal/proc/paw_hit(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	if(isalien(user))
 		dust_mob(source, user, cause = "alien attack")
 		return
 	dust_mob(source, user, cause = "monkey attack")
 
-/datum/element/supermatter_crystal/proc/animal_hit(datum/source, mob/living/simple_animal/user, list/modifiers)
+/datum/component/supermatter_crystal/proc/animal_hit(datum/source, mob/living/simple_animal/user, list/modifiers)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
 	var/murder
@@ -77,11 +73,11 @@
 	span_userdanger("You unwisely touch [atom_source], and your vision glows brightly as your body crumbles to dust. Oops."), \
 	"simple animal attack")
 
-/datum/element/supermatter_crystal/proc/hulk_hit(datum/source, mob/user)
+/datum/component/supermatter_crystal/proc/hulk_hit(datum/source, mob/user)
 	SIGNAL_HANDLER
 	dust_mob(source, user, cause = "hulk attack")
 
-/datum/element/supermatter_crystal/proc/unarmed_hit(datum/source, mob/user, list/modifiers)
+/datum/component/supermatter_crystal/proc/unarmed_hit(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
 	if(iscyborg(user) && atom_source.Adjacent(user))
@@ -93,7 +89,7 @@
 		dust_mob(source, user, cause = "larva attack")
 		return
 
-/datum/element/supermatter_crystal/proc/hand_hit(datum/source, mob/living/user, list/modifiers)
+/datum/component/supermatter_crystal/proc/hand_hit(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
 	if(user.incorporeal_move || user.status_flags & GODMODE)
@@ -136,7 +132,7 @@
 		"failed lick"
 	)
 
-/datum/element/supermatter_crystal/proc/attackby_hit(datum/source, obj/item/item, mob/living/user, params)
+/datum/component/supermatter_crystal/proc/attackby_hit(datum/source, obj/item/item, mob/living/user, params)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
 	if(!istype(item) || (item.item_flags & ABSTRACT) || !istype(user))
@@ -190,14 +186,14 @@
 		var/mob_msg = span_userdanger("You reach out and touch [atom_source] with [item]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"")
 		dust_mob(source, user, vis_msg, mob_msg)
 
-/datum/element/supermatter_crystal/proc/tool_hit(datum/source, mob/user, obj/item/tool)
+/datum/component/supermatter_crystal/proc/tool_hit(datum/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
-	if(tool.tool_behaviour == TOOL_WRENCH && tool_act_callback)
+	if(tool_act_callback)
 		tool_act_callback.Invoke(user, tool)
 		return
 	attackby_hit(source, tool, user)
 
-/datum/element/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)
+/datum/component/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
 	if(isliving(hit_object))
@@ -213,7 +209,7 @@
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
 	consume(atom_source, hit_object)
 
-/datum/element/supermatter_crystal/proc/bump_hit(datum/source, atom/bumped_atom)
+/datum/component/supermatter_crystal/proc/bump_hit(datum/source, atom/bumped_atom)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
 	if(isturf(bumped_atom))
@@ -257,12 +253,12 @@
 	playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)
 	consume(atom_source, bumped_atom)
 
-/datum/element/supermatter_crystal/proc/intercept_z_fall(datum/source, list/falling_movables, levels)
+/datum/component/supermatter_crystal/proc/intercept_z_fall(datum/source, list/falling_movables, levels)
 	SIGNAL_HANDLER
 	for(var/atom/movable/hit_object as anything in falling_movables)
 		bumped_hit(hit_object)
 
-/datum/element/supermatter_crystal/proc/dust_mob(datum/source, mob/living/nom, vis_msg, mob_msg, cause)
+/datum/component/supermatter_crystal/proc/dust_mob(datum/source, mob/living/nom, vis_msg, mob_msg, cause)
 	var/atom/atom_source = source
 	if(nom.incorporeal_move || nom.status_flags & GODMODE) //try to keep supermatter sliver's + hemostat's dust conditions in sync with this too
 		return
@@ -278,7 +274,7 @@
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
 	consume(atom_source, nom)
 
-/datum/element/supermatter_crystal/proc/consume(atom/source, atom/movable/consumed_object)
+/datum/component/supermatter_crystal/proc/consume(atom/source, atom/movable/consumed_object)
 	var/atom/atom_source = source
 	var/object_size = 0
 	var/matter_increase = 0
@@ -311,7 +307,7 @@
 		matter_increase += 70 * object_size
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(atom_source, max_range = 6, threshold = 1.2 / object_size, chance = 10 * object_size)
+	radiation_pulse(atom_source, max_range = 6, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size)
 	for(var/mob/living/near_mob in range(10))
 		atom_source.investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_ENGINE)
 		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))
@@ -325,11 +321,11 @@
 			near_mob.show_message(span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 	consume_returns(matter_increase, damage_increase)
 
-/datum/element/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)
+/datum/component/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)
 	if(consume_callback)
 		consume_callback.Invoke(matter_increase, damage_increase)
 
-/datum/element/supermatter_crystal/proc/use_scalpel(obj/item/scalpel/supermatter/scalpel, mob/living/user, atom/atom_source)
+/datum/component/supermatter_crystal/proc/use_scalpel(obj/item/scalpel/supermatter/scalpel, mob/living/user, atom/atom_source)
 	to_chat(user, span_notice("You carefully begin to scrape \the [atom_source] with \the [scalpel]..."))
 	if(scalpel.use_tool(atom_source, user, 60, volume=100))
 		if (scalpel.usesLeft)

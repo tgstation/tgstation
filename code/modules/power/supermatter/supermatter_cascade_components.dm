@@ -16,7 +16,7 @@
 	icon_state = "crystal_cascade_[rand(1,6)]"
 	START_PROCESSING(SSmachines, src)
 
-	AddElement(/datum/element/supermatter_crystal, null, null)
+	AddComponent(/datum/component/supermatter_crystal, null, null)
 
 /turf/closed/indestructible/supermatter_wall/process()
 
