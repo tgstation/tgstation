@@ -22195,8 +22195,8 @@
 /obj/effect/turf_decal/siding/purple,
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/door/window/right/directional/east{
-	req_access_txt = "8";
-	name = "Ordnance Freezer Chamber Access"
+	name = "Ordnance Freezer Chamber Access";
+	req_access_txt = "8"
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/mixing)
@@ -35876,7 +35876,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
 "lWB" = (
@@ -59340,7 +59341,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "uGo" = (
