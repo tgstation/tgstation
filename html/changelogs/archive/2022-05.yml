@@ -152,3 +152,50 @@
   Ryll/Shaps:
   - spellcheck: Wound and combat messages will no longer mention the species of an
       attacked bodypart when not appropriate
+2022-05-06:
+  Ghilker:
+  - balance: Pacmans no longer require stock parts (no more upgrade memery)
+  - balance: Base pacman power generation changed from 10-40 kW (t1) and 40-160 kW
+      (t4) to 2.5-10 kW
+  - balance: Base pacman max held sheets is 10
+  - balance: Base pacman sheet consumption speed has been quintupled
+  - balance: Super pacman no longer exists, the circuit board now switches between
+      a low production - low consumption mode to high production - high consumption
+      mode and viceversa
+  - balance: This new mode has a max held sheet of 5, power generation changed from
+      30-120kW (t1) and 120-480kW (t4) to 15-60 kW and consumes sheets ~3 times faster
+      than the base pacman
+  GoldenAlpharex:
+  - bugfix: Fixed the female-fitted version of uniform clothes, so that they are fitted
+      for female body types once again.
+  JohnFulpWillard:
+  - bugfix: Icebox's Altar of the Gods was removed, letting Chaplains once again replace
+      their own with a bible if it breaks.
+  Melbert:
+  - refactor: Drunkenness is now a status effect. The drunk alert should no longer
+      persist on aheals and in some rare cases, and should overrall act a bit more
+      consistently.
+  - refactor: Dizziness is now a status effect, similar to above. You no longer should
+      be stuck with an off center client view if you get very dizzy.
+  - refactor: The "ballmer" voicelines said by scientists are a liver trait now, instead
+      of hard checking job types.
+  - refactor: Refactored status effect examine text. Should overall have slightly
+      better grammar and more consistent span uses.
+  - bugfix: Stabilized dark purple extracts no longer runtime like crazy when not
+      holding an item.
+  - bugfix: Drunken Resilience should update health more accurately when it's occurring.
+  Rhials:
+  - bugfix: engineers can now properly access the space loop on Tramstation.
+  SmArtKar:
+  - code_imp: Changed some fire-related procs to be snake_case
+  - refactor: Refactored firestacks into status effects
+  - bugfix: Monkeys no longer have human fire overlay when on fire and instead use
+      the one they're supposed to use.
+  castawaynont:
+  - bugfix: Delta's virology lobby now has a camera, as intended
+  - bugfix: Delta's virology lobby now allows MDs in.
+  - bugfix: removed a section of cabling/piping from tram's medbay maint, preventing
+      cable/pipe double ups.
+  san7890:
+  - qol: IceBoxStation is now contained in one map file, instead of three. This is
+      good for mapping. If things on IceBox break, please make an issue report.

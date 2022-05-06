@@ -1,6 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - code_imp: "Changed some fire-related procs to be snake_case"
-  - refactor: "Refactored firestacks into status effects"
-  - bugfix: "Monkeys no longer have human fire overlay when on fire and instead use the one they're supposed to use."
