@@ -75,7 +75,7 @@
 	var/msg = "<b>Current Admins:</b>\n"
 	if(holder)
 		for(var/client/C in GLOB.admins)
-			msg += "\t[C] is a [C.holder.rank]"
+			msg += "\t[C] is a [C.holder.rank_names()]"
 
 			if(C.holder.fakekey)
 				msg += " <i>(as [C.holder.fakekey])</i>"
@@ -102,7 +102,7 @@
 			if(C.is_afk())
 				continue //Don't show afk admins to adminwho
 			if(!C.holder.fakekey)
-				msg += "\t[C] is a [C.holder.rank]\n"
+				msg += "\t[C] is a [C.holder.rank_names()]\n"
 		msg += span_info("Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game, sending an adminhelp might still be noticed and responded to.")
 	to_chat(src, msg)
 

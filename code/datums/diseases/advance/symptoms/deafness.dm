@@ -48,7 +48,8 @@
 			if(power >= 2)
 				if(ears.damage < ears.maxHealth)
 					to_chat(M, span_userdanger("Your ears pop painfully and start bleeding!"))
-					ears.damage = max(ears.damage, ears.maxHealth)
+					// Just absolutely murder me man
+					ears.applyOrganDamage(ears.maxHealth)
 					M.emote("scream")
 			else
 				to_chat(M, span_userdanger("Your ears pop and begin ringing loudly!"))

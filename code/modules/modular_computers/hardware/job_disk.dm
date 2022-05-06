@@ -68,6 +68,9 @@
 	if(disk_flags & DISK_STATUS)
 		progs_to_store += new /datum/computer_file/program/status(src)
 
+	if(disk_flags & DISK_SCI)
+		progs_to_store += new /datum/computer_file/program/science(src)
+
 	for (var/datum/computer_file/program/prog in progs_to_store)
 		prog.usage_flags = PROGRAM_ALL
 		prog.required_access = list()
@@ -184,12 +187,12 @@
 /obj/item/computer_hardware/hard_drive/role/head
 	name = "\improper Easy-Record DELUXE disk"
 	icon_state = "datadisk7"
-	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_BUDGET
+	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_BUDGET | DISK_SCI
 
 /obj/item/computer_hardware/hard_drive/role/hop
 	name = "\improper HumanResources9001 disk"
 	icon_state = "datadisk7"
-	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_JANI | DISK_SEC | DISK_NEWS | DISK_CARGO | DISK_ROBOS | DISK_BUDGET
+	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_JANI | DISK_SEC | DISK_NEWS | DISK_CARGO | DISK_ROBOS | DISK_BUDGET | DISK_SCI
 	bot_access = list(
 		MULE_BOT,
 		CLEAN_BOT,
@@ -199,7 +202,7 @@
 /obj/item/computer_hardware/hard_drive/role/hos
 	name = "\improper R.O.B.U.S.T. DELUXE disk"
 	icon_state = "datadisk7"
-	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_SEC | DISK_ROBOS | DISK_BUDGET
+	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_SEC | DISK_ROBOS | DISK_BUDGET | DISK_SCI
 	bot_access = list(
 		SEC_BOT,
 		ADVANCED_SEC_BOT,
@@ -209,7 +212,7 @@
 /obj/item/computer_hardware/hard_drive/role/ce
 	name = "\improper Power-On DELUXE disk"
 	icon_state = "datadisk7"
-	disk_flags = DISK_POWER | DISK_ATMOS | DISK_MANIFEST | DISK_STATUS | DISK_ROBOS | DISK_BUDGET
+	disk_flags = DISK_POWER | DISK_ATMOS | DISK_MANIFEST | DISK_STATUS | DISK_ROBOS | DISK_BUDGET | DISK_SCI
 	bot_access = list(
 		FLOOR_BOT,
 		FIRE_BOT,
@@ -218,7 +221,7 @@
 /obj/item/computer_hardware/hard_drive/role/cmo
 	name = "\improper Med-U DELUXE disk"
 	icon_state = "datadisk7"
-	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_CHEM | DISK_ROBOS | DISK_BUDGET
+	disk_flags = DISK_MANIFEST | DISK_STATUS | DISK_CHEM | DISK_ROBOS | DISK_BUDGET | DISK_SCI
 	bot_access = list(
 		MED_BOT,
 	)
@@ -226,7 +229,7 @@
 /obj/item/computer_hardware/hard_drive/role/rd
 	name = "\improper Signal Ace DELUXE disk"
 	icon_state = "rndmajordisk"
-	disk_flags = DISK_ATMOS | DISK_MANIFEST | DISK_STATUS | DISK_CHEM | DISK_ROBOS | DISK_BUDGET | DISK_SIGNAL
+	disk_flags = DISK_ATMOS | DISK_MANIFEST | DISK_STATUS | DISK_CHEM | DISK_ROBOS | DISK_BUDGET | DISK_SIGNAL | DISK_SCI
 	bot_access = list(
 		FLOOR_BOT,
 		CLEAN_BOT,

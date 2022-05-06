@@ -396,7 +396,7 @@
 			span_userdanger("You feel an inner fire as your skin bursts into flames!")
 		)
 		burned_mob.adjust_fire_stacks(5)
-		burned_mob.IgniteMob()
+		burned_mob.ignite_mob()
 	return
 
 /obj/singularity/proc/mezzer()

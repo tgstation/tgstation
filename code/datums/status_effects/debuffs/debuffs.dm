@@ -133,21 +133,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	tick_interval = 2 SECONDS
-	var/mob/living/carbon/carbon_owner
-	var/mob/living/carbon/human/human_owner
-
-/datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner)
-	. = ..()
-	if(.)
-		if(iscarbon(owner)) //to avoid repeated istypes
-			carbon_owner = owner
-		if(ishuman(owner))
-			human_owner = owner
-
-/datum/status_effect/incapacitating/sleeping/Destroy()
-	carbon_owner = null
-	human_owner = null
-	return ..()
 
 /datum/status_effect/incapacitating/sleeping/on_apply()
 	. = ..()
@@ -196,10 +181,14 @@
 			owner.adjustFireLoss(healing)
 			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
 		owner.adjustStaminaLoss(healing)
-	if(human_owner?.drunkenness)
-		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(carbon_owner)
+
+	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
+	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
+
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.handle_dreams()
+
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
 
@@ -267,7 +256,6 @@
 //OTHER DEBUFFS
 /datum/status_effect/strandling //get it, strand as in durathread strand + strangling = strandling hahahahahahahahahahhahahaha i want to die
 	id = "strandling"
-	examine_text = "SUBJECTPRONOUN seems to be being choked by some durathread strands. You may be able to <b>cut</b> them off."
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/strandling
 
@@ -278,6 +266,9 @@
 /datum/status_effect/strandling/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
 	return ..()
+
+/datum/status_effect/strandling/get_examine_text()
+	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] to be being choked by some durathread strands. You may be able to <b>cut</b> them off.")
 
 /atom/movable/screen/alert/status_effect/strandling
 	name = "Choking strand"
@@ -744,7 +735,6 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 300
 	tick_interval = 10
-	examine_text = span_warning("SUBJECTPRONOUN seems slow and unfocused.")
 	var/stun = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/trance
 
@@ -755,8 +745,8 @@
 
 /datum/status_effect/trance/tick()
 	if(stun)
-		owner.Stun(60, TRUE)
-	owner.dizziness = 20
+		owner.Stun(6 SECONDS, TRUE)
+	owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
 
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
@@ -776,9 +766,12 @@
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
-	owner.dizziness = 0
+	owner.remove_status_effect(/datum/status_effect/dizziness)
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, span_warning("You snap out of your trance!"))
+
+/datum/status_effect/trance/get_examine_text()
+	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
@@ -989,7 +982,7 @@
 		if(0 to 10)
 			human_owner.vomit()
 		if(20 to 30)
-			human_owner.Dizzy(50)
+			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			human_owner.Jitter(50)
 		if(30 to 40)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 5)
@@ -1073,7 +1066,6 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/ants
 	duration = 2 MINUTES //Keeping the normal timer makes sure people can't somehow dump 300+ ants on someone at once so they stay there for like 30 minutes. Max w/ 1 dump is 57.6 brute.
-	examine_text = span_warning("SUBJECTPRONOUN is covered in ants!")
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
@@ -1116,6 +1108,9 @@
 	SIGNAL_HANDLER
 	owner.remove_status_effect(/datum/status_effect/ants)
 	return COMPONENT_CLEANED
+
+/datum/status_effect/ants/get_examine_text()
+	return span_warning("[owner.p_they(TRUE)] [owner.p_are()] covered in ants!")
 
 /datum/status_effect/ants/tick()
 	var/mob/living/carbon/human/victim = owner

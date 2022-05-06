@@ -1,0 +1,5 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - qol: "mech construction now has balloon alerts!"
+  - code_imp: "mecha_construction_paths.dm is now has significantly less copy/paste code"
