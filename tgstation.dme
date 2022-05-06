@@ -2968,7 +2968,7 @@
 #include "code\modules\jobs\job_types\roboticist.dm"
 #include "code\modules\jobs\job_types\scientist.dm"
 #include "code\modules\jobs\job_types\security_officer.dm"
-#include "code\modules\jobs\job_types\brig_physician
+#include "code\modules\jobs\job_types\brig_physician"
 #include "code\modules\jobs\job_types\servant_golem.dm"
 #include "code\modules\jobs\job_types\shaft_miner.dm"
 #include "code\modules\jobs\job_types\station_engineer.dm"
