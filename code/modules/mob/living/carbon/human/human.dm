@@ -768,15 +768,10 @@
 	return ..()
 
 /mob/living/carbon/human/is_nearsighted()
-	. = ..() 
-	if(!.)
-		return FALSE
-
 	var/obj/item/clothing/glasses/eyewear = glasses
 	if(istype(eyewear) && eyewear.vision_correction)
 		return FALSE
-
-	return TRUE
+	return ..()
 
 /mob/living/carbon/human/is_literate()
 	return TRUE
