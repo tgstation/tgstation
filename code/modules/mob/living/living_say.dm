@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/environment = T.return_air()
 	var/pressure = (environment)? environment.return_pressure() : 0
-	if(pressure < SOUND_MINIMUM_PRESSURE && !HAS_TRAIT(H, TRAIT_SIGN_LANG))
+	if(pressure < SOUND_MINIMUM_PRESSURE && !HAS_TRAIT(src, TRAIT_SIGN_LANG))
 		message_range = 1
 
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
@@ -438,7 +438,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		// Mimes are excluded deliberately before the signal, instead of after.
 		return FALSE
 
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_VOCAL_SPEECH_CHECK, message, allow_mimes)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_LIVING_VOCAL_SPEECH_CHECK, allow_mimes)
 	if(sigreturn & COMPONENT_CAN_ALWAYS_SPEAK)
 		return TRUE
 

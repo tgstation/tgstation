@@ -17,7 +17,7 @@
 	// AIs cannot speak if silent AI is on.
 	// Unless forced is set, as that's probably stating laws or something.
 	if(!forced && CONFIG_GET(flag/silent_ai))
-		to_chat(src, span_danger("The ability for AIs to speak is currently disabled via server config.")
+		to_chat(src, span_danger("The ability for AIs to speak is currently disabled via server config."))
 		return FALSE
 
 	return ..()
