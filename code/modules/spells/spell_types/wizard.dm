@@ -291,9 +291,9 @@
 	if(isliving(user))
 		var/mob/living/caster = user
 		if(caster.can_cast_magic(antimagic_flags))
-			caster.IgniteMob()
+			caster.ignite_mob()
 		else
-			return 
+			return
 	for(var/mob/living/target in targets)
 		if(target.can_block_magic(antimagic_flags))
 			to_chat(user, span_warning("The spell can't seem to affect [target]!"))

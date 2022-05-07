@@ -7,16 +7,16 @@
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plating,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "n" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "o" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating/airless,
@@ -25,15 +25,15 @@
 /obj/structure/holosign/barrier/atmos,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/space/basic,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "w" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/plating,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "C" = (
 /turf/closed/wall/rock/porous,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "D" = (
 /obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
@@ -42,7 +42,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "I" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -51,7 +51,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/plating,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "O" = (
 /turf/open/misc/asteroid/airless,
 /area/mine/explored)
@@ -65,7 +65,7 @@
 /area/mine/explored)
 "V" = (
 /turf/closed/wall,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 
 (1,1,1) = {"
 V
