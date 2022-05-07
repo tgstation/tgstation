@@ -2209,6 +2209,7 @@
 #include "code\modules\antagonists\traitor\objectives\smuggling.dm"
 #include "code\modules\antagonists\traitor\objectives\steal.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\battlecruiser.dm"
+#include "code\modules\antagonists\traitor\objectives\final_objective\end_reality.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\final_objective.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\romerol.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\space_dragon.dm"

@@ -232,12 +232,3 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/powersink
 	cost = 11
-
-/datum/uplink_item/device_tools/destabilizing_crystal
-	name = "Destabilizing Crystal"
-	desc = "Attach the crystal to the Supermatter engine and it will start a cascade destabilization effect \
-			causing a deep resonance between the five known universes. The resonance will start to slowly \
-			crystallize all the matter of this universe. Good luck."
-	progression_minimum = 55 MINUTES
-	item = /obj/item/destabilizing_crystal
-	cost = 20
