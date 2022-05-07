@@ -439,7 +439,7 @@
  */
 /obj/item/bodypart/r_leg/proc/generate_masked_right_leg(right_leg_icon_file, right_leg_icon_state, image_dir)
 	RETURN_TYPE(/image)
-	if(!left_leg_mask_key || !left_leg_mask_cache[left_leg_mask_key] || !right_leg_icon_file || !right_leg_icon_state)
+	if(!left_leg_mask_cache[left_leg_mask_key] || !right_leg_icon_file || !right_leg_icon_state)
 		return
 
 	var/icon/right_leg_icon = icon(right_leg_icon_file, right_leg_icon_state)
