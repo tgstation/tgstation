@@ -524,8 +524,6 @@
 		var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
 		if(scan_result)
 			return scan_result
-		else
-			continue //The current element failed assessment, move on to the next.
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
 /mob/living/simple_animal/bot/proc/process_scan(scan_target)
