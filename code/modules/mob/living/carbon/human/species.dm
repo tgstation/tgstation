@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 
 	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
-	var/fire_overlay = "Standing"
+	var/fire_overlay = "human_burning"
 
 	///the species that body parts are surgically compatible with (found in _DEFINES/mobs.dm)
 	///current acceptable bitfields are HUMAN_BODY, ALIEN_BODY, LARVA_BODY, MONKEY_BODY, or NONE
@@ -1260,7 +1260,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
 		affecting = H.bodyparts[1]
 
-	hit_area = affecting.name
+	hit_area = affecting.plaintext_zone
 	var/def_zone = affecting.body_zone
 
 	var/armor_block = H.run_armor_check(affecting, MELEE, span_notice("Your armor has protected your [hit_area]!"), span_warning("Your armor has softened a hit to your [hit_area]!"),I.armour_penetration, weak_against_armour = I.weak_against_armour)
@@ -1721,77 +1721,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 //////////
 
 /datum/species/proc/handle_fire(mob/living/carbon/human/H, delta_time, times_fired, no_protection = FALSE)
-	if(!CanIgniteMob(H))
-		return TRUE
-	if(H.on_fire)
-		SEND_SIGNAL(H, COMSIG_HUMAN_BURNING)
-		//the fire tries to damage the exposed clothes and items
-		var/list/burning_items = list()
-		var/obscured = H.check_obscured_slots(TRUE)
-		//HEAD//
-
-		if(H.glasses && !(obscured & ITEM_SLOT_EYES))
-			burning_items += H.glasses
-		if(H.wear_mask && !(obscured & ITEM_SLOT_MASK))
-			burning_items += H.wear_mask
-		if(H.wear_neck && !(obscured & ITEM_SLOT_NECK))
-			burning_items += H.wear_neck
-		if(H.ears && !(obscured & ITEM_SLOT_EARS))
-			burning_items += H.ears
-		if(H.head)
-			burning_items += H.head
-
-		//CHEST//
-		if(H.w_uniform && !(obscured & ITEM_SLOT_ICLOTHING))
-			burning_items += H.w_uniform
-		if(H.wear_suit)
-			burning_items += H.wear_suit
-
-		//ARMS & HANDS//
-		var/obj/item/clothing/arm_clothes = null
-		if(H.gloves && !(obscured & ITEM_SLOT_GLOVES))
-			arm_clothes = H.gloves
-		else if(H.wear_suit && ((H.wear_suit.body_parts_covered & HANDS) || (H.wear_suit.body_parts_covered & ARMS)))
-			arm_clothes = H.wear_suit
-		else if(H.w_uniform && ((H.w_uniform.body_parts_covered & HANDS) || (H.w_uniform.body_parts_covered & ARMS)))
-			arm_clothes = H.w_uniform
-		if(arm_clothes)
-			burning_items |= arm_clothes
-
-		//LEGS & FEET//
-		var/obj/item/clothing/leg_clothes = null
-		if(H.shoes && !(obscured & ITEM_SLOT_FEET))
-			leg_clothes = H.shoes
-		else if(H.wear_suit && ((H.wear_suit.body_parts_covered & FEET) || (H.wear_suit.body_parts_covered & LEGS)))
-			leg_clothes = H.wear_suit
-		else if(H.w_uniform && ((H.w_uniform.body_parts_covered & FEET) || (H.w_uniform.body_parts_covered & LEGS)))
-			leg_clothes = H.w_uniform
-		if(leg_clothes)
-			burning_items |= leg_clothes
-
-		for(var/X in burning_items)
-			var/obj/item/I = X
-			I.fire_act((H.fire_stacks * 50)) //damage taken is reduced to 2% of this value by fire_act()
-
-		var/thermal_protection = H.get_thermal_protection()
-
-		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
-			return
-		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-			H.adjust_bodytemperature(5.5 * delta_time)
-		else
-			H.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (H.fire_stacks * 12)) * 0.5 * delta_time)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
-			H.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = H), story_value = STORY_VALUE_OKAY)
-
-/datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_NOFIRE))
-		return FALSE
-	return TRUE
-
-/datum/species/proc/extinguish_mob(mob/living/carbon/human/H)
-	return
-
+	return no_protection
 
 ////////////
 //  Stun  //

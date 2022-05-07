@@ -147,14 +147,14 @@
 		return
 
 	if(!silent && !demoted)
-		var/msg = span_danger("[victim]'s [limb.name] [occur_text]!")
+		var/msg = span_danger("[victim]'s [limb.plaintext_zone] [occur_text]!")
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
 		if(severity != WOUND_SEVERITY_MODERATE)
 			msg = "<b>[msg]</b>"
 			vis_dist = DEFAULT_MESSAGE_RANGE
 
-		victim.visible_message(msg, span_userdanger("Your [limb.name] [occur_text]!"), vision_distance = vis_dist)
+		victim.visible_message(msg, span_userdanger("Your [limb.plaintext_zone] [occur_text]!"), vision_distance = vis_dist)
 		if(sound_effect)
 			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
 
@@ -405,7 +405,7 @@
  * * mob/user: The user examining the wound's owner, if that matters
  */
 /datum/wound/proc/get_examine_description(mob/user)
-	. = "[victim.p_their(TRUE)] [limb.name] [examine_desc]"
+	. = "[victim.p_their(TRUE)] [limb.plaintext_zone] [examine_desc]"
 	. = severity <= WOUND_SEVERITY_MODERATE ? "[.]." : "<B>[.]!</B>"
 
 /datum/wound/proc/get_scanner_description(mob/user)

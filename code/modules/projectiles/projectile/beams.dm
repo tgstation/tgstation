@@ -50,7 +50,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		M.IgniteMob()
+		M.ignite_mob()
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
