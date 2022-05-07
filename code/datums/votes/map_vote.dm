@@ -63,9 +63,11 @@
 			// Non-voters will have their preferred map voted for automatically.
 			var/their_preferred_map = non_voter_client?.prefs.read_preference(/datum/preference/choiced/preferred_map)
 			var/default_map = global.config.defaultmap.map_name
-
 			// If the non-voter's preferred map is null for some reason, we just use the default map.
-			choices[their_preferred_map || default_map] += 1
+			var/voting_for = their_preferred_map || default_map
+
+			if(voting_for in choices)
+				choices[voting_for] += 1
 
 	return ..()
 
