@@ -45,7 +45,7 @@
 #define JOB_WARDEN "Warden"
 #define JOB_DETECTIVE "Detective"
 #define JOB_SECURITY_OFFICER "Security Officer"
-#define JOB_BRIG_PHYSICIAN "JOB_BRIG_PHYSICIAN"
+#define JOB_BRIG_PHYSICIAN "Brig Physician"
 #define JOB_SECURITY_OFFICER_MEDICAL "Security Officer (Medical)"
 #define JOB_SECURITY_OFFICER_ENGINEERING "Security Officer (Engineering)"
 #define JOB_SECURITY_OFFICER_SCIENCE "Security Officer (Science)"
