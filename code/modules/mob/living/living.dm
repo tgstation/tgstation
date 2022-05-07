@@ -1417,12 +1417,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(!fire_status || !fire_status.on_fire)
 		return
-	remove_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 
-// called when something steps onto a mob while we're on fire. override
-/mob/living/proc/on_entered_fire(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
-	return
+	remove_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 
 /**
  * Adjust the amount of fire stacks on a mob
