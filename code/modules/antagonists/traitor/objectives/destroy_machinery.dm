@@ -44,8 +44,6 @@
 /datum/traitor_objective/destroy_machinery/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(length(possible_duplicates) >= maximum_allowed && !allow_more_than_max)
 		return FALSE
-	var/datum/job/role = generating_for.assigned_role
-	applicable_jobs -= role.title
 	for(var/datum/traitor_objective/destroy_machinery/objective as anything in possible_duplicates)
 		applicable_jobs -= objective.chosen_job
 	if(!length(applicable_jobs))
