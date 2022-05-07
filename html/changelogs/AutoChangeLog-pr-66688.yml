@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Plants like Deathnettle will no longer use durability when clicking on someone from a distance."

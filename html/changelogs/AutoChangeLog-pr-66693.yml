@@ -1,4 +1,0 @@
-author: "lnGoror"
-delete-after: True
-changes: 
-  - bugfix: "Fixes Life(Friendly) reaction spawning hostile mobs"

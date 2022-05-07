@@ -26090,6 +26090,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/central)
 "erv" = (
@@ -78882,7 +78883,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 8
 	},
