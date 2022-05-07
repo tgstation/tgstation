@@ -1,0 +1,5 @@
+author: "MacBlaze1"
+delete-after: True
+changes: 
+  - qol: "the gas analyzer now shows the heat capacity and thermal energy of a mix"
+  - qol: "the gas analyzer now shows the volume of empty pipe networks"

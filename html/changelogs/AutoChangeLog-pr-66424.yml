@@ -1,0 +1,6 @@
+author: "MrNihil"
+delete-after: True
+changes: 
+  - bugfix: "You can now recycle unused mutators and activators in dna console."
+  - bugfix: "Genetic scanner now shows all mutations.
+expansion: Genetic scanner will highlight active mutations."
