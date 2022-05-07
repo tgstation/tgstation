@@ -315,7 +315,7 @@
 	if(right_leg)
 		var/old_right_leg_key = icon_render_keys?[right_leg.body_zone]
 		var/left_leg_mask_key = left_leg?.generate_mask_key().Join() // We generate a new mask key, to see if it changed.
-		right_leg.left_leg_mask_key = left_leg ? left_leg_mask_key : null
+		right_leg.left_leg_mask_key = left_leg_mask_key
 		// We regenerate the left_leg_mask in case that it doesn't exist yet.
 		if(left_leg_mask_key && !right_leg.left_leg_mask_cache[left_leg_mask_key] && left_leg_icons)
 			right_leg.left_leg_mask_cache[left_leg_mask_key] = generate_left_leg_mask(left_leg_icons[1], left_leg_mask_key)
