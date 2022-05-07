@@ -507,7 +507,7 @@
 			if(final_result)
 				return final_result
 
-		for(var/turf/scanned_turfs as anything in shuffle(view(scan_range, src))-adjacent) //Search for something in range, minus what we already checked.
+		for(var/turf/scanned_turfs as anything in shuffle(view(scan_range, src)) - adjacent) //Search for something in range, minus what we already checked.
 			if(check_bot(scanned_turfs)) //Is there another bot there? Then let's just skip it
 				continue
 			var/final_result = checkscan(scanned_turfs, scan_types, old_target)
