@@ -542,7 +542,7 @@
 
 /obj/item/food/timballo
 	name = "Timballo"
-	desc = "A slice of timballo. Perfect for a Monday afternoon."
+	desc = "A slice of timballo, a swirling mess of spaghetti."
 	icon_state = "timballo"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/tomatojuice = 10)
 	tastes = list("meat" = 3, "pasta" = 3, "tomato" = 2, "cheese" = 2)
