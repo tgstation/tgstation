@@ -32110,7 +32110,6 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/flask/gold,
 /obj/item/razor,
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain/private)
 "hfx" = (
