@@ -17695,8 +17695,7 @@
 /area/station/command/meeting_room)
 "fIi" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Ordnance Lab Maintenance";
-	req_one_access_txt = "47"
+	name = "Ordnance Lab Maintenance"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
@@ -21199,9 +21198,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
 /obj/machinery/door/airlock/engineering{
 	name = "Utilities Room"
 	},
@@ -30656,8 +30652,7 @@
 /area/station/security/prison/garden)
 "jNg" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Control Room";
-	req_access_txt = "19; 61"
+	name = "Control Room"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -46006,7 +46001,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/cmo,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
 "oMT" = (
@@ -62158,9 +62152,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/maintenance/glass{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance/glass,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
