@@ -578,15 +578,20 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
  * - ignore_temperature. Returns a cheaper form of gas calculation, useful if the temperature difference between the two gasmixes is low or nonexistant.
  */
 /datum/gas_mixture/proc/gas_pressure_calculate(datum/gas_mixture/output_air, target_pressure, ignore_temperature = FALSE)
-	if((total_moles() <= 0) || (temperature <= 0))
+	// So we dont need to iterate the gaslist multiple times.
+	var/our_moles = total_moles()
+	var/output_moles = output_air.total_moles()
+	var/output_pressure = output_air.return_pressure()
+
+	if(our_moles <= 0 || temperature <= 0)
 		return FALSE
 
 	var/pressure_delta = 0
-	if((output_air.temperature <= 0) || (output_air.total_moles() <= 0))
+	if(output_air.temperature <= 0 || output_moles <= 0)
 		ignore_temperature = TRUE
 		pressure_delta = target_pressure
 	else
-		pressure_delta = target_pressure - output_air.return_pressure()
+		pressure_delta = target_pressure - output_pressure
 
 	if(pressure_delta < 0.01 || gas_pressure_minimum_transfer(output_air) > target_pressure)
 		return FALSE
@@ -596,12 +601,17 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	// Lower and upper bound for the moles we must transfer to reach the pressure. The answer is bound to be here somewhere.
 	var/pv = target_pressure * output_air.volume
-	var/rt_low = R_IDEAL_GAS_EQUATION * max(temperature, output_air.temperature) // Low refers to the resulting mole, this number is actually higher.
-	var/rt_high = R_IDEAL_GAS_EQUATION * min(temperature, output_air.temperature)
+	/// The PV/R part in the equation we will use later. Counted early because pv/(r*t) might not be equal to pv/r/t, messing our lower and upper limit.
+	var/pvr = pv / R_IDEAL_GAS_EQUATION
 	// These works by assuming our gas has extremely high heat capacity
 	// and the resultant gasmix will hit either the highest or lowest temperature possible.
-	var/lower_limit = max((pv / rt_low) - output_air.total_moles(), 0)
-	var/upper_limit = (pv / rt_high) - output_air.total_moles() // In theory this should never go below zero, the pressure_delta check above should account for this.
+
+	/// This is the true lower limit, but numbers still can get lower than this due to floats.
+	var/lower_limit = max((pvr / max(temperature, output_air.temperature)) - output_moles, 0)
+	var/upper_limit = (pvr / min(temperature, output_air.temperature)) - output_moles // In theory this should never go below zero, the pressure_delta check above should account for this.
+
+	lower_limit = max(lower_limit - ATMOS_PRESSURE_ERROR_TOLERANCE, 0)
+	upper_limit += ATMOS_PRESSURE_ERROR_TOLERANCE
 
 	/*
 	 * We have PV=nRT as a nice formula, we can rearrange it into nT = PV/R
@@ -627,16 +637,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	// Our thermal energy and moles
 	var/w2 = thermal_energy()
-	var/n2 = total_moles()
+	var/n2 = our_moles
 	var/c2 = heat_capacity()
 
 	// Target thermal energy and moles
 	var/w1 = output_air.thermal_energy()
-	var/n1 = output_air.total_moles()
+	var/n1 = output_moles
 	var/c1 = output_air.heat_capacity()
-
-	/// The PV/R part in our equation.
-	var/pvr = pv / R_IDEAL_GAS_EQUATION
 
 	/// x^2 in the quadratic
 	var/a_value = w2/n2
@@ -659,8 +666,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/gas_pressure_quadratic(a, b, c, lower_limit, upper_limit)
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		solution = max(SolveQuadratic(a, b, c))
-		if((solution > lower_limit) && (solution < upper_limit)) //SolveQuadratic can return nulls so be careful here
+		solution = max(SolveQuadratic(a, b, c)) 
+		if(solution > lower_limit && solution < upper_limit) //SolveQuadratic can return empty lists so be careful here
 			return solution
 	stack_trace("Failed to solve pressure quadratic equation. A: [a]. B: [b]. C:[c]. Current value = [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")
 	return FALSE
@@ -670,8 +677,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/gas_pressure_approximate(a, b, c, lower_limit, upper_limit)
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		/// We need to start off at a reasonably good estimate. For very big numbers the amount of moles is most likely small so better start with lower_limit.
-		solution = lower_limit
+		// We start at the extrema of the equation, added by a number.
+		// This way we will hopefully always converge on the positive root, while starting at a reasonable number.
+		solution = (-b / (2 * a)) + 200
 		for (var/iteration in 1 to ATMOS_PRESSURE_APPROXIMATION_ITERATIONS)
 			var/diff = (a*solution**2 + b*solution + c) / (2*a*solution + b) // f(sol) / f'(sol)
 			solution -= diff // xn+1 = xn - f(sol) / f'(sol)

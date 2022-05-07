@@ -380,12 +380,31 @@
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
 	var/vanish_description = "vanishes from reality"
-	var/can_destroy = TRUE
+	// Weakref to the user who we're "acting" on
+	var/datum/weakref/user_ref
 
 /obj/effect/immortality_talisman/Initialize(mapload, mob/new_user)
 	. = ..()
 	if(new_user)
 		vanish(new_user)
+
+/obj/effect/immortality_talisman/Destroy()
+	// If we have a mob, we need to free it before cleanup
+	// This is a safety to prevent nuking a human, not so much a good pattern in general
+	unvanish()
+	return ..()
+
+/obj/effect/immortality_talisman/proc/unvanish()
+	var/mob/user = user_ref?.resolve()
+	user_ref = null
+
+	if(!user)
+		return
+
+	user.status_flags &= ~GODMODE
+	user.notransform = FALSE
+	user.forceMove(get_turf(src))
+	user.visible_message(span_danger("[user] pops back into reality!"))
 
 /obj/effect/immortality_talisman/proc/vanish(mob/user)
 	user.visible_message(span_danger("[user] [vanish_description], leaving a hole in [user.p_their()] place!"))
@@ -397,17 +416,11 @@
 	user.notransform = TRUE
 	user.status_flags |= GODMODE
 
-	can_destroy = FALSE
+	user_ref = WEAKREF(user)
 
-	addtimer(CALLBACK(src, .proc/unvanish, user), 10 SECONDS)
+	addtimer(CALLBACK(src, .proc/dissipate), 10 SECONDS)
 
-/obj/effect/immortality_talisman/proc/unvanish(mob/user)
-	user.status_flags &= ~GODMODE
-	user.notransform = FALSE
-	user.forceMove(get_turf(src))
-
-	user.visible_message(span_danger("[user] pops back into reality!"))
-	can_destroy = TRUE
+/obj/effect/immortality_talisman/proc/dissipate()
 	qdel(src)
 
 /obj/effect/immortality_talisman/attackby()
@@ -415,12 +428,6 @@
 
 /obj/effect/immortality_talisman/singularity_pull()
 	return
-
-/obj/effect/immortality_talisman/Destroy(force)
-	if(!can_destroy && !force)
-		return QDEL_HINT_LETMELIVE
-	else
-		. = ..()
 
 /obj/effect/immortality_talisman/void
 	vanish_description = "is dragged into the void"
