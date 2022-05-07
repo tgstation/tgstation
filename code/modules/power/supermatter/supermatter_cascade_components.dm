@@ -50,7 +50,6 @@
 			continue
 		else
 			qdel(checked_atom)
-		CHECK_TICK
 
 	next_turf.ChangeTurf(type)
 	var/turf/closed/indestructible/supermatter_wall/sm_wall = next_turf

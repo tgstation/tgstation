@@ -159,7 +159,7 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 	cascade_rift = new /obj/cascade_portal(rift_location)
 
 /datum/supermatter_delamination/proc/warn_crew()
-	for(var/mob/player in GLOB.alive_player_list)
+	for(var/mob/player as anything in GLOB.alive_player_list)
 		to_chat(player, span_boldannounce("You feel a strange presence in the air around you. You feel unsafe."))
 
 	priority_announce("Unknown harmonance affecting universal substructure, all nearby matter is starting to crystallize.", "The universe is collapsing.", 'sound/misc/bloblarm.ogg')
