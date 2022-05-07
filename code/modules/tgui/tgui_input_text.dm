@@ -183,9 +183,11 @@
 			return TRUE
 
 /datum/tgui_input_text/proc/set_entry(entry)
-	if(!isnull(entry))
+	if(length(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
 		src.entry = trim(converted_entry, max_length)
+	else
+		src.entry = ""
 
 /**
  * # async tgui_input_text
