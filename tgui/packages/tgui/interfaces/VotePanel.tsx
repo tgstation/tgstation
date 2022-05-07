@@ -4,13 +4,13 @@ import { Window } from '../layouts';
 import { useBackend } from '../backend';
 
 type Vote = {
-  name: String;
+  name: string;
   canBeInitiated: BooleanLike;
   config: number; // -1 = no config, 0 = config + disabled, 1 = config + enabled
 };
 
 type Option = {
-  name: String;
+  name: string;
   votes: number;
 };
 
@@ -31,7 +31,7 @@ type Data = {
   currentVote: ActiveVote;
   possibleVotes: Vote[];
   user: UserData;
-  voting: String[];
+  voting: string[];
 };
 
 export const VotePanel = (props, context) => {
