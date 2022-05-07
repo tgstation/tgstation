@@ -1,0 +1,4 @@
+author: "castawaynont"
+delete-after: True
+changes: 
+  - bugfix: "fixed the position of one of kilo's firealarms."
