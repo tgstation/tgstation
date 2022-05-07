@@ -1,0 +1,4 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - bugfix: "Kilostation's command section now accurately reflects that command staff are, in fact, commanding a hollowed out asteroid."
