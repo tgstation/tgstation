@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - qol: "Deadchat control on anarchy mode will now alert you when you can enter another command"

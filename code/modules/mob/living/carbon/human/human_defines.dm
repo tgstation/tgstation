@@ -27,7 +27,10 @@
 	var/facial_hairstyle = "Shaved"
 
 	//Eye colour
-	var/eye_color = "#000000"
+	var/eye_color_left = "#000000"
+	var/eye_color_right = "#000000"
+	/// Var used to keep track of a human mob having a heterochromatic right eye. To ensure prefs don't overwrite shit
+	var/eye_color_heterochromatic = FALSE
 
 	var/skin_tone = "caucasian1" //Skin tone
 

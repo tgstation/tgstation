@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Id cards, when having their job template changed, will change that job's payment department as they used to."
