@@ -1,6 +1,0 @@
-author: "Zestybastard, Azlan and PositiveEntropy"
-delete-after: True
-changes: 
-  - imageadd: "Resprites the old space suits!"
-  - imageadd: "Resprites the sleepers!"
-  - rscdel: "Removes unused orange and black engi light attachment helmet sprites."

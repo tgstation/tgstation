@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Managing to escape the area of a blade heretic's mark will no longer constantly burden you as if you never left."
-  - bugfix: "There should be less ways of escaping the area of a blade heretic's mark now."
-  - qol: "Heretics can drag people marked by a blade heretic out of the area they are trapped within."
-  - qol: "Being thrown back by a blade heretic's mark will be slightly less awkward now, and less dangerous."

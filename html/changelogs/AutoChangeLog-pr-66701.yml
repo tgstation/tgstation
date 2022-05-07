@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "The HoP is now considered part of Supply (Supply bans apply to HoP, they get Supply deathrattle, cannot get smuggle objective, ect)."

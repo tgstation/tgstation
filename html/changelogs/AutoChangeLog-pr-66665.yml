@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "drones should be able to do stuff next to other drones"
