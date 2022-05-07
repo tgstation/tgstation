@@ -19387,28 +19387,21 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "dQe" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower"
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "dQg" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Virology - Containment Lock";
-	name = "virology camera";
-	network = list("ss13","medbay")
+/obj/structure/closet/l3closet/virology{
+	pixel_y = 1
 	},
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "dQh" = (
@@ -19520,10 +19513,6 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror/directional/west,
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower"
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -19656,26 +19645,28 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "dRZ" = (
-/obj/structure/closet/l3closet/virology,
 /obj/structure/sign/warning/biohazard{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "dSa" = (
-/obj/structure/closet/l3closet/virology,
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/closet/emcloset,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "dSb" = (
-/obj/structure/closet/emcloset,
 /obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/l3closet/virology,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "dSd" = (
