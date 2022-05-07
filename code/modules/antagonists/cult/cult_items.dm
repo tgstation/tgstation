@@ -878,8 +878,8 @@ Striking a noncultist, however, will tear their flesh."}
 				H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
 		if(isshade(target) || isconstruct(target))
 			var/mob/living/simple_animal/M = target
-			if(M.health+5 < M.maxHealth)
-				M.adjustHealth(-5)
+			if(M.health < M.maxHealth)
+				M.adjustHealth(max(M.health - M.maxHealth, -5)) //heals 5 hp or all damage, whichever is less
 		new /obj/effect/temp_visual/cult/sparks(T)
 		qdel(src)
 	else
