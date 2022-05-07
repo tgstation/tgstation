@@ -1,0 +1,4 @@
+author: "castawaynont"
+delete-after: True
+changes: 
+  - bugfix: "Delta's virology's showers no longer float."
