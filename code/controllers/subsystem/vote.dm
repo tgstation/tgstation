@@ -144,7 +144,8 @@ SUBSYSTEM_DEF(vote)
 	var/datum/vote/to_vote
 	// If we were passed a path: find the path in possible_votes
 	if(ispath(vote_type, /datum/vote))
-		to_vote = locate(vote_type) in possible_votes
+		var/datum/vote/vote_path = vote_type
+		to_vote = possible_votes[initial(vote_path.name)]
 
 	// If we were passed an instance: use the instance
 	else if(istype(vote_type, /datum/vote))
