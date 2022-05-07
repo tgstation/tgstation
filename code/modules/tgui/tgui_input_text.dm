@@ -117,6 +117,7 @@
 	src.message = message
 	src.multiline = multiline
 	src.title = title
+	src.entry = ""
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
@@ -183,11 +184,9 @@
 			return TRUE
 
 /datum/tgui_input_text/proc/set_entry(entry)
-	if(length(entry))
+	if(entry)
 		var/converted_entry = encode ? html_encode(entry) : entry
 		src.entry = trim(converted_entry, max_length)
-	else
-		src.entry = ""
 
 /**
  * # async tgui_input_text
