@@ -6537,7 +6537,7 @@
 	icon_state = "plating"
 	},
 /obj/structure/tramwall/titanium,
-/obj/structure/shuttle/engine/propulsion/in_wall{
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
 	dir = 4;
 	pixel_x = 32
 	},
@@ -9217,9 +9217,9 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
 /obj/structure/fluff/tram_rail,
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "bWr" = (
@@ -9485,15 +9485,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"ccz" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
-/obj/machinery/door/window/left/directional/south{
-	id_tag = "tramdoor"
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "ccG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -9563,11 +9554,11 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "cdC" = (
@@ -15256,6 +15247,13 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
+"ehg" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/obj/machinery/door/window/right/tram,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "ehq" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
@@ -16886,6 +16884,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"eLi" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/obj/machinery/door/window/right/tram/directional/north,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "eLw" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -19944,15 +19949,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
-"fMp" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
-/obj/machinery/door/window/left/directional/north{
-	id_tag = "tramdoor"
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "fML" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -23595,8 +23591,6 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -23604,6 +23598,8 @@
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 8
 	},
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/center)
 "hef" = (
@@ -25942,6 +25938,19 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
+"hVM" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/turf/open/floor/vault,
+/area/station/hallway/primary/tram/center)
 "hVT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -26854,15 +26863,6 @@
 /obj/structure/chair/comfy/black,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
-"ink" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
-/obj/machinery/door/window/right/directional/north{
-	id_tag = "tramdoor"
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "inl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32785,9 +32785,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_white"
 	},
-/obj/machinery/door/window/right/directional/south{
-	id_tag = "tramdoor"
-	},
+/obj/machinery/door/window/left/tram/directional/north,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "kuF" = (
@@ -38320,7 +38318,7 @@
 	icon_state = "plating"
 	},
 /obj/structure/tramwall/titanium,
-/obj/structure/shuttle/engine/propulsion/in_wall{
+/obj/structure/shuttle/engine/propulsion/in_wall/tram{
 	dir = 8;
 	pixel_x = -32
 	},
@@ -41913,6 +41911,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
+"nKw" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/obj/machinery/door/window/left/tram,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "nKF" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall,
@@ -50193,8 +50198,6 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -50202,6 +50205,8 @@
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 4
 	},
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/center)
 "qLg" = (
@@ -57044,8 +57049,8 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/grille,
+/obj/structure/grille/tram,
+/obj/structure/window/reinforced/shuttle/tram,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "tlH" = (
@@ -57834,6 +57839,17 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
+"tBz" = (
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/obj/effect/landmark/lift_id,
+/turf/open/floor/vault,
+/area/station/hallway/primary/tram/center)
 "tBO" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
@@ -167919,11 +167935,11 @@ oLn
 bNj
 avR
 fKc
-fMp
+kuA
 gVN
-knD
+hVM
 eDw
-ccz
+nKw
 woO
 rcB
 aFf
@@ -168176,11 +168192,11 @@ rRU
 bDg
 avO
 pXe
-ink
+eLi
 gVN
-knD
+tBz
 eDw
-kuA
+ehg
 vwc
 hkr
 lsv
@@ -168690,11 +168706,11 @@ rRU
 qjK
 avR
 qDY
-fMp
+kuA
 gVN
 vBI
 eDw
-ccz
+nKw
 mRN
 fZX
 eOl
@@ -168947,11 +168963,11 @@ oLn
 iMR
 avO
 oww
-ink
+eLi
 gVN
 knD
 eDw
-kuA
+ehg
 hsN
 vqB
 aFf
