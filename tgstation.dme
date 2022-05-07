@@ -395,6 +395,8 @@
 #include "code\_onclick\hud\blobbernaut.dm"
 #include "code\_onclick\hud\credits.dm"
 #include "code\_onclick\hud\drones.dm"
+#include "code\modules\antagonists\ntagent\ntagent.dm"
+#include "code\modules\ntagent\outfit.dm"
 #include "code\_onclick\hud\families.dm"
 #include "code\_onclick\hud\fullscreen.dm"
 #include "code\_onclick\hud\generic_dextrous.dm"
