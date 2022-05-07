@@ -449,6 +449,8 @@
 	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
 	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
 	RegisterSignal(signer, COMSIG_LIVING_VOCAL_SPEECH_CHECK, .proc/on_vocal_check)
+	RegisterSignal(signer, COMSIG_LIVING_TREAT_MESSAGE, .proc/on_treat_message)
+	RegisterSignal(signer, COMSIG_MOVABLE_USING_RADIO, .proc/on_use_radio)
 
 /obj/item/organ/tongue/tied/Remove(mob/living/carbon/speaker, special = 0)
 	..()
@@ -458,16 +460,80 @@
 	speaker.verb_sing = initial(verb_sing)
 	speaker.verb_yell = initial(verb_yell)
 	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	UnregisterSignal(speaker, COMSIG_LIVING_VOCAL_SPEECH_CHECK)
+	UnregisterSignal(speaker, list(COMSIG_LIVING_VOCAL_SPEECH_CHECK, COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOVABLE_USING_RADIO))
 
 /// Signal proc for [COMSIG_LIVING_VOCAL_SPEECH_CHECK]
 /// Sign languagers can always speak regardless of they're mute (as long as they're not mimes)
-/obj/item/organ/tongue/tied/proc/on_vocal_check(datum/source, message)
+/obj/item/organ/tongue/tied/proc/on_vocal_check(mob/living/source, allow_mimes)
 	SIGNAL_HANDLER
 
-	// MELBERT TODO: move sign language checks here
+	switch(check_signables_state())
+		if(SIGN_HANDS_FULL) // Full hands
+			source.visible_message("tries to sign, but can't with [source.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_ARMLESS) // No arms
+			to_chat(src, span_warning("You can't sign with no hands!"))
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_TRAIT_BLOCKED) // Hands Blocked or Emote Mute traits
+			to_chat(src, span_warning("You can't sign at the moment!"))
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_CUFFED) // Cuffed
+			mute.visible_message("tries to sign, but can't with [source.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
+			return COMPONENT_CANNOT_SPEAK
 
 	return COMPONENT_CAN_ALWAYS_SPEAK
+
+/// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
+/obj/item/organ/tongue/tied/proc/on_treat_message(mob/living/source, list/message_args)
+	SIGNAL_HANDLER
+
+	if(check_signables_state() == SIGN_ONE_HAND)
+		message_args[1] = stars(message_args[1])
+
+/// Signal proc for [COMSIG_MOVABLE_USING_RADIO]
+/obj/item/organ/tongue/tied/proc/on_use_radio(atom/movable/source, obj/item/radio/radio, list/speech_arguments)
+	SIGNAL_HANDLER
+
+	if(!HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS))
+		return COMPONENT_CANNOT_USE_RADIO
+
+	switch(check_signables_state())
+		if(SIGN_ONE_HAND) // One hand full
+			speech_arguments[2] = stars(speech_arguments[2])
+
+		if(SIGN_HANDS_FULL, SIGN_ARMLESS, SIGN_TRAIT_BLOCKED, SIGN_CUFFED)
+			return COMPONENT_CANNOT_USE_RADIO
+
+// Checks to see how many hands this person has to sign with.
+/obj/item/organ/tongue/tied/proc/check_signables_state()
+	if(!owner)
+		CRASH("[type] called check_signables_state without an owner.")
+
+	var/obj/item/bodypart/left_arm = owner.get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/right_arm = owner.get_bodypart(BODY_ZONE_R_ARM)
+	var/empty_indexes = owner.get_empty_held_indexes()
+	var/exit_right = (!right_arm || right_arm.bodypart_disabled)
+	var/exit_left = (!left_arm || left_arm.bodypart_disabled)
+	// All existing hands full, can't sign
+	if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && (exit_left || exit_right)))
+		return SIGN_HANDS_FULL
+	// Can't sign with no arms!
+	if(exit_left && exit_right)
+		return SIGN_ARMLESS
+	// Cuffed. Usually will show visual effort to sign
+	if(owner.handcuffed)
+		return SIGN_CUFFED
+
+	if(HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_EMOTEMUTE))
+		return SIGN_TRAIT_BLOCKED
+	// One arm gone
+	if(length(empty_indexes) == 1 || exit_left || exit_right)
+		return SIGN_ONE_HAND
+
+	return SIGN_OKAY
 
 //Thank you Jwapplephobia for helping me with the literal hellcode below
 

@@ -556,6 +556,7 @@
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
 /// Sign Language defines
+#define SIGN_OKAY -1
 #define SIGN_ONE_HAND 0
 #define SIGN_HANDS_FULL 1
 #define SIGN_ARMLESS 2

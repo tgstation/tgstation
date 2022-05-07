@@ -84,3 +84,6 @@
 /// from base of atom/movable/Process_Spacemove(): (movement_dir)
 #define COMSIG_MOVABLE_SPACEMOVE "spacemove"
 	#define COMSIG_MOVABLE_STOP_SPACEMOVE (1<<0)
+
+#define COMSIG_MOVABLE_USING_RADIO "movable_radio"
+	#define COMPONENT_CANNOT_USE_RADIO (1<<0)
