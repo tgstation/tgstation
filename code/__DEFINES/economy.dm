@@ -53,7 +53,7 @@
 #define CIV_JOB_SEC 4
 #define CIV_JOB_DRINK 5
 #define CIV_JOB_CHEM 6
-#define CIV_JOB_VIRO 7
+#define CIV_JOB_FISH 7
 #define CIV_JOB_SCI 8
 #define CIV_JOB_ENG 9
 #define CIV_JOB_MINE 10

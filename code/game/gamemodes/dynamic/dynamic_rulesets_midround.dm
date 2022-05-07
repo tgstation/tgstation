@@ -588,7 +588,7 @@
 			if(!temp_vent_parent)
 				continue // No parent vent
 			// Stops Aliens getting stuck in small networks.
-			// See: Security, Virology
+			// See: Security, Fish Room
 			if(temp_vent_parent.other_atmos_machines.len > 20)
 				vents += temp_vent
 	if(!vents.len)

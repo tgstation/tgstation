@@ -171,7 +171,7 @@
 	assignment = "Chemist"
 	trim_state = "trim_chemist"
 	sechud_icon_state = SECHUD_CHEMIST
-	extra_access = list(ACCESS_SURGERY, ACCESS_VIROLOGY)
+	extra_access = list(ACCESS_SURGERY, ACCESS_FISH)
 	minimal_access = list(ACCESS_CHEMISTRY, ACCESS_MECH_MEDICAL, ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_PHARMACY)
 	config_job = "chemist"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CMO, ACCESS_CHANGE_IDS)
@@ -201,7 +201,7 @@
 	extra_wildcard_access = list()
 	minimal_access = list(ACCESS_CHEMISTRY, ACCESS_EVA, ACCESS_HEADS, ACCESS_KEYCARD_AUTH, ACCESS_MAINT_TUNNELS, ACCESS_MECH_MEDICAL,
 					ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_PHARMACY, ACCESS_PSYCHOLOGY, ACCESS_RC_ANNOUNCE,
-					ACCESS_BRIG_ENTRANCE, ACCESS_SURGERY, ACCESS_VIROLOGY)
+					ACCESS_BRIG_ENTRANCE, ACCESS_SURGERY, ACCESS_FISH)
 	minimal_wildcard_access = list(ACCESS_CMO)
 	config_job = "chief_medical_officer"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)
@@ -340,7 +340,7 @@
 	assignment = "Medical Doctor"
 	trim_state = "trim_medicaldoctor"
 	sechud_icon_state = SECHUD_MEDICAL_DOCTOR
-	extra_access = list(ACCESS_CHEMISTRY, ACCESS_VIROLOGY)
+	extra_access = list(ACCESS_CHEMISTRY, ACCESS_FISH)
 	minimal_access = list(ACCESS_MECH_MEDICAL, ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_PHARMACY, ACCESS_SURGERY)
 	config_job = "medical_doctor"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CMO, ACCESS_CHANGE_IDS)
@@ -537,15 +537,15 @@
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CE, ACCESS_CHANGE_IDS)
 	job = /datum/job/station_engineer
 
-/datum/id_trim/job/virologist
-	assignment = "Virologist"
-	trim_state = "trim_virologist"
-	sechud_icon_state = SECHUD_VIROLOGIST
+/datum/id_trim/job/fishdoctor
+	assignment = "Fish Doctor"
+	trim_state = "trim_fishdoctor"
+	sechud_icon_state = SECHUD_FISHDOCTOR
 	extra_access = list(ACCESS_CHEMISTRY, ACCESS_MORGUE, ACCESS_SURGERY)
-	minimal_access = list(ACCESS_MEDICAL, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_VIROLOGY)
-	config_job = "virologist"
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_FISH)
+	config_job = "fish_doctor"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CMO, ACCESS_CHANGE_IDS)
-	job = /datum/job/virologist
+	job = /datum/job/fishdoctor
 
 /datum/id_trim/job/warden
 	assignment = "Warden"

@@ -236,7 +236,7 @@
 					/obj/item/fish_feed = 10,
 					/obj/item/storage/fish_case = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/fish_wardrobe
-	payment_department = ACCOUNT_SRV
+	payment_department = ACCOUNT_MED
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 
 /obj/item/vending_refill/wardrobe/fish_wardrobe

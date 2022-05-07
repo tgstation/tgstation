@@ -1271,7 +1271,7 @@
 	desc = "Contains twelve different bottles, containing several viral samples for virology research. Also includes seven beakers and syringes. Balled-up jeans not included. Requires CMO access to open."
 	cost = CARGO_CRATE_VALUE * 5
 	access = ACCESS_CMO
-	access_view = ACCESS_VIROLOGY
+	access_view = ACCESS_FISH
 	contains = list(/obj/item/reagent_containers/glass/bottle/flu_virion,
 					/obj/item/reagent_containers/glass/bottle/cold,
 					/obj/item/reagent_containers/glass/bottle/random_virus,
@@ -2922,14 +2922,13 @@
 
 /datum/supply_pack/vending/wardrobes/general
 	name = "General Wardrobes Supply Crate"
-	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe, JaniDrobe, ChapDrobe, and FishDrobe."
+	desc = "This crate contains refills for the CuraDrobe, BarDrobe, ChefDrobe, JaniDrobe, ChapDrobe."
 	cost = CARGO_CRATE_VALUE * 7.5
 	contains = list(/obj/item/vending_refill/wardrobe/curator_wardrobe,
 					/obj/item/vending_refill/wardrobe/bar_wardrobe,
 					/obj/item/vending_refill/wardrobe/chef_wardrobe,
 					/obj/item/vending_refill/wardrobe/jani_wardrobe,
-					/obj/item/vending_refill/wardrobe/chap_wardrobe,
-					/obj/item/vending_refill/wardrobe/fish_wardrobe)
+					/obj/item/vending_refill/wardrobe/chap_wardrobe)
 	crate_name = "general wardrobes vendor refills"
 
 /datum/supply_pack/vending/wardrobes/hydroponics
@@ -2941,11 +2940,11 @@
 
 /datum/supply_pack/vending/wardrobes/medical
 	name = "Medical Wardrobe Supply Crate"
-	desc = "This crate contains refills for the MediDrobe, ChemDrobe, and ViroDrobe."
+	desc = "This crate contains refills for the MediDrobe, ChemDrobe, and FishDrobe."
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/vending_refill/wardrobe/medi_wardrobe,
 					/obj/item/vending_refill/wardrobe/chem_wardrobe,
-					/obj/item/vending_refill/wardrobe/viro_wardrobe)
+					/obj/item/vending_refill/wardrobe/fish_wardrobe)
 	crate_name = "medical department wardrobe supply crate"
 
 /datum/supply_pack/vending/wardrobes/science

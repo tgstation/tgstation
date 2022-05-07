@@ -281,7 +281,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_LIBRARY]"] = "Library"
 	desc_by_access["[ACCESS_LAWYER]"] = "Law Office"
 	desc_by_access["[ACCESS_ROBOTICS]"] = "Robotics"
-	desc_by_access["[ACCESS_VIROLOGY]"] = "Virology"
+	desc_by_access["[ACCESS_FISH]"] = "Fish Room"
 	desc_by_access["[ACCESS_PSYCHOLOGY]"] = "Psychology"
 	desc_by_access["[ACCESS_CMO]"] = "CMO Office"
 	desc_by_access["[ACCESS_QM]"] = "Quartermaster"

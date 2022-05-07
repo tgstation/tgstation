@@ -46,7 +46,7 @@
 #define ACCESS_HYDROPONICS 35
 #define ACCESS_LIBRARY 37
 #define ACCESS_LAWYER 38
-#define ACCESS_VIROLOGY 39
+#define ACCESS_FISH 39
 #define ACCESS_CMO 40
 #define ACCESS_QM 41
 #define ACCESS_COURT 42
@@ -250,7 +250,7 @@
 	ACCESS_SURGERY, \
 	ACCESS_COURT, \
 	ACCESS_QM, \
-	ACCESS_VIROLOGY, \
+	ACCESS_FISH, \
 	ACCESS_LAWYER, \
 	ACCESS_LIBRARY, \
 	ACCESS_HYDROPONICS, \
@@ -392,7 +392,7 @@
 	ACCESS_MEDICAL, \
 	ACCESS_MORGUE, \
 	ACCESS_CHEMISTRY, \
-	ACCESS_VIROLOGY, \
+	ACCESS_FISH, \
 	ACCESS_SURGERY, \
 	ACCESS_MECH_MEDICAL, \
 	ACCESS_CMO, \
@@ -478,7 +478,7 @@
 	/obj/item/modular_computer/tablet/pda/clown = list(REGION_GENERAL), \
 	/obj/item/modular_computer/tablet/pda/mime = list(REGION_GENERAL), \
 	/obj/item/modular_computer/tablet/pda/medical = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/tablet/pda/viro = list(REGION_MEDBAY), \
+	/obj/item/modular_computer/tablet/pda/fish = list(REGION_MEDBAY), \
 	/obj/item/modular_computer/tablet/pda/engineering = list(REGION_ENGINEERING), \
 	/obj/item/modular_computer/tablet/pda/security = list(REGION_SECURITY), \
 	/obj/item/modular_computer/tablet/pda/detective = list(REGION_SECURITY), \

@@ -156,9 +156,9 @@
 	glass_type = /obj/machinery/door/airlock/cult/unruned/glass
 
 /obj/structure/door_assembly/door_assembly_viro
-	name = "virology airlock assembly"
+	name = "fish room airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
-	base_name = "virology airlock"
+	base_name = "fish room airlock"
 	glass_type = /obj/machinery/door/airlock/virology/glass
 	airlock_type = /obj/machinery/door/airlock/virology
 

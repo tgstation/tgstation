@@ -1145,7 +1145,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "patients"
 
 /area/medical/virology
-	name = "Virology"
+	name = "Fish Room"
 	icon_state = "virology"
 
 /area/medical/morgue

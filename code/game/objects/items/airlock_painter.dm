@@ -33,7 +33,7 @@
 		"Maintenance" = /obj/machinery/door/airlock/maintenance,
 		"External" = /obj/machinery/door/airlock/external,
 		"External Maintenance"= /obj/machinery/door/airlock/maintenance/external,
-		"Virology" = /obj/machinery/door/airlock/virology,
+		"Fish Room" = /obj/machinery/door/airlock/virology,
 		"Standard" = /obj/machinery/door/airlock
 	)
 

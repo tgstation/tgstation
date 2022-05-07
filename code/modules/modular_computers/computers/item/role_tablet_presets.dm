@@ -4,8 +4,8 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
 
-/obj/item/modular_computer/tablet/pda/viro
-	name = "virology PDA"
+/obj/item/modular_computer/tablet/pda/fish
+	name = "fish doctor PDA"
 	default_disk = /obj/item/computer_hardware/hard_drive/role/medical
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#FAFAFA#355FAC#57C451"
@@ -232,4 +232,3 @@
 	icon_state = "pda-clear"
 	greyscale_config = null
 	greyscale_colors = null
-

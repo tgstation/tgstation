@@ -267,7 +267,7 @@ const SpecimenDisplay = (_, context) => {
             <Button
               icon="flask"
               content="Create culture bottle"
-              disabled={!is_ready}
+              disabled={!is_ready || is_ready}
               onClick={() =>
                 act('create_culture_bottle', {
                   index: virus.index,

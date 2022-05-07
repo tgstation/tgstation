@@ -10,7 +10,7 @@
 	name = "fishing rod"
 	desc = "A simple wooden fishing rod."
 	icon = 'icons/obj/wizard.dmi'
-	icon_state = "staff"
+	icon_state = "fishing_rod"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	force = 9
@@ -19,5 +19,5 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_BULKY
 	armour_penetration = 100
-	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
-	attack_verb_simple = list("bludgeon", "whack", "discipline")
+	attack_verb_continuous = list("whips", "whacks", "disciplines")
+	attack_verb_simple = list("whip", "whack", "discipline")

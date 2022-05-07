@@ -278,7 +278,7 @@ GLOBAL_LIST_INIT(scarySounds, list(
 24 Experimentor Lab
 25 Ordnance
 26 Dormitories
-27 Virology
+27 Fish Room
 28 Xenobiology
 29 Law Office
 30 Detective's Office
@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics",
-	"Experimentor Lab", "Ordnance", "Dormitories", "Virology",
+	"Experimentor Lab", "Ordnance", "Dormitories", "Fish Room",
 	"Xenobiology", "Law Office","Detective's Office"))
 
 GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt"))
