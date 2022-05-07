@@ -82,7 +82,7 @@
 	name = "plasmaglass"
 	desc = "Plasma-infused silicate. It is much more durable and heat resistant than either of its component materials."
 	color = "#ff80f4"
-	greyscale_colors = "#ff80f4"
+	greyscale_colors = "#ff80f496"
 	alpha = 150
 	init_flags = MATERIAL_INIT_MAPLOAD
 	integrity_modifier = 0.5
@@ -101,7 +101,7 @@
 	name = "titanium glass"
 	desc = "A specialized silicate-titanium alloy that is commonly used in shuttle windows."
 	color = "#cfbee0"
-	greyscale_colors = "#cfbee0"
+	greyscale_colors = "#cfbee096"
 	alpha = 150
 	init_flags = MATERIAL_INIT_MAPLOAD
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 0.8, ENERGY = 0.8, BOMB = 0.5, BIO = 1.2, FIRE = 0.8, ACID = 2)
@@ -119,7 +119,7 @@
 	name = "plastitanium glass"
 	desc = "A specialized silicate-plastitanium alloy."
 	color = "#5d3369"
-	greyscale_colors = "#5d3369"
+	greyscale_colors = "#5d336996"
 	alpha = 150
 	init_flags = MATERIAL_INIT_MAPLOAD
 	integrity_modifier = 1.1

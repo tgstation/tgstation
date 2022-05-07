@@ -376,7 +376,7 @@
 			if(prob(10))
 				victim.blur_eyes(1)
 			if(prob(10))
-				victim.Dizzy(1)
+				victim.set_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			if(prob(5))
 				victim.vomit()
 
@@ -996,7 +996,7 @@
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
 	if(isabductor(M))
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "ET_pieces", /datum/mood_event/et_pieces, name)
-		M.set_drugginess(15 * REM * delta_time)
+		M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	..()
 
 /datum/reagent/consumable/vinegar

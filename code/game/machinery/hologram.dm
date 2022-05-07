@@ -41,9 +41,6 @@ Possible to do for anyone motivated enough:
 	layer = LOW_OBJ_LAYER
 	plane = FLOOR_PLANE
 	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 100
 	max_integrity = 300
 	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
 	circuit = /obj/item/circuitboard/machine/holopad
@@ -196,6 +193,7 @@ Possible to do for anyone motivated enough:
 		outgoing_call.ConnectionFailure(src)
 
 /obj/machinery/holopad/RefreshParts()
+	. = ..()
 	var/holograph_range = 4
 	for(var/obj/item/stock_parts/capacitor/B in component_parts)
 		holograph_range += 1 * B.rating
@@ -549,7 +547,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/proc/SetLightsAndPower()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	update_use_power(total_users > 0 ? ACTIVE_POWER_USE : IDLE_POWER_USE)
-	update_mode_power_usage(ACTIVE_POWER_USE, HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
+	update_mode_power_usage(ACTIVE_POWER_USE, active_power_usage + HOLOPAD_PASSIVE_POWER_USAGE + (HOLOGRAM_POWER_USAGE * total_users))
 	if(total_users || replay_mode)
 		set_light(2)
 	else

@@ -63,6 +63,10 @@
 ///Empty ID define
 #define TIMER_ID_NULL -1
 
+/// Used to trigger object removal from a processing list
+#define PROCESS_KILL 26
+
+
 //! ## Initialization subsystem
 
 ///New should not call Initialize
@@ -87,9 +91,6 @@
 
 ///Call qdel on the atom after intialization
 #define INITIALIZE_HINT_QDEL 2
-
-///Call qdel with a force of TRUE after initialization
-#define INITIALIZE_HINT_QDEL_FORCE 3
 
 ///type and all subtypes should always immediately call Initialize in New()
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
@@ -120,7 +121,6 @@
 #define INIT_ORDER_VIS 80
 #define INIT_ORDER_DISCORD 78
 #define INIT_ORDER_ACHIEVEMENTS 77
-#define INIT_ORDER_RESEARCH 75
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
 #define INIT_ORDER_QUIRKS 73
 #define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
@@ -133,7 +133,8 @@
 #define INIT_ORDER_TCG 55
 #define INIT_ORDER_MAPPING 50
 #define INIT_ORDER_EARLY_ASSETS 48
-#define INIT_ORDER_TIMETRACK 47
+#define INIT_ORDER_RESEARCH 47
+#define INIT_ORDER_TIMETRACK 46
 #define INIT_ORDER_NETWORKS 45
 #define INIT_ORDER_SPATIAL_GRID 43
 #define INIT_ORDER_ECONOMY 40
@@ -165,6 +166,7 @@
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 
+#define FIRE_PRIORITY_PING 10
 #define FIRE_PRIORITY_IDLE_NPC 10
 #define FIRE_PRIORITY_SERVER_MAINT 10
 #define FIRE_PRIORITY_RESEARCH 10

@@ -392,7 +392,7 @@
 			if(!hypnosis)
 				to_chat(M, span_hypnophrase("The light makes you feel oddly relaxed..."))
 				M.add_confusion(min(M.get_confusion() + 10, 20))
-				M.dizziness += min(M.dizziness + 10, 20)
+				M.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, max_duration = 40 SECONDS)
 				M.adjust_drowsyness(min(M.drowsyness+10, 20))
 				M.apply_status_effect(/datum/status_effect/pacify, 100)
 			else
@@ -406,7 +406,7 @@
 	else if(M.flash_act())
 		to_chat(M, span_notice("Such a pretty light..."))
 		M.add_confusion(min(M.get_confusion() + 4, 20))
-		M.dizziness += min(M.dizziness + 4, 20)
+		M.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/dizziness, max_duration = 40 SECONDS)
 		M.adjust_drowsyness(min(M.drowsyness+4, 20))
 		M.apply_status_effect(/datum/status_effect/pacify, 40)
 

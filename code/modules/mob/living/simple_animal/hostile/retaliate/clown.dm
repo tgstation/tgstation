@@ -35,6 +35,7 @@
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
+	faction = FACTION_CLOWN
 	var/attack_reagent
 
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
@@ -97,7 +98,7 @@
 	banana_rustle.Grant(src)
 	banana_bunch = new()
 	banana_bunch.Grant(src)
-	
+
 /mob/living/simple_animal/hostile/retaliate/clown/banana/Destroy()
 	. = ..()
 	QDEL_NULL(banana_rustle)
@@ -151,7 +152,7 @@
 	if(!bunch_turf)
 		return
 	if(!owner.CanReach(bunch_turf) || !isopenturf(bunch_turf))
-		owner.balloon_alert("can't do that here!")
+		owner.balloon_alert(owner, "can't do that here!")
 		return
 	activating = TRUE
 	if(!do_after(owner, 1 SECONDS))
@@ -513,5 +514,3 @@
 	projected_morsel.throw_at(target, 8, 2, pouch_owner)
 	flick("glutton_mouth", pouch_owner)
 	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)
-
-

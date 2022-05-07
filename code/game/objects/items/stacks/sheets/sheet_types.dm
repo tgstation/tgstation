@@ -67,7 +67,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("rack parts", /obj/item/rack_parts), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	null, \
-	new/datum/stack_recipe("canister frame", /obj/structure/canister_frame/machine/frame_tier_0, 5, time = 8, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("unfinished canister frame", /obj/structure/canister_frame/machine/unfinished_canister_frame, 5, time = 8, one_per_turf = TRUE, on_floor = TRUE), \
 	null, \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/iron/base, 1, 4, 20), \
 	new/datum/stack_recipe("iron rod", /obj/item/stack/rods, 1, 2, 60), \
@@ -143,7 +143,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	matter_amount = 4
 	cost = 500
 	source = /datum/robot_energy_storage/iron
-	tram_wall_type = /obj/structure/tramwall
 
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
@@ -350,7 +349,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 /obj/item/stack/sheet/mineral/bamboo/get_main_recipes()
 	. = ..()
 	. += GLOB.bamboo_recipes
-	
+
 /obj/item/stack/sheet/mineral/bamboo/fifty
 	amount = 50
 

@@ -15,6 +15,7 @@
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/wrapping_paper
+	singular_name = "wrapping paper"
 
 /obj/item/stack/wrapping_paper/Initialize(mapload)
 	. = ..()
