@@ -481,7 +481,7 @@
 			return COMPONENT_CANNOT_SPEAK
 
 		if(SIGN_CUFFED) // Cuffed
-			mute.visible_message("tries to sign, but can't with [source.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
+			source.visible_message("tries to sign, but can't with [source.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
 			return COMPONENT_CANNOT_SPEAK
 
 	return COMPONENT_CAN_ALWAYS_SPEAK
