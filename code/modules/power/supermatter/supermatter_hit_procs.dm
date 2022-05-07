@@ -68,6 +68,46 @@
 		qdel(rip_u)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/obj/machinery/power/supermatter_crystal/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/scalpel/supermatter))
+		var/obj/item/scalpel/supermatter/scalpel = item
+		to_chat(user, span_notice("You carefully begin to scrape \the [src] with \the [scalpel]..."))
+		if(!scalpel.use_tool(src, user, 60, volume=100))
+			return
+		if (scalpel.usesLeft)
+			to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
+			new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
+			matter_power += 800
+			scalpel.usesLeft--
+			if (!scalpel.usesLeft)
+				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
+		else
+			to_chat(user, span_warning("You fail to extract a sliver from \The [src]! \the [scalpel] isn't sharp enough anymore."))
+		return
+
+	if(istype(item, /obj/item/destabilizing_crystal))
+		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
+
+		if(!anomaly_event)
+			to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on a Shard."))
+			return
+
+		if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT)
+			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to a Supermatter src that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
+			return
+
+		to_chat(user, span_notice("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
+		if(do_after(user, 3 SECONDS, src))
+			to_chat(user, span_notice("You attach \the [destabilizing_crystal] to \the [src]."))
+			has_destabilizing_crystal = TRUE
+			cascade_initiated = TRUE
+			damage += 100
+			matter_power += 500
+			qdel(destabilizing_crystal)
+		return
+
+	return ..()
+
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
 	return

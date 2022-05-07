@@ -1,6 +1,8 @@
 /datum/component/supermatter_crystal
 
+	///Callback for the wrench act call
 	var/datum/callback/tool_act_callback
+	///Callback used by the SM to get the damage and matter power increase/decrease
 	var/datum/callback/consume_callback
 
 /datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback)
@@ -167,15 +169,6 @@
 			playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)
 			radiation_pulse(atom_source, max_range = 1, threshold = 0, chance = 100)
 			return
-	if(istype(item, /obj/item/scalpel/supermatter))
-		var/obj/item/scalpel/supermatter/scalpel = item
-		INVOKE_ASYNC(src, .proc/use_scalpel, scalpel, user, atom_source)
-		return
-
-	if(istype(item, /obj/item/destabilizing_crystal))
-		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
-		INVOKE_ASYNC(src, .proc/use_destabilizing_crystal, destabilizing_crystal, user, atom_source)
-		return
 
 	if(user.dropItemToGround(item))
 		user.visible_message(span_danger("As [user] touches \the [atom_source] with \a [item], silence fills the room..."),\
@@ -331,39 +324,3 @@
 /datum/component/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)
 	if(consume_callback)
 		consume_callback.Invoke(matter_increase, damage_increase)
-
-/datum/component/supermatter_crystal/proc/use_scalpel(obj/item/scalpel/supermatter/scalpel, mob/living/user, atom/atom_source)
-	to_chat(user, span_notice("You carefully begin to scrape \the [atom_source] with \the [scalpel]..."))
-	if(scalpel.use_tool(atom_source, user, 60, volume=100))
-		if (scalpel.usesLeft)
-			to_chat(user, span_danger("You extract a sliver from \the [atom_source]. \The [atom_source] begins to react violently!"))
-			new /obj/item/nuke_core/supermatter_sliver(atom_source.drop_location())
-			consume_returns(matter_increase = 800)
-			scalpel.usesLeft--
-			if (!scalpel.usesLeft)
-				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
-		else
-			to_chat(user, span_warning("You fail to extract a sliver from \The [atom_source]! \the [scalpel] isn't sharp enough anymore."))
-
-/datum/component/supermatter_crystal/proc/use_destabilizing_crystal(obj/item/destabilizing_crystal, mob/living/user, atom/atom_source)
-	if(!istype(atom_source, /obj/machinery/power/supermatter_crystal))
-		to_chat(user, span_warning("You can only use \the [destabilizing_crystal] on a Full Supermatter Crystal."))
-		return
-
-	var/obj/machinery/power/supermatter_crystal/crystal = atom_source
-
-	if(!crystal.anomaly_event)
-		to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on a Shard."))
-		return
-
-	if(crystal.get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT)
-		to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to a Supermatter Crystal that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
-		return
-
-	to_chat(user, span_notice("You begin to attach \the [destabilizing_crystal] to \the [crystal]..."))
-	if(do_after(user, 3 SECONDS, crystal))
-		crystal.has_destabilizing_crystal = TRUE
-		crystal.cascade_initiated = TRUE
-		consume_returns(matter_increase = 500, damage_increase = 100)
-		qdel(destabilizing_crystal)
-		to_chat(user, span_notice("You attach \the [destabilizing_crystal] to \the [crystal]."))
