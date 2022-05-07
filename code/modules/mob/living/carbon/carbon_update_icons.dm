@@ -255,7 +255,7 @@
 			old_left_leg_key = old_key
 			continue // Legs are handled separately
 
-		if(!(icon_render_keys[limb.body_zone] == old_key)) //If the keys match, that means the limb doesn't need to be redrawn
+		if(icon_render_keys[limb.body_zone] != old_key) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
 
 
@@ -306,7 +306,7 @@
 	var/legs_need_redrawn = FALSE
 	if(left_leg)
 		// We regenerate the look of the left leg if it isn't already cached, we don't if not.
-		if(!(icon_render_keys[left_leg.body_zone] == old_left_leg_key))
+		if(icon_render_keys[left_leg.body_zone] != old_left_leg_key)
 			limb_icon_cache[icon_render_keys[left_leg.body_zone]] = left_leg.get_limb_icon()
 			legs_need_redrawn = TRUE
 
@@ -322,7 +322,7 @@
 		// We generate a new icon_render_key, which also takes into account the left_leg_mask_key so we cache the masked versions of the limbs too.
 		icon_render_keys[right_leg.body_zone] = right_leg.is_husked ? right_leg.generate_husk_key().Join() : right_leg.generate_icon_key().Join()
 
-		if(!(icon_render_keys[right_leg.body_zone] == old_right_leg_key))
+		if(icon_render_keys[right_leg.body_zone] != old_right_leg_key)
 			limb_icon_cache[icon_render_keys[right_leg.body_zone]] = right_leg.get_limb_icon()
 			legs_need_redrawn = TRUE
 
