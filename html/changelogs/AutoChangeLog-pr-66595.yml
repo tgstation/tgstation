@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - code_imp: "Some things that were hyper undeletable are now just normal undeletable. Please report any unexpected behavior, mostly in away missions, or on lavaland."
