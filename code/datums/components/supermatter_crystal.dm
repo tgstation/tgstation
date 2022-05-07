@@ -170,12 +170,14 @@
 	if(istype(item, /obj/item/scalpel/supermatter))
 		var/obj/item/scalpel/supermatter/scalpel = item
 		INVOKE_ASYNC(src, .proc/use_scalpel, scalpel, user, atom_source)
+		return
 
 	if(istype(item, /obj/item/destabilizing_crystal))
 		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
 		INVOKE_ASYNC(src, .proc/use_destabilizing_crystal, destabilizing_crystal, user, atom_source)
+		return
 
-	else if(user.dropItemToGround(item))
+	if(user.dropItemToGround(item))
 		user.visible_message(span_danger("As [user] touches \the [atom_source] with \a [item], silence fills the room..."),\
 			span_userdanger("You touch \the [atom_source] with \the [item], and everything suddenly goes silent.</span>\n<span class='notice'>\The [item] flashes into dust as you flinch away from \the [atom_source]."),\
 			span_hear("Everything suddenly goes silent."))
@@ -184,8 +186,9 @@
 		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
 
 		radiation_pulse(atom_source, max_range = 3, threshold = 0.1, chance = 50)
+		return
 
-	else if(atom_source.Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
+	if(atom_source.Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
 		var/vis_msg = span_danger("[user] reaches out and touches [atom_source] with [item], inducing a resonance... [item] starts to glow briefly before the light continues up to [user]'s body. [user.p_they(TRUE)] bursts into flames before flashing into dust!")
 		var/mob_msg = span_userdanger("You reach out and touch [atom_source] with [item]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"")
 		dust_mob(source, user, vis_msg, mob_msg)
@@ -360,6 +363,7 @@
 	to_chat(user, span_notice("You begin to attach \the [destabilizing_crystal] to \the [crystal]..."))
 	if(do_after(user, 3 SECONDS, crystal))
 		crystal.has_destabilizing_crystal = TRUE
+		crystal.cascade_initiated = TRUE
 		consume_returns(matter_increase = 500, damage_increase = 100)
 		qdel(destabilizing_crystal)
 		to_chat(user, span_notice("You attach \the [destabilizing_crystal] to \the [crystal]."))

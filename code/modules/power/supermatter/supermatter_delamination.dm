@@ -162,7 +162,7 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 	for(var/mob/player in GLOB.alive_player_list)
 		to_chat(player, span_boldannounce("You feel a strange presence in the air around you. You feel unsafe."))
 
-	priority_announce("Unknown harmonance affecting universal substructure, all nearby matter is starting to crystallize.", "The universe is collapsing.")
+	priority_announce("Unknown harmonance affecting universal substructure, all nearby matter is starting to crystallize.", "The universe is collapsing.", 'sound/misc/bloblarm.ogg')
 	priority_announce("There's been a universe-wide electromagnetic pulse. All of our systems are heavily damaged and many personnel are dead or dying. \
 		We are seeing increasing indications of the universe itself beginning to unravel. \
 		[station_name()], you are the only facility nearby a bluespace rift of unkown origin, which is near the [get_area_name(cascade_rift)]. \
@@ -177,9 +177,10 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 
 /datum/supermatter_delamination/proc/delta()
 	set_security_level("delta")
+	sound_to_playing_players('sound/misc/notice1.ogg')
 
 /datum/supermatter_delamination/proc/last_message()
-	priority_announce("To the remaining humans alive, I hope it was worth it.", " ")
+	priority_announce("To the remaining humans alive, I hope it was worth it.", " ", 'sound/misc/bloop.ogg')
 
 /datum/supermatter_delamination/proc/the_end()
 	SSticker.news_report = SUPERMATTER_CASCADE

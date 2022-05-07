@@ -475,14 +475,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/supermatter_cascade = can_trigger
 	var/list/required_gases = list(/datum/gas/hypernoblium, /datum/gas/antinoblium)
 	for(var/gas_path in required_gases)
+		if(has_destabilizing_crystal)
+			break // We have a destabilizing crystal, we're good
 		if(gas_comp[gas_path] < 0.4 || combined_gas < MOLE_PENALTY_THRESHOLD)
 			supermatter_cascade = FALSE
-			cascade_initiated = FALSE
 			break
 
-	if(admin_cascade || has_destabilizing_crystal)
+	if(admin_cascade)
 		supermatter_cascade = TRUE
-		cascade_initiated = TRUE
 
 	return supermatter_cascade
 

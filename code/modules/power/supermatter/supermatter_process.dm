@@ -76,6 +76,12 @@
 		animate(warp, time = 1, transform = matrix().Scale(0.5,0.5))
 		animate(time = 9, transform = matrix())
 
+	else
+		if(warp)
+			vis_contents -= warp
+			warp = null
+		cascade_initiated = FALSE
+
 	//handles hallucinations and the presence of a psychiatrist
 	psychological_examination()
 

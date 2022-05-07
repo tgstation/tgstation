@@ -1,6 +1,6 @@
 /turf/closed/indestructible/supermatter_wall
 	name = "wall"
-	desc = "Effectively impervious to conventional methods of destruction."
+	desc = "Effectively impervious any methods of destruction."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "crystal_cascade_1"
 	layer = AREA_LAYER
@@ -20,6 +20,8 @@
 	START_PROCESSING(SSmachines, src)
 
 	AddComponent(/datum/component/supermatter_crystal, null, null)
+
+	playsound(src, 'sound/misc/cracking_crystal.ogg', 20, TRUE)
 
 /turf/closed/indestructible/supermatter_wall/process()
 
