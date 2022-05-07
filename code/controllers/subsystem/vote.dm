@@ -1,4 +1,4 @@
-
+/// Define to mimic a span macro but for the purple font that vote specifically uses.
 #define vote_font(text) ("<font color='purple'>" + text + "</font>")
 
 SUBSYSTEM_DEF(vote)
@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/voting = list()
 
 /datum/controller/subsystem/vote/Initialize(start_timeofday)
-	for(var/vote_type as anything in subtypesof(/datum/vote))
+	for(var/vote_type in subtypesof(/datum/vote))
 		var/datum/vote/vote = new vote_type()
 		if(!vote.is_accessible_vote())
 			qdel(vote)
@@ -54,6 +54,8 @@ SUBSYSTEM_DEF(vote)
 		voting_action.Remove(voting_action.owner)
 
 	generated_actions.Cut()
+
+	SStgui.update_uis(src)
 
 /**
  * Process the results of the vote.
