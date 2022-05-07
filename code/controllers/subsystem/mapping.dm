@@ -124,15 +124,23 @@ SUBSYSTEM_DEF(mapping)
 		calculate_z_level_gravity(z_level)
 
 /datum/controller/subsystem/mapping/proc/generate_z_level_linkages()
-	multiz_levels.len = z_list.len
 	for(var/z_level in 1 to length(z_list))
-		var/linked_down = level_trait(z_level, ZTRAIT_DOWN)
-		var/linked_up = level_trait(z_level, ZTRAIT_UP)
-		multiz_levels[z_level] = list()
-		if(linked_down)
-			multiz_levels[z_level]["[DOWN]"] = TRUE
-		if(linked_up)
-			multiz_levels[z_level]["[UP]"] = TRUE
+		generate_linkages_for_z_level(z_level)
+
+/datum/controller/subsystem/mapping/proc/generate_linkages_for_z_level(z_level)
+	if(!isnum(z_level) || z_level <= 0)
+		return FALSE
+
+	if(multiz_levels.len < z_level)
+		multiz_levels.len = z_level
+
+	var/linked_down = level_trait(z_level, ZTRAIT_DOWN)
+	var/linked_up = level_trait(z_level, ZTRAIT_UP)
+	multiz_levels[z_level] = list()
+	if(linked_down)
+		multiz_levels[z_level]["[DOWN]"] = TRUE
+	if(linked_up)
+		multiz_levels[z_level]["[UP]"] = TRUE
 
 /datum/controller/subsystem/mapping/proc/calculate_z_level_gravity(z_level_number)
 	if(!isnum(z_level_number) || z_level_number < 1)
