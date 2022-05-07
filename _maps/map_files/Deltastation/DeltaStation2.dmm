@@ -5303,12 +5303,10 @@
 /area/commons/vacant_room/commissary)
 "bre" = (
 /obj/machinery/light/directional/west,
-/obj/structure/sign/warning/electricshock{
-	pixel_x = -32
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /turf/open/floor/iron,
 /area/security/execution/transfer)
 "brf" = (
@@ -8578,6 +8576,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/security/brig)
 "cbv" = (
@@ -19369,28 +19368,21 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "dQe" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower"
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/medical/virology)
 "dQg" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Virology - Containment Lock";
-	name = "virology camera";
-	network = list("ss13","medbay")
+/obj/structure/closet/l3closet/virology{
+	pixel_y = 1
 	},
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dQh" = (
@@ -19502,10 +19494,6 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror/directional/west,
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower"
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -19638,26 +19626,28 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "dRZ" = (
-/obj/structure/closet/l3closet/virology,
 /obj/structure/sign/warning/biohazard{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/shower{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/medical/virology)
 "dSa" = (
-/obj/structure/closet/l3closet/virology,
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/structure/closet/emcloset,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dSb" = (
-/obj/structure/closet/emcloset,
 /obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/l3closet/virology,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dSd" = (
@@ -46172,7 +46162,6 @@
 /area/engineering/atmos)
 "lom" = (
 /obj/item/kirbyplants/random,
-/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron,
@@ -87209,15 +87198,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/service/library/abandoned)
-"xxt" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm/directional/west,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/security/brig)
 "xxA" = (
 /turf/closed/wall/r_wall,
 /area/science/mixing/launch)
@@ -140942,7 +140922,7 @@ wYc
 pOw
 pOw
 cbr
-xxt
+pOw
 pOw
 wir
 bNj
