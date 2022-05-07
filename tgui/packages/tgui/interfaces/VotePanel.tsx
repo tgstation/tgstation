@@ -16,7 +16,7 @@ type Option = {
 
 type ActiveVote = {
   vote: Vote;
-  question: String | null;
+  question: string | null;
   timeRemaining: number;
   choices: Option[];
 };
@@ -24,7 +24,7 @@ type ActiveVote = {
 type UserData = {
   isLowerAdmin: BooleanLike;
   isUpperAdmin: BooleanLike;
-  selectedChoice: String | null;
+  selectedChoice: string | null;
 };
 
 type Data = {
@@ -75,7 +75,7 @@ const VoteOptions = (props, context) => {
       <Collapsible title="Start a Vote">
         <Stack vertical justify="space-between">
           { possibleVotes.map(option => (
-            <Stack.Item key={option}>
+            <Stack.Item key={option.name}>
               {!!user.isLowerAdmin && option.config !== -1 && (
                 <Button.Checkbox
                   mr={option.config === 0 ? 1 : 1.6}
