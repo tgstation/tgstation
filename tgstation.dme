@@ -2204,7 +2204,6 @@
 #include "code\modules\antagonists\traitor\objectives\hack_comm_console.dm"
 #include "code\modules\antagonists\traitor\objectives\kill_pet.dm"
 #include "code\modules\antagonists\traitor\objectives\sleeper_protocol.dm"
-#include "code\modules\antagonists\traitor\objectives\smuggling.dm"
 #include "code\modules\antagonists\traitor\objectives\steal.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\battlecruiser.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\final_objective.dm"
