@@ -188,15 +188,15 @@
 	result = /obj/item/food/meatclown
 	subcategory = CAT_MEAT
 
-/datum/crafting_recipe/food/lasagna
-	name = "Lasagna"
+/datum/crafting_recipe/food/timballo
+	name = "Timballo"
 	reqs = list(
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/cheese/wedge = 2,
 		/obj/item/food/spaghetti/raw = 1
 	)
-	result = /obj/item/food/lasagna
+	result = /obj/item/food/timballo
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/gumbo
