@@ -20,7 +20,7 @@
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
 		//remove areas too close to the destination, too obvious for our poor shmuck, or just unfair
-		if(istype(possible_area, /area/hallway) || istype(possible_area, /area/security))
+		if(istype(possible_area, /area/station/hallway) || istype(possible_area, /area/station/security))
 			possible_areas -= possible_area
 	dna_scanner_spawnarea_type = pick(possible_areas)
 	replace_in_name("%AREA%", initial(dna_scanner_spawnarea_type.name))
