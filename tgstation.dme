@@ -585,6 +585,7 @@
 #include "code\datums\tgs_event_handler.dm"
 #include "code\datums\verbs.dm"
 #include "code\datums\view.dm"
+#include "code\datums\viewport.dm"
 #include "code\datums\voice_of_god_command.dm"
 #include "code\datums\weakrefs.dm"
 #include "code\datums\world_topic.dm"

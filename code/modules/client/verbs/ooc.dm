@@ -414,7 +414,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 /// Attempt to automatically fit the viewport, assuming the user wants it
 /client/proc/attempt_auto_fit_viewport()
-	if (!prefs.read_preference(/datum/preference/toggle/auto_fit_viewport))
+	if(!prefs.read_preference(/datum/preference/toggle/auto_fit_viewport) || prefs?.read_preference(/datum/preference/toggle/widescreen))
 		return
 	if(fully_created)
 		INVOKE_ASYNC(src, .verb/fit_viewport)

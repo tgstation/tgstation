@@ -527,7 +527,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/visual_column = number % column_max
 	var/coord_col = "+[visual_column]"
 	var/coord_col_offset = 4 + 2 * (visual_column + 1)
-	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:-[pixel_north_offset]"
+	return "LEFT[coord_col]:[coord_col_offset],TOP[coord_row]:-[pixel_north_offset]" // The actual differing part.
 
 /datum/action_group/proc/check_against_view()
 	var/owner_view = owner?.mymob?.client?.view

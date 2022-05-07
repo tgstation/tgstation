@@ -29,17 +29,103 @@ menu "menu"
 		command = ""
 		category = "&File"
 		saved-params = "is-checked"
-	elem "reconnectbutton"
+	elem
 		name = "&Reconnect"
 		command = ".reconnect"
 		category = "&File"
 		saved-params = "is-checked"
 	elem
-		name = "&Quit\tAlt-F4"
+		name = "&Check ping"
+		command = ".ping"
+		category = "&File"
+		saved-params = "is-checked"
+	elem
+		name = "&Quit"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem "help-menu"
+	elem
+		name = "&Size"
+		command = ""
+		saved-params = "is-checked"
+	elem "stretch"
+		name = "&Stretch to fit"
+		command = ".winset \"mapwindow.map.icon-size=0\""
+		category = "&Size"
+		is-checked = true
+		can-check = true
+		group = "size"
+		saved-params = "is-checked"
+	elem "icon128"
+		name = "&128x128"
+		command = "SetWindowIconSize 128"
+		category = "&Size"
+		can-check = true
+		group = "size"
+		saved-params = "is-checked"
+	elem "icon96"
+		name = "&96x96"
+		command = "SetWindowIconSize 96"
+		category = "&Size"
+		can-check = true
+		group = "size"
+		saved-params = "is-checked"
+	elem "icon64"
+		name = "&64x64"
+		command = "SetWindowIconSize 64"
+		category = "&Size"
+		is-checked = true
+		can-check = true
+		group = "size"
+		saved-params = "is-checked"
+	elem "icon48"
+		name = "&48x48"
+		command = "SetWindowIconSize 48"
+		category = "&Size"
+		can-check = true
+		group = "size"
+		saved-params = "is-checked"
+	elem "icon32"
+		name = "&32x32"
+		command = "SetWindowIconSize 32"
+		category = "&Size"
+		can-check = true
+		group = "size"
+		saved-params = "is-checked"
+	elem
+		name = "&Scaling"
+		command = ""
+		saved-params = "is-checked"
+	elem "ZM"
+		name = "&Smooth Scaling"
+		command = ".winset \"zoommode.is-checked=true?map.zoom-mode=normal:map.zoom-mode=distort\""
+		category = "&Scaling"
+		is-checked = true
+		can-check = true
+		group = "scale"
+		saved-params = "is-checked"
+	elem "NN"
+		name = "&Nearest Neighbor"
+		command = ".winset \"mapwindow.map.zoom-mode=distort\""
+		category = "&Scaling"
+		can-check = true
+		group = "scale"
+		saved-params = "is-checked"
+	elem "PS"
+		name = "&Point Sampling"
+		command = ".winset \"mapwindow.map.zoom-mode=normal\""
+		category = "&Scaling"
+		can-check = true
+		group = "scale"
+		saved-params = "is-checked"
+	elem "BL"
+		name = "&Bilinear"
+		command = ".winset \"mapwindow.map.zoom-mode=blur\""
+		category = "&Scaling"
+		can-check = true
+		group = "scale"
+		saved-params = "is-checked"
+	elem
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
@@ -68,9 +154,10 @@ window "mainwindow"
 		icon = 'icons\\ui_icons\\common\\tg_32.png'
 		macro = "default"
 		menu = "menu"
+		on-size = "OnResize"
 	elem "split"
 		type = CHILD
-		pos = 3,0
+		pos = 0,0
 		size = 634x440
 		anchor1 = 0,0
 		anchor2 = 100,100
@@ -105,6 +192,7 @@ window "mapwindow"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 		on-status = ".winset \"status_bar.text=[[*]]\" "
+		on-size = "OnResize"
 	elem "map"
 		type = MAP
 		pos = 0,0
@@ -338,4 +426,3 @@ window "statwindow"
 		anchor2 = 100,100
 		is-visible = false
 		saved-params = ""
-

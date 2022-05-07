@@ -15,7 +15,7 @@
 /atom/movable/screen/buildmode/mode
 	name = "Toggle Mode"
 	icon_state = "buildmode_basic"
-	screen_loc = "NORTH,WEST"
+	screen_loc = "TOP,LEFT"
 
 /atom/movable/screen/buildmode/mode/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -33,7 +33,7 @@
 
 /atom/movable/screen/buildmode/help
 	icon_state = "buildhelp"
-	screen_loc = "NORTH,WEST+1"
+	screen_loc = "TOP,LEFT+1"
 	name = "Buildmode Help"
 
 /atom/movable/screen/buildmode/help/Click(location, control, params)
@@ -42,7 +42,7 @@
 
 /atom/movable/screen/buildmode/bdir
 	icon_state = "build"
-	screen_loc = "NORTH,WEST+2"
+	screen_loc = "TOP,LEFT+2"
 	name = "Change Dir"
 
 /atom/movable/screen/buildmode/bdir/update_icon_state()
@@ -83,7 +83,7 @@
 
 /atom/movable/screen/buildmode/quit
 	icon_state = "buildquit"
-	screen_loc = "NORTH,WEST+3"
+	screen_loc = "TOP,LEFT+3"
 	name = "Quit Buildmode"
 
 /atom/movable/screen/buildmode/quit/Click()
