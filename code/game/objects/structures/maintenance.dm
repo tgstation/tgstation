@@ -192,7 +192,7 @@ at the cost of risking a vicious bite.**/
 	update_icon()
 	visible_message(span_warning("You start feeling nauseous..."))
 	for(var/mob/living/viewing_mob in viewers(7, src))
-		viewingmob.blur_eyes(10)
+		viewing_mob.blur_eyes(10)
 		viewing_mob.add_confusion(10)
 	addtimer(CALLBACK(src, .proc/pants_stagethree), ALTAR_TIME)
 
