@@ -108,6 +108,8 @@
 
 	///Typepath for the wreckage it spawns when destroyed
 	var/wreckage
+	///single flag for the type of this mech, determines what kind of equipment can be attached to it
+	var/mech_type
 
 	///assoc list: key-typepathlist before init, key-equipmentlist after
 	var/list/equip_by_category = list(
