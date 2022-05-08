@@ -525,7 +525,6 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
-		JOB_PUG,
 		JOB_AI,
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
