@@ -201,7 +201,7 @@
 		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, TRUE)
 		to_chat(owner, span_userdanger("You feel an explosion erupt inside your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm as your implant breaks!"))
 		owner.adjust_fire_stacks(20)
-		owner.IgniteMob()
+		owner.ignite_mob()
 		owner.adjustFireLoss(25)
 		organ_flags |= ORGAN_FAILING
 

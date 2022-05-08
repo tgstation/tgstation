@@ -86,7 +86,8 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 // Rooms for where heretic sacrifices send people.
 /area/heretic_sacrifice
 	name = "Mansus"
-	icon_state = "away"
+	icon = 'icons/area/areas_centcom.dmi'
+	icon_state = "heretic"
 	has_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE

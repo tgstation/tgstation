@@ -28,7 +28,22 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///A bitfield of "bodytypes", updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 	///Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.
-	var/list/offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,0), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
+	var/list/offset_features = list(
+		OFFSET_UNIFORM = list(0,0),
+		OFFSET_ID = list(0,0),
+		OFFSET_GLOVES = list(0,0),
+		OFFSET_GLASSES = list(0,0),
+		OFFSET_EARS = list(0,0),
+		OFFSET_SHOES = list(0,0),
+		OFFSET_S_STORE = list(0,0),
+		OFFSET_FACEMASK = list(0,0),
+		OFFSET_HEAD = list(0,0),
+		OFFSET_FACE = list(0,0),
+		OFFSET_BELT = list(0,0),
+		OFFSET_BACK = list(0,0),
+		OFFSET_SUIT = list(0,0),
+		OFFSET_NECK = list(0,0),
+	)
 
 	///The maximum number of bodyparts this species can have.
 	var/max_bodypart_count = 6
@@ -150,7 +165,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 
 	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
-	var/fire_overlay = "Standing"
+	var/fire_overlay = "human"
 
 	///the species that body parts are surgically compatible with (found in _DEFINES/mobs.dm)
 	///current acceptable bitfields are HUMAN_BODY, ALIEN_BODY, LARVA_BODY, MONKEY_BODY, or NONE
@@ -555,31 +570,31 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(!(NOEYESPRITES in species_traits))
 			var/obj/item/organ/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
 			var/mutable_appearance/no_eyeslay
-			var/mutable_appearance/eye_overlay
-			var/obscured = species_human.check_obscured_slots(TRUE) //eyes that shine in the dark shouldn't show when you have glasses
 			var/add_pixel_x = 0
 			var/add_pixel_y = 0
 			//cut any possible vis overlays
 			if(body_vis_overlays.len)
 				SSvis_overlays.remove_vis_overlay(species_human, body_vis_overlays)
+
 			if(OFFSET_FACE in species_human.dna.species.offset_features)
 				add_pixel_x = species_human.dna.species.offset_features[OFFSET_FACE][1]
 				add_pixel_y = species_human.dna.species.offset_features[OFFSET_FACE][2]
+
 			if(!eye_organ)
 				no_eyeslay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
 				no_eyeslay.pixel_x += add_pixel_x
 				no_eyeslay.pixel_y += add_pixel_y
 				standing += no_eyeslay
-			if(!no_eyeslay)//we need eyes
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
-				if(eye_organ.overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
-					eye_overlay.overlays += emissive_appearance(eye_overlay.icon, eye_overlay.icon_state, alpha = eye_overlay.alpha)
 
-				eye_overlay.pixel_x += add_pixel_x
-				eye_overlay.pixel_y += add_pixel_y
-				if((EYECOLOR in species_traits) && eye_organ)
-					eye_overlay.color = species_human.eye_color
-				standing += eye_overlay
+			if(!no_eyeslay)
+				for(var/eye_overlay in eye_organ.generate_body_overlay(species_human))
+					standing += eye_overlay
+
+		// blush
+		if (HAS_TRAIT(species_human, TRAIT_BLUSHING)) // Caused by either the *blush emote or the "drunk" mood event
+			var/mutable_appearance/blush_overlay = mutable_appearance('icons/mob/human_face.dmi', "blush", -BODY_ADJ_LAYER) //should appear behind the eyes
+			blush_overlay.color = COLOR_BLUSH_PINK
+			standing += blush_overlay
 
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)
@@ -783,7 +798,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						if(FACEHAIR)
 							accessory_overlay.color = source.facial_hair_color
 						if(EYECOLOR)
-							accessory_overlay.color = source.eye_color
+							accessory_overlay.color = source.eye_color_left
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
@@ -1239,7 +1254,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!affecting) //Something went wrong. Maybe the limb is missing?
 		affecting = H.bodyparts[1]
 
-	hit_area = affecting.name
+	hit_area = affecting.plaintext_zone
 	var/def_zone = affecting.body_zone
 
 	var/armor_block = H.run_armor_check(affecting, MELEE, span_notice("Your armor has protected your [hit_area]!"), span_warning("Your armor has softened a hit to your [hit_area]!"),I.armour_penetration, weak_against_armour = I.weak_against_armour)
@@ -1511,8 +1526,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * humi (required) The mob we will targeting
  */
 /datum/species/proc/body_temperature_alerts(mob/living/carbon/human/humi)
+	var/old_bodytemp = humi.old_bodytemperature
+	var/bodytemp = humi.bodytemperature
 	// Body temperature is too hot, and we do not have resist traits
-	if(humi.bodytemperature > bodytemp_heat_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTHEAT))
+	if(bodytemp > bodytemp_heat_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTHEAT))
 		// Clear cold mood and apply hot mood
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
@@ -1520,7 +1537,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		//Remove any slowdown from the cold.
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		// display alerts based on how hot it is
-		switch(humi.bodytemperature)
+		switch(bodytemp)
 			if(bodytemp_heat_damage_limit to BODYTEMP_HEAT_WARNING_2)
 				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
 			if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
@@ -1529,14 +1546,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
 
 	// Body temperature is too cold, and we do not have resist traits
-	else if(humi.bodytemperature < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
+	else if(bodytemp < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
 		// clear any hot moods and apply cold mood
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(humi, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		// Apply cold slow down
 		humi.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/cold, multiplicative_slowdown = ((bodytemp_cold_damage_limit - humi.bodytemperature) / COLD_SLOWDOWN_FACTOR))
 		// Display alerts based how cold it is
-		switch(humi.bodytemperature)
+		switch(bodytemp)
 			if(BODYTEMP_COLD_WARNING_2 to bodytemp_cold_damage_limit)
 				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
 			if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
@@ -1545,11 +1562,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
 
 	// We are not to hot or cold, remove status and moods
-	else
+	// Optimization here, we check these things based off the old temperature to avoid unneeded work
+	// We're not perfect about this, because it'd just add more work to the base case, and resistances are rare
+	else if (old_bodytemp > bodytemp_heat_damage_limit || old_bodytemp < bodytemp_cold_damage_limit)
 		humi.clear_alert(ALERT_TEMPERATURE)
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
+
+	// Store the old bodytemp for future checking
+	humi.old_bodytemperature = bodytemp
 
 /**
  * Used to apply wounds and damage based on core/body temp
@@ -1693,77 +1715,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 //////////
 
 /datum/species/proc/handle_fire(mob/living/carbon/human/H, delta_time, times_fired, no_protection = FALSE)
-	if(!CanIgniteMob(H))
-		return TRUE
-	if(H.on_fire)
-		SEND_SIGNAL(H, COMSIG_HUMAN_BURNING)
-		//the fire tries to damage the exposed clothes and items
-		var/list/burning_items = list()
-		var/obscured = H.check_obscured_slots(TRUE)
-		//HEAD//
-
-		if(H.glasses && !(obscured & ITEM_SLOT_EYES))
-			burning_items += H.glasses
-		if(H.wear_mask && !(obscured & ITEM_SLOT_MASK))
-			burning_items += H.wear_mask
-		if(H.wear_neck && !(obscured & ITEM_SLOT_NECK))
-			burning_items += H.wear_neck
-		if(H.ears && !(obscured & ITEM_SLOT_EARS))
-			burning_items += H.ears
-		if(H.head)
-			burning_items += H.head
-
-		//CHEST//
-		if(H.w_uniform && !(obscured & ITEM_SLOT_ICLOTHING))
-			burning_items += H.w_uniform
-		if(H.wear_suit)
-			burning_items += H.wear_suit
-
-		//ARMS & HANDS//
-		var/obj/item/clothing/arm_clothes = null
-		if(H.gloves && !(obscured & ITEM_SLOT_GLOVES))
-			arm_clothes = H.gloves
-		else if(H.wear_suit && ((H.wear_suit.body_parts_covered & HANDS) || (H.wear_suit.body_parts_covered & ARMS)))
-			arm_clothes = H.wear_suit
-		else if(H.w_uniform && ((H.w_uniform.body_parts_covered & HANDS) || (H.w_uniform.body_parts_covered & ARMS)))
-			arm_clothes = H.w_uniform
-		if(arm_clothes)
-			burning_items |= arm_clothes
-
-		//LEGS & FEET//
-		var/obj/item/clothing/leg_clothes = null
-		if(H.shoes && !(obscured & ITEM_SLOT_FEET))
-			leg_clothes = H.shoes
-		else if(H.wear_suit && ((H.wear_suit.body_parts_covered & FEET) || (H.wear_suit.body_parts_covered & LEGS)))
-			leg_clothes = H.wear_suit
-		else if(H.w_uniform && ((H.w_uniform.body_parts_covered & FEET) || (H.w_uniform.body_parts_covered & LEGS)))
-			leg_clothes = H.w_uniform
-		if(leg_clothes)
-			burning_items |= leg_clothes
-
-		for(var/X in burning_items)
-			var/obj/item/I = X
-			I.fire_act((H.fire_stacks * 50)) //damage taken is reduced to 2% of this value by fire_act()
-
-		var/thermal_protection = H.get_thermal_protection()
-
-		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
-			return
-		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-			H.adjust_bodytemperature(5.5 * delta_time)
-		else
-			H.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (H.fire_stacks * 12)) * 0.5 * delta_time)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
-			H.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = H), story_value = STORY_VALUE_OKAY)
-
-/datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_NOFIRE))
-		return FALSE
-	return TRUE
-
-/datum/species/proc/extinguish_mob(mob/living/carbon/human/H)
-	return
-
+	return no_protection
 
 ////////////
 //  Stun  //

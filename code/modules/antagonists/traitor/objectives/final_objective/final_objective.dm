@@ -4,6 +4,7 @@
 		/datum/traitor_objective/final/romerol = 1,
 		/datum/traitor_objective/final/battlecruiser = 1,
 		/datum/traitor_objective/final/space_dragon = 1,
+		/datum/traitor_objective/final/end_reality = 1,
 	)
 	weight = 100
 

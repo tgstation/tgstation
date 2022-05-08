@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "Fixed some door accesses being overridden on MetaStation"

@@ -118,8 +118,12 @@
 	if(current_cycle == 35 && creation_purity <= 0.6)
 		if(!istype(M.dna.species, /datum/species/human/krokodil_addict))
 			to_chat(M, span_userdanger("Your skin falls off easily!"))
-			M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
+			var/mob/living/carbon/human/H = M
+			H.facial_hairstyle = "Shaved"
+			H.hairstyle = "Bald"
+			H.update_hair() // makes you loose hair as well
 			M.set_species(/datum/species/human/krokodil_addict)
+			M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M, delta_time, times_fired)
@@ -291,7 +295,7 @@
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_good_od)
 			if(2)
 				M.emote("sway")
-				M.Dizzy(25)
+				M.set_timed_status_effect(50 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			if(3)
 				M.emote("frown")
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_bad_od)

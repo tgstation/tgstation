@@ -48,6 +48,12 @@
 /obj/effect/decal/cleanable/glass/plasma
 	icon_state = "plasmatiny"
 
+/obj/effect/decal/cleanable/glass/titanium
+	icon_state = "titaniumtiny"
+
+/obj/effect/decal/cleanable/glass/plastitanium
+	icon_state = "plastitaniumtiny"
+
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."

@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes: 
+  - refactor: "changed how whether a mech equipment is attachable is determined, please report if any previously attachable equipments are bugged"

@@ -12,10 +12,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 "f" = (
 /turf/closed/wall,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 "n" = (
 /obj/structure/table,
 /obj/item/clothing/mask/gas/monkeymask,
@@ -23,7 +23,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/grown/bananapeel,
 /turf/open/floor/plating,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 "p" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -33,13 +33,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/bureaucracy/pen,
 /turf/open/floor/plating,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 "x" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/four,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 "Q" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12"
@@ -48,7 +48,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 "U" = (
 /obj/structure/punching_bag,
 /obj/effect/decal/cleanable/blood/old,
@@ -56,7 +56,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/plating,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 "W" = (
 /obj/structure/chair/plastic{
 	dir = 1
@@ -67,7 +67,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 "Y" = (
 /obj/structure/bed/maint,
 /obj/structure/sign/poster/contraband/rip_badger{
@@ -75,13 +75,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 "Z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/item/grown/bananapeel,
 /turf/open/floor/plating,
-/area/maintenance/starboard/lesser)
+/area/station/maintenance/starboard/lesser)
 
 (1,1,1) = {"
 f

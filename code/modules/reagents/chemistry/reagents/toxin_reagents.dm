@@ -424,7 +424,7 @@
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_fire_stacks(2 * REM * delta_time)
-	M.IgniteMob()
+	M.ignite_mob()
 	return ..()
 
 /datum/reagent/toxin/chloralhydrate
@@ -1176,7 +1176,13 @@
 
 /datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3 * REM * delta_time)
-	M.set_timed_status_effect(M.dizziness * 1 SECONDS, /datum/status_effect/confusion) //add a tertiary effect here if this is isn't an effective poison.
+
+	// Add a tertiary effect here if this is isn't an effective poison.
+	var/datum/status_effect/dizziness/mob_dizziness = M.has_status_effect(/datum/status_effect/dizziness)
+	if(mob_dizziness)
+		// Gain confusion = (seconds remaining in dizziness) / 2
+		M.set_timed_status_effect((mob_dizziness.duration - world.time) / 2, /datum/status_effect/confusion)
+
 	if(current_cycle >= 12 && DT_PROB(4, delta_time))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
 		to_chat(M, span_notice("[tox_message]"))

@@ -66,6 +66,11 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/turf/clos
     echo "ERROR: found lattice stacked with a wall, please remove them."
     st=1
 fi;
+if grep -Pzo '/obj/machinery/conveyor/inverted[/\w]*?\{\n[^}]*?dir = [1248];[^}]*?\},?\n' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found an inverted conveyor belt with a cardinal dir. Please replace it with a normal conveyor belt."
+    st=1
+fi;
 if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
     echo "ERROR: Vareditted /area path use detected in maps, please replace with proper paths."
     st=1
@@ -101,6 +106,10 @@ echo "Checking for common mistakes"
 if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
     echo "changed files contains proc argument starting with 'var'"
     st=1
+fi;
+if grep 'balloon_alert\(".+"\)' code/**/*.dm; then
+	echo "ERROR: Balloon alert with improper arguments."
+	st=1
 fi;
 if grep -i 'centcomm' code/**/*.dm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."

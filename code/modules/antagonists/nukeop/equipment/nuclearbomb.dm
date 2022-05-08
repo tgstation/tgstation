@@ -176,7 +176,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /obj/machinery/nuclearbomb/ui_state(mob/user)
 	if(HAS_TRAIT(user, TRAIT_CAN_USE_NUKE))
-		return GLOB.conscious_state
+		return GLOB.physical_state
 	return ..()
 
 /obj/machinery/nuclearbomb/proc/get_nuke_state()
@@ -589,8 +589,8 @@ GLOBAL_VAR(station_nuke_source)
 	R.my_atom = src
 	R.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
 
-	var/datum/effect_system/foam_spread/foam = new
-	foam.set_up(200, get_turf(src), R)
+	var/datum/effect_system/fluid_spread/foam/foam = new
+	foam.set_up(200, location = get_turf(src), carry = R)
 	foam.start()
 	disarm()
 
@@ -605,7 +605,7 @@ GLOBAL_VAR(station_nuke_source)
 		var/datum/reagents/beer = new /datum/reagents(1000)
 		beer.my_atom = vent
 		beer.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
-		beer.create_foam(/datum/effect_system/foam_spread, 200)
+		beer.create_foam(/datum/effect_system/fluid_spread/foam, DIAMOND_AREA(10))
 
 		CHECK_TICK
 

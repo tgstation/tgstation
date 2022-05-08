@@ -1,6 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "Thieves now have a low chance to found a thieves guild somewhere in maint."
-  - rscadd: "Adds a new type of thief, the \"All Access Fan\""
-  - rscdel: "Hoarder is disabled and admin only for the moment"

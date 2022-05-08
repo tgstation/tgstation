@@ -100,5 +100,5 @@
 	user.say(pick(conspiracy_line), forced=type)
 	var/obj/item/organ/brain/brain = user.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain)
-		brain.damage = BRAIN_DAMAGE_DEATH
+		brain.setOrganDamage(BRAIN_DAMAGE_DEATH)
 	return OXYLOSS
