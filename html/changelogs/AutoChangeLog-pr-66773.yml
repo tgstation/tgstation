@@ -1,0 +1,4 @@
+author: "iprice"
+delete-after: True
+changes: 
+  - bugfix: "PDA/Tablets are now made from a realistic amount of iron."

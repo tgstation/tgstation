@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - balance: "Printing surgery tools from the autolathe now requires silver"
