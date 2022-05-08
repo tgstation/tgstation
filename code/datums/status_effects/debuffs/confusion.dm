@@ -34,21 +34,22 @@
 
 	// How much time is left in the duration, in seconds.
 	var/time_left = (duration - world.time) / 10
+	var/direction = move_args[MOVE_ARG_DIRECTION]
 	var/new_dir
 
-	if(time_left > FULLY_CONFUSED_THRESHOLD)
+	if(time_left > CONFUSION_FULL_THRESHOLD)
 		new_dir = pick(GLOB.alldirs)
 
 	else if(prob(time_left * CONFUSION_SIDEWAYS_MOVE_PROB_PER_SECOND))
-		new_dir = angle2dir(dir2angle(direct) + pick(90, -90))
+		new_dir = angle2dir(dir2angle(direction) + pick(90, -90))
 
 	else if(prob(time_left * CONFUSION_DIAGONAL_MOVE_PROB_PER_SECOND))
-		new_dir = angle2dir(dir2angle(direct) + pick(45, -45))
+		new_dir = angle2dir(dir2angle(direction) + pick(45, -45))
 
 	if(!isnull(new_dir))
 		move_args[MOVE_ARG_NEW_LOC] = get_step(owner, new_dir)
 		move_args[MOVE_ARG_DIRECTION] = new_dir
 
-#undef FULLY_CONFUSED_THRESHOLD
+#undef CONFUSION_FULL_THRESHOLD
 #undef CONFUSION_SIDEWAYS_MOVE_PROB_PER_SECOND
 #undef CONFUSION_DIAGONAL_MOVE_PROB_PER_SECOND

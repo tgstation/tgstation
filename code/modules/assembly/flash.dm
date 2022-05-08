@@ -163,22 +163,22 @@
 
 	if(targeted)
 		if(flashed.flash_act(1, 1))
-			affected_mob.set_timed_status_effect(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER, /datum/status_effect/confusion, only_if_higher = TRUE)
+			flashed.set_timed_status_effect(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER, /datum/status_effect/confusion, only_if_higher = TRUE)
 			// Special check for if we're a revhead. Special cases to attempt conversion.
 			if(converter)
 				// Did we try to flash them from behind?
 				if(deviation == DEVIATION_FULL)
 					// Headrevs can use a tacticool leaning technique so that they don't have to worry about facing for their conversions.
-					to_chat(user, span_notice("You use the tacticool tier, lean over the shoulder technique to blind [M] with a flash!"))
+					to_chat(user, span_notice("You use the tacticool tier, lean over the shoulder technique to blind [flashed] with a flash!"))
 					deviation = DEVIATION_PARTIAL
 				// Convert them. Terribly.
-				terrible_conversion_proc(M, user)
-				visible_message(span_danger("[user] blinds [M] with the flash!"),span_userdanger("[user] blinds you with the flash!"))
+				terrible_conversion_proc(flashed, user)
+				visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction
-			flashed.adjustStaminaLoss(rand(80,120)*(1-(deviation*0.5)))
-			flashed.Paralyze(rand(25,50)*(1-(deviation*0.5)))
+			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
+			flashed.Paralyze(rand(25, 50) * (1 - (deviation * 0.5)))
 		else if(user)
-			visible_message(span_warning("[user] fails to blind [M] with the flash!"),span_danger("[user] fails to blind you with the flash!"))
+			visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
 		else
 			to_chat(flashed, span_danger("[src] fails to blind you!"))
 	else

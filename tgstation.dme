@@ -1115,6 +1115,7 @@
 #include "code\datums\status_effects\neutral.dm"
 #include "code\datums\status_effects\stacking_effect.dm"
 #include "code\datums\status_effects\wound_effects.dm"
+#include "code\datums\status_effects\debuffs\confusion.dm"
 #include "code\datums\status_effects\debuffs\debuffs.dm"
 #include "code\datums\status_effects\debuffs\drugginess.dm"
 #include "code\datums\status_effects\debuffs\speech_debuffs.dm"
