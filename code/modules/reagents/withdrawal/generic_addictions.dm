@@ -137,7 +137,7 @@
 	var/lums = T.get_lumcount()
 	if(lums > 0.5)
 		SEND_SIGNAL(affected_human, COMSIG_ADD_MOOD_EVENT, "too_bright", /datum/mood_event/bright_light)
-		affected_human.dizziness = min(40, affected_human.dizziness + 3)
+		affected_human.adjust_timed_status_effect(6 SECONDS, /datum/status_effect/dizziness, max_duration = 80 SECONDS)
 		affected_human.set_confusion(min(affected_human.get_confusion() + (0.5 * delta_time), 20))
 	else
 		SEND_SIGNAL(affected_carbon, COMSIG_CLEAR_MOOD_EVENT, "too_bright")

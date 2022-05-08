@@ -1,13 +1,18 @@
 ///Called when a driver clicks somewhere. Handles everything like equipment, punches, etc.
 /obj/vehicle/sealed/mecha/proc/on_mouseclick(mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+		set_safety(user)
+		return COMSIG_MOB_CANCEL_CLICKON
+	if(weapons_safety)
+		return
+	if(isAI(user)) //For AIs: If safeties are off, use mech functions. If safeties are on, use AI functions.
+		. = COMSIG_MOB_CANCEL_CLICKON
 	if(modifiers[SHIFT_CLICK]) //Allows things to be examined.
 		return
 	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled
 		return
 	if(completely_disabled || is_currently_ejecting || (mecha_flags & CANNOT_INTERACT))
-		return
-	if(isAI(user) == !LAZYACCESS(modifiers, MIDDLE_CLICK))//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
 		return
 	if(phasing)
 		balloon_alert(user, "not while [phasing]!")

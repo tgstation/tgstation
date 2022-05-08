@@ -4,9 +4,9 @@
 	//Allows the Malf to scan a mech's status and loadout, helping it to decide if it is a worthy chariot.
 	if(user.can_dominate_mechs)
 		examine(user) //Get diagnostic information!
-		for(var/obj/item/mecha_parts/mecha_tracking/tracking_beacon in trackers)
+		for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)
 			to_chat(user, span_danger("Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:"))
-			to_chat(user, "[tracking_beacon.get_mecha_info()]")
+			to_chat(user, "[B.get_mecha_info()]")
 			break
 		//Nothing like a big, red link to make the player feel powerful!
 		to_chat(user, "<a href='?src=[REF(user)];ai_take_control=[REF(src)]'>[span_userdanger("ASSUME DIRECT CONTROL?")]</a><br>")
@@ -16,9 +16,9 @@
 		to_chat(user, span_warning("This exosuit has a pilot and cannot be controlled."))
 		return
 	var/can_control_mech = FALSE
-	for(var/obj/item/mecha_parts/mecha_tracking/ai_control/ai_controller in trackers)
+	for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in trackers)
 		can_control_mech = TRUE
-		to_chat(user, "[span_notice("[icon2html(src, user)] Status of [name]:")]\n[ai_controller.get_mecha_info()]")
+		to_chat(user, "[span_notice("[icon2html(src, user)] Status of [name]:")]\n[A.get_mecha_info()]")
 		break
 	if(!can_control_mech)
 		to_chat(user, span_warning("You cannot control exosuits without AI control beacons installed."))
@@ -93,7 +93,7 @@
 			card.AI = null
 	ai_enter_mech(AI)
 
-/// Hack and From Card interactions share some code, so leave that here for both to use.
+///Hack and From Card interactions share some code, so leave that here for both to use.
 /obj/vehicle/sealed/mecha/proc/ai_enter_mech(mob/living/silicon/ai/AI)
 	AI.ai_restore_power()
 	mecha_flags |= SILICON_PILOT
@@ -103,10 +103,10 @@
 	AI.remote_control = src
 	to_chat(AI, AI.can_dominate_mechs ? span_greenannounce("Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!") :\
 		span_notice("You have been uploaded to a mech's onboard computer."))
-	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
+	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to toggle equipment safety. Clicks with safety enabled will pass AI commands.</span>")
 
 
-/// Handles an actual AI (simple_animal mecha pilot) entering the mech
+///Handles an actual AI (simple_animal mecha pilot) entering the mech
 /obj/vehicle/sealed/mecha/proc/aimob_enter_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
 	if(!pilot_mob?.Adjacent(src))
 		return
@@ -117,7 +117,7 @@
 	pilot_mob.forceMove(src)
 	update_appearance()
 
-/// Handles an actual AI (simple_animal mecha pilot) exiting the mech
+///Handles an actual AI (simple_animal mecha pilot) exiting the mech
 /obj/vehicle/sealed/mecha/proc/aimob_exit_mech(mob/living/simple_animal/hostile/syndicate/mecha_pilot/pilot_mob)
 	LAZYREMOVE(occupants, pilot_mob)
 	if(pilot_mob.mecha == src)

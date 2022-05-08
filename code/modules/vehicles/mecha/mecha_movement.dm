@@ -35,10 +35,10 @@
 	return FALSE
 
 /obj/vehicle/sealed/mecha/relaymove(mob/living/user, direction)
+	. = TRUE
 	if(!canmove || !(user in return_drivers()))
-		return TRUE
+		return
 	vehicle_move(direction)
-	return TRUE
 
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
@@ -154,8 +154,9 @@
 	log_message("[newoccupant] moved in as pilot.", LOG_MECHA)
 	setDir(dir_in)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
+	set_mouse_pointer()
 	if(!internal_damage)
-		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume = 50))
+		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
 	return TRUE
 
 /obj/vehicle/sealed/mecha/proc/mmi_move_inside(obj/item/mmi/brain_obj, mob/user)

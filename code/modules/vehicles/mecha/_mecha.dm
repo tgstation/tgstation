@@ -34,6 +34,7 @@
 	light_range = 8
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
+	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	///What direction will the mech face when entered/powered on? Defaults to South.
 	var/dir_in = SOUTH
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
@@ -145,8 +146,10 @@
 	var/silicon_icon_state = null
 	///Currently ejecting, and unable to do things
 	var/is_currently_ejecting = FALSE
+	///Safety for weapons. Won't fire if enabled, and toggled by middle click.
+	var/weapons_safety = FALSE
 
-	var/datum/effect_system/smoke_spread/smoke_system = new
+	var/datum/effect_system/fluid_spread/smoke/smoke_system = new
 
 	////Action vars
 	///Ref to any active thrusters we might have
@@ -206,7 +209,7 @@
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 
-	smoke_system.set_up(3, src)
+	smoke_system.set_up(3, location = src)
 	smoke_system.attach(src)
 
 	radio = new(src)
@@ -228,7 +231,7 @@
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
@@ -274,7 +277,7 @@
 
 	GLOB.mechas_list -= src //global mech list
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_from_hud(src) //YEET
+		diag_hud.remove_atom_from_hud(src) //YEET
 	return ..()
 
 /obj/vehicle/sealed/mecha/atom_destruction()
@@ -291,6 +294,37 @@
 /obj/vehicle/sealed/mecha/update_icon_state()
 	icon_state = get_mecha_occupancy_state()
 	return ..()
+
+/**
+ * Toggles Weapons Safety
+ *
+ * Handles enabling or disabling the safety function.
+ */
+/obj/vehicle/sealed/mecha/proc/set_safety(mob/user)
+	weapons_safety = !weapons_safety
+	SEND_SOUND(user, sound('sound/machines/beep.ogg', volume = 25))
+	balloon_alert(user, "equipment [weapons_safety ? "safe" : "ready"]")
+	set_mouse_pointer()
+
+/**
+ * Updates the pilot's mouse cursor override.
+ *
+ * If the mech's weapons safety is enabled, there should be no override, and the user gets their regular mouse cursor. If safety
+ * is off but the mech's equipment is disabled (such as by EMP), the cursor should be the red disabled version. Otherwise, if
+ * safety is off and the equipment is functional, the cursor should be the regular green cursor. This proc sets the cursor.
+ * correct and then updates it for each mob in the occupants list.
+ */
+/obj/vehicle/sealed/mecha/proc/set_mouse_pointer()
+	if(weapons_safety)
+		mouse_pointer = ""
+	else
+		if(equipment_disabled)
+			mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
+		else
+			mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
+
+	for(var/mob/mob_occupant as anything in occupants)
+		mob_occupant.update_mouse_pointer()
 
 //override this proc if you need to split up mecha control between multiple people (see savannah_ivanov.dm)
 /obj/vehicle/sealed/mecha/auto_assign_occupant_flags(mob/M)
@@ -334,7 +368,7 @@
 		var/mob/mob_occupant = occupant
 		SEND_SOUND(mob_occupant, sound('sound/items/timer.ogg', volume=50))
 		to_chat(mob_occupant, span_notice("Equipment control unit has been rebooted successfully."))
-		mob_occupant.update_mouse_pointer()
+	set_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/CheckParts(list/parts_list)
 	. = ..()
@@ -509,7 +543,7 @@
 	for(var/mob/living/cookedalive as anything in occupants)
 		if(cookedalive.fire_stacks < 5)
 			cookedalive.adjust_fire_stacks(1)
-			cookedalive.IgniteMob()
+			cookedalive.ignite_mob()
 
 ///Displays a special speech bubble when someone inside the mecha speaks
 /obj/vehicle/sealed/mecha/proc/display_speech_bubble(datum/source, list/speech_args)
@@ -519,7 +553,6 @@
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(speech_args[SPEECH_MESSAGE])]",MOB_LAYER+1), speech_bubble_recipients, 30)
-
 
 /obj/vehicle/sealed/mecha/enter_checks(mob/M)
 	if(atom_integrity <= 0)

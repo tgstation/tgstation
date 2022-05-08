@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user)
 	if(safety)
 		safety = FALSE
-		to_chat(user, span_warning("You silently fry [src]'s vocal circuit with the cryptographic sequencer."))
+		to_chat(user, span_warning("You silently fry [src]'s vocal circuit."))
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"

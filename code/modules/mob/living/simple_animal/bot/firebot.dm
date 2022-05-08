@@ -267,7 +267,7 @@
 
 /mob/living/simple_animal/bot/firebot/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(COOLDOWN_FINISHED(src, foam_cooldown))
-		new /obj/effect/particle_effect/foam/firefighting(loc)
+		new /obj/effect/particle_effect/fluid/foam/firefighting(loc)
 		COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
 /mob/living/simple_animal/bot/firebot/proc/spray_water(atom/target, mob/user)

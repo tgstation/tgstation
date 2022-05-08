@@ -35,6 +35,7 @@
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
+	faction = FACTION_CLOWN
 	var/attack_reagent
 
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
@@ -64,7 +65,7 @@
 	response_disarm_continuous = "gently scoops and pours aside"
 	response_disarm_simple = "gently scoop and pour aside"
 	emote_see = list("bubbles", "oozes")
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/foam)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/fluid/foam)
 
 /mob/living/simple_animal/hostile/retaliate/clown/lube/Initialize(mapload)
 	. = ..()
@@ -292,7 +293,7 @@
 	attack_verb_continuous = "steals the girlfriend of"
 	attack_verb_simple = "steal the girlfriend of"
 	attack_sound = 'sound/items/airhorn2.ogg'
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/fluid/foam, /obj/item/soap)
 
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus
 	name = "Honkmunculus"
@@ -315,7 +316,7 @@
 	attack_verb_continuous = "ferociously mauls"
 	attack_verb_simple = "ferociously maul"
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/fluid/foam, /obj/item/soap)
 	attack_reagent = /datum/reagent/peaceborg/confuse
 
 /mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer
@@ -338,7 +339,7 @@
 	attack_verb_simple = "act out divine vengeance on"
 	obj_damage = 50
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
-	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/foam, /obj/item/soap)
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/effect/particle_effect/fluid/foam, /obj/item/soap)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant
 	name = "Unknown"

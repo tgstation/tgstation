@@ -355,7 +355,7 @@
 					T.MakeSlippery(TURF_WET_WATER, min_wet_time = 20 SECONDS, wet_time_to_add = 15 SECONDS)
 			else
 				visible_message(span_danger("[src] whirs and bubbles violently, before releasing a plume of froth!"))
-				new /obj/effect/particle_effect/foam(loc)
+				new /obj/effect/particle_effect/fluid/foam(loc)
 
 	else
 		..()

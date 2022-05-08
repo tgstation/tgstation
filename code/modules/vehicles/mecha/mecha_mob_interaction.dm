@@ -1,13 +1,13 @@
-/obj/vehicle/sealed/mecha/mob_exit(mob/current_occupant, silent, forced)
+/obj/vehicle/sealed/mecha/mob_exit(mob/M, silent, forced)
 	var/atom/movable/mob_container
 	var/turf/newloc = get_turf(src)
-	if(ishuman(current_occupant))
-		mob_container = current_occupant
-	else if(isbrain(current_occupant))
-		var/mob/living/brain/brain = current_occupant
+	if(ishuman(M))
+		mob_container = M
+	else if(isbrain(M))
+		var/mob/living/brain/brain = M
 		mob_container = brain.container
-	else if(isAI(current_occupant))
-		var/mob/living/silicon/ai/AI = current_occupant
+	else if(isAI(M))
+		var/mob/living/silicon/ai/AI = M
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
 			AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
@@ -28,12 +28,11 @@
 			qdel(AI.linked_core)
 	else
 		return ..()
-
-	var/mob/living/ejector = current_occupant
+	var/mob/living/ejector = M
 	mecha_flags  &= ~SILICON_PILOT
 	mob_container.forceMove(newloc)//ejecting mob container
 	log_message("[mob_container] moved out.", LOG_MECHA)
-	SStgui.close_user_uis(current_occupant, src)
+	SStgui.close_user_uis(M, src)
 	if(istype(mob_container, /obj/item/mmi))
 		var/obj/item/mmi/mmi = mob_container
 		if(mmi.brainmob)
@@ -45,24 +44,22 @@
 	setDir(dir_in)
 	return ..()
 
-/obj/vehicle/sealed/mecha/add_occupant(mob/new_occupant, control_flags)
-	RegisterSignal(new_occupant, COMSIG_LIVING_DEATH, .proc/mob_exit)
-	RegisterSignal(new_occupant, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
-	RegisterSignal(new_occupant, COMSIG_MOB_MIDDLECLICKON, .proc/on_middlemouseclick) //For AIs
-	RegisterSignal(new_occupant, COMSIG_MOB_SAY, .proc/display_speech_bubble)
+/obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
+	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit)
+	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
+	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
 	. = ..()
 	update_appearance()
 
-/obj/vehicle/sealed/mecha/remove_occupant(mob/current_occupant)
-	UnregisterSignal(current_occupant, COMSIG_LIVING_DEATH)
-	UnregisterSignal(current_occupant, COMSIG_MOB_CLICKON)
-	UnregisterSignal(current_occupant, COMSIG_MOB_MIDDLECLICKON)
-	UnregisterSignal(current_occupant, COMSIG_MOB_SAY)
-	current_occupant.clear_alert(ALERT_CHARGE)
-	current_occupant.clear_alert(ALERT_MECH_DAMAGE)
-	if(current_occupant.client)
-		current_occupant.update_mouse_pointer()
-		current_occupant.client.view_size.resetToDefault()
+/obj/vehicle/sealed/mecha/remove_occupant(mob/M)
+	UnregisterSignal(M, COMSIG_LIVING_DEATH)
+	UnregisterSignal(M, COMSIG_MOB_CLICKON)
+	UnregisterSignal(M, COMSIG_MOB_SAY)
+	M.clear_alert(ALERT_CHARGE)
+	M.clear_alert(ALERT_MECH_DAMAGE)
+	if(M.client)
+		M.update_mouse_pointer()
+		M.client.view_size.resetToDefault()
 		zoom_mode = FALSE
 	. = ..()
 	update_appearance()
@@ -82,23 +79,23 @@
 		to_chat(user, span_notice("You stop exiting the mech. Weapons are enabled again."))
 	is_currently_ejecting = FALSE
 
-/obj/vehicle/sealed/mecha/mob_try_enter(mob/mob)
-	if(!ishuman(mob)) // no silicons or drones in mechas.
+/obj/vehicle/sealed/mecha/mob_try_enter(mob/M)
+	if(!ishuman(M)) // no silicons or drones in mechas.
 		return
-	if(HAS_TRAIT(mob, TRAIT_PRIMITIVE)) //no lavalizards either.
-		to_chat(mob, span_warning("The knowledge to use this device eludes you!"))
+	if(HAS_TRAIT(M, TRAIT_PRIMITIVE)) //no lavalizards either.
+		to_chat(M, span_warning("The knowledge to use this device eludes you!"))
 		return
-	log_message("[mob] tries to move into [src].", LOG_MECHA)
-	if(dna_lock && mob.has_dna())
-		var/mob/living/carbon/entering_carbon = mob
+	log_message("[M] tries to move into [src].", LOG_MECHA)
+	if(dna_lock && M.has_dna())
+		var/mob/living/carbon/entering_carbon = M
 		if(entering_carbon.dna.unique_enzymes != dna_lock)
-			to_chat(mob, span_warning("Access denied. [name] is secured with a DNA lock."))
+			to_chat(M, span_warning("Access denied. [name] is secured with a DNA lock."))
 			log_message("Permission denied (DNA LOCK).", LOG_MECHA)
 			return
-	if(!operation_allowed(mob))
-		to_chat(mob, span_warning("Access denied. Insufficient operation keycodes."))
+	if(!operation_allowed(M))
+		to_chat(M, span_warning("Access denied. Insufficient operation keycodes."))
 		log_message("Permission denied (No keycode).", LOG_MECHA)
 		return
 	. = ..()
 	if(.)
-		moved_inside(mob)
+		moved_inside(M)

@@ -288,7 +288,9 @@
 // Therefore, only show up if it's reasonable for that gag to happen.
 /datum/customer_data/moth/can_use(datum/venue/venue)
 	var/mob/living/carbon/buffet = venue.restaurant_portal?.turned_on_portal?.resolve()
-	if (!istype(buffet) || !QDELETED(buffet.head) || !QDELETED(buffet.gloves) || !QDELETED(buffet.shoes))
+	if (!istype(buffet))
+		return FALSE
+	if(QDELETED(buffet.head) && QDELETED(buffet.gloves) && QDELETED(buffet.shoes))
 		return FALSE
 	return TRUE
 

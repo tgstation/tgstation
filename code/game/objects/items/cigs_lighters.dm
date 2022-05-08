@@ -85,7 +85,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!isliving(M))
 		return
 
-	if(lit && M.IgniteMob())
+	if(lit && M.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 
@@ -312,7 +312,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/process(delta_time)
 	var/mob/living/user = isliving(loc) ? loc : null
-	user?.IgniteMob()
+	user?.ignite_mob()
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
 		var/datum/gas_mixture/air = return_air()
 		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
@@ -802,7 +802,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(lit && M.IgniteMob())
+	if(lit && M.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
@@ -1025,7 +1025,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(reagents.get_reagent_amount(/datum/reagent/fuel))
 		//HOT STUFF
 		vaper.adjust_fire_stacks(2)
-		vaper.IgniteMob()
+		vaper.ignite_mob()
 
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
@@ -1040,7 +1040,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/mob/living/M = loc
 
 	if(isliving(loc))
-		M.IgniteMob()
+		M.ignite_mob()
 
 	if(!reagents.total_volume)
 		if(ismob(loc))
@@ -1055,9 +1055,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	//Time to start puffing those fat vapes, yo.
 	COOLDOWN_START(src, drag_cooldown, dragtime)
 	if(obj_flags & EMAGGED)
-		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
-		s.set_up(reagents, 4, 24, loc)
-		s.start()
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
+		puff.set_up(4, location = loc, carry = reagents, efficiency = 24)
+		puff.start()
 		if(prob(5)) //small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, FALSE)
 			M.apply_damage(20, BURN, BODY_ZONE_HEAD)
@@ -1069,8 +1069,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			qdel(src)
 			return
 	else if(super)
-		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
-		s.set_up(reagents, 1, 24, loc)
-		s.start()
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
+		puff.set_up(1, location = loc, carry = reagents, efficiency = 24)
+		puff.start()
 
 	handle_reagents()

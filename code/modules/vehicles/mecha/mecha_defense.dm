@@ -181,15 +181,11 @@
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
-	if(istype(src, /obj/vehicle/sealed/mecha/combat)) //todo this stupid mouse icon should be a flag
-		mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
-		for(var/occus in occupants)
-			var/mob/living/occupant = occus
-			occupant.update_mouse_pointer()
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
 	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha.proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = TRUE
+	set_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > max_temperature

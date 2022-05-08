@@ -1,32 +1,6 @@
 ///the subsystem creates this many [/mob/oranges_ear] mob instances during init. allocations that require more than this create more.
 #define NUMBER_OF_PREGENERATED_ORANGES_EARS 2500
 
-// macros meant specifically to add/remove movables from the hearing_contents and client_contents lists of
-// /datum/spatial_grid_cell, when empty they become references to a single list in SSspatial_grid and when filled they become their own list
-// this is to save memory without making them lazylists as that slows down iteration through them
-#define GRID_CELL_ADD(cell_contents_list, movable_or_list) \
-	if(!length(cell_contents_list)) { \
-		cell_contents_list = list(); \
-		cell_contents_list += movable_or_list; \
-	} else { \
-		cell_contents_list += movable_or_list; \
-	};
-
-#define GRID_CELL_SET(cell_contents_list, movable_or_list) \
-	if(!length(cell_contents_list)) { \
-		cell_contents_list = list(); \
-		cell_contents_list += movable_or_list; \
-	} else { \
-		cell_contents_list |= movable_or_list; \
-	};
-
-//dont use these outside of SSspatial_grid's scope use the procs it has for this purpose
-#define GRID_CELL_REMOVE(cell_contents_list, movable_or_list) \
-	cell_contents_list -= movable_or_list; \
-	if(!length(cell_contents_list)) {\
-		cell_contents_list = dummy_list; \
-	};
-
 /**
  * # Spatial Grid Cell
  *
@@ -64,7 +38,6 @@
 	if(length(dummy_list))
 		dummy_list.Cut()
 		stack_trace("SSspatial_grid.dummy_list had something inserted into it at some point! this is a problem as it is supposed to stay empty")
-
 	hearing_contents = dummy_list
 	client_contents = dummy_list
 
@@ -131,7 +104,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			if(movable_turf)
 				enter_cell(movable, movable_turf)
 
-			UnregisterSignal(movable, COMSIG_PARENT_PREQDELETED)
+			UnregisterSignal(movable, COMSIG_PARENT_QDELETING)
 			waiting_to_add_by_type[channel_type] -= movable
 
 	pregenerate_more_oranges_ears(NUMBER_OF_PREGENERATED_ORANGES_EARS)
@@ -141,7 +114,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 ///add a movable to the pre init queue for whichever type is specified so that when the subsystem initializes they get added to the grid
 /datum/controller/subsystem/spatial_grid/proc/enter_pre_init_queue(atom/movable/waiting_movable, type)
-	RegisterSignal(waiting_movable, COMSIG_PARENT_PREQDELETED, .proc/queued_item_deleted, override = TRUE)
+	RegisterSignal(waiting_movable, COMSIG_PARENT_QDELETING, .proc/queued_item_deleted, override = TRUE)
 	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldnt know about eachother
 	waiting_to_add_by_type[type] += waiting_movable
 
@@ -156,11 +129,11 @@ SUBSYSTEM_DEF(spatial_grid)
 				waiting_movable_is_in_other_queues = TRUE
 
 		if(!waiting_movable_is_in_other_queues)
-			UnregisterSignal(movable_to_remove, COMSIG_PARENT_PREQDELETED)
+			UnregisterSignal(movable_to_remove, COMSIG_PARENT_QDELETING)
 
 		return
 
-	UnregisterSignal(movable_to_remove, COMSIG_PARENT_PREQDELETED)
+	UnregisterSignal(movable_to_remove, COMSIG_PARENT_QDELETING)
 	for(var/type in waiting_to_add_by_type)
 		waiting_to_add_by_type[type] -= movable_to_remove
 
@@ -296,6 +269,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	//technically THIS list only contains lists, but inside those lists are grid cell datums and we can go without a SINGLE var init if we do this
 	var/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
+
 	switch(type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis))
@@ -363,15 +337,15 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/datum/spatial_grid_cell/intersecting_cell = grids_by_z_level[z_index][y_index][x_index]
 
-	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
+	if(new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 		GRID_CELL_SET(intersecting_cell.client_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
-		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS), new_target)
+		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
-	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
-		GRID_CELL_SET(intersecting_cell.hearing_contents, new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+	if(new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+		GRID_CELL_SET(intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
-		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_HEARING_SENSITIVE), new_target)
+		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 /**
  * find the spatial map cell that target used to belong to, then subtract target's important_recusive_contents from it.
@@ -385,35 +359,54 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(!initialized)
 		return
 	if(!target_turf || !old_target?.important_recursive_contents)
-		CRASH("/datum/controller/subsystem/spatial_grid/proc/exit_cell() was given null arguments or a new_target without important_recursive_contents!")
+		stack_trace("/datum/controller/subsystem/spatial_grid/proc/exit_cell() was given null arguments or a new_target without important_recursive_contents!")
+		return FALSE
 
 	var/x_index = ROUND_UP(target_turf.x / SPATIAL_GRID_CELLSIZE)
 	var/y_index = ROUND_UP(target_turf.y / SPATIAL_GRID_CELLSIZE)
 	var/z_index = target_turf.z
 
-	var/list/grid = grids_by_z_level[z_index]
-	var/datum/spatial_grid_cell/intersecting_cell = grid[y_index][x_index]
+	var/datum/spatial_grid_cell/intersecting_cell = grids_by_z_level[z_index][y_index][x_index]
+	var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
 
-	if(exclusive_type && old_target.important_recursive_contents[exclusive_type])
-		switch(exclusive_type)
-			if(RECURSIVE_CONTENTS_CLIENT_MOBS)
-				GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
+	if(old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+		GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
-			if(RECURSIVE_CONTENTS_HEARING_SENSITIVE)
-				GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
-		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target)
-		return
+	if(old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+		GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
-	if(old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
-		GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
+		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
-		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target)
+	return TRUE
 
-	if(old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
-		GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+///acts like exit_cell() but only removes the target from the specified type of grid cell contents list
+/datum/controller/subsystem/spatial_grid/proc/remove_single_contents_type(atom/movable/old_target, turf/target_turf, exclusive_type)
+	if(!target_turf || !old_target?.important_recursive_contents || !exclusive_type)
+		stack_trace("/datum/controller/subsystem/spatial_grid/proc/remove_single_contents_type() was given null arguments or a new_target without important_recursive_contents!")
+		return FALSE
 
-		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(RECURSIVE_CONTENTS_HEARING_SENSITIVE), old_target)
+	if(!old_target.important_recursive_contents[exclusive_type])
+		return FALSE
+
+	var/x_index = ROUND_UP(target_turf.x / SPATIAL_GRID_CELLSIZE)
+	var/y_index = ROUND_UP(target_turf.y / SPATIAL_GRID_CELLSIZE)
+	var/z_index = target_turf.z
+
+	var/datum/spatial_grid_cell/intersecting_cell = grids_by_z_level[z_index][y_index][x_index]
+
+	switch(exclusive_type)
+		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
+			GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
+
+		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
+			GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+
+	SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target)
+
+	return TRUE
+
 
 ///find the cell this movable is associated with and removes it from all lists
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)

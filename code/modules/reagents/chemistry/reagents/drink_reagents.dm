@@ -288,7 +288,7 @@
 	..()
 
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
+	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	//310.15 is the normal bodytemp.
@@ -311,7 +311,7 @@
 	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (2 * REM * delta_time), 0)
+	M.adjust_timed_status_effect(-4 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.adjust_drowsyness(-1 * REM * delta_time)
 	M.jitteriness = max(M.jitteriness - (3 * REM * delta_time), 0)
 	M.AdjustSleeping(-20 * REM * delta_time)
@@ -363,7 +363,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/icecoffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
+	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
@@ -383,7 +383,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
+	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-60 * REM * delta_time)
 	M.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
@@ -404,7 +404,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/icetea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (2 * REM * delta_time), 0)
+	M.adjust_timed_status_effect(-4 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.adjust_drowsyness(-1 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
@@ -467,7 +467,7 @@
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.Jitter(20 * REM * delta_time)
 	M.set_timed_status_effect(1 MINUTES * REM * delta_time, /datum/status_effect/drugginess)
-	M.dizziness += 1.5 * REM * delta_time
+	M.adjust_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
@@ -506,9 +506,9 @@
 
 	M.Jitter(2 * REM * delta_time)
 	if(prob(50))
-		M.dizziness += 1 * REM * delta_time
+		M.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	if(current_cycle > 10)
-		M.dizziness += 1.5 * REM * delta_time
+		M.adjust_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 
 	..()
 	. = TRUE
@@ -534,7 +534,7 @@
 
 /datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.Jitter(20 * REM * delta_time)
-	M.dizziness += 1 * REM * delta_time
+	M.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
@@ -661,7 +661,7 @@
 		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
 
 /datum/reagent/consumable/sodawater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
+	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
@@ -677,7 +677,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/tonic/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
+	M.adjust_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
@@ -697,7 +697,7 @@
 
 /datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.Jitter(40 * REM * delta_time)
-	M.dizziness += 1 * REM * delta_time
+	M.adjust_timed_status_effect(2 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
@@ -745,7 +745,7 @@
 	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
+	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.adjust_drowsyness(-3 *REM * delta_time)
 	M.SetSleeping(0)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
@@ -768,7 +768,7 @@
 	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
+	M.adjust_timed_status_effect(-10 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
 	M.adjust_drowsyness(-6 * REM * delta_time)
 	M.SetSleeping(0)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
