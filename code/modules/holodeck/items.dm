@@ -32,6 +32,24 @@
 /obj/item/melee/energy/sword/holographic/red
 	sword_color_icon = "red"
 
+/obj/item/toy/cards/deck/syndicate/holographic
+	desc = "A deck of holographic playing cards."
+
+/obj/item/toy/cards/deck/syndicate/holographic/Initialize(mapload, obj/machinery/computer/holodeck/holodeck)
+	src.holodeck = holodeck
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/handle_card_delete)
+	. = ..()
+
+/obj/item/toy/cards/deck/syndicate/holographic/proc/handle_card_delete(datum/source)
+	SIGNAL_HANDLER
+
+	//if any REAL cards have been inserted into the deck they are moved outside before destroying it
+	for(var/obj/item/toy/singlecard/card in cards)
+		if(card.flags_1 & HOLOGRAM_1)
+			continue
+		cards -= card
+		card.forceMove(drop_location())
+
 //BASKETBALL OBJECTS
 
 /obj/item/toy/beach_ball/holoball

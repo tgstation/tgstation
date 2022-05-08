@@ -102,3 +102,11 @@
 }\
 /datum/controller/subsystem/processing/##X/fire() {..() /*just so it shows up on the profiler*/} \
 /datum/controller/subsystem/processing/##X
+
+#define FLUID_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/fluids/##X);\
+/datum/controller/subsystem/fluids/##X/New(){\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
+}\
+/datum/controller/subsystem/fluids/##X/fire() {..() /*just so it shows up on the profiler*/} \
+/datum/controller/subsystem/fluids/##X

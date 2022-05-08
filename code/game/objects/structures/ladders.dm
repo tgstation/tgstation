@@ -26,8 +26,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy(force)
-	if ((resistance_flags & INDESTRUCTIBLE) && !force)
-		return QDEL_HINT_LETMELIVE
 	GLOB.ladders -= src
 	disconnect()
 	return ..()
