@@ -129,7 +129,7 @@ at the cost of risking a vicious bite.**/
 
 /obj/structure/destructible/cult/pants_altar/attackby(obj/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user) && status)
-		to_chat(user, "<span class='notice'>[src] is creating something, you can't move it!</span>")
+		to_chat(user, span_notice("[src] is creating something, you can't move it!"))
 		return
 	return ..()
 
@@ -144,12 +144,12 @@ at the cost of risking a vicious bite.**/
 	var/altar_result = show_radial_menu(user, src, altar_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	switch(altar_result)
 		if("Change Color")
-			var/chosen_color = input(usr, "", "Choose Color", pants_color) as color|null
+			var/chosen_color = input(user, "", "Choose Color", pants_color) as color|null
 			if(!isnull(chosen_color) && user.canUseTopic(src, BE_CLOSE))
 				pants_color = chosen_color
 		if("Create Artefact")
 			if(!COOLDOWN_FINISHED(src, use_cooldown_duration))
-				to_chat(usr, "<span class='warning'>[src] is not ready to create something new yet...</span>")
+				to_chat(user, span_warning("[src] is not ready to create something new yet..."))
 				return
 			pants_stageone()
 	return TRUE
@@ -178,36 +178,40 @@ at the cost of risking a vicious bite.**/
 	pants_overlay.color = pants_color
 	. += pants_overlay
 
+/// Starts creating the pants, plays the sound.
 /obj/structure/destructible/cult/pants_altar/proc/pants_stageone()
 	status = ALTAR_STAGEONE
 	update_icon()
-	visible_message("<span class='warning'>[src] starts creating something...</span>")
+	visible_message(span_warning("[src] starts creating something..."))
 	playsound(src, 'sound/magic/pantsaltar.ogg', 60)
 	addtimer(CALLBACK(src, .proc/pants_stagetwo), ALTAR_TIME)
 
+/// Continues the creation, making every mob nearby nauseous.
 /obj/structure/destructible/cult/pants_altar/proc/pants_stagetwo()
 	status = ALTAR_STAGETWO
 	update_icon()
-	visible_message("<span class='warning'>You start feeling nauseous...</span>")
-	for(var/mob/living/mob in viewers(7, src))
-		mob.blur_eyes(10)
-		mob.add_confusion(10)
+	visible_message(span_warning("You start feeling nauseous..."))
+	for(var/mob/living/viewing_mob in viewers(7, src))
+		viewingmob.blur_eyes(10)
+		viewing_mob.add_confusion(10)
 	addtimer(CALLBACK(src, .proc/pants_stagethree), ALTAR_TIME)
 
+/// Continues the creation, making every mob nearby dizzy
 /obj/structure/destructible/cult/pants_altar/proc/pants_stagethree()
 	status = ALTAR_STAGETHREE
 	update_icon()
-	visible_message("<span class='warning'>You start feeling horrible...</span>")
-	for(var/mob/living/mob in viewers(7, src))
-		mob.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+	visible_message(span_warning("You start feeling horrible..."))
+	for(var/mob/living/viewing_mob in viewers(7, src))
+		viewing_mob.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 	addtimer(CALLBACK(src, .proc/pants_create), ALTAR_TIME)
 
+/// Finishes the creation, creating the item itself, setting the cooldowns and flashing every mob nearby.
 /obj/structure/destructible/cult/pants_altar/proc/pants_create()
 	status = ALTAR_INACTIVE
 	update_icon()
-	visible_message("<span class='warning'>[src] emits a flash of light and creates... pants?</span>")
-	for(var/mob/living/mob in viewers(7, src))
-		mob.flash_act()
+	visible_message(span_danger("[src] emits a flash of light and creates... pants?"))
+	for(var/mob/living/viewing_mob in viewers(7, src))
+		viewing_mob.flash_act()
 	var/obj/item/clothing/under/pants/altar/pants = new(get_turf(src))
 	pants.add_atom_colour(pants_color, ADMIN_COLOUR_PRIORITY)
 	COOLDOWN_START(src, use_cooldown, use_cooldown_duration)
