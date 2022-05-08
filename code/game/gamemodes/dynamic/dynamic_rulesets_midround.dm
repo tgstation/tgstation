@@ -195,6 +195,7 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
@@ -268,6 +269,7 @@
 		JOB_PRISONER,
 	)
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CYBORG,
 		JOB_CAPTAIN,
@@ -523,6 +525,7 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
@@ -937,6 +940,7 @@
 	antag_datum = /datum/antagonist/obsessed
 	antag_flag = ROLE_OBSESSED
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CYBORG,
 		ROLE_POSITRONIC_BRAIN,
