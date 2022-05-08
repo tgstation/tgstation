@@ -105,7 +105,7 @@
 	name = "Disco Inferno"
 	},
 /obj/machinery/door/airlock/gold{
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "fire" = 100, "acid" = 100);
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 0, "fire" = 100, "acid" = 100);
 	heat_proof = 1;
 	resistance_flags = 2
 	},

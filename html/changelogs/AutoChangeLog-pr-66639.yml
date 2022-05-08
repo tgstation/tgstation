@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "supermatter zaps now change color based on the power generated, starting from red and going toward blue the higher the power emitted"
