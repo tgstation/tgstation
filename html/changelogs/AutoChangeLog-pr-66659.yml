@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "adds the supermatter cascade round-ender, it can be triggered when the SM chamber is filled with hypernoblium and antinoblium at over 40% each, when the total moles are high enough to trigger a singulo and only when the SM integrity is over 80% (if the gases don't reach the requirement during the delamination for a moment, the whole thing will stop and need to restart)"
