@@ -17100,19 +17100,6 @@
 "ePS" = (
 /turf/closed/wall,
 /area/station/medical/medbay/lobby)
-"eQd" = (
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/turf/open/floor/vault,
-/area/station/hallway/primary/tram/center)
 "eQN" = (
 /obj/structure/railing{
 	dir = 4
@@ -37095,12 +37082,12 @@
 /area/station/science/storage)
 "lSo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
 	name = "view enhancer"
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
@@ -41276,12 +41263,12 @@
 /area/station/medical/treatment_center)
 "nyt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 8;
 	name = "view enhancer"
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
@@ -168018,7 +168005,7 @@ avR
 fKc
 xFa
 gVN
-eQd
+knD
 eDw
 muz
 woO
