@@ -498,21 +498,19 @@
 		adjacent = shuffle(adjacent)
 		shuffle = FALSE
 
-	for(var/scan_type_list in scan_types)
+	for(var/turf/scan as anything in adjacent) //Let's see if there's something right next to us first!
+		if(check_bot(scan)) //Is there another bot there? Then let's just skip it
+			continue
+		var/final_result = checkscan(scan, scan_types, old_target)
+		if(final_result)
+			return final_result
 
-		for(var/turf/scan as anything in adjacent) //Let's see if there's something right next to us first!
-			if(check_bot(scan)) //Is there another bot there? Then let's just skip it
-				continue
-			var/final_result = checkscan(scan, scan_types, old_target)
-			if(final_result)
-				return final_result
-
-		for(var/turf/scanned_turfs as anything in shuffle(view(scan_range, src)) - adjacent) //Search for something in range, minus what we already checked.
-			if(check_bot(scanned_turfs)) //Is there another bot there? Then let's just skip it
-				continue
-			var/final_result = checkscan(scanned_turfs, scan_types, old_target)
-			if(final_result)
-				return final_result
+	for(var/turf/scanned_turfs as anything in shuffle(view(scan_range, src)) - adjacent) //Search for something in range, minus what we already checked.
+		if(check_bot(scanned_turfs)) //Is there another bot there? Then let's just skip it
+			continue
+		var/final_result = checkscan(scanned_turfs, scan_types, old_target)
+		if(final_result)
+			return final_result
 
 /mob/living/simple_animal/bot/proc/checkscan(atom/scan, list/scan_types, old_target)
 	for(var/scan_type in scan_types)

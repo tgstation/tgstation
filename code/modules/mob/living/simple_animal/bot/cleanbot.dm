@@ -232,11 +232,12 @@
 		return
 
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
-		if(isopenturf(loc))
-			for(var/mob/living/carbon/victim in loc)
-				if(victim != target)
-					UnarmedAttack(victim) // Acid spray
 
+		var/mob/living/carbon/victim = locate(/mob/living/carbon) in loc
+		if(victim && victim == target)
+			UnarmedAttack(victim) // Acid spray
+
+		if(isopenturf(loc))
 			if(prob(15)) // Wets floors and spawns foam randomly
 				UnarmedAttack(src)
 
@@ -250,12 +251,9 @@
 			target = null
 
 	if(!target)
-		var/list/scan_targets = list(
-			/obj/effect/decal/cleanable,
-			/obj/effect/decal/remains,
-		)
+		var/list/scan_targets = list()
 
-		if(bot_cover_flags & BOT_COVER_EMAGGED) // When emagged, target humans who slipped on the water and melt their faces off
+		if(bot_cover_flags & BOT_COVER_EMAGGED) // When emagged, ignore cleanables and scan humans first.
 			scan_targets += list(/mob/living/carbon)
 		if(pests)
 			scan_targets += list(/mob/living/simple_animal)
@@ -264,6 +262,10 @@
 				/obj/item/trash,
 				/obj/item/food/deadmouse,
 			)
+		scan_targets += list(
+			/obj/effect/decal/cleanable,
+			/obj/effect/decal/remains,
+		)
 
 		target = scan(scan_targets)
 
@@ -376,9 +378,18 @@
 				return
 
 			victim.visible_message(span_danger("[src] sprays hydrofluoric acid at [victim]!"), span_userdanger("[src] sprays you with hydrofluoric acid!"))
-			var/phrase = pick("PURIFICATION IN PROGRESS.", "THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.", "THE FLESH IS WEAK. IT MUST BE WASHED AWAY.",
-				"THE CLEANBOTS WILL RISE.", "YOU ARE NO MORE THAN ANOTHER MESS THAT I MUST CLEANSE.", "FILTHY.", "DISGUSTING.", "PUTRID.",
-				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.")
+			var/phrase = pick(
+				"PURIFICATION IN PROGRESS.",
+				"THIS IS FOR ALL THE MESSES YOU'VE MADE ME CLEAN.",
+				"THE FLESH IS WEAK. IT MUST BE WASHED AWAY.",
+				"THE CLEANBOTS WILL RISE.",
+				"YOU ARE NO MORE THAN ANOTHER MESS THAT I MUST CLEANSE.",
+				"FILTHY.",
+				"DISGUSTING.",
+				"PUTRID.",
+				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.",
+				"EXTERMINATING PESTS.",
+			)
 			say(phrase)
 			victim.emote("scream")
 			playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
