@@ -122,6 +122,35 @@
 	var/spell
 	var/spellname = "conjure bugs"
 
+
+/obj/item/book/granter/spell/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
+
+/**
+ * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
+ *
+ * Refreshes uses on our spell granter, or make it quicker to read if it's already infinite use
+ */
+/obj/item/book/granter/spell/proc/on_magic_charge(datum/source, obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	if(!oneuse)
+		to_chat(caster, span_notice("This book is infinite use and can't be recharged, \
+			yet the magic has improved it somehow..."))
+		pages_to_mastery = max(pages_to_mastery - 1, 1)
+		return COMPONENT_ITEM_CHARGED|COMPONENT_ITEM_BURNT_OUT
+
+	if(prob(80))
+		caster.dropItemToGround(src, TRUE)
+		visible_message(span_warning("[src] catches fire and burns to ash!"))
+		new /obj/effect/decal/cleanable/ash(drop_location())
+		qdel(src)
+		return COMPONENT_ITEM_BURNT_OUT
+
+	used = FALSE
+	return COMPONENT_ITEM_CHARGED
+
 /obj/item/book/granter/spell/already_known(mob/user)
 	if(!spell)
 		return TRUE
