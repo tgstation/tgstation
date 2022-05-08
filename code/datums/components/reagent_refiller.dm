@@ -13,9 +13,9 @@
 	var/list/whitelisted_reagents
 
 /datum/component/reagent_refiller/Initialize(
-	time_to_refill = 5 SECONDS,
+	time_to_refill = 60 SECONDS,
 	datum/callback/power_draw_callback,
-	power_to_draw = 300,
+	power_to_draw = 30,
 	whitelisted_reagents = list(/datum/reagent/consumable)
 )
 	if(!istype(parent, /obj/item/reagent_containers))
