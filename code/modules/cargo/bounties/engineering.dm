@@ -48,6 +48,6 @@
 
 /datum/bounty/item/engineering/reflector
 	name = "Reflector"
-	description = "We want to make our emitters take a longer route, get us a reflector to make this happen.."
+	description = "We want to make our emitters take a longer route, get us a reflector to make this happen."
 	reward = CARGO_CRATE_VALUE * 7
 	wanted_types = list(/obj/structure/reflector = TRUE)
