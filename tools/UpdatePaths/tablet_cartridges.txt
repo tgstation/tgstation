@@ -15,3 +15,10 @@
 /obj/item/computer_hardware/hard_drive/role/virus/clown : /obj/item/computer_hardware/hard_drive/portable/virus/clown
 /obj/item/computer_hardware/hard_drive/role/virus/deto : /obj/item/computer_hardware/hard_drive/portable/virus/deto
 /obj/item/computer_hardware/hard_drive/role/virus/frame : /obj/item/computer_hardware/hard_drive/portable/virus/frame
+
+/obj/item/computer_hardware/hard_drive/role/lawyer : @DELETE
+/obj/item/computer_hardware/hard_drive/role/detective : @DELETE
+/obj/item/computer_hardware/hard_drive/role/janitor : @DELETE
+/obj/item/computer_hardware/hard_drive/role/curator : @DELETE
+/obj/item/computer_hardware/hard_drive/role/roboticist : @DELETE
+/obj/item/computer_hardware/hard_drive/role/signal : @DELETE
