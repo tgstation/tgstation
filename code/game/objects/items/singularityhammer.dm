@@ -30,14 +30,10 @@
 
 ///triggered on wield of two handed item
 /obj/item/singularityhammer/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	wielded = TRUE
 
 ///triggered on unwield of two handed item
 /obj/item/singularityhammer/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	wielded = FALSE
 
 /obj/item/singularityhammer/update_icon_state()
@@ -101,14 +97,10 @@
 
 /// triggered on wield of two handed item
 /obj/item/mjollnir/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/mjollnir/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	wielded = FALSE
 
 /obj/item/mjollnir/update_icon_state()

@@ -34,8 +34,6 @@
  * * user - The user which is wielding the broom
  */
 /obj/item/pushbroom/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	to_chat(user, span_notice("You brace the [src] against the ground in a firm sweeping stance."))
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/sweep)
 
@@ -47,8 +45,6 @@
  * * user - The user which is unwielding the broom
  */
 /obj/item/pushbroom/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
 
 /obj/item/pushbroom/afterattack(atom/A, mob/user, proximity)

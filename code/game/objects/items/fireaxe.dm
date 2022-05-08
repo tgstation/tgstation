@@ -21,7 +21,12 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -15
 	bare_wound_bonus = 20
-	var/wielded = FALSE // track wielded status on item
+	/// Are we wielded right now?
+	var/wielded = FALSE
+	/// How much damage to do unwielded
+	var/force_unwielded = 5
+	/// How much damage to do wielded
+	var/force_wielded = 24
 
 /obj/item/fireaxe/Initialize(mapload)
 	. = ..()
@@ -29,18 +34,14 @@
 /obj/item/fireaxe/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, icon_wielded="[base_icon_state]1", wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1", wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /// triggered on wield of two handed item
 /obj/item/fireaxe/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/fireaxe/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	wielded = FALSE
 
 /obj/item/fireaxe/update_icon_state()
@@ -68,11 +69,8 @@
 	base_icon_state = "bone_axe"
 	name = "bone axe"
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
-
-/obj/item/fireaxe/boneaxe/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="[base_icon_state]1")
-
+	force_unwielded = 5
+	force_wielded = 23
 
 /*
  * Metal Hydrogen Axe
@@ -82,7 +80,5 @@
 	base_icon_state = "metalh2_axe"
 	name = "metallic hydrogen axe"
 	desc = "A large, menacing axe made of an unknown substance that the eldest atmosians call Metallic Hydrogen. Truly an otherworldly weapon."
-
-/obj/item/fireaxe/metal_h2_axe/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="[base_icon_state]1")
+	force_unwielded = 5
+	force_wielded = 23

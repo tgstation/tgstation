@@ -901,15 +901,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /// triggered on wield of two handed item
 /obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	wielded = TRUE
 	update_icon(UPDATE_ICON_STATE)
 
 /// triggered on unwield of two handed item
 /obj/item/highfrequencyblade/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	wielded = FALSE
 	update_icon(UPDATE_ICON_STATE)
 

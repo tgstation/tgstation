@@ -31,14 +31,10 @@
 
 /// triggered on wield of two handed item
 /obj/item/rcl/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	active = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/rcl/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	active = FALSE
 
 /obj/item/rcl/screwdriver_act(mob/living/user, obj/item/tool)

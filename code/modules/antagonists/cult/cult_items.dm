@@ -730,14 +730,10 @@ Striking a noncultist, however, will tear their flesh."}
 
 /// triggered on wield of two handed item
 /obj/item/melee/cultblade/halberd/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/melee/cultblade/halberd/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	wielded = FALSE
 
 /obj/item/melee/cultblade/halberd/update_icon_state()
