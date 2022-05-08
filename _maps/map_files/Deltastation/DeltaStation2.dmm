@@ -1750,7 +1750,7 @@
 /area/security/holding_cell)
 "auK" = (
 /obj/machinery/door/airlock/virology{
-	name = "Virology Cabin";
+	name = "Fish Room Cabin";
 	req_access_txt = "39"
 	},
 /obj/structure/cable,
@@ -2589,6 +2589,21 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
+"aHz" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/virology/glass{
+	name = "Fishing Room";
+	req_access_txt = "39"
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/medical/virology)
 "aHM" = (
 /obj/machinery/computer/secure_data{
 	dir = 4
@@ -12753,10 +12768,8 @@
 /area/security/checkpoint/supply)
 "cUu" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/chair/office/light,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/status_display/evac/directional/west,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
@@ -19596,11 +19609,10 @@
 /area/medical/virology)
 "dRg" = (
 /obj/structure/table/glass,
-/obj/item/clipboard,
-/obj/item/toy/figure/virologist,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/item/book/fish_catalog,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dRj" = (
@@ -19656,15 +19668,14 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "dRZ" = (
-/obj/structure/closet/l3closet/virology,
 /obj/structure/sign/warning/biohazard{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/closet/emcloset,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dSa" = (
-/obj/structure/closet/l3closet/virology,
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -19965,7 +19976,6 @@
 "dVt" = (
 /obj/structure/table/glass,
 /obj/item/clothing/gloves/color/latex,
-/obj/item/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
 /obj/structure/cable,
 /obj/item/clothing/glasses/science,
@@ -19976,9 +19986,6 @@
 /obj/structure/table/glass,
 /obj/item/folder/white,
 /obj/item/pen/red,
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/requests_console/directional/north{
 	department = "Virology";
@@ -19988,7 +19995,6 @@
 /turf/open/floor/iron,
 /area/medical/virology)
 "dVv" = (
-/obj/machinery/computer/pandemic,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -20014,7 +20020,6 @@
 /turf/open/floor/iron,
 /area/medical/virology)
 "dVz" = (
-/obj/structure/closet/crate/freezer/blood,
 /obj/machinery/camera/directional/north{
 	c_tag = "Virology - Lab";
 	name = "virology camera";
@@ -20022,6 +20027,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/north,
+/obj/structure/closet/crate/freezer,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dVA" = (
@@ -20046,6 +20052,7 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/water_source/puddle/salt,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dVW" = (
@@ -20064,14 +20071,15 @@
 "dWm" = (
 /obj/structure/reagent_dispensers/wall/virusfood/directional/west,
 /obj/structure/table/glass,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
-	pixel_y = 5
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/item/fish_feed,
+/obj/item/fish_feed,
+/obj/item/fish_feed,
+/obj/item/fish_feed,
+/obj/item/fish_feed,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dWn" = (
@@ -20115,10 +20123,8 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dWx" = (
-/obj/structure/bed/roller,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dWy" = (
@@ -20127,12 +20133,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/medical/virology)
-"dWB" = (
-/obj/structure/bed/roller,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
 /area/medical/virology)
 "dWC" = (
 /obj/machinery/light/directional/south,
@@ -20299,19 +20299,13 @@
 /area/medical/medbay/lobby)
 "dXU" = (
 /obj/structure/table/glass,
-/obj/item/book/manual/wiki/infections,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -3;
-	pixel_y = 2
-	},
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
+/obj/item/book/fish_catalog,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dXV" = (
@@ -20341,7 +20335,6 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dYa" = (
-/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/medical/virology)
@@ -20479,15 +20472,11 @@
 /area/engineering/supermatter/room)
 "dYP" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/beakers{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/syringes,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dYQ" = (
@@ -20499,6 +20488,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/storage/box/cups,
 /turf/open/floor/iron,
 /area/medical/virology)
 "dYR" = (
@@ -20557,6 +20547,8 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
+/obj/item/storage/box/aquarium_props,
+/obj/item/storage/box/aquarium_props,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dZf" = (
@@ -20700,10 +20692,10 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "eah" = (
@@ -20768,13 +20760,7 @@
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
 /area/medical/virology)
-"eaO" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall,
-/area/medical/virology)
 "eaQ" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
@@ -20896,7 +20882,6 @@
 /turf/open/floor/plating/airless,
 /area/medical/virology)
 "ebv" = (
-/obj/machinery/iv_drip,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -20913,7 +20898,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ebz" = (
-/obj/machinery/iv_drip,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -21067,19 +21051,7 @@
 /turf/open/floor/plating/airless,
 /area/medical/virology)
 "eci" = (
-/obj/structure/table/glass,
-/obj/item/reagent_containers/glass/beaker,
-/obj/item/reagent_containers/syringe/antiviral,
-/obj/item/reagent_containers/dropper,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/medical/virology)
-"ecj" = (
-/obj/structure/table/glass,
-/obj/item/folder/white,
-/obj/item/pen/red,
-/obj/structure/cable,
-/obj/effect/turf_decal/delivery,
+/obj/structure/aquarium,
 /turf/open/floor/iron,
 /area/medical/virology)
 "eck" = (
@@ -22364,14 +22336,14 @@
 	autoclose = 0;
 	frequency = 1449;
 	id_tag = "virology_airlock_exterior";
-	name = "Virology Exterior Airlock";
+	name = "Fish Room Exterior Airlock";
 	req_access_txt = "39"
 	},
 /obj/machinery/door_buttons/access_button{
 	dir = 1;
 	idDoor = "virology_airlock_exterior";
 	idSelf = "virology_airlock_control";
-	name = "Virology Access Button";
+	name = "Fish Room Access Button";
 	pixel_x = -24;
 	pixel_y = -2;
 	req_access_txt = "39"
@@ -28056,6 +28028,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/item/ammo_casing/caseless/harpoon,
+/obj/item/ammo_casing/caseless/harpoon,
+/obj/item/ammo_casing/caseless/harpoon,
+/obj/item/gun/ballistic/rifle/boltaction/harpoon,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "fYO" = (
@@ -28863,13 +28839,13 @@
 	autoclose = 0;
 	frequency = 1449;
 	id_tag = "virology_airlock_interior";
-	name = "Virology Interior Airlock";
+	name = "Fish Room Interior Airlock";
 	req_access_txt = "39"
 	},
 /obj/machinery/door_buttons/access_button{
 	idDoor = "virology_airlock_interior";
 	idSelf = "virology_airlock_control";
-	name = "Virology Access Button";
+	name = "Fish Room Access Button";
 	pixel_y = 22;
 	req_access_txt = "39"
 	},
@@ -29713,10 +29689,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
 "gwB" = (
-/obj/structure/filingcabinet/chestdrawer,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
-	},
+/obj/machinery/computer/pandemic,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "gwI" = (
@@ -37479,6 +37452,10 @@
 /obj/structure/sign/poster/contraband/random/directional/east,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"iHX" = (
+/obj/structure/aquarium,
+/turf/open/floor/iron/white,
+/area/medical/virology)
 "iHY" = (
 /obj/effect/landmark/start/head_of_security,
 /obj/structure/cable,
@@ -56213,12 +56190,6 @@
 /turf/open/floor/iron,
 /area/cargo/drone_bay)
 "ojd" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/medical{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
@@ -57212,7 +57183,6 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "oxs" = (
-/obj/machinery/vending/wardrobe/viro_wardrobe,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/medical/virology)
@@ -61151,7 +61121,6 @@
 /area/science/robotics/lab)
 "pHE" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/chair/office/light,
 /obj/effect/decal/cleanable/greenglow,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -61854,7 +61823,6 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
-/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "pRv" = (
@@ -62011,7 +61979,7 @@
 "pTL" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology{
-	name = "Virology Break Room";
+	name = "Fish Break Room";
 	req_access_txt = "39"
 	},
 /obj/structure/cable,
@@ -62081,7 +62049,7 @@
 "pUk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology/glass{
-	name = "Virology Lab";
+	name = "Fish Room Lab";
 	req_access_txt = "39"
 	},
 /obj/structure/disposalpipe/segment{
@@ -67811,7 +67779,7 @@
 "rFw" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology{
-	name = "Virology Access"
+	name = "Fish Room Access"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -69346,7 +69314,7 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
-/mob/living/carbon/human/species/monkey,
+/obj/structure/water_source/puddle,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "scL" = (
@@ -70435,7 +70403,7 @@
 "srM" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology/glass{
-	name = "Virology Containment Cell";
+	name = "Aquarium";
 	req_access_txt = "39"
 	},
 /obj/structure/cable,
@@ -78294,6 +78262,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/medbay/lobby)
+"uHo" = (
+/turf/open/floor/iron/white,
+/area/medical/virology)
 "uHA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -84522,7 +84493,7 @@
 "wEs" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology/glass{
-	name = "Virology Access";
+	name = "Fish Room";
 	req_access_txt = "39"
 	},
 /obj/structure/cable,
@@ -86539,7 +86510,7 @@
 "xkv" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology{
-	name = "Virology Access";
+	name = "Fish Room Access";
 	req_access_txt = "39"
 	},
 /obj/structure/disposalpipe/segment{
@@ -139320,7 +139291,7 @@ ejm
 srM
 pSX
 pHE
-ecj
+eci
 dPr
 aaa
 qYo
@@ -139570,14 +139541,14 @@ fkq
 dPr
 iaQ
 vCr
-srM
+aHz
 rQN
 kbC
 dZE
 dQl
-eaO
-dQl
-dQl
+uHo
+uHo
+iHX
 dPq
 aad
 xTK
@@ -139834,7 +139805,7 @@ qnX
 srM
 sKN
 cUu
-ecj
+eci
 dPr
 aaa
 qYo
@@ -140083,7 +140054,7 @@ dQl
 dTY
 dQl
 dVH
-dWB
+dWx
 dQl
 dYi
 dZe
