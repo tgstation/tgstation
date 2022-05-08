@@ -59,10 +59,10 @@ All the important duct code:
 
 	handle_layer()
 
-	for(var/obj/machinery/duct/D in loc)
-		if(D == src)
+	for(var/obj/machinery/duct/Ducts in loc)
+		if(Ducts == src)
 			continue
-		if(D.duct_layer & duct_layer)
+		if(Ducts.duct_layer & duct_layer)
 			return INITIALIZE_HINT_QDEL //If we have company, end it all
 
 	attempt_connect()
@@ -77,12 +77,12 @@ All the important duct code:
 				disconnect_duct() //let's not built under plumbing machinery
 				return
 
-	for(var/D in GLOB.cardinals)
-		if(dumb && !(D & connects))
+	for(var/Ducts in GLOB.cardinals)
+		if(dumb && !(Ducts & connects))
 			continue
-		for(var/atom/movable/AM in get_step(src, D))
-			if(connect_network(AM, D))
-				add_connects(D)
+		for(var/atom/movable/AM in get_step(src, Ducts))
+			if(connect_network(AM, Ducts))
+				add_connects(Ducts)
 	update_appearance()
 
 ///see if whatever we found can be connected to
@@ -94,44 +94,44 @@ All the important duct code:
 		. += connect_plumber(plumber, direction) //so that if one is true, all is true. beautiful.
 
 ///connect to a duct
-/obj/machinery/duct/proc/connect_duct(obj/machinery/duct/D, direction, ignore_color)
+/obj/machinery/duct/proc/connect_duct(obj/machinery/duct/Ducts, direction, ignore_color)
 	var/opposite_dir = turn(direction, 180)
-	if(!active || !D.active)
+	if(!active || !Ducts.active)
 		return
 
-	if(!dumb && D.dumb && !(opposite_dir & D.connects))
+	if(!dumb && Ducts.dumb && !(opposite_dir & Ducts.connects))
 		return
-	if(dumb && D.dumb && !(connects & D.connects)) //we eliminated a few more scenarios in attempt connect
+	if(dumb && Ducts.dumb && !(connects & Ducts.connects)) //we eliminated a few more scenarios in attempt connect
 		return
 
-	if((duct == D.duct) && duct)//check if we're not just comparing two null values
-		add_neighbour(D, direction)
+	if((duct == Ducts.duct) && duct)//check if we're not just comparing two null values
+		add_neighbour(Ducts, direction)
 
-		D.add_connects(opposite_dir)
-		D.update_appearance()
+		Ducts.add_connects(opposite_dir)
+		Ducts.update_appearance()
 		return TRUE //tell the current pipe to also update it's sprite
-	if(!(D in neighbours)) //we cool
-		if((duct_color != D.duct_color) && !(ignore_colors || D.ignore_colors))
+	if(!(Ducts in neighbours)) //we cool
+		if((duct_color != Ducts.duct_color) && !(ignore_colors || Ducts.ignore_colors))
 			return
-		if(!(duct_layer & D.duct_layer))
+		if(!(duct_layer & Ducts.duct_layer))
 			return
 
-	if(D.duct)
+	if(Ducts.duct)
 		if(duct)
-			duct.assimilate(D.duct)
+			duct.assimilate(Ducts.duct)
 		else
-			D.duct.add_duct(src)
+			Ducts.duct.add_duct(src)
 	else
 		if(duct)
-			duct.add_duct(D)
+			duct.add_duct(Ducts)
 		else
 			create_duct()
-			duct.add_duct(D)
+			duct.add_duct(Ducts)
 
-	add_neighbour(D, direction)
+	add_neighbour(Ducts, direction)
 
 	//Delegate to timer subsystem so its handled the next tick and doesnt cause byond to mistake it for an infinite loop and kill the game
-	addtimer(CALLBACK(D, .proc/attempt_connect))
+	addtimer(CALLBACK(Ducts, .proc/attempt_connect))
 
 	return TRUE
 
@@ -184,17 +184,17 @@ All the important duct code:
 	duct.add_duct(src)
 
 ///add a duct as neighbour. this means we're connected and will connect again if we ever regenerate
-/obj/machinery/duct/proc/add_neighbour(obj/machinery/duct/D, direction)
-	if(!(D in neighbours))
-		neighbours[D] = direction
-	if(!(src in D.neighbours))
-		D.neighbours[src] = turn(direction, 180)
+/obj/machinery/duct/proc/add_neighbour(obj/machinery/duct/Ducts, direction)
+	if(!(Ducts in neighbours))
+		neighbours[Ducts] = direction
+	if(!(src in Ducts.neighbours))
+		Ducts.neighbours[src] = turn(direction, 180)
 
 ///remove all our neighbours, and remove us from our neighbours aswell
 /obj/machinery/duct/proc/lose_neighbours()
-	for(var/obj/machinery/duct/D in neighbours)
-		D.neighbours.Remove(src)
-		D.generate_connects()
+	for(var/obj/machinery/duct/Ducts in neighbours)
+		Ducts.neighbours.Remove(src)
+		Ducts.generate_connects()
 	neighbours = list()
 
 ///add a connect direction
@@ -217,22 +217,22 @@ All the important duct code:
 	var/list/adjacents = list()
 	for(var/A in GLOB.cardinals)
 		if(A & connects)
-			for(var/obj/machinery/duct/D in get_step(src, A))
-				if((turn(A, 180) & D.connects) && D.active)
-					adjacents += D
+			for(var/obj/machinery/duct/Ducts in get_step(src, A))
+				if((turn(A, 180) & Ducts.connects) && Ducts.active)
+					adjacents += Ducts
 	return adjacents
 
 /obj/machinery/duct/update_icon_state()
 	var/temp_icon = initial(icon_state)
-	for(var/D in GLOB.cardinals)
-		if(D & connects)
-			if(D == NORTH)
+	for(var/Ducts in GLOB.cardinals)
+		if(Ducts & connects)
+			if(Ducts == NORTH)
 				temp_icon += "_n"
-			if(D == SOUTH)
+			if(Ducts == SOUTH)
 				temp_icon += "_s"
-			if(D == EAST)
+			if(Ducts == EAST)
 				temp_icon += "_e"
-			if(D == WEST)
+			if(Ducts == WEST)
 				temp_icon += "_w"
 	icon_state = temp_icon
 	return ..()
@@ -281,11 +281,11 @@ All the important duct code:
 /obj/machinery/duct/proc/can_anchor(turf/T)
 	if(!T)
 		T = get_turf(src)
-	for(var/obj/machinery/duct/D in T)
-		if(!anchored || D == src)
+	for(var/obj/machinery/duct/Ducts in T)
+		if(!anchored || Ducts == src)
 			continue
 		for(var/A in GLOB.cardinals)
-			if(A & connects && A & D.connects)
+			if(A & connects && A & Ducts.connects)
 				return FALSE
 	return TRUE
 
@@ -301,22 +301,22 @@ All the important duct code:
 /obj/machinery/duct/MouseDrop_T(atom/A, mob/living/user)
 	if(!istype(A, /obj/machinery/duct))
 		return
-	var/obj/machinery/duct/D = A
+	var/obj/machinery/duct/Ducts = A
 	var/obj/item/I = user.get_active_held_item()
 	if(I?.tool_behaviour != TOOL_WRENCH)
 		to_chat(user, span_warning("You need to be holding a wrench in your active hand to do that!"))
 		return
-	if(get_dist(src, D) != 1)
+	if(get_dist(src, Ducts) != 1)
 		return
-	var/direction = get_dir(src, D)
+	var/direction = get_dir(src, Ducts)
 	if(!(direction in GLOB.cardinals))
 		return
-	if(duct_layer != D.duct_layer)
+	if(duct_layer != Ducts.duct_layer)
 		return
 
 	add_connects(direction) //the connect of the other duct is handled in connect_network, but do this here for the parent duct because it's not necessary in normal cases
-	add_neighbour(D, direction)
-	connect_network(D, direction, TRUE)
+	add_neighbour(Ducts, direction)
+	connect_network(Ducts, direction, TRUE)
 	update_appearance()
 
 /obj/item/stack/ducts
@@ -356,10 +356,10 @@ All the important duct code:
 	if(!proximity)
 		return
 	if(istype(target, /obj/machinery/duct))
-		var/obj/machinery/duct/D = target
-		if(!D.anchored)
+		var/obj/machinery/duct/Ducts = target
+		if(!Ducts.anchored)
 			add(1)
-			qdel(D)
+			qdel(Ducts)
 	check_attach_turf(target)
 
 /obj/item/stack/ducts/proc/check_attach_turf(atom/target)
