@@ -16,8 +16,6 @@
 	var/default_projectile_spread = 0
 	/// The multiplier to the projectiles speed (a value of 2 makes it twice as slow, 0.5 makes it twice as fast)
 	var/projectile_speed_multiplier = 1
-	/// How long is pre-attack cooldown
-	var/pre_attack_cooldown = 10 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/New(Target, projectile, homing, spread)
 	. = ..()
@@ -29,7 +27,7 @@
 		default_projectile_spread = spread
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
-	StartCooldown(pre_attack_cooldown)
+	StartCooldown(10 SECONDS)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 
@@ -286,10 +284,11 @@
 	name = "Titan's Finale"
 	desc = "A single-use ability that shoots a large amount of projectiles around you."
 	cooldown_time = 2.5 SECONDS
-	pre_attack_cooldown = 30 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
-	. = ..()
+	StartCooldown(30 SECONDS)
+	attack_sequence(owner, target_atom)
+	StartCooldown()
 	Remove(owner)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/attack_sequence(mob/living/firer, atom/target)
@@ -298,7 +297,7 @@
 		colossus = firer
 
 	var/finale_counter = 10
-	for(var/i = 1 to 20)
+	for(var/i in 1 to 20)
 		if(finale_counter > 4 && colossus)
 			colossus.say("Die!!", spans = list("colossus", "yell"))
 			colossus.telegraph()
