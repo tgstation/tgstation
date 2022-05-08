@@ -65,7 +65,7 @@
 			slot_flags = initial(slot_flags)
 			worn_y_offset = initial(worn_y_offset)
 			transform = initial(transform)
-			user.visible_message(span_notice("[user] unties the neckercheif back normal."), span_notice("You untie the neckercheif back to normal."))
+			user.visible_message(span_notice("[user] unties the neckercheif."), span_notice("You untie the neckercheif."))
 
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"
