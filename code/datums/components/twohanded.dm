@@ -22,7 +22,6 @@
 	/// A callback on the parent to be called when the item is unwielded
 	var/datum/callback/unwield_callback
 
-
 /**
 
  * Two Handed component
