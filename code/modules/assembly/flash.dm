@@ -153,7 +153,7 @@
 	if(generic_message && flashed != user)
 		to_chat(flashed, span_danger("[src] emits a blinding light!"))
 
-	var/deviation = calculate_deviation(flashed, user ? user : src)
+	var/deviation = calculate_deviation(flashed, user || src)
 
 	var/datum/antagonist/rev/head/converter = user?.mind?.has_antag_datum(/datum/antagonist/rev/head)
 

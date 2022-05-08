@@ -67,11 +67,11 @@
 		T.add_overlay(intended)
 		current_overlay = intended
 
-/datum/component/wet_floor/proc/AfterSlip(mob/living/L)
+/datum/component/wet_floor/proc/AfterSlip(mob/living/slipped)
 	if(highest_strength != TURF_WET_LUBE)
 		return
 
-	L.set_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+	slipped.set_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 
 /datum/component/wet_floor/proc/update_flags()
 	var/intensity
