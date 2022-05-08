@@ -1,5 +1,5 @@
 
-/datum/action/cooldown/spell/telepathy
+/datum/action/cooldown/spell/list_target/telepathy
 	name = "Telepathy"
 	desc = "Telepathically transmits a message to the target."
 	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
@@ -8,42 +8,32 @@
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 
-	/// The next mob we send a telepathy message to.
-	var/mob/living/to_telepath_to
-	/// The message sent to to_telepath_to
-	var/message
+	choose_target_message = "Choose a target to whisper to."
 
-	/// Radius around the caster that living targets are picked to choose from
-	var/telepathy_radius = 7
+	/// The message we send to the next person via telepathy.
+	var/message
 	/// The span surrounding the telepathy message
 	var/telepathy_span = "notice"
 	/// The bolded span surrounding the telepathy message
 	var/bold_telepathy_span = "boldnotice"
 
-/datum/action/cooldown/spell/telepathy/before_cast(atom/cast_on)
+/datum/action/cooldown/spell/list_target/telepathy/before_cast(atom/cast_on)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	var/list/mobs_to_chose = get_telepathy_targets(cast_on)
-	if(!length(mobs_to_chose))
-		to_chat(cast_on, span_warning("No targets nearby."))
+	message = tgui_input_text(cast_on, "What do you wish to whisper to [cast_on]?", "[src]")
+	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell(feedback = FALSE))
+		return FALSE
+	if(!message)
+		reset_spell_cooldown()
 		return FALSE
 
-	var/mob/living/chosen_mob = tgui_input_list(cast_on, "Choose a target to whisper to.", "[src]", sort_names(mobs_to_chose))
-	if(QDELETED(src) || QDELETED(cast_on) || QDELETED(chosen_mob) || !can_cast_spell(feedback = FALSE))
-		return FALSE
-
-	message = tgui_input_text(cast_on, "What do you wish to whisper to [chosen_mob]?", "[src]")
-	if(QDELETED(src) || QDELETED(cast_on) || !message || !can_cast_spell(feedback = FALSE))
-		return FALSE
-
-	to_telepath_to = chosen_mob
 	return TRUE
 
-/datum/action/cooldown/spell/telepathy/cast(atom/cast_on)
+/datum/action/cooldown/spell/list_target/telepathy/cast(atom/cast_on)
 	. = ..()
-	log_directed_talk(cast_on, to_telepath_to, message, LOG_SAY, "[src]")
+	log_directed_talk(cast_on, to_telepath_to, message, LOG_SAY, name)
 
 	var/formatted_message = "<span class='[telepathy_span]'>[message]</span>"
 
@@ -61,12 +51,3 @@
 		var/to_mob_name = span_name("[to_telepath_to]")
 
 		to_chat(ghost, "[from_link] [from_mob_name] [formatted_message] [to_link] [to_mob_name]")
-
-	to_telepath_to = null
-
-/datum/action/cooldown/spell/telepathy/proc/get_telepathy_targets(atom/center)
-	var/list/mobs_to_chose = list()
-	for(var/mob/living/living_thing in view(telepathy_radius, center))
-		mobs_to_chose += living_thing
-
-	return mobs_to_chose
