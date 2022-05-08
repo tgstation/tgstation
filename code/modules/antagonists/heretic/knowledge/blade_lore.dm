@@ -224,7 +224,7 @@
 	name = "Stance of the Scarred Duelist"
 	desc = "Grants resilience to blood loss from wounds and immunity to having your limbs dismembered. \
 		Additionally, when damaged below 50% of your maximum health, \
-		you gain increased resistance to gaining wounds and stun resistance."
+		you gain increased resistance to gaining wounds and baton resistance."
 	gain_text = "The Colonel was many things though out the age. But now, he is blind; he is deaf; \
 		he cannot be wounded; and he cannot be denied. His methods ensure that."
 	next_knowledge = list(
