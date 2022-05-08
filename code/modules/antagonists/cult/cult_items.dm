@@ -721,20 +721,11 @@ Striking a noncultist, however, will tear their flesh."}
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/datum/action/innate/cult/halberd/halberd_act
-	var/wielded = FALSE // track wielded status on item
 
 /obj/item/melee/cultblade/halberd/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
-
-/// triggered on wield of two handed item
-/obj/item/melee/cultblade/halberd/proc/on_wield(obj/item/source, mob/user)
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/melee/cultblade/halberd/proc/on_unwield(obj/item/source, mob/user)
-	wielded = FALSE
+	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
 
 /obj/item/melee/cultblade/halberd/update_icon_state()
 	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"

@@ -339,20 +339,11 @@
 	var/req_defib = TRUE // Whether or not the paddles require a defibrilator object
 	var/recharge_time = 6 SECONDS // Only applies to defibs that do not require a defibrilator. See: .proc/do_success
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
-	var/wielded = FALSE // track wielded status on item
 
 /obj/item/shockpaddles/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
-
-/// triggered on wield of two handed item
-/obj/item/shockpaddles/proc/on_wield(obj/item/source, mob/user)
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/shockpaddles/proc/on_unwield(obj/item/source, mob/user)
-	wielded = FALSE
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
 
 /obj/item/shockpaddles/Destroy()
 	defib = null
@@ -417,10 +408,10 @@
 	return (OXYLOSS)
 
 /obj/item/shockpaddles/update_icon_state()
-	icon_state = "[base_icon_state][wielded]"
+	icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	inhand_icon_state = icon_state
 	if(cooldown)
-		icon_state = "[base_icon_state][wielded]_cooldown"
+		icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]_cooldown"
 	return ..()
 
 /obj/item/shockpaddles/dropped(mob/user)

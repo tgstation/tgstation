@@ -25,8 +25,6 @@
 	var/war_cry = "AAAAARGH!!!"
 	/// The icon prefix for this flavor of spear
 	var/icon_prefix = "spearglass"
-	/// Are we wielded right now?
-	var/wielded = FALSE
 	/// How much damage to do unwielded
 	var/force_unwielded = 10
 	/// How much damage to do wielded
@@ -40,7 +38,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
 	AddComponent(/datum/component/jousting)
-	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1", wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1")
 	update_appearance()
 
 /obj/item/spear/update_icon_state()
@@ -59,19 +57,11 @@
 			icon_prefix = "spearplasma"
 			force_unwielded = 11
 			force_wielded = 19
-			AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1", wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
+			AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1")
 		update_appearance()
 		parts_list -= tip
 		qdel(tip)
 	return ..()
-
-/// triggered on wield of two handed item
-/obj/item/spear/proc/on_wield(obj/item/source, mob/user)
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/spear/proc/on_unwield(obj/item/source, mob/user)
-	wielded = FALSE
 
 /obj/item/spear/explosive
 	name = "explosive lance"
@@ -126,7 +116,7 @@
 
 /obj/item/spear/explosive/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
-	if(!proximity || !wielded || !istype(AM))
+	if(!proximity || !HAS_TRAIT(src, TRAIT_WIELDED) || !istype(AM))
 		return
 	if(AM.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
 		return

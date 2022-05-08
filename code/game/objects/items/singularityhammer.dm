@@ -17,8 +17,6 @@
 	force_string = "LORD SINGULOTH HIMSELF"
 	///Is it able to pull shit right now?
 	var/charged = TRUE
-	///track wielded status on item
-	var/wielded = FALSE
 
 /obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
@@ -26,15 +24,7 @@
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="[base_icon_state]1", wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
-
-///triggered on wield of two handed item
-/obj/item/singularityhammer/proc/on_wield(obj/item/source, mob/user)
-	wielded = TRUE
-
-///triggered on unwield of two handed item
-/obj/item/singularityhammer/proc/on_unwield(obj/item/source, mob/user)
-	wielded = FALSE
+	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="[base_icon_state]1")
 
 /obj/item/singularityhammer/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -89,19 +79,10 @@
 	throwforce = 30
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
-	var/wielded = FALSE // track wielded status on item
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="[base_icon_state]1", attacksound=SFX_SPARKS, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
-
-/// triggered on wield of two handed item
-/obj/item/mjollnir/proc/on_wield(obj/item/source, mob/user)
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/mjollnir/proc/on_unwield(obj/item/source, mob/user)
-	wielded = FALSE
+	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="[base_icon_state]1", attacksound=SFX_SPARKS)
 
 /obj/item/mjollnir/update_icon_state()
 	icon_state = "[base_icon_state]0"
