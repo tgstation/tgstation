@@ -69418,10 +69418,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"wwJ" = (
-/obj/structure/tank_dispenser,
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers)
 "wwK" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -190786,7 +190782,7 @@ tjo
 tjo
 tjo
 tjo
-wwJ
+tjo
 tjo
 tjo
 tjo
