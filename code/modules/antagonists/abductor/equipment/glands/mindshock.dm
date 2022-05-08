@@ -22,13 +22,13 @@
 		switch(pick(1,3))
 			if(1)
 				to_chat(target, span_userdanger("You hear a loud buzz in your head, silencing your thoughts!"))
-				H.Stun(50)
+				target.Stun(50)
 			if(2)
 				to_chat(target, span_warning("You hear an annoying buzz in your head."))
-				H.add_confusion(15)
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
+				target.add_confusion(15)
+				target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 			if(3)
-				H.hallucination += 60
+				target.hallucination += 60
 
 /obj/item/organ/heart/gland/mindshock/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
