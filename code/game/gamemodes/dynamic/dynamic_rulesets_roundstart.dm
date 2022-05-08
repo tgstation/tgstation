@@ -21,6 +21,7 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CYBORG,
 	)
@@ -118,6 +119,7 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CYBORG,
 	)
@@ -178,6 +180,7 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CYBORG,
 	)
@@ -228,6 +231,7 @@
 		JOB_BRIG_PHYSICIAN,
 	)
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CYBORG,
 	)
@@ -278,6 +282,7 @@
 	flags = HIGH_IMPACT_RULESET
 	minimum_required_age = 14
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_SECURITY,
 	) // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
@@ -324,6 +329,7 @@
 	antag_datum = /datum/antagonist/cult
 	minimum_required_age = 14
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CAPTAIN,
 		JOB_CHAPLAIN,
@@ -394,6 +400,7 @@
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	minimum_required_age = 14
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_SECURITY,
 	) // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
@@ -482,6 +489,7 @@
 	antag_datum = /datum/antagonist/rev/head
 	minimum_required_age = 14
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CAPTAIN,
 		JOB_CHIEF_ENGINEER,
@@ -583,6 +591,7 @@
 		JOB_PRISONER,
 	)
 	restricted_roles = list(
+		JOB_PUG,
 		JOB_AI,
 		JOB_CAPTAIN,
 		JOB_CYBORG,
@@ -633,7 +642,9 @@
 	name = "Extended"
 	antag_flag = null
 	antag_datum = null
-	restricted_roles = list()
+	restricted_roles = list(
+		JOB_PUG,
+	)
 	required_candidates = 0
 	weight = 3
 	cost = 0
