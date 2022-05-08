@@ -33,7 +33,6 @@
 	var/two_hand_force = 34
 	var/hacked = FALSE
 	var/list/possible_colors = list("red", "blue", "green", "purple")
-	var/wielded = FALSE // track wielded status on item
 
 /obj/item/dualsaber/ComponentInitialize()
 	. = ..()
@@ -43,13 +42,10 @@
 /// Triggered on wield of two handed item
 /// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
 /obj/item/dualsaber/proc/on_wield(obj/item/source, mob/living/carbon/user)
-	SIGNAL_HANDLER
-
 	if(user?.has_dna())
 		if(user.dna.check_mutation(/datum/mutation/human/hulk))
 			to_chat(user, span_warning("You lack the grace to wield this!"))
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
-	wielded = TRUE
 	w_class = w_class_on
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
@@ -59,9 +55,6 @@
 /// Triggered on unwield of two handed item
 /// switch hitsounds
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
 	w_class = initial(w_class)
 	hitsound = SFX_SWING_HIT
 	STOP_PROCESSING(SSobj, src)
@@ -69,10 +62,10 @@
 
 
 /obj/item/dualsaber/get_sharpness()
-	return wielded * sharpness
+	return HAS_TRAIT(src, TRAIT_WIELDED) && sharpness
 
 /obj/item/dualsaber/update_icon_state()
-	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][wielded]" : "dualsaber0"
+	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][HAS_TRAIT(src, TRAIT_WIELDED)]" : "dualsaber0"
 	return ..()
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
@@ -125,10 +118,13 @@
 				user.dropItemToGround(src, force=TRUE)
 				return
 	..()
-	if(wielded && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		return
+
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
 		impale(user)
 		return
-	if(wielded && prob(50))
+	if(prob(50))
 		INVOKE_ASYNC(src, .proc/jedi_spin, user)
 
 /obj/item/dualsaber/proc/jedi_spin(mob/living/user)
