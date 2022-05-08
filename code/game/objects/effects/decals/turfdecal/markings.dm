@@ -330,6 +330,16 @@
 /obj/effect/turf_decal/siding/thinplating/dark/end
 	icon_state = "siding_thinplating_end"
 
+/obj/effect/turf_decal/siding/thinplating/terracotta
+	icon_state = "siding_thinplating_line"
+	color = "#b84221"
+
+/obj/effect/turf_decal/siding/thinplating/terracotta/corner
+	icon_state = "siding_thinplating_corner"
+
+/obj/effect/turf_decal/siding/thinplating/terracotta/end
+	icon_state = "siding_thinplating_end"
+
 /obj/effect/turf_decal/siding/wideplating
 	icon_state = "siding_wideplating_line"
 	color = "#aaaaaa"
@@ -357,6 +367,16 @@
 	icon_state = "siding_wideplating_corner"
 
 /obj/effect/turf_decal/siding/wideplating/dark/end
+	icon_state = "siding_wideplating_end"
+
+/obj/effect/turf_decal/siding/wideplating/terracotta
+	icon_state = "siding_wideplating_line"
+	color = "#b84221"
+
+/obj/effect/turf_decal/siding/wideplating/terracotta/corner
+	icon_state = "siding_wideplating_corner"
+
+/obj/effect/turf_decal/siding/wideplating/terracotta/end
 	icon_state = "siding_wideplating_end"
 
 /obj/effect/turf_decal/siding/thinplating_new
@@ -388,6 +408,16 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/end
 	icon_state = "siding_thinplating_new_end"
 
+/obj/effect/turf_decal/siding/thinplating_new/terracotta
+	icon_state = "siding_thinplating_new_line"
+	color = "#b84221"
+
+/obj/effect/turf_decal/siding/thinplating_new/terracotta/corner
+	icon_state = "siding_thinplating_new_corner"
+
+/obj/effect/turf_decal/siding/thinplating_new/terracotta/end
+	icon_state = "siding_thinplating_new_end"
+
 /obj/effect/turf_decal/siding/wideplating_new
 	icon_state = "siding_wideplating_new_line"
 	color = "#949494"
@@ -415,4 +445,14 @@
 	icon_state = "siding_wideplating_new_corner"
 
 /obj/effect/turf_decal/siding/wideplating_new/dark/end
+	icon_state = "siding_wideplating_new_end"
+
+/obj/effect/turf_decal/siding/wideplating_new/terracotta
+	icon_state = "siding_wideplating_new_line"
+	color = "#b84221"
+
+/obj/effect/turf_decal/siding/wideplating_new/terracotta/corner
+	icon_state = "siding_wideplating_new_corner"
+
+/obj/effect/turf_decal/siding/wideplating_new/terracotta/end
 	icon_state = "siding_wideplating_new_end"

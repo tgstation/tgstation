@@ -104,7 +104,7 @@
 	spread_text = "Unknown"
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 1
+	spreading_modifier = 1
 	cure_chance = 0.5
 	disease_flags = CAN_CARRY|CAN_RESIST
 	desc = "A neutered but still dangerous descendent of the ancient \"Jungle Fever\", victims will eventually genetically backtrack into a primate. \

@@ -211,7 +211,7 @@
 		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
 			user.dropItemToGround(I)
 		user.adjust_fire_stacks(1)
-		user.IgniteMob()
+		user.ignite_mob()
 		return
 
 	if(user.is_holding(src)) //no TK shit here.

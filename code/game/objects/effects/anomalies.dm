@@ -79,7 +79,7 @@
 		qdel(src)
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
-	new /obj/effect/particle_effect/smoke/bad(loc)
+	new /obj/effect/particle_effect/fluid/smoke/bad(loc)
 
 	if(drops_core)
 		aSignal.forceMove(drop_location())
@@ -100,7 +100,7 @@
 
 /atom/movable/warp_effect
 	plane = GRAVITY_PULSE_PLANE
-	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
+	appearance_flags = PIXEL_SCALE|LONG_GLIDE // no tile bound so you can see it around corners and so
 	icon = 'icons/effects/light_overlays/light_352.dmi'
 	icon_state = "light"
 	pixel_x = -176
@@ -195,11 +195,11 @@
 	aSignal = /obj/item/assembly/signaler/anomaly/flux
 	var/canshock = FALSE
 	var/shockdamage = 20
-	var/explosive = TRUE
+	var/explosive = FLUX_EXPLOSIVE
 
-/obj/effect/anomaly/flux/Initialize(mapload, new_lifespan, drops_core = TRUE, _explosive = TRUE)
+/obj/effect/anomaly/flux/Initialize(mapload, new_lifespan, drops_core = TRUE, explosive = FLUX_EXPLOSIVE)
 	. = ..()
-	explosive = _explosive
+	src.explosive = explosive
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
@@ -231,11 +231,13 @@
 		M.electrocute_act(shockdamage, name, flags = SHOCK_NOGLOVES)
 
 /obj/effect/anomaly/flux/detonate()
-	if(explosive)
-		explosion(src, devastation_range = 1, heavy_impact_range = 4, light_impact_range = 16, flash_range = 18) //Low devastation, but hits a lot of stuff.
-	else
-		new /obj/effect/particle_effect/sparks(loc)
-
+	switch(explosive)
+		if(FLUX_EXPLOSIVE)
+			explosion(src, devastation_range = 1, heavy_impact_range = 4, light_impact_range = 16, flash_range = 18) //Low devastation, but hits a lot of stuff.
+		if(FLUX_LOW_EXPLOSIVE)
+			explosion(src, heavy_impact_range = 1, light_impact_range = 4, flash_range = 6)
+		if(FLUX_NO_EXPLOSION)
+			new /obj/effect/particle_effect/sparks(loc)
 
 /////////////////////
 

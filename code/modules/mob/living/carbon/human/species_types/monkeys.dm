@@ -54,7 +54,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
-	fire_overlay = "Monkey_burning"
+	fire_overlay = "monkey"
 	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 
