@@ -79,7 +79,7 @@
 	var/datum/action/cooldown/spell/night_vision/revenant/vision = new(src)
 	vision.Grant(src)
 
-	var/datum/action/cooldown/spell/telepathy/revenant/telepathy = new(src)
+	var/datum/action/cooldown/spell/list_target/telepathy/revenant/telepathy = new(src)
 	telepathy.Grant(src)
 
 	// Starting spells that start locked

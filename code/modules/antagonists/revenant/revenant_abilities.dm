@@ -121,7 +121,7 @@
 	toggle_span = "revennotice"
 
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
-/datum/action/cooldown/spell/telepathy/revenant
+/datum/action/cooldown/spell/list_target/telepathy/revenant
 	name = "Revenant Transmit"
 	panel = "Revenant Abilities"
 	background_icon_state = "bg_revenant"

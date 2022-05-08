@@ -17,7 +17,7 @@
 	if(!can_cast_spell())
 		return FALSE
 
-	var/list/list_targets = get_list_targets(caster, telepathy_radius)
+	var/list/list_targets = get_list_targets(caster, target_radius)
 	if(!length(list_targets))
 		caster.balloon_alert(caster, "no targets nearby!")
 		return FALSE

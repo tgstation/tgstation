@@ -31,23 +31,23 @@
 
 	return TRUE
 
-/datum/action/cooldown/spell/list_target/telepathy/cast(atom/cast_on)
+/datum/action/cooldown/spell/list_target/telepathy/cast(mob/living/cast_on)
 	. = ..()
-	log_directed_talk(cast_on, to_telepath_to, message, LOG_SAY, name)
+	log_directed_talk(owner, cast_on, message, LOG_SAY, name)
 
 	var/formatted_message = "<span class='[telepathy_span]'>[message]</span>"
 
-	to_chat(cast_on, "<span class='[bold_telepathy_span]'>You transmit to [to_telepath_to]:</span> [formatted_message]")
-	if(!to_telepath_to.can_block_magic(antimagic_flags, charge_cost = 0)) //hear no evil
-		to_chat(to_telepath_to, "<span class='[bold_telepathy_span]'>You hear something behind you talking...</span> [formatted_message]")
+	to_chat(owner, "<span class='[bold_telepathy_span]'>You transmit to [cast_on]:</span> [formatted_message]")
+	if(!cast_on.can_block_magic(antimagic_flags, charge_cost = 0)) //hear no evil
+		to_chat(cast_on, "<span class='[bold_telepathy_span]'>You hear something behind you talking...</span> [formatted_message]")
 
 	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
 		if(!isobserver(ghost))
 			continue
 
-		var/from_link = FOLLOW_LINK(ghost, cast_on)
-		var/from_mob_name = "<span class='[bold_telepathy_span]'>[cast_on] [src]:</span>"
-		var/to_link = FOLLOW_LINK(ghost, to_telepath_to)
-		var/to_mob_name = span_name("[to_telepath_to]")
+		var/from_link = FOLLOW_LINK(ghost, owner)
+		var/from_mob_name = "<span class='[bold_telepathy_span]'>[owner] [src]:</span>"
+		var/to_link = FOLLOW_LINK(ghost, cast_on)
+		var/to_mob_name = span_name("[cast_on]")
 
 		to_chat(ghost, "[from_link] [from_mob_name] [formatted_message] [to_link] [to_mob_name]")

@@ -71,7 +71,6 @@
 	equip_delay_other = 50
 	clothing_flags = CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	clothing_traits = list(TRAIT_WIZARD_ROBES)
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"

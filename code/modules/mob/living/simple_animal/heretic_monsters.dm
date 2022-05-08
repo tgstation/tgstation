@@ -57,7 +57,7 @@
 	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/eyes)
 	spells_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
-		/datum/action/cooldown/spell/telepathy/eldritch,
+		/datum/action/cooldown/spell/list_target/telepathy/eldritch,
 		/datum/action/cooldown/spell/pointed/blind/eldritch,
 	)
 	/// A weakref to the last target we smacked. Hitting targets consecutively does more damage.
