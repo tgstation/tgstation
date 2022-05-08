@@ -37093,6 +37093,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/storage)
+"lSo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	name = "view enhancer"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/tram/mid)
 "lSr" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12;25"
@@ -41263,6 +41274,17 @@
 /obj/structure/table/glass,
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
+"nyt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8;
+	name = "view enhancer"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/tram/mid)
 "nyA" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/nitrogen_input{
 	dir = 1
@@ -50775,6 +50797,10 @@
 	icon_state = "titanium"
 	},
 /obj/effect/landmark/lift_id,
+/obj/structure/ladder{
+	desc = "this doesn't seem very thought out.";
+	name = "experimental tram ladder"
+	},
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/center)
 "qWf" = (
@@ -54865,6 +54891,17 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
+"suN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/ladder{
+	desc = "this doesn't seem very thought out.";
+	name = "experimental tram ladder"
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/tram/mid)
 "suQ" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -63663,6 +63700,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"vIZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/tram/mid)
 "vJc" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
@@ -102180,9 +102224,9 @@ aOP
 rsP
 cMt
 wiA
-aMP
-aMP
-aMP
+nyt
+nyt
+nyt
 iVL
 myc
 mRa
@@ -102437,9 +102481,9 @@ aOP
 rsP
 cMt
 wiA
-aMP
-aMP
-aMP
+vIZ
+vIZ
+vIZ
 vQt
 wDw
 mRa
@@ -102694,9 +102738,9 @@ qAS
 aOj
 tQr
 wiA
-aMP
-aMP
-aMP
+vIZ
+suN
+vIZ
 vQt
 iLv
 mRa
@@ -102951,9 +102995,9 @@ oIo
 naO
 cMt
 cJa
-cJa
-cJa
-cJa
+vIZ
+vIZ
+vIZ
 cJa
 wDw
 mRa
@@ -103208,9 +103252,9 @@ ezd
 xFg
 cMt
 wiA
-aMP
-aMP
-aMP
+lSo
+lSo
+lSo
 vQt
 ugr
 mRa
