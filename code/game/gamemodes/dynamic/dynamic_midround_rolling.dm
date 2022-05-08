@@ -48,7 +48,7 @@
 		if (mid_round_budget < ruleset.cost)
 			continue
 
-		if (ruleset.minimum_round_time < world.time - SSticker.round_start_time)
+		if (ruleset.minimum_round_time > world.time - SSticker.round_start_time)
 			continue
 
 		// If admins have disabled dynamic from picking from the ghost pool
