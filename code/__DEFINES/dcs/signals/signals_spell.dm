@@ -66,7 +66,7 @@
 	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1 << 0)
 
 // Charge
-/// Sent from /datum/action/cooldown/spell/charge/cast(), to the item in hand being charged: (datum/action/cooldown/spell, mob/user)
+/// Sent from /datum/action/cooldown/spell/charge/cast(), to the item in hand being charged: (datum/action/cooldown/spell/spell, mob/user)
 #define COMSIG_ITEM_MAGICALLY_CHARGED "item_magic_charged"
 	/// Return if an item was successfuly recharged
 	#define COMPONENT_ITEM_CHARGED (1 << 0)
