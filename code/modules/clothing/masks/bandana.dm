@@ -41,9 +41,12 @@
 
 /obj/item/clothing/mask/bandana/AltClick(mob/user)
 	. = ..()
-	if(iscarbon(user) && user.is_holding(src))
+	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		var/matrix/widen = matrix()
+		if(!user.is_holding(src))
+			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
+			return
 		if((C.get_item_by_slot(ITEM_SLOT_HEAD == src)) || (C.get_item_by_slot(ITEM_SLOT_MASK) == src))
 			to_chat(user, span_warning("You can't tie [src] while wearing it!"))
 			return
@@ -63,8 +66,6 @@
 			worn_y_offset = initial(worn_y_offset)
 			transform = initial(transform)
 			user.visible_message(span_notice("[user] unties the neckercheif back normal."), span_notice("You untie the neckercheif back to normal."))
-	else
-		to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
 
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"
