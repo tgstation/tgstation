@@ -1,6 +1,11 @@
+SUBSYSTEM_DEF(supermatter_cascade)
+	name = "Supermatter Cascade"
+	wait = 1 SECONDS
+	stat_tag = "SC"
+
 /turf/closed/indestructible/supermatter_wall
-	name = "wall"
-	desc = "Effectively impervious any methods of destruction."
+	name = "crystal mass"
+	desc = "You see this massive crystal mass looming towards you, cracking and screeching at every seemingly random movement. Despair because the end is here."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "crystal_cascade_1"
 	layer = AREA_LAYER
@@ -17,11 +22,11 @@
 /turf/closed/indestructible/supermatter_wall/Initialize(mapload)
 	. = ..()
 	icon_state = "crystal_cascade_[rand(1,6)]"
-	START_PROCESSING(SSmachines, src)
+	START_PROCESSING(supermatter_cascade, src)
 
 	AddComponent(/datum/component/supermatter_crystal, null, null)
 
-	playsound(src, 'sound/misc/cracking_crystal.ogg', 20, TRUE)
+	playsound(src, 'sound/misc/cracking_crystal.ogg', 45, TRUE)
 
 /turf/closed/indestructible/supermatter_wall/process()
 
