@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section } from '../components';
+import { Box, Button, Icon, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type AirlockControllerData = {
@@ -12,19 +12,20 @@ type AirlockControllerData = {
 
 type AirlockStatus = {
   primary: string;
-  secondary: string;
-  color: string;
+  icon?: string;
+  color?: string;
 };
 
 const defaultStatus: AirlockStatus = {
   primary: 'Unknown',
-  secondary: '',
+  icon: '',
   color: 'average',
 };
 
 export const AirlockController = (_, context) => {
   const { data } = useBackend<AirlockControllerData>(context);
-  const { sensorPressure, pumpStatus, interiorStatus, exteriorStatus } = data;
+  const { airlockState, pumpStatus, interiorStatus, exteriorStatus } = data;
+  let currentStatus: AirlockStatus = getAirlockStatus(airlockState);
 
   return (
     <Window width={500} height={190}>
@@ -32,19 +33,23 @@ export const AirlockController = (_, context) => {
         <Section title="Airlock Status" buttons={<AirLockButtons />}>
           <LabeledList>
             <LabeledList.Item label="Current Status">
-              <CurrentStatusDisplay />
+              {currentStatus.primary}
             </LabeledList.Item>
             <LabeledList.Item label="Chamber Pressure">
-              {sensorPressure} kPa
+              <PressureIndicator currentStatus={currentStatus} />
             </LabeledList.Item>
             <LabeledList.Item label="Control Pump">
-              {pumpStatus}
+              {pumpStatus.replace(/^\w/, (c) => c.toUpperCase())}
             </LabeledList.Item>
             <LabeledList.Item label="Interior Door">
-              {interiorStatus}
+              <Box color={interiorStatus === 'open' && 'good'}>
+                {interiorStatus.replace(/^\w/, (c) => c.toUpperCase())}
+              </Box>
             </LabeledList.Item>
             <LabeledList.Item label="Exterior Door">
-              {exteriorStatus}
+              <Box color={exteriorStatus === 'open' && 'good'}>
+                {exteriorStatus.replace(/^\w/, (c) => c.toUpperCase())}
+              </Box>
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -60,63 +65,51 @@ const AirLockButtons = (_, context) => {
 
   return (
     ((airlockState === 'pressurize' || airlockState === 'depressurize') && (
-      <Button icon="stop-circle" content="Abort" onClick={() => act('abort')} />
+      <Button icon="stop-circle" onClick={() => act('abort')}>
+        Abort
+      </Button>
     ))
     || (airlockState === 'closed' && (
       <>
-        <Button
-          icon="lock-open"
-          content="Open Interior Airlock"
-          onClick={() => act('cycleInterior')}
-        />
-        <Button
-          icon="lock-open"
-          content="Open Exterior Airlock"
-          onClick={() => act('cycleExterior')}
-        />
+        <Button icon="lock-open" onClick={() => act('cycleInterior')}>
+          Open Interior Airlock
+        </Button>
+        <Button icon="lock-open" onClick={() => act('cycleExterior')}>
+          Open Exterior Airlock
+        </Button>
       </>
     ))
     || (airlockState === 'inopen' && (
       <>
-        <Button
-          icon="lock"
-          content="Close Interior Airlock"
-          onClick={() => act('cycleClosed')}
-        />
-        <Button
-          icon="sync"
-          content="Cycle to Exterior Airlock"
-          onClick={() => act('cycleExterior')}
-        />
+        <Button icon="lock" onClick={() => act('cycleClosed')}>
+          Close Interior Airlock
+        </Button>
+        <Button icon="sync" onClick={() => act('cycleExterior')}>
+          Cycle to Exterior Airlock
+        </Button>
       </>
     ))
     || (airlockState === 'outopen' && (
       <>
-        <Button
-          icon="lock"
-          content="Close Exterior Airlock"
-          onClick={() => act('cycleClosed')}
-        />
-        <Button
-          icon="sync"
-          content="Cycle to Interior Airlock"
-          onClick={() => act('cycleInterior')}
-        />
+        <Button icon="lock" onClick={() => act('cycleClosed')}>
+          Close Exterior Airlock
+        </Button>
+        <Button icon="sync" onClick={() => act('cycleInterior')}>
+          Cycle to Interior Airlock
+        </Button>
       </>
     ))
   );
 };
 
 /** Displays the current status as two text strings, depending on door state. */
-const CurrentStatusDisplay = (_, context) => {
-  const { data } = useBackend<AirlockControllerData>(context);
-  const { airlockState } = data;
+const getAirlockStatus = (airlockState) => {
   let currentStatus: AirlockStatus;
+
   switch (airlockState) {
     case 'inopen':
       currentStatus = {
         primary: 'Interior Airlock Open',
-        secondary: 'Chamber Pressurized',
         color: 'good',
       };
       break;
@@ -124,27 +117,30 @@ const CurrentStatusDisplay = (_, context) => {
       currentStatus = {
         ...defaultStatus,
         primary: 'Cycling to Interior Airlock',
-        secondary: 'Chamber Pressurizing',
+        icon: 'fan',
+        color: 'average',
       };
       break;
     case 'closed':
       currentStatus = {
         ...defaultStatus,
         primary: 'Inactive',
+        color: 'white',
       };
       break;
     case 'depressurize':
       currentStatus = {
         ...defaultStatus,
         primary: 'Cycling to Exterior Airlock',
-        secondary: 'Chamber Depressurizing',
+        icon: 'fan',
+        color: 'average',
       };
       break;
     case 'outopen':
       currentStatus = {
         ...defaultStatus,
         primary: 'Exterior Airlock Open',
-        secondary: 'Chamber Depressurized',
+        icon: 'exclamation-triangle',
         color: 'bad',
       };
       break;
@@ -152,14 +148,20 @@ const CurrentStatusDisplay = (_, context) => {
       currentStatus = defaultStatus;
   }
 
+  return currentStatus;
+};
+
+const PressureIndicator = (props, context) => {
+  const { data } = useBackend<AirlockControllerData>(context);
+  const { sensorPressure } = data;
+  const { currentStatus } = props;
+  const { icon, color } = currentStatus;
+  let spin = icon === 'fan' ? 1 : 0;
+
   return (
-    <>
-      {currentStatus.primary}{' '}
-      {currentStatus.secondary !== '' && (
-        <Box as="span" color={currentStatus.color}>
-          {currentStatus.secondary}
-        </Box>
-      )}
-    </>
+    <Box color={color}>
+      {sensorPressure} kPa{' '}
+      {currentStatus.icon && <Icon name={icon} spin={spin} />}
+    </Box>
   );
 };
