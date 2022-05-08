@@ -165,7 +165,7 @@
 		if(WEST)
 			pixel_x = 2
 			pixel_y = 0
-			
+
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
 	switch(buildstage)
@@ -577,20 +577,34 @@
 			if(AIRALARM_BUILD_NO_CIRCUIT)
 				icon_state = "alarm_b1"
 		return ..()
+		
+	icon_state = "alarm"
+	return ..()
+
+/obj/machinery/airalarm/update_overlays()
+	. = ..()
+	// Open panels will only display a light on the final buildstage
+	if(panel_open)
+		if(buildstage == AIRALARM_BUILD_COMPLETE)
+			. += mutable_appearance(icon, "light-out", layer, plane)
+		return
 
 	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
-		icon_state = "alarmp"
+		. += mutable_appearance(icon, "light-out", layer, plane)
 		return ..()
 
+	var/light_to_use
 	var/area/our_area = get_area(src)
 	switch(max(danger_level, !!our_area.active_alarms[ALARM_ATMOS]))
 		if(0)
-			icon_state = "alarm0"
+			light_to_use = "light-0"
 		if(1)
-			icon_state = "alarm2" //yes, alarm2 is yellow alarm
+			light_to_use = "light-2" //yes, alarm2 is yellow alarm
 		if(2)
-			icon_state = "alarm1"
-	return ..()
+			light_to_use = "light-1"
+
+	. += mutable_appearance(icon, light_to_use, layer, plane)
+	. += emissive_appearance(icon, light_to_use, layer)
 
 /**
  * main proc for throwing a shitfit if the air isnt right.
