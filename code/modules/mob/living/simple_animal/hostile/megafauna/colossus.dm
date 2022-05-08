@@ -125,7 +125,7 @@
 			dir_shots.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
-	for(var/mob/viewer in viewers(src))
+	for(var/mob/viewer as anything in viewers(10, src))
 		if(viewer.client)
 			flash_color(viewer.client, "#C80000", 1)
 			shake_camera(viewer, 4, 3)
@@ -137,13 +137,13 @@
 		spiral_shots.enraged = COLOSSUS_ENRAGED
 		telegraph()
 		icon_state = "eva_attack"
-		say("Judgement.", spans = list("colossus", "yell"))
+		INVOKE_ASYNC(src, /atom/movable.proc/say, "Judgement.", null, list("colossus", "yell"))
 	else if(activated == random_shots)
-		say("Wrath.", spans = list("colossus", "yell"))
+		INVOKE_ASYNC(src, /atom/movable.proc/say, "Wrath.", null, list("colossus", "yell"))
 	else if(activated == shotgun_blast)
-		say("Retribution.", spans = list("colossus", "yell"))
+		INVOKE_ASYNC(src, /atom/movable.proc/say, "Retribution.", null, list("colossus", "yell"))
 	else if(activated == dir_shots)
-		say("Lament.", spans = list("colossus", "yell"))
+		INVOKE_ASYNC(src, /atom/movable.proc/say, "Lament.", null, list("colossus", "yell"))
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/finished_attack(mob/living/owner, datum/action/cooldown/finished)
 	SIGNAL_HANDLER
