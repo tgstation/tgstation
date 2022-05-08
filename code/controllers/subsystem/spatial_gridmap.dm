@@ -66,11 +66,16 @@
  * currently this system is only designed for searching for relatively uncommon things, small subsets of /atom/movable.
  * dont add stupid shit to the cells please, keep the information that the cells store to things that need to be searched for often
  *
- * as of right now this system operates on a subset of the important_recursive_contents list for atom/movable, specifically
- * [RECURSIVE_CONTENTS_HEARING_SENSITIVE] and [RECURSIVE_CONTENTS_CLIENT_MOBS] because both are those are both 1. important and 2. commonly searched for
+ * The system currently implements two different "classes" of spatial type
  *
- * the system addtionally supports pipes, via a direct typecheck
- * I wouldn't noramally do this, but the case where we want to print pipes is expensive enough I feel I need to
+ * The first exists to support important_recursive_contents.
+ * So if a client is inside a locker and the locker crosses a boundary, you'll still get a signal from the spatial grid.
+ * These types are [SPATIAL_GRID_CONTENTS_TYPE_HEARING] and [SPATIAL_GRID_CONTENTS_TYPE_CLIENTS]
+ *
+ * The second pattern is more paired down, and supports more wide use.
+ * Rather then the object and anything the object is in being sensitive, it's limited to just the object itself
+ * Currently only [SPATIAL_GRID_CONTENTS_TYPE_ATMOS] uses this pattern. This is because it's far more common, and so worth optimizing
+ *
  */
 SUBSYSTEM_DEF(spatial_grid)
 	can_fire = FALSE
@@ -338,6 +343,58 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	return intersecting_grid_cells
 
+/// Adds grid awareness to the passed in atom, of the passed in type
+/// Basically, when this atom moves between grids, it wants to have enter/exit cell called on it
+/datum/controller/subsystem/spatial_grid/proc/add_grid_awareness(atom/movable/add_to, type)
+	// We need to ensure we have a new list reference, to build our new key out of
+	var/list/current_list = spatial_grid_categories[add_to.spatial_grid_key]
+	if(current_list)
+		current_list = current_list.Copy()
+	else
+		current_list = list()
+	// Now we do a binary insert, to ensure it's sorted (don't wanna overcache)
+	BINARY_INSERT_DEFINE(type, current_list, SORT_VAR_NO_TYPE, type, SORT_COMPARE_DIRECTLY, COMPARE_KEY)
+	update_grid_awareness(add_to, current_list)
+
+/// Removes grid awareness from the passed in atom, of the passed in type
+/datum/controller/subsystem/spatial_grid/proc/remove_grid_awareness(atom/movable/remove_from, type)
+	// We need to ensure we have a new list reference, to build our new key out of
+	var/list/current_list = spatial_grid_categories[remove_from.spatial_grid_key]
+	if(current_list)
+		current_list = current_list.Copy()
+	else
+		current_list = list()
+	current_list -= type
+	update_grid_awareness(remove_from, current_list)
+
+/// Alerts the atom's current cell that it wishes to be treated as a member
+/// This functionally amounts to "hey, I was recently made aware by [add_grid_awareness], please insert me into my current cell"
+/datum/controller/subsystem/spatial_grid/proc/add_grid_membership(atom/movable/add_to, turf/target_turf, type)
+	if(!target_turf)
+		return
+	if(initialized)
+		add_single_type(add_to, target_turf, type)
+	else //SSspatial_grid isnt init'd yet, add ourselves to the queue
+		enter_pre_init_queue(add_to, type)
+
+/// Removes grid membership from the passed in atom, of the passed in type
+/datum/controller/subsystem/spatial_grid/proc/remove_grid_membership(atom/movable/remove_from, turf/target_turf, type)
+	if(!target_turf)
+		return
+	if(initialized)
+		remove_single_type(remove_from, target_turf, type)
+	else //SSspatial_grid isnt init'd yet, remove ourselves from the queue
+		remove_from_pre_init_queue(remove_from, type)
+
+/// Updates the string that atoms hold that stores their grid awareness
+/// We will use it to key into their spatial grid categories later
+/datum/controller/subsystem/spatial_grid/proc/update_grid_awareness(atom/movable/update, list/new_list)
+	// We locally store a stringified version of the list, to prevent people trying to mutate it
+	update.spatial_grid_key = new_list.Join("-")
+	// Ensure the global representation is cached
+	if(!spatial_grid_categories[update.spatial_grid_key])
+		spatial_grid_categories[update.spatial_grid_key] = new_list
+
 ///find the spatial map cell that target belongs to, then add the target to it, as its type prefers.
 ///make sure to provide the turf new_target is "in"
 /datum/controller/subsystem/spatial_grid/proc/enter_cell(atom/movable/new_target, turf/target_turf)
@@ -463,7 +520,7 @@ SUBSYSTEM_DEF(spatial_grid)
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
 			var/list/old_target_contents = old_target.important_recursive_contents
 			GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
-			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
+			SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 			GRID_CELL_REMOVE(intersecting_cell.atmos_contents, old_target)
@@ -511,58 +568,6 @@ SUBSYSTEM_DEF(spatial_grid)
 						force_remove_from_cell(to_remove, cell)
 
 	return containing_cells
-
-/// Adds grid awareness to the passed in atom, of the passed in type
-/// Basically, when this atom moves between grids, it wants to have enter/exit cell called on it
-/datum/controller/subsystem/spatial_grid/proc/add_grid_awareness(atom/movable/add_to, type)
-	// We need to ensure we have a new list reference, to build our new key out of
-	var/list/current_list = spatial_grid_categories[add_to.spatial_grid_key]
-	if(current_list)
-		current_list = current_list.Copy()
-	else
-		current_list = list()
-	// Now we do a binary insert, to ensure it's sorted (don't wanna overcache)
-	BINARY_INSERT_DEFINE(type, current_list, SORT_VAR_NO_TYPE, type, SORT_COMPARE_DIRECTLY, COMPARE_KEY)
-	update_grid_awareness(add_to, current_list)
-
-/// Alerts the atom's current cell that it wishes to be treated as a member
-/// This functionally amounts to "hey, I was recently made aware by [add_grid_awareness], please insert me into my current cell"
-/datum/controller/subsystem/spatial_grid/proc/add_grid_membership(atom/movable/add_to, turf/target_turf, type)
-	if(!target_turf)
-		return
-	if(initialized)
-		add_single_type(add_to, target_turf, type)
-	else //SSspatial_grid isnt init'd yet, add ourselves to the queue
-		enter_pre_init_queue(add_to, type)
-
-/// Removes grid awareness from the passed in atom, of the passed in type
-/datum/controller/subsystem/spatial_grid/proc/remove_grid_awareness(atom/movable/remove_from, type)
-	// We need to ensure we have a new list reference, to build our new key out of
-	var/list/current_list = spatial_grid_categories[remove_from.spatial_grid_key]
-	if(current_list)
-		current_list = current_list.Copy()
-	else
-		current_list = list()
-	current_list -= type
-	update_grid_awareness(remove_from, current_list)
-
-/// Removes grid membership from the passed in atom, of the passed in type
-/datum/controller/subsystem/spatial_grid/proc/remove_grid_membership(atom/movable/remove_from, turf/target_turf, type)
-	if(!target_turf)
-		return
-	if(initialized)
-		remove_single_type(remove_from, target_turf, type)
-	else //SSspatial_grid isnt init'd yet, remove ourselves from the queue
-		remove_from_pre_init_queue(remove_from, type)
-
-/// Updates the string that atoms hold that stores their grid awareness
-/// We will use it to key into their spatial grid categories later
-/datum/controller/subsystem/spatial_grid/proc/update_grid_awareness(atom/movable/update, list/new_list)
-	// We locally store a stringified version of the list, to prevent people trying to mutate it
-	update.spatial_grid_key = new_list.Join("-")
-	// Ensure the global representation is cached
-	if(!spatial_grid_categories[update.spatial_grid_key])
-		spatial_grid_categories[update.spatial_grid_key] = new_list
 
 ///debug proc for checking if a movable is in multiple cells when it shouldnt be (ie always unless multitile entering is implemented)
 /atom/proc/find_all_cells_containing(remove_from_cells = FALSE)
