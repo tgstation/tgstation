@@ -16,6 +16,7 @@
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //Same as the PDA
 	looping_sound = FALSE
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
 
 	var/has_variants = TRUE
 	var/finish_color = null
@@ -58,6 +59,12 @@
 			to_chat(user, span_notice("You insert \the [W] into \the [src]."))
 			inserted_item = W
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
+
+	if(istype(W, /obj/item/paper))
+		var/obj/item/paper/paper = W
+
+		to_chat(user, span_notice("You scan \the [W] into \the [src]."))
+		note = paper.info
 
 /obj/item/modular_computer/tablet/AltClick(mob/user)
 	. = ..()

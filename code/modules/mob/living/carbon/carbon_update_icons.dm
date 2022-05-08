@@ -47,7 +47,6 @@
 	update_fire()
 	update_body_parts()
 
-
 /mob/living/carbon/update_inv_hands()
 	remove_overlay(HANDS_LAYER)
 	if (handcuffed)
@@ -78,15 +77,27 @@
 	overlays_standing[HANDS_LAYER] = hands
 	apply_overlay(HANDS_LAYER)
 
+/mob/living/carbon/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+	var/fire_icon = "[dna?.species.fire_overlay || "human"]_[stacks > MOB_BIG_FIRE_STACK_THRESHOLD ? "big_fire" : "small_fire"][suffix]"
 
-/mob/living/carbon/update_fire(fire_icon = "Generic_mob_burning")
+	if(!GLOB.fire_appearances[fire_icon])
+		GLOB.fire_appearances[fire_icon] = mutable_appearance('icons/mob/onfire.dmi', fire_icon, -FIRE_LAYER, appearance_flags = RESET_COLOR)
+
+	if((stacks > 0 && on_fire) || HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE))
+		if(fire_icon == last_icon_state)
+			return last_icon_state
+
+		remove_overlay(FIRE_LAYER)
+		overlays_standing[FIRE_LAYER] = GLOB.fire_appearances[fire_icon]
+		apply_overlay(FIRE_LAYER)
+		return fire_icon
+
+	if(!last_icon_state)
+		return last_icon_state
+
 	remove_overlay(FIRE_LAYER)
-	if(on_fire || HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE))
-		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
-		new_fire_overlay.appearance_flags = RESET_COLOR
-		overlays_standing[FIRE_LAYER] = new_fire_overlay
-
 	apply_overlay(FIRE_LAYER)
+	return null
 
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)

@@ -79,7 +79,7 @@
 		qdel(src)
 
 /obj/effect/anomaly/proc/anomalyNeutralize()
-	new /obj/effect/particle_effect/smoke/bad(loc)
+	new /obj/effect/particle_effect/fluid/smoke/bad(loc)
 
 	if(drops_core)
 		aSignal.forceMove(drop_location())
@@ -100,7 +100,7 @@
 
 /atom/movable/warp_effect
 	plane = GRAVITY_PULSE_PLANE
-	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
+	appearance_flags = PIXEL_SCALE|LONG_GLIDE // no tile bound so you can see it around corners and so
 	icon = 'icons/effects/light_overlays/light_352.dmi'
 	icon_state = "light"
 	pixel_x = -176
@@ -195,11 +195,11 @@
 	aSignal = /obj/item/assembly/signaler/anomaly/flux
 	var/canshock = FALSE
 	var/shockdamage = 20
-	var/explosive = TRUE
+	var/explosive = FLUX_EXPLOSIVE
 
-/obj/effect/anomaly/flux/Initialize(mapload, new_lifespan, drops_core = TRUE, _explosive = TRUE)
+/obj/effect/anomaly/flux/Initialize(mapload, new_lifespan, drops_core = TRUE, explosive = FLUX_EXPLOSIVE)
 	. = ..()
-	explosive = _explosive
+	src.explosive = explosive
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
@@ -231,11 +231,13 @@
 		M.electrocute_act(shockdamage, name, flags = SHOCK_NOGLOVES)
 
 /obj/effect/anomaly/flux/detonate()
-	if(explosive)
-		explosion(src, devastation_range = 1, heavy_impact_range = 4, light_impact_range = 16, flash_range = 18) //Low devastation, but hits a lot of stuff.
-	else
-		new /obj/effect/particle_effect/sparks(loc)
-
+	switch(explosive)
+		if(FLUX_EXPLOSIVE)
+			explosion(src, devastation_range = 1, heavy_impact_range = 4, light_impact_range = 16, flash_range = 18) //Low devastation, but hits a lot of stuff.
+		if(FLUX_LOW_EXPLOSIVE)
+			explosion(src, heavy_impact_range = 1, light_impact_range = 4, flash_range = 6)
+		if(FLUX_NO_EXPLOSION)
+			new /obj/effect/particle_effect/sparks(loc)
 
 /////////////////////
 
@@ -418,5 +420,51 @@
 				SSexplosions.medturf += T
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += T
+
+/obj/effect/anomaly/hallucination
+	name = "hallucination anomaly"
+	icon_state = "hallucination_anomaly"
+	aSignal = /obj/item/assembly/signaler/anomaly/hallucination
+	/// Time passed since the last effect, increased by delta_time of the SSobj
+	var/ticks = 0
+	/// How many seconds between each small hallucination pulses
+	var/release_delay = 5
+
+/obj/effect/anomaly/hallucination/anomalyEffect(delta_time)
+	. = ..()
+	ticks += delta_time
+	if(ticks < release_delay)
+		return
+	ticks -= release_delay
+	var/turf/open/our_turf = get_turf(src)
+	if(istype(our_turf))
+		hallucination_pulse(our_turf, 5)
+
+/obj/effect/anomaly/hallucination/detonate()
+	var/turf/open/our_turf = get_turf(src)
+	if(istype(our_turf))
+		hallucination_pulse(our_turf, 10)
+
+/obj/effect/anomaly/hallucination/proc/hallucination_pulse(turf/open/location, range)
+	for(var/mob/living/carbon/human/near in view(location, range))
+		// If they are immune to hallucinations.
+		if (HAS_TRAIT(near, TRAIT_MADNESS_IMMUNE) || (near.mind && HAS_TRAIT(near.mind, TRAIT_MADNESS_IMMUNE)))
+			continue
+
+		// Blind people don't get hallucinations.
+		if (near.is_blind())
+			continue
+
+		// Everyone else gets hallucinations.
+		var/dist = sqrt(1 / max(1, get_dist(near, location)))
+		near.hallucination += 50 * dist
+		near.hallucination = clamp(near.hallucination, 0, 150)
+		var/list/messages = list(
+			"You feel your conscious mind fall apart!",
+			"Reality warps around you!",
+			"Something's wispering around you!",
+			"You are going insane!",
+		)
+		to_chat(near, span_warning(pick(messages)))
 
 #undef ANOMALY_MOVECHANCE

@@ -86,3 +86,6 @@
 
 /// generally called before temporary non-parallel animate()s on the atom (animation_duration)
 #define COMSIG_ATOM_TEMPORARY_ANIMATION_START "atom_temp_animate_start"
+
+/// from internal loop in /atom/proc/propagate_radiation_pulse: (atom/pulse_source)
+#define COMSIG_ATOM_PROPAGATE_RAD_PULSE "atom_propagate_radiation_pulse"

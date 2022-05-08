@@ -118,12 +118,6 @@
 #define COMSIG_ITEM_PICKUP "item_pickup"
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
-///return a truthy value to prevent ensouling, checked in /obj/effect/proc_holder/spell/targeted/lichdom/cast(): (mob/user)
-#define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul"
-	#define COMPONENT_BLOCK_IMBUE (1 << 0)
-///called before marking an object for retrieval, checked in /obj/effect/proc_holder/spell/targeted/summonitem/cast() : (mob/user)
-#define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"
-	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1<<0)
 ///from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
 	#define COMPONENT_HIT_REACTION_BLOCK (1<<0)
@@ -285,6 +279,9 @@
 
 // /obj/item/gun signals
 
+///called in /obj/item/gun/fire_gun (user, target, flag, params)
+#define COMSIG_GUN_TRY_FIRE "gun_try_fire"
+	#define COMPONENT_CANCEL_GUN_FIRE (1<<0)
 ///called in /obj/item/gun/process_fire (src, target, params, zone_override)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
@@ -302,6 +299,22 @@
 	#define COMPONENT_CANCEL_SPELL (1<<0)
 ///called from /obj/effect/proc_holder/spell/perform (src)
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
+
+/// Sent from /obj/effect/proc_holder/spell/targeted/lichdom/cast(), to the item being imbued: (mob/user)
+#define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul"
+	/// Returns to block this item from being imbued into a phylactery
+	#define COMPONENT_BLOCK_IMBUE (1 << 0)
+/// Sent from /obj/effect/proc_holder/spell/targeted/summonitem/cast(), to the item being marked : ()
+#define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"
+	/// Returns to block this item from being marked for instant summons
+	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1<<0)
+
+/// Sent from /obj/effect/proc_holder/spell/targeted/charge/cast(), to the item in hand being charged: (obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+#define COMSIG_ITEM_MAGICALLY_CHARGED "item_magic_charged"
+	/// Returns if an item was successfuly recharged
+	#define COMPONENT_ITEM_CHARGED (1 << 0)
+	/// Returns if the item had a negative side effect occur while recharging
+	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
 
 // /obj/item/camera signals
 
@@ -334,6 +347,8 @@
 ///from [/obj/item/proc/tryEmbed] sent when trying to force an embed (mainly for projectiles and eating glass)
 #define COMSIG_EMBED_TRY_FORCE "item_try_embed"
 	#define COMPONENT_EMBED_SUCCESS (1<<1)
+// FROM [/obj/item/proc/updateEmbedding] sent when an item's embedding properties are changed : ()
+#define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
 ///sent to targets during the process_hit proc of projectiles
 #define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"
@@ -393,4 +408,3 @@
 /// from base of /obj/item/slimepotion/speed/afterattack(): (obj/target, /obj/src, mob/user)
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
-

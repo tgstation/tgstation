@@ -4300,7 +4300,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "uq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
@@ -4921,7 +4920,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/effect/turf_decal/bot_white{
 	color = "#00A2FF"
 	},
@@ -5140,10 +5139,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
-/area/shuttle/sbc_starfury)
-"Pf" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_starfury)
 "Pk" = (
 /obj/effect/turf_decal/stripes/line{
@@ -6942,7 +6937,7 @@ nk
 bo
 bE
 uq
-Pf
+ae
 KP
 Sh
 df

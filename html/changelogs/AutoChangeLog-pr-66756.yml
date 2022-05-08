@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - qol: "removes redundant access requirements from some airlocks"

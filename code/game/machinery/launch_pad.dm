@@ -35,7 +35,7 @@
 	. = ..()
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 
 	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
 	var/mutable_appearance/MA = new /mutable_appearance()
@@ -49,7 +49,7 @@
 
 /obj/machinery/launchpad/Destroy()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_from_hud(src)
+		diag_hud.remove_atom_from_hud(src)
 	return ..()
 
 /obj/machinery/launchpad/examine(mob/user)
@@ -222,7 +222,6 @@
 		log_msg += "nothing"
 	log_msg += " [sending ? "to" : "from"] [target_x], [target_y], [z] ([A ? A.name : "null area"])"
 	log_game(log_msg.Join())
-	updateDialog()
 
 //Starts in the briefcase. Don't spawn this directly, or it will runtime when closing.
 /obj/machinery/launchpad/briefcase
