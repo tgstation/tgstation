@@ -76,7 +76,7 @@
 
 /datum/heretic_knowledge/rust_regen
 	name = "Leeching Walk"
-	desc = "Grants you passive healing and baton resistance while standing over rust."
+	desc = "Grants you passive healing and resistance to batons while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/rust_mark,
