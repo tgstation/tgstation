@@ -26,6 +26,8 @@ export const AirlockController = (_, context) => {
   const { data } = useBackend<AirlockControllerData>(context);
   const { airlockState, pumpStatus, interiorStatus, exteriorStatus } = data;
   const currentStatus: AirlockStatus = getAirlockStatus(airlockState);
+  const nameToUpperCase = (str: string) =>
+    str.replace(/^\w/, (c) => c.toUpperCase());
 
   return (
     <Window width={500} height={190}>
@@ -39,16 +41,16 @@ export const AirlockController = (_, context) => {
               <PressureIndicator currentStatus={currentStatus} />
             </LabeledList.Item>
             <LabeledList.Item label="Control Pump">
-              {pumpStatus.replace(/^\w/, (c) => c.toUpperCase())}
+              {nameToUpperCase(pumpStatus)}
             </LabeledList.Item>
             <LabeledList.Item label="Interior Door">
               <Box color={interiorStatus === 'open' && 'good'}>
-                {interiorStatus.replace(/^\w/, (c) => c.toUpperCase())}
+                {nameToUpperCase(interiorStatus)}
               </Box>
             </LabeledList.Item>
             <LabeledList.Item label="Exterior Door">
               <Box color={exteriorStatus === 'open' && 'good'}>
-                {exteriorStatus.replace(/^\w/, (c) => c.toUpperCase())}
+                {nameToUpperCase(exteriorStatus)}
               </Box>
             </LabeledList.Item>
           </LabeledList>
@@ -63,106 +65,104 @@ const AirLockButtons = (_, context) => {
   const { act, data } = useBackend<AirlockControllerData>(context);
   const { airlockState } = data;
 
-  return (
-    ((airlockState === 'pressurize' || airlockState === 'depressurize') && (
-      <Button icon="stop-circle" onClick={() => act('abort')}>
-        Abort
-      </Button>
-    ))
-    || (airlockState === 'closed' && (
-      <>
-        <Button icon="lock-open" onClick={() => act('cycleInterior')}>
-          Open Interior Airlock
-        </Button>
-        <Button icon="lock-open" onClick={() => act('cycleExterior')}>
-          Open Exterior Airlock
-        </Button>
-      </>
-    ))
-    || (airlockState === 'inopen' && (
-      <>
-        <Button icon="lock" onClick={() => act('cycleClosed')}>
-          Close Interior Airlock
-        </Button>
-        <Button icon="sync" onClick={() => act('cycleExterior')}>
-          Cycle to Exterior Airlock
-        </Button>
-      </>
-    ))
-    || (airlockState === 'outopen' && (
-      <>
-        <Button icon="lock" onClick={() => act('cycleClosed')}>
-          Close Exterior Airlock
-        </Button>
-        <Button icon="sync" onClick={() => act('cycleInterior')}>
-          Cycle to Interior Airlock
-        </Button>
-      </>
-    ))
-  );
-};
-
-/** Displays the current status as two text strings, depending on door state. */
-const getAirlockStatus = (airlockState) => {
-  let currentStatus: AirlockStatus;
-
   switch (airlockState) {
-    case 'inopen':
-      currentStatus = {
-        primary: 'Interior Airlock Open',
-        color: 'good',
-      };
-      break;
-    case 'pressurize':
-      currentStatus = {
-        ...defaultStatus,
-        primary: 'Cycling to Interior Airlock',
-        icon: 'fan',
-        color: 'average',
-      };
-      break;
+    case 'pressurize' || 'depressurize':
+      return (
+        <Button icon="stop-circle" onClick={() => act('abort')}>
+          Abort
+        </Button>
+      );
     case 'closed':
-      currentStatus = {
-        ...defaultStatus,
-        primary: 'Inactive',
-        color: 'white',
-      };
-      break;
-    case 'depressurize':
-      currentStatus = {
-        ...defaultStatus,
-        primary: 'Cycling to Exterior Airlock',
-        icon: 'fan',
-        color: 'average',
-      };
-      break;
+      return (
+        <>
+          <Button icon="lock-open" onClick={() => act('cycleInterior')}>
+            Open Interior Airlock
+          </Button>
+          <Button icon="lock-open" onClick={() => act('cycleExterior')}>
+            Open Exterior Airlock
+          </Button>
+        </>
+      );
+    case 'inopen':
+      return (
+        <>
+          <Button icon="lock" onClick={() => act('cycleClosed')}>
+            Close Interior Airlock
+          </Button>
+          <Button icon="sync" onClick={() => act('cycleExterior')}>
+            Cycle to Exterior Airlock
+          </Button>
+        </>
+      );
     case 'outopen':
-      currentStatus = {
-        ...defaultStatus,
-        primary: 'Exterior Airlock Open',
-        icon: 'exclamation-triangle',
-        color: 'bad',
-      };
-      break;
+      return (
+        <>
+          <Button icon="lock" onClick={() => act('cycleClosed')}>
+            Close Exterior Airlock
+          </Button>
+          <Button icon="sync" onClick={() => act('cycleInterior')}>
+            Cycle to Interior Airlock
+          </Button>
+        </>
+      );
     default:
-      currentStatus = defaultStatus;
+      return null;
   }
-
-  return currentStatus;
 };
 
 /** Displays the numeric pressure alongside an icon for the user */
 const PressureIndicator = (props, context) => {
   const { data } = useBackend<AirlockControllerData>(context);
   const { sensorPressure } = data;
-  const { currentStatus } = props;
-  const { icon, color } = currentStatus;
+  const {
+    currentStatus: { icon, color },
+  } = props;
   let spin = icon === 'fan' ? 1 : 0;
 
   return (
     <Box color={color}>
-      {sensorPressure} kPa{' '}
-      {currentStatus.icon && <Icon name={icon} spin={spin} />}
+      {sensorPressure} kPa {icon && <Icon name={icon} spin={spin} />}
     </Box>
   );
+};
+
+
+/** Displays the current status as two text strings, depending on door state. */
+const getAirlockStatus = (airlockState) => {
+  switch (airlockState) {
+    case 'inopen':
+      return {
+        primary: 'Interior Airlock Open',
+        color: 'good',
+      };
+    case 'pressurize':
+      return {
+        ...defaultStatus,
+        primary: 'Cycling to Interior Airlock',
+        icon: 'fan',
+        color: 'average',
+      };
+    case 'closed':
+      return {
+        ...defaultStatus,
+        primary: 'Inactive',
+        color: 'white',
+      };
+    case 'depressurize':
+      return {
+        ...defaultStatus,
+        primary: 'Cycling to Exterior Airlock',
+        icon: 'fan',
+        color: 'average',
+      };
+    case 'outopen':
+      return {
+        ...defaultStatus,
+        primary: 'Exterior Airlock Open',
+        icon: 'exclamation-triangle',
+        color: 'bad',
+      };
+    default:
+      return defaultStatus;
+  }
 };
