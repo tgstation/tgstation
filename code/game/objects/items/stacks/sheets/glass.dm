@@ -274,6 +274,8 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	max_integrity = 40
 	sharpness = SHARP_EDGED
 	var/icon_prefix
+	var/shiv_type = /obj/item/knife/shiv
+	var/craft_time = 3.5 SECONDS
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
 	embedding = list("embed_chance" = 65)
 
@@ -338,38 +340,13 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	else if(istype(item, /obj/item/stack/sheet/cloth))
 		var/obj/item/stack/sheet/cloth/cloth = item
 		to_chat(user, span_notice("You begin to wrap the [cloth] around the [src]..."))
-		if(istype(src, /obj/item/shard/plasma))
-			if(do_after(user, 140, target = src))
-				var/obj/item/knife/shiv/plasma/shiv = new /obj/item/knife/shiv/plasma
-				cloth.use(1)
-				to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
-				remove_item_from_storage(src)
-				qdel(src)
-				user.put_in_hands(shiv)
-		else if(istype(src, /obj/item/shard/titanium))
-			if(do_after(user, 70, target = src))
-				var/obj/item/knife/shiv/titanium/shiv = new /obj/item/knife/shiv/titanium
-				cloth.use(1)
-				to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
-				remove_item_from_storage(src)
-				qdel(src)
-				user.put_in_hands(shiv)
-		else if(istype(src, /obj/item/shard/plastitanium))
-			if(do_after(user, 70, target = src))
-				var/obj/item/knife/shiv/plastitanium/shiv = new /obj/item/knife/shiv/plastitanium
-				cloth.use(1)
-				to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
-				remove_item_from_storage(src)
-				qdel(src)
-				user.put_in_hands(shiv)
-		else
-			if(do_after(user, 35, target = src))
-				var/obj/item/knife/shiv/shiv = new /obj/item/knife/shiv
-				cloth.use(1)
-				to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
-				remove_item_from_storage(src)
-				qdel(src)
-				user.put_in_hands(shiv)
+		if(do_after(user, craft_time, target = src))
+			var/obj/item/knife/shiv/shiv = new shiv_type
+			cloth.use(1)
+			to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
+			remove_item_from_storage(src)
+			qdel(src)
+			user.put_in_hands(shiv)
 
 	else
 		return ..()
@@ -405,6 +382,8 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	custom_materials = list(/datum/material/alloy/plasmaglass=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "plasma"
 	weld_material = /obj/item/stack/sheet/plasmaglass
+	craft_time = 7 SECONDS
+	shiv_type = /obj/item/knife/shiv/plasma
 
 /obj/item/shard/titanium
 	name = "bright shard"
@@ -415,6 +394,8 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	custom_materials = list(/datum/material/alloy/titaniumglass=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "titanium"
 	weld_material = /obj/item/stack/sheet/titaniumglass
+	craft_time = 7 SECONDS
+	shiv_type = /obj/item/knife/shiv/titanium
 
 /obj/item/shard/plastitanium
 	name = "dark shard"
@@ -426,3 +407,5 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	custom_materials = list(/datum/material/alloy/plastitaniumglass=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "plastitanium"
 	weld_material = /obj/item/stack/sheet/plastitaniumglass
+	craft_time = 14 SECONDS
+	shiv_type = /obj/item/knife/shiv/plastitanium
