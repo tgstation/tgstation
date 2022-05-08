@@ -428,10 +428,10 @@
 	icon_state = "delimber_anomaly"
 	aSignal = /obj/item/assembly/signaler/anomaly/delimber
 	immortal = TRUE
-	/// Time passed since the last effect, increased by delta_time of the SSobj
-	var/ticks = 0
+	/// Cooldown for every anomaly pulse
+	COOLDOWN_DECLARE(pulse_cooldown)
 	/// How many seconds between each anomaly pulses
-	var/releasedelay = 15
+	var/pulse_delay = 15 SECONDS
 	/// Range of the anomaly pulse
 	var/range = 5
 	///Lists for zones and bodyparts to swap and randomize
@@ -463,10 +463,11 @@
 
 /obj/effect/anomaly/delimber/anomalyEffect(delta_time)
 	. = ..()
-	ticks += delta_time
-	if(ticks < releasedelay)
+
+	if(!COOLDOWN_FINISHED(src, pulse_cooldown))
 		return
-	ticks -= releasedelay
+
+	COOLDOWN_START(src, pulse_cooldown, pulse_delay)
 
 	swap_parts(range)
 
@@ -498,7 +499,7 @@
 		var/obj/item/organ/new_organ = new picked_organ
 		new_organ.Insert(nearby, TRUE, FALSE)
 		nearby.update_body(TRUE)
-		to_chat(nearby, span_notice("Something has changed about you!"))
+		balloon_alert(nearby, "Something has changed about you!")
 
 /obj/effect/anomaly/hallucination
 	name = "hallucination anomaly"

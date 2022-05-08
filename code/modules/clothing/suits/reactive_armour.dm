@@ -382,6 +382,7 @@
 	desc = "An experimental suit of armor with sensitive detectors hooked up to a biohazard release valve. It scrambles the bodies of those around."
 	cooldown_message = span_danger("The connection is currently out of sync... Recalibrating.")
 	emp_message = span_warning("You feel the armor squirm.")
+	///Range of the effect.
 	var/range = 5
 	///Lists for zones and bodyparts to swap and randomize
 	var/static/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -455,4 +456,4 @@
 		var/obj/item/organ/new_organ = new picked_organ
 		new_organ.Insert(nearby, TRUE, FALSE)
 		nearby.update_body(TRUE)
-		to_chat(nearby, span_notice("Something has changed about you!"))
+		balloon_alert(nearby, "Something has changed about you!")
