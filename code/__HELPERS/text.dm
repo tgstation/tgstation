@@ -102,7 +102,7 @@
 
 
 /**
- * Used to get a properly sanitized input
+ * Used to get a properly sanitized input. Returns null if cancel is pressed.
  *
  * Arguments
  ** user - Target of the input prompt.
@@ -110,11 +110,10 @@
  ** title - The window title of the prompt.
  ** max_length - If you intend to impose a length limit - default is 1024.
  ** no_trim - Prevents the input from being trimmed if you intend to parse newlines or whitespace.
- ** null_return - Allows you to return a null value in case the user cancels or hits X. Default is false, which returns an empty string.
 */
-/proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE, null_return=FALSE)
+/proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/user_input = input(user, message, title, default) as text|null
-	if(null_return && isnull(user_input))
+	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
 		return copytext(html_encode(user_input), 1, max_length)
@@ -130,11 +129,10 @@
  ** title - The window title of the prompt.
  ** max_length - If you intend to impose a length limit - default is 1024.
  ** no_trim - Prevents the input from being trimmed if you intend to parse newlines or whitespace.
- ** null_return - Allows you to return a null value in case the user cancels or hits X. Default is false, which returns an empty string.
 */
-/proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE, null_return=FALSE)
+/proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/user_input = input(user, message, title, default) as message|null
-	if(null_return && isnull(user_input))
+	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
 		return copytext(html_encode(user_input), 1, max_length)

@@ -28,9 +28,9 @@
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(encode)
 			if(multiline)
-				return stripped_multiline_input(user, message, title, default, max_length, null_return = TRUE)
+				return stripped_multiline_input(user, message, title, default, max_length)
 			else
-				return stripped_input(user, message, title, default, max_length, null_return = TRUE)
+				return stripped_input(user, message, title, default, max_length)
 		else
 			if(multiline)
 				return input(user, message, title, default) as message|null
@@ -70,9 +70,9 @@
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(encode)
 			if(multiline)
-				return stripped_multiline_input(user, message, title, default, max_length, null_return = TRUE)
+				return stripped_multiline_input(user, message, title, default, max_length)
 			else
-				return stripped_input(user, message, title, default, max_length, null_return = TRUE)
+				return stripped_input(user, message, title, default, max_length)
 		else
 			if(multiline)
 				return input(user, message, title, default) as message|null
