@@ -3116,7 +3116,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "hD" = (
-/obj/machinery/rnd/production/protolathe,
+/obj/machinery/rnd/production/protolathe/offstation,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

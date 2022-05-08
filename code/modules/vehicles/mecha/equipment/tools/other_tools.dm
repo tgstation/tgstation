@@ -434,7 +434,7 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas
 	name = "RCS thruster package"
 	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments, by expelling gas from the internal life support tank."
-	effect_type = /obj/effect/particle_effect/smoke
+	effect_type = /obj/effect/particle_effect/fluid/smoke
 	var/move_cost = 20 //moles per step
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/gas/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
