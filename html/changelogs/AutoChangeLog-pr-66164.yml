@@ -1,5 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes: 
-  - rscadd: "Heterochromia Quirk, try it out!"
-  - refactor: "Eyes now support having two different colors for each eye; become your own disco!"
