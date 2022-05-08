@@ -9,7 +9,9 @@
 	)
 
 /datum/vote/restart_vote/toggle_votable(mob/toggler)
-	if(!check_rights_for(toggler?.client, R_ADMIN))
+	if(!toggler)
+		CRASH("[type] wasn't passed a \"toggler\" mob to toggle_votable.")
+	if(!check_rights_for(toggler.client, R_ADMIN))
 		return FALSE
 
 	CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))

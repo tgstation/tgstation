@@ -3,10 +3,16 @@ import { Box, Icon, Stack, Button, Section, NoticeBox, LabeledList, Collapsible 
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
 
+enum VoteConfig {
+  None = -1,
+  Disabled = 0,
+  Enabled = 1,
+}
+
 type Vote = {
   name: string;
   canBeInitiated: BooleanLike;
-  config: number; // -1 = no config, 0 = config + disabled, 1 = config + enabled
+  config: VoteConfig;
 };
 
 type Option = {
@@ -76,13 +82,13 @@ const VoteOptions = (props, context) => {
         <Stack vertical justify="space-between">
           { possibleVotes.map(option => (
             <Stack.Item key={option.name}>
-              {!!user.isLowerAdmin && option.config !== -1 && (
+              {!!user.isLowerAdmin && option.config !== VoteConfig.None && (
                 <Button.Checkbox
-                  mr={option.config === 0 ? 1 : 1.6}
+                  mr={option.config === VoteConfig.Disabled ? 1 : 1.6}
                   color="red"
-                  checked={option.config === 1}
+                  checked={option.config === VoteConfig.Enabled}
                   disabled={!user.isUpperAdmin}
-                  content={option.config === 1 ? 'Enabled' : 'Disabled'}
+                  content={option.config === VoteConfig.Enabled ? 'Enabled' : 'Disabled'}
                   onClick={() => act('toggleVote', {
                     voteName: option.name,
                   })} />
