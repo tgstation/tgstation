@@ -15,8 +15,12 @@
 	/// and the destination landmark.
 	var/obj/effect/landmark/tram/from_where
 
-	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag
+	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
+	///this var is poorly named its actually horizontal movement delay but whatever.
 	var/horizontal_speed = 0.5
+
+	///version of horizontal_speed that gets set in init and is considered our base speed if our lift gets slowed down
+	var/base_horizontal_speed = 0.5
 
 	///the world.time we should next move at. in case our speed is set to less than 1 movement per tick
 	var/next_move = INFINITY
@@ -34,8 +38,14 @@
 /datum/lift_master/tram/New(obj/structure/industrial_lift/tram/lift_platform)
 	. = ..()
 	horizontal_speed = lift_platform.horizontal_speed
+	base_horizontal_speed = lift_platform.horizontal_speed
 
 	check_starting_landmark()
+
+/datum/lift_master/tram/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == "base_horizontal_speed")
+		horizontal_speed = max(horizontal_speed, base_horizontal_speed)
 
 /datum/lift_master/tram/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
 	. = ..()
@@ -125,7 +135,7 @@
 				times_below = 0
 
 			if(times_below >= SStramprocess.max_cheap_moves)
-				horizontal_speed = initial(horizontal_speed)
+				horizontal_speed = base_horizontal_speed
 				slowed_down = FALSE
 				times_below = 0
 
@@ -133,9 +143,8 @@
 			times_exceeded++
 
 			if(times_exceeded >= SStramprocess.max_exceeding_moves)
-				message_admins("The tram at [ADMIN_JMP(lift_platforms[1])] is taking more than [SStramprocess.max_time] milliseconds per movement, halving its movement speed")
-				horizontal_speed = initial(horizontal_speed)
-				horizontal_speed *= 2 //halve its speed
+				message_admins("The tram at [ADMIN_JMP(lift_platforms[1])] is taking more than [SStramprocess.max_time] milliseconds per movement, halving its movement speed. if this continues to be a problem you can call reset_lift_contents() on the trams lift_master_datum to reset it to its original state and clear added objects")
+				horizontal_speed = base_horizontal_speed * 2 //halves its speed
 				slowed_down = TRUE
 				times_exceeded = 0
 		else
