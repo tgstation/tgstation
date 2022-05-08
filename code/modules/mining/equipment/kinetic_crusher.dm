@@ -31,15 +31,10 @@
 	var/backstab_bonus = 30
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/kinetic_crusher/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
 /obj/item/kinetic_crusher/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 110) //technically it's huge and bulky, but this provides an incentive to use it
-	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
+	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)

@@ -61,13 +61,11 @@
 
 /obj/item/spear/explosive/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	set_explosive(new /obj/item/grenade/iedcasing/spawned()) //For admin-spawned explosive lances
 
 /obj/item/spear/explosive/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1", wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /// triggered on wield of two handed item
 /obj/item/spear/explosive/proc/on_wield(obj/item/source, mob/user)

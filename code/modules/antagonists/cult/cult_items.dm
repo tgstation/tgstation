@@ -723,15 +723,10 @@ Striking a noncultist, however, will tear their flesh."}
 	var/datum/action/innate/cult/halberd/halberd_act
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/melee/cultblade/halberd/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
 /obj/item/melee/cultblade/halberd/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 100, 90)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
+	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /// triggered on wield of two handed item
 /obj/item/melee/cultblade/halberd/proc/on_wield(obj/item/source, mob/user)
@@ -1077,12 +1072,12 @@ Striking a noncultist, however, will tear their flesh."}
 
 		if(target.can_block_magic() || IS_CULTIST(target))
 			target.visible_message(span_warning("[src] bounces off of [target], as if repelled by an unseen force!"))
-			return 
+			return
 		if(IS_CULTIST(target) && target.put_in_active_hand(src))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
 			target.visible_message(span_warning("[target] catches [src] out of the air!"))
 			return
-		if(!..())			
+		if(!..())
 			target.Paralyze(30)
 			if(D?.thrower)
 				for(var/mob/living/Next in orange(2, T))

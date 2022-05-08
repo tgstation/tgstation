@@ -344,7 +344,7 @@
 /obj/item/shockpaddles/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /// triggered on wield of two handed item
 /obj/item/shockpaddles/proc/on_wield(obj/item/source, mob/user)
@@ -405,8 +405,6 @@
 /obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, TRAIT_GENERIC) //stops shockpaddles from being inserted in BoH
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	if(!req_defib)
 		return //If it doesn't need a defib, just say it exists
 	if (!loc || !istype(loc, /obj/item/defibrillator)) //To avoid weird issues from admin spawns

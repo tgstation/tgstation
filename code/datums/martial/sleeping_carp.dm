@@ -169,14 +169,9 @@
 	block_chance = 50
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/staff/bostaff/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
 /obj/item/staff/bostaff/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, icon_wielded="[base_icon_state]1", wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /// triggered on wield of two handed item
 /obj/item/staff/bostaff/proc/on_wield(obj/item/source, mob/user)

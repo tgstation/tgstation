@@ -24,15 +24,10 @@
 	var/on = FALSE
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/chainsaw/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
 /obj/item/chainsaw/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
-	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /// triggered on wield of two handed item
 /obj/item/chainsaw/proc/on_wield(obj/item/source, mob/user)
