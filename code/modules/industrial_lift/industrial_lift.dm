@@ -27,6 +27,9 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	///what movables on our platform that we are moving
 	var/list/atom/movable/lift_load
+	///lazylist of weakrefs to the contents we have when we're first created. stored so that admins can clear the tram to its initial state
+	///if someone put a bunch of stuff onto it.
+	var/list/datum/weakref/initial_contents
 
 	///what glide_size we set our moving contents to.
 	var/glide_size_override = 8
@@ -99,18 +102,35 @@ GLOBAL_LIST_EMPTY(lifts)
 	LAZYREMOVE(changed_gliders, potential_rider)
 	UnregisterSignal(potential_rider, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
 
-/obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
+/obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/new_lift_contents)
 	SIGNAL_HANDLER
 	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/industrial_lift))
-	if(is_type_in_typecache(AM, blacklisted_types) || AM.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
-		return
-	if(AM in lift_load)
-		return
-	if(isliving(AM) && !HAS_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED))
-		ADD_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
-	LAZYADD(lift_load, AM)
-	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
+	if(is_type_in_typecache(new_lift_contents, blacklisted_types) || new_lift_contents.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
+		return FALSE
+	if(new_lift_contents in lift_load)
+		return FALSE
 
+	if(isliving(new_lift_contents) && !HAS_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED))
+		ADD_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
+	LAZYADD(lift_load, new_lift_contents)
+	RegisterSignal(new_lift_contents, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
+
+	return TRUE
+
+///adds everything on our tile that can be added to our lift_load and initial_contents lists when we're created
+/obj/structure/industrial_lift/proc/add_initial_contents()
+	for(var/turf/turf_loc in locs)
+		for(var/atom/movable/movable_contents as anything in turf_loc)
+			if(movable_contents == src)
+				continue
+
+			if(AddItemOnLift(src, movable_contents))
+
+				var/datum/weakref/new_initial_contents = WEAKREF(movable_contents)
+				if(!new_initial_contents)
+					continue
+
+				LAZYADD(initial_contents, new_initial_contents)
 
 ///signal handler for COMSIG_MOVABLE_UPDATE_GLIDE_SIZE: when a movable in lift_load changes its glide_size independently.
 ///adds that movable to a lazy list, movables in that list have their glide_size updated when the tram next moves
@@ -200,6 +220,8 @@ GLOBAL_LIST_EMPTY(lifts)
 		lift_master_datum.lift_platforms -= other_lift
 		if(other_lift.lift_load)
 			LAZYOR(lift_load, other_lift.lift_load)
+		if(other_lift.initial_contents)
+			LAZYOR(initial_contents, other_lift.initial_contents)
 
 		qdel(other_lift)
 
@@ -414,6 +436,75 @@ GLOBAL_LIST_EMPTY(lifts)
 			mover.loc = get_step(mover, movement_direction)
 
 			mover.Moved(mover_old_loc, movement_direction, TRUE, null, src, FALSE)
+
+	return TRUE
+
+/**
+ * reset the contents of this lift platform to its original state in case someone put too much shit on it.
+ * used by an admin via calling reset_lift_contents() on our lift_master_datum.
+ *
+ * Arguments:
+ * * consider_anything_past - number. if > 0 this platform will only handle foreign contents that exceed this number on each of our locs
+ * * foreign_objects - bool. if true this platform will consider /atom/movable's that arent mobs as part of foreign contents
+ * * foreign_non_player_mobs - bool. if true we consider mobs that dont have a mind to be foreign
+ * * consider_player_mobs - bool. if true we consider player mobs to be foreign. only works if foreign_non_player_mobs is true as well
+ */
+/obj/structure/industrial_lift/proc/reset_contents(consider_anything_past = 0, foreign_objects = TRUE, foreign_non_player_mobs = TRUE, consider_player_mobs = FALSE)
+	if(!foreign_objects && !foreign_non_player_mobs && !consider_player_mobs)
+		return FALSE
+
+	consider_anything_past = isnum(consider_anything_past) ? max(consider_anything_past, 0) : 0
+	//just in case someone fucks up the arguments
+
+	if(consider_anything_past && length(lift_load) <= consider_anything_past)
+		return FALSE
+
+	///list of resolve()'d initial_contents that are still in lift_load
+	var/list/atom/movable/original_contents = list(src)
+
+	///list of objects we consider foreign according to the given arguments
+	var/list/atom/movable/foreign_contents = list()
+
+
+	for(var/datum/weakref/initial_contents_ref as anything in initial_contents)
+		if(!initial_contents_ref)
+			continue
+
+		var/atom/movable/resolved_contents = initial_contents_ref.resolve()
+
+		if(!resolved_contents)
+			continue
+
+		if(!(resolved_contents in lift_load))
+			continue
+
+		original_contents += resolved_contents
+
+	for(var/turf/turf_loc as anything in locs)
+		var/list/atom/movable/foreign_contents_in_loc = list()
+
+		for(var/atom/movable/foreign_movable as anything in (turf_loc.contents - original_contents))
+			if(foreign_objects && ismovable(foreign_movable) && !ismob(foreign_movable))
+				foreign_contents_in_loc += foreign_movable
+				continue
+
+			if(foreign_non_player_mobs && ismob(foreign_movable))
+				var/mob/foreign_mob = foreign_movable
+				if(consider_player_mobs || !foreign_mob.mind)
+					foreign_contents_in_loc += foreign_mob
+					continue
+
+		if(consider_anything_past)
+			foreign_contents_in_loc.len -= consider_anything_past
+			//hey cool this works, neat. this takes from the opposite side of the list that youd expect but its easy so idc
+			//also this means that if you use consider_anything_past then foreign mobs are less likely to be deleted than foreign objects
+			//because internally the contents list is 2 linked lists of obj contents - mob contents, thus mobs are always last in the order
+			//when you iterate it.
+
+		foreign_contents += foreign_contents_in_loc
+
+	for(var/atom/movable/contents_to_delete as anything in foreign_contents)
+		qdel(contents_to_delete)
 
 	return TRUE
 

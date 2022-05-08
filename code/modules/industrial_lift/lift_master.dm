@@ -46,6 +46,9 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	LAZYADDASSOCLIST(GLOB.active_lifts_by_type, lift_id, src)
 
+	for(var/obj/structure/industrial_lift/lift as anything in lift_platforms)
+		lift.add_initial_contents()
+
 /datum/lift_master/Destroy()
 	for(var/obj/structure/industrial_lift/lift_platform as anything in lift_platforms)
 		lift_platform.lift_master_datum = null
@@ -323,3 +326,19 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
  */
 /datum/lift_master/proc/set_controls(state)
 	controls_locked = state
+
+/**
+ * resets the contents of all platforms to their original state in case someone put a bunch of shit onto the tram.
+ * intended to be called by admins. passes all arguments to reset_contents() for each of our platforms.
+ *
+ * Arguments:
+ * * consider_anything_past - number. if > 0 our platforms will only handle foreign contents that exceed this number in each of their locs
+ * * foreign_objects - bool. if true our platforms will consider /atom/movable's that arent mobs as part of foreign contents
+ * * foreign_non_player_mobs - bool. if true our platforms consider mobs that dont have a mind to be foreign
+ * * consider_player_mobs - bool. if true our platforms consider player mobs to be foreign. only works if foreign_non_player_mobs is true as well
+ */
+/datum/lift_master/proc/reset_lift_contents(consider_anything_past = 0, foreign_objects = TRUE, foreign_non_player_mobs = TRUE, consider_player_mobs = FALSE)
+	for(var/obj/structure/industrial_lift/lift_to_reset in lift_platforms)
+		lift_to_reset.reset_contents(consider_anything_past, foreign_objects, foreign_non_player_mobs, consider_player_mobs)
+
+	return TRUE
