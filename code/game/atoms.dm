@@ -7,7 +7,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND|LONG_GLIDE
 
 	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
 	var/pass_flags_self = NONE
@@ -536,7 +536,7 @@
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	if (source)
+	if (source) // Some sources directly expose us to a reagent without a source holder. This prevents a runtime when we attempt to send a signal to a null source.
 		SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
 	for(var/datum/reagent/current_reagent as anything in reagents)
 		. |= current_reagent.expose_atom(src, reagents[current_reagent])

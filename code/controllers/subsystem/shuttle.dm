@@ -95,6 +95,9 @@ SUBSYSTEM_DEF(shuttle)
 	/// A listing of previously delivered supply packs.
 	var/list/order_history = list()
 
+	/// A listing of previously delivered supply packs by order id
+	var/list/order_history_by_id = list()
+
 	/// A list of job accesses that are able to purchase any shuttles.
 	var/list/has_purchase_shuttle_access
 
@@ -132,6 +135,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	/// Are we currently in the process of loading a shuttle? Useful to ensure we don't load more than one at once, to avoid weird inconsistencies and possible runtimes.
 	var/shuttle_loading
+	/// Did the supermatter start an end of the universe event?
+	var/universal_cascade = FALSE
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	order_number = rand(1, 9000)
@@ -388,7 +393,7 @@ SUBSYSTEM_DEF(shuttle)
 	return 1
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
-	if (!SSticker.IsRoundInProgress())
+	if (!SSticker.IsRoundInProgress() || universal_cascade)
 		return
 
 	var/callShuttle = TRUE
@@ -632,6 +637,8 @@ SUBSYSTEM_DEF(shuttle)
 		request_list = SSshuttle.request_list
 	if (istype(SSshuttle.order_history))
 		order_history = SSshuttle.order_history
+	if (istype(SSshuttle.order_history_by_id))
+		order_history_by_id = SSshuttle.order_history_by_id
 
 	if (istype(SSshuttle.shuttle_loan))
 		shuttle_loan = SSshuttle.shuttle_loan

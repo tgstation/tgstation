@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - refactor: "Refactored the voting subsystem. Votes are now each their own datums."
+  - refactor: "The voting UI now uses Typescript."

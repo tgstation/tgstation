@@ -64,7 +64,7 @@
 			holder.shape.dust() //vampires do not have batform anymore, but this would still lead to very weird stuff with other shapeshift holders
 		vampire.dust()
 	var/area/A = get_area(vampire)
-	if(istype(A, /area/service/chapel))
+	if(istype(A, /area/station/service/chapel))
 		to_chat(vampire, span_warning("You don't belong here!"))
 		vampire.adjustFireLoss(10 * delta_time)
 		vampire.adjust_fire_stacks(3 * delta_time)

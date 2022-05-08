@@ -97,3 +97,5 @@
 		M.mutadone_proof = TRUE
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.show_to(H)
+	H.faction |= FACTION_CLOWN
+	
