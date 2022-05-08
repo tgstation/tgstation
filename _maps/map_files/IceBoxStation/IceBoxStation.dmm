@@ -887,8 +887,7 @@
 "aqx" = (
 /obj/structure/table,
 /obj/item/computer_hardware/hard_drive/portable{
-	pixel_x = -4;
-	pixel_y = -3
+	pixel_x = -2
 	},
 /obj/item/computer_hardware/hard_drive/portable{
 	pixel_x = 2;
@@ -6035,15 +6034,19 @@
 /area/station/maintenance/central/lesser)
 "bVz" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/ordnance{
-	pixel_x = 5;
-	pixel_y = 1
-	},
 /obj/machinery/camera/directional/east{
 	c_tag = "Ordnance Office";
 	network = list("ss13","rd")
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/mixing/hallway)
 "bVJ" = (
@@ -8262,7 +8265,17 @@
 /turf/open/floor/iron/smooth_edge,
 /area/station/security/lockers)
 "cFu" = (
-/obj/structure/tank_dispenser,
+/obj/structure/table,
+/obj/item/raw_anomaly_core/random{
+	pixel_x = -7
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 5
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_x = 8;
+	pixel_y = 9
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/mixing)
 "cFE" = (
@@ -32577,12 +32590,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "kuE" = (
-/obj/structure/table,
-/obj/item/pipe_dispenser{
-	pixel_x = 3;
-	pixel_y = 7
-	},
-/obj/item/pipe_dispenser,
+/obj/structure/tank_dispenser,
 /turf/open/floor/iron/dark,
 /area/station/science/mixing/hallway)
 "kuR" = (
@@ -33240,13 +33248,12 @@
 /area/station/commons/dorms)
 "kGL" = (
 /obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 3;
-	pixel_y = -2
+/obj/item/holosign_creator/atmos{
+	pixel_x = -5
 	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = 8
+/obj/item/holosign_creator/atmos{
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/mixing/hallway)
@@ -60926,14 +60933,12 @@
 /area/station/engineering/atmos)
 "tJy" = (
 /obj/structure/table,
-/obj/item/holosign_creator/atmos{
-	pixel_x = -5
-	},
 /obj/machinery/light/directional/east,
 /obj/machinery/firealarm/directional/east,
-/obj/item/holosign_creator/atmos{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/item/pipe_dispenser,
+/obj/item/pipe_dispenser{
+	pixel_x = 3;
+	pixel_y = 7
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/mixing/hallway)
@@ -69413,6 +69418,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"wwJ" = (
+/obj/structure/tank_dispenser,
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers)
 "wwK" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -190777,7 +190786,7 @@ tjo
 tjo
 tjo
 tjo
-tjo
+wwJ
 tjo
 tjo
 tjo
