@@ -499,7 +499,7 @@
 		var/obj/item/organ/new_organ = new picked_organ
 		new_organ.Insert(nearby, TRUE, FALSE)
 		nearby.update_body(TRUE)
-		balloon_alert(nearby, "Something has changed about you!")
+		balloon_alert(nearby, "something has changed about you")
 
 /obj/effect/anomaly/hallucination
 	name = "hallucination anomaly"
