@@ -60,6 +60,11 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 /datum/lift_master/proc/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
 	if(new_lift_platform in lift_platforms)
 		return
+	for(var/obj/structure/industrial_lift/other_platform in new_lift_platform.loc)
+		if(other_platform != new_lift_platform)
+			stack_trace("there is more than one lift platform on a tile when a lift_master adds it. this causes problems")
+			qdel(other_platform)
+
 	new_lift_platform.lift_master_datum = src
 	LAZYADD(lift_platforms, new_lift_platform)
 	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
