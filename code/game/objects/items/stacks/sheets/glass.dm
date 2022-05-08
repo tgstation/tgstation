@@ -382,8 +382,8 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	custom_materials = list(/datum/material/alloy/plasmaglass=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "plasma"
 	weld_material = /obj/item/stack/sheet/plasmaglass
-	craft_time = 7 SECONDS
 	shiv_type = /obj/item/knife/shiv/plasma
+	craft_time = 7 SECONDS
 
 /obj/item/shard/titanium
 	name = "bright shard"
@@ -394,8 +394,8 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	custom_materials = list(/datum/material/alloy/titaniumglass=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "titanium"
 	weld_material = /obj/item/stack/sheet/titaniumglass
-	craft_time = 7 SECONDS
 	shiv_type = /obj/item/knife/shiv/titanium
+	craft_time = 7 SECONDS
 
 /obj/item/shard/plastitanium
 	name = "dark shard"
@@ -407,5 +407,5 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	custom_materials = list(/datum/material/alloy/plastitaniumglass=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "plastitanium"
 	weld_material = /obj/item/stack/sheet/plastitaniumglass
-	craft_time = 14 SECONDS
 	shiv_type = /obj/item/knife/shiv/plastitanium
+	craft_time = 14 SECONDS
