@@ -130,7 +130,7 @@
  * Spawns the first half anomalies instantly and calls the second half
  */
 /datum/supermatter_delamination/proc/spawn_anomalies()
-	var/list/anomaly_types = list(GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, FLUX_ANOMALY = 35, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
+	var/list/anomaly_types = list(GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, DELIMBER_ANOMALY = 35, FLUX_ANOMALY = 25, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
 	var/list/anomaly_places = GLOB.generic_event_spawns
 	var/currently_spawning_anomalies = round(anomalies_to_spawn * 0.5, 1)
 	anomalies_to_spawn -= currently_spawning_anomalies
@@ -146,7 +146,7 @@
  */
 /datum/supermatter_delamination/proc/spawn_overtime()
 
-	var/list/anomaly_types = list(GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, FLUX_ANOMALY = 35, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
+	var/list/anomaly_types = list(GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, DELIMBER_ANOMALY = 35, FLUX_ANOMALY = 25, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
 	var/list/anomaly_places = GLOB.generic_event_spawns
 
 	var/current_spawn = rand(5 SECONDS, 10 SECONDS)

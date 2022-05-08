@@ -1400,6 +1400,17 @@
 	crate_name = "raw pyro anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
+/datum/supply_pack/science/raw_delimber_anomaly
+	name = "Raw Delimber Anomaly"
+	desc = "The raw core of a delimber anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
+	contains = list(/obj/item/raw_anomaly_core/delimber)
+	crate_name = "raw delimber anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
+
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
 	desc = "The tools you need to replace those finicky humans with a loyal robot army! Contains four proximity sensors, two empty first aid kits, two health analyzers, two red hardhats, two mechanical toolboxes, and two cleanbot assemblies! Requires Robotics access to open."

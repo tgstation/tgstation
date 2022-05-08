@@ -2704,6 +2704,7 @@
 #include "code\modules\events\alien_infestation.dm"
 #include "code\modules\events\anomaly.dm"
 #include "code\modules\events\anomaly_bluespace.dm"
+#include "code\modules\events\anomaly_delimber.dm"
 #include "code\modules\events\anomaly_flux.dm"
 #include "code\modules\events\anomaly_grav.dm"
 #include "code\modules\events\anomaly_pyro.dm"
