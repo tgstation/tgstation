@@ -465,8 +465,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 	switch(type)
 		if(FLUX_ANOMALY)
-			var/obj/effect/anomaly/flux/flux = new(local_turf, has_changed_lifespan ? rand(250, 350) : null, FALSE)
-			flux.explosive = !has_changed_lifespan
+			var/explosive = has_changed_lifespan ? FLUX_NO_EXPLOSION : FLUX_LOW_EXPLOSIVE
+			new /obj/effect/anomaly/flux(local_turf, has_changed_lifespan ? rand(250, 350) : null, FALSE, explosive)
 		if(GRAVITATIONAL_ANOMALY)
 			new /obj/effect/anomaly/grav(local_turf, has_changed_lifespan ? rand(200, 300) : null, FALSE)
 		if(PYRO_ANOMALY)
