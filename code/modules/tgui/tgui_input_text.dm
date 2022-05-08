@@ -28,9 +28,9 @@
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(encode)
 			if(multiline)
-				return stripped_multiline_input(user, message, title, default, max_length)
+				return stripped_multiline_input(user, message, title, default, max_length, null_return = TRUE)
 			else
-				return stripped_input(user, message, title, default, max_length)
+				return stripped_input(user, message, title, default, max_length, null_return = TRUE)
 		else
 			if(multiline)
 				return input(user, message, title, default) as message|null
@@ -70,9 +70,9 @@
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(encode)
 			if(multiline)
-				return stripped_multiline_input(user, message, title, default, max_length)
+				return stripped_multiline_input(user, message, title, default, max_length, null_return = TRUE)
 			else
-				return stripped_input(user, message, title, default, max_length)
+				return stripped_input(user, message, title, default, max_length, null_return = TRUE)
 		else
 			if(multiline)
 				return input(user, message, title, default) as message|null
@@ -117,7 +117,6 @@
 	src.message = message
 	src.multiline = multiline
 	src.title = title
-	src.entry = ""
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
@@ -184,7 +183,7 @@
 			return TRUE
 
 /datum/tgui_input_text/proc/set_entry(entry)
-	if(entry)
+	if(!isnull(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
 		src.entry = trim(converted_entry, max_length)
 
