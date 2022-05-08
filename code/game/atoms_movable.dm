@@ -1,7 +1,7 @@
 /atom/movable
 	layer = OBJ_LAYER
 	glide_size = 8
-	appearance_flags = TILE_BOUND|PIXEL_SCALE
+	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
 
 	var/last_move = null
 	var/anchored = FALSE
@@ -427,7 +427,6 @@
 	if(!only_pulling && pulledby && moving_diagonally != FIRST_DIAG_STEP && (get_dist(src, pulledby) > 1 || z != pulledby.z)) //separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-
 /atom/movable/proc/set_glide_size(target = 8)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, target)
 	glide_size = target
@@ -654,7 +653,10 @@
 
 	if (!inertia_moving && momentum_change)
 		newtonian_move(movement_dir)
-	if (client_mobs_in_contents)
+	// If we ain't moving diagonally right now, update our parallax
+	// We don't do this all the time because diag movements should trigger one call to this, not two
+	// Waste of cpu time, and it fucks the animate
+	if (!moving_diagonally && client_mobs_in_contents)
 		update_parallax_contents()
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)

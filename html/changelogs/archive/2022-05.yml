@@ -268,3 +268,65 @@
   - bugfix: fixed NT frontier being downloadble by non scientists.
   - code_imp: changed how the gas pressure calculation work very slightly, report
       if things are bugged.
+2022-05-08:
+  Gandalf2k15 for porting, DarthSidiousPalpatine for their original contribution on TauCeti:
+  - imageadd: Mob fire sprites have been updated!
+  - refactor: The way mobs update fire has been refactored. If you spot any anomalies,
+      please report them.
+  Ghilker:
+  - balance: lowered overall max tesla coil power conversion at all parts tiers (at
+      t4 it went from 85% to 50%)
+  - bugfix: connect tramstation arrivals to the distro/waste
+  Hiderin0:
+  - rscdel: Just deleted an errant disposals pipe at  X:97, Y:112 under the glass
+  JohnFulpWillard:
+  - bugfix: Modular computers work again, allowing you to put your ID in to download/use
+      programs.
+  LemonInTheDark:
+  - code_imp: Some things that were hyper undeletable are now just normal undeletable.
+      Please report any unexpected behavior, mostly in away missions, or on lavaland.
+  - balance: Firelocks now take 3 seconds to auto-close after opening, rather then
+      5
+  - bugfix: Firelocks on top of normal doors will now no longer fail to re-close for
+      seemingly random reasons
+  - qol: Space Parallax will now smoothly animate between steps, based off your movement
+      speed. Please report any jitter.
+  - bugfix: Parallax will no longer "freeze" when you cross some area boundaries.
+      Looks better now.
+  - bugfix: Dragging objects diagonally will no longer cause them to visually "jump"
+      to catch up to you. Seriously how did none report this, are we just collectively
+      blind?
+  MacBlaze1:
+  - qol: the gas analyzer now shows the heat capacity and thermal energy of a mix
+  - qol: the gas analyzer now shows the volume of empty pipe networks
+  Melbert:
+  - qol: Heretic ghoul recipes are more descriptive when failing
+  - bugfix: Fixes a missing span on heretic ghoul deconversion
+  MrNihil:
+  - bugfix: You can now recycle unused mutators and activators in dna console.
+  - bugfix: 'Genetic scanner now shows all mutations. expansion: Genetic scanner will
+      highlight active mutations.'
+  OperativeLyn:
+  - bugfix: Removed a duplicated airlock in IceBox lower maints.
+  SmArtKar:
+  - bugfix: Removes second intercom in captain's office on Delta
+  TemporalOroboros:
+  - balance: The resulting changes to smoke and foam have effected their balance.
+      In which direction is currently unclear.
+  - code_imp: Minor code improvements to smoke, foam, and... _wizard spells?_.
+  ZephyrTFA:
+  - rscadd: Heterochromia Quirk, try it out!
+  - refactor: Eyes now support having two different colors for each eye; become your
+      own disco!
+  Zytolg:
+  - bugfix: Kilostation's command section now accurately reflects that command staff
+      are, in fact, commanding a hollowed out asteroid.
+  cacogen:
+  - qol: Deadchat control on anarchy mode will now alert you when you can enter another
+      command
+  castawaynont:
+  - bugfix: fixed the position of one of kilo's firealarms.
+  - bugfix: Delta's virology's showers no longer float.
+  san7890:
+  - imageadd: On the mapping end, we've removed some duplicate names for different
+      icons.
