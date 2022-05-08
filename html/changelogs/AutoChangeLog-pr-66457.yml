@@ -1,0 +1,5 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Briefcase launchpads now work again."
+  - bugfix: "Briefcase launchpads now don't drain power from the station."
