@@ -7,7 +7,7 @@
 	cure_chance = 10
 	agent = "Shitty Adrenal Glands"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 1
+	spreading_modifier = 1
 	desc = "If left untreated the subject will suffer from lethargy, dizziness and periodic loss of conciousness."
 	severity = DISEASE_SEVERITY_MEDIUM
 	disease_flags = CAN_CARRY|CAN_RESIST
