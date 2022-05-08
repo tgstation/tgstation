@@ -563,11 +563,11 @@
 #define SIGN_CUFFED 4
 
 /// Height defines
-#define CARBONHEIGHT_SHORTEST "shortest height"
-#define CARBONHEIGHT_SHORT    "short height"
-#define CARBONHEIGHT_MEDIUM   "medium height"
-#define CARBONHEIGHT_TALL     "tall height"
-#define CARBONHEIGHT_TALLEST  "tallest height"
+#define CARBON_HEIGHT_SHORTEST "shortest height"
+#define CARBON_HEIGHT_SHORT "short height"
+#define CARBON_HEIGHT_MEDIUM "medium height"
+#define CARBON_HEIGHT_TALL "tall height"
+#define CARBON_HEIGHT_TALLEST "tallest height"
 
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays

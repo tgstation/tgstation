@@ -47,7 +47,7 @@
 	var/obj/item/clothing/ears = null
 
 	/// Height of the mob, only used by humans.
-	var/height = CARBONHEIGHT_MEDIUM
+	var/height = CARBON_HEIGHT_MEDIUM
 
 	/// Carbon
 	var/datum/dna/dna = null

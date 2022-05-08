@@ -225,14 +225,14 @@
 		appearance.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
 	else
 		switch(height)
-			if(CARBONHEIGHT_SHORTEST)
+			if(CARBON_HEIGHT_SHORTEST)
 				appearance.add_filter("Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 1))
 				appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
-			if(CARBONHEIGHT_SHORT)
+			if(CARBON_HEIGHT_SHORT)
 				appearance.add_filter("Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 1))
-			if(CARBONHEIGHT_TALL)
+			if(CARBON_HEIGHT_TALL)
 				appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
-			if(CARBONHEIGHT_TALLEST)
+			if(CARBON_HEIGHT_TALLEST)
 				appearance.add_filter("Lenghten_Torso", 1, displacement_map_filter(lenghten_torso_mask, x = 0, y = 0, size = 1))
 				appearance.add_filter("Lenghten_Legs", 1, displacement_map_filter(lenghten_legs_mask, x = 0, y = 0, size = 1))
 

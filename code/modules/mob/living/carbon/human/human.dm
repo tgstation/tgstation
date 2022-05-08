@@ -873,11 +873,11 @@
 		if(!check_rights(R_SPAWN))
 			return
 		var/static/list/options = list(
-			CARBONHEIGHT_SHORTEST,
-			CARBONHEIGHT_SHORT,
-			CARBONHEIGHT_MEDIUM,
-			CARBONHEIGHT_TALL,
-			CARBONHEIGHT_TALLEST
+			CARBON_HEIGHT_SHORTEST,
+			CARBON_HEIGHT_SHORT,
+			CARBON_HEIGHT_MEDIUM,
+			CARBON_HEIGHT_TALL,
+			CARBON_HEIGHT_TALLEST
 		)
 		var/result = input(usr, "Please choose a new height","Height") as null|anything in options
 		if(result)
