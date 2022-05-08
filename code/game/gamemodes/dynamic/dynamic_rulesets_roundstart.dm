@@ -282,7 +282,6 @@
 	flags = HIGH_IMPACT_RULESET
 	minimum_required_age = 14
 	restricted_roles = list(
-		JOB_PUG,
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_SECURITY,
 	) // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
@@ -400,7 +399,6 @@
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	minimum_required_age = 14
 	restricted_roles = list(
-		JOB_PUG,
 		JOB_CAPTAIN,
 		JOB_HEAD_OF_SECURITY,
 	) // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
@@ -643,7 +641,6 @@
 	antag_flag = null
 	antag_datum = null
 	restricted_roles = list(
-		JOB_PUG,
 	)
 	required_candidates = 0
 	weight = 3
