@@ -1,3 +1,6 @@
+/// How many jobs have bounties, minus the random civ bounties. PLEASE INCREASE THIS NUMBER AS MORE DEPTS ARE ADDED TO BOUNTIES.
+#define MAXIMUM_BOUNTY_JOBS 13
+
 /datum/bounty
 	var/name
 	var/description
@@ -37,42 +40,42 @@
 		if(guided && (guided != CIV_JOB_RANDOM))
 			bounty_num = guided
 		else
-			bounty_num = rand(1,13)
+			bounty_num = rand(1, MAXIMUM_BOUNTY_JOBS)
 		switch(bounty_num)
-			if(1)
+			if(CIV_JOB_BASIC)
 				chosen_type = pick(subtypesof(/datum/bounty/item/assistant))
-			if(2)
+			if(CIV_JOB_ROBO)
 				chosen_type = pick(subtypesof(/datum/bounty/item/mech))
-			if(3)
+			if(CIV_JOB_CHEF)
 				chosen_type = pick(subtypesof(/datum/bounty/item/chef))
-			if(4)
+			if(CIV_JOB_SEC)
 				chosen_type = pick(subtypesof(/datum/bounty/item/security))
-			if(5)
+			if(CIV_JOB_DRINK)
 				if(prob(50))
 					chosen_type = /datum/bounty/reagent/simple_drink
 				else
 					chosen_type = /datum/bounty/reagent/complex_drink
-			if(6)
+			if(CIV_JOB_CHEM)
 				if(prob(50))
 					chosen_type = /datum/bounty/reagent/chemical_simple
 				else
 					chosen_type = /datum/bounty/reagent/chemical_complex
-			if(7)
+			if(CIV_JOB_VIRO)
 				chosen_type = pick(subtypesof(/datum/bounty/virus))
-			if(8)
+			if(CIV_JOB_SCI)
 				if(prob(50))
 					chosen_type = pick(subtypesof(/datum/bounty/item/science))
 				else
 					chosen_type = pick(subtypesof(/datum/bounty/item/slime))
-			if(9)
+			if(CIV_JOB_ENG)
 				chosen_type = pick(subtypesof(/datum/bounty/item/engineering))
-			if(10)
+			if(CIV_JOB_MINE)
 				chosen_type = pick(subtypesof(/datum/bounty/item/mining))
-			if(11)
+			if(CIV_JOB_MED)
 				chosen_type = pick(subtypesof(/datum/bounty/item/medical))
-			if(12)
+			if(CIV_JOB_GROW)
 				chosen_type = pick(subtypesof(/datum/bounty/item/botany))
-			if(13)
+			if(CIV_JOB_ATMOS)
 				chosen_type = pick(subtypesof(/datum/bounty/item/atmospherics))
 		bounty_ref = new chosen_type
 		if(bounty_ref.can_get())
@@ -80,3 +83,5 @@
 		else
 			qdel(bounty_ref)
 	return bounty_ref
+
+#undef MAXIMUM_BOUNTY_JOBS
