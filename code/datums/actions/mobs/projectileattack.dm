@@ -16,6 +16,8 @@
 	var/default_projectile_spread = 0
 	/// The multiplier to the projectiles speed (a value of 2 makes it twice as slow, 0.5 makes it twice as fast)
 	var/projectile_speed_multiplier = 1
+	/// How long is pre-attack cooldown
+	var/pre_attack_cooldown = 10 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/New(Target, projectile, homing, spread)
 	. = ..()
@@ -27,7 +29,7 @@
 		default_projectile_spread = spread
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
-	StartCooldown(100)
+	StartCooldown(pre_attack_cooldown)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 
@@ -142,6 +144,13 @@
 		playsound(get_turf(firer), projectile_sound, 20, TRUE)
 		SLEEP_CHECK_DEATH(0.1 SECONDS, firer)
 
+/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus
+	cooldown_time = 1.5 SECONDS
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/Activate(atom/target_atom)
+	SLEEP_CHECK_DEATH(1.5 SECONDS, owner)
+	return ..()
+
 /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe
 	name = "All Directions"
 	icon_icon = 'icons/effects/effects.dmi'
@@ -156,6 +165,13 @@
 	playsound(U, projectile_sound, 300, TRUE, 5)
 	for(var/i in 1 to 32)
 		shoot_projectile(firer, target, rand(0, 360), firer, null, null)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/colossus
+	cooldown_time = 1.5 SECONDS
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/colossus/Activate(atom/target_atom)
+	SLEEP_CHECK_DEATH(1.5 SECONDS, owner)
+	return ..()
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast
 	name = "Shotgun Fire"
@@ -179,6 +195,14 @@
 	playsound(firer, projectile_sound, 200, TRUE, 2)
 	for(var/spread in chosen_angles)
 		shoot_projectile(firer, target, null, firer, spread, null)
+
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/colossus
+	cooldown_time = 0.5 SECONDS
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/colossus/Activate(atom/target_atom)
+	SLEEP_CHECK_DEATH(1.5 SECONDS, owner)
+	return ..()
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern
 	name = "Alternating Shotgun Fire"
@@ -235,6 +259,13 @@
 	SLEEP_CHECK_DEATH(1 SECONDS, firer)
 	fire_in_directions(firer, target, GLOB.cardinals)
 
+/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating/colossus
+	cooldown_time = 2.5 SECONDS
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating/colossus/Activate(atom/target_atom)
+	SLEEP_CHECK_DEATH(1.5 SECONDS, owner)
+	return ..()
+
 /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
 	name = "Fire Kinetic Accelerator"
 	icon_icon = 'icons/obj/guns/energy.dmi'
@@ -250,3 +281,50 @@
 	owner.visible_message(span_danger("[owner] fires the proto-kinetic accelerator!"))
 	owner.face_atom(target_atom)
 	new /obj/effect/temp_visual/dir_setting/firing_effect(owner.loc, owner.dir)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final
+	name = "Titan's Finale"
+	desc = "A single-use ability that shoots a large amount of projectiles around you."
+	cooldown_time = 2.5 SECONDS
+	pre_attack_cooldown = 30 SECONDS
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
+	. = ..()
+	Remove(owner)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/attack_sequence(mob/living/firer, atom/target)
+	var/mob/living/simple_animal/hostile/megafauna/colossus/colossus
+	if(istype(firer, /mob/living/simple_animal/hostile/megafauna/colossus))
+		colossus = firer
+
+	var/finale_counter = 10
+	for(var/i = 1 to 20)
+		if(finale_counter > 4 && colossus)
+			colossus.say("Die!!", spans = list("colossus", "yell"))
+			colossus.telegraph()
+			colossus.shotgun_blast.attack_sequence(firer, target)
+
+		if(finale_counter > 1)
+			finale_counter -= 1
+
+		var/turf/start_turf = get_turf(firer)
+		for(var/turf/target_turf in RANGE_TURFS(12, start_turf))
+			if(prob(min(finale_counter, 2)) && target_turf != get_turf(firer))
+				shoot_projectile(firer, target_turf, null, firer, null, null)
+
+		SLEEP_CHECK_DEATH(finale_counter + 1, firer)
+
+	for(var/i = 1 to 3)
+		if(colossus)
+			colossus.say("Die.", spans = list("colossus", "yell"))
+			colossus.telegraph()
+			colossus.random_shots.attack_sequence(firer, target)
+		finale_counter += 6
+		SLEEP_CHECK_DEATH(finale_counter, firer)
+
+	for(var/i = 1 to 3)
+		if(colossus)
+			colossus.say("Die...", spans = list("colossus", "yell"))
+			colossus.telegraph()
+			colossus.dir_shots.attack_sequence(firer, target)
+		SLEEP_CHECK_DEATH(1 SECONDS, firer)
