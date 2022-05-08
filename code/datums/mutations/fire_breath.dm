@@ -51,7 +51,7 @@
 		var/mob/living/carbon/our_lizard = cast_on
 		if(our_lizard.is_mouth_covered())
 			our_lizard.adjust_fire_stacks(cone_levels)
-			our_lizard.IgniteMob()
+			our_lizard.ignite_mob()
 			to_chat(our_lizard, span_warning("Something in front of your mouth catches fire!"))
 
 	return TRUE
@@ -87,7 +87,7 @@
 	// The actual burn damage application is not blocked by fireproofing, like space dragons.
 	target_mob.apply_damage(max(10, 40 - (5 * level)), BURN, spread_damage = TRUE)
 	target_mob.adjust_fire_stacks(max(2, 5 - level))
-	target_mob.IgniteMob()
+	target_mob.ignite_mob()
 
 /datum/action/cooldown/spell/cone/staggered/firebreath/do_obj_cone_effect(obj/target_obj, atom/caster, level)
 	// Further out objects experience less exposed_temperature and exposed_volume

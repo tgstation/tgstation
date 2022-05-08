@@ -23,7 +23,7 @@ export const NtosNotepad = (props, context) => {
               <Input
                 value={note}
                 fluid
-                onInput={(e, value) => act('UpdateNote', {
+                onEnter={(e, value) => act('UpdateNote', {
                   newnote: value,
                 })}
               />

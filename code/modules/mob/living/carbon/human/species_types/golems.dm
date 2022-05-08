@@ -173,7 +173,7 @@
 			to_chat(owner, span_notice("You ignite yourself!"))
 		else
 			to_chat(owner, span_warning("You try to ignite yourself, but fail!"))
-		H.IgniteMob() //firestacks are already there passively
+		H.ignite_mob() //firestacks are already there passively
 
 //Harder to hurt
 /datum/species/golem/diamond
@@ -552,7 +552,7 @@
 	var/cooldown = 150
 	var/last_teleport = 0
 	///Set to true upon action activation to prevent spamming teleport callbacks while the first is still occurring.
-	var/is_charging = FALSE 
+	var/is_charging = FALSE
 
 /datum/action/innate/unstable_teleport/IsAvailable()
 	. = ..()

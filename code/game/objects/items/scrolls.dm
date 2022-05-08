@@ -46,6 +46,9 @@
 	if(human_user.incapacitated() || !human_user.is_holding(src))
 		return
 	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
+	if(!teleport)
+		to_chat(user, span_warning("[src] seems to be a faulty teleportation scroll, and has no magic associated."))
+		return
 	if(!teleport.Activate(user))
 		return
 	if(--uses <= 0)

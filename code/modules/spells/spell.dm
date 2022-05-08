@@ -84,9 +84,9 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	var/spell_max_level = 5
 	/// If set to a positive number, the spell will produce sparks when casted.
 	var/sparks_amt = 0
-	/// What type of smoke is spread on cast. Harmless, harmful, or sleeping smoke.
-	var/smoke_type = NO_SMOKE
-	/// The amount of smoke spread.
+	/// The typepath of the smoke to create on cast.
+	var/smoke_type
+	/// The amount of smoke to create on case. This is a range so a value of 5 will create enough smoke to cover everything within 5 steps.
 	var/smoke_amt = 0
 
 /datum/action/cooldown/spell/Grant(mob/grant_to)
@@ -165,13 +165,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 	if(ishuman(owner))
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
-			if(!HAS_TRAIT(owner, TRAIT_WIZARD_ROBES))
-				if(feedback)
-					to_chat(owner, span_warning("You don't feel strong enough to cast [src] without your robes!"))
+			var/mob/living/carbon/human/human_owner = owner
+			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES))
+				to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
-			if(!HAS_TRAIT(owner, TRAIT_WIZARD_HAT))
-				if(feedback)
-					to_chat(owner, span_warning("You don't feel strong enough to cast [src] without your hat!"))
+			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES))
+				to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
 
 	else
@@ -287,21 +286,10 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
 
-	if(smoke_type)
-		switch(smoke_type)
-			if(SMOKE_HARMLESS)
-				smoke_type = /datum/effect_system/smoke_spread
-			if(SMOKE_HARMFUL)
-				smoke_type = /datum/effect_system/smoke_spread/bad
-			if(SMOKE_SLEEPING)
-				smoke_type = /datum/effect_system/smoke_spread/sleeping
-
-		if(ispath(smoke_type))
-			var/datum/effect_system/smoke = new smoke_type()
-			smoke.set_up(smoke_amt, get_turf(owner))
-			smoke.start()
-		else
-			stack_trace("Invalid smoke type for spell [type]. Got: [smoke_type || "null"].")
+	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
+		var/datum/effect_system/smoke = new smoke_type()
+		smoke.set_up(smoke_amt, get_turf(owner))
+		smoke.start()
 
 /// Provides feedback after a spell cast occurs, in the form of a cast sound or invocation
 /datum/action/cooldown/spell/proc/spell_feedback()

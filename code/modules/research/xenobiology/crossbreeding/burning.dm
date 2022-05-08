@@ -45,11 +45,11 @@ Burning extracts:
 
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
 	user.visible_message(span_danger("[src] boils over with a caustic gas!"))
-	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
+	var/datum/reagents/tmp_holder = new/datum/reagents(100)
+	tmp_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
 
-	var/datum/effect_system/smoke_spread/chem/smoke = new
-	smoke.set_up(R, 7, get_turf(user))
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
+	smoke.set_up(7, location = get_turf(user), carry = tmp_holder)
 	smoke.start()
 	..()
 
@@ -120,11 +120,11 @@ Burning extracts:
 
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
 	user.visible_message(span_danger("[src] releases a burst of chilling smoke!"))
-	var/datum/reagents/R = new/datum/reagents(100)
-	R.add_reagent(/datum/reagent/consumable/frostoil, 40)
-	user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
-	var/datum/effect_system/smoke_spread/chem/smoke = new
-	smoke.set_up(R, 7, get_turf(user))
+	var/datum/reagents/tmp_holder = new/datum/reagents(100)
+	tmp_holder.add_reagent(/datum/reagent/consumable/frostoil, 40)
+	user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 10)
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
+	smoke.set_up(7, location = get_turf(user), carry = tmp_holder)
 	smoke.start()
 	..()
 

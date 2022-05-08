@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - qol: "Heretic ghoul recipes are more descriptive when failing"
+  - bugfix: "Fixes a missing span on heretic ghoul deconversion"

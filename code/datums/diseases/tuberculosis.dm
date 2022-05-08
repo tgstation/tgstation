@@ -30,7 +30,7 @@
 		if(4)
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, span_userdanger("You see four of everything!"))
-				affected_mob.Dizzy(5)
+				affected_mob.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, span_danger("You feel a sharp pain from your lower chest!"))
 				affected_mob.adjustOxyLoss(5, FALSE)

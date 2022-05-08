@@ -35,5 +35,5 @@
 
 /datum/action/cooldown/spell/aoe/sacred_flame/cast(mob/living/cast_on)
 	. = ..()
-	cast_on.IgniteMob()
+	cast_on.ignite_mob()
 	to_chat(cast_on, span_danger("You feel a roaring flame build up inside you!"))

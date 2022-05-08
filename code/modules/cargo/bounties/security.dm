@@ -52,15 +52,15 @@
 /datum/bounty/item/security/paperwork/New()
 	///list of areas for security to choose from to perform an inspection.
 	var/static/list/possible_areas = list(\
-		/area/maintenance,\
-		/area/commons,\
-		/area/service,\
-		/area/hallway/primary,\
-		/area/security/office,\
-		/area/security/prison,\
-		/area/security/range,\
-		/area/security/checkpoint,\
-		/area/security/interrogation)
+		/area/station/maintenance,\
+		/area/station/commons,\
+		/area/station/service,\
+		/area/station/hallway/primary,\
+		/area/station/security/office,\
+		/area/station/security/prison,\
+		/area/station/security/range,\
+		/area/station/security/checkpoint,\
+		/area/station/security/interrogation)
 	demanded_area = pick(possible_areas)
 	name = name + ": [initial(demanded_area.name)]"
 	description = initial(description) + " [initial(demanded_area.name)]"

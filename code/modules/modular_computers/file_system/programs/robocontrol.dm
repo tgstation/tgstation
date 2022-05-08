@@ -144,6 +144,9 @@
 			if(!computer || !card_slot || !id_card)
 				to_chat(current_user, span_notice("No ID found, authorization failed."))
 				return
+			if(isdrone(current_user))
+				to_chat(current_user, span_notice("You can't free yourself."))
+				return
 			if(!(ACCESS_CE in id_card.access))
 				to_chat(current_user, span_notice("Required access not found on ID."))
 				return

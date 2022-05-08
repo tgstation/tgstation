@@ -250,7 +250,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		update_appearance()
 		update_slot_icon()
 
-	return FALSE
+	return TRUE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -564,6 +564,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	else
 		set_light(0)
 	update_appearance()
+	if(light_butt)
+		update_action_buttons(force = TRUE) // must force if just the overlays changed.
 	return TRUE
 
 /**

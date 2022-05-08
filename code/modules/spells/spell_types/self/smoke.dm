@@ -10,7 +10,7 @@
 
 	invocation_type = INVOCATION_NONE
 
-	smoke_type = SMOKE_HARMFUL
+	smoke_type = /datum/effect_system/fluid_spread/smoke/bad
 	smoke_amt = 4
 
 /// Chaplain smoke.
@@ -21,7 +21,7 @@
 	cooldown_time = 36 SECONDS
 	spell_requirements = NONE
 
-	smoke_type = SMOKE_HARMFUL
+	smoke_type = /datum/effect_system/fluid_spread/smoke/bad
 	smoke_amt = 2
 
 /datum/action/cooldown/spell/smoke/disable
@@ -31,4 +31,4 @@
 
 	cooldown_time = 20 SECONDS
 
-	smoke_type = SMOKE_SLEEPING
+	smoke_type = /datum/effect_system/fluid_spread/smoke/sleeping

@@ -71,4 +71,4 @@
 			human_in_range.adjustStaminaLoss(10)
 
 		if(DT_PROB(25, delta_time))
-			human_in_range.Dizzy(5)
+			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)

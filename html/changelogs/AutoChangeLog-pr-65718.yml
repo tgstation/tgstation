@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - rscadd: "Adds a new heretic path, the the Blade Path"
-  - expansion: "Heretic sidepaths got tweaked a bit. Blood siphon is now between raw ritual and void phase. Cleave is now between Lonely Ritual and Void pull. Rusted Ritual is now between Entropic Plume and Firey Rebirth."
-  - refactor: "Refactored how heretic alt paths are set up to make adding new heretic paths easier."

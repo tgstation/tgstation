@@ -10,7 +10,7 @@
 
 	invocation_type = INVOCATION_NONE
 
-	smoke_type = SMOKE_HARMLESS
+	smoke_type = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 0
 
 	inner_tele_radius = 0

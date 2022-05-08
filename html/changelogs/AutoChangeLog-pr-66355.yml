@@ -1,6 +1,0 @@
-author: "PositiveEntropy, AxieTheAxolotl"
-delete-after: True
-changes: 
-  - imageadd: "Resprites several syndicate outfits, particularly the Syndicate Coat, the Turtlenecks, and the Combat Uniform!"
-  - imageadd: "Resprites and updates the Really Black Suits!"
-  - rscdel: "Removes the trak_suit from syndicate.dmi (it was a dupe and unused)"
