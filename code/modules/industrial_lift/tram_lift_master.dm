@@ -24,6 +24,13 @@
 	///whether we have been slowed down automatically
 	var/slowed_down = FALSE
 
+	///how many times we moved while costing more than SStramprocess.max_time milliseconds per movement.
+	///if this exceeds SStramprocess.max_exceeding_moves
+	var/times_exceeded = 0
+
+	///how many times we moved while costing less than 0.5 * SStramprocess.max_time milliseconds per movement
+	var/times_below = 0
+
 /datum/lift_master/tram/New(obj/structure/industrial_lift/tram/lift_platform)
 	. = ..()
 	horizontal_speed = lift_platform.horizontal_speed
@@ -107,18 +114,32 @@
 	else if(world.time >= next_move)
 		var/start_time = TICK_USAGE
 		travel_distance--
+
 		MoveLiftHorizontal(travel_direction)
 
 		var/duration = TICK_USAGE_TO_MS(start_time)
 		if(slowed_down)
-			if(duration < SStramprocess.max_time / 2)
+			if(duration <= (SStramprocess.max_time / 2))
+				times_below++
+			else
+				times_below = 0
+
+			if(times_below >= SStramprocess.max_cheap_moves)
 				horizontal_speed = initial(horizontal_speed)
 				slowed_down = FALSE
+				times_below = 0
 
 		else if(duration > SStramprocess.max_time)
-			message_admins("The tram at [ADMIN_JMP(lift_platforms[1])] is taking more than [SStramprocess.max_time * 100] milliseconds per movement, halving its movement speed")
-			horizontal_speed = initial(horizontal_speed) * 2
-			slowed_down = TRUE
+			times_exceeded++
+
+			if(times_exceeded >= SStramprocess.max_exceeding_moves)
+				message_admins("The tram at [ADMIN_JMP(lift_platforms[1])] is taking more than [SStramprocess.max_time] milliseconds per movement, halving its movement speed")
+				horizontal_speed = initial(horizontal_speed)
+				horizontal_speed *= 2 //halve its speed
+				slowed_down = TRUE
+				times_exceeded = 0
+		else
+			times_exceeded = max(times_exceeded - 1, 0)
 
 		next_move = world.time + horizontal_speed
 
