@@ -1,0 +1,11 @@
+author: "RandomGamer123, some ideas from the-orange-cow & cacogen"
+delete-after: True
+changes: 
+  - balance: "The explosive mutation for kudzu is now classified as a severe instead of just above average mutation"
+  - balance: "Venus human trap vine throw cooldown increased to 4 seconds"
+  - balance: "Kudzu's maximum mutation severity in general has been increased"
+  - balance: "Event-spawned kudzu's maximum mutation severity has been further increased"
+  - balance: "Kudzu now mutates twice as often in general"
+  - balance: "Event-spawned kudzu now has its minimum spread rate tripled"
+  - balance: "Newly spawned kudzu in general has its starting spread rate buffed
+expansion: New temperature stabilisation mutation for kudzu as a semi-alternative to cold proof and being a beneficial kudzu mutation in general, effectively functions as a space heater with the target temperature being 20C"

@@ -104,8 +104,14 @@ GLOBAL_VAR(test_log)
 		var/file = fail_reasons[reasonID][2]
 		var/line = fail_reasons[reasonID][3]
 
-		/// Github action annotation.
-		log_world("::error file=[file],line=[line],title=[test_path]::[text]")
+		// Github action annotation.
+		// See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+
+		// Need to escape the text to properly support newlines.
+		var/annotation_text = replacetext(text, "%", "%25")
+		annotation_text = replacetext(annotation_text, "\n", "%0A")
+
+		log_world("::error file=[file],line=[line],title=[test_path]::[annotation_text]")
 
 		// Normal log message
 		log_entry += "\tREASON #[reasonID]: [text] at [file]:[line]"
