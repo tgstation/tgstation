@@ -132,6 +132,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	/// Are we currently in the process of loading a shuttle? Useful to ensure we don't load more than one at once, to avoid weird inconsistencies and possible runtimes.
 	var/shuttle_loading
+	/// Did the supermatter start an end of the universe event?
+	var/universal_cascade = FALSE
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	order_number = rand(1, 9000)
@@ -388,7 +390,7 @@ SUBSYSTEM_DEF(shuttle)
 	return 1
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
-	if (!SSticker.IsRoundInProgress())
+	if (!SSticker.IsRoundInProgress() || universal_cascade)
 		return
 
 	var/callShuttle = TRUE

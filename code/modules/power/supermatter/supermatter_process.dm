@@ -68,6 +68,20 @@
 		//handles temperature increase and gases made by the crystal
 		temperature_gas_production(env, removed)
 
+	if(check_cascade_requirements(anomaly_event))
+		cascade_initiated = TRUE
+		if(!warp)
+			warp = new(src)
+			vis_contents += warp
+		animate(warp, time = 1, transform = matrix().Scale(0.5,0.5))
+		animate(time = 9, transform = matrix())
+
+	else
+		if(warp)
+			vis_contents -= warp
+			warp = null
+		cascade_initiated = FALSE
+
 	//handles hallucinations and the presence of a psychiatrist
 	psychological_examination()
 
@@ -85,6 +99,9 @@
 
 	//Tells the engi team to get their butt in gear
 	handle_emergency_alerts()
+
+	if(damage == 0 && has_destabilizing_crystal)
+		has_destabilizing_crystal = FALSE
 
 	return TRUE
 
@@ -262,13 +279,16 @@
 		var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
 		var/pressure_multiplier = max((1 / ((env.return_pressure() ** pressure_bonus_curve_angle) + 1) * pressure_bonus_derived_steepness) + pressure_bonus_derived_constant, 1)
 		var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
+		hue_angle_shift = clamp(903 * log(10, (power + 8000)) - 3590, -50, 240)
+		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
 			zap_str = 2.5 * power * power_multiplier * pressure_multiplier * co2_power_increase,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
 			zap_cutoff = 300,
-			power_level = power
+			power_level = power,
+			color = zap_color,
 		)
 		last_power_zap = world.time
 
@@ -405,6 +425,20 @@
 
 		if(combined_gas > MOLE_PENALTY_THRESHOLD)
 			radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel)
+
+		if(check_cascade_requirements(anomaly_event))
+			var/channel_to_talk_to = damage > emergency_point ? common_channel : engineering_channel
+			radio.talk_into(src, "DANGER: RESONANCE CASCADE INITIATED.", channel_to_talk_to)
+			for(var/mob/victim as anything in GLOB.player_list)
+				var/list/messages = list(
+					"You feel a strange presence in the air coming from engineering.",
+					"Something is wrong, there are weird sounds coming from engineering.",
+					"You don't like the smell of the SM.",
+					"The SM is emitting strange noises.",
+					"Crystals sounds are echoing through the station.",
+				)
+				to_chat(victim, span_boldannounce(pick(messages)))
+
 	//Boom (Mind blown)
 	if(damage > explosion_point)
 		countdown()

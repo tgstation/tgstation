@@ -840,7 +840,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/power/apc/auto_name/directional/north{
-	areastring = "/area/engineering/supermatter"
+	areastring = "/area/station/engineering/supermatter"
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,

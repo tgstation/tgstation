@@ -11,6 +11,8 @@
 #define HEALIUM_HEAT_PENALTY 4
 #define PROTO_NITRATE_HEAT_PENALTY -3
 #define ZAUKER_HEAT_PENALTY 8
+#define HYPERNOBLIUM_HEAT_PENALTY -5
+#define ANTINOBLIUM_HEAT_PENALTY 20
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
 //Keep the negative values here above -10 and we won't get negative rads
@@ -114,3 +116,5 @@
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
 
 #define MAX_SPACE_EXPOSURE_DAMAGE 10
+
+#define SUPERMATTER_CASCADE_PERCENT 80

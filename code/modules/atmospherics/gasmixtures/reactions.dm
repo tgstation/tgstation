@@ -733,31 +733,38 @@
 
 /datum/gas_reaction/freonformation/init_reqs() //minimum requirements for freon formation
 	requirements = list(
-		/datum/gas/plasma = 40,
-		/datum/gas/carbon_dioxide = 20,
-		/datum/gas/bz = 20,
+		/datum/gas/plasma = MINIMUM_MOLE_COUNT * 6,
+		/datum/gas/carbon_dioxide = MINIMUM_MOLE_COUNT * 3,
+		/datum/gas/bz = MINIMUM_MOLE_COUNT,
 		"MIN_TEMP" = FREON_FORMATION_MIN_TEMPERATURE,
 	)
 
 /datum/gas_reaction/freonformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/heat_efficency = min(temperature / FREON_FORMATION_TEMP_DIVISOR, cached_gases[/datum/gas/plasma][MOLES] * INVERSE(1.5), cached_gases[/datum/gas/carbon_dioxide][MOLES] * INVERSE(0.75), cached_gases[/datum/gas/bz][MOLES] * INVERSE(0.25))
-	if (heat_efficency <= 0 || (cached_gases[/datum/gas/plasma][MOLES] - heat_efficency * 1.5 < 0 ) || (cached_gases[/datum/gas/carbon_dioxide][MOLES] - heat_efficency * 0.75 < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
+	var/minimal_mole_factor = min(cached_gases[/datum/gas/plasma][MOLES] *  INVERSE(0.6), cached_gases[/datum/gas/bz][MOLES] *  INVERSE(0.1), cached_gases[/datum/gas/carbon_dioxide][MOLES] *  INVERSE(0.3))
+
+	var/equation_first_part = NUM_E ** (-((temperature - 800) / 200) ** 2)
+	var/equation_second_part = 3 / (1 + NUM_E ** (-0.001 * (temperature - 6000)))
+	var/heat_factor = equation_first_part + equation_second_part
+
+	var/freon_formed = min(heat_factor * minimal_mole_factor * 0.05, cached_gases[/datum/gas/plasma][MOLES] * INVERSE(0.6), cached_gases[/datum/gas/carbon_dioxide][MOLES] * INVERSE(0.3), cached_gases[/datum/gas/bz][MOLES] * INVERSE(0.1))
+	if (freon_formed <= 0 || (cached_gases[/datum/gas/plasma][MOLES] - freon_formed * 0.6 < 0 ) || (cached_gases[/datum/gas/carbon_dioxide][MOLES] - freon_formed * 0.3 < 0) || (cached_gases[/datum/gas/bz][MOLES] - freon_formed * 0.1 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
 	ASSERT_GAS(/datum/gas/freon, air)
-	cached_gases[/datum/gas/plasma][MOLES] -= heat_efficency * 1.5 // 6
-	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= heat_efficency * 0.75 //  3
-	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.25 // 1
-	cached_gases[/datum/gas/freon][MOLES] += heat_efficency * 2.5 // 10
+	cached_gases[/datum/gas/plasma][MOLES] -= freon_formed * 0.6
+	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= freon_formed * 0.3
+	cached_gases[/datum/gas/bz][MOLES] -= freon_formed * 0.1
+	cached_gases[/datum/gas/freon][MOLES] += freon_formed
 
-	SET_REACTION_RESULTS(heat_efficency * 2.5)
-	var/energy_used = heat_efficency * FREON_FORMATION_ENERGY
+	SET_REACTION_RESULTS(freon_formed)
+
+	var/energy_consumed = (7000 / (1 + NUM_E ** (-0.0015 * (temperature - 6000))) + 1000) * freon_formed * 0.1
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max(((temperature * old_heat_capacity - energy_used)/new_heat_capacity), TCMB)
+		air.temperature = max(((temperature * old_heat_capacity - energy_consumed)/new_heat_capacity), TCMB)
 	return REACTING
 
 

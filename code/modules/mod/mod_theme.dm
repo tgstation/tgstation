@@ -31,8 +31,6 @@
 	var/max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	/// Max cold protection shared across the MOD parts.
 	var/min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	/// Permeability shared across the MOD parts.
-	var/permeability_coefficient = 0.01
 	/// Siemens shared across the MOD parts.
 	var/siemens_coefficient = 0.5
 	/// How much modules can the MOD carry without malfunctioning.
@@ -367,7 +365,6 @@
 	armor = list(MELEE = 15, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 10, BIO = 10, FIRE = 25, ACID = 25, WOUND = 10)
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	permeability_coefficient = 0.5
 	siemens_coefficient = 0.25
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.5

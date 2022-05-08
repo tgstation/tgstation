@@ -11542,7 +11542,7 @@
 	},
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/plant_analyzer,
-/obj/item/clothing/mask/bandana/color/striped/botany,
+/obj/item/clothing/mask/bandana/striped/botany,
 /obj/item/hatchet,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark{
@@ -11758,7 +11758,7 @@
 	},
 /obj/item/clothing/suit/apron,
 /obj/item/storage/bag/plants/portaseeder,
-/obj/item/clothing/mask/bandana/color/striped/botany,
+/obj/item/clothing/mask/bandana/striped/botany,
 /obj/item/cultivator,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark{
