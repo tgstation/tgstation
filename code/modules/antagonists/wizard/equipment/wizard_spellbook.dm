@@ -34,7 +34,7 @@
 /**
  * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
  *
- * Has no effect on charge, but gives a funny message to people who think they're smart.
+ * Has no effect on charge, but gives a funny message to people who think they're clever.
  */
 /obj/item/spellbook/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/spell, mob/living/caster)
 	SIGNAL_HANDLER
@@ -47,8 +47,8 @@
 		"YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?",
 	)
 
-	to_chat(caster, span_danger("Glowing red letters appear on the front cover..."))
-	to_chat(caster, span_warning(pick(clever_girl)))
+	to_chat(caster, span_warning("Glowing red letters appear on the front cover..."))
+	to_chat(caster, span_red(pick(clever_girl)))
 
 	return COMPONENT_ITEM_BURNT_OUT
 

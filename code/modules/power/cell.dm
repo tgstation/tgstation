@@ -71,11 +71,12 @@
  *
  * If we, or the item we're located in, is subject to the charge spell, gain some charge back
  */
-/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/spell, mob/living/caster)
+/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
-	// We should be in the caster's hands, or inside something in the caster's hands
-	if(isturf(loc))
+	// This shouldn't be running if we're not being held by a mob,
+	// or if we're not within an object being held by a mob, but just in case...
+	if(!ismovable(loc))
 		return
 
 	. = COMPONENT_ITEM_CHARGED

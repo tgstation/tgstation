@@ -17,7 +17,7 @@
 /datum/action/cooldown/spell/charge/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/charge/cast(mob/living/cast_on) // MELBERT TODO TEST AND CL
+/datum/action/cooldown/spell/charge/cast(mob/living/cast_on)
 	. = ..()
 
 	// Charge people we're pulling first and foremost
@@ -25,8 +25,10 @@
 		var/mob/living/pulled_living = cast_on.pulling
 		var/pulled_has_spells = FALSE
 
-		for(var/datum/action/cooldown/spell/spell in pulled_living.actions)
-			spell.reset_spell_cooldown()
+		for(var/obj/effect/proc_holder/spell/spell in pulled_living.mob_spell_list | pulled_living.mind?.spell_list)
+			spell.charge_counter = spell.charge_max
+			spell.recharging = FALSE
+			spell.update_appearance()
 			pulled_has_spells = TRUE
 
 		if(pulled_has_spells)

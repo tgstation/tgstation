@@ -142,7 +142,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	pixel_x = -192
 	bound_width = 352
 	bound_x = -192
-	appearance_flags = NONE //Removes default TILE_BOUND
+	appearance_flags = LONG_GLIDE //Removes default TILE_BOUND
 
 /obj/machinery/bsa/full/wrench_act(mob/living/user, obj/item/I)
 	return FALSE
