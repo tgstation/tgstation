@@ -25,7 +25,7 @@ const defaultStatus: AirlockStatus = {
 export const AirlockController = (_, context) => {
   const { data } = useBackend<AirlockControllerData>(context);
   const { airlockState, pumpStatus, interiorStatus, exteriorStatus } = data;
-  let currentStatus: AirlockStatus = getAirlockStatus(airlockState);
+  const currentStatus: AirlockStatus = getAirlockStatus(airlockState);
 
   return (
     <Window width={500} height={190}>
