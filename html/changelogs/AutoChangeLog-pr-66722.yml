@@ -1,6 +1,0 @@
-author: "PestoVerde322"
-delete-after: True
-changes: 
-  - imageadd: "Added new icons for the DNA injectors"
-  - imageadd: "Added new icons for the DNA implanters and their cases"
-  - bugfix: "The bluespace icon syringe is now more animated"
