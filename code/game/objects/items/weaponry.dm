@@ -878,22 +878,22 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 			return TRUE
 		return FALSE
-	if(prob(final_block_chance * (wielded ? 2 : 1)))
+	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
 
 /obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	slash(target, user, params)
 
 /obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		return
 	return ..()
 
 /obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
 		return

@@ -447,7 +447,7 @@
 		user.visible_message(span_warning("[defib] beeps: Not enough charge!"))
 		playsound(src, 'sound/machines/defib_failed.ogg', 50, FALSE)
 		return
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		if(iscyborg(user))
 			to_chat(user, span_warning("You must activate the paddles in your active module before you can use them on someone!"))
 		else

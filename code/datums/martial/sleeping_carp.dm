@@ -206,7 +206,7 @@
 		return
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(!wielded)
+		if(!HAS_TRAIT(src, TRAIT_WIELDED))
 			return ..()
 		if(!ishuman(target))
 			return ..()
@@ -233,6 +233,6 @@
 		return ..()
 
 /obj/item/staff/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	return FALSE

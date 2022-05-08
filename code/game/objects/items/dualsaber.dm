@@ -72,11 +72,11 @@
 	return wielded * sharpness
 
 /obj/item/dualsaber/update_icon_state()
-	icon_state = wielded ? "dualsaber[saber_color][wielded]" : "dualsaber0"
+	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][wielded]" : "dualsaber0"
 	return ..()
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.visible_message(span_suicide("[user] begins spinning way too fast! It looks like [user.p_theyre()] trying to commit suicide!"))
 
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)//stole from chainsaw code
@@ -121,7 +121,7 @@
 	if(user.has_dna())
 		if(user.dna.check_mutation(/datum/mutation/human/hulk))
 			to_chat(user, span_warning("You grip the blade too hard and accidentally drop it!"))
-			if(wielded)
+			if(HAS_TRAIT(src, TRAIT_WIELDED))
 				user.dropItemToGround(src, force=TRUE)
 				return
 	..()
@@ -136,18 +136,18 @@
 
 /obj/item/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, span_warning("You twirl around a bit before losing your balance and impaling yourself on [src]."))
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.take_bodypart_damage(20,25,check_armor = TRUE)
 	else
 		user.adjustStaminaLoss(25)
 
 /obj/item/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	return 0
 
 /obj/item/dualsaber/process()
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		if(hacked)
 			set_light_color(pick(COLOR_SOFT_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER))
 		open_flame()
@@ -155,12 +155,12 @@
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/dualsaber/IsReflect()
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		return 1
 
 /obj/item/dualsaber/ignition_effect(atom/A, mob/user)
 	// same as /obj/item/melee/energy, mostly
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ""
 	var/in_mouth = ""
 	if(iscarbon(user))
