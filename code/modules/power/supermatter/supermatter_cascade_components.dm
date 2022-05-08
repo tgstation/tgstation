@@ -106,6 +106,11 @@
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 	consume(hit_object)
 
+/**
+ * Proc to consume the objects colliding with the portal
+ *
+ * Arguments: atom/movable/consumed_object is the object hitting the portal
+ */
 /obj/cascade_portal/proc/consume(atom/movable/consumed_object)
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object

@@ -1,5 +1,3 @@
-GLOBAL_VAR_INIT(cascade_delamination, FALSE)
-
 /datum/supermatter_delamination
 	///Power amount of the SM at the moment of death
 	var/supermatter_power = 0
@@ -17,8 +15,8 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 	var/supermatter_gasmix_power_ratio = 0
 	///Are we triggering an universal endgame?
 	var/supermatter_cascade = FALSE
-
-	var/cascade_rift
+	///The rift in space that will be created by the cascade
+	var/obj/cascade_portal/cascade_rift
 
 /datum/supermatter_delamination/New(supermatter_power, supermatter_gas_amount, turf/supermatter_turf, supermatter_explosion_power, supermatter_gasmix_power_ratio, can_spawn_anomalies, supermatter_cascade)
 	. = ..()
@@ -30,7 +28,6 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 	src.supermatter_gasmix_power_ratio = supermatter_gasmix_power_ratio
 
 	if(supermatter_cascade)
-		GLOB.cascade_delamination = TRUE
 		start_universe_ending_cascade()
 		return
 
@@ -43,6 +40,9 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 
 	setup_anomalies()
 
+/**
+ * What the mobs should deal with when a delamination happens
+ */
 /datum/supermatter_delamination/proc/setup_mob_interaction()
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
 		if(!istype(victim) || victim.z != supermatter_turf.z)
@@ -70,6 +70,9 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 		to_chat(victim, span_boldannounce("You feel reality distort for a moment..."))
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
 
+/**
+ * Setup for the types of possible delaminations and their effects (singulo, tesla or normal)
+ */
 /datum/supermatter_delamination/proc/setup_delamination_type()
 	if(supermatter_gas_amount > MOLE_PENALTY_THRESHOLD)
 		call_singulo()
@@ -80,6 +83,9 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 
 	call_explosion()
 
+/**
+ * Spawns the singularity
+ */
 /datum/supermatter_delamination/proc/call_singulo()
 	if(!supermatter_turf) //If something fucks up we blow anyhow. This fix is 4 years old and none ever said why it's here. help.
 		call_explosion()
@@ -89,6 +95,9 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 	created_singularity.consume(src)
 	should_spawn_anomalies = FALSE
 
+/**
+ * Spawns the tesla
+ */
 /datum/supermatter_delamination/proc/call_tesla()
 	if(supermatter_turf)
 		var/obj/energy_ball/created_tesla = new(supermatter_turf)
@@ -96,6 +105,9 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 	call_explosion()
 	should_spawn_anomalies = FALSE
 
+/**
+ * Spawns the explosion
+ */
 /datum/supermatter_delamination/proc/call_explosion()
 	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(origin = supermatter_turf,
@@ -107,10 +119,16 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 		ignorecap = TRUE
 	)
 
+/**
+ * Setups how many anomalies to spawn
+ */
 /datum/supermatter_delamination/proc/setup_anomalies()
 	anomalies_to_spawn = max(round(0.005 * supermatter_power, 1) + rand(-2, 5), 1)
 	spawn_anomalies()
 
+/**
+ * Spawns the first half anomalies instantly and calls the second half
+ */
 /datum/supermatter_delamination/proc/spawn_anomalies()
 	var/list/anomaly_types = list(FLUX_ANOMALY = 65, GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
 	var/list/anomaly_places = GLOB.generic_event_spawns
@@ -123,6 +141,9 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 
 	spawn_overtime()
 
+/**
+ * Spawns the second half anomalies after a delay
+ */
 /datum/supermatter_delamination/proc/spawn_overtime()
 
 	var/list/anomaly_types = list(FLUX_ANOMALY = 65, GRAVITATIONAL_ANOMALY = 55, HALLUCINATION_ANOMALY = 45, PYRO_ANOMALY = 5, VORTEX_ANOMALY = 1)
@@ -139,9 +160,15 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 		addtimer(CALLBACK(src, .proc/spawn_anomaly, anomaly_location, anomaly_to_spawn), current_spawn + extended_spawn)
 		current_spawn += next_spawn
 
+/**
+ * Callback for the anomalies to spawn after some time
+ */
 /datum/supermatter_delamination/proc/spawn_anomaly(location, type)
 	supermatter_anomaly_gen(location, type, has_changed_lifespan = FALSE)
 
+/**
+ * Setup for the cascade delamination
+ */
 /datum/supermatter_delamination/proc/start_universe_ending_cascade()
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.universal_cascade = TRUE
@@ -154,10 +181,16 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 		var/turf/crystal_cascade_location = get_turf(pick(GLOB.generic_event_spawns))
 		crystal_cascade_location.ChangeTurf(/turf/closed/indestructible/supermatter_wall)
 
+/**
+ * Picks a random location for the rift
+ */
 /datum/supermatter_delamination/proc/pick_rift_location()
 	var/turf/rift_location = get_turf(pick(GLOB.generic_event_spawns))
 	cascade_rift = new /obj/cascade_portal(rift_location)
 
+/**
+ * Warns the crew about the cascade start and the rift location
+ */
 /datum/supermatter_delamination/proc/warn_crew()
 	for(var/mob/player as anything in GLOB.alive_player_list)
 		to_chat(player, span_boldannounce("You feel a strange presence in the air around you. You feel unsafe."))
@@ -175,13 +208,22 @@ GLOBAL_VAR_INIT(cascade_delamination, FALSE)
 
 	addtimer(CALLBACK(src, .proc/the_end), 5 MINUTES)
 
+/**
+ * Increases the security level to the highest level
+ */
 /datum/supermatter_delamination/proc/delta()
 	set_security_level("delta")
 	sound_to_playing_players('sound/misc/notice1.ogg')
 
+/**
+ * Announces the last message to the station
+ */
 /datum/supermatter_delamination/proc/last_message()
 	priority_announce("To the remaining humans alive, I hope it was worth it.", " ", 'sound/misc/bloop.ogg')
 
+/**
+ * Ends the round
+ */
 /datum/supermatter_delamination/proc/the_end()
 	SSticker.news_report = SUPERMATTER_CASCADE
 	SSticker.force_ending = 1

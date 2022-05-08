@@ -467,6 +467,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	SIGNAL_HANDLER
 	delamination_event()
 
+/**
+ * Checks if the supermatter is in a state where it can cascade
+ *
+ * Arguments: can_trigger = TRUE if the supermatter can trigger the cascade
+ * Returns: TRUE if the supermatter can cascade
+ */
 /obj/machinery/power/supermatter_crystal/proc/check_cascade_requirements(can_trigger)
 
 	if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT && !cascade_initiated && !admin_cascade && can_trigger)
