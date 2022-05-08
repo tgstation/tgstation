@@ -4,7 +4,7 @@
 /atom/movable/screen/alert/status_effect/unholy_determination
 	name = "Unholy Determination"
 	desc = "You appear in a unfamiliar room. The darkness begins to close in. Panic begins to set in. There is no time. Fight on, or die!"
-	icon_state = "regenerative_core"
+	icon_state = "wounded"
 
 /// The buff given to people within the shadow realm to assist them in surviving.
 /datum/status_effect/unholy_determination
