@@ -112,7 +112,7 @@
 	SIGNAL_HANDLER
 	holder = equipper
 	RegisterSignal(holder, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react, override=TRUE)
-	RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted, override=TRUE)
+	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/holder_deleted, override=TRUE)
 	//override for the preqdeleted is necessary because putting parent in hands sends the signal that this proc is registered towards,
 	//so putting an object in hands and then equipping the item on a clothing slot (without dropping it first)
 	//will always runtime without override = TRUE
@@ -120,7 +120,7 @@
 /datum/component/squeak/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 	UnregisterSignal(user, COMSIG_MOVABLE_DISPOSING)
-	UnregisterSignal(user, COMSIG_PARENT_PREQDELETED)
+	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
 	holder = null
 
 ///just gets rid of the reference to holder in the case that theyre qdeleted
