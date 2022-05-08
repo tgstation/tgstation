@@ -231,6 +231,7 @@
 	icon_teleport = "blpad-beam"
 	anchored = FALSE
 	use_power = NO_POWER_USE
+	active_power_usage = 0
 	teleport_speed = 20
 	range = 8
 	stationary = FALSE
@@ -254,7 +255,9 @@
 /obj/machinery/launchpad/briefcase/isAvailable()
 	if(closed)
 		return FALSE
-	return ..()
+	if(panel_open)
+		return FALSE
+	return TRUE
 
 /obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
 	. = ..()
@@ -284,7 +287,6 @@
 
 /obj/item/storage/briefcase/launchpad/Initialize(mapload)
 	pad = new(null, src) //spawns pad in nullspace to hide it from briefcase contents
-	pad.setup_area_power_relationship() // needed because since the pad is spawned in nullspace and has use_power == NO_POWER_USE, the power relationship doesnt get set up, so the machine gets stuck in a NOPOWER state (all nullspaced machines have NOPOWER by default)
 	. = ..()
 
 /obj/item/storage/briefcase/launchpad/Destroy()
