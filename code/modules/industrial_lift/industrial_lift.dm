@@ -61,9 +61,6 @@ GLOBAL_LIST_EMPTY(lifts)
 		lift_master_datum = new lift_master_type(src)
 		return INITIALIZE_HINT_LATELOAD
 
-	//if(create_multitile_platform)
-	//	return INITIALIZE_HINT_LATELOAD
-
 /obj/structure/industrial_lift/LateInitialize()
 	//after everything is initialized the lift master can order everything
 	lift_master_datum.order_platforms_by_z_level()
@@ -141,6 +138,10 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/turf/bottom_left_loc = locate(min_x, min_y, z)
 	var/obj/structure/industrial_lift/loc_corner_lift = locate() in bottom_left_loc
 
+	if(!loc_corner_lift)
+		stack_trace("no lift in the bottom left corner of a lift level!")
+		return FALSE
+
 	if(loc_corner_lift != src)
 		//the loc of a multitile object must always be the lower left corner
 		return loc_corner_lift.create_multitile_platform()
@@ -208,6 +209,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	forceMove(locate(min_x, min_y, z))//move to the lower left corner
 	set_movement_registrations(locs - old_loc)
+	return TRUE
 
 ///returns an unordered list of all lift platforms adjacent to us. used so our lift_master_datum can control all connected platforms.
 ///includes platforms directly above or below us as well. only includes platforms with an identical lift_id to our own.
@@ -325,7 +327,7 @@ GLOBAL_LIST_EMPTY(lifts)
 					qdel(victim_machine)
 
 			for(var/mob/living/collided in dest_turf.contents)
-				if(is_type_in_typecache(collided, lift_master_datum.ignored_smashthroughs))
+				if(lift_master_datum.ignored_smashthroughs[collided.type])
 					continue
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
