@@ -31,15 +31,14 @@
 	///The color of the beam we're drawing.
 	var/beam_color
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=INFINITY,maxdistance=INFINITY,btype = /obj/effect/ebeam, _beam_color = null)
-	origin = beam_origin
-	target = beam_target
-	max_distance = maxdistance
-	icon = beam_icon
-	icon_state = beam_icon_state
-	beam_type = btype
-	if(_beam_color)
-		beam_color = _beam_color
+/datum/beam/New(origin, target, icon = 'icons/effects/beam.dmi', icon_state = "b_beam", time = INFINITY, max_distance = INFINITY, beam_type = /obj/effect/ebeam, beam_color = null)
+	src.origin = origin
+	src.target = target
+	src.icon = icon
+	src.icon_state = icon_state
+	src.max_distance = max_distance
+	src.beam_type = beam_type
+	src.beam_color = beam_color
 	if(time < INFINITY)
 		QDEL_IN(src, time)
 
