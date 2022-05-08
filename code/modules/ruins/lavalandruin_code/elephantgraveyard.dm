@@ -132,7 +132,7 @@
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
 	new /obj/effect/decal/remains/human/grave(src)
-	switch(rand(1,8))
+	switch(rand(1,7))
 		if(1)
 			new /obj/item/coin/gold(src)
 			new /obj/item/storage/wallet(src)

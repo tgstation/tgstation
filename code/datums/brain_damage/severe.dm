@@ -179,7 +179,7 @@
 		return
 
 	var/high_stress = (stress > 60) //things get psychosomatic from here on
-	switch(rand(1,6))
+	switch(rand(1,5))
 		if(1)
 			if(!high_stress)
 				to_chat(owner, span_warning("You feel sick..."))

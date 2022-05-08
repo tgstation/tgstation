@@ -100,12 +100,12 @@
 				newletter = "...huuuhhh..."
 			else if(newletter == ".")
 				newletter = " *BURP*."
-		switch(rand(1, 20))
+		switch(rand(1, 3))
 			if(1)
 				newletter += "'"
-			if(10)
+			if(2)
 				newletter += "[newletter]"
-			if(20)
+			if(3)
 				newletter += "[newletter][newletter]"
 		. += "[newletter]"
 	return sanitize(.)
@@ -139,7 +139,7 @@
 			else if(newletter == "H")
 				newletter = " IT COMES... "
 
-		switch(rand(1, 15))
+		switch(rand(1, 5))
 			if(1)
 				newletter = "'"
 			if(2)
