@@ -1,6 +1,6 @@
 /**
  * TILE STACKS
- * 
+ *
  * Allows us to place a turf on a plating.
  */
 /obj/item/stack/tile
@@ -65,7 +65,7 @@
 
 /**
  * Place our tile on a plating, or replace it.
- * 
+ *
  * Arguments:
  * * target_plating - Instance of the plating we want to place on. Replaced during sucessful executions.
  * * user - The mob doing the placing.
@@ -968,6 +968,19 @@
 	merge_type = /obj/item/stack/tile/fakepit
 
 /obj/item/stack/tile/fakepit/loaded
+	amount = 30
+
+/obj/item/stack/tile/fakeice
+	name = "fake ice"
+	singular_name = "fake ice tile"
+	desc = "A piece of tile with a convincing ice pattern."
+	icon_state = "tile_ice"
+	inhand_icon_state = "tile-diamond"
+	turf_type = /turf/open/floor/fakeice
+	resistance_flags = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fakeice
+
+/obj/item/stack/tile/fakeice/loaded
 	amount = 30
 
 //High-traction

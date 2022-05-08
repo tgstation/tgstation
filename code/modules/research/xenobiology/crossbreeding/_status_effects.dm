@@ -632,7 +632,7 @@
 
 /datum/status_effect/stabilized/darkblue/tick()
 	if(owner.fire_stacks > 0 && prob(80))
-		owner.adjust_fire_stacks(-1)
+		owner.adjust_wet_stacks(1)
 		if(owner.fire_stacks <= 0)
 			to_chat(owner, span_notice("[linked_extract] coats you in a watery goo, extinguishing the flames."))
 	var/obj/O = owner.get_active_held_item()

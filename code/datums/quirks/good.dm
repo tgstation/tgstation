@@ -76,7 +76,7 @@
 
 /datum/quirk/item_quirk/clown_enjoyer/add()
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.add_hud_to(quirk_holder)
+	fan.show_to(quirk_holder)
 
 /datum/quirk/item_quirk/mime_fan
 	name = "Mime Fan"
@@ -93,7 +93,7 @@
 
 /datum/quirk/item_quirk/mime_fan/add()
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.add_hud_to(quirk_holder)
+	fan.show_to(quirk_holder)
 
 /datum/quirk/freerunning
 	name = "Freerunning"

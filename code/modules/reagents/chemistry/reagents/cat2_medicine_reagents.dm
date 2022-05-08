@@ -221,7 +221,7 @@
 		return
 
 	exposed_mob.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
-	exposed_mob.adjust_fire_stacks(-reac_volume / 2)
+	exposed_mob.adjust_fire_stacks(reac_volume / -2)
 	if(reac_volume >= metabolization_rate)
 		exposed_mob.extinguish_mob()
 

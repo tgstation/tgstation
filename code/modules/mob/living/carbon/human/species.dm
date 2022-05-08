@@ -165,7 +165,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 
 	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
-	var/fire_overlay = "Standing"
+	var/fire_overlay = "human"
 
 	///the species that body parts are surgically compatible with (found in _DEFINES/mobs.dm)
 	///current acceptable bitfields are HUMAN_BODY, ALIEN_BODY, LARVA_BODY, MONKEY_BODY, or NONE
@@ -570,31 +570,25 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(!(NOEYESPRITES in species_traits))
 			var/obj/item/organ/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
 			var/mutable_appearance/no_eyeslay
-			var/mutable_appearance/eye_overlay
-			var/obscured = species_human.check_obscured_slots(TRUE) //eyes that shine in the dark shouldn't show when you have glasses
 			var/add_pixel_x = 0
 			var/add_pixel_y = 0
 			//cut any possible vis overlays
 			if(body_vis_overlays.len)
 				SSvis_overlays.remove_vis_overlay(species_human, body_vis_overlays)
+
 			if(OFFSET_FACE in species_human.dna.species.offset_features)
 				add_pixel_x = species_human.dna.species.offset_features[OFFSET_FACE][1]
 				add_pixel_y = species_human.dna.species.offset_features[OFFSET_FACE][2]
+
 			if(!eye_organ)
 				no_eyeslay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
 				no_eyeslay.pixel_x += add_pixel_x
 				no_eyeslay.pixel_y += add_pixel_y
 				standing += no_eyeslay
-			if(!no_eyeslay)//we need eyes
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
-				if(eye_organ.overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
-					eye_overlay.overlays += emissive_appearance(eye_overlay.icon, eye_overlay.icon_state, alpha = eye_overlay.alpha)
 
-				eye_overlay.pixel_x += add_pixel_x
-				eye_overlay.pixel_y += add_pixel_y
-				if((EYECOLOR in species_traits) && eye_organ)
-					eye_overlay.color = species_human.eye_color
-				standing += eye_overlay
+			if(!no_eyeslay)
+				for(var/eye_overlay in eye_organ.generate_body_overlay(species_human))
+					standing += eye_overlay
 
 		// blush
 		if (HAS_TRAIT(species_human, TRAIT_BLUSHING)) // Caused by either the *blush emote or the "drunk" mood event
@@ -804,7 +798,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						if(FACEHAIR)
 							accessory_overlay.color = source.facial_hair_color
 						if(EYECOLOR)
-							accessory_overlay.color = source.eye_color
+							accessory_overlay.color = source.eye_color_left
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
@@ -1721,77 +1715,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 //////////
 
 /datum/species/proc/handle_fire(mob/living/carbon/human/H, delta_time, times_fired, no_protection = FALSE)
-	if(!CanIgniteMob(H))
-		return TRUE
-	if(H.on_fire)
-		SEND_SIGNAL(H, COMSIG_HUMAN_BURNING)
-		//the fire tries to damage the exposed clothes and items
-		var/list/burning_items = list()
-		var/obscured = H.check_obscured_slots(TRUE)
-		//HEAD//
-
-		if(H.glasses && !(obscured & ITEM_SLOT_EYES))
-			burning_items += H.glasses
-		if(H.wear_mask && !(obscured & ITEM_SLOT_MASK))
-			burning_items += H.wear_mask
-		if(H.wear_neck && !(obscured & ITEM_SLOT_NECK))
-			burning_items += H.wear_neck
-		if(H.ears && !(obscured & ITEM_SLOT_EARS))
-			burning_items += H.ears
-		if(H.head)
-			burning_items += H.head
-
-		//CHEST//
-		if(H.w_uniform && !(obscured & ITEM_SLOT_ICLOTHING))
-			burning_items += H.w_uniform
-		if(H.wear_suit)
-			burning_items += H.wear_suit
-
-		//ARMS & HANDS//
-		var/obj/item/clothing/arm_clothes = null
-		if(H.gloves && !(obscured & ITEM_SLOT_GLOVES))
-			arm_clothes = H.gloves
-		else if(H.wear_suit && ((H.wear_suit.body_parts_covered & HANDS) || (H.wear_suit.body_parts_covered & ARMS)))
-			arm_clothes = H.wear_suit
-		else if(H.w_uniform && ((H.w_uniform.body_parts_covered & HANDS) || (H.w_uniform.body_parts_covered & ARMS)))
-			arm_clothes = H.w_uniform
-		if(arm_clothes)
-			burning_items |= arm_clothes
-
-		//LEGS & FEET//
-		var/obj/item/clothing/leg_clothes = null
-		if(H.shoes && !(obscured & ITEM_SLOT_FEET))
-			leg_clothes = H.shoes
-		else if(H.wear_suit && ((H.wear_suit.body_parts_covered & FEET) || (H.wear_suit.body_parts_covered & LEGS)))
-			leg_clothes = H.wear_suit
-		else if(H.w_uniform && ((H.w_uniform.body_parts_covered & FEET) || (H.w_uniform.body_parts_covered & LEGS)))
-			leg_clothes = H.w_uniform
-		if(leg_clothes)
-			burning_items |= leg_clothes
-
-		for(var/X in burning_items)
-			var/obj/item/I = X
-			I.fire_act((H.fire_stacks * 50)) //damage taken is reduced to 2% of this value by fire_act()
-
-		var/thermal_protection = H.get_thermal_protection()
-
-		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
-			return
-		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-			H.adjust_bodytemperature(5.5 * delta_time)
-		else
-			H.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (H.fire_stacks * 12)) * 0.5 * delta_time)
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
-			H.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = H), story_value = STORY_VALUE_OKAY)
-
-/datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_NOFIRE))
-		return FALSE
-	return TRUE
-
-/datum/species/proc/extinguish_mob(mob/living/carbon/human/H)
-	return
-
+	return no_protection
 
 ////////////
 //  Stun  //

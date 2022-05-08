@@ -240,7 +240,7 @@
 			if(END_STAGE)
 				N.color = null
 				N.icon_state = ""
-				N.icon = 'icons/turf/areas.dmi'
+				N.icon = 'icons/area/areas_misc.dmi'
 				N.layer = initial(N.layer)
 				N.plane = initial(N.plane)
 				N.set_opacity(FALSE)
