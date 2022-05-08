@@ -391,9 +391,6 @@
 	)
 
 /datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
-	if(!isturf(holder))
-		return NO_REACTION
-
 	var/temperature = air.temperature
 	var/temperature_scale
 	if(temperature < FREON_TERMINAL_TEMPERATURE) //stop the reaction when too cold
@@ -423,7 +420,7 @@
 	ASSERT_GAS(/datum/gas/carbon_dioxide, air)
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] += freon_burn_rate
 
-	if(temperature < HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE && temperature > HOT_ICE_FORMATION_MINIMUM_TEMPERATURE && prob(HOT_ICE_FORMATION_PROB))
+	if(temperature < HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE && temperature > HOT_ICE_FORMATION_MINIMUM_TEMPERATURE && prob(HOT_ICE_FORMATION_PROB) && isturf(holder))
 		new /obj/item/stack/sheet/hot_ice(holder)
 
 	SET_REACTION_RESULTS(freon_burn_rate * (1 + oxygen_burn_ratio))
