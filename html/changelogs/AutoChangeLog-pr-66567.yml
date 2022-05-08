@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - qol: "Space Parallax will now smoothly animate between steps, based off your movement speed. Please report any jitter."
-  - bugfix: "Parallax will no longer \"freeze\" when you cross some area boundaries. Looks better now."
-  - bugfix: "Dragging objects diagonally will no longer cause them to visually \"jump\" to catch up to you. Seriously how did none report this, are we just collectively blind?"

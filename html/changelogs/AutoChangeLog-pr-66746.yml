@@ -1,5 +1,0 @@
-author: "Gandalf2k15 for porting, DarthSidiousPalpatine for their original contribution on TauCeti"
-delete-after: True
-changes: 
-  - imageadd: "Mob fire sprites have been updated!"
-  - refactor: "The way mobs update fire has been refactored. If you spot any anomalies, please report them."
