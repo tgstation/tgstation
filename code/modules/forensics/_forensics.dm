@@ -1,11 +1,43 @@
+/**
+ * Forensics datum
+ *
+ * Placed onto atoms, and contains:
+ * * List of fingerprints on the atom
+ * * List of hidden prints (used for admins)
+ * * List of blood on the atom
+ * * List of clothing fibres on the atom
+ */
 /datum/forensics
-
+	/// Weakref to the parent owning this datum
 	var/datum/weakref/parent
-
-	var/list/fingerprints //assoc print = print
-	var/list/hiddenprints //assoc ckey = realname/gloves/ckey
-	var/list/blood_DNA //assoc dna = bloodtype
-	var/list/fibers //assoc print = print
+	/**
+	 * List of fingerprints on this atom
+	 *
+	 * Formatting:
+	 * * print = print
+	 */
+	var/list/fingerprints
+	/**
+	 * List of fingerprints on this atom
+	 *
+	 * Formatting:
+	 * * ckey = realname/gloves/ckey
+	 */
+	var/list/hiddenprints
+	/**
+	 * List of fingerprints on this atom
+	 *
+	 * Formatting:
+	 * * dna = bloodtype
+	 */
+	var/list/blood_DNA
+	/**
+	 * List of clothing fibres on this atom
+	 *
+	 * Formatting:
+	 * * fiber = fibre
+	 */
+	var/list/fibers
 
 /datum/forensics/New(atom/parent, fingerprints, hiddenprints, blood_DNA, fibers)
 	if(!isatom(parent))
@@ -20,6 +52,7 @@
 	src.fibers = fibers
 	check_blood()
 
+/// Merges the given lists into the preexisting values
 /datum/forensics/proc/inherit_new(list/fingerprints, list/hiddenprints, list/blood_DNA, list/fibers) //Use of | and |= being different here is INTENTIONAL.
 	if (fingerprints)
 		src.fingerprints = LAZY_LISTS_OR(src.fingerprints, fingerprints)
@@ -35,21 +68,22 @@
 	UnregisterSignal(parent.resolve(), list(COMSIG_COMPONENT_CLEAN_ACT))
 	return ..()
 
+/// Empties the fingerprints list
 /datum/forensics/proc/wipe_fingerprints()
 	fingerprints = null
 	return TRUE
 
-/datum/forensics/proc/wipe_hiddenprints()
-	return
-
+/// Empties the blood_DNA list
 /datum/forensics/proc/wipe_blood_DNA()
 	blood_DNA = null
 	return TRUE
 
+/// Empties the fibres list
 /datum/forensics/proc/wipe_fibers()
 	fibers = null
 	return TRUE
 
+/// Handles cleaning up the various forensic types
 /datum/forensics/proc/clean_act(datum/source, clean_types)
 	SIGNAL_HANDLER
 
@@ -60,6 +94,7 @@
 	if(clean_types & CLEAN_TYPE_FIBERS)
 		wipe_fibers()
 
+/// Adds the given list into fingerprints
 /datum/forensics/proc/add_fingerprint_list(list/fingerprints)
 	if(!length(fingerprints))
 		return
@@ -68,6 +103,7 @@
 		src.fingerprints[fingerprint] = fingerprint
 	return TRUE
 
+/// Adds a single fingerprint
 /datum/forensics/proc/add_fingerprint(mob/living/suspect, ignoregloves = FALSE)
 	if(!isliving(suspect))
 		if(!iscameramob(suspect))
@@ -92,6 +128,7 @@
 		LAZYSET(fingerprints, full_print, full_print)
 	return TRUE
 
+/// Adds the given list into fibers
 /datum/forensics/proc/add_fiber_list(list/fibers)
 	if(!length(fibers))
 		return
@@ -103,6 +140,7 @@
 #define ITEM_FIBRE_MULTIPLIER 1.2
 #define NON_ITEM_FIBRE_MULTIPLIER 1
 
+/// Adds a single fibre
 /datum/forensics/proc/add_fibers(mob/living/carbon/human/suspect)
 	var/fibertext
 	var/item_multiplier = isitem(src) ? ITEM_FIBRE_MULTIPLIER : NON_ITEM_FIBRE_MULTIPLIER
@@ -137,6 +175,7 @@
 #undef ITEM_FIBRE_MULTIPLIER
 #undef NON_ITEM_FIBRE_MULTIPLIER
 
+/// Adds the given list into hiddenprints
 /datum/forensics/proc/add_hiddenprint_list(list/hiddenprints) //list(ckey = text)
 	if(!length(hiddenprints))
 		return
@@ -145,6 +184,7 @@
 		src.hiddenprints[hidden_print] = hiddenprints[hidden_print]
 	return TRUE
 
+/// Adds a single hiddenprint
 /datum/forensics/proc/add_hiddenprint(mob/suspect)
 	if(!isliving(suspect))
 		if(!iscameramob(suspect))
@@ -173,6 +213,7 @@
 	parent_atom.fingerprintslast = suspect.ckey
 	return TRUE
 
+/// Adds the given list into blood_DNA
 /datum/forensics/proc/add_blood_DNA(list/blood_DNA)
 	if(!length(blood_DNA))
 		return
@@ -182,9 +223,11 @@
 	check_blood()
 	return TRUE
 
+/// Updates the blood displayed on parent
 /datum/forensics/proc/check_blood()
-	if(!isitem(parent))
+	if(!isitem(parent.resolve()))
 		return
 	if(!length(blood_DNA))
 		return
-	parent.AddElement(/datum/element/decal/blood)
+	var/atom/parent_atom = parent.resolve()
+	parent_atom.AddElement(/datum/element/decal/blood)
