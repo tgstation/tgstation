@@ -31207,7 +31207,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "jWd" = (
@@ -32220,7 +32219,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only,
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/camera{
 	c_tag = "Service-Botany Top 2";
@@ -36011,7 +36009,6 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Service Hall Exit"
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "service-hall-external"
 	},
@@ -40208,9 +40205,6 @@
 	req_access_txt = "35"
 	},
 /obj/structure/flora/ausbushes/ywflowers,
-/obj/machinery/door/firedoor/border_only{
-	dir = 1
-	},
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "mYZ" = (
@@ -42275,7 +42269,6 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Icemoon Exterior Garden"
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
 /turf/open/floor/iron/textured_half,
 /area/station/service/hydroponics)
@@ -52160,7 +52153,6 @@
 /obj/machinery/door/airlock/highsecurity{
 	name = "Service Hall Exit"
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "service-hall-external"
 	},
@@ -59685,9 +59677,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
 /turf/open/floor/iron,
