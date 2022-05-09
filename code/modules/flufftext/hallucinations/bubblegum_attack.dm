@@ -1,0 +1,103 @@
+/// Sends a fake bubblegum charging through a nearby wall to our target.
+/datum/hallucination/oh_yeah
+	/// An image overlayed to the wall bubblegum comes out of, to look destroyed.
+	var/image/fake_broken_wall
+	/// An image put where bubblegum is expected to land, to mimic his charge "rune" icon.
+	var/image/fake_rune
+	/// if TRUE, we will also send one of the hallucination lines when we start.
+	var/haunt_them = FALSE
+	/// a weakref to the bubblegum effect we create, to make sure it gets deleted when we do
+	var/datum/weakref/fake_bubblegum_weakref
+	/// if haunt_them is TRUE, they will also be shown one of these lines when the hallucination occurs
+	var/static/list/hallucination_lines = list(
+		"I AM IMMORTAL.",
+		"I SHALL TAKE YOUR WORLD.",
+		"I SEE YOU.",
+		"YOU CANNOT ESCAPE ME FOREVER.",
+		"NOTHING CAN HOLD ME.",
+	)
+
+/datum/hallucination/oh_yeah/New(mob/living/target, source = "an external source", haunt_them = FALSE)
+	src.haunt_them = haunt_them
+	return ..()
+
+/datum/hallucination/oh_yeah/Destroy()
+	if(fake_broken_wall)
+		target.client?.images -= fake_broken_wall
+		fake_broken_wall = null
+	if(fake_rune)
+		target.client?.images -= fake_rune
+		fake_rune = null
+
+	qdel(fake_bubblegum_weakref)
+	return ..()
+
+/datum/hallucination/oh_yeah/start()
+	var/turf/closed/wall/wall_source = locate() in range(7, target)
+	if(!wall_source)
+		qdel(src)
+		return
+
+	feedback_details += "Source: ([wall.x], [wall.y], [wall.z])"
+
+	var/turf/target_landing_turf = get_turf(target)
+	var/turf/target_landing_image_turf = get_step(landing, SOUTHWEST) // The icon is 3x3, so we shift down+left
+
+	if(target.client)
+
+		fake_broken_wall = image('icons/turf/floors.dmi', wall_source, "plating", layer = TURF_LAYER)
+		fake_broken_wall.override = TRUE
+		fake_rune = image('icons/effects/96x96.dmi', target_landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
+
+		target.client?.images |= fake_broken_wall
+		target.client?.images |= fake_rune
+
+		target.playsound_local(wall_source, 'sound/effects/meteorimpact.ogg', 150, TRUE)
+
+	if(haunt_them)
+		to_chat(wearer, span_bold(span_colossus(pick(hallucination_lines))))
+
+	var/obj/effect/hallucination/simple/bubblegum/fake_bubbles = new(wall_source, src)
+	fake_bubblegum_weakref = WEAKREF(fake_bubbles)
+	addtimer(CALLBACK(src, .proc/charge_loop, fake_bubbles, target_landing_turf), 1 SECONDS)
+
+/**
+ * Recursive function that operates as a "fake charge" of our effect towards the target turf.
+ */
+/datum/hallucination/oh_yeah/proc/charge_loop(obj/effect/hallucination/simple/bubblegum/fake_bubbles, turf/landing_turf)
+	if(QDELETED(src))
+		return
+
+	if(QDELETED(target) || QDELETED(fake_bubbles) || !landing_turf || fake_bubbles.z != target.z || fake_bubbles.z != landing_turf.z)
+		qdel(src)
+		return
+
+	if(get_turf(fake_bubbles) == landing_turf || target.stat == DEAD)
+		QDEL_IN(src, 3 SECONDS)
+		return
+
+	bubblegum.forceMove(get_step_towards(fake_bubbles, landing_turf))
+	bubblegum.setDir(get_dir(fake_bubbles, landing_turf))
+	target.playsound_local(get_turf(fake_bubbles), 'sound/effects/meteorimpact.ogg', 150, TRUE)
+	shake_camera(target, 2, 1)
+
+	if(fake_bubbles.Adjacent(target))
+		target.Paralyze(8 SECONDS)
+		target.adjustStaminaLoss(40)
+		step_away(target, bubblegum)
+		shake_camera(target, 4, 3)
+		target.visible_message(
+			span_warning("[target] jumps backwards, falling on the ground!"),
+			span_userdanger("[bubblegum] slams into you!"),
+		)
+		QDEL_IN(src, 3 SECONDS)
+
+	else
+		addtimer(CALLBACK(src, .proc/charge_loop, fake_bubbles, landing_turf), 0.2 SECONDS)
+
+/// Fake bubblegum hallucination effect for the oh yeah hallucination
+/obj/effect/hallucination/simple/bubblegum
+	name = "Bubblegum"
+	image_icon = 'icons/mob/lavaland/96x96megafauna.dmi'
+	image_state = "bubblegum"
+	px = -32

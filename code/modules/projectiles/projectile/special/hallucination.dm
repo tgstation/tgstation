@@ -12,7 +12,7 @@
 	log_override = TRUE
 	var/hal_icon_state
 	var/image/fake_icon
-	var/mob/living/carbon/hal_target
+	var/mob/living/carbon/hal_target // el hard delete
 	var/hal_fire_sound
 	var/hal_hitsound
 	var/hal_hitsound_wall
@@ -24,12 +24,10 @@
 /obj/projectile/hallucination/fire()
 	..()
 	fake_icon = image('icons/obj/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
-	if(hal_target.client)
-		hal_target.client.images += fake_icon
+	hal_target.client?.images += fake_icon
 
 /obj/projectile/hallucination/Destroy()
-	if(hal_target?.client)
-		hal_target.client.images -= fake_icon
+	hal_target?.client?.images -= fake_icon
 	QDEL_NULL(fake_icon)
 	return ..()
 
@@ -214,7 +212,7 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/change/hal_apply_effect()
-	new /datum/hallucination/self_delusion(hal_target, TRUE, wabbajack = FALSE)
+	hal_target.cause_hallucination(/datum/hallucination/self_delusion, source = "fake [name]", wabbajack = FALSE)
 
 /obj/projectile/hallucination/death
 	name = "bolt of death"
@@ -227,4 +225,4 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/death/hal_apply_effect()
-	new /datum/hallucination/death(hal_target, TRUE)
+	hal_target.cause_hallucination(/datum/hallucination/death, source = "fake [name]")

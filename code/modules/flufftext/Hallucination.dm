@@ -55,7 +55,7 @@
 			return
 		Expand()
 		if((get_turf(target) in flood_turfs) && !target.internal)
-			new /datum/hallucination/fake_alert(target, TRUE, ALERT_TOO_MUCH_PLASMA)
+			target.cause_hallucination(/datum/hallucination/fake_alert, source = "fake plasmaflood hallucination", specific = ALERT_TOO_MUCH_PLASMA)
 		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 
 /datum/hallucination/fake_flood/proc/Expand()
@@ -99,85 +99,6 @@
 
 /obj/effect/hallucination/simple/clown/scary
 	image_state = "scary_clown"
-
-/obj/effect/hallucination/simple/bubblegum
-	name = "Bubblegum"
-	image_icon = 'icons/mob/lavaland/96x96megafauna.dmi'
-	image_state = "bubblegum"
-	px = -32
-
-/datum/hallucination/oh_yeah
-	var/obj/effect/hallucination/simple/bubblegum/bubblegum
-	var/image/fakebroken
-	var/image/fakerune
-	var/turf/landing
-	var/charged
-	var/next_action = 0
-
-/datum/hallucination/oh_yeah/New(mob/living/carbon/C, forced = TRUE)
-	set waitfor = FALSE
-	. = ..()
-	var/turf/closed/wall/wall
-	for(var/turf/closed/wall/W in range(7,target))
-		wall = W
-		break
-	if(!wall)
-		return INITIALIZE_HINT_QDEL
-	feedback_details += "Source: [wall.x],[wall.y],[wall.z]"
-
-	fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
-	landing = get_turf(target)
-	var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
-	fakerune = image('icons/effects/96x96.dmi', landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
-	fakebroken.override = TRUE
-	if(target.client)
-		target.client.images |= fakebroken
-		target.client.images |= fakerune
-	target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
-	bubblegum = new(wall, target)
-	addtimer(CALLBACK(src, .proc/start_processing), 10)
-
-/datum/hallucination/oh_yeah/proc/start_processing()
-	if (isnull(target))
-		qdel(src)
-		return
-	START_PROCESSING(SSfastprocess, src)
-
-/datum/hallucination/oh_yeah/process(delta_time)
-	next_action -= delta_time
-
-	if (next_action > 0)
-		return
-
-	if (get_turf(bubblegum) != landing && target?.stat != DEAD)
-		if(!landing || (get_turf(bubblegum)).loc.z != landing.loc.z)
-			qdel(src)
-			return
-		bubblegum.forceMove(get_step_towards(bubblegum, landing))
-		bubblegum.setDir(get_dir(bubblegum, landing))
-		target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
-		shake_camera(target, 2, 1)
-		if(bubblegum.Adjacent(target) && !charged)
-			charged = TRUE
-			target.Paralyze(80)
-			target.adjustStaminaLoss(40)
-			step_away(target, bubblegum)
-			shake_camera(target, 4, 3)
-			target.visible_message(span_warning("[target] jumps backwards, falling on the ground!"),span_userdanger("[bubblegum] slams into you!"))
-		next_action = 0.2
-	else
-		STOP_PROCESSING(SSfastprocess, src)
-		QDEL_IN(src, 3 SECONDS)
-
-/datum/hallucination/oh_yeah/Destroy()
-	if(target.client)
-		target.client.images.Remove(fakebroken)
-		target.client.images.Remove(fakerune)
-	QDEL_NULL(fakebroken)
-	QDEL_NULL(fakerune)
-	QDEL_NULL(bubblegum)
-	STOP_PROCESSING(SSfastprocess, src)
-	return ..()
 
 /datum/hallucination/battle
 	var/battle_type
@@ -583,7 +504,7 @@
 
 /datum/hallucination/chat
 
-/datum/hallucination/chat/New(mob/living/carbon/C, forced = TRUE, force_radio, specific_message)
+/datum/hallucination/chat/New(mob/living/carbon/C, forced = TRUE, force_radio = FALSE, specific_message)
 	set waitfor = FALSE
 	..()
 	var/target_name = target.first_name()
@@ -627,7 +548,7 @@
 
 	// Generate message
 	var/spans = list(person.speech_span)
-	var/chosen = !specific_message ? capitalize(pick(is_radio ? speak_messages : radio_messages)) : specific_message
+	var/chosen = specific_message || capitalize(pick(is_radio ? speak_messages : radio_messages))
 	chosen = replacetext(chosen, "%TARGETNAME%", target_name)
 	var/message = target.compose_message(person, understood_language, chosen, is_radio ? "[FREQ_COMMON]" : null, spans, face_name = TRUE)
 	feedback_details += "Type: [is_radio ? "Radio" : "Talk"], Source: [person.real_name], Message: [message]"
@@ -728,7 +649,7 @@
 		if("beepsky")
 			target.playsound_local(source, 'sound/voice/beepsky/freeze.ogg', 35, 0)
 		if("mech")
-			new /datum/hallucination/mech_sounds(C, forced, sound_type)
+			target.cause_hallucination(/datum/hallucination/mech_sounds, source = "fake sounds hallucination")
 		//Deconstructing a wall
 		if("wall decon")
 			target.playsound_local(source, 'sound/items/welder.ogg', 50, 1)
@@ -1129,11 +1050,14 @@
 	if(target.client)
 		target.client.images += image
 
-/obj/effect/hallucination/danger/lava/proc/on_entered(datum/source, atom/movable/AM)
+/obj/effect/hallucination/danger/lava/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
-	if(AM == target)
-		target.adjustStaminaLoss(20)
-		new /datum/hallucination/fire(target)
+
+	if(entered != target)
+		return
+
+	target.adjustStaminaLoss(20)
+	target.cause_hallucination(/datum/hallucination/fire, source = "fake lava hallucination")
 
 /obj/effect/hallucination/danger/chasm
 	name = "chasm"
@@ -1185,10 +1109,13 @@
 	if(target.client)
 		target.client.images += image
 
-/obj/effect/hallucination/danger/anomaly/proc/on_entered(datum/source, atom/movable/AM)
+/obj/effect/hallucination/danger/anomaly/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
-	if(AM == target)
-		new /datum/hallucination/shock(target)
+
+	if(entered != target)
+		return
+
+	target.cause_hallucination(/datum/hallucination/shock, source = "fake anomaly hallucination")
 
 /datum/hallucination/death
 
