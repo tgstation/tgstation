@@ -2441,7 +2441,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	drinker.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
 	if (DT_PROB(2.5, delta_time))
 		drinker.adjust_fire_stacks(1)
-		drinker.IgniteMob()
+		drinker.ignite_mob()
 	..()
 
 /datum/reagent/consumable/ethanol/painkiller

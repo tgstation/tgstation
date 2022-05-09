@@ -668,6 +668,28 @@
 /obj/item/spellbook/Initialize(mapload)
 	. = ..()
 	prepare_spells()
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
+
+/**
+ * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
+ *
+ * Has no effect on charge, but gives a funny message to people who think they're clever.
+ */
+/obj/item/spellbook/proc/on_magic_charge(datum/source, obj/effect/proc_holder/spell/targeted/charge/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	var/static/list/clever_girl = list(
+		"NICE TRY BUT NO!",
+		"CLEVER BUT NOT CLEVER ENOUGH!",
+		"SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!",
+		"CUTE! VERY CUTE!",
+		"YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?",
+	)
+
+	to_chat(caster, span_warning("Glowing red letters appear on the front cover..."))
+	to_chat(caster, span_red(pick(clever_girl)))
+
+	return COMPONENT_ITEM_BURNT_OUT
 
 /obj/item/spellbook/attack_self(mob/user)
 	if(!owner)

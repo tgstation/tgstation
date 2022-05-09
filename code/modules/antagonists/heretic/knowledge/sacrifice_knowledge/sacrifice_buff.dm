@@ -61,7 +61,7 @@
  */
 /datum/status_effect/unholy_determination/proc/adjust_all_damages(amount)
 
-	owner.set_fire_stacks(max(owner.fire_stacks - 1, 0))
+	owner.adjust_fire_stacks(-1)
 	owner.losebreath = max(owner.losebreath - 0.5, 0)
 
 	owner.adjustToxLoss(-amount, FALSE, TRUE)
