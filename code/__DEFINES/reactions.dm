@@ -119,6 +119,10 @@
 #define N2O_FORMATION_MAX_TEMPERATURE 250
 /// The amount of energy released when a mole of N2O forms from nitrogen and oxygen in the presence of BZ.
 #define N2O_FORMATION_ENERGY 10000
+/// The optimal temperature for N2O formation.
+#define N2O_FORMATION_OPTIMAL_TEMPERATURE 225
+/// The temperature scale for N2O formation.
+#define N2O_FORMATION_TEMPERATURE_SCALE 25
 
 /// The minimum temperature N2O can decompose at.
 #define N2O_DECOMPOSITION_MIN_TEMPERATURE 1400
@@ -150,19 +154,21 @@
 #define PLUOXIUM_FORMATION_MAX_RATE 5
 /// The amount of energy one mole of pluoxium forming from carbon dioxide, oxygen, and tritium releases.
 #define PLUOXIUM_FORMATION_ENERGY 250
+/// The pressure scaling factor for pluoxium formation efficiency. Higher values will mean you need more pressure to achieve the same efficiency.
+#define PLUOXIUM_FORMATION_PRESSURE_SCALE 100000
 
 // Nitrium:
 /// The minimum temperature necessary for nitrium to form from tritium, nitrogen, and BZ.
 #define NITRIUM_FORMATION_MIN_TEMP 1500
 /// A scaling divisor for the rate of nitrium formation relative to mix temperature.
-#define NITRIUM_FORMATION_TEMP_DIVISOR (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8)
+#define NITRIUM_FORMATION_TEMP_DIVISOR 200000
 /// The amount of thermal energy consumed when a mole of nitrium is formed from tritium, nitrogen, and BZ.
 #define NITRIUM_FORMATION_ENERGY 100000
 
 /// The maximum temperature nitrium can decompose into nitrogen and hydrogen at.
 #define NITRIUM_DECOMPOSITION_MAX_TEMP (T0C + 70) //Pretty warm, explicitly not fire temps. Time bombs are cool, but not that cool. If it makes you feel any better it's close.
 /// A scaling divisor for the rate of nitrium decomposition relative to mix temperature.
-#define NITRIUM_DECOMPOSITION_TEMP_DIVISOR (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8)
+#define NITRIUM_DECOMPOSITION_TEMP_DIVISOR (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 64)
 /// The amount of energy released when a mole of nitrium decomposes into nitrogen and hydrogen.
 #define NITRIUM_DECOMPOSITION_ENERGY 30000
 
@@ -193,12 +199,18 @@
 
 /// How much energy a mole of halon combusting consumes.
 #define HALON_COMBUSTION_ENERGY 2500
+/// The temperature scale for halon combustion.
+#define HALON_COMBUSTION_TEMPERATURE_SCALE (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10)
+/// The divisor for the maximum halon combustion rate. (Up to 1/10th of the minimum required gas scaled by their consumption rate can get consumed at once)
+#define HALON_COMBUSTION_DELTA 10
 
 // Healium:
 /// The minimum temperature healium can form from BZ and freon at.
 #define HEALIUM_FORMATION_MIN_TEMP 25
 /// The maximum temperature healium can form from BZ and freon at.
 #define HEALIUM_FORMATION_MAX_TEMP 300
+/// The pressure scaling factor for healium formation efficiency. Higher values will mean you need more pressure to achieve the same efficiency.
+#define HEALIUM_FORMATION_PRESSURE_SCALE 100000
 /// The amount of energy three moles of healium forming from BZ and freon releases.
 #define HEALIUM_FORMATION_ENERGY 9000
 
@@ -207,13 +219,13 @@
 #define ZAUKER_FORMATION_MIN_TEMPERATURE 50000
 /// The maximum temperature zauker can form from hyper-noblium and nitrium at.
 #define ZAUKER_FORMATION_MAX_TEMPERATURE 75000
-/// The temperature scaling factor for zauker formation. At most this many moles of zauker can form per reaction tick per kelvin.
-#define ZAUKER_FORMATION_TEMPERATURE_SCALE 5e-6
+/// The pressure scaling factor for zauker formation efficiency. Higher values will mean you need more pressure to achieve the same efficiency.
+#define ZAUKER_FORMATION_PRESSURE_SCALE 3e7
 /// The amount of energy half a mole of zauker forming from hypernoblium and nitrium consumes.
 #define ZAUKER_FORMATION_ENERGY 5000
 
-/// The maximum number of moles of zauker that can decompose per reaction tick.
-#define ZAUKER_DECOMPOSITION_MAX_RATE 20
+/// A divisor that determines the maximum nitrogen efficiency based on volume. A maximum decomposition rate of 20 can be achieved in a volume of 2,000L.
+#define ZAUKER_DECOMPOSITION_VOLUME_SCALING 125
 /// The amount of energy a mole of zauker decomposing in the presence of nitrogen releases.
 #define ZAUKER_DECOMPOSITION_ENERGY 460
 
@@ -222,15 +234,21 @@
 #define PN_FORMATION_MIN_TEMPERATURE 5000
 /// The maximum temperature proto-nitrate can form from pluoxium and hydrogen at.
 #define PN_FORMATION_MAX_TEMPERATURE 10000
-/// The temperature scaling factor for proto-nitrate formation. At most this many moles of zauker can form per reaction tick per kelvin.
-#define PN_FORMATION_TEMPERATURE_SCALE 5e-3
+/// The lower temperature to achieve the highest thermal efficiency for proto-nitrate formation.
+#define PN_FORMATION_LOWER_TEMPERATURE_MAXIMUM_EFFICIENCY 6250
+/// The upper temperature to achieve the highest thermal efficiency for proto-nitrate formation.
+#define PN_FORMATION_UPPER_TEMPERATURE_MAXIMUM_EFFICIENCY 8750
+/// The temperature scale for proto-nitrate formation
+#define PN_FORMATION_TEMPERATURE_SCALE 1250
+/// The divisor for the maximum proto-nitrate formation rate. (Up to 1/10th of the minimum required gas scaled by their consumption rate can get consumed at once)
+#define PN_FORMATION_DELTA 10
 /// The amount of energy 2.2 moles of proto-nitrate forming from pluoxium and hydrogen releases.
 #define PN_FORMATION_ENERGY 650
 
 /// The amount of hydrogen necessary for proto-nitrate to start converting it to more proto-nitrate.
 #define PN_HYDROGEN_CONVERSION_THRESHOLD 150
-/// The maximum number of moles of hydrogen that can be converted into proto-nitrate in a single reaction tick.
-#define PN_HYDROGEN_CONVERSION_MAX_RATE 5
+/// The pressure scaling factor for proto-nitrate hydrogen response efficiency. Higher values will mean you need more pressure to achieve the same efficiency.
+#define PN_HYDROGEN_CONVERSION_PRESSURE_SCALE 300000
 /// The amount of energy converting a mole of hydrogen into half a mole of proto-nitrate consumes.
 #define PN_HYDROGEN_CONVERSION_ENERGY 2500
 
@@ -256,6 +274,6 @@
 /// The minimum released energy necessary for proto-nitrate to release rads when breaking down BZ (at a mix volume of [CELL_VOLUME]).
 #define PN_BZASE_RAD_RELEASE_THRESHOLD 60000
 /// A scaling factor for the range of the radiation pulses generated when proto-nitrate breaks down BZ.
-#define PN_BZASE_RAD_RANGE_DIVISOR 1.5
+#define PN_BZASE_RAD_RANGE_DIVISOR 3
 /// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate breaks down BZ.
 #define PN_BZASE_RAD_THRESHOLD_BASE 15
