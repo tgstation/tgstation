@@ -1082,7 +1082,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 ///The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"
-	desc = "An expertly modified RCD outfitted to construct plumbing machinery. Alt-Click to change layer and duct color."
+	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
 	icon_state = "plumberer2"
 	inhand_icon_state = "plumberer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -1113,6 +1113,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	set_plumbing_designs()
 
+/obj/item/construction/plumbing/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-Click to change layer and duct color.")
+
 /obj/item/construction/plumbing/equipped(mob/user, slot, initial)
 	. = ..()
 	if(slot == ITEM_SLOT_HANDS)
@@ -1131,12 +1135,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
 	if(!choices.len)
-		for(var/A in plumbing_design_types)
-			var/obj/machinery/plumbing/M = A
-
-			choices += list(initial(M.name) = image(initial(M.icon), icon_state = initial(M.icon_state)))
-			name_to_type[initial(M.name)] = M
-			machinery_data["cost"][A] = plumbing_design_types[A]
+		for(var/obj/machinery/plumbing/plumbing_type as anything in plumbing_design_types)
+			choices += list(initial(plumbing_type.name) = image(initial(plumbing_type.icon), icon_state = initial(plumbing_type.icon_state)))
+			name_to_type[initial(plumbing_type.name)] = plumbing_type
+			machinery_data["cost"][plumbing_type] = plumbing_design_types[plumbing_type]
 
 	// Update duct icon
 	var/image/duct_image = choices["fluid duct"]
@@ -1179,37 +1181,37 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	)
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
-/obj/item/construction/plumbing/proc/create_machine(atom/A, mob/user)
-	if(!machinery_data || !isopenturf(A))
+/obj/item/construction/plumbing/proc/create_machine(atom/destination, mob/user)
+	if(!machinery_data || !isopenturf(destination))
 		return FALSE
 
-	if(!canPlace(A))
+	if(!canPlace(destination))
 		var/obj/blueprint_type = blueprint
 		to_chat(user, span_notice("There is something blocking you from placing a [initial(blueprint_type.name)] there."))
 		return
 	if(checkResource(machinery_data["cost"][blueprint], user) && blueprint)
 		//"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
-		if(do_after(user, machinery_data["cost"][blueprint], target = A))
-			if(checkResource(machinery_data["cost"][blueprint], user) && canPlace(A))
+		if(do_after(user, machinery_data["cost"][blueprint], target = destination))
+			if(checkResource(machinery_data["cost"][blueprint], user) && canPlace(destination))
 				useResource(machinery_data["cost"][blueprint], user)
 				activate()
-				playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 				if(ispath(blueprint, /obj/machinery/duct))
 					var/is_omni = current_color == DUCT_COLOR_OMNI
-					new blueprint(A, FALSE, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer], null, is_omni)
+					new blueprint(destination, FALSE, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer], null, is_omni)
 				else
-					new blueprint(A, FALSE, GLOB.plumbing_layers[current_layer])
+					new blueprint(destination, FALSE, GLOB.plumbing_layers[current_layer])
 				return TRUE
 
-/obj/item/construction/plumbing/proc/canPlace(turf/T)
-	if(!isopenturf(T))
+/obj/item/construction/plumbing/proc/canPlace(turf/destination)
+	if(!isopenturf(destination))
 		return FALSE
 	. = TRUE
 
 	var/obj/blueprint_template = blueprint
 	var/layer_id = GLOB.plumbing_layers[current_layer]
 
-	for(var/obj/machinery/machine in T.contents)
+	for(var/obj/machinery/machine in destination.contents)
 		// Let's not built ontop of dense stuff, if this is also dense.
 		if(initial(blueprint_template.density) && machine.density)
 			return FALSE
@@ -1311,19 +1313,19 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	SIGNAL_HANDLER
 	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
+	if(delta_y == 0)
+		return
 
 	if(delta_y < 0)
 		var/current_loc = GLOB.plumbing_layers.Find(current_layer) + 1
 		if(current_loc > GLOB.plumbing_layers.len)
 			current_loc = 1
 		current_layer = GLOB.plumbing_layers[current_loc]
-	else if(delta_y > 0)
+	else
 		var/current_loc = GLOB.plumbing_layers.Find(current_layer) - 1
 		if(current_loc < 1)
 			current_loc = GLOB.plumbing_layers.len
 		current_layer = GLOB.plumbing_layers[current_loc]
-	else
-		return
 	to_chat(source, span_notice("You set the layer to [current_layer]."))
 
 /obj/item/construction/plumbing/research
