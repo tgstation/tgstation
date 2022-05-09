@@ -202,28 +202,5 @@
 		You are hereby directed to enter the rift using all means necessary, quite possibly as the last humans alive. \
 		Five minutes before the universe collapses. Good l\[\[###!!!-")
 
-	addtimer(CALLBACK(src, .proc/delta), 10 SECONDS)
-
-	addtimer(CALLBACK(src, .proc/last_message), 4 MINUTES)
-
-	addtimer(CALLBACK(src, .proc/the_end), 5 MINUTES)
-
-/**
- * Increases the security level to the highest level
- */
-/datum/supermatter_delamination/proc/delta()
-	set_security_level("delta")
-	sound_to_playing_players('sound/misc/notice1.ogg')
-
-/**
- * Announces the last message to the station
- */
-/datum/supermatter_delamination/proc/last_message()
-	priority_announce("To the remaining humans alive, I hope it was worth it.", " ", 'sound/misc/bloop.ogg')
-
-/**
- * Ends the round
- */
-/datum/supermatter_delamination/proc/the_end()
 	SSticker.news_report = SUPERMATTER_CASCADE
 	SSticker.force_ending = 1
