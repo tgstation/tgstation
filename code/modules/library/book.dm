@@ -104,12 +104,12 @@
 	if(book_data?.content)
 		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 
-		LAZYINITLIST(user.mind.book_titles_read)
-		var/has_not_read_book = isnull(user.mind.book_titles_read[starting_title])
+		LAZYINITLIST(user.mind?.book_titles_read)
+		var/has_not_read_book = isnull(user.mind?.book_titles_read[starting_title])
 
 		if(has_not_read_book) // any new books give bonus mood
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
-			user.mind.book_titles_read[starting_title] = TRUE
+			user.mind?.book_titles_read[starting_title] = TRUE
 		onclose(user, "book")
 	else
 		to_chat(user, span_notice("This book is completely blank!"))
