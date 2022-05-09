@@ -242,7 +242,7 @@
 		user.visible_message(span_notice("[user] snuffs out [src]'s flame."))
 
 /obj/item/burner/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(lit && M.IgniteMob())
+	if(lit && M.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 	return ..()

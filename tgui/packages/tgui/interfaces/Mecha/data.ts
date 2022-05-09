@@ -81,6 +81,7 @@ export type OperatorData = {
   mech_electronics: MechElectronics;
   right_arm_weapon: MechWeapon | null;
   left_arm_weapon: MechWeapon | null;
+  weapons_safety: boolean;
   mech_equipment: string[];
   mech_view: string;
   mineral_material_amount: number;

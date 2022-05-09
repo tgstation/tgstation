@@ -260,7 +260,6 @@
 	if(fire_stacks <= 0 && !QDELETED(src))
 		visible_message(span_danger("[src] successfully extinguishes [p_them()]self!"), \
 			span_notice("You extinguish yourself."))
-		extinguish_mob()
 	return
 
 /mob/living/carbon/resist_restraints()
@@ -964,15 +963,6 @@
 		I.wash(CLEAN_TYPE_ACID) //washes off the acid on our clothes
 		I.extinguish() //extinguishes our clothes
 	..()
-
-/mob/living/carbon/fakefire(fire_icon = "Generic_mob_burning")
-	var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
-	new_fire_overlay.appearance_flags = RESET_COLOR
-	overlays_standing[FIRE_LAYER] = new_fire_overlay
-	apply_overlay(FIRE_LAYER)
-
-/mob/living/carbon/fakefireextinguish()
-	remove_overlay(FIRE_LAYER)
 
 
 /mob/living/carbon/proc/create_bodyparts()
