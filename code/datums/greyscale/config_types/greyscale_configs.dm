@@ -517,3 +517,13 @@
 	name = "Material Airlock"
 	icon_file = 'icons/obj/doors/airlocks/material/material.dmi'
 	json_config = 'code/datums/greyscale/json_configs/material_airlock.json'
+
+/datum/greyscale_config/vape
+	name = "Vape"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/vape.json'
+
+/datum/greyscale_config/vape_worn
+	name = "Worn Vape"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+	json_config = 'code/datums/greyscale/json_configs/vape_worn.json'

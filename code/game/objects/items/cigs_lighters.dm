@@ -910,10 +910,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape
 	name = "\improper E-Cigarette"
 	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: Do not fill with flammable materials.\""//<<< i'd vape to that.
-	icon = 'icons/obj/clothing/masks.dmi'
-	icon_state = "red_vape"
+	icon_state = "vape"
+	worn_icon_state = "vape_worn"
+	greyscale_config = /datum/greyscale_config/vape
+	greyscale_config_worn = /datum/greyscale_config/vape_worn
+	greyscale_colors = "#2e2e2e"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 	/// The capacity of the vape.
 	var/chem_volume = 100
@@ -926,14 +930,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	/// Whether the vape has been overloaded to spread smoke.
 	var/super = FALSE
 
-/obj/item/clothing/mask/vape/Initialize(mapload, param_color)
+/obj/item/clothing/mask/vape/Initialize(mapload)
 	. = ..()
 	create_reagents(chem_volume, NO_REACT)
 	reagents.add_reagent(/datum/reagent/drug/nicotine, 50)
-	if(!param_color)
-		param_color = pick("red","blue","black","white","green","purple","yellow","orange")
-	icon_state = "[param_color]_vape"
-	inhand_icon_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!"))//it doesn't give you cancer, it is cancer
