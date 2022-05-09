@@ -18,14 +18,14 @@
 	 */
 	var/list/fingerprints
 	/**
-	 * List of fingerprints on this atom
+	 * List of hiddenprints on this atom
 	 *
 	 * Formatting:
 	 * * ckey = realname/gloves/ckey
 	 */
 	var/list/hiddenprints
 	/**
-	 * List of fingerprints on this atom
+	 * List of blood dna on this atom
 	 *
 	 * Formatting:
 	 * * dna = bloodtype
@@ -67,7 +67,9 @@
 	check_blood()
 
 /datum/forensics/Destroy(force, ...)
-	UnregisterSignal(parent.resolve(), list(COMSIG_COMPONENT_CLEAN_ACT))
+	var/atom/parent_atom = parent.resolve()
+	if (!isnull(parent_atom))
+		UnregisterSignal(parent_atom, list(COMSIG_COMPONENT_CLEAN_ACT))
 	return ..()
 
 /// Empties the fingerprints list

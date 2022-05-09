@@ -311,6 +311,9 @@
 	if(reagents)
 		QDEL_NULL(reagents)
 
+	if(forensics)
+		QDEL_NULL(forensics)
+
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
