@@ -42,6 +42,10 @@
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
 	var/healium_sleep_min = 6
+	///Minimum amount of helium to affect speech
+	var/helium_speech_min = 5
+	//Whether helium speech effects are currently active
+	var/helium_speech = FALSE
 	///Whether these lungs react negatively to miasma
 	var/suffers_miasma = TRUE
 
@@ -128,7 +132,7 @@
 	//Vars for n2o and healium induced euphorias.
 	var/n2o_euphoria = EUPHORIA_LAST_FLAG
 	var/healium_euphoria = EUPHORIA_LAST_FLAG
-
+	
 	//Handle subtypes' breath processing
 	handle_gas_override(breather,breath_gases, gas_breathed)
 
@@ -381,6 +385,18 @@
 			breather.reagents.add_reagent(/datum/reagent/hypernoblium,max(0, 1 - existing))
 		breath_gases[/datum/gas/hypernoblium][MOLES]-=gas_breathed
 
+	// Helium
+		//Activates helium speech when partial pressure gets high enough
+		var/helium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/helium][MOLES])
+		if(helium_pp > helium_speech_min && !helium_speech)
+			helium_speech = TRUE
+			RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_helium_speech)
+		else if(helium_pp <= helium_speech_min && helium_speech)
+			helium_speech = FALSE
+			UnregisterSignal(owner, COMSIG_MOB_SAY)
+		gas_breathed = breath_gases[/datum/gas/helium][MOLES]
+		breath_gases[/datum/gas/helium][MOLES] -= gas_breathed
+
 	// Miasma
 		if (breath_gases[/datum/gas/miasma] && suffers_miasma)
 			var/miasma_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/miasma][MOLES])
@@ -490,6 +506,10 @@
 
 	// The air you breathe out should match your body temperature
 	breath.temperature = breather.bodytemperature
+
+/obj/item/organ/lungs/proc/handle_helium_speech(owner, list/speech_args)
+	SIGNAL_HANDLER
+	speech_args[SPEECH_SPANS] |= SPAN_HELIUM
 
 /obj/item/organ/lungs/on_life(delta_time, times_fired)
 	. = ..()

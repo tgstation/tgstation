@@ -312,7 +312,7 @@
 	sac_target.flash_act()
 	sac_target.blur_eyes(15)
 	sac_target.Jitter(10)
-	sac_target.Dizzy(10)
+	sac_target.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 	sac_target.hallucination += 12
 	sac_target.emote("scream")
 
@@ -371,7 +371,7 @@
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.
-	var/turf/open/floor/safe_turf = find_safe_turf(extended_safety_checks = TRUE)
+	var/turf/open/floor/safe_turf = get_safe_random_station_turf()
 	var/obj/effect/landmark/observer_start/backup_loc = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	if(!safe_turf)
 		safe_turf = get_turf(backup_loc)
@@ -434,7 +434,7 @@
 	sac_target.add_confusion(60)
 	sac_target.Jitter(60)
 	sac_target.blur_eyes(50)
-	sac_target.Dizzy(30)
+	sac_target.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)
 	sac_target.AdjustKnockdown(80)
 	sac_target.adjustStaminaLoss(120)
 

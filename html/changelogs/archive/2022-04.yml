@@ -1194,3 +1194,25 @@
   - bugfix: Nullwave Vibrato now works as intended, stacking antimagic duration
   - balance: Nullwave Vibrato stacks 10 seconds of antimagic, every few moments you
       listen to it.
+2022-04-30:
+  BlueMemesauce:
+  - qol: Location names in Crew Monitor console now stretch if too long again
+  Dragonfruits, with some tweaks by PositiveEntropy:
+  - imageadd: The cargonian wardrobe has now been updated into a tasteful brown!
+  Fikou:
+  - bugfix: fixes overslots being permanently lost if you switched modsuit skin
+  - bugfix: fixes golems/monkeys keeping modsuits on if switched race from different
+      species
+  OperativeLyn:
+  - bugfix: Removed some useless catwalk tiles, cables and pipes in TramStation maintenance.
+  castawaynont:
+  - bugfix: DeltaStation cargo warehouse poster has been moved one tile down
+  san7890:
+  - bugfix: Nanotrasen's Department of "Reality Fixing" has corrected an issue regarding
+      the space on the tiles of the southern solars on TramStation.
+  - bugfix: Nanotrasen will no longer install "Mining" Access Doors in DeltaStation's
+      Cargo Bay.
+  timothymtorres:
+  - qol: Rearrange Delta library gaming room to host D&D parties
+  xyc:
+  - bugfix: tram medbay maint won't sometimes get double stacked cables and piping

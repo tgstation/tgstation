@@ -21,6 +21,9 @@
 		/obj/item/stack/tile/iron/half,
 		/obj/item/stack/tile/iron/corner,
 		/obj/item/stack/tile/iron/large,
+		/obj/item/stack/tile/iron/small,
+		/obj/item/stack/tile/iron/diagonal,
+		/obj/item/stack/tile/iron/herringbone,
 		/obj/item/stack/tile/iron/textured,
 		/obj/item/stack/tile/iron/textured_edge,
 		/obj/item/stack/tile/iron/textured_half,
@@ -31,6 +34,9 @@
 		/obj/item/stack/tile/iron/dark/smooth_half,
 		/obj/item/stack/tile/iron/dark/smooth_corner,
 		/obj/item/stack/tile/iron/dark/smooth_large,
+		/obj/item/stack/tile/iron/dark/small,
+		/obj/item/stack/tile/iron/dark/diagonal,
+		/obj/item/stack/tile/iron/dark/herringbone,
 		/obj/item/stack/tile/iron/dark_side,
 		/obj/item/stack/tile/iron/dark_corner,
 		/obj/item/stack/tile/iron/checker,
@@ -44,6 +50,9 @@
 		/obj/item/stack/tile/iron/white/smooth_half,
 		/obj/item/stack/tile/iron/white/smooth_corner,
 		/obj/item/stack/tile/iron/white/smooth_large,
+		/obj/item/stack/tile/iron/white/small,
+		/obj/item/stack/tile/iron/white/diagonal,
+		/obj/item/stack/tile/iron/white/herringbone,
 		/obj/item/stack/tile/iron/white_side,
 		/obj/item/stack/tile/iron/white_corner,
 		/obj/item/stack/tile/iron/cafeteria,
@@ -58,6 +67,14 @@
 		/obj/item/stack/tile/iron/smooth_half,
 		/obj/item/stack/tile/iron/smooth_corner,
 		/obj/item/stack/tile/iron/smooth_large,
+		/obj/item/stack/tile/iron/terracotta,
+		/obj/item/stack/tile/iron/terracotta/small,
+		/obj/item/stack/tile/iron/terracotta/diagonal,
+		/obj/item/stack/tile/iron/terracotta/herringbone,
+		/obj/item/stack/tile/iron/kitchen,
+		/obj/item/stack/tile/iron/kitchen/small,
+		/obj/item/stack/tile/iron/kitchen/diagonal,
+		/obj/item/stack/tile/iron/kitchen/herringbone,
 		/obj/item/stack/tile/iron/chapel,
 		/obj/item/stack/tile/iron/showroomfloor,
 		/obj/item/stack/tile/iron/solarpanel,
@@ -159,6 +176,27 @@
 	turf_type = /turf/open/floor/iron/textured_large
 	merge_type = /obj/item/stack/tile/iron/textured_large
 
+/obj/item/stack/tile/iron/small
+	name = "small tile"
+	singular_name = "small floor tile"
+	icon_state = "tile_small"
+	turf_type = /turf/open/floor/iron/small
+	merge_type = /obj/item/stack/tile/iron/small
+
+/obj/item/stack/tile/iron/diagonal
+	name = "diagonal tile"
+	singular_name = "diagonal floor tile"
+	icon_state = "tile_diagonal"
+	turf_type = /turf/open/floor/iron/diagonal
+	merge_type = /obj/item/stack/tile/iron/diagonal
+
+/obj/item/stack/tile/iron/herringbone
+	name = "herringbone tile"
+	singular_name = "herringbone floor tile"
+	icon_state = "tile_herringbone"
+	turf_type = /turf/open/floor/iron/herringbone
+	merge_type = /obj/item/stack/tile/iron/herringbone
+
 /obj/item/stack/tile/iron/dark
 	name = "dark tile"
 	singular_name = "dark floor tile"
@@ -258,6 +296,27 @@
 	icon_state = "tile_textured_dark_large"
 	turf_type = /turf/open/floor/iron/dark/textured_large
 	merge_type = /obj/item/stack/tile/iron/dark/textured_large
+
+/obj/item/stack/tile/iron/dark/small
+	name = "dark small tile"
+	singular_name = "dark small floor tile"
+	icon_state = "tile_dark_small"
+	turf_type = /turf/open/floor/iron/dark/small
+	merge_type = /obj/item/stack/tile/iron/dark/small
+
+/obj/item/stack/tile/iron/dark/diagonal
+	name = "dark diagonal tile"
+	singular_name = "dark diagonal floor tile"
+	icon_state = "tile_dark_diagonal"
+	turf_type = /turf/open/floor/iron/dark/diagonal
+	merge_type = /obj/item/stack/tile/iron/dark/diagonal
+
+/obj/item/stack/tile/iron/dark/herringbone
+	name = "dark herringbone tile"
+	singular_name = "dark herringbone floor tile"
+	icon_state = "tile_dark_herringbone"
+	turf_type = /turf/open/floor/iron/dark/herringbone
+	merge_type = /obj/item/stack/tile/iron/dark/herringbone
 
 /obj/item/stack/tile/iron/white
 	name = "white tile"
@@ -359,6 +418,27 @@
 	turf_type = /turf/open/floor/iron/white/textured_large
 	merge_type = /obj/item/stack/tile/iron/white/textured_large
 
+/obj/item/stack/tile/iron/white/small
+	name = "white small tile"
+	singular_name = "white small floor tile"
+	icon_state = "tile_white_small"
+	turf_type = /turf/open/floor/iron/white/small
+	merge_type = /obj/item/stack/tile/iron/white/small
+
+/obj/item/stack/tile/iron/white/diagonal
+	name = "white diagonal tile"
+	singular_name = "white diagonal floor tile"
+	icon_state = "tile_white_diagonal"
+	turf_type = /turf/open/floor/iron/white/diagonal
+	merge_type = /obj/item/stack/tile/iron/white/diagonal
+
+/obj/item/stack/tile/iron/white/herringbone
+	name = "white herringbone tile"
+	singular_name = "white herringbone floor tile"
+	icon_state = "tile_white_herringbone"
+	turf_type = /turf/open/floor/iron/white/herringbone
+	merge_type = /obj/item/stack/tile/iron/white/herringbone
+
 /obj/item/stack/tile/iron/recharge_floor
 	name = "recharge floor tile"
 	singular_name = "recharge floor tile"
@@ -403,6 +483,62 @@
 	icon_state = "tile_smooth_large"
 	turf_type = /turf/open/floor/iron/smooth_large
 	merge_type = /obj/item/stack/tile/iron/smooth_large
+
+/obj/item/stack/tile/iron/terracotta
+	name = "terracotta floor tile"
+	singular_name = "terracotta floor tile"
+	icon_state = "tile_terracotta"
+	turf_type = /turf/open/floor/iron/terracotta
+	merge_type = /obj/item/stack/tile/iron/terracotta
+
+/obj/item/stack/tile/iron/terracotta/small
+	name = "terracotta small tile"
+	singular_name = "terracotta small floor tile"
+	icon_state = "tile_terracotta_small"
+	turf_type = /turf/open/floor/iron/terracotta/small
+	merge_type = /obj/item/stack/tile/iron/terracotta/small
+
+/obj/item/stack/tile/iron/terracotta/diagonal
+	name = "terracotta diagonal tile"
+	singular_name = "terracotta diagonal floor tile"
+	icon_state = "tile_terracotta_diagonal"
+	turf_type = /turf/open/floor/iron/terracotta/diagonal
+	merge_type = /obj/item/stack/tile/iron/terracotta/diagonal
+
+/obj/item/stack/tile/iron/terracotta/herringbone
+	name = "terracotta herringbone tile"
+	singular_name = "terracotta herringbone floor tile"
+	icon_state = "tile_terracotta_herringbone"
+	turf_type = /turf/open/floor/iron/terracotta/herringbone
+	merge_type = /obj/item/stack/tile/iron/terracotta/herringbone
+
+/obj/item/stack/tile/iron/kitchen
+	name = "kitchen tile"
+	singular_name = "kitchen tile"
+	icon_state = "tile_kitchen"
+	turf_type = /turf/open/floor/iron/kitchen
+	merge_type = /obj/item/stack/tile/iron/kitchen
+
+/obj/item/stack/tile/iron/kitchen/small
+	name = "small kitchen tile"
+	singular_name = "small kitchen floor tile"
+	icon_state = "tile_kitchen_small"
+	turf_type = /turf/open/floor/iron/kitchen/small
+	merge_type = /obj/item/stack/tile/iron/kitchen/small
+
+/obj/item/stack/tile/iron/kitchen/diagonal
+	name = "diagonal kitchen tile"
+	singular_name = "diagonal kitchen floor tile"
+	icon_state = "tile_kitchen_diagonal"
+	turf_type = /turf/open/floor/iron/kitchen/diagonal
+	merge_type = /obj/item/stack/tile/iron/kitchen/diagonal
+
+/obj/item/stack/tile/iron/kitchen/herringbone
+	name = "herringbone kitchen tile"
+	singular_name = "herringbone kitchen floor tile"
+	icon_state = "tile_kitchen_herringbone"
+	turf_type = /turf/open/floor/iron/kitchen/herringbone
+	merge_type = /obj/item/stack/tile/iron/kitchen/herringbone
 
 /obj/item/stack/tile/iron/chapel
 	name = "chapel floor tile"

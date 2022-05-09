@@ -21,6 +21,8 @@
 
 	/// What color is this machine's stripe? Leave null to not have a stripe.
 	var/stripe_color = null
+	/// Does this charge the user's ID on fabrication?
+	var/charges_tax = TRUE
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
@@ -173,7 +175,9 @@
 			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
 			return FALSE
 	var/total_cost = LATHE_TAX
-	if(is_station_level(z) && isliving(usr)) //We don't block purchases off station Z.
+	if(!charges_tax)
+		total_cost = 0
+	if(isliving(usr))
 		var/mob/living/user = usr
 		var/obj/item/card/id/card = user.get_idcard(TRUE)
 		if(!card && istype(user.pulling, /obj/item/card/id))

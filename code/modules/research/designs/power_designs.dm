@@ -74,13 +74,6 @@
 	category = list("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/datum/design/board/pacman/super
-	name = "Machine Design (SUPERPACMAN-type Generator Board)"
-	desc = "The circuit board that for a SUPERPACMAN-type portable generator."
-	id = "superpacman"
-	build_path = /obj/item/circuitboard/machine/pacman/super
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-
 /datum/design/turbine_part_compressor
 	name = "Turbine Part - Compressor"
 	desc = "The basic tier of a compressor blade."
