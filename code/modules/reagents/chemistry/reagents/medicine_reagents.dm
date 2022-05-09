@@ -87,7 +87,7 @@
 	for(var/effect in typesof(/datum/status_effect/speech))
 		M.remove_status_effect(effect)
 	M.jitteriness = 0
-	M.hallucination = 0
+	M.remove_status_effect(/datum/status_effect/hallucination)
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5 * REM * delta_time, FALSE, TRUE)
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)

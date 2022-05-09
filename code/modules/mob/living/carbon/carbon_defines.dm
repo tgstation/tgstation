@@ -83,7 +83,6 @@
 
 	//halucination vars
 	var/hal_screwyhud = SCREWYHUD_NONE
-	var/next_hallucination = 0
 	var/damageoverlaytemp = 0
 
 	///used to halt stamina regen temporarily
