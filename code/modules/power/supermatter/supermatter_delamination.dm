@@ -172,8 +172,6 @@
 /datum/supermatter_delamination/proc/start_universe_ending_cascade()
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.universal_cascade = TRUE
-	SSair.can_fire = FALSE
-	SSmachines.can_fire = FALSE
 	call_explosion()
 	pick_rift_location()
 	warn_crew()
