@@ -1,25 +1,29 @@
-//CONTAINS: Suit fibers and Detective's Scanning Computer
-
+/// Returns the fingerprints on this atom
 /atom/proc/return_fingerprints()
 	if (forensics)
 		return forensics.fingerprints
 
+/// Returns the hidden prints on this atom
 /atom/proc/return_hiddenprints()
 	if (forensics)
 		return forensics.hiddenprints
 
+/// Returns the blood dna on this atom
 /atom/proc/return_blood_DNA()
 	if (forensics)
 		return forensics.blood_DNA
 
+/// Returns the number of unique blood dna sources on this atom
 /atom/proc/blood_DNA_length()
 	if (forensics)
 		return length(forensics.blood_DNA)
 
+/// Returns the fibers on this atom
 /atom/proc/return_fibers()
 	if (forensics)
 		return forensics.fibers
 
+/// Adds a list of fingerprints to the atom
 /atom/proc/add_fingerprint_list(list/fingerprints_to_add) //ASSOC LIST FINGERPRINT = FINGERPRINT
 	if (isnull(fingerprints_to_add))
 		return
@@ -29,8 +33,8 @@
 		forensics = new(src, fingerprints = fingerprints_to_add)
 	return TRUE
 
-//Set ignoregloves to add prints irrespective of the mob having gloves on.
-/atom/proc/add_fingerprint(mob/suspect, ignoregloves = FALSE)
+/// Adds a single fingerprint to the atom
+/atom/proc/add_fingerprint(mob/suspect, ignoregloves = FALSE) //Set ignoregloves to add prints irrespective of the mob having gloves on.
 	if (QDELING(src))
 		return
 	if (isnull(forensics))
@@ -38,6 +42,7 @@
 	forensics.add_fingerprint(suspect, ignoregloves)
 	return TRUE
 
+/// Add a list of fibers to the atom
 /atom/proc/add_fiber_list(list/fibers_to_add) //ASSOC LIST FIBERTEXT = FIBERTEXT
 	if (isnull(fibers_to_add))
 		return
@@ -47,6 +52,7 @@
 		forensics = new(src, fibers = fibers_to_add)
 	return TRUE
 
+/// Adds a single fiber to the atom
 /atom/proc/add_fibers(mob/living/carbon/human/suspect)
 	var/old = 0
 	if(suspect.gloves && istype(suspect.gloves, /obj/item/clothing))
@@ -64,6 +70,7 @@
 	forensics.add_fibers(suspect)
 	return TRUE
 
+/// Adds a list of hiddenprints to the atom
 /atom/proc/add_hiddenprint_list(list/hiddenprints_to_add) //NOTE: THIS IS FOR ADMINISTRATION FINGERPRINTS, YOU MUST CUSTOM SET THIS TO INCLUDE CKEY/REAL NAMES! CHECK FORENSICS.DM
 	if (isnull(hiddenprints_to_add))
 		return
@@ -73,12 +80,14 @@
 		forensics = new(src, hiddenprints = hiddenprints_to_add)
 	return TRUE
 
+/// Adds a single hiddenprint to the atom
 /atom/proc/add_hiddenprint(mob/suspect)
 	if (isnull(forensics))
 		forensics = new(src)
 	forensics.add_hiddenprint(suspect)
 	return TRUE
 
+/// Adds blood dna to the atom
 /atom/proc/add_blood_DNA(list/blood_DNA_to_add) //ASSOC LIST DNA = BLOODTYPE
 	return FALSE
 
