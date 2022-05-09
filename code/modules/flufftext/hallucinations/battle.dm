@@ -109,7 +109,7 @@
 	hallucinator.playsound_local(source, 'sound/weapons/egloves.ogg', 40, TRUE)
 	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
 
-	addtimer(CALLBLACK(src, .proc/harmbaton_loop, source, rand(5, 12)), 2 SECONDS)
+	addtimer(CALLBACK(src, .proc/harmbaton_loop, source, rand(5, 12)), 2 SECONDS)
 
 /// The main sound loop for harmbatonning.
 /datum/hallucination/battle/harm_baton/proc/harmbaton_loop(turf/source, hits_remaing = 5)
@@ -154,7 +154,7 @@
 /datum/hallucination/battle/bomb
 
 /datum/hallucination/battle/bomb/start()
-	addtimer(CALLBLACK(src, .proc/fake_tick, random_far_turf(), rand(3, 11)), 1.5 SECONDS)
+	addtimer(CALLBACK(src, .proc/fake_tick, random_far_turf(), rand(3, 11)), 1.5 SECONDS)
 
 /// The loop of the (fake) bomb ticking down.
 /datum/hallucination/battle/bomb/proc/fake_tick(turf/source, ticks_remaining = 3)
@@ -166,4 +166,4 @@
 		qdel(src)
 
 	else
-		addtimer(CALLBLACK(src, .proc/fake_tick, source, ticks_remaining), 1.5 SECONDS)
+		addtimer(CALLBACK(src, .proc/fake_tick, source, ticks_remaining), 1.5 SECONDS)

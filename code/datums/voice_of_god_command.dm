@@ -168,9 +168,9 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	for(var/mob/living/target in listeners)
 		target.cause_hallucination(
 			/datum/hallucination/delusion,
-			source = "voice of god",
-			duration = 15 SECONDS * power_multiplier,
-			skip_nearby = FALSE,
+			/* source = */"voice of god",
+			/* duration = */15 SECONDS * power_multiplier,
+			/* skip_nearby = */FALSE,
 		)
 
 /// This command wakes up the listeners.

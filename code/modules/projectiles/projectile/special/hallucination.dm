@@ -212,7 +212,7 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/change/hal_apply_effect()
-	hal_target.cause_hallucination(/datum/hallucination/self_delusion, source = "fake [name]", wabbajack = FALSE)
+	hal_target.cause_hallucination(/datum/hallucination/self_delusion, source = "fake [name]", /* wabbajack = */FALSE)
 
 /obj/projectile/hallucination/death
 	name = "bolt of death"

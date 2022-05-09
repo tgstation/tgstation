@@ -604,9 +604,9 @@
 	owner.cause_hallucination(
 		/datum/hallucination/delusion,
 		source = "[id] status effect",
-		force_kind = "demon"
-		duration = duration,
-		skip_nearby = FALSE,
+		/* force_kind = */"demon"
+		/* duration = */duration,
+		/* skip_nearby = */FALSE,
 	)
 	chainsaw = new(get_turf(owner))
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)

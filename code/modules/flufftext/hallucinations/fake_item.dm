@@ -33,8 +33,7 @@
 		mob_pool += nearby_mob
 
 	if(!length(mob_pool))
-		qdel(src)
-		return
+		return FALSE
 
 	var/mob/living/carbon/human/who_has_the_item = pick(mob_pool)
 	feedback_details += ", Mob: [who_has_the_item.real_name]"
@@ -48,9 +47,9 @@
 	if(generated_image)
 		hallucinator.client?.images += generated_image
 		addtimer(CALLBACK(src, .proc/remove_image, who_has_the_item), rand(15 SECONDS, 25 SECONDS))
+		return TRUE
 
-	else
-		qdel(src)
+	return FALSE
 
 /// Generates the image with the given file on the passed mob.
 /datum/hallucination/nearby_fake_item/proc/generate_fake_image(mob/living/carbon/human/holder, file)

@@ -803,7 +803,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		drinker.adjustStaminaLoss(-10 * REM * delta_time, 0)
 		if(DT_PROB(10, delta_time))
-			drinker.cause_hallucination(/datum/hallucination/items_other, name)
+			drinker.cause_hallucination(/datum/hallucination/random_nearby_fake_item, name)
 		if(DT_PROB(5, delta_time))
 			drinker.cause_hallucination(/datum/hallucination/stray_bullet, name)
 	..()

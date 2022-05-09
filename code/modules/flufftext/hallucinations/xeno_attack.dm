@@ -10,13 +10,13 @@
 		break
 
 	if(!xeno_attack_source)
-		qdel(src)
-		return
+		return FALSE
 
 	feedback_details += "Vent Coords: ([xeno_attack_source.x], [xeno_attack_source.y], [xeno_attack_source.z])"
 
 	var/obj/effect/hallucination/simple/xeno/fake_xeno = new(xeno_attack_source, src)
 	addtimer(CALLBACK(src, .proc/leap_at_target, fake_xeno, xeno_attack_source), 1 SECONDS)
+	return TRUE
 
 /// Leaps from the vent to the hallucinator.
 /datum/hallucination/xeno_attack/proc/leap_at_target(obj/effect/hallucination/simple/xeno/fake_xeno, turf/attack_source)

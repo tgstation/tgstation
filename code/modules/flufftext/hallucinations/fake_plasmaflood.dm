@@ -22,8 +22,7 @@
 		break
 
 	if(!center)
-		qdel(src)
-		return
+		return FALSE
 
 	feedback_details += "Vent Coords: [center.x],[center.y],[center.z]"
 	var/obj/effect/plasma_image_holder/pih = new(center)
@@ -36,6 +35,7 @@
 	if(target.client)
 		target.client.images |= flood_images
 	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
+	return TRUE
 
 	START_PROCESSING(SSobj, src)
 
@@ -47,7 +47,7 @@
 			return
 		Expand()
 		if((get_turf(target) in flood_turfs) && !target.internal)
-			target.cause_hallucination(/datum/hallucination/fake_alert, source = "fake plasmaflood hallucination", specific = ALERT_TOO_MUCH_PLASMA)
+			target.cause_hallucination(/datum/hallucination/fake_alert, source = "fake plasmaflood hallucination", /* specific = */ALERT_TOO_MUCH_PLASMA)
 		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 
 /datum/hallucination/fake_flood/proc/Expand()

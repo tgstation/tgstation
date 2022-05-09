@@ -37,7 +37,7 @@
 			// Same sound played to everyone
 			var/played_to_all = pick(fake_sounds)
 			for(var/mob/living/hallucinating as anything in hallucinating)
-				hallucinating.cause_hallucination(/datum/hallucination/sounds, source = "mass hallucination", sound_type = played_to_all)
+				hallucinating.cause_hallucination(/datum/hallucination/sounds, source = "mass hallucination", /* sound_type = */played_to_all)
 
 		if(2) // Plays a (much weirder) fake sound to everyone
 			var/static/list/wacky_sounds = list(
@@ -53,7 +53,7 @@
 			// Same sound played to everyone
 			var/played_to_all = pick(wacky_sounds)
 			for(var/mob/living/hallucinating as anything in hallucinating)
-				hallucinating.cause_hallucination(/datum/hallucination/weird_sounds, source = "mass hallucination", sound_type = played_to_all)
+				hallucinating.cause_hallucination(/datum/hallucination/weird_sounds, source = "mass hallucination", /* sound_type = */played_to_all)
 
 		if(3) // Sends a fake message to everyone
 			var/static/list/stationwide_messages = list(
@@ -68,7 +68,7 @@
 			// Same message sent to everyone
 			var/sent_to_all = pick(stationwide_messages)
 			for(var/mob/living/hallucinating as anything in hallucinating)
-				hallucinating.cause_hallucination(/datum/hallucination/stationmessage, source = "mass hallucination", message = sent_to_all)
+				hallucinating.cause_hallucination(/datum/hallucination/stationmessage, source = "mass hallucination", /*message = */sent_to_all)
 
 		if(4 to 6) // Causes a generic hallucination to everyone
 			var/static/list/possible_hallucinations = list(

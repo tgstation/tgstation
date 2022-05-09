@@ -355,10 +355,7 @@
 		return
 
 	else if(user.has_status_effect(/datum/status_effect/hallucination) && carbon_user.should_electrocute() && !operating && prob(1))
-		owner.cause_hallucination(
-				/datum/hallucination/shock,
-				source = "hallucinated shock from [src]",
-		)
+		owner.cause_hallucination(/datum/hallucination/shock, source = "hallucinated shock from [src]",)
 		return
 
 	return ..()

@@ -39,10 +39,10 @@
 	living_target.cause_hallucination(
 		/datum/hallucination/delusion,
 		"fire holoparasite ([src], owned by [summoner])",
-		duration = 20 SECONDS,
-		skip_nearby = FALSE,
-		custom_icon = icon_state,
-		custom_icon_file = icon,
+		/* duration = */20 SECONDS,
+		/* skip_nearby = */FALSE,
+		/* custom_icon = */icon_state,
+		/* custom_icon_file = */icon,
 	)
 
 /mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, AM as mob|obj)

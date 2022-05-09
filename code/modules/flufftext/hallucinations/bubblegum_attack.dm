@@ -32,8 +32,7 @@
 /datum/hallucination/oh_yeah/start()
 	var/turf/closed/wall/wall_source = locate() in range(7, hallucinator)
 	if(!wall_source)
-		qdel(src)
-		return
+		return FALSE
 
 	feedback_details += "Source: ([wall_source.x], [wall_source.y], [wall_source.z])"
 
@@ -56,6 +55,7 @@
 
 	var/obj/effect/hallucination/simple/bubblegum/fake_bubbles = new(wall_source, src)
 	addtimer(CALLBACK(src, .proc/charge_loop, fake_bubbles, target_landing_turf), 1 SECONDS)
+	return TRUE
 
 /**
  * Recursive function that operates as a "fake charge" of our effect towards the target turf.
