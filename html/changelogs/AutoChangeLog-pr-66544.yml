@@ -1,7 +1,0 @@
-author: "Comxy"
-delete-after: True
-changes: 
-  - bugfix: "When holding plasma glass, the sprite of normal glass was shown in hand since plasma glass in hand didn't exist."
-  - rscadd: "Added titanium and plastitanium glass shards as well as spears and shivs for their types, including plasma glass shivs."
-  - imageadd: "Sprites for plasma, titanium and plastitanium glass shards when hold in hand."
-  - qol: "titanium and plastitanium glass having their own shards makes sense, and is a quality feature."

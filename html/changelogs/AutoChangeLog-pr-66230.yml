@@ -1,4 +1,0 @@
-author: "timothymtorres, TheBonded"
-delete-after: True
-changes: 
-  - balance: "Decreased the amount of credits an approved manifest grants. (was +80, it's now +70)"
