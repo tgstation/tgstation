@@ -19,5 +19,5 @@
 		TEST_ASSERT_EQUAL(mods[mod_key], expected_mods[mod_key], "The value for [mod_key] was not what we expected. Message: [message]")
 		expected_mods -= mod_key
 
-	if (expected_mods.len)
-		Fail("Some message mods were expected, but were not returned by get_message_mods: [json_encode(expected_mods)]. Message: [message]")
+	TEST_ASSERT(!expected_mods.len,
+		"Some message mods were expected, but were not returned by get_message_mods: [json_encode(expected_mods)]. Message: [message]")

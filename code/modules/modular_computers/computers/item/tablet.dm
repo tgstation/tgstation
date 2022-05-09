@@ -11,11 +11,12 @@
 	max_hardware_size = 1
 	w_class = WEIGHT_CLASS_SMALL
 	max_bays = 3
-	steel_sheet_cost = 1
+	steel_sheet_cost = 2
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //Same as the PDA
 	looping_sound = FALSE
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
 
 	var/has_variants = TRUE
 	var/finish_color = null

@@ -11,6 +11,8 @@
 #define HEALIUM_HEAT_PENALTY 4
 #define PROTO_NITRATE_HEAT_PENALTY -3
 #define ZAUKER_HEAT_PENALTY 8
+#define HYPERNOBLIUM_HEAT_PENALTY -5
+#define ANTINOBLIUM_HEAT_PENALTY 20
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
 //Keep the negative values here above -10 and we won't get negative rads
@@ -64,21 +66,21 @@
 //Along with damage_penalty_point, makes flux anomalies.
 /// The cutoff for the minimum amount of power required to trigger the crystal invasion delamination event.
 #define EVENT_POWER_PENALTY_THRESHOLD 4500
-#define POWER_PENALTY_THRESHOLD 5000          //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
-#define SEVERE_POWER_PENALTY_THRESHOLD 7000   //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
+#define POWER_PENALTY_THRESHOLD 5000 //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
+#define SEVERE_POWER_PENALTY_THRESHOLD 7000 //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
 #define CRITICAL_POWER_PENALTY_THRESHOLD 9000 //+1 bolt of electricity.
-#define HEAT_PENALTY_THRESHOLD 40             //Higher == Crystal safe operational temperature is higher.
+#define HEAT_PENALTY_THRESHOLD 40 //Higher == Crystal safe operational temperature is higher.
 #define DAMAGE_HARDCAP 0.002
 #define DAMAGE_INCREASE_MULTIPLIER 0.25
 
 
-#define THERMAL_RELEASE_MODIFIER 5         //Higher == less heat released during reaction, not to be confused with the above values
-#define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
-#define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
+#define THERMAL_RELEASE_MODIFIER 4 //Higher == less heat released during reaction, not to be confused with the above values
+#define PLASMA_RELEASE_MODIFIER 650 //Higher == less plasma released by reaction
+#define OXYGEN_RELEASE_MODIFIER 340 //Higher == less oxygen released at high temperature/power
 
-#define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
+#define REACTION_POWER_MODIFIER 0.65 //Higher == more overall power
 
-#define MATTER_POWER_CONVERSION 10         //Crystal converts 1/this value of stored matter into energy.
+#define MATTER_POWER_CONVERSION 10 //Crystal converts 1/this value of stored matter into energy.
 
 //These would be what you would get at point blank, decreases with distance
 #define DETONATION_HALLUCINATION 600
@@ -94,6 +96,8 @@
 #define GRAVITATIONAL_ANOMALY "gravitational_anomaly"
 #define FLUX_ANOMALY "flux_anomaly"
 #define PYRO_ANOMALY "pyro_anomaly"
+#define DELIMBER_ANOMALY "delimber_anomaly"
+#define HALLUCINATION_ANOMALY "hallucination_anomaly"
 #define VORTEX_ANOMALY "vortex_anomaly"
 
 //If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
@@ -112,4 +116,6 @@
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_referance" //Witty I know
 
-#define MAX_SPACE_EXPOSURE_DAMAGE 2
+#define MAX_SPACE_EXPOSURE_DAMAGE 10
+
+#define SUPERMATTER_CASCADE_PERCENT 80

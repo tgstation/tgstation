@@ -7,6 +7,7 @@
 # MAINTAINERS
 
 # Cobby
+
 /code/modules/reagents/ @ExcessiveUseOfCobblestone
 /code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
 /code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
@@ -25,13 +26,12 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
-# Jordie0608
+# JohnFulpWizard
 
-/SQL/ @Jordie0608
-/code/controllers/subsystem/dbcore.dm @Jordie0608
-/tools/SQLAlertEmail/ @Jordie0608
+/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
 
 # Kylerace
+
 /code/__DEFINES/spatial_gridmap.dm @Kylerace
 /code/controllers/subsystem/spatial_gridmap.dm @Kylerace
 
@@ -73,7 +73,7 @@
 # san7890
 
 /code/game/area/ @san7890
-/icons/turf/areas.dmi @san7890
+/icons/area/ @san7890
 
 # stylemistake
 
@@ -106,9 +106,11 @@
 /code/__DEFINES/atmospherics/ @Ghilker
 /code/modules/atmospherics/ @Ghilker
 
-# JohnFulpWizard
+# Jordie0608
 
-/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
+/SQL/ @Jordie0608
+/code/controllers/subsystem/dbcore.dm @Jordie0608
+/tools/SQLAlertEmail/ @Jordie0608
 
 # Kapu1178
 
@@ -141,13 +143,14 @@
 
 # MULTIPLE OWNERS
 
+/_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
 /icons/ @Imaginos16 @Krysonism @Twaticus
+
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
-/_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
 /tools/build/ @MrStonedOne @stylemistake
 /tools/LinuxOneShot/ @Cyberboss @MrStonedOne
 /tools/tgs4_scripts/ @Cyberboss @MrStonedOne

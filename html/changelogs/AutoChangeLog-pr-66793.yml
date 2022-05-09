@@ -1,0 +1,7 @@
+author: "SmArtKar, Rukofamicom"
+delete-after: True
+changes: 
+  - balance: "Hierophant crusher trophy now creates a hierophant chaser instead of a wall"
+  - rscadd: "Colossus now has a final attack which he can use once at 10% health."
+  - balance: "Colossus now telegraphs his attacks through speech 1.5 seconds before they happen - \"Judgement\" (Spiral or Double Spiral), \"Wrath\" (Ring), \"Retribution\" (Shotgun), \"Lament\" (Alternating cardinal and diagonal shots) and \"Perish\" (Final attack)"
+  - code_imp: "Improved colossus' variable names and added spaces where required"

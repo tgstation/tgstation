@@ -40,7 +40,7 @@
 	activated = TRUE
 	create_reagents(max_volume, DRAINABLE)
 	reagents.add_reagent(reagent_id, start_volume)
-	START_PROCESSING(SSfluids, src) //It's main function is to be plumbed, so use SSfluids
+	START_PROCESSING(SSplumbing, src) //It's main function is to be plumbed, so use SSplumbing
 	if(erupting_state)
 		icon_state = erupting_state
 	else

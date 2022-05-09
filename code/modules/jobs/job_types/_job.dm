@@ -174,14 +174,6 @@
 		for(var/i in roundstart_experience)
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
 
-	var/obj/item/modular_computer/tablet/pda/PDA = spawned.get_item_by_slot(ITEM_SLOT_BELT)
-	if(istype(PDA))
-		var/obj/item/computer_hardware/identifier/id = PDA.all_components[MC_IDENTIFY]
-
-		if(id)
-			id.UpdateDisplay()
-
-
 /datum/job/proc/announce_job(mob/living/joining_mob)
 	if(head_announce)
 		announce_head(joining_mob, head_announce)
@@ -329,6 +321,10 @@
 		PDA.saved_identification = H.real_name
 		PDA.saved_job = J.title
 
+		var/obj/item/computer_hardware/identifier/id = PDA.all_components[MC_IDENTIFY]
+		if(id)
+			id.UpdateDisplay()
+
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
@@ -367,7 +363,7 @@
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
 			return get_latejoin_spawn_point()
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
-			return get_safe_random_station_turf(typesof(/area/hallway)) || get_latejoin_spawn_point()
+			return get_safe_random_station_turf(typesof(/area/station/hallway)) || get_latejoin_spawn_point()
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 			var/obj/effect/landmark/start/hangover_spawn_point
 			for(var/obj/effect/landmark/start/hangover/hangover_landmark in GLOB.start_landmarks_list)
