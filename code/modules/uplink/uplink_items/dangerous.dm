@@ -45,7 +45,16 @@
 	progression_minimum = 20 MINUTES
 	item = /obj/item/melee/energy/sword/saber
 	cost = 8
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NANO)
+	
+/datum/uplink_item/dangerous/swordnano
+	name = "Energy Sword"
+	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
+			pocketed when inactive. Activating it produces a loud, distinctive noise."
+	progression_minimum = 20 MINUTES
+	item = /obj/item/melee/energy/sword/saber/blue
+	cost = 8
+	purchasable_from = UPLINK_NANO
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
@@ -75,7 +84,17 @@
 	item = /obj/item/dualsaber
 
 	cost = 16
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NANO)
+
+/datum/uplink_item/dangerous/doubleswordnano
+	name = "Double-Bladed Energy Sword"
+	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
+			all energy projectiles, but requires two hands to wield."
+	progression_minimum = 30 MINUTES
+	item = /obj/item/dualsaber/blue
+
+	cost = 16
+	purchasable_from = UPLINK_NANO	
 
 /datum/uplink_item/dangerous/doublesword/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
@@ -98,4 +117,13 @@
 	progression_minimum = 30 MINUTES
 	cost = 13
 	surplus = 50
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NANO)
+
+/datum/uplink_item/dangerous/taser
+	name = "Nanotrasen Taser"
+	desc = "For losers"
+	item = /obj/item/gun/energy/e_gun/advtaser               //taser here
+	progression_minimum = 30 MINUTES
+	cost = 15
+	surplus = 50
+	purchasable_from = UPLINK_NANO
