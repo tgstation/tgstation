@@ -4,6 +4,7 @@
 	hal_screwyhud = hud_type
 	update_health_hud()
 
+/*
 /obj/effect/hallucination/simple/clown
 	image_icon = 'icons/mob/animal.dmi'
 	image_state = "clown"
@@ -15,110 +16,7 @@
 
 /obj/effect/hallucination/simple/clown/scary
 	image_state = "scary_clown"
-
-/datum/hallucination/items_other
-
-/datum/hallucination/items_other/New(mob/living/carbon/C, forced = TRUE, item_type)
-	set waitfor = FALSE
-	..()
-	var/item
-	if(!item_type)
-		item = pick(list("esword","taser","ebow","baton","dual_esword","ttv","flash","armblade"))
-	else
-		item = item_type
-	feedback_details += "Item: [item]"
-	var/side
-	var/image_file
-	var/image/A = null
-	var/list/mob_pool = list()
-
-	for(var/mob/living/carbon/human/M in view(7,hallucinator))
-		if(M != hallucinator)
-			mob_pool += M
-	if(!mob_pool.len)
-		return
-
-	var/mob/living/carbon/human/H = pick(mob_pool)
-	feedback_details += " Mob: [H.real_name]"
-
-	var/free_hand = H.get_empty_held_index_for_side(LEFT_HANDS)
-	if(free_hand)
-		side = "left"
-	else
-		free_hand = H.get_empty_held_index_for_side(RIGHT_HANDS)
-		if(free_hand)
-			side = "right"
-
-	if(side)
-		switch(item)
-			if("esword")
-				if(side == "right")
-					image_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-				else
-					image_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-				hallucinator.playsound_local(H, 'sound/weapons/saberon.ogg',35,1)
-				A = image(image_file,H,"e_sword_on_red", layer=ABOVE_MOB_LAYER)
-			if("dual_esword")
-				if(side == "right")
-					image_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-				else
-					image_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-				hallucinator.playsound_local(H, 'sound/weapons/saberon.ogg',35,1)
-				A = image(image_file,H,"dualsaberred1", layer=ABOVE_MOB_LAYER)
-			if("taser")
-				if(side == "right")
-					image_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-				else
-					image_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-				A = image(image_file,H,"advtaserstun4", layer=ABOVE_MOB_LAYER)
-			if("ebow")
-				if(side == "right")
-					image_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-				else
-					image_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-				A = image(image_file,H,"crossbow", layer=ABOVE_MOB_LAYER)
-			if("baton")
-				if(side == "right")
-					image_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-				else
-					image_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
-				hallucinator.playsound_local(H, SFX_SPARKS,75,1,-1)
-				A = image(image_file,H,"baton", layer=ABOVE_MOB_LAYER)
-			if("ttv")
-				if(side == "right")
-					image_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
-				else
-					image_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
-				A = image(image_file,H,"ttv", layer=ABOVE_MOB_LAYER)
-			if("flash")
-				if(side == "right")
-					image_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-				else
-					image_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
-				A = image(image_file,H,"flashtool", layer=ABOVE_MOB_LAYER)
-			if("armblade")
-				if(side == "right")
-					image_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-				else
-					image_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
-				hallucinator.playsound_local(H, 'sound/effects/blobattack.ogg',30,1)
-				A = image(image_file,H,"arm_blade", layer=ABOVE_MOB_LAYER)
-		if(hallucinator.client)
-			hallucinator.client.images |= A
-			addtimer(CALLBACK(src, .proc/cleanup, item, A, H), rand(15 SECONDS, 25 SECONDS))
-			return
-	qdel(src)
-
-/datum/hallucination/items_other/proc/cleanup(item, atom/image_used, has_the_item)
-	if (isnull(hallucinator))
-		qdel(src)
-		return
-	if(item == "esword" || item == "dual_esword")
-		hallucinator.playsound_local(has_the_item, 'sound/weapons/saberoff.ogg',35,1)
-	if(item == "armblade")
-		hallucinator.playsound_local(has_the_item, 'sound/effects/blobattack.ogg',30,1)
-	hallucinator.client.images.Remove(image_used)
-	qdel(src)
+*/
 
 /datum/hallucination/delusion
 	var/list/image/delusions = list()
