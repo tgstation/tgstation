@@ -260,7 +260,6 @@
 	if(fire_stacks <= 0 && !QDELETED(src))
 		visible_message(span_danger("[src] successfully extinguishes [p_them()]self!"), \
 			span_notice("You extinguish yourself."))
-		extinguish_mob()
 	return
 
 /mob/living/carbon/resist_restraints()
@@ -642,18 +641,6 @@
 	else
 		. += INFINITY
 
-/mob/living/carbon/get_permeability_protection(list/target_zones = list(HANDS,CHEST,GROIN,LEGS,FEET,ARMS,HEAD))
-	var/list/tally = list()
-	for(var/obj/item/I in get_equipped_items())
-		for(var/zone in target_zones)
-			if(I.body_parts_covered & zone)
-				tally["[zone]"] = max(1 - I.permeability_coefficient, target_zones["[zone]"])
-	var/protection = 0
-	for(var/key in tally)
-		protection += tally[key]
-	protection *= INVERSE(target_zones.len)
-	return protection
-
 //this handles hud updates
 /mob/living/carbon/update_damage_hud()
 
@@ -928,20 +915,18 @@
 		if (heart.organ_flags & ORGAN_FAILING)
 			return DEFIB_FAIL_FAILING_HEART
 
-	// Carbons with HARS do not need a brain
-	if (!dna?.check_mutation(/datum/mutation/human/headless))
-		var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
+	var/obj/item/organ/brain/current_brain = getorgan(/obj/item/organ/brain)
 
-		if (QDELETED(BR))
-			return DEFIB_FAIL_NO_BRAIN
+	if (QDELETED(current_brain))
+		return DEFIB_FAIL_NO_BRAIN
 
-		if (BR.organ_flags & ORGAN_FAILING)
-			return DEFIB_FAIL_FAILING_BRAIN
+	if (current_brain.organ_flags & ORGAN_FAILING)
+		return DEFIB_FAIL_FAILING_BRAIN
 
-		if (BR.suicided || BR.brainmob?.suiciding)
-			return DEFIB_FAIL_NO_INTELLIGENCE
+	if (current_brain.suicided || current_brain.brainmob?.suiciding)
+		return DEFIB_FAIL_NO_INTELLIGENCE
 
-	if(key && key[1] == "@") // Adminghosts (#61870)
+	if(key && key[1] == "@") // Adminghosts
 		return DEFIB_NOGRAB_AGHOST
 
 	return DEFIB_POSSIBLE
@@ -967,15 +952,6 @@
 		I.extinguish() //extinguishes our clothes
 	..()
 
-/mob/living/carbon/fakefire(fire_icon = "Generic_mob_burning")
-	var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
-	new_fire_overlay.appearance_flags = RESET_COLOR
-	overlays_standing[FIRE_LAYER] = new_fire_overlay
-	apply_overlay(FIRE_LAYER)
-
-/mob/living/carbon/fakefireextinguish()
-	remove_overlay(FIRE_LAYER)
-
 
 /mob/living/carbon/proc/create_bodyparts()
 	var/l_arm_index_next = -1
@@ -999,7 +975,7 @@
 ///Proc to hook behavior on bodypart additions.
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	bodyparts += new_bodypart
-	new_bodypart.owner = src
+	new_bodypart.set_owner(src)
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
@@ -1031,6 +1007,17 @@
 		var/obj/item/organ/I = X
 		I.Insert(src)
 
+/// Takes an organ to slot in, and the slot to put it in, and puts in inside our lists properly
+/// To be called once the organ is actually inside us. NOT a helper proc
+/mob/living/carbon/proc/slot_in_organ(obj/item/organ/insert, slot)
+	internal_organs |= insert
+	internal_organs_slot[slot] = insert
+	/// internal_organs_slot must ALWAYS be ordered in the same way as organ_process_order
+	/// Otherwise life processing breaks down
+	sortTim(internal_organs_slot, /proc/cmp_organ_slot_asc)
+
+/proc/cmp_organ_slot_asc(slot_a, slot_b)
+	return GLOB.organ_process_order.Find(slot_a) - GLOB.organ_process_order.Find(slot_b)
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
@@ -1222,17 +1209,15 @@
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
-	for(var/i in bodyparts)
-		var/obj/item/bodypart/BP = i
-		if(BP.get_part_bleed_rate())
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		if(part.get_modified_bleed_rate())
 			return TRUE
 
 /// get our total bleedrate
 /mob/living/carbon/proc/get_total_bleed_rate()
 	var/total_bleed_rate = 0
-	for(var/i in bodyparts)
-		var/obj/item/bodypart/BP = i
-		total_bleed_rate += BP.get_part_bleed_rate()
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		total_bleed_rate += part.get_modified_bleed_rate()
 
 	return total_bleed_rate
 

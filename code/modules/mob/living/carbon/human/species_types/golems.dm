@@ -83,24 +83,6 @@
 
 	return to_add
 
-/datum/species/golem/random
-	name = "Random Golem"
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
-	var/static/list/random_golem_types
-
-/datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	if(!random_golem_types)
-		random_golem_types = subtypesof(/datum/species/golem) - type
-		for(var/V in random_golem_types)
-			var/datum/species/golem/G = V
-			if(!initial(G.random_eligible))
-				random_golem_types -= G
-	var/datum/species/golem/golem_type = pick(random_golem_types)
-	var/mob/living/carbon/human/H = C
-	H.set_species(golem_type)
-	to_chat(H, "[initial(golem_type.info_text)]")
-
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
 	id = SPECIES_GOLEM_ADAMANTINE
@@ -191,7 +173,7 @@
 			to_chat(owner, span_notice("You ignite yourself!"))
 		else
 			to_chat(owner, span_warning("You try to ignite yourself, but fail!"))
-		H.IgniteMob() //firestacks are already there passively
+		H.ignite_mob() //firestacks are already there passively
 
 //Harder to hurt
 /datum/species/golem/diamond
@@ -569,18 +551,22 @@
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	var/cooldown = 150
 	var/last_teleport = 0
+	///Set to true upon action activation to prevent spamming teleport callbacks while the first is still occurring.
+	var/is_charging = FALSE
 
 /datum/action/innate/unstable_teleport/IsAvailable()
 	. = ..()
 	if(!.)
 		return
-	if(world.time > last_teleport + cooldown)
+	if(world.time > last_teleport + cooldown && !is_charging)
 		return TRUE
 	return FALSE
 
 /datum/action/innate/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
 	H.visible_message(span_warning("[H] starts vibrating!"), span_danger("You start charging your bluespace core..."))
+	is_charging = TRUE
+	UpdateButtons() //action icon looks unavailable
 	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, TRUE)
 	addtimer(CALLBACK(src, .proc/teleport, H), 15)
 
@@ -592,9 +578,8 @@
 	spark_system.start()
 	do_teleport(H, get_turf(H), 12, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
-	UpdateButtons() //action icon looks unavailable
-	//action icon looks available again
-	addtimer(CALLBACK(src, .proc/UpdateButtons), cooldown + 5)
+	is_charging = FALSE
+	addtimer(CALLBACK(src, .proc/UpdateButtons), cooldown + 5) //action icon looks available again
 
 
 //honk
@@ -902,7 +887,7 @@
 	name = "pile of bandages"
 	desc = "It emits a strange aura, as if there was still life within it..."
 	max_integrity = 50
-	armor = list(MELEE = 90, BULLET = 90, LASER = 25, ENERGY = 80, BOMB = 50, BIO = 100, FIRE = -50, ACID = -50)
+	armor = list(MELEE = 90, BULLET = 90, LASER = 25, ENERGY = 80, BOMB = 50, BIO = 0, FIRE = -50, ACID = -50)
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "pile_bandages"
 	resistance_flags = FLAMMABLE

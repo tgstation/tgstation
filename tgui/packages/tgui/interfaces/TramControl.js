@@ -3,6 +3,7 @@ import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const DEPARTMENT2COLOR = {
+  // Station
   Arrivals: "black",
   Service: "olive",
   Command: "blue",
@@ -10,7 +11,17 @@ const DEPARTMENT2COLOR = {
   Medical: "teal",
   Engineering: "yellow",
   Cargo: "brown",
+  Science: "purple",
   Departures: "white",
+  // Hilbert Research Facility
+  Reception: "white",
+  Botany: "olive",
+  Chemistry: "teal",
+  Processing: "brown",
+  Xenobiology: "purple",
+  Ordnance: "yellow",
+  Office: "red",
+  Dormitories: "black",
 };
 
 const COLOR2BLURB = {

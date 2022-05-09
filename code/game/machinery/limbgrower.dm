@@ -6,9 +6,6 @@
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/limbgrower
 
 	/// The category of limbs we're browing in our UI.
@@ -163,7 +160,7 @@
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 					return
 
-				power = max(2000, (power + consumed_reagents_list[reagent_id]))
+				power = max(active_power_usage, (power + consumed_reagents_list[reagent_id]))
 
 			busy = TRUE
 			use_power(power)
@@ -217,7 +214,7 @@
 	//i need to create a body part manually using a set icon (otherwise it doesnt appear)
 	var/obj/item/bodypart/limb
 	limb = new buildpath(loc)
-	limb.name = "\improper synthetic [selected_category] [parse_zone(limb.body_zone)]"
+	limb.name = "\improper synthetic [selected_category] [limb.plaintext_zone]"
 	limb.limb_id = selected_category
 	limb.mutation_color = "#62A262"
 	limb.update_icon_dropped()
@@ -234,6 +231,7 @@
 	return text2path(path)
 
 /obj/machinery/limbgrower/RefreshParts()
+	. = ..()
 	reagents.maximum_volume = 0
 	for(var/obj/item/reagent_containers/glass/our_beaker in component_parts)
 		reagents.maximum_volume += our_beaker.volume

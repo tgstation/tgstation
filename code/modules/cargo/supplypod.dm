@@ -15,7 +15,7 @@
 	anchored = TRUE //So it cant slide around after landing
 	anchorable = FALSE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 	density = FALSE
 	divable = FALSE
 	///List of bitflags for supply pods, see: code\__DEFINES\obj_flags.dm
@@ -657,6 +657,7 @@
 /obj/effect/pod_landingzone/proc/endLaunch()
 	pod.tryMakeRubble(drop_location())
 	pod.layer = initial(pod.layer)
+	pod.plane = initial(pod.plane)
 	pod.endGlow()
 	QDEL_NULL(helper)
 	pod.preOpen() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place

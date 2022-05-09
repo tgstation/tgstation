@@ -9,6 +9,7 @@ export const MechStatPane = (props, context) => {
     name,
     integrity,
     airtank_present,
+    weapons_safety,
     air_source,
     cabin_pressure,
     cabin_dangerous_highpressure,
@@ -42,6 +43,11 @@ export const MechStatPane = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Power">
               <PowerBar />
+            </LabeledList.Item>
+            <LabeledList.Item label="Safety">
+              <Button color={weapons_safety ? "red" : ""} onClick={() => act('toggle_safety')}>
+                {weapons_safety ? "Dis" : "En"}able
+              </Button>
             </LabeledList.Item>
           </LabeledList>
         </Section>
