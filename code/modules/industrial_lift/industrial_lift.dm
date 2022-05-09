@@ -673,14 +673,11 @@ GLOBAL_LIST_EMPTY(lifts)
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
 
-	//the following are only used to give to the lift_master datum when it's first create
+	//the following are only used to give to the lift_master datum when it's first created
 
 	///decisecond delay between horizontal movements. cannot make the tram move faster than 1 movement per world.tick_lag. only used to give to the lift_master
 	var/horizontal_speed = 0.5
 
-	create_multitile_platform = TRUE
-
-/obj/structure/industrial_lift/tram/central //TODOKYLER: remove cause dumb
 	create_multitile_platform = TRUE
 
 /obj/structure/industrial_lift/tram/AddItemOnLift(datum/source, atom/movable/AM)
