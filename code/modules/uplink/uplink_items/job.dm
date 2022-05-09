@@ -77,6 +77,7 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/mmi/syndie
 	cost = 2
+	purchasable_from = ~UPLINK_NANO
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER)
 	surplus = 0
 
@@ -116,6 +117,7 @@
 	progression_minimum = 15 MINUTES
 	item = /obj/item/gun/syringe/dna
 	cost = 14
+	purchasable_from = ~UPLINK_NANO
 	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/meathook
@@ -210,6 +212,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 10
 	item = /obj/item/autosurgeon/organ/syndicate/laser_arm
+	purchasable_from = ~UPLINK_NANO
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/chemical_gun

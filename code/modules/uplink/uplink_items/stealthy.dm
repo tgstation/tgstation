@@ -34,6 +34,7 @@
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
 	item = /obj/item/storage/box/syndie_kit/chemical
 	cost = 6
+	purchasable_from = ~UPLINK_NANO
 	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/suppressor
@@ -48,6 +49,7 @@
 	name = "Syndicate Holster"
 	desc = "A useful little device that allows for inconspicuous carrying of guns using chameleon technology. It also allows for badass gun-spinning."
 	item = /obj/item/storage/belt/holster/chameleon
+	purchasable_from = ~UPLINK_NANO
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/sleepy_pen
@@ -70,7 +72,7 @@
 	item = /obj/item/storage/box/syndie_kit/origami_bundle
 	cost = 14
 	surplus = 0
-	purchasable_from = ~UPLINK_NUKE_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
+	purchasable_from = (~UPLINK_NUKE_OPS | UPLINK_NANO) //clown ops intentionally left in, because that seems like some s-tier shenanigans.
 
 
 // Medium progression cost
