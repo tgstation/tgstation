@@ -310,3 +310,15 @@
 	)
 	result = /obj/item/food/popsicle/nogga_black
 	subcategory = CAT_ICE
+
+/datum/crafting_recipe/food/mothsicle
+	name = "Mothsicle"
+	reqs = list(
+		/obj/item/clothing/neck/scarf = 1,
+		/datum/reagent/consumable/ice = 2,
+		/datum/reagent/consumable/cream = 2,
+		/datum/reagent/consumable/vanilla = 3,
+		/datum/reagent/consumable/sugar = 2
+	)
+	result = /obj/item/food/mothsicle
+	subcategory = CAT_ICE

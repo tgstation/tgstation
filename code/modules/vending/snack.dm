@@ -23,6 +23,7 @@
 		/obj/item/food/semki = 6,
 		/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
 		/obj/item/storage/box/gum = 3,
+		/obj/item/food/mothsicle = 6,
 		/obj/item/food/energybar = 6
 	)
 	contraband = list(

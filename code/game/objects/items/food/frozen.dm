@@ -299,6 +299,21 @@
 	tastes = list("salty liquorice")
 	overlay_state = "nogga_black"
 
+/obj/item/food/mothsicle
+	name = "mothsicle"
+	desc = "A cute, sweet frozen treat shaped like SafetyMoth!"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
+	tastes = list("comforting sugar")
+	icon_state = "mothsicle"
+
+/obj/item/food/mothsicle/Initialize(mapload)
+	. = ..()
+	if(prob(5))
+		name = "horrific mothsicle"
+		desc += " This particular one looks like it didn't follow safety protocols!."
+		icon_state = "mothsicle_void"
+		tastes = list("a swirling abyss of distortion and hate")
+
 /obj/item/food/cornuto
 	name = "cornuto"
 	w_class = WEIGHT_CLASS_SMALL
