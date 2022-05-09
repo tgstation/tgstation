@@ -4,8 +4,14 @@
 		CRASH("cause_hallucination was given a non-hallucination type.")
 
 	var/datum/hallucination/new_hallucination = new type(src, source)
-	new_hallucination.log_hallucination()
-	new_hallucination.start()
+	// If we self-terminate in new(), due to a errors or whatever, don't start
+	if(!QDELETED(new_hallucination))
+		new_hallucination.start()
+
+	// If we self-terminate in start(), due to an error or failure to setup, don't log
+	if(!QDELETED(new_hallucination))
+		new_hallucination.log_hallucination()
+
 
 /**
  * # Hallucination datum.
@@ -19,19 +25,19 @@
 	/// Extra info about the hallucination displayed in the log.
 	var/feedback_details
 	/// The mob we're targeting with the hallucination.
-	var/mob/living/target
+	var/mob/living/hallucinator
 
-/datum/hallucination/New(mob/living/target, source = "an external source")
-	if(!target)
+/datum/hallucination/New(mob/living/hallucinator, source = "an external source")
+	if(!hallucinator)
 		stack_trace("[type] was created without a target.")
 		qdel(src)
 		return
 
-	src.target = target
+	src.hallucinator = hallucinator
 	src.source = source
 
 	// Cancel early if the target is deleted
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/target_deleting)
+	RegisterSignal(hallucinator, COMSIG_PARENT_QDELETING, .proc/target_deleting)
 
 /datum/hallucination/proc/target_deleting()
 	SIGNAL_HANDLER
@@ -39,24 +45,24 @@
 	qdel(src)
 
 /datum/hallucination/proc/wake_and_restore()
-	target.set_screwyhud(SCREWYHUD_NONE)
-	target.SetSleeping(0)
+	hallucinator.set_screwyhud(SCREWYHUD_NONE)
+	hallucinator.SetSleeping(0)
 
 /datum/hallucination/proc/log_hallucination()
-	target.investigate_log("was afflicted with a hallucination of type [type] by [source]. [feedback_details]", INVESTIGATE_HALLUCINATIONS)
+	hallucinator.investigate_log("was afflicted with a hallucination of type [type] by [source]. [feedback_details]", INVESTIGATE_HALLUCINATIONS)
 
 /datum/hallucination/proc/start()
 	SHOULD_CALL_PARENT(FALSE)
 	stack_trace("[type] didn't implement any hallucination effects in start.")
 
 /datum/hallucination/Destroy()
-	if(target)
-		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
-		target = null
+	if(hallucinator)
+		UnregisterSignal(hallucinator, COMSIG_PARENT_QDELETING)
+		hallucinator = null
 
 	return ..()
 
-/// Returns a random turf in a ring around the target mob.
+/// Returns a random turf in a ring around the hallucinator mob.
 /// Useful for sound hallucinations.
 /datum/hallucination/proc/random_far_turf()
 	var/first_offset = pick(-8, -7, -6, -5, 5, 6, 7, 8)
@@ -70,7 +76,7 @@
 		x_offset = second_offset
 		y_offset = first_offset
 
-	return locate(target.x + x_offset, target.y + y_offset, target.z)
+	return locate(hallucinator.x + x_offset, hallucinator.y + y_offset, hallucinator.z)
 
 /**
  * # Hallucination effect.
@@ -137,9 +143,9 @@
 
 /obj/effect/hallucination/simple/proc/show_image()
 	if(shown_image)
-		parent.target.client?.images -= shown_image
+		parent.hallucinator.client?.images -= shown_image
 	shown_image = generate_image()
-	parent.target.client?.images |= shown_image
+	parent.hallucinator.client?.images |= shown_image
 
 /obj/effect/hallucination/simple/update_icon(updates = ALL)
 	. = ..()
@@ -153,6 +159,6 @@
 
 /obj/effect/hallucination/simple/Destroy()
 	if(shown_image)
-		parent.target.client?.images -= shown_image
+		parent.hallucinator.client?.images -= shown_image
 
 	return ..()

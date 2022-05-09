@@ -77,7 +77,7 @@
 				/datum/hallucination/message,
 				/datum/hallucination/bolts,
 				/datum/hallucination/fake_flood,
-				/datum/hallucination/battle,
+				/datum/hallucination/random_battle,
 				/datum/hallucination/fire,
 				/datum/hallucination/self_delusion,
 				/datum/hallucination/death,

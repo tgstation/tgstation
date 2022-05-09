@@ -1,35 +1,25 @@
 /// Xeno crawls from nearby vent, jumps at you, and goes back in.
 /datum/hallucination/xeno_attack
-	/// The turf the xeno attack is coming from. Has a vent on it.
+
+/datum/hallucination/xeno_attack/start()
 	var/turf/xeno_attack_source
-
-/datum/hallucination/xeno_attack/New(mob/living/target, source = "an external source")
-	. = ..()
-	if(!target || QDELETED(src))
-		return
-
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/nearby_pump in orange(7, target))
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/nearby_pump in orange(7, hallucinator))
 		if(nearby_pump.welded)
 			continue
-		xeno_attack_source = get_turf(chosen_pump)
+		xeno_attack_source = get_turf(nearby_pump)
 		break
 
 	if(!xeno_attack_source)
 		qdel(src)
 		return
 
-	feedback_details += "Vent Coords: ([pump_location.x], [pump_location.y], [pump_location.z])"
+	feedback_details += "Vent Coords: ([xeno_attack_source.x], [xeno_attack_source.y], [xeno_attack_source.z])"
 
-/datum/hallucination/xeno_attack/Destroy()
-	xeno_attack_source = null
-	return ..()
-
-/datum/hallucination/xeno_attack/start()
 	var/obj/effect/hallucination/simple/xeno/fake_xeno = new(xeno_attack_source, src)
-	addtimer(CALLBACK(src, .proc/leap_at_target, fake_xeno), 1 SECONDS)
+	addtimer(CALLBACK(src, .proc/leap_at_target, fake_xeno, xeno_attack_source), 1 SECONDS)
 
 /// Leaps from the vent to the hallucinator.
-/datum/hallucination/xeno_attack/proc/leap_at_target(obj/effect/hallucination/simple/xeno/fake_xeno)
+/datum/hallucination/xeno_attack/proc/leap_at_target(obj/effect/hallucination/simple/xeno/fake_xeno, turf/attack_source)
 	if(QDELETED(src))
 		return
 	if(QDELETED(fake_xeno))
@@ -37,21 +27,19 @@
 		return
 
 	fake_xeno.set_leaping()
-	fake_xeno.throw_at(target, 7, 1, spin = FALSE, diagonals_first = TRUE)
-	stage = XENO_ATTACK_STAGE_LEAP_AT_PUMP
-
+	fake_xeno.throw_at(hallucinator, 7, 1, spin = FALSE, diagonals_first = TRUE)
 	addtimer(CALLBACK(src, .proc/leap_back_to_pump, fake_xeno), 1 SECONDS)
 
 /// Leaps from the hallucinator back to the vent.
-/datum/hallucination/xeno_attack/proc/leap_back_to_pump(obj/effect/hallucination/simple/xeno/fake_xeno)
+/datum/hallucination/xeno_attack/proc/leap_back_to_pump(obj/effect/hallucination/simple/xeno/fake_xeno, turf/attack_source)
 	if(QDELETED(src))
 		return
-	if(QDELETED(fake_xeno))
+	if(QDELETED(fake_xeno) || !attack_source)
 		qdel(src)
 		return
 
 	fake_xeno.set_leaping()
-	fake_xeno.throw_at(pump_location, 7, 1, spin = FALSE, diagonals_first = TRUE)
+	fake_xeno.throw_at(attack_source, 7, 1, spin = FALSE, diagonals_first = TRUE)
 	addtimer(CALLBACK(src, .proc/begin_crawling, fake_xeno), 1 SECONDS)
 
 /// Mimics ventcrawling into the vent.
@@ -62,7 +50,7 @@
 		qdel(src)
 		return
 
-	to_chat(target, span_notice("[fake_xeno.name] begins climbing into the ventilation system..."))
+	to_chat(hallucinator, span_notice("[fake_xeno.name] begins climbing into the ventilation system..."))
 	addtimer(CALLBACK(src, .proc/disappear, fake_xeno), 3 SECONDS)
 
 /// Disappears into the vent, ending the hallucination.
@@ -70,7 +58,7 @@
 	if(QDELETED(src))
 		return
 	if(!QDELETED(fake_xeno))
-		to_chat(target, span_notice("[xeno.name] scrambles into the ventilation ducts!"))
+		to_chat(hallucinator, span_notice("[fake_xeno.name] scrambles into the ventilation ducts!"))
 
 	qdel(src)
 
@@ -89,11 +77,11 @@
 	if(!isliving(hit_atom))
 		return
 	var/mob/living/hit_living = hit_atom
-	if(hit_living != parent.target || hit_living.stat != DEAD)
+	if(hit_living != parent.hallucinator || hit_living.stat != DEAD)
 		return
 	hit_living.Paralyze(10 SECONDS)
 	hit_living.visible_message(
-		span_danger("[target] flails around wildly."),
+		span_danger("[hit_living] flails around wildly."),
 		span_userdanger("[name] pounces on you!"),
 	)
 
