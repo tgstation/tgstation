@@ -1130,6 +1130,7 @@
 #include "code\datums\status_effects\debuffs\drunk.dm"
 #include "code\datums\status_effects\debuffs\fire_stacks.dm"
 #include "code\datums\status_effects\debuffs\speech_debuffs.dm"
+#include "code\datums\status_effects\debuffs\strandling.dm"
 #include "code\datums\votes\_vote_datum.dm"
 #include "code\datums\votes\custom_vote.dm"
 #include "code\datums\votes\map_vote.dm"
