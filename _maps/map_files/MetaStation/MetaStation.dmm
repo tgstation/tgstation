@@ -13738,8 +13738,7 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
-	name = "Abandoned Warehouse";
-	req_access_txt = "12"
+	name = "Abandoned Warehouse"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
@@ -32195,8 +32194,7 @@
 /area/station/medical/virology)
 "lyo" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Pharmacy Maintenance";
-	req_access_txt = "69"
+	name = "Pharmacy Maintenance"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32541,8 +32539,7 @@
 "lHh" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/virology/glass{
-	name = "Virology Access";
-	req_one_access_txt = "5;39"
+	name = "Virology Access"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -43531,8 +43528,7 @@
 "pCD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
-	name = "Bridge";
-	req_access_txt = "19"
+	name = "Bridge"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -44472,9 +44468,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -68380,11 +68374,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
-"xZU" = (
-/obj/effect/spawner/random/structure/crate,
-/obj/effect/mapping_helpers/airlock/abandoned,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/aft)
 "xZW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -103907,7 +103896,7 @@ bLd
 fPD
 fPD
 fPD
-xZU
+uGX
 oWk
 sem
 hMf
