@@ -233,6 +233,9 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/protolathe/department/engineering
 
+/obj/item/circuitboard/machine/protolathe/department/engineering/no_tax
+	build_path = /obj/machinery/rnd/production/protolathe/department/engineering/no_tax
+
 /obj/item/circuitboard/machine/rtg
 	name = "RTG (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

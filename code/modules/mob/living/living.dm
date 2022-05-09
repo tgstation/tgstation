@@ -1157,10 +1157,6 @@
 		return FALSE
 	return TRUE
 
-//used in datum/reagents/reaction() proc
-/mob/living/proc/get_permeability_protection(list/target_zones)
-	return 0
-
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
 	return
 
@@ -1668,10 +1664,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	return result
 
 /mob/living/reset_perspective(atom/A)
-	if(..())
-		update_sight()
-		update_fullscreen()
-		update_pipe_vision()
+	if(!..())
+		return
+	update_sight()
+	update_fullscreen()
+	update_pipe_vision()
 
 /// Proc used to handle the fullscreen overlay updates, realistically meant for the reset_perspective() proc.
 /mob/living/proc/update_fullscreen()

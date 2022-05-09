@@ -8,7 +8,6 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
-	permeability_coefficient = 0.05
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 95, ACID = 95)
 
 /obj/item/clothing/gloves/color/plasmaman/black
@@ -64,7 +63,6 @@
 	desc = "Covers up those scandalous boney hands."
 	icon_state = "botanyplasma"
 	inhand_icon_state = "botanyplasma"
-	permeability_coefficient = 0.05
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 95, ACID = 95)
 
 /obj/item/clothing/gloves/color/plasmaman/prototype
