@@ -43,7 +43,7 @@
 	owner,
 	lockable = TRUE,
 	enabled = FALSE,
-	uplink_flag = UPLINK_TRAITORS,
+	uplink_flag = UPLINK_NANO,
 	starting_tc = TELECRYSTALS_DEFAULT,
 	has_progression = FALSE,
 	datum/uplink_handler/uplink_handler_override,
