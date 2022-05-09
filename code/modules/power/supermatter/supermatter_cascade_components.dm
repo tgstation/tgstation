@@ -1,4 +1,4 @@
-SUBSYSTEM_DEF(supermatter_cascade)
+PROCESSING_SUBSYSTEM_DEF(supermatter_cascade)
 	name = "Supermatter Cascade"
 	wait = 1 SECONDS
 	stat_tag = "SC"
@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(supermatter_cascade)
 /turf/closed/indestructible/supermatter_wall/Initialize(mapload)
 	. = ..()
 	icon_state = "crystal_cascade_[rand(1,6)]"
-	START_PROCESSING(supermatter_cascade, src)
+	START_PROCESSING(SSsupermatter_cascade, src)
 
 	AddComponent(/datum/component/supermatter_crystal, null, null)
 
