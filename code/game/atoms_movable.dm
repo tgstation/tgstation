@@ -849,21 +849,6 @@
 
 ///propogates ourselves through our nested contents, similar to other important_recursive_contents procs
 ///main difference is that client contents need to possibly duplicate recursive contents for the clients mob AND its eye
-<<<<<<< HEAD
-/mob/proc/enable_client_mobs_in_contents(client/new_client)
-	var/turf/our_turf = get_turf(src)
-
-	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
-		LAZYORASSOCLIST(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, new_client.mob)
-
-	if(our_turf && SSspatial_grid.initialized)
-		SSspatial_grid.enter_cell(src, our_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
-	else if(our_turf && !SSspatial_grid.initialized)
-		SSspatial_grid.enter_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
-
-///Clears the clients channel of this movables important_recursive_contents list and all nested locs
-/atom/movable/proc/clear_important_client_contents(client/former_client)
-=======
 /mob/proc/enable_client_mobs_in_contents()
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
 		LAZYINITLIST(movable_loc.important_recursive_contents)
@@ -879,7 +864,6 @@
 
 ///Clears the clients channel of this mob
 /mob/proc/clear_important_client_contents()
->>>>>>> upstream/master
 	var/turf/our_turf = get_turf(src)
 	SSspatial_grid.remove_grid_membership(src, our_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 
