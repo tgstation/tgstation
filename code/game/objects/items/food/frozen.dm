@@ -310,7 +310,7 @@
 	. = ..()
 	if(prob(5))
 		name = "horrific mothsicle"
-		desc += " This particular one looks like it didn't follow safety protocols!."
+		desc += " This particular one looks like it didn't follow safety protocols!"
 		icon_state = "mothsicle_void"
 		tastes = list("a swirling abyss of distortion and hate")
 
