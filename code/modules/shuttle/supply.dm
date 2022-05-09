@@ -162,7 +162,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SSshuttle.shopping_list -= spawning_order
 		SSshuttle.order_history += spawning_order
 		SSshuttle.order_history_by_id[spawning_order.id] = TRUE
-		if(spawning_order.applied_coupon && !QDELETED(spawning_order.applied_coupon))
+		if(!QDELETED(spawning_order.applied_coupon))
 			QDEL_NULL(spawning_order.applied_coupon)
 
 		if(!spawning_order.pack.goody) //we handle goody crates below
