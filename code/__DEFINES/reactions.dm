@@ -169,8 +169,6 @@
 // Freon:
 /// The minimum temperature freon can form from plasma, CO2, and BZ at.
 #define FREON_FORMATION_MIN_TEMPERATURE FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
-/// A scaling divisor for the rate of freon formation relative to mix temperature.
-#define FREON_FORMATION_TEMP_DIVISOR (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10)
 /// The amount of energy 2.5 moles of freon forming from plasma, CO2, and BZ consumes.
 #define FREON_FORMATION_ENERGY 100
 

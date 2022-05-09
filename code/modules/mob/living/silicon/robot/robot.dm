@@ -1003,3 +1003,7 @@
 
 	cut_overlay(GLOB.fire_appearances[fire_icon])
 	return null
+
+/// Draw power from the robot
+/mob/living/silicon/robot/proc/draw_power(power_to_draw)
+	cell?.use(power_to_draw)
