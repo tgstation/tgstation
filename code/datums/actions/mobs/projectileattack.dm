@@ -320,7 +320,7 @@
 		finale_counter += 6
 		SLEEP_CHECK_DEATH(finale_counter, firer)
 
-	for(var/i = 1 to 3)
+	for(var/i in 1 to 3)
 		if(colossus)
 			colossus.telegraph()
 			colossus.dir_shots.attack_sequence(firer, target)
