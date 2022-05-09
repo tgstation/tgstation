@@ -40012,10 +40012,6 @@
 	dir = 8;
 	pixel_x = -28
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
-	pixel_x = 8;
-	pixel_y = 32
-	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/mixing/chamber)
 "lkT" = (
@@ -81859,6 +81855,9 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior{
 	name = "Burn Chamber Interior Airlock"
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
+	pixel_x = -32
 	},
 /turf/open/floor/engine,
 /area/station/science/mixing/chamber)
