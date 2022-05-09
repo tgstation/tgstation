@@ -133,21 +133,6 @@
 	alert_type = /atom/movable/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	tick_interval = 2 SECONDS
-	var/mob/living/carbon/carbon_owner
-	var/mob/living/carbon/human/human_owner
-
-/datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner)
-	. = ..()
-	if(.)
-		if(iscarbon(owner)) //to avoid repeated istypes
-			carbon_owner = owner
-		if(ishuman(owner))
-			human_owner = owner
-
-/datum/status_effect/incapacitating/sleeping/Destroy()
-	carbon_owner = null
-	human_owner = null
-	return ..()
 
 /datum/status_effect/incapacitating/sleeping/on_apply()
 	. = ..()
@@ -196,10 +181,14 @@
 			owner.adjustFireLoss(healing)
 			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
 		owner.adjustStaminaLoss(healing)
-	if(human_owner?.drunkenness)
-		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(carbon_owner)
+
+	// Drunkenness gets reduced by 0.3% per tick (6% per 2 seconds)
+	owner.set_drunk_effect(owner.get_drunk_amount() * 0.997)
+
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.handle_dreams()
+
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
 
@@ -212,7 +201,6 @@
 /datum/status_effect/grouped/stasis
 	id = "stasis"
 	duration = -1
-	tick_interval = 10
 	alert_type = /atom/movable/screen/alert/status_effect/stasis
 	var/last_dead_time
 
@@ -268,7 +256,6 @@
 //OTHER DEBUFFS
 /datum/status_effect/strandling //get it, strand as in durathread strand + strangling = strandling hahahahahahahahahahhahahaha i want to die
 	id = "strandling"
-	examine_text = "SUBJECTPRONOUN seems to be being choked by some durathread strands. You may be able to <b>cut</b> them off."
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/strandling
 
@@ -279,6 +266,9 @@
 /datum/status_effect/strandling/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
 	return ..()
+
+/datum/status_effect/strandling/get_examine_text()
+	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] to be being choked by some durathread strands. You may be able to <b>cut</b> them off.")
 
 /atom/movable/screen/alert/status_effect/strandling
 	name = "Choking strand"
@@ -393,11 +383,13 @@
 	on_remove_on_mob_delete = TRUE
 	///underlay used to indicate that someone is marked
 	var/mutable_appearance/marked_underlay
-	///path for the underlay
-	var/effect_sprite = ""
+	/// icon file for the underlay
+	var/effect_icon = 'icons/effects/eldritch.dmi'
+	/// icon state for the underlay
+	var/effect_icon_state = ""
 
 /datum/status_effect/eldritch/on_creation(mob/living/new_owner, ...)
-	marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite,BELOW_MOB_LAYER)
+	marked_underlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
 	return ..()
 
 /datum/status_effect/eldritch/Destroy()
@@ -437,7 +429,7 @@
 
 //Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
 /datum/status_effect/eldritch/flesh
-	effect_sprite = "emark1"
+	effect_icon_state = "emark1"
 
 /datum/status_effect/eldritch/flesh/on_effect()
 	if(ishuman(owner))
@@ -449,7 +441,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/ash
-	effect_sprite = "emark2"
+	effect_icon_state = "emark2"
 	/// Dictates how much stamina and burn damage the mark will cause on trigger.
 	var/repetitions = 1
 
@@ -471,7 +463,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/rust
-	effect_sprite = "emark3"
+	effect_icon_state = "emark3"
 
 /datum/status_effect/eldritch/rust/on_effect()
 	if(iscarbon(owner))
@@ -499,7 +491,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/void
-	effect_sprite = "emark4"
+	effect_icon_state = "emark4"
 
 /datum/status_effect/eldritch/void/on_effect()
 	var/turf/open/our_turf = get_turf(owner)
@@ -511,6 +503,94 @@
 		carbon_owner.silent += 5
 
 	return ..()
+
+/datum/status_effect/eldritch/blade
+	effect_icon_state = "emark5"
+	/// If set, the owner of the status effect will not be able to leave this area.
+	var/area/locked_to
+
+/datum/status_effect/eldritch/blade/Destroy()
+	locked_to = null
+	return ..()
+
+/datum/status_effect/eldritch/blade/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOVABLE_PRE_THROW, .proc/on_pre_throw)
+	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTED, .proc/on_teleport)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+
+/datum/status_effect/eldritch/blade/on_remove()
+	UnregisterSignal(owner, list(
+		COMSIG_MOVABLE_PRE_THROW,
+		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_MOVED,
+	))
+
+	return ..()
+
+/// Checks if the movement from moving_from to going_to leaves our [var/locked_to] area. Returns TRUE if so.
+/datum/status_effect/eldritch/blade/proc/is_escaping_locked_area(atom/moving_from, atom/going_to)
+	if(!locked_to)
+		return FALSE
+
+	// If moving_from isn't in our locked area, it means they've
+	// somehow completely escaped, so we'll opt not to act on them.
+	if(get_area(moving_from) != locked_to)
+		return FALSE
+
+	// If going_to is in our locked area,
+	// they're just moving within the area like normal.
+	if(get_area(going_to) == locked_to)
+		return FALSE
+
+	return TRUE
+
+/// Signal proc for [COMSIG_MOVABLE_PRE_THROW] that prevents people from escaping our locked area via throw.
+/datum/status_effect/eldritch/blade/proc/on_pre_throw(mob/living/source, list/throw_args)
+	SIGNAL_HANDLER
+
+	var/atom/throw_dest = throw_args[1]
+	if(!is_escaping_locked_area(source, throw_dest))
+		return
+
+	var/mob/thrower = throw_args[4]
+	if(istype(thrower))
+		to_chat(thrower, span_hypnophrase("An otherworldly force prevents you from throwing [source] out of [get_area_name(locked_to)]!"))
+
+	to_chat(source, span_hypnophrase("An otherworldly force prevents you from being thrown out of [get_area_name(locked_to)]!"))
+
+	return COMPONENT_CANCEL_THROW
+
+/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area.
+/datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
+	SIGNAL_HANDLER
+
+	if(!is_escaping_locked_area(source, destination))
+		return
+
+	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
+
+	source.Stun(1 SECONDS)
+	return COMPONENT_BLOCK_TELEPORT
+
+/// Signal proc for [COMSIG_MOVABLE_MOVED] that blocks any movement out of our locked area
+/datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+
+	// Let's not mess with heretics dragging a potential victim.
+	if(ismob(source.pulledby) && IS_HERETIC(source.pulledby))
+		return
+
+	// If the movement's forced, just let it happen regardless.
+	if(forced || !is_escaping_locked_area(old_loc, source))
+		return
+
+	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
+
+	var/turf/further_behind_old_loc = get_edge_target_turf(old_loc, REVERSE_DIR(movement_dir))
+
+	source.Stun(1 SECONDS)
+	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
 
 /// A status effect used for specifying confusion on a living mob.
 /// Created automatically with /mob/living/set_confusion.
@@ -695,7 +775,6 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 300
 	tick_interval = 10
-	examine_text = span_warning("SUBJECTPRONOUN seems slow and unfocused.")
 	var/stun = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/trance
 
@@ -706,8 +785,8 @@
 
 /datum/status_effect/trance/tick()
 	if(stun)
-		owner.Stun(60, TRUE)
-	owner.dizziness = 20
+		owner.Stun(6 SECONDS, TRUE)
+	owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
 
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
@@ -727,9 +806,12 @@
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
-	owner.dizziness = 0
+	owner.remove_status_effect(/datum/status_effect/dizziness)
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, span_warning("You snap out of your trance!"))
+
+/datum/status_effect/trance/get_examine_text()
+	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
@@ -940,7 +1022,7 @@
 		if(0 to 10)
 			human_owner.vomit()
 		if(20 to 30)
-			human_owner.Dizzy(50)
+			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			human_owner.Jitter(50)
 		if(30 to 40)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 5)
@@ -1024,7 +1106,6 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/ants
 	duration = 2 MINUTES //Keeping the normal timer makes sure people can't somehow dump 300+ ants on someone at once so they stay there for like 30 minutes. Max w/ 1 dump is 57.6 brute.
-	examine_text = span_warning("SUBJECTPRONOUN is covered in ants!")
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
@@ -1067,6 +1148,9 @@
 	SIGNAL_HANDLER
 	owner.remove_status_effect(/datum/status_effect/ants)
 	return COMPONENT_CLEANED
+
+/datum/status_effect/ants/get_examine_text()
+	return span_warning("[owner.p_they(TRUE)] [owner.p_are()] covered in ants!")
 
 /datum/status_effect/ants/tick()
 	var/mob/living/carbon/human/victim = owner
@@ -1121,10 +1205,94 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
 	alert_type = /atom/movable/screen/alert/status_effect/ghoul
+	/// The new max health value set for the ghoul, if supplied
+	var/new_max_health
+	/// Reference to the master of the ghoul's mind
+	var/datum/mind/master_mind
+	/// An optional callback invoked when a ghoul is made (on_apply)
+	var/datum/callback/on_made_callback
+	/// An optional callback invoked when a goul is unghouled (on_removed)
+	var/datum/callback/on_lost_callback
+
+/datum/status_effect/ghoul/Destroy()
+	master_mind = null
+	QDEL_NULL(on_made_callback)
+	QDEL_NULL(on_lost_callback)
+	return ..()
+
+/datum/status_effect/ghoul/on_creation(
+	mob/living/new_owner,
+	new_max_health,
+	datum/mind/master_mind,
+	datum/callback/on_made_callback,
+	datum/callback/on_lost_callback,
+)
+
+	src.new_max_health = new_max_health
+	src.master_mind = master_mind
+	src.on_made_callback = on_made_callback
+	src.on_lost_callback = on_lost_callback
+
+	. = ..()
+
+	if(master_mind)
+		linked_alert.desc += " You are an eldritch monster reanimated to serve its master, [master_mind]."
+	if(isnum(new_max_health))
+		if(new_max_health > initial(new_owner.maxHealth))
+			linked_alert.desc += " You are stronger in this form."
+		else
+			linked_alert.desc += " You are more fragile in this form."
+
+/datum/status_effect/ghoul/on_apply()
+	if(!ishuman(owner))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = owner
+
+	RegisterSignal(human_target, COMSIG_LIVING_DEATH, .proc/remove_ghoul_status)
+	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
+
+	if(new_max_health)
+		human_target.setMaxHealth(new_max_health)
+		human_target.health = new_max_health
+
+	on_made_callback?.Invoke(human_target)
+	human_target.become_husk(MAGIC_TRAIT)
+	human_target.faction |= FACTION_HERETIC
+
+	if(human_target.mind)
+		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
+		heretic_monster.set_owner(master_mind)
+
+	return TRUE
+
+/datum/status_effect/ghoul/on_remove()
+	remove_ghoul_status()
+	return ..()
+
+/// Removes the ghoul effects from our owner and returns them to normal.
+/datum/status_effect/ghoul/proc/remove_ghoul_status(datum/source)
+	SIGNAL_HANDLER
+
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/human_target = owner
+
+	if(new_max_health)
+		human_target.setMaxHealth(initial(human_target.maxHealth))
+
+	on_lost_callback?.Invoke(human_target)
+	human_target.cure_husk(MAGIC_TRAIT)
+	human_target.faction -= FACTION_HERETIC
+	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
+
+	UnregisterSignal(human_target, COMSIG_LIVING_DEATH)
+	if(!QDELETED(src))
+		qdel(src)
 
 /atom/movable/screen/alert/status_effect/ghoul
 	name = "Flesh Servant"
-	desc = "You are a Ghoul! A eldritch monster reanimated to serve its master."
+	desc = "You are a Ghoul!"
 	icon_state = ALERT_MIND_CONTROL
 
 

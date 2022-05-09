@@ -12,6 +12,7 @@
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants, /obj/item/graft, /obj/item/secateurs, /obj/item/geneshears)
 	species_exception = list(/datum/species/golem)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/suit/apron/waders
 	name = "horticultural waders"
@@ -19,7 +20,6 @@
 	icon_state = "hort_waders"
 	inhand_icon_state = "hort_waders"
 	body_parts_covered = CHEST|GROIN|LEGS
-	permeability_coefficient = 0.5
 
 //Captain
 /obj/item/clothing/suit/capjacket
@@ -36,7 +36,7 @@
 	desc = "An apron-jacket used by a high class chef."
 	icon_state = "chef"
 	inhand_icon_state = "chef"
-	permeability_coefficient = 0.5
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen, /obj/item/storage/bag/tray)
 	toggle_noun = "sleeves"

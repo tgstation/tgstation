@@ -11,11 +11,12 @@
 	max_hardware_size = 1
 	w_class = WEIGHT_CLASS_SMALL
 	max_bays = 3
-	steel_sheet_cost = 1
+	steel_sheet_cost = 2
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!
 	comp_light_luminosity = 2.3 //Same as the PDA
 	looping_sound = FALSE
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
 
 	var/has_variants = TRUE
 	var/finish_color = null
@@ -39,6 +40,13 @@
 		explode(usr, from_message_menu = TRUE)
 		return
 
+/obj/item/modular_computer/tablet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove pen"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()
 
@@ -52,7 +60,20 @@
 			inserted_item = W
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
+	if(istype(W, /obj/item/paper))
+		var/obj/item/paper/paper = W
+
+		to_chat(user, span_notice("You scan \the [W] into \the [src]."))
+		note = paper.info
+
 /obj/item/modular_computer/tablet/AltClick(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	remove_pen(user)
+
+/obj/item/modular_computer/tablet/CtrlClick(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -247,6 +268,7 @@
 // Round start tablets
 
 /obj/item/modular_computer/tablet/pda
+	icon = 'icons/obj/modular_pda.dmi'
 	icon_state = "pda"
 
 	greyscale_config = /datum/greyscale_config/tablet

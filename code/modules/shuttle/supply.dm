@@ -155,11 +155,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			if(spawning_order.pack.goody)
 				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
 			paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] has shipped. [price] credits have been charged to your bank account.")
+			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - spawning_order.pack.get_cost()) //Cargo gets the handling fee
 		value += spawning_order.pack.get_cost()
 		SSshuttle.shopping_list -= spawning_order
 		SSshuttle.order_history += spawning_order
+		SSshuttle.order_history_by_id[spawning_order.id] = TRUE
 		QDEL_NULL(spawning_order.applied_coupon)
 
 		if(!spawning_order.pack.goody) //we handle goody crates below

@@ -11,6 +11,7 @@
  *   Ashen Eyes
  *
  * Mark of Ash
+ * Ritual of Knowledge
  * Mask of Madness
  * > Sidepaths:
  *   Curse of Corrosion
@@ -20,36 +21,25 @@
  * Nightwater's Rebirth
  * > Sidepaths:
  *   Ashen Ritual
- *   Blood Cleave
+ *   Rusted Ritual
  *
  * Ashlord's Rite
  */
-/datum/heretic_knowledge/limited_amount/base_ash
+/datum/heretic_knowledge/limited_amount/starting/base_ash
 	name = "Nightwatcher's Secret"
 	desc = "Opens up the Path of Ash to you. \
 		Allows you to transmute a match and a knife into an Ashen Blade. \
 		You can only create two at a time."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
 	next_knowledge = list(/datum/heretic_knowledge/ashen_grasp)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/limited_amount/base_rust,
-		/datum/heretic_knowledge/limited_amount/base_flesh,
-		/datum/heretic_knowledge/limited_amount/base_void,
-		/datum/heretic_knowledge/final/rust_final,
-		/datum/heretic_knowledge/final/flesh_final,
-		/datum/heretic_knowledge/final/void_final,
-	)
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/match = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
-	limit = 2
-	cost = 1
-	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_ASH
 
-/datum/heretic_knowledge/limited_amount/base_ash/on_research(mob/user)
+/datum/heretic_knowledge/limited_amount/starting/base_ash/on_research(mob/user)
 	. = ..()
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	our_heretic.heretic_path = route
@@ -87,7 +77,7 @@
 	desc = "Grants you Ashen Passage, a silent but short range jaunt."
 	gain_text = "He knew how to walk between the planes."
 	next_knowledge = list(
-		/datum/heretic_knowledge/ash_mark,
+		/datum/heretic_knowledge/mark/ash_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/essence,
 		/datum/heretic_knowledge/medallion,
@@ -96,7 +86,7 @@
 	cost = 1
 	route = PATH_ASH
 
-/datum/heretic_knowledge/ash_mark
+/datum/heretic_knowledge/mark/ash_mark
 	name = "Mark of Ash"
 	desc = "Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade. \
 		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to any nearby heathens. \
@@ -105,46 +95,20 @@
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/ash)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/rust_mark,
-		/datum/heretic_knowledge/flesh_mark,
-		/datum/heretic_knowledge/void_mark,
-	)
-	cost = 2
 	route = PATH_ASH
+	mark_type = /datum/status_effect/eldritch/ash
 
-/datum/heretic_knowledge/ash_mark/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-
-/datum/heretic_knowledge/ash_mark/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
-
-/datum/heretic_knowledge/ash_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
-
-	target.apply_status_effect(/datum/status_effect/eldritch/ash)
-
-/datum/heretic_knowledge/ash_mark/proc/on_eldritch_blade(mob/living/user, mob/living/target)
-	SIGNAL_HANDLER
-
-	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
-	if(!istype(mark))
+/datum/heretic_knowledge/mark/ash_mark/trigger_mark(mob/living/source, mob/living/target)
+	. = ..()
+	if(!.)
 		return
 
-	mark.on_effect()
-
 	// Also refunds 75% of charge!
-	for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in user.mind.spell_list)
+	for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in source.mind.spell_list)
 		grasp.charge_counter = min(round(grasp.charge_counter + grasp.charge_max * 0.75), grasp.charge_max)
 
 /datum/heretic_knowledge/knowledge_ritual/ash
 	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/knowledge_ritual/flesh,
-		/datum/heretic_knowledge/knowledge_ritual/void,
-		/datum/heretic_knowledge/knowledge_ritual/rust,
-	)
 	route = PATH_ASH
 
 /datum/heretic_knowledge/mad_mask
@@ -154,7 +118,7 @@
 		It can also be forced onto a heathen, to make them unable to take it off..."
 	gain_text = "The Nightwater was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	next_knowledge = list(
-		/datum/heretic_knowledge/ash_blade_upgrade,
+		/datum/heretic_knowledge/blade_upgrade/ash,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/curse/paralysis,
@@ -169,36 +133,20 @@
 	cost = 1
 	route = PATH_ASH
 
-/datum/heretic_knowledge/ash_blade_upgrade
+/datum/heretic_knowledge/blade_upgrade/ash
 	name = "Fiery Blade"
 	desc = "Your blade now lights enemies ablaze on attack."
 	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
 		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
 	next_knowledge = list(/datum/heretic_knowledge/spell/flame_birth)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/rust_blade_upgrade,
-		/datum/heretic_knowledge/flesh_blade_upgrade,
-		/datum/heretic_knowledge/void_blade_upgrade,
-	)
-	cost = 2
 	route = PATH_ASH
 
-/datum/heretic_knowledge/ash_blade_upgrade/on_gain(mob/user)
-	. = ..()
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-
-/datum/heretic_knowledge/ash_blade_upgrade/on_lose(mob/user)
-	. = ..()
-	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
-
-/datum/heretic_knowledge/ash_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
-	SIGNAL_HANDLER
-
-	if(user == target)
+/datum/heretic_knowledge/blade_upgrade/ash/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	if(source == target)
 		return
 
 	target.adjust_fire_stacks(1)
-	target.IgniteMob()
+	target.ignite_mob()
 
 /datum/heretic_knowledge/spell/flame_birth
 	name = "Nightwater's Rebirth"
@@ -210,7 +158,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/final/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
-		/datum/heretic_knowledge/spell/cleave,
+		/datum/heretic_knowledge/summon/rusty,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
 	cost = 1
