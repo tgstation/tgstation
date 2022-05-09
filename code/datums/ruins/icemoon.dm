@@ -6,6 +6,8 @@
 	cost = 5
 	ruin_type = ZTRAIT_ICE_RUINS
 	default_area = /area/icemoon/surface/outdoors/unexplored
+	has_ceiling = TRUE
+	ceiling_turf = /turf/closed/mineral/random/snow
 
 // above ground only
 
