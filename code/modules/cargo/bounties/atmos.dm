@@ -8,11 +8,11 @@
 	/// Typepath of the gas datum required to fufill the bounty
 	var/gas_type
 
-/datum/bounty/item/atmospherics/applies_to(obj/O)
+/datum/bounty/item/atmospherics/applies_to(obj/applied_obj)
 	if(!..())
 		return FALSE
-	var/obj/item/tank/T = O
-	var/datum/gas_mixture/our_mix = T.return_air()
+	var/obj/item/tank/applied_tank = applied_obj
+	var/datum/gas_mixture/our_mix = applied_tank.return_air()
 	if(!our_mix.gases[gas_type])
 		return FALSE
 	return our_mix.gases[gas_type][MOLES] >= moles_required
