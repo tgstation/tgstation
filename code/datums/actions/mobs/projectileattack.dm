@@ -295,11 +295,11 @@
 	var/mob/living/simple_animal/hostile/megafauna/colossus/colossus
 	if(istype(firer, /mob/living/simple_animal/hostile/megafauna/colossus))
 		colossus = firer
-
+		colossus.say("Perish.", spans = list("colossus", "yell"))
+	
 	var/finale_counter = 10
 	for(var/i in 1 to 20)
 		if(finale_counter > 4 && colossus)
-			colossus.say("Die!!", spans = list("colossus", "yell"))
 			colossus.telegraph()
 			colossus.shotgun_blast.attack_sequence(firer, target)
 
@@ -315,7 +315,6 @@
 
 	for(var/i = 1 to 3)
 		if(colossus)
-			colossus.say("Die.", spans = list("colossus", "yell"))
 			colossus.telegraph()
 			colossus.random_shots.attack_sequence(firer, target)
 		finale_counter += 6
@@ -323,7 +322,6 @@
 
 	for(var/i = 1 to 3)
 		if(colossus)
-			colossus.say("Die...", spans = list("colossus", "yell"))
 			colossus.telegraph()
 			colossus.dir_shots.attack_sequence(firer, target)
 		SLEEP_CHECK_DEATH(1 SECONDS, firer)
