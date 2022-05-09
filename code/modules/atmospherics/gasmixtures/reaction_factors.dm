@@ -90,6 +90,7 @@
 		/datum/gas/tritium = "Tritium is consumed at 0.01 reaction rate",
 		/datum/gas/pluoxium = "Pluoxium is produced at 1 reaction rate",
 		/datum/gas/hydrogen = "Hydrogen is produced at 0.01 reaction rate",
+		"Pressure" = "The higher the pressure the faster the reaction rate goes.",
 		"Energy" = "[PLUOXIUM_FORMATION_ENERGY] joules of energy is released per reaction rate",
 		"Temperature" = "Can only occur between [PLUOXIUM_FORMATION_MIN_TEMP] - [PLUOXIUM_FORMATION_MAX_TEMP] Kelvin",
 	)
@@ -100,13 +101,13 @@
 		/datum/gas/tritium = "20 moles of tritium needs to be present for the reaction to occur. Tritium is consumed at 1 reaction rate",
 		/datum/gas/nitrogen = "10 moles of tritium needs to be present for the reaction to occur. Nitrogen is consumed at 1 reaction rate",
 		/datum/gas/nitrium = "Nitrium is produced at 1 reaction rate",
-		"Temperature" = "Can only occur above [NITRIUM_FORMATION_MIN_TEMP] kelvins",
+		"Temperature" = "Can only occur above [NITRIUM_FORMATION_MIN_TEMP] kelvins. Higher temperature increases the reaction rate.",
 		"Energy" = "[NITRIUM_FORMATION_ENERGY] joules of energy is absorbed per reaction rate",
 	)
 
 /datum/gas_reaction/nitrium_decomposition/init_factors()
 	factor = list(
-		/datum/gas/oxygen = "[MINIMUM_MOLE_COUNT] moles of oxygen need to be present for the reaction to occur. Not consumed.",
+		/datum/gas/oxygen = "[MINIMUM_MOLE_COUNT] moles of oxygen need to be present for the reaction to occur. Not consumed. Increases reaction rate.",
 		/datum/gas/nitrium = "Nitrium is consumed at 1 reaction rate",
 		/datum/gas/hydrogen = "Hydrogen is produced at 1 reaction rate",
 		/datum/gas/nitrogen = "Nitrogen is produced at 1 reaction rate",
@@ -148,7 +149,8 @@
 		/datum/gas/bz = "BZ is consumed at 0.25 reaction rate",
 		/datum/gas/freon = "Freon is consumed at 2.75 reaction rate",
 		/datum/gas/healium = "Healium is produced at 3 reaction rate",
-		"Temperature" = "Can only occur between [HEALIUM_FORMATION_MIN_TEMP] - [HEALIUM_FORMATION_MAX_TEMP]. Higher temperature increases the reaction rate.",
+		"Pressure" = "The higher the pressure the faster the reaction rate goes.",
+		"Temperature" = "Can only occur between [HEALIUM_FORMATION_MIN_TEMP] - [HEALIUM_FORMATION_MAX_TEMP] Kelvin.",
 		"Energy" = "[HEALIUM_FORMATION_ENERGY] joules of energy is released per reaction rate.",
 	)
 
@@ -157,14 +159,15 @@
 		/datum/gas/hypernoblium = "Hyper-Noblium is consumed at 0.01 reaction rate",
 		/datum/gas/nitrium = "Nitrium is consumed at 0.5 reaction rate",
 		/datum/gas/zauker = "Zauker is produced at 0.5 reaction rate",
+		"Pressure" = "The higher the pressure the faster the reaction rate goes.",
 		"Temperature" = "Can only occur between [ZAUKER_FORMATION_MIN_TEMPERATURE] - [ZAUKER_FORMATION_MAX_TEMPERATURE] kelvin",
 		"Energy" = "[ZAUKER_FORMATION_ENERGY] joules of energy is absorbed per reaction rate",
 	)
 
-/datum/gas_reaction/zauker_decomp/init_factors() //Fixed reaction rate
+/datum/gas_reaction/zauker_decomp/init_factors()
 	factor = list(
 		/datum/gas/zauker = "Zauker is consumed at 1 reaction rate",
-		/datum/gas/nitrogen = "At least [MINIMUM_MOLE_COUNT] moles of Nitrogen needs to be present for this reaction to occur. Nitrogen is produced at 0.7 reaction rate",
+		/datum/gas/nitrogen = "At least [MINIMUM_MOLE_COUNT] moles of Nitrogen needs to be present for this reaction to occur. Nitrogen is produced at 0.7 reaction rate. The more nitrogen there is, the faster the reaction rate is, limited by volume.",
 		/datum/gas/oxygen = "Oxygen is produced at 0.3 reaction rate",
 		"Energy" = "[ZAUKER_DECOMPOSITION_ENERGY] joules of energy is released per reaction rate",
 	)
@@ -175,28 +178,29 @@
 		/datum/gas/hydrogen = "Hydrogen is consumed at 2 reaction rate",
 		/datum/gas/proto_nitrate = "Proto-Nitrate is produced at 2.2 reaction rate",
 		"Energy" = "[PN_FORMATION_ENERGY] joules of energy is released per reaction rate",
-		"Temperature" = "Can only occur between [PN_FORMATION_MIN_TEMPERATURE] - [PN_FORMATION_MAX_TEMPERATURE] kelvin. Higher temperature increases the reaction rate.",
+		"Temperature" = "Can only occur between [PN_FORMATION_MIN_TEMPERATURE] - [PN_FORMATION_MAX_TEMPERATURE] kelvin. Reaction rate peaks at [PN_FORMATION_LOWER_TEMPERATURE_MAXIMUM_EFFICIENCY] and [PN_FORMATION_UPPER_TEMPERATURE_MAXIMUM_EFFICIENCY] Kelvin, and drops at [PN_FORMATION_MIN_TEMPERATURE], 5,000, and [PN_FORMATION_MAX_TEMPERATURE] Kelvin.",
 	)
 
-/datum/gas_reaction/proto_nitrate_hydrogen_response/init_factors() // Fixed reaction rate
+/datum/gas_reaction/proto_nitrate_hydrogen_response/init_factors()
 	factor = list(
 		/datum/gas/hydrogen = "[PN_HYDROGEN_CONVERSION_THRESHOLD] moles of hydrogen needs to be present for the reaction to occur. Hydrogen is consumed at 1 reaction rate.",
-		/datum/gas/proto_nitrate = "[MINIMUM_MOLE_COUNT] moles of proto-nitrate needs to be present for the reaction to occur. Proto nitrate is produced at 0.5 reaction rate.",
+		/datum/gas/proto_nitrate = "[MINIMUM_MOLE_COUNT] moles of proto-nitrate needs to be present for the reaction to occur. Proto nitrate is produced at 0.5 reaction rate. Proto-nitrate increases reaction rate.",
+		"Pressure" = "The higher the pressure the faster the reaction rate goes.",
 		"Energy" = "[PN_HYDROGEN_CONVERSION_ENERGY] joules of energy is absorbed per reaction rate",
 	)
 
-/datum/gas_reaction/proto_nitrate_tritium_response/init_factors() // Fixed reaction rate
+/datum/gas_reaction/proto_nitrate_tritium_response/init_factors()
 	factor = list(
-		/datum/gas/tritium = "Tritium is consumed at 1 reaction rate.",
-		/datum/gas/proto_nitrate = "Proto nitrate is consumed at 0.01 reaction rate.",
+		/datum/gas/tritium = "Tritium is consumed at 1 reaction rate. More tritium increases reaction rate.",
+		/datum/gas/proto_nitrate = "Proto nitrate is consumed at 0.01 reaction rate. More proto-nitrate increases reaction rate.",
 		/datum/gas/hydrogen = "Hydrogen is produced at 1 reaction rate.",
 		"Energy" = "[PN_TRITIUM_CONVERSION_ENERGY] joules of energy is released per reaction rate",
 		"Radiation" = "This reaction emits radiation proportional to the reaction rate.",
 	)
 
-/datum/gas_reaction/proto_nitrate_bz_response/init_factors() // Fixed reaction rate
+/datum/gas_reaction/proto_nitrate_bz_response/init_factors()
 	factor = list(
-		/datum/gas/proto_nitrate = "[MINIMUM_MOLE_COUNT] moles of proto-nitrate needs to be present for the reaction to occur",
+		/datum/gas/proto_nitrate = "[MINIMUM_MOLE_COUNT] moles of proto-nitrate needs to be present for the reaction to occur. More proto-nitrate increases reaction rate.",
 		/datum/gas/bz = "BZ is consumed at 1 reaction rate.",
 		/datum/gas/nitrogen = "Nitrogen is produced at 0.4 reaction rate.",
 		/datum/gas/helium = "Helium is produced at 1.6 reaction rate.",
@@ -204,4 +208,5 @@
 		"Energy" = "[PN_BZASE_ENERGY] joules of energy is released per reaction rate",
 		"Radiation" = "This reaction emits radiation proportional to the reaction rate.",
 		"Hallucinations" = "This reaction can cause various carbon based lifeforms in the vicinity to hallucinate.",
+		"Nuclear particles" = "This reaction has a chance to release extremely high energy nuclear particle clusters proportional to the reaction rate.",
 	)
