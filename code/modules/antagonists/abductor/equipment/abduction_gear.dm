@@ -516,7 +516,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			target.set_confusion(max(10, target.get_confusion()))
 			target.set_timed_status_effect(16 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 			SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_STUNRESISTANCE) ? 0.1 : 1))
+			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) ? 0.1 : 1))
 		if(BATON_SLEEP)
 			SleepAttack(target,user)
 		if(BATON_CUFF)
