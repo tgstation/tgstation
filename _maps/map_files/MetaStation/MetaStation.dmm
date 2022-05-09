@@ -10679,10 +10679,6 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "dKR" = (
-/obj/effect/spawner/random/engineering/tank,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
 	dir = 4
 	},
@@ -13459,10 +13455,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "eGx" = (
-/obj/effect/spawner/random/structure/closet_maintenance,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -17273,13 +17265,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
-"gcW" = (
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/wall,
-/area/station/maintenance/starboard/aft)
 "gdh" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -23150,6 +23135,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
+"iiA" = (
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/turf/closed/wall/r_wall,
+/area/station/maintenance/starboard/lesser)
 "iiE" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -34157,10 +34148,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "maP" = (
-/obj/effect/spawner/random/engineering/tank,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/table,
 /obj/item/computer_hardware/hard_drive/portable{
 	pixel_x = -8;
@@ -34955,10 +34942,6 @@
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos)
 "mnw" = (
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/iron/dark,
 /area/station/science/mixing)
@@ -41514,13 +41497,6 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "oGs" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/light/small/directional/north,
-/obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
 	dir = 4
 	},
@@ -46610,11 +46586,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "qwS" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/spawner/random/engineering/tank,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible/layer2{
 	dir = 9
 	},
@@ -101617,7 +101588,7 @@ cGF
 maP
 bAB
 brh
-nPD
+waM
 iOO
 qbT
 sbX
@@ -102131,7 +102102,7 @@ cGF
 nZA
 eGx
 mOV
-nPD
+waM
 syo
 ivn
 mKc
@@ -104703,7 +104674,7 @@ hod
 emC
 emC
 emC
-gcW
+emC
 emC
 tPs
 kNF
@@ -104947,7 +104918,7 @@ cJD
 iXu
 iXu
 iXu
-iXu
+iiA
 iXu
 iXu
 iXu
