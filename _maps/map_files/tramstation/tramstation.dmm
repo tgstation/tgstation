@@ -22298,10 +22298,6 @@
 	dir = 1;
 	pixel_y = 24
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
-	pixel_x = 32;
-	pixel_y = -8
-	},
 /turf/open/floor/iron/white,
 /area/station/science/mixing/chamber)
 "hDO" = (
@@ -52668,6 +52664,9 @@
 	name = "Burn Chamber Interior Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
+	pixel_y = 32
+	},
 /turf/open/floor/engine,
 /area/station/science/mixing/chamber)
 "rSv" = (
