@@ -165,8 +165,24 @@
 	storable = list(/obj/item/reagent_containers/food/drinks,
 					/obj/item/reagent_containers/food/condiment)
 
-/obj/item/borg/apparatus/beaker/servive/add_glass()
+/obj/item/borg/apparatus/beaker/service/add_glass()
 	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
+	handle_reflling(stored, loc.loc, force = TRUE)
+
+/obj/item/borg/apparatus/beaker/service/proc/handle_reflling(obj/item/reagent_containers/glass, mob/living/silicon/robot/bro, force = FALSE)
+	if (isnull(bro))
+		bro = loc
+	if (!iscyborg(bro))
+		return
+
+	if (!stored || force)
+		glass.AddComponent(/datum/component/reagent_refiller, power_draw_callback = CALLBACK(bro, /mob/living/silicon/robot.proc/draw_power))
+
+/obj/item/borg/apparatus/beaker/service/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if (!istype(arrived, /obj/item/reagent_containers/food/drinks))
+		return
+	handle_reflling(arrived)
+	return ..()
 
 /// allows medical cyborgs to manipulate organs without hands
 /obj/item/borg/apparatus/organ_storage
