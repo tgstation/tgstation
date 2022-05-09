@@ -2,10 +2,12 @@ name: CI Suite
 on:
   push:
     branches:
-    - master
+    - stable
+    - experimental
   pull_request:
     branches:
-    - master
+    - stable
+    - experimental
 jobs:
   run_linters:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
