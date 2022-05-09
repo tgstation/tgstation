@@ -15,6 +15,10 @@
 /// You can also pass in a minimum exposure time. If this is set, then this radiation pulse
 /// will not irradiate the source unless they have been around *any* radioactive source for that
 /// period of time.
+/// The chance to get irradiated diminishes over range, and from objects that block radiation.
+/// Assuming there is nothing in the way, the chance will determine what the chance is to get irradiated from half of max_range.
+/// Example: If chance is equal to 30%, and max_range is equal to 8,
+/// then the chance for a thing to get irradiated is 30% if they are 4 turfs away from the pulse source.
 /proc/radiation_pulse(
 	atom/source,
 	max_range,

@@ -786,6 +786,7 @@
 	audible_message(span_hear("[src] begins to hum as it warms up its printing drums."))
 	busy = TRUE
 	playsound(src, 'sound/machines/printer.ogg', 50)
+	flick("binder1", src)
 	addtimer(CALLBACK(src, .proc/bind_book, draw_from), 4.1 SECONDS)
 
 /obj/machinery/bookbinder/proc/bind_book(obj/item/paper/draw_from)

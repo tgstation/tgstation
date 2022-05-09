@@ -465,6 +465,9 @@ SUBSYSTEM_DEF(id_access)
 
 	id_card.add_access(trim.access, mode = TRY_ADD_ALL_NO_WILDCARD)
 	id_card.add_wildcards(trim.wildcard_access, mode = TRY_ADD_ALL)
+	if(istype(trim, /datum/id_trim/job))
+		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
+		id_card.registered_account.account_job.paycheck_department = job_trim.job.paycheck_department
 
 /**
  * Tallies up all accesses the card has that have flags greater than or equal to the access_flag supplied.

@@ -31,8 +31,9 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)
 		if(isitem(parent))
 			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/explodable_attack)
-			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-			RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+			if(isclothing(parent))
+				RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+				RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	if(SEND_SIGNAL(parent, COMSIG_CONTAINS_STORAGE))
 		RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
 
@@ -103,30 +104,24 @@
 /// Checks if we're hitting the zone this component is covering
 /datum/component/explodable/proc/is_hitting_zone(def_zone)
 	var/obj/item/item = parent
-	var/mob/living/L = item.loc //Get whoever is equipping the item currently
+	var/mob/living/carbon/wearer = item.loc //Get whoever is equipping the item currently
+	if(!istype(wearer))
+		return FALSE
 
-	if(!istype(L))
-		return
+	// Maybe switch this over if we have a get_all_clothing or similar proc for carbon mobs.
+	// get_all_worn_items is a lie, they include pockets.
+	var/list/worn_items = list()
+	worn_items += list(wearer.head, wearer.wear_mask, wearer.gloves, wearer.shoes, wearer.glasses, wearer.ears)
+	if(ishuman(wearer))
+		var/mob/living/carbon/human/human_wearer = wearer
+		worn_items += list(human_wearer.wear_suit, human_wearer.w_uniform)
 
-	var/obj/item/bodypart/bodypart = L.get_bodypart(check_zone(def_zone))
+	if(!(item in worn_items))
+		return FALSE
 
-	var/list/equipment_items = list()
-	if(iscarbon(L))
-		var/mob/living/carbon/C = L
-		equipment_items += list(C.head, C.wear_mask, C.back, C.gloves, C.shoes, C.glasses, C.ears)
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			equipment_items += list(H.wear_suit, H.w_uniform, H.belt, H.s_store, H.wear_id)
-
-	for(var/bp in equipment_items)
-		if(!bp)
-			continue
-
-		var/obj/item/I = bp
-		if(I.body_parts_covered & bodypart.body_part)
-			return TRUE
+	if(item.body_parts_covered & def_zone)
+		return TRUE
 	return FALSE
-
 
 /datum/component/explodable/proc/check_if_detonate(target)
 	if(!isitem(target))

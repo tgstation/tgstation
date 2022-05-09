@@ -332,7 +332,7 @@ GLOBAL_PROTECT(poll_options)
 		return
 	var/admin_rank
 	if(client.holder)
-		admin_rank = client.holder.rank.name
+		admin_rank = client.holder.rank_names()
 	else
 		if(poll.admin_only)
 			return
