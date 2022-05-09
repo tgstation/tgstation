@@ -160,6 +160,8 @@
 
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
+	var/datum/forensics/forensics
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *

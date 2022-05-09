@@ -52,27 +52,23 @@
 /datum/component/forensics/proc/clean_act(datum/source, clean_types)
 	SIGNAL_HANDLER
 
-	. = NONE
 	if(clean_types & CLEAN_TYPE_FINGERPRINTS)
 		wipe_fingerprints()
-		. = COMPONENT_CLEANED
 	if(clean_types & CLEAN_TYPE_BLOOD)
 		wipe_blood_DNA()
-		. = COMPONENT_CLEANED
 	if(clean_types & CLEAN_TYPE_FIBERS)
 		wipe_fibers()
-		. = COMPONENT_CLEANED
 
-/datum/component/forensics/proc/add_fingerprint_list(list/_fingerprints) //list(text)
-	if(!length(_fingerprints))
+/datum/component/forensics/proc/add_fingerprint_list(list/fingerprints) //list(text)
+	if(!length(fingerprints))
 		return
-	LAZYINITLIST(fingerprints)
-	for(var/i in _fingerprints) //We use an associative list, make sure we don't just merge a non-associative list into ours.
-		fingerprints[i] = i
+	LAZYINITLIST(src.fingerprints)
+	for(var/fingerprint in fingerprints) //We use an associative list, make sure we don't just merge a non-associative list into ours.
+		src.fingerprints[fingerprint] = fingerprint
 	return TRUE
 
 /datum/component/forensics/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
-	if(!isliving(M))
+	if(!isliving(M) )
 		if(!iscameramob(M))
 			return
 		if(isaicamera(M))
