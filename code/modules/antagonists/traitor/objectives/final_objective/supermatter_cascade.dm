@@ -1,6 +1,6 @@
-/datum/traitor_objective/final/end_reality
-	name = "end reality as we know it by causing a crystallizing resonance cascade"
-	description = "End this known reality by causing a supermatter cascade. Go to %AREA% to retrieve the destabilizing crystal \
+/datum/traitor_objective/final/supermatter_cascade
+	name = "destroy the station by causing a crystallizing resonance cascade"
+	description = "Destroy the station by causing a supermatter cascade. Go to %AREA% to retrieve the destabilizing crystal \
 	and use it on the SM."
 
 	///area type the objective owner must be in to recieve the destabilizing crystal
@@ -8,7 +8,7 @@
 	///checker on whether we have sent the crystal yet.
 	var/sent_crystal = FALSE
 
-/datum/traitor_objective/final/end_reality/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+/datum/traitor_objective/final/supermatter_cascade/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(!can_take_final_objective())
 		return
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
@@ -20,13 +20,13 @@
 	replace_in_name("%AREA%", initial(dest_crystal_area_pickup.name))
 	return TRUE
 
-/datum/traitor_objective/final/end_reality/generate_ui_buttons(mob/user)
+/datum/traitor_objective/final/supermatter_cascade/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
 	if(!sent_crystal)
-		buttons += add_ui_button("", "Pressing this will call down a pod with the universe ending kit.", "biohazard", "destabilizing_crystal")
+		buttons += add_ui_button("", "Pressing this will call down a pod with the supermatter cascade kit.", "biohazard", "destabilizing_crystal")
 	return buttons
 
-/datum/traitor_objective/final/end_reality/ui_perform_action(mob/living/user, action)
+/datum/traitor_objective/final/supermatter_cascade/ui_perform_action(mob/living/user, action)
 	. = ..()
 	switch(action)
 		if("destabilizing_crystal")
