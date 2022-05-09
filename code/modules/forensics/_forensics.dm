@@ -5,7 +5,7 @@
  * * List of fingerprints on the atom
  * * List of hidden prints (used for admins)
  * * List of blood on the atom
- * * List of clothing fibres on the atom
+ * * List of clothing fibers on the atom
  */
 /datum/forensics
 	/// Weakref to the parent owning this datum
@@ -32,10 +32,10 @@
 	 */
 	var/list/blood_DNA
 	/**
-	 * List of clothing fibres on this atom
+	 * List of clothing fibers on this atom
 	 *
 	 * Formatting:
-	 * * fiber = fibre
+	 * * fiber = fiber
 	 */
 	var/list/fibers
 
@@ -80,7 +80,7 @@
 	blood_DNA = null
 	return TRUE
 
-/// Empties the fibres list
+/// Empties the fibers list
 /datum/forensics/proc/wipe_fibers()
 	fibers = null
 	return TRUE
@@ -135,17 +135,17 @@
 	if(!length(fibers))
 		return
 	LAZYINITLIST(src.fibers)
-	for(var/fibre in fibers) //We use an associative list, make sure we don't just merge a non-associative list into ours.
-		src.fibers[fibre] = fibre
+	for(var/fiber in fibers) //We use an associative list, make sure we don't just merge a non-associative list into ours.
+		src.fibers[fiber] = fiber
 	return TRUE
 
-#define ITEM_FIBRE_MULTIPLIER 1.2
-#define NON_ITEM_FIBRE_MULTIPLIER 1
+#define ITEM_FIBER_MULTIPLIER 1.2
+#define NON_ITEM_FIBER_MULTIPLIER 1
 
-/// Adds a single fibre
+/// Adds a single fiber
 /datum/forensics/proc/add_fibers(mob/living/carbon/human/suspect)
 	var/fibertext
-	var/item_multiplier = isitem(src) ? ITEM_FIBRE_MULTIPLIER : NON_ITEM_FIBRE_MULTIPLIER
+	var/item_multiplier = isitem(src) ? ITEM_FIBER_MULTIPLIER : NON_ITEM_FIBER_MULTIPLIER
 	if(suspect.wear_suit)
 		fibertext = "Material from \a [suspect.wear_suit]."
 		if(prob(10 * item_multiplier) && !LAZYACCESS(fibers, fibertext))
@@ -174,8 +174,8 @@
 			LAZYSET(fibers, fibertext, fibertext)
 	return TRUE
 
-#undef ITEM_FIBRE_MULTIPLIER
-#undef NON_ITEM_FIBRE_MULTIPLIER
+#undef ITEM_FIBER_MULTIPLIER
+#undef NON_ITEM_FIBER_MULTIPLIER
 
 /// Adds the given list into hiddenprints
 /datum/forensics/proc/add_hiddenprint_list(list/hiddenprints) //list(ckey = text)
@@ -198,19 +198,19 @@
 			suspect = ai_camera.ai
 	if(!suspect.key)
 		return
-	var/hasgloves = ""
+	var/has_gloves = ""
 	if(ishuman(suspect))
 		var/mob/living/carbon/human/human_suspect = suspect
 		if(human_suspect.gloves)
-			hasgloves = "(gloves)"
+			has_gloves = "(gloves)"
 	var/current_time = time_stamp()
 	if(!LAZYACCESS(hiddenprints, suspect.key))
-		LAZYSET(hiddenprints, suspect.key, "First: \[[current_time]\] \"[suspect.real_name]\"[hasgloves]. Ckey: [suspect.ckey]")
+		LAZYSET(hiddenprints, suspect.key, "First: \[[current_time]\] \"[suspect.real_name]\"[has_gloves]. Ckey: [suspect.ckey]")
 	else
-		var/laststamppos = findtext(LAZYACCESS(hiddenprints, suspect.key), "\nLast: ")
-		if(laststamppos)
-			LAZYSET(hiddenprints, suspect.key, copytext(hiddenprints[suspect.key], 1, laststamppos))
-		hiddenprints[suspect.key] += "\nLast: \[[current_time]\] \"[suspect.real_name]\"[hasgloves]. Ckey: [suspect.ckey]" //made sure to be existing by if(!LAZYACCESS);else
+		var/last_stamp_pos = findtext(LAZYACCESS(hiddenprints, suspect.key), "\nLast: ")
+		if(last_stamp_pos)
+			LAZYSET(hiddenprints, suspect.key, copytext(hiddenprints[suspect.key], 1, last_stamp_pos))
+		hiddenprints[suspect.key] += "\nLast: \[[current_time]\] \"[suspect.real_name]\"[has_gloves]. Ckey: [suspect.ckey]" //made sure to be existing by if(!LAZYACCESS);else
 	var/atom/parent_atom = parent.resolve()
 	parent_atom.fingerprintslast = suspect.ckey
 	return TRUE
