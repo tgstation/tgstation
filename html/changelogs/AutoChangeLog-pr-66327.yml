@@ -1,4 +1,0 @@
-author: "timothymtorres, TheBonded"
-delete-after: True
-changes: 
-  - code_imp: "Improve nearsighted code to be more robust"

@@ -25,6 +25,10 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
+# JohnFulpWizard
+
+/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
+
 # Jordie0608
 
 /SQL/ @Jordie0608
@@ -105,10 +109,6 @@
 
 /code/__DEFINES/atmospherics/ @Ghilker
 /code/modules/atmospherics/ @Ghilker
-
-# JohnFulpWizard
-
-/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
 
 # Kapu1178
 
