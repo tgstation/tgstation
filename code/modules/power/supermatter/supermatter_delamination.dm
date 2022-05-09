@@ -200,13 +200,13 @@
 		We are seeing increasing indications of the universe itself beginning to unravel. \
 		[station_name()], you are the only facility nearby a bluespace rift of unkown origin, which is near the [get_area_name(cascade_rift)]. \
 		You are hereby directed to enter the rift using all means necessary, quite possibly as the last humans alive. \
-		Five minutes before the universe collapses. Good l\[\[###!!!-")
+		One minute before the universe collapses. Good l\[\[###!!!-")
 
 	addtimer(CALLBACK(src, .proc/delta), 10 SECONDS)
 
-	addtimer(CALLBACK(src, .proc/last_message), 4 MINUTES)
+	addtimer(CALLBACK(src, .proc/last_message), 50 SECONDS)
 
-	addtimer(CALLBACK(src, .proc/the_end), 5 MINUTES)
+	addtimer(CALLBACK(src, .proc/the_end), 1 MINUTES)
 
 /**
  * Increases the security level to the highest level
