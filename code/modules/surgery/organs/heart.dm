@@ -283,7 +283,7 @@
 
 /obj/item/organ/heart/ethereal/Remove(mob/living/carbon/owner, special = 0)
 	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_QDELETING))
-	REMOVE_TRAIT(owner, TRAIT_ETH_CORPSELOCKED, SPECIES_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(owner)
 	QDEL_NULL(current_crystal)
 	return ..()
@@ -338,7 +338,7 @@
 		span_notice("Crystals start forming around [victim]."),
 		span_nicegreen("Crystals start forming around your dead body."),
 	)
-	ADD_TRAIT(victim, TRAIT_ETH_CORPSELOCKED, SPECIES_TRAIT)
+	ADD_TRAIT(victim, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
 
@@ -382,7 +382,7 @@
 	crystalization_process_damage = 0 //Reset damage taken during crystalization
 
 	if(!succesful)
-		REMOVE_TRAIT(owner, TRAIT_ETH_CORPSELOCKED, SPECIES_TRAIT)
+		REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 		QDEL_NULL(current_crystal)
 
 	if(crystalize_timer_id)
@@ -465,7 +465,7 @@
 	ethereal_heart.current_crystal = null
 	COOLDOWN_START(ethereal_heart, crystalize_cooldown, CRYSTALIZE_COOLDOWN_LENGTH)
 	ethereal_heart.owner.forceMove(get_turf(src))
-	REMOVE_TRAIT(ethereal_heart.owner, TRAIT_ETH_CORPSELOCKED, SPECIES_TRAIT)
+	REMOVE_TRAIT(ethereal_heart.owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	deltimer(crystal_heal_timer)
 	visible_message(span_notice("The crystals shatters, causing [ethereal_heart.owner] to fall out"))
 	return ..()

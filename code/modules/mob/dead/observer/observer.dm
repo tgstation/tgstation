@@ -283,15 +283,14 @@ Works together with spawning an observer, noted above.
 /mob/proc/ghostize(can_reenter_corpse = TRUE)
 	if(key)
 		if(key[1] != "@") // Skip aghosts.
-			if(HAS_TRAIT(src, TRAIT_ETH_CORPSELOCKED) && can_reenter_corpse) //If you can re-enter the corpse you can't leave when corpselocked
-				var/response = tgui_alert(usr, "Are you sure you want to ghost? If you ghost during crystallization you cannot re-enter your body!", "Confirm Ghost Observe", list("Ghost", "Stay in Body"))
-				if(response == "Ghost") // ghosting breaks the crystal and stops them from re-entering corpse
-					var/mob/living/carbon/human/ethereal = usr
-					var/obj/item/organ/heart/ethereal/ethereal_heart = ethereal.getorganslot(ORGAN_SLOT_HEART)
-					ethereal_heart.stop_crystalization_process(ethereal)
-					can_reenter_corpse = FALSE
-				else
+			if(HAS_TRAIT(src, TRAIT_CORPSELOCKED))
+				if(can_reenter_corpse) //If you can re-enter the corpse you can't leave when corpselocked
 					return
+				else //otherwise, continues the ghosting process
+					if(isethereal(usr)) //and cancels crystallization process for ethereals
+						var/mob/living/carbon/human/ethereal = usr
+						var/obj/item/organ/heart/ethereal/ethereal_heart = ethereal.getorganslot(ORGAN_SLOT_HEART)
+						ethereal_heart.stop_crystalization_process(ethereal)
 			stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
 			var/mob/dead/observer/ghost = new(src) // Transfer safety to observer spawning proc.
 			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
@@ -319,8 +318,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
-		ghostize(TRUE)
-		return TRUE
+		if(isethereal(usr))
+			var/response = tgui_alert(usr, "Are you sure you want to ghost? If you ghost whilst crystallizing you cannot re-enter your body!", "Confirm Ghost Observe", list("Ghost", "Stay in Body"))
+			if(response == "Ghost")
+				ghostize(FALSE)
+			else
+				return FALSE
+		else
+			ghostize(TRUE)
+			return TRUE
 	var/response = tgui_alert(usr, "Are you sure you want to ghost? If you ghost whilst still alive you cannot re-enter your body!", "Confirm Ghost Observe", list("Ghost", "Stay in Body"))
 	if(response != "Ghost")
 		return FALSE//didn't want to ghost after-all
