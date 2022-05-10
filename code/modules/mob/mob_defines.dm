@@ -221,8 +221,6 @@
 	var/list/client_colours = list()
 	var/hud_type = /datum/hud
 
-	var/datum/h_sandbox/sandbox = null
-
 	var/datum/focus //What receives our keyboard inputs. src by default
 
 	/// Used for tracking last uses of emotes for cooldown purposes

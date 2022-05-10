@@ -20,8 +20,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// The formatting of the name of the species in plural context. Defaults to "[name]\s" if unset.
 	/// Ex "[Plasmamen] are weak", "[Mothmen] are strong", "[Lizardpeople] don't like", "[Golems] hate"
 	var/plural_form
-	// Default color. If mutant colors are disabled, this is the color that will be used by that race.
-	var/default_color = "#FFFFFF"
 
 	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
@@ -1296,7 +1294,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						if(H.stat == CONSCIOUS)
 							H.visible_message(span_danger("[H] is knocked senseless!"), \
 											span_userdanger("You're knocked senseless!"))
-							H.set_confusion(max(H.get_confusion(), 20))
+							H.set_timed_status_effect(20 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 							H.adjust_blurriness(10)
 						if(prob(10))
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
