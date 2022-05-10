@@ -34,7 +34,7 @@
 				return
 			var/area/delivery_area = get_area(user)
 			if(delivery_area.type != dest_crystal_area_pickup)
-				to_chat(user, span_warning("You must be in [initial(dest_crystal_area_pickup.name)] to recieve the bioterror agent."))
+				to_chat(user, span_warning("You must be in [initial(dest_crystal_area_pickup.name)] to recieve the supermatter cascade kit."))
 				return
 			sent_crystal = TRUE
 			podspawn(list(
