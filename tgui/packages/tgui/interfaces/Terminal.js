@@ -11,9 +11,7 @@ export const Terminal = (_, context) => {
         <NoticeBox textAlign="left">
           {uppertext}
         </NoticeBox>
-        <Section>
-          <Messages messages={messages} />
-        </Section>
+        <Messages messages={messages} />
       </Window.Content>
     </Window>
   );
