@@ -1,0 +1,5 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - bugfix: "added the missing raw anomaly core to icebox ordnance"
+  - bugfix: "fix kilostation and tramstation chambers controllers not accesible from the inside."

@@ -1,8 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "Change how opening a hole in the chamber will affect the SM, increasing the dangers it will have by having more damage dealt, increase the power of the SM by 250 and stopping the SM healing from low moles/cold."
-  - balance: "Increased the heat released by lowering the THERMAL_RELEASE_MODIFIER from 5 to 4"
-  - balance: "Increased the plasma released by lowering the PLASMA_RELEASE_MODIFIER from 750 to 650"
-  - balance: "Lowered the oxygen released by increasing the OXYGEN_RELEASE_MODIFIER  from 325 to 340"
-  - balance: "Increased the REACTION_POWER_MODIFIER  from 0.55 to 0.65 increasing the power generated"
