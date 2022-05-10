@@ -17,7 +17,7 @@
 				var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
 				if(ears)
 					ears.adjustEarDamage(0, 30)
-				C.add_confusion(25)
+				C.adjust_timed_status_effect(25 SECONDS, /datum/status_effect/confusion)
 				C.Jitter(50)
 			else
 				SEND_SOUND(C, sound('sound/effects/screech.ogg'))

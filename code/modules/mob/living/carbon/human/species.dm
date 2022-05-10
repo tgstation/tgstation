@@ -1294,7 +1294,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						if(H.stat == CONSCIOUS)
 							H.visible_message(span_danger("[H] is knocked senseless!"), \
 											span_userdanger("You're knocked senseless!"))
-							H.set_confusion(max(H.get_confusion(), 20))
+							H.set_timed_status_effect(20 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 							H.adjust_blurriness(10)
 						if(prob(10))
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
