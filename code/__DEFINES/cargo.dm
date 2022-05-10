@@ -40,17 +40,6 @@
 /// The baseline unit for cargo crates. Adjusting this will change the cost of all in-game shuttles, crate export values, bounty rewards, and all supply pack import values, as they use this as their unit of measurement.
 #define CARGO_CRATE_VALUE 200
 
-#define QM_STAMP_SET list("stamp-qm" = JOB_QUARTERMASTER, "stamp-hop" = JOB_HEAD_OF_PERSONNEL, "stamp-cap" = JOB_CAPTAIN, "stamp-centcom" = JOB_CENTCOM_OFFICIAL)
-#define HOP_STAMP_SET list("stamp-hop" = JOB_HEAD_OF_PERSONNEL, "stamp-cap" = JOB_CAPTAIN, "stamp-centcom" = JOB_CENTCOM_OFFICIAL)
-#define HOS_STAMP_SET list("stamp-hos" = JOB_HEAD_OF_SECURITY, "stamp-cap" = JOB_CAPTAIN, "stamp-centcom" = JOB_CENTCOM_OFFICIAL)
-#define CE_STAMP_SET list("stamp-ce" = JOB_CHIEF_ENGINEER, "stamp-cap" = JOB_CAPTAIN, "stamp-centcom" = JOB_CENTCOM_OFFICIAL)
-#define RD_STAMP_SET list("stamp-rd" = JOB_RESEARCH_DIRECTOR, "stamp-cap" = JOB_CAPTAIN, "stamp-centcom" = JOB_CENTCOM_OFFICIAL)
-#define CMO_STAMP_SET list("stamp-cmo" = JOB_CHIEF_MEDICAL_OFFICER, "stamp-cap" = JOB_CAPTAIN, "stamp-centcom" = JOB_CENTCOM_OFFICIAL)
-#define CAP_STAMP_SET list("stamp-cap" = JOB_CAPTAIN, "stamp-centcom" = JOB_CENTCOM_OFFICIAL)
-#define HONK_STAMP_SET list("stamp-clown" = JOB_CLOWN, "stamp-mime" = JOB_MIME)
-#define NOTARY_STAMP_SET list("stamp-law" = JOB_LAWYER, "stamp-chap" = JOB_CHAPLAIN)
-#define ILLEGAL_STAMP_SET list("stamp-syndicate" = "Syndicate Official", "stamp-centcom" = JOB_CENTCOM_OFFICIAL)
-
 GLOBAL_LIST_EMPTY(supplypod_loading_bays)
 
 GLOBAL_LIST_INIT(podstyles, list(\

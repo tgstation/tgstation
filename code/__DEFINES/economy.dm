@@ -59,7 +59,8 @@
 #define CIV_JOB_MINE 10
 #define CIV_JOB_MED 11
 #define CIV_JOB_GROW 12
-#define CIV_JOB_RANDOM 13
+#define CIV_JOB_ATMOS 13
+#define CIV_JOB_RANDOM 14
 
 //By how much should the station's inflation value be multiplied by when dividing the civilian bounty's reward?
 #define BOUNTY_MULTIPLIER 10

@@ -470,14 +470,14 @@
 /turf/open/floor/iron/solarpanel/airless,
 /area/ruin/space/has_grav/hotel)
 "eI" = (
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel)
 "eK" = (
 /obj/structure/chair/wood,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/grimy,
@@ -885,7 +885,7 @@
 "iq" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/comfy,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
@@ -1052,7 +1052,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
@@ -1526,7 +1526,7 @@
 "ne" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/wood/large,
@@ -1571,7 +1571,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hotel/dock)
 "no" = (
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/wood/tile,
@@ -3377,7 +3377,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "JG" = (
 /obj/machinery/firealarm/directional/east,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/sepia,
@@ -4093,7 +4093,7 @@
 /area/ruin/space/has_grav/hotel/workroom)
 "Tm" = (
 /obj/machinery/oven,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_y = 32
 	},
 /obj/machinery/camera/directional/north{
@@ -4479,7 +4479,7 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "Xh" = (
-/obj/structure/sign/warning/nosmoking,
+/obj/structure/sign/warning/no_smoking,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hotel)
 "Xi" = (

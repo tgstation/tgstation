@@ -554,22 +554,6 @@
 	source.Stun(1 SECONDS)
 	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
 
-/// A status effect used for specifying confusion on a living mob.
-/// Created automatically with /mob/living/set_confusion.
-/datum/status_effect/confusion
-	id = "confusion"
-	alert_type = null
-	var/strength
-
-/datum/status_effect/confusion/tick()
-	strength -= 1
-	if (strength <= 0)
-		owner.remove_status_effect(/datum/status_effect/confusion)
-		return
-
-/datum/status_effect/confusion/proc/set_strength(new_strength)
-	strength = new_strength
-
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
 	tick_interval = 6
@@ -1001,7 +985,7 @@
 		if(90 to 95)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
-			human_owner.add_confusion(12)
+			human_owner.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/confusion)
 
 /datum/status_effect/amok
 	id = "amok"

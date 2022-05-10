@@ -13,7 +13,7 @@
 	var/supermatter_explosion_power = 0
 	///Amount the gasmix will affect the explosion size
 	var/supermatter_gasmix_power_ratio = 0
-	///Are we triggering an universal endgame?
+	///Are we triggering a supermatter cascade?
 	var/supermatter_cascade = FALSE
 	///The rift in space that will be created by the cascade
 	var/obj/cascade_portal/cascade_rift
@@ -28,7 +28,7 @@
 	src.supermatter_gasmix_power_ratio = supermatter_gasmix_power_ratio
 
 	if(supermatter_cascade)
-		start_universe_ending_cascade()
+		start_supermatter_cascade()
 		return
 
 	setup_mob_interaction()
@@ -169,9 +169,9 @@
 /**
  * Setup for the cascade delamination
  */
-/datum/supermatter_delamination/proc/start_universe_ending_cascade()
+/datum/supermatter_delamination/proc/start_supermatter_cascade()
 	SSshuttle.registerHostileEnvironment(src)
-	SSshuttle.universal_cascade = TRUE
+	SSshuttle.supermatter_cascade = TRUE
 	SSair.can_fire = FALSE
 	call_explosion()
 	pick_rift_location()
@@ -195,12 +195,12 @@
 	for(var/mob/player as anything in GLOB.alive_player_list)
 		to_chat(player, span_boldannounce("You feel a strange presence in the air around you. You feel unsafe."))
 
-	priority_announce("Unknown harmonance affecting universal substructure, all nearby matter is starting to crystallize.", "The universe is collapsing.", 'sound/misc/bloblarm.ogg')
-	priority_announce("There's been a universe-wide electromagnetic pulse. All of our systems are heavily damaged and many personnel are dead or dying. \
-		We are seeing increasing indications of the universe itself beginning to unravel. \
-		[station_name()], you are the only facility nearby a bluespace rift of unkown origin, which is near the [get_area_name(cascade_rift)]. \
-		You are hereby directed to enter the rift using all means necessary, quite possibly as the last humans alive. \
-		Five minutes before the universe collapses. Good l\[\[###!!!-")
+	priority_announce("Unknown harmonance affecting local spatial substructure, all nearby matter is starting to crystallize.", "Central Command Higher Dimensional Affairs", 'sound/misc/bloblarm.ogg')
+	priority_announce("There's been a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those required for emergency shuttle navigation. \
+		We can only reasonably conclude that a supermatter cascade has been initiated on or near your station. \
+		Evacuation is no longer possible by conventional means; however, a bluespace rift of unkown origin has appeared near the [get_area_name(cascade_rift)]. \
+		All personnel are hereby advised to enter the rift using all means available. Retrieval of survivors will be conducted upon recovery of necessary facilities. \
+		Five minutes before total loss of the station and nearby space. Good l\[\[###!!!-")
 
 	addtimer(CALLBACK(src, .proc/delta), 10 SECONDS)
 
@@ -219,7 +219,7 @@
  * Announces the last message to the station
  */
 /datum/supermatter_delamination/proc/last_message()
-	priority_announce("To the remaining humans alive, I hope it was worth it.", " ", 'sound/misc/bloop.ogg')
+	priority_announce("To the remaining survivors of [station_name()], I hope it was worth it.", " ", 'sound/misc/bloop.ogg')
 
 /**
  * Ends the round
