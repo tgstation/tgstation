@@ -38,6 +38,6 @@
 		if(SOUTH)
 			real_target.plane = WALL_PLANE
 		if(EAST)
-			real_target.plane = WALL_PLANE
+			real_target.plane = OVER_FRILL_PLANE
 		if(WEST)
-			real_target.plane = WALL_PLANE
+			real_target.plane = OVER_FRILL_PLANE
