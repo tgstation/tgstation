@@ -361,6 +361,38 @@
 	return data
 
 /**
+ * ##stamp
+ *
+ * Proc used to place a stamp onto a piece of paper
+ *
+ * Arguments:
+ * * x - The x coord of the stamp
+ * * y - The y coord of the stamp
+ * * r - The rotation in degrees, of the stamp
+ * * icon_state - The stamp icon to be placed on the paper
+ * * class - (Optional) A string needed for the list of stamps on the page
+ */
+/obj/item/paper/proc/stamp(x, y, r, icon_state, class = "paper121x54 [icon_state]")
+	if (isnull(stamps))
+		stamps = list()
+	if (stamps.len < MAX_PAPER_STAMPS)
+		stamps[++stamps.len] = list(class, x, y, r)
+
+		if(isnull(stamped))
+			stamped = list()
+		if(stamped.len < MAX_PAPER_STAMPS_OVERLAYS)
+			var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[icon_state]")
+			stampoverlay.pixel_x = rand(-2, 2)
+			stampoverlay.pixel_y = rand(-3, 2)
+			add_overlay(stampoverlay)
+			LAZYADD(stamped, icon_state)
+			update_icon()
+		return TRUE
+	else
+		to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
+		return FALSE
+
+/**
  * is_approved
  *
  * To determine if a paper has the correct stamp. If no department stamp is specified then the
@@ -429,38 +461,6 @@
 	if(istype(loc, /obj/structure/noticeboard))
 		return loc
 	return ..()
-
-/**
- * ##stamp
- *
- * Proc used to place a stamp onto a piece of paper
- *
- * Arguments:
- * * x - The x coord of the stamp
- * * y - The y coord of the stamp
- * * r - The rotation in degrees, of the stamp
- * * icon_state - The stamp icon to be placed on the paper
- * * class - (Optional) A string needed for the list of stamps on the page
- */
-/obj/item/paper/proc/stamp(x, y, r, icon_state, class = "paper121x54 [icon_state]")
-	if (isnull(stamps))
-		stamps = list()
-	if (stamps.len < MAX_PAPER_STAMPS)
-		stamps[++stamps.len] = list(class, x, y, r)
-
-		if(isnull(stamped))
-			stamped = list()
-		if(stamped.len < MAX_PAPER_STAMPS_OVERLAYS)
-			var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[icon_state]")
-			stampoverlay.pixel_x = rand(-2, 2)
-			stampoverlay.pixel_y = rand(-3, 2)
-			add_overlay(stampoverlay)
-			LAZYADD(stamped, icon_state)
-			update_icon()
-		return TRUE
-	else
-		to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
-		return FALSE
 
 /**
  * Construction paper
