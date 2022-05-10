@@ -3,7 +3,7 @@
 Usage:
 Override /Run() to run your test code
 
-Call Fail() to fail the test (You should specify a reason)
+Call TEST_FAIL() to fail the test (You should specify a reason)
 
 You may use /New() and /Destroy() for setup/teardown respectively
 
@@ -60,15 +60,15 @@ GLOBAL_VAR(test_log)
 	return ..()
 
 /datum/unit_test/proc/Run()
-	Fail("Run() called parent or not implemented")
+	TEST_FAIL("Run() called parent or not implemented")
 
-/datum/unit_test/proc/Fail(reason = "No reason")
+/datum/unit_test/proc/Fail(reason = "No reason", file = "OUTDATED_TEST", line = 1)
 	succeeded = FALSE
 
 	if(!istext(reason))
 		reason = "FORMATTED: [reason != null ? reason : "NULL"]"
 
-	LAZYADD(fail_reasons, reason)
+	LAZYADD(fail_reasons, list(list(reason, file, line)))
 
 /// Allocates an instance of the provided type, and places it somewhere in an available loc
 /// Instances allocated through this proc will be destroyed when the test is over
@@ -94,11 +94,28 @@ GLOBAL_VAR(test_log)
 	GLOB.current_test = null
 	GLOB.failed_any_test |= !test.succeeded
 
-	var/list/log_entry = list("[test.succeeded ? "PASS" : "FAIL"]: [test_path] [duration / 10]s")
+	var/list/log_entry = list(
+		"[test.succeeded ? TEST_OUTPUT_GREEN("PASS") : TEST_OUTPUT_RED("FAIL")]: [test_path] [duration / 10]s",
+	)
 	var/list/fail_reasons = test.fail_reasons
 
-	for(var/J in 1 to LAZYLEN(fail_reasons))
-		log_entry += "\tREASON #[J]: [fail_reasons[J]]"
+	for(var/reasonID in 1 to LAZYLEN(fail_reasons))
+		var/text = fail_reasons[reasonID][1]
+		var/file = fail_reasons[reasonID][2]
+		var/line = fail_reasons[reasonID][3]
+
+		// Github action annotation.
+		// See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
+
+		// Need to escape the text to properly support newlines.
+		var/annotation_text = replacetext(text, "%", "%25")
+		annotation_text = replacetext(annotation_text, "\n", "%0A")
+
+		log_world("::error file=[file],line=[line],title=[test_path]::[annotation_text]")
+
+		// Normal log message
+		log_entry += "\tREASON #[reasonID]: [text] at [file]:[line]"
+
 	var/message = log_entry.Join("\n")
 	log_test(message)
 

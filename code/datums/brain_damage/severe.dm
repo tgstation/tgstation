@@ -189,12 +189,12 @@
 		if(2)
 			if(!high_stress)
 				to_chat(owner, span_warning("You can't stop shaking..."))
-				owner.dizziness += 20
+				owner.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
 				owner.add_confusion(20)
 				owner.Jitter(20)
 			else
 				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
-				owner.dizziness += 20
+				owner.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
 				owner.add_confusion(20)
 				owner.Jitter(20)
 				owner.adjustStaminaLoss(50)

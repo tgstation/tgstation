@@ -759,12 +759,17 @@
 		regenerate_organs()
 	remove_all_embedded_objects()
 	set_heartattack(FALSE)
-	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
 	set_coretemperature(get_body_temp_normal(apply_change=FALSE))
 	heat_exposure_stacks = 0
+	return ..()
+
+/mob/living/carbon/human/is_nearsighted()
+	var/obj/item/clothing/glasses/eyewear = glasses
+	if(istype(eyewear) && eyewear.vision_correction)
+		return FALSE
 	return ..()
 
 /mob/living/carbon/human/is_literate()

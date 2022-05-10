@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
-	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 
 	var/bypass_state = FALSE // bypassing the set icon state
 
@@ -250,7 +250,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		update_appearance()
 		update_slot_icon()
 
-	return FALSE
+	return TRUE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr

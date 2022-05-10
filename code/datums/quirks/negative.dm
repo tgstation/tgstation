@@ -826,12 +826,13 @@
 	hardcore_value = 1
 
 /datum/quirk/bad_touch/add()
-	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED), .proc/uncomfortable_touch)
+	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT), .proc/uncomfortable_touch)
 
 /datum/quirk/bad_touch/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED))
+	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT))
 
-/datum/quirk/bad_touch/proc/uncomfortable_touch()
+/// Causes a negative moodlet to our quirk holder on signal
+/datum/quirk/bad_touch/proc/uncomfortable_touch(datum/source)
 	SIGNAL_HANDLER
 
 	if(quirk_holder.stat == DEAD)

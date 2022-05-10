@@ -298,7 +298,7 @@
 	acceptable_clothes = list(/obj/item/clothing/under/suit/checkered,
 		/obj/item/clothing/head/fedora,
 		/obj/item/clothing/neck/scarf/green,
-		/obj/item/clothing/mask/bandana/color/green)
+		/obj/item/clothing/mask/bandana/green)
 	free_clothes = list(/obj/item/clothing/head/fedora,
 		/obj/item/clothing/under/suit/checkered,
 		/obj/item/toy/crayon/spraycan)
@@ -321,7 +321,7 @@
 	gang_id = "TS"
 	acceptable_clothes = list(/obj/item/clothing/under/pants/classicjeans,
 		/obj/item/clothing/suit/jacket,
-		/obj/item/clothing/mask/bandana/color/skull/black)
+		/obj/item/clothing/mask/bandana/skull/black)
 	free_clothes = list(/obj/item/clothing/suit/jacket,
 		/obj/item/clothing/under/pants/classicjeans,
 		/obj/item/toy/crayon/spraycan)
@@ -346,7 +346,7 @@
 		/obj/item/clothing/under/suit/henchmen,
 		/obj/item/clothing/neck/scarf/yellow,
 		/obj/item/clothing/head/beanie/yellow,
-		/obj/item/clothing/mask/bandana/color/gold,
+		/obj/item/clothing/mask/bandana/gold,
 		/obj/item/storage/backpack/henchmen)
 	free_clothes = list(/obj/item/storage/backpack/henchmen,
 		/obj/item/clothing/under/suit/henchmen,
@@ -372,7 +372,7 @@
 		/obj/item/clothing/shoes/yakuza,
 		/obj/item/clothing/neck/scarf/yellow,
 		/obj/item/clothing/head/beanie/yellow,
-		/obj/item/clothing/mask/bandana/color/gold,
+		/obj/item/clothing/mask/bandana/gold,
 		/obj/item/clothing/head/hardhat,
 		/obj/item/clothing/suit/yakuza)
 	free_clothes = list(/obj/item/clothing/under/costume/yakuza,
@@ -401,7 +401,7 @@
 		/obj/item/clothing/under/costume/jackbros,
 		/obj/item/clothing/shoes/jackbros,
 		/obj/item/clothing/head/jackbros,
-		/obj/item/clothing/mask/bandana/color/blue)
+		/obj/item/clothing/mask/bandana/blue)
 	free_clothes = list(/obj/item/clothing/under/costume/jackbros,
 		/obj/item/clothing/shoes/jackbros,
 		/obj/item/clothing/head/jackbros,
@@ -428,7 +428,7 @@
 		/obj/item/clothing/under/costume/dutch,
 		/obj/item/clothing/suit/dutch,
 		/obj/item/clothing/head/bowler,
-		/obj/item/clothing/mask/bandana/color/black)
+		/obj/item/clothing/mask/bandana/black)
 	free_clothes = list(/obj/item/clothing/under/costume/dutch,
 		/obj/item/clothing/head/bowler,
 		/obj/item/clothing/suit/dutch,
