@@ -95,9 +95,6 @@ SUBSYSTEM_DEF(shuttle)
 	/// A listing of previously delivered supply packs.
 	var/list/order_history = list()
 
-	/// A listing of previously delivered supply packs by order id
-	var/list/order_history_by_id = list()
-
 	/// A list of job accesses that are able to purchase any shuttles.
 	var/list/has_purchase_shuttle_access
 
@@ -637,8 +634,6 @@ SUBSYSTEM_DEF(shuttle)
 		request_list = SSshuttle.request_list
 	if (istype(SSshuttle.order_history))
 		order_history = SSshuttle.order_history
-	if (istype(SSshuttle.order_history_by_id))
-		order_history_by_id = SSshuttle.order_history_by_id
 
 	if (istype(SSshuttle.shuttle_loan))
 		shuttle_loan = SSshuttle.shuttle_loan
