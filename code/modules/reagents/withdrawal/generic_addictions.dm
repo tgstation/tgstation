@@ -1,4 +1,4 @@
-///Opiods
+///Opioids
 /datum/addiction/opioids
 	name = "opioid"
 	withdrawal_stage_messages = list("I feel aches in my bodies..", "I need some pain relief...", "It aches all over...I need some opioids!")
