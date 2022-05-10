@@ -225,7 +225,7 @@
 			if(DT_PROB(pukeprob, delta_time)) //iT hAndLeS mOrE ThaN PukInG
 				disgusted.adjust_timed_status_effect(2.5 SECONDS, /datum/status_effect/confusion)
 				disgusted.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/speech/stutter)
-				disgusted.vomit(10, 0, 1, 0, 1, 0)
+				disgusted.vomit(10, distance = 0, vomit_type = NONE)
 			disgusted.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(DT_PROB(13, delta_time))
