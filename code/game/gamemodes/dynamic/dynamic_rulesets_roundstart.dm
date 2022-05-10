@@ -99,6 +99,57 @@
 		LAZYADDASSOC(SSjob.dynamic_forced_occupations, new_malf, "AI")
 	return TRUE
 
+//////////////////////////////////////////////
+//                                          //
+//               NT Agent                   //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/ntagent
+	name = "Changelings"
+	antag_flag = ROLE_NT_AGENT
+	antag_datum = /datum/antagonist/ntagent
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+		JOB_BRIG_PHYSICIAN,
+	)
+	restricted_roles = list(
+		JOB_PUG,
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 1
+	weight = 4
+	cost = 8
+	scaling_cost = 11
+	requirements = list(10,10,10,10,10,10,10,10,10,7)
+	antag_cap = list("denominator" = 15)
+
+/datum/dynamic_ruleset/roundstart/ntagent/pre_execute(population)
+	. = ..()
+	var/num_ntage = get_antag_cap(population) * (scaled_times + 1)
+	for (var/i = 1 to num_ntage)
+		if(candidates.len <= 0)
+			break
+		var/mob/M = pick_n_take(candidates)
+		assigned += M.mind
+		M.mind.restricted_roles = restricted_roles
+		M.mind.special_role = ROLE_NT_AGENT
+		GLOB.pre_setup_antags += M.mind
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/ntagent/execute()
+	for(var/datum/mind/ntagent in assigned)
+		var/datum/antagonist/ntagent/new_antag = new antag_datum()
+		ntagent.add_antag_datum(new_antag)
+		GLOB.pre_setup_antags -= ntagent
+	return TRUE
+	
 //////////////////////////////////////////
 //                                      //
 //           BLOOD BROTHERS             //
