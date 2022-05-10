@@ -23135,12 +23135,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
-"iiA" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/wall/r_wall,
-/area/station/maintenance/starboard/lesser)
 "iiE" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -104918,7 +104912,7 @@ cJD
 iXu
 iXu
 iXu
-iiA
+iXu
 iXu
 iXu
 iXu
