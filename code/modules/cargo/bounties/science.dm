@@ -131,3 +131,8 @@
 	name = "Refined Hallucination Core"
 	description = "We're making a better version of space drugs, send us a core to help us replicate its effects."
 	wanted_types = list(/obj/item/assembly/signaler/anomaly/hallucination = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/delimber
+	name = "Refined Delimber Core"
+	description = "Our janitor lizard lost all their limbs, send us a delimber core to replace them."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/delimber = TRUE)
