@@ -119,6 +119,12 @@
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 
+	if(!chassis.internal_tank) //Just in case.
+		chassis.use_internal_tank = FALSE
+		chassis.balloon_alert(owner, "no tank available!")
+		chassis.log_message("Switch to internal tank failed. No tank available.", LOG_MECHA)
+		return
+
 	chassis.use_internal_tank = !chassis.use_internal_tank
 	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
 	chassis.balloon_alert(owner, "taking air from [chassis.use_internal_tank ? "internal airtank" : "environment"]")

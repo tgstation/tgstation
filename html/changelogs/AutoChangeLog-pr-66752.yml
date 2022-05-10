@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "Lower the amount of anomalies spawned from the SM delamination"
-  - balance: "Lower the probability of getting a flux anomaly from the SM delamination"
-  - balance: "Flux anomalies spawned by the SM in this way will have the explosion size reduced by 4"

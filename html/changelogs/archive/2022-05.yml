@@ -330,3 +330,160 @@
   san7890:
   - imageadd: On the mapping end, we've removed some duplicate names for different
       icons.
+2022-05-09:
+  B4CKU:
+  - bugfix: fixed export prices of computer parts being overwritten by a "miscellaneous
+      computer part"
+  - bugfix: fixed missing export datums for various computer parts
+  - code_imp: improved code of computer part exports
+  Comxy:
+  - bugfix: When holding plasma glass, the sprite of normal glass was shown in hand
+      since plasma glass in hand didn't exist.
+  - rscadd: Added titanium and plastitanium glass shards as well as spears and shivs
+      for their types, including plasma glass shivs.
+  - imageadd: Sprites for plasma, titanium and plastitanium glass shards when hold
+      in hand.
+  - qol: titanium and plastitanium glass having their own shards makes sense, and
+      is a quality feature.
+  Fikou:
+  - balance: some items may protect more or less against diseases now
+  Fikou, sounds by Floyd:
+  - rscadd: Maintenance now contains an ancient altar.
+  Ghilker:
+  - balance: Change how opening a hole in the chamber will affect the SM, increasing
+      the dangers it will have by having more damage dealt, increase the power of
+      the SM by 250 and stopping the SM healing from low moles/cold.
+  - balance: Increased the heat released by lowering the THERMAL_RELEASE_MODIFIER
+      from 5 to 4
+  - balance: Increased the plasma released by lowering the PLASMA_RELEASE_MODIFIER
+      from 750 to 650
+  - balance: Lowered the oxygen released by increasing the OXYGEN_RELEASE_MODIFIER  from
+      325 to 340
+  - balance: Increased the REACTION_POWER_MODIFIER  from 0.55 to 0.65 increasing the
+      power generated
+  - balance: improved freon production with a ratio of 6 moles of plasma, 1 mole of
+      bz and 3 moles of co2. At 800 K there is a minor peak of production to have
+      a fast way to generate freon, but at over 5000 K the rate starts to increase
+      up to three times the rate at 800 K.
+  - balance: Lower the amount of anomalies spawned from the SM delamination
+  - balance: Lower the probability of getting a flux anomaly from the SM delamination
+  - balance: Flux anomalies spawned by the SM in this way will have the explosion
+      size reduced by 4
+  - qol: supermatter zaps now change color based on the power generated, starting
+      from red and going toward blue the higher the power emitted
+  - rscadd: adds the supermatter cascade round-ender, it can be triggered when the
+      SM chamber is filled with hypernoblium and antinoblium at over 40% each, when
+      the total moles are high enough to trigger a singulo and only when the SM integrity
+      is over 80% (if the gases don't reach the requirement during the delamination
+      for a moment, the whole thing will stop and need to restart)
+  Melbert:
+  - refactor: Refactored the voting subsystem. Votes are now each their own datums.
+  - refactor: The voting UI now uses Typescript.
+  - refactor: Refactored the wizard spell Charge
+  MidoriWroth:
+  - rscadd: Adds 7 new foods! The power of chefs continues to grow.
+  - rscadd: Updated pierogi and stuffed cabbage sprites.
+  RandomGamer123:
+  - bugfix: Briefcase launchpads now work again.
+  - bugfix: Briefcase launchpads now don't drain power from the station.
+  RandomGamer123, some ideas from the-orange-cow & cacogen:
+  - balance: The explosive mutation for kudzu is now classified as a severe instead
+      of just above average mutation
+  - balance: Venus human trap vine throw cooldown increased to 4 seconds
+  - balance: Kudzu's maximum mutation severity in general has been increased
+  - balance: Event-spawned kudzu's maximum mutation severity has been further increased
+  - balance: Kudzu now mutates twice as often in general
+  - balance: Event-spawned kudzu now has its minimum spread rate tripled
+  - balance: 'Newly spawned kudzu in general has its starting spread rate buffed expansion:
+      New temperature stabilisation mutation for kudzu as a semi-alternative to cold
+      proof and being a beneficial kudzu mutation in general, effectively functions
+      as a space heater with the target temperature being 20C'
+  Sneeker134:
+  - rscadd: New clever mutation, allowing some mobs such as monkeys to use consoles.
+  Son-of-Space:
+  - qol: removes redundant access requirements from some airlocks
+  - bugfix: Fixed some door accesses being overridden on MetaStation
+  TemporalOroboros:
+  - bugfix: Spamming the start compression test button will not make the anomaly refinery
+      eject a live TTV.
+  - rscadd: That's what the emag is for.
+  TiviPlus:
+  - refactor: changed how whether a mech equipment is attachable is determined, please
+      report if any previously attachable equipments are bugged
+  Unit2E:
+  - spellcheck: Clarifies the explanation of the new turbine some, and fixes some
+      grammar for the parts too.
+  Watermelon914:
+  - rscadd: Adds a new 'Destroy Machinery' traitor objective that focuses on destroying
+      various important pieces of machinery around the station.
+  - rscadd: Traitor steal objectives can now have their timer skipped as soon as the
+      bug is placed onto the target item. However, doing so will give reduced rewards.
+  - rscdel: Removes the smuggling traitor objective
+  - balance: Low risk steal objectives reward slightly less TC
+  Zonespace27:
+  - balance: Off-station lathes no longer you pay a tax.
+  castawaynont:
+  - bugfix: reshuffled some wallmounts in Delta's brig.
+  iprice:
+  - bugfix: PDA/Tablets are now made from a realistic amount of iron.
+  jlsnow301:
+  - bugfix: Changes the succumb screen to work for both tgui and standard inputs.
+  san7890:
+  - rscadd: On the mapping end, mappers are now able to add a wide range of funky
+      new colors to maps. Keep an eye out, for they might just be coming to a station
+      near you sometime soon.
+  timothymtorres:
+  - balance: Printing surgery tools from the autolathe now requires silver
+  timothymtorres, TheBonded:
+  - code_imp: Improve nearsighted code to be more robust
+  - balance: Decreased the amount of credits an approved manifest grants. (was +80,
+      it's now +70)
+2022-05-10:
+  LemonInTheDark:
+  - qol: When ventcrawling, rather then jumping between pipes, your view will "glide"
+  - qol: When ventcrawling, holding two directions no longer locks you in place. Instead
+      behaving as expected
+  - qol: Ventcrawling now darkens the background while you're doing it. Hopefully
+      this looks slightly better then the fullbright of current.
+  - code_imp: Ventcrawling code has had a 99% performance increase. I am not joking.
+      Won't lag the server anymore.
+  Melbert:
+  - refactor: Refactored the Durathread golem's strangle status effect
+  Pickle-Coding:
+  - bugfix: Fixes freon fires being too efficient in oxygen deficient environments.
+  - bugfix: Fixes freon fires hotspots not working properly.
+  - rscadd: Freon can now react in any gasmixture, instead of just turfs, but can't
+      create hot ice if it's not in a turf.
+  RandomGamer123:
+  - bugfix: The tank compressor on Deltastation is now correctly oriented
+  Rhials:
+  - balance: The mindshock gland mind control has been changed from a single, six-minute
+      command to two, two-minute long commands. Also, those who are mindshielded will
+      resist the brainwashing effects and the brain-melting waves the gland passively
+      emits.
+  Ryll/Shaps:
+  - bugfix: Directional windows, firelocks, and other border objects will now properly
+      block incoming ballistic fire
+  SmArtKar, Rukofamicom:
+  - balance: Hierophant crusher trophy now creates a hierophant chaser instead of
+      a wall
+  - rscadd: Colossus now has a final attack which he can use once at 10% health.
+  - balance: Colossus now telegraphs his attacks through speech 1.5 seconds before
+      they happen - "Judgement" (Spiral or Double Spiral), "Wrath" (Ring), "Retribution"
+      (Shotgun), "Lament" (Alternating cardinal and diagonal shots) and "Perish" (Final
+      attack)
+  - code_imp: Improved colossus' variable names and added spaces where required
+  Son-of-Space:
+  - bugfix: Fixed several inconsistent or niche access requirements on IceBoxStation
+  - qol: Replaced all access requirement vars on doors with mapping helpers on IceBoxStation
+  WatlerJe, PositiveEntropy:
+  - imageadd: Resprites the Polaroid Camera and the Film Cartridge!
+  san7890:
+  - imageadd: On the mapping end, the "Tram" Area Icon Sprites have been re-standardized.
+  tralezab:
+  - rscadd: Adds Dungeon Master, The Painter and Their Canvas, and Nutimov lawsets.
+      They aren't obtainable at the moment.
+  vincentiusvin:
+  - bugfix: added the missing raw anomaly core to icebox ordnance
+  - bugfix: fix kilostation and tramstation chambers controllers not accesible from
+      the inside.

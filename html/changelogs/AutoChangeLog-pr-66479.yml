@@ -1,6 +1,0 @@
-author: "B4CKU"
-delete-after: True
-changes: 
-  - bugfix: "fixed export prices of computer parts being overwritten by a \"miscellaneous computer part\""
-  - bugfix: "fixed missing export datums for various computer parts"
-  - code_imp: "improved code of computer part exports"

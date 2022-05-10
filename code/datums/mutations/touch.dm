@@ -35,7 +35,7 @@
 		if(C.electrocute_act(15, user, 1, SHOCK_NOGLOVES | SHOCK_NOSTUN))//doesnt stun. never let this stun
 			C.dropItemToGround(C.get_active_held_item())
 			C.dropItemToGround(C.get_inactive_held_item())
-			C.add_confusion(15)
+			C.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
 			C.visible_message(span_danger("[user] electrocutes [target]!"),span_userdanger("[user] electrocutes you!"))
 			return ..()
 		else
