@@ -98,7 +98,7 @@
 	if(istype(component, /datum/component/nanouplink))
 		qdel(src)
 
-/obj/item/implanter/uplink
+/obj/item/implanter/nanouplink
 	name = "implanter (uplink)"
 	imp_type = /obj/item/implant/nanouplink
 
@@ -108,7 +108,7 @@
 
 /obj/item/implanter/nanouplink/precharged
 	name = "implanter (precharged uplink)"
-	imp_type = /obj/item/implant/uplink/precharged
+	imp_type = /obj/item/implant/nanouplink/precharged
 
 /obj/item/implant/nanouplink/precharged
 	starting_tc = TELECRYSTALS_PRELOADED_IMPLANT
