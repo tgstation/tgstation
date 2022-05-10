@@ -5181,7 +5181,6 @@
 /area/station/maintenance/department/chapel)
 "bET" = (
 /obj/machinery/light/small/directional/east,
-/obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -10302,6 +10301,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "dlr" = (
@@ -19338,6 +19338,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/stripes/line,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "ghJ" = (
@@ -40633,7 +40634,6 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "ndM" = (
-/obj/machinery/light/small/directional/east,
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat/service";
 	name = "Service Bay Turret Control";
@@ -65255,11 +65255,13 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "vdr" = (
-/obj/machinery/light/small/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "MiniSat Antechamber";
 	network = list("minisat");
 	start_active = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat/atmos";
@@ -65267,9 +65269,6 @@
 	pixel_x = -27;
 	req_access = null;
 	req_access_txt = "65"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -71720,7 +71719,6 @@
 /area/station/cargo/storage)
 "xdF" = (
 /obj/machinery/light/small/directional/west,
-/obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -72182,6 +72180,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "xlq" = (
@@ -74831,6 +74830,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/stripes/line,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/service)
 "yep" = (
