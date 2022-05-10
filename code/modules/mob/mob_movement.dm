@@ -294,17 +294,18 @@
 		return TRUE
 
 	var/atom/movable/backup = get_spacemove_backup(movement_dir, continuous_move)
-	if(backup)
-		if(!continuous_move && istype(backup) && movement_dir && !backup.anchored)
-			// last pushoff exists for one reason
-			// to ensure pushing a mob doesn't just lead to it considering us as backup, and failing
-			last_pushoff = world.time
-			if(backup.newtonian_move(turn(movement_dir, 180), instant = TRUE)) //You're pushing off something movable, so it moves
-				// We set it down here so future calls to Process_Spacemove by the same pair in the same tick don't lead to fucky
-				backup.last_pushoff = world.time
-				to_chat(src, span_info("You push off of [backup] to propel yourself."))
+	if(!backup)
+		return FALSE
+	if(continuous_move || !istype(backup) || !movement_dir || backup.anchored)
 		return TRUE
-	return FALSE
+	// last pushoff exists for one reason
+	// to ensure pushing a mob doesn't just lead to it considering us as backup, and failing
+	last_pushoff = world.time
+	if(backup.newtonian_move(turn(movement_dir, 180), instant = TRUE)) //You're pushing off something movable, so it moves
+		// We set it down here so future calls to Process_Spacemove by the same pair in the same tick don't lead to fucky
+		backup.last_pushoff = world.time
+		to_chat(src, span_info("You push off of [backup] to propel yourself."))
+	return TRUE
 
 /**
  * Finds a target near a mob that is viable for pushing off when moving.
