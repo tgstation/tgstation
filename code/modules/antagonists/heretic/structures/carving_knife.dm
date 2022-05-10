@@ -240,7 +240,7 @@
 	carbon_victim.adjustStaminaLoss(80)
 	carbon_victim.silent += 10
 	carbon_victim.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/stutter)
-	carbon_victim.add_confusion(5)
+	carbon_victim.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
 	carbon_victim.Jitter(10)
 	carbon_victim.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 	carbon_victim.blind_eyes(2)

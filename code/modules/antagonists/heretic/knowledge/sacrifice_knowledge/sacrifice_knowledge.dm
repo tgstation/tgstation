@@ -431,7 +431,7 @@
 
 	// Oh god where are we?
 	sac_target.flash_act()
-	sac_target.add_confusion(60)
+	sac_target.adjust_timed_status_effect(60 SECONDS, /datum/status_effect/confusion)
 	sac_target.Jitter(60)
 	sac_target.blur_eyes(50)
 	sac_target.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)

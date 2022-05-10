@@ -208,8 +208,8 @@
 	update_appearance()
 
 /obj/machinery/atmospherics/update_icon()
-	layer = initial(layer) + piping_layer / 1000
-	return ..()
+	. = ..()
+	update_layer()
 
 /**
  * Check if a node can actually exists by connecting to another machine
@@ -579,7 +579,7 @@
  * Update the layer in which the pipe/device is in, that way pipes have consistent layer depending on piping_layer
  */
 /obj/machinery/atmospherics/proc/update_layer()
-	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.01)
+	return
 
 /**
  * Called by the RPD.dm pre_attack(), overriden by pipes.dm

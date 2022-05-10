@@ -1,0 +1,9 @@
+author: "Zonespace27"
+delete-after: True
+changes: 
+  - rscdel: "Dead mouse, sunglasses, and briefcase bounties removed from assistants"
+  - rscadd: "Added more engineering & science bounties"
+  - rscadd: "Flamethrower, pneumatic cannon, water tank, and improvised shotgun shell bounties to assistants."
+  - balance: "Atmospheric bounties are separated from engineering bounties"
+  - balance: "Medical organ bounties have their reward reduced to 1k for a single organ, and 2k for bulk."
+  - refactor: "Refactored bounty cube selection back-end"
