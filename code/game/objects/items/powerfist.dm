@@ -2,6 +2,9 @@
 #define LOW_PRESSURE 1
 #define MID_PRESSURE 2
 #define HIGH_PRESSURE 3
+///Defines for the tank change action
+#define TANK_INSERTING 0
+#define TANK_REMOVING 1
 
 /obj/item/melee/powerfist
 	name = "power-fist"
@@ -42,14 +45,14 @@
 /obj/item/melee/powerfist/wrench_act(mob/living/user, obj/item/tool)
 	fist_pressure_setting = fist_pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : fist_pressure_setting + 1
 	tool.play_tool_sound(src)
-	balloon_alert(user, "you tweak \the [src]'s piston valve to [fist_pressure_setting]")
+	balloon_alert(user, "piston strength set to [fist_pressure_setting]")
 	return TRUE
 
 /obj/item/melee/powerfist/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!tank)
 		balloon_alert(user, "no tank present")
 		return
-	update_tank(tank, TRUE, user)
+	update_tank(tank, TANK_REMOVING, user)
 	return TRUE
 
 /obj/item/melee/powerfist/attackby(obj/item/item_to_insert, mob/user, params)
@@ -62,9 +65,9 @@
 	if(tank_to_insert.volume <= 3)
 		to_chat(user, span_warning("\The [tank_to_insert] is too small for \the [src]."))
 		return
-	update_tank(item_to_insert, FALSE, user)
+	update_tank(item_to_insert, TANK_INSERTING, user)
 
-/obj/item/melee/powerfist/proc/update_tank(obj/item/tank/internals/the_tank, removing = 0, mob/living/carbon/human/user)
+/obj/item/melee/powerfist/proc/update_tank(obj/item/tank/internals/the_tank, removing = TANK_INSERTING, mob/living/carbon/human/user)
 	if(removing)
 		if(!tank)
 			to_chat(user, span_notice("\The [src] currently has no tank attached to it."))
@@ -132,3 +135,5 @@
 #undef LOW_PRESSURE
 #undef MID_PRESSURE
 #undef HIGH_PRESSURE
+#undef TANK_INSERTING
+#undef TANK_REMOVING
