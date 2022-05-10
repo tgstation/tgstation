@@ -3,7 +3,7 @@
 	antagpanel_category = "Nanotrasen"
 	show_name_in_check_antagonists = TRUE
 	job_rank = ROLE_NT_AGENT
-	show_to_ghosts = TRUE
+	show_to_ghosts = FALSE
 	preview_outfit = /datum/outfit/ntagent
 	suicide_cry = "Syndicate i sikeyim!!!"
 
