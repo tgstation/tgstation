@@ -172,7 +172,6 @@
 /datum/supermatter_delamination/proc/start_supermatter_cascade()
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.supermatter_cascade = TRUE
-	SSair.can_fire = FALSE
 	call_explosion()
 	pick_rift_location()
 	warn_crew()
