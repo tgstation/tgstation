@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "Adds Dungeon Master, The Painter and Their Canvas, and Nutimov lawsets. They aren't obtainable at the moment."

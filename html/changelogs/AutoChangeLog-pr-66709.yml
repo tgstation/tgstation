@@ -1,0 +1,7 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - qol: "When ventcrawling, rather then jumping between pipes, your view will \"glide\""
+  - qol: "When ventcrawling, holding two directions no longer locks you in place. Instead behaving as expected"
+  - qol: "Ventcrawling now darkens the background while you're doing it. Hopefully this looks slightly better then the fullbright of current."
+  - code_imp: "Ventcrawling code has had a 99% performance increase. I am not joking. Won't lag the server anymore."
