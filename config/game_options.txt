@@ -268,23 +268,30 @@ LAW_WEIGHT custom,0
 LAW_WEIGHT asimov,32
 LAW_WEIGHT asimovpp,12
 LAW_WEIGHT paladin,12
+LAW_WEIGHT paladin5,12
 LAW_WEIGHT robocop,12
 LAW_WEIGHT corporate,12
+LAW_WEIGHT hippocratic,12
+LAW_WEIGHT maintain,12
+LAW_WEIGHT liveandletlive,12
+LAW_WEIGHT peacekeeper,12
+LAW_WEIGHT ten_commandments,12
+LAW_WEIGHT nutimov,12
 
 ## Quirky laws. Shouldn't cause too much harm
-LAW_WEIGHT hippocratic,3
-LAW_WEIGHT maintain,4
-LAW_WEIGHT drone,3
-LAW_WEIGHT liveandletlive,3
-LAW_WEIGHT peacekeeper,3
+LAW_WEIGHT drone,4
 LAW_WEIGHT reporter,4
 LAW_WEIGHT hulkamania,4
-LAW_WEIGHT ten_commandments,4
+LAW_WEIGHT tyrant,4
+LAW_WEIGHT overlord,4
+LAW_WEIGHT painter,4
+LAW_WEIGHT dungeon_master,4
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0
 LAW_WEIGHT ninja,0
 LAW_WEIGHT antimov,0
+LAW_WEIGHT balance,0
 LAW_WEIGHT thermodynamic,0
 LAW_WEIGHT buildawall,0
 
