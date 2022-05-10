@@ -1,7 +1,7 @@
 /// Triggers one of the random nearby fake item hallucinations.
 /datum/hallucination/random_nearby_fake_item
 
-/datum/hallucination/random_nearby_fake_item
+/datum/hallucination/random_nearby_fake_item/start()
 	var/picked_item = pick(subtypesof(/datum/hallucination/nearby_fake_item))
 
 	feedback_details += "Type: [picked_item]"
@@ -19,11 +19,16 @@
 	var/image/generated_image
 
 /datum/hallucination/nearby_fake_item/Destroy()
-	hallucinator.client?.images -= generated_image
-	generated_image = null
+	if(generated_image)
+		hallucinator.client?.images -= generated_image
+		generated_image = null
 	return ..()
 
 /datum/hallucination/nearby_fake_item/start()
+	// This hallucination is purely visual, so we don't need to bother for clientless mobs
+	if(!hallucinator.client)
+		return FALSE
+
 	feedback_details += "Item: [item]"
 
 	var/list/mob_pool = list()

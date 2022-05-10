@@ -1,4 +1,3 @@
-#define HAL_LINES_FILE "hallucination.json"
 
 /mob/living/proc/set_screwyhud(hud_type)
 	hal_screwyhud = hud_type
@@ -196,66 +195,6 @@
 	. = ..()
 	if(mover == target && airlock.density)
 		return FALSE
-
-/datum/hallucination/chat
-
-/datum/hallucination/chat/New(mob/living/carbon/C, forced = TRUE, force_radio = FALSE, specific_message)
-	set waitfor = FALSE
-	..()
-	var/target_name = hallucinator.first_name()
-	var/speak_messages = list("[pick_list_replacements(HAL_LINES_FILE, "suspicion")]",\
-		"[pick_list_replacements(HAL_LINES_FILE, "conversation")]",\
-		"[pick_list_replacements(HAL_LINES_FILE, "greetings")][hallucinator.first_name()]!",\
-		"[pick_list_replacements(HAL_LINES_FILE, "getout")]",\
-		"[pick_list_replacements(HAL_LINES_FILE, "weird")]",\
-		"[pick_list_replacements(HAL_LINES_FILE, "didyouhearthat")]",\
-		"[pick_list_replacements(HAL_LINES_FILE, "doubt")]",\
-		"[pick_list_replacements(HAL_LINES_FILE, "aggressive")]",\
-		"[pick_list_replacements(HAL_LINES_FILE, "help")]!!",\
-		"[pick_list_replacements(HAL_LINES_FILE, "escape")]",\
-		"I'm infected, [pick_list_replacements(HAL_LINES_FILE, "infection_advice")]!")
-
-	var/radio_messages = list("[pick_list_replacements(HAL_LINES_FILE, "people")] is [pick_list_replacements(HAL_LINES_FILE, "accusations")]!",\
-		"Help!",\
-		"[pick_list_replacements(HAL_LINES_FILE, "threat")] in [pick_list_replacements(HAL_LINES_FILE, "location")][prob(50)?"!":"!!"]",\
-		"[pick("Where's [hallucinator.first_name()]?", "Set [hallucinator.first_name()] to arrest!")]",\
-		"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!",\
-		"AI [pick("rogue", "is dead")]!!")
-
-	var/mob/living/carbon/person = null
-	var/datum/language/understood_language = hallucinator.get_random_understood_language()
-	for(var/mob/living/carbon/H in view(hallucinator))
-		if(H == hallucinator)
-			continue
-		if(!person)
-			person = H
-		else
-			if(get_dist(hallucinator,H)<get_dist(hallucinator,person))
-				person = H
-
-	// Get person to affect if radio hallucination
-	var/is_radio = !person || force_radio
-	if (is_radio)
-		var/list/humans = list()
-		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-			humans += H
-		person = pick(humans)
-
-	// Generate message
-	var/spans = list(person.speech_span)
-	var/chosen = specific_message || capitalize(pick(is_radio ? speak_messages : radio_messages))
-	chosen = replacetext(chosen, "%TARGETNAME%", target_name)
-	var/message = hallucinator.compose_message(person, understood_language, chosen, is_radio ? "[FREQ_COMMON]" : null, spans, face_name = TRUE)
-	feedback_details += "Type: [is_radio ? "Radio" : "Talk"], Source: [person.real_name], Message: [message]"
-
-	// Display message
-	if (!is_radio && !hallucinator.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
-		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
-		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, speech_overlay, list(hallucinator.client), 30)
-	if (hallucinator.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
-		hallucinator.create_chat_message(person, understood_language, chosen, spans)
-	to_chat(hallucinator, message)
-	qdel(src)
 
 /datum/hallucination/message
 
@@ -489,68 +428,6 @@
 /datum/hallucination/hudscrew/Destroy()
 	hallucinator.set_screwyhud(SCREWYHUD_NONE)
 	return ..()
-
-/datum/hallucination/items/New(mob/living/carbon/C, forced = TRUE)
-	set waitfor = FALSE
-	..()
-	//Strange items
-
-	var/obj/halitem = new
-
-	halitem = new
-	var/obj/item/l_hand = hallucinator.get_item_for_held_index(1)
-	var/obj/item/r_hand = hallucinator.get_item_for_held_index(2)
-	var/l = ui_hand_position(hallucinator.get_held_index_of_item(l_hand))
-	var/r = ui_hand_position(hallucinator.get_held_index_of_item(r_hand))
-	var/list/slots_free = list(l,r)
-	if(l_hand)
-		slots_free -= l
-	if(r_hand)
-		slots_free -= r
-	if(ishuman(hallucinator))
-		var/mob/living/carbon/human/H = target
-		if(!H.belt)
-			slots_free += ui_belt
-		if(!H.l_store)
-			slots_free += ui_storage1
-		if(!H.r_store)
-			slots_free += ui_storage2
-	if(slots_free.len)
-		halitem.screen_loc = pick(slots_free)
-		halitem.plane = ABOVE_HUD_PLANE
-		switch(rand(1,6))
-			if(1) //revolver
-				halitem.icon = 'icons/obj/guns/ballistic.dmi'
-				halitem.icon_state = "revolver"
-				halitem.name = "Revolver"
-			if(2) //c4
-				halitem.icon = 'icons/obj/grenade.dmi'
-				halitem.icon_state = "plastic-explosive0"
-				halitem.name = "C4"
-				if(prob(25))
-					halitem.icon_state = "plasticx40"
-			if(3) //sword
-				halitem.icon = 'icons/obj/transforming_energy.dmi'
-				halitem.icon_state = "e_sword"
-				halitem.name = "energy sword"
-			if(4) //stun baton
-				halitem.icon = 'icons/obj/items_and_weapons.dmi'
-				halitem.icon_state = "stunbaton"
-				halitem.name = "Stun Baton"
-			if(5) //emag
-				halitem.icon = 'icons/obj/card.dmi'
-				halitem.icon_state = "emag"
-				halitem.name = "Cryptographic Sequencer"
-			if(6) //flashbang
-				halitem.icon = 'icons/obj/grenade.dmi'
-				halitem.icon_state = "flashbang1"
-				halitem.name = "Flashbang"
-		feedback_details += "Type: [halitem.name]"
-		if(hallucinator.client)
-			hallucinator.client.screen += halitem
-		QDEL_IN(halitem, rand(150, 350))
-
-	qdel(src)
 
 /datum/hallucination/dangerflash
 
@@ -803,72 +680,6 @@
 
 #undef RAISE_FIRE_COUNT
 #undef RAISE_FIRE_TIME
-
-/datum/hallucination/shock
-	var/image/shock_image
-	var/image/electrocution_skeleton_anim
-
-/datum/hallucination/shock/New(mob/living/carbon/C, forced = TRUE)
-	set waitfor = FALSE
-	..()
-	shock_image = image(hallucinator, hallucinator, dir = hallucinator.dir)
-	shock_image.appearance_flags |= KEEP_APART
-	shock_image.color = rgb(0,0,0)
-	shock_image.override = TRUE
-	electrocution_skeleton_anim = image('icons/mob/human.dmi', hallucinator, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
-	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
-	to_chat(hallucinator, span_userdanger("You feel a powerful shock course through your body!"))
-	if(hallucinator.client)
-		hallucinator.client.images |= shock_image
-		hallucinator.client.images |= electrocution_skeleton_anim
-	addtimer(CALLBACK(src, .proc/reset_shock_animation), 40)
-	hallucinator.playsound_local(get_turf(src), SFX_SPARKS, 100, 1)
-	hallucinator.staminaloss += 50
-	hallucinator.Stun(40)
-	hallucinator.jitteriness += 1000
-	hallucinator.do_jitter_animation(hallucinator.jitteriness)
-	addtimer(CALLBACK(src, .proc/shock_drop), 20)
-
-/datum/hallucination/shock/proc/reset_shock_animation()
-	if(hallucinator.client)
-		hallucinator.client.images.Remove(shock_image)
-		hallucinator.client.images.Remove(electrocution_skeleton_anim)
-
-/datum/hallucination/shock/proc/shock_drop()
-	hallucinator.jitteriness = max(hallucinator.jitteriness - 990, 10) //Still jittery, but vastly less
-	hallucinator.Paralyze(60)
-
-/datum/hallucination/husks
-	var/image/halbody
-
-/datum/hallucination/husks/New(mob/living/carbon/C, forced = TRUE)
-	set waitfor = FALSE
-	..()
-	var/list/possible_points = list()
-	for(var/turf/open/floor/F in view(hallucinator,world.view))
-		possible_points += F
-	if(possible_points.len)
-		var/turf/open/floor/husk_point = pick(possible_points)
-		switch(rand(1,4))
-			if(1)
-				var/image/body = image('icons/mob/human.dmi',husk_point,"husk",TURF_LAYER)
-				var/matrix/M = matrix()
-				M.Turn(90)
-				body.transform = M
-				halbody = body
-			if(2,3)
-				halbody = image('icons/mob/human.dmi',husk_point,"husk",TURF_LAYER)
-			if(4)
-				halbody = image('icons/mob/alien.dmi',husk_point,"alienother",TURF_LAYER)
-
-		if(hallucinator.client)
-			hallucinator.client.images += halbody
-		QDEL_IN(src, rand(30,50)) //Only seen for a brief moment.
-
-/datum/hallucination/husks/Destroy()
-	hallucinator.client?.images -= halbody
-	QDEL_NULL(halbody)
-	return ..()
 
 //hallucination projectile code in code/modules/projectiles/projectile/special.dm
 /datum/hallucination/stray_bullet

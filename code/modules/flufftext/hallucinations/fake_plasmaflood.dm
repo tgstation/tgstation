@@ -13,8 +13,8 @@
 	var/next_expand = 0
 
 /datum/hallucination/fake_flood/start()
-	// This hallucination is entirely visual so we'll just not do it for clientless mobs
-	if(hallucinator.client)
+	// This hallucination is purely visual, so we don't need to bother for clientless mobs
+	if(!hallucinator.client)
 		return FALSE
 
 	var/turf/center
