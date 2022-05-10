@@ -605,26 +605,6 @@
 	if(update)
 		update_movespeed()
 
-/// Gets the amount of confusion on the mob.
-/mob/living/proc/get_confusion()
-	var/datum/status_effect/confusion/confusion = has_status_effect(/datum/status_effect/confusion)
-	return confusion ? confusion.strength : 0
-
-/// Set the confusion of the mob. Confusion will make the mob walk randomly.
-/mob/living/proc/set_confusion(new_confusion)
-	new_confusion = max(new_confusion, 0)
-
-	if (new_confusion)
-		var/datum/status_effect/confusion/confusion_status = has_status_effect(/datum/status_effect/confusion) || apply_status_effect(/datum/status_effect/confusion)
-		confusion_status.set_strength(new_confusion)
-	else
-		remove_status_effect(/datum/status_effect/confusion)
-
-/// Add confusion to the mob. Confusion will make the mob walk randomly.
-/// Shorthand for set_confusion(confusion + x).
-/mob/living/proc/add_confusion(confusion_to_add)
-	set_confusion(get_confusion() + confusion_to_add)
-
 /**
  * Sets the [SHOCKED_1] flag on this mob.
  */
@@ -727,6 +707,26 @@
 
 	else if(duration > 0)
 		apply_status_effect(effect, duration)
+
+/**
+ * Gets how many deciseconds are remaining in
+ * the duration of the passed status effect on this mob.
+ *
+ * If the mob is unaffected by the passed effect, returns 0.
+ */
+/mob/living/proc/get_timed_status_effect_duration(effect)
+	if(!ispath(effect, /datum/status_effect))
+		CRASH("get_timed_status_effect_duration: called with an invalid effect type. (Got: [effect])")
+
+	var/datum/status_effect/existing = has_status_effect(effect)
+	if(!existing)
+		return 0
+	// Infinite duration status effects technically are not "timed status effects"
+	// by name or nature, but support is included just in case.
+	if(existing.duration == -1)
+		return INFINITY
+
+	return existing.duration - world.time
 
 /**
  * Adjust the "drunk value" the mob is currently experiencing,
