@@ -6,12 +6,11 @@
 
 /datum/round_event/scrubber_clog
 	announceWhen = 1
-	startWhen = 15
-	var/scrubber
-	var/spawned_mob
-	var/severity = "Minor"
-	var/randomProbability = 1
-	var/reagentsAmount = 100
+	startWhen = 10
+	var/scrubber //Scrubber selected for the event
+	var/spawned_mob //What mob will spawn out of the vents
+	var/severity = "Minor" //Severity of the event (how dangerous are the spawned mobs, and it what quantity)
+	var/maximum_spawns //Cap on the number of spawned mobs that can be alive at once
 
 /datum/round_event/scrubber_clog/announce()
 	priority_announce("[severity] biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Custodial Notification")
