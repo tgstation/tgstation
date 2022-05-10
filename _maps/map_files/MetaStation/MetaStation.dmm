@@ -16177,7 +16177,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
 /obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -53242,7 +53242,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
 /obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
+	dir = 2
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
