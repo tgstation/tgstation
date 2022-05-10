@@ -438,3 +438,52 @@
   - code_imp: Improve nearsighted code to be more robust
   - balance: Decreased the amount of credits an approved manifest grants. (was +80,
       it's now +70)
+2022-05-10:
+  LemonInTheDark:
+  - qol: When ventcrawling, rather then jumping between pipes, your view will "glide"
+  - qol: When ventcrawling, holding two directions no longer locks you in place. Instead
+      behaving as expected
+  - qol: Ventcrawling now darkens the background while you're doing it. Hopefully
+      this looks slightly better then the fullbright of current.
+  - code_imp: Ventcrawling code has had a 99% performance increase. I am not joking.
+      Won't lag the server anymore.
+  Melbert:
+  - refactor: Refactored the Durathread golem's strangle status effect
+  Pickle-Coding:
+  - bugfix: Fixes freon fires being too efficient in oxygen deficient environments.
+  - bugfix: Fixes freon fires hotspots not working properly.
+  - rscadd: Freon can now react in any gasmixture, instead of just turfs, but can't
+      create hot ice if it's not in a turf.
+  RandomGamer123:
+  - bugfix: The tank compressor on Deltastation is now correctly oriented
+  Rhials:
+  - balance: The mindshock gland mind control has been changed from a single, six-minute
+      command to two, two-minute long commands. Also, those who are mindshielded will
+      resist the brainwashing effects and the brain-melting waves the gland passively
+      emits.
+  Ryll/Shaps:
+  - bugfix: Directional windows, firelocks, and other border objects will now properly
+      block incoming ballistic fire
+  SmArtKar, Rukofamicom:
+  - balance: Hierophant crusher trophy now creates a hierophant chaser instead of
+      a wall
+  - rscadd: Colossus now has a final attack which he can use once at 10% health.
+  - balance: Colossus now telegraphs his attacks through speech 1.5 seconds before
+      they happen - "Judgement" (Spiral or Double Spiral), "Wrath" (Ring), "Retribution"
+      (Shotgun), "Lament" (Alternating cardinal and diagonal shots) and "Perish" (Final
+      attack)
+  - code_imp: Improved colossus' variable names and added spaces where required
+  Son-of-Space:
+  - bugfix: Fixed several inconsistent or niche access requirements on IceBoxStation
+  - qol: Replaced all access requirement vars on doors with mapping helpers on IceBoxStation
+  WatlerJe, PositiveEntropy:
+  - imageadd: Resprites the Polaroid Camera and the Film Cartridge!
+  san7890:
+  - imageadd: On the mapping end, the "Tram" Area Icon Sprites have been re-standardized.
+  tralezab:
+  - rscadd: Adds Dungeon Master, The Painter and Their Canvas, and Nutimov lawsets.
+      They aren't obtainable at the moment.
+  vincentiusvin:
+  - bugfix: added the missing raw anomaly core to icebox ordnance
+  - bugfix: fix kilostation and tramstation chambers controllers not accesible from
+      the inside.
