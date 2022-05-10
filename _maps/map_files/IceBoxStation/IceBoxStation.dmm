@@ -16226,7 +16226,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/safe)
 "fkZ" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -33302,12 +33302,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"kHH" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/security/prison)
 "kHJ" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
@@ -34928,11 +34922,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
-"lgB" = (
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2,
-/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4,
-/turf/open/floor/plating,
-/area/station/security/prison)
 "lgD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44840,11 +44829,11 @@
 /area/station/hallway/primary/central)
 "oua" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/safe)
 "ouc" = (
 /obj/structure/table,
 /obj/item/clothing/mask/gas,
@@ -45150,7 +45139,7 @@
 "oyH" = (
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/safe)
 "ozn" = (
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
@@ -45256,7 +45245,7 @@
 "oAP" = (
 /obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/safe)
 "oBi" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
@@ -50294,7 +50283,7 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/security/prison)
+/area/station/security/prison/safe)
 "qfu" = (
 /obj/structure/closet/crate/wooden/toy,
 /obj/machinery/camera/directional/south{
@@ -53504,10 +53493,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage)
-"rke" = (
-/obj/structure/cable/multilayer/multiz,
-/turf/open/floor/plating,
-/area/station/security/prison)
 "rki" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -167594,10 +167579,10 @@ tjo
 tjo
 cek
 iDt
-mMM
-rke
+xhK
+taV
 qfs
-tVf
+vVH
 sFu
 oVY
 vHU
@@ -167851,10 +167836,10 @@ gjq
 gjq
 cek
 iDt
-mMM
-lgB
-kHH
-tVf
+xhK
+nCQ
+swf
+vVH
 xtz
 oVY
 pez
@@ -168108,10 +168093,10 @@ gjq
 gjq
 kSw
 iDt
-mMM
+xhK
 oAP
 oua
-tVf
+vVH
 kqn
 oVY
 tjC
@@ -168365,10 +168350,10 @@ gjq
 gjq
 gjq
 gjq
-mMM
+xhK
 oyH
-kHH
-tVf
+swf
+vVH
 kqn
 oVY
 rwu
@@ -168622,10 +168607,10 @@ gjq
 gjq
 gjq
 gjq
-mMM
-tVf
+xhK
+vVH
 fkV
-tVf
+vVH
 kqn
 oVY
 sMs
