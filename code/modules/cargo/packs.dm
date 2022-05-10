@@ -20,6 +20,8 @@
 	var/special_pod //If this pack comes shipped in a specific pod when launched from the express console
 	var/admin_spawned = FALSE
 	var/goody = FALSE //Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the 700 min doesn't apply
+	/// If the requisition paper is stamped by a stamp in the list it gives bonus points for crate returns
+	var/list/authorization_stamps = QM_STAMP_SET
 
 /datum/supply_pack/New()
 	id = type
@@ -65,6 +67,7 @@
 
 /datum/supply_pack/emergency
 	group = "Emergency"
+	authorization_stamps = QM_STAMP_SET
 
 /datum/supply_pack/emergency/vehicle
 	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
@@ -76,7 +79,7 @@
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
 					/obj/item/clothing/head/soft,
-					/obj/item/clothing/mask/bandana/color/skull/black)//so you can properly #cargoniabikergang
+					/obj/item/clothing/mask/bandana/skull/black)//so you can properly #cargoniabikergang
 	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
 
@@ -248,6 +251,7 @@
 					/obj/item/grenade/chem_grenade/incendiary)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
+	authorization_stamps = ILLEGAL_STAMP_SET
 
 /datum/supply_pack/emergency/weedcontrol
 	name = "Weed Control Crate"
@@ -279,6 +283,7 @@
 	group = "Security"
 	access = ACCESS_SECURITY
 	crate_type = /obj/structure/closet/crate/secure/gear
+	authorization_stamps = HOS_STAMP_SET
 
 /datum/supply_pack/security/ammo
 	name = "Ammo Crate"
@@ -464,6 +469,7 @@
 	access = ACCESS_ARMORY
 	access_view = ACCESS_ARMORY
 	crate_type = /obj/structure/closet/crate/secure/weapon
+	authorization_stamps = HOS_STAMP_SET
 
 /datum/supply_pack/security/armory/bulletarmor
 	name = "Bulletproof Armor Crate"
@@ -654,6 +660,7 @@
 /datum/supply_pack/engineering
 	group = "Engineering"
 	crate_type = /obj/structure/closet/crate/engineering
+	authorization_stamps = CE_STAMP_SET
 
 /datum/supply_pack/engineering/shieldgen
 	name = "Anti-breach Shield Projector Crate"
@@ -886,6 +893,7 @@
 	group = "Engine Construction"
 	access_view = ACCESS_ENGINE
 	crate_type = /obj/structure/closet/crate/engineering
+	authorization_stamps = CE_STAMP_SET
 
 /datum/supply_pack/engine/emitter
 	name = "Emitter Crate"
@@ -993,6 +1001,7 @@
 
 /datum/supply_pack/materials
 	group = "Canisters & Materials"
+	authorization_stamps = QM_STAMP_SET
 
 /datum/supply_pack/materials/cardboard50
 	name = "50 Cardboard Sheets"
@@ -1145,6 +1154,7 @@
 	group = "Medical"
 	access_view = ACCESS_MEDICAL
 	crate_type = /obj/structure/closet/crate/medical
+	authorization_stamps = CMO_STAMP_SET
 
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
@@ -1307,6 +1317,7 @@
 	group = "Science"
 	access_view = ACCESS_RESEARCH
 	crate_type = /obj/structure/closet/crate/science
+	authorization_stamps = RD_STAMP_SET
 
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
@@ -1388,6 +1399,17 @@
 	contains = list(/obj/item/raw_anomaly_core/pyro)
 	crate_name = "raw pyro anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_delimber_anomaly
+	name = "Raw Delimber Anomaly"
+	desc = "The raw core of a delimber anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
+	contains = list(/obj/item/raw_anomaly_core/delimber)
+	crate_name = "raw delimber anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
@@ -1483,6 +1505,7 @@
 
 /datum/supply_pack/service
 	group = "Service"
+	authorization_stamps = QM_STAMP_SET
 
 /datum/supply_pack/service/cargo_supples
 	name = "Cargo Supplies Crate"
@@ -1503,6 +1526,7 @@
 	access_view = ACCESS_JANITOR
 	contains = list(/obj/item/stack/tile/noslip/thirty)
 	crate_name = "high-traction floor tiles crate"
+	authorization_stamps = HONK_STAMP_SET
 
 /datum/supply_pack/service/janitor
 	name = "Janitorial Supplies Crate"
@@ -1679,6 +1703,7 @@
 					/obj/item/bouquet/poppy,
 					/obj/item/reagent_containers/food/drinks/bottle/champagne)
 	crate_name = "wedding crate"
+	authorization_stamps = NOTARY_STAMP_SET
 
 /// Box of 7 grey IDs.
 /datum/supply_pack/service/greyidbox
@@ -1687,6 +1712,7 @@
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/storage/box/ids)
 	crate_name = "basic id card crate"
+	authorization_stamps = HOP_STAMP_SET
 
 /// Single silver ID.
 /datum/supply_pack/service/silverid
@@ -1695,6 +1721,7 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/card/id/advanced/silver)
 	crate_name = "silver id card crate"
+	authorization_stamps = HOP_STAMP_SET
 
 /datum/supply_pack/service/emptycrate
 	name = "Empty Crate"
@@ -1740,6 +1767,7 @@
 /datum/supply_pack/organic
 	group = "Food & Hydroponics"
 	crate_type = /obj/structure/closet/crate/freezer
+	authorization_stamps = QM_STAMP_SET
 
 /datum/supply_pack/organic/hydroponics
 	access_view = ACCESS_HYDROPONICS
@@ -1852,6 +1880,7 @@
 	access = ACCESS_THEATRE
 	access_view = ACCESS_THEATRE
 	crate_type = /obj/structure/closet/crate/secure
+	authorization_stamps = HONK_STAMP_SET
 
 /datum/supply_pack/organic/hydroponics
 	name = "Hydroponics Crate"
@@ -2038,6 +2067,7 @@
 /datum/supply_pack/critter
 	group = "Livestock"
 	crate_type = /obj/structure/closet/crate/critter
+	authorization_stamps = NOTARY_STAMP_SET
 
 /datum/supply_pack/critter/parrot
 	name = "Bird Crate"
@@ -2195,6 +2225,7 @@
 
 /datum/supply_pack/costumes_toys
 	group = "Costumes & Toys"
+	authorization_stamps = HONK_STAMP_SET
 
 /datum/supply_pack/costumes_toys/randomised
 	name = "Collectable Hats Crate"
@@ -2251,6 +2282,7 @@
 					/obj/item/clothing/neck/necklace/dope,
 					/obj/item/vending_refill/donksoft)
 	crate_name = "crate"
+	authorization_stamps = ILLEGAL_STAMP_SET
 
 /datum/supply_pack/costumes_toys/foamforce
 	name = "Foam Force Crate"
@@ -2309,6 +2341,7 @@
 					/obj/item/lipstick/random)
 	crate_name = "formalwear crate"
 	crate_type = /obj/structure/closet/crate/wooden
+	authorization_stamps = NOTARY_STAMP_SET
 
 /datum/supply_pack/costumes_toys/clownpin
 	name = "Hilarious Firing Pin Crate"
@@ -2473,6 +2506,7 @@
 
 /datum/supply_pack/misc
 	group = "Miscellaneous Supplies"
+	authorization_stamps = QM_STAMP_SET
 
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
@@ -2488,6 +2522,7 @@
 					/obj/item/toy/crayon/rainbow)
 	crate_name = "art supply crate"
 	crate_type = /obj/structure/closet/crate/wooden
+	authorization_stamps = HONK_STAMP_SET
 
 /datum/supply_pack/misc
 	group = "Miscellaneous Supplies"
@@ -2558,6 +2593,7 @@
 	contains = list(/obj/vehicle/ridden/bicycle)
 	crate_name = "bicycle crate"
 	crate_type = /obj/structure/closet/crate/large
+	authorization_stamps = ILLEGAL_STAMP_SET
 
 /datum/supply_pack/misc/bigband
 	name = "Big Band Instrument Collection"
@@ -2574,6 +2610,7 @@
 					/obj/item/instrument/harmonica,
 					/obj/structure/musician/piano/unanchored)
 	crate_type = /obj/structure/closet/crate/wooden
+	authorization_stamps = HONK_STAMP_SET
 
 /datum/supply_pack/misc/book_crate
 	name = "Book Crate"
@@ -2588,6 +2625,7 @@
 					/obj/item/book/random,
 					/obj/item/book/random)
 	crate_type = /obj/structure/closet/crate/wooden
+	authorization_stamps = NOTARY_STAMP_SET
 
 /datum/supply_pack/misc/commandkeys
 	name = "Command Encryption Key Crate"
@@ -2649,6 +2687,7 @@
 	contains = list(/obj/item/storage/box/fountainpens)
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "calligraphy crate"
+	authorization_stamps = CAP_STAMP_SET
 
 /datum/supply_pack/misc/wrapping_paper
 	name = "Festive Wrapping Paper Crate"
@@ -2657,7 +2696,6 @@
 	contains = list(/obj/item/stack/wrapping_paper)
 	crate_type = /obj/structure/closet/crate/wooden
 	crate_name = "festive wrapping paper crate"
-
 
 /datum/supply_pack/misc/funeral
 	name = "Funeral Supply crate"
@@ -2669,6 +2707,7 @@
 					/obj/item/food/grown/poppy/geranium)
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
+	authorization_stamps = NOTARY_STAMP_SET
 
 /datum/supply_pack/misc/empty
 	name = "Empty Supplypod"
@@ -2694,6 +2733,7 @@
 					/obj/item/clothing/under/misc/burial,
 				)
 	crate_name = "religious supplies crate"
+	authorization_stamps = NOTARY_STAMP_SET
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
@@ -2740,6 +2780,7 @@
 		/obj/item/stock_parts/subspace/ansible
 	)
 	crate_name = "crate"
+	authorization_stamps = ILLEGAL_STAMP_SET
 
 ///Special supply crate that generates random syndicate gear up to a determined TC value
 /datum/supply_pack/misc/syndicate
@@ -2749,6 +2790,7 @@
 	contains = list()
 	crate_name = "syndicate gear crate"
 	crate_type = /obj/structure/closet/crate
+	authorization_stamps = ILLEGAL_STAMP_SET
 	var/crate_value = 30 ///Total TC worth of contained uplink items
 	var/uplink_flag = UPLINK_TRAITORS
 
@@ -2775,6 +2817,7 @@
 
 /datum/supply_pack/vending
 	group = "Vending Restocks"
+	authorization_stamps = QM_STAMP_SET
 
 /datum/supply_pack/vending/bartending
 	name = "Booze-o-mat and Coffee Supply Crate"
@@ -2970,6 +3013,7 @@
 /datum/supply_pack/exploration
 	special = TRUE
 	group = "Outsourced"
+	authorization_stamps = QM_STAMP_SET
 
 /datum/supply_pack/exploration/scrapyard
 	name = "Scrapyard Crate"

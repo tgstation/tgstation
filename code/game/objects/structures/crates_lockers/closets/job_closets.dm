@@ -125,7 +125,7 @@
 		/obj/item/clothing/shoes/jackboots = 3,
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
-		/obj/item/clothing/mask/bandana/color/red = 2)
+		/obj/item/clothing/mask/bandana/red = 2)
 	generate_items_inside(items_inside,src)
 	return
 
@@ -212,9 +212,9 @@
 		/obj/item/clothing/head/soft/black = 2)
 	generate_items_inside(items_inside,src)
 	if(prob(40))
-		new /obj/item/clothing/mask/bandana/color/skull/black(src)
+		new /obj/item/clothing/mask/bandana/skull/black(src)
 	if(prob(40))
-		new /obj/item/clothing/mask/bandana/color/skull/black(src)
+		new /obj/item/clothing/mask/bandana/skull/black(src)
 	return
 
 
@@ -299,7 +299,7 @@
 		/obj/item/clothing/suit/apron = 2,
 		/obj/item/clothing/suit/apron/overalls = 2,
 		/obj/item/clothing/under/rank/civilian/hydroponics = 3,
-		/obj/item/clothing/mask/bandana/color/striped/botany = 3)
+		/obj/item/clothing/mask/bandana/striped/botany = 3)
 	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/wardrobe/curator

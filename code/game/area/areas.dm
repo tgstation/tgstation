@@ -5,7 +5,7 @@
  */
 /area
 	name = "Space"
-	icon = 'icons/turf/areas.dmi'
+	icon = 'icons/area/areas_misc.dmi'
 	icon_state = "unknown"
 	layer = AREA_LAYER
 	//Keeping this on the default plane, GAME_PLANE, will make area overlays fail to render on FLOOR_PLANE.
@@ -27,6 +27,8 @@
 	var/list/firealarms
 	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
+	///List of all lights in our area
+	var/list/lights = list()
 	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing. Fire alarms and fire locks will set and clear alarms.
 	var/datum/alarm_handler/alarm_manager
 
@@ -266,38 +268,22 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (area_flags & NO_ALERTS)
 		return
 	//Trigger alarm effect
-	set_fire_alarm_effect()
+	set_fire_effect(TRUE)
 	//Lockdown airlocks
 	for(var/obj/machinery/door/door in src)
 		close_and_lock_door(door)
 
-/**
- * Trigger the fire alarm visual affects in an area
- *
- * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
- */
-/area/proc/set_fire_alarm_effect()
-	if(fire)
-		return
-	fire = TRUE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/obj/machinery/light/L in src)
-		L.update()
-	for(var/obj/machinery/firealarm/firepanel in firealarms)
-		firepanel.set_status()
 
 /**
- * unset the fire alarm visual affects in an area
+ * Set the fire alarm visual affects in an area
  *
- * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
+ * Allows interested parties (lights and fire alarms) to react
  */
-/area/proc/unset_fire_alarm_effects()
-	fire = FALSE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/obj/machinery/light/L in src)
-		L.update()
-	for(var/obj/machinery/firealarm/firepanel in firealarms)
-		firepanel.set_status()
+/area/proc/set_fire_effect(new_fire)
+	if(new_fire == fire)
+		return
+	fire = new_fire
+	SEND_SIGNAL(src, COMSIG_AREA_FIRE_CHANGED, fire)
 
 /**
  * Update the icon state of the area

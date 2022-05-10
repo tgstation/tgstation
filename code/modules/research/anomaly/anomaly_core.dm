@@ -62,6 +62,12 @@
 	icon_state = "vortex_core"
 	anomaly_type = /obj/effect/anomaly/bhole
 
+/obj/item/assembly/signaler/anomaly/delimber
+	name = "\improper delimber anomaly core"
+	desc = "The neutralized core of a delimber anomaly. It's squirming, as if moving. It'd probably be valuable for research."
+	icon_state = "delimber_core"
+	anomaly_type = /obj/effect/anomaly/delimber
+
 /obj/item/assembly/signaler/anomaly/hallucination
 	name = "\improper hallucination anomaly core"
 	desc = "The neutralized core of a hallucination anomaly. It seems to be moving, but it's probably your imagination. It'd probably be valuable for research."
