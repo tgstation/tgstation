@@ -193,7 +193,7 @@ at the cost of risking a vicious bite.**/
 	visible_message(span_warning("You start feeling nauseous..."))
 	for(var/mob/living/viewing_mob in viewers(7, src))
 		viewing_mob.blur_eyes(10)
-		viewing_mob.add_confusion(10)
+		viewing_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
 	addtimer(CALLBACK(src, .proc/pants_stagethree), ALTAR_TIME)
 
 /// Continues the creation, making every mob nearby dizzy

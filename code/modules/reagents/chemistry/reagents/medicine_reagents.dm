@@ -76,7 +76,7 @@
 	M.SetUnconscious(0)
 	M.SetParalyzed(0)
 	M.SetImmobilized(0)
-	M.set_confusion(0)
+	M.remove_status_effect(/datum/status_effect/confusion)
 	M.SetSleeping(0)
 
 	M.silent = FALSE
@@ -994,7 +994,7 @@
 	M.remove_status_effect(/datum/status_effect/dizziness)
 	M.set_drowsyness(0)
 	M.remove_status_effect(/datum/status_effect/speech/slurring/drunk)
-	M.set_confusion(0)
+	M.remove_status_effect(/datum/status_effect/confusion)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	M.adjustToxLoss(-0.2 * REM * delta_time, 0)
 	M.adjust_drunk_effect(-10 * REM * delta_time * normalise_creation_purity())
@@ -1387,7 +1387,7 @@
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.jitteriness = max(M.jitteriness - (6 * REM * delta_time), 0)
 	M.adjust_timed_status_effect(-12 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.set_confusion(max(M.get_confusion() - (6 * REM * delta_time), 0))
+	M.adjust_timed_status_effect(-6 SECONDS * REM * delta_time, /datum/status_effect/confusion)
 	M.disgust = max(M.disgust - (6 * REM * delta_time), 0)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	if(mood != null && mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
