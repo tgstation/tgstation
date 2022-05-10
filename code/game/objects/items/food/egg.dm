@@ -90,9 +90,8 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
-	if(!istype(target, /obj/machinery/griddle)){
+	if(!istype(target, /obj/machinery/griddle))
 		return SECONDARY_ATTACK_CALL_NORMAL
-	}
 
 	var/atom/broken_egg = new /obj/item/food/rawegg(target.loc)
 	broken_egg.pixel_x = pixel_x
