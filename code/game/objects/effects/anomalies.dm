@@ -499,7 +499,7 @@
 		var/obj/item/organ/new_organ = new picked_organ
 		var/obj/item/organ/mob_organ = nearby.getorganslot(new_organ.slot)
 		if(mob_organ) //Doesn't always exists
-			mob_brain.organ_flags &= ~ORGAN_VITAL
+			mob_organ.organ_flags &= ~ORGAN_VITAL
 		new_organ.Insert(nearby, TRUE, FALSE)
 		nearby.update_body(TRUE)
 		balloon_alert(nearby, "something has changed about you")
