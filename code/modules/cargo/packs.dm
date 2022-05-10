@@ -76,7 +76,7 @@
 					/obj/item/clothing/suit/jacket/leather/overcoat,
 					/obj/item/clothing/gloves/color/black,
 					/obj/item/clothing/head/soft,
-					/obj/item/clothing/mask/bandana/color/skull/black)//so you can properly #cargoniabikergang
+					/obj/item/clothing/mask/bandana/skull/black)//so you can properly #cargoniabikergang
 	crate_name = "biker kit"
 	crate_type = /obj/structure/closet/crate/large
 
@@ -1388,6 +1388,17 @@
 	contains = list(/obj/item/raw_anomaly_core/pyro)
 	crate_name = "raw pyro anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
+
+/datum/supply_pack/science/raw_delimber_anomaly
+	name = "Raw Delimber Anomaly"
+	desc = "The raw core of a delimber anomaly, ready to be implosion-compressed into a powerful artifact."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ORDNANCE
+	access_view = ACCESS_ORDNANCE
+	contains = list(/obj/item/raw_anomaly_core/delimber)
+	crate_name = "raw delimber anomaly"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"

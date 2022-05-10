@@ -78,7 +78,7 @@
 		counter,
 		owner,
 	)
-	alt_appearance.add_hud_to(owner)
+	alt_appearance.show_to(owner)
 
 	counter_appearance = WEAKREF(alt_appearance)
 
@@ -103,7 +103,7 @@
 			number,
 			owner,
 		)
-		number_alt_appearance.add_hud_to(owner)
+		number_alt_appearance.show_to(owner)
 
 		numbers += WEAKREF(number_alt_appearance)
 
@@ -115,7 +115,7 @@
 	numbers = list()
 
 	var/datum/atom_hud/overlay = counter_appearance?.resolve()
-	overlay.remove_hud_from(owner)
+	overlay.hide_from(owner)
 	QDEL_NULL(overlay)
 
 /obj/item/circuit_component/counter_overlay/Destroy()

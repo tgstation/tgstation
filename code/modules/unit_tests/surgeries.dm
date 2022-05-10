@@ -87,7 +87,7 @@
 	var/datum/surgery/surgery = new /datum/surgery/healing/brute/basic
 
 	if (!surgery.can_start(user, patient))
-		Fail("Can't start basic tend wounds!")
+		TEST_FAIL("Can't start basic tend wounds!")
 
 	qdel(surgery)
 

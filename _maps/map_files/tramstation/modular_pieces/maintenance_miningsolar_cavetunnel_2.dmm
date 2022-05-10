@@ -21,11 +21,11 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "o" = (
 /obj/structure/rack,
 /turf/open/floor/iron/smooth,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "q" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12"
@@ -35,11 +35,11 @@
 /area/template_noop)
 "r" = (
 /turf/closed/wall,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "u" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/smooth,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "v" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/two,
@@ -60,7 +60,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "E" = (
 /obj/structure/barricade/wooden,
 /turf/open/misc/asteroid/airless,
@@ -90,10 +90,10 @@
 /area/mine/explored)
 "R" = (
 /turf/open/floor/plating,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "S" = (
 /turf/open/floor/iron/smooth,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "T" = (
 /obj/item/stack/ore/iron{
 	pixel_x = -9;
