@@ -1,21 +1,25 @@
 /datum/hallucination/death
 
 /datum/hallucination/death/Destroy()
-	if(!QDELETED(hallucinator))
-		hallucinator.set_screwyhud(SCREWYHUD_NONE)
+	if(!QDELETED(hallucinator) && iscarbon(hallucinator))
+		var/mob/living/carbon/carbon_hallucinator = hallucinator
+		carbon_hallucinator.set_screwyhud(SCREWYHUD_NONE)
+
 	return ..()
 
 /datum/hallucination/death/start()
-	hallucinator.set_screwyhud(SCREWYHUD_DEAD)
 	hallucinator.Paralyze(30 SECONDS)
-	hallucinator.silent += 10
+	if(iscarbon(hallucinator))
+		var/mob/living/carbon/carbon_hallucinator = hallucinator
+		carbon_hallucinator.set_screwyhud(SCREWYHUD_DEAD)
+		carbon_hallucinator.silent += 10
 	to_chat(hallucinator, span_deadsay("<b>[hallucinator.real_name]</b> has died at <b>[get_area_name(hallucinator)]</b>."))
 
 	var/delay = 0
 
 	if(prob(50))
 		var/mob/who_is_salting
-		if(ength(GLOB.dead_player_list))
+		if(length(GLOB.dead_player_list))
 			who_is_salting = pick(GLOB.dead_mob_list)
 
 		if(who_is_salting)
@@ -54,9 +58,11 @@
 
 /datum/hallucination/death/proc/wake_up()
 	if(!QDELETED(hallucinator))
-		hallucinator.set_screwyhud(SCREWYHUD_NONE)
+		if(iscarbon(hallucinator))
+			var/mob/living/carbon/carbon_hallucinator = hallucinator
+			carbon_hallucinator.set_screwyhud(SCREWYHUD_DEAD)
+			carbon_hallucinator.silent += 10
 		hallucinator.SetParalyzed(0 SECONDS)
-		hallucinator.silent = 0
 
-	if(!QDELTED(src))
+	if(!QDELETED(src))
 		qdel(src)

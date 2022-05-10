@@ -41,6 +41,8 @@
 	ignore += typesof(/obj/item/food/grown)
 	//Nothing to hallucinate if there's nothing to hallicinate
 	ignore += typesof(/obj/effect/hallucination)
+	ignore += typesof(/obj/projectile/hallucination)
+	ignore += typesof(/obj/item/hallucinated)
 	//These want fried food to take on the shape of, we can't pass that in
 	ignore += typesof(/obj/item/food/deepfryholder)
 	//Can't pass in a thing to glow

@@ -165,9 +165,11 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	trigger = "see\\s*the\\s*truth|hallucinate"
 
 /datum/voice_of_god_command/hallucinate/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
+	var/picked_delusion = pick(subtypesof(/datum/hallucination/delusion) - /datum/hallucination/delusion/custom)
+
 	for(var/mob/living/target in listeners)
 		target.cause_hallucination(
-			/datum/hallucination/delusion,
+			picked_delusion,
 			/* source = */"voice of god",
 			/* duration = */15 SECONDS * power_multiplier,
 			/* skip_nearby = */FALSE,

@@ -75,7 +75,7 @@
 				/datum/hallucination/death,
 				/datum/hallucination/delusion,
 				/datum/hallucination/oh_yeah,
-			)
+			) + subtypesof(/datum/hallucination/delusion)
 
 			// Same hallucination played for all
 			var/picked_hallucination = pick(possible_hallucinations)

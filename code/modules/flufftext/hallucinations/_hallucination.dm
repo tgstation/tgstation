@@ -83,6 +83,23 @@
 	/// The hallucination that created us.
 	var/datum/hallucination/parent
 
+	/// The created image, what we look like.
+	var/image/shown_image
+	/// The icon file the image uses. If null, we have no image
+	var/image_icon
+	/// The icon state the image uses
+	var/image_state
+	/// The x pixel offset of the image
+	var/image_pixel_x = 0
+	/// The y pixel offset of the image
+	var/image_pixel_y = 0
+	/// Optional, the color of the image
+	var/image_color
+	/// The layer of the image
+	var/image_layer = MOB_LAYER
+	/// The plane of the image
+	var/image_plane = GAME_PLANE
+
 /obj/effect/hallucination/Initialize(mapload, datum/hallucination/parent)
 	. = ..()
 	if(!parent)
@@ -92,9 +109,15 @@
 	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/parent_deleting)
 	src.parent = parent
 
+	if(image_icon)
+		show_image()
+
 /obj/effect/hallucination/Destroy(force)
 	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
 	parent = null
+
+	if(shown_image)
+		parent.hallucinator.client?.images -= shown_image
 
 	return ..()
 
@@ -110,34 +133,8 @@
 /obj/effect/hallucination/singularity_act()
 	return
 
-/// A subtype of hallucination effects that take on a simple image.
-/obj/effect/hallucination/simple
-	/// The created image, what we look like
-	var/image/shown_image
-	/// The icon file the image uses
-	var/image_icon = 'icons/mob/alien.dmi'
-	/// The icon state the image uses
-	var/image_state = "alienh_pounce"
-	/// The x pixel offset of the image
-	var/image_pixel_x = 0
-	/// The y pixel offset of the image
-	var/image_pixel_y = 0
-	/// Optional, the color of the image
-	var/image_color
-	/// The layer of the image
-	var/image_layer = MOB_LAYER
-	/// The plane of the image
-	var/image_plane = GAME_PLANE
-
-/obj/effect/hallucination/simple/Initialize(mapload, datum/hallucination/parent)
-	. = ..()
-	if(!parent)
-		return
-
-	show_image()
-
 /// Generates the image which we take on.
-/obj/effect/hallucination/simple/proc/generate_image()
+/obj/effect/hallucination/proc/generate_image()
 	var/image/created = image(image_icon, src, image_state, image_layer, dir = src.dir)
 	created.plane = image_plane
 	created.pixel_x = image_pixel_x
@@ -147,26 +144,22 @@
 	return created
 
 /// Shows the image we generated to the person hallucinating (the hallucinator var of our parent).
-/obj/effect/hallucination/simple/proc/show_image()
+/obj/effect/hallucination/proc/show_image()
+	if(!image_icon)
+		return
 	if(shown_image)
 		parent.hallucinator.client?.images -= shown_image
 	shown_image = generate_image()
 	parent.hallucinator.client?.images |= shown_image
 
 // Whenever we perform icon updates, regenerate our image
-/obj/effect/hallucination/simple/update_icon(updates = ALL)
+/obj/effect/hallucination/update_icon(updates = ALL)
 	. = ..()
 	show_image()
 
 // If we move for some reason, regenerate our image
-/obj/effect/hallucination/simple/Moved(atom/OldLoc, Dir)
+/obj/effect/hallucination/Moved(atom/OldLoc, Dir)
 	. = ..()
 	if(!loc)
 		return
 	show_image()
-
-/obj/effect/hallucination/simple/Destroy()
-	if(shown_image)
-		parent.hallucinator.client?.images -= shown_image
-
-	return ..()

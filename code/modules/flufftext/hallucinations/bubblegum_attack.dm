@@ -53,14 +53,14 @@
 	if(haunt_them)
 		to_chat(hallucinator, span_bold(span_colossus(pick(hallucination_lines))))
 
-	var/obj/effect/hallucination/simple/bubblegum/fake_bubbles = new(wall_source, src)
+	var/obj/effect/hallucination/bubblegum/fake_bubbles = new(wall_source, src)
 	addtimer(CALLBACK(src, .proc/charge_loop, fake_bubbles, target_landing_turf), 1 SECONDS)
 	return TRUE
 
 /**
  * Recursive function that operates as a "fake charge" of our effect towards the target turf.
  */
-/datum/hallucination/oh_yeah/proc/charge_loop(obj/effect/hallucination/simple/bubblegum/fake_bubbles, turf/landing_turf)
+/datum/hallucination/oh_yeah/proc/charge_loop(obj/effect/hallucination/bubblegum/fake_bubbles, turf/landing_turf)
 	if(QDELETED(src))
 		return
 
@@ -97,7 +97,7 @@
 		addtimer(CALLBACK(src, .proc/charge_loop, fake_bubbles, landing_turf), 0.2 SECONDS)
 
 /// Fake bubblegum hallucination effect for the oh yeah hallucination
-/obj/effect/hallucination/simple/bubblegum
+/obj/effect/hallucination/bubblegum
 	name = "Bubblegum"
 	image_icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	image_state = "bubblegum"

@@ -5,17 +5,16 @@
 	var/list/turf/starting_locations = list()
 	for(var/turf/open/open_out_of_view in view(world.view + 1, hallucinator) - view(world.view, hallucinator))
 		starting_locations += open_out_of_view
-	if(!length(startlocs))
+	if(!length(starting_locations))
 		return FALSE
 
 	var/turf/start = pick(starting_locations)
 	var/fake_type = pick(subtypesof(/obj/projectile/hallucination))
 
-	feedback_details += "Type: [proj_type], Source: ([start.x], [start.y], [start.z])"
+	feedback_details += "Type: [fake_type], Source: ([start.x], [start.y], [start.z])"
 
 	var/obj/projectile/hallucination/fake_projectile = new fake_type(start, src)
 
-	fake_projectile.hal_target = hallucinator
 	fake_projectile.preparePixelProjectile(hallucinator, start)
 	fake_projectile.fire()
 
@@ -61,11 +60,12 @@
 
 
 /obj/projectile/hallucination/Destroy()
+	if(!QDELETED(parent.hallucinator))
+		parent.hallucinator.client?.images -= fake_bullet
+	fake_bullet = null
+
 	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
 	parent = null
-
-	hal_target?.client?.images -= fake_bullet
-	fake_bullet = null
 	return ..()
 
 /// Signal proc for [COMSIG_PARENT_QDELETING], if our associated hallucination deletes, we need to clean up
@@ -79,8 +79,8 @@
 	if(hal_fire_sound)
 		parent.hallucinator.playsound_local(get_turf(src), hal_fire_sound, 60, TRUE)
 
-	fake_icon = image('icons/obj/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
-	parent.hallucinator.client?.images += fake_icon
+	fake_bullet = image('icons/obj/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
+	parent.hallucinator.client?.images += fake_bullet
 
 /obj/projectile/hallucination/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
@@ -89,7 +89,7 @@
 
 	if(ismob(target))
 		if(hal_hitsound)
-			hal_target.playsound_local(A, hal_hitsound, 100, 1)
+			parent.hallucinator.playsound_local(A, hal_hitsound, 100, 1)
 		on_mob_hit(target)
 
 	else
@@ -104,11 +104,11 @@
 /// Called when a mob is hit by the fake projectile
 /obj/projectile/hallucination/proc/on_mob_hit(mob/living/hit_mob)
 	if(hit_mob == parent.hallucinator)
-		to_chat(hal_target, span_userdanger("[hit_mob] is hit by \a [src] in the chest!"))
+		to_chat(parent.hallucinator, span_userdanger("[hit_mob] is hit by \a [src] in the chest!"))
 		apply_effect_to_hallucinator(parent.hallucinator)
 
 	else if(hit_mob in view(parent.hallucinator))
-		to_chat(hal_target, span_danger("[hit_mob] is hit by \a [src] in the chest!"))
+		to_chat(parent.hallucinator, span_danger("[hit_mob] is hit by \a [src] in the chest!"))
 
 	if(damage_type == BRUTE)
 		var/splatter_dir = dir
@@ -228,8 +228,15 @@
 /obj/projectile/hallucination/taser/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.Paralyze(100)
 	afflicted.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
-	if(afflicted.dna?.check_mutation(/datum/mutation/human/hulk))
-		afflicted.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk (hallucinating)")
+	if(HAS_TRAIT(afflicted, TRAIT_HULK))
+		afflicted.say(pick(
+			";RAAAAAAAARGH!",
+			";HNNNNNNNNNGGGGGGH!",
+			";GWAAAAAAAARRRHHH!",
+			"NNNNNNNNGGGGGGGGHH!",
+			";AAAAAAARRRGH!"),
+			forced = "hulk (hallucinating)",
+		)
 	else if((afflicted.status_flags & CANKNOCKDOWN) && !HAS_TRAIT(afflicted, TRAIT_STUNIMMUNE))
 		addtimer(CALLBACK(afflicted, /mob/living/carbon.proc/do_jitter_animation, 20), 0.5 SECONDS)
 
@@ -274,7 +281,7 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/change/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.cause_hallucination(/datum/hallucination/self_delusion, source = "fake [name]", /* wabbajack = */FALSE)
+	afflicted.cause_hallucination(/datum/hallucination/self_delusion, "fake [name]", /* wabbajack = */FALSE)
 
 /obj/projectile/hallucination/death
 	name = "bolt of death"

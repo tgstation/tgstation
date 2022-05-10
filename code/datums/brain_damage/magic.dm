@@ -73,7 +73,7 @@
 	scan_desc = "extra-sensory paranoia"
 	gain_text = "<span class='warning'>You feel like something wants to kill you...</span>"
 	lose_text = "<span class='notice'>You no longer feel eyes on your back.</span>"
-	var/obj/effect/hallucination/simple/stalker_phantom/stalker
+	var/obj/effect/hallucination/stalker_phantom/stalker // melbert todo, this needs reworking
 	var/close_stalker = FALSE //For heartbeat
 
 /datum/brain_trauma/magic/stalker/on_gain()
@@ -115,7 +115,7 @@
 			close_stalker = FALSE
 	..()
 
-/obj/effect/hallucination/simple/stalker_phantom
+/obj/effect/hallucination/stalker_phantom
 	name = "???"
 	desc = "It's coming closer..."
 	image_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'

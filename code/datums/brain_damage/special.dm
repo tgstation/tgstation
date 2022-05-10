@@ -87,29 +87,30 @@
 	if(!second_turf)
 		return
 
-	var/obj/effect/hallucination/simple/bluespace_stream/first = new(first_turf, owner)
-	var/obj/effect/hallucination/simple/bluespace_stream/second = new(second_turf, owner)
+	// Melbert todo, this needs reworking as well
+	var/obj/effect/hallucination/bluespace_stream/first = new(first_turf, owner)
+	var/obj/effect/hallucination/bluespace_stream/second = new(second_turf, owner)
 
 	first.linked_to = second
 	second.linked_to = first
 	first.seer = owner
 	second.seer = owner
 
-/obj/effect/hallucination/simple/bluespace_stream
+/obj/effect/hallucination/bluespace_stream
 	name = "bluespace stream"
 	desc = "You see a hidden pathway through bluespace..."
 	image_icon = 'icons/effects/effects.dmi'
 	image_state = "bluestream"
 	image_layer = ABOVE_MOB_LAYER
 	image_plane = GAME_PLANE_UPPER
-	var/obj/effect/hallucination/simple/bluespace_stream/linked_to
+	var/obj/effect/hallucination/bluespace_stream/linked_to
 	var/mob/living/carbon/seer
 
-/obj/effect/hallucination/simple/bluespace_stream/Initialize(mapload)
+/obj/effect/hallucination/bluespace_stream/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 300)
 
-/obj/effect/hallucination/simple/bluespace_stream/Destroy()
+/obj/effect/hallucination/bluespace_stream/Destroy()
 	if(!QDELETED(linked_to))
 		qdel(linked_to)
 	linked_to = null
@@ -117,7 +118,7 @@
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user, list/modifiers)
+/obj/effect/hallucination/bluespace_stream/attack_hand(mob/user, list/modifiers)
 	if(user != seer || !linked_to)
 		return
 	var/slip_in_message = pick("slides sideways in an odd way, and disappears", "jumps into an unseen dimension",\
@@ -141,7 +142,7 @@
 
 		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...and find your way to the other side."))
 
-/obj/effect/hallucination/simple/bluespace_stream/attack_tk(mob/user)
+/obj/effect/hallucination/bluespace_stream/attack_tk(mob/user)
 	to_chat(user, span_warning("\The [src] actively rejects your mind, and the bluespace energies surrounding it disrupt your telekinesis!"))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -353,7 +354,7 @@
 	gain_text = "<span class='warning'>Justice is coming for you.</span>"
 	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
 	random_gain = FALSE
-	var/obj/effect/hallucination/simple/securitron/beepsky
+	var/obj/effect/hallucination/securitron/beepsky
 
 /datum/brain_trauma/special/beepsky/on_gain()
 	create_securitron()
@@ -391,24 +392,24 @@
 		owner.playsound_local(beepsky, 'sound/voice/beepsky/criminal.ogg', 40)
 	..()
 
-/obj/effect/hallucination/simple/securitron
+/obj/effect/hallucination/securitron
 	name = "Securitron"
 	desc = "The LAW is coming."
 	image_icon = 'icons/mob/aibots.dmi'
 	image_state = "secbot-c"
-	var/victim
+	var/victim // melbert todo, this as well
 
-/obj/effect/hallucination/simple/securitron/Initialize(mapload)
+/obj/effect/hallucination/securitron/Initialize(mapload)
 	. = ..()
 	name = pick("Officer Beepsky", "Officer Johnson", "Officer Pingsky")
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/effect/hallucination/simple/securitron/process()
+/obj/effect/hallucination/securitron/process()
 	if(prob(60))
 		forceMove(get_step_towards(src, victim))
 		if(prob(5))
 			to_chat(victim, span_name("[name]</span> exclaims, \"<span class='robotic'>Level 10 infraction alert!\""))
 
-/obj/effect/hallucination/simple/securitron/Destroy()
+/obj/effect/hallucination/securitron/Destroy()
 	STOP_PROCESSING(SSfastprocess,src)
 	return ..()
