@@ -19,6 +19,15 @@
 	illegal_tech = FALSE
 	purchasable_from = ~UPLINK_NANO
 
+/datum/uplink_item/device_tools/security_encryption
+	name = "Security Radio Sniffer"
+	desc = "This radio sniffer is used to listen to the security radio channel. Just put it inside your headset. \
+			However Nanotrasen would not recommend talking on the channel."
+	item = /obj/item/encryptionkey/headset_sec
+	cost = 1
+	surplus = 50
+	purchasable_from = UPLINK_NANO
+
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Duffel Bag"
 	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
@@ -93,6 +102,15 @@
 			After hacking a certain number of airlocks, the device will require some time to recharge."
 	item = /obj/item/card/emag/doorjack
 	cost = 3
+
+/datum/uplink_item/device_tools/detective_scanner
+	name = "Nano Scanner"
+	desc = "The finest tool a crime finder can have. Scan for fingerprints, fibers and DNA from blood. Keep in mind \
+			you need a security records or medical record console to check the prints."
+	item = /obj/item/detective_scanner
+	cost = 3
+	surplus = 90
+	purchasable_from = UPLINK_NANO
 
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
@@ -197,7 +215,6 @@
 	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	cost = 5
 	surplus = 90
-
 
 // Medium progression cost
 
