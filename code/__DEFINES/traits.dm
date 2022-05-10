@@ -180,7 +180,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TESLA_SHOCKIMMUNE "tesla_shock_immunity"
 #define TRAIT_STABLEHEART "stable_heart"
 /// Prevents you from leaving your corpse
-#define TRAIT_CORPSELOCKED "corpselocked"
+#define TRAIT_ETH_CORPSELOCKED "corpselocked"
 #define TRAIT_STABLELIVER "stable_liver"
 #define TRAIT_VATGROWN "vatgrown"
 #define TRAIT_RESISTHEAT "resist_heat"
