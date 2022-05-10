@@ -14,7 +14,7 @@
 	var/reagentsAmount = 100
 
 /datum/round_event/scrubber_clog/announce()
-	priority_announce("[severity] biological blockage detected in [scrubber.name] ventilation. ", "Custodial Notification") //change to find scrubber loc
+	priority_announce("[severity] biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Custodial Notification")
 
 /datum/round_event/scrubber_clog/setup()
 	scrubber = get_scrubber()
@@ -22,7 +22,7 @@
 		CRASH("Unable to find suitable scrubber.")
 	spawned_mob = get_mob()
 
-/datum/round_event/scrubber_clog/get_scrubber()
+/datum/round_event/scrubber_clog/proc/get_scrubber()
 	var/list/scrubber_list
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
 		var/turf/scrubber_turf = get_turf(scrubber)
@@ -30,14 +30,13 @@
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
-/datum/round_event/scrubber_clog/get_mob() //picks from mob list of some sorts, use switches based on severity for which mob list to pick from
+/datum/round_event/scrubber_clog/proc/get_mob() //picks from mob list of some sorts, use switches based on severity for which mob list to pick from
 
 
 
 
 
 /datum/round_event/scrubber_clog/start() //unedited andy
-
 
 
 
