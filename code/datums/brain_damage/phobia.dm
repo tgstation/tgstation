@@ -124,7 +124,7 @@
 			owner.blind_eyes(10)
 		if(4)
 			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness)
-			owner.add_confusion(10)
+			owner.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
 			owner.Jitter(10)
 			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter)
 

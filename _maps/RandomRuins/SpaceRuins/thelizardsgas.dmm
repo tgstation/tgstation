@@ -220,7 +220,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "yU" = (
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	desc = "An incredibly bad idea.";
 	pixel_y = 32
 	},
@@ -390,7 +390,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/thelizardsgas)
 "LT" = (
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /obj/machinery/suit_storage_unit/standard_unit,

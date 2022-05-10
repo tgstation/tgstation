@@ -466,7 +466,7 @@
 		H.Stun(20)
 		H.blur_eyes(20)
 		eyes?.applyOrganDamage(5)
-		H.add_confusion(3)
+		H.adjust_timed_status_effect(3 SECONDS, /datum/status_effect/confusion)
 	for(var/mob/living/silicon/S in view(2,owner))
 		to_chat(S, span_userdanger("Your sensors are disabled by a shower of blood!"))
 		S.Paralyze(60)

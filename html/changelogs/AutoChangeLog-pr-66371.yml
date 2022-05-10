@@ -1,0 +1,4 @@
+author: "timothymtorres, TheBonded"
+delete-after: True
+changes: 
+  - bugfix: "Fix books to only give mood bonus when read the first time"
