@@ -17,10 +17,14 @@
 /datum/chatmessage
 	/// list of images generated for the message sent to each hearing client.
 	/// associative list of the form: list(message image = client using that image)
-	var/list/image/messages = list()
-	/// The clients who heard this message.
+	var/list/image/messages
+	/// The clients who heard this message. only populated with clients that have been assigned an image
 	/// associative list of the form: list(client who hears this message = chat message image that client uses)
-	var/list/client/hearers = list()
+	var/list/client/hearers
+	/// all clients that have been assigned to this chatmessage datum from create_chat_message().
+	/// needed to ensure that the same client cant be a hearer to a message twice.
+	/// associative list of the form: list(client = TRUE)
+	var/list/client/all_hearers
 	/// The location in which the message is appearing
 	var/atom/message_loc
 	/// the full edited message the speaker created, might be edited by subsequent hearers
@@ -29,7 +33,7 @@
 	var/datum/language/message_language
 	/// Contains the approximate amount of lines for height decay for each message image.
 	/// associative list of the form: list(message image = approximate lines for that image)
-	var/list/approx_lines = list()
+	var/list/approx_lines
 
 	/// The current index used for adjusting the layer of each sequential chat message such that recent messages will overlay older ones
 	var/static/current_z_idx = 0
@@ -44,7 +48,7 @@
 	///how long the main stage of this message lasts (maptext fully visible) by default.
 	var/lifespan = 0
 	///associative list of the form: list(message image = world.time that image is set to fade out)
-	var/list/fade_times_by_image = list()
+	var/list/fade_times_by_image
 	///what world.time this message datum was created.
 	var/creation_time = 0
 
@@ -72,6 +76,7 @@
 		current_z_idx = 0
 
 	message_loc = isturf(target) ? target : get_atom_on_turf(target)
+	RegisterSignal(message_loc, COMSIG_PARENT_QDELETING, .proc/end_of_life)
 
 	creation_time = world.time
 	src.lifespan = lifespan
@@ -91,6 +96,12 @@
 
 	SSrunechat.messages_by_creation_string[creation_parameters] = src
 
+	messages = list()
+	hearers = list()
+	approx_lines = list()
+	fade_times_by_image = list()
+	all_hearers = list()
+
 /datum/chatmessage/Destroy()
 	for(var/client/hearer in hearers)
 		LAZYREMOVEASSOC(hearer.seen_messages, message_loc, src)
@@ -105,11 +116,13 @@
 
 	messages = null
 	hearers = null
+	all_hearers = null
 	approx_lines = null
 
 	return ..()
 
 /datum/chatmessage/proc/end_of_life()
+	SIGNAL_HANDLER
 	qdel(src)
 
 /datum/chatmessage/proc/on_hearer_qdel(datum/source)
@@ -124,6 +137,7 @@
 		messages -= seen_image
 
 	hearers -= hearer
+	all_hearers -= hearer
 
 /**
  * generates the spanned text used for the final image and creates a callback in SSrunechat to call generate_image() next tick.
@@ -144,6 +158,11 @@
 	var/static/list/language_icons
 
 	var/client/owned_by = owner.client
+	if(!owned_by)
+		return FALSE
+
+	LAZYSET(all_hearers, owned_by, TRUE)
+	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_hearer_qdel)
 
 	// Remove spans in the message from things like the recorder
 	var/static/regex/span_check = new(@"<\/?span[^>]*>", "gi")
@@ -203,10 +222,10 @@
 	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
 	var/measurement = owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH)//resolving it to a var so the macro doesnt call MeasureText() twice
 
-	//fun fact: MeasureText() works by waiting for the client to send back the measurements for the text. meaning it works like a verb
-	//procs like this are called at the last section of hte tick before it ends, meaning if the other portions used up most of it
+	//fun fact: MeasureText() works by waiting for the client to send back the measurements for the text. meaning it works like a verb.
+	//procs like this are called at the last section of hte tick before it ends, meaning if the other portions used up most of it,
 	//then everything after this point is likely to overtime. queuing the message completion if the server is overloaded fixes this
-	if(!owned_by || QDELETED(src))
+	if(!owned_by || QDELETED(src) || !all_hearers[owned_by])
 		return
 
 	var/mheight = WXH_TO_HEIGHT(measurement)
@@ -227,10 +246,8 @@
  */
 /datum/chatmessage/proc/generate_image(atom/target, mob/owner, complete_text, mheight)
 	var/client/owned_by = owner.client
-	if(!owned_by || QDELETED(target) || QDELING(src))//possible now since generate_image() is called via a queue
+	if(!owned_by || QDELETED(target) || QDELETED(src))//possible now since generate_image() is called via a queue
 		return
-
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_hearer_qdel)
 
 	var/our_approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
@@ -246,6 +263,9 @@
 				continue
 
 			var/image/other_message_image = preexisting_message.hearers[owned_by]
+
+			if(!other_message_image)
+				continue //no image yet because the message hasnt been able to create an image.
 
 			combined_height += preexisting_message.approx_lines[other_message_image]
 
@@ -373,8 +393,8 @@
 
 	message_to_use = SSrunechat.messages_by_creation_string["[text_to_use]-[REF(speaker)]-[message_language]-[list2params(spans)]-[CHAT_MESSAGE_LIFESPAN]-[world.time]"]
 	//if an already existing message already has processed us as a hearer then we have to assume that this is from a new, identical message sent in the same tick
-	//as the already existing one. thats the only time this can happen. if this is the case then null out message_to_use and create a new one
-	if(!message_to_use || message_to_use && (client in message_to_use.hearers))
+	//as the already existing one. thats the only time this can happen. if this is the case then create a new chatmessage
+	if(!message_to_use || (message_to_use && message_to_use.all_hearers?[client]))
 		message_to_use = new /datum/chatmessage(text_to_use, speaker, message_language, spans)
 
 	message_to_use.prepare_text(text_to_use, speaker, src, message_language, spans)
