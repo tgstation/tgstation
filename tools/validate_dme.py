@@ -48,4 +48,5 @@ sorted_lines = sorted(lines, key = functools.cmp_to_key(compare_lines))
 for (index, line) in enumerate(lines):
     if sorted_lines[index] != line:
         print(f"The include at line {index + 1} is out of order ({line})")
+        print(f"::error file=tgstation.dme,line={index+1},title=DME Validator::The include at line {index + 1} is out of order ({line})")
         sys.exit(1)
