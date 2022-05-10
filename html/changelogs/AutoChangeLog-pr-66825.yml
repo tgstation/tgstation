@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - bugfix: "thermomachine no longer is under every pipe but is now above them"
+  - qol: "pipes and atmos components have better visual clarity and consistency between them"
