@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "improved the speed of cascade wall spreading, made a better description for them"
+  - qol: "I didn't update the changelog in the initial PR so i'll add this here: Antags can unlock a final objective (like romerol) that instructs them to cause a cascade. The objective will provide a destabilizing crystal that once applied to the SM will instantly cause it to start delaminating and sets the SM for a cascade. Once it delaminates it ensures the start of the cascade. NOTE that if the SM recovers you won't be able to do it again."
