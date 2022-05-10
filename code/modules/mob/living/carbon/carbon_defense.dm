@@ -387,6 +387,7 @@
 	//Jitter and other fluff.
 	do_jitter_animation(300)
 	adjust_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
+	adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/stutter)
 	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 2 SECONDS)
 	return shock_damage
 

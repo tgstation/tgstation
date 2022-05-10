@@ -1191,8 +1191,8 @@
 		M.reagents.remove_reagent(R.type, 5 * REM * delta_time)
 	M.adjust_drowsyness(2 * REM * delta_time)
 
-	// melbert todo check > 6 seconds with getter
-	M.adjust_timed_status_effect(-6 SECONDS * REM * delta_time, /datum/status_effect/jitter)
+	if(M.get_timed_status_effect(/datum/status_effect/jitter) >= 6 SECONDS)
+		M.adjust_timed_status_effect(-6 SECONDS * REM * delta_time, /datum/status_effect/jitter)
 
 	if (M.hallucination >= 5)
 		M.hallucination -= 5 * REM * delta_time
