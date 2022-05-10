@@ -41245,8 +41245,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "npi" = (
 /obj/machinery/door/airlock/external{
-	name = "Service Hall Exit";
-	req_one_access_txt = "73"
+	name = "Service Hall Exit"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "service-hall-external"
@@ -49904,8 +49903,7 @@
 /area/station/cargo/storage)
 "pZd" = (
 /obj/machinery/door/airlock/external{
-	name = "Service Hall Exit";
-	req_one_access_txt = "73"
+	name = "Service Hall Exit"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "service-hall-external"
