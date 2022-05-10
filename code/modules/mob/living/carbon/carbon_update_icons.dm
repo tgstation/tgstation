@@ -314,13 +314,12 @@
 
 	if(right_leg)
 		var/old_right_leg_key = icon_render_keys?[right_leg.body_zone]
-		var/left_leg_mask_key = left_leg?.generate_mask_key().Join() // We generate a new mask key, to see if it changed.
-		right_leg.left_leg_mask_key = left_leg_mask_key
+		right_leg.left_leg_mask_key = left_leg?.generate_mask_key().Join() // We generate a new mask key, to see if it changed.
 		// We regenerate the left_leg_mask in case that it doesn't exist yet.
-		if(left_leg_mask_key && !right_leg.left_leg_mask_cache[left_leg_mask_key] && left_leg_icons)
-			right_leg.left_leg_mask_cache[left_leg_mask_key] = generate_left_leg_mask(left_leg_icons[1], left_leg_mask_key)
+		if(right_leg.left_leg_mask_key && !right_leg.left_leg_mask_cache[right_leg.left_leg_mask_key] && left_leg_icons)
+			right_leg.left_leg_mask_cache[right_leg.left_leg_mask_key] = generate_left_leg_mask(left_leg_icons[1], right_leg.left_leg_mask_key)
 		// We generate a new icon_render_key, which also takes into account the left_leg_mask_key so we cache the masked versions of the limbs too.
-		icon_render_keys[right_leg.body_zone] = right_leg.is_husked ? right_leg.generate_husk_key().Join() : right_leg.generate_icon_key().Join()
+		icon_render_keys[right_leg.body_zone] = right_leg.is_husked ? right_leg.generate_husk_key().Join("-") : right_leg.generate_icon_key().Join()
 
 		if(icon_render_keys[right_leg.body_zone] != old_right_leg_key)
 			limb_icon_cache[icon_render_keys[right_leg.body_zone]] = right_leg.get_limb_icon()
@@ -371,13 +370,13 @@
 	RETURN_TYPE(/list)
 	. = list()
 	if(is_dimorphic)
-		. += "[limb_gender]-"
+		. += "[limb_gender]"
 	. += "[limb_id]"
-	. += "-[body_zone]"
+	. += "[body_zone]"
 	for(var/obj/item/organ/external/external_organ as anything in external_organs)
 		if(!external_organ.can_draw_on_bodypart(owner))
 			continue
-		. += "-[external_organ.generate_icon_cache()]"
+		. += "[external_organ.generate_icon_cache()]"
 
 	return .
 
