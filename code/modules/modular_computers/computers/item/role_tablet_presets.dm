@@ -306,7 +306,7 @@
 
 /obj/item/modular_computer/tablet/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != saved_identification))
-		var/obj/item/computer_hardware/hard_drive/portable/virus/clown/cart = all_components[MC_HDD_JOB]
+		var/obj/item/computer_hardware/hard_drive/portable/virus/clown/cart = all_components[MC_SDD]
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 			playsound(src,'sound/machines/ping.ogg',30,TRUE)
