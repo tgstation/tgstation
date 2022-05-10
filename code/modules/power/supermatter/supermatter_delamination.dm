@@ -172,7 +172,6 @@
 /datum/supermatter_delamination/proc/start_supermatter_cascade()
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.supermatter_cascade = TRUE
-	SSair.can_fire = FALSE
 	call_explosion()
 	pick_rift_location()
 	warn_crew()
@@ -200,13 +199,14 @@
 		We can only reasonably conclude that a supermatter cascade has been initiated on or near your station. \
 		Evacuation is no longer possible by conventional means; however, a bluespace rift of unkown origin has appeared near the [get_area_name(cascade_rift)]. \
 		All personnel are hereby advised to enter the rift using all means available. Retrieval of survivors will be conducted upon recovery of necessary facilities. \
-		Five minutes before total loss of the station and nearby space. Good l\[\[###!!!-")
+		One minute before total loss of the station and nearby space. Good l\[\[###!!!-")
+
 
 	addtimer(CALLBACK(src, .proc/delta), 10 SECONDS)
 
-	addtimer(CALLBACK(src, .proc/last_message), 4 MINUTES)
+	addtimer(CALLBACK(src, .proc/last_message), 50 SECONDS)
 
-	addtimer(CALLBACK(src, .proc/the_end), 5 MINUTES)
+	addtimer(CALLBACK(src, .proc/the_end), 1 MINUTES)
 
 /**
  * Increases the security level to the highest level

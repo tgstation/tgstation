@@ -1032,7 +1032,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "di" = (
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -1065,7 +1065,7 @@
 /area/shuttle/escape)
 "dl" = (
 /obj/structure/table,
-/obj/structure/sign/warning/enginesafety{
+/obj/structure/sign/warning/engine_safety{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/yellow,
