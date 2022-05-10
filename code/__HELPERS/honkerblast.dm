@@ -41,7 +41,7 @@
 
 	for(var/mob/living/carbon/victim in lightly_honked)
 		victim.Knockdown(20)
-		victim.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+		victim.set_timed_status_effect(200 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 		var/obj/item/organ/ears/ears = victim.getorganslot(ORGAN_SLOT_EARS)
 		ears?.adjustEarDamage(4, 5)
 		to_chat(victim, "<font color='red' size='2'>HONK</font>")
