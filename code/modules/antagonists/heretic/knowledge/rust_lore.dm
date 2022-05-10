@@ -76,7 +76,7 @@
 
 /datum/heretic_knowledge/rust_regen
 	name = "Leeching Walk"
-	desc = "Grants you passive healing and stun resistance while standing over rust."
+	desc = "Grants you passive healing and resistance to batons while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/rust_mark,
@@ -97,23 +97,23 @@
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].
  *
- * Checks if we should have stun resistance on the new turf.
+ * Checks if we should have baton resistance on the new turf.
  */
 /datum/heretic_knowledge/rust_regen/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
 	var/turf/mover_turf = get_turf(source)
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
-		ADD_TRAIT(source, TRAIT_STUNRESISTANCE, type)
+		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
 		return
 
-	REMOVE_TRAIT(source, TRAIT_STUNRESISTANCE, type)
+	REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
  *
  * Gradually heals the heretic ([source]) on rust,
- * including stuns and stamina damage.
+ * including baton knockdown and stamina damage.
  */
 /datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, delta_time, times_fired)
 	SIGNAL_HANDLER
@@ -198,10 +198,10 @@
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE
 	/// A typepath to an area that we must finish the ritual in.
-	var/area/ritual_location = /area/command/bridge
+	var/area/ritual_location = /area/station/command/bridge
 	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
-		TRAIT_STUNIMMUNE,
+		TRAIT_BATON_RESISTANCE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_PUSHIMMUNE,
 		TRAIT_SHOCKIMMUNE,

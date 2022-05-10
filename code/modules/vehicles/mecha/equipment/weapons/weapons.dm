@@ -3,6 +3,7 @@
 	range = MECHA_RANGED
 	equipment_slot = MECHA_WEAPON
 	destroy_sound = 'sound/mecha/weapdestr.ogg'
+	mech_flags = EXOSUIT_MODULE_COMBAT
 	var/projectile
 	var/fire_sound
 	var/projectiles_per_shot = 1
@@ -11,7 +12,6 @@
 	var/projectile_delay = 0
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect //the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
-	mech_flags = EXOSUIT_MODULE_COMBAT
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(!..())

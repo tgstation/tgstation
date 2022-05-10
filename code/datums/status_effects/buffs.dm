@@ -237,15 +237,18 @@
 
 	//Makes the user passive, it's in their oath not to harm!
 	ADD_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	H.add_hud_to(owner)
+	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	med_hud.show_to(owner)
 	return ..()
 
 /datum/status_effect/hippocratic_oath/on_remove()
 	QDEL_NULL(aura_healing)
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, HIPPOCRATIC_OATH_TRAIT)
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	H.remove_hud_from(owner)
+	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	med_hud.hide_from(owner)
+
+/datum/status_effect/hippocratic_oath/get_examine_text()
+	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
 
 /datum/status_effect/hippocratic_oath/get_examine_text()
 	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
@@ -320,8 +323,7 @@
 	if(owner.can_hear())
 		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
 		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/jitter)
-		owner.set_confusion(max(0, owner.get_confusion() - 1))
-		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/jitter)
+		owner.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/confusion)
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 
 /atom/movable/screen/alert/status_effect/regenerative_core
@@ -348,34 +350,6 @@
 
 /datum/status_effect/regenerative_core/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
-
-/datum/status_effect/antimagic
-	id = "antimagic"
-	status_type = STATUS_EFFECT_REFRESH
-	duration = 10 SECONDS
-
-/datum/status_effect/antimagic/on_creation(mob/living/new_owner, duration = 10 SECONDS)
-	src.duration = duration
-	return ..()
-
-/datum/status_effect/antimagic/refresh(effect, duration = 10 SECONDS)
-	if(duration == -1)
-		return
-	duration = world.time + duration
-
-/datum/status_effect/antimagic/on_apply()
-	owner.visible_message(span_notice("[owner] is coated with a dull aura!"))
-	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-	//glowing wings overlay
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
-	return ..()
-
-/datum/status_effect/antimagic/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
-	owner.visible_message(span_warning("[owner]'s dull aura fades away..."))
-
-/datum/status_effect/antimagic/get_examine_text()
-	return span_notice("[owner.p_they(TRUE)] seem[owner.p_s()] to be covered in a dull, grey aura.")
 
 /datum/status_effect/crucible_soul
 	id = "Blessing of Crucible Soul"

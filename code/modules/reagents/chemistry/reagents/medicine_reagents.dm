@@ -76,7 +76,7 @@
 	M.SetUnconscious(0)
 	M.SetParalyzed(0)
 	M.SetImmobilized(0)
-	M.set_confusion(0)
+	M.remove_status_effect(/datum/status_effect/confusion)
 	M.SetSleeping(0)
 
 	M.silent = FALSE
@@ -528,7 +528,7 @@
 
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
-	description = "Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing."
+	description = "Increases resistance to batons and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -543,11 +543,11 @@
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
-	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	ADD_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 
 /datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
-	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	REMOVE_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -994,7 +994,7 @@
 	M.remove_status_effect(/datum/status_effect/dizziness)
 	M.set_drowsyness(0)
 	M.remove_status_effect(/datum/status_effect/speech/slurring/drunk)
-	M.set_confusion(0)
+	M.remove_status_effect(/datum/status_effect/confusion)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
 	M.adjustToxLoss(-0.2 * REM * delta_time, 0)
 	M.adjust_drunk_effect(-10 * REM * delta_time * normalise_creation_purity())
@@ -1003,7 +1003,7 @@
 
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"
-	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
+	description = "Increases resistance to batons and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
 	color = "#78008C"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
@@ -1014,11 +1014,11 @@
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
-	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	ADD_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
-	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	REMOVE_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1221,13 +1221,13 @@
 /datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	ADD_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
 	..()
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	REMOVE_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	L.remove_status_effect(/datum/status_effect/dizziness)
 	L.remove_status_effect(/datum/status_effect/jitter)
@@ -1389,7 +1389,7 @@
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_timed_status_effect(-12 SECONDS * REM * delta_time, /datum/status_effect/jitter)
 	M.adjust_timed_status_effect(-12 SECONDS * REM * delta_time, /datum/status_effect/dizziness)
-	M.set_confusion(max(M.get_confusion() - (6 * REM * delta_time), 0))
+	M.adjust_timed_status_effect(-6 SECONDS * REM * delta_time, /datum/status_effect/confusion)
 	M.disgust = max(M.disgust - (6 * REM * delta_time), 0)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	if(mood != null && mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
@@ -1504,10 +1504,22 @@
 
 /datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/M)
 	ADD_TRAIT(M, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/blood_boy = M
+		blood_boy.physiology?.bleed_mod *= passive_bleed_modifier
+
 	return ..()
 
 /datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_COAGULATING, /datum/reagent/medicine/coagulant)
+
+	if(was_working)
+		to_chat(M, span_warning("The medicine thickening your blood loses its effect!"))
+	if(ishuman(M))
+		var/mob/living/carbon/human/blood_boy = M
+		blood_boy.physiology?.bleed_mod /= passive_bleed_modifier
+
 	return ..()
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1527,7 +1539,7 @@
 		if(!was_working)
 			to_chat(M, span_green("You can feel your flowing blood start thickening!"))
 			was_working = TRUE
-		bloodiest_wound.blood_flow = max(0, bloodiest_wound.blood_flow - (clot_rate * REM * delta_time))
+		bloodiest_wound.adjust_blood_flow(-clot_rate * REM * delta_time)
 	else if(was_working)
 		was_working = FALSE
 
@@ -1551,22 +1563,6 @@
 		else
 			var/obj/item/organ/heart/our_heart = M.getorganslot(ORGAN_SLOT_HEART)
 			our_heart.applyOrganDamage(1)
-
-/datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/M)
-	if(!ishuman(M))
-		return
-
-	var/mob/living/carbon/human/blood_boy = M
-	blood_boy.physiology?.bleed_mod *= passive_bleed_modifier
-
-/datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/M)
-	if(was_working)
-		to_chat(M, span_warning("The medicine thickening your blood loses its effect!"))
-	if(!ishuman(M))
-		return
-
-	var/mob/living/carbon/human/blood_boy = M
-	blood_boy.physiology?.bleed_mod /= passive_bleed_modifier
 
 // i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
 /datum/reagent/medicine/coagulant/banana_peel

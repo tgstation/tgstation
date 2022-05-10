@@ -205,9 +205,9 @@
 				msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
 
 
-	if(fire_stacks > 0)
+	if(has_status_effect(/datum/status_effect/fire_handler/fire_stacks))
 		msg += "[t_He] [t_is] covered in something flammable.\n"
-	if(fire_stacks < 0)
+	if(has_status_effect(/datum/status_effect/fire_handler/wet_stacks))
 		msg += "[t_He] look[p_s()] a little soaked.\n"
 
 
@@ -244,9 +244,8 @@
 		var/list/obj/item/bodypart/bleeding_limbs = list()
 		var/list/obj/item/bodypart/grasped_limbs = list()
 
-		for(var/i in bodyparts)
-			var/obj/item/bodypart/body_part = i
-			if(body_part.get_part_bleed_rate())
+		for(var/obj/item/bodypart/body_part as anything in bodyparts)
+			if(body_part.get_modified_bleed_rate())
 				bleeding_limbs += body_part
 			if(body_part.grasped_by)
 				grasped_limbs += body_part
@@ -409,20 +408,19 @@
  * Shows any and all examine text related to any status effects the user has.
  */
 /mob/living/proc/get_status_effect_examinations()
-	RETURN_TYPE(/list)
-	var/list/data = list()
+	var/list/examine_list = list()
 
 	for(var/datum/status_effect/effect as anything in status_effects)
 		var/effect_text = effect.get_examine_text()
 		if(!effect_text)
 			continue
 
-		data += effect_text
+		examine_list += effect_text
 
-	if(!length(data))
+	if(!length(examine_list))
 		return
 
-	return data.Join("\n")
+	return examine_list.Join("\n")
 
 /mob/living/carbon/human/examine_more(mob/user)
 	. = ..()

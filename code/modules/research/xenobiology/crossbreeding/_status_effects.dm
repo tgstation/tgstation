@@ -442,11 +442,29 @@
 	var/obj/item/slimecross/stabilized/linked_extract
 	var/colour = "null"
 
+/datum/status_effect/stabilized/proc/location_check()
+	if(linked_extract.loc == owner)
+		return TRUE
+	if(linked_extract.loc.loc == owner)
+		return TRUE
+	for(var/atom/storage_loc as anything in get_storage_locs(linked_extract))
+		if(storage_loc == owner)
+			return TRUE
+		if(storage_loc.loc == owner)
+			return TRUE
+		for(var/atom/storage_loc_storage_loc as anything in get_storage_locs(storage_loc))
+			if(storage_loc_storage_loc == owner)
+				return TRUE
+	for(var/atom/loc_storage_loc as anything in get_storage_locs(linked_extract.loc))
+		if(loc_storage_loc == owner)
+			return TRUE
+	return FALSE
+
 /datum/status_effect/stabilized/tick()
 	if(!linked_extract || !linked_extract.loc) //Sanity checking
 		qdel(src)
 		return
-	if(linked_extract && linked_extract.loc != owner && linked_extract.loc.loc != owner)
+	if(linked_extract && !location_check())
 		linked_extract.linked_effect = null
 		if(!QDELETED(linked_extract))
 			linked_extract.owner = null
@@ -614,7 +632,7 @@
 
 /datum/status_effect/stabilized/darkblue/tick()
 	if(owner.fire_stacks > 0 && prob(80))
-		owner.adjust_fire_stacks(-1)
+		owner.adjust_wet_stacks(1)
 		if(owner.fire_stacks <= 0)
 			to_chat(owner, span_notice("[linked_extract] coats you in a watery goo, extinguishing the flames."))
 	var/obj/O = owner.get_active_held_item()

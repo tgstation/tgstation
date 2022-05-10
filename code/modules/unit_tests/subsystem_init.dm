@@ -4,4 +4,4 @@
 		if(ss.flags & SS_NO_INIT)
 			continue
 		if(!ss.initialized)
-			Fail("[ss]([ss.type]) is a subsystem meant to initialize but doesn't get set as initialized.")
+			TEST_FAIL("[ss]([ss.type]) is a subsystem meant to initialize but doesn't get set as initialized.")

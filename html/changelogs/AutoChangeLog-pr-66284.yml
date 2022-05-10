@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Heretic's Madness Mask applies stamina damage to people when it should"

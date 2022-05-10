@@ -104,6 +104,8 @@
 
 	/// Default body temperature
 	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
+	/// Our body temperatue as of the last process, prevents pointless work when handling alerts
+	var/old_bodytemperature = 0
 	/// Drowsyness level of the mob
 	var/drowsyness = 0//Carbon
 	/// Hunger level of the mob
@@ -145,8 +147,6 @@
 	var/datum/component/storage/active_storage
 	/// Active hud
 	var/datum/hud/hud_used = null
-	/// I have no idea tbh
-	var/research_scanner = FALSE
 
 	/// Is the mob throw intent on
 	var/throw_mode = THROW_MODE_DISABLED
@@ -218,8 +218,6 @@
 	var/list/screens = list()
 	var/list/client_colours = list()
 	var/hud_type = /datum/hud
-
-	var/datum/h_sandbox/sandbox = null
 
 	var/datum/focus //What receives our keyboard inputs. src by default
 

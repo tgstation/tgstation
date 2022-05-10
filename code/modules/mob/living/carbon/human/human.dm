@@ -766,6 +766,12 @@
 	heat_exposure_stacks = 0
 	return ..()
 
+/mob/living/carbon/human/is_nearsighted()
+	var/obj/item/clothing/glasses/eyewear = glasses
+	if(istype(eyewear) && eyewear.vision_correction)
+		return FALSE
+	return ..()
+
 /mob/living/carbon/human/is_literate()
 	return TRUE
 

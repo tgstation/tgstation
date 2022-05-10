@@ -251,44 +251,6 @@
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
 
-//GOLEM GANG
-
-//OTHER DEBUFFS
-/datum/status_effect/strandling //get it, strand as in durathread strand + strangling = strandling hahahahahahahahahahhahahaha i want to die
-	id = "strandling"
-	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /atom/movable/screen/alert/status_effect/strandling
-
-/datum/status_effect/strandling/on_apply()
-	ADD_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
-	return ..()
-
-/datum/status_effect/strandling/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_MAGIC_CHOKE, STATUS_EFFECT_TRAIT)
-	return ..()
-
-/datum/status_effect/strandling/get_examine_text()
-	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] to be being choked by some durathread strands. You may be able to <b>cut</b> them off.")
-
-/atom/movable/screen/alert/status_effect/strandling
-	name = "Choking strand"
-	desc = "A magical strand of Durathread is wrapped around your neck, preventing you from breathing! Click this icon to remove the strand."
-	icon_state = "his_grace"
-	alerttooltipstyle = "hisgrace"
-
-/atom/movable/screen/alert/status_effect/strandling/Click(location, control, params)
-	. = ..()
-	if(!.)
-		return
-
-	to_chat(owner, span_notice("You attempt to remove the durathread strand from around your neck."))
-	if(do_after(owner, 3.5 SECONDS, owner))
-		if(isliving(owner))
-			var/mob/living/living_owner = owner
-			to_chat(living_owner, span_notice("You succesfuly remove the durathread strand."))
-			living_owner.remove_status_effect(/datum/status_effect/strandling)
-
-//OTHER DEBUFFS
 /datum/status_effect/pacify
 	id = "pacify"
 	status_type = STATUS_EFFECT_REPLACE
@@ -515,21 +477,57 @@
 
 /datum/status_effect/eldritch/blade/on_apply()
 	. = ..()
+	RegisterSignal(owner, COMSIG_MOVABLE_PRE_THROW, .proc/on_pre_throw)
 	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTED, .proc/on_teleport)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /datum/status_effect/eldritch/blade/on_remove()
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_TELEPORTED, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(owner, list(
+		COMSIG_MOVABLE_PRE_THROW,
+		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_MOVED,
+	))
+
 	return ..()
 
-/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area
+/// Checks if the movement from moving_from to going_to leaves our [var/locked_to] area. Returns TRUE if so.
+/datum/status_effect/eldritch/blade/proc/is_escaping_locked_area(atom/moving_from, atom/going_to)
+	if(!locked_to)
+		return FALSE
+
+	// If moving_from isn't in our locked area, it means they've
+	// somehow completely escaped, so we'll opt not to act on them.
+	if(get_area(moving_from) != locked_to)
+		return FALSE
+
+	// If going_to is in our locked area,
+	// they're just moving within the area like normal.
+	if(get_area(going_to) == locked_to)
+		return FALSE
+
+	return TRUE
+
+/// Signal proc for [COMSIG_MOVABLE_PRE_THROW] that prevents people from escaping our locked area via throw.
+/datum/status_effect/eldritch/blade/proc/on_pre_throw(mob/living/source, list/throw_args)
+	SIGNAL_HANDLER
+
+	var/atom/throw_dest = throw_args[1]
+	if(!is_escaping_locked_area(source, throw_dest))
+		return
+
+	var/mob/thrower = throw_args[4]
+	if(istype(thrower))
+		to_chat(thrower, span_hypnophrase("An otherworldly force prevents you from throwing [source] out of [get_area_name(locked_to)]!"))
+
+	to_chat(source, span_hypnophrase("An otherworldly force prevents you from being thrown out of [get_area_name(locked_to)]!"))
+
+	return COMPONENT_CANCEL_THROW
+
+/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area.
 /datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
 	SIGNAL_HANDLER
 
-	if(!locked_to)
-		return
-
-	if(get_area(destination) == locked_to)
+	if(!is_escaping_locked_area(source, destination))
 		return
 
 	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
@@ -541,32 +539,20 @@
 /datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
 
-	if(!locked_to)
+	// Let's not mess with heretics dragging a potential victim.
+	if(ismob(source.pulledby) && IS_HERETIC(source.pulledby))
 		return
 
-	if(get_area(source) == locked_to)
+	// If the movement's forced, just let it happen regardless.
+	if(forced || !is_escaping_locked_area(old_loc, source))
 		return
 
 	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
 
+	var/turf/further_behind_old_loc = get_edge_target_turf(old_loc, REVERSE_DIR(movement_dir))
+
 	source.Stun(1 SECONDS)
-	source.throw_at(old_loc, 5, 1)
-
-/// A status effect used for specifying confusion on a living mob.
-/// Created automatically with /mob/living/set_confusion.
-/datum/status_effect/confusion
-	id = "confusion"
-	alert_type = null
-	var/strength
-
-/datum/status_effect/confusion/tick()
-	strength -= 1
-	if (strength <= 0)
-		owner.remove_status_effect(/datum/status_effect/confusion)
-		return
-
-/datum/status_effect/confusion/proc/set_strength(new_strength)
-	strength = new_strength
+	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -1002,7 +988,7 @@
 		if(90 to 95)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
-			human_owner.add_confusion(12)
+			human_owner.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/confusion)
 
 /datum/status_effect/amok
 	id = "amok"

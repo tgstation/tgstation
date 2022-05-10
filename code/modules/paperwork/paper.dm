@@ -63,7 +63,6 @@
 
 /obj/item/paper/Destroy()
 	stamps = null
-	stamped = null
 	form_fields = null
 	stamped = null
 	. = ..()
@@ -131,7 +130,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.can_read(src) || usr.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
+	if(!usr.can_read(src) || usr.is_blind() || usr.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -163,13 +162,18 @@
 	if(!in_range(user, src) && !isobserver(user))
 		. += span_warning("You're too far away to read it!")
 		return
+
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return
+
 	if(user.can_read(src))
 		ui_interact(user)
 		return
 	. += span_warning("You cannot read it!")
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
-		// Are we on fire?  Hard ot read if so
+	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
 	if(!in_range(user, src) && !isobserver(user))
@@ -178,6 +182,9 @@
 		return UI_UPDATE
 	// Even harder to read if your blind...braile? humm
 	// .. or if you cannot read
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return UI_CLOSE
 	if(!user.can_read(src))
 		return UI_CLOSE
 	if(in_contents_of(/obj/machinery/door/airlock) || in_contents_of(/obj/item/clipboard))
@@ -203,7 +210,7 @@
 		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
 			user.dropItemToGround(I)
 		user.adjust_fire_stacks(1)
-		user.IgniteMob()
+		user.ignite_mob()
 		return
 
 	if(user.is_holding(src)) //no TK shit here.
@@ -237,13 +244,16 @@
 		P.attackby(src, user)
 		return
 	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+		if(!user.can_write(P))
+			return
 		if(get_info_length() >= MAX_PAPER_LENGTH) // Sheet must have less than 5000 charaters
 			to_chat(user, span_warning("This sheet of paper is full!"))
 			return
+
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
-		if(!user.can_read(src))
+		if(!user.can_read(src) || user.is_blind())
 			//The paper window is 400x500
 			stamp(rand(0, 400), rand(0, 500), rand(0, 360), P.icon_state)
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [P.name]!"))
@@ -386,6 +396,29 @@
 	else
 		to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
 		return FALSE
+
+/**
+ * is_approved
+ *
+ * To determine if a paper has the correct stamp. If no department stamp is specified then the
+ * regular granted stamp (/obj/item/stamp) is checked
+ *
+ * Arguments:
+ * * department (optional) - The department stamp we are checking for
+ */
+/obj/item/paper/proc/is_approved(department_stamp)
+	if(department_stamp)
+		return stamped && (department_stamp in stamped)
+	else
+		return stamped && ("stamp-ok" in stamped)
+
+/**
+ * is_denied
+ *
+ * To determine if a paper has the DENIED stamp
+ */
+/obj/item/paper/proc/is_denied()
+	return stamped && ("stamp-deny" in stamped)
 
 /obj/item/paper/ui_act(action, params, datum/tgui/ui)
 	. = ..()

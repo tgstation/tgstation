@@ -47,8 +47,8 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		objectives_by_path[typepath] -= source
 
 /datum/traitor_objective/steal_item
-	name = "Steal %ITEM% and place a bug on it. Hold it for %TIME% minutes"
-	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it on the item. After that, you must keep it near you for %TIME% minutes"
+	name = "Steal %ITEM% and place a bug on it."
+	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it on the item. Additionally, you can keep it near you for %TIME% minutes, and you will be rewarded with %PROGRESSION% reputation and %TC% telecrystals."
 
 	progression_minimum = 20 MINUTES
 	progression_reward = 5 MINUTES
@@ -70,6 +70,11 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	/// Telecrystal reward increase per unit of time.
 	var/minutes_per_telecrystal = 3
 
+	/// Extra TC given for holding the item for the required duration of time.
+	var/extra_tc = 0
+	/// Extra progression given for holding the item for the required duration of time.
+	var/extra_progression = 0
+
 	abstract_type = /datum/traitor_objective/steal_item
 
 /datum/traitor_objective/steal_item/low_risk_cap
@@ -78,6 +83,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = 0
+	minutes_per_telecrystal = 6
 	possible_items = list(
 		/datum/objective_item/steal/low_risk/techboard/borgupload,
 		/datum/objective_item/steal/low_risk/techboard/aiupload,
@@ -89,6 +95,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	progression_maximum = 35 MINUTES
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = 0
+	minutes_per_telecrystal = 6
 
 	possible_items = list(
 		/datum/objective_item/steal/low_risk/cargo_budget,
@@ -170,10 +177,12 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	if(length(target_item.special_equipment))
 		special_equipment = target_item.special_equipment
 	hold_time_required = rand(hold_time_required[1], hold_time_required[2])
-	progression_reward += hold_time_required * (1 MINUTES)
-	telecrystal_reward += round(hold_time_required / max(minutes_per_telecrystal, 0.1))
+	extra_progression += hold_time_required * (1 MINUTES)
+	extra_tc += round(hold_time_required / max(minutes_per_telecrystal, 0.1))
 	replace_in_name("%ITEM%", target_item.name)
 	replace_in_name("%TIME%", hold_time_required)
+	replace_in_name("%TC%", extra_tc)
+	replace_in_name("%PROGRESSION%", DISPLAY_PROGRESSION(extra_progression))
 	return TRUE
 
 /datum/traitor_objective/steal_item/ungenerate_objective()
@@ -195,6 +204,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		buttons += add_ui_button("", "Pressing this will materialize a bug in your hand, which you can place on the target item", "wifi", "summon_bug")
 	else if(bug.planted_on)
 		buttons += add_ui_button("[DisplayTimeText(time_fulfilled)]", "This tells you how much time you have spent around the target item after the bug has been planted.", "clock", "none")
+		buttons += add_ui_button("Skip Time", "Pressing this will succeed the mission. You will not get the extra TC and progression.", "forward-step", "cash_out")
 	return buttons
 
 /datum/traitor_objective/steal_item/ui_perform_action(mob/living/user, action)
@@ -220,6 +230,10 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 				user.put_in_hands(new_item)
 			user.balloon_alert(user, "the equipment materializes in your hand")
 			special_equipment = null
+		if("cash_out")
+			if(!bug.planted_on)
+				return
+			succeed_objective()
 
 /datum/traitor_objective/steal_item/process(delta_time)
 	var/mob/owner = handler.owner?.current
@@ -232,6 +246,8 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		return
 	time_fulfilled += delta_time * (1 SECONDS)
 	if(time_fulfilled >= hold_time_required * (1 MINUTES))
+		progression_reward += extra_progression
+		telecrystal_reward += extra_tc
 		succeed_objective()
 		return PROCESS_KILL
 	handler.on_update()
@@ -259,4 +275,5 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/traitor_objective/steal_item/proc/on_bug_planted(obj/item/source, obj/item/location)
 	SIGNAL_HANDLER
-	START_PROCESSING(SSprocessing, src)
+	if(objective_state == OBJECTIVE_STATE_ACTIVE)
+		START_PROCESSING(SSprocessing, src)

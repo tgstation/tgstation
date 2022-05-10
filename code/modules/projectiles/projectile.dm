@@ -94,6 +94,8 @@
 	var/ricochet_auto_aim_angle = 30
 	/// the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle
 	var/ricochet_incidence_leeway = 40
+	/// Can our ricochet autoaim hit our firer?
+	var/ricochet_shoots_firer = TRUE
 
 	///If the object being hit can pass ths damage on to something else, it should not do it for this bullet
 	var/force_hit = FALSE
@@ -325,7 +327,7 @@
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		best_angle += NICE_SHOT_RICOCHET_BONUS
 	for(var/mob/living/L in range(ricochet_auto_aim_range, src.loc))
-		if(L.stat == DEAD || !is_in_sight(src, L))
+		if(L.stat == DEAD || !is_in_sight(src, L) || (!ricochet_shoots_firer && L == firer))
 			continue
 		var/our_angle = abs(closer_angle_difference(Angle, get_angle(src.loc, L.loc)))
 		if(our_angle < best_angle)
@@ -452,34 +454,38 @@
  * 0. Anything that is already in impacted is ignored no matter what. Furthermore, in any bracket, if the target atom parameter is in it, that's hit first.
  * Furthermore, can_hit_target is always checked. This (entire proc) is PERFORMANCE OVERHEAD!! But, it shouldn't be ""too"" bad and I frankly don't have a better *generic non snowflakey* way that I can think of right now at 3 AM.
  * FURTHERMORE, mobs/objs have a density check from can_hit_target - to hit non dense objects over a turf, you must click on them, same for mobs that usually wouldn't get hit.
- * 1. The thing originally aimed at/clicked on
- * 2. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
- * 3. Objs
- * 4. Turf
- * 5. Nothing
+ * 1. Special check on what we bumped to see if it's a border object that intercepts hitting anything behind it
+ * 2. The thing originally aimed at/clicked on
+ * 3. Mobs - picks lowest buckled mob to prevent scarp piggybacking memes
+ * 4. Objs
+ * 5. Turf
+ * 6. Nothing
  */
 /obj/projectile/proc/select_target(turf/our_turf, atom/target, atom/bumped)
-	// 1. original
+	// 1. special bumped border object check
+	if(bumped?.flags_1 & ON_BORDER_1)
+		return bumped
+	// 2. original
 	if(can_hit_target(original, TRUE, FALSE, original == bumped))
 		return original
 	var/list/atom/considering = list()  // let's define this ONCE
-	// 2. mobs
+	// 3. mobs
 	for(var/mob/living/iter_possible_target in our_turf)
 		if(can_hit_target(iter_possible_target, iter_possible_target == original, TRUE, iter_possible_target == bumped))
 			considering += iter_possible_target
 	if(considering.len)
 		var/mob/living/hit_living = pick(considering)
 		return hit_living.lowest_buckled_mob()
-	// 3. objs and other dense things
+	// 4. objs and other dense things
 	for(var/i in our_turf)
 		if(can_hit_target(i, i == original, TRUE, i == bumped))
 			considering += i
 	if(considering.len)
 		return pick(considering)
-	// 4. turf
+	// 5. turf
 	if(can_hit_target(our_turf, our_turf == original, TRUE, our_turf == bumped))
 		return our_turf
-	// 5. nothing
+	// 6. nothing
 		// (returns null)
 
 //Returns true if the target atom is on our current turf and above the right layer

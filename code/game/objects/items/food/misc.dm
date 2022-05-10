@@ -35,7 +35,7 @@
 	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/wheel/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 30, table_required = TRUE)
 
 /obj/item/food/cheese/wheel/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -982,4 +982,12 @@
 	tastes = list("juicy meat" = 1, "rice" = 1, "cabbage" = 1)
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
-	
+
+/obj/item/food/seaweedsheet
+	name = "seaweed sheet"
+	desc = "A dried sheet of seaweed used for making sushi."
+	icon_state = "seaweedsheet"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("seaweed" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
