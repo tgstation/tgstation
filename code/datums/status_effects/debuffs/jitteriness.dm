@@ -15,17 +15,17 @@
 /datum/status_effect/jitter/on_remove()
 	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, id)
+	// juuust in case, reset our x and y's from our jittering
+	owner.pixel_x = 0
+	owner.pixel_y = 0
 
 /datum/status_effect/jitter/get_examine_text()
-
-	var/time_left_in_seconds = (duration - world.time) / 10
-
-	switch(time_left_in_seconds)
-		if(300 to INFINITY) // 5 minutes - infinity
+	switch(duration - world.time)
+		if(5 MINUTES to INFINITY)
 			return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] convulsing violently!")
-		if(180 to 300) // 3 minutes - 5 minutes
+		if(3 MINUTES to 5 MINUTES)
 			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] extremely jittery.")
-		if(60 to 180) // 1 minutes - 3 minutes
+		if(1 MINUTES to 3 MINUTES)
 			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] twitching ever so slightly.")
 
 	return null
