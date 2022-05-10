@@ -13,11 +13,7 @@
 ///default queuing tick_usage threshold for most verbs which can allow a small amount of latency to be processed in the next tick
 #define VERB_DEFAULT_QUEUE_THRESHOLD 85
 
-///client verbs execute after Master and after SendMaps, so we're in that portion iff we agree with Master on world.time and disagree on maptick,
-///since maptick happens after Master but before (most) verbs process.
-#define IS_IN_VERB_TICK_PORTION (world.time >= Master.last_run && MAPTICK_LAST_INTERNAL_TICK_USAGE != Master.last_maptick)
-
 ///attempt to queue this verb process if the server is overloaded. evaluates to FALSE if queuing isnt necessary or if it failed.
-#define TRY_QUEUE_VERB(_object, _proc, _tick_check, _args...) (IS_IN_VERB_TICK_PORTION && (TICK_USAGE > _tick_check) && SSverb_manager.initialized && SSverb_manager.queue_verb(_object, _proc, _args))
+#define TRY_QUEUE_VERB(_object, _proc, _tick_check, _args...) ((TICK_USAGE > _tick_check) && SSverb_manager.initialized && SSverb_manager.queue_verb(_object, _proc, _args))
 ///queue wrapper for TRY_QUEUE_VERB() when you want to call the proc if the server isnt overloaded enough to queue
 #define QUEUE_OR_CALL_VERB(_object, _proc, _tick_check, _args...) if(!TRY_QUEUE_VERB(_object, _proc, _tick_check, _args)) {call(_object, _proc)(_args)};

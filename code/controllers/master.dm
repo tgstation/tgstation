@@ -32,8 +32,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	/// world.time of last fire, for tracking lag outside of the mc
 	var/last_run
-	/// the last MAPTICK_LAST_INTERNAL_TICK_USAGE the mc recorded, used for tracking tick portions outside the MC.
-	var/last_maptick
 
 	/// List of subsystems to process().
 	var/list/subsystems
@@ -379,7 +377,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		var/starting_tick_usage = TICK_USAGE
 
-		last_maptick = MAPTICK_LAST_INTERNAL_TICK_USAGE
 		if (init_stage != init_stage_completed)
 			return MC_LOOP_RTN_NEWSTAGES
 		if (processing <= 0)
