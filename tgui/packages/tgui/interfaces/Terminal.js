@@ -1,17 +1,33 @@
 import { useBackend } from '../backend';
-import { NoticeBox } from '../components';
+import { NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
-export const Terminal = (props, context) => {
+export const Terminal = (_, context) => {
   const { act, data } = useBackend(context);
+  const { uppertext, messages } = data;
   return (
-    <Window theme={data.tguitheme} title="Terminal" width={600} height={600}>
+    <Window theme={data.tguitheme} title="Terminal" width={480} height={520}>
       <Window.Content scrollable>
         <NoticeBox textAlign="left">
-          {data.uppertext}
+          {uppertext}
         </NoticeBox>
-        {data.text}
+        <Section>
+          <Messages messages={messages} />
+        </Section>
       </Window.Content>
     </Window>
   );
+};
+
+const Messages = (props, context) => {
+  const { messages } = props;
+  const { act } = useBackend(context);
+
+  return messages.map(message => {
+    return (
+      <Section key={message.key}>
+        {message}
+      </Section>
+    );
+  });
 };
