@@ -604,7 +604,7 @@
 	owner.cause_hallucination(
 		/datum/hallucination/delusion,
 		source = "[id] status effect",
-		/* force_kind = */"demon"
+		/* force_kind = */"demon",
 		/* duration = */duration,
 		/* skip_nearby = */FALSE,
 	)

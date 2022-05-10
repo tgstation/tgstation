@@ -4,9 +4,8 @@
 
 /datum/hallucination/fake_flood
 	//Plasma starts flooding from the nearby vent
-	var/turf/center
-	var/list/flood_images = list()
-	var/list/flood_image_holders = list()
+	var/list/image/flood_images = list()
+	var/list/obj/effect/plasma_image_holder/flood_image_holders = list()
 	var/list/turf/flood_turfs = list()
 	var/image_icon = 'icons/effects/atmospherics.dmi'
 	var/image_state = "plasma"
@@ -14,7 +13,13 @@
 	var/next_expand = 0
 
 /datum/hallucination/fake_flood/start()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/nearby_pump in orange(7,target))
+	// This hallucination is entirely visual so we'll just not do it for clientless mobs
+	if(hallucinator.client)
+		return FALSE
+
+	var/turf/center
+
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/nearby_pump in orange(7, hallucinator))
 		if(nearby_pump.welded)
 			continue
 
@@ -24,60 +29,69 @@
 	if(!center)
 		return FALSE
 
-	feedback_details += "Vent Coords: [center.x],[center.y],[center.z]"
-	var/obj/effect/plasma_image_holder/pih = new(center)
-	var/image/plasma_image = image(image_icon, pih, image_state, FLY_LAYER)
+	feedback_details += "Vent Coords: ([center.x], [center.y], [center.z])"
+	create_new_plasma_image(center)
+	hallucinator.client?.images |= flood_images
+
+	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
+	START_PROCESSING(SSobj, src)
+	return TRUE
+
+/datum/hallucination/fake_flood/process()
+	if(next_expand > world.time)
+		return
+
+	radius++
+	if(radius > FAKE_FLOOD_MAX_RADIUS)
+		qdel(src)
+		return
+
+	expand_flood()
+
+	if(get_turf(hallucinator) in flood_turfs)
+		var/mob/living/carbon/carbon_hallucinator = hallucinator
+		if(istype(carbon_hallucinator) && !carbon_hallucinator.internal)
+			hallucinator.cause_hallucination(
+				/datum/hallucination/fake_alert,
+				source = "fake plasmaflood hallucination",
+				/* specific = */ALERT_TOO_MUCH_PLASMA,
+			)
+
+	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
+
+/datum/hallucination/fake_flood/proc/expand_flood()
+	for(var/image/flood_image in flood_images)
+		flood_image.alpha = min(flood_image.alpha + 50, 255)
+
+	for(var/turf/flooded_turf in flood_turfs)
+		for(var/dir in GLOB.cardinals)
+			var/turf/nearby_turf = get_step(flooded_turf, dir)
+			if((nearby_turf in flood_turfs) || !TURFS_CAN_SHARE(nearby_turf, flooded_turf) || isspaceturf(nearby_turf))
+				continue
+			create_new_plasma_image(nearby_turf)
+
+	hallucinator.client?.images |= flood_images
+
+/datum/hallucination/fake_flood/proc/create_new_plasma_image(turf/to_flood)
+	flood_turfs += to_flood
+
+	var/obj/effect/plasma_image_holder/image_holder = new(to_flood)
+	flood_image_holders += image_holder
+
+	var/image/plasma_image = image(image_icon, image_holder, image_state, FLY_LAYER)
 	plasma_image.alpha = 50
 	plasma_image.plane = ABOVE_GAME_PLANE
 	flood_images += plasma_image
-	flood_image_holders += pih
-	flood_turfs += center
-	if(target.client)
-		target.client.images |= flood_images
-	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
-	return TRUE
-
-	START_PROCESSING(SSobj, src)
-
-/datum/hallucination/fake_flood/process()
-	if(next_expand <= world.time)
-		radius++
-		if(radius > FAKE_FLOOD_MAX_RADIUS)
-			qdel(src)
-			return
-		Expand()
-		if((get_turf(target) in flood_turfs) && !target.internal)
-			target.cause_hallucination(/datum/hallucination/fake_alert, source = "fake plasmaflood hallucination", /* specific = */ALERT_TOO_MUCH_PLASMA)
-		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
-
-/datum/hallucination/fake_flood/proc/Expand()
-	for(var/image/I in flood_images)
-		I.alpha = min(I.alpha + 50, 255)
-	for(var/turf/FT in flood_turfs)
-		for(var/dir in GLOB.cardinals)
-			var/turf/T = get_step(FT, dir)
-			if((T in flood_turfs) || !TURFS_CAN_SHARE(T, FT) || isspaceturf(T)) //If we've gottem already, or if they're not alright to spread with.
-				continue
-			var/obj/effect/plasma_image_holder/pih = new(T)
-			var/image/new_plasma = image(image_icon, pih, image_state, FLY_LAYER)
-			new_plasma.alpha = 50
-			new_plasma.plane = ABOVE_GAME_PLANE
-			flood_images += new_plasma
-			flood_image_holders += pih
-			flood_turfs += T
-	if(target.client)
-		target.client.images |= flood_images
 
 /datum/hallucination/fake_flood/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	qdel(flood_turfs)
-	flood_turfs = list()
-	if(target.client)
-		target.client.images.Remove(flood_images)
-	qdel(flood_images)
-	flood_images = list()
-	qdel(flood_image_holders)
-	flood_image_holders = list()
+
+	hallucinator.client?.images -= flood_images
+
+	flood_turfs.Cut() // We don't own these
+	flood_images.Cut() // We also don't own these, kinda
+	QDEL_LIST(flood_image_holders) // But we DO own these
+
 	return ..()
 
 /obj/effect/plasma_image_holder
@@ -86,3 +100,6 @@
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+#undef FAKE_FLOOD_EXPAND_TIME
+#undef FAKE_FLOOD_MAX_RADIUS

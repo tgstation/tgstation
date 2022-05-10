@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/dangerflash = 15,
 	/datum/hallucination/hudscrew = 12,
 	/datum/hallucination/fake_health_doll = 12,
-	/datum/hallucination/fake_alert = 12,
+	/datum/hallucination/random_fake_alert = 12,
 	/datum/hallucination/weird_sounds = 8,
 	/datum/hallucination/stationmessage = 7,
 	/datum/hallucination/fake_flood = 7,

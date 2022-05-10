@@ -159,15 +159,21 @@
 /datum/addiction/medicine
 	name = "medicine"
 	withdrawal_stage_messages = list("", "", "")
-	var/datum/hallucination/fake_alert/hallucination
-	var/datum/hallucination/fake_health_doll/hallucination2
+	var/datum/datum/weakref/fake_alert_ref
+	var/datum/datum/weakref/health_doll_ref
 
 /datum/addiction/medicine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
 	if(!ishuman(affected_carbon))
 		return
-	var/mob/living/carbon/human/human_mob = affected_carbon
-	hallucination2 = new(human_mob, TRUE, severity = 1, duration = 120 MINUTES)
+	var/datum/hallucination/health_doll = affected_carbon.cause_hallucination(
+		/datum/hallucination/fake_health_doll,
+		source = "medicine addiction",
+		/* specific_limb = */null,
+		/* severity = */1,
+		/* duration = */120 MINUTES,
+	)
+	health_doll_ref = WEAKREF(health_doll)
 
 /datum/addiction/medicine/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
@@ -177,26 +183,40 @@
 /datum/addiction/medicine/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
 	var/list/possibilities = list()
+
 	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTHEAT))
-		possibilities += ALERT_TEMPERATURE_HOT
+		possibilities += /datum/hallucination/fake_alert/hot
 	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTCOLD))
-		possibilities += ALERT_TEMPERATURE_COLD
+		possibilities += /datum/hallucination/fake_alert/cold
+
 	var/obj/item/organ/lungs/lungs = affected_carbon.getorganslot(ORGAN_SLOT_LUNGS)
 	if(lungs)
 		if(lungs.safe_oxygen_min)
-			possibilities += ALERT_NOT_ENOUGH_OXYGEN
+			possibilities += /datum/hallucination/fake_alert/need_oxygen
 		if(lungs.safe_oxygen_max)
-			possibilities += ALERT_TOO_MUCH_OXYGEN
-	var/type = pick(possibilities)
-	hallucination = new(affected_carbon, TRUE, type, 120 MINUTES)//last for a while basically
+			possibilities += /datum/hallucination/fake_alert/bad_oxygen
+
+	if(!length(possibilities))
+		return
+
+	var/datum/hallucination/fake_alert = affected_carbon.cause_hallucination(
+		pick(possibilities),
+		source = "medicine addiction",
+		/* duration = */120 MINUTES,
+	)
+	fake_alert_ref = WEAKREF(fake_alert)
 
 /datum/addiction/medicine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	if(DT_PROB(10, delta_time))
-		hallucination2.add_fake_limb(severity = 1)
-		return
-	if(DT_PROB(5, delta_time))
-		hallucination2.increment_fake_damage()
+	var/datum/hallucination/fake_health_doll/hallucination = health_doll_ref?.resolve()
+	if(hallucination)
+		if(DT_PROB(10, delta_time))
+			hallucination.add_fake_limb(severity = 1)
+			return
+
+		if(DT_PROB(5, delta_time))
+			hallucination.increment_fake_damage()
+			return
 
 /datum/addiction/medicine/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -204,14 +224,18 @@
 
 /datum/addiction/medicine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
-	if(DT_PROB(5, delta_time))
-		hallucination2.increment_fake_damage()
+	var/datum/hallucination/fake_health_doll/hallucination = health_doll_ref?.resolve()
+	if(hallucination && DT_PROB(5, delta_time))
+		hallucination.increment_fake_damage()
 		return
+
 	if(DT_PROB(15, delta_time))
 		affected_carbon.emote("cough")
 		return
+
 	if(DT_PROB(65, delta_time))
 		return
+
 	if(affected_carbon.stat >= SOFT_CRIT)
 		return
 
@@ -219,16 +243,18 @@
 	if(organ.low_threshold)
 		to_chat(affected_carbon, organ.low_threshold_passed)
 		return
+
 	else if (organ.high_threshold_passed)
 		to_chat(affected_carbon, organ.high_threshold_passed)
 		return
+
 	to_chat(affected_carbon, span_warning("You feel a dull pain in your [organ.name]."))
 
 /datum/addiction/medicine/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.hal_screwyhud = SCREWYHUD_NONE
-	hallucination.cleanup()
-	QDEL_NULL(hallucination2)
+	QDEL_NULL(fake_alert_ref)
+	QDEL_NULL(health_doll_ref)
 
 ///Nicotine
 /datum/addiction/nicotine

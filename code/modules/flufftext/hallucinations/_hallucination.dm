@@ -25,7 +25,7 @@
  */
 /datum/hallucination
 	/// Extra info about the hallucination displayed in the log.
-	var/feedback_details
+	var/feedback_details = ""
 	/// The mob we're targeting with the hallucination.
 	var/mob/living/hallucinator
 

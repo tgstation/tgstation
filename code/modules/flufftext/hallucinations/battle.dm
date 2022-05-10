@@ -1,5 +1,4 @@
-/// Random battle hallucination.
-/// Triggers a random "battle" hallucination.
+/// Random battle hallucination. Triggers a random "battle" hallucination.
 /datum/hallucination/random_battle
 
 /datum/hallucination/random_battle/start()
