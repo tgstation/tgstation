@@ -51,6 +51,9 @@
 
 /obj/item/spear/CheckParts(list/parts_list)
 	var/obj/item/shard/tip = locate() in parts_list
+	if(!tip)
+		return ..()
+
 	switch(tip.type)
 		if(/obj/item/shard/plasma)
 			force = 11
@@ -80,9 +83,10 @@
 			force_wielded = 20
 			icon_prefix = "spearplastitanium"
 			AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[icon_prefix]1")
-		update_appearance()
-		parts_list -= tip
-		qdel(tip)
+
+	update_appearance()
+	parts_list -= tip
+	qdel(tip)
 	return ..()
 
 /obj/item/spear/explosive
