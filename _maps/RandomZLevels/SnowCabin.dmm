@@ -1317,7 +1317,7 @@
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "ey" = (
-/obj/structure/sign/warning/nosmoking/circle,
+/obj/structure/sign/warning/no_smoking/circle,
 /turf/closed/wall/mineral/wood,
 /area/awaymission/cabin/snowforest)
 "ez" = (
@@ -2896,20 +2896,20 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "jO" = (
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	pixel_x = 32
 	},
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "jP" = (
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	pixel_x = -32
 	},
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "jQ" = (
 /obj/structure/table/wood,
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_x = -16;
 	pixel_y = 32
 	},
@@ -3137,7 +3137,7 @@
 	pixel_x = 3;
 	throwforce = 4
 	},
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_x = 16;
 	pixel_y = -32
 	},
@@ -3312,7 +3312,7 @@
 /turf/closed/wall/ice,
 /area/awaymission/cabin/caves)
 "lQ" = (
-/obj/structure/sign/warning/enginesafety{
+/obj/structure/sign/warning/engine_safety{
 	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift. It seems to particularly focus on how dangerous the sawblade is.";
 	name = "\improper LUMBERMILL SAFETY"
 	},

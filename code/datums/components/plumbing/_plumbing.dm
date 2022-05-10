@@ -68,7 +68,7 @@
 
 /datum/component/plumbing/process()
 	if(!demand_connects || !reagents)
-		STOP_PROCESSING(SSfluids, src)
+		STOP_PROCESSING(SSplumbing, src)
 		return
 	if(reagents.total_volume < reagents.maximum_volume)
 		for(var/D in GLOB.cardinals)
@@ -199,7 +199,7 @@
 	if(!active)
 		return
 
-	STOP_PROCESSING(SSfluids, src)
+	STOP_PROCESSING(SSplumbing, src)
 
 	for(var/A in ducts)
 		var/datum/ductnet/D = ducts[A]
@@ -231,7 +231,7 @@
 			D.disconnect_duct()
 
 	if(demand_connects)
-		START_PROCESSING(SSfluids, src)
+		START_PROCESSING(SSplumbing, src)
 
 	for(var/D in GLOB.cardinals)
 

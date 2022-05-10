@@ -12,6 +12,10 @@
 	stripe_color = "#EFB341"
 	payment_department = ACCOUNT_ENG
 
+/obj/machinery/rnd/production/protolathe/department/engineering/no_tax
+	circuit = /obj/item/circuitboard/machine/protolathe/department/engineering/no_tax
+	charges_tax = FALSE
+
 /obj/machinery/rnd/production/protolathe/department/service
 	name = "department protolathe (Service)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_SERVICE

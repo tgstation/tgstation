@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "fixed overlapping objecs on the AI minisat on IceBoxStation"

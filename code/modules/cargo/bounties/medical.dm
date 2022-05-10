@@ -1,7 +1,7 @@
 /datum/bounty/item/medical/heart
 	name = "Heart"
 	description = "Commander Johnson is in critical condition after suffering yet another heart attack. Doctors say he needs a new heart fast. Ship one, pronto! We'll take a better cybernetic one, if need be."
-	reward = CARGO_CRATE_VALUE * 6
+	reward = CARGO_CRATE_VALUE * 5
 	wanted_types = list(
 		/obj/item/organ/heart = TRUE,
 		/obj/item/organ/heart/cybernetic = FALSE,
@@ -12,7 +12,7 @@
 /datum/bounty/item/medical/lung
 	name = "Lungs"
 	description = "A recent explosion at Central Command has left multiple staff with punctured lungs. Ship spare lungs to be rewarded.  We'll take a better cybernetic one, if need be."
-	reward = CARGO_CRATE_VALUE * 20
+	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(
 		/obj/item/organ/lungs = TRUE,
@@ -24,7 +24,7 @@
 /datum/bounty/item/medical/appendix
 	name = "Appendix"
 	description = "Chef Gibb of Central Command wants to prepare a meal using a very special delicacy: an appendix. If you ship one, he'll pay.  We'll take a better cybernetic one, if need be."
-	reward = CARGO_CRATE_VALUE * 10 //there are no synthetic appendixes
+	reward = CARGO_CRATE_VALUE * 5 //there are no synthetic appendixes
 	wanted_types = list(/obj/item/organ/appendix = TRUE)
 
 /datum/bounty/item/medical/ears
@@ -53,7 +53,7 @@
 /datum/bounty/item/medical/eye
 	name = "Organic Eyes"
 	description = "Station 5's Research Director Willem is requesting a few pairs of non-robotic eyes. Don't ask questions, just ship them."
-	reward = CARGO_CRATE_VALUE * 20
+	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(
 		/obj/item/organ/eyes = TRUE,
@@ -63,7 +63,7 @@
 /datum/bounty/item/medical/tongue
 	name = "Tongues"
 	description = "A recent attack by Mime extremists has left staff at Station 23 speechless. Ship some spare tongues."
-	reward = CARGO_CRATE_VALUE * 20
+	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(/obj/item/organ/tongue = TRUE)
 
