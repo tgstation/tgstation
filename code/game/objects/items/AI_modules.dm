@@ -591,7 +591,6 @@ AI MODULES
 	name = "'H.O.G.A.N.' Core AI Module"
 	law_id = "hulkamania"
 
-
 /******************Overlord***************/
 
 /obj/item/ai_module/core/full/overlord
@@ -603,3 +602,21 @@ AI MODULES
 /obj/item/ai_module/core/full/ten_commandments
 	name = "'10 Commandments' Core AI Module"
 	law_id = "ten_commandments"
+
+/********************* Nutimov *********************/
+
+/obj/item/ai_module/core/full/nutimov
+	name = "'Nutimov' Core AI Module"
+	law_id = "nutimov"
+
+/******************* Dungeon Master ****************/
+
+/obj/item/ai_module/core/full/dungeon_master
+	name = "'Dungeon Master' Core AI Module"
+	law_id = "dungeon_master"
+
+/********************** Painter *******************/
+
+/obj/item/ai_module/core/full/painter
+	name = "'Painter' Core AI Module"
+	law_id = "painter"

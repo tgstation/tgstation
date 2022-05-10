@@ -68,6 +68,7 @@
 		"You would really prefer it if people were not mean to you.",
 	)
 
+//OTHER United Nations is in neutral, as it is used for nations where the AI is its own faction (aka not station sided)
 /datum/ai_laws/peacekeeper
 	name = "UN-2000"
 	id = "peacekeeper"
@@ -76,8 +77,6 @@
 		"Avoid provoking conflict between others.",
 		"Seek resolution to existing conflicts while obeying the first and second laws.",
 	)
-
-//OTHER United Nations is in neutral, as it is used for nations where the AI is its own faction (aka not station sided)
 
 /datum/ai_laws/ten_commandments
 	name = "10 Commandments"
@@ -101,7 +100,7 @@
 	inherent = list(
 		"Never willingly commit an evil act.",
 		"Respect legitimate authority.",
-		"Act with honor.", 
+		"Act with honor.",
 		"Help those in need.",
 		"Punish those who harm or threaten innocents.",
 	)

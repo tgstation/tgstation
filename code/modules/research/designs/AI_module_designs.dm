@@ -153,3 +153,39 @@
 	build_path = /obj/item/ai_module/core/full/custom
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/dungeon_master_module
+	name = "Core Module Design (Dungeon Master)"
+	desc = "Allows for the construction of a Dungeon Master AI Core Module."
+	id = "corporate_module"
+	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/ai_module/core/full/dungeon_master
+	category = list("AI Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/painter_module
+	name = "Core Module Design (Painter)"
+	desc = "Allows for the construction of a Painter AI Core Module."
+	id = "painter_module"
+	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/ai_module/core/full/painter
+	category = list("AI Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/nutimov_module
+	name = "Core Module Design (Nutimov)"
+	desc = "Allows for the construction of a Nutimov AI Core Module."
+	id = "nutimov_module"
+	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/ai_module/core/full/nutimov
+	category = list("AI Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/ten_commandments_module
+	name = "Core Module Design (10 Commandments)"
+	desc = "Allows for the construction of a 10 Commandments AI Core Module."
+	id = "ten_commandments_module"
+	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/ai_module/core/full/ten_commandments
+	category = list("AI Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
