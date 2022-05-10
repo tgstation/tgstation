@@ -22,7 +22,6 @@ export const Terminal = (_, context) => {
 const Messages = (props, context) => {
   const { messages } = props;
   const { act } = useBackend(context);
-
   return messages.map(message => {
     return (
       <Section key={message.key}>
