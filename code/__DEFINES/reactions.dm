@@ -277,3 +277,5 @@
 #define PN_BZASE_RAD_RANGE_DIVISOR 3
 /// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate breaks down BZ.
 #define PN_BZASE_RAD_THRESHOLD_BASE 15
+/// A scaling factor for the chance of the reaction to fire a nuclear particle.
+#define PN_BZASE_NUCLEAR_PARTICLE_CHANCE_DIVISOR 20

@@ -1172,7 +1172,7 @@
 		location = holder
 	if (location && energy_released > PN_TRITIUM_CONVERSION_RAD_RELEASE_THRESHOLD * (air.volume / CELL_VOLUME) ** ATMOS_RADIATION_VOLUME_EXP)
 		radiation_pulse(location, max_range = min(sqrt(consumed_amount) / PN_BZASE_RAD_RANGE_DIVISOR, GAS_REACTION_MAXIMUM_RADIATION_PULSE_RANGE), threshold = PN_BZASE_RAD_THRESHOLD_BASE * INVERSE(PN_BZASE_RAD_THRESHOLD_BASE + consumed_amount))
-		if(prob(100 * (1 - NUM_E ** -consumed_amount)))
+		if(prob(100 * (1 - NUM_E ** -(consumed_amount / PN_BZASE_NUCLEAR_PARTICLE_CHANCE_DIVISOR))))
 			location.fire_nuclear_particle()
 		for(var/mob/living/carbon/L in location)
 			L.hallucination += consumed_amount
