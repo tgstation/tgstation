@@ -945,30 +945,34 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(user, span_notice("You open the cap on [src]."))
 		reagents.flags |= OPENCONTAINER
 		if(obj_flags & EMAGGED)
-			add_overlay("vapeopen_high")
+			icon_state = "vape_open_high"
+			set_greyscale(new_config = /datum/greyscale_config/vape_open_high)
 		else if(super)
-			add_overlay("vapeopen_med")
+			icon_state = "vape_open_med"
+			set_greyscale(new_config = /datum/greyscale_config/vape_open_med)
 		else
-			add_overlay("vapeopen_low")
+			icon_state = "vape_open_low"
+			set_greyscale(new_config = /datum/greyscale_config/vape_open_low)
 	else
 		screw = FALSE
 		to_chat(user, span_notice("You close the cap on [src]."))
 		reagents.flags &= ~(OPENCONTAINER)
-		cut_overlays()
+		icon_state = initial(icon_state)
+		set_greyscale(new_config = initial(greyscale_config))
 
 /obj/item/clothing/mask/vape/multitool_act(mob/living/user, obj/item/tool)
 	. = TRUE
 	if(screw && !(obj_flags & EMAGGED))//also kinky
 		if(!super)
-			cut_overlays()
 			super = TRUE
 			to_chat(user, span_notice("You increase the voltage of [src]."))
-			add_overlay("vapeopen_med")
+			icon_state = "vape_open_med"
+			set_greyscale(new_config = /datum/greyscale_config/vape_open_med)
 		else
-			cut_overlays()
 			super = FALSE
 			to_chat(user, span_notice("You decrease the voltage of [src]."))
-			add_overlay("vapeopen_low")
+			icon_state = "vape_open_low"
+			set_greyscale(new_config = /datum/greyscale_config/vape_open_low)
 
 	if(screw && (obj_flags & EMAGGED))
 		to_chat(user, span_warning("[src] can't be modified!"))
@@ -976,11 +980,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
 	if(screw)
 		if(!(obj_flags & EMAGGED))
-			cut_overlays()
 			obj_flags |= EMAGGED
 			super = FALSE
 			to_chat(user, span_warning("You maximize the voltage of [src]."))
-			add_overlay("vapeopen_high")
+			icon_state = "vape_open_high"
+			set_greyscale(new_config = /datum/greyscale_config/vape_open_high)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
 			sp.set_up(5, 1, src)
 			sp.start()
