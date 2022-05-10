@@ -56,7 +56,7 @@
 
 /obj/item/implant/uplink/starting
 	starting_tc = TELECRYSTALS_DEFAULT - UPLINK_IMPLANT_TELECRYSTAL_COST
-	
+
 /obj/item/implant/nanouplink
 	name = "Nano uplink implant"
 	desc = "Sneeki breeki."
@@ -66,7 +66,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/starting_tc = 0
 	/// The uplink flags of the implant uplink inside, only checked during initialisation so modifying it after initialisation will do nothing
-	var/uplink_flag = UPLINK_TRAITORS
+	var/uplink_flag = UPLINK_NANO
 	///Reference to the uplink handler, deciding which type of uplink this implant has.
 	var/uplink_handler
 
@@ -80,7 +80,7 @@
 /obj/item/implant/nanouplink/implant(mob/living/carbon/target, mob/user, silent, force)
 	. = ..()
 	var/datum/component/nanouplink/new_uplink = AddComponent(/datum/component/nanouplink, owner = target?.key, lockable = TRUE, enabled = FALSE, uplink_handler_override = uplink_handler, starting_tc = starting_tc)
-	new_uplink.unlock_text = "Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."
+	new_uplink.unlock_text = "Your Nanotrasen Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."
 	if(!uplink_handler)
 		new_uplink.uplink_handler.owner = target.mind
 		new_uplink.uplink_handler.assigned_role = target.mind.assigned_role.title
@@ -99,7 +99,7 @@
 		qdel(src)
 
 /obj/item/implanter/nanouplink
-	name = "implanter (uplink)"
+	name = "implanter (nanouplink)"
 	imp_type = /obj/item/implant/nanouplink
 
 /obj/item/implanter/nanouplink/Initialize(mapload, uplink_handler)
@@ -114,4 +114,4 @@
 	starting_tc = TELECRYSTALS_PRELOADED_IMPLANT
 
 /obj/item/implant/nanouplink/starting
-	starting_tc = TELECRYSTALS_DEFAULT - UPLINK_IMPLANT_TELECRYSTAL_COST	
+	starting_tc = TELECRYSTALS_DEFAULT - UPLINK_IMPLANT_TELECRYSTAL_COST
