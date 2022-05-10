@@ -7,6 +7,9 @@
 	feedback_details += "Type: [picked_battle]"
 	hallucinator.cause_hallucination(picked_battle, source = "random battle hallucination")
 
+	qdel(src)
+	return TRUE
+
 /// Battle hallucination, makes it sound like a melee or gun battle is going on in the background.
 /datum/hallucination/battle
 

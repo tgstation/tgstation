@@ -11,7 +11,7 @@
 		return
 
 	add_fake_limb(specific_limb, severity)
-	timer_id = QDEL_IN(src, duration)
+	del_timer_id = QDEL_IN(src, duration)
 
 // So that the associated addition proc cleans it up correctly
 /datum/hallucination/fake_health_doll/Destroy()
@@ -43,6 +43,6 @@
 		SCREWYDOLL_R_LEG,
 	)
 
-	var/mob/living/carbon/human/human_mob = target
+	var/mob/living/carbon/human/human_mob = hallucinator
 	LAZYSET(human_mob.hal_screwydoll, specific_limb || pick(screwy_limbs), severity || rand(1, 5))
 	hallucinator.update_health_hud()

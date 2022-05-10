@@ -53,7 +53,7 @@
 		if(istype(carbon_hallucinator) && !carbon_hallucinator.internal)
 			hallucinator.cause_hallucination(
 				/datum/hallucination/fake_alert,
-				source = "fake plasmaflood hallucination",
+				"fake plasmaflood hallucination",
 				/* specific = */ALERT_TOO_MUCH_PLASMA,
 			)
 

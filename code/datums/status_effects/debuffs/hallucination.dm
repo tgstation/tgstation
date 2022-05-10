@@ -3,28 +3,47 @@
 GLOBAL_LIST_INIT(hallucination_list, list(
 	/datum/hallucination/chat = 100,
 	/datum/hallucination/message = 60,
-	/datum/hallucination/sounds = 50,
+	/datum/hallucination/fake_sound/normal/random = 50,
+
 	/datum/hallucination/random_battle = 20,
 	/datum/hallucination/dangerflash = 15,
-	/datum/hallucination/hudscrew = 12,
 	/datum/hallucination/fake_health_doll = 12,
+	/datum/hallucination/hudscrew = 12,
 	/datum/hallucination/random_fake_alert = 12,
-	/datum/hallucination/weird_sounds = 8,
-	/datum/hallucination/stationmessage = 7,
-	/datum/hallucination/fake_flood = 7,
-	/datum/hallucination/stray_bullet = 7,
-	/datum/hallucination/bolts = 7,
-	/datum/hallucination/random_nearby_fake_item = 7,
+
 	/datum/hallucination/body/husk = 4,
-	/datum/hallucination/body/husk/sideways = 2,
-	/datum/hallucination/body/alien = 1,
+	/datum/hallucination/bolts = 7,
+	/datum/hallucination/fake_flood = 7,
+	/datum/hallucination/random_nearby_fake_item = 7,
+	/datum/hallucination/stray_bullet = 7,
 	/datum/hallucination/items = 4,
 	/datum/hallucination/fire = 3,
-	/datum/hallucination/self_delusion = 2,
+	/datum/hallucination/body/husk/sideways = 2,
 	/datum/hallucination/delusion = 2,
-	/datum/hallucination/shock = 1,
+	/datum/hallucination/self_delusion = 2,
+	/datum/hallucination/station_message/meteors = 2,
+	/datum/hallucination/station_message/supermatter_delam = 2,
+	/datum/hallucination/body/alien = 1,
 	/datum/hallucination/death = 1,
+	/datum/hallucination/fake_item/baton = 1,
+	/datum/hallucination/fake_item/c4 = 1,
+	/datum/hallucination/fake_item/emag = 1,
+	/datum/hallucination/fake_item/esword = 1,
+	/datum/hallucination/fake_item/flashbang = 1,
+	/datum/hallucination/fake_item/revolver = 1,
+	/datum/hallucination/fake_sound/weird/creepy = 1
+	/datum/hallucination/fake_sound/weird/game_over = 1
+	/datum/hallucination/fake_sound/weird/hallelujah = 1
+	/datum/hallucination/fake_sound/weird/highlander = 1
+	/datum/hallucination/fake_sound/weird/hyperspace = 1
+	/datum/hallucination/fake_sound/weird/laugher = 1
+	/datum/hallucination/fake_sound/weird/phone = 1
+	/datum/hallucination/fake_sound/weird/tesloose = 1
 	/datum/hallucination/oh_yeah = 1,
+	/datum/hallucination/shock = 1,
+	/datum/hallucination/station_message/blob_alert = 1,
+	/datum/hallucination/station_message/malf_ai = 1,
+	/datum/hallucination/station_message/shuttle_dock = 1,
 ))
 
 

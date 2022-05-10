@@ -7,6 +7,9 @@
 	feedback_details += "Type: [picked_item]"
 	hallucinator.cause_hallucination(picked_item, source = "random nearby item hallucination")
 
+	qdel(src)
+	return TRUE
+
 /// A hallucination that delivers the illusion that someone nearby has pulled out a weapon or item.
 /datum/hallucination/nearby_fake_item
 	/// The icon file to draw from for left hand icons

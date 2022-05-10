@@ -26,7 +26,7 @@
 	return TRUE
 
 /datum/hallucination/body/Destroy()
-	hallucinator.client?.images -= halbody
+	hallucinator.client?.images -= shown_body
 	shown_body = null
 	return ..()
 

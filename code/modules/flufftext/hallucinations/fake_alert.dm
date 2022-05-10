@@ -5,7 +5,10 @@
 	var/picked_alert = pick(subtypesof(/datum/hallucination/random_fake_alert))
 
 	feedback_details += "Type: [picked_alert]"
-	hallucinator.cause_hallucination(picked_battle, source = "random fake alert hallucination")
+	hallucinator.cause_hallucination(picked_alert, source = "random fake alert hallucination")
+
+	qdel(src)
+	return TRUE
 
 /// Fake alert hallucination. Causes a fake alert to be thrown to the hallucinator.
 /datum/hallucination/fake_alert
@@ -32,7 +35,7 @@
 	return ..()
 
 /datum/hallucination/fake_alert/start()
-	var/picked_type = islist(alert_type) ? pick(alert_Type) : alert_type
+	var/picked_type = islist(alert_type) ? pick(alert_type) : alert_type
 
 	feedback_details += "Alert type: [alert_category], Actual type: [alert_type]"
 

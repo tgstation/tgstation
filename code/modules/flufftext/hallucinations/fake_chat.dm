@@ -1,5 +1,3 @@
-#define HALLUCINATION_FILE "hallucination.json"
-
 /// Sends a fake chat message to the hallucinator.
 /datum/hallucination/chat
 	/// If TRUE, we force the message to be hallucinated from common radio. Only set in New()
@@ -25,7 +23,7 @@
 			speaker = nearby_human
 
 	// Get person to affect if radio hallucination
-	var/is_radio = !person || force_radio
+	var/is_radio = !speaker || force_radio
 	if(is_radio)
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/existing_human in GLOB.alive_mob_list)
@@ -82,5 +80,3 @@
 
 	// Then clean up.
 	qdel(src)
-
-#undef HALLUCINATION_FILE

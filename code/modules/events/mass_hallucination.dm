@@ -56,19 +56,11 @@
 				hallucinating.cause_hallucination(/datum/hallucination/weird_sounds, source = "mass hallucination", /* sound_type = */played_to_all)
 
 		if(3) // Sends a fake message to everyone
-			var/static/list/stationwide_messages = list(
-				"ratvar", //lol
-				"shuttle_dock",
-				"blob_alert",
-				"malf_ai",
-				"meteors",
-				"supermatter",
-			)
 
-			// Same message sent to everyone
-			var/sent_to_all = pick(stationwide_messages)
+			// Same message sent to everyone.
+			var/sent_to_all = pick(subtypesof(/datum/hallucination/station_message) - /datum/hallucination/station_message/ratvar)
 			for(var/mob/living/hallucinating as anything in hallucinating)
-				hallucinating.cause_hallucination(/datum/hallucination/stationmessage, source = "mass hallucination", /*message = */sent_to_all)
+				hallucinating.cause_hallucination(sent_to_all, source = "mass hallucination")
 
 		if(4 to 6) // Causes a generic hallucination to everyone
 			var/static/list/possible_hallucinations = list(
