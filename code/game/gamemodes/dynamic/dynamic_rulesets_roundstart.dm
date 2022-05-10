@@ -106,7 +106,7 @@
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/roundstart/ntagent
-	name = "Changelings"
+	name = "NT Agent"
 	antag_flag = ROLE_NT_AGENT
 	antag_datum = /datum/antagonist/ntagent
 	protected_roles = list(
@@ -127,7 +127,7 @@
 	weight = 4
 	cost = 8
 	scaling_cost = 11
-	requirements = list(10,10,10,10,10,10,10,10,10,7)
+	requirements = list(70,60,40,30,30,30,20,20,20,10)
 	antag_cap = list("denominator" = 15)
 
 /datum/dynamic_ruleset/roundstart/ntagent/pre_execute(population)
