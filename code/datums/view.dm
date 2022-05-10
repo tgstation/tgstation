@@ -46,14 +46,14 @@
 	zoom = 0
 
 /datum/view_data/proc/resetFormat()
-	if((chief.prefs.read_preference(/datum/preference/toggle/widescreen)))
+	if(chief.prefs.read_preference(/datum/preference/toggle/widescreen))
 		return
 	zoom = chief?.prefs.read_preference(/datum/preference/numeric/pixel_size)
 	winset(chief, "mapwindow.map", "zoom=[zoom]")
 	chief?.attempt_auto_fit_viewport() // If you change zoom mode, fit the viewport
 
 /datum/view_data/proc/setZoomMode()
-	if((chief.prefs.read_preference(/datum/preference/toggle/widescreen)))
+	if(chief.prefs.read_preference(/datum/preference/toggle/widescreen))
 		return
 	winset(chief, "mapwindow.map", "zoom-mode=[chief?.prefs.read_preference(/datum/preference/choiced/scaling_method)]")
 
@@ -104,7 +104,7 @@
 	apply()
 
 /datum/view_data/proc/apply()
-	if((chief.prefs.read_preference(/datum/preference/toggle/widescreen)))
+	if(chief.prefs.read_preference(/datum/preference/toggle/widescreen))
 		return
 	chief?.change_view(getView())
 	afterViewChange()
