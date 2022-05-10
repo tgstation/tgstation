@@ -478,5 +478,5 @@ MAXFINE 2000
 #NATIVE_FOV
 
 ## Max distance for clients to view with widescren mode enabled. 
-MAX_CLIENT_VIEW_X 22
+MAX_CLIENT_VIEW_X 19
 MAX_CLIENT_VIEW_Y 16
