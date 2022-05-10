@@ -49,7 +49,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "q" = (
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	pixel_y = 32
 	},
 /turf/template_noop,

@@ -295,16 +295,6 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/closed/indestructible/syndicate,
 /area/syndicate_mothership/expansion_bioterrorism)
-"aY" = (
-/obj/docking_port/stationary{
-	dwidth = 25;
-	height = 50;
-	id = "emergency_syndicate";
-	name = "Syndicate Auxiliary Shuttle Dock";
-	width = 50
-	},
-/turf/open/misc/asteroid/snow/airless,
-/area/syndicate_mothership)
 "aZ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
@@ -427,15 +417,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/centcom/control)
-"bq" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "nukiebase";
-	desc = "Has a valve and pump attached to it. Slightly more menacing than Nanotrasen's standard.";
-	dir = 1;
-	name = "syndicate air injector"
-	},
-/turf/open/floor/engine/vacuum,
-/area/syndicate_mothership/expansion_bombthreat)
 "br" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -619,10 +600,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
-"bR" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/admin/storage)
 "bS" = (
 /obj/structure/closet{
 	anchored = 1;
@@ -724,10 +701,6 @@
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/white,
 /area/tdome/observation)
-"ce" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/armory)
 "cf" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -1312,22 +1285,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/tdome/administration)
-"dK" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
-/obj/structure/rack,
-/obj/item/analyzer{
-	pixel_x = 2;
-	pixel_y = 1
-	},
-/obj/item/pipe_dispenser{
-	desc = "A device used to rapidly pipe things. This one has a curious abundance of warning labels.";
-	name = "Syndicate Rapid Pipe Dispenser (RPD)";
-	pixel_y = -3
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/syndicate_mothership/expansion_bombthreat)
 "dL" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron,
@@ -2000,10 +1957,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/centcom/fore)
-"fC" = (
-/obj/structure/sign/warning/nosmoking,
-/turf/closed/indestructible/riveted,
-/area/tdome/observation)
 "fD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -2348,6 +2301,14 @@
 /obj/machinery/status_display/ai/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
+"gG" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/portable_atmospherics/pump{
+	desc = "A betrayer to pump-kind.";
+	name = "Lil Pump"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/syndicate_mothership/expansion_bombthreat)
 "gH" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/sofa/corp/right{
@@ -2415,6 +2376,10 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
+"gS" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/ferry)
 "gT" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -3088,10 +3053,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
-"iI" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/prison/cells)
 "iJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -3863,6 +3824,10 @@
 	icon_state = "alien19"
 	},
 /area/abductor_ship)
+"kR" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/admin/storage)
 "kS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -4622,6 +4587,17 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
 /area/centcom/prison)
+"mU" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/machinery/door/puzzle/keycard/syndicate_bio,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/smooth_half{
+	dir = 4
+	},
+/area/syndicate_mothership/expansion_bioterrorism)
 "mV" = (
 /obj/machinery/shower{
 	pixel_y = 12
@@ -5513,20 +5489,6 @@
 /obj/structure/flora/grass/both,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
-"px" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/sign/warning/securearea{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron,
-/area/centcom/ferry)
 "py" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -5812,6 +5774,10 @@
 /obj/item/food/grown/apple,
 /turf/open/floor/plastic,
 /area/syndicate_mothership/expansion_fridgerummage)
+"qq" = (
+/obj/structure/sign/warning/no_smoking,
+/turf/closed/indestructible/riveted,
+/area/centcom/admin)
 "qr" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/tile/green{
@@ -6137,10 +6103,6 @@
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/admin)
-"rz" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/ferry)
 "rB" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
@@ -6281,6 +6243,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"rY" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/armory)
 "rZ" = (
 /obj/machinery/shower{
 	dir = 8
@@ -6650,6 +6616,20 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/admin)
+"tn" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/structure/sign/warning/secure_area{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/centcom/ferry)
 "to" = (
 /obj/machinery/computer/shuttle/ferry{
 	dir = 4
@@ -6844,10 +6824,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/centcom/control)
-"tP" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
 /area/centcom/control)
 "tR" = (
 /obj/effect/turf_decal/stripes/line{
@@ -7377,17 +7353,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
-"vK" = (
-/obj/effect/turf_decal/siding/wideplating/dark,
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 1
-	},
-/obj/machinery/door/puzzle/keycard/syndicate_bio,
-/obj/structure/fans/tiny,
-/turf/open/floor/iron/smooth_half{
-	dir = 4
-	},
-/area/syndicate_mothership/expansion_bioterrorism)
 "vL" = (
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark/textured_half{
@@ -7586,6 +7551,15 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/holding)
+"wo" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "wq" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
@@ -8093,6 +8067,16 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/control)
+"xP" = (
+/obj/docking_port/stationary{
+	dwidth = 25;
+	height = 50;
+	id = "emergency_syndicate";
+	name = "Syndicate Auxiliary Shuttle Dock";
+	width = 50
+	},
+/turf/open/misc/asteroid/snow/airless,
+/area/syndicate_mothership)
 "xQ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/south,
@@ -9634,15 +9618,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/tdome/observation)
-"BX" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/syndicate_mothership/expansion_bombthreat)
 "Ca" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -9944,6 +9919,16 @@
 "CN" = (
 /turf/closed/indestructible/syndicate,
 /area/syndicate_mothership/expansion_bioterrorism)
+"CP" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "CQ" = (
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
@@ -10196,6 +10181,10 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"DF" = (
+/obj/structure/sign/warning/no_smoking,
+/turf/closed/indestructible/riveted,
+/area/tdome/observation)
 "DG" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -10792,6 +10781,10 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
+"Fq" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/control)
 "Fr" = (
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium,
@@ -10946,6 +10939,17 @@
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/mineral/titanium/tiled,
 /area/syndicate_mothership/expansion_bioterrorism)
+"FO" = (
+/obj/structure/table/reinforced,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/gps/mining,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/centcom/supply)
 "FP" = (
 /obj/structure/window/reinforced/survival_pod{
 	name = "Tinted Window";
@@ -11369,6 +11373,19 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
+"Hh" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("nukiebase" = "Burn Chamber");
+	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
+	dir = 1;
+	name = "Ordnance Chamber Monitor"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/cold/directional/west{
+	dir = 2
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/syndicate_mothership/expansion_bombthreat)
 "Hi" = (
 /obj/structure/flora/rock/pile,
 /obj/structure/flora/ausbushes/grassybush,
@@ -11554,14 +11571,6 @@
 "HN" = (
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
-"HO" = (
-/obj/effect/turf_decal/stripes/box,
-/obj/machinery/portable_atmospherics/pump{
-	desc = "A betrayer to pump-kind.";
-	name = "Lil Pump"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/syndicate_mothership/expansion_bombthreat)
 "HQ" = (
 /obj/structure/flora/rock/pile,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -12597,6 +12606,22 @@
 /obj/structure/cable,
 /turf/open/floor/iron/textured_large,
 /area/syndicate_mothership/control)
+"KY" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/analyzer{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/pipe_dispenser{
+	desc = "A device used to rapidly pipe things. This one has a curious abundance of warning labels.";
+	name = "Syndicate Rapid Pipe Dispenser (RPD)";
+	pixel_y = -3
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "KZ" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
@@ -14183,17 +14208,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/centcom/admin)
-"PG" = (
-/obj/structure/table/reinforced,
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
-/obj/item/gps/mining,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/iron,
-/area/centcom/supply)
 "PH" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/closet/crate/bin,
@@ -15466,6 +15480,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
+"Th" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "nukiebase";
+	desc = "Has a valve and pump attached to it. Slightly more menacing than Nanotrasen's standard.";
+	dir = 1;
+	name = "syndicate air injector"
+	},
+/turf/open/floor/engine/vacuum,
+/area/syndicate_mothership/expansion_bombthreat)
 "Ti" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -16063,19 +16086,6 @@
 /obj/item/stack/spacecash/c20,
 /turf/open/floor/iron/dark/textured_half,
 /area/syndicate_mothership/control)
-"UK" = (
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("nukiebase" = "Burn Chamber");
-	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
-	dir = 1;
-	name = "Ordnance Chamber Monitor"
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/light/cold/directional/west{
-	dir = 2
-	},
-/turf/open/floor/mineral/titanium/tiled/yellow,
-/area/syndicate_mothership/expansion_bombthreat)
 "UL" = (
 /obj/machinery/light/floor{
 	pixel_x = 4;
@@ -17565,10 +17575,6 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/syndicate_mothership)
-"YI" = (
-/obj/structure/sign/warning/nosmoking,
-/turf/closed/indestructible/riveted,
-/area/centcom/admin)
 "YJ" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -17677,6 +17683,10 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
+"YX" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/prison/cells)
 "YY" = (
 /obj/item/storage/medkit/toxin,
 /obj/item/storage/medkit/o2{
@@ -17951,16 +17961,6 @@
 /obj/machinery/status_display/ai/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
-"ZG" = (
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 4
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/syndicate_mothership/expansion_bombthreat)
 "ZH" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -24678,7 +24678,7 @@ we
 br
 Bq
 fQ
-vK
+mU
 qM
 uk
 EE
@@ -25450,8 +25450,8 @@ ay
 Bq
 Fn
 kv
-BX
-ZG
+wo
+CP
 ki
 Td
 Zp
@@ -25969,7 +25969,7 @@ HZ
 HZ
 HZ
 Nv
-HO
+gG
 XG
 kv
 qK
@@ -26221,7 +26221,7 @@ br
 Bq
 fQ
 of
-dK
+KY
 UT
 Fp
 zg
@@ -26229,7 +26229,7 @@ Gw
 tC
 kf
 nE
-bq
+Th
 oY
 kv
 kb
@@ -26484,7 +26484,7 @@ BD
 Us
 Ks
 Mc
-UK
+Hh
 Yg
 uU
 uU
@@ -34939,7 +34939,7 @@ Ff
 Ff
 Ff
 Ff
-aY
+xP
 Zb
 ll
 ll
@@ -53980,7 +53980,7 @@ vE
 wt
 xg
 wt
-px
+tn
 mD
 pD
 pX
@@ -55522,7 +55522,7 @@ mD
 ss
 fw
 tr
-rz
+gS
 SM
 WR
 RH
@@ -55762,7 +55762,7 @@ aa
 aa
 On
 On
-YI
+qq
 On
 gI
 pE
@@ -56289,7 +56289,7 @@ dz
 Nr
 Xq
 Rg
-rz
+gS
 wz
 TK
 xR
@@ -56550,7 +56550,7 @@ mD
 su
 fw
 wh
-rz
+gS
 NN
 MJ
 TI
@@ -57323,11 +57323,11 @@ fw
 ts
 mD
 Ya
-ce
+rY
 ST
 VO
 ST
-ce
+rY
 Ya
 Ya
 aa
@@ -58085,7 +58085,7 @@ On
 YU
 YU
 Rj
-bR
+kR
 YU
 oe
 qR
@@ -58337,7 +58337,7 @@ iF
 yd
 oM
 pi
-PG
+FO
 Tq
 YU
 Sh
@@ -58373,7 +58373,7 @@ at
 QC
 QC
 QC
-fC
+DF
 QC
 QC
 QC
@@ -59122,11 +59122,11 @@ xh
 wu
 mD
 Ya
-ce
+rY
 Ya
 Ya
 Ya
-ce
+rY
 Ya
 Ya
 Dq
@@ -59895,7 +59895,7 @@ ys
 mR
 zF
 Am
-tP
+Fq
 iu
 io
 gl
@@ -61194,7 +61194,7 @@ Mu
 Mu
 Mu
 aB
-fC
+DF
 BW
 BW
 NV
@@ -62940,7 +62940,7 @@ aa
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb
@@ -62952,7 +62952,7 @@ iB
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb
@@ -63225,7 +63225,7 @@ io
 io
 io
 io
-tP
+Fq
 UO
 io
 io
@@ -65510,7 +65510,7 @@ aa
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb
@@ -65522,7 +65522,7 @@ iB
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb
