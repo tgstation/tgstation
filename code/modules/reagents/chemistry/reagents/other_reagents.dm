@@ -1240,7 +1240,7 @@
 	taste_description = "numbness"
 	ph = 9.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opiods = 10)
+	addiction_types = list(/datum/addiction/opioids = 10)
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.jitteriness = max(M.jitteriness - (2.5*delta_time),0)
