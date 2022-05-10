@@ -15,10 +15,10 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
+	AddElement(/datum/element/wall_mount)
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return
-	AddElement(/datum/element/wall_mount)
 	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, .proc/AreaPowerCheck)
 	AddElement(/datum/element/wall_mount)
 
