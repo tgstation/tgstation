@@ -30,8 +30,9 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "[type]_overdose", /datum/mood_event/overdose, name)
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M, delta_time, times_fired)
-	if(M.hallucination < volume && DT_PROB(10, delta_time))
-		M.hallucination += 5
+	var/hallucination_duration_in_seconds = (M.get_timed_status_effect_duration(/datum/status_effect/hallucination) / 10)
+	if(hallucination_duration_in_seconds < volume && DT_PROB(10, delta_time))
+		M.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/hallucination)
 	..()
 
 /datum/reagent/drug/cannabis

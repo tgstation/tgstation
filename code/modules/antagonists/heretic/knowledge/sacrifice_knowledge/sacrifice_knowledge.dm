@@ -313,7 +313,7 @@
 	sac_target.blur_eyes(15)
 	sac_target.Jitter(10)
 	sac_target.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-	sac_target.hallucination += 12
+	sac_target.adjust_timed_status_effect(24 SECONDS, /datum/status_effect/hallucination)
 	sac_target.emote("scream")
 
 	to_chat(sac_target, span_reallybig(span_hypnophrase("The grasp of the Mansus reveal themselves to you!")))

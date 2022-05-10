@@ -12,12 +12,11 @@
 	lose_text = "<span class='notice'>You feel more grounded.</span>"
 
 /datum/brain_trauma/mild/hallucinations/on_life(delta_time, times_fired)
-	owner.hallucination = min(owner.hallucination + 10, 50)
-	..()
+	owner.adjust_timed_status_effect(10 SECONDS * delta_time, /datum/status_effect/hallucination, max_duration = 100 SECONDS)
 
 /datum/brain_trauma/mild/hallucinations/on_lose()
-	owner.hallucination = 0
-	..()
+	owner.remove_status_effect(/datum/status_effect/hallucination)
+	return ..()
 
 /datum/brain_trauma/mild/stuttering
 	name = "Stuttering"

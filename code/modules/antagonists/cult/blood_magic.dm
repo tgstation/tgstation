@@ -266,8 +266,7 @@
 		var/mob/living/carbon/human/human_target = target
 		if(!istype(human_target) || IS_CULTIST(human_target))
 			return
-		var/mob/living/carbon/human/H = target
-		H.hallucination = max(H.hallucination, 120)
+		human_target.set_timed_status_effect(240 SECONDS, /datum/status_effect/hallucination, only_if_higher = TRUE)
 		SEND_SOUND(ranged_ability_user, sound('sound/effects/ghost.ogg',0,1,50))
 		var/image/C = image('icons/effects/cult/effects.dmi',H,"bloodsparkles", ABOVE_MOB_LAYER)
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, NONE)

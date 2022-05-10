@@ -533,7 +533,7 @@
 		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
 
 /obj/item/food/bubblegum/bubblegum/suicide_act(mob/user)
-	user.say(";[pick(hallucination_lines)]")
+	//user.say(";[pick(hallucination_lines)]") //melberet todo
 	return ..()
 
 /obj/item/food/gumball

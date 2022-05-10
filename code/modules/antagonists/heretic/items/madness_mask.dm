@@ -61,7 +61,7 @@
 		SEND_SIGNAL(human_in_range, COMSIG_HERETIC_MASK_ACT, rand(-2, -20) * delta_time)
 
 		if(DT_PROB(60, delta_time))
-			human_in_range.hallucination = min(human_in_range.hallucination + 5, 120)
+			human_in_range.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/hallucination, max_duration = 240 SECONDS)
 
 		if(DT_PROB(40, delta_time))
 			human_in_range.Jitter(5)

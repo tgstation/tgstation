@@ -728,6 +728,9 @@
 	else if(duration > 0)
 		apply_status_effect(effect, duration)
 
+/mob/living/proc/get_timed_status_effect_duration()
+	return
+
 /**
  * Adjust the "drunk value" the mob is currently experiencing,
  * or applies a drunk effect if the mob isn't currently drunk (or tipsy)

@@ -28,7 +28,7 @@
 				target.add_confusion(15)
 				target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 			if(3)
-				target.hallucination += 60
+		l		target.adjust_timed_status_effect(120 SECONDS, /datum/status_effect/hallucination)
 
 /obj/item/organ/heart/gland/mindshock/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)

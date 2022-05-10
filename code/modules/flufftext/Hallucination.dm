@@ -1,8 +1,4 @@
 
-/mob/living/carbon/proc/set_screwyhud(hud_type)
-	hal_screwyhud = hud_type
-	update_health_hud()
-
 /*
 /obj/effect/hallucination/clown
 	image_icon = 'icons/mob/animal.dmi'
