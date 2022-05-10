@@ -541,6 +541,7 @@
 #include "code\controllers\subsystem\processing\reagents.dm"
 #include "code\controllers\subsystem\processing\singulo.dm"
 #include "code\controllers\subsystem\processing\station.dm"
+#include "code\controllers\subsystem\processing\supermatter_cascade.dm"
 #include "code\controllers\subsystem\processing\tramprocess.dm"
 #include "code\controllers\subsystem\processing\wet_floors.dm"
 #include "code\datums\action.dm"

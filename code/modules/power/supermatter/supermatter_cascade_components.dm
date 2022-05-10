@@ -1,11 +1,6 @@
-PROCESSING_SUBSYSTEM_DEF(supermatter_cascade)
-	name = "Supermatter Cascade"
-	wait = 1 SECONDS
-	stat_tag = "SC"
-
 /turf/closed/indestructible/supermatter_wall
 	name = "crystal mass"
-	desc = "You see this massive crystal mass looming towards you, cracking and screeching at every seemingly random movement. Despair because the end is here."
+	desc = "You see this massive crystal mass looming towards you, cracking and screeching at every seemingly random movement."
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "crystal_cascade_1"
 	layer = AREA_LAYER
