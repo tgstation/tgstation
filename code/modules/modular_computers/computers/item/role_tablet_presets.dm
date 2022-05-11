@@ -87,6 +87,11 @@
 /obj/item/modular_computer/tablet/pda/captain/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, .proc/tab_no_detonate)
+	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
+	if(!drive)
+		return
+	for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+		messenger_app.spam_mode = TRUE
 
 /obj/item/modular_computer/tablet/pda/cargo
 	name = "cargo technician PDA"
@@ -122,6 +127,14 @@
 	default_disk = /obj/item/computer_hardware/hard_drive/role/lawyer
 	greyscale_colors = "#4C76C8#FFE243"
 	insert_type = /obj/item/pen/fountain
+
+/obj/item/modular_computer/tablet/pda/lawyer/Initialize(mapload)
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
+	if(!drive)
+		return
+	for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+		messenger_app.spam_mode = TRUE
 
 /obj/item/modular_computer/tablet/pda/botanist
 	name = "botanist PDA"
