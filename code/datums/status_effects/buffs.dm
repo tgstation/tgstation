@@ -603,9 +603,12 @@
 	SEND_SOUND(owner, sound('sound/hallucinations/veryfar_noise.ogg'))
 	owner.cause_hallucination(
 		/datum/hallucination/delusion/demon,
-		"[id] status effect",
+		/* source = */"[id] status effect",
 		/* duration = */duration,
+		/* affects_us = */FALSE,
+		/* affects_others = */TRUE,
 		/* skip_nearby = */FALSE,
+		/* play_wabbajack = */FALSE,
 	)
 	chainsaw = new(get_turf(owner))
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)

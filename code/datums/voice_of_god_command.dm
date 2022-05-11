@@ -172,6 +172,8 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 			picked_delusion,
 			/* source = */"voice of god",
 			/* duration = */15 SECONDS * power_multiplier,
+			/* affects_us = */FALSE,
+			/* affects_others = */TRUE,
 			/* skip_nearby = */FALSE,
 		)
 
