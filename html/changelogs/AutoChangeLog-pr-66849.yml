@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "High blood pressure effect is now applied correctly by opioid addiction"
+  - spellcheck: "opioid is now also spelled correctly"

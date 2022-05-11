@@ -3955,15 +3955,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
-"bnE" = (
-/obj/structure/table/glass,
-/obj/item/computer_hardware/hard_drive/role/medical,
-/obj/item/computer_hardware/hard_drive/role/medical,
-/obj/item/computer_hardware/hard_drive/role/chemistry,
-/obj/machinery/status_display/evac/directional/north,
-/obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/cmo)
 "bnJ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -7191,6 +7182,21 @@
 "cpY" = (
 /turf/closed/wall,
 /area/station/service/kitchen)
+"cqh" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Library Maintenance"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/service/library,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "cqj" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/tile/blue{
@@ -9843,17 +9849,6 @@
 /obj/effect/turf_decal/tile/red/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
-"dhp" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Library Maintenance"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/access/all/service/library,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "dhq" = (
 /turf/closed/mineral/random/labormineral/ice,
 /area/icemoon/surface/outdoors/labor_camp)
@@ -12530,6 +12525,27 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
+"dXR" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Quartermaster's Office"
+	},
+/obj/machinery/status_display/supply{
+	pixel_x = -32
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/coin/silver,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/clipboard,
+/turf/open/floor/iron,
+/area/station/cargo/qm)
 "dYd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -15278,13 +15294,6 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"eVE" = (
-/obj/structure/table,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/turf/open/floor/iron/cafeteria,
-/area/station/command/heads_quarters/rd)
 "eVR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -39981,6 +39990,18 @@
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"mUC" = (
+/obj/structure/table/wood,
+/obj/item/taperecorder,
+/obj/machinery/computer/security/telescreen/prison{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "mUG" = (
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
@@ -42465,6 +42486,15 @@
 /obj/machinery/blackbox_recorder,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
+"nLd" = (
+/obj/structure/table/glass,
+/obj/item/computer_hardware/hard_drive/portable/medical,
+/obj/item/computer_hardware/hard_drive/portable/medical,
+/obj/item/computer_hardware/hard_drive/portable/chemistry,
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/dark,
+/area/station/command/heads_quarters/cmo)
 "nLn" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -46621,19 +46651,6 @@
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
-"oWZ" = (
-/obj/structure/table/wood,
-/obj/item/taperecorder,
-/obj/item/computer_hardware/hard_drive/role/lawyer,
-/obj/machinery/computer/security/telescreen/prison{
-	pixel_y = 32
-	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "oXe" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -58546,27 +58563,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"sUm" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Quartermaster's Office"
-	},
-/obj/machinery/status_display/supply{
-	pixel_x = -32
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/item/coin/silver,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/clipboard,
-/turf/open/floor/iron,
-/area/station/cargo/qm)
 "sUr" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -62207,6 +62203,13 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
+"udQ" = (
+/obj/structure/table,
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/turf/open/floor/iron/cafeteria,
+/area/station/command/heads_quarters/rd)
 "udR" = (
 /obj/structure/cable,
 /obj/machinery/button/door/directional/west{
@@ -67875,6 +67878,17 @@
 	icon_state = "platingdmg1"
 	},
 /area/station/maintenance/department/medical/central)
+"vTi" = (
+/obj/structure/table/reinforced,
+/obj/item/computer_hardware/hard_drive/portable/engineering,
+/obj/item/computer_hardware/hard_drive/portable/engineering,
+/obj/item/computer_hardware/hard_drive/portable/engineering,
+/obj/item/computer_hardware/hard_drive/portable/atmos,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/ce)
 "vTj" = (
 /obj/structure/cable,
 /obj/machinery/holopad/secure,
@@ -73833,17 +73847,6 @@
 /obj/machinery/mineral/processing_unit_console,
 /turf/open/floor/iron,
 /area/mine/production)
-"xOO" = (
-/obj/structure/table/reinforced,
-/obj/item/computer_hardware/hard_drive/role/engineering,
-/obj/item/computer_hardware/hard_drive/role/engineering,
-/obj/item/computer_hardware/hard_drive/role/engineering,
-/obj/item/computer_hardware/hard_drive/role/atmos,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/ce)
 "xPk" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/yellow,
@@ -164270,7 +164273,7 @@ iDt
 ijY
 pfw
 wUj
-oWZ
+mUC
 jeJ
 aFg
 vwl
@@ -227022,7 +227025,7 @@ eXn
 tKI
 ylT
 nNs
-sUm
+dXR
 fGb
 vAT
 opa
@@ -236582,7 +236585,7 @@ bup
 ojv
 bAT
 wox
-xOO
+vTi
 bVt
 aTj
 uif
@@ -247076,7 +247079,7 @@ vBG
 rkK
 oeM
 vBG
-bnE
+nLd
 wLY
 hXI
 vBG
@@ -249365,7 +249368,7 @@ fMM
 dUL
 gMZ
 iOc
-dhp
+cqh
 tsh
 gEq
 aDo
@@ -251718,7 +251721,7 @@ jbU
 xKO
 cRK
 uMK
-eVE
+udQ
 uMK
 wZI
 jbU
