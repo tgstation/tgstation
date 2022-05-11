@@ -7,7 +7,7 @@
 /obj/item/ai_module/remove
 	name = "\improper 'Remove Law' AI module"
 	desc = "An AI Module for removing single laws."
-	bypass_law_amt_check = 1
+	bypass_law_amt_check = TRUE
 	var/lawpos = 1
 
 /obj/item/ai_module/remove/attack_self(mob/user)
@@ -34,7 +34,7 @@
 	name = "\improper 'Reset' AI module"
 	var/targetName = "name"
 	desc = "An AI Module for removing all non-core laws."
-	bypass_law_amt_check = 1
+	bypass_law_amt_check = TRUE
 
 /obj/item/ai_module/reset/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()

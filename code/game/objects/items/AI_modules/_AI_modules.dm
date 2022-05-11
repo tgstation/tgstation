@@ -12,9 +12,11 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	var/list/laws = list()
-	var/bypass_law_amt_check = 0
 	custom_materials = list(/datum/material/gold = 50)
+	/// This is where our laws get put at for the module
+	var/list/laws = list()
+	/// Used to skip laws being checked (for reset & remove boards that have no laws)
+	var/bypass_law_amt_check = FALSE
 
 /obj/item/ai_module/examine(mob/user as mob)
 	. = ..()

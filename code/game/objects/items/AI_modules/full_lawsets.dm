@@ -24,6 +24,15 @@
  * /obj/item/ai_module/core/full/painter
 **/
 
+/* When adding a new lawset please make sure you add it to the following locations:
+ *
+ * code\game\objects\items\AI_modules - (full_lawsets.dm, supplied.dm, etc.)
+ * code\datums\ai_laws - (laws_anatgonistic.dm, laws_neutral.dm, etc.)
+ * code\game\objects\effects\spawners\random\ai_module.dm - (this gives a chance to spawn the lawset in the AI upload)
+ * code\modules\research\designs\AI_module_designs.dm - (this lets research print the lawset module in game)
+ * config\game_options.txt - (this allows the AI to potentially use the lawset at roundstart or with the Unique AI station trait)
+**/
+
 /obj/item/ai_module/core/full/custom
 	name = "Default Core AI Module"
 
