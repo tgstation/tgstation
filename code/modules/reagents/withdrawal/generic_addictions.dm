@@ -59,15 +59,14 @@
 /datum/addiction/alcohol/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	affected_carbon.Jitter(10 * delta_time)
-	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
+	affected_carbon.set_timed_status_effect(100 SECONDS, /datum/status_effect/hallucination, only_if_higher = TRUE)
 
 /datum/addiction/alcohol/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	affected_carbon.Jitter(15 * delta_time)
-	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
-	if(DT_PROB(4, delta_time))
-		if(!HAS_TRAIT(affected_carbon, TRAIT_ANTICONVULSANT))
-			affected_carbon.apply_status_effect(/datum/status_effect/seizure)
+	affected_carbon.set_timed_status_effect(100 SECONDS, /datum/status_effect/hallucination, only_if_higher = TRUE)
+	if(DT_PROB(4, delta_time) && !HAS_TRAIT(affected_carbon, TRAIT_ANTICONVULSANT))
+		affected_carbon.apply_status_effect(/datum/status_effect/seizure)
 
 /datum/addiction/hallucinogens
 	name = "hallucinogen"
@@ -159,8 +158,8 @@
 /datum/addiction/medicine
 	name = "medicine"
 	withdrawal_stage_messages = list("", "", "")
-	var/datum/datum/weakref/fake_alert_ref
-	var/datum/datum/weakref/health_doll_ref
+	var/datum/weakref/fake_alert_ref
+	var/datum/weakref/health_doll_ref
 
 /datum/addiction/medicine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -168,7 +167,7 @@
 		return
 	var/datum/hallucination/health_doll = affected_carbon.cause_hallucination(
 		/datum/hallucination/fake_health_doll,
-		source = "medicine addiction",
+		"medicine addiction",
 		/* specific_limb = */null,
 		/* severity = */1,
 		/* duration = */120 MINUTES,
@@ -201,7 +200,7 @@
 
 	var/datum/hallucination/fake_alert = affected_carbon.cause_hallucination(
 		pick(possibilities),
-		source = "medicine addiction",
+		"medicine addiction",
 		/* duration = */120 MINUTES,
 	)
 	fake_alert_ref = WEAKREF(fake_alert)

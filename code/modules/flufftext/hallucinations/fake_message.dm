@@ -10,7 +10,7 @@
 			suspicious_personnel = nearby_human
 			adjacent_to_us = TRUE
 			break
-		mobpool += nearby_human
+		nearby_humans += nearby_human
 
 	if(!suspicious_personnel && length(nearby_humans))
 		suspicious_personnel = pick(nearby_humans)

@@ -203,12 +203,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "pancake syrup"
 	glass_name = "glass of candy corn liquor"
 	glass_desc = "Good for your Imagination."
-	var/hal_amt = 4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		drinker.hallucination += hal_amt //conscious dreamers can be treasurers to their own currency
+		drinker.adjust_timed_status_effect(4 SECONDS * REM * delta_time, /datum/status_effect/hallucination)
 	..()
 
 /datum/reagent/consumable/ethanol/thirteenloko
@@ -467,7 +466,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(5, delta_time) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		drinker.hallucination += 4 //Reference to the urban myth
+		drinker.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/hallucination)
 	..()
 
 /datum/reagent/consumable/ethanol/hooch
@@ -2826,6 +2825,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/helianthus/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(drinker.hallucination < hal_cap && DT_PROB(5, delta_time))
-		drinker.hallucination += hal_amt
+	if(DT_PROB(5, delta_time))
+		drinker.adjust_timed_status_effect(4 SECONDS * REM * delta_time, /datum/status_effect/hallucination, max_duration = 48 SECONDS)
+
 	..()

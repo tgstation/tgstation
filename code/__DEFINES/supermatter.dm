@@ -83,7 +83,7 @@
 #define MATTER_POWER_CONVERSION 10 //Crystal converts 1/this value of stored matter into energy.
 
 //These would be what you would get at point blank, decreases with distance
-#define DETONATION_HALLUCINATION 600
+#define DETONATION_HALLUCINATION 1200 SECONDS
 
 /// All humans within this range will be irradiated
 #define DETONATION_RADIATION_RANGE 20

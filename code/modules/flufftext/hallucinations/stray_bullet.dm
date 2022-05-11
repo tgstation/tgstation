@@ -89,7 +89,7 @@
 
 	if(ismob(target))
 		if(hal_hitsound)
-			parent.hallucinator.playsound_local(A, hal_hitsound, 100, 1)
+			parent.hallucinator.playsound_local(target, hal_hitsound, 100, 1)
 		on_mob_hit(target)
 
 	else

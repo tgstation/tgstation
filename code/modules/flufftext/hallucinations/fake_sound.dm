@@ -27,7 +27,7 @@
 	var/picked_sound = pick(subtypesof(/datum/hallucination/fake_sound/normal) - type)
 
 	feedback_details += "Type: [picked_sound]"
-	hallucinator.cause_hallucination(picked_battle, source = "random normal sound hallucination")
+	hallucinator.cause_hallucination(picked_sound, source = "random normal sound hallucination")
 
 	qdel(src)
 	return TRUE
@@ -73,7 +73,7 @@
 /datum/hallucination/fake_sound/normal/mech/start()
 	mech_dir = pick(GLOB.cardinals)
 	steps_left = rand(4, 9)
-	source_turf = random_far_turf()
+	sound_source = random_far_turf()
 
 	mech_walk()
 	return TRUE
@@ -83,10 +83,10 @@
 		return
 
 	if(prob(75))
-		hallucinator.playsound_local(source, 'sound/mecha/mechstep.ogg', 40, TRUE)
-		source_turf = get_step(source_turf, mech_dir)
+		hallucinator.playsound_local(sound_source, 'sound/mecha/mechstep.ogg', 40, TRUE)
+		sound_source = get_step(sound_source, mech_dir)
 	else
-		hallucinator.playsound_local(source, 'sound/mecha/mechturn.ogg', 40, TRUE)
+		hallucinator.playsound_local(sound_source, 'sound/mecha/mechturn.ogg', 40, TRUE)
 		mech_dir = pick(GLOB.cardinals)
 
 	if(--steps_left <= 0)

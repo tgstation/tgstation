@@ -8,10 +8,15 @@
 	name = "Hallucinations"
 	desc = "Patient suffers constant hallucinations."
 	scan_desc = "schizophrenia"
-	gain_text = "<span class='warning'>You feel your grip on reality slipping...</span>"
-	lose_text = "<span class='notice'>You feel more grounded.</span>"
+	gain_text = span_warning("You feel your grip on reality slipping...")
+	lose_text = span_notice("You feel more grounded.")
 
 /datum/brain_trauma/mild/hallucinations/on_life(delta_time, times_fired)
+	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
+		return
+	if(HAS_TRAIT(owner, TRAIT_HALLUCINATION_SUPPRESSED))
+		return
+
 	owner.adjust_timed_status_effect(10 SECONDS * delta_time, /datum/status_effect/hallucination, max_duration = 100 SECONDS)
 
 /datum/brain_trauma/mild/hallucinations/on_lose()

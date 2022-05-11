@@ -725,11 +725,11 @@
 		var/status = ""
 		var/brutedamage = body_part.brute_dam
 		var/burndamage = body_part.burn_dam
-		if(hallucination)
+		if(has_status_effect(/datum/status_effect/hallucination))
 			if(prob(30))
-				brutedamage += rand(30,40)
+				brutedamage += rand(30, 40)
 			if(prob(30))
-				burndamage += rand(30,40)
+				burndamage += rand(30, 40)
 
 		if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
 			status = "[brutedamage] brute damage and [burndamage] burn damage"

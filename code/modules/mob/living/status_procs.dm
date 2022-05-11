@@ -708,9 +708,6 @@
 	else if(duration > 0)
 		apply_status_effect(effect, duration)
 
-/mob/living/proc/get_timed_status_effect_duration()
-	return
-
 /**
  * Gets how many deciseconds are remaining in
  * the duration of the passed status effect on this mob.

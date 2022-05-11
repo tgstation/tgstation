@@ -239,9 +239,9 @@
 	if(breath_gases[/datum/gas/bz])
 		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
-			hallucination += 10
+			adjust_timed_status_effect(20 SECONDS, /datum/status_effect/hallucination)
 		else if(bz_partialpressure > 0.01)
-			hallucination += 5
+			adjust_timed_status_effect(10 SECONDS, /datum/status_effect/hallucination)
 
 	//NITRIUM
 	if(breath_gases[/datum/gas/nitrium])
@@ -444,9 +444,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	if(silent)
 		silent = max(silent - (0.5 * delta_time), 0)
-
-	if(hallucination)
-		handle_hallucinations(delta_time, times_fired)
 
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)

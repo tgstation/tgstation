@@ -32,8 +32,6 @@
 	if(!hallucinator.client)
 		return FALSE
 
-	feedback_details += "Item: [item]"
-
 	var/list/mob_pool = list()
 	for(var/mob/living/carbon/human/nearby_mob in view(7, hallucinator))
 		if(nearby_mob == hallucinator)
@@ -77,7 +75,7 @@
 	right_hand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	image_icon_state = "e_sword_on_red"
 
-/datum/hallucination/nearby_fake_item/e_sword/generate_fake_image(mob/living/carbon/human/holder)
+/datum/hallucination/nearby_fake_item/e_sword/generate_fake_image(mob/living/carbon/human/holder, file)
 	hallucinator.playsound_local(get_turf(holder), 'sound/weapons/saberon.ogg', 35, TRUE)
 	return ..()
 
@@ -102,7 +100,7 @@
 	right_hand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	image_icon_state = "baton"
 
-/datum/hallucination/nearby_fake_item/baton/generate_fake_image(mob/living/carbon/human/holder)
+/datum/hallucination/nearby_fake_item/baton/generate_fake_image(mob/living/carbon/human/holder, file)
 	hallucinator.playsound_local(get_turf(holder), SFX_SPARKS, 75, TRUE, -1)
 	return ..()
 
@@ -111,7 +109,7 @@
 	right_hand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	image_icon_state = "flashtool"
 
-/datum/hallucination/nearby_fake_item/flash/generate_fake_image(mob/living/carbon/human/holder)
+/datum/hallucination/nearby_fake_item/flash/generate_fake_image(mob/living/carbon/human/holder, file)
 	hallucinator.playsound_local(get_turf(holder), 'sound/items/handling/component_pickup.ogg', 35, TRUE)
 	return ..()
 
@@ -125,7 +123,7 @@
 	right_hand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	image_icon_state = "arm_blade"
 
-/datum/hallucination/nearby_fake_item/armblade/generate_fake_image(mob/living/carbon/human/holder)
+/datum/hallucination/nearby_fake_item/armblade/generate_fake_image(mob/living/carbon/human/holder, file)
 	hallucinator.playsound_local(get_turf(holder), 'sound/effects/blobattack.ogg', 35, TRUE)
 	return ..()
 

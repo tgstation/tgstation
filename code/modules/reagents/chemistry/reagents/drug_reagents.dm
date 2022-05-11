@@ -221,7 +221,7 @@
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "salted", /datum/mood_event/stimulant_heavy, name)
 	M.adjustStaminaLoss(-5 * REM * delta_time, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4 * REM * delta_time)
-	M.hallucination += 5 * REM * delta_time
+	M.adjust_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hallucination)
 	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		step(M, pick(GLOB.cardinals))
 		step(M, pick(GLOB.cardinals))
@@ -229,7 +229,7 @@
 	. = TRUE
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M, delta_time, times_fired)
-	M.hallucination += 5 * REM * delta_time
+	M.adjust_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hallucination)
 	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED) && !ismovable(M.loc))
 		for(var/i in 1 to round(8 * REM * delta_time, 1))
 			step(M, pick(GLOB.cardinals))

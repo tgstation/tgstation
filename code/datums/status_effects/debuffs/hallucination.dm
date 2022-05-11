@@ -1,6 +1,6 @@
 
 
-GLOBAL_LIST_INIT(hallucination_list, )
+GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
 
 /proc/generate_hallucination_weighted_list()
 	var/list/list = list(
@@ -34,20 +34,22 @@ GLOBAL_LIST_INIT(hallucination_list, )
 		/datum/hallucination/fake_item/esword = 1,
 		/datum/hallucination/fake_item/flashbang = 1,
 		/datum/hallucination/fake_item/revolver = 1,
-		/datum/hallucination/fake_sound/weird/creepy = 1
-		/datum/hallucination/fake_sound/weird/game_over = 1
-		/datum/hallucination/fake_sound/weird/hallelujah = 1
-		/datum/hallucination/fake_sound/weird/highlander = 1
-		/datum/hallucination/fake_sound/weird/hyperspace = 1
-		/datum/hallucination/fake_sound/weird/laugher = 1
-		/datum/hallucination/fake_sound/weird/phone = 1
-		/datum/hallucination/fake_sound/weird/tesloose = 1
+		/datum/hallucination/fake_sound/weird/creepy = 1,
+		/datum/hallucination/fake_sound/weird/game_over = 1,
+		/datum/hallucination/fake_sound/weird/hallelujah = 1,
+		/datum/hallucination/fake_sound/weird/highlander = 1,
+		/datum/hallucination/fake_sound/weird/hyperspace = 1,
+		/datum/hallucination/fake_sound/weird/laugher = 1,
+		/datum/hallucination/fake_sound/weird/phone = 1,
+		/datum/hallucination/fake_sound/weird/tesloose = 1,
 		/datum/hallucination/oh_yeah = 1,
 		/datum/hallucination/shock = 1,
 		/datum/hallucination/station_message/blob_alert = 1,
 		/datum/hallucination/station_message/malf_ai = 1,
 		/datum/hallucination/station_message/shuttle_dock = 1,
 	)
+
+	return list
 
 
 

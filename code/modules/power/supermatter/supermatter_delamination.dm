@@ -48,10 +48,8 @@
 		if(!istype(victim) || victim.z != supermatter_turf.z)
 			continue
 
-		if(ishuman(victim))
-			//Hilariously enough, running into a closet should make you get hit the hardest.
-			var/mob/living/carbon/human/human = victim
-			human.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1)) ) )
+		var/hallucination_amount = max(100 SECONDS, min(600 SECONDS, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1))))
+		victim.adjust_timed_status_effect(hallucination_amount, /datum/status_effect/hallucination)
 
 		if (get_dist(victim, src) <= DETONATION_RADIATION_RANGE)
 			SSradiation.irradiate(victim)

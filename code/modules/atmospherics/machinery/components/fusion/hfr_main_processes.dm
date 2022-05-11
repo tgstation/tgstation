@@ -324,7 +324,8 @@
 				internal_output.assert_gases(/datum/gas/healium, /datum/gas/proto_nitrate)
 				internal_output.gases[/datum/gas/proto_nitrate][MOLES] += scaled_production * 1.5
 				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production * 1.5
-				induce_hallucination(50 * power_level, delta_time)
+				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * delta_time)
+
 		if(5)
 			if(moderator_list[/datum/gas/plasma] > 15)
 				internal_output.assert_gases(/datum/gas/freon)
@@ -343,7 +344,7 @@
 			if(moderator_list[/datum/gas/bz] > 100)
 				internal_output.assert_gases(/datum/gas/healium)
 				internal_output.gases[/datum/gas/healium][MOLES] += scaled_production
-				induce_hallucination(500, delta_time)
+				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * delta_time)
 				moderator_internal.gases[/datum/gas/freon][MOLES] += scaled_production * 1.15
 			if(moderator_list[/datum/gas/healium] > 100)
 				if(critical_threshold_proximity > 400)
@@ -364,7 +365,7 @@
 				radiation *= 2
 				heat_output *= 2.25
 			if(moderator_list[/datum/gas/bz])
-				induce_hallucination(900, delta_time, force=TRUE)
+				visible_hallucination_pulse(src, HALLUCINATION_HFR(heat_output), 100 SECONDS * power_level * delta_time)
 				moderator_internal.gases[/datum/gas/antinoblium][MOLES] += clamp(dirty_production_rate / 0.045, 0, 10) * delta_time
 			if(moderator_list[/datum/gas/healium] > 100)
 				if(critical_threshold_proximity > 400)
@@ -403,7 +404,7 @@
 
 	check_gravity_pulse(delta_time)
 
-	emit_rads()
+	radiation_pulse(src, max_range = 6, threshold = 0.3)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/evaporate_moderator(delta_time)
 	// Don't evaporate if the reaction is dead
