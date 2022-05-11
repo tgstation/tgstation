@@ -1,18 +1,19 @@
 /datum/hallucination/death
 
 /datum/hallucination/death/Destroy()
-	if(!QDELETED(hallucinator) && iscarbon(hallucinator))
-		var/mob/living/carbon/carbon_hallucinator = hallucinator
-		carbon_hallucinator.set_screwyhud(SCREWYHUD_NONE)
+	if(!QDELETED(hallucinator))
+		hallucinator.RemoveElement(/datum/element/screwy_hud, SCREWYHUD_DEAD)
 
 	return ..()
 
 /datum/hallucination/death/start()
 	hallucinator.Paralyze(30 SECONDS)
+	hallucinator.AddElement(/datum/element/screwy_hud, SCREWYHUD_DEAD)
+
 	if(iscarbon(hallucinator))
 		var/mob/living/carbon/carbon_hallucinator = hallucinator
-		carbon_hallucinator.set_screwyhud(SCREWYHUD_DEAD)
 		carbon_hallucinator.silent += 10
+
 	to_chat(hallucinator, span_deadsay("<b>[hallucinator.real_name]</b> has died at <b>[get_area_name(hallucinator)]</b>."))
 
 	var/delay = 0
@@ -58,10 +59,12 @@
 
 /datum/hallucination/death/proc/wake_up()
 	if(!QDELETED(hallucinator))
+		hallucinator.RemoveElement(/datum/element/screwy_hud, SCREWYHUD_DEAD)
+
 		if(iscarbon(hallucinator))
 			var/mob/living/carbon/carbon_hallucinator = hallucinator
-			carbon_hallucinator.set_screwyhud(SCREWYHUD_DEAD)
-			carbon_hallucinator.silent += 10
+			carbon_hallucinator.silent = 0
+
 		hallucinator.SetParalyzed(0 SECONDS)
 
 	if(!QDELETED(src))

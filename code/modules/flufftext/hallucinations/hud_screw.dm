@@ -1,16 +1,23 @@
-/datum/hallucination/hudscrew
+/// Screwyhud, makes the user's health bar hud wonky
+/datum/hallucination/screwy_hud
+	/// The type of hud we give to the hallucinator
+	var/screwy_hud_type = SCREWYHUD_NONE
 
-/datum/hallucination/hudscrew/New(mob/living/carbon/C, forced = TRUE, screwyhud_type)
-	set waitfor = FALSE
-	..()
-	//Screwy HUD
-	var/chosen_screwyhud = screwyhud_type
-	if(!chosen_screwyhud)
-		chosen_screwyhud = pick(SCREWYHUD_CRIT,SCREWYHUD_DEAD,SCREWYHUD_HEALTHY)
-	hallucinator.set_screwyhud(chosen_screwyhud)
-	feedback_details += "Type: [hallucinator.hal_screwyhud]"
-	QDEL_IN(src, rand(100, 250))
+/datum/hallucination/screwy_hud/start()
+	hallucinator.AddElement(/datum/element/screwy_hud, screwy_hud_type)
+	QDEL_IN(src, rand(10 SECONDS, 25 SECONDS))
+	return TRUE
 
-/datum/hallucination/hudscrew/Destroy()
-	hallucinator.set_screwyhud(SCREWYHUD_NONE)
+/datum/hallucination/screwy_hud/Destroy()
+	if(!QDELETED(hallucinator))
+		hallucinator.RemoveElement(/datum/element/screwy_hud, screwy_hud_type)
 	return ..()
+
+/datum/hallucination/screwy_hud/crit
+	screwy_hud_type = SCREWYHUD_CRIT
+
+/datum/hallucination/screwy_hud/dead
+	screwy_hud_type = SCREWYHUD_DEAD
+
+/datum/hallucination/screwy_hud/healthy
+	screwy_hud_type = SCREWYHUD_HEALTHY

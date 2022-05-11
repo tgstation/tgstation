@@ -976,6 +976,7 @@
 #include "code\datums\elements\ranged_attacks.dm"
 #include "code\datums\elements\ridable.dm"
 #include "code\datums\elements\rust.dm"
+#include "code\datums\elements\screwy_hud.dm"
 #include "code\datums\elements\selfknockback.dm"
 #include "code\datums\elements\series.dm"
 #include "code\datums\elements\simple_flying.dm"

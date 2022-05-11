@@ -731,29 +731,39 @@
 		clear_fullscreen("brute")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
-	if(!client || !hud_used)
+	if(!client || !hud_used?.healths)
 		return
-	if(hud_used.healths)
-		if(stat != DEAD)
-			. = 1
-			if(shown_health_amount == null)
-				shown_health_amount = health
-			if(shown_health_amount >= maxHealth)
-				hud_used.healths.icon_state = "health0"
-			else if(shown_health_amount > maxHealth*0.8)
-				hud_used.healths.icon_state = "health1"
-			else if(shown_health_amount > maxHealth*0.6)
-				hud_used.healths.icon_state = "health2"
-			else if(shown_health_amount > maxHealth*0.4)
-				hud_used.healths.icon_state = "health3"
-			else if(shown_health_amount > maxHealth*0.2)
-				hud_used.healths.icon_state = "health4"
-			else if(shown_health_amount > 0)
-				hud_used.healths.icon_state = "health5"
-			else
-				hud_used.healths.icon_state = "health6"
-		else
-			hud_used.healths.icon_state = "health7"
+
+	if(stat == DEAD)
+		hud_used.healths.icon_state = "health7"
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_CARBON_UPDATING_HEALTH_HUD, shown_health_amount) & COMPONENT_OVERRIDE_HEALTH_HUD)
+		return
+
+	if(shown_health_amount == null)
+		shown_health_amount = health
+
+	if(shown_health_amount >= maxHealth)
+		hud_used.healths.icon_state = "health0"
+
+	else if(shown_health_amount > maxHealth * 0.8)
+		hud_used.healths.icon_state = "health1"
+
+	else if(shown_health_amount > maxHealth * 0.6)
+		hud_used.healths.icon_state = "health2"
+
+	else if(shown_health_amount > maxHealth * 0.4)
+		hud_used.healths.icon_state = "health3"
+
+	else if(shown_health_amount > maxHealth*0.2)
+		hud_used.healths.icon_state = "health4"
+
+	else if(shown_health_amount > 0)
+		hud_used.healths.icon_state = "health5"
+
+	else
+		hud_used.healths.icon_state = "health6"
 
 /mob/living/carbon/update_stamina_hud(shown_stamina_amount)
 	if(!client || !hud_used?.stamina)
@@ -1317,9 +1327,6 @@
 	switch(var_name)
 		if(NAMEOF(src, disgust))
 			set_disgust(var_value)
-			. = TRUE
-		if(NAMEOF(src, hal_screwyhud))
-			set_screwyhud(var_value)
 			. = TRUE
 		if(NAMEOF(src, handcuffed))
 			set_handcuffed(var_value)

@@ -113,17 +113,15 @@
 	lose_text = "<span class='warning'>You no longer feel perfectly healthy.</span>"
 
 /datum/brain_trauma/mild/healthy/on_gain()
-	owner.set_screwyhud(SCREWYHUD_HEALTHY)
-	..()
+	owner.AddElement(/datum/element/screwy_hud, SCREWYHUD_HEALTHY)
+	return ..()
 
 /datum/brain_trauma/mild/healthy/on_life(delta_time, times_fired)
-	owner.set_screwyhud(SCREWYHUD_HEALTHY) //just in case of hallucinations
 	owner.adjustStaminaLoss(-2.5 * delta_time) //no pain, no fatigue
-	..()
 
 /datum/brain_trauma/mild/healthy/on_lose()
-	owner.set_screwyhud(SCREWYHUD_NONE)
-	..()
+	owner.RemoveElement(/datum/element/screwy_hud, SCREWYHUD_HEALTHY)
+	return ..()
 
 /datum/brain_trauma/mild/muscle_weakness
 	name = "Muscle Weakness"

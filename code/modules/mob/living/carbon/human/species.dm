@@ -1039,9 +1039,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	outfit_important_for_life= new()
 	outfit_important_for_life.equip(human_to_equip)
 
-/datum/species/proc/update_health_hud(mob/living/carbon/human/H)
-	return FALSE
-
 /**
  * Species based handling for irradiation
  *

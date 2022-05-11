@@ -62,6 +62,10 @@
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
 ///Called when a carbon updates their health (source = carbon)
 #define COMSIG_CARBON_HEALTH_UPDATE "carbon_health_update"
+///Called when a carbon's health hud is updated. (source = carbon, shown_health_amount)
+#define COMSIG_CARBON_UPDATING_HEALTH_HUD "carbon_health_hud_update"
+	/// Return if you override the carbon's health hud with something else
+	#define COMPONENT_OVERRIDE_HEALTH_HUD (1<<0)
 ///Called when a carbon updates their sanity (source = carbon)
 #define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
 ///Called when a carbon breathes, before the breath has actually occured

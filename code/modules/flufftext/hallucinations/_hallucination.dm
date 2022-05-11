@@ -14,11 +14,6 @@
 	investigate_log("was afflicted with a hallucination of type [type] by [source]. [new_hallucination.feedback_details]", INVESTIGATE_HALLUCINATIONS)
 	return new_hallucination
 
-/// Updates the screwyhud of the carbon.
-/mob/living/carbon/proc/set_screwyhud(hud_type)
-	hal_screwyhud = hud_type
-	update_health_hud()
-
 /**
  * Emits a hallucinating pulse around the passed atom.
  * Affects everyone in the passed radius who can view the center,
