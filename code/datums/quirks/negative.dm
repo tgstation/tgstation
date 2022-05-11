@@ -589,7 +589,7 @@
 
 	switch(rand(1,3))
 		if(1)
-			quirk_holder.Jitter(10)
+			quirk_holder.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			msg += "causing you to start fidgeting!"
 		if(2)
 			quirk_holder.set_timed_status_effect(6 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)

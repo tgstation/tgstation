@@ -16198,7 +16198,11 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Library Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/service/library,
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/service/library,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "gaw" = (
@@ -53322,7 +53326,11 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/service/library,
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/access/any/service/library,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "sQB" = (

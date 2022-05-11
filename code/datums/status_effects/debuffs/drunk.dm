@@ -160,7 +160,7 @@
 		owner.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk)
 
 	// And drunk people will always lose jitteriness
-	owner.jitteriness = max(owner.jitteriness - 3, 0)
+	owner.adjust_timed_status_effect(-6 SECONDS, /datum/status_effect/jitter)
 
 	// Over 11, we will constantly gain slurring up to 10 seconds of slurring.
 	if(drunk_value >= 11)

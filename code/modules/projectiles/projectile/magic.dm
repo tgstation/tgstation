@@ -447,7 +447,7 @@
 	qdel(chain)
 	. = ..()
 
-/obj/projectile/magic/aoe/fireball
+/obj/projectile/magic/fireball
 	name = "bolt of fireball"
 	icon_state = "fireball"
 	damage = 10
@@ -460,7 +460,7 @@
 	var/exp_flash = 3
 	var/exp_fire = 2
 
-/obj/projectile/magic/aoe/fireball/on_hit(mob/living/target)
+/obj/projectile/magic/fireball/on_hit(mob/living/target)
 	. = ..()
 	if(ismob(target))
 		//between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately

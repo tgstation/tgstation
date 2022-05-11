@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Ripley mechs can no longer toggle to their nonexistant air tank."
