@@ -1,5 +1,6 @@
 /datum/antagonist/ntagent
 	name = "\improper NT Agent"
+	antag_hud_name = "ntagent"
 	antagpanel_category = "Nanotrasen"
 	show_name_in_check_antagonists = TRUE
 	job_rank = ROLE_NT_AGENT
