@@ -1,85 +1,24 @@
-/obj/item/modular_computer/tablet/pda/medical
-	name = "medical PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/medical
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#FAFAFA#000099#3F96CC"
-
-/obj/item/modular_computer/tablet/pda/viro
-	name = "virology PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/medical
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
-	greyscale_colors = "#FAFAFA#355FAC#57C451"
-
-/obj/item/modular_computer/tablet/pda/engineering
-	name = "engineering PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/engineering
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#D99A2E#69DBF3#E3DF3D"
-
-/obj/item/modular_computer/tablet/pda/security
-	name = "security PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/security
-	greyscale_colors = "#EA3232#0000cc"
-
-/obj/item/modular_computer/tablet/pda/detective
-	name = "detective PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/detective
-	greyscale_colors = "#805A2F#990202"
-
-/obj/item/modular_computer/tablet/pda/warden
-	name = "warden PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/security
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
-	greyscale_colors = "#EA3232#0000CC#363636"
-
-/obj/item/modular_computer/tablet/pda/janitor
-	name = "janitor PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/janitor
-	greyscale_colors = "#933ea8#235AB2"
-
-/obj/item/modular_computer/tablet/pda/science
-	name = "scientist PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/signal/ordnance
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#FAFAFA#000099#B347BC"
+/**
+ * Command
+ */
 
 /obj/item/modular_computer/tablet/pda/heads
-	default_disk = /obj/item/computer_hardware/hard_drive/role/head
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
+	default_applications = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
+	)
 
-/obj/item/modular_computer/tablet/pda/heads/hop
-	name = "head of personnel PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/hop
+/obj/item/modular_computer/tablet/pda/heads/Initialize(mapload)
+	. = ..()
+	install_component(new /obj/item/computer_hardware/card_slot/secondary)
 
-/obj/item/modular_computer/tablet/pda/heads/hos
-	name = "head of security PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/hos
-	greyscale_config = /datum/greyscale_config/tablet/head
-	greyscale_colors = "#EA3232#0000CC"
-
-/obj/item/modular_computer/tablet/pda/heads/ce
-	name = "chief engineer PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/ce
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
-	greyscale_colors = "#D99A2E#69DBF3#FAFAFA"
-
-/obj/item/modular_computer/tablet/pda/heads/cmo
-	name = "chief medical officer PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/cmo
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
-	greyscale_colors = "#FAFAFA#000099#3F96CC"
-
-/obj/item/modular_computer/tablet/pda/heads/rd
-	name = "research director PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/rd
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
-	greyscale_colors = "#FAFAFA#000099#B347BC"
-	insert_type = /obj/item/pen/fountain
-
-/obj/item/modular_computer/tablet/pda/captain
+/obj/item/modular_computer/tablet/pda/heads/captain
 	name = "captain PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/captain
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#FFD55B"
 	insert_type = /obj/item/pen/fountain
@@ -88,10 +27,205 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, .proc/tab_no_detonate)
 
+/obj/item/modular_computer/tablet/pda/heads/hop
+	name = "head of personnel PDA"
+	default_applications = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/job_management,
+	)
+
+/obj/item/modular_computer/tablet/pda/heads/hos
+	name = "head of security PDA"
+	greyscale_config = /datum/greyscale_config/tablet/head
+	greyscale_colors = "#EA3232#0000CC"
+	default_applications = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/records/security,
+	)
+
+/obj/item/modular_computer/tablet/pda/heads/ce
+	name = "chief engineer PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
+	greyscale_colors = "#D99A2E#69DBF3#FAFAFA"
+	default_applications = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/atmosscan,
+		/datum/computer_file/program/alarm_monitor,
+		/datum/computer_file/program/power_monitor,
+		/datum/computer_file/program/supermatter_monitor,
+	)
+
+/obj/item/modular_computer/tablet/pda/heads/cmo
+	name = "chief medical officer PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
+	greyscale_colors = "#FAFAFA#000099#3F96CC"
+	default_applications = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/phys_scanner/all,
+		/datum/computer_file/program/records/medical,
+	)
+
+/obj/item/modular_computer/tablet/pda/heads/rd
+	name = "research director PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
+	greyscale_colors = "#FAFAFA#000099#B347BC"
+	insert_type = /obj/item/pen/fountain
+	default_applications = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/status,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/phys_scanner/chemistry,
+		/datum/computer_file/program/signal_commander,
+	)
+
+/**
+ * Security
+ */
+
+/obj/item/modular_computer/tablet/pda/security
+	name = "security PDA"
+	greyscale_colors = "#EA3232#0000cc"
+	default_applications = list(
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/robocontrol,
+	)
+
+/obj/item/modular_computer/tablet/pda/detective
+	name = "detective PDA"
+	greyscale_colors = "#805A2F#990202"
+	default_applications = list(
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/phys_scanner/medical,
+	)
+
+/obj/item/modular_computer/tablet/pda/warden
+	name = "warden PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_colors = "#EA3232#0000CC#363636"
+	default_applications = list(
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/robocontrol,
+	)
+
+/**
+ * Engineering
+ */
+
+/obj/item/modular_computer/tablet/pda/engineering
+	name = "engineering PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#D99A2E#69DBF3#E3DF3D"
+	default_applications = list(
+		/datum/computer_file/program/power_monitor,
+		/datum/computer_file/program/supermatter_monitor,
+	)
+
+/obj/item/modular_computer/tablet/pda/atmos
+	name = "atmospherics PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#EEDC43#00E5DA#727272"
+	default_applications = list(
+		/datum/computer_file/program/atmosscan,
+		/datum/computer_file/program/alarm_monitor,
+	)
+
+/**
+ * Science
+ */
+
+/obj/item/modular_computer/tablet/pda/science
+	name = "scientist PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#FAFAFA#000099#B347BC"
+	default_applications = list(
+		/datum/computer_file/program/atmosscan,
+		/datum/computer_file/program/signal_commander,
+	)
+
+/obj/item/modular_computer/tablet/pda/roboticist
+	name = "roboticist PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_colors = "#484848#0099CC#D94927"
+	default_applications = list(
+		/datum/computer_file/program/robocontrol,
+	)
+
+/obj/item/modular_computer/tablet/pda/geneticist
+	name = "geneticist PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_colors = "#FAFAFA#000099#0097CA"
+	default_applications = list(
+		/datum/computer_file/program/phys_scanner/medical,
+		/datum/computer_file/program/records/medical,
+	)
+
+/**
+ * Medical
+ */
+
+/obj/item/modular_computer/tablet/pda/medical
+	name = "medical PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#FAFAFA#000099#3F96CC"
+	default_applications = list(
+		/datum/computer_file/program/phys_scanner/medical,
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/robocontrol,
+	)
+
+/obj/item/modular_computer/tablet/pda/viro
+	name = "virology PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_split
+	greyscale_colors = "#FAFAFA#355FAC#57C451"
+	default_applications = list(
+		/datum/computer_file/program/phys_scanner/medical,
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/robocontrol,
+	)
+
+/obj/item/modular_computer/tablet/pda/chemist
+	name = "chemist PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
+	greyscale_colors = "#FAFAFA#355FAC#EA6400"
+	default_applications = list(
+		/datum/computer_file/program/phys_scanner/chemistry,
+	)
+
+/**
+ * Supply
+ */
+
 /obj/item/modular_computer/tablet/pda/cargo
 	name = "cargo technician PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/quartermaster
 	greyscale_colors = "#D6B328#6506CA"
+	default_applications = list(
+		/datum/computer_file/program/shipping,
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/robocontrol,
+	)
 
 /obj/item/modular_computer/tablet/pda/quartermaster/Initialize(mapload)
 	. = ..()
@@ -99,9 +233,13 @@
 
 /obj/item/modular_computer/tablet/pda/quartermaster
 	name = "quartermaster PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/quartermaster
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D6B328#6506CA#927444"
+	default_applications = list(
+		/datum/computer_file/program/shipping,
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/robocontrol,
+	)
 
 /obj/item/modular_computer/tablet/pda/quartermaster/Initialize(mapload)
 	. = ..()
@@ -112,6 +250,17 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#927444#D6B328#6C3BA1"
 
+/**
+ * Service
+ */
+
+/obj/item/modular_computer/tablet/pda/janitor
+	name = "janitor PDA"
+	greyscale_colors = "#933ea8#235AB2"
+	default_applications = list(
+		/datum/computer_file/program/radar/custodial_locator,
+	)
+
 /obj/item/modular_computer/tablet/pda/chaplain
 	name = "chaplain PDA"
 	greyscale_config = /datum/greyscale_config/tablet/chaplain
@@ -119,20 +268,16 @@
 
 /obj/item/modular_computer/tablet/pda/lawyer
 	name = "lawyer PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/lawyer
 	greyscale_colors = "#4C76C8#FFE243"
 	insert_type = /obj/item/pen/fountain
+	default_applications = list(
+		/datum/computer_file/program/records/security,
+	)
 
 /obj/item/modular_computer/tablet/pda/botanist
 	name = "botanist PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#50E193#E26F41#71A7CA"
-
-/obj/item/modular_computer/tablet/pda/roboticist
-	name = "roboticist PDA"
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
-	greyscale_colors = "#484848#0099CC#D94927"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/roboticist
 
 /obj/item/modular_computer/tablet/pda/cook
 	name = "cook PDA"
@@ -142,27 +287,9 @@
 	name = "bartender PDA"
 	greyscale_colors = "#333333#C7C7C7"
 
-/obj/item/modular_computer/tablet/pda/atmos
-	name = "atmospherics PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/atmos
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#EEDC43#00E5DA#727272"
-
-/obj/item/modular_computer/tablet/pda/chemist
-	name = "chemist PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/chemistry
-	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
-	greyscale_colors = "#FAFAFA#355FAC#EA6400"
-
-/obj/item/modular_computer/tablet/pda/geneticist
-	name = "geneticist PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/medical
-	greyscale_config = /datum/greyscale_config/tablet/stripe_split
-	greyscale_colors = "#FAFAFA#000099#0097CA"
-
 /obj/item/modular_computer/tablet/pda/clown
 	name = "clown PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/clown
+	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/clown
 	icon_state = "pda-clown"
 	greyscale_config = null
 	greyscale_colors = null
@@ -179,7 +306,7 @@
 
 /obj/item/modular_computer/tablet/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != saved_identification))
-		var/obj/item/computer_hardware/hard_drive/role/virus/clown/cart = all_components[MC_HDD_JOB]
+		var/obj/item/computer_hardware/hard_drive/portable/virus/clown/cart = all_components[MC_SDD]
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 			playsound(src,'sound/machines/ping.ogg',30,TRUE)
@@ -189,7 +316,7 @@
 
 /obj/item/modular_computer/tablet/pda/mime
 	name = "mime PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/mime
+	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/mime
 	greyscale_config = /datum/greyscale_config/tablet/mime
 	greyscale_colors = "#FAFAFA#EA3232"
 	insert_type = /obj/item/toy/crayon/mime
@@ -205,11 +332,13 @@
 
 /obj/item/modular_computer/tablet/pda/curator
 	name = "curator PDA"
-	default_disk = /obj/item/computer_hardware/hard_drive/role/curator
 	greyscale_config = null
 	greyscale_colors = null
 	icon_state = "pda-library"
 	insert_type = /obj/item/pen/fountain
+	default_applications = list(
+		/datum/computer_file/program/newscaster,
+	)
 
 /obj/item/modular_computer/tablet/pda/curator/Initialize(mapload)
 	. = ..()
@@ -218,6 +347,10 @@
 	if(hdd)
 		for(var/datum/computer_file/program/messenger/msg in hdd.stored_files)
 			msg.allow_emojis = TRUE
+
+/**
+ * Non-roles
+ */
 
 /obj/item/modular_computer/tablet/pda/syndicate
 	name = "military PDA"

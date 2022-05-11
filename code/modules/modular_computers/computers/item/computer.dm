@@ -303,7 +303,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	. = ..()
 
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
-	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Job Disk"
+	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -340,11 +340,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(.)
 		return
 
-	var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
+	var/obj/item/computer_hardware/hard_drive/ssd = all_components[MC_SDD]
 	if(!ssd)
 		return
 	if(uninstall_component(ssd, usr))
 		user.put_in_hands(ssd)
+		playsound(src, 'sound/machines/card_slide.ogg', 50)
 
 /obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.

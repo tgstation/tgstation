@@ -9,7 +9,7 @@
 		/obj/item/assembly/igniter = 3,
 		/obj/item/assembly/signaler = 4,
 		/obj/item/wirecutters = 1,
-		/obj/item/computer_hardware/hard_drive/role/signal = 4,
+		/obj/item/computer_hardware/hard_drive/portable/ordnance = 4,
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/manipulator = 3,
 		/obj/item/stock_parts/micro_laser = 3,
