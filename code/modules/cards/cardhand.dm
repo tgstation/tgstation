@@ -6,13 +6,16 @@
 	w_class = WEIGHT_CLASS_TINY
 	worn_icon_state = "card"
 
-/obj/item/toy/cards/cardhand/Initialize(mapload, list/cards_to_combine)
+/obj/item/toy/cards/cardhand/Initialize(mapload, list/cards_to_combine = list())
 	. = ..()
 
-	if(!LAZYLEN(cards_to_combine) && (mapload && !LAZYLEN(cards)))
+	var/has_runtime_spawned_cards = length(cards_to_combine)
+	var/has_mapped_spawned_cards = mapload && length(cards)
+
+	if(!has_runtime_spawned_cards && !has_mapped_spawned_cards)
 		CRASH("[src] is being made into a cardhand without a list of cards to combine")
 
-	if(mapload && LAZYLEN(cards)) // these cards have not been initialized
+	if(has_mapped_spawned_cards) // these cards have not been initialized
 		for(var/card_name in cards)
 			var/obj/item/toy/singlecard/new_card = new (loc, card_name)
 			new_card.update_appearance()

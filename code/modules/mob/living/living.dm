@@ -839,7 +839,6 @@
 	hallucination = 0
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	extinguish_mob()
-	set_confusion(0)
 	set_drowsyness(0)
 	jitteriness = 0
 	stop_sound_channel(CHANNEL_HEARTBEAT)
