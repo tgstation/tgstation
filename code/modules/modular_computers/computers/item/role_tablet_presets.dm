@@ -26,7 +26,7 @@
 /obj/item/modular_computer/tablet/pda/captain/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, .proc/tab_no_detonate)
-  var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
+	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
 	if(!drive)
 		return
 	for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
