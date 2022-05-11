@@ -458,7 +458,7 @@
 	set name = "Examine"
 	set category = "IC"
 
-	QUEUE_OR_CALL_VERB(src, .proc/finish_examinate, VERB_DEFAULT_QUEUE_THRESHOLD, examinify)
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/finish_examinate, examinify))
 
 /mob/proc/finish_examinate(atom/examinify)
 
@@ -604,10 +604,7 @@
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
 
-	if(TRY_QUEUE_VERB(src, .proc/wrap_pointed, VERB_DEFAULT_QUEUE_THRESHOLD, A))
-		return
-
-	return wrap_pointed(A)
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/wrap_pointed, A))
 
 /mob/proc/wrap_pointed(atom/pointing_at)
 	if(client && !(pointing_at in view(client.view, src)))
@@ -673,7 +670,7 @@
 	set category = "Object"
 	set src = usr
 
-	QUEUE_OR_CALL_VERB(src, .proc/execute_mode, VERB_DEFAULT_QUEUE_THRESHOLD)
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/execute_mode))
 
 ///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
 /mob/proc/execute_mode()

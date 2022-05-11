@@ -38,7 +38,7 @@
 SUBSYSTEM_DEF(verb_manager)
 	name = "Verb Manager"
 	wait = 1
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_NO_INIT
 	priority = FIRE_PRIORITY_DELAYED_VERBS
 	runlevels = RUNLEVEL_INIT | RUNLEVELS_DEFAULT
 
@@ -55,12 +55,16 @@ SUBSYSTEM_DEF(verb_manager)
 	///if this is true all verbs immediately execute and dont queue. in case the mc is fucked or something
 	var/FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs = FALSE
 
-	///used for subtypes to determine if they use their own stats
+	///used for subtypes to determine if they use their own stats for the stat entry
 	var/use_default_stats = TRUE
 
+	///if TRUE this will... message admins every time a verb is queued to this subsystem for the next tick with stats.
+	///for obvious reasons dont make this be TRUE on the code level this is for admins to turn on
+	var/message_admins_on_queue = FALSE
+
 /**
- * queue a callback for the given proc and any given arguments to the specified verb subsystem, so that they process in the next tick.
- * intended to only work with verbs or verblike procs called directly from client input, use as part of TRY_QUEUE_VERB()
+ * queue a callback for the given verb/verblike proc and any given arguments to the specified verb subsystem, so that they process in the next tick.
+ * intended to only work with verbs or verblike procs called directly from client input, use as part of TRY_QUEUE_VERB() and co.
  *
  * returns TRUE if the queuing was successful, FALSE otherwise.
  */
@@ -68,7 +72,6 @@ SUBSYSTEM_DEF(verb_manager)
 	if(TICK_USAGE < tick_check \
 	|| QDELETED(incoming_callback) \
 	|| QDELETED(incoming_callback.object) \
-	|| !incoming_callback.proc_to_call \
 	|| !ismob(usr) \
 	|| QDELING(usr))
 		return FALSE
@@ -77,18 +80,18 @@ SUBSYSTEM_DEF(verb_manager)
 	if(!istype(subsystem_to_use))
 		return FALSE
 
-	var/list/args_to_check = args.Cut(2, 4)//cut out tick_check and subsystem_to_use
+	var/list/args_to_check = args.Copy()
+	args_to_check.Cut(2, 4)//cut out tick_check and subsystem_to_use
 
 	//any subsystem can use the additional arguments to refuse queuing
-	if(!subsystem_to_use.can_queue_verb(arglist(args_to_check))
+	if(!subsystem_to_use.can_queue_verb(arglist(args_to_check)))
 		return FALSE
 
 	return subsystem_to_use.queue_verb(incoming_callback)
 
 /**
  * subsystem-specific check for whether a callback can be queued.
- * designed so that subtypes can accept specific /datum/callback/verb_callback subtypes if they wish,
- * so that you cant fuck up giving them the arguments they need.
+ * intended so that subsystem subtypes can verify whether
  *
  * subtypes may include additional arguments here if they need them! you just need to include them properly
  * in TRY_QUEUE_VERB() and co.
@@ -100,6 +103,8 @@ SUBSYSTEM_DEF(verb_manager)
 	|| !(runlevels & Master.current_runlevel))
 		return FALSE
 
+	return TRUE
+
 /**
  * queue a callback for the given proc, so that it is invoked in the next tick.
  * intended to only work with verbs or verblike procs called directly from client input, use as part of TRY_QUEUE_VERB()
@@ -108,6 +113,8 @@ SUBSYSTEM_DEF(verb_manager)
  */
 /datum/controller/subsystem/verb_manager/proc/queue_verb(datum/callback/verb_callback/incoming_callback)
 	. = FALSE //errored
+	if(message_admins_on_queue)
+		message_admins("[name] verb queuing: tick usage: [TICK_USAGE]%, proc: [incoming_callback.delegate], object: [incoming_callback.object], usr: [usr]")
 	verb_queue += incoming_callback
 	return TRUE
 

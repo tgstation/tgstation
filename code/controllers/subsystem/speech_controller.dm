@@ -1,14 +1,10 @@
-SUBSYSTEM_DEF(speech_controller)
+/// verb_manager subsystem just for handling say's
+VERB_MANAGER_SUBSYSTEM_DEF(speech_controller)
 	name = "Speech Controller"
 	wait = 1
-	flags = SS_TICKER|SS_NO_INIT
 	priority = FIRE_PRIORITY_SPEECH_CONTROLLER//has to be high priority, second in priority ONLY to SSinput
-	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
-	///list of the form: list(client mob, message that mob is queued to say, other say arguments (if any)).
-	///this is our process queue, processed every tick.
-	var/list/queued_says_to_execute = list()
-
+/*
 ///queues mob_to_queue into our process list so they say(message) near the start of the next tick
 /datum/controller/subsystem/verb_manager/speech_controller/proc/queue_say_for_mob(mob/mob_to_queue, message, message_type)
 
@@ -48,3 +44,4 @@ SUBSYSTEM_DEF(speech_controller)
 
 		if(SPEECH_CONTROLLER_QUEUE_EMOTE_VERB)
 			mob_to_speak.emote("me",1,message,TRUE)
+*/

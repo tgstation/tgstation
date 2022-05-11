@@ -1,6 +1,5 @@
-SUBSYSTEM_DEF(input)
+VERB_MANAGER_SUBSYSTEM_DEF(input)
 	name = "Input"
-	wait = 1 //SS_TICKER means this runs every tick
 	init_order = INIT_ORDER_INPUT
 	init_stage = INITSTAGE_EARLY
 	flags = SS_TICKER
@@ -51,7 +50,7 @@ SUBSYSTEM_DEF(input)
 
 /datum/controller/subsystem/verb_manager/input/can_queue_verb(datum/callback/verb_callback/incoming_callback, control)
 	//make sure the incoming verb is actually something we specifically want to handle
-	if(incoming_callback.delegate != /atom/Click || control != "mapwindow.map")
+	if(control != "mapwindow.map")
 		return FALSE
 
 	if(average_click_delay >= MAXIMUM_CLICK_LATENCY || !..())
@@ -85,12 +84,12 @@ SUBSYSTEM_DEF(input)
 	return TRUE
 */
 
-/*
+
 ///stupid workaround for byond not recognizing the /atom/Click typepath for the queued click callbacks
-/datum/controller/subsystem/verb_manager/input/proc/wrap_Click(atom/clicked_atom, location, control, params)
+/atom/proc/wrap_Click(location, control, params)
 	if(usr)
-		clicked_atom.Click(location, control, params)
-*/
+		Click(location, control, params)
+
 
 /datum/controller/subsystem/verb_manager/input/fire()
 	var/moves_this_run = 0
