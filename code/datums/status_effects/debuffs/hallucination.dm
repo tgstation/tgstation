@@ -67,15 +67,26 @@ GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
 
 /datum/status_effect/hallucination/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_hallucinations)
+	if(iscarbon(owner))
+		RegisterSignal(owner, COMSIG_CARBON_CHECKING_BODYPART, .proc/on_check_bodypart)
 	return TRUE
 
 /datum/status_effect/hallucination/on_remove()
-	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
+	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_CARBON_CHECKING_BODYPART))
 
 /datum/status_effect/hallucination/proc/remove_hallucinations(datum/source)
 	SIGNAL_HANDLER
 
 	qdel(src)
+
+/datum/status_effect/hallucination/proc/on_check_bodypart(mob/living/carbon/source, obj/item/bodypart/examined, list/check_list, list/limb_damage)
+	SIGNAL_HANDLER
+
+	if(prob(30))
+		limb_damage[1] += rand(30, 40)
+	if(prob(30))
+		limb_damage[2] += rand(30, 40)
+
 
 /datum/status_effect/hallucination/tick(delta_time, times_fired)
 	var/datum/hallucination/picked_hallucination = pick_weight(GLOB.hallucination_list)

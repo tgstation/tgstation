@@ -189,6 +189,79 @@
 	if(locate(/datum/wound/burn) in wounds)
 		. += span_warning("The flesh on this limb appears badly cooked.")
 
+/obj/item/bodypart/proc/check_for_injuries(mob/living/carbon/human/examiner, list/check_list)
+
+	var/list/limb_damage = list(brute_dam, burn_dam)
+
+	SEND_SIGNAL(src, COMSIG_BODYPART_CHECKED_FOR_INJURY, examiner, check_list, limb_damage)
+	SEND_SIGNAL(examiner, COMSIG_CARBON_CHECKING_BODYPART, src, check_list, limb_damage)
+
+	var/shown_brute = limb_damage[1]
+	var/shown_burn = limb_damage[2]
+	var/status = ""
+	var/self_aware = HAS_TRAIT(examiner, TRAIT_SELF_AWARE)
+
+	if(self_aware)
+		if(!shown_brute && !shown_burn)
+			status = "no damage"
+		else
+			status = "[shown_brute] brute damage and [shown_burn] burn damage"
+
+	else
+		if(shown_brute > DAMAGE_PRECISION)
+			status += light_brute_msg
+		if(shown_brute > (max_damage * 0.4))
+			status += medium_brute_msg
+		if(shown_brute > (max_damage * 0.8))
+			status += heavy_brute_msg
+
+		if(shown_brute > DAMAGE_PRECISION && shown_burn > DAMAGE_PRECISION)
+			status += " and "
+
+		if(shown_burn > (max_damage * 0.8))
+			status += heavy_burn_msg
+		else if(shown_burn > (max_damage * 0.2))
+			status += medium_burn_msg
+		else if(shown_burn > DAMAGE_PRECISION)
+			status += light_burn_msg
+
+		if(status == "")
+			status = "OK"
+
+	var/no_damage
+	if(status == "OK" || status == "no damage")
+		no_damage = TRUE
+
+	var/is_disabled = ""
+	if(bodypart_disabled)
+		is_disabled = " is disabled"
+		if(no_damage)
+			is_disabled += " but otherwise"
+		else
+			is_disabled += " and"
+
+	check_list += "\t <span class='[no_damage ? "notice" : "warning"]'>Your [name][is_disabled][self_aware ? " has " : " is "][status].</span>"
+
+	for(var/datum/wound/wound as anything in wounds)
+		switch(wound.severity)
+			if(WOUND_SEVERITY_TRIVIAL)
+				check_list += "\t [span_danger("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)].")]"
+			if(WOUND_SEVERITY_MODERATE)
+				check_list += "\t [span_warning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!")]"
+			if(WOUND_SEVERITY_SEVERE)
+				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!")]"
+			if(WOUND_SEVERITY_CRITICAL)
+				check_list += "\t [span_boldwarning("Your [name] is suffering [wound.a_or_from] [lowertext(wound.name)]!!")]"
+
+	for(var/obj/item/embedded_thing in embedded_objects)
+		if(embedded_thing.isEmbedHarmless())
+			// melbert todo test
+			check_list += "\t <a href='?src=[REF(src)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [embedded_thing] stuck to your [name]!</a>"
+
+		else
+			check_list += "\t <a href='?src=[REF(src)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(body_part)]' class='warning'>There is \a [embedded_thing] embedded in your [name]!</a>"
+
+
 /obj/item/bodypart/blob_act()
 	receive_damage(max_damage, wound_bonus = CANT_WOUND)
 

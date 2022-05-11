@@ -1,48 +1,78 @@
 ///Causes the target to see incorrect health damages on the healthdoll
 /datum/hallucination/fake_health_doll
+	/// The duration of the hallucination
+	var/duration
+	/// Assoc list of [ref to bodyparts] to [severity]
+	var/list/bodyparts
+	/// Timer ID for when we're deleted
 	var/del_timer_id
 
 ///Creates a specified doll hallucination, or picks one randomly
-/datum/hallucination/fake_health_doll/New(mob/living/hallucinator, specific_limb, severity, duration = 50 SECONDS)
-	. = ..()
-	if(!ishuman(hallucinator))
-		//stack_trace("[type] - [hallucinator] was assigned a fake health doll hallucination while not being a human mob.")
-		qdel(src)
-		return
-
-	add_fake_limb(specific_limb, severity)
-	del_timer_id = QDEL_IN(src, duration)
+/datum/hallucination/fake_health_doll/New(mob/living/hallucinator, duration = 50 SECONDS)
+	src.duration = duration
+	return ..()
 
 // So that the associated addition proc cleans it up correctly
 /datum/hallucination/fake_health_doll/Destroy()
 	if(del_timer_id)
 		deltimer(del_timer_id)
-	var/mob/living/carbon/human/human_mob = hallucinator
-	LAZYNULL(human_mob.hal_screwydoll)
-	human_mob.update_health_hud()
+
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		remove_bodypart(limb)
+
+	hallucinator.update_health_hud()
 	return ..()
 
 /datum/hallucination/fake_health_doll/start()
-	return TRUE // Starts from creation
+	if(!ishuman(hallucinator))
+		return FALSE
 
-///Increments the severity of the damage seen on the doll
+	add_fake_limb()
+	del_timer_id = QDEL_IN(src, duration)
+	return TRUE
+
+/// Increments the severity of the damage seen on all the limbs we are already tracking.
 /datum/hallucination/fake_health_doll/proc/increment_fake_damage()
-	var/mob/living/carbon/human/human_mob = hallucinator
-	for(var/entry in human_mob.hal_screwydoll)
-		human_mob.hal_screwydoll[entry] = clamp(human_mob.hal_screwydoll[entry] + 1, 1, 5)
-	human_mob.update_health_hud()
 
-///Adds a fake limb to the hallucination datum effect
-/datum/hallucination/fake_health_doll/proc/add_fake_limb(specific_limb, severity)
-	var/static/list/screwy_limbs = list(
-		SCREWYDOLL_HEAD,
-		SCREWYDOLL_CHEST,
-		SCREWYDOLL_L_ARM,
-		SCREWYDOLL_R_ARM,
-		SCREWYDOLL_L_LEG,
-		SCREWYDOLL_R_LEG,
-	)
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		bodyparts[limb] = clamp(bodyparts[limb] + 1, 1, 5)
 
-	var/mob/living/carbon/human/human_mob = hallucinator
-	LAZYSET(human_mob.hal_screwydoll, specific_limb || pick(screwy_limbs), severity || rand(1, 5))
 	hallucinator.update_health_hud()
+
+/**
+ * Adds a fake limb to the effect.
+ *
+ * specific_limb - optional, the specific limb to apply the effect to. If not passed, picks a random limb
+ * seveirty - optional, the specific severity level to apply the effect. Clamped from 1 to 5. If not passed, picks a random number.
+ */
+/datum/hallucination/fake_health_doll/proc/add_fake_limb(obj/item/bodypart/specific_limb, severity)
+	var/mob/living/carbon/human/human_mob = hallucinator
+
+	var/obj/item/bodypart/picked = specific_limb || pick(human_mob.bodyparts)
+	if(!(picked in bodyparts))
+		RegisterSignal(picked, list(COMSIG_PARENT_QDELETING, COMSIG_BODYPART_REMOVED), .proc/remove_bodypart)
+		RegisterSignal(picked, COMSIG_BODYPART_UPDATING_HEALTH_HUD, .proc/on_bodypart_hud_update)
+		RegisterSignal(picked, COMSIG_BODYPART_CHECKED_FOR_INJURY, .proc/on_bodypart_checked)
+
+	bodyparts[picked] = clamp(severity || rand(1, 5), 1, 5)
+	hallucinator.update_health_hud()
+
+/// Remove a bodypart from our list, unregistering all associated signals and handling the reference
+/datum/hallucination/fake_health_doll/proc/remove_bodypart(obj/item/bodypart/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_BODYPART_REMOVED, COMSIG_BODYPART_UPDATING_HEALTH_HUD, COMSIG_BODYPART_CHECKED_FOR_INJURY))
+	bodyparts -= source
+
+/// Whenever a bodypart we're tracking has their health hud updated, override it with our fake overlay
+/datum/hallucination/fake_health_doll/proc/on_bodypart_hud_update(obj/item/bodypart/source, mob/living/carbon/human/owner)
+	SIGNAL_HANDLER
+
+	var/mutable_appearance/fake_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "[source.body_zone][bodyparts[source]]")
+	owner.hud_used.healthdoll.add_overlay(fake_overlay)
+	return COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD
+
+/datum/hallucination/fake_health_doll/proc/on_bodypart_checked(obj/item/bodypart/source, mob/living/carbon/examiner, list/check_list, list/limb_damage)
+	SIGNAL_HANDLER
+
+	limb_damage[1] = bodyparts[source] * 0.2 * source.max_damage

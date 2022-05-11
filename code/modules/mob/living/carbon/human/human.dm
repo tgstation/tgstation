@@ -721,12 +721,10 @@
 	hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
 	for(var/obj/item/bodypart/body_part as anything in bodyparts)
 		var/icon_num = 0
-		//Hallucinations
-		if(body_part.type in hal_screwydoll)
-			icon_num = hal_screwydoll[body_part.type]
-			hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
+
+		if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, src) & COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD)
 			continue
-		//Not hallucinating
+
 		var/damage = body_part.burn_dam + body_part.brute_dam
 		var/comparison = (body_part.max_damage/5)
 		if(damage)
