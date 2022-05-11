@@ -34,11 +34,34 @@
 	UnregisterSignal(target, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET))
 	return ..()
 
+/**
+ * Handles a venomous gun hitting a target with a projectile.
+ *
+ * Adds venom to the targets bloodstream.
+ *
+ * Arguments:
+ * * [fired_from][/atom]: The thing the projectile was fired from.
+ * * [firer][/atom/movable]: The mob that fired the projectile.
+ * * [target][/atom]: The atom that the projectile hit.
+ * * Angle: The angle the projectile was moving at upon impact.
+ */
 /datum/element/venomous/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER
 
 	add_reagent(target)
 
+/**
+ * Handles a venomous weapon hitting a target/being used on a target.
+ *
+ * Adds venom to the targets bloodstream if the attack was in melee.
+ *
+ * Arguments:
+ * * [source][/obj/item]: The venomous item being used on the target.
+ * * [target][/atom]: The atom that the attacker is attacking.
+ * * [user][/mob]: The mob wielding the source item.
+ * * proximity_flag: Whether the interaction was in melee range.
+ * * click_parameters: Various click-related parameters formatted as a string or assoc list.
+ */
 /datum/element/venomous/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
 
@@ -46,6 +69,16 @@
 		return
 	add_reagent(target)
 
+/**
+ * Handles a hostile, venomous mob punching a target.
+ *
+ * Adds venom to the targets bloodstream if the attack was successful.
+ *
+ * Arguments:
+ * * [attacker][/mob/living/simple_animal/hostile]: The venomous mob attacking a target.
+ * * [target][/atom]: The atom that the attacker is attacking.
+ * * success: Whether the attach successfully hit the target.
+ */
 /datum/element/venomous/proc/hostile_attackingtarget(mob/living/simple_animal/hostile/attacker, atom/target, success)
 	SIGNAL_HANDLER
 
@@ -53,6 +86,15 @@
 		return
 	add_reagent(target)
 
+/**
+ * Handles actually adding the venom reagent to the target
+ *
+ * Also handles exposing the target to the venom reagent.
+ * Also handles any transfer-based effects of the venom reagent.
+ *
+ * Arguments:
+ * - [target][/mob/living]: The mob that is getting venom added to its bloodstream.
+ */
 /datum/element/venomous/proc/add_reagent(mob/living/target)
 	if(!istype(target))
 		return
