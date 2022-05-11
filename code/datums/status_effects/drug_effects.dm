@@ -4,15 +4,13 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/woozy
 
-
 /datum/status_effect/woozy/nextmove_modifier()
 	return 1.5
 
 /atom/movable/screen/alert/status_effect/woozy
 	name = "Woozy"
-	desc = "You feel a bit slower than usual, it seems doing things with your hands takes longer than it usually does"
+	desc = "You feel a bit slower than usual, it seems doing things with your hands takes longer than it usually does."
 	icon_state = "woozy"
-
 
 /datum/status_effect/high_blood_pressure
 	id = "high_blood_pressure"
@@ -21,21 +19,24 @@
 	alert_type = /atom/movable/screen/alert/status_effect/high_blood_pressure
 
 /datum/status_effect/high_blood_pressure/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.bleed_mod *= 1.25
+	if(!ishuman(owner))
+		return FALSE
+
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.physiology.bleed_mod *= 1.25
+	return TRUE
 
 /datum/status_effect/high_blood_pressure/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.bleed_mod /= 1.25
+	if(!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.physiology.bleed_mod /= 1.25
 
 /atom/movable/screen/alert/status_effect/high_blood_pressure
 	name = "High blood pressure"
 	desc = "Your blood pressure is real high right now ... You'd probably bleed like a stuck pig."
 	icon_state = "highbloodpressure"
-
-
 
 /datum/status_effect/seizure
 	id = "seizure"

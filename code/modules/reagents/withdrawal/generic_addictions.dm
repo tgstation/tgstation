@@ -1,24 +1,23 @@
-///Opiods
-/datum/addiction/opiods
-	name = "opiod"
-	withdrawal_stage_messages = list("I feel aches in my bodies..", "I need some pain relief...", "It aches all over...I need some opiods!")
+///Opioids
+/datum/addiction/opioids
+	name = "opioid"
+	withdrawal_stage_messages = list("I feel aches in my bodies..", "I need some pain relief...", "It aches all over...I need some opioids!")
 
-/datum/addiction/opiods/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
+/datum/addiction/opioids/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	if(DT_PROB(10, delta_time))
 		affected_carbon.emote("yawn")
 
-/datum/addiction/opiods/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
+/datum/addiction/opioids/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.apply_status_effect(/datum/status_effect/high_blood_pressure)
 
-/datum/addiction/opiods/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
+/datum/addiction/opioids/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
 	if(affected_carbon.disgust < DISGUST_LEVEL_DISGUSTED && DT_PROB(7.5, delta_time))
 		affected_carbon.adjust_disgust(12.5 * delta_time)
 
-
-/datum/addiction/opiods/end_withdrawal(mob/living/carbon/affected_carbon)
+/datum/addiction/opioids/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.remove_status_effect(/datum/status_effect/high_blood_pressure)
 	affected_carbon.set_disgust(affected_carbon.disgust * 0.5) //half their disgust to help
