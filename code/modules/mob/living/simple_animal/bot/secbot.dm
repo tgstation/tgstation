@@ -332,7 +332,7 @@
 		if(BOT_IDLE) // idle
 			SSmove_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
-			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
+			if((mode == BOT_IDLE) && bot_mode_flags & BOT_MODE_AUTOPATROL) // didn't start hunting during look_for_perp, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
 
 		if(BOT_HUNT) // hunting for perp

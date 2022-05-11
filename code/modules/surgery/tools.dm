@@ -360,7 +360,7 @@
 	attack_verb_continuous = list("shears", "snips")
 	attack_verb_simple = list("shear", "snip")
 	sharpness = SHARP_EDGED
-	custom_premium_price = PAYCHECK_MEDIUM * 14
+	custom_premium_price = PAYCHECK_CREW * 14
 
 /obj/item/shears/attack(mob/living/amputee, mob/living/user)
 	if(!iscarbon(amputee) || user.combat_mode)
@@ -399,7 +399,7 @@
 	playsound(get_turf(patient), 'sound/items/ratchet.ogg', 20, TRUE)
 	if(patient.stat >= UNCONSCIOUS || HAS_TRAIT(patient, TRAIT_INCAPACITATED)) //if you're incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly line up a snip
 		amputation_speed_mod *= 0.5
-	if(patient.stat != DEAD && patient.jitteriness) //jittering will make it harder to secure the shears, even if you can't otherwise move
+	if(patient.stat != DEAD && patient.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to secure the shears, even if you can't otherwise move
 		amputation_speed_mod *= 1.5 //15*0.5*1.5=11.25, so staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to snip their head off, but staminacritting someone who isn't jittering will
 
 	if(do_after(user,  toolspeed * 15 SECONDS * amputation_speed_mod, target = patient))
@@ -453,3 +453,40 @@
 	attack_verb_simple = list("pump", "siphon")
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
+	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
+	var/list/whitelist = list()
+
+/obj/item/blood_filter/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BloodFilter", name)
+		ui.open()
+
+/obj/item/blood_filter/ui_data(mob/user)
+	var/list/data = list()
+	var/list/chem_names = list()
+	for(var/key in whitelist)
+		chem_names += whitelist[key]
+	data["whitelist"] = chem_names
+	return data
+
+/obj/item/blood_filter/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	. = TRUE
+	switch(action)
+		if("add")
+			var/new_chem_name = params["name"]
+			var/chem_id = get_chem_id(new_chem_name)
+			if(!chem_id || !new_chem_name)
+				to_chat(usr, span_warning("No such known reagent exists!"))
+				return
+			if(!(chem_id in whitelist))
+				whitelist[chem_id] = new_chem_name
+
+
+		if("remove")
+			var/chem_name = params["reagent"]
+			var/chem_id = get_chem_id(chem_name)
+			whitelist -= chem_id

@@ -15,7 +15,6 @@
 	. = ..()
 	dead_ai.name = src.name
 	dead_ai.real_name = src.name
-	dead_ai.aiPDA.toff = TRUE //turns the AI's PDA messenger off, stopping it showing up on player PDAs
 
 ///dead slimes, with a var for whatever color you want.
 /obj/effect/mob_spawn/corpse/slime

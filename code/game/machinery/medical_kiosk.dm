@@ -55,7 +55,7 @@
 
 	var/obj/item/card/id/card = paying.get_idcard(TRUE)
 	if(card?.registered_account?.account_job?.paycheck_department == payment_department)
-		use_power(20)
+		use_power(active_power_usage)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
@@ -63,7 +63,7 @@
 	var/bonus_fee = pandemonium ? rand(10,30) : 0
 	if(attempt_charge(src, paying, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
-	use_power(20)
+	use_power(active_power_usage)
 	paying_customer = TRUE
 	icon_state = "[base_icon_state]_active"
 	say("Thank you for your patronage!")
@@ -91,6 +91,7 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/medical_kiosk/RefreshParts()
+	. = ..()
 	var/obj/item/circuitboard/machine/medical_kiosk/board = circuit
 	if(board)
 		active_price = board.custom_cost

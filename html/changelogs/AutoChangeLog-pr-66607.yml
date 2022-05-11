@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - refactor: "Refactored how legs are rendered, using dynamically-generated masks to avoid left legs always displaying over right ones, or right legs above left ones."

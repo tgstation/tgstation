@@ -657,7 +657,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cg" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -1669,7 +1669,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "eA" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/r_wall,
 /area/awaymission/moonoutpost19/research)
 "eB" = (
@@ -1872,7 +1872,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "fe" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_x = 32
 	},
 /obj/structure/alien/weeds,
@@ -2893,11 +2893,8 @@
 /area/awaymission/moonoutpost19/research)
 "hr" = (
 /obj/structure/table,
-/obj/item/cartridge/signal/ordnance,
-/obj/item/cartridge/signal/ordnance{
-	pixel_x = -4;
-	pixel_y = 2
-	},
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
+/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -3367,7 +3364,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "iu" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/machinery/shower{
