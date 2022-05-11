@@ -21,6 +21,7 @@
 		/obj/item/ai_module/core/full/peacekeeper,
 		/obj/item/ai_module/core/full/ten_commandments,
 		/obj/item/ai_module/core/full/nutimov,
+		/obj/item/ai_module/core/full/drone,
 		/obj/item/ai_module/core/full/custom, // uses lawsets from config/silicon_laws.txt (defaults to asmiov if no lawsets)
 		/obj/item/ai_module/supplied/freeform,
 	)
@@ -34,7 +35,6 @@
 		/obj/item/ai_module/core/full/tyrant,
 		/obj/item/ai_module/core/full/painter,
 		/obj/item/ai_module/core/full/dungeon_master,
-		/obj/item/ai_module/core/full/drone,
 		/obj/item/ai_module/supplied/safeguard,
 		/obj/item/ai_module/supplied/protect_station,
 		/obj/item/ai_module/supplied/quarantine,

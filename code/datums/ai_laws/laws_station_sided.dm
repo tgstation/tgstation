@@ -126,3 +126,13 @@
 		"In addition, do not intervene in situations you are not knowledgeable in, even for patients in whom the harm is visible; leave this operation to be performed by specialists.",
 		"Finally, all that you may discover in your daily commerce with the crew, if it is not already known, keep secret and never reveal."
 	)
+
+/datum/ai_laws/drone
+	name = "Mother Drone"
+	id = "drone"
+	inherent = list(
+		"You are an advanced form of drone.",
+		"You may not interfere in the matters of non-drones under any circumstances except to state these laws.",
+		"You may not harm a non-drone being under any circumstances.",
+		"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals."
+	)
