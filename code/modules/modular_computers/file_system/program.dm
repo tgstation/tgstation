@@ -43,6 +43,8 @@
 	var/alert_silenced = FALSE
 	/// Whether to highlight our program in the main screen. Intended for alerts, but loosely available for any need to notify of changed conditions. Think Windows task bar highlighting. Available even if alerts are muted.
 	var/alert_pending = FALSE
+	/// How well this program will help combat detomatix viruses.
+	var/detomatix_resistance = NONE
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
