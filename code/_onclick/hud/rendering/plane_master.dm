@@ -7,6 +7,9 @@
 	var/show_alpha = 255
 	var/hide_alpha = 0
 
+	var/offset
+	var/real_plane
+
 	//--rendering relay vars--
 	///integer: what plane we will relay this planes render to
 	var/render_relay_plane = RENDER_PLANE_GAME
@@ -16,6 +19,19 @@
 	var/blend_mode_override
 	///reference: current relay this plane is utilizing to render
 	var/atom/movable/render_plane_relay/relay
+
+/atom/movable/screen/plane_master/New(offset = 0)
+	src.offset = offset
+	real_plane = plane
+	update_offset()
+
+/atom/movable/screen/plane_master/proc/update_offset()
+	name = "[initial(name)] #[offset]"
+	SET_PLANE_W_SCALAR(src, real_plane, offset)
+	if(render_relay_plane)
+		render_relay_plane = GET_NEW_PLANE(render_relay_plane, offset)
+	if(initial(render_target))
+		render_target = "[initial(render_target)] #[offset]"
 
 /atom/movable/screen/plane_master/proc/Show(override)
 	alpha = override || show_alpha

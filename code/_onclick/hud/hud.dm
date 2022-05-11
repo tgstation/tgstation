@@ -101,9 +101,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hand_slots = list()
 
 	for(var/mytype in subtypesof(/atom/movable/screen/plane_master)- /atom/movable/screen/plane_master/rendering_plate)
-		var/atom/movable/screen/plane_master/instance = new mytype()
-		plane_masters["[instance.plane]"] = instance
-		instance.backdrop(mymob)
+		for(var/plane_offset in 0 to SSmapping.max_plane_offset)
+			var/atom/movable/screen/plane_master/instance = new mytype(plane_offset)
+			plane_masters["[instance.plane]"] = instance
+			instance.backdrop(mymob)
 
 	var/datum/preferences/preferences = owner?.client?.prefs
 	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
@@ -118,6 +119,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
 
 	AddComponent(/datum/component/zparallax, owner.client)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_plane_increase)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
@@ -162,6 +164,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_NULL(screentip_text)
 
 	return ..()
+
+/datum/hud/proc/on_plane_increase(datum/source, old_max_offset, new_max_offset)
+	SIGNAL_HANDLER
+	for(var/mytype in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate)
+		for(var/plane_offset in old_max_offset + 1 to new_max_offset)
+			var/atom/movable/screen/plane_master/instance = new mytype(plane_offset)
+			plane_masters["[instance.plane]"] = instance
+			instance.backdrop(mymob)
 
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)

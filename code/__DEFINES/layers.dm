@@ -31,6 +31,71 @@
 
 #define ABOVE_GAME_PLANE -2
 
+
+#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+
+#define AREA_PLANE 60
+#define MASSIVE_OBJ_PLANE 70
+#define GHOST_PLANE 80
+#define POINT_PLANE 90
+
+#define RAD_TEXT_PLANE 90
+
+//---------- LIGHTING -------------
+///Normal 1 per turf dynamic lighting underlays
+#define LIGHTING_PLANE 100
+
+///Lighting objects that are "free floating"
+#define O_LIGHTING_VISUAL_PLANE 110
+#define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
+
+///Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 120
+
+///visibility + hiding of things outside of light source range
+#define BYOND_LIGHTING_PLANE 130
+
+/// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
+#define EMISSIVE_PLANE 150
+
+///---------------- MISC -----------------------
+
+///Pipecrawling images
+#define PIPECRAWL_IMAGES_PLANE 180
+
+///AI Camera Static
+#define CAMERA_STATIC_PLANE 200
+
+///Debug Atmos Overlays
+#define ATMOS_GROUP_PLANE 450
+
+#define FULLSCREEN_PLANE 500
+
+///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
+
+///Popup Chat Messages
+#define RUNECHAT_PLANE 501
+/// Plane for balloon text (text that fades up)
+#define BALLOON_CHAT_PLANE 502
+
+//-------------------- HUD ---------------------
+//HUD layer defines
+#define HUD_PLANE 1000
+#define ABOVE_HUD_PLANE 1100
+
+///Plane of the "splash" icon used that shows on the lobby screen. only render plate planes should be above this
+#define SPLASHSCREEN_PLANE 9900
+
+//-------------------- Rendering ---------------------
+#define RENDER_PLANE_GAME 9990
+#define RENDER_PLANE_NON_GAME 9995
+#define RENDER_PLANE_MASTER 9999
+
+// Lummox I swear to god I will find you
+#define HIGHEST_EVER_PLANE 10000
+/// The range unique planes can be in
+#define PLANE_RANGE (HIGHEST_EVER_PLANE - LOWEST_EVER_PLANE)
+
 // PLANE_SPACE layer(s)
 #define SPACE_LAYER 1.8
 
@@ -118,61 +183,26 @@
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
-
-#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
-
-#define AREA_PLANE 60
-#define MASSIVE_OBJ_PLANE 70
-#define GHOST_PLANE 80
-#define POINT_PLANE 90
-
-#define RAD_TEXT_PLANE 90
-
 //---------- LIGHTING -------------
-///Normal 1 per turf dynamic lighting underlays
-#define LIGHTING_PLANE 100
-
-///Lighting objects that are "free floating"
-#define O_LIGHTING_VISUAL_PLANE 110
-#define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
-
-///Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 120
 
 #define LIGHTING_PRIMARY_LAYER 15	//The layer for the main lights of the station
 #define LIGHTING_PRIMARY_DIMMER_LAYER 15.1	//The layer that dims the main lights of the station
 #define LIGHTING_SECONDARY_LAYER 16	//The colourful, usually small lights that go on top
 
 
-///visibility + hiding of things outside of light source range
-#define BYOND_LIGHTING_PLANE 130
 
 
 //---------- EMISSIVES -------------
 //Layering order of these is not particularly meaningful.
 //Important part is the seperation of the planes for control via plane_master
 
-/// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
-#define EMISSIVE_PLANE 150
 /// The render target used by the emissive layer.
 #define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
 /// The layer you should use if you _really_ don't want an emissive overlay to be blocked.
 #define EMISSIVE_LAYER_UNBLOCKABLE 9999
 
-///---------------- MISC -----------------------
-
-///Pipecrawling images
-#define PIPECRAWL_IMAGES_PLANE 180
-
-///AI Camera Static
-#define CAMERA_STATIC_PLANE 200
-
-///Debug Atmos Overlays
-#define ATMOS_GROUP_PLANE 450
-
 ///--------------- FULLSCREEN IMAGES ------------
 
-#define FULLSCREEN_PLANE 500
 #define FLASH_LAYER 1
 #define FULLSCREEN_LAYER 2
 #define UI_DAMAGE_LAYER 3
@@ -181,17 +211,7 @@
 #define CURSE_LAYER 6
 #define FOV_EFFECTS_LAYER 10000 //Blindness effects are not layer 4, they lie to you
 
-///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
-
-///Popup Chat Messages
-#define RUNECHAT_PLANE 501
-/// Plane for balloon text (text that fades up)
-#define BALLOON_CHAT_PLANE 502
-
-//-------------------- HUD ---------------------
-//HUD layer defines
-#define HUD_PLANE 1000
-#define ABOVE_HUD_PLANE 1100
+//----------------------------------------------------
 
 #define RADIAL_BACKGROUND_LAYER 0
 ///1000 is an unimportant number, it's just to normalize copied layers
@@ -202,14 +222,6 @@
 ///Layer for screentips
 #define SCREENTIP_LAYER 4
 
-///Plane of the "splash" icon used that shows on the lobby screen. only render plate planes should be above this
-#define SPLASHSCREEN_PLANE 9900
-
-//-------------------- Rendering ---------------------
-#define RENDER_PLANE_GAME 9990
-#define RENDER_PLANE_NON_GAME 9995
-#define RENDER_PLANE_MASTER 9999
-//----------------------------------------------------
 
 #define LOBBY_BACKGROUND_LAYER 3
 #define LOBBY_BUTTON_LAYER 4

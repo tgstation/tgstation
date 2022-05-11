@@ -25,6 +25,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/holodeck_templates = list()
 
 	var/list/areas_in_z = list()
+	var/list/z_level_to_plane_offset = list()
+	var/max_plane_offset = 0
 
 	var/loading_ruins = FALSE
 	var/list/turf/unused_turfs = list() //Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
@@ -622,3 +624,35 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		spawner.spawn_loot()
 		qdel(spawner)
+
+// NOTE:
+// All this code HAS to run before any linked layers generate
+// We do not suppport adding up/down linking later in the process
+/datum/controller/subsystem/mapping/proc/add_to_plane_tracking(datum/space_level/new_z)
+	// We are guarenteed that we'll always grow bottom up
+	// Suck it jannies
+	z_level_to_plane_offset.len += 1
+	// 0's the default value, we'll update it later if required
+	z_level_to_plane_offset[new_z.z_value] = 0
+	var/below_offset = new_z.traits[ZTRAIT_DOWN]
+	if(below_offset)
+		update_plane_tracking(new_z)
+
+/datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
+	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go
+	// Yes this will cause infinite loops if our templating is fucked. Fuck off
+	var/below_offset = 0
+	// I'm sorry, it needs to start at 0
+	var/current_level = -1
+	var/current_z = update_with.z_value
+	do
+		current_level += 1
+		current_z += below_offset
+		z_level_to_plane_offset[current_z] = current_level
+		var/datum/space_level/next_level = z_list[current_z]
+		below_offset = next_level.traits[ZTRAIT_DOWN]
+	while(below_offset)
+	var/old_max = max_plane_offset
+	max_plane_offset = max(max_plane_offset, current_level)
+	if(max_plane_offset != old_max)
+		SEND_SIGNAL(src, COMSIG_PLANE_OFFSET_INCREASE, old_max, max_plane_offset)
