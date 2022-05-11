@@ -82,7 +82,7 @@
 	for(var/mob/living/listener in song_datum.hearing_mobs)
 		if(listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
 			continue
-		listener.apply_status_effect(/datum/status_effect/antimagic, 2 MINUTES)
+		listener.apply_status_effect(/datum/status_effect/song/antimagic)
 
 /datum/religion_rites/song_tuner/pain
 	name = "Murderous Chord"

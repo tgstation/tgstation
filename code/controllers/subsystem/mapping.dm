@@ -40,6 +40,7 @@ SUBSYSTEM_DEF(mapping)
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
 	var/space_levels_so_far = 0
+	///list of all the z level datums created representing the z levels in the world
 	var/list/z_list
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
@@ -66,6 +67,7 @@ SUBSYSTEM_DEF(mapping)
 			config = old_config
 	initialize_biomes()
 	loadWorld()
+	determine_fake_sale()
 	repopulate_sorted_areas()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
@@ -187,6 +189,13 @@ Used by the AI doomsday and the self-destruct nuke.
 	for(var/N in nuke_tiles)
 		var/turf/open/floor/circuit/C = N
 		C.update_appearance()
+
+/datum/controller/subsystem/mapping/proc/determine_fake_sale()
+	if(length(SSmapping.levels_by_all_traits(list(ZTRAIT_STATION, ZTRAIT_NOPARALLAX))))
+		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakeice/loaded
+	else
+		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakespace/loaded
+
 
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
@@ -386,24 +395,25 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/mapvote()
 	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
 		return
-	if(SSvote.mode) //Theres already a vote running, default to rotation.
+	if(SSvote.current_vote) //Theres already a vote running, default to rotation.
 		maprotate()
-	SSvote.initiate_vote("map", "automatic map rotation")
+		return
+	SSvote.initiate_vote(/datum/vote/map_vote, "automatic map rotation")
 
-/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
-	if(!VM.MakeNextMap())
+/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/change_to)
+	if(!change_to.MakeNextMap())
 		next_map_config = load_default_map_config()
-		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
+		message_admins("Failed to set new map with next_map.json for [change_to.map_name]! Using default as backup!")
 		return
 
-	if (VM.config_min_users > 0 && GLOB.clients.len < VM.config_min_users)
-		message_admins("[VM.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-		log_game("[VM.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (VM.config_max_users > 0 && GLOB.clients.len > VM.config_max_users)
-		message_admins("[VM.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
-		log_game("[VM.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
+	if (change_to.config_min_users > 0 && GLOB.clients.len < change_to.config_min_users)
+		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
+		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
+	if (change_to.config_max_users > 0 && GLOB.clients.len > change_to.config_max_users)
+		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
+		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 
-	next_map_config = VM
+	next_map_config = change_to
 	return TRUE
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
