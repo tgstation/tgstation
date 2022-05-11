@@ -44,7 +44,7 @@
 	. = TRUE
 	if(istype(tool, /obj/item/shockpaddles))
 		var/obj/item/shockpaddles/paddles = tool
-		if((paddles.req_defib && !paddles.defib.powered) || !paddles.wielded || paddles.cooldown || paddles.busy)
+		if((paddles.req_defib && !paddles.defib.powered) || !HAS_TRAIT(paddles, TRAIT_WIELDED) || paddles.cooldown || paddles.busy)
 			to_chat(user, span_warning("You need to wield both paddles, and [paddles.defib] must be powered!"))
 			return FALSE
 	if(istype(tool, /obj/item/melee/baton/security))
