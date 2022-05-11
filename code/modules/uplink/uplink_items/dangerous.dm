@@ -20,6 +20,14 @@
 
 // Low progression cost
 
+/datum/uplink_item/dangerous/Ntsaber
+	name = "Nanotrasen Saber SMG"
+	desc = "Fully automatic submachine gun, very robust if you have the tc for it. Can be stored in belt slot. \
+			Also comes with a supressor for your stealth needs."
+	item = /obj/item/storage/box/nano_kit/smg
+	cost = 27
+	purchasable_from = UPLINK_NANO
+
 /datum/uplink_item/dangerous/pistol
 	name = "Makarov Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
