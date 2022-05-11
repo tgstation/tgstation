@@ -1,0 +1,8 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - rscdel: "The following job cartridges have been deleted: Detective, Lawyer, Janitor, Curator, Roboticist and Scientist (without sensor pack)."
+  - balance: "The following tablet apps has had their storage space cost lowered Robocontrol 12 -> 6, Power monitor 9 -> 8, Budget ordering 20 -> 10, Power alarms 5 -> 4, Science hub 16 -> 10."
+  - balance: "You no longer need an MC Scanner part to use the tablet's remote signalling device application."
+  - balance: "Cartridges no longer let you run applications off of them, but you can still download applications off of them. Additionally, applications that were once on a roundstart cartridge (or were a program you had pre-Ntos PDAs) has been moved to be downloaded onto your tablet roundstart."
+  - qol: "The Eject Disk button on the tablet's UI has been moved to the very top to not clutter your UI as much."
