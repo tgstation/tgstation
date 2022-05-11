@@ -189,6 +189,11 @@
 	if(locate(/datum/wound/burn) in wounds)
 		. += span_warning("The flesh on this limb appears badly cooked.")
 
+/**
+ * Called when a bodypart is checked for injuries.
+ *
+ * Modifies the check_list list with the resulting report of the limb's status.
+ */
 /obj/item/bodypart/proc/check_for_injuries(mob/living/carbon/human/examiner, list/check_list)
 
 	var/list/limb_damage = list(brute_dam, burn_dam)
