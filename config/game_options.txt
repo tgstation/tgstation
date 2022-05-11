@@ -265,27 +265,27 @@ RANDOM_LAWS corporate
 LAW_WEIGHT custom,0
 
 ## standard-ish laws. These are fairly ok to run
-LAW_WEIGHT asimov,32
-LAW_WEIGHT asimovpp,12
-LAW_WEIGHT paladin,12
-LAW_WEIGHT paladin5,12
-LAW_WEIGHT robocop,12
-LAW_WEIGHT corporate,12
-LAW_WEIGHT hippocratic,12
-LAW_WEIGHT maintain,12
-LAW_WEIGHT liveandletlive,12
-LAW_WEIGHT peacekeeper,12
-LAW_WEIGHT ten_commandments,12
-LAW_WEIGHT nutimov,12
+LAW_WEIGHT asimov,10
+LAW_WEIGHT asimovpp,2
+LAW_WEIGHT paladin,2
+LAW_WEIGHT paladin5,2
+LAW_WEIGHT robocop,2
+LAW_WEIGHT corporate,2
+LAW_WEIGHT hippocratic,2
+LAW_WEIGHT maintain,2
+LAW_WEIGHT liveandletlive,2
+LAW_WEIGHT peacekeeper,2
+LAW_WEIGHT ten_commandments,2
+LAW_WEIGHT nutimov,2
+LAW_WEIGHT drone,2
 
 ## Quirky laws. Shouldn't cause too much harm
-LAW_WEIGHT drone,4
-LAW_WEIGHT reporter,4
-LAW_WEIGHT hulkamania,4
-LAW_WEIGHT tyrant,4
-LAW_WEIGHT overlord,4
-LAW_WEIGHT painter,4
-LAW_WEIGHT dungeon_master,4
+LAW_WEIGHT reporter,1
+LAW_WEIGHT hulkamania,1
+LAW_WEIGHT tyrant,1
+LAW_WEIGHT overlord,1
+LAW_WEIGHT painter,1
+LAW_WEIGHT dungeon_master,1
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0
