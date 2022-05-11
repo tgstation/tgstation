@@ -5,15 +5,12 @@ SUBSYSTEM_DEF(speech_controller)
 	priority = FIRE_PRIORITY_SPEECH_CONTROLLER//has to be high priority, second in priority ONLY to SSinput
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
-	///used so that an admin can force all speech verbs to execute immediately instead of queueing
-	var/FOR_ADMINS_IF_BROKE_immediately_execute_all_speech = FALSE
-
 	///list of the form: list(client mob, message that mob is queued to say, other say arguments (if any)).
 	///this is our process queue, processed every tick.
 	var/list/queued_says_to_execute = list()
 
 ///queues mob_to_queue into our process list so they say(message) near the start of the next tick
-/datum/controller/subsystem/speech_controller/proc/queue_say_for_mob(mob/mob_to_queue, message, message_type)
+/datum/controller/subsystem/verb_manager/speech_controller/proc/queue_say_for_mob(mob/mob_to_queue, message, message_type)
 
 	if(!TICK_CHECK || FOR_ADMINS_IF_BROKE_immediately_execute_all_speech)
 		process_single_say(mob_to_queue, message, message_type)
@@ -23,7 +20,7 @@ SUBSYSTEM_DEF(speech_controller)
 
 	return TRUE
 
-/datum/controller/subsystem/speech_controller/fire(resumed)
+/datum/controller/subsystem/verb_manager/speech_controller/fire(resumed)
 
 	///	cache for sanic speed (lists are references anyways)
 	var/list/says_to_process = queued_says_to_execute.Copy()
@@ -39,7 +36,7 @@ SUBSYSTEM_DEF(speech_controller)
 
 ///used in fire() to process a single mobs message through the relevant proc.
 ///only exists so that sleeps in the message pipeline dont cause the whole queue to wait
-/datum/controller/subsystem/speech_controller/proc/process_single_say(mob/mob_to_speak, message, message_category)
+/datum/controller/subsystem/verb_manager/speech_controller/proc/process_single_say(mob/mob_to_speak, message, message_category)
 	set waitfor = FALSE
 
 	switch(message_category)

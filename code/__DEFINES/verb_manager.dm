@@ -14,6 +14,11 @@
 #define VERB_DEFAULT_QUEUE_THRESHOLD 85
 
 ///attempt to queue this verb process if the server is overloaded. evaluates to FALSE if queuing isnt necessary or if it failed.
-#define TRY_QUEUE_VERB(_object, _proc, _tick_check, _args...) ((TICK_USAGE > _tick_check) && SSverb_manager.initialized && SSverb_manager.queue_verb(_object, _proc, _args))
+///_verification_args... are only necessary if the verb_manager subsystem youre using checks them in can_queue_verb()
+#define TRY_QUEUE_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) (_queue_verb(_verb_callback, _tick_check, _subsystem_to_use, _verification_args))
 ///queue wrapper for TRY_QUEUE_VERB() when you want to call the proc if the server isnt overloaded enough to queue
-#define QUEUE_OR_CALL_VERB(_object, _proc, _tick_check, _args...) if(!TRY_QUEUE_VERB(_object, _proc, _tick_check, _args)) {call(_object, _proc)(_args)};
+#define QUEUE_OR_CALL_VERB(_verb_callback, _tick_check, _subsystem_to_use, _verification_args...) if(!TRY_QUEUE_VERB(_verb_callback, _tick_check, _verification_args)) {_verb_callback.InvokeAsync()};
+
+//goes straight to SSverb_manager
+#define DEFAULT_TRY_QUEUE_VERB(_verb_callback, _verification_args...) (TRY_QUEUE_VERB(_verb_callback, VERB_DEFAULT_QUEUE_THRESHOLD, null, _verification_args))
+#define DEFAULT_QUEUE_OR_CALL_VERB(_verb_callback, _verification_args...) (QUEUE_OR_CALL_VERB(_verb_callback, VERB_DEFAULT_QUEUE_THRESHOLD, null, _verification_args))

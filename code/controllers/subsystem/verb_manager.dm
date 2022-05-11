@@ -49,34 +49,72 @@ SUBSYSTEM_DEF(verb_manager)
 	///running average of how many verb callbacks are executed every second. used for the stat entry
 	var/verbs_executed_per_second = 0
 
+	///if TRUE we treat usr's with holders just like usr's without holders. otherwise they always execute immediately
+	var/can_queue_admin_verbs = FALSE
+
+	///if this is true all verbs immediately execute and dont queue. in case the mc is fucked or something
 	var/FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs = FALSE
 
+	///used for subtypes to determine if they use their own stats
+	var/use_default_stats = TRUE
+
 /**
- * queue a callback for the given proc and any given arguments, so that they process in the next tick.
+ * queue a callback for the given proc and any given arguments to the specified verb subsystem, so that they process in the next tick.
  * intended to only work with verbs or verblike procs called directly from client input, use as part of TRY_QUEUE_VERB()
  *
  * returns TRUE if the queuing was successful, FALSE otherwise.
  */
-/datum/controller/subsystem/verb_manager/proc/queue_verb(datum/thing_to_call, proc_to_call, ...)
-	//since this queue is meant specifically to delay user input as little as possible without overrunning the tick, the callback must have usr.
-	//no, you cant queue everything up for this eat shit. if its not user input then it cant go into a queue that never yields
-	if(QDELETED(thing_to_call) \
-	|| !proc_to_call \
+/proc/_queue_verb(datum/callback/verb_callback/incoming_callback, tick_check, datum/controller/subsystem/verb_manager/subsystem_to_use, ...)
+	if(TICK_USAGE < tick_check \
+	|| QDELETED(incoming_callback) \
+	|| QDELETED(incoming_callback.object) \
+	|| !incoming_callback.proc_to_call \
 	|| !ismob(usr) \
-	|| QDELING(usr) \
-	|| usr.client?.holder /*dont worry admins cant cause overtime :clueless:*/ \
+	|| QDELING(usr))
+		return FALSE
+
+	subsystem_to_use = subsystem_to_use || SSverb_manager
+	if(!istype(subsystem_to_use))
+		return FALSE
+
+	var/list/args_to_check = args.Cut(2, 4)//cut out tick_check and subsystem_to_use
+
+	//any subsystem can use the additional arguments to refuse queuing
+	if(!subsystem_to_use.can_queue_verb(arglist(args_to_check))
+		return FALSE
+
+	return subsystem_to_use.queue_verb(incoming_callback)
+
+/**
+ * subsystem-specific check for whether a callback can be queued.
+ * designed so that subtypes can accept specific /datum/callback/verb_callback subtypes if they wish,
+ * so that you cant fuck up giving them the arguments they need.
+ *
+ * subtypes may include additional arguments here if they need them! you just need to include them properly
+ * in TRY_QUEUE_VERB() and co.
+ */
+/datum/controller/subsystem/verb_manager/proc/can_queue_verb(datum/callback/verb_callback/incoming_callback)
+	if(usr.client?.holder && !can_queue_admin_verbs \
 	|| FOR_ADMINS_IF_VERBS_FUCKED_immediately_execute_all_verbs \
 	|| !initialized \
 	|| !(runlevels & Master.current_runlevel))
 		return FALSE
 
-	verb_queue += CALLBACK(arglist(args))
+/**
+ * queue a callback for the given proc, so that it is invoked in the next tick.
+ * intended to only work with verbs or verblike procs called directly from client input, use as part of TRY_QUEUE_VERB()
+ *
+ * returns TRUE if the queuing was successful, FALSE otherwise.
+ */
+/datum/controller/subsystem/verb_manager/proc/queue_verb(datum/callback/verb_callback/incoming_callback)
+	. = FALSE //errored
+	verb_queue += incoming_callback
 	return TRUE
 
 /datum/controller/subsystem/verb_manager/fire(resumed)
 	var/executed_verbs = 0
 
-	for(var/datum/callback/verb_callback in verb_queue)
+	for(var/datum/callback/verb_callback/verb_callback in verb_queue)
 		verb_callback.InvokeAsync()
 		executed_verbs++
 
@@ -85,4 +123,5 @@ SUBSYSTEM_DEF(verb_manager)
 
 /datum/controller/subsystem/verb_manager/stat_entry(msg)
 	. = ..()
-	. += "V/S: [round(verbs_executed_per_second, 0.01)]"
+	if(use_default_stats)
+		. += "V/S: [round(verbs_executed_per_second, 0.01)]"

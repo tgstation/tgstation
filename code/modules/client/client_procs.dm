@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	//fun fact: Topic() acts like a verb and is executed at the end of the tick like other verbs. So we have to queue it if the server is
 	//overloaded
-	if(hsrc && hsrc != holder && TRY_QUEUE_VERB(src, .proc/Topic_wrapper, VERB_DEFAULT_QUEUE_THRESHOLD, hsrc, href, href_list))
+	if(hsrc && hsrc != holder && DEFAULT_TRY_QUEUE_VERB(VERB_CALLBACK(src, .proc/Topic_wrapper, hsrc, href, href_list)))
 		return
 	..() //redirect to hsrc.Topic()
 
@@ -938,7 +938,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	//check if the server is overloaded and if it is then queue up the click for next tick
-	if(SSinput.queue_click_from_usr(object, location, control, params))
+	//if(SSinput.queue_click_from_usr(object, location, control, params))
+	//	return //TODOKYLER: fix
+	if(TRY_QUEUE_VERB(VERB_CALLBACK(object, location, control, params), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSinput, control))
 		return
 
 	if (hotkeys)
