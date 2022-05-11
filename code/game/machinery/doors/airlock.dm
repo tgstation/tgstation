@@ -1112,11 +1112,9 @@
 		return
 
 	if(!operating)
-		if(istype(I, /obj/item/fireaxe)) //being fireaxe'd
-			var/obj/item/fireaxe/axe = I
-			if(axe && !axe.wielded)
-				to_chat(user, span_warning("You need to be wielding \the [axe] to do that!"))
-				return
+		if(istype(I, /obj/item/fireaxe) && !HAS_TRAIT(I, TRAIT_WIELDED)) //being fireaxe'd
+			to_chat(user, span_warning("You need to be wielding [I] to do that!"))
+			return
 		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 
 /obj/machinery/door/airlock/open(forced=0)

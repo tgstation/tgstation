@@ -17,8 +17,8 @@
 	hallucinator.playsound_local(get_turf(src), SFX_SPARKS, 100, TRUE)
 	hallucinator.adjustStaminaLoss(50)
 	hallucinator.Stun(4 SECONDS)
-	hallucinator.jitteriness += 1000
-	hallucinator.do_jitter_animation(hallucinator.jitteriness)
+	hallucinator.do_jitter_animation(300) // Maximum jitter
+	hallucinator.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
 
 	addtimer(CALLBACK(src, .proc/reset_shock_animation, shock_image, electrocution_skeleton_anim), 4 SECONDS)
 	addtimer(CALLBACK(src, .proc/shock_drop), 2 SECONDS)
@@ -36,5 +36,4 @@
 	if(QDELETED(hallucinator))
 		return
 
-	hallucinator.jitteriness = max(hallucinator.jitteriness - 990, 10) // Still jittery, but vastly less
 	hallucinator.Paralyze(6 SECONDS)

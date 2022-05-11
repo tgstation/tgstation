@@ -1,5 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - qol: "department signs have directional variants"
-  - code_imp: "sign paths are now in snake_case"

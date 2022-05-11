@@ -64,7 +64,7 @@
 			human_in_range.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/hallucination, max_duration = 240 SECONDS)
 
 		if(DT_PROB(40, delta_time))
-			human_in_range.Jitter(5)
+			human_in_range.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 
 		if(human_in_range.getStaminaLoss() <= 85 && DT_PROB(30, delta_time))
 			human_in_range.emote(pick("giggle", "laugh"))
