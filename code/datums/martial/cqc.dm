@@ -222,12 +222,37 @@
 ///Subtype of CQC. Only used for the chef.
 /datum/martial_art/cqc/under_siege
 	name = "Close Quarters Cooking"
-	var/list/kitchen_areas
+	///List of all areas that CQC will work in, defaults to Kitchen.
+	var/list/kitchen_areas = list(/area/station/service/kitchen)
 
-/// Refreshes the valid areas from the cook job singleton, otherwise uses the default kitchen area as a fallback option. See also [/datum/job/cook/New].
+/// Refreshes the valid areas from the cook's mapping config, adding areas in config to the list of possible areas.
 /datum/martial_art/cqc/under_siege/proc/refresh_valid_areas()
-	var/datum/job/cook/cook_job = SSjob.GetJobType(/datum/job/cook)
-	kitchen_areas = cook_job.kitchen_areas.Copy()
+	var/list/job_changes = SSmapping.config.job_changes
+
+	if(!length(job_changes))
+		return
+
+	var/list/cook_changes = job_changes[JOB_COOK]
+
+	if(!length(cook_changes))
+		return
+
+	var/list/additional_cqc_areas = cook_changes["additional_cqc_areas"]
+
+	if(!additional_cqc_areas)
+		return
+
+	if(!islist(additional_cqc_areas))
+		stack_trace("Incorrect CQC area format from mapping configs. Expected /list, got: \[[additional_cqc_areas.type]\]")
+		return
+
+	for(var/path_as_text in additional_cqc_areas)
+		var/path = text2path(path_as_text)
+		if(!ispath(path, /area))
+			stack_trace("Invalid path in mapping config for chef CQC: \[[path_as_text]\]")
+			continue
+
+		kitchen_areas |= path
 
 /// Limits where the chef's CQC can be used to only whitelisted areas.
 /datum/martial_art/cqc/under_siege/can_use(mob/living/owner)
