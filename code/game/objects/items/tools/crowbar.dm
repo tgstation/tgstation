@@ -83,6 +83,7 @@
 	custom_materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	force_opens = TRUE
 
