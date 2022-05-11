@@ -3,9 +3,6 @@
 	icon_state = "spark"
 	color = "#FFFF00"
 	nodamage = FALSE
-	paralyze = 10 SECONDS
-	stutter = 10 SECONDS
-	jitter = 2 SECONDS
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
 	tracer_type = /obj/effect/projectile/tracer/stun
