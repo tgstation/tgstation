@@ -37796,10 +37796,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"kDR" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall,
-/area/station/engineering/storage/tech)
 "kEl" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/conveyor{
@@ -114796,13 +114792,13 @@ lcS
 kNK
 hyl
 hXK
-hAJ
-fqQ
-hAJ
+vqM
+vqM
+vqM
 dUK
-kDR
-hAJ
-fqQ
+dHq
+vqM
+vVT
 woJ
 fhs
 gmG
@@ -115053,7 +115049,7 @@ rmI
 tzI
 ueZ
 djW
-vqM
+vVT
 dsH
 lWQ
 nWG
@@ -116338,13 +116334,13 @@ vfb
 fgJ
 iQY
 iiM
-hAJ
+vqM
 kax
-hAJ
+vqM
 oqN
-hAJ
-fqQ
-gmG
+vqM
+vqM
+cfL
 een
 iGg
 vKO

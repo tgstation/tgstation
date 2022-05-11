@@ -6003,9 +6003,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 2
-	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "cnv" = (
@@ -18179,9 +18177,9 @@
 /turf/open/floor/wood,
 /area/station/command/corporate_showroom)
 "gMp" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/engineering/storage/tech)
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
 "gMt" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
 	dir = 4
@@ -19333,6 +19331,7 @@
 /area/station/security/brig)
 "hht" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "hhN" = (
@@ -22289,6 +22288,7 @@
 "ihx" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "ihB" = (
@@ -26263,6 +26263,7 @@
 /obj/machinery/holopad,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "jtA" = (
@@ -29674,6 +29675,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "kEe" = (
@@ -60328,6 +60330,7 @@
 "vlh" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/rnd_secure_all,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "vlp" = (
@@ -104875,9 +104878,9 @@ qXB
 qXB
 hHd
 qXB
-aaa
-aaa
-aaa
+gMp
+gMp
+gMp
 adp
 vFB
 fRS
@@ -105647,7 +105650,7 @@ dVb
 eWW
 tCS
 lxv
-gMp
+jhS
 lkW
 xww
 jsv
