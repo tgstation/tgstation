@@ -1741,6 +1741,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	. = ..()
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPEECH_IMPEDIMENT, "Impede Speech (Slurring, stuttering, etc)")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_HALLUCINATION, "Give Hallucination")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_DELUSION_HALLUCINATION, "Give Delusion Hallucination")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -1749,6 +1751,16 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(!check_rights(NONE))
 			return
 		admin_give_speech_impediment(usr)
+
+	if(href_list[VV_HK_GIVE_HALLUCINATION])
+		if(!check_rights(NONE))
+			return
+		admin_give_hallucination(usr)
+
+	if(href_list[VV_HK_GIVE_DELUSION_HALLUCINATION])
+		if(!check_rights(NONE))
+			return
+		admin_give_delusion(usr)
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
@@ -2291,3 +2303,95 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 
 	adjust_timed_status_effect(duration SECONDS, impediments[chosen])
+
+/// Admin only proc for making the mob hallucinate a certain thing
+/mob/living/proc/admin_give_hallucination(mob/admin)
+	if(!admin || !check_rights(NONE))
+		return
+
+	var/list/hallucinations = subtypesof(/datum/hallucination)
+
+	var/chosen = tgui_input_list(admin, "What hallucination do you want to give to [src]? Note, some subtypes are abstract and will do nothing.", "Give Hallucination", hallucinations)
+	if(!chosen || !ispath(chosen, /datum/hallucination) || QDELETED(src) || !check_rights(NONE))
+		return
+
+	if(!cause_hallucination(chosen, "admin forced"))
+		to_chat(admin, "That hallucination ([chosen]) could not be run, is invalid with this type of mob, or has no effects.")
+		return
+
+	message_admins("[key_name_admin(admin)] gave [ADMIN_LOOKUPFLW(src)] a hallucination. (Type: [chosen])")
+	log_admin("[key_name(admin)] gave [src] a hallucination. (Type: [chosen])")
+
+/// Admin only proc for giving the mob a delusion hallucination with specific arguments
+/mob/living/proc/admin_give_delusion(mob/admin)
+	if(!admin || !check_rights(NONE))
+		return
+
+	var/list/delusions = subtypesof(/datum/hallucination/delusion) - /datum/hallucination/delusion/preset
+
+	var/chosen = tgui_input_list(admin, "What delusion do you want to give to [src]?", "Give Delusion", delusions)
+	if(!chosen || !ispath(chosen, /datum/hallucination/delusion) || QDELETED(src) || !check_rights(NONE))
+		return
+
+	var/duration = tgui_input_number(admin, "How long should it last in deciseconds?", "Give Delusion", max_value = INFINITY, min_value = 10, default = 30 SECONDS)
+	if(QDELETED(src) || !check_rights(NONE))
+		return
+
+	var/list/options = list("Yes", "No")
+	var/affects_us = (tgui_alert(admin, "Should the mob see themselves as the delusion?", "Give Delusion", options) == "Yes")
+	if(QDELETED(src) || !check_rights(NONE))
+		return
+
+	var/affects_others = (tgui_alert(admin, "Should the mob see everyone else delusion?", "Give Delusion", options) == "Yes")
+	if(QDELETED(src) || !check_rights(NONE))
+		return
+
+	var/skip_nearby = (tgui_alert(admin, "Should the mob only see people outside of their view as the delusion?", "Give Delusion", options) == "Yes")
+	if(QDELETED(src) || !check_rights(NONE))
+		return
+
+	var/play_wabbajack = (tgui_alert(admin, "Play the wabbajack sound when it's done?", "Give Delusion", options) == "Yes")
+	if(QDELETED(src) || !check_rights(NONE))
+		return
+
+	if(ispath(chosen, /datum/hallucination/delusion/custom))
+
+		var/custom_file = input("Pick file for custom delusion:", "File") as null|file
+		if(!custom_file || QDELETED(src) || !check_rights(NONE))
+			return
+
+		var/custom_icon_state = tgui_input_text(admin, "What icon state do you wanna use from the file?", "Icon State")
+		if(!custom_icon_state || QDELETED(src) || !check_rights(NONE))
+			return
+
+		var/custom_name = tgui_input_text(admin, "What name should it show up as?", "Name")
+		if(QDELETED(src) || !check_rights(NONE))
+			return
+
+		message_admins("[key_name_admin(admin)] gave [ADMIN_LOOKUPFLW(src)] a custom delusion hallucination.")
+		log_admin("[key_name(admin)] gave [src] a custom delusion hallucination.")
+		cause_hallucination(
+			chosen,
+			"admin forced",
+			duration,
+			affects_us,
+			affects_others,
+			skip_nearby,
+			play_wabbajack,
+			custom_file,
+			custom_icon_state,
+			custom_name,
+		)
+
+	else
+		message_admins("[key_name_admin(admin)] gave [ADMIN_LOOKUPFLW(src)] a delusion hallucination. (Type: [chosen])")
+		log_admin("[key_name(admin)] gave [src] a delusion hallucination. (Type: [chosen])")
+		cause_hallucination(
+			chosen,
+			"admin forced",
+			duration,
+			affects_us,
+			affects_others,
+			skip_nearby,
+			play_wabbajack,
+		)

@@ -124,6 +124,8 @@
 	interaction_flags_item = NONE
 	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	/// The hallucination that created us.
+	var/datum/hallucination/parent
 
 /obj/item/hallucinated/Initialize(mapload, datum/hallucination/parent)
 	. = ..()
@@ -131,4 +133,18 @@
 		stack_trace("[type] was created without a parent hallucination.")
 		return INITIALIZE_HINT_QDEL
 
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/parent_deleting)
+	src.parent = parent
+
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+
+/obj/item/hallucinated/Destroy(force)
+	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	parent = null
+	return ..()
+
+/// Signal proc for [COMSIG_PARENT_QDELETING], if our associated hallucination deletes, we should too
+/obj/item/hallucinated/proc/parent_deleting(datum/source)
+	SIGNAL_HANDLER
+
+	qdel(src)

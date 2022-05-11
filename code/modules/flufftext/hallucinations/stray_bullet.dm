@@ -75,12 +75,12 @@
 	qdel(src)
 
 /obj/projectile/hallucination/fire()
-	. = ..()
 	if(hal_fire_sound)
 		parent.hallucinator.playsound_local(get_turf(src), hal_fire_sound, 60, TRUE)
 
 	fake_bullet = image('icons/obj/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
 	parent.hallucinator.client?.images += fake_bullet
+	return ..()
 
 /obj/projectile/hallucination/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()

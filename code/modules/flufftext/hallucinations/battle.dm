@@ -33,6 +33,7 @@
 /datum/hallucination/battle/gun/start()
 	var/turf/source = random_far_turf()
 	fire_loop(source, rand(shots_to_fire_lower_range, shots_to_fire_upper_range))
+	return TRUE
 
 /// The main loop for gun based hallucinations.
 /datum/hallucination/battle/gun/proc/fire_loop(turf/source, shots_left = 3, hits = 0)
@@ -93,6 +94,7 @@
 	hallucinator.playsound_local(source, 'sound/weapons/egloves.ogg', 40, TRUE)
 	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
 	addtimer(CALLBACK(src, .proc/fake_cuff, source), 2 SECONDS)
+	return TRUE
 
 /// Plays a fake cable-cuff sound and deletes the hallucination.
 /datum/hallucination/battle/stun_prod/proc/fake_cuff(turf/source)
@@ -112,6 +114,7 @@
 	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
 
 	addtimer(CALLBACK(src, .proc/harmbaton_loop, source, rand(5, 12)), 2 SECONDS)
+	return TRUE
 
 /// The main sound loop for harmbatonning.
 /datum/hallucination/battle/harm_baton/proc/harmbaton_loop(turf/source, hits_remaing = 5)
@@ -133,6 +136,7 @@
 
 	hallucinator.playsound_local(source, 'sound/weapons/saberon.ogg',15, 1)
 	addtimer(CALLBACK(src, .proc/stab_loop, source, rand(4, 8)), 0.2 SECONDS)
+	return TRUE
 
 /// The main sound loop of someone being esworded.
 /datum/hallucination/battle/e_sword/proc/stab_loop(turf/source, stabs_remaining = 4)
@@ -157,6 +161,7 @@
 
 /datum/hallucination/battle/bomb/start()
 	addtimer(CALLBACK(src, .proc/fake_tick, random_far_turf(), rand(3, 11)), 1.5 SECONDS)
+	return TRUE
 
 /// The loop of the (fake) bomb ticking down.
 /datum/hallucination/battle/bomb/proc/fake_tick(turf/source, ticks_remaining = 3)

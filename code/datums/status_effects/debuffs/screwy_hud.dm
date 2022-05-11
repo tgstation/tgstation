@@ -8,6 +8,7 @@
  * accidentally removing another source's hud.
  */
 /datum/status_effect/grouped/screwy_hud
+	alert_type = null
 	/// The priority of this screwyhud over other screwyhuds.
 	var/priority = -1
 	/// The icon we override our owner's healths.icon_state with
@@ -18,10 +19,12 @@
 		return FALSE
 
 	RegisterSignal(owner, COMSIG_CARBON_UPDATING_HEALTH_HUD, .proc/on_health_hud_updated)
+	owner.update_health_hud()
 	return TRUE
 
 /datum/status_effect/grouped/screwy_hud/on_remove()
 	UnregisterSignal(owner, COMSIG_CARBON_UPDATING_HEALTH_HUD)
+	owner.update_health_hud()
 
 /datum/status_effect/grouped/screwy_hud/proc/on_health_hud_updated(mob/living/carbon/source, shown_health_amount)
 	SIGNAL_HANDLER

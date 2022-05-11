@@ -52,9 +52,8 @@
 		var/mob/living/carbon/carbon_hallucinator = hallucinator
 		if(istype(carbon_hallucinator) && !carbon_hallucinator.internal)
 			hallucinator.cause_hallucination(
-				/datum/hallucination/fake_alert,
+				/datum/hallucination/fake_alert/bad_plasma,
 				"fake plasmaflood hallucination",
-				/* specific = */ALERT_TOO_MUCH_PLASMA,
 			)
 
 	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME

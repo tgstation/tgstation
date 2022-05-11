@@ -59,7 +59,7 @@
 
 	next_action = rand(4, 12)
 
-/datum/hallucination/bolts/Destroy()
+/datum/hallucination/bolts/Destroy() // melbert todo null comp lookup
 	// Clean up any locks we happen to have remaining on qdel.
 	// Hypothetically this shouldn't delete anything. But just in case.
 	for(var/datum/weakref/leftover_lock_ref as anything in locks)

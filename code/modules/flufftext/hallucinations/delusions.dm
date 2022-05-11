@@ -74,7 +74,7 @@
 
 	for(var/mob/living/carbon/human/found_human in funny_looking_mobs)
 		var/image/funny_image = make_delusion_image(found_human)
-		delusions |= funny_image
+		LAZYADD(delusions, funny_image)
 		hallucinator.client.images |= funny_image
 
 	if(play_wabbajack)
@@ -171,6 +171,7 @@
 	delusion_name = "demon"
 
 /datum/hallucination/delusion/preset/cyborg
+	play_wabbajack = TRUE
 	delusion_icon_file = 'icons/mob/robots.dmi'
 	delusion_icon_state = "robot"
 	delusion_name = "cyborg"

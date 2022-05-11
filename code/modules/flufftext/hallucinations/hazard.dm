@@ -21,7 +21,7 @@
 /datum/hallucination/hazard/chasm
 	hazard_type = /obj/effect/hallucination/danger/chasm
 
-/datum/hallucination/hazard/anomaly
+/datum/hallucination/hazard/anomaly // melbert todo not deleting
 	hazard_type = /obj/effect/hallucination/danger/anomaly
 
 /// These hallucination effects cause side effects when the hallucinator walks into them.

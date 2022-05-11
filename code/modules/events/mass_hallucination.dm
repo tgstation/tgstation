@@ -10,7 +10,7 @@
 
 /datum/round_event/mass_hallucination/start()
 	var/picked_hallucination
-	var/list/extra_args
+	var/list/extra_args = list()
 	switch(rand(1, 10))
 		if(1)
 			// Send the same sound to everyone
@@ -63,8 +63,16 @@
 
 			picked_hallucination = pick(possible_hallucinations)
 
-	for(var/mob/living/alive_mob in GLOB.alive_mob_list)
-		// Skipped for admin/ooc stuff
-		if(alive_mob.z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))
+	// We'll only hallucinate for carbons now, even though livings can hallucinate just fine in most cases.
+	for(var/mob/living/carbon/hallucinating as anything in GLOB.carbon_list)
+		// If they're on centcom, skip them entirely.
+		if(is_centcom_level(hallucinating.z))
 			continue
-		alive_mob.cause_hallucination(picked_hallucination, "mass hallucination", extra_args)
+		// We can skip dead carbons as well
+		if(hallucinating.stat == DEAD)
+			continue
+		// If they're not on the station z level, and they're clientless, let's just save us the time
+		if(!is_station_level(hallucinating.z) && !hallucinating.client)
+			continue
+
+		hallucinating.cause_hallucination(arglist(list(picked_hallucination, "mass hallucination") + extra_args))

@@ -213,12 +213,12 @@
 			status = "[shown_brute] brute damage and [shown_burn] burn damage"
 
 	else
-		if(shown_brute > DAMAGE_PRECISION)
-			status += light_brute_msg
-		if(shown_brute > (max_damage * 0.4))
-			status += medium_brute_msg
 		if(shown_brute > (max_damage * 0.8))
 			status += heavy_brute_msg
+		else if(shown_brute > (max_damage * 0.4))
+			status += medium_brute_msg
+		else if(shown_brute > DAMAGE_PRECISION)
+			status += light_brute_msg
 
 		if(shown_brute > DAMAGE_PRECISION && shown_burn > DAMAGE_PRECISION)
 			status += " and "

@@ -80,3 +80,4 @@
 
 	// Then clean up.
 	qdel(src)
+	return TRUE

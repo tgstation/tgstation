@@ -52,14 +52,14 @@ GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
 
 /datum/status_effect/hallucination
 	id = "hallucination"
-	alert_type = /atom/movable/screen/alert/status_effect/high
-	// We start by ticking every 2 seconds until any hallucination triggers.
+	alert_type = null
 	tick_interval = 2 SECONDS
-	// Whenever a hallucination triggers, our tick interval expands to some time in the below range.
 	/// The lower range of when the next hallucination will trigger after one occurs.
 	var/lower_tick_interval = 10 SECONDS
 	/// The upper range of when the next hallucination will trigger after one occurs.
 	var/upper_tick_interval = 60 SECONDS
+	/// The cooldown for when the next hallucination can occur
+	COOLDOWN_DECLARE(hallucination_cooldown)
 
 /datum/status_effect/hallucination/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
@@ -89,7 +89,10 @@ GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
 
 
 /datum/status_effect/hallucination/tick(delta_time, times_fired)
+	if(!COOLDOWN_FINISHED(src, hallucination_cooldown))
+		return
+
 	var/datum/hallucination/picked_hallucination = pick_weight(GLOB.hallucination_list)
 	owner.cause_hallucination(picked_hallucination, "[id] status effect")
 
-	tick_interval = world.time + rand(lower_tick_interval, upper_tick_interval)
+	COOLDOWN_START(src, hallucination_cooldown, rand(lower_tick_interval, upper_tick_interval))

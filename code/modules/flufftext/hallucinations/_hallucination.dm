@@ -6,7 +6,7 @@
 	var/list/passed_args = args.Copy(3)
 	passed_args.Insert(1, src)
 
-	var/datum/hallucination/new_hallucination = new type(passed_args)
+	var/datum/hallucination/new_hallucination = new type(arglist(passed_args))
 	if(!new_hallucination.start())
 		qdel(new_hallucination)
 		return
@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 	var/mob/living/hallucinator
 
 /datum/hallucination/New(mob/living/hallucinator)
-	if(!hallucinator)
+	if(!isliving(hallucinator))
 		stack_trace("[type] was created without a hallucinating mob.")
 		qdel(src)
 		return
@@ -142,11 +142,11 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		show_image()
 
 /obj/effect/hallucination/Destroy(force)
-	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
-	parent = null
-
 	if(shown_image)
 		parent.hallucinator.client?.images -= shown_image
+
+	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	parent = null
 
 	return ..()
 

@@ -3,7 +3,7 @@
 	/// The duration of the hallucination
 	var/duration
 	/// Assoc list of [ref to bodyparts] to [severity]
-	var/list/bodyparts
+	var/list/bodyparts = list()
 	/// Timer ID for when we're deleted
 	var/del_timer_id
 
