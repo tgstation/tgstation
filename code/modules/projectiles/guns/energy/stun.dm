@@ -24,13 +24,14 @@
 	return
 
 /obj/item/gun/energy/disabler
-	name = "disabler"
-	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
-	icon_state = "disabler"
+	name = "hybrid taser"
+	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse. Comes with a taser mode that only effects assistants. Use it in-hand to switch between modes."
+	icon_state = "advtaser"
 	inhand_icon_state = null
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
-	ammo_x_offset = 2
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/assistant, /obj/item/ammo_casing/energy/disabler)
+	modifystate = TRUE
 	can_flashlight = TRUE
+	ammo_x_offset = 2
 	flight_x_offset = 15
 	flight_y_offset = 10
 

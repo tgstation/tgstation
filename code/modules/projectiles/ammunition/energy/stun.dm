@@ -5,6 +5,9 @@
 	e_cost = 200
 	harmful = FALSE
 
+/obj/item/ammo_casing/energy/electrode/assistant
+	projectile_type = /obj/projectile/energy/electrode/assistant
+
 /obj/item/ammo_casing/energy/electrode/spec
 	e_cost = 100
 
