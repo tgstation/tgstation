@@ -601,7 +601,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
 "bR" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/indestructible/riveted,
 /area/centcom/admin/storage)
 "bS" = (
@@ -706,7 +706,7 @@
 /turf/open/floor/iron/white,
 /area/tdome/observation)
 "ce" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/indestructible/riveted,
 /area/centcom/armory)
 "cf" = (
@@ -1966,7 +1966,7 @@
 /turf/open/floor/iron,
 /area/centcom/fore)
 "fC" = (
-/obj/structure/sign/warning/nosmoking,
+/obj/structure/sign/warning/no_smoking,
 /turf/closed/indestructible/riveted,
 /area/tdome/observation)
 "fD" = (
@@ -3062,7 +3062,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
 "iI" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/indestructible/riveted,
 /area/centcom/prison/cells)
 "iJ" = (
@@ -5502,7 +5502,7 @@
 	dir = 8
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -6133,7 +6133,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/admin)
 "rz" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/indestructible/riveted,
 /area/centcom/ferry)
 "rB" = (
@@ -6841,7 +6841,7 @@
 /turf/open/floor/iron,
 /area/centcom/control)
 "tP" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "tR" = (
@@ -17576,7 +17576,7 @@
 	},
 /area/syndicate_mothership)
 "YI" = (
-/obj/structure/sign/warning/nosmoking,
+/obj/structure/sign/warning/no_smoking,
 /turf/closed/indestructible/riveted,
 /area/centcom/admin)
 "YJ" = (

@@ -280,7 +280,7 @@
 
 /datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.jitteriness = 0
-	M.set_confusion(0)
+	M.remove_status_effect(/datum/status_effect/confusion)
 	M.disgust = 0
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * REM * delta_time)
 	..()
@@ -315,10 +315,10 @@
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	ADD_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 
 /datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	REMOVE_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 	..()
 
 /datum/reagent/drug/pumpup/on_mob_life(mob/living/carbon/M, delta_time, times_fired)

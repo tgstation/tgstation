@@ -171,7 +171,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_XENO_HOST "xeno_host"
 #define TRAIT_STUNIMMUNE "stun_immunity"
-#define TRAIT_STUNRESISTANCE "stun_resistance"
+#define TRAIT_BATON_RESISTANCE "baton_resistance"
 /// Anti Dual-baton cooldown bypass exploit.
 #define TRAIT_IWASBATONED "iwasbatoned"
 #define TRAIT_SLEEPIMMUNE "sleep_immunity"
@@ -266,7 +266,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_SURGEON "surgeon"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
-#define TRAIT_MAGIC_CHOKE "magic_choke"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
 #define TRAIT_BOOZE_SLIDER "booze-slider"
 /// We place people into a fireman carry quicker than standard

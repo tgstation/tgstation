@@ -37,7 +37,7 @@
 		suppress_warning = TRUE
 
 /datum/symptom/confusion/End(datum/disease/advance/A)
-	A.affected_mob.set_confusion(0)
+	A.affected_mob.remove_status_effect(/datum/status_effect/confusion)
 	return ..()
 
 /datum/symptom/confusion/Activate(datum/disease/advance/A)
@@ -51,7 +51,7 @@
 				to_chat(M, span_warning("[pick("Your head hurts.", "Your mind blanks for a moment.")]"))
 		else
 			to_chat(M, span_userdanger("You can't think straight!"))
-			M.add_confusion(16 * power)
+			M.adjust_timed_status_effect(16 SECONDS * power, /datum/status_effect/confusion)
 			if(brain_damage)
 				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
 				M.updatehealth()

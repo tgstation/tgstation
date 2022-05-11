@@ -565,6 +565,9 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			node.add_member(src)
 		SSair.add_to_rebuild_queue(src)
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/update_layer()
+	return
+
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR
 #undef CRYO_TX_QTY
