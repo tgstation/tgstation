@@ -128,6 +128,7 @@
 	melee_damage_upper = 20
 	minbodytemp = 100
 	combat_mode = TRUE
+	ranged_cooldown_time = 4 SECONDS
 	del_on_death = TRUE
 	deathmessage = "collapses into bits of plant matter."
 	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'

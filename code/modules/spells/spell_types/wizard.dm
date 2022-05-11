@@ -62,7 +62,7 @@
 	include_user = TRUE
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
-	smoke_spread = 2
+	smoke_spread = /datum/effect_system/fluid_spread/smoke/bad
 	smoke_amt = 4
 
 	action_icon_state = "smoke"
@@ -81,7 +81,7 @@
 	include_user = TRUE
 	antimagic_flags = NONE // no cast restrictions
 
-	smoke_spread = 1
+	smoke_spread = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 2
 
 	action_icon_state = "smoke"
@@ -115,7 +115,7 @@
 	cooldown_min = 5 //4 deciseconds reduction per rank
 
 
-	smoke_spread = 1
+	smoke_spread = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 0
 
 	inner_tele_radius = 0
@@ -139,7 +139,7 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 	action_icon_state = "teleport"
 
-	smoke_spread = 1
+	smoke_spread = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 2
 	sound1 = 'sound/magic/teleport_diss.ogg'
 	sound2 = 'sound/magic/teleport_app.ogg'
@@ -291,9 +291,9 @@
 	if(isliving(user))
 		var/mob/living/caster = user
 		if(caster.can_cast_magic(antimagic_flags))
-			caster.IgniteMob()
+			caster.ignite_mob()
 		else
-			return 
+			return
 	for(var/mob/living/target in targets)
 		if(target.can_block_magic(antimagic_flags))
 			to_chat(user, span_warning("The spell can't seem to affect [target]!"))

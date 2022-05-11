@@ -13,6 +13,6 @@
 		/obj/item/assembly/igniter = 6
 	)
 	contraband = list(/obj/item/assembly/health = 3)
-	default_price = PAYCHECK_ASSISTANT
-	extra_price = PAYCHECK_ASSISTANT
+	default_price = PAYCHECK_CREW
+	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SCI

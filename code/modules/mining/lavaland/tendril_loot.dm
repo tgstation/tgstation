@@ -380,12 +380,31 @@
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
 	var/vanish_description = "vanishes from reality"
-	var/can_destroy = TRUE
+	// Weakref to the user who we're "acting" on
+	var/datum/weakref/user_ref
 
 /obj/effect/immortality_talisman/Initialize(mapload, mob/new_user)
 	. = ..()
 	if(new_user)
 		vanish(new_user)
+
+/obj/effect/immortality_talisman/Destroy()
+	// If we have a mob, we need to free it before cleanup
+	// This is a safety to prevent nuking a human, not so much a good pattern in general
+	unvanish()
+	return ..()
+
+/obj/effect/immortality_talisman/proc/unvanish()
+	var/mob/user = user_ref?.resolve()
+	user_ref = null
+
+	if(!user)
+		return
+
+	user.status_flags &= ~GODMODE
+	user.notransform = FALSE
+	user.forceMove(get_turf(src))
+	user.visible_message(span_danger("[user] pops back into reality!"))
 
 /obj/effect/immortality_talisman/proc/vanish(mob/user)
 	user.visible_message(span_danger("[user] [vanish_description], leaving a hole in [user.p_their()] place!"))
@@ -397,17 +416,11 @@
 	user.notransform = TRUE
 	user.status_flags |= GODMODE
 
-	can_destroy = FALSE
+	user_ref = WEAKREF(user)
 
-	addtimer(CALLBACK(src, .proc/unvanish, user), 10 SECONDS)
+	addtimer(CALLBACK(src, .proc/dissipate), 10 SECONDS)
 
-/obj/effect/immortality_talisman/proc/unvanish(mob/user)
-	user.status_flags &= ~GODMODE
-	user.notransform = FALSE
-	user.forceMove(get_turf(src))
-
-	user.visible_message(span_danger("[user] pops back into reality!"))
-	can_destroy = TRUE
+/obj/effect/immortality_talisman/proc/dissipate()
 	qdel(src)
 
 /obj/effect/immortality_talisman/attackby()
@@ -415,12 +428,6 @@
 
 /obj/effect/immortality_talisman/singularity_pull()
 	return
-
-/obj/effect/immortality_talisman/Destroy(force)
-	if(!can_destroy && !force)
-		return QDEL_HINT_LETMELIVE
-	else
-		. = ..()
 
 /obj/effect/immortality_talisman/void
 	vanish_description = "is dragged into the void"
@@ -467,6 +474,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/book_of_babel/attack_self(mob/user)
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return FALSE
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
@@ -587,7 +597,7 @@
 	desc = "Voices echo from the armor, driving the user insane. Is not space-proof."
 	icon_state = "berserker"
 	hoodtype = /obj/item/clothing/head/hooded/berserker
-	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -612,7 +622,7 @@
 	name = "berserker helmet"
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "berserker"
-	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -774,7 +784,7 @@
 	living_target.apply_status_effect(/datum/status_effect/stagger)
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = ranged_ability_user.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_target = living_target
-	living_target.Jitter(5 SECONDS)
+	living_target.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	to_chat(living_target, span_warning("You've been staggered!"))
 	living_target.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
 	addtimer(CALLBACK(living_target, /atom/.proc/remove_filter, "scan"), 30 SECONDS)
@@ -973,7 +983,7 @@
 			target.ranged_cooldown += 5 SECONDS
 		else if(iscarbon(source))
 			var/mob/living/carbon/target = source
-			target.set_confusion(max(target.get_confusion(), 8))
+			target.set_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 	return NONE
 
 /obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)
