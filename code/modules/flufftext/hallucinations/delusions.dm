@@ -1,6 +1,3 @@
-
-/datum/hallucination/random_delusion
-
 /// A hallucination that makes us and (possibly) other people look like something else.
 /datum/hallucination/delusion
 	/// The duration of the delusions
@@ -30,7 +27,7 @@
 	duration = 30 SECONDS,
 	affects_us = TRUE,
 	affects_others = FALSE,
-	skip_nearby = FALSE,
+	skip_nearby = TRUE,
 	play_wabbajack = FALSE,
 )
 
@@ -119,22 +116,24 @@
 
 	return ..()
 
-/datum/hallucination/delusion/nothing
+/datum/hallucination/delusion/preset
+
+/datum/hallucination/delusion/preset/nothing
 	delusion_icon_file = 'icons/effects/effects.dmi'
 	delusion_icon_state = "nothing"
 	delusion_name = "..."
 
-/datum/hallucination/delusion/curse
+/datum/hallucination/delusion/preset/curse
 	delusion_icon_file = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	delusion_icon_state = "curseblob"
 	delusion_name = "???"
 
-/datum/hallucination/delusion/monkey
+/datum/hallucination/delusion/preset/monkey
 	delusion_icon_file = 'icons/mob/human.dmi'
 	delusion_icon_state = "monkey"
 	delusion_name = "monkey"
 
-/datum/hallucination/delusion/monkey/New(
+/datum/hallucination/delusion/preset/monkey/New(
 	mob/living/hallucinator,
 	duration = 30 SECONDS,
 	affects_us = TRUE,
@@ -146,36 +145,36 @@
 	. = ..()
 	delusion_name += " ([rand(1,999)])"
 
-/datum/hallucination/delusion/corgi
+/datum/hallucination/delusion/preset/corgi
 	delusion_icon_file = 'icons/mob/pets.dmi'
 	delusion_icon_state = "corgi"
 	delusion_name = "corgi"
 
-/datum/hallucination/delusion/carp
+/datum/hallucination/delusion/preset/carp
 	delusion_icon_file = 'icons/mob/carp.dmi'
 	delusion_icon_state = "carp"
 	delusion_name = "carp"
 
-/datum/hallucination/delusion/skeleton
+/datum/hallucination/delusion/preset/skeleton
 	delusion_icon_file = 'icons/mob/human.dmi'
 	delusion_icon_state = "skeleton"
 	delusion_name = "skeleton"
 
-/datum/hallucination/delusion/zombie
+/datum/hallucination/delusion/preset/zombie
 	delusion_icon_file = 'icons/mob/human.dmi'
 	delusion_icon_state = "zombie"
 	delusion_name = "zombie"
 
-/datum/hallucination/delusion/demon
+/datum/hallucination/delusion/preset/demon
 	delusion_icon_file = 'icons/mob/mob.dmi'
 	delusion_icon_state = "daemon"
 	delusion_name = "demon"
 
-/datum/hallucination/delusion/cyborg
+/datum/hallucination/delusion/preset/cyborg
 	delusion_icon_file = 'icons/mob/robots.dmi'
 	delusion_icon_state = "robot"
 	delusion_name = "cyborg"
 
-/datum/hallucination/delusion/cyborg/make_delusion_image(mob/over_who)
+/datum/hallucination/delusion/preset/cyborg/make_delusion_image(mob/over_who)
 	. = ..()
 	hallucinator.playsound_local(get_turf(over_who), 'sound/voice/liveagain.ogg', 75, TRUE)

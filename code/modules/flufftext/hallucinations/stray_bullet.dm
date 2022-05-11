@@ -281,7 +281,17 @@
 	hal_impact_effect_wall = null
 
 /obj/projectile/hallucination/change/apply_effect_to_hallucinator(mob/living/afflicted)
-	afflicted.cause_hallucination(/datum/hallucination/self_delusion, "fake [name]", /* wabbajack = */FALSE)
+	var/picked_delusion = pick(subtypesof(/datum/hallucination/delusion/preset))
+
+	afflicted.cause_hallucination(
+		/* type = */picked_delusion,
+		/* source = */"fake [name]",
+		/* duration = */30 SECONDS,
+		/* affects_us = */TRUE,
+		/* affects_others = */FALSE,
+		/* skip_nearby = */FALSE,
+		/* play_wabbajack = */TRUE,
+	)
 
 /obj/projectile/hallucination/death
 	name = "bolt of death"

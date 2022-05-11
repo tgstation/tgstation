@@ -19,11 +19,8 @@ GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
 		/datum/hallucination/hazard/chasm = 5,
 		/datum/hallucination/hazard/lava = 5,
 		/datum/hallucination/body/husk = 4,
-		/datum/hallucination/items = 4,
 		/datum/hallucination/fire = 3,
 		/datum/hallucination/body/husk/sideways = 2,
-		/datum/hallucination/delusion/custom = 2, //wroks as a random one. melbert todo undo this
-		/datum/hallucination/self_delusion = 2,
 		/datum/hallucination/station_message/meteors = 2,
 		/datum/hallucination/station_message/supermatter_delam = 2,
 		/datum/hallucination/body/alien = 1,
@@ -50,8 +47,6 @@ GLOBAL_LIST_INIT(hallucination_list, generate_hallucination_weighted_list())
 	)
 
 	return list
-
-
 
 /datum/status_effect/hallucination
 	id = "hallucination"

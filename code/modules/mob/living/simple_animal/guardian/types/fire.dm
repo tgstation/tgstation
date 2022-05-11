@@ -37,7 +37,7 @@
 		return
 	var/mob/living/living_target = target
 	living_target.cause_hallucination(
-		/datum/hallucination/delusion/custom,
+		/* type = *//datum/hallucination/delusion/custom,
 		/* source = */"fire holoparasite ([src], owned by [summoner])",
 		/* duration = */20 SECONDS,
 		/* affects_us = */TRUE,

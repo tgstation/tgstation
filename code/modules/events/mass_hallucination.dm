@@ -26,7 +26,7 @@
 
 		if(4)
 			// Send the same delusion to everyone.
-			picked_hallucination = pick(subtypesof(/datum/hallucination/delusion) - /datum/hallucination/delusion/custom)
+			picked_hallucination = pick(subtypesof(/datum/hallucination/delusion/preset))
 			// Delusion will affect everyone BUT the hallucinator.
 			extra_args = list(
 				/* duration = */30 SECONDS,
@@ -38,7 +38,7 @@
 
 		if(5)
 			// Send the same delusion to everyone
-			picked_hallucination = pick(subtypesof(/datum/hallucination/delusion) - /datum/hallucination/delusion/custom)
+			picked_hallucination = pick(subtypesof(/datum/hallucination/delusion/preset))
 			// Delusion will affect only the hallucinator.
 			extra_args = list(
 				/* duration = */45 SECONDS,

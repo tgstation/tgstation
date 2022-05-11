@@ -44,6 +44,9 @@
 		if(length(optional_messages))
 			to_chat(nearby_living, pick(optional_messages))
 
+/// A global list of all ongoing hallucinations.
+GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
+
 /**
  * # Hallucination datum.
  *
@@ -66,6 +69,7 @@
 
 	src.hallucinator = hallucinator
 	RegisterSignal(hallucinator, COMSIG_PARENT_QDELETING, .proc/target_deleting)
+	GLOB.all_ongoing_hallucinations += src
 
 /// Signal proc for [COMSIG_PARENT_QDELETING], if the mob hallucinating us is deletes, we should delete too.
 /datum/hallucination/proc/target_deleting()
@@ -83,6 +87,7 @@
 		UnregisterSignal(hallucinator, COMSIG_PARENT_QDELETING)
 		hallucinator = null
 
+	GLOB.all_ongoing_hallucinations -= src
 	return ..()
 
 /// Returns a random turf in a ring around the hallucinator mob.
