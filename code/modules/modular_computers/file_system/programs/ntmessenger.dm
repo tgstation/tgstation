@@ -189,11 +189,6 @@
 	data["photo"] = photo_path
 	data["canSpam"] = spam_mode
 
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	if(card_slot)
-		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : ""
-		data["canSpam"] = (ACCESS_LAWYER in id_card?.access)
-
 	var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
 	if(disk)
 		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/portable/virus)
