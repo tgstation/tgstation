@@ -113,14 +113,14 @@
 	lose_text = "<span class='warning'>You no longer feel perfectly healthy.</span>"
 
 /datum/brain_trauma/mild/healthy/on_gain()
-	owner.AddElement(/datum/element/screwy_hud, SCREWYHUD_HEALTHY)
+	owner.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	return ..()
 
 /datum/brain_trauma/mild/healthy/on_life(delta_time, times_fired)
 	owner.adjustStaminaLoss(-2.5 * delta_time) //no pain, no fatigue
 
 /datum/brain_trauma/mild/healthy/on_lose()
-	owner.RemoveElement(/datum/element/screwy_hud, SCREWYHUD_HEALTHY)
+	owner.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	return ..()
 
 /datum/brain_trauma/mild/muscle_weakness

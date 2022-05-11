@@ -2,13 +2,13 @@
 
 /datum/hallucination/death/Destroy()
 	if(!QDELETED(hallucinator))
-		hallucinator.RemoveElement(/datum/element/screwy_hud, SCREWYHUD_DEAD)
+		hallucinator.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, type)
 
 	return ..()
 
 /datum/hallucination/death/start()
 	hallucinator.Paralyze(30 SECONDS)
-	hallucinator.AddElement(/datum/element/screwy_hud, SCREWYHUD_DEAD)
+	hallucinator.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, type)
 
 	if(iscarbon(hallucinator))
 		var/mob/living/carbon/carbon_hallucinator = hallucinator
@@ -59,7 +59,7 @@
 
 /datum/hallucination/death/proc/wake_up()
 	if(!QDELETED(hallucinator))
-		hallucinator.RemoveElement(/datum/element/screwy_hud, SCREWYHUD_DEAD)
+		hallucinator.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, type)
 
 		if(iscarbon(hallucinator))
 			var/mob/living/carbon/carbon_hallucinator = hallucinator

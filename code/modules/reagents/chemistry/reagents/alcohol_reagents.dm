@@ -2577,9 +2577,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	drinker.hal_screwyhud = SCREWYHUD_HEALTHY //almost makes you forget how much it hurts
 	SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
 	..()
+
+/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
+/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
 
 /datum/reagent/consumable/ethanol/protein_blend
 	name = "Protein Blend"

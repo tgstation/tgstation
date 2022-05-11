@@ -96,7 +96,7 @@
 
 /datum/addiction/maintenance_drugs/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.hal_screwyhud = SCREWYHUD_HEALTHY
+	affected_carbon.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 
 /datum/addiction/maintenance_drugs/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
@@ -143,7 +143,7 @@
 
 /datum/addiction/maintenance_drugs/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.hal_screwyhud = SCREWYHUD_NONE
+	affected_carbon.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
 	if(!ishuman(affected_carbon))
 		return
 	var/mob/living/carbon/human/affected_human = affected_carbon
@@ -219,7 +219,7 @@
 
 /datum/addiction/medicine/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.hal_screwyhud = SCREWYHUD_CRIT
+	affected_carbon.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_crit, type)
 
 /datum/addiction/medicine/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
@@ -251,7 +251,7 @@
 
 /datum/addiction/medicine/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.hal_screwyhud = SCREWYHUD_NONE
+	affected_carbon.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_crit, type)
 	QDEL_NULL(fake_alert_ref)
 	QDEL_NULL(health_doll_ref)
 

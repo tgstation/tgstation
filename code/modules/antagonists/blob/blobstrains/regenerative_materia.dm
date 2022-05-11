@@ -24,13 +24,15 @@
 		exposed_mob.reagents.add_reagent(/datum/reagent/toxin/spore, 0.2*reac_volume)
 	exposed_mob.apply_damage(0.7*reac_volume, TOX)
 
-/datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	C.adjustToxLoss(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-	C.hal_screwyhud = SCREWYHUD_HEALTHY //fully healed, honest
+/datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
+	metabolizer.adjustToxLoss(1 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 	..()
+	return TRUE
 
-/datum/reagent/blob/regenerative_materia/on_mob_end_metabolize(mob/living/M)
-	if(iscarbon(M))
-		var/mob/living/carbon/N = M
-		N.hal_screwyhud = 0
-	..()
+/datum/reagent/blob/regenerative_materia/on_mob_metabolize(mob/living/metabolizer)
+	. = ..()
+	metabolizer.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
+/datum/reagent/blob/regenerative_materia/on_mob_end_metabolize(mob/living/metabolizer)
+	. = ..()
+	metabolizer.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)

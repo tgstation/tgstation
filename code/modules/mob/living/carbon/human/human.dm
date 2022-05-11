@@ -739,7 +739,7 @@
 			icon_num = 4
 		if(damage > (comparison*4))
 			icon_num = 5
-		if(hal_screwyhud == SCREWYHUD_HEALTHY)
+		if(has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
 			icon_num = 0
 		if(icon_num)
 			hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))

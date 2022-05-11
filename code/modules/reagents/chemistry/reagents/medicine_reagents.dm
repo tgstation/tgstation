@@ -355,7 +355,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	C.hal_screwyhud = SCREWYHUD_HEALTHY
 	C.adjustBruteLoss(-0.25 * REM * delta_time, 0)
 	C.adjustFireLoss(-0.25 * REM * delta_time, 0)
 	..()
@@ -380,11 +379,14 @@
 		if(show_message)
 			to_chat(exposed_carbon, span_danger("You feel your injuries fade away to nothing!") )
 
-/datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/M)
-	if(iscarbon(M))
-		var/mob/living/carbon/N = M
-		N.hal_screwyhud = SCREWYHUD_NONE
-	..()
+/datum/reagent/medicine/mine_salve/on_mob_metabolize(mob/living/metabolizer)
+	. = ..()
+	metabolizer.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
+/datum/reagent/medicine/mine_salve/on_mob_end_metabolize(mob/living/metabolizer)
+	. = ..()
+	metabolizer.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
+
 
 /datum/reagent/medicine/omnizine
 	name = "Omnizine"
