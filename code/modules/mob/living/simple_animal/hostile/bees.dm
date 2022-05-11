@@ -203,7 +203,7 @@
 		real_name = name
 		//clear the old since this one is going to have some new value
 		RemoveElement(/datum/element/venomous)
-		AddElement(/datum/element/venomous, beegent.type, list(1, 5), INJECT)
+		AddElement(/datum/element/venomous, beegent.type, list(1, 5), methods = INJECT)
 		generate_bee_visuals()
 
 /mob/living/simple_animal/hostile/bee/proc/pollinate(obj/machinery/hydroponics/Hydro)

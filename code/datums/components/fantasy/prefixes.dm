@@ -137,7 +137,7 @@
 		/datum/reagent/toxin/histamine = "creeping malaise"
 	)
 	var/poisonname = names[picked_poison]
-	master.AddElement(/datum/element/venomous, picked_poison, comp.quality+1, INJECT)
+	master.AddElement(/datum/element/venomous, picked_poison, comp.quality+1, methods = INJECT)
 	//seriously don't @ me about the correct use of venom vs poison. shut up.
 	return "[poisonname]-[pick("poisoned", "envenomed", "laced")] [newName]"
 

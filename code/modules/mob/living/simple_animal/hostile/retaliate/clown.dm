@@ -43,7 +43,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
 	. = ..()
 	if(attack_reagent)
-		AddElement(/datum/element/venomous, attack_reagent, list(1, 5), INJECT)
+		AddElement(/datum/element/venomous, attack_reagent, list(1, 5), methods = INJECT)
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
