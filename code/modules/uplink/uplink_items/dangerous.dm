@@ -46,7 +46,7 @@
 	item = /obj/item/melee/energy/sword/saber
 	cost = 8
 	purchasable_from = ~(UPLINK_CLOWN_OPS | UPLINK_NANO)
-	
+
 /datum/uplink_item/dangerous/swordnano
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
@@ -94,7 +94,16 @@
 	item = /obj/item/dualsaber/blue
 
 	cost = 16
-	purchasable_from = UPLINK_NANO	
+	purchasable_from = UPLINK_NANO
+
+/datum/uplink_item/dangerous/cqcnano
+	name = "Close Quarters Combat"
+	desc = "For better validhunting."
+	progression_minimum = 20 MINUTES
+	item = /obj/item/book/granter/martial/cqc
+
+	cost = 16
+	purchasable_from = UPLINK_NANO
 
 /datum/uplink_item/dangerous/doublesword/get_discount()
 	return pick(4;0.8,2;0.65,1;0.5)
