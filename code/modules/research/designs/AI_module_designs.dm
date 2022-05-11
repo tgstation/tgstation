@@ -157,7 +157,7 @@
 /datum/design/board/dungeon_master_module
 	name = "Core Module Design (Dungeon Master)"
 	desc = "Allows for the construction of a Dungeon Master AI Core Module."
-	id = "corporate_module"
+	id = "dungeon_master_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/ai_module/core/full/dungeon_master
 	category = list("AI Modules")
