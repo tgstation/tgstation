@@ -83,6 +83,7 @@
 #define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
 #define SECHUD_BARTENDER "hudbartender"
 #define SECHUD_BOTANIST "hudbotanist"
+#define SECHUD_BRIG_PHYSICIAN "hudbrigphysician"
 #define SECHUD_CAPTAIN "hudcaptain"
 #define SECHUD_CARGO_TECHNICIAN "hudcargotechnician"
 #define SECHUD_CHAPLAIN "hudchaplain"
