@@ -288,6 +288,11 @@
 	required_reagents = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
 	level_min = 8
 	level_max = 8
+	
+/datum/chemical_reaction/mix_virus/mix_virus_13
+	required_reagents = list(/datum/reagent/space_cleaner = 1) //daha sonradan içeriği değişecek.
+	level_min = 9
+	level_max = 9	
 
 /datum/chemical_reaction/mix_virus/rem_virus
 	required_reagents = list(/datum/reagent/medicine/synaptizine = 1)
