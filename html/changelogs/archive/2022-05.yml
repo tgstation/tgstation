@@ -487,3 +487,75 @@
   - bugfix: added the missing raw anomaly core to icebox ordnance
   - bugfix: fix kilostation and tramstation chambers controllers not accesible from
       the inside.
+2022-05-11:
+  BebeYoshi:
+  - bugfix: The Hair Stylist Association has noticed the sudden changes to the Mohawk,
+      Short Hair 5, Short Hair 6 and Pig Tails 2 hairstyle and brought them back to
+      their previous glory.
+  Ghilker:
+  - qol: improved the speed of cascade wall spreading, made a better description for
+      them
+  - qol: 'I didn''t update the changelog in the initial PR so i''ll add this here:
+      Antags can unlock a final objective (like romerol) that instructs them to cause
+      a cascade. The objective will provide a destabilizing crystal that once applied
+      to the SM will instantly cause it to start delaminating and sets the SM for
+      a cascade. Once it delaminates it ensures the start of the cascade. NOTE that
+      if the SM recovers you won''t be able to do it again.'
+  - bugfix: Fix being unable to refine the delimber anomaly raw core in the refinery
+  - code_imp: cleaned and brought up to date the powerfist code
+  - qol: added some more examine text on the powerfist
+  - bugfix: thermomachine no longer is under every pipe but is now above them
+  - qol: pipes and atmos components have better visual clarity and consistency between
+      them
+  Iamgoofball:
+  - qol: The supermatter cascade now takes one minute to end the round instead of
+      5 minutes to end the round, to put it on par with Blob and such.
+  OperativeLyn:
+  - bugfix: Fixed misplaced sofa parts in the Icemoon abandoned village.
+  SmArtKar:
+  - bugfix: Charged green crossbreeds no longer display species types instead of actual
+      names
+  - bugfix: You can no longer farm orbiting blades by using your mark on corpses
+  Son-of-Space:
+  - bugfix: Fixed several inconsistent or niche access requirements on KiloStation
+  - qol: Replaced all access requirement vars on doors with mapping helpers on KiloStation
+  - bugfix: You can now cook meals on the oldstation ruin again
+  - bugfix: fixed overlapping objecs on the AI minisat on IceBoxStation
+  Y0SH1M4S73R:
+  - spellcheck: Recent re-evaluations of the underlying math have concluded that a
+      supermatter cascade will not, in fact, destroy the entire universe - only an
+      area several hundred kilometers in radius.
+  Zonespace27:
+  - rscdel: Dead mouse, sunglasses, and briefcase bounties removed from assistants
+  - rscadd: Added more engineering & science bounties
+  - rscadd: Flamethrower, pneumatic cannon, water tank, and improvised shotgun shell
+      bounties to assistants.
+  - balance: Atmospheric bounties are separated from engineering bounties
+  - balance: Medical organ bounties have their reward reduced to 1k for a single organ,
+      and 2k for bulk.
+  - refactor: Refactored bounty cube selection back-end
+  dragomagol:
+  - qol: department signs have directional variants
+  - code_imp: sign paths are now in snake_case
+  dragomagol, unit0016:
+  - rscadd: Added lore terminals - for when leaving a scrap of paper on the ground
+      just won't cut it
+  orthography:
+  - bugfix: fixes door access.
+  san7890:
+  - bugfix: After a mixup in the Marker Beacon Factory with the "Default Glowing Texture"
+      Factory, Marker Beacons should now have any actual sprite.
+  - balance: 'After a recent earthquake, a good chunk of the exterior surrounding
+      the Mining Base on IceBoxStation has undergone a drastic conformational change:
+      the river has expanded. In response to this, more infrastructure in that part
+      of the station has been re-done, and even added in some spots.'
+  timothymtorres:
+  - bugfix: Fix mapped in cardhands not initializing properly
+  timothymtorres, TheBonded:
+  - bugfix: Fix books to only give mood bonus when read the first time
+  vincentiusvin:
+  - spellcheck: fixed the omega soap recipe not having bold on it's first line.
+  wesoda25:
+  - bugfix: Mulligan now properly randomizes ethereal color
+  zxaber:
+  - bugfix: Ripley mechs can no longer toggle to their nonexistant air tank.

@@ -434,14 +434,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(DT_PROB(2.5, delta_time))
 			AdjustSleeping(10 SECONDS)
 
-	//Jitteriness
-	if(jitteriness)
-		do_jitter_animation(jitteriness)
-		jitteriness = max(jitteriness - (restingpwr * delta_time), 0)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "jittery", /datum/mood_event/jittery)
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
-
 	if(silent)
 		silent = max(silent - (0.5 * delta_time), 0)
 
