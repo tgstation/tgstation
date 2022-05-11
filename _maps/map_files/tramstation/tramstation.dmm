@@ -1752,9 +1752,6 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
-"aOn" = (
-/turf/closed/wall,
-/area/station/engineering/storage/tech)
 "aOp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5761,6 +5758,7 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "ccH" = (
@@ -6303,6 +6301,7 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "ckM" = (
@@ -14954,6 +14953,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/engineering_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "few" = (
@@ -16846,6 +16846,7 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "fPj" = (
@@ -20107,6 +20108,7 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "gSj" = (
@@ -22941,6 +22943,7 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "hQU" = (
@@ -28188,6 +28191,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/rnd_secure_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "jDi" = (
@@ -28462,6 +28466,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/rnd_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "jIA" = (
@@ -31196,6 +31201,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "kCV" = (
@@ -51115,6 +51121,7 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "rtG" = (
@@ -63658,6 +63665,7 @@
 /obj/effect/spawner/random/techstorage/ai_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "vIq" = (
@@ -65196,6 +65204,7 @@
 /obj/machinery/status_display/ai/directional/north,
 /obj/effect/spawner/random/techstorage/medical_all,
 /obj/effect/turf_decal/trimline/white/filled/line,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "wma" = (
@@ -68345,6 +68354,7 @@
 /obj/item/t_scanner,
 /obj/item/multitool,
 /obj/effect/turf_decal/trimline/white/filled/line,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "xsx" = (
@@ -99086,14 +99096,14 @@ qvL
 wYu
 qjU
 dhe
-aOn
+ukq
 ukq
 ukq
 gbf
 gbf
 ukq
 jIG
-jnq
+jIG
 wOp
 jIG
 jIG
@@ -99343,14 +99353,14 @@ alG
 wYu
 qjU
 dhe
-aOn
+ukq
 xst
 moy
 nav
 nav
 kaA
 ccx
-jnq
+jIG
 bRP
 jIG
 fVh
@@ -99600,14 +99610,14 @@ qvL
 wYu
 qjU
 dhe
-aOn
+ukq
 fem
 mpf
 bcV
 qBQ
 sfI
 rtD
-jnq
+jIG
 bRP
 jIG
 fVh
@@ -99857,14 +99867,14 @@ qvL
 sNR
 qjU
 qjU
-aOn
+ukq
 wlQ
 mpf
 rEQ
 bUj
 sfI
 gSf
-jnq
+jIG
 bRP
 jIG
 iTL
@@ -100114,14 +100124,14 @@ qvL
 wYu
 hee
 qjU
-aOn
+ukq
 jIy
 mpf
 khV
 hkF
 sfI
 ckH
-jnq
+jIG
 bRP
 jIG
 xkD
@@ -100371,14 +100381,14 @@ qvL
 wYu
 qjU
 qjU
-aOn
-aOn
+ukq
+ukq
 iDj
 uKh
 vxl
 cqO
-jnq
-jnq
+jIG
+jIG
 bRP
 jIG
 bTm
@@ -100628,13 +100638,13 @@ qvL
 uai
 gRy
 qjU
-aOn
-aOn
+dhe
+ukq
 fOW
 ojS
 aDz
 gis
-jnq
+jIG
 tlz
 kYi
 jIG
@@ -100886,12 +100896,12 @@ vVa
 xqG
 qjU
 dhe
-aOn
-aOn
-aOn
-aOn
+ukq
+ukq
+ukq
+ukq
 eGh
-jnq
+jIG
 waM
 jnq
 jIG

@@ -26819,9 +26819,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
-"hAJ" = (
-/turf/closed/wall,
-/area/station/engineering/storage/tech)
 "hAM" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
@@ -54665,7 +54662,7 @@
 /area/station/commons/vacant_room/commissary)
 "prX" = (
 /obj/machinery/status_display/shuttle,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/engineering/storage/tech)
 "psf" = (
 /obj/effect/turf_decal/stripes/line{
@@ -72141,10 +72138,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/prison)
-"upH" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall,
-/area/station/engineering/storage/tech)
 "upK" = (
 /obj/effect/turf_decal/siding/thinplating/dark/end,
 /turf/open/floor/glass/reinforced,
@@ -114804,13 +114797,13 @@ lcS
 kNK
 hyl
 hXK
-hAJ
-fqQ
-hAJ
+vqM
+vVT
+vqM
 rDs
-upH
-hAJ
-fqQ
+iCv
+vqM
+vVT
 woJ
 fhs
 gmG
@@ -115061,7 +115054,7 @@ rmI
 tzI
 ueZ
 djW
-hAJ
+vqM
 dsH
 lWQ
 nWG
@@ -115318,7 +115311,7 @@ kqD
 dJg
 hyl
 rsw
-hAJ
+vqM
 hJD
 vbP
 iAX
@@ -115575,7 +115568,7 @@ pPe
 tmZ
 aQs
 rsw
-hAJ
+vqM
 kIf
 rIk
 seU
@@ -116346,13 +116339,13 @@ vfb
 fgJ
 iQY
 mEJ
-hAJ
+vqM
 kax
-hAJ
+vqM
 jzl
-hAJ
-fqQ
-gmG
+vqM
+vVT
+cfL
 een
 iGg
 vKO

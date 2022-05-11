@@ -23504,6 +23504,7 @@
 /obj/structure/rack,
 /obj/machinery/status_display/ai/directional/north,
 /obj/effect/spawner/random/techstorage/medical_all,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "izl" = (
@@ -26031,6 +26032,7 @@
 "jpx" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/rnd_all,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "jpA" = (
@@ -26309,6 +26311,7 @@
 "jtp" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "jtA" = (
@@ -41528,6 +41531,7 @@
 "oPp" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/tcomms_all,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "oPq" = (
@@ -42181,6 +42185,7 @@
 "pbU" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/service_all,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "pbX" = (
@@ -43187,6 +43192,7 @@
 /area/station/service/janitor)
 "pua" = (
 /obj/machinery/vending/assist,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "pul" = (
@@ -49069,6 +49075,7 @@
 /obj/item/multitool,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light_switch/directional/south,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "rwx" = (
@@ -49271,6 +49278,7 @@
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/t_scanner,
 /obj/item/multitool,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "rzx" = (
@@ -51814,6 +51822,7 @@
 "soW" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/security_all,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "spd" = (
@@ -53328,9 +53337,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 2
-	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "sQB" = (
@@ -55566,6 +55573,7 @@
 "tDk" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/engineering_all,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "tDz" = (
@@ -105897,8 +105905,8 @@ qVy
 hzJ
 uiB
 brA
-qXB
-qXB
+tCS
+tCS
 tCS
 xww
 kDY
@@ -106154,13 +106162,13 @@ nhQ
 iJb
 qXB
 ckX
-qXB
+tCS
 rzr
 dhu
 ihx
 jtp
 pua
-cdX
+xww
 dFp
 fRS
 tUv
@@ -106411,13 +106419,13 @@ xyI
 ovZ
 qXB
 szN
-qXB
+tCS
 tDk
 jhS
 soW
 vph
 vQv
-cdX
+xww
 vFB
 usY
 huX
@@ -106668,13 +106676,13 @@ jYu
 lJa
 qXB
 psZ
-qXB
+tCS
 ize
 jhS
 pbU
 tXD
 dMb
-cdX
+xww
 pYL
 gaN
 iqB
@@ -106925,13 +106933,13 @@ qXB
 qXB
 qXB
 tjo
-qXB
+tCS
 jpx
 vJX
 oPp
 tXD
 rwn
-cdX
+xww
 vFB
 fRS
 tUv
@@ -107182,7 +107190,7 @@ nXT
 wyG
 qXB
 psZ
-qXB
+tCS
 ttA
 uWS
 uWS
@@ -107439,7 +107447,7 @@ edC
 psZ
 psZ
 psZ
-qXB
+tCS
 gAU
 kQD
 syr
