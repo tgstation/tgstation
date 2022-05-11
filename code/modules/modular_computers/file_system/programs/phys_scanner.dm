@@ -88,3 +88,6 @@
 
 /datum/computer_file/program/phys_scanner/all
 	available_modes = TABLET_MEDICAL_MODE | TABLET_CHEMISTRY_MODE
+
+#undef TABLET_MEDICAL_MODE
+#undef TABLET_CHEMISTRY_MODE
