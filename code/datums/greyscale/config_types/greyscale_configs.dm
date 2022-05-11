@@ -523,22 +523,19 @@
 	icon_file = 'icons/obj/clothing/masks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/vape.json'
 
-/datum/greyscale_config/vape_worn
+/datum/greyscale_config/vape/worn
 	name = "Worn Vape"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 	json_config = 'code/datums/greyscale/json_configs/vape_worn.json'
 
-/datum/greyscale_config/vape_open_low
+/datum/greyscale_config/vape/open_low
 	name = "Open Vape Low"
-	icon_file = 'icons/obj/clothing/masks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/vape_open_low.json'
 
-/datum/greyscale_config/vape_open_med
+/datum/greyscale_config/vape/open_med
 	name = "Open Vape Medium"
-	icon_file = 'icons/obj/clothing/masks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/vape_open_med.json'
 
-/datum/greyscale_config/vape_open_high
+/datum/greyscale_config/vape/open_high
 	name = "Open Vape High"
-	icon_file = 'icons/obj/clothing/masks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/vape_open_high.json'

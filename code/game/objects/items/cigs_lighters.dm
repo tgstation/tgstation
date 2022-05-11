@@ -913,7 +913,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "vape"
 	worn_icon_state = "vape_worn"
 	greyscale_config = /datum/greyscale_config/vape
-	greyscale_config_worn = /datum/greyscale_config/vape_worn
+	greyscale_config_worn = /datum/greyscale_config/vape/worn
 	greyscale_colors = "#2e2e2e"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_TINY
@@ -946,13 +946,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.flags |= OPENCONTAINER
 		if(obj_flags & EMAGGED)
 			icon_state = "vape_open_high"
-			set_greyscale(new_config = /datum/greyscale_config/vape_open_high)
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_high)
 		else if(super)
 			icon_state = "vape_open_med"
-			set_greyscale(new_config = /datum/greyscale_config/vape_open_med)
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_med)
 		else
 			icon_state = "vape_open_low"
-			set_greyscale(new_config = /datum/greyscale_config/vape_open_low)
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_low)
 	else
 		screw = FALSE
 		to_chat(user, span_notice("You close the cap on [src]."))
@@ -967,12 +967,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			super = TRUE
 			to_chat(user, span_notice("You increase the voltage of [src]."))
 			icon_state = "vape_open_med"
-			set_greyscale(new_config = /datum/greyscale_config/vape_open_med)
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_med)
 		else
 			super = FALSE
 			to_chat(user, span_notice("You decrease the voltage of [src]."))
 			icon_state = "vape_open_low"
-			set_greyscale(new_config = /datum/greyscale_config/vape_open_low)
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_low)
 
 	if(screw && (obj_flags & EMAGGED))
 		to_chat(user, span_warning("[src] can't be modified!"))
@@ -984,7 +984,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			super = FALSE
 			to_chat(user, span_warning("You maximize the voltage of [src]."))
 			icon_state = "vape_open_high"
-			set_greyscale(new_config = /datum/greyscale_config/vape_open_high)
+			set_greyscale(new_config = /datum/greyscale_config/vape/open_high)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
 			sp.set_up(5, 1, src)
 			sp.start()
@@ -1078,3 +1078,35 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		puff.start()
 
 	handle_reagents()
+
+/obj/item/clothing/mask/vape/red
+	greyscale_colors = "#A02525"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/blue
+	greyscale_colors = "#294A98"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/purple
+	greyscale_colors = "#9900CC"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/green
+	greyscale_colors = "#3D9829"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/yellow
+	greyscale_colors = "#DAC20E"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/orange
+	greyscale_colors = "#da930e"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/black
+	greyscale_colors = "#2e2e2e"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/vape/white
+	greyscale_colors = "#DCDCDC"
+	flags_1 = NONE
