@@ -101,7 +101,7 @@
 
 	var/obj/machinery/griddle/hit_griddle = target
 	hit_griddle.AddToGrill(broken_egg, user)
-	to_chat(user, "You crack [src] open onto [target].")
+	target.balloon_alert(user, "You crack [src] open onto [target].")
 
 	qdel(src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
