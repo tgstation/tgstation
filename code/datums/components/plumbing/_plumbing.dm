@@ -196,12 +196,14 @@
 	active = FALSE
 
 	for(var/direction in GLOB.cardinals)
-		if(direction & (demand_connects | supply_connects))
-			for(var/obj/machinery/duct/duct in get_step(parent, direction))
-				if(duct.duct_layer & ducting_layer)
-					duct.remove_connects(turn(direction, 180))
-					duct.neighbours.Remove(parent)
-					duct.update_appearance()
+		if(!(direction & (demand_connects | supply_connects)))
+			continue
+		for(var/obj/machinery/duct/duct in get_step(parent, direction))
+			if(!(duct.duct_layer & ducting_layer))
+				continue
+			duct.remove_connects(turn(direction, 180))
+			duct.neighbours.Remove(parent)
+			duct.update_appearance()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
 /datum/component/plumbing/proc/enable(obj/object, datum/component/component)
@@ -225,15 +227,17 @@
 		START_PROCESSING(SSplumbing, src)
 
 	for(var/direction in GLOB.cardinals)
-		if(direction & (demand_connects | supply_connects))
-			for(var/atom/movable/found_atom in get_step(parent, direction))
-				if(istype(found_atom, /obj/machinery/duct))
-					var/obj/machinery/duct/duct = found_atom
-					duct.attempt_connect()
-				else
-					for(var/datum/component/plumbing/plumber as anything in found_atom.GetComponents(/datum/component/plumbing))
-						if(plumber.ducting_layer & ducting_layer)
-							direct_connect(plumber, direction)
+		if(!(direction & (demand_connects | supply_connects)))
+			continue
+		for(var/atom/movable/found_atom in get_step(parent, direction))
+			if(istype(found_atom, /obj/machinery/duct))
+				var/obj/machinery/duct/duct = found_atom
+				duct.attempt_connect()
+				continue
+
+			for(var/datum/component/plumbing/plumber as anything in found_atom.GetComponents(/datum/component/plumbing))
+				if(plumber.ducting_layer & ducting_layer)
+					direct_connect(plumber, direction)
 
 /// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move
 /datum/component/plumbing/proc/toggle_active(obj/parent_obj, new_state)
