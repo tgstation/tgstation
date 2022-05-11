@@ -192,12 +192,6 @@
 	export_types = list(/obj/item/computer_hardware/sensorpackage)
 	include_subtypes = TRUE
 
-/datum/export/modular_part/integratedsignaler
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "integrated computer signaler"
-	export_types = list(/obj/item/computer_hardware/radio_card)
-	include_subtypes = TRUE
-
 /datum/export/modular_part/misc
 	cost = CARGO_CRATE_VALUE * 0.1
 	unit_name = "miscellaneous computer part"
