@@ -28,7 +28,7 @@
 	id = "seccamera"
 	build_path = /obj/item/circuitboard/computer/security
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/rdcamera
 	name = "Computer Design (Research Monitor)"
@@ -36,7 +36,7 @@
 	id = "rdcamera"
 	build_path = /obj/item/circuitboard/computer/research
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/xenobiocamera
 	name = "Computer Design (Xenobiology Console)"
@@ -44,7 +44,7 @@
 	id = "xenobioconsole"
 	build_path = /obj/item/circuitboard/computer/xenobiology
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/aiupload
 	name = "Computer Design (AI Upload)"
@@ -53,7 +53,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/diamond = 2000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/circuitboard/computer/aiupload
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/borgupload
 	name = "Computer Design (Cyborg Upload)"
@@ -62,7 +62,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000, /datum/material/diamond = 2000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/circuitboard/computer/borgupload
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/med_data
 	name = "Computer Design (Medical Records)"
@@ -70,7 +70,7 @@
 	id = "med_data"
 	build_path = /obj/item/circuitboard/computer/med_data
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/operating
 	name = "Computer Design (Operating Computer)"
@@ -78,7 +78,7 @@
 	id = "operating"
 	build_path = /obj/item/circuitboard/computer/operating
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/pandemic
 	name = "Computer Design (PanD.E.M.I.C. 2200)"
@@ -86,7 +86,7 @@
 	id = "pandemic"
 	build_path = /obj/item/circuitboard/computer/pandemic
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/scan_console
 	name = "Computer Design (DNA Console)"
@@ -94,7 +94,7 @@
 	id = "scan_console"
 	build_path = /obj/item/circuitboard/computer/scan_consolenew
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/comconsole
 	name = "Computer Design (Communications)"
@@ -102,7 +102,7 @@
 	id = "comconsole"
 	build_path = /obj/item/circuitboard/computer/communications
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
 
 /datum/design/board/crewconsole
 	name = "Computer Design (Crew monitoring computer)"
@@ -111,7 +111,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/crew
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/secdata
 	name = "Computer Design (Security Records Console)"
@@ -119,7 +119,7 @@
 	id = "secdata"
 	build_path = /obj/item/circuitboard/computer/secure_data
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/atmosalerts
 	name = "Computer Design (Atmosphere Alert)"
@@ -127,7 +127,7 @@
 	id = "atmosalerts"
 	build_path = /obj/item/circuitboard/computer/atmos_alert
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/atmos_control
 	name = "Computer Design (Atmospheric Monitor)"
@@ -135,7 +135,7 @@
 	id = "atmos_control"
 	build_path = /obj/item/circuitboard/computer/atmos_control
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/robocontrol
 	name = "Computer Design (Robotics Control Console)"
@@ -144,7 +144,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 1000, /datum/material/silver = 1000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/circuitboard/computer/robotics
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/slot_machine
 	name = "Computer Design (Slot Machine)"
@@ -160,7 +160,7 @@
 	id = "powermonitor"
 	build_path = /obj/item/circuitboard/computer/powermonitor
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/solarcontrol
 	name = "Computer Design (Solar Control)"
@@ -168,7 +168,7 @@
 	id = "solarcontrol"
 	build_path = /obj/item/circuitboard/computer/solar_control
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/prisonmanage
 	name = "Computer Design (Prisoner Management Console)"
@@ -176,7 +176,7 @@
 	id = "prisonmanage"
 	build_path = /obj/item/circuitboard/computer/prisoner
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/mechacontrol
 	name = "Computer Design (Exosuit Control Console)"
@@ -184,7 +184,7 @@
 	id = "mechacontrol"
 	build_path = /obj/item/circuitboard/computer/mecha_control
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/mechapower
 	name = "Computer Design (Mech Bay Power Control Console)"
@@ -192,7 +192,7 @@
 	id = "mechapower"
 	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/rdconsole
 	name = "Computer Design (R&D Console)"
@@ -200,7 +200,7 @@
 	id = "rdconsole"
 	build_path = /obj/item/circuitboard/computer/rdconsole
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/cargo
 	name = "Computer Design (Supply Console)"
@@ -209,7 +209,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/cargo
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/cargorequest
 	name = "Computer Design (Supply Request Console)"
@@ -218,7 +218,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/cargo/request
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/mining
 	name = "Computer Design (Outpost Status Display)"
@@ -226,7 +226,7 @@
 	id = "mining"
 	build_path = /obj/item/circuitboard/computer/mining
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/comm_monitor
 	name = "Computer Design (Telecommunications Monitoring Console)"
@@ -234,7 +234,7 @@
 	id = "comm_monitor"
 	build_path = /obj/item/circuitboard/computer/comm_monitor
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/comm_server
 	name = "Computer Design (Telecommunications Server Monitoring Console)"
@@ -242,7 +242,7 @@
 	id = "comm_server"
 	build_path = /obj/item/circuitboard/computer/comm_server
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/message_monitor
 	name = "Computer Design (Messaging Monitor Console)"
@@ -250,7 +250,7 @@
 	id = "message_monitor"
 	build_path = /obj/item/circuitboard/computer/message_monitor
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/aifixer
 	name = "Computer Design (AI Integrity Restorer)"
@@ -258,7 +258,7 @@
 	id = "aifixer"
 	build_path = /obj/item/circuitboard/computer/aifixer
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/libraryconsole
 	name = "Computer Design (Library Console)"
@@ -274,7 +274,7 @@
 	id = "apc_control"
 	build_path = /obj/item/circuitboard/computer/apc_control
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/advanced_camera
 	name = "Computer Design (Advanced Camera Console)"
@@ -282,7 +282,7 @@
 	id = "advanced_camera"
 	build_path = /obj/item/circuitboard/computer/advanced_camera
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/board/bountypad_control
 	name = "Computer Design (Civilian Bounty Pad Control)"
@@ -314,4 +314,4 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/accounting
 	category = list("Computer Boards")
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
