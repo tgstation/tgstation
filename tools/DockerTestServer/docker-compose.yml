@@ -9,6 +9,8 @@ services:
       context: ../../
       dockerfile: Dockerfile
     entrypoint: bash /entrypoint.sh
+    env_file:
+     - .env
     ports: 
       - "1337:1337"
     depends_on:
