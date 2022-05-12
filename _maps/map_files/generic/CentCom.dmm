@@ -600,10 +600,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
-"bR" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/admin/storage)
 "bS" = (
 /obj/structure/closet{
 	anchored = 1;
@@ -705,10 +701,6 @@
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/white,
 /area/tdome/observation)
-"ce" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/armory)
 "cf" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -1965,10 +1957,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/centcom/fore)
-"fC" = (
-/obj/structure/sign/warning/nosmoking,
-/turf/closed/indestructible/riveted,
-/area/tdome/observation)
 "fD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -2388,6 +2376,10 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
+"gS" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/ferry)
 "gT" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -3061,10 +3053,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
-"iI" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/prison/cells)
 "iJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -3836,6 +3824,10 @@
 	icon_state = "alien19"
 	},
 /area/abductor_ship)
+"kR" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/admin/storage)
 "kS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -5497,20 +5489,6 @@
 /obj/structure/flora/grass/both,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
-"px" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/sign/warning/securearea{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron,
-/area/centcom/ferry)
 "py" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -5613,17 +5591,6 @@
 /obj/structure/flora/ausbushes/palebush,
 /turf/open/misc/asteroid,
 /area/tdome/observation)
-"pP" = (
-/obj/structure/table/reinforced,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/gps/mining,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/iron,
-/area/centcom/supply)
 "pQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -5807,6 +5774,10 @@
 /obj/item/food/grown/apple,
 /turf/open/floor/plastic,
 /area/syndicate_mothership/expansion_fridgerummage)
+"qq" = (
+/obj/structure/sign/warning/no_smoking,
+/turf/closed/indestructible/riveted,
+/area/centcom/admin)
 "qr" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/tile/green{
@@ -6132,10 +6103,6 @@
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/admin)
-"rz" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/ferry)
 "rB" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
@@ -6276,6 +6243,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"rY" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/armory)
 "rZ" = (
 /obj/machinery/shower{
 	dir = 8
@@ -6645,6 +6616,20 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/admin)
+"tn" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/structure/sign/warning/secure_area{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/centcom/ferry)
 "to" = (
 /obj/machinery/computer/shuttle/ferry{
 	dir = 4
@@ -6839,10 +6824,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/centcom/control)
-"tP" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
 /area/centcom/control)
 "tR" = (
 /obj/effect/turf_decal/stripes/line{
@@ -10200,6 +10181,10 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"DF" = (
+/obj/structure/sign/warning/no_smoking,
+/turf/closed/indestructible/riveted,
+/area/tdome/observation)
 "DG" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -10796,6 +10781,10 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
+"Fq" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/control)
 "Fr" = (
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium,
@@ -10950,6 +10939,17 @@
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/mineral/titanium/tiled,
 /area/syndicate_mothership/expansion_bioterrorism)
+"FO" = (
+/obj/structure/table/reinforced,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/gps/mining,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/centcom/supply)
 "FP" = (
 /obj/structure/window/reinforced/survival_pod{
 	name = "Tinted Window";
@@ -17575,10 +17575,6 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/syndicate_mothership)
-"YI" = (
-/obj/structure/sign/warning/nosmoking,
-/turf/closed/indestructible/riveted,
-/area/centcom/admin)
 "YJ" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -17687,6 +17683,10 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
+"YX" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/prison/cells)
 "YY" = (
 /obj/item/storage/medkit/toxin,
 /obj/item/storage/medkit/o2{
@@ -53980,7 +53980,7 @@ vE
 wt
 xg
 wt
-px
+tn
 mD
 pD
 pX
@@ -55522,7 +55522,7 @@ mD
 ss
 fw
 tr
-rz
+gS
 SM
 WR
 RH
@@ -55762,7 +55762,7 @@ aa
 aa
 On
 On
-YI
+qq
 On
 gI
 pE
@@ -56289,7 +56289,7 @@ dz
 Nr
 Xq
 Rg
-rz
+gS
 wz
 TK
 xR
@@ -56550,7 +56550,7 @@ mD
 su
 fw
 wh
-rz
+gS
 NN
 MJ
 TI
@@ -57323,11 +57323,11 @@ fw
 ts
 mD
 Ya
-ce
+rY
 ST
 VO
 ST
-ce
+rY
 Ya
 Ya
 aa
@@ -58085,7 +58085,7 @@ On
 YU
 YU
 Rj
-bR
+kR
 YU
 oe
 qR
@@ -58337,7 +58337,7 @@ iF
 yd
 oM
 pi
-pP
+FO
 Tq
 YU
 Sh
@@ -58373,7 +58373,7 @@ at
 QC
 QC
 QC
-fC
+DF
 QC
 QC
 QC
@@ -59122,11 +59122,11 @@ xh
 wu
 mD
 Ya
-ce
+rY
 Ya
 Ya
 Ya
-ce
+rY
 Ya
 Ya
 Dq
@@ -59895,7 +59895,7 @@ ys
 mR
 zF
 Am
-tP
+Fq
 iu
 io
 gl
@@ -61194,7 +61194,7 @@ Mu
 Mu
 Mu
 aB
-fC
+DF
 BW
 BW
 NV
@@ -62940,7 +62940,7 @@ aa
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb
@@ -62952,7 +62952,7 @@ iB
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb
@@ -63225,7 +63225,7 @@ io
 io
 io
 io
-tP
+Fq
 UO
 io
 io
@@ -65510,7 +65510,7 @@ aa
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb
@@ -65522,7 +65522,7 @@ iB
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb

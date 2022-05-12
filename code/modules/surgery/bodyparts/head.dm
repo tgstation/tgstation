@@ -6,6 +6,7 @@
 	max_damage = 200
 	body_zone = BODY_ZONE_HEAD
 	body_part = HEAD
+	plaintext_zone = "head"
 	w_class = WEIGHT_CLASS_BULKY //Quite a hefty load
 	slowdown = 1 //Balancing measure
 	throw_range = 2 //No head bowling
@@ -334,14 +335,17 @@
 			. += lips_overlay
 
 		// eyes
-		var/image/eyes_overlay = image('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
-		. += eyes_overlay
-		if(eyes)
-			eyes_overlay.icon_state = eyes.eye_icon_state
-
-			if(eyes.eye_color)
-				eyes_overlay.color = eyes.eye_color
-
+		if(eyes) // This is a bit of copy/paste code from eyes.dm:generate_body_overlay
+			var/image/eye_left = image('icons/mob/human_face.dmi', "[eyes.eye_icon_state]_l", -BODY_LAYER, SOUTH)
+			var/image/eye_right = image('icons/mob/human_face.dmi', "[eyes.eye_icon_state]_r", -BODY_LAYER, SOUTH)
+			if(eyes.eye_color_left)
+				eye_left.color = eyes.eye_color_left
+			if(eyes.eye_color_right)
+				eye_right.color = eyes.eye_color_right
+			. += eye_left
+			. += eye_right
+		else
+			. += image('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 	else
 		if(!facial_hair_hidden && facial_overlay && (FACEHAIR in species_flags_list))
 			facial_overlay.alpha = hair_alpha

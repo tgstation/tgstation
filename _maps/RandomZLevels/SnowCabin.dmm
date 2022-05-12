@@ -957,16 +957,6 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
-"dm" = (
-/obj/structure/table/reinforced,
-/obj/item/modular_computer/tablet/pda/syndicate{
-	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/mime;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: My partner has left to help those Nanotrasen fucks three days ago. They said that a distress signal came from down south and they had to check it out. How fucking long does it take to investigate a mining outpost? Either those Nanotrasen fuckers betrayed us or something really did go wrong. Either way, I'm leaving before this becomes an issue for me and anyone else here. That dumb idiot."
-	},
-/turf/open/floor/plating/snowed/snow_cabin,
-/area/awaymission/cabin/snowforest/sovietsurface)
 "dn" = (
 /obj/structure/table/reinforced,
 /obj/item/megaphone/sec{
@@ -1316,10 +1306,6 @@
 /obj/item/stack/sheet/mineral/wood,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
-"ey" = (
-/obj/structure/sign/warning/nosmoking/circle,
-/turf/closed/wall/mineral/wood,
-/area/awaymission/cabin/snowforest)
 "ez" = (
 /obj/structure/fence,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -2895,26 +2881,6 @@
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
-"jO" = (
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = 32
-	},
-/turf/open/floor/wood/freezing,
-/area/awaymission/cabin/lumbermill)
-"jP" = (
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = -32
-	},
-/turf/open/floor/wood/freezing,
-/area/awaymission/cabin/lumbermill)
-"jQ" = (
-/obj/structure/table/wood,
-/obj/structure/sign/warning/nosmoking/circle{
-	pixel_x = -16;
-	pixel_y = 32
-	},
-/turf/open/floor/wood/freezing,
-/area/awaymission/cabin/lumbermill)
 "jR" = (
 /obj/structure/table/wood,
 /obj/item/hatchet{
@@ -3101,48 +3067,6 @@
 	icon_state = "wood-broken7"
 	},
 /area/awaymission/cabin/caves)
-"kD" = (
-/obj/structure/table/wood,
-/obj/item/hatchet{
-	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	force = 4;
-	name = "weak hatchet";
-	pixel_x = 7;
-	throwforce = 4
-	},
-/obj/item/hatchet{
-	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	force = 4;
-	name = "weak hatchet";
-	throwforce = 4
-	},
-/obj/item/hatchet{
-	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	force = 4;
-	name = "weak hatchet";
-	pixel_x = -7;
-	throwforce = 4
-	},
-/obj/item/hatchet{
-	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	force = 4;
-	name = "weak hatchet";
-	pixel_x = -3;
-	throwforce = 4
-	},
-/obj/item/hatchet{
-	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
-	force = 4;
-	name = "weak hatchet";
-	pixel_x = 3;
-	throwforce = 4
-	},
-/obj/structure/sign/warning/nosmoking/circle{
-	pixel_x = 16;
-	pixel_y = -32
-	},
-/turf/open/floor/wood/freezing,
-/area/awaymission/cabin/lumbermill)
 "kE" = (
 /obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -3311,13 +3235,6 @@
 	},
 /turf/closed/wall/ice,
 /area/awaymission/cabin/caves)
-"lQ" = (
-/obj/structure/sign/warning/enginesafety{
-	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift. It seems to particularly focus on how dangerous the sawblade is.";
-	name = "\improper LUMBERMILL SAFETY"
-	},
-/turf/closed/wall/mineral/wood,
-/area/awaymission/cabin/lumbermill)
 "lS" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
@@ -3560,19 +3477,6 @@
 	},
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
-"nb" = (
-/obj/effect/turf_decal/weather/snow,
-/obj/item/modular_computer/tablet/pda/syndicate{
-	default_disk = /obj/item/computer_hardware/hard_drive/role/virus/clown;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: DO NOT GO SOUTH."
-	},
-/obj/effect/decal/remains/human{
-	color = "#72e4fa"
-	},
-/turf/open/floor/iron/dark/snowdin,
-/area/awaymission/cabin/caves)
 "nc" = (
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/wall/ice,
@@ -3743,6 +3647,13 @@
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"pj" = (
+/obj/structure/sign/warning/engine_safety{
+	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift. It seems to particularly focus on how dangerous the sawblade is.";
+	name = "\improper LUMBERMILL SAFETY"
+	},
+/turf/closed/wall/mineral/wood,
+/area/awaymission/cabin/lumbermill)
 "pu" = (
 /obj/item/grenade/barrier{
 	pixel_x = -14;
@@ -3998,6 +3909,19 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"vD" = (
+/obj/effect/turf_decal/weather/snow,
+/obj/item/modular_computer/tablet/pda/syndicate{
+	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/clown;
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
+	name = "soviet tablet";
+	note = "TRANSLATED TO GALACTIC COMMON: DO NOT GO SOUTH."
+	},
+/obj/effect/decal/remains/human{
+	color = "#72e4fa"
+	},
+/turf/open/floor/iron/dark/snowdin,
+/area/awaymission/cabin/caves)
 "vG" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/grenade/chem_grenade/large,
@@ -4133,6 +4057,16 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
+"yR" = (
+/obj/structure/table/reinforced,
+/obj/item/modular_computer/tablet/pda/syndicate{
+	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/mime;
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
+	name = "soviet tablet";
+	note = "TRANSLATED TO GALACTIC COMMON: My partner has left to help those Nanotrasen fucks three days ago. They said that a distress signal came from down south and they had to check it out. How fucking long does it take to investigate a mining outpost? Either those Nanotrasen fuckers betrayed us or something really did go wrong. Either way, I'm leaving before this becomes an issue for me and anyone else here. That dumb idiot."
+	},
+/turf/open/floor/plating/snowed/snow_cabin,
+/area/awaymission/cabin/snowforest/sovietsurface)
 "yY" = (
 /obj/vehicle/ridden/atv{
 	dir = 4
@@ -4164,6 +4098,10 @@
 	pixel_x = -7
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/cabin/snowforest)
+"zm" = (
+/obj/structure/sign/warning/no_smoking/circle,
+/turf/closed/wall/mineral/wood,
 /area/awaymission/cabin/snowforest)
 "zn" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -4450,6 +4388,12 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"Lt" = (
+/obj/structure/sign/warning/no_smoking{
+	pixel_x = 32
+	},
+/turf/open/floor/wood/freezing,
+/area/awaymission/cabin/lumbermill)
 "LE" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/nullrod/claymore/multiverse{
@@ -4592,6 +4536,14 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
+"OF" = (
+/obj/structure/table/wood,
+/obj/structure/sign/warning/no_smoking/circle{
+	pixel_x = -16;
+	pixel_y = 32
+	},
+/turf/open/floor/wood/freezing,
+/area/awaymission/cabin/lumbermill)
 "OZ" = (
 /obj/structure/flora/tree/dead,
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4753,6 +4705,48 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
+"SQ" = (
+/obj/structure/table/wood,
+/obj/item/hatchet{
+	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
+	force = 4;
+	name = "weak hatchet";
+	pixel_x = 7;
+	throwforce = 4
+	},
+/obj/item/hatchet{
+	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
+	force = 4;
+	name = "weak hatchet";
+	throwforce = 4
+	},
+/obj/item/hatchet{
+	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
+	force = 4;
+	name = "weak hatchet";
+	pixel_x = -7;
+	throwforce = 4
+	},
+/obj/item/hatchet{
+	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
+	force = 4;
+	name = "weak hatchet";
+	pixel_x = -3;
+	throwforce = 4
+	},
+/obj/item/hatchet{
+	desc = "A decent axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood.";
+	force = 4;
+	name = "weak hatchet";
+	pixel_x = 3;
+	throwforce = 4
+	},
+/obj/structure/sign/warning/no_smoking/circle{
+	pixel_x = 16;
+	pixel_y = -32
+	},
+/turf/open/floor/wood/freezing,
+/area/awaymission/cabin/lumbermill)
 "SS" = (
 /obj/effect/decal/cleanable/glitter/blue{
 	desc = "It looks like fancy glitter to me.";
@@ -4811,6 +4805,12 @@
 	slowdown = 0
 	},
 /area/awaymission/cabin/caves)
+"Un" = (
+/obj/structure/sign/warning/no_smoking{
+	pixel_x = -32
+	},
+/turf/open/floor/wood/freezing,
+/area/awaymission/cabin/lumbermill)
 "Uu" = (
 /obj/structure/statue/snow/snowlegion{
 	anchored = 1;
@@ -18329,7 +18329,7 @@ mU
 mU
 mU
 mJ
-nb
+vD
 mW
 mW
 ab
@@ -35928,13 +35928,13 @@ RC
 RC
 ad
 ad
-jP
+Un
 af
 af
 af
 af
 af
-jP
+Un
 ad
 ad
 RC
@@ -37477,7 +37477,7 @@ af
 ak
 af
 af
-kD
+SQ
 ad
 RC
 RC
@@ -37726,7 +37726,7 @@ Sd
 RC
 RC
 ad
-jQ
+OF
 af
 ak
 jX
@@ -39269,13 +39269,13 @@ RC
 ae
 ad
 ad
-jO
+Lt
 af
 af
 af
 af
 af
-jO
+Lt
 ad
 ad
 fb
@@ -39529,7 +39529,7 @@ ad
 ad
 eH
 eG
-lQ
+pj
 eG
 eH
 ad
@@ -42446,7 +42446,7 @@ Xa
 Xa
 Xa
 dc
-dm
+yR
 di
 dG
 dP
@@ -42607,7 +42607,7 @@ RC
 RC
 Sd
 RC
-ey
+zm
 ez
 eC
 eC
@@ -42619,7 +42619,7 @@ eC
 eC
 eC
 fa
-ey
+zm
 RC
 RC
 RC

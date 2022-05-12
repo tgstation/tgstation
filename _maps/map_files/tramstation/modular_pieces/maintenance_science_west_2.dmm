@@ -4,7 +4,7 @@
 /area/template_noop)
 "b" = (
 /turf/closed/wall,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "c" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -12,110 +12,110 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/catwalk_floor,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "d" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'CAVE IN HAZARD: WEAR PROTECTIVE HEAD GEAR'.";
 	name = "\improper CAVE IN HAZARD sign";
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "e" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "h" = (
 /turf/closed/wall/rock/porous,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "i" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "j" = (
 /turf/closed/wall/rust,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "o" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "p" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/shovel,
 /turf/open/misc/asteroid,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "u" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "w" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "x" = (
 /obj/item/clothing/head/hardhat,
 /turf/open/misc/asteroid,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "y" = (
 /obj/modular_map_root/tramstation{
 	key = "maintenance_science_west_attachment"
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "z" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/sand/plating,
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'CAVE IN HAZARD: WEAR PROTECTIVE HEAD GEAR'.";
 	name = "\improper CAVE IN HAZARD sign";
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "A" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "B" = (
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/misc/asteroid,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "D" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/misc/asteroid,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "F" = (
 /obj/structure/barricade/wooden,
 /turf/open/misc/asteroid,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "H" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "I" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "M" = (
 /obj/item/storage/toolbox/mechanical,
 /turf/open/misc/asteroid,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "N" = (
 /obj/item/clothing/head/cone{
 	pixel_x = 11;
@@ -126,16 +126,16 @@
 	pixel_y = -10
 	},
 /turf/open/misc/asteroid,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "O" = (
 /obj/effect/spawner/random/structure/girder,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "V" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -143,13 +143,13 @@
 /obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "W" = (
 /turf/open/misc/asteroid,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "X" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 "Y" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/clothing/head/cone{
@@ -161,7 +161,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/department/medical)
+/area/station/maintenance/department/medical)
 
 (1,1,1) = {"
 a

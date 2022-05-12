@@ -77,7 +77,7 @@
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)
 	new /obj/item/storage/bag/garment/chief_medical(src)
-	new /obj/item/computer_hardware/hard_drive/role/cmo(src)
+	new /obj/item/computer_hardware/hard_drive/portable/command/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/defibrillator/compact/loaded(src)

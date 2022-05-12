@@ -1,3 +1,5 @@
+import { BooleanLike } from "common/react";
+
 export const KelvinZeroCelcius = 273.15;
 
 export const InternalDamageToDamagedDesc = {
@@ -69,6 +71,7 @@ export type OperatorData = {
   mecha_flags: number;
   internal_damage: number;
   internal_damage_keys: string[];
+  airtank_present: BooleanLike;
   air_source: string;
   mechflag_keys: string[];
   cabin_dangerous_highpressure: number;
@@ -81,6 +84,7 @@ export type OperatorData = {
   mech_electronics: MechElectronics;
   right_arm_weapon: MechWeapon | null;
   left_arm_weapon: MechWeapon | null;
+  weapons_safety: boolean;
   mech_equipment: string[];
   mech_view: string;
   mineral_material_amount: number;

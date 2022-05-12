@@ -181,15 +181,11 @@
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
-	if(istype(src, /obj/vehicle/sealed/mecha/combat)) //todo this stupid mouse icon should be a flag
-		mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
-		for(var/occus in occupants)
-			var/mob/living/occupant = occus
-			occupant.update_mouse_pointer()
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
 	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha.proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = TRUE
+	set_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > max_temperature
@@ -368,3 +364,53 @@
 			cell.charge = rand(0, cell.charge)
 			cell = null
 	. = ..()
+
+/obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/A, mob/user,fail_chat_override = FALSE)
+	if(!A.rounds)
+		if(!fail_chat_override)
+			to_chat(user, span_warning("This box of ammo is empty!"))
+		return FALSE
+	var/ammo_needed
+	var/found_gun
+	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in flat_equipment)
+		ammo_needed = 0
+
+		if(!istype(gun, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic) && gun.ammo_type == A.ammo_type)
+			continue
+		found_gun = TRUE
+		if(A.direct_load)
+			ammo_needed = initial(gun.projectiles) - gun.projectiles
+		else
+			ammo_needed = gun.projectiles_cache_max - gun.projectiles_cache
+
+		if(!ammo_needed)
+			continue
+		if(ammo_needed < A.rounds)
+			if(A.direct_load)
+				gun.projectiles = gun.projectiles + ammo_needed
+			else
+				gun.projectiles_cache = gun.projectiles_cache + ammo_needed
+			playsound(get_turf(user),A.load_audio,50,TRUE)
+			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
+			A.rounds = A.rounds - ammo_needed
+			if(A.custom_materials)
+				A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
+			A.update_name()
+			return TRUE
+
+		if(A.direct_load)
+			gun.projectiles = gun.projectiles + A.rounds
+		else
+			gun.projectiles_cache = gun.projectiles_cache + A.rounds
+		playsound(get_turf(user),A.load_audio,50,TRUE)
+		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
+		A.rounds = 0
+		A.set_custom_materials(list(/datum/material/iron=2000))
+		A.update_name()
+		return TRUE
+	if(!fail_chat_override)
+		if(found_gun)
+			to_chat(user, span_notice("You can't fit any more ammo of this type!"))
+		else
+			to_chat(user, span_notice("None of the equipment on this exosuit can use this ammo!"))
+	return FALSE

@@ -252,12 +252,3 @@
 	build_path = /obj/item/computer_hardware/sensorpackage
 	category = list("Computer Parts")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
-
-/datum/design/signaler_part
-	name = "Integrated Signaler"
-	id = "signalpart"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 400, /datum/material/glass = 100)
-	build_path = /obj/item/computer_hardware/radio_card
-	category = list("Computer Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING

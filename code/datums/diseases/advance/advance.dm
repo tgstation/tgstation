@@ -253,7 +253,7 @@
 		else
 			SetSpread(DISEASE_SPREAD_BLOOD)
 
-		permeability_mod = max(CEILING(0.4 * properties["transmittable"], 1), 1)
+		spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = clamp(7.5 - (0.5 * properties["resistance"]), 5, 10) // can be between 5 and 10
 		stage_prob = max(0.5 * properties["stage_rate"], 1)
 		SetSeverity(properties["severity"])

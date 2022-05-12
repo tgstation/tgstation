@@ -418,7 +418,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
  */
 /obj/machinery/exodrone_launcher/proc/launch_effect()
 	playsound(src,'sound/effects/podwoosh.ogg',50, FALSE)
-	do_smoke(1,get_turf(src))
+	do_smoke(DIAMOND_AREA(1), get_turf(src))
 
 /obj/machinery/exodrone_launcher/handle_atom_del(atom/A)
 	if(A == fuel_canister)

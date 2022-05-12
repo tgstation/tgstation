@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
-	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 
 	var/bypass_state = FALSE // bypassing the set icon state
 
@@ -250,7 +250,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		update_appearance()
 		update_slot_icon()
 
-	return FALSE
+	return TRUE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -303,7 +303,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	. = ..()
 
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
-	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Job Disk"
+	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -340,11 +340,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(.)
 		return
 
-	var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
+	var/obj/item/computer_hardware/hard_drive/ssd = all_components[MC_SDD]
 	if(!ssd)
 		return
 	if(uninstall_component(ssd, usr))
 		user.put_in_hands(ssd)
+		playsound(src, 'sound/machines/card_slide.ogg', 50)
 
 /obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.

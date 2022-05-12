@@ -279,8 +279,6 @@
 /datum/config_entry/flag/silent_ai
 /datum/config_entry/flag/silent_borg
 
-/datum/config_entry/flag/sandbox_autoclose // close the sandbox panel after spawning an item, potentially reducing griff
-
 /datum/config_entry/number/default_laws //Controls what laws the AI spawns with.
 	default = 0
 	min_val = 0

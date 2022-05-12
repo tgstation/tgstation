@@ -316,7 +316,7 @@
 			return 250
 
 		if(SLIME_ACTIVATE_MAJOR)
-			user.reagents.create_foam(/datum/effect_system/foam_spread,20)
+			user.reagents.create_foam(/datum/effect_system/fluid_spread/foam, 20)
 			user.visible_message(span_danger("Foam spews out from [user]'s skin!"), span_warning("You activate [src], and foam bursts out of your skin!"))
 			return 600
 
@@ -331,7 +331,7 @@
 		if(SLIME_ACTIVATE_MINOR)
 			to_chat(user, span_notice("You activate [src]. You start feeling colder!"))
 			user.extinguish_mob()
-			user.adjust_fire_stacks(-20)
+			user.adjust_wet_stacks(20)
 			user.reagents.add_reagent(/datum/reagent/consumable/frostoil,6)
 			user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,7)
 			return 100
