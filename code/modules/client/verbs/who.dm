@@ -76,7 +76,8 @@
 	var/display_name
 	if(holder)
 		for(var/client/client in GLOB.admins)
-			display_name = client.holder.feedback_link() ? "<a href=[client.holder.feedback_link()]>[client]</a>" : client
+			var/feedback_link = client.holder.feedback_link()
+			display_name = feedback_link ? "<a href=[feedback_link]>[client]</a>" : client
 
 			msg += "\t[display_name] is a [client.holder.rank_names()]"
 
@@ -102,7 +103,8 @@
 			msg += "\n"
 	else
 		for(var/client/client in GLOB.admins)
-			display_name = client.holder.feedback_link() ? "<a href=[client.holder.feedback_link()]>[client]</a>" : client
+			var/feedback_link = client.holder.feedback_link()
+			display_name = feedback_link ? "<a href=[feedback_link]>[client]</a>" : client
 
 			if(client.is_afk())
 				continue //Don't show afk admins to adminwho

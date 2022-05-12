@@ -170,17 +170,18 @@ GLOBAL_PROTECT(href_token)
 		owner.holder = null
 		owner = null
 
+/// Returns the feedback forum thread for the admin holder's owner, as according to DB.
 /datum/admins/proc/feedback_link()
-	if(!(world.time - last_forum_access_time) > 100)
+	if(!((world.time - last_forum_access_time) > 10 SECONDS))
 		return cached_forum_link
 
 	last_forum_access_time = world.time
 
-	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[key_name_admin(usr)]'")
+	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
 
 	if(!feedback_query.Execute())
 		log_sql("Error retrieving feedback link for [src]")
-		return FALSE
+		return cached_forum_link
 	if(!feedback_query.NextRow())
 		return FALSE // no feedback link exists
 
