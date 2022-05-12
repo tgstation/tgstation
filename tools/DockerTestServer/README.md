@@ -19,6 +19,8 @@ Also with some tweaks done to read environment variables, like database config a
 5) Edit the values in `.env` (the content and commented out sections, seriously, read it)
 6) When all and dandy, start the server by doing `docker-compose up`
 
+After this, you should be able to connect over to your server by opening BYOND and joining your game with an URL that looks like this `byond://localhost:1337` or if you are hosting this on another device `byond://192.168.1.25:1337` or whatever that device's IP or domain is.
+
 ## Turning off the server:
 
 Same directory as before in the terminal, try `docker-compose down`
