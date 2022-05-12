@@ -258,7 +258,9 @@ export const selectBackend = <TData>(state: any): BackendState<TData> => (
 );
 
 /**
- * Get data from tgui backend and the `act` function for performing actions.
+ * Get data from tgui backend.
+ *
+ * Includes the `act` function for performing DM actions.
  */
 export const useBackend = <TData>(context: any) => {
   const { store } = context;
