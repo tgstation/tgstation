@@ -248,9 +248,13 @@ const CraftingList = (props: CraftingListProps, context) => {
         'PersonalCraftingGridItem',
         recipe.craftable && 'PersonalCraftingGridItem--craftable',
       ])}
-      onClick={() => act('make', {
-        recipe: recipe.ref,
-      })}>
+      onClick={() => {
+        if (recipe.craftable) {
+          act('make', {
+            recipe: recipe.ref,
+          });
+        }
+      }}>
       <div className="PersonalCraftingGridItem__content">
         <div className="PersonalCraftingGridItem__name">
           {recipe.name}
