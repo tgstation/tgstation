@@ -291,9 +291,7 @@ const CompactCraftingList = (props: CraftingListProps, context) => {
           <Table.Cell bold maxWidth="250px">
             {recipe.name}
           </Table.Cell>
-          <Table.Cell
-            opacity={0.6}
-            title={recipe.tool_text && 'Tools needed: ' + recipe.tool_text}>
+          <Table.Cell opacity={0.6}>
             {recipe.req_text}
           </Table.Cell>
           <Table.Cell collapsing>
