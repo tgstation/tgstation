@@ -139,7 +139,7 @@
 		if(airs.len != 1) //not a unary gas mixture
 			mix_name += " - Node [airs.Find(air)]"
 		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
-	old_gasmix_data = new_gasmix_data
+	last_gasmix_data = new_gasmix_data
 
 /**
  * Outputs a message to the user describing the target's gasmixes.
