@@ -82,6 +82,7 @@
 	var/static/list/slot2type = list(
 		"head" = /obj/item/clothing/head/changeling,
 		"wear_mask" = /obj/item/clothing/mask/changeling,
+		"wear_neck" = /obj/item/changeling,
 		"back" = /obj/item/changeling,
 		"wear_suit" = /obj/item/clothing/suit/changeling,
 		"w_uniform" = /obj/item/clothing/under/changeling,
@@ -480,7 +481,7 @@
 	// Grab the target's sechut icon.
 	new_profile.id_icon = target.wear_id?.get_sechud_job_icon_state()
 
-	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
+	var/list/slots = list("head", "wear_mask", "wear_neck", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
 		if(!(slot in target.vars))
 			continue
@@ -663,7 +664,7 @@
 	var/static/list/slot2slot = list(
 		"head" = ITEM_SLOT_HEAD,
 		"wear_mask" = ITEM_SLOT_MASK,
-		"neck" = ITEM_SLOT_NECK,
+		"wear_neck" = ITEM_SLOT_NECK,
 		"back" = ITEM_SLOT_BACK,
 		"wear_suit" = ITEM_SLOT_OCLOTHING,
 		"w_uniform" = ITEM_SLOT_ICLOTHING,
