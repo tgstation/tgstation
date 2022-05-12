@@ -128,7 +128,7 @@ const PressureIndicator = (props, context) => {
 
 
 /** Displays the current status as two text strings, depending on door state. */
-const getAirlockStatus = (airlockState) => {
+const getAirlockStatus = (airlockState): AirlockStatus => {
   switch (airlockState) {
     case 'inopen':
       return {
