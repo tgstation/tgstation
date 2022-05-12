@@ -22,6 +22,10 @@
 	if (CONFIG_GET(flag/log_say))
 		WRITE_LOG(GLOB.world_game_log, "SAY: [text]")
 
+/proc/log_access(text)
+	if (CONFIG_GET(flag/log_access))
+		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
+
 /proc/log_topic(text)
 	WRITE_LOG(GLOB.world_game_log, "TOPIC: [text]")
 

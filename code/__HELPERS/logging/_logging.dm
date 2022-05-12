@@ -130,33 +130,13 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)
 
-/**
- * Helper for logging chat messages or other logs with arbitrary inputs(e.g. announcements)
- *
- * This proc compiles a log string by prefixing the tag to the message
- * and suffixing what it was forced_by if anything
- * if the message lacks a tag and suffix then it is logged on its own
- * Arguments:
- * * message - The message being logged
- * * message_type - the type of log the message is(ATTACK, SAY, etc)
- * * tag - tag that indicates the type of text(announcement, telepathy, etc)
- * * log_globally - boolean checking whether or not we write this log to the log file
- * * forced_by - source that forced the dialogue if any
- */
-/atom/proc/log_talk(message, message_type, tag = null, log_globally = TRUE, forced_by = null, custom_say_emote = null)
-	var/prefix = tag ? "([tag]) " : ""
-	var/suffix = forced_by ? " FORCED by [forced_by]" : ""
-	log_message("[prefix][custom_say_emote ? "*[custom_say_emote]*, " : ""]\"[message]\"[suffix]", message_type, log_globally=log_globally)
+/* For logging round startup. */
+/proc/start_log(log)
+	WRITE_LOG(log, "Starting up round ID [GLOB.round_id].\n-------------------------")
 
-/// Helper for logging of messages with only one sender and receiver
-/proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)
-	if(!tag)
-		stack_trace("Unspecified tag for private message")
-		tag = "UNKNOWN"
-
-	source.log_talk(message, message_type, tag="[tag] to [key_name(target)]")
-	if(source != target)
-		target.log_talk(message, LOG_VICTIM, tag="[tag] from [key_name(source)]", log_globally=FALSE)
+/* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
+/proc/shutdown_logging()
+	rustg_log_close_all()
 
 /* All other items are public. */
 /proc/log_mecha(text)
@@ -170,30 +150,9 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/log_paper(text)
 	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
 
-/proc/log_access(text)
-	if (CONFIG_GET(flag/log_access))
-		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
-
-/proc/log_tool(text, mob/initiator)
-	if(CONFIG_GET(flag/log_tools))
-		WRITE_LOG(GLOB.world_tool_log, "TOOL: [text]")
-
-/proc/log_econ(text)
-	if (CONFIG_GET(flag/log_econ))
-		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
-
 /proc/log_manifest(ckey, datum/mind/mind, mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
 		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role.title] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
-
-/// Logs the contents of the gasmix to the game log, prefixed by text
-/proc/log_atmos(text, datum/gas_mixture/mix)
-	var/message = text
-	message += "TEMP=[mix.temperature],MOL=[mix.total_moles()],VOL=[mix.volume]"
-	for(var/key in mix.gases)
-		var/list/gaslist = mix.gases[key]
-		message += "[gaslist[GAS_META][META_GAS_ID]]=[gaslist[MOLES]];"
-	log_game(message)
 
 /proc/log_telecomms(text)
 	if (CONFIG_GET(flag/log_telecomms))
@@ -202,57 +161,6 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/log_shuttle(text)
 	if (CONFIG_GET(flag/log_shuttle))
 		WRITE_LOG(GLOB.world_shuttle_log, "SHUTTLE: [text]")
-
-/proc/log_href(text)
-	WRITE_LOG(GLOB.world_href_log, "HREF: [text]")
-
-/proc/log_filter_raw(text)
-	WRITE_LOG(GLOB.filter_log, "FILTER: [text]")
-
-/proc/log_perf(list/perf_info)
-	. = "[perf_info.Join(",")]\n"
-	WRITE_LOG_NO_FORMAT(GLOB.perf_log, .)
-
-/**
- * Appends a tgui-related log entry. All arguments are optional.
- */
-/proc/log_tgui(user, message, context,
-		datum/tgui_window/window,
-		datum/src_object)
-	var/entry = ""
-	// Insert user info
-	if(!user)
-		entry += "<nobody>"
-	else if(istype(user, /mob))
-		var/mob/mob = user
-		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
-	else if(istype(user, /client))
-		var/client/client = user
-		entry += "[client.ckey]"
-	// Insert context
-	if(context)
-		entry += " in [context]"
-	else if(window)
-		entry += " in [window.id]"
-	// Resolve src_object
-	if(!src_object && window?.locked_by)
-		src_object = window.locked_by.src_object
-	// Insert src_object info
-	if(src_object)
-		entry += "\nUsing: [src_object.type] [REF(src_object)]"
-	// Insert message
-	if(message)
-		entry += "\n[message]"
-	WRITE_LOG(GLOB.tgui_log, entry)
-
-/* For logging round startup. */
-/proc/start_log(log)
-	WRITE_LOG(log, "Starting up round ID [GLOB.round_id].\n-------------------------")
-
-/* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
-/proc/shutdown_logging()
-	rustg_log_close_all()
-
 
 /* Helper procs for building detailed log lines */
 /proc/key_name(whom, include_link = null, include_name = TRUE)

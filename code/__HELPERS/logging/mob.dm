@@ -7,7 +7,7 @@
 
 
 /// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
-/mob/log_message(message, message_type, color=null, log_globally = TRUE)
+/mob/log_message(message, message_type, color = null, log_globally = TRUE)
 	if(!LAZYLEN(message))
 		stack_trace("Empty message")
 		return
