@@ -83,7 +83,7 @@
 				var/admin_link = "<a href=\"[admin_threads[client.ckey]]\">[client]</a>"
 				display_name = admin_link
 
-			msg += "\t[display_name] is a [client.holder.rank]"
+			msg += "\t[display_name] is a [client.holder.rank_names()]"
 
 			if(client.holder.fakekey)
 				msg += " <i>(as [client.holder.fakekey])</i>"
@@ -116,7 +116,7 @@
 					var/admin_link = "<a href=\"[admin_threads[client.ckey]]\">[client]</a>"
 					display_name = admin_link
 
-				msg += "\t[display_name] is a [client.holder.rank]\n"
+				msg += "\t[display_name] is a [client.holder.rank_names()]\n"
 		msg += span_info("Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game, sending an adminhelp might still be noticed and responded to.")
 	to_chat(src, msg)
 
