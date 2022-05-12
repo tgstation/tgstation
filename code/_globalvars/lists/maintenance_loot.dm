@@ -340,7 +340,6 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 
 
 GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
-		/obj/structure/destructible/cult/pants_altar = 1,
 		/obj/effect/rune/teleport = 1,
 		/obj/item/clothing/head/helmet/abductor = 1,
 		/obj/item/clothing/shoes/jackboots/fast = 1,
