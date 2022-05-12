@@ -572,7 +572,7 @@
 	if (nitrous_oxide_decomposed_factor>0)
 		ASSERT_GAS(/datum/gas/nitrogen, air)
 		ASSERT_GAS(/datum/gas/oxygen, air)
-		var/amount_decomposed = 0.4 * bzformed * nitrous_oxide_decomposed_factor
+		var/amount_decomposed = 0.4 * bz_formed * nitrous_oxide_decomposed_factor
 		cached_gases[/datum/gas/nitrogen] += amount_decomposed
 		cached_gases[/datum/gas/oxygen] += 0.5 * amount_decomposed
 
