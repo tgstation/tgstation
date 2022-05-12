@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/list/grids_by_z_level = list()
 	///everything that spawns before us is added to this list until we initialize
 	var/list/waiting_to_add_by_type = list(SPATIAL_GRID_CONTENTS_TYPE_HEARING = list(), SPATIAL_GRID_CONTENTS_TYPE_CLIENTS = list(), SPATIAL_GRID_CONTENTS_TYPE_ATMOS = list())
-	///associative list of the form: movable.spatial_grid_key (string) -> inner list of spatial grid types for that key. 
+	///associative list of the form: movable.spatial_grid_key (string) -> inner list of spatial grid types for that key.
 	///inner lists contain contents channel types such as SPATIAL_GRID_CONTENTS_TYPE_HEARING etc.
 	///we use this to make adding to a cell static cost, and to save on memory
 	var/list/spatial_grid_categories = list()
@@ -261,36 +261,6 @@ SUBSYSTEM_DEF(spatial_grid)
 		return
 
 	return grids_by_z_level[target_turf.z][GET_SPATIAL_INDEX(target_turf.y)][GET_SPATIAL_INDEX(target_turf.x)]
-
-///returns a square of grid cells outward from the spatial grid cell encompassing the center atom.
-///num_cells_outward_of_center is the number of cells between the center cell and the outer layer. making this 0 just returns the grid cell at the center.
-///use this if you want to specify range in grid cells not turfs.
-/datum/controller/subsystem/spatial_grid/proc/get_block_of_cells(atom/center, num_cells_outward_of_center)
-	var/turf/center_turf = get_turf(center)
-	if(!center_turf)
-		return FALSE
-
-	var/center_x = ROUND_UP(center_turf.x / SPATIAL_GRID_CELLSIZE)
-	var/center_y = ROUND_UP(center_turf.y / SPATIAL_GRID_CELLSIZE)
-
-	//find the indices in the spatial grid we are using
-	var/min_x_index = max(center_x - num_cells_outward_of_center, 1)
-	var/min_y_index = max(center_y - num_cells_outward_of_center, 1)
-
-	var/max_x_index = min(center_x + num_cells_outward_of_center, cells_on_x_axis)
-	var/max_y_index = min(center_y + num_cells_outward_of_center, cells_on_y_axis)
-
-	var/list/intersecting_grid_cells = list()
-
-	var/list/grid_level = grids_by_z_level[center_turf.z]
-
-	for(var/row in min_y_index to max_y_index)
-		var/list/grid_row = grid_level[row]
-
-		for(var/x_index in min_x_index to max_x_index)
-			intersecting_grid_cells += grid_row[x_index]
-
-	return intersecting_grid_cells
 
 ///get all grid cells intersecting the bounding box around center with sides of length 2 * range
 /datum/controller/subsystem/spatial_grid/proc/get_cells_in_range(atom/center, range)
