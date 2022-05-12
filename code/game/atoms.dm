@@ -1418,10 +1418,10 @@
 	// A tooltype_act has completed successfully
 	if(is_left_clicking)
 		log_tool("[key_name(user)] used [tool] on [src] at [AREACOORD(src)]")
-		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_PRIMARY(tooltype), src)
+		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_type), src)
 	else
 		log_tool("[key_name(user)] used [tool] on [src] (right click) at [AREACOORD(src)]")
-		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_SECONDARY(tooltype), src)
+		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
