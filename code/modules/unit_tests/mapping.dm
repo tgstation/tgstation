@@ -1,3 +1,4 @@
+/// Conveys all log_mapping messages as unit test failures, as they all indicate mapping problems.
 /datum/unit_test/log_mapping
 	// Happen before all other tests, to make sure we only capture normal mapping logs.
 	priority = TEST_PRE
