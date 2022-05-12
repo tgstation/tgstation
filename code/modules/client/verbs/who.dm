@@ -74,14 +74,9 @@
 
 	var/msg = "<b>Current Admins:</b>\n"
 	var/display_name
-	var/list/admin_threads = json_decode(file2text("[global.config.directory]/admin_feedback.json"))
 	if(holder)
 		for(var/client/client in GLOB.admins)
-			display_name = client
-
-			if(admin_threads[client.ckey])
-				var/admin_link = "<a href=\"[admin_threads[client.ckey]]\">[client]</a>"
-				display_name = admin_link
+			display_name = client.holder.feedback_link() ? "<a href=[client.holder.feedback_link()]>[client]</a>" : client
 
 			msg += "\t[display_name] is a [client.holder.rank_names()]"
 
@@ -107,15 +102,11 @@
 			msg += "\n"
 	else
 		for(var/client/client in GLOB.admins)
-			display_name = client
+			display_name = client.holder.feedback_link() ? "<a href=[client.holder.feedback_link()]>[client]</a>" : client
 
 			if(client.is_afk())
 				continue //Don't show afk admins to adminwho
 			if(!client.holder.fakekey)
-				if(admin_threads[client.ckey])
-					var/admin_link = "<a href=\"[admin_threads[client.ckey]]\">[client]</a>"
-					display_name = admin_link
-
 				msg += "\t[display_name] is a [client.holder.rank_names()]\n"
 		msg += span_info("Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game, sending an adminhelp might still be noticed and responded to.")
 	to_chat(src, msg)
