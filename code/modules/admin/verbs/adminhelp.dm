@@ -1039,7 +1039,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 					if(AHELP_RESOLVED)
 						state_word = "Resolved"
 
-				msglist[i]= "<u><A href='?_src_=holder;[HrefToken()];ahelp=[REF(ahelp_check)];ahelp_action=ticket'>[word] ([state_word] | [ahelp_check.initiator_key_name])</A></u>"
+				msglist[i]= "<u><A href='?_src_=holder;[HrefToken(TRUE)];ahelp=[REF(ahelp_check)];ahelp_action=ticket'>[word] ([state_word] | [ahelp_check.initiator_key_name])</A></u>"
 				modified = TRUE
 
 	if(modified)
