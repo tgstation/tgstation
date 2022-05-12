@@ -58,9 +58,9 @@ export const AirlockController = (_, context) => {
 const AirLockButtons = (_, context) => {
   const { act, data } = useBackend<AirlockControllerData>(context);
   const { airlockState } = data;
-
   switch (airlockState) {
-    case 'pressurize' || 'depressurize':
+    case 'pressurize':
+    case 'depressurize':
       return (
         <Button icon="stop-circle" onClick={() => act('abort')}>
           Abort
