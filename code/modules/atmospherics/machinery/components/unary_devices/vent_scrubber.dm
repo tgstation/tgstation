@@ -41,6 +41,7 @@
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
+	RegisterSignal(src, COMSIG_VENT_CLOG, .proc/clog)
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
 	. = ..()
@@ -462,6 +463,18 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4
 	piping_layer = 4
 	icon_state = "scrub_map_on-4"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog(spawned_mob, maximum_spawns)
+	SIGNAL_HANDLER
+	RegisterSignal(src, COMSIG_VENT_UNCLOG, .proc/unclog)
+	priority_announce("it worked lol", "Custodial s")
+
+
+
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/unclog()
+	SIGNAL_HANDLER
+
 
 #undef SIPHONING
 #undef SCRUBBING

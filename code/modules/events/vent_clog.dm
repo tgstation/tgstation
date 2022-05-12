@@ -7,8 +7,8 @@
 /datum/round_event/scrubber_clog
 	announceWhen = 1
 	startWhen = 10
-	var/scrubber //Scrubber selected for the event
-	var/spawned_mob = /mob/living/basic/cockroach //What mob will spawn out of the vents
+	var/obj/scrubber //Scrubber selected for the event
+	var/mob/spawned_mob = /mob/living/basic/cockroach //What mob will be spawned
 	var/severity = "Minor" //Severity of the event (how dangerous are the spawned mobs, and it what quantity)
 	var/maximum_spawns //Cap on the number of spawned mobs that can be alive at once
 
@@ -35,30 +35,33 @@
 		if("Minor") //Spawns nuisance mobs that are small enough to realistically clog a vent.
 			var/list/minor_mobs = list(
 				/mob/living/simple_animal/mouse,
-				/mob/living/basic/cockroach)
+				/mob/living/basic/cockroach
+				)
 			return pick(minor_mobs)
 
 		if("Major") //Spawns potentially dangerous mobs.
 			var/list/major_mobs = list(
 				/mob/living/simple_animal/hostile/rat,
 				/mob/living/simple_animal/hostile/bee,
-				/mob/living/simple_animal/hostile/giant_spider)
+				/mob/living/simple_animal/hostile/giant_spider
+				)
 			return pick(major_mobs)
 
 		if("Critical") //Higher impact mobs, but with a lower max spawn
 			var/list/critical_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 				/mob/living/basic/cockroach/glockroach,
-				/mob/living/simple_animal/hostile/ooze
+				/mob/living/simple_animal/hostile/ooze,
 				/mob/living/simple_animal/hostile/bee/toxin
 				)
 			return pick(critical_mobs)
 
-			//Maybe add a "strange" severity that very rarely rolls, and would provide the crew with a more useful/fun variety of mobs?
+			//Maybe add a "strange" severity with very low weight, and would provide the crew with a more useful/goofier variety of mobs?
 
 
-/datum/round_event/scrubber_clog/start() //unedited andy
-
+/datum/round_event/scrubber_clog/start()
+	setup()
+	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG, spawned_mob, maximum_spawns) //Sends signal to proc
 
 
 
