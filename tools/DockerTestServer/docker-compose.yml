@@ -15,6 +15,7 @@ services:
       - db
     volumes:
       - ./entrypoint.sh:/entrypoint.sh:ro #
+      - ../../config:/gamecfg_ro:ro # Contains the default configuration, as defined in config/ 
       - ./gamecfg:/gamecfg:ro # Contains the override config files, entrypoint.sh overrides using these
       - gamedata:/tgstation/data # Contains the game data, contained nicely in a volume
 

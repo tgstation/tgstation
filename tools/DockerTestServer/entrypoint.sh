@@ -8,9 +8,15 @@ PURPLE='\033[00;35m'
 # Docker entrypoint
 # =================
 # What this will do:
-# 1) Override files under /tgstation/config/ with files present in /gamecfg/
-# 2) Process environment variables passed to the container into /tgstation/config/
-# 3) Finally start the DreamDaemon
+# 1) Copy the default config/ files from the read-only volume to /tgstation/config/
+# 2) Override files under /tgstation/config/ with files present in /gamecfg/
+# 3) Process environment variables passed to the container into /tgstation/config/
+# 4) Finally start the DreamDaemon
+
+# Override game config files
+echo -e "${PURPLE}[${YELLOW}---${PURPLE}]${RS} Copying default configuration files..."
+cp -frv /gamecfg_ro/* /tgstation/config
+echo -e "${PURPLE}[${GREEN}---${PURPLE}]${RS} ${GREEN}Copy complete!${RS}"
 
 # Override game config files
 echo -e "${PURPLE}[${YELLOW}---${PURPLE}]${RS} Overriding config files"
@@ -31,10 +37,10 @@ sed -i -r 's/FEEDBACK_PASSWORD .*/FEEDBACK_PASSWORD '"$DB_PASS"'/' /tgstation/co
 
 # Setting ranks
 export IFS=","
-if [[ -z "${CKEYRANKS}" ]]; then
+if [[ ! -z "${CKEYRANKS}" ]]; then
   echo -e "${PURPLE}[${YELLOW}---${PURPLE}]${RS} Inserting ranks..."
   echo "" > /tgstation/config/admins.txt
-  echo "${RED}admins.txt has been reset!${RS}"
+  echo -e "${RED}admins.txt has been reset!${RS}"
   for RANK in $CKEYRANKS; do
     echo "$( echo $RANK | cut -d '=' -f 1 )is now$( echo $RANK | cut -d '=' -f 2 )"
     printf "${RANK}\n" >> /tgstation/config/admins.txt
