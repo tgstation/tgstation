@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "On IceBoxStation, Ice Moon Ruins will no longer vent out all their atmospherics out the top of the map, since they magically now have ceilings."
+  - rscadd: "However, this dark magick to give Ice Moon Ruins ceilings come at a cost: avalanches over certain chasms are now much more likely, and can decimate certain infrastructure. Nanotrasen has ensured that anything vital shouldn't be impacted by this, but do expect to see certain \"unmaintained\" catwalk sections be swept up in an avalanche of sorts."
