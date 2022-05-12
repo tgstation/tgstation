@@ -10,7 +10,7 @@
 		/obj/item/assembly/timer = 6,
 		/obj/item/assembly/signaler = 6,
 		/obj/item/assembly/prox_sensor = 6,
-		/obj/item/assembly/igniter = 6
+		/obj/item/assembly/igniter = 6,
 	)
 	contraband = list(/obj/item/assembly/health = 3)
 	default_price = PAYCHECK_CREW
