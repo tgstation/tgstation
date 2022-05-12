@@ -71,7 +71,7 @@
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Major Scrubber Clog"
-	typepath = /datum/round_event/scrubber_clog
+	typepath = /datum/round_event/scrubber_clog/major
 	weight = 12 //Subject to change
 	max_occurrences = 3
 
