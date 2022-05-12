@@ -1,7 +1,7 @@
 /datum/round_event_control/scrubber_clog
 	name = "Minor Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog
-	weight = 15 //All weight values are very subject to change.
+	weight = 20 //All weight values are very subject to change.
 	max_occurrences = 3
 
 /datum/round_event/scrubber_clog
@@ -35,23 +35,22 @@
 		if("Minor") //Spawns nuisance mobs that are small enough to realistically clog a vent.
 			var/list/minor_mobs = list(
 				/mob/living/simple_animal/mouse,
-				/mob/living/basic/cockroach,
-				/mob/living/basic/stickman/dog)
+				/mob/living/basic/cockroach)
 			return pick(minor_mobs)
 
-		if("Major") //Spawns larger or more potentially dangerous mobs.
+		if("Major") //Spawns potentially dangerous mobs.
 			var/list/major_mobs = list(
 				/mob/living/simple_animal/hostile/rat,
-				/mob/living/basic/cockroach,
-				/mob/living/basic/stickman/dog)
+				/mob/living/simple_animal/hostile/bee,
+				/mob/living/simple_animal/hostile/giant_spider)
 			return pick(major_mobs)
 
 		if("Critical") //Higher impact mobs, but with a lower max spawn
 			var/list/critical_mobs = list(
-				/mob/living/simple_animal/hostile/giant_spider,
 				/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 				/mob/living/basic/cockroach/glockroach,
 				/mob/living/simple_animal/hostile/ooze
+				/mob/living/simple_animal/hostile/bee/toxin
 				)
 			return pick(critical_mobs)
 
@@ -62,28 +61,26 @@
 
 
 
+
+
+
+
+
 /datum/round_event_control/scrubber_clog/major
 	name = "Major Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog
-	weight = 12
+	weight = 12 //Subject to change
 	max_occurrences = 3
-
 
 /datum/round_event/scrubber_clog/major
 	severity = "Major"
 
-
-
-
-
 /datum/round_event_control/scrubber_clog/critical
 	name = "Critical Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog/critical
-	weight = 8
+	weight = 8 //Subject to change
 	max_occurrences = 1
 
 /datum/round_event/scrubber_clog/critical
 	severity = "Critical"
 	maximum_spawns = 2
-
-
