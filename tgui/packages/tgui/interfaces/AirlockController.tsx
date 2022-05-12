@@ -12,14 +12,8 @@ type AirlockControllerData = {
 
 type AirlockStatus = {
   primary: string;
-  icon?: string;
-  color?: string;
-};
-
-const defaultStatus: AirlockStatus = {
-  primary: 'Unknown',
-  icon: '',
-  color: 'average',
+  icon: string;
+  color: string;
 };
 
 export const AirlockController = (_, context) => {
@@ -126,43 +120,44 @@ const PressureIndicator = (props, context) => {
   );
 };
 
-
 /** Displays the current status as two text strings, depending on door state. */
 const getAirlockStatus = (airlockState): AirlockStatus => {
   switch (airlockState) {
     case 'inopen':
       return {
         primary: 'Interior Airlock Open',
+        icon: '',
         color: 'good',
       };
     case 'pressurize':
       return {
-        ...defaultStatus,
         primary: 'Cycling to Interior Airlock',
         icon: 'fan',
         color: 'average',
       };
     case 'closed':
       return {
-        ...defaultStatus,
         primary: 'Inactive',
+        icon: '',
         color: 'white',
       };
     case 'depressurize':
       return {
-        ...defaultStatus,
         primary: 'Cycling to Exterior Airlock',
         icon: 'fan',
         color: 'average',
       };
     case 'outopen':
       return {
-        ...defaultStatus,
         primary: 'Exterior Airlock Open',
         icon: 'exclamation-triangle',
         color: 'bad',
       };
     default:
-      return defaultStatus;
+      return {
+        primary: 'Unknown',
+        icon: '',
+        color: 'average',
+      };
   }
 };
