@@ -559,3 +559,38 @@
   - bugfix: Mulligan now properly randomizes ethereal color
   zxaber:
   - bugfix: Ripley mechs can no longer toggle to their nonexistant air tank.
+2022-05-12:
+  GoblinBackwards:
+  - balance: Fireball no longer has a 3 tile wide hitbox.
+  GoldenAlpharex:
+  - refactor: Refactored how legs are rendered, using dynamically-generated masks
+      to avoid left legs always displaying over right ones, or right legs above left
+      ones.
+  JohnFulpWillard:
+  - rscdel: 'The following job cartridges have been deleted: Detective, Lawyer, Janitor,
+      Curator, Roboticist and Scientist (without sensor pack).'
+  - balance: The following tablet apps has had their storage space cost lowered Robocontrol
+      12 -> 6, Power monitor 9 -> 8, Budget ordering 20 -> 10, Power alarms 5 -> 4,
+      Science hub 16 -> 10.
+  - balance: You no longer need an MC Scanner part to use the tablet's remote signalling
+      device application.
+  - balance: Cartridges no longer let you run applications off of them, but you can
+      still download applications off of them. Additionally, applications that were
+      once on a roundstart cartridge (or were a program you had pre-Ntos PDAs) has
+      been moved to be downloaded onto your tablet roundstart.
+  - qol: The Eject Disk button on the tablet's UI has been moved to the very top to
+      not clutter your UI as much.
+  Melbert:
+  - bugfix: High blood pressure effect is now applied correctly by opioid addiction
+  - spellcheck: opioid is now also spelled correctly
+  - refactor: Jitterriness is now a status effect
+  - bugfix: The first stage of addiction now actually occurs.
+  RandomGamer123:
+  - spellcheck: Removes some erroneous "the" in some clown car messages
+  Son-of-Space:
+  - bugfix: varedited access reqs were removed from the service hallway on IceBox
+      so mapping helpers can function correctly
+  - bugfix: maintenance access returned to the library door on IceBox station
+  san7890:
+  - bugfix: Nanotrasen will no longer install two separate APCs in the prison wing
+      of IceBoxStation.

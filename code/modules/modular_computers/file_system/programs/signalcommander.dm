@@ -1,4 +1,4 @@
-/datum/computer_file/program/signaler
+/datum/computer_file/program/signal_commander
 	filename = "signaler"
 	filedesc = "SignalCommander"
 	category = PROGRAM_CATEGORY_MISC
@@ -15,34 +15,17 @@
 	/// Radio connection datum used by signalers.
 	var/datum/radio_frequency/radio_connection
 
-/datum/computer_file/program/signaler/run_program(mob/living/user)
-	. = ..()
-	if (!.)
-		return
-	var/obj/item/computer_hardware/hard_drive/role/signal/disk = computer?.get_modular_computer_part(MC_HDD_JOB)
-	if(!(computer?.get_modular_computer_part(MC_SIGNALER) || istype(disk))) //Giving a clue to users why the program is spitting out zeros.
-		to_chat(user, span_warning("\The [computer] flashes an error: \"hardware\\signal_hardware\\startup.bin -- file not found\"."))
-
-
-/datum/computer_file/program/signaler/ui_data(mob/user)
+/datum/computer_file/program/signal_commander/ui_data(mob/user)
 	var/list/data = get_header_data()
-	var/obj/item/computer_hardware/radio_card/sensor = computer?.get_modular_computer_part(MC_SIGNALER)
-	var/obj/item/computer_hardware/hard_drive/role/signal/disk = computer?.get_modular_computer_part(MC_HDD_JOB)
-	if(sensor?.check_functionality() || istype(disk))
-		data["frequency"] = signal_frequency
-		data["code"] = signal_code
-		data["minFrequency"] = MIN_FREE_FREQ
-		data["maxFrequency"] = MAX_FREE_FREQ
+	data["frequency"] = signal_frequency
+	data["code"] = signal_code
+	data["minFrequency"] = MIN_FREE_FREQ
+	data["maxFrequency"] = MAX_FREE_FREQ
 	return data
 
-/datum/computer_file/program/signaler/ui_act(action, list/params)
+/datum/computer_file/program/signal_commander/ui_act(action, list/params)
 	. = ..()
 	if(.)
-		return
-	var/obj/item/computer_hardware/radio_card/sensor = computer?.get_modular_computer_part(MC_SIGNALER)
-	var/obj/item/computer_hardware/hard_drive/role/signal/disk = computer?.get_modular_computer_part(MC_HDD_JOB)
-	if(!(sensor?.check_functionality() || istype(disk)))
-		playsound(src, 'sound/machines/scanbuzz.ogg', 100, FALSE)
 		return
 	switch(action)
 		if("signal")
@@ -63,7 +46,7 @@
 				signal_code = initial(signal_code)
 			. = TRUE
 
-/datum/computer_file/program/signaler/proc/signal()
+/datum/computer_file/program/signal_commander/proc/signal()
 	if(!radio_connection)
 		return
 
@@ -78,7 +61,7 @@
 	var/datum/signal/signal = new(list("code" = signal_code), logging_data = logging_data)
 	radio_connection.post_signal(computer, signal)
 
-/datum/computer_file/program/signaler/proc/set_frequency(new_frequency)
+/datum/computer_file/program/signal_commander/proc/set_frequency(new_frequency)
 	SSradio.remove_object(computer, signal_frequency)
 	signal_frequency = new_frequency
 	radio_connection = SSradio.add_object(computer, signal_frequency, RADIO_SIGNALER)
