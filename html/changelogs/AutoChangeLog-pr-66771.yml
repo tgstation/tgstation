@@ -1,7 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - rscadd: "Adds a new 'Destroy Machinery' traitor objective that focuses on destroying various important pieces of machinery around the station."
-  - rscadd: "Traitor steal objectives can now have their timer skipped as soon as the bug is placed onto the target item. However, doing so will give reduced rewards."
-  - rscdel: "Removes the smuggling traitor objective"
-  - balance: "Low risk steal objectives reward slightly less TC"

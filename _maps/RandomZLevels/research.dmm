@@ -8,14 +8,6 @@
 "ad" = (
 /turf/closed/mineral,
 /area/awaymission/research/exterior)
-"ae" = (
-/obj/structure/table/wood,
-/obj/item/book/granter/action/spell/random,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral,
-/area/space/nearstation)
 "ag" = (
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8
@@ -522,16 +514,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
-"bV" = (
-/obj/structure/sign/warning/nosmoking/circle{
-	pixel_x = -32
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/awaymission/research/interior/engineering)
 "bX" = (
 /obj/effect/mob_spawn/corpse/human/engineer{
 	brute_damage = 200
@@ -808,6 +790,23 @@
 "de" = (
 /obj/structure/filingcabinet,
 /obj/structure/filingcabinet,
+/turf/open/floor/iron/dark,
+/area/awaymission/research/interior/secure)
+"df" = (
+/obj/structure/closet/crate,
+/obj/item/disk/data{
+	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off.";
+	genetic_makeup_buffer = list("label" = "Buffer1:Kr-$$@##", "UI" = "f8f603857000f930127c4", "SE" = "414401462231053131010241514651403453121613263463440351136366", "UE" = "340008485c321e542aed4df7032ac04d", "name" = "Krystal Symers", "blood_type" = "A+");
+	name = "dusty genetics data disk";
+	read_only = 1
+	},
+/obj/item/disk/data{
+	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
+	name = "encrypted genetic data disk";
+	read_only = 1
+	},
+/obj/item/dnainjector/thermal,
+/obj/item/dnainjector/thermal,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "dg" = (
@@ -2428,6 +2427,14 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/research/interior)
+"jr" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/action/spell/random,
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/turf/closed/mineral,
+/area/space/nearstation)
 "js" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -3960,23 +3967,6 @@
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
-"zC" = (
-/obj/structure/closet/crate,
-/obj/item/disk/data{
-	desc = "A data disk used to store cloning and genetic records. The name on the label appears to be scratched off.";
-	genetic_makeup_buffer = list("label" = "Buffer1:Kr-$$@##", "UI" = "f8f603857000f930127c4", "SE" = "414401462231053131010241514651403453121613263463440351136366", "UE" = "340008485c321e542aed4df7032ac04d", "name" = "Krystal Symers", "blood_type" = "A+");
-	name = "dusty genetics data disk";
-	read_only = 1
-	},
-/obj/item/disk/data{
-	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
-	name = "encrypted genetic data disk";
-	read_only = 1
-	},
-/obj/item/dnainjector/thermal,
-/obj/item/dnainjector/thermal,
-/turf/open/floor/iron/dark,
-/area/awaymission/research/interior/secure)
 "AY" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/riot,
@@ -4096,6 +4086,16 @@
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
+"Ev" = (
+/obj/structure/sign/warning/no_smoking/circle{
+	pixel_x = -32
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/awaymission/research/interior/engineering)
 "Ez" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/stack/rods,
@@ -9311,9 +9311,9 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
+jr
+jr
+jr
 ab
 ab
 ab
@@ -30589,7 +30589,7 @@ ad
 ad
 ad
 cQ
-zC
+df
 dd
 dM
 cQ
@@ -42405,7 +42405,7 @@ aT
 bd
 Mo
 bI
-bV
+Ev
 cf
 cq
 cA

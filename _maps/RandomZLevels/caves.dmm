@@ -504,13 +504,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
-"cK" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'HOLY SHIT SWAGMAN WHAT ARE YOU DOING'.";
-	name = "\improper HOLY SHIT SWAGMAN WHAT ARE YOU DOING"
-	},
-/turf/closed/wall,
-/area/awaymission/caves/bmp_asteroid/level_two)
 "cN" = (
 /obj/machinery/door/window/left/directional/east,
 /obj/effect/decal/cleanable/xenoblood/xgibs,
@@ -722,6 +715,11 @@
 /area/awaymission/caves/northblock)
 "dz" = (
 /obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/awaymission/caves/northblock)
+"dA" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dB" = (
@@ -969,6 +967,13 @@
 "eJ" = (
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
+"eK" = (
+/obj/structure/table,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron,
+/area/awaymission/caves/listeningpost)
 "eL" = (
 /obj/machinery/vending/sovietsoda,
 /turf/open/floor/iron,
@@ -1092,12 +1097,6 @@
 /area/awaymission/caves/bmp_asteroid)
 "fK" = (
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
-"fL" = (
-/obj/structure/sign/departments/examroom{
-	pixel_y = 32
-	},
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fN" = (
@@ -1540,13 +1539,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"sY" = (
-/obj/structure/table,
-/obj/item/gun/energy/recharge/kinetic_accelerator,
-/obj/item/gun/energy/recharge/kinetic_accelerator,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/iron,
-/area/awaymission/caves/listeningpost)
 "tz" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
@@ -1596,6 +1588,19 @@
 "xs" = (
 /obj/item/bedsheet/patriot,
 /turf/open/misc/asteroid/basalt/lava{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_four)
+"xu" = (
+/obj/structure/destructible/cult/item_dispenser/archives,
+/obj/item/stack/sheet/runed_metal{
+	amount = 25
+	},
+/obj/item/coin/antagtoken,
+/obj/item/book/granter/action/spell/summonitem{
+	name = "\proper an extremely flamboyant book"
+	},
+/turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
@@ -1885,19 +1890,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
-"LC" = (
-/obj/structure/destructible/cult/item_dispenser/archives,
-/obj/item/stack/sheet/runed_metal{
-	amount = 25
-	},
-/obj/item/coin/antagtoken,
-/obj/item/book/granter/action/spell/summonitem{
-	name = "\proper an extremely flamboyant book"
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_four)
 "Mk" = (
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/wood,
@@ -1933,11 +1925,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"MU" = (
-/obj/structure/closet/secure_closet/personal,
-/obj/item/gun/energy/recharge/kinetic_accelerator,
-/turf/open/floor/wood,
-/area/awaymission/caves/northblock)
 "Np" = (
 /obj/effect/mine/explosive{
 	desc = "Rusted mines planted out by the miners before, probably to keep the cave monsters at bay.";
@@ -2059,6 +2046,12 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
+"Vd" = (
+/obj/structure/sign/departments/maint{
+	pixel_y = 32
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid)
 "VK" = (
 /obj/effect/mob_spawn/ghost_role/human/skeleton{
 	name = "spooky skeleton remains"
@@ -2135,6 +2128,13 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
+"ZN" = (
+/obj/structure/sign/warning/secure_area{
+	desc = "A warning sign which reads 'HOLY SHIT SWAGMAN WHAT ARE YOU DOING'.";
+	name = "\improper HOLY SHIT SWAGMAN WHAT ARE YOU DOING"
+	},
+/turf/closed/wall,
+/area/awaymission/caves/bmp_asteroid/level_two)
 "ZS" = (
 /obj/structure/barricade/wooden,
 /turf/open/misc/asteroid/basalt{
@@ -5418,7 +5418,7 @@ dM
 dP
 dI
 bn
-MU
+dA
 du
 bL
 bL
@@ -6439,7 +6439,7 @@ bL
 bL
 bL
 du
-MU
+dA
 bn
 dI
 dO
@@ -7747,7 +7747,7 @@ dW
 FS
 fB
 dW
-fL
+Vd
 ev
 dX
 bL
@@ -13132,7 +13132,7 @@ dX
 dX
 dW
 eF
-sY
+eK
 eP
 eV
 eF
@@ -59737,7 +59737,7 @@ ad
 ax
 aC
 ao
-LC
+xu
 ax
 ao
 ao
@@ -59888,7 +59888,7 @@ cm
 bR
 oI
 oI
-cK
+ZN
 bK
 bK
 bN
@@ -60913,7 +60913,7 @@ oI
 bK
 bK
 bK
-cK
+ZN
 oI
 oI
 bR

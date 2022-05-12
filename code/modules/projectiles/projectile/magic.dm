@@ -416,7 +416,7 @@
 
 /obj/projectile/magic/aoe/Range()
 	if(trigger_range >= 1)
-		for(var/mob/living/nearby_guy in range(1, get_turf(src)))
+		for(var/mob/living/nearby_guy in range(trigger_range, get_turf(src)))
 			if(nearby_guy.stat == DEAD)
 				continue
 			if(nearby_guy == firer)
@@ -488,7 +488,7 @@
 	zap_range = 4
 	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 
-/obj/projectile/magic/aoe/fireball
+/obj/projectile/magic/fireball
 	name = "bolt of fireball"
 	icon_state = "fireball"
 	damage = 10
@@ -504,7 +504,7 @@
 	/// Flash radius of the fireball
 	var/exp_flash = 3
 
-/obj/projectile/magic/aoe/fireball/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/magic/fireball/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/mob_target = target
