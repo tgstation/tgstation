@@ -5097,6 +5097,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -25712,6 +25713,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/primary/port)
+"ilQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "ime" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35894,6 +35904,14 @@
 	},
 /turf/open/floor/iron,
 /area/security/office)
+"man" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/port)
 "mar" = (
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
@@ -56367,6 +56385,13 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
+"tGn" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "tGv" = (
 /turf/closed/wall,
 /area/command/heads_quarters/hop)
@@ -56434,6 +56459,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/poster/contraband/random/directional/north,
+/obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
 /area/maintenance/starboard/lesser)
 "tHP" = (
@@ -57893,6 +57919,13 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron,
 /area/service/hydroponics)
+"ulA" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "ulD" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/landmark/event_spawn,
@@ -86400,7 +86433,7 @@ haV
 stQ
 haV
 pTH
-stQ
+ulA
 stQ
 vMW
 haV
@@ -87925,7 +87958,7 @@ wPy
 pHF
 opO
 alK
-xpd
+man
 alK
 xYz
 dux
@@ -102010,7 +102043,7 @@ xnc
 qoz
 qoz
 qoz
-qoz
+tGn
 kDL
 rSy
 agq
@@ -103571,7 +103604,7 @@ pRW
 gff
 lgz
 dnh
-aDL
+ilQ
 dnh
 dnh
 dnh

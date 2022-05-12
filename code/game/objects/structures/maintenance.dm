@@ -105,3 +105,70 @@ at the cost of risking a vicious bite.**/
 		return
 	hidden_item = I
 	to_chat(user, span_notice("You hide [I] inside the basin."))
+
+/**
+ * Spawns in maint shafts, and blocks lines of sight perodically when active.
+ */
+/obj/structure/steam_vent
+	name = "steam vent"
+	desc = "A device periodically filtering out moisture particles from the nearby walls and windows. It's only possible due to the moisture traps nearby."
+	icon_state = "steam_vent"
+	anchored = TRUE
+	density = FALSE
+	/// How often does the vent reset the blow_steam callback loop.
+	var/steam_speed = 15 SECONDS
+	/// Is the steam vent active?
+	var/vent_active = TRUE
+	///The cooldown for toggling the steam vent to prevent infinite steam vent looping.
+	COOLDOWN_DECLARE(steam_vent_interact)
+
+/obj/structure/steam_vent/Initialize(mapload)
+	. = ..()
+	if(prob(75))
+		vent_active = FALSE
+	var/timer = (steam_speed - (rand(1,5) SECONDS))
+	addtimer(CALLBACK(src, .proc/blow_steam), timer)
+	update_icon_state()
+
+/obj/structure/steam_vent/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, steam_vent_interact))
+		to_chat(user, span_notice("\The [src] isn't ready to be adjusted yet."))
+		return
+	vent_active = !vent_active
+	if(vent_active)
+		to_chat(user, span_notice("\The [src] is now on."))
+	else
+		to_chat(user, span_notice("\The [src] is now off."))
+		return
+	addtimer(CALLBACK(src, .proc/blow_steam), 1 SECONDS)
+	COOLDOWN_START(src, steam_vent_interact, 20 SECONDS)
+
+/**
+ * Actively looped proc that creates smoke, and determines when the vent needs to block line of sight via reset_opacity.
+ */
+/obj/structure/steam_vent/proc/blow_steam()
+	if(!vent_active)
+		return
+	new /obj/effect/particle_effect/smoke(loc)
+	set_opacity(TRUE)
+	addtimer(CALLBACK(src, .proc/reset_opacity), 9 SECONDS)
+	addtimer(CALLBACK(src, .proc/blow_steam), steam_speed)
+
+/**
+ * Simply handles resetting the opacity of the vent to simulate the smoke blocking line of sight.
+ */
+/obj/structure/steam_vent/proc/reset_opacity()
+	set_opacity(FALSE)
+
+/obj/structure/steam_vent/update_icon_state()
+	. = ..()
+	switch(vent_active)
+		if(TRUE)
+			icon_state = "steam_vent"
+		if(FALSE)
+			icon_state = "steam_vent_off"
+
+/obj/structure/steam_vent/fast
+	desc = "A device periodically filtering out moisture particles from the nearby walls and windows. It's only possible due to the moisture traps nearby. It's faster than most."
+	steam_speed = 10 SECONDS

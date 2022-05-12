@@ -1823,8 +1823,8 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/camera/directional/west{
 	c_tag = "Library Backroom 1";
-	name = "library camera";
-	dir = 2
+	dir = 2;
+	name = "library camera"
 	},
 /turf/open/floor/iron/dark,
 /area/service/library)
@@ -5281,6 +5281,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
+"bqy" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "bqM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5539,6 +5545,17 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
+"btG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/maintenance/port/aft)
 "btH" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
@@ -7750,6 +7767,10 @@
 	},
 /turf/open/floor/iron,
 /area/security/warden)
+"bTj" = (
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/maintenance/port/greater)
 "bTl" = (
 /obj/machinery/camera/motion/directional/west{
 	c_tag = "Armoury - Exterior"
@@ -9498,6 +9519,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -9829,6 +9851,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -46426,6 +46449,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/service/abandoned_gambling_den)
+"lsU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/iron,
+/area/maintenance/starboard/aft)
 "lsV" = (
 /obj/machinery/door/poddoor{
 	id = "engstorage";
@@ -47027,6 +47061,11 @@
 	},
 /turf/open/floor/iron,
 /area/medical/break_room)
+"lzM" = (
+/obj/structure/cable,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "lzN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -61296,6 +61335,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -67679,6 +67719,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "rEM" = (
@@ -70173,6 +70214,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/primary/central/aft)
+"spw" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/maintenance/port/greater)
 "spy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -77665,6 +77716,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/surgery/aft)
+"uxs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "uxw" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -81207,8 +81264,8 @@
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/camera/directional/west{
 	c_tag = "Library Backroom 2";
-	name = "library camera";
-	dir = 1
+	dir = 1;
+	name = "library camera"
 	},
 /turf/open/floor/iron/dark,
 /area/service/library)
@@ -118878,7 +118935,7 @@ qhJ
 cXX
 kGw
 fOD
-rdi
+spw
 bzr
 guB
 cON
@@ -121189,7 +121246,7 @@ sGU
 mFG
 iJp
 fOD
-syw
+bTj
 xvE
 scC
 bzr
@@ -121757,8 +121814,8 @@ dOM
 dOM
 dOM
 dOM
-hqn
-dTv
+btG
+lzM
 ebc
 ebQ
 xHf
@@ -132680,7 +132737,7 @@ dmD
 bdI
 gVg
 vLs
-pDF
+bqy
 vLs
 ssB
 fWn
@@ -138701,7 +138758,7 @@ hqi
 gIm
 sPI
 fhP
-hqi
+lsU
 gnq
 bIC
 cHU
@@ -142539,7 +142596,7 @@ rAg
 jFs
 cjc
 kcB
-ueh
+uxs
 nHB
 kiK
 rAg
