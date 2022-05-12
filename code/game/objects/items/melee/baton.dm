@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	wound_bonus = 15
 
 	/// Whether this baton is active or not
@@ -304,7 +304,7 @@
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		hitsound_on = hitsound, \
-		w_class_on = WEIGHT_CLASS_NORMAL, \
+		w_class_on = WEIGHT_CLASS_BULKY, \
 		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
@@ -698,7 +698,7 @@
 /obj/item/melee/baton/security/cattleprod/teleprod
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	icon_state = "teleprod"
 	inhand_icon_state = "teleprod"
 	slot_flags = null
