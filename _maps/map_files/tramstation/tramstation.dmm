@@ -4158,17 +4158,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/captain/private)
-"bCP" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4;
-	name = "view enhancer"
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/tram/mid)
 "bCR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -20669,10 +20658,6 @@
 	icon_state = "titanium"
 	},
 /obj/effect/landmark/lift_id,
-/obj/structure/ladder{
-	desc = "this doesn't seem very thought out.";
-	name = "experimental tram ladder"
-	},
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/center)
 "hax" = (
@@ -25858,9 +25843,7 @@
 /area/station/commons/dorms)
 "iQo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
+/obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
 "iQy" = (
@@ -35861,17 +35844,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
-"mfi" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/ladder{
-	desc = "this doesn't seem very thought out.";
-	name = "experimental tram ladder"
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/tram/mid)
 "mfC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -59429,17 +59401,6 @@
 /obj/structure/table,
 /turf/open/floor/carpet,
 /area/station/cargo/miningdock)
-"ujO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/comfy/shuttle{
-	dir = 8;
-	name = "view enhancer"
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/tram/mid)
 "ujZ" = (
 /turf/open/floor/iron/white,
 /area/station/science/explab)
@@ -102210,9 +102171,9 @@ oUL
 nnW
 iui
 qWn
-ujO
-ujO
-ujO
+kFp
+kFp
+kFp
 eXH
 xwB
 pcu
@@ -102467,9 +102428,9 @@ oUL
 nnW
 iui
 qWn
-iQo
-iQo
-iQo
+kFp
+kFp
+kFp
 qvL
 rCM
 pcu
@@ -102724,9 +102685,9 @@ lGO
 jWR
 pKL
 qWn
-iQo
-mfi
-iQo
+kFp
+kFp
+kFp
 qvL
 wPF
 pcu
@@ -103238,9 +103199,9 @@ auG
 qse
 iui
 qWn
-bCP
-bCP
-bCP
+kFp
+kFp
+kFp
 qvL
 pcD
 pcu
