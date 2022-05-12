@@ -187,8 +187,9 @@
 		returned_text += "\n[span_bold("Vote Tied Between:")]"
 		for(var/a_winner in all_winners)
 			returned_text += "\n\t[a_winner]"
+		returned_text += "\n"
 
-	returned_text += span_bold("\wVote Result: [real_winner]")
+	returned_text += span_bold("Vote Result: [real_winner]")
 	return returned_text
 
 /**
