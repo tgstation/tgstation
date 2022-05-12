@@ -35380,6 +35380,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"mGI" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/lesser)
 "mGX" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -55705,6 +55709,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "tGb" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -56651,6 +56656,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/contraband/random/directional/north,
+/obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "tWJ" = (
@@ -82756,7 +82762,7 @@ kBS
 rOz
 mlH
 sHu
-sHu
+cVL
 jZW
 tGb
 uUu
@@ -97228,7 +97234,7 @@ jxW
 dKC
 rhU
 pjX
-nFa
+mGI
 jZS
 dKC
 xLu
@@ -98255,8 +98261,8 @@ kRD
 mHL
 svS
 oHO
+mGI
 oEx
-nFa
 nFa
 nFa
 gvI
