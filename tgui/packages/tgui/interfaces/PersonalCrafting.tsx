@@ -59,7 +59,7 @@ const GENERAL_GROUP = 'General';
 const remapData = (rawData: RawData): Data => {
   const craftability_by_ref = rawData.craftability;
   const dm_categories = rawData.crafting_recipes || {};
-  // Sort everything into flat categories
+
   const recipes: Recipe[] = [];
   const generalGroup: Group = {
     name: GENERAL_GROUP,
