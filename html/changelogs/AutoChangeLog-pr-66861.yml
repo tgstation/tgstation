@@ -1,0 +1,4 @@
+author: "MacBlaze1"
+delete-after: True
+changes: 
+  - bugfix: "fixed dizziness causing hard crashes"
