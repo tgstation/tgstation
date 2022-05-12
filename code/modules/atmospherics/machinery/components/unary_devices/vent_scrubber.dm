@@ -38,6 +38,8 @@
 	///Radio connection from the air alarm
 	var/radio_filter_in
 
+	var/clogged = FALSE
+
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
@@ -464,16 +466,29 @@
 	piping_layer = 4
 	icon_state = "scrub_map_on-4"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog(spawned_mob, maximum_spawns)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+	if(!clogged)
+		return
+
+	to_chat(user, span_notice("You begin pumping the [name] with your plunger."))
+	if(do_after(user, 30, target = src))
+		to_chat(user, span_notice("You finish plunging the [name]."))
+		SEND_SIGNAL(src, COMSIG_VENT_UNCLOG)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog(spawned_mob, maximum_spawns) //Spawns mobs at a constant rate. Unclogs on plunge, and will not produce mobs while welded
 	SIGNAL_HANDLER
 	RegisterSignal(src, COMSIG_VENT_UNCLOG, .proc/unclog)
-	priority_announce("it worked lol", "Custodial s")
+	clogged = TRUE
 
+	while(clogged)
+		say("Good evening.")
+		sleep(10)
 
 
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/unclog()
 	SIGNAL_HANDLER
+	clogged = FALSE
 
 
 #undef SIPHONING

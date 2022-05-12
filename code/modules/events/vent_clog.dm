@@ -6,7 +6,7 @@
 
 /datum/round_event/scrubber_clog
 	announceWhen = 1
-	startWhen = 10
+	startWhen = 5
 	var/obj/scrubber //Scrubber selected for the event
 	var/mob/spawned_mob = /mob/living/basic/cockroach //What mob will be spawned
 	var/severity = "Minor" //Severity of the event (how dangerous are the spawned mobs, and it what quantity)
@@ -60,14 +60,7 @@
 
 
 /datum/round_event/scrubber_clog/start()
-	setup()
-	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG, spawned_mob, maximum_spawns) //Sends signal to proc
-
-
-
-
-
-
+	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG, spawned_mob, maximum_spawns)
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Major Scrubber Clog"
