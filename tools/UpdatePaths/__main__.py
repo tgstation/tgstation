@@ -138,20 +138,25 @@ def update_path(dmm_data, replacement_string, verbose=False):
             return [element]
 
     bad_keys = {}
+    modified_keys = []
     keys = list(dmm_data.dictionary.keys())
     for definition_key in keys:
         def_value = dmm_data.dictionary[definition_key]
         new_value = tuple(y for x in def_value for y in get_result(x) if y != None)
         if new_value != def_value:
             dmm_data.overwrite_key(definition_key, new_value, bad_keys)
+            modified_keys.append(definition_key)
     dmm_data.reassign_bad_keys(bad_keys)
+    return modified_keys
 
 
 def update_map(map_filepath, updates, verbose=False):
     print("Updating: {0}".format(map_filepath))
     dmm_data = DMM.from_file(map_filepath)
+    modified_keys = []
     for update_string in updates:
-        update_path(dmm_data, update_string, verbose)
+        modified_keys.extend(update_path(dmm_data, update_string, verbose))
+    dmm_data.remove_unused_keys(modified_keys)
     dmm_data.to_file(map_filepath)
 
 
