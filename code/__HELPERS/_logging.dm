@@ -292,6 +292,9 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	SEND_TEXT(world.log, text)
 
 /proc/log_mapping(text, skip_world_log)
+#ifdef UNIT_TESTS
+	GLOB.unit_test_mapping_logs += text
+#endif
 	WRITE_LOG(GLOB.world_map_error_log, text)
 	if(skip_world_log)
 		return
