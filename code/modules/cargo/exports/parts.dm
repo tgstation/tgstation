@@ -16,32 +16,6 @@
 	export_types = list(/obj/item/circuitboard/computer/solar_control)
 
 // Computer and Tablet Parts
-//Processors
-
-/datum/export/modular_part/processor/small
-	cost = CARGO_CRATE_VALUE * 0.1
-	unit_name = "microprocessor"
-	export_types = list(/obj/item/computer_hardware/processor_unit/small)
-	include_subtypes = FALSE
-
-/datum/export/modular_part/processor/photonic
-	cost = CARGO_CRATE_VALUE * 1.2
-	unit_name = "photonic processor board"
-	export_types = list(/obj/item/computer_hardware/processor_unit/photonic)
-	include_subtypes = FALSE
-
-/datum/export/modular_part/processor/photonic/small
-	cost = CARGO_CRATE_VALUE * 0.6
-	unit_name = "photonic microprocessor"
-	export_types = list(/obj/item/computer_hardware/processor_unit/photonic/small)
-	include_subtypes = FALSE
-
-/datum/export/modular_part/processor/standard
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "processor board"
-	export_types = list(/obj/item/computer_hardware/processor_unit)
-	include_subtypes = TRUE
-
 //Batteries
 
 /datum/export/modular_part/battery/advanced
@@ -184,12 +158,6 @@
 	cost = CARGO_CRATE_VALUE * 0.2
 	unit_name = "miniprinter"
 	export_types = list(/obj/item/computer_hardware/printer/mini)
-	include_subtypes = TRUE
-
-/datum/export/modular_part/sensorpackage
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "sensor package"
-	export_types = list(/obj/item/computer_hardware/sensorpackage)
 	include_subtypes = TRUE
 
 /datum/export/modular_part/misc
