@@ -46,7 +46,7 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define SATURDAY "Sat"
 #define SUNDAY "Sun"
 
-#define MILLISECONDS * 0.01
+#define MILLISECONDS *0.01
 
 #define DECISECONDS *1 //the base unit all of these defines are scaled by, because byond uses that as a unit of measurement for some fucking reason
 
