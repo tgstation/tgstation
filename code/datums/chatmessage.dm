@@ -196,9 +196,11 @@
 	if (current_z_idx >= CHAT_LAYER_MAX_Z)
 		current_z_idx = 0
 
+	// Lemon todo: make this follow the mob's plane
+	var/turf/our_turf = get_turf(src)
 	// Build message image
 	message = image(loc = message_loc, layer = CHAT_LAYER + CHAT_LAYER_Z_STEP * current_z_idx++)
-	message.plane = RUNECHAT_PLANE
+	SET_PLANE(message, RUNECHAT_PLANE, our_turf)
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
 	message.pixel_y = target.maptext_height

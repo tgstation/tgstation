@@ -54,6 +54,7 @@
 
 /area/proc/add_base_lighting()
 	lighting_effect = mutable_appearance('icons/effects/alphacolors.dmi', "white")
+	SET_PLANE_W_SCALAR(lighting_effect, ABOVE_GAME_PLANE, SSmapping.z_level_to_plane_offset[z])
 	lighting_effect.plane = LIGHTING_PLANE
 	lighting_effect.layer = LIGHTING_PRIMARY_LAYER
 	lighting_effect.blend_mode = BLEND_ADD

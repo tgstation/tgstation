@@ -88,6 +88,11 @@
 		var/easing_direction = _running ? EASE_OUT : EASE_IN
 		animate(mattress_on, alpha = new_alpha, time = 50, easing = CUBIC_EASING|easing_direction)
 
+/obj/machinery/stasis/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents = TRUE)
+	mattress_on = null
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	update_appearance()
+	return ..()
 
 /obj/machinery/stasis/atom_break(damage_flag)
 	. = ..()

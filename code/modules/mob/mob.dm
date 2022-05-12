@@ -461,6 +461,7 @@
 	if(!client)
 		return
 
+	var/atom/old_eye = client.eye
 	if(new_eye)
 		if(ismovable(new_eye))
 			//Set the new eye unless it's us
@@ -490,7 +491,7 @@
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = loc
 	/// Signal sent after the eye has been successfully updated, with the client existing.
-	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
+	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE, old_eye, client.eye)
 	return TRUE
 
 /**
@@ -1116,10 +1117,13 @@
 
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var
 /mob/proc/sync_lighting_plane_alpha()
-	if(hud_used)
-		var/atom/movable/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = lighting_alpha
+	if(!hud_used)
+		return
+	for(var/plane in TRUE_PLANE_TO_OFFSETS(LIGHTING_PLANE))
+		var/atom/movable/screen/plane_master/lighting/light_plane = hud_used.plane_masters["[plane]"]
+		if (!light_plane)
+			continue
+		light_plane.set_alpha(lighting_alpha)
 
 ///Update the mouse pointer of the attached client in this mob
 /mob/proc/update_mouse_pointer()

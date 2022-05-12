@@ -99,8 +99,9 @@
 		var/datum/atom_hud/overlay = overlay_ref?.resolve()
 		QDEL_NULL(overlay)
 
+	var/turf/our_turf = get_turf(target_atom)
 	var/image/cool_overlay = image(icon = 'icons/hud/screen_bci.dmi', loc = target_atom, icon_state = options_map[object_overlay_options.value], layer = RIPPLE_LAYER)
-	cool_overlay.plane = ABOVE_LIGHTING_PLANE
+	SET_PLANE(cool_overlay, ABOVE_LIGHTING_PLANE, our_turf)
 
 	if(image_pixel_x.value != null)
 		cool_overlay.pixel_x = image_pixel_x.value

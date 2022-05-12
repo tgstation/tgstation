@@ -42,8 +42,9 @@
 		var/atom/movable/movable_source = src
 		bound_width = movable_source.bound_width
 
+	var/turf/our_turf = get_turf(src)
 	var/image/balloon_alert = image(loc = isturf(src) ? src : get_atom_on_turf(src), layer = ABOVE_MOB_LAYER)
-	balloon_alert.plane = BALLOON_CHAT_PLANE
+	SET_PLANE(balloon_alert, BALLOON_CHAT_PLANE, our_turf)
 	balloon_alert.alpha = 0
 	balloon_alert.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	balloon_alert.maptext = MAPTEXT("<span style='text-align: center; -dm-text-outline: 1px #0005'>[text]</span>")

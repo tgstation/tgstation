@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_directional_opacity = directional_opacity
 	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_rcd_memory = rcd_memory
+	var/old_always_lit = always_lit
 
 	var/old_bp = blueprint_data
 	blueprint_data = null
@@ -125,9 +126,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	dynamic_lumcount = old_dynamic_lumcount
 
 	if(W.always_lit)
-		W.add_overlay(GLOB.fullbright_overlay)
-	else
-		W.cut_overlay(GLOB.fullbright_overlay)
+		// We are guarenteed to have these overlays because of how generation works
+		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+		W.add_overlay(overlay)
+	else if (old_always_lit)
+		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+		W.cut_overlay(overlay)
 
 	if(SSlighting.initialized)
 		W.lighting_object = old_lighting_object

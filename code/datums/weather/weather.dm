@@ -227,7 +227,7 @@
 	for(var/V in impacted_areas)
 		var/area/N = V
 		N.layer = overlay_layer
-		N.plane = overlay_plane
+		N.plane = SET_PLANE(N, overlay_plane, N)
 		N.icon = 'icons/effects/weather_effects.dmi'
 		N.color = weather_color
 		switch(stage)
@@ -242,5 +242,5 @@
 				N.icon_state = ""
 				N.icon = 'icons/area/areas_misc.dmi'
 				N.layer = initial(N.layer)
-				N.plane = initial(N.plane)
+				N.plane = SET_PLANE(N, initial(N.plane), N)
 				N.set_opacity(FALSE)

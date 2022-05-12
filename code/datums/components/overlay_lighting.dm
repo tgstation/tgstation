@@ -82,14 +82,16 @@
 
 	. = ..()
 
+	var/turf/our_turf = get_turf(movable_parent)
+
 	visible_mask = image('icons/effects/light_overlays/light_32.dmi', icon_state = "light")
-	visible_mask.plane = O_LIGHTING_VISUAL_PLANE
+	SET_PLANE(visible_mask, O_LIGHTING_VISUAL_PLANE, our_turf)
 	visible_mask.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	visible_mask.alpha = 0
 	if(is_directional)
 		directional = TRUE
 		cone = image('icons/effects/light_overlays/light_cone.dmi', icon_state = "light")
-		cone.plane = O_LIGHTING_VISUAL_PLANE
+		SET_PLANE(cone, O_LIGHTING_VISUAL_PLANE, our_turf)
 		cone.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		cone.alpha = 110
 		cone.transform = cone.transform.Translate(-32, -32)
@@ -112,6 +114,7 @@
 	if(directional)
 		RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/on_parent_dir_change)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_parent_moved)
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/on_z_move)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_RANGE, .proc/set_range)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_POWER, .proc/set_power)
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .proc/set_color)
@@ -299,6 +302,18 @@
 		return
 	make_luminosity_update()
 
+/datum/component/overlay_lighting/proc/on_z_move(atom/source)
+	SIGNAL_HANDLER
+	var/turf/our_turf = get_turf(source)
+	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays -= visible_mask
+		current_holder.underlays -= cone
+	SET_PLANE(visible_mask, O_LIGHTING_VISUAL_PLANE, our_turf)
+	if(cone)
+		SET_PLANE(cone, O_LIGHTING_VISUAL_PLANE, our_turf)
+	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+		current_holder.underlays += visible_mask
+		current_holder.underlays += cone
 
 ///Called when the current_holder is qdeleted, to remove the light effect.
 /datum/component/overlay_lighting/proc/on_parent_attached_to_qdel(atom/movable/source, force)

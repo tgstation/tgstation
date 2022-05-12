@@ -523,12 +523,14 @@
 		display_id = wrapping_id
 	for(var/thing in turf_list)
 		var/turf/display = thing
-		display.vis_contents += GLOB.colored_turfs[display_id]
+		var/offset = SSmapping.z_level_to_plane_offset[display.z]
+		display.vis_contents += GLOB.colored_turfs[display_id][offset + 1]
 
 /datum/excited_group/proc/hide_turfs()
 	for(var/thing in turf_list)
 		var/turf/display = thing
-		display.vis_contents -= GLOB.colored_turfs[display_id]
+		var/offset = SSmapping.z_level_to_plane_offset[display.z]
+		display.vis_contents -= GLOB.colored_turfs[display_id][offset + 1]
 	display_id = 0
 
 /datum/excited_group/proc/display_turf(turf/thing)
@@ -536,7 +538,8 @@
 		wrapping_id = wrapping_id % GLOB.colored_turfs.len
 		wrapping_id++ //We do this after because lists index at 1
 		display_id = wrapping_id
-	thing.vis_contents += GLOB.colored_turfs[display_id]
+	var/offset = SSmapping.z_level_to_plane_offset[thing.z]
+	thing.vis_contents += GLOB.colored_turfs[display_id][offset]
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 

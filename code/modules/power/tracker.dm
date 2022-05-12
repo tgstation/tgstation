@@ -37,12 +37,13 @@
 	return ..()
 
 /obj/machinery/power/tracker/proc/add_panel_overlay(icon_state, y_offset)
+	var/turf/our_turf = get_turf(src)
 	var/obj/effect/overlay/overlay = new()
 	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
 	overlay.appearance_flags = TILE_BOUND
 	overlay.icon_state = icon_state
 	overlay.layer = FLY_LAYER
-	overlay.plane = ABOVE_GAME_PLANE
+	SET_PLANE(overlay, ABOVE_GAME_PLANE, our_turf)
 	overlay.pixel_y = y_offset
 	vis_contents += overlay
 	return overlay

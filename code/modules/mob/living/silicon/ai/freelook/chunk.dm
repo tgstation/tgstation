@@ -149,7 +149,7 @@
 		turfs[t] = t
 
 	for(var/turf in turfs)//one for each 16x16 = 256 turfs this camera chunk encompasses
-		inactive_static_images += new/image(GLOB.cameranet.obscured)
+		inactive_static_images += new /image(GLOB.cameranet.obscured_images[GET_Z_PLANE_OFFSET(z)])
 
 	for(var/obj/machinery/camera/camera as anything in cameras)
 		if(!camera)

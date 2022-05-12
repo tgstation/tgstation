@@ -13,6 +13,7 @@
 	else
 		icon_state = "[splatter_type][pick(3, 4, 5)]"
 	. = ..()
+	var/turf/our_turf = get_turf(src)
 	var/target_pixel_x = 0
 	var/target_pixel_y = 0
 	switch(set_dir)
@@ -21,7 +22,7 @@
 		if(SOUTH)
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			plane = GAME_PLANE_UPPER
+			SET_PLANE(src, GAME_PLANE_UPPER, our_turf)
 		if(EAST)
 			target_pixel_x = 16
 		if(WEST)
@@ -36,12 +37,12 @@
 			target_pixel_x = 16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			plane = GAME_PLANE_UPPER
+			SET_PLANE(src, GAME_PLANE_UPPER, our_turf)
 		if(SOUTHWEST)
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			plane = GAME_PLANE_UPPER
+			SET_PLANE(src, GAME_PLANE_UPPER, our_turf)
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter

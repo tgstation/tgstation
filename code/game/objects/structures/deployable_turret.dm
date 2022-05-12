@@ -92,8 +92,9 @@
 			var/obj/item/gun_control/TC = new(src)
 			M.put_in_hands(TC)
 	M.pixel_y = 14
+	var/turf/our_turf = get_turf(src)
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
+	SET_PLANE(src, GAME_PLANE_UPPER, our_turf)
 	setDir(SOUTH)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	set_anchored(TRUE)
@@ -125,45 +126,47 @@
 		return
 	setDir(get_dir(src,targeted))
 	user.setDir(dir)
+	var/turf/our_turf = get_turf(src)
 	switch(dir)
 		if(NORTH)
 			layer = BELOW_MOB_LAYER
-			plane = GAME_PLANE
+			SET_PLANE(src, GAME_PLANE, our_turf)
 			user.pixel_x = 0
 			user.pixel_y = -14
 		if(NORTHEAST)
 			layer = BELOW_MOB_LAYER
-			plane = GAME_PLANE
+			SET_PLANE(src, GAME_PLANE, our_turf)
 			user.pixel_x = -8
 			user.pixel_y = -4
 		if(EAST)
 			layer = ABOVE_MOB_LAYER
-			plane = GAME_PLANE_UPPER
+			SET_PLANE(src, GAME_PLANE_UPPER, our_turf)
 			user.pixel_x = -14
 			user.pixel_y = 0
 		if(SOUTHEAST)
 			layer = BELOW_MOB_LAYER
-			plane = GAME_PLANE
+			SET_PLANE(src, GAME_PLANE, our_turf)
 			user.pixel_x = -8
 			user.pixel_y = 4
 		if(SOUTH)
 			layer = ABOVE_MOB_LAYER
+			SET_PLANE(src, GAME_PLANE_UPPER, our_turf)
 			plane = GAME_PLANE_UPPER
 			user.pixel_x = 0
 			user.pixel_y = 14
 		if(SOUTHWEST)
 			layer = BELOW_MOB_LAYER
-			plane = GAME_PLANE
+			SET_PLANE(src, GAME_PLANE, our_turf)
 			user.pixel_x = 8
 			user.pixel_y = 4
 		if(WEST)
 			layer = ABOVE_MOB_LAYER
-			plane = GAME_PLANE_UPPER
+			SET_PLANE(src, GAME_PLANE_UPPER, our_turf)
 			user.pixel_x = 14
 			user.pixel_y = 0
 		if(NORTHWEST)
 			layer = BELOW_MOB_LAYER
-			plane = GAME_PLANE
+			SET_PLANE(src, GAME_PLANE, our_turf)
 			user.pixel_x = 8
 			user.pixel_y = -4
 

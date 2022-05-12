@@ -12,9 +12,7 @@
 
 	our_turf.layer = OPENSPACE_LAYER
 	if(is_openspace) // openspace and windows have different visual effects but both share this component.
-		our_turf.plane = OPENSPACE_PLANE
-	else
-		our_turf.plane = TRANSPARENT_FLOOR_PLANE
+		SET_PLANE(our_turf, OPENSPACE_PLANE, our_turf)
 
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)

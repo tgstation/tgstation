@@ -11,27 +11,28 @@
 	var/real_plane
 
 	//--rendering relay vars--
-	///integer: what plane we will relay this planes render to
-	var/render_relay_plane = RENDER_PLANE_GAME
-	///bool: Whether this plane should get a render target automatically generated
+	/// list of planes we will relay this plane's render to
+	var/list/render_relay_planes = list(RENDER_PLANE_GAME)
+	/// Whether this plane should get a render target automatically generated
 	var/generate_render_target = TRUE
-	///integer: blend mode to apply to the render relay in case you dont want to use the plane_masters blend_mode
+	/// blend mode to apply to the render relay in case you dont want to use the plane_masters blend_mode
 	var/blend_mode_override
-	///reference: current relay this plane is utilizing to render
-	var/atom/movable/render_plane_relay/relay
+	/// list of current relays this plane is utilizing to render
+	var/list/atom/movable/render_plane_relay/relays = list()
 
 /atom/movable/screen/plane_master/New(offset = 0)
 	src.offset = offset
 	real_plane = plane
 	update_offset()
+	return ..()
 
 /atom/movable/screen/plane_master/proc/update_offset()
 	name = "[initial(name)] #[offset]"
 	SET_PLANE_W_SCALAR(src, real_plane, offset)
-	if(render_relay_plane)
-		render_relay_plane = GET_NEW_PLANE(render_relay_plane, offset)
+	for(var/i in 1 to length(render_relay_planes))
+		render_relay_planes[i] = GET_NEW_PLANE(render_relay_planes[i], offset)
 	if(initial(render_target))
-		render_target = "[initial(render_target)] #[offset]"
+		render_target = OFFSET_RENDER_TARGET(initial(render_target), offset)
 
 /atom/movable/screen/plane_master/proc/Show(override)
 	alpha = override || show_alpha
@@ -43,8 +44,12 @@
 //Trust me, you need one. Period. If you don't think you do, you're doing something extremely wrong.
 /atom/movable/screen/plane_master/proc/backdrop(mob/mymob)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!isnull(render_relay_plane))
-		relay_render_to_plane(mymob, render_relay_plane)
+	if(length(render_relay_planes))
+		relay_render_to_plane(mymob, render_relay_planes)
+
+/atom/movable/screen/plane_master/proc/set_hud(datum/hud/new_hud)
+	SHOULD_CALL_PARENT(TRUE)
+	hud = new_hud
 
 ///Things rendered on "openspace"; holes in multi-z
 /atom/movable/screen/plane_master/openspace_backdrop
@@ -94,32 +99,32 @@
 /atom/movable/screen/plane_master/game_world_fov_hidden
 	name = "game world fov hidden plane master"
 	plane = GAME_PLANE_FOV_HIDDEN
-	render_relay_plane = GAME_PLANE
+	render_relay_planes = list(GAME_PLANE)
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/game_world_fov_hidden/Initialize()
 	. = ..()
-	add_filter("vision_cone", 1, alpha_mask_filter(render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
+	add_filter("vision_cone", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
 /atom/movable/screen/plane_master/game_world_upper
 	name = "upper game world plane master"
 	plane = GAME_PLANE_UPPER
-	render_relay_plane = GAME_PLANE
+	render_relay_planes = list(GAME_PLANE)
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/game_world_upper_fov_hidden
 	name = "upper game world fov hidden plane master"
 	plane = GAME_PLANE_UPPER_FOV_HIDDEN
-	render_relay_plane = GAME_PLANE_FOV_HIDDEN
+	render_relay_planes = list(GAME_PLANE_FOV_HIDDEN)
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/game_world_above
 	name = "above game world plane master"
 	plane = ABOVE_GAME_PLANE
-	render_relay_plane = GAME_PLANE
+	render_relay_planes = list(GAME_PLANE)
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
@@ -134,7 +139,7 @@
 	plane = GHOST_PLANE
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
-	render_relay_plane = RENDER_PLANE_NON_GAME
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
 /atom/movable/screen/plane_master/point
 	name = "point plane master"
@@ -162,12 +167,44 @@
 	plane = LIGHTING_PLANE
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
+	var/alpha_enabled = TRUE
+	var/true_alpha = 255
 
 /atom/movable/screen/plane_master/lighting/backdrop(mob/mymob)
 	. = ..()
 	mymob.overlay_fullscreen("lighting_backdrop_lit", /atom/movable/screen/fullscreen/lighting_backdrop/lit)
 	mymob.overlay_fullscreen("lighting_backdrop_unlit", /atom/movable/screen/fullscreen/lighting_backdrop/unlit)
+
+// Sorry, this is a bit annoying
+// Basically, we only want the lighting plane we can actually see to attempt to render
+// If we don't our lower plane gets totally overriden by the black void of the upper plane
+/atom/movable/screen/plane_master/lighting/set_hud(datum/hud/new_hud)
+	if(hud)
+		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED)
+	. = ..()
+	RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+
+/atom/movable/screen/plane_master/lighting/proc/on_offset_change(datum/source, old_offset, new_offset)
+	SIGNAL_HANDLER
+	// Offsets stack down remember. This implies that we're above the mob's view plane, and shouldn't render
+	if(offset < new_offset)
+		disable_alpha()
+	else
+		enable_alpha()
+
+/atom/movable/screen/plane_master/lighting/proc/set_alpha(new_alpha)
+	true_alpha = new_alpha
+	if(!alpha_enabled)
+		return
+	alpha = new_alpha
+
+/atom/movable/screen/plane_master/lighting/proc/disable_alpha()
+	alpha_enabled = FALSE
+	alpha = 0
+
+/atom/movable/screen/plane_master/lighting/proc/enable_alpha()
+	alpha_enabled = TRUE
+	alpha = true_alpha
 
 /*!
  * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
@@ -181,8 +218,8 @@
  */
 /atom/movable/screen/plane_master/lighting/Initialize(mapload)
 	. = ..()
-	add_filter("emissives", 1, alpha_mask_filter(render_source = EMISSIVE_RENDER_TARGET, flags = MASK_INVERSE))
-	add_filter("object_lighting", 2, alpha_mask_filter(render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE))
+	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
 
 
 /**
@@ -193,7 +230,7 @@
 	plane = EMISSIVE_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_RENDER_TARGET
-	render_relay_plane = null
+	render_relay_planes = list()
 
 /atom/movable/screen/plane_master/emissive/Initialize(mapload)
 	. = ..()
@@ -256,7 +293,7 @@
 	plane = RUNECHAT_PLANE
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
-	render_relay_plane = RENDER_PLANE_NON_GAME
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
 /atom/movable/screen/plane_master/runechat/backdrop(mob/mymob)
 	. = ..()
@@ -271,7 +308,7 @@
 	blend_mode = BLEND_ADD
 	blend_mode_override = BLEND_ADD
 	render_target = GRAVITY_PULSE_RENDER_TARGET
-	render_relay_plane = null
+	render_relay_planes = list()
 
 /atom/movable/screen/plane_master/area
 	name = "area plane"
@@ -280,17 +317,17 @@
 /atom/movable/screen/plane_master/radtext
 	name = "radtext plane"
 	plane = RAD_TEXT_PLANE
-	render_relay_plane = RENDER_PLANE_NON_GAME
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
 /atom/movable/screen/plane_master/balloon_chat
 	name = "balloon alert plane"
 	plane = BALLOON_CHAT_PLANE
-	render_relay_plane = RENDER_PLANE_NON_GAME
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
 /atom/movable/screen/plane_master/fullscreen
 	name = "fullscreen alert plane"
 	plane = FULLSCREEN_PLANE
-	render_relay_plane = RENDER_PLANE_NON_GAME
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/plane_master/field_of_vision_blocker
@@ -298,19 +335,19 @@
 	plane = FIELD_OF_VISION_BLOCKER_PLANE
 	render_target = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_plane = null
+	render_relay_planes = list()
 
 /atom/movable/screen/plane_master/hud
 	name = "HUD plane"
 	plane = HUD_PLANE
-	render_relay_plane = RENDER_PLANE_NON_GAME
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
 /atom/movable/screen/plane_master/above_hud
 	name = "above HUD plane"
 	plane = ABOVE_HUD_PLANE
-	render_relay_plane = RENDER_PLANE_NON_GAME
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 
 /atom/movable/screen/plane_master/splashscreen
 	name = "splashscreen plane"
 	plane = SPLASHSCREEN_PLANE
-	render_relay_plane = RENDER_PLANE_NON_GAME
+	render_relay_planes = list(RENDER_PLANE_NON_GAME)

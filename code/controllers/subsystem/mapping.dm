@@ -652,7 +652,12 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		var/datum/space_level/next_level = z_list[current_z]
 		below_offset = next_level.traits[ZTRAIT_DOWN]
 	while(below_offset)
+
 	var/old_max = max_plane_offset
 	max_plane_offset = max(max_plane_offset, current_level)
-	if(max_plane_offset != old_max)
-		SEND_SIGNAL(src, COMSIG_PLANE_OFFSET_INCREASE, old_max, max_plane_offset)
+	if(max_plane_offset == old_max)
+		return
+
+	for(var/offset in old_max + 1 to max_plane_offset)
+		GLOB.fullbright_overlays += create_fullbright_overlay(offset)
+	SEND_SIGNAL(src, COMSIG_PLANE_OFFSET_INCREASE, old_max, max_plane_offset)

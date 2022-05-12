@@ -37,6 +37,13 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
 
+	update_hud()
+
+/obj/machinery/launchpad/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents)
+	update_hud()
+	return ..()
+
+/obj/machinery/launchpad/proc/update_hud()
 	var/image/holder = hud_list[DIAG_LAUNCHPAD_HUD]
 	var/mutable_appearance/MA = new /mutable_appearance()
 	MA.icon = 'icons/effects/effects.dmi'

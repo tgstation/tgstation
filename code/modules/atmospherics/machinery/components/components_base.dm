@@ -59,7 +59,8 @@
 	underlays.Cut()
 
 	color = null
-	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
+	var/turf/our_turf = get_turf(src)
+	SET_PLANE(src, showpipe ? GAME_PLANE : FLOOR_PLANE, our_turf)
 
 	if(!showpipe)
 		return ..()

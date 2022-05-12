@@ -15,12 +15,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 
 	owner_hud = hud
 	var/assoc_controlled_planes = list()
-	for(var/i in controlled_planes)
-		var/atom/movable/screen/plane_master/instance = owner_hud.plane_masters["[i]"]
-		if(!instance) //If we looked for a hud that isn't instanced, just keep going
-			stack_trace("[i] isn't a valid plane master layer for [owner_hud.type], are you sure it exists in the first place?")
-			continue
-		assoc_controlled_planes["[i]"] = instance
+	for(var/true_plane in controlled_planes)
+		for(var/plane in TRUE_PLANE_TO_OFFSETS(true_plane))
+			var/atom/movable/screen/plane_master/instance = owner_hud.plane_masters["[plane]"]
+			if(!instance) //If we looked for a hud that isn't instanced, just keep going
+				stack_trace("[plane] isn't a valid plane master layer for [owner_hud.type], are you sure it exists in the first place?")
+				continue
+			assoc_controlled_planes["[plane]"] = instance
 	controlled_planes = assoc_controlled_planes
 
 ///Full override so we can just use filterrific

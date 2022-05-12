@@ -19,10 +19,22 @@
 	var/mutable_appearance/leftpewarmrest
 
 /obj/structure/chair/pew/left/Initialize(mapload)
-	leftpewarmrest = GetLeftPewArmrest()
-	leftpewarmrest.layer = ABOVE_MOB_LAYER
-	leftpewarmrest.plane = GAME_PLANE_UPPER
+	gen_armrest()
 	return ..()
+
+/obj/structure/chair/pew/left/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents)
+	cut_overlay(leftpewarmrest)
+	QDEL_NULL(leftpewarmrest)
+	gen_armrest()
+	return ..()
+
+/obj/structure/chair/pew/left/proc/gen_armrest()
+	leftpewarmrest = GetLeftPewArmrest()
+	var/turf/our_turf = get_turf(src)
+	leftpewarmrest.layer = ABOVE_MOB_LAYER
+	SET_PLANE(leftpewarmrest, GAME_PLANE_UPPER, our_turf)
+	update_leftpewarmrest()
+
 
 /obj/structure/chair/pew/left/proc/GetLeftPewArmrest()
 	return mutable_appearance('icons/obj/sofa.dmi', "pewend_left_armrest")
@@ -51,10 +63,21 @@
 	var/mutable_appearance/rightpewarmrest
 
 /obj/structure/chair/pew/right/Initialize(mapload)
-	rightpewarmrest = GetRightPewArmrest()
-	rightpewarmrest.layer = ABOVE_MOB_LAYER
-	rightpewarmrest.plane = GAME_PLANE_UPPER
+	gen_armrest()
 	return ..()
+
+/obj/structure/chair/pew/right/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents)
+	cut_overlay(rightpewarmrest)
+	QDEL_NULL(rightpewarmrest)
+	gen_armrest()
+	return ..()
+
+/obj/structure/chair/pew/right/proc/gen_armrest()
+	rightpewarmrest = GetRightPewArmrest()
+	var/turf/our_turf = get_turf(src)
+	rightpewarmrest.layer = ABOVE_MOB_LAYER
+	SET_PLANE(rightpewarmrest, GAME_PLANE_UPPER, our_turf)
+	update_rightpewarmrest()
 
 /obj/structure/chair/pew/right/proc/GetRightPewArmrest()
 	return mutable_appearance('icons/obj/sofa.dmi', "pewend_right_armrest")

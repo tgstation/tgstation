@@ -64,8 +64,10 @@
 	var/datum/atom_hud/overlay = counter_appearance?.resolve()
 	QDEL_NULL(overlay)
 
+	var/turf/our_turf = get_turf(owner)
+
 	var/image/counter = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_numbers", loc = owner, layer = RIPPLE_LAYER)
-	counter.plane = ABOVE_LIGHTING_PLANE
+	SET_PLANE(counter, ABOVE_LIGHTING_PLANE, our_turf)
 
 	if(image_pixel_x.value != null)
 		counter.pixel_x = image_pixel_x.value
@@ -87,7 +89,7 @@
 	for(var/i = 1 to 3)
 		var/cur_num = round(cleared_number / (10 ** (3 - i))) % 10
 		var/image/number = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_number_[cur_num]", loc = owner, layer = RIPPLE_LAYER)
-		number.plane = ABOVE_LIGHTING_PLANE
+		SET_PLANE(number, ABOVE_LIGHTING_PLANE, our_turf)
 
 		if(image_pixel_x.value != null)
 			number.pixel_x = image_pixel_x.value + (i - 1) * 9

@@ -398,8 +398,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	for(var/mob/M in listening)
 		if(M.client && (!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)
+	// Lemon todo, consider building some way to track plane changes for overlays like this
+	var/turf/our_turf = get_turf(src)
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
-	I.plane = ABOVE_GAME_PLANE
+	SET_PLANE(I, ABOVE_GAME_PLANE, our_turf)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 

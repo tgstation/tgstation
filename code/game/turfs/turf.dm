@@ -126,7 +126,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/area/our_area = loc
 	if(our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
-		add_overlay(GLOB.fullbright_overlay)
+		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+		add_overlay(overlay)
 
 	if(requires_activation)
 		CALCULATE_ADJACENT_TURFS(src, KILL_EXCITED)
@@ -553,7 +554,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/add_blueprints(atom/movable/AM)
 	var/image/I = new
-	I.plane = GAME_PLANE
+	SET_PLANE(I, GAME_PLANE, src)
 	I.layer = OBJ_LAYER
 	I.appearance = AM.appearance
 	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM

@@ -123,8 +123,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		target.client.images |= current_image
 
 /obj/effect/hallucination/simple/proc/GetImage()
+	var/turf/our_turf = get_turf(src)
 	var/image/I = image(image_icon,src,image_state,image_layer,dir=src.dir)
-	I.plane = image_plane
+	SET_PLANE(I, image_plane, our_turf)
 	I.pixel_x = px
 	I.pixel_y = py
 	if(col_mod)
@@ -197,7 +198,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/obj/effect/plasma_image_holder/pih = new(center)
 	var/image/plasma_image = image(image_icon, pih, image_state, FLY_LAYER)
 	plasma_image.alpha = 50
-	plasma_image.plane = ABOVE_GAME_PLANE
+	SET_PLANE(plasma_image, ABOVE_GAME_PLANE, center)
 	flood_images += plasma_image
 	flood_image_holders += pih
 	flood_turfs += center
@@ -228,7 +229,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			var/obj/effect/plasma_image_holder/pih = new(T)
 			var/image/new_plasma = image(image_icon, pih, image_state, FLY_LAYER)
 			new_plasma.alpha = 50
-			new_plasma.plane = ABOVE_GAME_PLANE
+			SET_PLANE(new_plasma, ABOVE_GAME_PLANE, FT)
 			flood_images += new_plasma
 			flood_image_holders += pih
 			flood_turfs += T

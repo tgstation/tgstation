@@ -18,6 +18,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /proc/ui_style2icon(ui_style)
 	return GLOB.available_ui_styles[ui_style] || GLOB.available_ui_styles[GLOB.available_ui_styles[1]]
 
+GLOBAL_LIST_EMPTY(offset_to_true_plane)
+GLOBAL_LIST_EMPTY(true_to_offset_planes)
 /datum/hud
 	var/mob/mymob
 
@@ -51,6 +53,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
 	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
 
+	/// Think of multiz as a stack of z levels. Each index in that stack has its own group of plane masters
+	/// This variable is the plane offset our mob/client is currently "on"
+	/// We use it to track what we should show/not show
+	/// Goes from 0 to the max (z level stack size - 1)
+	var/current_plane_offset = 0
 
 	///UI for screentips that appear when you mouse over things
 	var/atom/movable/screen/screentip/screentip_text
@@ -100,10 +107,21 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	hand_slots = list()
 
+	var/list/plane_offset_to_true = GLOB.offset_to_true_plane // Cache for sonic s
+	var/list/true_to_plane_offsets = GLOB.true_to_offset_planes
 	for(var/mytype in subtypesof(/atom/movable/screen/plane_master)- /atom/movable/screen/plane_master/rendering_plate)
 		for(var/plane_offset in 0 to SSmapping.max_plane_offset)
 			var/atom/movable/screen/plane_master/instance = new mytype(plane_offset)
-			plane_masters["[instance.plane]"] = instance
+			var/string_plane = "[instance.plane]"
+			plane_masters[string_plane] = instance
+			// Lemon todo: Move this generation to SSmapping
+			if(!plane_offset_to_true[string_plane])
+				plane_offset_to_true[string_plane] = instance.real_plane
+			var/string_real = "[instance.real_plane]"
+			if(!true_to_plane_offsets[string_real])
+				true_to_plane_offsets[string_real] = list()
+			true_to_plane_offsets[string_real] |= instance.plane
+			instance.set_hud(src)
 			instance.backdrop(mymob)
 
 	var/datum/preferences/preferences = owner?.client?.prefs
@@ -120,6 +138,25 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	AddComponent(/datum/component/zparallax, owner.client)
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_plane_increase)
+	RegisterSignal(owner, COMSIG_MOB_RESET_PERSPECTIVE, .proc/on_eye_change)
+	if(mymob.client?.eye)
+		eye_z_changed(mymob.client.eye)
+
+/datum/hud/proc/on_eye_change(datum/source, atom/old_eye, atom/new_eye)
+	SIGNAL_HANDLER
+	UnregisterSignal(old_eye, COMSIG_MOVABLE_Z_CHANGED)
+	RegisterSignal(new_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/eye_z_changed)
+	eye_z_changed(new_eye)
+
+/datum/hud/proc/eye_z_changed(atom/eye)
+	SIGNAL_HANDLER
+	var/turf/eye_turf = get_turf(eye)
+	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
+	if(current_plane_offset == new_offset)
+		return
+	var/old_offset = current_plane_offset
+	current_plane_offset = new_offset
+	SEND_SIGNAL(src, COMSIG_HUD_OFFSET_CHANGED, old_offset, new_offset)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)

@@ -69,8 +69,9 @@
 		transform *= 2
 		pixel_x -= 8
 		pixel_y += 8
+	var/turf/our_turf = get_turf(src)
 	layer = initial(layer)
-	plane = initial(plane)
+	SET_PLANE(src, initial(plane), our_turf)
 	U.cut_overlays()
 	U.attached_accessory = null
 	U.accessory_overlay = null

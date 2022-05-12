@@ -241,8 +241,9 @@
 		qdel(I)
 		return FALSE
 	I.forceMove(drop_location())
+	var/turf/our_turf = get_turf(drop_location())
 	I.layer = initial(I.layer)
-	I.plane = initial(I.plane)
+	SET_PLANE(I, initial(I.plane), our_turf)
 	I.dropped(src)
 	return FALSE
 
@@ -321,8 +322,9 @@
 	if(I)
 		if(client)
 			client.screen -= I
+		var/turf/our_turf = get_turf(drop_location())
 		I.layer = initial(I.layer)
-		I.plane = initial(I.plane)
+		SET_PLANE(I, initial(I.plane), our_turf)
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
 			if (isnull(newloc))

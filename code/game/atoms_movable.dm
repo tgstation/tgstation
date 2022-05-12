@@ -955,11 +955,13 @@
  *
  * Arguments:
  * * old_z - The previous z-level they were on before.
- * * notify_contents - Whether or not to notify the movable's contents that their z-level has changed.
+ * * notify_contents - Whether or not to notify the movable's contents that their z-level has changed. NOTE, IF YOU SET THIS, YOU NEED TO MANUALLY SET PLANE OF THE CONTENTS LATER
  */
 /atom/movable/proc/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_turf, new_turf)
 
+	SET_PLANE(src, PLANE_TO_TRUE(src.plane), new_turf)
 	if(!notify_contents)
 		return
 

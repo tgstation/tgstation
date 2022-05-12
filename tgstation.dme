@@ -220,6 +220,7 @@
 #include "code\__DEFINES\dcs\signals\signals_global_object.dm"
 #include "code\__DEFINES\dcs\signals\signals_greyscale.dm"
 #include "code\__DEFINES\dcs\signals\signals_heretic.dm"
+#include "code\__DEFINES\dcs\signals\signals_hud.dm"
 #include "code\__DEFINES\dcs\signals\signals_hydroponic.dm"
 #include "code\__DEFINES\dcs\signals\signals_janitor.dm"
 #include "code\__DEFINES\dcs\signals\signals_ladder.dm"

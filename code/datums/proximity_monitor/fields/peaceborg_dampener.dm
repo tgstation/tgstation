@@ -55,8 +55,12 @@
 	effect.icon_state = overlay.icon_state
 	effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	effect.layer = ABOVE_ALL_MOB_LAYER
+	SET_PLANE(effect, ABOVE_GAME_PLANE, target)
 	effect.plane = ABOVE_GAME_PLANE
 	LAZYSET(edgeturf_effects, target, effect)
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/on_z_change(datum/source)
+	recalculate_field()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/target)
 	. = ..()

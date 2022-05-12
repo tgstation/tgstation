@@ -96,6 +96,7 @@
 
 /obj/structure/academy_wizard_spawner/New()
 	START_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/structure/academy_wizard_spawner/Destroy()
 	if(!broken)

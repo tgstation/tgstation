@@ -112,12 +112,13 @@
 			buckled_mob.setDir(direction)
 
 /obj/structure/chair/proc/handle_layer()
+	var/turf/our_turf = get_turf(src)
 	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_MOB_LAYER
-		plane = GAME_PLANE_UPPER
+		SET_PLANE(src, GAME_PLANE_UPPER_FOV_HIDDEN, our_turf)
 	else
 		layer = OBJ_LAYER
-		plane = GAME_PLANE
+		SET_PLANE(src, GAME_PLANE, our_turf)
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
 	. = ..()
@@ -170,10 +171,21 @@
 	var/mutable_appearance/armrest
 
 /obj/structure/chair/comfy/Initialize(mapload)
-	armrest = GetArmrest()
-	armrest.layer = ABOVE_MOB_LAYER
-	armrest.plane = GAME_PLANE_UPPER
+	gen_armrest()
 	return ..()
+
+/obj/structure/chair/comfy/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents)
+	cut_overlay(armrest)
+	QDEL_NULL(armrest)
+	gen_armrest()
+	return ..()
+
+/obj/structure/chair/comfy/proc/gen_armrest()
+	armrest = GetArmrest()
+	var/turf/our_turf = get_turf(src)
+	armrest.layer = ABOVE_MOB_LAYER
+	SET_PLANE(armrest, GAME_PLANE_UPPER, our_turf)
+	update_armrest()
 
 /obj/structure/chair/comfy/proc/GetArmrest()
 	return mutable_appearance(icon, "[icon_state]_armrest")

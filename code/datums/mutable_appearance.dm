@@ -10,6 +10,7 @@
 						// And yes this does have to be in the constructor, BYOND ignores it if you set it as a normal var
 
 /// Helper similar to image()
+// Lemon TODO: do a pass, maybe add support for passing in a loc reference
 /proc/mutable_appearance(icon, icon_state = "", layer = FLOAT_LAYER, plane = FLOAT_PLANE, alpha = 255, appearance_flags = NONE)
 	var/mutable_appearance/MA = new()
 	MA.icon = icon

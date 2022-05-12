@@ -16,15 +16,26 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	var/list/chunks = list()
 	var/ready = 0
 
-	///The image cloned by all chunk static images put onto turfs cameras cant see
-	var/image/obscured
+	/// List of images cloned by all chunk static images put onto turfs cameras cant see
+	/// Indexed by the plane offset to use
+	var/list/image/obscured_images
 
 /datum/cameranet/New()
+	obscured_images = list()
+	update_offsets(SSmapping.max_plane_offset)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_growth)
 
-	obscured = new('icons/effects/cameravis.dmi')
-	obscured.plane = CAMERA_STATIC_PLANE
-	obscured.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
-	obscured.override = TRUE
+/datum/cameranet/proc/update_offsets(new_offset)
+	for(var/i in length(obscured_images) to new_offset)
+		var/image/obscured = new('icons/effects/cameravis.dmi')
+		obscured.plane = CAMERA_STATIC_PLANE
+		obscured.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
+		obscured.override = TRUE
+		obscured_images += obscured
+
+/datum/cameranet/proc/on_offset_growth(datum/source, old_offset, new_offset)
+	SIGNAL_HANDLER
+	update_offsets(new_offset)
 
 /// Checks if a chunk has been Generated in x, y, z.
 /datum/cameranet/proc/chunkGenerated(x, y, z)

@@ -111,10 +111,15 @@
 	. = ..()
 	if(!on)
 		return
+	var/turf/our_turf = get_turf(src)
 	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
-	water_falling.plane = GAME_PLANE_UPPER
+	SET_PLANE(water_falling, GAME_PLANE_UPPER, our_turf)
 	. += water_falling
+
+/obj/machinery/shower/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents)
+	update_appearance()
+	return ..()
 
 /obj/machinery/shower/proc/handle_mist()
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds

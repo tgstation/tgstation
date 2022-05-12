@@ -23,6 +23,7 @@
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 /turf/open/space/basic/New() //Do not convert to Initialize
+	SHOULD_CALL_PARENT(FALSE)
 	//This is used to optimize the map loader
 	return
 
@@ -41,7 +42,7 @@
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
-
+	SET_PLANE(src, initial(plane), src)
 	if (length(smoothing_groups))
 		sortTim(smoothing_groups) //In case it's not properly ordered, let's avoid duplicate entries with the same values.
 		SET_BITFLAG_LIST(smoothing_groups)
@@ -53,7 +54,8 @@
 
 	var/area/our_area = loc
 	if(our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
-		add_overlay(GLOB.fullbright_overlay)
+		var/mutable_appearance/overlay = GLOB.fullbright_overlays[GET_TURF_PLANE_OFFSET(src) + 1]
+		add_overlay(overlay)
 
 	if(requires_activation)
 		SSair.add_to_active(src, TRUE)
@@ -184,7 +186,7 @@
 /turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'
 	underlay_appearance.icon_state = SPACE_ICON_STATE
-	underlay_appearance.plane = PLANE_SPACE
+	SET_PLANE(underlay_appearance, PLANE_SPACE, src)
 	return TRUE
 
 

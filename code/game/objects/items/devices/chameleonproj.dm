@@ -59,10 +59,11 @@
 			return
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, span_notice("Scanned [target]."))
+	var/turf/our_turf = get_turf(src)
 	var/obj/temp = new/obj()
 	temp.appearance = target.appearance
 	temp.layer = initial(target.layer) // scanning things in your inventory
-	temp.plane = initial(target.plane)
+	SET_PLANE(temp, initial(plane), our_turf)
 	saved_appearance = temp.appearance
 
 /obj/item/chameleon/proc/check_sprite(atom/target)

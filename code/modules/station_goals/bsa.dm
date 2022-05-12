@@ -173,9 +173,6 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 /obj/machinery/bsa/full/Initialize(mapload, cannon_direction = WEST)
 	. = ..()
-	if(!top_layer)
-		top_layer = mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
-		top_layer.plane = GAME_PLANE_UPPER
 	switch(cannon_direction)
 		if(WEST)
 			setDir(WEST)
@@ -187,8 +184,24 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 			bound_x = -128
 			top_layer.icon_state = "top_east"
 			icon_state = "cannon_east"
-	add_overlay(top_layer)
+	get_layer()
 	reload()
+
+/obj/machinery/bsa/full/proc/get_layer()
+	var/turf/our_turf = get_turf(src)
+	top_layer = mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
+	SET_PLANE(top_layer, GAME_PLANE_UPPER, our_turf)
+	switch(dir)
+		if(WEST)
+			top_layer.icon_state = "top_west"
+		if(EAST)
+			top_layer.icon_state = "top_east"
+	add_overlay(top_layer)
+
+/obj/machinery/bsa/full/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents)
+	cut_overlay(top_layer)
+	get_layer()
+	return ..()
 
 /obj/machinery/bsa/full/proc/fire(mob/user, turf/bullseye)
 	reload()

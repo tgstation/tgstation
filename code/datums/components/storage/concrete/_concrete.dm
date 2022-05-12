@@ -111,8 +111,9 @@
 
 //Resets screen loc and other vars of something being removed from storage.
 /datum/component/storage/concrete/_removal_reset(atom/movable/thing)
+	var/turf/current_turf = get_turf(thing)
 	thing.layer = initial(thing.layer)
-	thing.plane = initial(thing.plane)
+	SET_PLANE(thing, initial(thing.plane), current_turf)
 	thing.mouse_opacity = initial(thing.mouse_opacity)
 	if(thing.maptext)
 		thing.maptext = ""

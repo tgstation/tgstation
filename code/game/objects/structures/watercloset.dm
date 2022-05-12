@@ -653,14 +653,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/curtain/proc/toggle()
 	open = !open
+	var/turf/our_turf = get_turf(src)
 	if(open)
 		layer = SIGN_LAYER
-		plane = GAME_PLANE
+		SET_PLANE(src, GAME_PLANE, our_turf)
 		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
-		plane = GAME_PLANE_UPPER
+		SET_PLANE(src, GAME_PLANE_UPPER, our_turf)
 		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
@@ -756,16 +757,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"
+	var/turf/our_turf = get_turf(src)
 	layer = SIGN_LAYER
-	plane = GAME_PLANE
+	SET_PLANE(src, GAME_PLANE, our_turf)
 	set_density(FALSE)
 	open = TRUE
 	set_opacity(FALSE)
 
 /obj/structure/curtain/cloth/fancy/mechanical/proc/close()
 	icon_state = "[icon_type]-closed"
+	var/turf/our_turf = get_turf(src)
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
+	SET_PLANE(src, GAME_PLANE_UPPER, our_turf)
 	set_density(TRUE)
 	open = FALSE
 	if(opaque_closed)

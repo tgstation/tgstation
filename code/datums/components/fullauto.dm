@@ -118,7 +118,7 @@
 		return
 
 	if(isnull(location) || istype(_target, /atom/movable/screen)) //Clicking on a screen object.
-		if(_target.plane != CLICKCATCHER_PLANE) //The clickcatcher is a special case. We want the click to trigger then, under it.
+		if(PLANE_TO_TRUE(_target.plane) != CLICKCATCHER_PLANE) //The clickcatcher is a special case. We want the click to trigger then, under it.
 			return //If we click and drag on our worn backpack, for example, we want it to open instead.
 		_target = parse_caught_click_modifiers(modifiers, get_turf(source.eye), source)
 		params = list2params(modifiers)

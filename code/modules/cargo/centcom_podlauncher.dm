@@ -94,7 +94,7 @@
 	cam_plane_masters = list()
 	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
 		var/atom/movable/screen/plane_master/instance = new plane()
-		if (!renderLighting && instance.plane == LIGHTING_PLANE)
+		if (!renderLighting && instance.real_plane == LIGHTING_PLANE)
 			instance.alpha = 100
 		if(instance.blend_mode_override)
 			instance.blend_mode = instance.blend_mode_override

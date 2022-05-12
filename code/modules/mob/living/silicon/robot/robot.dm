@@ -346,17 +346,18 @@
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
+	var/turf/our_turf = get_turf(src)
 	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_l"
 			eye_lights.color = lamp_doom? COLOR_RED : lamp_color
-			eye_lights.plane = ABOVE_LIGHTING_PLANE //glowy eyes
+			SET_PLANE(eye_lights, ABOVE_LIGHTING_PLANE, our_turf) //glowy eyes
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
-			eye_lights.plane = ABOVE_GAME_PLANE
+			SET_PLANE(eye_lights, ABOVE_GAME_PLANE, our_turf)
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
@@ -372,6 +373,10 @@
 		head_overlay.pixel_y += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
+
+/mob/living/silicon/robot/on_changed_z_level(turf/old_turf, turf/new_turf)
+	update_appearance()
+	return ..()
 
 /mob/living/silicon/robot/proc/self_destruct(mob/usr)
 	var/turf/groundzero = get_turf(src)
