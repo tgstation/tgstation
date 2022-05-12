@@ -197,6 +197,10 @@
 	results = list(/datum/reagent/consumable/bbqsauce = 5)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/medicine/salglu_solution = 3, /datum/reagent/consumable/blackpepper = 1)
 
+/datum/chemical_reaction/food/quality_oil
+	results = list(/datum/reagent/consumable/quality_oil = 5)
+	required_reagents = list(/datum/reagent/consumable/korta_milk = 1, /datum/reagent/water = 1, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/consumable/blackpepper = 1)
+
 /datum/chemical_reaction/food/gravy
 	results = list(/datum/reagent/consumable/gravy = 3)
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
