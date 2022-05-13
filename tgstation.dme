@@ -291,6 +291,7 @@
 #include "code\__HELPERS\dna.dm"
 #include "code\__HELPERS\files.dm"
 #include "code\__HELPERS\filters.dm"
+#include "code\__HELPERS\forensics.dm"
 #include "code\__HELPERS\game.dm"
 #include "code\__HELPERS\global_lists.dm"
 #include "code\__HELPERS\guid.dm"

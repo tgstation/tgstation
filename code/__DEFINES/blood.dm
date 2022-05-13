@@ -1,6 +1,3 @@
-/// Checks if an object is covered in blood
-#define HAS_BLOOD_DNA(thing) (length(thing.forensics?.blood_DNA))
-
 //Bloody shoes/footprints
 /// Minimum alpha of footprints
 #define BLOODY_FOOTPRINT_BASE_ALPHA 20

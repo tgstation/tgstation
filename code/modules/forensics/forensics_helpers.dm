@@ -1,28 +1,3 @@
-/// Returns the fingerprints on this atom
-/atom/proc/return_fingerprints()
-	if (forensics)
-		return forensics.fingerprints
-
-/// Returns the hidden prints on this atom
-/atom/proc/return_hiddenprints()
-	if (forensics)
-		return forensics.hiddenprints
-
-/// Returns the blood dna on this atom
-/atom/proc/return_blood_DNA()
-	if (forensics)
-		return forensics.blood_DNA
-
-/// Returns the number of unique blood dna sources on this atom
-/atom/proc/blood_DNA_length()
-	if (forensics)
-		return length(forensics.blood_DNA)
-
-/// Returns the fibers on this atom
-/atom/proc/return_fibers()
-	if (forensics)
-		return forensics.fibers
-
 /// Adds a list of fingerprints to the atom
 /atom/proc/add_fingerprint_list(list/fingerprints_to_add) //ASSOC LIST FINGERPRINT = FINGERPRINT
 	if (isnull(fingerprints_to_add))
@@ -57,13 +32,13 @@
 	var/old = 0
 	if(suspect.gloves && istype(suspect.gloves, /obj/item/clothing))
 		var/obj/item/clothing/gloves/suspect_gloves = suspect.gloves
-		old = length(suspect_gloves.return_blood_DNA())
+		old = length(GET_ATOM_BLOOD_DNA(suspect_gloves))
 		if(suspect_gloves.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
-			if(add_blood_DNA(suspect_gloves.return_blood_DNA()) && suspect_gloves.blood_DNA_length() > old) //only reduces the bloodiness of our gloves if the item wasn't already bloody
+			if(add_blood_DNA(GET_ATOM_BLOOD_DNA(suspect_gloves)) && GET_ATOM_BLOOD_DNA_LENGTH(suspect_gloves) > old) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				suspect_gloves.transfer_blood -= 1
 	else if(suspect.blood_in_hands > 1)
-		old = length(suspect.return_blood_DNA())
-		if(add_blood_DNA(suspect.return_blood_DNA()) && suspect.blood_DNA_length() > old)
+		old = length(GET_ATOM_BLOOD_DNA(suspect))
+		if(add_blood_DNA(GET_ATOM_BLOOD_DNA(suspect)) && GET_ATOM_BLOOD_DNA_LENGTH(suspect) > old)
 			suspect.blood_in_hands -= 1
 	if (isnull(forensics))
 		forensics = new(src)
@@ -136,12 +111,12 @@
  * Transfer all the fingerprints and hidden prints from [src] to [transfer_to].
  */
 /atom/proc/transfer_fingerprints_to(atom/transfer_to)
-	transfer_to.add_fingerprint_list(return_fingerprints())
-	transfer_to.add_hiddenprint_list(return_hiddenprints())
+	transfer_to.add_fingerprint_list(GET_ATOM_FINGERPRINTS(src))
+	transfer_to.add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(src))
 	transfer_to.fingerprintslast = fingerprintslast
 
 /*
  * Transfer all the fibers from [src] to [transfer_to].
  */
 /atom/proc/transfer_fibers_to(atom/transfer_to)
-	transfer_to.add_fiber_list(return_fibers())
+	transfer_to.add_fiber_list(GET_ATOM_FIBRES(src))

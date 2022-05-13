@@ -48,13 +48,13 @@
 	var/list/seen_atoms = view(7, owner)
 	if(LAZYLEN(trigger_objs))
 		for(var/obj/O in seen_atoms)
-			if(is_type_in_typecache(O, trigger_objs) || (phobia_type == "blood" && HAS_BLOOD_DNA(O)))
+			if(is_type_in_typecache(O, trigger_objs) || (phobia_type == "blood" && GET_ATOM_BLOOD_DNA_LENGTH(O)))
 				freak_out(O)
 				return
 		for(var/mob/living/carbon/human/HU in seen_atoms) //check equipment for trigger items
 			for(var/X in HU.get_all_worn_items() | HU.held_items)
 				var/obj/I = X
-				if(!QDELETED(I) && (is_type_in_typecache(I, trigger_objs) || (phobia_type == "blood" && HAS_BLOOD_DNA(I))))
+				if(!QDELETED(I) && (is_type_in_typecache(I, trigger_objs) || (phobia_type == "blood" && GET_ATOM_BLOOD_DNA_LENGTH(I))))
 					freak_out(I)
 					return
 
