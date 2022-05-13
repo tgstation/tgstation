@@ -1353,7 +1353,7 @@
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/clothing/mask/animal/pig,
 /obj/item/clothing/mask/animal/horsehead,
-/obj/item/clothing/mask/animal/rat,
+/obj/item/clothing/mask/animal/small/rat,
 /obj/item/clothing/mask/fakemoustache{
 	pixel_y = 9
 	},
