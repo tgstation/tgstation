@@ -44141,6 +44141,10 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
 	},
+/obj/machinery/door/airlock/hatch{
+	name = "Ladder Access Hatch";
+	req_one_access_txt = null
+	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/left)
 "oWe" = (
