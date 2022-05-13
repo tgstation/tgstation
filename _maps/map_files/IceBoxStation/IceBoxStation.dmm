@@ -61029,7 +61029,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/processing)
 "tIo" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
 	name = "Kill Chamber";
 	normalspeed = 0;
@@ -61037,6 +61036,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
 /turf/open/floor/iron/freezer,
 /area/station/science/xenobiology)
 "tIu" = (
