@@ -41,6 +41,8 @@
 		if(hit_object.resistance_flags & FREEZE_PROOF)
 			hit_object.visible_message(span_warning("[hit_object] is freeze-proof!"))
 			return
+		if(HAS_TRAIT(hit_object, TRAIT_FROZEN))
+			return
 		hit_object.AddElement(/datum/element/frozen)
 	else if(isliving(hit_atom))
 		var/mob/living/hit_mob = hit_atom

@@ -188,7 +188,8 @@
 
 /turf/open/proc/freeze_turf()
 	for(var/obj/I in contents)
-		I.AddElement(/datum/element/frozen)
+		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.obj_flags & FREEZE_PROOF))
+			I.AddElement(/datum/element/frozen)
 
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50)
