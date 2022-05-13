@@ -292,28 +292,28 @@
 
 /// Shows a radial consisting of every radial recipe we have in our list.
 /obj/item/stack/proc/show_construction_radial(mob/builder)
-	var/static/list/options
-	var/static/list/titles_to_recipies
+	var/list/options = list()
+	var/list/titles_to_recipes = list()
 
-	if(!options || !titles_to_recipies)
-		options = list()
-		titles_to_recipies = list()
-		for(var/datum/stack_recipe/radial/recipe in recipes)
-			var/datum/radial_menu_choice/option = new()
-			option.image = image(
-				icon = initial(recipe.result_type.icon),
-				icon_state = initial(recipe.result_type.icon_state),
-			)
+	for(var/datum/stack_recipe/radial/recipe in recipes)
+		var/datum/radial_menu_choice/option = new()
+		option.image = image(
+			icon = initial(recipe.result_type.icon),
+			icon_state = initial(recipe.result_type.icon_state),
+		)
 
-			if(recipe.desc)
-				option.info = recipe.desc
+		if(recipe.desc)
+			option.info = recipe.desc
 
-			options[recipe.title] = option
-			titles_to_recipies[recipe.title] = recipe
+		options[recipe.title] = option
+		titles_to_recipes[recipe.title] = recipe
 
-		// After everything's been added to the radial, add an option
-		// that lets the user see the whole list of buildables
-		options[FULL_LIST] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_full_list")
+	// After everything's been added to the radial, add an option
+	// that lets the user see the whole list of buildables
+	options[FULL_LIST] = image(
+		icon = 'icons/hud/radial.dmi',
+		icon_state = "radial_full_list",
+	)
 
 	var/selection = show_radial_menu(
 		user = builder,
@@ -332,7 +332,7 @@
 		return
 
 	// Otherwise go straight to building
-	var/datum/stack_recipe/picked_recipe = titles_to_recipies[selection]
+	var/datum/stack_recipe/picked_recipe = titles_to_recipes[selection]
 	if(!istype(picked_recipe))
 		return
 
