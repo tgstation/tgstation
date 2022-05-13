@@ -83,8 +83,12 @@
 	desc,
 )
 
-	src.desc = desc
-	desc += "Requires: [req_amount]."
+	if(desc)
+		src.desc = desc
+		src.desc += " Requires: [req_amount]."
+	else
+		src.desc = "Requires: [req_amount]."
+
 	return ..()
 
 
