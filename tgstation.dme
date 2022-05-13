@@ -746,6 +746,7 @@
 #include "code\datums\components\label.dm"
 #include "code\datums\components\light_eater.dm"
 #include "code\datums\components\lockon_aiming.dm"
+#include "code\datums\components\machine_power_modifier.dm"
 #include "code\datums\components\manual_blinking.dm"
 #include "code\datums\components\manual_breathing.dm"
 #include "code\datums\components\material_container.dm"

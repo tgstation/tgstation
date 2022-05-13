@@ -148,8 +148,6 @@
 	var/always_area_sensitive = FALSE
 	///Multiplier for power consumption.
 	var/machine_power_rectifier = 1
-	/// Are we upgraded with metallic hydrogen for less power consumption?
-	var/has_hydrogen_upgrade = FALSE
 
 /obj/machinery/Initialize(mapload)
 	if(!armor)
@@ -183,8 +181,6 @@
 	setup_area_power_relationship()
 
 /obj/machinery/Destroy()
-	if(has_hydrogen_upgrade)
-		new /obj/item/stack/sheet/mineral/metal_hydrogen(loc, 2)
 	GLOB.machines.Remove(src)
 	end_processing()
 	dump_inventory_contents()
@@ -675,12 +671,6 @@
 	. = ..()
 	if(.)
 		return
-	if(istype(weapon, /obj/item/stack/sheet/mineral/metal_hydrogen) && !has_hydrogen_upgrade && panel_open)
-		var/obj/item/stack/sheet/mineral/metal_hydrogen/metal_h2 = weapon
-		if(metal_h2.use(2))
-			has_hydrogen_upgrade = TRUE
-			RefreshParts()
-		return
 	update_last_used(user)
 
 /obj/machinery/attackby_secondary(obj/item/weapon, mob/user, params)
@@ -722,11 +712,9 @@
 	idle_power_usage = initial(idle_power_usage) * (1 + parts_energy_rating)
 	active_power_usage = initial(active_power_usage) * (1 + parts_energy_rating)
 
-	if(has_hydrogen_upgrade)
-		idle_power_usage *= 0.5
-		active_power_usage *= 0.5
-
 	update_current_power_usage()
+
+	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS, null)
 
 /obj/machinery/proc/default_pry_open(obj/item/crowbar)
 	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
