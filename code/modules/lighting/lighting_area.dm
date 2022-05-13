@@ -1,7 +1,8 @@
 /area
 	luminosity = 1
-	///The mutable appearance we underlay to show light
-	var/mutable_appearance/lighting_effect = null
+	///List of mutable appearances we underlay to show light
+	///In the form plane offset + 1 -> appearance to use
+	var/list/mutable_appearance/lighting_effects = null
 	///Whether this area has a currently active base lighting, bool
 	var/area_has_base_lighting = FALSE
 	///alpha 0-255 of lighting_effect and thus baselighting intensity
@@ -48,20 +49,22 @@
 
 /area/proc/remove_base_lighting()
 	for(var/turf/T in src)
-		T.cut_overlay(lighting_effect)
-	QDEL_NULL(lighting_effect)
+		T.cut_overlay(lighting_effects[GET_TURF_PLANE_OFFSET(T) + 1])
+	QDEL_LIST(lighting_effects)
 	area_has_base_lighting = FALSE
 
 /area/proc/add_base_lighting()
-	lighting_effect = mutable_appearance('icons/effects/alphacolors.dmi', "white")
-	SET_PLANE_W_SCALAR(lighting_effect, ABOVE_GAME_PLANE, SSmapping.z_level_to_plane_offset[z])
-	lighting_effect.plane = LIGHTING_PLANE
-	lighting_effect.layer = LIGHTING_PRIMARY_LAYER
-	lighting_effect.blend_mode = BLEND_ADD
-	lighting_effect.alpha = base_lighting_alpha
-	lighting_effect.color = base_lighting_color
-	lighting_effect.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
+	lighting_effects = list()
+	for(var/offset in 0 to SSmapping.max_plane_offset)
+		var/mutable_appearance/lighting_effect = mutable_appearance('icons/effects/alphacolors.dmi', "white")
+		SET_PLANE_W_SCALAR(lighting_effect, LIGHTING_PLANE, offset)
+		lighting_effect.layer = LIGHTING_PRIMARY_LAYER
+		lighting_effect.blend_mode = BLEND_ADD
+		lighting_effect.alpha = base_lighting_alpha
+		lighting_effect.color = base_lighting_color
+		lighting_effect.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
+		lighting_effects += lighting_effect
 	for(var/turf/T in src)
-		T.add_overlay(lighting_effect)
+		T.add_overlay(lighting_effects[GET_TURF_PLANE_OFFSET(T) + 1])
 		T.luminosity = 1
 	area_has_base_lighting = TRUE

@@ -14,6 +14,7 @@
 			C.parallax_layers_cached += new SSparallax.random_layer(null, screenmob)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, screenmob)
 
+	refresh_parallax_plane()
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
 	if (length(C.parallax_layers) > C.parallax_layers_max)
@@ -33,6 +34,16 @@
 			0, 0, 0, 0
 			)
 
+/// Takes all our parallax objects and moves them to the bottom plane offset
+/// Of the z level stack our mob is currently in
+/datum/hud/proc/refresh_parallax_plane()
+	var/client/our_client = mymob.client
+	if(!our_client)
+		return
+	var/turf/eye_turf = get_turf(our_client.eye)
+	var/lowest_offset = GET_LOWEST_STACK_OFFSET(eye_turf.z)
+	for(var/atom/movable/screen/parallax_layer/parallax in our_client.parallax_layers_cached)
+		SET_PLANE_W_SCALAR(parallax, PLANE_TO_TRUE(parallax.plane), lowest_offset)
 
 /datum/hud/proc/remove_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob

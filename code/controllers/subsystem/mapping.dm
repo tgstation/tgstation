@@ -25,7 +25,18 @@ SUBSYSTEM_DEF(mapping)
 	var/list/holodeck_templates = list()
 
 	var/list/areas_in_z = list()
+	/// List of z level (as number) -> plane offset of that z level
+	/// Used to maintain the plane cube
 	var/list/z_level_to_plane_offset = list()
+	/// List of z level (as number) -> The lowest plane offset in that z stack
+	var/list/z_level_to_lowest_plane_offset = list()
+	// This pair allows for easy conversion between an offset plane, and its true representation
+	// Both are in the form "input plane" -> output plane(s)
+	/// Assoc list of string plane values to their true, non offset representation
+	var/list/plane_offset_to_true
+	/// Assoc list of true string plane values to a list of all potential offset planess
+	var/list/true_to_offset_planes
+	/// The largest plane offset we've generated so far
 	var/max_plane_offset = 0
 
 	var/loading_ruins = FALSE
@@ -67,6 +78,9 @@ SUBSYSTEM_DEF(mapping)
 		if(!config || config.defaulted)
 			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to Meta Station."))
 			config = old_config
+	plane_offset_to_true = list()
+	true_to_offset_planes = list()
+	create_plane_offsets(0, 0)
 	initialize_biomes()
 	loadWorld()
 	determine_fake_sale()
@@ -632,8 +646,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// We are guarenteed that we'll always grow bottom up
 	// Suck it jannies
 	z_level_to_plane_offset.len += 1
+	z_level_to_lowest_plane_offset += 1
 	// 0's the default value, we'll update it later if required
 	z_level_to_plane_offset[new_z.z_value] = 0
+	z_level_to_lowest_plane_offset[new_z.z_value] = 0
 	var/below_offset = new_z.traits[ZTRAIT_DOWN]
 	if(below_offset)
 		update_plane_tracking(new_z)
@@ -645,19 +661,44 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// I'm sorry, it needs to start at 0
 	var/current_level = -1
 	var/current_z = update_with.z_value
+	var/list/datum/space_level/levels_checked = list()
 	do
 		current_level += 1
 		current_z += below_offset
 		z_level_to_plane_offset[current_z] = current_level
 		var/datum/space_level/next_level = z_list[current_z]
 		below_offset = next_level.traits[ZTRAIT_DOWN]
+		levels_checked += next_level
 	while(below_offset)
+
+	/// Updates the lowest offset value
+	for(var/datum/space_level/level_to_update in levels_checked)
+		z_level_to_lowest_plane_offset[level_to_update.z_value] = current_level
 
 	var/old_max = max_plane_offset
 	max_plane_offset = max(max_plane_offset, current_level)
 	if(max_plane_offset == old_max)
 		return
 
-	for(var/offset in old_max + 1 to max_plane_offset)
-		GLOB.fullbright_overlays += create_fullbright_overlay(offset)
+	generate_offset_lists(old_max + 1, max_plane_offset)
 	SEND_SIGNAL(src, COMSIG_PLANE_OFFSET_INCREASE, old_max, max_plane_offset)
+
+/// Takes an offset to generate misc lists to, and a base to start from
+/// Use this to react globally to maintain parity with plane offsets
+/datum/controller/subsystem/mapping/proc/generate_offset_lists(gen_from, new_offset)
+	create_plane_offsets(gen_from, new_offset)
+	for(var/offset in gen_from to new_offset)
+		GLOB.fullbright_overlays += create_fullbright_overlay(offset)
+
+/datum/controller/subsystem/mapping/proc/create_plane_offsets(gen_from, new_offset)
+	for(var/plane_offset in gen_from to new_offset)
+		for(var/atom/movable/screen/plane_master/subsystem_type as anything in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate)
+			var/plane_to_use = initial(subsystem_type.plane)
+			var/string_real = "[plane_to_use]"
+			var/offset_plane = GET_NEW_PLANE(plane_to_use, plane_offset)
+			var/string_plane = "[offset_plane]"
+
+			plane_offset_to_true[string_plane] = plane_to_use
+			if(!true_to_offset_planes[string_real])
+				true_to_offset_planes[string_real] = list()
+			true_to_offset_planes[string_real] |= offset_plane
