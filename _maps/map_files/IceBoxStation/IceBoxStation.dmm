@@ -19869,9 +19869,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
-"gub" = (
-/turf/open/floor/plating/snowed/icemoon,
-/area/station/service/hydroponics)
 "guo" = (
 /obj/structure/transit_tube/curved{
 	dir = 4
@@ -174048,7 +174045,7 @@ bdr
 rCh
 reh
 rCh
-gub
+xuo
 kDU
 iDt
 qau
