@@ -287,6 +287,9 @@
 
 			return make_item(usr, recipe, multiplier)
 
+/// Add an option to see the whole crafting list
+#define FULL_LIST "view full list"
+
 /// Shows a radial consisting of every radial recipe we have in our list.
 /obj/item/stack/proc/show_construction_radial(mob/builder)
 	var/static/list/options
@@ -299,10 +302,14 @@
 
 			var/datum/radial_menu_choice/option = new()
 			option.image = image(icon = initial(recipe.result_type.icon), icon_state = initial(recipe.result_type.icon_state))
-			option.info = recipe.desc
+			if(recipe.desc)
+				option.info = recipe.desc
 
 			options[recipe.title] = option
 			titles_to_recipies[recipe.title] = recipe
+
+		// An option to view the entire stack craft list like normal
+		options[FULL_LIST] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_full_list")
 
 	var/selection = show_radial_menu(
 		builder,
@@ -315,6 +322,10 @@
 
 	if(!selection)
 		return
+	if(selection == FULL_LIST)
+		ui_interact(builder)
+		return
+
 	var/datum/stack_recipe/picked_recipe = titles_to_recipies[selection]
 	if(!istype(picked_recipe))
 		return
@@ -331,6 +342,8 @@
 		return FALSE
 	return TRUE
 
+#undef FULL_LIST
+
 /// Makes the item with the given recipe.
 /obj/item/stack/proc/make_item(mob/builder, datum/stack_recipe/recipe, multiplier)
 	if(get_amount() < 1 && !is_cyborg) //sanity check as this shouldn't happen
@@ -344,6 +357,7 @@
 		return
 	if(recipe.time)
 		var/adjusted_time = 0
+		builder.balloon_alert(builder, "building...")
 		builder.visible_message(
 			span_notice("[builder] starts building \a [recipe.title]."),
 			span_notice("You start building \a [recipe.title]..."),
@@ -353,6 +367,7 @@
 		else
 			adjusted_time = recipe.time
 		if(!do_after(builder, adjusted_time, target = builder))
+			builder.balloon_alert(builder, "interrupted!")
 			return
 		if(!building_checks(builder, recipe, multiplier))
 			return
@@ -406,11 +421,8 @@
 
 /// Checks if we can build here, validly.
 /obj/item/stack/proc/building_checks(mob/builder, datum/stack_recipe/recipe, multiplier)
-	if (get_amount() < recipe.req_amount*multiplier)
-		if (recipe.req_amount*multiplier>1)
-			to_chat(builder, span_warning("You haven't got enough [src] to build \the [recipe.req_amount*multiplier] [recipe.title]\s!"))
-		else
-			to_chat(builder, span_warning("You haven't got enough [src] to build \the [recipe.title]!"))
+	if (get_amount() < recipe.req_amount * multiplier)
+		builder.balloon_alert(builder, "not enough material!")
 		return FALSE
 	var/turf/dest_turf = get_turf(builder)
 
@@ -418,21 +430,21 @@
 	if(ispath(recipe.result_type, /obj/structure/window))
 		var/obj/structure/window/result_path = recipe.result_type
 		if(!valid_window_location(dest_turf, builder.dir, is_fulltile = initial(result_path.fulltile)))
-			to_chat(builder, span_warning("The [recipe.title] won't fit here!"))
+			builder.balloon_alert(builder, "won't fit here!")
 			return FALSE
 
 	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
-		to_chat(builder, span_warning("There is another [recipe.title] here!"))
+		builder.balloon_alert(builder, "already one here!")
 		return FALSE
 
 	if(recipe.on_tram)
 		if(!locate(/obj/structure/industrial_lift/tram) in dest_turf)
-			to_chat(builder, span_warning("\The [recipe.title] must be constructed on a tram floor!"))
+			builder.balloon_alert(builder, "must be made on a tram!")
 			return FALSE
 
 	if(recipe.on_floor)
 		if(!isfloorturf(dest_turf))
-			to_chat(builder, span_warning("\The [recipe.title] must be constructed on the floor!"))
+			builder.balloon_alert(builder, "must be made on a floor!")
 			return FALSE
 
 		for(var/obj/object in dest_turf)
@@ -445,7 +457,7 @@
 				if(!window_structure.fulltile)
 					continue
 			if(object.density || NO_BUILD & object.obj_flags)
-				to_chat(builder, span_warning("There is \a [object.name] here. You can\'t make \a [recipe.title] here!"))
+				builder.balloon_alert(builder, "there's something in the way!")
 				return FALSE
 
 	if(recipe.placement_checks & STACK_CHECK_CARDINALS)
@@ -454,11 +466,12 @@
 			nearby_turf = get_step(dest_turf, direction)
 			if(locate(recipe.result_type) in nearby_turf)
 				to_chat(builder, span_warning("\The [recipe.title] must not be built directly adjacent to another!"))
+				builder.balloon_alert(builder, "can't be adjacent to another!")
 				return FALSE
 
 	if(recipe.placement_checks & STACK_CHECK_ADJACENT)
 		if(locate(recipe.result_type) in range(1, dest_turf))
-			to_chat(builder, span_warning("\The [recipe.title] must be constructed at least one tile away from others of its type!"))
+			builder.balloon_alert(builder, "can't be near another!")
 			return FALSE
 
 	return TRUE
@@ -481,6 +494,9 @@
 
 /obj/item/stack/tool_use_check(mob/living/user, amount)
 	if(get_amount() < amount)
+		// general balloon alert that says they don't have enough
+		user.balloon_alert(user, "not enough material!")
+		// then a more specific message about how much they need and what they need specifically
 		if(singular_name)
 			if(amount > 1)
 				to_chat(user, span_warning("You need at least [amount] [singular_name]\s to do this!"))

@@ -81,11 +81,13 @@
 	trait_booster,
 	trait_modifier = 1,
 	desc,
+	required_noun,
 )
 
 	if(desc)
 		src.desc = desc
-	src.desc += " Requires: [req_amount]."
+	if(required_noun)
+		src.desc += span_boldnotice("[desc ? " - ":""]Requires: [req_amount] [required_noun]\s.")
 
 	return ..()
 

@@ -1,6 +1,3 @@
-// NOTE: The order which these recipes is deliberate,
-// for the purpose of aligning them to specific spots
-// within the recipe radial menu. (Crafting top three, pylon at the bottom)
 GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 	new /datum/stack_recipe/radial( \
 		title = "altar", \
@@ -10,6 +7,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		one_per_turf = TRUE, \
 		on_floor = TRUE, \
 		desc = span_cultbold("Altar: Can make Eldritch Whetstones, Construct Shells, and Flasks of Unholy Water."), \
+		required_noun = "runed metal sheet", \
 	), \
 	new /datum/stack_recipe/radial( \
 		title = "daemon forge", \
@@ -20,32 +18,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		on_floor = TRUE, \
 		desc = span_cultbold("Daemon Forge: Can make Nar'Sien Hardened Armor, Flagellant's Robes, \
 			and Eldritch Longswords. Emits Light."), \
-	), \
-	new /datum/stack_recipe/radial( \
-		title = "runed door", \
-		result_type = /obj/machinery/door/airlock/cult, \
-		time = 5 SECONDS, \
-		one_per_turf = TRUE, \
-		on_floor = TRUE, \
-		desc = span_cultbold("Runed Door: A weak door which stuns non-blood cultists who touch it."), \
-	), \
-	new /datum/stack_recipe/radial( \
-		title = "pylon", \
-		result_type = /obj/structure/destructible/cult/pylon, \
-		req_amount = 4, \
-		time = 4 SECONDS, \
-		one_per_turf = TRUE, \
-		on_floor = TRUE, \
-		desc = span_cultbold("Pylon: Heals and regenerates the blood of nearby blood cultists and constructs, and also \
-			converts nearby floor tiles into engraved flooring, which allows blood cultists to scribe runes faster."), \
-	), \
-	new /datum/stack_recipe/radial( \
-		title = "runed girder", \
-		result_type = /obj/structure/girder/cult, \
-		time = 5 SECONDS, \
-		one_per_turf = TRUE, \
-		on_floor = TRUE, \
-		desc = span_cultbold("Runed Girder: A weak girder that can be instantly destroyed by ritual daggers. Not a recommended usage of runed metal."), \
+		required_noun = "runed metal sheet", \
 	), \
 	new /datum/stack_recipe/radial( \
 		title = "archives", \
@@ -56,6 +29,36 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		on_floor = TRUE, \
 		desc = span_cultbold("Archives: Can make Zealot's Blindfolds, Shuttle Curse Orbs, \
 			and Veil Walker equipment. Emits Light."), \
+		required_noun = "runed metal sheet", \
+	), \
+	new /datum/stack_recipe/radial( \
+		title = "pylon", \
+		result_type = /obj/structure/destructible/cult/pylon, \
+		req_amount = 4, \
+		time = 4 SECONDS, \
+		one_per_turf = TRUE, \
+		on_floor = TRUE, \
+		desc = span_cultbold("Pylon: Heals and regenerates the blood of nearby blood cultists and constructs, and also \
+			converts nearby floor tiles into engraved flooring, which allows blood cultists to scribe runes faster."), \
+		required_noun = "runed metal sheet", \
+	), \
+	new /datum/stack_recipe/radial( \
+		title = "runed door", \
+		result_type = /obj/machinery/door/airlock/cult, \
+		time = 5 SECONDS, \
+		one_per_turf = TRUE, \
+		on_floor = TRUE, \
+		desc = span_cultbold("Runed Door: A weak door which stuns non-blood cultists who touch it."), \
+		required_noun = "runed metal sheet", \
+	), \
+	new /datum/stack_recipe/radial( \
+		title = "runed girder", \
+		result_type = /obj/structure/girder/cult, \
+		time = 5 SECONDS, \
+		one_per_turf = TRUE, \
+		on_floor = TRUE, \
+		desc = span_cultbold("Runed Girder: A weak girder that can be instantly destroyed by ritual daggers. Not a recommended usage of runed metal."), \
+		required_noun = "runed metal sheet", \
 	), \
 ))
 
