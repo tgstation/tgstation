@@ -44137,9 +44137,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "oVY" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Ladder Access Hatch"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
@@ -49050,9 +49047,6 @@
 	name = "Ladder Access Hatch"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/right)
 "qDR" = (
@@ -49598,9 +49592,6 @@
 	req_one_access_txt = null
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/right)
 "qMR" = (
@@ -53707,9 +53698,6 @@
 	req_one_access_txt = null
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 8
-	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/left)
 "shg" = (
