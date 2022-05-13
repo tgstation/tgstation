@@ -7,6 +7,14 @@
 	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 	strip_delay = 80
 
+/obj/item/clothing/head/constable
+	name = "constable helmet"
+	desc = "A british looking helmet."
+	icon_state = "constable"
+	inhand_icon_state = "constable"
+	custom_price = PAYCHECK_COMMAND * 1.5
+	worn_y_offset = 4
+
 /obj/item/clothing/head/spacepolice
 	name = "space police cap"
 	desc = "A blue cap for patrolling the daily beat."
