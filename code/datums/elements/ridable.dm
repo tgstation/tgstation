@@ -101,7 +101,7 @@
 			amount_equipped++
 		else
 			qdel(inhand)
-			break
+			return FALSE
 
 	if(amount_equipped >= amount_required)
 		return TRUE
