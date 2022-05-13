@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - bugfix: "Surgery tools will now give silver back when recycled."
