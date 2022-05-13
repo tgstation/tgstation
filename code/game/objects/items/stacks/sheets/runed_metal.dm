@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 
 	return ..()
 
-/obj/item/stack/runed_metal/radial_check(mob/builder)
+/obj/item/stack/sheet/runed_metal/radial_check(mob/builder)
 	return ..() && IS_CULTIST(builder)
 
 /obj/item/stack/sheet/runed_metal/get_main_recipes()

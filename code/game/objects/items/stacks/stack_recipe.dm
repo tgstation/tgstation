@@ -85,9 +85,7 @@
 
 	if(desc)
 		src.desc = desc
-		src.desc += " Requires: [req_amount]."
-	else
-		src.desc = "Requires: [req_amount]."
+	src.desc += " Requires: [req_amount]."
 
 	return ..()
 
