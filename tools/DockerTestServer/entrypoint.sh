@@ -31,9 +31,36 @@ DB_HOST="${DB_HOST:-db}"
 DB_USER="${DB_USER:-gamelord}"
 DB_PASS="${DB_PASS:-gamelord}"
 
-sed -i -r 's/ADDRESS .*/ADDRESS '"$DB_HOST"'/' /tgstation/config/dbconfig.txt
-sed -i -r 's/FEEDBACK_LOGIN .*/FEEDBACK_LOGIN '"$DB_USER"'/' /tgstation/config/dbconfig.txt
-sed -i -r 's/FEEDBACK_PASSWORD .*/FEEDBACK_PASSWORD '"$DB_PASS"'/' /tgstation/config/dbconfig.txt
+sed -i -r 's/(#|^)ADDRESS .*/ADDRESS '"$DB_HOST"'/' /tgstation/config/dbconfig.txt
+sed -i -r 's/(#|^)FEEDBACK_LOGIN .*/FEEDBACK_LOGIN '"$DB_USER"'/' /tgstation/config/dbconfig.txt
+sed -i -r 's/(#|^)FEEDBACK_PASSWORD .*/FEEDBACK_PASSWORD '"$DB_PASS"'/' /tgstation/config/dbconfig.txt
+
+function envvar_override () {
+  ### FUNCTION for overriding options in a file using the exported environment variables
+  # Syntax:
+  # envvar_override "<envvar prefix>"" "<filename in container>"
+
+  # Overriding options
+  PREFIX=$1
+  FILENAME=$2
+
+  env | grep "$PREFIX"| while read p
+  do
+    OPTION=`echo $p | cut -d "=" -f 1 | sed s/"$PREFIX"//`
+    VALUE=`echo $p | cut -d "=" -f 2`
+    # Comment out logic, comments line out if value is #
+    if [[ "${VALUE}" == "#" ]]; then 
+      echo "Commenting out option \"$OPTION\" in $FILENAME"
+      sed -i -r 's/^'"$OPTION"'.*/#&/' "$FILENAME"
+    else
+      echo "Injecting option \"$OPTION\" with value \"$VALUE\" in $FILENAME"
+      sed -i -r 's/(#|^)'"$OPTION"'.*/'"$OPTION"' '"$VALUE"'/' "$FILENAME"
+    fi
+  done
+}
+# Overriding game options
+envvar_override "TG_GAME_" "/tgstation/config/game_options.txt"
+
 
 # Setting ranks
 export IFS=","
