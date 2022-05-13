@@ -334,10 +334,7 @@
 	if(istype(PDA))
 		PDA.saved_identification = H.real_name
 		PDA.saved_job = J.title
-
-		var/obj/item/computer_hardware/identifier/id = PDA.all_components[MC_IDENTIFY]
-		if(id)
-			id.UpdateDisplay()
+		PDA.UpdateDisplay()
 
 
 /datum/outfit/job/get_chameleon_disguise_info()
