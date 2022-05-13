@@ -145,7 +145,7 @@ Makes normal reloads easier
 
 /obj/item/microfusion_cell_attachment/reloader/add_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
 	. = ..()
-	microfusion_cell.reloading_time = 2 SECONDS
+	microfusion_cell.reloading_time = 5
 
 /obj/item/microfusion_cell_attachment/reloader/remove_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
 	. = ..()
@@ -164,7 +164,7 @@ Makes tactical reloads easier
 
 /obj/item/microfusion_cell_attachment/tactical/add_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
 	. = ..()
-	microfusion_cell.reloading_time_tactical = 3 SECONDS
+	microfusion_cell.reloading_time_tactical = 2 SECONDS
 
 /obj/item/microfusion_cell_attachment/tactical/remove_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
 	. = ..()
