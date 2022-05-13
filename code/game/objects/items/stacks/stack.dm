@@ -287,7 +287,7 @@
 
 			return make_item(usr, recipe, multiplier)
 
-/// Add an option to see the whole crafting list
+/// The key / title for a radial option that shows the entire list of buildables (uses the old menu)
 #define FULL_LIST "view full list"
 
 /// Shows a radial consisting of every radial recipe we have in our list.
@@ -297,24 +297,28 @@
 
 	if(!options || !titles_to_recipies)
 		options = list()
-		titles_to_recipies =list()
+		titles_to_recipies = list()
 		for(var/datum/stack_recipe/radial/recipe in recipes)
-
 			var/datum/radial_menu_choice/option = new()
-			option.image = image(icon = initial(recipe.result_type.icon), icon_state = initial(recipe.result_type.icon_state))
+			option.image = image(
+				icon = initial(recipe.result_type.icon),
+				icon_state = initial(recipe.result_type.icon_state),
+			)
+
 			if(recipe.desc)
 				option.info = recipe.desc
 
 			options[recipe.title] = option
 			titles_to_recipies[recipe.title] = recipe
 
-		// An option to view the entire stack craft list like normal
+		// After everything's been added to the radial, add an option
+		// that lets the user see the whole list of buildables
 		options[FULL_LIST] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_full_list")
 
 	var/selection = show_radial_menu(
-		builder,
-		builder,
-		options,
+		user = builder,
+		anchor = builder,
+		choices = options,
 		custom_check = CALLBACK(src, .proc/radial_check, builder),
 		radius = radial_radius,
 		tooltips = TRUE,
@@ -322,10 +326,12 @@
 
 	if(!selection)
 		return
+	// Run normal UI interact if we wanna see the full list
 	if(selection == FULL_LIST)
 		ui_interact(builder)
 		return
 
+	// Otherwise go straight to building
 	var/datum/stack_recipe/picked_recipe = titles_to_recipies[selection]
 	if(!istype(picked_recipe))
 		return
@@ -372,21 +378,30 @@
 		if(!building_checks(builder, recipe, multiplier))
 			return
 
-	var/obj/created
-	if(recipe.max_res_amount > 1) //Is it a stack?
+	var/atom/created
+	if(recipe.max_res_amount > 1) // Is it a stack?
 		created = new recipe.result_type(builder.drop_location(), recipe.res_amount * multiplier)
+		builder.balloon_alert(builder, "built items")
+
 	else if(ispath(recipe.result_type, /turf))
 		var/turf/covered_turf = builder.drop_location()
 		if(!isturf(covered_turf))
 			return
 		covered_turf.PlaceOnTop(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
+		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
+
 	else
 		created = new recipe.result_type(builder.drop_location())
+		builder.balloon_alert(builder, "built item")
+
 	if(created)
 		created.setDir(builder.dir)
+
+	// Use up the material
 	use(recipe.req_amount * multiplier)
 	builder.investigate_log("[key_name(builder)] crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
+	// Apply mat datums
 	if(recipe.applies_mats && LAZYLEN(mats_per_unit))
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
@@ -394,10 +409,12 @@
 		else
 			created.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
+	// We could be qdeleted - like if it's a stack and has already been merged
 	if(QDELETED(created))
-		return TRUE //It's a stack and has already been merged
+		return TRUE
 
-	created.add_fingerprint(builder) //Add fingerprints first, otherwise created might already be deleted because of stack merging
+	// Add fingerprints first, otherwise created might already be deleted because of stack merging
+	created.add_fingerprint(builder)
 	if(isitem(created))
 		builder.put_in_hands(created)
 
