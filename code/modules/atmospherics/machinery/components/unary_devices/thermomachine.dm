@@ -312,6 +312,9 @@
 		return
 	. = ..()
 
+/obj/machinery/atmospherics/components/unary/thermomachine/update_layer()
+	return
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on

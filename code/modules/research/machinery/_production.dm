@@ -182,9 +182,9 @@
 		var/obj/item/card/id/card = user.get_idcard(TRUE)
 		if(!card && istype(user.pulling, /obj/item/card/id))
 			card = user.pulling
-		if(card)
+		if(card && card.registered_account)
 			var/datum/bank_account/our_acc = card.registered_account
-			if(our_acc.account_job && SSeconomy.get_dep_account(our_acc.account_job?.paycheck_department) == SSeconomy.get_dep_account(payment_department))
+			if(our_acc.account_job.departments_bitflags & allowed_department_flags)
 				total_cost = 0 //We are not charging crew for printing their own supplies and equipment.
 	if(attempt_charge(src, usr, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
 		return FALSE

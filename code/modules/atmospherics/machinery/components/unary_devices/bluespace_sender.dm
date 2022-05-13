@@ -176,3 +176,6 @@
 				update_parents()
 				bluespace_network.garbage_collect()
 			. = TRUE
+
+/obj/machinery/atmospherics/components/unary/bluespace_sender/update_layer()
+	return

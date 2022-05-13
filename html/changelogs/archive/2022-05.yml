@@ -487,3 +487,153 @@
   - bugfix: added the missing raw anomaly core to icebox ordnance
   - bugfix: fix kilostation and tramstation chambers controllers not accesible from
       the inside.
+2022-05-11:
+  BebeYoshi:
+  - bugfix: The Hair Stylist Association has noticed the sudden changes to the Mohawk,
+      Short Hair 5, Short Hair 6 and Pig Tails 2 hairstyle and brought them back to
+      their previous glory.
+  Ghilker:
+  - qol: improved the speed of cascade wall spreading, made a better description for
+      them
+  - qol: 'I didn''t update the changelog in the initial PR so i''ll add this here:
+      Antags can unlock a final objective (like romerol) that instructs them to cause
+      a cascade. The objective will provide a destabilizing crystal that once applied
+      to the SM will instantly cause it to start delaminating and sets the SM for
+      a cascade. Once it delaminates it ensures the start of the cascade. NOTE that
+      if the SM recovers you won''t be able to do it again.'
+  - bugfix: Fix being unable to refine the delimber anomaly raw core in the refinery
+  - code_imp: cleaned and brought up to date the powerfist code
+  - qol: added some more examine text on the powerfist
+  - bugfix: thermomachine no longer is under every pipe but is now above them
+  - qol: pipes and atmos components have better visual clarity and consistency between
+      them
+  Iamgoofball:
+  - qol: The supermatter cascade now takes one minute to end the round instead of
+      5 minutes to end the round, to put it on par with Blob and such.
+  OperativeLyn:
+  - bugfix: Fixed misplaced sofa parts in the Icemoon abandoned village.
+  SmArtKar:
+  - bugfix: Charged green crossbreeds no longer display species types instead of actual
+      names
+  - bugfix: You can no longer farm orbiting blades by using your mark on corpses
+  Son-of-Space:
+  - bugfix: Fixed several inconsistent or niche access requirements on KiloStation
+  - qol: Replaced all access requirement vars on doors with mapping helpers on KiloStation
+  - bugfix: You can now cook meals on the oldstation ruin again
+  - bugfix: fixed overlapping objecs on the AI minisat on IceBoxStation
+  Y0SH1M4S73R:
+  - spellcheck: Recent re-evaluations of the underlying math have concluded that a
+      supermatter cascade will not, in fact, destroy the entire universe - only an
+      area several hundred kilometers in radius.
+  Zonespace27:
+  - rscdel: Dead mouse, sunglasses, and briefcase bounties removed from assistants
+  - rscadd: Added more engineering & science bounties
+  - rscadd: Flamethrower, pneumatic cannon, water tank, and improvised shotgun shell
+      bounties to assistants.
+  - balance: Atmospheric bounties are separated from engineering bounties
+  - balance: Medical organ bounties have their reward reduced to 1k for a single organ,
+      and 2k for bulk.
+  - refactor: Refactored bounty cube selection back-end
+  dragomagol:
+  - qol: department signs have directional variants
+  - code_imp: sign paths are now in snake_case
+  dragomagol, unit0016:
+  - rscadd: Added lore terminals - for when leaving a scrap of paper on the ground
+      just won't cut it
+  orthography:
+  - bugfix: fixes door access.
+  san7890:
+  - bugfix: After a mixup in the Marker Beacon Factory with the "Default Glowing Texture"
+      Factory, Marker Beacons should now have any actual sprite.
+  - balance: 'After a recent earthquake, a good chunk of the exterior surrounding
+      the Mining Base on IceBoxStation has undergone a drastic conformational change:
+      the river has expanded. In response to this, more infrastructure in that part
+      of the station has been re-done, and even added in some spots.'
+  timothymtorres:
+  - bugfix: Fix mapped in cardhands not initializing properly
+  timothymtorres, TheBonded:
+  - bugfix: Fix books to only give mood bonus when read the first time
+  vincentiusvin:
+  - spellcheck: fixed the omega soap recipe not having bold on it's first line.
+  wesoda25:
+  - bugfix: Mulligan now properly randomizes ethereal color
+  zxaber:
+  - bugfix: Ripley mechs can no longer toggle to their nonexistant air tank.
+2022-05-12:
+  GoblinBackwards:
+  - balance: Fireball no longer has a 3 tile wide hitbox.
+  GoldenAlpharex:
+  - refactor: Refactored how legs are rendered, using dynamically-generated masks
+      to avoid left legs always displaying over right ones, or right legs above left
+      ones.
+  JohnFulpWillard:
+  - rscdel: 'The following job cartridges have been deleted: Detective, Lawyer, Janitor,
+      Curator, Roboticist and Scientist (without sensor pack).'
+  - balance: The following tablet apps has had their storage space cost lowered Robocontrol
+      12 -> 6, Power monitor 9 -> 8, Budget ordering 20 -> 10, Power alarms 5 -> 4,
+      Science hub 16 -> 10.
+  - balance: You no longer need an MC Scanner part to use the tablet's remote signalling
+      device application.
+  - balance: Cartridges no longer let you run applications off of them, but you can
+      still download applications off of them. Additionally, applications that were
+      once on a roundstart cartridge (or were a program you had pre-Ntos PDAs) has
+      been moved to be downloaded onto your tablet roundstart.
+  - qol: The Eject Disk button on the tablet's UI has been moved to the very top to
+      not clutter your UI as much.
+  Melbert:
+  - bugfix: High blood pressure effect is now applied correctly by opioid addiction
+  - spellcheck: opioid is now also spelled correctly
+  - refactor: Jitterriness is now a status effect
+  - bugfix: The first stage of addiction now actually occurs.
+  RandomGamer123:
+  - spellcheck: Removes some erroneous "the" in some clown car messages
+  Son-of-Space:
+  - bugfix: varedited access reqs were removed from the service hallway on IceBox
+      so mapping helpers can function correctly
+  - bugfix: maintenance access returned to the library door on IceBox station
+  san7890:
+  - bugfix: Nanotrasen will no longer install two separate APCs in the prison wing
+      of IceBoxStation.
+2022-05-13:
+  Ebb-Real:
+  - imageadd: Turned vapes into GAGS making them recolorable from vendors.
+  - imagedel: Removed the massive ammount of old icons for vapes.
+  Ghilker:
+  - bugfix: 'fix delimber anomaly from round removing you and other griefs remove:
+      delimber anomaly doesn''t change your organs anymore'
+  Guillaume Prata:
+  - qol: Removed Sutures/Ointment from the list of items you can hold in the exoslot
+      of your medical wintercoat as there is basically no reason for someone to carry
+      them on that slot and they kept getting placed there by the inventory shortcuts.
+  JohnFulpWillard:
+  - bugfix: Cult's antag UI now works from the start, rather than having to close
+      and reopen the tab to see your objectives.
+  - bugfix: Constable helmets no longer cause your hair to mysteriously disappear
+      when wearing one.
+  - bugfix: Jobs that are in several departments (like HoP, who is charged for Supply
+      but not Service) won't get charged lathe tax for any departments they are in.
+  MacBlaze1:
+  - bugfix: fixed dizziness causing hard crashes
+  Son-of-Space:
+  - bugfix: Realigns the DeltaStation holodeck to fit universal templates
+  - bugfix: It is no longer possible to access cargo through maintenance without appropriate
+      access on MetaStation
+  dragomagol:
+  - bugfix: non-cultists can now enter the pride ruin
+  san7890:
+  - bugfix: On IceBoxStation, Ice Moon Ruins will no longer vent out all their atmospherics
+      out the top of the map, since they magically now have ceilings.
+  - rscadd: 'However, this dark magick to give Ice Moon Ruins ceilings come at a cost:
+      avalanches over certain chasms are now much more likely, and can decimate certain
+      infrastructure. Nanotrasen has ensured that anything vital shouldn''t be impacted
+      by this, but do expect to see certain "unmaintained" catwalk sections be swept
+      up in an avalanche of sorts.'
+  timothymtorres:
+  - qol: Add randomized lockers, reagent tanks, and atmospherics equipment to Meta
+      maint.
+  - bugfix: Fix ordnance lab having exposed windows peeping into maint.  These have
+      been replaced with rwalls.
+  - bugfix: Fix wizard modsuit not having antimagic protection
+  wesoda25:
+  - qol: ethereals can now press the ghost button to cancel crystallization and permanently
+      vacate their body
