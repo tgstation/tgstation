@@ -714,7 +714,7 @@
 
 	update_current_power_usage()
 
-	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS, null)
+	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS)
 
 /obj/machinery/proc/default_pry_open(obj/item/crowbar)
 	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR

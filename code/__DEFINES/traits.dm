@@ -884,4 +884,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FINGERPRINT_PASSTHROUGH "fingerprint_passthrough"
 
 /// The machine has been upgraded with metallic hydrogen to halves the power consumption.
-#define TRAIT_MACHINE_POWER_UPGRADED "machine_power_upgraded"
+#define TRAIT_METAL_HYDROGEN_UPGRADED "metal_hydrogen_upgraded"

@@ -483,32 +483,36 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	mats_per_unit = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT)
 	material_type = /datum/material/metalhydrogen
 	merge_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	/// Modifier for the idle power usage of the machine we're upgrading
 	var/idle_power_multiplier = 0.5
+	/// Modifier for the active power usage of the machine we're upgrading
 	var/active_power_multiplier = 0.5
+	/// Amount of sheets to use/drop when the machine gets upgraded/deconstructed
+	var/upgrade_amount = 2
 
 /obj/item/stack/sheet/mineral/metal_hydrogen/get_main_recipes()
 	. = ..()
 	. += GLOB.metalhydrogen_recipes
 
 /obj/item/stack/sheet/mineral/metal_hydrogen/attack_atom(atom/attacked_atom, mob/living/user, params)
-	if(!istype(attacked_atom, /obj/machinery) || istype(attacked_atom, /obj/machinery/computer) || istype(attacked_atom, /obj/machinery/power))
+	if(!ismachinery(attacked_atom) || istype(attacked_atom, /obj/machinery/computer) || istype(attacked_atom, /obj/machinery/power))
 		return ..()
 
 	var/obj/machinery/machine_to_upgrade = attacked_atom
 	if(!machine_to_upgrade.panel_open)
 		return ..()
 
-	if(HAS_TRAIT(machine_to_upgrade, TRAIT_MACHINE_POWER_UPGRADED))
-		balloon_alert(user, "this machine is already upgraded")
+	if(HAS_TRAIT(machine_to_upgrade, TRAIT_METAL_HYDROGEN_UPGRADED))
+		machine_to_upgrade.balloon_alert(user, "already upgraded!")
 		return
 
-	if(get_amount() < 2 || !do_after(user, 3 SECONDS, machine_to_upgrade))
+	if(get_amount() < upgrade_amount || !do_after(user, 3 SECONDS, machine_to_upgrade))
 		return
 
-	if(!use(2))
+	if(!use(upgrade_amount))
 		return
 
-	machine_to_upgrade.AddComponent(/datum/component/machine_power_modifier, idle_power_multiplier, active_power_multiplier)
+	machine_to_upgrade.AddComponent(/datum/component/machine_power_modifier, idle_power_multiplier, active_power_multiplier, TRAIT_METAL_HYDROGEN_UPGRADED, TRUE, list(type = upgrade_amount))
 	machine_to_upgrade.RefreshParts()
 
 /obj/item/stack/sheet/mineral/zaukerite

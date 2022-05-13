@@ -1,20 +1,31 @@
 /datum/component/machine_power_modifier
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_ALLOWED
+	/// Multiplier for the idle power consumption of the attached machine.
 	var/idle_power_multiplier = 1
+	/// Multiplier for the active power consumption of the attached machine.
 	var/active_power_multiplier = 1
+	/// Trait to give to the machine we're getting attached to.
+	var/trait_to_add
 
-/datum/component/machine_power_modifier/Initialize(idle_power_multiplier, active_power_multiplier)
-	if(!istype(parent, /obj/machinery) || istype(parent, /obj/machinery/power) || istype(parent, /obj/machinery/computer))
+	var/list/objects_to_drop
+
+/datum/component/machine_power_modifier/Initialize(idle_power_multiplier = 1, active_power_multiplier = 1, trait_to_add, has_deconstruction_property, list/objects_to_drop)
+	if(!ismachinery(parent) || istype(parent, /obj/machinery/power) || istype(parent, /obj/machinery/computer))
 		return COMPONENT_INCOMPATIBLE
 	src.idle_power_multiplier = idle_power_multiplier
 	src.active_power_multiplier = active_power_multiplier
 	RegisterSignal(parent, COMSIG_MACHINERY_REFRESH_PARTS, .proc/on_refresh_parts)
-	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_machine_deconstruct)
-	ADD_TRAIT(parent, TRAIT_MACHINE_POWER_UPGRADED, src)
+	if(has_deconstruction_property)
+		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_machine_deconstruct)
+		src.objects_to_drop = objects_to_drop
+	if(trait_to_add)
+		src.trait_to_add = trait_to_add
+		ADD_TRAIT(parent, trait_to_add, REF(src))
 
 /datum/component/machine_power_modifier/Destroy(force, silent)
 	UnregisterSignal(parent, list(COMSIG_MACHINERY_REFRESH_PARTS, COMSIG_OBJ_DECONSTRUCT))
-	REMOVE_TRAIT(parent, TRAIT_MACHINE_POWER_UPGRADED, src)
+	if(trait_to_add)
+		REMOVE_TRAIT(parent, trait_to_add, REF(src))
 	return ..()
 
 /datum/component/machine_power_modifier/proc/on_refresh_parts(obj/machinery/source)
@@ -27,4 +38,8 @@
 /datum/component/machine_power_modifier/proc/on_machine_deconstruct(obj/machinery/source)
 	SIGNAL_HANDLER
 
-	new /obj/item/stack/sheet/mineral/metal_hydrogen(source.loc, 2)
+	for(var/obj in objects_to_drop)
+		for(var/i in 1 to objects_to_drop[obj])
+			new obj(source.loc)
+
+	//new /obj/item/stack/sheet/mineral/metal_hydrogen(source.loc, 2)
