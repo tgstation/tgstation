@@ -89,7 +89,7 @@
 	var/list/job_changes = SSmapping.config.job_changes
 	if(!length(job_changes))
 		return
-	var/list/captain_changes = job_changes["captain"]
+	var/list/captain_changes = job_changes[JOB_CAPTAIN]
 	if(!length(captain_changes))
 		return
 	special_charter = captain_changes["special_charter"]
