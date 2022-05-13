@@ -183,7 +183,7 @@
 
 /datum/objective/traitor_objectives/New(text)
 	. = ..()
-	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]) / 60)
+	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]) / PROGRESSION_POINT_FACTOR)
 	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_progression_in_objectives)
 
 /datum/objective/traitor_objectives/check_completion()
@@ -199,7 +199,7 @@
 		if(objective.objective_state != OBJECTIVE_STATE_COMPLETED)
 			continue
 		total_points += objective.progression_reward
-	if(total_points / 60 < required_progression_in_objectives)
+	if(total_points / PROGRESSION_POINT_FACTOR < required_progression_in_objectives)
 		return FALSE
 	return TRUE
 
