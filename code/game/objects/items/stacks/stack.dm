@@ -56,7 +56,7 @@
 	/// If TRUE, we'll use a radial instead when displaying recipes
 	var/use_radial = FALSE
 	/// If use_radial is TRUE, this is the radius of the radial
-	var/radial_radius = 48
+	var/radial_radius = 52
 
 	// The following are all for medical treatment
 	// They're here instead of /stack/medical

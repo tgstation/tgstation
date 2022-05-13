@@ -1,4 +1,17 @@
+// Note, the order these in are deliberate, as it affects
+// the order they are shown via radial.
 GLOBAL_LIST_INIT(runed_metal_recipes, list( \
+	new /datum/stack_recipe/radial( \
+		title = "pylon", \
+		result_type = /obj/structure/destructible/cult/pylon, \
+		req_amount = 4, \
+		time = 4 SECONDS, \
+		one_per_turf = TRUE, \
+		on_floor = TRUE, \
+		desc = span_cultbold("Pylon: Heals and regenerates the blood of nearby blood cultists and constructs, and also \
+			converts nearby floor tiles into engraved flooring, which allows blood cultists to scribe runes faster."), \
+		required_noun = "runed metal sheet", \
+	), \
 	new /datum/stack_recipe/radial( \
 		title = "altar", \
 		result_type = /obj/structure/destructible/cult/item_dispenser/altar, \
@@ -7,17 +20,6 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		one_per_turf = TRUE, \
 		on_floor = TRUE, \
 		desc = span_cultbold("Altar: Can make Eldritch Whetstones, Construct Shells, and Flasks of Unholy Water."), \
-		required_noun = "runed metal sheet", \
-	), \
-	new /datum/stack_recipe/radial( \
-		title = "daemon forge", \
-		result_type = /obj/structure/destructible/cult/item_dispenser/forge, \
-		req_amount = 3, \
-		time = 4 SECONDS, \
-		one_per_turf = TRUE, \
-		on_floor = TRUE, \
-		desc = span_cultbold("Daemon Forge: Can make Nar'Sien Hardened Armor, Flagellant's Robes, \
-			and Eldritch Longswords. Emits Light."), \
 		required_noun = "runed metal sheet", \
 	), \
 	new /datum/stack_recipe/radial( \
@@ -32,14 +34,14 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 		required_noun = "runed metal sheet", \
 	), \
 	new /datum/stack_recipe/radial( \
-		title = "pylon", \
-		result_type = /obj/structure/destructible/cult/pylon, \
-		req_amount = 4, \
+		title = "daemon forge", \
+		result_type = /obj/structure/destructible/cult/item_dispenser/forge, \
+		req_amount = 3, \
 		time = 4 SECONDS, \
 		one_per_turf = TRUE, \
 		on_floor = TRUE, \
-		desc = span_cultbold("Pylon: Heals and regenerates the blood of nearby blood cultists and constructs, and also \
-			converts nearby floor tiles into engraved flooring, which allows blood cultists to scribe runes faster."), \
+		desc = span_cultbold("Daemon Forge: Can make Nar'Sien Hardened Armor, Flagellant's Robes, \
+			and Eldritch Longswords. Emits Light."), \
 		required_noun = "runed metal sheet", \
 	), \
 	new /datum/stack_recipe/radial( \
