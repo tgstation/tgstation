@@ -1,0 +1,4 @@
+author: "fippe"
+delete-after: True
+changes: 
+  - bugfix: "Botany and Service firelocks in Icebox moved around to stop fire alarm spam"
