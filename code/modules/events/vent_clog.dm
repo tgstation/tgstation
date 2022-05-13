@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/scrubber_clog
 	weight = 20 //All weight values are very subject to change.
 	max_occurrences = 3
+	earliest_start = 5 MINUTES
 
 /datum/round_event/scrubber_clog
 	announceWhen = 1
@@ -67,6 +68,7 @@
 	typepath = /datum/round_event/scrubber_clog/major
 	weight = 12 //Subject to change
 	max_occurrences = 3
+	earliest_start = 10 MINUTES
 
 /datum/round_event/scrubber_clog/major
 	severity = "Major"
@@ -76,6 +78,7 @@
 	typepath = /datum/round_event/scrubber_clog/critical
 	weight = 8 //Subject to change
 	max_occurrences = 1
+	earliest_start = 25 MINUTES
 
 /datum/round_event/scrubber_clog/critical
 	severity = "Critical"

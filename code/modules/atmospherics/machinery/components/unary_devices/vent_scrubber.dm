@@ -481,8 +481,7 @@
 	clogged = TRUE
 
 	while(clogged)
-		say("Good evening.")
-		sleep(10)
+		var/mob/clog_mob = new spawned_mob(get_turf(src))
 
 
 
