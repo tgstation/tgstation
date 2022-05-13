@@ -6003,7 +6003,7 @@
 /area/station/medical/psychology)
 "cnn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "cnv" = (
@@ -26837,7 +26837,7 @@
 /turf/open/floor/grass,
 /area/station/security/prison)
 "jCj" = (
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "jCk" = (
@@ -36669,7 +36669,7 @@
 /area/station/security/execution/education)
 "ncv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/white/line{

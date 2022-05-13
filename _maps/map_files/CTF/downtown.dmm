@@ -109,7 +109,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "bT" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 4;
 	resistance_flags = 64
 	},
@@ -343,7 +343,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "gO" = (
-/obj/structure/holohoop{
+/obj/structure/hoop{
 	dir = 8;
 	resistance_flags = 64
 	},
@@ -2494,7 +2494,7 @@
 /turf/open/floor/iron/dark,
 /area/ctf)
 "ZA" = (
-/obj/item/toy/beach_ball/holoball,
+/obj/item/toy/basketball,
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark/side{
 	dir = 8
