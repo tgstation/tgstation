@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "fix delimber anomaly from round removing you and other griefs
-remove: delimber anomaly doesn't change your organs anymore"

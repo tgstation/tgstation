@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Cult's antag UI now works from the start, rather than having to close and reopen the tab to see your objectives."

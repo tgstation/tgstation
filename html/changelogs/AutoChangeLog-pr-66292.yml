@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - qol: "Add randomized lockers, reagent tanks, and atmospherics equipment to Meta maint."
-  - bugfix: "Fix ordnance lab having exposed windows peeping into maint.  These have been replaced with rwalls."

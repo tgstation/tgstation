@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - qol: "Removed Sutures/Ointment from the list of items you can hold in the exoslot of your medical wintercoat as there is basically no reason for someone to carry them on that slot and they kept getting placed there by the inventory shortcuts."
