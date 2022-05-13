@@ -1092,9 +1092,7 @@
 			var/obj/item/modular_computer/tablet/pda/PDA = A
 			if(PDA.saved_identification == oldname)
 				PDA.saved_identification = newname
-				var/obj/item/computer_hardware/identifier/display = PDA.all_components[MC_IDENTIFY]
-				if(display)
-					display.UpdateDisplay()
+				PDA.UpdateDisplay()
 				if(!search_id)
 					break
 				search_pda = 0

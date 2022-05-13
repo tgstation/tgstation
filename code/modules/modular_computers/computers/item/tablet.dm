@@ -9,6 +9,7 @@
 	worn_icon_state = "tablet"
 	hardware_flag = PROGRAM_TABLET
 	max_hardware_size = 1
+	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
 	max_bays = 3
 	steel_sheet_cost = 2
@@ -312,12 +313,9 @@
 /obj/item/modular_computer/tablet/pda/Initialize(mapload)
 	. = ..()
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
-	install_component(new /obj/item/computer_hardware/processor_unit/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/card_slot)
-	install_component(new /obj/item/computer_hardware/identifier)
-	install_component(new /obj/item/computer_hardware/sensorpackage)
 
 	if(!isnull(default_applications))
 		var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")

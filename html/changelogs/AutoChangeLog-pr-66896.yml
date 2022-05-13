@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Jobs that are in several departments (like HoP, who is charged for Supply but not Service) won't get charged lathe tax for any departments they are in."

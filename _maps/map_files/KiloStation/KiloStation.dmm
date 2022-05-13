@@ -31728,7 +31728,6 @@
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
 "iJY" = (
-/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -37659,7 +37658,7 @@
 /area/station/command/heads_quarters/cmo)
 "kBd" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "e.v.a. maintenance"
+	name = "E.V.A. Maintenance"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/command/eva,

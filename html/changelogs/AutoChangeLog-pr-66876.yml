@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Cook's CQC now properly works in the assigned areas outside the kitchen."
+  - bugfix: "Cooks now properly get their Cook mail instead of just money."
+  - bugfix: "Mapping configs can now once again set job position slots (and fully remove jobs from maps that don't support them)."

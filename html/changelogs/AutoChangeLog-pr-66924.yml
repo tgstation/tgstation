@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - balance: "CPU, Sensor and Identify hardwares have all been removed from modular PCs, this means AtmoZphere can run regardless of hardware, and running programs/updating your PDA info, is no longer tied to hardware either."

@@ -108,7 +108,7 @@
 	data["has_light"] = has_light
 	data["light_on"] = light_on
 	data["comp_light_color"] = comp_light_color
-	data["pai"] = pai
+	data["pai"] = inserted_pai
 	return data
 
 
@@ -128,7 +128,7 @@
 			return TRUE
 		if("PC_minimize")
 			var/mob/user = usr
-			if(!active_program || !all_components[MC_CPU])
+			if(!active_program)
 				return
 
 			idle_threads.Add(active_program)
@@ -179,9 +179,7 @@
 				update_appearance()
 				return
 
-			var/obj/item/computer_hardware/processor_unit/PU = all_components[MC_CPU]
-
-			if(idle_threads.len > PU.max_idle_programs)
+			if(idle_threads.len > max_idle_programs)
 				to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
 				return
 
@@ -240,26 +238,24 @@
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 		if("PC_Imprint_ID")
 			var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-			var/obj/item/computer_hardware/identifier/id_hardware = all_components[MC_IDENTIFY]
 			if(!cardholder)
 				return
 
 			saved_identification = cardholder.current_identification
 			saved_job = cardholder.current_job
 
-			if(id_hardware)
-				id_hardware.UpdateDisplay()
+			UpdateDisplay()
 
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 		if("PC_Pai_Interact")
 			switch(params["option"])
 				if("eject")
-					usr.put_in_hands(pai)
-					pai.slotted = FALSE
-					pai = null
-					to_chat(usr, span_notice("You remove the pAI from the [name]."))
+					usr.put_in_hands(inserted_pai)
+					to_chat(usr, span_notice("You remove [inserted_pai] from the [name]."))
+					inserted_pai.slotted = FALSE
+					inserted_pai = null
 				if("interact")
-					pai.attack_self(usr)
+					inserted_pai.attack_self(usr)
 			return UI_UPDATE
 		else
 			return
