@@ -821,7 +821,7 @@
 	)
 
 /datum/mod_theme/ntagent
-	name = "ntagent"
+	name = "Unknown"
 	desc = " A suit which looks very familiar. There is no description on it. Offering armor and protection from space."
 	extended_desc = "A technological wonder, looking very similar to ERT modsuits. On the inside \
 		It has layers of shaped plasteel, chromium steel fibers and ceramic kevlar plates on the inside, \
