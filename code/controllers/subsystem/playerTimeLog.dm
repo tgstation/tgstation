@@ -4,6 +4,10 @@ SUBSYSTEM_DEF(oyuncuDakikaTut)
 
 /datum/controller/subsystem/oyuncuDakikaTut/fire(resumed)
 	var/logFile = file("data/playerMinutes.json")
+	
+	if(!(logFile in flist("data/")))
+		text2file("{}", logFile)
+	
 	var/playerMinuteList = json_decode(file2text(logFile))
 	fdel(logFile)
 
