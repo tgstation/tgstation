@@ -66,6 +66,15 @@
 	purchasable_from = ~UPLINK_NANO
 	cost = 4
 
+/datum/uplink_item/device_tools/thermalnano
+	name = "Thermal Eyepatch"
+	desc = "This is a nanotrasen branded thermal eyepatch. They allow you to see organisms through walls by capturing the upper portion of the \
+			infrared light spectrum, emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms and artifiial \
+			intelligence cores emit more of this light than cooler objects like walls and airlocks. "
+	item = /obj/item/clothing/glasses/thermal/eyepatch
+	purchasable_from = UPLINK_NANO
+	cost = 4
+
 /datum/uplink_item/device_tools/cutouts
 	name = "Adaptive Cardboard Cutouts"
 	desc = "These cardboard cutouts are coated with a thin material that prevents discoloration and makes the images on them appear more lifelike. \

@@ -37,6 +37,15 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_NANO) //you can't buy it in nuke, because the elite modsuit costs the same while being better
 	progression_minimum = 20 MINUTES
 
+/datum/uplink_item/suits/ntmodsuit
+	name = "Nanotrasen MODsuit"
+	desc = "The budget version of the ERT MODsuit. Features armoring and a set of inbuilt modules. \
+	Comes with a flamethrower! Free of charge."
+	item = /obj/item/mod/control/pre_equipped/ntuplinkagent
+	cost = 9
+	purchasable_from = UPLINK_NANO
+	progression_minimum = 20 MINUTES
+
 /datum/uplink_item/suits/thermal
 	name = "MODsuit Thermal Visor Module"
 	desc = "A visor for a MODsuit. Lets you see living beings through walls."
