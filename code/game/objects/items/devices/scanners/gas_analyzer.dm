@@ -116,8 +116,8 @@
 	if (user.stat != CONSCIOUS || user.is_blind())
 		to_chat(user, span_warning("You're unable to see [src]'s results!"))
 		return
-
 	atmos_scan(user=user, target=get_turf(src), tool=src, silent=FALSE)
+	on_analyze(source=src, target=get_turf(src))
 
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
 	// Check if it requires visibility and if the user is you know, blind.
