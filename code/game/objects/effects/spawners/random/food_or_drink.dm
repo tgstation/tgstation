@@ -117,6 +117,7 @@
 		/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 1,
 		/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 1,
 		/obj/item/reagent_containers/food/drinks/soda_cans/cola = 1,
+		/obj/item/reagent_containers/food/drinks/soda_cans/iced_tea = 1,
 	)
 
 /obj/effect/spawner/random/food_or_drink/booze

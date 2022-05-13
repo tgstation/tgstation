@@ -863,3 +863,9 @@
 	desc = "There is no air shortage. Do not drink."
 	icon_state = "air"
 	list_reagents = list(/datum/reagent/nitrogen = 24, /datum/reagent/oxygen = 6)
+
+/obj/item/reagent_containers/food/drinks/soda_cans/iced_tea
+	name = "Tee's Iced Tea"
+	desc = "Ice cold baby!"
+	icon_state = "ice_tea_can"
+	list_reagents = list(/datum/reagent/consumable/icetea = 30)
