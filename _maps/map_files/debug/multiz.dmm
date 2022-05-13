@@ -1384,6 +1384,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"Au" = (
+/obj/effect/landmark/observer_start,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "AG" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/storage)
@@ -3057,7 +3061,7 @@ eb
 eb
 bv
 cD
-bE
+Au
 bE
 cN
 cZ
