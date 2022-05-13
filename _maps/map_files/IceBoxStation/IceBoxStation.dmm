@@ -61036,9 +61036,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /turf/open/floor/iron/freezer,
 /area/station/science/xenobiology)
 "tIu" = (
