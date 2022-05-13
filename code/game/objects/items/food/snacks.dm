@@ -390,7 +390,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /obj/item/food/cornchips/purple
 	name = "\improper Spicy Sweet Chili Boritos corn chips"
-	desc = "The only flavour that actually tastes spicy like nachos are supposed to."
+	desc = "The only flavour that actually tastes spicy like proper nachos."
 	icon_state = "boritospurple"
 	trash_type = /obj/item/trash/boritos/purple
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/sugar = 1)
