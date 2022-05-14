@@ -61029,7 +61029,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/processing)
 "tIo" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research/glass{
 	name = "Kill Chamber";
 	normalspeed = 0;
