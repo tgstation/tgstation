@@ -141,6 +141,18 @@
 		/obj/item/mod/module/bikehorn,
 	)
 
+/obj/item/mod/control/pre_equipped/ntuplinkagent
+	theme = /datum/mod_theme/ntagent
+	applied_cell = /obj/item/stock_parts/cell/super
+	initial_modules = list(
+		/obj/item/mod/module/storage/bluespace,
+		/obj/item/mod/module/flamethrower,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/dna_lock,
+	)
+
 /obj/item/mod/control/pre_equipped/traitor
 	theme = /datum/mod_theme/syndicate
 	applied_cell = /obj/item/stock_parts/cell/super
