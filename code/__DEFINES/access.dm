@@ -1,148 +1,183 @@
-// Security equipment, security records, gulag item storage, secbots
-#define ACCESS_SECURITY 1
-/// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console
-#define ACCESS_BRIG 2
-/// Armory, gulag teleporter, execution chamber
-#define ACCESS_ARMORY 3
-///Detective's office, forensics lockers, security+medical records
-#define ACCESS_FORENSICS 4
-/// Medical general access
-#define ACCESS_MEDICAL 5
-/// Morgue access
-#define ACCESS_MORGUE 6
-/// R&D department and R&D console
-#define ACCESS_RND 7
-/// Ordnance lab and burn chamber
-#define ACCESS_ORDNANCE 8
-/// Genetics access
-#define ACCESS_GENETICS 9
-/// Engineering area, power monitor, power flow control console
-#define ACCESS_ENGINE 10
-///APCs, EngiVend/YouTool, engineering equipment lockers
-#define ACCESS_ENGINE_EQUIP 11
-#define ACCESS_MAINT_TUNNELS 12
-#define ACCESS_EXTERNAL_AIRLOCKS 13
-#define ACCESS_CHANGE_IDS 15
-#define ACCESS_AI_UPLOAD 16
-#define ACCESS_TELEPORTER 17
-#define ACCESS_EVA 18
-/// Bridge, EVA storage windoors, gateway shutters, AI integrity restorer, comms console
-#define ACCESS_HEADS 19
-#define ACCESS_CAPTAIN 20
-#define ACCESS_ALL_PERSONAL_LOCKERS 21
-#define ACCESS_CHAPEL_OFFICE 22
-#define ACCESS_TECH_STORAGE 23
-#define ACCESS_ATMOSPHERICS 24
-#define ACCESS_BAR 25
-#define ACCESS_JANITOR 26
-#define ACCESS_CREMATORIUM 27
-#define ACCESS_KITCHEN 28
-#define ACCESS_ROBOTICS 29
-#define ACCESS_RD 30
-#define ACCESS_CARGO 31
-#define ACCESS_CONSTRUCTION 32
-///Allows access to chemistry factory areas on compatible maps
-#define ACCESS_CHEMISTRY 33
-#define ACCESS_HYDROPONICS 35
-#define ACCESS_LIBRARY 37
-#define ACCESS_LAWYER 38
-#define ACCESS_VIROLOGY 39
-#define ACCESS_CMO 40
-#define ACCESS_QM 41
-#define ACCESS_COURT 42
-#define ACCESS_SURGERY 45
-#define ACCESS_THEATRE 46
-#define ACCESS_RESEARCH 47
-#define ACCESS_MINING 48
-#define ACCESS_MAILSORTING 50
-#define ACCESS_VAULT 53
-#define ACCESS_MINING_STATION 54
-#define ACCESS_XENOBIOLOGY 55
-#define ACCESS_CE 56
-#define ACCESS_HOP 57
-#define ACCESS_HOS 58
-/// Request console announcements
-#define ACCESS_RC_ANNOUNCE 59
+/// Access IDs are broken down by department, department special functions/rooms, and departmental roles
+/// The first access for the department will always be its general access function
+/// Access for departmental roles will start with the head and go down in level of succession
+/// If we ever get to a point where we have more departmental roles than the five (four) available slots, we should be looking to make some jobs more generic
+/// Job-specific accesses start at the 15th access code for that department to leave room to add more special functions/rooms (i.e. HOS starts at 35)
+/// Command 1-19, Security 20-39, Engineering 40-59, Medical 60-79, Supply 80-99, Science 100-119, Service 120-139, Away 140-169, Mech 170-179 Admin 180-199, Ruin 200-299, Antag 300-399
+
+/// - - - COMMAND 1-19 - - -
+/// Command general access, EVA storage windoors, gateway shuters, AI integrity restorer, comms console
+#define ACCESS_COMMAND 1
+#define ACCESS_AI_UPLOAD 2
+#define ACCESS_TELEPORTER 3
+#define ACCESS_EVA 4
+///Request console announcements
+#define ACCESS_RC_ANNOUNCE 5
 /// Used for events which require at least two people to confirm them
-#define ACCESS_KEYCARD_AUTH 60
-/// has access to the entire telecomms satellite / machinery
-#define ACCESS_TCOMSAT 61
-#define ACCESS_GATEWAY 62
-/// Outer brig doors, department security posts
-#define ACCESS_BRIG_ENTRANCE 63
-/// For releasing minerals from the ORM
-#define ACCESS_MINERAL_STOREROOM 64
-#define ACCESS_MINISAT 65
-/// Weapon authorization for secbots
-#define ACCESS_WEAPONS 66
+#define ACCESS_KEYCARD_AUTH 6
+#define ACCESS_MINISAT 7
 /// NTnet diagnostics/monitoring software
-#define ACCESS_NETWORK 67
-/// Pharmacy access (Chemistry room in Medbay)
-#define ACCESS_PHARMACY 69 ///Nice.
-#define ACCESS_PSYCHOLOGY 70
-/// Ordnance gas storage room access
-#define ACCESS_ORDNANCE_STORAGE 71
+#define ACCESS_NETWORK 8
+#define ACCESS_GATEWAY 9
+#define ACCESS_ALL_PERSONAL_LOCKERS 10
+#define ACCESS_CHANGE_IDS 11
+///ID 12-14 currently unused
+/// COMMAND - JOBS
+#define ACCESS_CAPTAIN 15
+#define ACCESS_HOP 16
+///ID 17-19 currently unused
+
+/// - - - SECURITY 20-39 - - -
+/// Security general access, security records, gulag item storage, secbots
+#define ACCESS_SECURITY 20
+/// Outer brig doors
+#define ACCESS_BRIG_ENTRANCE 21
+/// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console, security equipment
+#define ACCESS_BRIG 22
+/// Armory, gulag teleporter, execution chamber
+#define ACCESS_ARMORY 23
+#define ACCESS_COURT 24
+/// Weapon authorization for secbots
+#define ACCESS_WEAPONS 25
+///ID 26-34 currently unused
+/// SECURITY - JOBS
+#define ACCESS_HOS 35
+///Detective's office, forensics lockers, security+medical records
+#define ACCESS_DETECTIVE 36
+///ID 37-39 currently unused
+
+/// - - - ENGINEERING 40-59 - - -
+/// Engineering general access, power monitor, power flow control console
+#define ACCESS_ENGINEERING 40
+#define ACCESS_ATMOS 41
+#define ACCESS_MAINT_TUNNELS 42
+///APCs, EngiVend/YouTool, engineering equipment lockers
+#define ACCESS_ENGINE_EQUIP 43
+#define ACCESS_CONSTRUCTION 44
+#define ACCESS_TECH_STORAGE 45
+/// has access to the entire telecomms satellite / machinery
+#define ACCESS_TCOMMS 46
 /// Room and launching.
-#define ACCESS_AUX_BASE 72
-/// Service access, for service hallway and service consoles
-#define ACCESS_SERVICE 73
+#define ACCESS_AUX_BASE 47
+#define ACCESS_EXTERNAL_AIRLOCKS 48
+///ID 49-54 currently unused
+/// ENGINEERING - JOBS
+#define ACCESS_CE 55
+///ID 56-59 currently unused
 
-	//BEGIN CENTCOM ACCESS
-	/*Should leave plenty of room if we need to add more access levels.
-	Mostly for admin fun times.*/
-/// General facilities. CentCom ferry.
-#define ACCESS_CENT_GENERAL 101
-/// Thunderdome.
-#define ACCESS_CENT_THUNDER 102
-/// Special Ops. Captain's display case, Marauder and Seraph mechs.
-#define ACCESS_CENT_SPECOPS 103
-/// Medical/Research
-#define ACCESS_CENT_MEDICAL 104
-/// Living quarters.
-#define ACCESS_CENT_LIVING 105
-/// Generic storage areas.
-#define ACCESS_CENT_STORAGE 106
-/// Teleporter.
-#define ACCESS_CENT_TELEPORTER 107
-/// Captain's office/ID comp/AI.
-#define ACCESS_CENT_CAPTAIN 109
-/// The non-existent CentCom Bar
-#define ACCESS_CENT_BAR 110
+/// - - - MEDICAL 60-79 - - -
+/// Medical general access
+#define ACCESS_MEDICAL 60
+#define ACCESS_MORGUE 61
+/// Pharmacy access (Chemistry room in Medbay)
+#define ACCESS_PHARMACY 62
+#define ACCESS_SURGERY 63
+///Allows access to chemistry factory areas on compatible maps
+#define ACCESS_PLUMBING 64
+///ID 65-74 currently unused
+/// MEDICAL - JOBS
+#define ACCESS_CMO 75
+#define ACCESS_VIROLOGY 76
+#define ACCESS_PSYCHOLOGY 77
+///ID 78-79 currently unused
 
-	//The Syndicate
-/// General Syndicate Access. Includes Syndicate mechs and ruins.
-#define ACCESS_SYNDICATE 150
-/// Nuke Op Leader Access
-#define ACCESS_SYNDICATE_LEADER 151
+/// - - - SUPPLY 80-99 - - -
+///Cargo general access
+#define ACCESS_CARGO 80
+#define ACCESS_MAIL_SORTING 81
+/// For releasing minerals from the ORM
+#define ACCESS_MINERAL_STOREROOM 82
+#define ACCESS_MINING_STATION 83
+#define ACCESS_VAULT 84
+///ID 85-94 currently unused
+/// SUPPLY - JOBS
+#define ACCESS_QM 95
+#define ACCESS_MINING 96
+///ID 97-99
 
-	//Away Missions or Ruins
-	/*For generic away-mission/ruin access. Why would normal crew have access to a long-abandoned derelict
+/// - - - SCIENCE 100-119 - - -
+///Science general access
+#define ACCESS_SCIENCE 100
+#define ACCESS_RESEARCH 101
+#define ACCESS_ORDNANCE_STORAGE 102
+///ID 103-114 currently unused
+/// SCIENCE - JOBS
+#define ACCESS_RD 115
+#define ACCESS_GENETICS 116
+#define ACCESS_ROBOTICS 117
+#define ACCESS_ORDNANCE 118
+#define ACCESS_XENOBIOLOGY 119
+
+/// - - - SERVICE 120-139 - - -
+///Service general access
+#define ACCESS_SERVICE 120
+#define ACCESS_THEATRE 121
+#define ACCESS_CHAPEL_OFFICE 122
+#define ACCESS_CREMATORIUM 123
+#define ACCESS_LIBRARY 124
+#define ACCESS_BAR 125
+#define ACCESS_KITCHEN 126
+#define ACCESS_HYDROPONICS 127
+///ID 128-134 currently unused
+/// SERVICE - JOBS
+///ID 135 reserved for HOP in case it changes
+#define ACCESS_JANITOR 136
+#define ACCESS_LAWYER 137
+///ID 138-139 currently unused
+
+/// - - - AWAY MISSIONS - - -
+/*For generic away-mission/ruin access. Why would normal crew have access to a long-abandoned derelict
 	or a 2000 year-old temple? */
-/// Away general facilities.
-#define ACCESS_AWAY_GENERAL 200
-/// Away maintenance
-#define ACCESS_AWAY_MAINT 201
-/// Away medical
-#define ACCESS_AWAY_MED 202
-/// Away security
-#define ACCESS_AWAY_SEC 203
-/// Away engineering
-#define ACCESS_AWAY_ENGINE 204
-///Away generic access
-#define ACCESS_AWAY_GENERIC1 205
-#define ACCESS_AWAY_GENERIC2 206
-#define ACCESS_AWAY_GENERIC3 207
-#define ACCESS_AWAY_GENERIC4 208
+#define ACCESS_AWAY_GENERAL 140
+#define ACCESS_AWAY_COMMAND 141
+#define ACCESS_AWAY_SEC 142
+#define ACCESS_AWAY_ENGINEERING 143
+#define ACCESS_AWAY_MEDICAL 144
+#define ACCESS_AWAY_SUPPLY 145
+#define ACCESS_AWAY_SCIENCE 146
+#define ACCESS_AWAY_MAINTENANCE 147
+///ID 148-149 currently unused
+#define ACCESS_AWAY_GENERIC1 150
+#define ACCESS_AWAY_GENERIC2 151
+#define ACCESS_AWAY_GENERIC3 152
+#define ACCESS_AWAY_GENERIC4 153
+///ID 154-159 currently unused
 
-	//Special, for anything that's basically internal
-#define ACCESS_BLOODCULT 250
-
+/// - - - MECH - - -
 	// Mech Access, allows maintanenace of internal components and altering keycard requirements.
-#define ACCESS_MECH_MINING 300
-#define ACCESS_MECH_MEDICAL 301
-#define ACCESS_MECH_SECURITY 302
-#define ACCESS_MECH_SCIENCE 303
-#define ACCESS_MECH_ENGINE 304
+#define ACCESS_MECH_MINING 170
+#define ACCESS_MECH_MEDICAL 171
+#define ACCESS_MECH_SECURITY 172
+#define ACCESS_MECH_SCIENCE 173
+#define ACCESS_MECH_ENGINE 174
+///ID 175-180 currently unused
+
+/// - - - ADMIN - - -
+/// Used for admin events and things of the like. Lots of extra space for more admin tools in the future
+/// General facilities. Centcom ferry.
+#define ACCESS_CENT_GENERAL 180
+#define ACCESS_CENT_THUNDER 181
+#define ACCESS_CENT_MEDICAL 182
+#define ACCESS_CENT_LIVING 183
+#define ACCESS_CENT_STORAGE 184
+#define ACCESS_CENT_TELEPORTER 185
+#define ACCESS_CENT_CAPTAIN 186
+#define ACCESS_CENT_BAR 187
+/// Special Ops. Captain's display case, Marauder and Seraph mechs.
+#define ACCESS_CENT_SPECOPS 188
+
+/// - - - ANTAGONIST - - -
+/// SYNDICATE
+#define ACCESS_SYNDICATE 300
+#define ACCESS_SYNDICATE_LEADER 301
+///ID 302-309 not currently used
+/// BLOODCULT
+	//Special, for anything that's basically internal
+#define ACCESS_BLOODCULT 310
+///ID 311-319 not currently used
+///ID 320-399 not currently used
+
+/// - - - END ACCESS IDS - - -
 
 /// A list of access levels that, when added to an ID card, will warn admins.
 #define ACCESS_ALERT_ADMINS list(ACCESS_CHANGE_IDS)
