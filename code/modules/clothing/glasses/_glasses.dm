@@ -307,7 +307,7 @@
 	name = "beer goggles"
 	icon_state = "sunhudbeer"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
-	clothing_traits = list(TRAIT_BOOZE_SLIDER, TRAIT_REAGENT_SCANNER)
+	clothing_traits = list(TRAIT_DRUNK_VISION)
 
 /obj/item/clothing/glasses/sunglasses/chemical
 	name = "science glasses"
