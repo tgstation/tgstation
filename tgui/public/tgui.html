@@ -219,13 +219,13 @@ var Byond = window.Byond = {};
   };
 
   Byond.subscribeTo = function (type, listener) {
-    listener = function (_type, payload) {
+    var _listener = function (_type, payload) {
       if (_type === type) {
         listener(payload);
       }
     };
-    window.update.listeners.push(listener);
-    window.update.flushQueue(listener);
+    window.update.flushQueue(_listener);
+    window.update.listeners.push(_listener);
   };
 
   // Asset loaders
@@ -391,7 +391,6 @@ window.onerror = function (msg, url, line, col, error) {
   var setFatalErrorGeometry = function () {
     Byond.winset(Byond.windowId, {
       titlebar: true,
-      size: '600x600',
       'is-visible': true,
       'can-resize': true,
     });

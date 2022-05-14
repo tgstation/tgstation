@@ -258,6 +258,9 @@ SUBSYSTEM_DEF(statpanels)
 	SIGNAL_HANDLER
 	SSstatpanels.cached_images -= REF(src)
 
+/// Stat panel window declaration
+/client/var/datum/tgui_window/stat_panel
+
 /// verbs that send information from the browser UI
 /client/verb/set_tab(tab as text|null)
 	set name = "Set Tab"
@@ -283,12 +286,6 @@ SUBSYSTEM_DEF(statpanels)
 	set hidden = TRUE
 
 	panel_tabs = list()
-
-/client/verb/panel_ready()
-	set name = "Panel Ready"
-	set hidden = TRUE
-
-	init_verbs()
 
 /client/verb/update_verbs()
 	set name = "Update Verbs"

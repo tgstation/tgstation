@@ -116,6 +116,19 @@
 /**
  * public
  *
+ * Reinitializes the panel with previous data used for initialization.
+ */
+/datum/tgui_window/proc/reinitialize()
+	initialize(
+		fancy = initial_fancy,
+		assets = initial_assets,
+		inline_html = initial_inline_html,
+		inline_js = initial_inline_js,
+		inline_css = initial_inline_css)
+
+/**
+ * public
+ *
  * Checks if the window is ready to receive data.
  *
  * return bool
@@ -334,12 +347,7 @@
 			client << link(href_list["url"])
 		if("cacheReloaded")
 			// Reinitialize
-			initialize(
-				fancy = initial_fancy,
-				assets = initial_assets,
-				inline_html = initial_inline_html,
-				inline_js = initial_inline_js,
-				inline_css = initial_inline_css)
+			reinitialize()
 			// Resend the assets
 			for(var/asset in sent_assets)
 				send_asset(asset)

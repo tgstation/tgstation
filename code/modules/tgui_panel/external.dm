@@ -5,8 +5,6 @@
 
 /client/var/datum/tgui_panel/tgui_panel
 
-/client/var/datum/tgui_window/stat_panel
-
 /**
  * tgui panel / chat troubleshooting verb
  */
