@@ -512,7 +512,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	if(!use(upgrade_amount))
 		return
 
-	machine_to_upgrade.AddComponent(/datum/component/machine_power_modifier, idle_power_multiplier, active_power_multiplier, TRAIT_METAL_HYDROGEN_UPGRADED, TRUE, list(type = upgrade_amount))
+	machine_to_upgrade.AddComponent(/datum/component/machine_power_modifier, idle_power_multiplier, active_power_multiplier, TRAIT_METAL_HYDROGEN_UPGRADED, list(type = upgrade_amount))
 	machine_to_upgrade.RefreshParts()
 
 /obj/item/stack/sheet/mineral/zaukerite
