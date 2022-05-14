@@ -146,9 +146,6 @@
 /obj/machinery/electrolyzer/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/electrolyzer/default_unfasten_wrench(mob/user, obj/item/wrench, time)
-	. = ..()
-
 /obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(istype(I, /obj/item/stock_parts/cell))
