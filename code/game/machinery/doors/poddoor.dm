@@ -211,3 +211,11 @@
 /obj/machinery/door/poddoor/massdriver_trash
 	name = "Disposals Launcher Bay Door"
 	id = MASSDRIVER_DISPOSALS
+
+/obj/machinery/door/poddoor/incinerator_engine_main
+	name = "turbine vent"
+	id = INCINERATOR_ENGINE_MAINVENT
+
+/obj/machinery/door/poddoor/incinerator_engine_aux
+	name = "combustion chamber vent"
+	id = INCINERATOR_ENGINE_AUXVENT

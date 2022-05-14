@@ -69,13 +69,13 @@
 #define POWER_PENALTY_THRESHOLD 5000 //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
 #define SEVERE_POWER_PENALTY_THRESHOLD 7000 //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
 #define CRITICAL_POWER_PENALTY_THRESHOLD 9000 //+1 bolt of electricity.
-#define HEAT_PENALTY_THRESHOLD 40 //Higher == Crystal safe operational temperature is higher.
+#define HEAT_PENALTY_THRESHOLD 80 //Higher == Crystal safe operational temperature is higher.
 #define DAMAGE_HARDCAP 0.002
 #define DAMAGE_INCREASE_MULTIPLIER 0.25
 
 
-#define THERMAL_RELEASE_MODIFIER 4 //Higher == less heat released during reaction, not to be confused with the above values
-#define PLASMA_RELEASE_MODIFIER 650 //Higher == less plasma released by reaction
+#define THERMAL_RELEASE_MODIFIER 3 //Higher == less heat released during reaction, not to be confused with the above values
+#define PLASMA_RELEASE_MODIFIER 400 //Higher == less plasma released by reaction
 #define OXYGEN_RELEASE_MODIFIER 340 //Higher == less oxygen released at high temperature/power
 
 #define REACTION_POWER_MODIFIER 0.65 //Higher == more overall power

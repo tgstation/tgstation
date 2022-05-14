@@ -76,3 +76,12 @@
 #define INCINERATOR_SYNDICATELAVA_AIRLOCK_CONTROLLER "syndicatelava_airlock_controller"
 #define INCINERATOR_SYNDICATELAVA_AIRLOCK_INTERIOR "syndicatelava_airlock_interior"
 #define INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR "syndicatelava_airlock_exterior"
+
+#define INCINERATOR_ENGINE_IGNITER "engine_igniter"
+#define INCINERATOR_ENGINE_MAINVENT "engine_mainvent"
+#define INCINERATOR_ENGINE_AUXVENT "engine_auxvent"
+#define INCINERATOR_ENGINE_DP_VENTPUMP "engine_airlock_pump"
+#define INCINERATOR_ENGINE_AIRLOCK_SENSOR "engine_airlock_sensor"
+#define INCINERATOR_ENGINE_AIRLOCK_CONTROLLER "engine_airlock_controller"
+#define INCINERATOR_ENGINE_AIRLOCK_INTERIOR "engine_airlock_interior"
+#define INCINERATOR_ENGINE_AIRLOCK_EXTERIOR "engine_airlock_exterior"

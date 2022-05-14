@@ -321,6 +321,14 @@
 	name = "Turbine Exterior Airlock"
 	id_tag = INCINERATOR_ATMOS_AIRLOCK_EXTERIOR
 
+/obj/machinery/door/airlock/public/glass/incinerator/engine_interior
+	name = "Engine Interior Airlock"
+	id_tag = INCINERATOR_ENGINE_AIRLOCK_INTERIOR
+
+/obj/machinery/door/airlock/public/glass/incinerator/engine_exterior
+	name = "Engine Exterior Airlock"
+	id_tag = INCINERATOR_ENGINE_AIRLOCK_EXTERIOR
+
 //////////////////////////////////
 /*
 	External Airlocks

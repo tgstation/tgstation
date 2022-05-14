@@ -287,8 +287,6 @@
 	var/radio_key = /obj/item/encryptionkey/headset_eng
 	///The engineering channel
 	var/engineering_channel = "Engineering"
-	///Ratio of the amount of gas going in the turbine
-	var/intake_regulator = 0.5
 
 	COOLDOWN_DECLARE(turbine_damage_alert)
 
@@ -551,7 +549,7 @@
 
 	var/intake_size = 1
 	if(regulated)
-		intake_size = intake_regulator
+		intake_size = 0.05
 
 	input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
 	var/output_mix_heat_capacity = output_mix.heat_capacity()

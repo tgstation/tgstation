@@ -71,8 +71,6 @@
 
 	data["can_turn_off"] = main_control.rpm < 1000
 
-	data["regulator"] = main_control.intake_regulator
-
 	return data
 
 /obj/machinery/computer/turbine_computer/ui_act(action, params)
@@ -90,11 +88,4 @@
 			main_control.toggle_power()
 			main_control.rpm = 0
 			main_control.produced_energy = 0
-			. = TRUE
-		if("regulate")
-			var/intake_size = text2num(params["regulate"])
-			var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core?.resolve()
-			if(intake_size == null || !main_control)
-				return
-			main_control.intake_regulator = clamp(intake_size, 0.01, 1)
 			. = TRUE

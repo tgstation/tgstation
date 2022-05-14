@@ -483,6 +483,29 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	mats_per_unit = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT)
 	material_type = /datum/material/metalhydrogen
 	merge_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	var/total_progress = 0
+
+/obj/item/stack/sheet/mineral/metal_hydrogen/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+
+/obj/item/stack/sheet/mineral/metal_hydrogen/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	if(exposed_temperature > 2000 && amount > 2)
+		return TRUE
+	return FALSE
+
+/obj/item/stack/sheet/mineral/metal_hydrogen/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	if(air.has_gas(/datum/gas/plasma, 150))
+		total_progress += clamp(air.gases[/datum/gas/plasma][MOLES] * 0.01, 0, 10)
+		air.gases[/datum/gas/plasma][MOLES] -= clamp(air.gases[/datum/gas/plasma][MOLES] * 0.01, 0, 10)
+
+	if(total_progress < 100)
+		return
+
+	total_progress = 0
+	if(!use(2))
+		return
+	new /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen(loc)
 
 /obj/item/stack/sheet/mineral/metal_hydrogen/get_main_recipes()
 	. = ..()
@@ -498,3 +521,13 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	mats_per_unit = list(/datum/material/zaukerite = MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/zaukerite
 	material_type = /datum/material/zaukerite
+
+/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen
+	name = "plasma coated metal hydrogen"
+	icon_state = "sheet-metalhydrogencoated"
+	inhand_icon_state = "sheet-metalhydrogencoated"
+	singular_name = "plasma coated metal hydrogen sheet"
+	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
+	point_value = 100
+	merge_type = /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen

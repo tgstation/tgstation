@@ -106,7 +106,26 @@
 			qdel(destabilizing_crystal)
 		return
 
+	if(istype(item, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen) && anomaly_event)
+		var/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen/coated_metal_h2 = item
+		var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
+		var/hypermatter_timer = old_time_left + coated_metal_h2.amount * 30 SECONDS
+		COOLDOWN_START(src, hypermatter_cooldown, hypermatter_timer)
+		hypermatter_state = TRUE
+		qdel(coated_metal_h2)
+		return
+
 	return ..()
+
+/obj/machinery/power/supermatter_crystal/Bumped(atom/movable/bumped_atom)
+	if(!istype(bumped_atom, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen) || !anomaly_event)
+		return ..()
+	var/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen/coated_metal_h2 = bumped_atom
+	var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
+	var/hypermatter_timer = old_time_left + coated_metal_h2.amount * 30 SECONDS
+	COOLDOWN_START(src, hypermatter_cooldown, hypermatter_timer)
+	hypermatter_state = TRUE
+	qdel(coated_metal_h2)
 
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)

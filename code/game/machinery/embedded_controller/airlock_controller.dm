@@ -270,6 +270,15 @@
 	sanitize_external = TRUE
 	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_engine
+	name = "Incinerator Access Console"
+	airpump_tag = INCINERATOR_ENGINE_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_ENGINE_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_ENGINE_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_ENGINE_AIRLOCK_INTERIOR
+	sanitize_external = TRUE
+	sensor_tag = INCINERATOR_ENGINE_AIRLOCK_SENSOR
+
 /obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
 	. = ..()
 	if(!mapload)

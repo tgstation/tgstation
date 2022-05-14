@@ -239,6 +239,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	id = INCINERATOR_SYNDICATELAVA_AUXVENT
 	req_access = list(ACCESS_SYNDICATE)
 
+/obj/machinery/button/door/incinerator_vent_engine_main
+	name = "turbine engine control"
+	id = INCINERATOR_ENGINE_MAINVENT
+	req_access = list(ACCESS_ENGINE)
+
+/obj/machinery/button/door/incinerator_vent_engine_aux
+	name = "combustion chamber engine control"
+	id = INCINERATOR_ENGINE_AUXVENT
+	req_access = list(ACCESS_ENGINE)
+
 /obj/machinery/button/massdriver
 	name = "mass driver button"
 	desc = "A remote control switch for a mass driver."
@@ -271,6 +281,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 
 /obj/machinery/button/ignition/incinerator/syndicatelava
 	id = INCINERATOR_SYNDICATELAVA_IGNITER
+
+/obj/machinery/button/ignition/incinerator/engine
+	id = INCINERATOR_ENGINE_IGNITER
 
 /obj/machinery/button/flasher
 	name = "flasher button"

@@ -266,6 +266,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/cascade_initiated = FALSE
 	///Reference to the warp effect
 	var/atom/movable/supermatter_warp_effect/warp
+	///Cooldown for the hypermatter state
+	COOLDOWN_DECLARE(hypermatter_cooldown)
+	///Are we in an hypermatter state?
+	var/hypermatter_state = FALSE
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
@@ -303,6 +307,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		move_resist = MOVE_FORCE_OVERPOWERING // Avoid being moved by statues or other memes
 
 	update_constants()
+
+	underlays += image(icon, loc, "crystal_base")
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	if(warp)

@@ -103,6 +103,11 @@
 	if(damage == 0 && has_destabilizing_crystal)
 		has_destabilizing_crystal = FALSE
 
+	if(COOLDOWN_FINISHED(src, hypermatter_cooldown))
+		hypermatter_state = FALSE
+
+	update_appearance()
+
 	return TRUE
 
 /obj/machinery/power/supermatter_crystal/proc/handle_crystal_sounds()
@@ -139,7 +144,8 @@
 	//((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 10)) * some number between 0.25 and knock your socks off / 150) * 0.25
 	//Heat and mols account for each other, a lot of hot mols are more damaging then a few
 	//Mols start to have a positive effect on damage after 350
-	damage = max(damage + (max(clamp(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
+	if(!hypermatter_state)
+		damage = max(damage + (max(clamp(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
 	//Power only starts affecting damage when it is above 5000
 	damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
 	//Molar count only starts affecting damage when it is above 1800
@@ -260,20 +266,22 @@
 		matter_power = max(matter_power - removed_matter, 0)
 
 	var/temp_factor = 50
-	if(gasmix_power_ratio > 0.8)
+	if(gasmix_power_ratio > 0.8 && !hypermatter_state)
 		//with a perfect gas mix, make the power more based on heat
 		icon_state = "[base_icon_state]_glow"
-	else
+	else if(!hypermatter_state)
 		//in normal mode, power is less effected by heat
 		temp_factor = 30
 		icon_state = base_icon_state
+	else
+		icon_state = "hypermatter"
 
 	//if there is more pluox and n2 then anything else, we receive no power increase from heat
 	if(power_changes)
 		power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
 	//Zaps around 2.5 seconds at 1500 MeV, limited to 0.5 from 4000 MeV and up
-	if(power && (last_power_zap + 4 SECONDS - (power * 0.001)) < world.time)
+	if(hypermatter_state && power && (last_power_zap + 1 SECONDS - (power * 0.001)) < world.time)
 		//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
@@ -308,11 +316,15 @@
 	//We can only emit so much heat, that being 57500
 	removed.temperature = max(TCMB, min(removed.temperature, 2500 * dynamic_heat_modifier))
 
+	var/moles_multiplier = 1
+	if(hypermatter_state)
+		moles_multiplier = 5
+
 	//Calculate how much gas to release
 	//Varies based on power and gas content
-	removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
+	removed.gases[/datum/gas/plasma][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0) * moles_multiplier
 	//Varies based on power, gas content, and heat
-	removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+	removed.gases[/datum/gas/oxygen][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0) * moles_multiplier
 
 	if(produces_gas)
 		removed.garbage_collect()

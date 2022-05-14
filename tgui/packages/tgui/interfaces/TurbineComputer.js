@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Box, Modal, ProgressBar, NumberInput } from '../components';
+import { Button, LabeledList, Section, Box, Modal, ProgressBar } from '../components';
 import { Window } from '../layouts';
 
 export const TurbineComputer = (props, context) => {
@@ -44,17 +44,6 @@ export const TurbineComputer = (props, context) => {
           {parts_not_connected}
           {parts_not_ready}
           <LabeledList>
-            <LabeledList.Item label="Intake Regulator">
-              <NumberInput
-                animated
-                value={parseFloat(data.regulator * 100)}
-                unit="%"
-                minValue={1}
-                maxValue={100}
-                onDrag={(e, value) => act('regulate', {
-                  regulate: (value * 0.01),
-                })} />
-            </LabeledList.Item>
             <LabeledList.Item label="Turbine Integrity">
               <ProgressBar
                 value={data.integrity}
