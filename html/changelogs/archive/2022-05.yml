@@ -637,3 +637,45 @@
   wesoda25:
   - qol: ethereals can now press the ghost button to cancel crystallization and permanently
       vacate their body
+2022-05-14:
+  Crumpaloo - Main Sprites, PestoVerde322 - Soda Cans, Vending Machines and Posters, ErdinyoBarboza - PR and Small Fixes:
+  - imageadd: All drinks and bottles have been resprited
+  Guillaume Prata:
+  - bugfix: Surgery tools will now give silver back when recycled.
+  - bugfix: Whistles are small now. Rejoice not having to carry a whistle that was
+      the size of a bucket while trying to be the referee for a match.
+  - balance: Tier 2 tools (Jaws of life/Laser scalpel/Experimental welder) are changed
+      from Small to Medium sized so now you can't carry 49 Jaws of life in your backpack.
+  JohnFulpWillard:
+  - bugfix: The Captain's PDA now works, and their cartridge now spawns in their locker.
+  - balance: CPU, Sensor and Identify hardwares have all been removed from modular
+      PCs, this means AtmoZphere can run regardless of hardware, and running programs/updating
+      your PDA info, is no longer tied to hardware either.
+  - bugfix: Cook's CQC now properly works in the assigned areas outside the kitchen.
+  - bugfix: Cooks now properly get their Cook mail instead of just money.
+  - bugfix: Mapping configs can now once again set job position slots (and fully remove
+      jobs from maps that don't support them).
+  - balance: Mini-fridges can now hold slightly more things.
+  - bugfix: The new cult altar can't be spammed anymore.
+  Melbert:
+  - bugfix: Fixes some wonky vote formatting
+  - balance: Central Command's agency of supernatural structures have made it much
+      less likely for you to come across ancient altars
+  SmArtKar:
+  - bugfix: You can no longer use staff of storms to cheese the hell out of lavaland
+      bosses
+  Son-of-Space:
+  - bugfix: Fixed several inconsistent or niche access requirements on TramStation
+  - qol: Replaced all access requirement vars on doors with mapping helpers on TramStation
+  - bugfix: KiloStation maintenance airlock in EVA is properly named
+  - bugfix: Fixed several inconsistent or niche access requirements on DeltaStation
+  - qol: Replaced all access requirement vars on doors with mapping helpers on DeltaStation
+  Sylphet:
+  - bugfix: removes extra air alarm in bar maint
+  dragomagol:
+  - code_imp: pod cloning logging is now in investigate botany
+  fippe:
+  - bugfix: Botany and Service firelocks in Icebox moved around to stop fire alarm
+      spam
+  magatsuchi:
+  - bugfix: fixes broken admin ticket links
