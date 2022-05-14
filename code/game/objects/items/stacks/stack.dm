@@ -474,7 +474,7 @@
 				if(!window_structure.fulltile)
 					continue
 			if(object.density || NO_BUILD & object.obj_flags)
-				builder.balloon_alert(builder, "there's something in the way!")
+				builder.balloon_alert(builder, "something is in the way!")
 				return FALSE
 
 	if(recipe.placement_checks & STACK_CHECK_CARDINALS)
