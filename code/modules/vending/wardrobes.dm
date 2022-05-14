@@ -273,7 +273,7 @@
 					/obj/item/storage/box/beanbag = 1,
 					/obj/item/clothing/suit/armor/vest/alt = 1,
 					/obj/item/circuitboard/machine/dish_drive = 1,
-					/obj/item/clothing/glasses/sunglasses/reagent = 1,
+					/obj/item/clothing/glasses/beer = 1,
 					/obj/item/clothing/neck/petcollar = 1,
 					/obj/item/storage/belt/bandolier = 1,
 					/obj/item/storage/dice/hazard = 1,
