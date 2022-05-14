@@ -54,6 +54,18 @@
 			if(!broken)
 				return  span_warning("It's falling apart!")
 
+/obj/structure/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!attacking_item.force)
+		return
+
+	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
+
+	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1)
+
+	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
+		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+	log_combat(user, src, "attacked", attacking_item)
+
 /obj/structure/rust_heretic_act()
 	take_damage(500, BRUTE, "melee", 1)
 

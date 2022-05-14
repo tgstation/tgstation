@@ -13,6 +13,9 @@
 	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
 	var/bare_wound_bonus = 0
 
+	/// A bonus or malus to an objects force when used against structures and robots. Should be larger on big brutish weapons and smaller on more finesse ones.
+	var/demolition_mod = 1
+
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
 

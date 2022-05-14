@@ -242,13 +242,16 @@
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")
 
-/mob/living/attacked_by(obj/item/I, mob/living/user)
-	send_item_attack_message(I, user)
-	if(I.force)
-		apply_damage(I.force, I.damtype)
-		if(I.damtype == BRUTE)
+/mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
+	send_item_attack_message(attacking_item, user)
+	if(attacking_item.force)
+		var/damage = attacking_item.force
+		if(mob_biotypes == MOB_ROBOTIC)
+			damage = (damage * attacking_item.demolition_mod)
+		apply_damage(damage, attacking_item.damtype)
+		if(attacking_item.damtype == BRUTE)
 			if(prob(33))
-				I.add_mob_blood(src)
+				attacking_item.add_mob_blood(src)
 				var/turf/location = get_turf(src)
 				add_splatter_floor(location)
 				if(get_dist(user, src) <= 1) //people with TK won't get smeared with blood
