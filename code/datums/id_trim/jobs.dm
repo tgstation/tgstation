@@ -230,8 +230,8 @@
 	assignment = "Detective"
 	trim_state = "trim_detective"
 	sechud_icon_state = SECHUD_DETECTIVE
-	extra_access = list()
-	minimal_access = list(ACCESS_BRIG, ACCESS_COURT, ACCESS_FORENSICS, ACCESS_BRIG_ENTRANCE,ACCESS_MAINT_TUNNELS, ACCESS_MORGUE,
+	extra_access = list(ACCESS_BRIG)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_COURT, ACCESS_FORENSICS, ACCESS_BRIG_ENTRANCE,ACCESS_MAINT_TUNNELS, ACCESS_MORGUE,
 					ACCESS_MECH_SECURITY, ACCESS_MINERAL_STOREROOM, ACCESS_WEAPONS)
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOS, ACCESS_CHANGE_IDS)
 	job = /datum/job/detective
