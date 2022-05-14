@@ -850,6 +850,10 @@
 	colour = "pink"
 	var/list/mobs = list()
 	var/faction_name
+	/// List of mob types that should NOT have this status effect applied to
+	var/list/mob_type_blacklist = list(
+		/mob/living/simple_animal/hostile/megafauna,
+	)
 
 /datum/status_effect/stabilized/pink/on_apply()
 	faction_name = REF(owner)
@@ -857,6 +861,8 @@
 
 /datum/status_effect/stabilized/pink/tick()
 	for(var/mob/living/simple_animal/M in view(7,get_turf(owner)))
+		if (is_type_in_list(M, mob_type_blacklist))
+			continue
 		if(!(M in mobs))
 			mobs += M
 			M.apply_status_effect(/datum/status_effect/pinkdamagetracker)
