@@ -4,6 +4,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 150
 	anchored = TRUE
+	drag_slowdown = 1.1
 
 	/// If set, the flora will have this as its name after being harvested. When the flora becomes harvestable again, it reverts to its initial(name)
 	var/harvested_name as text
@@ -26,6 +27,12 @@
 	var/harvest_verb = "harvest"
 	/// What should be added to harvest_verb depending on the context ("user harvest(s) the tree" / "user cut(s down) the tree")
 	var/harvest_verb_suffix = "s"
+	/// If the user is allowed to uproot the flora
+	var/can_uproot = TRUE
+	/// What tools are allowed to be used to uproot the flora
+	var/uprooting_tools = list(/obj/item/shovel)
+	var/uprooted = FALSE
+	var/previous_rotation = 0
 	
 	/// If false, the flora won't be able to be harvested at all. If it's true, go through checks normally to determine if the flora is able to be harvested
 	var/harvestable = TRUE
@@ -63,9 +70,34 @@
 	
 	required_tools = typecacheof(required_tools)
 	disallowed_tools = typecacheof(disallowed_tools)
+	uprooting_tools = typecacheof(uprooting_tools)
 
 /obj/structure/flora/attackby(obj/item/W, mob/living/user, params)
-	if(!can_harvest(user, W) || user.combat_mode)
+	if(user.combat_mode)
+		return ..()
+
+	if(can_uproot && is_type_in_typecache(W, uprooting_tools))
+		if(uprooted)
+			user.visible_message(span_notice("[user] starts to replant [src]..."),
+				span_notice("You start to replant [src]..."))
+		else
+			user.visible_message(span_notice("[user] starts to uproot [src]..."),
+				span_notice("You start to uproot [src]..."))
+		W.play_tool_sound(src, 50)
+		if(!do_after(user, harvest_time, src))
+			return
+		if(uprooted)
+			user.visible_message(span_notice("[user] replants [src]."),
+				span_notice("You replant [src]."))
+			replant(user)
+		else
+			user.visible_message(span_notice("[user] uproots [src]."),
+				span_notice("You uproot [src]."))
+			uproot(user)
+		W.play_tool_sound(src, 50)
+		return
+
+	if(!can_harvest(user, W))
 		return ..()
 	
 	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
@@ -218,6 +250,25 @@
 	desc = initial(desc)
 	harvested = FALSE
 
+/*
+ * Called after the user uproots the flora with a shovel.
+ */
+/obj/structure/flora/proc/uproot(mob/living/user)
+	anchored = FALSE
+	uprooted = TRUE
+	var/matrix/M = matrix(transform)
+	previous_rotation = pick(-90, 90)
+	transform = M.Turn(previous_rotation)
+
+/*
+ * Called after the user plants the flora back into the ground after uprooted
+ */
+/obj/structure/flora/proc/replant(mob/living/user)
+	anchored = initial(anchored)
+	uprooted = FALSE
+	var/matrix/M = matrix(transform)
+	transform = M.Turn(-previous_rotation)
+
 /*********
  * Trees *
  *********/
@@ -230,23 +281,28 @@
 	pixel_x = -16
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
+	drag_slowdown = 1.35
 	product_types = list(/obj/item/grown/log/tree = 1)
 	harvest_amount_low = 6
 	harvest_amount_high = 10
 	harvest_message_low = "You manage to gather a few logs from the tree."
 	harvest_message_med = "You manage to gather some logs from the tree."
-	harvest_message_high = "You harvest most of the wood from the tree."
+	harvest_message_high = "You manage to get most of the wood from the tree."
 	harvest_verb = "chop"
 	harvest_verb_suffix = "s down"
 	delete_on_harvest = TRUE
 	flora_flags = FLORA_HERBAL | FLORA_WOODEN
 
-/obj/structure/flora/tree/harvest(user)
+/obj/structure/flora/tree/harvest(mob/living/user)
 	. = ..()
 	var/turf/my_turf = get_turf(src)
 	playsound(my_turf, 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
 	var/obj/structure/flora/tree/stump/new_stump = new(my_turf)
 	new_stump.name = "[name] stump"
+
+/obj/structure/flora/tree/uproot(mob/living/user)
+	..()
+	playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
 
 /obj/structure/flora/tree/stump
 	name = "stump"
@@ -256,7 +312,12 @@
 	density = FALSE
 	delete_on_harvest = TRUE
 
-/obj/structure/flora/tree/stump/harvest(user)
+/obj/structure/flora/tree/stump/harvest(mob/living/user)
+	to_chat(user, span_notice("You manage to remove [src]."))
+	qdel(src)
+
+/obj/structure/flora/tree/stump/uproot(mob/living/user)
+	..()
 	to_chat(user, span_notice("You manage to remove [src]."))
 	qdel(src)
 
@@ -383,9 +444,9 @@
 
 /obj/structure/festivus
 	name = "festivus pole"
+	desc = "During last year's Feats of Strength the Research Director was able to suplex this passing immobile rod into a planter."
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "festivus_pole"
-	desc = "During last year's Feats of Strength the Research Director was able to suplex this passing immobile rod into a planter."
 
 /obj/structure/festivus/anchored
 	name = "suplexed rod"
@@ -399,8 +460,8 @@
 
 /obj/structure/flora/tree/palm
 	name = "palm tree"
-	icon = 'icons/misc/beach2.dmi'
 	desc = "A tree straight from the tropics."
+	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm1"
 	pixel_x = 0
 
@@ -425,6 +486,7 @@
 	harvest_message_low = "You uproot the grass from the ground, just for the fun of it."
 	harvest_message_med = "You gather up some grass."
 	harvest_message_high = "You gather up a handful grass."
+	can_uproot = TRUE
 	flora_flags = FLORA_HERBAL
 
 /obj/structure/flora/grass/brown
@@ -750,14 +812,16 @@
 	icon_state = "basalt1"
 	desc = "A volcanic rock. Pioneers used to ride these babies for miles."
 	icon = 'icons/obj/flora/rocks.dmi'
-	resistance_flags = FIRE_PROOF
 	density = TRUE
+	resistance_flags = FIRE_PROOF
 	product_types = list(/obj/item/stack/ore/glass/basalt = 1)
 	harvest_amount_low = 10
 	harvest_amount_high = 20
 	harvest_message_med = "You finish mining the rock."
 	harvest_verb = "mine"
 	flora_flags = FLORA_STONE
+	can_uproot = FALSE
+	delete_on_harvest = TRUE
 
 /obj/structure/flora/rock/style_2
 	icon_state = "basalt2"

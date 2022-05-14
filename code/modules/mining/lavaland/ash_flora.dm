@@ -100,6 +100,7 @@
 	harvest_time = 10
 	regrowth_time_low = 4800
 	regrowth_time_high = 7200
+	can_uproot = FALSE //Don't want 50 in one tile to decimate whoever dare step on the mass of cacti
 
 /obj/structure/flora/ash/cacti/Initialize(mapload)
 	. = ..()
