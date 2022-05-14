@@ -6567,8 +6567,10 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/power/rtg/old_station,
 /obj/structure/cable,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/template_noop,
-/area/template_noop)
+/area/solars/ancientstation/charlie/solars)
 "vX" = (
 /obj/structure/alien/weeds,
 /obj/structure/closet/crate/engineering{
