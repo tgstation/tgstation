@@ -475,16 +475,17 @@
 		to_chat(user, span_notice("You finish pumping the [name]."))
 		SEND_SIGNAL(src, COMSIG_VENT_UNCLOG)
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog(spawned_mob, maximum_spawns, spawn_delay) //Spawns new spawned_mob at every spawn_delay interval, with a maximum of maximum_spawns.
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog(datum/source, spawned_mob, maximum_spawns, spawn_delay) //Spawns new spawned_mob at every spawn_delay interval, with a maximum of maximum_spawns.
 	SIGNAL_HANDLER																								//Unclogs on plunge, and will not produce mobs while welded.
 	RegisterSignal(src, COMSIG_VENT_UNCLOG, .proc/unclog)
 	clogged = TRUE
 
 	while(clogged)
 		if(welded == FALSE)
-			var/mob/new_mob = new spawned_mob(get_turf(src))
-			src.visible_message(span_warning("[new_mob] crawls out of the [name]"))
-			SEND_SIGNAL(src, COMSIG_VENT_UNCLOG)
+			new spawned_mob(src.loc) //currently checking which of the two spawn methods works better
+			var/mob/new_mob = new spawned_mob(src.loc)
+			src.visible_message(span_warning("[new_mob] crawls out of the [name]!"))
+			SEND_SIGNAL(src, COMSIG_VENT_UNCLOG) //So it doesnt loop forever
 
 
 

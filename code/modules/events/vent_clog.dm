@@ -25,21 +25,23 @@
 	maximum_spawns = rand(3, 5)
 
 /datum/round_event/scrubber_clog/proc/get_scrubber()
-	var/list/scrubber_list
+	var/list/scrubber_list = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
 		var/turf/scrubber_turf = get_turf(scrubber)
-		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded)
+		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
 /datum/round_event/scrubber_clog/proc/get_mob() //picks from mob list of some sorts, use switches based on severity for which mob list to pick from
+	var/mob/selected_mob
 	switch(severity)
-		if("Minor") //Spawns nuisance mobs that are small enough to realistically clog a vent.
+		if("Minor") //Spawns harmless nuisance mobs.
 			var/list/minor_mobs = list(
 				/mob/living/simple_animal/mouse,
 				/mob/living/basic/cockroach
 				)
-			return pick(minor_mobs)
+			selected_mob = pick(minor_mobs)
+			return selected_mob
 
 		if("Major") //Spawns potentially dangerous mobs.
 			var/list/major_mobs = list(
@@ -47,16 +49,20 @@
 				/mob/living/simple_animal/hostile/bee,
 				/mob/living/simple_animal/hostile/giant_spider
 				)
-			return pick(major_mobs)
+			selected_mob = pick(major_mobs)
+			return selected_mob
 
-		if("Critical") //Higher impact mobs, but with a lower max spawn
+		if("Critical") //Higher impact mobs, but with a lower max spawn.
 			var/list/critical_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 				/mob/living/basic/cockroach/glockroach,
+				/mob/living/simple_animal/hostile/carp,
 				/mob/living/simple_animal/hostile/ooze,
 				/mob/living/simple_animal/hostile/bee/toxin
 				)
-			return pick(critical_mobs)
+			selected_mob = pick(critical_mobs)
+			return selected_mob
+
 
 			//Maybe add a "strange" severity with very low weight, and would provide the crew with a more useful/goofier variety of mobs?
 
@@ -84,3 +90,6 @@
 /datum/round_event/scrubber_clog/critical
 	severity = "Critical"
 	maximum_spawns = 2
+
+/datum/round_event/scrubber_clog/critical/announce()
+	priority_announce("Potentially hazardous lifesigns detected in the [get_area(scrubber)] ventilation network.", "Security Alert")
