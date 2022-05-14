@@ -71,6 +71,7 @@
 	icon_state = "e_cautery"
 	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
 	hitsound = 'sound/items/welder.ogg'
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	light_system = MOVABLE_LIGHT
 	light_range = 1
@@ -267,6 +268,7 @@
 	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver = 2000, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	light_system = MOVABLE_LIGHT
 	light_range = 1
@@ -314,6 +316,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium = 5000)
 	icon_state = "adv_retractor"
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 
 /obj/item/retractor/advanced/Initialize(mapload)
