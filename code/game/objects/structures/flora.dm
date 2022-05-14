@@ -4,10 +4,26 @@
 	anchored = TRUE
 	/// Flags for the flora to determine what kind of sound to play when it gets hit
 	var/flora_flags = NONE
+	
+	//Temporary variables to work off of, make this modular as if it were a component and document later
+	var/harvest = null
+	var/harvested_name as text
+	var/harvested_desc as text
+	var/harvest_amount_low = 1
+	var/harvest_amount_high = 3
+	var/harvest_message_low as text
+	var/harvest_message_med as text
+	var/harvest_message_high as text
+	var/harvest_time = 60
+	var/regrowth_time_low = 8 MINUTES
+	var/regrowth_time_high = 16 MINUTES
+	var/harvested = FALSE
+	var/needs_sharp_harvest = TRUE
+	var/delete_on_harvest = FALSE
 
 /obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(flora_flags == NONE)
-		return ..() //play generic metal thunk, tap or welder sound instead
+		return ..()
 	if(flora_flags & FLORA_HERBAL)
 		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE)
 	if(flora_flags & FLORA_WOODEN)
@@ -15,9 +31,62 @@
 	if(flora_flags & FLORA_STONE)
 		playsound(src, SFX_ROCK_TAP, 50, vary = FALSE)
 
-//////////////////////////
-//////////TREES///////////
-//////////////////////////
+/obj/structure/flora/proc/harvest(user)
+	if(harvested || !harvest)
+		return FALSE
+
+	var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
+	if(rand_harvested)
+		if(user)
+			var/msg = harvest_message_med
+			if(rand_harvested == harvest_amount_low && harvest_message_low)
+				msg = harvest_message_low
+			else if(rand_harvested == harvest_amount_high && harvest_message_high)
+				msg = harvest_message_high
+			to_chat(user, span_notice("[msg]"))
+		for(var/i in 1 to rand_harvested)
+			new harvest(get_turf(src))
+
+	if(harvested_name)
+		name = harvested_name
+	if(harvested_desc)
+		desc = harvested_desc
+	harvested = TRUE
+	addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
+	return TRUE
+
+/obj/structure/flora/proc/after_harvest(user)
+	if(delete_on_harvest)
+		qdel(src)
+
+/obj/structure/flora/proc/regrow()
+	name = initial(name)
+	desc = initial(desc)
+	harvested = FALSE
+
+/obj/structure/flora/attackby(obj/item/W, mob/user, params)
+	if(!harvested && needs_sharp_harvest && W.get_sharpness())
+		user.visible_message(span_notice("[user] starts to harvest from [src] with [W]."),span_notice("You begin to harvest from [src] with [W]."))
+		if(do_after(user, harvest_time, target = src))
+			if(harvest(user))
+				after_harvest(user)
+	else
+		return ..()
+
+/obj/structure/flora/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!harvested && !needs_sharp_harvest)
+		user.visible_message(span_notice("[user] starts to harvest from [src]."),span_notice("You begin to harvest from [src]."))
+		if(do_after(user, harvest_time, target = src))
+			if(harvest(user))
+				after_harvest(user)
+
+/*********
+ * Trees *
+ *********/
+//Can *you* speak their language?
 
 /obj/structure/flora/tree
 	name = "tree"
@@ -26,28 +95,24 @@
 	pixel_x = -16
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
+	harvest = /obj/item/grown/log/tree
+	harvest_amount_low = 6
+	harvest_amount_high = 10
+	harvest_message_low = "You manage to gather a few logs from the tree."
+	harvest_message_med = "You manage to gather some logs from the tree."
+	harvest_message_high = "You harvest most of the wood from the tree."
+	delete_on_harvest = TRUE
 	flora_flags = FLORA_HERBAL | FLORA_WOODEN
-	var/log_amount = 10
 
-/obj/structure/flora/tree/attackby(obj/item/attacking_item, mob/user, params)
-	if(!log_amount || flags_1 & NODECONSTRUCT_1)
-		return ..()
-	if(!attacking_item.get_sharpness() || attacking_item.force <= 0)
-		return ..()
-	var/my_turf = get_turf(src)
-	if(attacking_item.hitsound)
-		playsound(my_turf, attacking_item.hitsound, 100, FALSE, FALSE)
-	user.visible_message(span_notice("[user] begins to cut down [src] with [attacking_item]."),span_notice("You begin to cut down [src] with [attacking_item]."), span_hear("You hear sawing."))
-	if(!do_after(user, 1000/attacking_item.force, target = src)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
-		return
-	user.visible_message(span_notice("[user] fells [src] with [attacking_item]."),span_notice("You fell [src] with [attacking_item]."), span_hear("You hear the sound of a tree falling."))
+/obj/structure/flora/tree/harvest(user)
+	if(!..())
+		return FALSE
+	var/turf/my_turf = get_turf(src)
 	playsound(my_turf, 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
-	user.log_message("cut down [src] at [AREACOORD(src)]", LOG_ATTACK)
-	for(var/i=1 to log_amount)
-		new /obj/item/grown/log/tree(drop_location())
 	var/obj/structure/flora/stump/new_stump = new(my_turf)
 	new_stump.name = "[name] stump"
 	qdel(src)
+	return TRUE
 
 /obj/structure/flora/stump
 	name = "stump"
@@ -56,25 +121,32 @@
 	icon_state = "tree_stump"
 	density = FALSE
 	pixel_x = -16
+	harvest = /obj/item/grown/log/tree
+	harvest_amount_low = 1
+	harvest_amount_high = 1
+	harvest_message_low = "You manage to cut up the stump from the ground, somehow."
+	delete_on_harvest = TRUE
 	flora_flags = FLORA_WOODEN
 
-/obj/structure/flora/tree/dead/style_random
+/obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	desc = "A dead tree. How it died, you know not."
 	icon_state = "tree_1"
-	flora_flags = NONE
+	harvest_amount_low = 2
+	harvest_amount_high = 6
+	flora_flags = FLORA_WOODEN
 
-/obj/structure/flora/tree/dead/style_random/style_2
+/obj/structure/flora/tree/dead/style_2
 	icon_state = "tree_2"
-/obj/structure/flora/tree/dead/style_random/style_3
+/obj/structure/flora/tree/dead/style_3
 	icon_state = "tree_3"
-/obj/structure/flora/tree/dead/style_random/style_4
+/obj/structure/flora/tree/dead/style_4
 	icon_state = "tree_4"
-/obj/structure/flora/tree/dead/style_random/style_5
+/obj/structure/flora/tree/dead/style_5
 	icon_state = "tree_5"
-/obj/structure/flora/tree/dead/style_random/style_6
+/obj/structure/flora/tree/dead/style_6
 	icon_state = "tree_6"
-/obj/structure/flora/tree/dead/style_random/style_random/Initialize(mapload)
+/obj/structure/flora/tree/dead/style_random/Initialize(mapload)
 	. = ..()
 	icon_state = "tree_[rand(1, 6)]"
 
@@ -214,6 +286,14 @@
 	desc = "A patch of overgrown grass."
 	icon = 'icons/obj/flora/snowflora.dmi'
 	gender = PLURAL //"this is grass" not "this is a grass"
+	harvest = /obj/item/food/grown/grass
+	harvest_amount_low = 0
+	harvest_amount_high = 2
+	harvest_message_low = "You uproot the grass from the ground, just for the fun of it."
+	harvest_message_med = "You gather up some grass."
+	harvest_message_high = "You gather up a handfull grass."
+	needs_sharp_harvest = FALSE
+	delete_on_harvest = TRUE
 	flora_flags = FLORA_HERBAL
 
 /obj/structure/flora/grass/brown
@@ -541,11 +621,11 @@
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE
+	harvest = /obj/item/stack/ore/glass/basalt
+	harvest_amount_low = 10
+	harvest_amount_high = 20
+	harvest_message_med = "You finish mining the rock."
 	flora_flags = FLORA_STONE
-	/// Itemstack that is dropped when a rock is mined with a pickaxe
-	var/obj/item/stack/mineResult = /obj/item/stack/ore/glass/basalt
-	/// Amount of the itemstack to drop
-	var/mineAmount = 20
 
 /obj/structure/flora/rock/style_2
 	icon_state = "basalt2"
@@ -555,24 +635,13 @@
 	. = ..()
 	icon_state = "basalt[rand(1, 3)]"
 
-/obj/structure/flora/rock/attackby(obj/item/attacking_item, mob/user, params)
-	if(!mineResult || attacking_item.tool_behaviour != TOOL_MINING)
-		return ..()
-	if(flags_1 & NODECONSTRUCT_1)
-		return ..()
-	to_chat(user, span_notice("You start mining..."))
-	if(!attacking_item.use_tool(src, user, 40, volume=50))
-		return
-	to_chat(user, span_notice("You finish mining the rock."))
-	if(mineResult && mineAmount)
-		new mineResult(loc, mineAmount)
-	SSblackbox.record_feedback("tally", "pick_used_mining", 1, attacking_item.type)
-	qdel(src)
-
 /obj/structure/flora/rock/pile
 	name = "rock pile"
 	desc = "A pile of rocks."
 	icon_state = "lavarocks1"
+	harvest_amount_low = 5
+	harvest_amount_high = 10
+	harvest_message_med = "You finish mining the pile of rocks."
 	density = FALSE
 
 /obj/structure/flora/rock/pile/style_2
@@ -604,6 +673,8 @@
 	icon = 'icons/obj/flora/largejungleflora.dmi'
 	pixel_x = -16
 	pixel_y = -16
+	harvest_amount_low = 9
+	harvest_amount_high = 13
 
 /obj/structure/flora/rock/pile/jungle/large/style_2
 	icon_state = "rocks2"

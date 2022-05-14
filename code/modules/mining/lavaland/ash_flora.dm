@@ -2,27 +2,20 @@
 //This includes: The structures, their produce, their seeds and the crafting recipe for the mushroom bowl
 
 /obj/structure/flora/ash
-	gender = PLURAL
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER //sporangiums up don't shoot
-	icon = 'icons/obj/lavaland/ash_flora.dmi'
-	icon_state = "l_mushroom"
 	name = "large mushrooms"
 	desc = "A number of large mushrooms, covered in a faint layer of ash and what can only be spores."
+	icon = 'icons/obj/lavaland/ash_flora.dmi'
+	icon_state = "l_mushroom"
+	gender = PLURAL
+	layer = PROJECTILE_HIT_THRESHHOLD_LAYER //sporangiums up don't shoot
+	harvest = /obj/item/food/grown/ash_flora/shavings
+	harvested_name = "shortened mushrooms"
+	harvested_desc = "Some quickly regrowing mushrooms, formerly known to be quite large."
+	harvest_message_low = "You pick a mushroom, but fail to collect many shavings from its cap."
+	harvest_message_med = "You pick a mushroom, carefully collecting the shavings from its cap."
+	harvest_message_high = "You harvest and collect shavings from several mushroom caps."
 	flora_flags = FLORA_HERBAL //not really accurate but what sound do hit mushrooms make anyway
-	var/harvested_name = "shortened mushrooms"
-	var/harvested_desc = "Some quickly regrowing mushrooms, formerly known to be quite large."
-	var/needs_sharp_harvest = TRUE
-	var/harvest = /obj/item/food/grown/ash_flora/shavings
-	var/harvest_amount_low = 1
-	var/harvest_amount_high = 3
-	var/harvest_time = 60
-	var/harvest_message_low = "You pick a mushroom, but fail to collect many shavings from its cap."
-	var/harvest_message_med = "You pick a mushroom, carefully collecting the shavings from its cap."
-	var/harvest_message_high = "You harvest and collect shavings from several mushroom caps."
-	var/harvested = FALSE
 	var/base_icon
-	var/regrowth_time_low = 8 MINUTES
-	var/regrowth_time_high = 16 MINUTES
 	var/number_of_variants = 4
 
 /obj/structure/flora/ash/Initialize(mapload)
@@ -30,51 +23,15 @@
 	base_icon = "[icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon
 
-/obj/structure/flora/ash/proc/harvest(user)
-	if(harvested)
+/obj/structure/flora/ash/harvest(user)
+	if(!..())
 		return FALSE
-
-	var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
-	if(rand_harvested)
-		if(user)
-			var/msg = harvest_message_med
-			if(rand_harvested == harvest_amount_low)
-				msg = harvest_message_low
-			else if(rand_harvested == harvest_amount_high)
-				msg = harvest_message_high
-			to_chat(user, span_notice("[msg]"))
-		for(var/i in 1 to rand_harvested)
-			new harvest(get_turf(src))
-
 	icon_state = "[base_icon]p"
-	name = harvested_name
-	desc = harvested_desc
-	harvested = TRUE
-	addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
 	return TRUE
 
-/obj/structure/flora/ash/proc/regrow()
+/obj/structure/flora/ash/regrow()
+	..()
 	icon_state = base_icon
-	name = initial(name)
-	desc = initial(desc)
-	harvested = FALSE
-
-/obj/structure/flora/ash/attackby(obj/item/W, mob/user, params)
-	if(!harvested && needs_sharp_harvest && W.get_sharpness())
-		user.visible_message(span_notice("[user] starts to harvest from [src] with [W]."),span_notice("You begin to harvest from [src] with [W]."))
-		if(do_after(user, harvest_time, target = src))
-			harvest(user)
-	else
-		return ..()
-
-/obj/structure/flora/ash/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if(!harvested && !needs_sharp_harvest)
-		user.visible_message(span_notice("[user] starts to harvest from [src]."),span_notice("You begin to harvest from [src]."))
-		if(do_after(user, harvest_time, target = src))
-			harvest(user)
 
 /obj/structure/flora/ash/tall_shroom //exists only so that the spawning check doesn't allow these spawning near other things
 	regrowth_time_low = 4200
