@@ -127,3 +127,28 @@
 
 	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
 	GLOB.colored_assistant = new new_colored_assistant_type
+
+/datum/station_trait/cargorilla
+	name = "Cargo Gorilla"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
+
+/datum/station_trait/cargorilla/New()
+	. = ..()
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/replace_cargo)
+
+/datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/simple_animal/sloth/cargo_sloth = locate(/mob/living/simple_animal/sloth/citrus) || locate(/mob/living/simple_animal/sloth/paperwork)
+	if(!cargo_sloth)
+		return
+
+	var/mob/living/simple_animal/hostile/gorilla/cargo_domestic/cargorilla = new(cargo_sloth.loc)
+	cargorilla.name = cargo_sloth.name
+	qdel(cargo_sloth)
+
+	var/obj/vehicle/sealed/mecha/working/ripley/cargo/cargo_mech = locate()
+	if(cargo_mech)
+		qdel(cargo_mech)
