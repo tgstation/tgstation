@@ -48,23 +48,29 @@
 		/obj/item/storage/medkit/toxin = 35,
 		/obj/item/storage/medkit/brute = 27,
 		/obj/item/storage/medkit/fire = 27,
-		/obj/item/grenade/clusterbuster/smoke = 15,
-		/obj/item/clothing/under/chameleon = 13,
 		/obj/item/storage/toolbox/syndicate = 12,
 		/obj/item/borg/upgrade/ddrill = 3,
+		/obj/item/knife/butcher = 14,
+		/obj/item/clothing/glasses/night = 10,
+		/obj/item/pickaxe/drill/diamonddrill = 6,
 	)
 
 /obj/effect/spawner/random/exotic/antag_gear
 	name = "antag gear"
 	icon_state = "esword"
 	loot = list(
-		/obj/item/book/granter/spell/summonitem = 20,
+
+		/obj/item/clothing/glasses/science/night = 15,
 		/obj/item/shield/riot = 12,
-		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 10,
-		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 10,
-		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 10,
-		/obj/item/stack/sheet/mineral/gold{amount = 15} = 10,
-		/obj/item/pickaxe/drill/diamonddrill = 6,
+		/obj/item/stack/sheet/mineral/diamond{amount = 15} = 5,
+		/obj/item/stack/sheet/mineral/uranium{amount = 15} = 5,
+		/obj/item/stack/sheet/mineral/plasma{amount = 15} = 5,
+		/obj/item/stack/sheet/mineral/gold{amount = 15} = 5,
+		/obj/item/grenade/clusterbuster/smoke = 15,
+		/obj/item/clothing/under/chameleon = 13,
+		/obj/item/knife/combat = 10,
+		/obj/item/implantcase/deathrattle = 5,
+		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 1,
 	)
 
 /obj/effect/spawner/random/exotic/snow_gear
