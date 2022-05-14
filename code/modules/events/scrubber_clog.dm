@@ -10,9 +10,9 @@
 	startWhen = 5
 	var/obj/scrubber //Scrubber selected for the event
 	var/mob/spawned_mob = /mob/living/basic/cockroach //What mob will be spawned
-	var/severity = "Minor" //Severity of the event (how dangerous are the spawned mobs, and it what quantity)
-	var/maximum_spawns //Cap on the number of spawned mobs that can be alive at once
-	var/spawn_delay = 15 SECONDS //Interval between mob spawns
+	var/severity = "Minor" //Severity of the event (how dangerous are the spawned mobs, and at what quantity)
+	var/maximum_spawns = 3 //Cap on the number of spawned mobs that can be alive at once
+	var/spawn_delay = 10 SECONDS //Interval between mob spawns
 
 /datum/round_event/scrubber_clog/announce()
 	priority_announce("[severity] biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Custodial Notification")
@@ -23,6 +23,7 @@
 		CRASH("Unable to find suitable scrubber.")
 	spawned_mob = get_mob()
 	maximum_spawns = rand(3, 5)
+	spawn_delay = rand(10 SECONDS, 15 SECONDS)
 
 /datum/round_event/scrubber_clog/proc/get_scrubber()
 	var/list/scrubber_list = list()
@@ -32,12 +33,13 @@
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
-/datum/round_event/scrubber_clog/proc/get_mob() //picks from mob list of some sorts, use switches based on severity for which mob list to pick from
+/datum/round_event/scrubber_clog/proc/get_mob()
 	switch(severity)
 		if("Minor") //Spawns harmless nuisance mobs.
 			var/list/minor_mobs = list(
 				/mob/living/simple_animal/mouse,
-				/mob/living/basic/cockroach
+				/mob/living/basic/cockroach,
+				/mob/living/simple_animal/butterfly
 				)
 			return pick(minor_mobs)
 
@@ -51,16 +53,21 @@
 
 		if("Critical") //Higher impact mobs, but with a lower max spawn.
 			var/list/critical_mobs = list(
-				/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
-				/mob/living/basic/cockroach/glockroach,
 				/mob/living/simple_animal/hostile/carp,
-				/mob/living/simple_animal/hostile/ooze,
-				/mob/living/simple_animal/hostile/bee/toxin
+				/mob/living/simple_animal/hostile/bee/toxin,
+				/mob/living/simple_animal/hostile/mushroom //I'm PRETTY sure these guys are hostile to crew? Maybe not?
 				)
 			return pick(critical_mobs)
 
-			//Maybe add a "strange" severity with very low weight, and would provide the crew with a more useful/goofier variety of mobs?
-
+		if("Strange") //Useful or silly mobs. Still hazardous. Very low weight. Also on the chopping block for removal if need be.
+			var/list/strange_mobs = list(
+				/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
+				/mob/living/basic/cockroach/glockroach,
+				/mob/living/simple_animal/hostile/bear,
+				/mob/living/simple_animal/pet/gondola,
+				/mob/living/simple_animal/hostile/lightgeist
+				)
+			return pick(strange_mobs)
 
 /datum/round_event/scrubber_clog/start()
 	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG, spawned_mob, maximum_spawns, spawn_delay)
@@ -75,16 +82,40 @@
 /datum/round_event/scrubber_clog/major
 	severity = "Major"
 
+/datum/round_event/scrubber_clog/major/setup()
+	. = ..()
+	maximum_spawns = rand(2,4)
+	spawn_delay = rand(15 SECONDS,20 SECONDS)
+
+
 /datum/round_event_control/scrubber_clog/critical
 	name = "Critical Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog/critical
 	weight = 8 //Subject to change
+	min_players = 15
 	max_occurrences = 1
 	earliest_start = 25 MINUTES
 
 /datum/round_event/scrubber_clog/critical
 	severity = "Critical"
-	maximum_spawns = 2
+
+/datum/round_event/scrubber_clog/critical/setup()
+	. = ..()
+	maximum_spawns = 3
+	spawn_delay = rand(15 SECONDS, 25 SECONDS)
+
 
 /datum/round_event/scrubber_clog/critical/announce()
 	priority_announce("Potentially hazardous lifesigns detected in the [get_area(scrubber)] ventilation network.", "Security Alert")
+
+/datum/round_event_control/scrubber_clog/strange
+	name = "Strange Scrubber Clog"
+	typepath = /datum/round_event/scrubber_clog/strange
+	weight = 5 //Subject to change
+	max_occurrences = 1
+
+/datum/round_event/scrubber_clog/strange
+	severity = "Strange"
+
+/datum/round_event/scrubber_clog/strange/announce()
+	priority_announce("Unusual lifesign readings detected in the [get_area(scrubber)] ventilation network.", "Lifesign Alert")
