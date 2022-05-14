@@ -28219,6 +28219,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "jDN" = (
@@ -29185,6 +29186,7 @@
 /area/station/engineering/atmos)
 "jUD" = (
 /obj/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "jUF" = (
@@ -32971,7 +32973,7 @@
 	departmentType = 5;
 	name = "AI Requests Console"
 	},
-/obj/structure/cable,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "lgt" = (
@@ -33867,6 +33869,7 @@
 	dir = 9;
 	network = list("aicore")
 	},
+/obj/structure/cable/multilayer,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "lvi" = (
@@ -34780,7 +34783,7 @@
 	c_tag = "Secure - AI Upper External North";
 	network = list("aicore")
 	},
-/obj/structure/cable,
+/obj/structure/cable/multilayer/connected,
 /turf/open/floor/engine/hull/reinforced,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "lKI" = (
@@ -45146,6 +45149,7 @@
 	},
 /obj/machinery/holopad/secure,
 /obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/open/floor/glass/reinforced,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "psc" = (
@@ -58556,7 +58560,6 @@
 	id = "AI";
 	pixel_y = 26
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "tYZ" = (
@@ -62418,7 +62421,7 @@
 "vlZ" = (
 /obj/machinery/porta_turret/ai,
 /obj/machinery/light/directional/north,
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "vmd" = (
@@ -65087,7 +65090,6 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "wkg" = (
@@ -65703,7 +65705,7 @@
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "wvH" = (
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "wvK" = (
@@ -66436,7 +66438,8 @@
 /area/station/cargo/drone_bay)
 "wKf" = (
 /obj/structure/cable,
-/turf/open/floor/circuit,
+/obj/structure/cable/layer1,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "wKp" = (
 /obj/machinery/door/airlock/external{
@@ -69503,7 +69506,7 @@
 /obj/structure/showcase/cyborg/old{
 	pixel_y = 20
 	},
-/obj/structure/cable,
+/obj/structure/cable/layer1,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "xOL" = (
@@ -183714,7 +183717,7 @@ wvH
 vlZ
 prX
 jDq
-myx
+wKf
 gky
 xPX
 sQo
@@ -184488,7 +184491,7 @@ uoZ
 jZu
 dbJ
 wjW
-wKf
+rUY
 tYS
 rUY
 gbV
