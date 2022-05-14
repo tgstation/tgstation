@@ -24,6 +24,25 @@
 	var/delete_on_harvest = FALSE
 	var/harvest_message_true_thresholds = FALSE	//Whether or not to divide the messages into thirds depending on how much was harvested
 
+/obj/structure/flora/attackby(obj/item/W, mob/user, params)
+	if(!harvested && needs_sharp_harvest && W.get_sharpness())
+		user.visible_message(span_notice("[user] starts to harvest from [src] with [W]."),span_notice("You begin to harvest from [src] with [W]."))
+		if(do_after(user, harvest_time, target = src))
+			if(harvest(user))
+				after_harvest(user)
+	else
+		return ..()
+
+/obj/structure/flora/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!harvested && !needs_sharp_harvest)
+		user.visible_message(span_notice("[user] starts to harvest from [src]."),span_notice("You begin to harvest from [src]."))
+		if(do_after(user, harvest_time, target = src))
+			if(harvest(user))
+				after_harvest(user)
+
 /obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(flora_flags == NONE)
 		return ..()
@@ -34,6 +53,10 @@
 	if(flora_flags & FLORA_STONE)
 		playsound(src, SFX_ROCK_TAP, 50, vary = FALSE)
 
+/* 
+ * A helper proc for getting a random amount of products, associated with the flora's product list.
+ * Returns: A list where each value is (product_type = amount_of_products)
+ */
 /obj/structure/flora/proc/get_products_list()
 	. = list()
 	if(!LAZYLEN(product_types))
@@ -46,6 +69,12 @@
 			.[chosen_product] = 0
 		.[chosen_product]++
 
+/*
+ * This gets called after a mob tries to harvest this flora with the correct tool.
+ * It displays a flavortext message to whoever's harvesting this flora, then creates new products depending on the flora's product list.
+ * Also renames the flora if harvested_name or harvested_desc is set in the variables
+ * Returns: FALSE if nothing was made, otherwise a list of created products
+ */
 /obj/structure/flora/proc/harvest(user)
 	. = FALSE
 	if(harvested && !LAZYLEN(product_types))
@@ -60,6 +89,7 @@
 
 	//This loop creates new products on the turf of our flora, but checks if it's an item stack
 	//If it *is* an item stack, we don't want to go through 50 different iterations of a new object where it just gets qdeleted after the first
+	. = list()
 	for(var/product in products_to_create)
 		var/amount_to_create = products_to_create[product]
 		products_created += amount_to_create
@@ -68,9 +98,10 @@
 			while(product_left > 0)
 				var/obj/item/stack/new_stack = new product(turf_below)
 				product_left -= new_stack.amount = min(product_left, new_stack.max_amount)
+				. += new_stack
 		else
 			for(var/iteration in 1 to amount_to_create)
-				new product(turf_below)
+				. += new product(turf_below)
 
 	//This bit of code determines what should be shown to the user when this is harvested
 	var/message = harvest_message_med || harvest_message_high || harvest_message_low
@@ -90,7 +121,6 @@
 			//[   ][***][   ] use the default message if none of the above applies
 
 		to_chat(user, span_notice(message))
-		
 
 	if(harvested_name)
 		name = harvested_name
@@ -99,7 +129,6 @@
 	harvested = TRUE
 	if(!delete_on_harvest)
 		addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
-	return TRUE
 
 /obj/structure/flora/proc/after_harvest(user)
 	if(delete_on_harvest)
@@ -109,25 +138,6 @@
 	name = initial(name)
 	desc = initial(desc)
 	harvested = FALSE
-
-/obj/structure/flora/attackby(obj/item/W, mob/user, params)
-	if(!harvested && needs_sharp_harvest && W.get_sharpness())
-		user.visible_message(span_notice("[user] starts to harvest from [src] with [W]."),span_notice("You begin to harvest from [src] with [W]."))
-		if(do_after(user, harvest_time, target = src))
-			if(harvest(user))
-				after_harvest(user)
-	else
-		return ..()
-
-/obj/structure/flora/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if(!harvested && !needs_sharp_harvest)
-		user.visible_message(span_notice("[user] starts to harvest from [src]."),span_notice("You begin to harvest from [src]."))
-		if(do_after(user, harvest_time, target = src))
-			if(harvest(user))
-				after_harvest(user)
 
 /*********
  * Trees *
