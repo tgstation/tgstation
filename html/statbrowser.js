@@ -1,250 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Stat Browser</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="Cache-Control" content="max-age=15; must-revalidate" />
-<link id="goonStyle" rel="stylesheet" type="text/css" href="browserOutput_white.css" media="all" />
-<style>
-	body {
-		font-family: Verdana, Geneva, Tahoma, sans-serif;
-		font-size: 12px !important;
-		margin: 0 !important;
-		padding: 0 !important;
-		overflow-x: hidden;
-		overflow-y: scroll;
-	}
-
-	body.dark {
-		background-color: #131313;
-		color: #b2c4dd;
-		scrollbar-base-color: #1c1c1c;
-		scrollbar-face-color: #3b3b3b;
-		scrollbar-3dlight-color: #252525;
-		scrollbar-highlight-color: #252525;
-		scrollbar-track-color: #1c1c1c;
-		scrollbar-arrow-color: #929292;
-		scrollbar-shadow-color: #3b3b3b;
-	}
-
-	#menu {
-		background-color: #F0F0F0;
-		position: fixed;
-		width: 100%;
-		z-index: 100;
-	}
-
-	.dark #menu {
-		background-color: #202020;
-	}
-
-	#statcontent {
-		padding: 7px 7px 7px 7px;
-	}
-
-	a {
-		color: black;
-		text-decoration: none
-	}
-
-	.dark a {
-		color: #b2c4dd;
-	}
-
-	a:hover, .dark a:hover {
-		text-decoration: underline;
-	}
-
-	ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		background-color: #333;
-	}
-
-	li {
-		float: left;
-	}
-
-	li a {
-		display: block;
-		color: white;
-		text-align: center;
-		padding: 14px 16px;
-		text-decoration: none;
-	}
-
-	li a:hover:not(.active) {
-		background-color: #111;
-	}
-
-	.button-container {
-		display: inline-flex;
-		flex-wrap: wrap-reverse;
-		flex-direction: row;
-		align-items: flex-start;
-		overflow-x: hidden;
-		white-space: pre-wrap;
-		padding: 0 4px;
-	}
-
-	.button {
-		background-color: #dfdfdf;
-		border: 1px solid #cecece;
-		border-bottom-width: 2px;
-		color: rgba(0, 0, 0, 0.7);
-		padding: 6px 4px 4px;
-		text-align: center;
-		text-decoration: none;
-		font-size: 12px;
-		margin: 0;
-		cursor: pointer;
-		transition-duration: 100ms;
-		order: 3;
-		min-width: 40px;
-	}
-
-	.dark button {
-		background-color: #222222;
-		border-color: #343434;
-		color: rgba(255, 255, 255, 0.5);
-	}
-
-	.button:hover {
-		background-color: #ececec;
-		transition-duration: 0;
-	}
-
-	.dark button:hover {
-		background-color:  #2e2e2e;
-	}
-
-	.button:active, .button.active {
-		background-color: #ffffff;
-		color: black;
-		border-top-color: #cecece;
-		border-left-color: #cecece;
-		border-right-color: #cecece;
-		border-bottom-color: #ffffff;
-	}
-
-	.dark .button:active, .dark .button.active {
-		background-color: #444444;
-		color: white;
-		border-top-color: #343434;
-		border-left-color: #343434;
-		border-right-color: #343434;
-		border-bottom-color: #ffffff;
-	}
-
-	.grid-container {
-		margin: -2px;
-		margin-right: -15px;
-	}
-
-	.grid-item {
-		position: relative;
-		display: inline-block;
-		width: 100%;
-		box-sizing: border-box;
-		overflow: visible;
-		padding: 3px 2px;
-		text-decoration: none;
-	}
-
-	@media only screen and (min-width: 300px) {
-		.grid-item {
-			width: 50%;
-		}
-	}
-
-	@media only screen and (min-width: 430px) {
-		.grid-item {
-			width: 33%;
-		}
-	}
-
-	@media only screen and (min-width: 560px) {
-		.grid-item {
-			width: 25%;
-		}
-	}
-
-	@media only screen and (min-width: 770px) {
-		.grid-item {
-			width: 20%;
-		}
-	}
-
-	.grid-item:hover {
-		z-index: 1;
-	}
-
-	.grid-item:hover .grid-item-text {
-		width: auto;
-		text-decoration: underline;
-	}
-
-	.grid-item-text {
-		display: inline-block;
-		width: 100%;
-		background-color: #ffffff;
-		margin: 0 -6px;
-		padding: 0 6px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		pointer-events: none;
-	}
-
-	.dark .grid-item-text {
-		background-color: #131313;
-	}
-
-	.link {
-		display: inline;
-		background: none;
-		border: none;
-		padding: 7px 14px;
-		color: black;
-		text-decoration: none;
-		cursor: pointer;
-		font-size: 13px;
-		margin: 2px 2px;
-	}
-
-	.dark .link {
-		color: #abc6ec;
-	}
-
-	.link:hover {
-		text-decoration: underline;
-	}
-
-	img {
-		-ms-interpolation-mode: nearest-neighbor;
-		image-rendering: pixelated;
-	}
-
-	.interview_panel_controls, .interview_panel_stats {
-		margin-bottom: 10px;
-	}
-</style>
-</head>
-<body>
-<ul id="menu" class="button-container"></ul>
-<div id="under_menu"></div>
-<div id="statcontent"></div>
-<script>
 // Polyfills and compatibility ------------------------------------------------
 var decoder = decodeURIComponent || unescape;
 var addEventListenerKey = (document.addEventListener ? 'addEventListener' : 'attachEvent'); // IE8 handling for Wine users
 var textContentKey = (typeof document.body.textContent != 'undefined') ? 'textContent' : 'innerText';
-if(!Array.prototype.includes) {
-	Array.prototype.includes = function(thing) {
-		for(var i = 0; i < this.length; i++) {
-			if(this[i] == thing) return true;
+if (!Array.prototype.includes) {
+	Array.prototype.includes = function (thing) {
+		for (var i = 0; i < this.length; i++) {
+			if (this[i] == thing) return true;
 		}
 		return false;
 	}
@@ -268,35 +29,35 @@ if (!String.prototype.trim) {
 |*|  var intervalID = window.setInterval(code, delay);
 |*|
 \*/
-(function() {
-  setTimeout(function(arg1) {
-    if (arg1 === 'test') {
-      // feature test is passed, no need for polyfill
-      return;
-    }
-    var __nativeST__ = window.setTimeout;
-    window.setTimeout = function(vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */ ) {
-      var aArgs = Array.prototype.slice.call(arguments, 2);
-      return __nativeST__(vCallback instanceof Function ? function() {
-        vCallback.apply(null, aArgs);
-      } : vCallback, nDelay);
-    };
-  }, 0, 'test');
+(function () {
+	setTimeout(function (arg1) {
+		if (arg1 === 'test') {
+			// feature test is passed, no need for polyfill
+			return;
+		}
+		var __nativeST__ = window.setTimeout;
+		window.setTimeout = function (vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */) {
+			var aArgs = Array.prototype.slice.call(arguments, 2);
+			return __nativeST__(vCallback instanceof Function ? function () {
+				vCallback.apply(null, aArgs);
+			} : vCallback, nDelay);
+		};
+	}, 0, 'test');
 
-  var interval = setInterval(function(arg1) {
-    clearInterval(interval);
-    if (arg1 === 'test') {
-      // feature test is passed, no need for polyfill
-      return;
-    }
-    var __nativeSI__ = window.setInterval;
-    window.setInterval = function(vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */ ) {
-      var aArgs = Array.prototype.slice.call(arguments, 2);
-      return __nativeSI__(vCallback instanceof Function ? function() {
-        vCallback.apply(null, aArgs);
-      } : vCallback, nDelay);
-    };
-  }, 0, 'test');
+	var interval = setInterval(function (arg1) {
+		clearInterval(interval);
+		if (arg1 === 'test') {
+			// feature test is passed, no need for polyfill
+			return;
+		}
+		var __nativeSI__ = window.setInterval;
+		window.setInterval = function (vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */) {
+			var aArgs = Array.prototype.slice.call(arguments, 2);
+			return __nativeSI__(vCallback instanceof Function ? function () {
+				vCallback.apply(null, aArgs);
+			} : vCallback, nDelay);
+		};
+	}, 0, 'test');
 }())
 
 // Status panel implementation ------------------------------------------------
@@ -309,7 +70,7 @@ var spell_tabs = [];
 var verb_tabs = [];
 var verbs = [["", ""]]; // list with a list inside
 var tickets = [];
-var interviewManager = {status: "", interviews: []};
+var interviewManager = { status: "", interviews: [] };
 var sdql2 = [];
 var permanent_tabs = []; // tabs that won't be cleared by wipes
 var turfcontents = [];
@@ -324,6 +85,85 @@ var split_admin_tabs = false;
 
 var connected = false;
 var commandQueue = [];
+
+// Byond subscribe wrapper for communication from DM
+Byond.subscribe(function (type, payload) {
+	if (type === "add_verb_list") {
+		add_verb_list(payload);
+	}
+	if (type === "add_verb_list") {
+		add_verb_list(payload);
+		return;
+	}
+	if (type === "remove_verb_list") {
+		remove_verb_list(payload);
+		return;
+	}
+	if (type === "create_listedturf") {
+		create_listedturf(payload);
+		return;
+	}
+	if (type === "remove_admin_tabs") {
+		remove_admin_tabs();
+		return;
+	}
+	if (type === "update_split_admin_tabs") {
+		update_split_admin_tabs(payload);
+		return;
+	}
+	if (type === "add_admin_tabs") {
+		add_admin_tabs(payload);
+		return;
+	}
+	if (type === "update") {
+		update(payload.egd, payload.ps, payload.os);
+		return;
+	}
+	if (type === "remove_listedturf") {
+		remove_listedturf();
+		return;
+	}
+	if (type === "update_sdql2") {
+		update_sdql2(payload);
+		return;
+	}
+	if (type === "update_mc") {
+		update_mc(payload.gmd, payload.ce);
+		return;
+	}
+	if (type === "update_tickets") {
+		update_tickets(payload);
+		return;
+	}
+	if (type === "update_interviews") {
+		update_interviews(payload);
+		return;
+	}
+	if (type === "update_spells") {
+		update_spells(payload.st, payload.ph);
+		return;
+	}
+	if (type === "update_listedturf") {
+		update_listedturf(payload);
+		return;
+	}
+	if (type === "remove_sdql2") {
+		remove_sdql2();
+		return;
+	}
+	if (type === "check_spells") {
+		check_spells();
+		return;
+	}
+	if (type === "create_debug") {
+		create_debug();
+		return;
+	}
+	if (type === "init_verbs") {
+		init_verbs(payload.p, payload.v);
+		return;
+	}
+});
 
 // Any BYOND verb call must go through this, as if a verb is sent during reconnect then
 // it will cause the reconnect to fail.
@@ -383,12 +223,12 @@ function createStatusTab(name) {
 		else
 			name = splitName[0];
 	}
-	if(document.getElementById(name) || name.trim() == "")
+	if (document.getElementById(name) || name.trim() == "")
 		return;
-	if(!verb_tabs.includes(name) && !permanent_tabs.includes(name))
+	if (!verb_tabs.includes(name) && !permanent_tabs.includes(name))
 		return;
 	var B = document.createElement("BUTTON");
-	B.onclick = function() {
+	B.onclick = function () {
 		tab_change(name);
 		this.blur();
 	};
@@ -397,7 +237,7 @@ function createStatusTab(name) {
 	B.className = "button";
 	//ORDERING ALPHABETICALLY
 	B.style.order = name.charCodeAt(0);
-	if(name == "Status" || name == "MC")
+	if (name == "Status" || name == "MC")
 		B.style.order = name == "Status" ? 1 : 2;
 	//END ORDERING
 	menu.appendChild(B);
@@ -406,7 +246,7 @@ function createStatusTab(name) {
 }
 
 function removeStatusTab(name) {
-	if(!document.getElementById(name) || permanent_tabs.includes(name))
+	if (!document.getElementById(name) || permanent_tabs.includes(name))
 		return;
 	for (var i = verb_tabs.length - 1; i >= 0; --i) {
 		if (verb_tabs[i] == name) {
@@ -436,7 +276,7 @@ window.onresize = function () {
 }
 
 function addPermanentTab(name) {
-	if(!permanent_tabs.includes(name))
+	if (!permanent_tabs.includes(name))
 		permanent_tabs.push(name);
 	createStatusTab(name);
 }
@@ -451,23 +291,23 @@ function removePermanentTab(name) {
 }
 
 function checkStatusTab() {
-	for(var i=0; i < menu.children.length; i++)
-		if(!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
+	for (var i = 0; i < menu.children.length; i++)
+		if (!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
 			menu.removeChild(menu.children[i]);
 }
 
 function remove_verb(v) {
 	var verb_to_remove = v; // to_remove = [verb:category, verb:name]
-	for(var i = verbs.length - 1; i >= 0; i--){
+	for (var i = verbs.length - 1; i >= 0; i--) {
 		var part_to_remove = verbs[i];
-		if(part_to_remove[1] == verb_to_remove[1]){
+		if (part_to_remove[1] == verb_to_remove[1]) {
 			verbs.splice(i, 1)
 		}
 	}
 }
 
 function check_verbs() {
-	for(var v = verb_tabs.length - 1; v >= 0; v--){
+	for (var v = verb_tabs.length - 1; v >= 0; v--) {
 		verbs_cat_check(verb_tabs[v]);
 	}
 }
@@ -483,11 +323,11 @@ function verbs_cat_check(cat) {
 	}
 	var verbs_in_cat = 0;
 	var verbcat = "";
-	if(!verb_tabs.includes(tabCat)){
+	if (!verb_tabs.includes(tabCat)) {
 		removeStatusTab(tabCat);
 		return;
 	}
-	for(var v = 0; v < verbs.length; v++){
+	for (var v = 0; v < verbs.length; v++) {
 		var part = verbs[v];
 		verbcat = part[0];
 		if (verbcat.indexOf(".") != -1) {
@@ -497,25 +337,25 @@ function verbs_cat_check(cat) {
 			else
 				verbcat = splitName[0];
 		}
-		if(verbcat != tabCat || verbcat.trim() == ""){
+		if (verbcat != tabCat || verbcat.trim() == "") {
 			continue;
 		}
-		else{
+		else {
 			verbs_in_cat = 1;
 			break; // we only need one
 		}
 	}
-	if(verbs_in_cat != 1) {
+	if (verbs_in_cat != 1) {
 		removeStatusTab(tabCat);
-		if(current_tab == tabCat)
+		if (current_tab == tabCat)
 			tab_change("Status");
 	}
 }
 
 function findVerbindex(name, verblist) {
-	for(var i = 0; i < verblist.length; i++) {
+	for (var i = 0; i < verblist.length; i++) {
 		var part = verblist[i];
-		if(part[1] == name)
+		if (part[1] == name)
 			return i;
 	}
 }
@@ -533,9 +373,9 @@ function update_verbs() {
 function add_verb_list(v) {
 	var to_add = JSON.parse(v); // list of a list with category and verb inside it
 	to_add.sort(); // sort what we're adding
-	for(var i = 0; i < to_add.length; i++) {
+	for (var i = 0; i < to_add.length; i++) {
 		var part = to_add[i];
-		if(!part[0])
+		if (!part[0])
 			continue;
 		var category = part[0];
 		if (category.indexOf(".") != -1) {
@@ -545,14 +385,14 @@ function add_verb_list(v) {
 			else
 				category = splitName[0];
 		}
-		if(findVerbindex(part[1], verbs))
+		if (findVerbindex(part[1], verbs))
 			continue;
-		if(verb_tabs.includes(category)){
+		if (verb_tabs.includes(category)) {
 			verbs.push(part);
-			if(current_tab == category) {
+			if (current_tab == category) {
 				draw_verbs(category); // redraw if we added a verb to the tab we're currently in
 			}
-		} else if(category) {
+		} else if (category) {
 			verb_tabs.push(category);
 			verbs.push(part);
 			createStatusTab(category);
@@ -562,12 +402,12 @@ function add_verb_list(v) {
 
 function remove_verb_list(v) {
 	var to_remove = JSON.parse(v);
-	for(var i = 0; i < to_remove.length; i++) {
+	for (var i = 0; i < to_remove.length; i++) {
 		remove_verb(to_remove[i]);
 	}
 	check_verbs();
 	sortVerbs();
-	if(verb_tabs.includes(current_tab))
+	if (verb_tabs.includes(current_tab))
 		draw_verbs(current_tab);
 }
 
@@ -581,27 +421,27 @@ function init_verbs(c, v) {
 	verb_tabs.sort(); // sort it
 	var do_update = false;
 	var cat = "";
-	for(var i = 0; i < verb_tabs.length; i++){
+	for (var i = 0; i < verb_tabs.length; i++) {
 		cat = verb_tabs[i];
 		createStatusTab(cat); // create a category if the verb doesn't exist yet
 	}
-	if(verb_tabs.includes(current_tab)) {
+	if (verb_tabs.includes(current_tab)) {
 		do_update = true;
 	}
-	if(v) {
+	if (v) {
 		add_verb_list(v);
 		sortVerbs(); // sort them
-		if(do_update) {
+		if (do_update) {
 			draw_verbs(current_tab);
 		}
 	}
 	SendTabsToByond();
 }
 
-function SendTabsToByond(){
+function SendTabsToByond() {
 	var tabstosend = [];
 	tabstosend = tabstosend.concat(permanent_tabs, verb_tabs);
-	for(var i=0; i < tabstosend.length; i++){
+	for (var i = 0; i < tabstosend.length; i++) {
 		SendTabToByond(tabstosend[i]);
 	}
 }
@@ -618,41 +458,41 @@ function TakeTabFromByond(tab) {
 function update(global_data, ping_entry, other_entries) {
 	status_tab_parts = [ping_entry];
 	var parsed = JSON.parse(global_data);
-	for(var i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
+	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
 	parsed = JSON.parse(other_entries);
-	for(var i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
-	if(current_tab == "Status")
+	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+	if (current_tab == "Status")
 		draw_status();
-	else if(current_tab == "Debug Stat Panel")
+	else if (current_tab == "Debug Stat Panel")
 		draw_debug();
 }
 
 function update_mc(global_mc_data, coords_entry) {
 	mc_tab_parts = JSON.parse(global_mc_data);
-	mc_tab_parts.splice(0,0,["Location:",coords_entry]);
-	if(!verb_tabs.includes("MC"))
+	mc_tab_parts.splice(0, 0, ["Location:", coords_entry]);
+	if (!verb_tabs.includes("MC"))
 		verb_tabs.push("MC");
 	createStatusTab("MC");
-	if(current_tab == "MC")
+	if (current_tab == "MC")
 		draw_mc();
 }
 
 function remove_mc() {
 	removeStatusTab("MC");
-	if(current_tab == "MC")
+	if (current_tab == "MC")
 		tab_change("Status");
 }
 function remove_spells() {
-	for(var s = 0; s < spell_tabs.length; s++){
+	for (var s = 0; s < spell_tabs.length; s++) {
 		removeStatusTab(spell_tabs[s]);
 	}
 }
 
 function init_spells() {
 	var cat = "";
-	for(var i = 0; i < spell_tabs.length; i++) {
+	for (var i = 0; i < spell_tabs.length; i++) {
 		cat = spell_tabs[i];
-		if(cat.length > 0) {
+		if (cat.length > 0) {
 			verb_tabs.push(cat);
 			createStatusTab(cat);
 		}
@@ -660,33 +500,33 @@ function init_spells() {
 }
 
 function check_spells() {
-	for(var v = 0; v < spell_tabs.length; v++)
+	for (var v = 0; v < spell_tabs.length; v++)
 		spell_cat_check(spell_tabs[v]);
 }
 function spell_cat_check(cat) {
 	var spells_in_cat = 0;
 	var spellcat = "";
-	for(var s = 0; s < spells.length; s++){
+	for (var s = 0; s < spells.length; s++) {
 		var spell = spells[s];
 		spellcat = spell[0];
-		if(spellcat == cat){
+		if (spellcat == cat) {
 			spells_in_cat++;
 		}
 	}
-	if(spells_in_cat < 1) {
+	if (spells_in_cat < 1) {
 		removeStatusTab(cat);
 	}
 }
 function update_spells(t, s) {
 	spell_tabs = JSON.parse(t);
 	var do_update = false;
-	if(spell_tabs.includes(current_tab)) {
+	if (spell_tabs.includes(current_tab)) {
 		do_update = true;
 	}
 	init_spells();
-	if(s) {
+	if (s) {
 		spells = JSON.parse(s);
-		if(do_update) {
+		if (do_update) {
 			draw_spells(current_tab);
 		}
 	} else {
@@ -695,31 +535,31 @@ function update_spells(t, s) {
 }
 
 function tab_change(tab) {
-	if(tab == current_tab) return;
-	if(document.getElementById(current_tab))
+	if (tab == current_tab) return;
+	if (document.getElementById(current_tab))
 		document.getElementById(current_tab).className = "button"; // disable active on last button
 	current_tab = tab;
 	set_byond_tab(tab);
-	if(document.getElementById(tab))
+	if (document.getElementById(tab))
 		document.getElementById(tab).className = "button active"; // make current button active
 	var spell_tabs_thingy = (spell_tabs.includes(tab));
 	var verb_tabs_thingy = (verb_tabs.includes(tab));
-	if(tab == "Status") {
+	if (tab == "Status") {
 		draw_status();
-	} else if(tab == "MC") {
+	} else if (tab == "MC") {
 		draw_mc();
-	} else if(spell_tabs_thingy) {
+	} else if (spell_tabs_thingy) {
 		draw_spells(tab);
-	} else if(verb_tabs_thingy){
+	} else if (verb_tabs_thingy) {
 		draw_verbs(tab);
-	} else if(tab == "Debug Stat Panel") {
+	} else if (tab == "Debug Stat Panel") {
 		draw_debug();
-	} else if(tab == "Tickets") {
+	} else if (tab == "Tickets") {
 		draw_tickets();
 		draw_interviews();
-	} else if(tab == "SDQL2") {
+	} else if (tab == "SDQL2") {
 		draw_sdql2();
-	}else if(tab == turfname) {
+	} else if (tab == turfname) {
 		draw_listedturf();
 	} else {
 		statcontentdiv[textContentKey] = "Loading...";
@@ -727,7 +567,7 @@ function tab_change(tab) {
 	window.location.href = "byond://winset?statbrowser.is-visible=true";
 }
 
-function set_byond_tab(tab){
+function set_byond_tab(tab) {
 	send_byond_command("Set-Tab " + tab);
 }
 
@@ -735,13 +575,13 @@ function draw_debug() {
 	statcontentdiv[textContentKey] = "";
 	var wipeverbstabs = document.createElement("div");
 	var link = document.createElement("a");
-	link.onclick = function() {wipe_verbs()};
+	link.onclick = function () { wipe_verbs() };
 	link[textContentKey] = "Wipe All Verbs";
 	wipeverbstabs.appendChild(link);
 	document.getElementById("statcontent").appendChild(wipeverbstabs);
 	var wipeUpdateVerbsTabs = document.createElement("div");
 	var updateLink = document.createElement("a");
-	updateLink.onclick = function() {update_verbs()};
+	updateLink.onclick = function () { update_verbs() };
 	updateLink[textContentKey] = "Wipe and Update All Verbs";
 	wipeUpdateVerbsTabs.appendChild(updateLink);
 	document.getElementById("statcontent").appendChild(wipeUpdateVerbsTabs);
@@ -749,7 +589,7 @@ function draw_debug() {
 	text[textContentKey] = "Verb Tabs:";
 	document.getElementById("statcontent").appendChild(text);
 	var table1 = document.createElement("table");
-	for(var i=0; i < verb_tabs.length ; i++) {
+	for (var i = 0; i < verb_tabs.length; i++) {
 		var part = verb_tabs[i];
 		// Hide subgroups except admin subgroups if they are split
 		if (verb_tabs[i].lastIndexOf(".") != -1) {
@@ -764,7 +604,7 @@ function draw_debug() {
 		td1[textContentKey] = part;
 		var a = document.createElement("a");
 		a.onclick = function (part) {
-			return function() {removeStatusTab(part)};
+			return function () { removeStatusTab(part) };
 		}(part);
 		a[textContentKey] = " Delete Tab " + part;
 		td1.appendChild(a);
@@ -776,7 +616,7 @@ function draw_debug() {
 	header2[textContentKey] = "Verbs:";
 	document.getElementById("statcontent").appendChild(header2);
 	var table2 = document.createElement("table");
-	for(var v = 0; v < verbs.length; v++) {
+	for (var v = 0; v < verbs.length; v++) {
 		var part2 = verbs[v];
 		var trr = document.createElement("tr");
 		var tdd1 = document.createElement("td");
@@ -792,7 +632,7 @@ function draw_debug() {
 	text3[textContentKey] = "Permanent Tabs:";
 	document.getElementById("statcontent").appendChild(text3);
 	var table3 = document.createElement("table");
-	for(var i=0; i < permanent_tabs.length ; i++) {
+	for (var i = 0; i < permanent_tabs.length; i++) {
 		var part3 = permanent_tabs[i];
 		var trrr = document.createElement("tr");
 		var tddd1 = document.createElement("td");
@@ -804,13 +644,13 @@ function draw_debug() {
 
 }
 function draw_status() {
-	if(!document.getElementById("Status")) {
+	if (!document.getElementById("Status")) {
 		createStatusTab("Status");
 		current_tab = "Status";
 	}
 	statcontentdiv[textContentKey] = '';
-	for(var i = 0; i < status_tab_parts.length; i++) {
-		if(status_tab_parts[i].trim() == "") {
+	for (var i = 0; i < status_tab_parts.length; i++) {
+		if (status_tab_parts[i].trim() == "") {
 			document.getElementById("statcontent").appendChild(document.createElement("br"));
 		} else {
 			var div = document.createElement("div");
@@ -818,8 +658,7 @@ function draw_status() {
 			document.getElementById("statcontent").appendChild(div);
 		}
 	}
-	if(verb_tabs.length == 0 || !verbs)
-	{
+	if (verb_tabs.length == 0 || !verbs) {
 		send_byond_command("Fix-Stat-Panel");
 	}
 }
@@ -827,13 +666,13 @@ function draw_status() {
 function draw_mc() {
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
-	for(var i = 0; i < mc_tab_parts.length; i++) {
+	for (var i = 0; i < mc_tab_parts.length; i++) {
 		var part = mc_tab_parts[i];
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
 		td1[textContentKey] = part[0];
 		var td2 = document.createElement("td");
-		if(part[2]) {
+		if (part[2]) {
 			var a = document.createElement("a");
 			a.href = "?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
 			a[textContentKey] = part[1];
@@ -847,52 +686,52 @@ function draw_mc() {
 	}
 	document.getElementById("statcontent").appendChild(table);
 }
-function update_tickets(T){
+function update_tickets(T) {
 	tickets = JSON.parse(T);
-	if(!verb_tabs.includes("Tickets")) {
+	if (!verb_tabs.includes("Tickets")) {
 		verb_tabs.push("Tickets");
 		addPermanentTab("Tickets");
 	}
-	if(current_tab == "Tickets")
+	if (current_tab == "Tickets")
 		draw_tickets();
 }
-function update_interviews(I){
+function update_interviews(I) {
 	interviewManager = JSON.parse(I);
-	if(current_tab == "Tickets")
+	if (current_tab == "Tickets")
 		draw_interviews();
 }
 function update_sdql2(S) {
 	sdql2 = JSON.parse(S);
-	if(sdql2.length > 0 && !verb_tabs.includes("SDQL2")) {
+	if (sdql2.length > 0 && !verb_tabs.includes("SDQL2")) {
 		verb_tabs.push("SDQL2");
 		addPermanentTab("SDQL2");
 	}
-	if(current_tab == "SDQL2")
+	if (current_tab == "SDQL2")
 		draw_sdql2();
 }
 
 function remove_sdql2() {
-	if(sdql2) {
+	if (sdql2) {
 		sdql2 = [];
 		removePermanentTab("SDQL2");
-		if(current_tab == "SDQL2")
+		if (current_tab == "SDQL2")
 			tab_change("Status");
 	}
 	checkStatusTab();
 }
 
 function remove_tickets() {
-	if(tickets) {
+	if (tickets) {
 		tickets = [];
 		removePermanentTab("Tickets");
-		if(current_tab == "Tickets")
+		if (current_tab == "Tickets")
 			tab_change("Status");
 	}
 	checkStatusTab();
 }
 
 function remove_interviews() {
-	if(tickets) {
+	if (tickets) {
 		tickets = [];
 	}
 	checkStatusTab();
@@ -920,14 +759,14 @@ function create_listedturf(TN) {
 }
 function update_listedturf(TC) {
 	turfcontents = JSON.parse(TC);
-	if(current_tab == turfname)
+	if (current_tab == turfname)
 		draw_listedturf();
 }
 function iconError() {
 	var that = this;
-	setTimeout(function() {
+	setTimeout(function () {
 		var current_attempts = that.id; // a bit of a hack, change this if we need to call on img id's later
-		if(!current_attempts)
+		if (!current_attempts)
 			that.id = 1;
 		if (current_attempts > imageRetryLimit)
 			return;
@@ -941,20 +780,20 @@ function iconError() {
 function draw_listedturf() {
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
-	for(var i = 0; i < turfcontents.length; i++) {
+	for (var i = 0; i < turfcontents.length; i++) {
 		var part = turfcontents[i];
-		if(storedimages[part[1]] == null && part[2]) {
+		if (storedimages[part[1]] == null && part[2]) {
 			var img = document.createElement("img");
 			img.src = part[2];
 			img.id = part[1];
 			storedimages[part[1]] = part[2];
-			img.onerror = function() {
+			img.onerror = function () {
 				iconError();
 			};
 			table.appendChild(img);
 		} else {
 			var img = document.createElement("img");
-			img.onerror = function() {
+			img.onerror = function () {
 				iconError();
 			};
 			img.src = storedimages[part[1]];
@@ -967,10 +806,10 @@ function draw_listedturf() {
 		b.onmousedown = function (part) {
 			// The outer function is used to close over a fresh "part" variable,
 			// rather than every onmousedown getting the "part" of the last entry.
-			return function(e) {
+			return function (e) {
 				e.preventDefault();
 				clickcatcher = "?src=" + part[1];
-				switch(e.button){
+				switch (e.button) {
 					case 1:
 						clickcatcher += ";statpanel_item_click=middle"
 						break;
@@ -980,13 +819,13 @@ function draw_listedturf() {
 					default:
 						clickcatcher += ";statpanel_item_click=left"
 				}
-				if(e.shiftKey){
+				if (e.shiftKey) {
 					clickcatcher += ";statpanel_item_shiftclick=1";
 				}
-				if(e.ctrlKey){
+				if (e.ctrlKey) {
 					clickcatcher += ";statpanel_item_ctrlclick=1";
 				}
-				if(e.altKey) {
+				if (e.altKey) {
 					clickcatcher += ";statpanel_item_altclick=1";
 				}
 				window.location.href = clickcatcher;
@@ -1002,19 +841,19 @@ function draw_listedturf() {
 function remove_listedturf() {
 	removePermanentTab(turfname);
 	checkStatusTab();
-	if(current_tab == turfname)
+	if (current_tab == turfname)
 		tab_change("Status");
 }
-function draw_sdql2(){
+function draw_sdql2() {
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
-	for(var i = 0; i < sdql2.length; i++) {
+	for (var i = 0; i < sdql2.length; i++) {
 		var part = sdql2[i];
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
 		td1[textContentKey] = part[0];
 		var td2 = document.createElement("td");
-		if(part[2]) {
+		if (part[2]) {
 			var a = document.createElement("a");
 			a.href = "?src=" + part[2] + ";statpanel_item_click=left";
 			a[textContentKey] = part[1];
@@ -1032,20 +871,20 @@ function draw_sdql2(){
 function draw_tickets() {
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
-	if(!tickets)
+	if (!tickets)
 		return;
-	for(var i = 0; i < tickets.length; i++) {
+	for (var i = 0; i < tickets.length; i++) {
 		var part = tickets[i];
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
 		td1[textContentKey] = part[0];
 		var td2 = document.createElement("td");
-		if(part[2]) {
+		if (part[2]) {
 			var a = document.createElement("a");
-			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=left;action=ticket" ;
+			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=left;action=ticket";
 			a[textContentKey] = part[1];
 			td2.appendChild(a);
-		} else if(part[3]){
+		} else if (part[3]) {
 			var a = document.createElement("a");
 			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
 			a[textContentKey] = part[1];
@@ -1075,7 +914,7 @@ function draw_interviews() {
 
 	// List interview stats
 	var statsDiv = document.createElement("table");
-	statsDiv.className="interview_panel_stats";
+	statsDiv.className = "interview_panel_stats";
 	for (var key in interviewManager.status) {
 		var d = document.createElement("div");
 		var tr = document.createElement("tr");
@@ -1093,9 +932,9 @@ function draw_interviews() {
 	// List interviews if any are open
 	var table = document.createElement("table");
 	table.className = "interview_panel_table";
-	if(!interviewManager)
+	if (!interviewManager)
 		return;
-	for(var i = 0; i < interviewManager.interviews.length; i++) {
+	for (var i = 0; i < interviewManager.interviews.length; i++) {
 		var part = interviewManager.interviews[i];
 		var tr = document.createElement("tr");
 		var td = document.createElement("td");
@@ -1112,14 +951,14 @@ function draw_interviews() {
 function draw_spells(cat) {
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
-	for(var i = 0; i < spells.length; i++) {
+	for (var i = 0; i < spells.length; i++) {
 		var part = spells[i];
-		if(part[0] != cat) continue;
+		if (part[0] != cat) continue;
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
 		td1[textContentKey] = part[1];
 		var td2 = document.createElement("td");
-		if(part[3]) {
+		if (part[3]) {
 			var a = document.createElement("a");
 			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
 			a[textContentKey] = part[2];
@@ -1135,14 +974,14 @@ function draw_spells(cat) {
 }
 
 function make_verb_onclick(command) {
-	return function() {
-		run_after_focus(function() {
+	return function () {
+		run_after_focus(function () {
 			send_byond_command(command);
 		});
 	};
 }
 
-function draw_verbs(cat){
+function draw_verbs(cat) {
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("div");
 	var additions = {}; // additional sub-categories to be rendered
@@ -1199,19 +1038,8 @@ function draw_verbs(cat){
 		}
 	}
 }
-
-function set_theme(which) {
-	if (which == "light") {
-		document.body.className = "";
-		set_style_sheet("browserOutput_white");
-	} else if (which == "dark") {
-		document.body.className = "dark";
-		set_style_sheet("browserOutput");
-	}
-}
-
 function set_style_sheet(sheet) {
-	if(document.getElementById("goonStyle")) {
+	if (document.getElementById("goonStyle")) {
 		var currentSheet = document.getElementById("goonStyle");
 		currentSheet.parentElement.removeChild(currentSheet);
 	}
@@ -1226,7 +1054,7 @@ function set_style_sheet(sheet) {
 }
 
 function restoreFocus() {
-	run_after_focus(function() {
+	run_after_focus(function () {
 		window.location.href = "byond://winset?map.focus=true";
 	});
 }
@@ -1234,12 +1062,12 @@ function restoreFocus() {
 document[addEventListenerKey]("mouseup", restoreFocus);
 document[addEventListenerKey]("keyup", restoreFocus);
 
-if(!current_tab) {
+if (!current_tab) {
 	addPermanentTab("Status");
 	tab_change("Status");
 }
 
-window.onload = function() {
+window.onload = function () {
 	NotifyByondOnload();
 };
 
@@ -1247,8 +1075,8 @@ function NotifyByondOnload() {
 	window.location.href = "byond://winset?command=Panel-Ready";
 }
 
-function create_debug(){
-	if(!document.getElementById("Debug Stat Panel")) {
+function create_debug() {
+	if (!document.getElementById("Debug Stat Panel")) {
 		addPermanentTab("Debug Stat Panel");
 	} else {
 		removePermanentTab("Debug Stat Panel");
@@ -1258,15 +1086,12 @@ function create_debug(){
 function getCookie(cname) {
 	var name = cname + '=';
 	var ca = document.cookie.split(';');
-	for(var i=0; i < ca.length; i++) {
-	var c = ca[i];
-	while (c.charAt(0)==' ') c = c.substring(1);
+	for (var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') c = c.substring(1);
 		if (c.indexOf(name) === 0) {
-			return decoder(c.substring(name.length,c.length));
+			return decoder(c.substring(name.length, c.length));
 		}
 	}
 	return '';
 }
-</script>
-</body>
-</html>

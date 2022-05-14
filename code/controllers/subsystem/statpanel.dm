@@ -46,19 +46,19 @@ SUBSYSTEM_DEF(statpanels)
 		var/client/target = currentrun[length(currentrun)]
 		currentrun.len--
 
-		if(!target.statbrowser_ready)
+		if(!target.stat_panel.is_ready())
 			continue
 
 		if(target.stat_tab == "Status" && num_fires % status_wait == 0)
 			set_status_tab(target)
 
 		if(!target.holder)
-			target << output("", "statbrowser:remove_admin_tabs")
+			target.stat_panel.send_message("remove_admin_tabs", "")
 		else
-			target << output("[!!(target.prefs.toggles & SPLIT_ADMIN_TABS)]", "statbrowser:update_split_admin_tabs")
+			target.stat_panel.send_message("update_split_admin_tabs", "[!!(target.prefs.toggles & SPLIT_ADMIN_TABS)]")
 
 			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
-				target << output("[url_encode(target.holder.href_token)]", "statbrowser:add_admin_tabs")
+				target.stat_panel.send_message("add_admin_tabs", "[url_encode(target.holder.href_token)]")
 
 			if(target.stat_tab == "MC" && ((num_fires % mc_wait == 0) || target?.prefs.read_preference(/datum/preference/toggle/fast_mc_refresh)))
 				set_MC_tab(target)
@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(statpanels)
 				set_tickets_tab(target)
 
 			if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
-				target << output("", "statbrowser:remove_sdql2")
+				target.stat_panel.send_message("remove_sdql2", "")
 
 			else if(length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)) && num_fires % default_wait == 0)
 				set_SDQL2_tab(target)
@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(statpanels)
 
 			if(target_mob?.listed_turf && num_fires % default_wait == 0)
 				if(!target_mob.TurfAdjacent(target_mob.listed_turf))
-					target << output("", "statbrowser:remove_listedturf")
+					target.stat_panel.send_message("remove_listedturf", "")
 					target_mob.listed_turf = null
 
 				else if(target.stat_tab == target_mob?.listed_turf.name || !(target_mob?.listed_turf.name in target.panel_tabs))
@@ -95,18 +95,25 @@ SUBSYSTEM_DEF(statpanels)
 
 	var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
 	var/other_str = url_encode(json_encode(target.mob?.get_status_tab_items()))
-	target << output("[encoded_global_data];[ping_str];[other_str]", "statbrowser:update")
+	target.stat_panel.send_message("update", list(
+		egd = encoded_global_data,
+		ps = ping_str,
+		os = other_str,
+	))
 
 /datum/controller/subsystem/statpanels/proc/set_MC_tab(client/target)
 	var/turf/eye_turf = get_turf(target.eye)
 	var/coord_entry = url_encode(COORD(eye_turf))
 	if(!mc_data_encoded)
 		generate_mc_data()
-	target << output("[mc_data_encoded];[coord_entry]", "statbrowser:update_mc")
+	target.stat_panel.send_message("update_mc", list(
+		gmd = mc_data_encoded,
+		ce = coord_entry,
+	))
 
 /datum/controller/subsystem/statpanels/proc/set_tickets_tab(client/target)
 	var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
-	target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
+	target.stat_panel.send_message("update_tickets",	"[url_encode(json_encode(ahelp_tickets))]")
 	var/datum/interview_manager/m = GLOB.interviews
 
 	// get open interview count
@@ -134,7 +141,7 @@ SUBSYSTEM_DEF(statpanels)
 	)
 
 	// Push update
-	target << output("[url_encode(json_encode(data))];", "statbrowser:update_interviews")
+	target.stat_panel.send_message("update_interviews",	"[url_encode(json_encode(data))]")
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()
@@ -144,7 +151,7 @@ SUBSYSTEM_DEF(statpanels)
 		sdql2B = query.generate_stat()
 
 	sdql2A += sdql2B
-	target << output(url_encode(json_encode(sdql2A)), "statbrowser:update_sdql2")
+	target.stat_panel.send_message("update_sdql2", "[url_encode(json_encode(sdql2A))]")
 
 /datum/controller/subsystem/statpanels/proc/set_spells_tab(client/target, mob/target_mob)
 	var/list/proc_holders = target_mob.get_proc_holders()
@@ -157,7 +164,10 @@ SUBSYSTEM_DEF(statpanels)
 	if(length(proc_holders))
 		proc_holders_encoded = url_encode(json_encode(proc_holders))
 
-	target << output("[url_encode(json_encode(target.spell_tabs))];[proc_holders_encoded]", "statbrowser:update_spells")
+	target.stat_panel.send_message("update_spells", list(
+		st = url_encode(json_encode(target.spell_tabs)),
+		ph = proc_holders_encoded,
+	))
 
 /datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
 	var/list/overrides = list()
@@ -195,7 +205,7 @@ SUBSYSTEM_DEF(statpanels)
 			turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
 
 	turfitems = url_encode(json_encode(turfitems))
-	target << output("[turfitems];", "statbrowser:update_listedturf")
+	target.stat_panel.send_message("update_listedturf", "[turfitems]")
 
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	var/list/mc_data = list(
@@ -216,7 +226,7 @@ SUBSYSTEM_DEF(statpanels)
 
 ///immediately update the active statpanel tab of the target client
 /datum/controller/subsystem/statpanels/proc/immediate_send_stat_data(client/target)
-	if(!target.statbrowser_ready)
+	if(!target.stat_panel.is_ready())
 		return FALSE
 
 	if(target.stat_tab == "Status")
@@ -230,7 +240,7 @@ SUBSYSTEM_DEF(statpanels)
 
 	if(target_mob?.listed_turf)
 		if(!target_mob.TurfAdjacent(target_mob.listed_turf))
-			target << output("", "statbrowser:remove_listedturf")
+			target.stat_panel.send_message("removed_listedturf", "")
 			target_mob.listed_turf = null
 
 		else if(target.stat_tab == target_mob?.listed_turf.name || !(target_mob?.listed_turf.name in target.panel_tabs))
@@ -249,7 +259,7 @@ SUBSYSTEM_DEF(statpanels)
 		return TRUE
 
 	if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
-		target << output("", "statbrowser:remove_sdql2")
+		target.stat_panel.send_message("remove_sdql2", "")
 
 	else if(length(GLOB.sdql2_queries) && target.stat_tab == "SDQL2")
 		set_SDQL2_tab(target)
@@ -288,7 +298,6 @@ SUBSYSTEM_DEF(statpanels)
 	set name = "Panel Ready"
 	set hidden = TRUE
 
-	statbrowser_ready = TRUE
 	init_verbs()
 
 /client/verb/update_verbs()
