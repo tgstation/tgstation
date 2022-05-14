@@ -309,6 +309,14 @@
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
 	clothing_traits = list(TRAIT_DRUNK_VISION)
 
+/obj/item/clothing/glasses/sunglasses/reagent/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	user.update_eye_blur()
+
+/obj/item/clothing/glasses/sunglasses/reagent/dropped(mob/living/carbon/human/user)
+	..()
+	user.update_eye_blur()
+
 /obj/item/clothing/glasses/sunglasses/chemical
 	name = "science glasses"
 	icon_state = "sunhudsci"
