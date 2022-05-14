@@ -467,13 +467,6 @@
 	desc = "This wand uses healing magics to heal and revive. The years of the cold have weakened the magic inside the wand."
 	max_charges = 5
 
-//mobs//--
-
-//ice spiders moved to giant_spiders.dm
-
-//objs//--
-
-//ice rocks moved to flora.dm
 
 //decals//--
 /obj/effect/turf_decal/snowdin_station_sign

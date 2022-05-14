@@ -4,12 +4,12 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 150
 	anchored = TRUE
-	drag_slowdown = 1.1
+	drag_slowdown = 1.3
 
 	/// If set, the flora will have this as its name after being harvested. When the flora becomes harvestable again, it reverts to its initial(name)
-	var/harvested_name as text
+	var/harvested_name
 	/// If set, the flora will have this as its description after being harvested. When the flora becomes harvestable again, it regerts to its initial(desc)
-	var/harvested_desc as text
+	var/harvested_desc
 
 	/// A lazylist of products that could be created when harvesting this flora, syntax is (type = weight)
 	/// Because of how this works, it can spawn in anomalies if you want it to. Or wall girders
@@ -25,7 +25,7 @@
 	var/harvest_with_hands = FALSE
 	/// The "verb" to use when the user harvests the flora
 	var/harvest_verb = "harvest"
-	/// What should be added to harvest_verb depending on the context ("user harvest(s) the tree" / "user cut(s down) the tree")
+	/// What should be added to harvest_verb depending on the context ("user harvest(s) the tree" / "user chop(s down) the tree")
 	var/harvest_verb_suffix = "s"
 	/// If the user is allowed to uproot the flora
 	var/can_uproot = TRUE
@@ -36,20 +36,22 @@
 	
 	/// If false, the flora won't be able to be harvested at all. If it's true, go through checks normally to determine if the flora is able to be harvested
 	var/harvestable = TRUE
-	/// The low and high ends of how many product_type items you get
+	/// The low end of how many product_type items you get
 	var/harvest_amount_low = 1
+	/// The high end of how many product_type items you get
 	var/harvest_amount_high = 3
-	/// Messages to show to the user when the flora gets harvested
-	var/harvest_message_low as text
-	var/harvest_message_med as text
-	var/harvest_message_high as text
+
+	//Messages to show to the user depending on how many items they get when harvesting the flora
+	var/harvest_message_low
+	var/harvest_message_med
+	var/harvest_message_high
+	/// See proc/harvest() and where this is used for an explaination on how this works
+	var/harvest_message_true_thresholds = FALSE
+
 	/// How long it takes to harvest the flora with the correct tool
 	var/harvest_time = 6 SECONDS
 	var/delete_on_harvest = FALSE
 	var/harvested = FALSE
-	
-	/// See proc/harvest() and where this is used for an explaination on how this works
-	var/harvest_message_true_thresholds = FALSE
 
 	/// Variables for determining the low/high ends of how long it takes for the flora takes to grow.
 	var/regrowth_time_low = 8 MINUTES
@@ -179,7 +181,7 @@
 
 /*
  * This gets called after a mob tries to harvest this flora with the correct tool.
- * It displays a flavortext message to whoever's harvesting this flora, then creates new products depending on the flora's product list.
+ * It displays a flavor message to whoever's harvesting this flora, then creates new products depending on the flora's product list.
  * Also renames the flora if harvested_name or harvested_desc is set in the variables
  * Returns: FALSE if nothing was made, otherwise a list of created products
  */
@@ -281,7 +283,7 @@
 	pixel_x = -16
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
-	drag_slowdown = 1.35
+	drag_slowdown = 1.5
 	product_types = list(/obj/item/grown/log/tree = 1)
 	harvest_amount_low = 6
 	harvest_amount_high = 10
