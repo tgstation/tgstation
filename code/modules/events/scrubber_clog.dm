@@ -117,5 +117,10 @@
 /datum/round_event/scrubber_clog/strange
 	severity = "Strange"
 
+/datum/round_event/scrubber_clog/critical/setup()
+	. = ..()
+	maximum_spawns = 3
+	spawn_delay = rand(10 SECONDS, 25 SECONDS) //Wide range, for maximum utility/comedy
+
 /datum/round_event/scrubber_clog/strange/announce()
 	priority_announce("Unusual lifesign readings detected in the [get_area(scrubber)] ventilation network.", "Lifesign Alert")
