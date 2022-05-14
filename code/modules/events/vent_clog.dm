@@ -12,6 +12,7 @@
 	var/mob/spawned_mob = /mob/living/basic/cockroach //What mob will be spawned
 	var/severity = "Minor" //Severity of the event (how dangerous are the spawned mobs, and it what quantity)
 	var/maximum_spawns //Cap on the number of spawned mobs that can be alive at once
+	var/spawn_delay = 15 SECONDS //Interval between mob spawns
 
 /datum/round_event/scrubber_clog/announce()
 	priority_announce("[severity] biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Custodial Notification")
@@ -61,7 +62,7 @@
 
 
 /datum/round_event/scrubber_clog/start()
-	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG, spawned_mob, maximum_spawns)
+	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG, spawned_mob, maximum_spawns, spawn_delay)
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Major Scrubber Clog"
