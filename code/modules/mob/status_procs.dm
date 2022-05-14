@@ -84,15 +84,23 @@
 	eye_blurry = max(amount, 0)
 	update_eye_blur()
 
+#define MAX_BLUR 3
+#define MIN_BLUR 0.6
+
 ///Apply the blurry overlays to a mobs clients screen
 /mob/proc/update_eye_blur()
 	if(!client)
 		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	if(eye_blurry)
-		game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(clamp(eye_blurry * 0.1, 0.6, 3)))
+	if(HAS_TRAIT(src, TRAIT_DRUNK_VISION))
+		game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(MAX_BLUR))
+	else if(eye_blurry)
+		game_plane_master_controller.add_filter("eye_blur", 1, gauss_blur_filter(clamp(eye_blurry * 0.1, MIN_BLUR, MAX_BLUR)))
 	else
 		game_plane_master_controller.remove_filter("eye_blur")
+
+#undef MAX_BLUR
+#undef MIN_BLUR
 
 ///Adjust the disgust level of a mob
 /mob/proc/adjust_disgust(amount)
