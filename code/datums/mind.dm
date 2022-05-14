@@ -810,7 +810,7 @@
 		if(istype(S, spell))
 			spell_list -= S
 			qdel(S)
-	current?.client.stat_panel.send_message("check_spells", "")
+	current?.client.stat_panel.send_message("check_spells")
 
 /datum/mind/proc/RemoveAllSpells()
 	for(var/obj/effect/proc_holder/S in spell_list)

@@ -339,7 +339,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// Initialize tgui panel
 	// src << browse(file('html/statbrowser.html'), "window=statbrowser")
-	stat_panel.initialize(inline_html = file2text('html/statbrowser.html'), inline_css = file2text('html/statbrowser.css'))
+	stat_panel.initialize(fancy = TRUE, inline_html = file2text('html/statbrowser.html'), inline_css = file2text('html/statbrowser.css'))
 	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
 	tgui_panel.initialize()
 
@@ -1095,8 +1095,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src.stat_panel.send_message("init_verbs", list(
-		p = url_encode(json_encode(panel_tabs)),
-		v = url_encode(json_encode(verblist)),
+		p = json_encode(panel_tabs),
+		v = json_encode(verblist),
 	))
 
 /client/proc/check_panel_loaded()

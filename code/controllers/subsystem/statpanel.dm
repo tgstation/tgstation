@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(statpanels)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
-		encoded_global_data = url_encode(json_encode(global_data))
+		encoded_global_data = json_encode(global_data)
 		src.currentrun = GLOB.clients.Copy()
 		mc_data_encoded = null
 
@@ -53,12 +53,12 @@ SUBSYSTEM_DEF(statpanels)
 			set_status_tab(target)
 
 		if(!target.holder)
-			target.stat_panel.send_message("remove_admin_tabs", "")
+			target.stat_panel.send_message("remove_admin_tabs")
 		else
-			target.stat_panel.send_message("update_split_admin_tabs", "[!!(target.prefs.toggles & SPLIT_ADMIN_TABS)]")
+			target.stat_panel.send_message("update_split_admin_tabs", list(update = !!(target.prefs.toggles & SPLIT_ADMIN_TABS)))
 
 			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
-				target.stat_panel.send_message("add_admin_tabs", "[url_encode(target.holder.href_token)]")
+				target.stat_panel.send_message("add_admin_tabs", list(href = target.holder.href_token))
 
 			if(target.stat_tab == "MC" && ((num_fires % mc_wait == 0) || target?.prefs.read_preference(/datum/preference/toggle/fast_mc_refresh)))
 				set_MC_tab(target)
@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(statpanels)
 				set_tickets_tab(target)
 
 			if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
-				target.stat_panel.send_message("remove_sdql2", "")
+				target.stat_panel.send_message("remove_sdql2")
 
 			else if(length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)) && num_fires % default_wait == 0)
 				set_SDQL2_tab(target)
@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(statpanels)
 
 			if(target_mob?.listed_turf && num_fires % default_wait == 0)
 				if(!target_mob.TurfAdjacent(target_mob.listed_turf))
-					target.stat_panel.send_message("remove_listedturf", "")
+					target.stat_panel.send_message("remove_listedturf")
 					target_mob.listed_turf = null
 
 				else if(target.stat_tab == target_mob?.listed_turf.name || !(target_mob?.listed_turf.name in target.panel_tabs))
@@ -93,8 +93,8 @@ SUBSYSTEM_DEF(statpanels)
 	if(!encoded_global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
 
-	var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
-	var/other_str = url_encode(json_encode(target.mob?.get_status_tab_items()))
+	var/ping_str = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)"
+	var/other_str = json_encode(target.mob?.get_status_tab_items())
 	target.stat_panel.send_message("update_stat", list(
 		egd = encoded_global_data,
 		ps = ping_str,
@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(statpanels)
 
 /datum/controller/subsystem/statpanels/proc/set_MC_tab(client/target)
 	var/turf/eye_turf = get_turf(target.eye)
-	var/coord_entry = url_encode(COORD(eye_turf))
+	var/coord_entry = COORD(eye_turf)
 	if(!mc_data_encoded)
 		generate_mc_data()
 	target.stat_panel.send_message("update_mc", list(
@@ -113,7 +113,7 @@ SUBSYSTEM_DEF(statpanels)
 
 /datum/controller/subsystem/statpanels/proc/set_tickets_tab(client/target)
 	var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
-	target.stat_panel.send_message("update_tickets",	"[url_encode(json_encode(ahelp_tickets))]")
+	target.stat_panel.send_message("update_tickets", list(tickets = json_encode(ahelp_tickets)))
 	var/datum/interview_manager/m = GLOB.interviews
 
 	// get open interview count
@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(statpanels)
 	)
 
 	// Push update
-	target.stat_panel.send_message("update_interviews",	"[url_encode(json_encode(data))]")
+	target.stat_panel.send_message("update_interviews",	list(data = json_encode(data)))
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()
@@ -151,7 +151,7 @@ SUBSYSTEM_DEF(statpanels)
 		sdql2B = query.generate_stat()
 
 	sdql2A += sdql2B
-	target.stat_panel.send_message("update_sdql2", "[url_encode(json_encode(sdql2A))]")
+	target.stat_panel.send_message("update_sdql2", list(sdql2A = json_encode(sdql2A)))
 
 /datum/controller/subsystem/statpanels/proc/set_spells_tab(client/target, mob/target_mob)
 	var/list/proc_holders = target_mob.get_proc_holders()
@@ -162,10 +162,10 @@ SUBSYSTEM_DEF(statpanels)
 
 	var/proc_holders_encoded = ""
 	if(length(proc_holders))
-		proc_holders_encoded = url_encode(json_encode(proc_holders))
+		proc_holders_encoded = json_encode(proc_holders)
 
 	target.stat_panel.send_message("update_spells", list(
-		st = url_encode(json_encode(target.spell_tabs)),
+		st = json_encode(target.spell_tabs),
 		ph = proc_holders_encoded,
 	))
 
@@ -204,8 +204,8 @@ SUBSYSTEM_DEF(statpanels)
 		else
 			turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
 
-	turfitems = url_encode(json_encode(turfitems))
-	target.stat_panel.send_message("update_listedturf", "[turfitems]")
+	turfitems = json_encode(turfitems)
+	target.stat_panel.send_message("update_listedturf", list(items = turfitems))
 
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	var/list/mc_data = list(
@@ -222,7 +222,7 @@ SUBSYSTEM_DEF(statpanels)
 	for(var/datum/controller/subsystem/sub_system as anything in Master.subsystems)
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), "\ref[sub_system]")
 	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", "\ref[GLOB.cameranet]")
-	mc_data_encoded = url_encode(json_encode(mc_data))
+	mc_data_encoded = json_encode(mc_data)
 
 ///immediately update the active statpanel tab of the target client
 /datum/controller/subsystem/statpanels/proc/immediate_send_stat_data(client/target)
@@ -240,7 +240,7 @@ SUBSYSTEM_DEF(statpanels)
 
 	if(target_mob?.listed_turf)
 		if(!target_mob.TurfAdjacent(target_mob.listed_turf))
-			target.stat_panel.send_message("removed_listedturf", "")
+			target.stat_panel.send_message("removed_listedturf")
 			target_mob.listed_turf = null
 
 		else if(target.stat_tab == target_mob?.listed_turf.name || !(target_mob?.listed_turf.name in target.panel_tabs))
@@ -259,7 +259,7 @@ SUBSYSTEM_DEF(statpanels)
 		return TRUE
 
 	if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
-		target.stat_panel.send_message("remove_sdql2", "")
+		target.stat_panel.send_message("remove_sdql2")
 
 	else if(length(GLOB.sdql2_queries) && target.stat_tab == "SDQL2")
 		set_SDQL2_tab(target)

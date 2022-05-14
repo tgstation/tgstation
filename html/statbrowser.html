@@ -3,6 +3,9 @@
 <div id="statcontent"></div>
 
 <script>
+	Byond.subscribeTo('alert', function(payload) {
+		window.alert("ALERT");
+	});
 	// Polyfills and compatibility ------------------------------------------------
 	var decoder = decodeURIComponent || unescape;
 	var addEventListenerKey = (document.addEventListener ? 'addEventListener' : 'attachEvent'); // IE8 handling for Wine users
@@ -88,7 +91,6 @@
 	var statcontentdiv = document.getElementById('statcontent');
 	var storedimages = [];
 	var split_admin_tabs = false;
-	var Byond = window.Byond = {};
 
 	var connected = false;
 	var commandQueue = [];
@@ -383,7 +385,7 @@
 		send_byond_command("Remove-Tabs " + tab);
 	}
 
-	function update(global_data, ping_entry, other_entries) {
+	function update_stat(global_data, ping_entry, other_entries) {
 		status_tab_parts = [ping_entry];
 		var parsed = JSON.parse(global_data);
 		for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
@@ -940,7 +942,7 @@
 				}
 
 				var a = document.createElement("a");
-				a.href = "#"
+				a.href = "#";
 				a.onclick = make_verb_onclick(command.replace(/\s/g, "-"));
 				a.className = "grid-item";
 				var t = document.createElement("span");
@@ -996,8 +998,8 @@
 	}
 
 	window.onload = function () {
+		setupSubscribe();
 		NotifyByondOnload();
-		window.alert("onload");
 	};
 
 	function NotifyByondOnload() {
@@ -1025,84 +1027,84 @@
 		return '';
 	}
 
+	window.alert(Byond.windowId);
+
 	// Byond subscribe wrapper for communication from DM
-	Byond.subscribe(function (type, payload) {
-		if(type === 'alert') {
-			window.alert(payload || "null");
-			return;
-		}
-		if (type === "add_verb_list") {
-			add_verb_list(payload);
-			return;
-		}
-		if (type === "remove_verb_list") {
-			remove_verb_list(payload);
-			return;
-		}
-		if (type === "create_listedturf") {
-			create_listedturf(payload);
-			return;
-		}
-		if (type === "remove_admin_tabs") {
-			remove_admin_tabs();
-			return;
-		}
-		if (type === "update_split_admin_tabs") {
-			update_split_admin_tabs(payload);
-			return;
-		}
-		if (type === "add_admin_tabs") {
-			add_admin_tabs(payload);
-			return;
-		}
-		if (type === "update_stat") {
-			update(payload.egd, payload.ps, payload.os);
-			return;
-		}
-		if (type === "remove_listedturf") {
-			remove_listedturf();
-			return;
-		}
-		if (type === "update_sdql2") {
-			update_sdql2(payload);
-			return;
-		}
-		if (type === "update_mc") {
-			update_mc(payload.gmd, payload.ce);
-			return;
-		}
-		if (type === "update_tickets") {
-			update_tickets(payload);
-			return;
-		}
-		if (type === "update_interviews") {
-			update_interviews(payload);
-			return;
-		}
-		if (type === "update_spells") {
-			update_spells(payload.st, payload.ph);
-			return;
-		}
-		if (type === "update_listedturf") {
-			update_listedturf(payload);
-			return;
-		}
-		if (type === "remove_sdql2") {
-			remove_sdql2();
-			return;
-		}
-		if (type === "check_spells") {
-			check_spells();
-			return;
-		}
-		if (type === "create_debug") {
-			create_debug();
-			return;
-		}
-		if (type === "init_verbs") {
-			init_verbs(payload.p, payload.v);
-			return;
-		}
-	});
+	function setupSubscribe() {
+		Byond.subscribe(function (type, payload) {
+			if (type === "add_verb_list") {
+				add_verb_list(payload.list);
+				return;
+			};
+			if (type === "remove_verb_list") {
+				remove_verb_list(payload.list);
+				return;
+			};
+			if (type === "create_listedturf") {
+				create_listedturf(payload.name);
+				return;
+			};
+			if (type === "remove_admin_tabs") {
+				remove_admin_tabs();
+				return;
+			};
+			if (type === "update_split_admin_tabs") {
+				update_split_admin_tabs(payload.update);
+				return;
+			};
+			if (type === "add_admin_tabs") {
+				add_admin_tabs(payload.href);
+				return;
+			};
+			if (type === "update_stat") {
+				update_stat(payload.egd, payload.ps, payload.os);
+				return;
+			};
+			if (type === "remove_listedturf") {
+				remove_listedturf();
+				return;
+			};
+			if (type === "update_sdql2") {
+				update_sdql2(payload.sdql2A);
+				return;
+			};
+			if (type === "update_mc") {
+				update_mc(payload.gmd, payload.ce);
+				return;
+			};
+			if (type === "update_tickets") {
+				update_tickets(payload.tickets);
+				return;
+			};
+			if (type === "update_interviews") {
+				update_interviews(payload.data);
+				return;
+			};
+			if (type === "update_spells") {
+				update_spells(payload.st, payload.ph);
+				return;
+			};
+			if (type === "update_listedturf") {
+				update_listedturf(payload.items);
+				return;
+			};
+			if (type === "remove_sdql2") {
+				remove_sdql2();
+				return;
+			};
+			if (type === "check_spells") {
+				check_spells();
+				return;
+			};
+			if (type === "init_verbs") {
+				init_verbs(payload.p, payload.v);
+				return;
+			};
+			if (type === "create_debug") {
+				create_debug();
+				return;
+			};
+		});
+	};
 
 </script>
