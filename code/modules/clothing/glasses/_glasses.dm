@@ -303,17 +303,18 @@
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	dog_fashion = /datum/dog_fashion/head
 
-/obj/item/clothing/glasses/sunglasses/reagent
+/obj/item/clothing/glasses/beer
 	name = "beer goggles"
 	icon_state = "sunhudbeer"
-	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
+	desc = "A pair of goggles outfitted with special lenses that distort vision."
 	clothing_traits = list(TRAIT_DRUNK_VISION)
 
-/obj/item/clothing/glasses/sunglasses/reagent/equipped(mob/living/carbon/human/user, slot)
-	. = ..()
-	user.update_eye_blur()
+/obj/item/clothing/glasses/beer/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if(slot == ITEM_SLOT_EYES)
+		user.update_eye_blur()
 
-/obj/item/clothing/glasses/sunglasses/reagent/dropped(mob/living/carbon/human/user)
+/obj/item/clothing/glasses/beer/dropped(mob/living/carbon/human/user)
 	..()
 	user.update_eye_blur()
 
