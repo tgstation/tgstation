@@ -86,8 +86,15 @@ var split_admin_tabs = false;
 var connected = false;
 var commandQueue = [];
 
+Byond.sendMessage('click', {
+	text: "init",
+})
+
 // Byond subscribe wrapper for communication from DM
 Byond.subscribe(function (type, payload) {
+	Byond.sendMessage('click', {
+		text: "shit happ",
+	})
 	if (type === "add_verb_list") {
 		add_verb_list(payload);
 	}
