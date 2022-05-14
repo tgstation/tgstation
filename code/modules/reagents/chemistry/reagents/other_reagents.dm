@@ -1514,9 +1514,9 @@
 	taste_description = "like air but better"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/pluoxium/on_mob_life(mob/living/L, delta_time, times_fired)
+/datum/reagent/pluoxium/on_mob_life(mob/living/Living, delta_time, times_fired)
 	. = ..()
-	L.adjustOxyLoss(-2 * REM * delta_time, FALSE)
+	Living.adjustOxyLoss(-2 * REM * delta_time, FALSE)
 
 /datum/reagent/halon
 	name = "Halon"
