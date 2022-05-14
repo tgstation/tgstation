@@ -1,7 +1,7 @@
 /datum/round_event_control/scrubber_clog
 	name = "Minor Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog
-	weight = 20 //All weight values are very subject to change.
+	weight = 25 //All weight values are very subject to change.
 	max_occurrences = 3
 	earliest_start = 5 MINUTES
 
@@ -33,15 +33,13 @@
 	return pick(scrubber_list)
 
 /datum/round_event/scrubber_clog/proc/get_mob() //picks from mob list of some sorts, use switches based on severity for which mob list to pick from
-	var/mob/selected_mob
 	switch(severity)
 		if("Minor") //Spawns harmless nuisance mobs.
 			var/list/minor_mobs = list(
 				/mob/living/simple_animal/mouse,
 				/mob/living/basic/cockroach
 				)
-			selected_mob = pick(minor_mobs)
-			return selected_mob
+			return pick(minor_mobs)
 
 		if("Major") //Spawns potentially dangerous mobs.
 			var/list/major_mobs = list(
@@ -49,8 +47,7 @@
 				/mob/living/simple_animal/hostile/bee,
 				/mob/living/simple_animal/hostile/giant_spider
 				)
-			selected_mob = pick(major_mobs)
-			return selected_mob
+			return pick(major_mobs)
 
 		if("Critical") //Higher impact mobs, but with a lower max spawn.
 			var/list/critical_mobs = list(
@@ -60,9 +57,7 @@
 				/mob/living/simple_animal/hostile/ooze,
 				/mob/living/simple_animal/hostile/bee/toxin
 				)
-			selected_mob = pick(critical_mobs)
-			return selected_mob
-
+			return pick(critical_mobs)
 
 			//Maybe add a "strange" severity with very low weight, and would provide the crew with a more useful/goofier variety of mobs?
 

@@ -17,7 +17,7 @@
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"
 
 
-// Vent Clog Event signals (this will probably be moved, but I dont want to make a new file rn bc im just experimenting)
+// Vent Clog Event signals
 /// Called when a vent is clogged (spawned_mob, maximum_spawns)
 #define COMSIG_VENT_CLOG "clog_vent"
 /// Called when a vent is unclogged
