@@ -16210,6 +16210,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
+/obj/machinery/crossing_signal/southwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "fAU" = (
@@ -17472,6 +17473,7 @@
 	},
 /obj/effect/turf_decal/caution,
 /obj/structure/cable,
+/obj/machinery/crossing_signal/northwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "fXq" = (
@@ -23328,6 +23330,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
+/obj/machinery/crossing_signal/southeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "hYH" = (
@@ -36489,6 +36492,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/crossing_signal/southwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "mpA" = (
@@ -45240,6 +45244,7 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/caution,
+/obj/machinery/crossing_signal/northeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "poT" = (
@@ -45549,6 +45554,7 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /obj/effect/turf_decal/caution,
+/obj/machinery/crossing_signal/northeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "ptE" = (
@@ -51088,6 +51094,7 @@
 /obj/effect/turf_decal/caution{
 	dir = 1
 	},
+/obj/machinery/crossing_signal/southeast,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "rqV" = (
@@ -70385,6 +70392,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/caution,
+/obj/machinery/crossing_signal/northwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "xXo" = (
