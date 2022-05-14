@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(statpanels)
 
 	var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
 	var/other_str = url_encode(json_encode(target.mob?.get_status_tab_items()))
-	target.stat_panel.send_message("update", list(
+	target.stat_panel.send_message("update_stat", list(
 		egd = encoded_global_data,
 		ps = ping_str,
 		os = other_str,

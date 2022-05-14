@@ -15,6 +15,7 @@ if (!String.prototype.trim) {
 		return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 	};
 }
+
 /*\
 |*|
 |*|  Polyfill which enables the passage of arbitrary arguments to the
@@ -85,92 +86,6 @@ var split_admin_tabs = false;
 
 var connected = false;
 var commandQueue = [];
-
-Byond.sendMessage('click', {
-	text: "init",
-})
-
-// Byond subscribe wrapper for communication from DM
-Byond.subscribe(function (type, payload) {
-	Byond.sendMessage('click', {
-		text: "shit happ",
-	})
-	if (type === "add_verb_list") {
-		add_verb_list(payload);
-	}
-	if (type === "add_verb_list") {
-		add_verb_list(payload);
-		return;
-	}
-	if (type === "remove_verb_list") {
-		remove_verb_list(payload);
-		return;
-	}
-	if (type === "create_listedturf") {
-		create_listedturf(payload);
-		return;
-	}
-	if (type === "remove_admin_tabs") {
-		remove_admin_tabs();
-		return;
-	}
-	if (type === "update_split_admin_tabs") {
-		update_split_admin_tabs(payload);
-		return;
-	}
-	if (type === "add_admin_tabs") {
-		add_admin_tabs(payload);
-		return;
-	}
-	if (type === "update") {
-		update(payload.egd, payload.ps, payload.os);
-		return;
-	}
-	if (type === "remove_listedturf") {
-		remove_listedturf();
-		return;
-	}
-	if (type === "update_sdql2") {
-		update_sdql2(payload);
-		return;
-	}
-	if (type === "update_mc") {
-		update_mc(payload.gmd, payload.ce);
-		return;
-	}
-	if (type === "update_tickets") {
-		update_tickets(payload);
-		return;
-	}
-	if (type === "update_interviews") {
-		update_interviews(payload);
-		return;
-	}
-	if (type === "update_spells") {
-		update_spells(payload.st, payload.ph);
-		return;
-	}
-	if (type === "update_listedturf") {
-		update_listedturf(payload);
-		return;
-	}
-	if (type === "remove_sdql2") {
-		remove_sdql2();
-		return;
-	}
-	if (type === "check_spells") {
-		check_spells();
-		return;
-	}
-	if (type === "create_debug") {
-		create_debug();
-		return;
-	}
-	if (type === "init_verbs") {
-		init_verbs(payload.p, payload.v);
-		return;
-	}
-});
 
 // Any BYOND verb call must go through this, as if a verb is sent during reconnect then
 // it will cause the reconnect to fail.
@@ -1076,6 +991,7 @@ if (!current_tab) {
 
 window.onload = function () {
 	NotifyByondOnload();
+	window.alert("onload");
 };
 
 function NotifyByondOnload() {
@@ -1102,3 +1018,83 @@ function getCookie(cname) {
 	}
 	return '';
 }
+
+// Byond subscribe wrapper for communication from DM
+Byond.subscribe(function (type, payload) {
+	if(type === 'alert') {
+		window.alert(payload || "null");
+		return;
+	}
+	if (type === "add_verb_list") {
+		add_verb_list(payload);
+		return;
+	}
+	if (type === "remove_verb_list") {
+		remove_verb_list(payload);
+		return;
+	}
+	if (type === "create_listedturf") {
+		create_listedturf(payload);
+		return;
+	}
+	if (type === "remove_admin_tabs") {
+		remove_admin_tabs();
+		return;
+	}
+	if (type === "update_split_admin_tabs") {
+		update_split_admin_tabs(payload);
+		return;
+	}
+	if (type === "add_admin_tabs") {
+		add_admin_tabs(payload);
+		return;
+	}
+	if (type === "update_stat") {
+		update(payload.egd, payload.ps, payload.os);
+		return;
+	}
+	if (type === "remove_listedturf") {
+		remove_listedturf();
+		return;
+	}
+	if (type === "update_sdql2") {
+		update_sdql2(payload);
+		return;
+	}
+	if (type === "update_mc") {
+		update_mc(payload.gmd, payload.ce);
+		return;
+	}
+	if (type === "update_tickets") {
+		update_tickets(payload);
+		return;
+	}
+	if (type === "update_interviews") {
+		update_interviews(payload);
+		return;
+	}
+	if (type === "update_spells") {
+		update_spells(payload.st, payload.ph);
+		return;
+	}
+	if (type === "update_listedturf") {
+		update_listedturf(payload);
+		return;
+	}
+	if (type === "remove_sdql2") {
+		remove_sdql2();
+		return;
+	}
+	if (type === "check_spells") {
+		check_spells();
+		return;
+	}
+	if (type === "create_debug") {
+		create_debug();
+		return;
+	}
+	if (type === "init_verbs") {
+		init_verbs(payload.p, payload.v);
+		return;
+	}
+});

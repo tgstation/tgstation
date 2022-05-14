@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// Instantiate tgui panel
 	tgui_panel = new(src, "browseroutput")
 	// Instantiate stat panel
-	stat_panel = new(src, "custom_popup")
+	stat_panel = new(src, "statbrowser")
 
 	set_right_click_menu_mode(TRUE)
 
@@ -339,7 +339,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// Initialize tgui panel
 	// src << browse(file('html/statbrowser.html'), "window=statbrowser")
-	stat_panel.initialize(inline_html = "<b>Hi!</b>")
+	stat_panel.initialize(inline_html = file2text('html/statbrowser.html'), inline_css = file2text('html/statbrowser.css'))
 	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
 	tgui_panel.initialize()
 

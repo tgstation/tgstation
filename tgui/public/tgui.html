@@ -9,6 +9,7 @@
 
 <!-- Early setup -->
 <script type="text/javascript">
+var Byond = window.Byond = {};
 (function () {
   // Utility functions
   var hasOwn = Object.prototype.hasOwnProperty;
@@ -33,8 +34,6 @@
 
   // BYOND API object
   // ------------------------------------------------------
-
-  var Byond = window.Byond = {};
 
   // Expose inlined metadata
   Byond.windowId = parseMetaTag('tgui:windowId');
