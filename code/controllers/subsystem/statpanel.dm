@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(statpanels)
 	///how many subsystem fires between most tab updates
 	var/default_wait = 10
 	///how many subsystem fires between updates of the status tab
-	var/status_wait = 12
+	var/status_wait = 6
 	///how many subsystem fires between updates of the MC tab
 	var/mc_wait = 5
 	///how many full runs this subsystem has completed. used for variable rate refreshes.
@@ -55,10 +55,10 @@ SUBSYSTEM_DEF(statpanels)
 		if(!target.holder)
 			target.stat_panel.send_message("remove_admin_tabs")
 		else
-			target.stat_panel.send_message("update_split_admin_tabs", list(update = !!(target.prefs.toggles & SPLIT_ADMIN_TABS)))
+			target.stat_panel.send_message("update_split_admin_tabs", !!(target.prefs.toggles & SPLIT_ADMIN_TABS))
 
 			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
-				target.stat_panel.send_message("add_admin_tabs", list(href = target.holder.href_token))
+				target.stat_panel.send_message("add_admin_tabs", target.holder.href_token)
 
 			if(target.stat_tab == "MC" && ((num_fires % mc_wait == 0) || target?.prefs.read_preference(/datum/preference/toggle/fast_mc_refresh)))
 				set_MC_tab(target)
@@ -102,11 +102,11 @@ SUBSYSTEM_DEF(statpanels)
 	var/coord_entry = COORD(eye_turf)
 	if(!mc_data_encoded)
 		generate_mc_data()
-	target.stat_panel.send_message("update_mc", list(mc_data_encoded, coord_entry))
+	target.stat_panel.send_message("update_mc", list(mc_data_encoded, json_encode(coord_entry)))
 
 /datum/controller/subsystem/statpanels/proc/set_tickets_tab(client/target)
 	var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
-	target.stat_panel.send_message("update_tickets", list(tickets = json_encode(ahelp_tickets)))
+	target.stat_panel.send_message("update_tickets", json_encode(ahelp_tickets))
 	var/datum/interview_manager/m = GLOB.interviews
 
 	// get open interview count
@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(statpanels)
 	)
 
 	// Push update
-	target.stat_panel.send_message("update_interviews",	list(data = json_encode(data)))
+	target.stat_panel.send_message("update_interviews", json_encode(data))
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(statpanels)
 		sdql2B = query.generate_stat()
 
 	sdql2A += sdql2B
-	target.stat_panel.send_message("update_sdql2", list(sdql2A = json_encode(sdql2A)))
+	target.stat_panel.send_message("update_sdql2", json_encode(sdql2A))
 
 /datum/controller/subsystem/statpanels/proc/set_spells_tab(client/target, mob/target_mob)
 	var/list/proc_holders = target_mob.get_proc_holders()
@@ -157,7 +157,7 @@ SUBSYSTEM_DEF(statpanels)
 	if(length(proc_holders))
 		proc_holders_encoded = json_encode(proc_holders)
 
-	target.stat_panel.send_message("update_spells", list(target.spell_tabs, proc_holders_encoded))
+	target.stat_panel.send_message("update_spells", list(json_encode(target.spell_tabs), proc_holders_encoded))
 
 /datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
 	var/list/overrides = list()
@@ -195,7 +195,7 @@ SUBSYSTEM_DEF(statpanels)
 			turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
 
 	turfitems = json_encode(turfitems)
-	target.stat_panel.send_message("update_listedturf", list(items = turfitems))
+	target.stat_panel.send_message("update_listedturf", turfitems)
 
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	var/list/mc_data = list(

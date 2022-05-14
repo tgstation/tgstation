@@ -93,4 +93,4 @@
 		output_list[++output_list.len] = list(verb_to_remove.category, verb_to_remove.name)
 	output_list = json_encode(output_list)
 
-	target.stat_panel.send_message("remove_verb_list", list(list = output_list))
+	target.stat_panel.send_message("remove_verb_list", output_list)

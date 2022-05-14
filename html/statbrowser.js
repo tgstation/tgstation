@@ -121,20 +121,6 @@ function connected_to_server() {
 	commandQueue = [];
 }
 
-function update_split_admin_tabs(status) {
-	status = (status == true);
-
-	if (split_admin_tabs !== status) {
-		if (split_admin_tabs === true) {
-			removeStatusTab("Events");
-			removeStatusTab("Fun");
-			removeStatusTab("Game");
-		}
-		update_verbs();
-	}
-	split_admin_tabs = status;
-}
-
 function createStatusTab(name) {
 	if (name.indexOf(".") != -1) {
 		var splitName = name.split(".");
@@ -474,28 +460,15 @@ function draw_mc() {
 	}
 	document.getElementById("statcontent").appendChild(table);
 }
-function update_tickets(T) {
-	tickets = JSON.parse(T);
-	if (!verb_tabs.includes("Tickets")) {
-		verb_tabs.push("Tickets");
-		addPermanentTab("Tickets");
+
+function remove_tickets() {
+	if (tickets) {
+		tickets = [];
+		removePermanentTab("Tickets");
+		if (current_tab == "Tickets")
+			tab_change("Status");
 	}
-	if (current_tab == "Tickets")
-		draw_tickets();
-}
-function update_interviews(I) {
-	interviewManager = JSON.parse(I);
-	if (current_tab == "Tickets")
-		draw_interviews();
-}
-function update_sdql2(S) {
-	sdql2 = JSON.parse(S);
-	if (sdql2.length > 0 && !verb_tabs.includes("SDQL2")) {
-		verb_tabs.push("SDQL2");
-		addPermanentTab("SDQL2");
-	}
-	if (current_tab == "SDQL2")
-		draw_sdql2();
+	checkStatusTab();
 }
 
 function remove_sdql2() {
@@ -508,16 +481,6 @@ function remove_sdql2() {
 	checkStatusTab();
 }
 
-function remove_tickets() {
-	if (tickets) {
-		tickets = [];
-		removePermanentTab("Tickets");
-		if (current_tab == "Tickets")
-			tab_change("Status");
-	}
-	checkStatusTab();
-}
-
 function remove_interviews() {
 	if (tickets) {
 		tickets = [];
@@ -525,31 +488,6 @@ function remove_interviews() {
 	checkStatusTab();
 }
 
-// removes MC, Tickets and MC tabs.
-function remove_admin_tabs() {
-	href_token = null;
-	remove_mc();
-	remove_tickets();
-	remove_sdql2();
-	remove_interviews();
-}
-
-function add_admin_tabs(ht) {
-	href_token = ht;
-	addPermanentTab("MC");
-	addPermanentTab("Tickets");
-}
-function create_listedturf(TN) {
-	remove_listedturf(); // remove the last one if we had one
-	turfname = JSON.parse(TN);
-	addPermanentTab(turfname);
-	tab_change(turfname);
-}
-function update_listedturf(TC) {
-	turfcontents = JSON.parse(TC);
-	if (current_tab == turfname)
-		draw_listedturf();
-}
 function iconError() {
 	var that = this;
 	setTimeout(function () {
@@ -632,6 +570,13 @@ function remove_listedturf() {
 	if (current_tab == turfname)
 		tab_change("Status");
 }
+
+function remove_mc() {
+	removeStatusTab("MC");
+	if (current_tab == "MC")
+		tab_change("Status");
+};
+
 function draw_sdql2() {
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
@@ -871,6 +816,36 @@ function getCookie(cname) {
 	return '';
 }
 
+function add_verb_list(payload) {
+	var to_add = JSON.parse(payload); // list of a list with category and verb inside it
+	to_add.sort(); // sort what we're adding
+	for (var i = 0; i < to_add.length; i++) {
+		var part = to_add[i];
+		if (!part[0])
+			continue;
+		var category = part[0];
+		if (category.indexOf(".") != -1) {
+			var splitName = category.split(".");
+			if (split_admin_tabs && splitName[0] === "Admin")
+				category = splitName[1];
+			else
+				category = splitName[0];
+		}
+		if (findVerbindex(part[1], verbs))
+			continue;
+		if (verb_tabs.includes(category)) {
+			verbs.push(part);
+			if (current_tab == category) {
+				draw_verbs(category); // redraw if we added a verb to the tab we're currently in
+			}
+		} else if (category) {
+			verb_tabs.push(category);
+			verbs.push(part);
+			createStatusTab(category);
+		}
+	}
+};
+
 document[addEventListenerKey]("mouseup", restoreFocus);
 document[addEventListenerKey]("keyup", restoreFocus);
 
@@ -900,37 +875,6 @@ Byond.subscribeTo('update_spells', function (payload) {
 	}
 });
 
-Byond.subscribeTo('add_verb_list', function (payload) {
-	window.alert("add_verb_list")
-	var to_add = JSON.parse(payload); // list of a list with category and verb inside it
-	to_add.sort(); // sort what we're adding
-	for (var i = 0; i < to_add.length; i++) {
-		var part = to_add[i];
-		if (!part[0])
-			continue;
-		var category = part[0];
-		if (category.indexOf(".") != -1) {
-			var splitName = category.split(".");
-			if (split_admin_tabs && splitName[0] === "Admin")
-				category = splitName[1];
-			else
-				category = splitName[0];
-		}
-		if (findVerbindex(part[1], verbs))
-			continue;
-		if (verb_tabs.includes(category)) {
-			verbs.push(part);
-			if (current_tab == category) {
-				draw_verbs(category); // redraw if we added a verb to the tab we're currently in
-			}
-		} else if (category) {
-			verb_tabs.push(category);
-			verbs.push(part);
-			createStatusTab(category);
-		}
-	}
-});
-
 Byond.subscribeTo('remove_verb_list', function (v) {
 	var to_remove = JSON.parse(v);
 	for (var i = 0; i < to_remove.length; i++) {
@@ -945,7 +889,6 @@ Byond.subscribeTo('remove_verb_list', function (v) {
 // passes a 2D list of (verbcategory, verbname) creates tabs and adds verbs to respective list
 // example (IC, Say)
 Byond.subscribeTo('init_verbs', function (payload) {
-	window.alert("init_verbs")
 	connected_to_server();
 	wipe_verbs(); // remove all verb categories so we can replace them
 	checkStatusTab(); // remove all status tabs
@@ -985,17 +928,11 @@ Byond.subscribeTo('update_stat', function (payload) {
 Byond.subscribeTo('update_mc', function (payload) {
 	mc_tab_parts = JSON.parse(payload[0]);
 	mc_tab_parts.splice(0, 0, ["Location:", payload[1]]);
-	if (!verb_tabs.includes("MC"))s
+	if (!verb_tabs.includes("MC"))
 		verb_tabs.push("MC");
 	createStatusTab("MC");
 	if (current_tab == "MC")
 		draw_mc();
-});
-
-Byond.subscribeTo('remove_mc', function () {
-	removeStatusTab("MC");
-	if (current_tab == "MC")
-		tab_change("Status");
 });
 
 Byond.subscribeTo('remove_spells', function () {
@@ -1028,45 +965,88 @@ Byond.subscribeTo('create_debug', function () {
 	}
 });
 
+Byond.subscribeTo('create_listedturf', function (TN) {
+	remove_listedturf(); // remove the last one if we had one
+	turfname = JSON.parse(TN);
+	addPermanentTab(turfname);
+	tab_change(turfname);
+});
+
+Byond.subscribeTo('remove_admin_tabs', function () {
+	href_token = null;
+	remove_mc();
+	remove_tickets();
+	remove_sdql2();
+	remove_interviews();
+});
+
+Byond.subscribeTo('update_listedturf', function (TC) {
+	turfcontents = JSON.parse(TC);
+	if (current_tab == turfname)
+		draw_listedturf();
+});
+
+Byond.subscribeTo('update_interviews', function (I) {
+	interviewManager = JSON.parse(I);
+	if (current_tab == "Tickets")
+		draw_interviews();
+});
+
+Byond.subscribeTo('update_split_admin_tabs', function (status) {
+	status = (status == true);
+
+	if (split_admin_tabs !== status) {
+		if (split_admin_tabs === true) {
+			removeStatusTab("Events");
+			removeStatusTab("Fun");
+			removeStatusTab("Game");
+		}
+		update_verbs();
+	}
+	split_admin_tabs = status;
+});
+
+Byond.subscribeTo('add_admin_tabs', function (ht) {
+	href_token = ht;
+	addPermanentTab("MC");
+	addPermanentTab("Tickets");
+});
+
+Byond.subscribeTo('update_sdql2', function (S) {
+	sdql2 = JSON.parse(S);
+	if (sdql2.length > 0 && !verb_tabs.includes("SDQL2")) {
+		verb_tabs.push("SDQL2");
+		addPermanentTab("SDQL2");
+	}
+	if (current_tab == "SDQL2")
+		draw_sdql2();
+});
+
+Byond.subscribeTo('update_tickets', function (T) {
+	tickets = JSON.parse(T);
+	if (!verb_tabs.includes("Tickets")) {
+		verb_tabs.push("Tickets");
+		addPermanentTab("Tickets");
+	}
+	if (current_tab == "Tickets")
+		draw_tickets();
+});
+
 Byond.subscribe(function (type, payload) {
-	if (type === "create_listedturf") {
-		create_listedturf(payload.name);
-		return;
-	};
-	if (type === "remove_admin_tabs") {
-		remove_admin_tabs();
-		return;
-	};
-	if (type === "update_split_admin_tabs") {
-		update_split_admin_tabs(payload.update);
-		return;
-	};
-	if (type === "add_admin_tabs") {
-		add_admin_tabs(payload.href);
-		return;
-	};
 	if (type === "remove_listedturf") {
 		remove_listedturf();
 		return;
-	};
-	if (type === "update_sdql2") {
-		update_sdql2(payload.sdql2A);
-		return;
-	};
-	if (type === "update_tickets") {
-		update_tickets(payload.tickets);
-		return;
-	};
-	if (type === "update_interviews") {
-		update_interviews(payload.data);
-		return;
-	};
-	if (type === "update_listedturf") {
-		update_listedturf(payload.items);
-		return;
-	};
+	}
 	if (type === "remove_sdql2") {
 		remove_sdql2();
 		return;
-	};
+	}
+	if (type === "remove_mc") {
+		remove_mc();
+		return;
+	}
+	if (type === "add_verb_list") {
+		add_verb_list(payload);
+		return;
+	}
 });
