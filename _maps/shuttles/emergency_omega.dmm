@@ -108,10 +108,10 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/sunny/style_random,
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -196,10 +196,10 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aI" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/shuttle/escape)
@@ -231,11 +231,11 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aO" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "aP" = (

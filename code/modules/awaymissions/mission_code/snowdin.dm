@@ -473,13 +473,7 @@
 
 //objs//--
 
-/obj/structure/flora/rock/icy
-	name = "icy rock"
-	color = rgb(204,233,235)
-
-/obj/structure/flora/rock/pile/icy
-	name = "icey rocks"
-	color = rgb(204,233,235)
+//ice rocks moved to flora.dm
 
 //decals//--
 /obj/effect/turf_decal/snowdin_station_sign

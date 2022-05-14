@@ -89,11 +89,11 @@
 /turf/open/misc/beach/coastline_b,
 /area/awaymission/beach)
 "as" = (
-/obj/structure/flora/rock{
+/obj/structure/flora/rock/style_random{
 	desc = "A volcanic rock.";
 	name = "coastal rock"
 	},
-/obj/structure/flora/ausbushes/stalkybush{
+/obj/structure/flora/bush/stalky/style_random{
 	desc = "It can't be smoked.";
 	name = "sea weed"
 	},
@@ -106,7 +106,7 @@
 	},
 /area/awaymission/beach)
 "at" = (
-/obj/structure/flora/rock{
+/obj/structure/flora/rock/style_random{
 	desc = "A volcanic rock.";
 	name = "coastal rock"
 	},
