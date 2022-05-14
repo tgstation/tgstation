@@ -1,6 +1,5 @@
 // Polyfills and compatibility ------------------------------------------------
 var decoder = decodeURIComponent || unescape;
-var addEventListenerKey = (document.addEventListener ? 'addEventListener' : 'attachEvent'); // IE8 handling for Wine users
 var textContentKey = (typeof document.body.textContent != 'undefined') ? 'textContent' : 'innerText';
 if (!Array.prototype.includes) {
 	Array.prototype.includes = function (thing) {
@@ -846,8 +845,8 @@ function add_verb_list(payload) {
 	}
 };
 
-document[addEventListenerKey]("mouseup", restoreFocus);
-document[addEventListenerKey]("keyup", restoreFocus);
+document.addEventListener("mouseup", restoreFocus);
+document.addEventListener("keyup", restoreFocus);
 
 if (!current_tab) {
 	addPermanentTab("Status");
