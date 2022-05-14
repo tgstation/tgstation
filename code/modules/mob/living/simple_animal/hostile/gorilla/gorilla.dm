@@ -86,7 +86,8 @@
 			visible_message(span_danger("[src] knocks [living_target] down!"))
 
 /mob/living/simple_animal/hostile/gorilla/CanAttack(atom/the_target)
-	return ..() && !ismonkey(the_target) && (LAZYLEN(get_target_bodyparts(target)) > 3)
+	var/list/parts = get_target_bodyparts(target)
+	return ..() && !ismonkey(the_target) && (!parts || length(parts) > 3)
 
 /mob/living/simple_animal/hostile/gorilla/CanSmashTurfs(turf/T)
 	return iswallturf(T)

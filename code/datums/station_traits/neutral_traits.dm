@@ -133,6 +133,8 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 1
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
+	/// The gorilla we created
+	var/mob/living/simple_animal/hostile/gorilla/cargo_domestic/cargorilla
 
 /datum/station_trait/cargorilla/New()
 	. = ..()
@@ -145,10 +147,29 @@
 	if(!cargo_sloth)
 		return
 
-	var/mob/living/simple_animal/hostile/gorilla/cargo_domestic/cargorilla = new(cargo_sloth.loc)
+	cargorilla = new(cargo_sloth.loc)
 	cargorilla.name = cargo_sloth.name
 	qdel(cargo_sloth)
 
 	var/obj/vehicle/sealed/mecha/working/ripley/cargo/cargo_mech = locate()
 	if(cargo_mech)
 		qdel(cargo_mech)
+
+/datum/station_trait/cargorilla/on_round_start()
+	if(!cargorilla)
+		return
+
+	INVOKE_ASYNC(src, .proc/get_ghost_for_gorilla, cargorilla)
+	cargorilla = null
+
+/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/gorilla)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(
+		"Do you want to play as a Cargorilla?",
+		jobban_type = ROLE_SENTIENCE,
+		poll_time = 30 SECONDS,
+		target_mob = gorilla,
+	)
+
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/picked = pick(candidates)
+		gorilla.key = picked.key
