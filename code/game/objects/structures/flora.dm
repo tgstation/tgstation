@@ -4,9 +4,11 @@
 	anchored = TRUE
 	/// Flags for the flora to determine what kind of sound to play when it gets hit
 	var/flora_flags = NONE
+
+	/// A lazylist of products that could be created when harvesting this flora, syntax is (type = weight)
+	var/product_types = null
 	
 	//Temporary variables to work off of, make this modular as if it were a component and document later
-	var/harvest = null
 	var/harvested_name as text
 	var/harvested_desc as text
 	var/harvest_amount_low = 1
@@ -20,6 +22,7 @@
 	var/harvested = FALSE
 	var/needs_sharp_harvest = TRUE
 	var/delete_on_harvest = FALSE
+	var/harvest_message_true_thresholds = FALSE	//Whether or not to divide the messages into thirds depending on how much was harvested
 
 /obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(flora_flags == NONE)
@@ -31,28 +34,71 @@
 	if(flora_flags & FLORA_STONE)
 		playsound(src, SFX_ROCK_TAP, 50, vary = FALSE)
 
-/obj/structure/flora/proc/harvest(user)
-	if(harvested || !harvest)
-		return FALSE
+/obj/structure/flora/proc/get_products_list()
+	. = list()
+	if(!LAZYLEN(product_types))
+		return
 
-	var/rand_harvested = rand(harvest_amount_low, harvest_amount_high)
-	if(rand_harvested)
-		if(user)
-			var/msg = harvest_message_med
-			if(rand_harvested == harvest_amount_low && harvest_message_low)
-				msg = harvest_message_low
-			else if(rand_harvested == harvest_amount_high && harvest_message_high)
-				msg = harvest_message_high
-			to_chat(user, span_notice("[msg]"))
-		for(var/i in 1 to rand_harvested)
-			new harvest(get_turf(src))
+	var/harvest_amount = rand(harvest_amount_low, harvest_amount_high)
+	for(var/iteration in 1 to harvest_amount)
+		var/chosen_product = pick_weight(product_types)
+		if(!.[chosen_product])
+			.[chosen_product] = 0
+		.[chosen_product]++
+
+/obj/structure/flora/proc/harvest(user)
+	. = FALSE
+	if(harvested && !LAZYLEN(product_types))
+		return
+	
+	var/list/products_to_create = get_products_list()
+	if(!products_to_create.len)
+		return
+
+	var/products_created = 0
+	var/turf/turf_below = get_turf(src)
+
+	//This loop creates new products on the turf of our flora, but checks if it's an item stack
+	//If it *is* an item stack, we don't want to go through 50 different iterations of a new object where it just gets qdeleted after the first
+	for(var/product in products_to_create)
+		var/amount_to_create = products_to_create[product]
+		products_created += amount_to_create
+		if(ispath(product, /obj/item/stack))
+			var/product_left = amount_to_create
+			while(product_left > 0)
+				var/obj/item/stack/new_stack = new product(turf_below)
+				product_left -= new_stack.amount = min(product_left, new_stack.max_amount)
+		else
+			for(var/iteration in 1 to amount_to_create)
+				new product(turf_below)
+
+	//This bit of code determines what should be shown to the user when this is harvested
+	var/message = harvest_message_med || harvest_message_high || harvest_message_low
+	if(user)
+		if(harvest_message_true_thresholds) //Old method of how the harvest messages worked. Useful depending on the context you want to implement
+			if(products_created == harvest_amount_low && harvest_message_low)
+				message = harvest_message_low
+			if(products_created == harvest_amount_high && harvest_message_high)
+				message = harvest_message_high
+		else //New method of determining the message to display. Separates the messages into 3 different viable "regions" [   ][   ][   ]
+			var/comparison = products_created - harvest_amount_low //Avoiding unnecessary math
+			var/middle_value = round((harvest_amount_high - harvest_amount_low)/2) + harvest_amount_low //The exact (rounded) middle between the high and low
+			if(comparison < (middle_value - harvest_amount_low)/2 && harvest_message_low) //[***][   ][   ]
+				message = harvest_message_low
+			if(comparison > (harvest_message_high - middle_value)/2 && harvest_message_high) //[   ][   ][***]
+				message = harvest_message_high
+			//[   ][***][   ] use the default message if none of the above applies
+
+		to_chat(user, span_notice(message))
+		
 
 	if(harvested_name)
 		name = harvested_name
 	if(harvested_desc)
 		desc = harvested_desc
 	harvested = TRUE
-	addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
+	if(!delete_on_harvest)
+		addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
 	return TRUE
 
 /obj/structure/flora/proc/after_harvest(user)
@@ -95,7 +141,7 @@
 	pixel_x = -16
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
-	harvest = /obj/item/grown/log/tree
+	product_types = list(/obj/item/grown/log/tree = 1)
 	harvest_amount_low = 6
 	harvest_amount_high = 10
 	harvest_message_low = "You manage to gather a few logs from the tree."
@@ -121,7 +167,7 @@
 	icon_state = "tree_stump"
 	density = FALSE
 	pixel_x = -16
-	harvest = /obj/item/grown/log/tree
+	product_types = list(/obj/item/grown/log/tree = 1)
 	harvest_amount_low = 1
 	harvest_amount_high = 1
 	harvest_message_low = "You manage to cut up the stump from the ground, somehow."
@@ -286,7 +332,7 @@
 	desc = "A patch of overgrown grass."
 	icon = 'icons/obj/flora/snowflora.dmi'
 	gender = PLURAL //"this is grass" not "this is a grass"
-	harvest = /obj/item/food/grown/grass
+	product_types = list(/obj/item/food/grown/grass = 10, /obj/item/seeds/grass = 1)
 	harvest_amount_low = 0
 	harvest_amount_high = 2
 	harvest_message_low = "You uproot the grass from the ground, just for the fun of it."
@@ -621,7 +667,7 @@
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE
-	harvest = /obj/item/stack/ore/glass/basalt
+	product_types = list(/obj/item/stack/ore/glass/basalt = 1)
 	harvest_amount_low = 10
 	harvest_amount_high = 20
 	harvest_message_med = "You finish mining the rock."
