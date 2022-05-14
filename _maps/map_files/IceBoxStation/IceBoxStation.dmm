@@ -22785,10 +22785,6 @@
 /obj/item/clothing/under/misc/burial,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
-"hlU" = (
-/obj/machinery/door/window/right/directional/east,
-/turf/closed/wall,
-/area/station/maintenance/starboard/lesser)
 "hmb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -181493,7 +181489,7 @@ aCo
 hMw
 jre
 xMq
-hlU
+jre
 nmg
 jre
 tjo
