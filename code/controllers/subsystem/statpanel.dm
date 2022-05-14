@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(statpanels)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
-		encoded_global_data = json_encode(global_data)
+		encoded_global_data = global_data
 		src.currentrun = GLOB.clients.Copy()
 		mc_data_encoded = null
 
@@ -94,7 +94,7 @@ SUBSYSTEM_DEF(statpanels)
 		return
 
 	var/ping_str = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)"
-	var/other_str = json_encode(target.mob?.get_status_tab_items())
+	var/other_str = target.mob?.get_status_tab_items()
 	target.stat_panel.send_message("update_stat", list(encoded_global_data, ping_str, other_str))
 
 /datum/controller/subsystem/statpanels/proc/set_MC_tab(client/target)
@@ -102,11 +102,11 @@ SUBSYSTEM_DEF(statpanels)
 	var/coord_entry = COORD(eye_turf)
 	if(!mc_data_encoded)
 		generate_mc_data()
-	target.stat_panel.send_message("update_mc", list(mc_data_encoded, json_encode(coord_entry)))
+	target.stat_panel.send_message("update_mc", list(mc_data_encoded, coord_entry))
 
 /datum/controller/subsystem/statpanels/proc/set_tickets_tab(client/target)
 	var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
-	target.stat_panel.send_message("update_tickets", json_encode(ahelp_tickets))
+	target.stat_panel.send_message("update_tickets", ahelp_tickets)
 	var/datum/interview_manager/m = GLOB.interviews
 
 	// get open interview count
@@ -134,7 +134,7 @@ SUBSYSTEM_DEF(statpanels)
 	)
 
 	// Push update
-	target.stat_panel.send_message("update_interviews", json_encode(data))
+	target.stat_panel.send_message("update_interviews", data)
 
 /datum/controller/subsystem/statpanels/proc/set_SDQL2_tab(client/target)
 	var/list/sdql2A = list()
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(statpanels)
 		sdql2B = query.generate_stat()
 
 	sdql2A += sdql2B
-	target.stat_panel.send_message("update_sdql2", json_encode(sdql2A))
+	target.stat_panel.send_message("update_sdql2", sdql2A)
 
 /datum/controller/subsystem/statpanels/proc/set_spells_tab(client/target, mob/target_mob)
 	var/list/proc_holders = target_mob.get_proc_holders()
@@ -155,9 +155,9 @@ SUBSYSTEM_DEF(statpanels)
 
 	var/proc_holders_encoded = ""
 	if(length(proc_holders))
-		proc_holders_encoded = json_encode(proc_holders)
+		proc_holders_encoded = proc_holders
 
-	target.stat_panel.send_message("update_spells", list(json_encode(target.spell_tabs), proc_holders_encoded))
+	target.stat_panel.send_message("update_spells", list(target.spell_tabs, proc_holders_encoded))
 
 /datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
 	var/list/overrides = list()
@@ -194,7 +194,7 @@ SUBSYSTEM_DEF(statpanels)
 		else
 			turfitems[++turfitems.len] = list("[turf_content.name]", REF(turf_content))
 
-	turfitems = json_encode(turfitems)
+	turfitems = turfitems
 	target.stat_panel.send_message("update_listedturf", turfitems)
 
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
@@ -212,7 +212,7 @@ SUBSYSTEM_DEF(statpanels)
 	for(var/datum/controller/subsystem/sub_system as anything in Master.subsystems)
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), "\ref[sub_system]")
 	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", "\ref[GLOB.cameranet]")
-	mc_data_encoded = json_encode(mc_data)
+	mc_data_encoded = mc_data
 
 ///immediately update the active statpanel tab of the target client
 /datum/controller/subsystem/statpanels/proc/immediate_send_stat_data(client/target)

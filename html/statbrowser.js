@@ -816,7 +816,7 @@ function getCookie(cname) {
 }
 
 function add_verb_list(payload) {
-	var to_add = JSON.parse(payload); // list of a list with category and verb inside it
+	var to_add = payload; // list of a list with category and verb inside it
 	to_add.sort(); // sort what we're adding
 	for (var i = 0; i < to_add.length; i++) {
 		var part = to_add[i];
@@ -858,14 +858,14 @@ window.onload = function () {
 };
 
 Byond.subscribeTo('update_spells', function (payload) {
-	spell_tabs = JSON.parse(payload[0]);
+	spell_tabs = payload[0];
 	var do_update = false;
 	if (spell_tabs.includes(current_tab)) {
 		do_update = true;
 	}
 	init_spells();
 	if (payload[1]) {
-		spells = JSON.parse(payload[1]);
+		spells = payload[1];
 		if (do_update) {
 			draw_spells(current_tab);
 		}
@@ -875,7 +875,7 @@ Byond.subscribeTo('update_spells', function (payload) {
 });
 
 Byond.subscribeTo('remove_verb_list', function (v) {
-	var to_remove = JSON.parse(v);
+	var to_remove = v;
 	for (var i = 0; i < to_remove.length; i++) {
 		remove_verb(to_remove[i]);
 	}
@@ -891,7 +891,7 @@ Byond.subscribeTo('init_verbs', function (payload) {
 	connected_to_server();
 	wipe_verbs(); // remove all verb categories so we can replace them
 	checkStatusTab(); // remove all status tabs
-	verb_tabs = JSON.parse(payload[0]);
+	verb_tabs = payload[0];
 	verb_tabs.sort(); // sort it
 	var do_update = false;
 	var cat = "";
@@ -914,9 +914,9 @@ Byond.subscribeTo('init_verbs', function (payload) {
 
 Byond.subscribeTo('update_stat', function (payload) {
 	status_tab_parts = [payload[1]];
-	var parsed = JSON.parse(payload[0]);
+	var parsed = payload[0];
 	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
-	parsed = JSON.parse(payload[2]);
+	parsed = payload[2];
 	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
 	if (current_tab == "Status")
 		draw_status();
@@ -925,7 +925,7 @@ Byond.subscribeTo('update_stat', function (payload) {
 });
 
 Byond.subscribeTo('update_mc', function (payload) {
-	mc_tab_parts = JSON.parse(payload[0]);
+	mc_tab_parts = payload[0];
 	mc_tab_parts.splice(0, 0, ["Location:", payload[1]]);
 	if (!verb_tabs.includes("MC"))
 		verb_tabs.push("MC");
@@ -966,7 +966,7 @@ Byond.subscribeTo('create_debug', function () {
 
 Byond.subscribeTo('create_listedturf', function (TN) {
 	remove_listedturf(); // remove the last one if we had one
-	turfname = JSON.parse(TN);
+	turfname = TN;
 	addPermanentTab(turfname);
 	tab_change(turfname);
 });
@@ -980,13 +980,13 @@ Byond.subscribeTo('remove_admin_tabs', function () {
 });
 
 Byond.subscribeTo('update_listedturf', function (TC) {
-	turfcontents = JSON.parse(TC);
+	turfcontents = TC;
 	if (current_tab == turfname)
 		draw_listedturf();
 });
 
 Byond.subscribeTo('update_interviews', function (I) {
-	interviewManager = JSON.parse(I);
+	interviewManager = I;
 	if (current_tab == "Tickets")
 		draw_interviews();
 });
@@ -1012,7 +1012,7 @@ Byond.subscribeTo('add_admin_tabs', function (ht) {
 });
 
 Byond.subscribeTo('update_sdql2', function (S) {
-	sdql2 = JSON.parse(S);
+	sdql2 = S;
 	if (sdql2.length > 0 && !verb_tabs.includes("SDQL2")) {
 		verb_tabs.push("SDQL2");
 		addPermanentTab("SDQL2");
@@ -1022,7 +1022,7 @@ Byond.subscribeTo('update_sdql2', function (S) {
 });
 
 Byond.subscribeTo('update_tickets', function (T) {
-	tickets = JSON.parse(T);
+	tickets = T;
 	if (!verb_tabs.includes("Tickets")) {
 		verb_tabs.push("Tickets");
 		addPermanentTab("Tickets");
