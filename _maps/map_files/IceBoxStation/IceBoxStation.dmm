@@ -2259,9 +2259,8 @@
 /turf/open/floor/iron,
 /area/station/science/mixing)
 "aMO" = (
-/obj/machinery/vending/dinnerware,
 /obj/structure/sign/poster/random/directional/east,
-/turf/open/floor/iron/cafeteria,
+/turf/closed/wall,
 /area/station/service/kitchen)
 "aMP" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -21962,13 +21961,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "gZK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/airalarm/directional/south,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/machinery/chem_master/condimaster,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "gZO" = (
@@ -58650,13 +58643,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/eva/lower)
 "sWj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "sWl" = (
@@ -70685,6 +70672,10 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/commons/lounge)
+"wMx" = (
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "wMz" = (
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	color = "#0000ff";
@@ -179437,8 +179428,8 @@ fzK
 xqz
 ybm
 pXb
+ldY
 aMO
-cpY
 cpY
 tjo
 tjo
@@ -179694,7 +179685,7 @@ fzK
 kfG
 uZN
 pXb
-cpY
+gZK
 cpY
 tjo
 tjo
@@ -179950,9 +179941,9 @@ jFe
 fzK
 pqV
 pZE
+pXb
 sWj
 cpY
-xMq
 tjo
 tjo
 tjo
@@ -180207,9 +180198,9 @@ jre
 jre
 jre
 roc
-gZK
+pXb
+wMx
 cpY
-xMq
 xMq
 tjo
 tjo
