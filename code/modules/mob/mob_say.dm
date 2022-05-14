@@ -28,8 +28,14 @@
 	if(message)
 		SSspeech_controller.queue_say_for_mob(src, message, SPEECH_CONTROLLER_QUEUE_WHISPER_VERB)
 
-///whisper a message
-/mob/proc/whisper(message, datum/language/language=null)
+/**
+ * Whisper a message.
+ *
+ * Basic level implementation just speaks the message, nothing else.
+ */
+/mob/proc/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language, ignore_spam = FALSE, forced, filterproof)
+	if(!message)
+		return
 	say(message, language = language)
 
 ///The me emote verb

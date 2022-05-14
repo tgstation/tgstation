@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /// Does not check anything involving potential targets.
 /datum/action/cooldown/spell/proc/can_cast_spell(feedback = TRUE)
 	if(!owner)
-		CRASH("Spell can_cast_spell called on a spell without an owner!")
+		CRASH("[type] - can_cast_spell called on a spell without an owner!")
 
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)
@@ -143,13 +143,18 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		return FALSE
 
 	if((spell_requirements & SPELL_REQUIRES_MIND) && !owner.mind)
+		// No point in feedback here, as mindless mobs aren't players
 		return FALSE
 
 	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !owner.mind?.miming)
+		// In the future this can be moved out of spell checks exactly
 		if(feedback)
 			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
 		return FALSE
 
+	// If the spell requires the user has no antimagic equipped,
+	// and they're holding antimagic that corresponds with the spell's antimagic,
+	// then they can't actually cast the spell
 	if((spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC) && !owner.can_cast_magic(antimagic_flags))
 		if(feedback)
 			to_chat(owner, span_warning("Some form of antimagic is preventing you from casting [src]!"))
@@ -174,11 +179,13 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 				return FALSE
 
 	else
+		// If the spell requires wizard equipment and we're not a human (can't wear robes or hats), that's just a given
 		if(spell_requirements & (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_HUMAN))
 			if(feedback)
 				to_chat(owner, span_warning("[src] can only be cast by humans!"))
 			return FALSE
 
+		// I'm not sure if this can even feasibly come into play anymore, but might as well keep it
 		if((spell_requirements & SPELL_REQUIRES_NON_ABSTRACT) && (isbrain(owner) || ispAI(owner)))
 			if(feedback)
 				to_chat(owner, span_warning("[src] can only be cast by physical beings!"))
@@ -188,9 +195,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 /**
  * Check if the target we're casting on is a valid target.
- *
- * For spells with click_to_activate = TRUE, cast_on will be whatever is clicked
- * For all other spells, cast_on will be the caster of the spell unless passed otherwise
+ * For self-casted spells, the target being checked / cast_on is the caster.
  *
  * Return TRUE if cast_on is valid, FALSE otherwise
  */
@@ -277,21 +282,18 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
+	if(owner)
+		SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
 
-	if(!owner)
-		return
+		if(sparks_amt)
+			do_sparks(sparks_amt, FALSE, get_turf(owner))
 
-	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
+		if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
+			var/datum/effect_system/smoke = new smoke_type()
+			smoke.set_up(smoke_amt, get_turf(owner))
+			smoke.start()
 
-	if(sparks_amt)
-		do_sparks(sparks_amt, FALSE, get_turf(owner))
-
-	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
-		var/datum/effect_system/smoke = new smoke_type()
-		smoke.set_up(smoke_amt, get_turf(owner))
-		smoke.start()
-
-/// Provides feedback after a spell cast occurs, in the form of a cast sound or invocation
+/// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation
 /datum/action/cooldown/spell/proc/spell_feedback()
 	if(!owner)
 		return
@@ -305,16 +307,17 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell/proc/invocation()
 	switch(invocation_type)
 		if(INVOCATION_SHOUT)
-			//Auto-mute? Fuck that noise
 			if(prob(50))
 				owner.say(invocation, forced = "spell ([src])")
 			else
 				owner.say(replacetext(invocation," ","`"), forced = "spell ([src])")
+
 		if(INVOCATION_WHISPER)
 			if(prob(50))
-				owner.whisper(invocation)
+				owner.whisper(invocation, forced = "spell ([src])")
 			else
-				owner.whisper(replacetext(invocation," ","`"))
+				owner.whisper(replacetext(invocation," ","`"), forced = "spell ([src])")
+
 		if(INVOCATION_EMOTE)
 			owner.visible_message(invocation, invocation_self_message)
 
