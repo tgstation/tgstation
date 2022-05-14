@@ -7768,6 +7768,15 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
+"PS" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/hall)
 "PV" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-25"
@@ -8649,7 +8658,7 @@ eA
 gw
 bw
 gz
-gi
+PS
 gi
 ne
 gi
