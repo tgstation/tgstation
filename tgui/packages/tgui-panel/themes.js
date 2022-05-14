@@ -26,6 +26,10 @@ export const setClientTheme = name => {
   // Transmit once for fast updates and again in a little while in case we won
   // the race against statbrowser init.
   clearInterval(setClientThemeTimer);
+  Byond.command(`.output statbrowser:set_theme ${name}`);
+  setClientThemeTimer = setTimeout(() => {
+    Byond.command(`.output statbrowser:set_theme ${name}`);
+  }, 1500);
 
   if (name === 'light') {
     return Byond.winset({
@@ -58,8 +62,6 @@ export const setClientTheme = name => {
       'output.text-color': '#000000',
       'statwindow.background-color': 'none',
       'statwindow.text-color': '#000000',
-      'statbrowser.background-color': 'none',
-      'statbrowser.text-color': '#000000',
       'stat.background-color': '#FFFFFF',
       'stat.tab-background-color': 'none',
       'stat.text-color': '#000000',
@@ -110,8 +112,6 @@ export const setClientTheme = name => {
       'output.text-color': COLOR_DARK_TEXT,
       'statwindow.background-color': COLOR_DARK_BG_DARKER,
       'statwindow.text-color': COLOR_DARK_TEXT,
-      'statbrowser.background-color': COLOR_DARK_BG_DARKER,
-      'statbrowser.text-color': COLOR_DARK_TEXT,
       'stat.background-color': COLOR_DARK_BG_DARKER,
       'stat.tab-background-color': COLOR_DARK_BG,
       'stat.text-color': COLOR_DARK_TEXT,

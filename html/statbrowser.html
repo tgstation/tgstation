@@ -3,9 +3,6 @@
 <div id="statcontent"></div>
 
 <script>
-	Byond.subscribeTo('alert', function(payload) {
-		window.alert("ALERT");
-	});
 	// Polyfills and compatibility ------------------------------------------------
 	var decoder = decodeURIComponent || unescape;
 	var addEventListenerKey = (document.addEventListener ? 'addEventListener' : 'attachEvent'); // IE8 handling for Wine users
@@ -100,12 +97,10 @@
 	// This function will either call immediately, or queue until
 	// BYOND confirms we are connected.
 	function send_byond_command(command) {
-		var href = "byond://winset?command=" + command;
-
 		if (connected) {
-			window.location.href = href;
+			Byond.command(command);
 		} else {
-			commandQueue.push(href);
+			commandQueue.push(command);
 		}
 	}
 
@@ -125,7 +120,7 @@
 
 		for (var index = 0; index < commandQueue.length; index++) {
 			// This is just setting it a lot, is this not going to cancel?
-			window.location.href = commandQueue[index];
+			Byond.command(commandQueue[index]);
 		}
 
 		commandQueue = [];
@@ -968,6 +963,17 @@
 			}
 		}
 	}
+
+	function set_theme(which) {
+		if (which == "light") {
+			document.body.className = "";
+			set_style_sheet("browserOutput_white");
+		} else if (which == "dark") {
+			document.body.className = "dark";
+			set_style_sheet("browserOutput");
+		}
+	}
+
 	function set_style_sheet(sheet) {
 		if (document.getElementById("goonStyle")) {
 			var currentSheet = document.getElementById("goonStyle");
@@ -1003,7 +1009,7 @@
 	};
 
 	function NotifyByondOnload() {
-		window.location.href = "byond://winset?command=Panel-Ready";
+		Byond.command("Panel-Ready")
 	}
 
 	function create_debug() {
@@ -1026,8 +1032,6 @@
 		}
 		return '';
 	}
-
-	window.alert(Byond.windowId);
 
 	// Byond subscribe wrapper for communication from DM
 	function setupSubscribe() {
