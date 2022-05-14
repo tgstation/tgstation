@@ -16,7 +16,6 @@
 /turf/open/lava/smooth,
 /area/ruin/powered/pride)
 "j" = (
-/obj/structure/mirror/magic/pride,
 /turf/closed/wall/mineral/silver,
 /area/ruin/powered/pride)
 "k" = (
@@ -90,6 +89,12 @@
 "G" = (
 /turf/closed/wall/mineral/cult,
 /area/ruin/powered/pride)
+"H" = (
+/obj/structure/mirror/magic/pride{
+	pixel_y = 26
+	},
+/turf/open/floor/mineral/silver,
+/area/ruin/powered/pride)
 "J" = (
 /obj/structure/stone_tile{
 	dir = 1
@@ -112,7 +117,7 @@
 "N" = (
 /obj/structure/stone_tile/center,
 /obj/structure/stone_tile/surrounding/burnt,
-/obj/machinery/door/airlock/cult/unruned,
+/obj/machinery/door/airlock/cult/unruned/friendly,
 /turf/open/lava/smooth,
 /area/ruin/powered/pride)
 "O" = (
@@ -225,7 +230,7 @@ c
 c
 G
 j
-r
+H
 S
 y
 z
