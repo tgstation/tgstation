@@ -8,6 +8,9 @@
 	desc = "Here's your chance, do your dance at the Space Jam."
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
+/obj/item/toy/basketball/Initialize()
+	. = ..()
+	AddComponent(/datum/component/knockoff, knockoff_chance=30, zone_override=list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM), slots_knockoffable=list(ITEM_SLOT_HANDS))
 
 /obj/structure/hoop
 	name = "basketball hoop"
@@ -38,7 +41,8 @@
 			living_baller.apply_damage(50, STAMINA) //failing a dunk is universally taxing
 		ball_exp = 5
 		user?.mind.adjust_experience(/datum/skill/balling, ball_exp)
-		visible_message(span_danger("[user] fumbles the dunk!"))
+		playsound(src, 'sound/weapons/gun/general/grenade_launch.ogg', 50, TRUE)
+		visible_message(span_warning("[user] fumbles the dunk!"))
 		user.dropItemToGround(dunk_object)
 		step(dunk_object, pick(NORTH,SOUTH,EAST,WEST))
 		return
@@ -50,7 +54,8 @@
 			living_baller.apply_damage(stam_cost, STAMINA)
 		ball_exp = 20
 		user?.mind.adjust_experience(/datum/skill/balling, ball_exp)
-		visible_message(span_warning("[user] dunks [dunk_object] into \the [src]!"))
+		playsound(src, 'sound/weapons/thudswoosh.ogg', 130, TRUE)
+		visible_message(span_boldnicegreen("[user] dunks [dunk_object] into \the [src]!"))
 
 /obj/structure/hoop/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -65,8 +70,7 @@
 		victim.Paralyze(100)
 		visible_message(span_danger("[user] dunks [victim] into \the [src]!"))
 		user.stop_pulling()
-	else
-		..()
+
 /**
 * this proc is for when a hoop is hit by a thrown item, and calculates whether it goes in
 *
@@ -98,6 +102,6 @@
 		return ..()
 
 	thrownitem.forceMove(get_turf(src))
+	playsound(src, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 2)
 	baller?.mind.adjust_experience(/datum/skill/balling, ball_exp)
-	visible_message(span_warning("Swish! [thrownitem] lands in [src]."))
-	return
+	visible_message(span_nicegreen("Swish! [thrownitem] lands in [src]."))

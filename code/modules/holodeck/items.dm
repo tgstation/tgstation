@@ -60,12 +60,12 @@
 /obj/item/toy/beach_ball/dodgeball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if((ishuman(hit_atom)))
-		var/mob/living/carbon/M = hit_atom
+		var/mob/living/carbon/victim = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, TRUE)
-		M.apply_damage(10, STAMINA)
+		victim.apply_damage(10, STAMINA)
 		if(prob(5))
-			M.Paralyze(60)
-			visible_message(span_danger("[M] is knocked right off [M.p_their()] feet!"))
+			victim.Paralyze(60)
+			visible_message(span_danger("[victim] is knocked right off [victim.p_their()] feet!"))
 
 //
 // Machines

@@ -34,6 +34,10 @@
 		return
 	if(!wearer.dropItemToGround(item))
 		return
+	if(istype(item, /obj/item/toy/basketball))
+		wearer.visible_message(span_boldwarning("[attacker] swats the [item.name] out of [wearer]'s hand!"),span_userdanger("[attacker] steals your [item.name]!"))
+		playsound(item, 'sound/items/dodgeball.ogg', 50, TRUE)
+		return
 	wearer.visible_message(span_warning("[attacker] knocks off [wearer]'s [item.name]!"),span_userdanger("[attacker] knocks off your [item.name]!"))
 
 ///Tries to knockoff the item when user is knocked down
