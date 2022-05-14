@@ -988,12 +988,12 @@
 	priority_group = PRIORITY_FORMATION
 	name = "Proto Nitrate Formation"
 	id = "proto_nitrate_formation"
-	desc = "Production of proto-nitrate from pluoxium and hydrogen under high temperatures."
+	desc = "Production of proto-nitrate from pluoxium and nitrogen under high temperatures."
 
 /datum/gas_reaction/proto_nitrate_formation/init_reqs()
 	requirements = list(
 		/datum/gas/pluoxium = MINIMUM_MOLE_COUNT,
-		/datum/gas/hydrogen = MINIMUM_MOLE_COUNT,
+		/datum/gas/nitrogen = MINIMUM_MOLE_COUNT,
 		"MIN_TEMP" = PN_FORMATION_MIN_TEMPERATURE,
 		"MAX_TEMP" = PN_FORMATION_MAX_TEMPERATURE,
 	)
@@ -1002,13 +1002,13 @@
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
-	var/heat_efficency = min(temperature * 0.005, cached_gases[/datum/gas/pluoxium][MOLES] * INVERSE(0.2), cached_gases[/datum/gas/hydrogen][MOLES] * INVERSE(2))
-	if (heat_efficency <= 0 || (cached_gases[/datum/gas/pluoxium][MOLES] - heat_efficency * 0.2 < 0 ) || (cached_gases[/datum/gas/hydrogen][MOLES] - heat_efficency * 2 < 0)) //Shouldn't produce gas from nothing.
+	var/heat_efficency = min(temperature * 0.005, cached_gases[/datum/gas/pluoxium][MOLES] * INVERSE(0.2), cached_gases[/datum/gas/nitrogen][MOLES] * INVERSE(2))
+	if (heat_efficency <= 0 || (cached_gases[/datum/gas/pluoxium][MOLES] - heat_efficency * 0.2 < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency * 2 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
 	var/old_heat_capacity = air.heat_capacity()
 	ASSERT_GAS(/datum/gas/proto_nitrate, air)
-	cached_gases[/datum/gas/hydrogen][MOLES] -= heat_efficency * 2
+	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency * 2
 	cached_gases[/datum/gas/pluoxium][MOLES] -= heat_efficency * 0.2
 	cached_gases[/datum/gas/proto_nitrate][MOLES] += heat_efficency * 2.2
 

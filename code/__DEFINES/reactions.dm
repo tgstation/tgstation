@@ -218,13 +218,13 @@
 #define ZAUKER_DECOMPOSITION_ENERGY 460
 
 // Proto-Nitrate:
-/// The minimum temperature proto-nitrate can form from pluoxium and hydrogen at.
-#define PN_FORMATION_MIN_TEMPERATURE 5000
-/// The maximum temperature proto-nitrate can form from pluoxium and hydrogen at.
-#define PN_FORMATION_MAX_TEMPERATURE 10000
+/// The minimum temperature proto-nitrate can form from pluoxium and nitrogen at.
+#define PN_FORMATION_MIN_TEMPERATURE 3000
+/// The maximum temperature proto-nitrate can form from pluoxium and nitrogen at.
+#define PN_FORMATION_MAX_TEMPERATURE 7000
 /// The temperature scaling factor for proto-nitrate formation. At most this many moles of zauker can form per reaction tick per kelvin.
 #define PN_FORMATION_TEMPERATURE_SCALE 5e-3
-/// The amount of energy 2.2 moles of proto-nitrate forming from pluoxium and hydrogen releases.
+/// The amount of energy 2.2 moles of proto-nitrate forming from pluoxium and nitrogen releases.
 #define PN_FORMATION_ENERGY 650
 
 /// The amount of hydrogen necessary for proto-nitrate to start converting it to more proto-nitrate.
