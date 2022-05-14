@@ -553,7 +553,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape/simulation)
 "yk" = (
-/obj/structure/flora/ausbushes,
+/obj/structure/flora/bush,
 /turf/open/misc/grass,
 /area/shuttle/escape/simulation)
 "zd" = (

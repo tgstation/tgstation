@@ -1717,7 +1717,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "yC" = (
-/obj/structure/flora/ausbushes,
+/obj/structure/flora/bush,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -2113,7 +2113,7 @@
 /turf/open/floor/iron/chapel,
 /area/shuttle/escape)
 "Dt" = (
-/obj/structure/flora/ausbushes,
+/obj/structure/flora/bush,
 /turf/open/misc/asteroid,
 /area/shuttle/escape)
 "Dv" = (
