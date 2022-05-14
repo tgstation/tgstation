@@ -440,6 +440,9 @@
 
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
+		SSticker.mode_result = "loss - rev heads killed"
+		SSticker.news_report = REVS_LOSE
+		SSticker.force_ending = TRUE
 	else
 		for(var/datum/mind/headrev_mind as anything in ex_headrevs)
 			if(charter_given)
@@ -491,6 +494,9 @@
 		priority_announce("A recent assessment of your station has marked your station as a severe risk area for high ranking Nanotrasen officials. \
 		For the safety of our staff, we have blacklisted your station for new employment of security and command. \
 		[pick(world.file2list("strings/anti_union_propaganda.txt"))]", null, null, null, "Central Command Loyalty Monitoring Division")
+		SSticker.mode_result = "win - heads killed"
+		SSticker.news_report = REVS_WIN
+		SSticker.force_ending = TRUE
 
 /// Mutates the ticker to report that the revs have won
 /datum/team/revolution/proc/round_result(finished)
