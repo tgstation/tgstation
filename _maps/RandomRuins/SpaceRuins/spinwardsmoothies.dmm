@@ -1,0 +1,850 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/hedge{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/siding/thinplating/terracotta,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"cc" = (
+/obj/effect/turf_decal/siding/thinplating/terracotta,
+/turf/open/misc/ironsand,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"co" = (
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"dc" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"el" = (
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"jo" = (
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"mt" = (
+/obj/structure/flora/ausbushes/brflowers,
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"qs" = (
+/obj/effect/turf_decal/siding/thinplating/terracotta/corner,
+/turf/open/misc/ironsand,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"rf" = (
+/obj/machinery/chem_dispenser/fullupgrade,
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 1
+	},
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"ri" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"sJ" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"uX" = (
+/obj/structure/flora/rock/pile/largejungle,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"AW" = (
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"BT" = (
+/obj/effect/turf_decal/caution{
+	pixel_y = -5
+	},
+/obj/effect/turf_decal/raven{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"CA" = (
+/turf/open/space/basic,
+/area/space)
+"CJ" = (
+/turf/open/misc/ironsand,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"CL" = (
+/obj/structure/marker_beacon/violet,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"DR" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"FW" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Gd" = (
+/obj/structure/chair/sofa/corp/left{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 9
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Hs" = (
+/obj/structure/table/wood/fancy,
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 1
+	},
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"JV" = (
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 6
+	},
+/turf/open/misc/ironsand,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"JX" = (
+/obj/structure/chair/sofa/corp{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 8
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"NH" = (
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Oz" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"OI" = (
+/obj/machinery/vending/hydroseeds{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/terracotta/end,
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Pk" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Pl" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/misc/ironsand,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Qg" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Qi" = (
+/turf/closed/mineral,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Qx" = (
+/obj/machinery/light,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"QG" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 9
+	},
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"RM" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Tr" = (
+/obj/structure/statue/gold/rd{
+	anchored = 1;
+	desc = "A statue of the founder of Spinward Smoothies. The number 007 is carved into its placard, for some reason.";
+	name = "Golden Memories";
+	pixel_y = 12
+	},
+/turf/open/floor/bronze/flat,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"TB" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 8
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"TE" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"TF" = (
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 10
+	},
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Um" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/machinery/light,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"UO" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"VD" = (
+/obj/structure/chair/sofa/corp/right{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 8
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"VH" = (
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 1
+	},
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"WJ" = (
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 10
+	},
+/turf/open/misc/ironsand,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"WW" = (
+/obj/structure/table/wood/fancy,
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 6
+	},
+/obj/machinery/reagentgrinder,
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"XK" = (
+/obj/structure/billboard/smoothies,
+/obj/effect/turf_decal/siding/thinplating/terracotta/corner{
+	dir = 8
+	},
+/turf/open/misc/ironsand,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Yh" = (
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/machinery/light,
+/obj/effect/turf_decal/siding/thinplating/terracotta{
+	dir = 1
+	},
+/turf/open/floor/bamboo,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Yw" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"YB" = (
+/turf/open/misc/asteroid,
+/area/ruin/space/has_grav/spinwardsmoothies)
+"Zs" = (
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/spinwardsmoothies)
+
+(1,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(2,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+CA
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(3,1,1) = {"
+CA
+CA
+CA
+CA
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+CA
+CA
+CA
+CA
+CA
+"}
+(4,1,1) = {"
+CA
+CA
+CA
+CA
+Qi
+TE
+TE
+TE
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+CA
+CA
+CA
+CA
+"}
+(5,1,1) = {"
+CA
+CA
+CA
+Qi
+Qi
+TE
+dc
+jo
+BT
+YB
+YB
+YB
+YB
+Qg
+YB
+CL
+Qi
+Qi
+CA
+CA
+CA
+CA
+"}
+(6,1,1) = {"
+CA
+CA
+CA
+Qi
+Qi
+TE
+el
+TE
+CL
+Qg
+YB
+YB
+YB
+YB
+YB
+YB
+Qi
+Qi
+CA
+CA
+CA
+CA
+"}
+(7,1,1) = {"
+CA
+CA
+Qi
+Qi
+Qi
+TE
+el
+TE
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+YB
+YB
+YB
+Qi
+CA
+CA
+CA
+CA
+"}
+(8,1,1) = {"
+CA
+CA
+Qi
+Qi
+TE
+TE
+jo
+TE
+TE
+TE
+TE
+Qi
+Qi
+Qi
+Qi
+YB
+YB
+Qg
+YB
+CA
+CA
+CA
+"}
+(9,1,1) = {"
+CA
+Qi
+Qi
+TE
+TE
+UO
+AW
+FW
+DR
+Qx
+TE
+TE
+TE
+TE
+Qi
+Qi
+YB
+YB
+YB
+CL
+CA
+CA
+"}
+(10,1,1) = {"
+CA
+Qi
+Qi
+TE
+aa
+Yw
+AW
+AW
+AW
+RM
+AW
+FW
+RM
+TE
+Qi
+Qi
+Qi
+WJ
+YB
+YB
+CA
+CA
+"}
+(11,1,1) = {"
+CA
+Qi
+Qi
+TE
+aa
+co
+AW
+uX
+AW
+AW
+AW
+Tr
+FW
+TE
+TE
+Qi
+Pl
+XK
+WJ
+YB
+YB
+CA
+"}
+(12,1,1) = {"
+CA
+Qi
+Qi
+TE
+aa
+FW
+AW
+AW
+AW
+Yw
+AW
+Yw
+Yw
+AW
+TE
+Qi
+CJ
+CJ
+cc
+YB
+CL
+CA
+"}
+(13,1,1) = {"
+CA
+Qi
+Qi
+TE
+aa
+AW
+RM
+AW
+Yw
+AW
+ri
+AW
+FW
+AW
+TE
+Qi
+Pl
+qs
+JV
+YB
+YB
+CA
+"}
+(14,1,1) = {"
+CA
+Qi
+Qi
+TE
+aa
+Yw
+AW
+FW
+AW
+RM
+FW
+RM
+AW
+Um
+TE
+Qi
+Qi
+JV
+YB
+YB
+CA
+CA
+"}
+(15,1,1) = {"
+CA
+Qi
+Qi
+TE
+aa
+FW
+mt
+AW
+Gd
+JX
+JX
+JX
+JX
+VD
+TE
+Qi
+Qi
+YB
+YB
+CL
+CA
+CA
+"}
+(16,1,1) = {"
+CA
+Qi
+Qi
+TE
+aa
+Yw
+RM
+AW
+Hs
+Pk
+Pk
+Pk
+Pk
+Pk
+TE
+TE
+Qi
+Qg
+YB
+CA
+CA
+CA
+"}
+(17,1,1) = {"
+CA
+Qi
+Qi
+TE
+TE
+TE
+AW
+Yw
+WW
+Zs
+Zs
+Zs
+Zs
+Zs
+VH
+TE
+Qi
+CL
+CA
+CA
+CA
+CA
+"}
+(18,1,1) = {"
+CA
+CA
+Qi
+Qi
+Qi
+TE
+sJ
+FW
+NH
+Zs
+Zs
+Zs
+Zs
+Zs
+Yh
+TE
+Qi
+Qi
+CA
+CA
+CA
+CA
+"}
+(19,1,1) = {"
+CA
+CA
+CA
+Qi
+Qi
+TE
+TE
+TE
+Oz
+Zs
+QG
+TB
+TF
+Zs
+rf
+TE
+Qi
+Qi
+CA
+CA
+CA
+CA
+"}
+(20,1,1) = {"
+CA
+CA
+CA
+CA
+Qi
+Qi
+Qi
+TE
+OI
+Zs
+TE
+TE
+TE
+TE
+TE
+TE
+Qi
+Qi
+CA
+CA
+CA
+CA
+"}
+(21,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+Qi
+Qi
+TE
+TE
+TE
+TE
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+CA
+CA
+CA
+CA
+"}
+(22,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+CA
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+CA
+CA
+CA
+CA
+CA
+"}
+(23,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+CA
+Qi
+Qi
+Qi
+Qi
+Qi
+Qi
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(24,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
