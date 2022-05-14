@@ -1879,7 +1879,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/flora/stump,
+/obj/structure/flora/tree/stump,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "EZ" = (
@@ -2876,7 +2876,7 @@
 /turf/open/floor/plating,
 /area/ruin/plasma_facility/commons)
 "Ve" = (
-/obj/structure/flora/stump,
+/obj/structure/flora/tree/stump,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Vy" = (

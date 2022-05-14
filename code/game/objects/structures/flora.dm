@@ -1,57 +1,117 @@
 /obj/structure/flora
+	name = "flora"
+	desc = "Some sort of plant."
 	resistance_flags = FLAMMABLE
 	max_integrity = 150
 	anchored = TRUE
-	/// Flags for the flora to determine what kind of sound to play when it gets hit
-	var/flora_flags = NONE
+
+	/// If set, the flora will have this as its name after being harvested. When the flora becomes harvestable again, it reverts to its initial(name)
+	var/harvested_name as text
+	/// If set, the flora will have this as its description after being harvested. When the flora becomes harvestable again, it regerts to its initial(desc)
+	var/harvested_desc as text
 
 	/// A lazylist of products that could be created when harvesting this flora, syntax is (type = weight)
-	var/product_types = null
+	/// Because of how this works, it can spawn in anomalies if you want it to. Or wall girders
+	var/product_types
+	/// A lazylist typecache of items that can harvest this flora.
+	/// Will be set automatically on Initialization depending on flora_flags.
+	/// Paths in this list and their subtypes will be able to harvest the flora.
+	var/required_tools
+	/// A lazylist typecache of items that will be excluded from required_tools
+	/// Paths in this list disallows items from harvesting this flora if that item is a type of this path
+	var/disallowed_tools
+	/// If the user is able to harvest this with their hands
+	var/harvest_with_hands = FALSE
+	/// The "verb" to use when the user harvests the flora
+	var/harvest_verb = "harvest"
+	/// What should be added to harvest_verb depending on the context ("user harvest(s) the tree" / "user cut(s down) the tree")
+	var/harvest_verb_suffix = "s"
 	
-	//Temporary variables to work off of, make this modular as if it were a component and document later
-	var/harvested_name as text
-	var/harvested_desc as text
+	/// If false, the flora won't be able to be harvested at all. If it's true, go through checks normally to determine if the flora is able to be harvested
+	var/harvestable = TRUE
+	/// The low and high ends of how many product_type items you get
 	var/harvest_amount_low = 1
 	var/harvest_amount_high = 3
+	/// Messages to show to the user when the flora gets harvested
 	var/harvest_message_low as text
 	var/harvest_message_med as text
 	var/harvest_message_high as text
-	var/harvest_time = 60
-	var/regrowth_time_low = 8 MINUTES
-	var/regrowth_time_high = 16 MINUTES
-	var/harvested = FALSE
-	var/needs_sharp_harvest = TRUE
+	/// How long it takes to harvest the flora with the correct tool
+	var/harvest_time = 6 SECONDS
 	var/delete_on_harvest = FALSE
-	var/harvest_message_true_thresholds = FALSE	//Whether or not to divide the messages into thirds depending on how much was harvested
+	var/harvested = FALSE
+	
+	/// See proc/harvest() and where this is used for an explaination on how this works
+	var/harvest_message_true_thresholds = FALSE
 
-/obj/structure/flora/attackby(obj/item/W, mob/user, params)
-	if(!harvested && needs_sharp_harvest && W.get_sharpness())
-		user.visible_message(span_notice("[user] starts to harvest from [src] with [W]."),span_notice("You begin to harvest from [src] with [W]."))
-		if(do_after(user, harvest_time, target = src))
-			if(harvest(user))
-				after_harvest(user)
-	else
+	/// Variables for determining the low/high ends of how long it takes for the flora takes to grow.
+	var/regrowth_time_low = 8 MINUTES
+	/// Stops the flora from regrowing if this is set to 0
+	var/regrowth_time_high = 16 MINUTES
+
+	/// Flags for the flora to determine what kind of sound to play when it gets hit
+	var/flora_flags = NONE
+
+/obj/structure/flora/Initialize(mapload)
+	. = ..()
+	if(!required_tools)
+		required_tools = list()
+		if(flora_flags & FLORA_WOODEN)
+			required_tools += FLORA_HARVEST_WOOD_TOOLS
+		if(flora_flags & FLORA_STONE)
+			required_tools += FLORA_HARVEST_STONE_TOOLS
+	
+	required_tools = typecacheof(required_tools)
+	disallowed_tools = typecacheof(disallowed_tools)
+
+/obj/structure/flora/attackby(obj/item/W, mob/living/user, params)
+	if(!can_harvest(user, W) || user.combat_mode)
 		return ..()
+	
+	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
+		span_notice("You start to [harvest_verb] [src] with [W]..."))
+	play_attack_sound(W.force)
+	if(!do_after(user, harvest_time, src))
+		return
+	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
+		ignored_mobs = list(user))
+	play_attack_sound(W.force)
+	
+	if(harvest(user))
+		after_harvest(user)
 
 /obj/structure/flora/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(!harvested && !needs_sharp_harvest)
-		user.visible_message(span_notice("[user] starts to harvest from [src]."),span_notice("You begin to harvest from [src]."))
-		if(do_after(user, harvest_time, target = src))
-			if(harvest(user))
-				after_harvest(user)
+	if(!can_harvest(user) || !harvest_with_hands)
+		return
+
+	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
+		span_notice("You start to [harvest_verb] [src]..."))
+	play_attack_sound()
+	if(!do_after(user, harvest_time, src))
+		return
+	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
+		ignored_mobs = list(user))
+	play_attack_sound()
+	
+	if(harvest(user))
+		after_harvest(user)
 
 /obj/structure/flora/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	if(flora_flags == NONE)
-		return ..()
+	var/use_default_sound = TRUE //Because I don't wanna do unnecessary bitflag checks in a single if statement, while also allowing for multiple sounds to be played
 	if(flora_flags & FLORA_HERBAL)
 		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE)
+		use_default_sound = FALSE
 	if(flora_flags & FLORA_WOODEN)
 		playsound(src, SFX_TREE_CHOP, 50, vary = FALSE)
+		use_default_sound = FALSE
 	if(flora_flags & FLORA_STONE)
 		playsound(src, SFX_ROCK_TAP, 50, vary = FALSE)
+		use_default_sound = FALSE
+	if(use_default_sound)
+		return ..()
 
 /* 
  * A helper proc for getting a random amount of products, associated with the flora's product list.
@@ -68,6 +128,22 @@
 		if(!.[chosen_product])
 			.[chosen_product] = 0
 		.[chosen_product]++
+
+/*
+ * A helper proc that determines if a user can currently harvest this flora with whatever tool they're trying to use.
+ * Returns: TRUE if they can harvest, FALSE if not. Null if it's not harvestable at all.
+ */
+/obj/structure/flora/proc/can_harvest(mob/user, obj/item/harvesting_item)
+	. = FALSE
+	if(harvested || !harvestable)
+		return null
+	
+	if(harvesting_item)
+		if(!is_type_in_typecache(harvesting_item, required_tools))
+			return
+		if(is_type_in_typecache(harvesting_item, disallowed_tools))
+			return
+	return TRUE
 
 /*
  * This gets called after a mob tries to harvest this flora with the correct tool.
@@ -105,18 +181,21 @@
 
 	//This bit of code determines what should be shown to the user when this is harvested
 	var/message = harvest_message_med || harvest_message_high || harvest_message_low
-	if(user)
+	if(user && message)
 		if(harvest_message_true_thresholds) //Old method of how the harvest messages worked. Useful depending on the context you want to implement
 			if(products_created == harvest_amount_low && harvest_message_low)
 				message = harvest_message_low
 			if(products_created == harvest_amount_high && harvest_message_high)
 				message = harvest_message_high
-		else //New method of determining the message to display. Separates the messages into 3 different viable "regions" [   ][   ][   ]
-			var/comparison = products_created - harvest_amount_low //Avoiding unnecessary math
-			var/middle_value = round((harvest_amount_high - harvest_amount_low)/2) + harvest_amount_low //The exact (rounded) middle between the high and low
-			if(comparison < (middle_value - harvest_amount_low)/2 && harvest_message_low) //[***][   ][   ]
+		else //New method of determining the message to display. Separates the messages into 3 different viable "regions"
+			//[   ][   ][   ] the default message depends on whether or not something's nulled out
+			var/comparison = products_created - harvest_amount_low //avoiding unnecessary math
+			var/middle_value = round((harvest_amount_high - harvest_amount_low)/2) + harvest_amount_low //mathy shit, gets the middle between two values
+			//[***][   ][   ]
+			if(comparison < (middle_value - harvest_amount_low)/2 && harvest_message_low) //more mathy shit, gets the middle between middle_value and harvest_amount_low
 				message = harvest_message_low
-			if(comparison > (harvest_message_high - middle_value)/2 && harvest_message_high) //[   ][   ][***]
+			//[   ][   ][***]
+			if(comparison > (harvest_amount_high - middle_value)/2 && harvest_message_high) //the middle between middle_value and harvest_amount_high
 				message = harvest_message_high
 			//[   ][***][   ] use the default message if none of the above applies
 
@@ -127,7 +206,7 @@
 	if(harvested_desc)
 		desc = harvested_desc
 	harvested = TRUE
-	if(!delete_on_harvest)
+	if(!delete_on_harvest && regrowth_time_high > 0)
 		addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
 
 /obj/structure/flora/proc/after_harvest(user)
@@ -157,32 +236,29 @@
 	harvest_message_low = "You manage to gather a few logs from the tree."
 	harvest_message_med = "You manage to gather some logs from the tree."
 	harvest_message_high = "You harvest most of the wood from the tree."
+	harvest_verb = "chop"
+	harvest_verb_suffix = "s down"
 	delete_on_harvest = TRUE
 	flora_flags = FLORA_HERBAL | FLORA_WOODEN
 
 /obj/structure/flora/tree/harvest(user)
-	if(!..())
-		return FALSE
+	. = ..()
 	var/turf/my_turf = get_turf(src)
 	playsound(my_turf, 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
-	var/obj/structure/flora/stump/new_stump = new(my_turf)
+	var/obj/structure/flora/tree/stump/new_stump = new(my_turf)
 	new_stump.name = "[name] stump"
-	qdel(src)
-	return TRUE
 
-/obj/structure/flora/stump
+/obj/structure/flora/tree/stump
 	name = "stump"
 	desc = "This represents our promise to the crew, and the station itself, to cut down as many trees as possible." //running naked through the trees
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "tree_stump"
 	density = FALSE
-	pixel_x = -16
-	product_types = list(/obj/item/grown/log/tree = 1)
-	harvest_amount_low = 1
-	harvest_amount_high = 1
-	harvest_message_low = "You manage to cut up the stump from the ground, somehow."
 	delete_on_harvest = TRUE
-	flora_flags = FLORA_WOODEN
+
+/obj/structure/flora/tree/stump/harvest(user)
+	to_chat(user, span_notice("You manage to remove [src]."))
+	qdel(src)
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
@@ -343,13 +419,12 @@
 	icon = 'icons/obj/flora/snowflora.dmi'
 	gender = PLURAL //"this is grass" not "this is a grass"
 	product_types = list(/obj/item/food/grown/grass = 10, /obj/item/seeds/grass = 1)
+	harvest_with_hands = TRUE
 	harvest_amount_low = 0
 	harvest_amount_high = 2
 	harvest_message_low = "You uproot the grass from the ground, just for the fun of it."
 	harvest_message_med = "You gather up some grass."
-	harvest_message_high = "You gather up a handfull grass."
-	needs_sharp_harvest = FALSE
-	delete_on_harvest = TRUE
+	harvest_message_high = "You gather up a handful grass."
 	flora_flags = FLORA_HERBAL
 
 /obj/structure/flora/grass/brown
@@ -681,6 +756,7 @@
 	harvest_amount_low = 10
 	harvest_amount_high = 20
 	harvest_message_med = "You finish mining the rock."
+	harvest_verb = "mine"
 	flora_flags = FLORA_STONE
 
 /obj/structure/flora/rock/style_2

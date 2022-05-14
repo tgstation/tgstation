@@ -12116,7 +12116,7 @@
 	},
 /area/awaymission/snowdin/outside)
 "Qc" = (
-/obj/structure/flora/stump,
+/obj/structure/flora/tree/stump,
 /obj/effect/light_emitter{
 	name = "outdoor light";
 	set_cap = 3;
@@ -13856,7 +13856,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/snowdin/post/messhall)
 "ZX" = (
-/obj/structure/flora/stump,
+/obj/structure/flora/tree/stump,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 

@@ -9,12 +9,14 @@
 	gender = PLURAL
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER //sporangiums up don't shoot
 	product_types = list(/obj/item/food/grown/ash_flora/shavings = 1)
+	harvest_with_hands = TRUE
 	harvested_name = "shortened mushrooms"
 	harvested_desc = "Some quickly regrowing mushrooms, formerly known to be quite large."
 	harvest_message_low = "You pick a mushroom, but fail to collect many shavings from its cap."
 	harvest_message_med = "You pick a mushroom, carefully collecting the shavings from its cap."
 	harvest_message_high = "You harvest and collect shavings from several mushroom caps."
 	harvest_message_true_thresholds = TRUE
+	harvest_verb = "pluck"
 	flora_flags = FLORA_HERBAL //not really accurate but what sound do hit mushrooms make anyway
 	var/base_icon
 	var/number_of_variants = 4
@@ -51,7 +53,6 @@
 	harvest_time = 20
 	regrowth_time_low = 2400
 	regrowth_time_high = 6000
-	needs_sharp_harvest = FALSE
 
 /obj/structure/flora/ash/cap_shroom
 	name = "tall mushrooms"
@@ -99,7 +100,6 @@
 	harvest_time = 10
 	regrowth_time_low = 4800
 	regrowth_time_high = 7200
-	needs_sharp_harvest = FALSE
 
 /obj/structure/flora/ash/cacti/Initialize(mapload)
 	. = ..()
@@ -120,7 +120,6 @@
 	regrowth_time_low = 3000
 	regrowth_time_high = 5400
 	number_of_variants = 2
-	needs_sharp_harvest = FALSE
 	harvest_message_true_thresholds = FALSE
 
 ///Snow flora to exist on icebox.
@@ -139,7 +138,6 @@
 	regrowth_time_low = 2400
 	regrowth_time_high = 5500
 	number_of_variants = 2
-	needs_sharp_harvest = FALSE
 
 //SNACKS
 

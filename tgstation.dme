@@ -78,6 +78,7 @@
 #include "code\__DEFINES\fantasy_affixes.dm"
 #include "code\__DEFINES\firealarm.dm"
 #include "code\__DEFINES\flags.dm"
+#include "code\__DEFINES\flora.dm"
 #include "code\__DEFINES\fonts.dm"
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\footsteps.dm"
