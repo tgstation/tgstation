@@ -95,21 +95,14 @@ SUBSYSTEM_DEF(statpanels)
 
 	var/ping_str = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)"
 	var/other_str = json_encode(target.mob?.get_status_tab_items())
-	target.stat_panel.send_message("update_stat", list(
-		egd = encoded_global_data,
-		ps = ping_str,
-		os = other_str,
-	))
+	target.stat_panel.send_message("update_stat", list(encoded_global_data, ping_str, other_str))
 
 /datum/controller/subsystem/statpanels/proc/set_MC_tab(client/target)
 	var/turf/eye_turf = get_turf(target.eye)
 	var/coord_entry = COORD(eye_turf)
 	if(!mc_data_encoded)
 		generate_mc_data()
-	target.stat_panel.send_message("update_mc", list(
-		gmd = mc_data_encoded,
-		ce = coord_entry,
-	))
+	target.stat_panel.send_message("update_mc", list(mc_data_encoded, coord_entry))
 
 /datum/controller/subsystem/statpanels/proc/set_tickets_tab(client/target)
 	var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
@@ -164,10 +157,7 @@ SUBSYSTEM_DEF(statpanels)
 	if(length(proc_holders))
 		proc_holders_encoded = json_encode(proc_holders)
 
-	target.stat_panel.send_message("update_spells", list(
-		st = json_encode(target.spell_tabs),
-		ph = proc_holders_encoded,
-	))
+	target.stat_panel.send_message("update_spells", list(target.spell_tabs, proc_holders_encoded))
 
 /datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
 	var/list/overrides = list()

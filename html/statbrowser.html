@@ -295,74 +295,6 @@
 		send_byond_command("Update-Verbs");
 	}
 
-	function add_verb_list(v) {
-		var to_add = JSON.parse(v); // list of a list with category and verb inside it
-		to_add.sort(); // sort what we're adding
-		for (var i = 0; i < to_add.length; i++) {
-			var part = to_add[i];
-			if (!part[0])
-				continue;
-			var category = part[0];
-			if (category.indexOf(".") != -1) {
-				var splitName = category.split(".");
-				if (split_admin_tabs && splitName[0] === "Admin")
-					category = splitName[1];
-				else
-					category = splitName[0];
-			}
-			if (findVerbindex(part[1], verbs))
-				continue;
-			if (verb_tabs.includes(category)) {
-				verbs.push(part);
-				if (current_tab == category) {
-					draw_verbs(category); // redraw if we added a verb to the tab we're currently in
-				}
-			} else if (category) {
-				verb_tabs.push(category);
-				verbs.push(part);
-				createStatusTab(category);
-			}
-		}
-	}
-
-	function remove_verb_list(v) {
-		var to_remove = JSON.parse(v);
-		for (var i = 0; i < to_remove.length; i++) {
-			remove_verb(to_remove[i]);
-		}
-		check_verbs();
-		sortVerbs();
-		if (verb_tabs.includes(current_tab))
-			draw_verbs(current_tab);
-	}
-
-	// passes a 2D list of (verbcategory, verbname) creates tabs and adds verbs to respective list
-	// example (IC, Say)
-	function init_verbs(c, v) {
-		connected_to_server();
-		wipe_verbs(); // remove all verb categories so we can replace them
-		checkStatusTab(); // remove all status tabs
-		verb_tabs = JSON.parse(c);
-		verb_tabs.sort(); // sort it
-		var do_update = false;
-		var cat = "";
-		for (var i = 0; i < verb_tabs.length; i++) {
-			cat = verb_tabs[i];
-			createStatusTab(cat); // create a category if the verb doesn't exist yet
-		}
-		if (verb_tabs.includes(current_tab)) {
-			do_update = true;
-		}
-		if (v) {
-			add_verb_list(v);
-			sortVerbs(); // sort them
-			if (do_update) {
-				draw_verbs(current_tab);
-			}
-		}
-		SendTabsToByond();
-	}
-
 	function SendTabsToByond() {
 		var tabstosend = [];
 		tabstosend = tabstosend.concat(permanent_tabs, verb_tabs);
@@ -380,54 +312,6 @@
 		send_byond_command("Remove-Tabs " + tab);
 	}
 
-	function update_stat(global_data, ping_entry, other_entries) {
-		status_tab_parts = [ping_entry];
-		var parsed = JSON.parse(global_data);
-		for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
-		parsed = JSON.parse(other_entries);
-		for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
-		if (current_tab == "Status")
-			draw_status();
-		else if (current_tab == "Debug Stat Panel")
-			draw_debug();
-	}
-
-	function update_mc(global_mc_data, coords_entry) {
-		mc_tab_parts = JSON.parse(global_mc_data);
-		mc_tab_parts.splice(0, 0, ["Location:", coords_entry]);
-		if (!verb_tabs.includes("MC"))
-			verb_tabs.push("MC");
-		createStatusTab("MC");
-		if (current_tab == "MC")
-			draw_mc();
-	}
-
-	function remove_mc() {
-		removeStatusTab("MC");
-		if (current_tab == "MC")
-			tab_change("Status");
-	}
-	function remove_spells() {
-		for (var s = 0; s < spell_tabs.length; s++) {
-			removeStatusTab(spell_tabs[s]);
-		}
-	}
-
-	function init_spells() {
-		var cat = "";
-		for (var i = 0; i < spell_tabs.length; i++) {
-			cat = spell_tabs[i];
-			if (cat.length > 0) {
-				verb_tabs.push(cat);
-				createStatusTab(cat);
-			}
-		}
-	}
-
-	function check_spells() {
-		for (var v = 0; v < spell_tabs.length; v++)
-			spell_cat_check(spell_tabs[v]);
-	}
 	function spell_cat_check(cat) {
 		var spells_in_cat = 0;
 		var spellcat = "";
@@ -440,22 +324,6 @@
 		}
 		if (spells_in_cat < 1) {
 			removeStatusTab(cat);
-		}
-	}
-	function update_spells(t, s) {
-		spell_tabs = JSON.parse(t);
-		var do_update = false;
-		if (spell_tabs.includes(current_tab)) {
-			do_update = true;
-		}
-		init_spells();
-		if (s) {
-			spells = JSON.parse(s);
-			if (do_update) {
-				draw_spells(current_tab);
-			}
-		} else {
-			remove_spells();
 		}
 	}
 
@@ -1006,18 +874,155 @@
 	window.onload = function () {
 		setupSubscribe();
 		NotifyByondOnload();
+
+		Byond.subscribeTo('update_spells', function (payload) {
+			spell_tabs = JSON.parse(payload[0]);
+			var do_update = false;
+			if (spell_tabs.includes(current_tab)) {
+				do_update = true;
+			}
+			init_spells();
+			if (payload[1]) {
+				spells = JSON.parse(payload[1]);
+				if (do_update) {
+					draw_spells(current_tab);
+				}
+			} else {
+				remove_spells();
+			}
+		});
+
+		Byond.subscribeTo('add_verb_list', function (payload) {
+			window.alert("add_verb_list")
+			var to_add = JSON.parse(payload); // list of a list with category and verb inside it
+			to_add.sort(); // sort what we're adding
+			for (var i = 0; i < to_add.length; i++) {
+				var part = to_add[i];
+				if (!part[0])
+					continue;
+				var category = part[0];
+				if (category.indexOf(".") != -1) {
+					var splitName = category.split(".");
+					if (split_admin_tabs && splitName[0] === "Admin")
+						category = splitName[1];
+					else
+						category = splitName[0];
+				}
+				if (findVerbindex(part[1], verbs))
+					continue;
+				if (verb_tabs.includes(category)) {
+					verbs.push(part);
+					if (current_tab == category) {
+						draw_verbs(category); // redraw if we added a verb to the tab we're currently in
+					}
+				} else if (category) {
+					verb_tabs.push(category);
+					verbs.push(part);
+					createStatusTab(category);
+				}
+			}
+		});
+
+		Byond.subscribeTo('remove_verb_list', function (v) {
+			var to_remove = JSON.parse(v);
+			for (var i = 0; i < to_remove.length; i++) {
+				remove_verb(to_remove[i]);
+			}
+			check_verbs();
+			sortVerbs();
+			if (verb_tabs.includes(current_tab))
+				draw_verbs(current_tab);
+		});
+
+		// passes a 2D list of (verbcategory, verbname) creates tabs and adds verbs to respective list
+		// example (IC, Say)
+		Byond.subscribeTo('init_verbs', function (payload) {
+			window.alert("init_verbs")
+			connected_to_server();
+			wipe_verbs(); // remove all verb categories so we can replace them
+			checkStatusTab(); // remove all status tabs
+			verb_tabs = JSON.parse(payload[0]);
+			verb_tabs.sort(); // sort it
+			var do_update = false;
+			var cat = "";
+			for (var i = 0; i < verb_tabs.length; i++) {
+				cat = verb_tabs[i];
+				createStatusTab(cat); // create a category if the verb doesn't exist yet
+			}
+			if (verb_tabs.includes(current_tab)) {
+				do_update = true;
+			}
+			if (payload[1]) {
+				add_verb_list(payload[1]);
+				sortVerbs(); // sort them
+				if (do_update) {
+					draw_verbs(current_tab);
+				}
+			}
+			SendTabsToByond();
+		});
+
+		Byond.subscribeTo('update_stat', function (payload) {
+			status_tab_parts = [payload[1]];
+			var parsed = JSON.parse(payload[0]);
+			for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+			parsed = JSON.parse(payload[2]);
+			for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+			if (current_tab == "Status")
+				draw_status();
+			else if (current_tab == "Debug Stat Panel")
+				draw_debug();
+		});
+
+		Byond.subscribeTo('update_mc', function (payload) {
+			mc_tab_parts = JSON.parse(payload[0]);
+			mc_tab_parts.splice(0, 0, ["Location:", payload[1]]);
+			if (!verb_tabs.includes("MC"))s
+				verb_tabs.push("MC");
+			createStatusTab("MC");
+			if (current_tab == "MC")
+				draw_mc();
+		});
+
+		Byond.subscribeTo('remove_mc', function () {
+			removeStatusTab("MC");
+			if (current_tab == "MC")
+				tab_change("Status");
+		});
+
+		Byond.subscribeTo('remove_spells', function () {
+			for (var s = 0; s < spell_tabs.length; s++) {
+				removeStatusTab(spell_tabs[s]);
+			}
+		});
+
+		Byond.subscribeTo('init_spells', function () {
+			var cat = "";
+			for (var i = 0; i < spell_tabs.length; i++) {
+				cat = spell_tabs[i];
+				if (cat.length > 0) {
+					verb_tabs.push(cat);
+					createStatusTab(cat);
+				}
+			}
+		});
+
+		Byond.subscribeTo('check_spells', function () {
+			for (var v = 0; v < spell_tabs.length; v++)
+				spell_cat_check(spell_tabs[v]);
+		});
+
+		Byond.subscribeTo('create_debug', function () {
+			if (!document.getElementById("Debug Stat Panel")) {
+				addPermanentTab("Debug Stat Panel");
+			} else {
+				removePermanentTab("Debug Stat Panel");
+			}
+		});
 	};
 
 	function NotifyByondOnload() {
 		Byond.command("Panel-Ready")
-	}
-
-	function create_debug() {
-		if (!document.getElementById("Debug Stat Panel")) {
-			addPermanentTab("Debug Stat Panel");
-		} else {
-			removePermanentTab("Debug Stat Panel");
-		}
 	}
 
 	function getCookie(cname) {
@@ -1036,14 +1041,6 @@
 	// Byond subscribe wrapper for communication from DM
 	function setupSubscribe() {
 		Byond.subscribe(function (type, payload) {
-			if (type === "add_verb_list") {
-				add_verb_list(payload.list);
-				return;
-			};
-			if (type === "remove_verb_list") {
-				remove_verb_list(payload.list);
-				return;
-			};
 			if (type === "create_listedturf") {
 				create_listedturf(payload.name);
 				return;
@@ -1060,20 +1057,12 @@
 				add_admin_tabs(payload.href);
 				return;
 			};
-			if (type === "update_stat") {
-				update_stat(payload.egd, payload.ps, payload.os);
-				return;
-			};
 			if (type === "remove_listedturf") {
 				remove_listedturf();
 				return;
 			};
 			if (type === "update_sdql2") {
 				update_sdql2(payload.sdql2A);
-				return;
-			};
-			if (type === "update_mc") {
-				update_mc(payload.gmd, payload.ce);
 				return;
 			};
 			if (type === "update_tickets") {
@@ -1084,28 +1073,12 @@
 				update_interviews(payload.data);
 				return;
 			};
-			if (type === "update_spells") {
-				update_spells(payload.st, payload.ph);
-				return;
-			};
 			if (type === "update_listedturf") {
 				update_listedturf(payload.items);
 				return;
 			};
 			if (type === "remove_sdql2") {
 				remove_sdql2();
-				return;
-			};
-			if (type === "check_spells") {
-				check_spells();
-				return;
-			};
-			if (type === "init_verbs") {
-				init_verbs(payload.p, payload.v);
-				return;
-			};
-			if (type === "create_debug") {
-				create_debug();
 				return;
 			};
 		});
