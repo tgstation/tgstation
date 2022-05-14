@@ -132,6 +132,7 @@
 	name = "Cargo Gorilla"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 1
+	force = TRUE
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
 	/// The gorilla we created
 	var/mob/living/simple_animal/hostile/gorilla/cargo_domestic/cargorilla
@@ -151,6 +152,10 @@
 	cargorilla.name = cargo_sloth.name
 	qdel(cargo_sloth)
 
+	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(cargorilla.loc)
+	gorilla_id.registered_name = cargorilla.name
+	cargorilla.put_in_hands(gorilla_id, del_on_fail = TRUE)
+
 	var/obj/vehicle/sealed/mecha/working/ripley/cargo/cargo_mech = locate()
 	if(cargo_mech)
 		qdel(cargo_mech)
@@ -159,17 +164,12 @@
 	if(!cargorilla)
 		return
 
-	INVOKE_ASYNC(src, .proc/get_ghost_for_gorilla, cargorilla)
+	addtimer(CALLBACK(src, .proc/get_ghost_for_gorilla, cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
 	cargorilla = null
 
-/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/gorilla)
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(
-		"Do you want to play as a Cargorilla?",
-		jobban_type = ROLE_SENTIENCE,
-		poll_time = 30 SECONDS,
-		target_mob = gorilla,
-	)
+/// Get us a ghost for the gorilla.
+/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/simple_animal/hostile/gorilla/cargo_domestic/gorilla)
+	if(QDELETED(gorilla))
+		return
 
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/picked = pick(candidates)
-		gorilla.key = picked.key
+	gorilla.poll_for_gorilla()

@@ -123,8 +123,59 @@
 	faction = list(FACTION_STATION)
 	gold_core_spawnable = NO_SPAWN
 	unique_name = FALSE
+	/// Whether we're currently being polled over
+	var/being_polled_for = FALSE
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	AddComponent(/datum/component/crate_carrier)
+
+/mob/living/simple_animal/hostile/gorilla/cargo_domestic/attack_ghost(mob/user)
+	if(being_polled_for || mind || client || (flags_1 & ADMIN_SPAWNED_1))
+		return ..()
+
+	if(is_banned_from(user.ckey, list(ROLE_SENTIENCE, ROLE_SYNDICATE)))
+		return ..()
+
+	if(!SSticker.HasRoundStarted())
+		return ..()
+
+	var/become_gorilla = tgui_alert(user, "Become a Cargorilla?", "Confirm", list("Yes", "No"))
+	if(become_gorilla != "Yes" || QDELETED(src) || QDELETED(user))
+		return
+
+	enter_ghost(user)
+
+/// Poll ghosts for control of the gorilla.
+/mob/living/simple_animal/hostile/gorilla/cargo_domestic/proc/poll_for_gorilla()
+	being_polled_for = TRUE
+	var/list/mob/dead/candidates = poll_candidates_for_mob(
+		"Do you want to play as a Cargorilla?",
+		jobban_type = ROLE_SENTIENCE,
+		poll_time = 30 SECONDS,
+		target_mob = gorilla,
+	)
+
+	being_polled_for = FALSE
+	if(QDELETED(src) || mind || client)
+		return
+
+	if(LAZYLEN(candidates))
+		enter_ghost(pick(candidates))
+
+/// Brings in the a ghost to take control of the gorilla.
+/mob/living/simple_animal/hostile/gorilla/cargo_domestic/proc/enter_ghost(mob/dead/user)
+	key = user.key
+	if(!mind)
+		CRASH("[type] - enter_ghost didn't end up with a mind.")
+
+	mind.set_assigned_role(SSjob.GetJobType(/datum/job/cargo_technician))
+	mind.special_role = "Cargorilla"
+	to_chat(src, span_boldnotice("You are a Cargorilla, a pacifistic friend of the station and carrier of freight."))
+	to_chat(src, span_notice("You can pick up crates by clicking on them, and drop them by clicking on the ground."))
+
+/obj/item/card/id/advanced/cargo_gorilla
+	name = "cargorilla ID"
+	desc = "A card used to provide ID and determine access across the station. A gorilla sized ID for a gorilla sized cargo technician."
+	trim = /datum/id_trim/job/cargo_technician

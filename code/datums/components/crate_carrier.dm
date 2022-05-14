@@ -67,7 +67,7 @@
 		source.balloon_alert(source, "grabbed crate")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(isopenturf(target))
+	if(isopenturf(target) && LAZYLEN(crates_in_hand))
 		drop_all_crates(target)
 		source.balloon_alert(source, "dropped crate")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
