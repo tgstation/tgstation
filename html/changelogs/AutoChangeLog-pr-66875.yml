@@ -1,0 +1,4 @@
+author: "d0sboots"
+delete-after: True
+changes: 
+  - bugfix: "suit_storage slot now shows the item it has equipped"

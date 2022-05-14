@@ -370,7 +370,7 @@
 	return span_danger("The baton is still charging!")
 
 /obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Jitter(20)
+	target.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
 
 /obj/item/melee/baton/security
@@ -562,7 +562,7 @@
  * After a period of time, we then check to see what stun duration we give.
  */
 /obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.Jitter(20)
+	target.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 	target.set_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 	target.set_timed_status_effect(16 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 

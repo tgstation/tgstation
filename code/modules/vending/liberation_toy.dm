@@ -16,7 +16,7 @@
 		/obj/item/toy/foamblade = 10,
 		/obj/item/toy/balloon/syndicate = 10,
 		/obj/item/clothing/suit/syndicatefake = 5,
-		/obj/item/clothing/head/syndicatefake = 5 //OPS IN DORMS oh wait it's just an assistant
+		/obj/item/clothing/head/syndicatefake = 5, //OPS IN DORMS oh wait it's just an assistant
 	)
 	contraband = list(
 		/obj/item/gun/ballistic/shotgun/toy/crossbow = 10,   //Congrats, you unlocked the +18 setting!
@@ -25,7 +25,7 @@
 		/obj/item/ammo_box/foambox/riot = 20,
 		/obj/item/toy/katana = 10,
 		/obj/item/dualsaber/toy = 5,
-		/obj/item/toy/cards/deck/syndicate = 10 //Gambling and it hurts, making it a +18 item
+		/obj/item/toy/cards/deck/syndicate = 10, //Gambling and it hurts, making it a +18 item
 	)
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
