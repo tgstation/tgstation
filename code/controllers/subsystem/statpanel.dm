@@ -6,8 +6,8 @@ SUBSYSTEM_DEF(statpanels)
 	priority = FIRE_PRIORITY_STATPANEL
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	var/list/currentrun = list()
-	var/encoded_global_data
-	var/mc_data_encoded
+	var/list/global_data
+	var/list/mc_data
 	var/list/cached_images = list()
 
 	///how many subsystem fires between most tab updates
@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(statpanels)
 	if (!resumed)
 		num_fires++
 		var/datum/map_config/cached = SSmapping.next_map_config
-		var/list/global_data = list(
+		global_data = list(
 			"Map: [SSmapping.config?.map_name || "Loading..."]",
 			cached ? "Next Map: [cached.map_name]" : null,
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
@@ -37,9 +37,8 @@ SUBSYSTEM_DEF(statpanels)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
-		encoded_global_data = global_data
 		src.currentrun = GLOB.clients.Copy()
-		mc_data_encoded = null
+		mc_data = null
 
 	var/list/currentrun = src.currentrun
 	while(length(currentrun))
@@ -90,19 +89,21 @@ SUBSYSTEM_DEF(statpanels)
 			return
 
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
-	if(!encoded_global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
+	if(!global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
 
-	var/ping_str = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)"
-	var/other_str = target.mob?.get_status_tab_items()
-	target.stat_panel.send_message("update_stat", list(encoded_global_data, ping_str, other_str))
+	target.stat_panel.send_message("update_stat", list(
+		global_data = global_data,
+		ping_str = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)",
+		other_str = target.mob?.get_status_tab_items(),
+	))
 
 /datum/controller/subsystem/statpanels/proc/set_MC_tab(client/target)
 	var/turf/eye_turf = get_turf(target.eye)
 	var/coord_entry = COORD(eye_turf)
-	if(!mc_data_encoded)
+	if(!mc_data)
 		generate_mc_data()
-	target.stat_panel.send_message("update_mc", list(mc_data_encoded, coord_entry))
+	target.stat_panel.send_message("update_mc", list(mc_data = mc_data, coord_entry = coord_entry))
 
 /datum/controller/subsystem/statpanels/proc/set_tickets_tab(client/target)
 	var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
@@ -153,11 +154,7 @@ SUBSYSTEM_DEF(statpanels)
 	for(var/proc_holder_list as anything in proc_holders)
 		target.spell_tabs |= proc_holder_list[1]
 
-	var/proc_holders_encoded = ""
-	if(length(proc_holders))
-		proc_holders_encoded = proc_holders
-
-	target.stat_panel.send_message("update_spells", list(target.spell_tabs, proc_holders_encoded))
+	target.stat_panel.send_message("update_spells", list(spell_tabs = target.spell_tabs, proc_holders_encoded = proc_holders))
 
 /datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
 	var/list/overrides = list()
@@ -198,7 +195,7 @@ SUBSYSTEM_DEF(statpanels)
 	target.stat_panel.send_message("update_listedturf", turfitems)
 
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
-	var/list/mc_data = list(
+	mc_data = list(
 		list("CPU:", world.cpu),
 		list("Instances:", "[num2text(world.contents.len, 10)]"),
 		list("World Time:", "[world.time]"),
@@ -212,7 +209,6 @@ SUBSYSTEM_DEF(statpanels)
 	for(var/datum/controller/subsystem/sub_system as anything in Master.subsystems)
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), "\ref[sub_system]")
 	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", "\ref[GLOB.cameranet]")
-	mc_data_encoded = mc_data
 
 ///immediately update the active statpanel tab of the target client
 /datum/controller/subsystem/statpanels/proc/immediate_send_stat_data(client/target)

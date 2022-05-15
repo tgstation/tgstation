@@ -869,14 +869,14 @@ window.onload = function () {
 };
 
 Byond.subscribeTo('update_spells', function (payload) {
-	spell_tabs = payload[0];
+	spell_tabs = payload.spell_tabs;
 	var do_update = false;
 	if (spell_tabs.includes(current_tab)) {
 		do_update = true;
 	}
 	init_spells();
-	if (payload[1]) {
-		spells = payload[1];
+	if (payload.verblist) {
+		spells = payload.verblist;
 		if (do_update) {
 			draw_spells(current_tab);
 		}
@@ -902,7 +902,7 @@ Byond.subscribeTo('init_verbs', function (payload) {
 	connected_to_server();
 	wipe_verbs(); // remove all verb categories so we can replace them
 	checkStatusTab(); // remove all status tabs
-	verb_tabs = payload[0];
+	verb_tabs = payload.panel_tabs;
 	verb_tabs.sort(); // sort it
 	var do_update = false;
 	var cat = "";
@@ -913,8 +913,8 @@ Byond.subscribeTo('init_verbs', function (payload) {
 	if (verb_tabs.includes(current_tab)) {
 		do_update = true;
 	}
-	if (payload[1]) {
-		add_verb_list(payload[1]);
+	if (payload.verblist) {
+		add_verb_list(payload.verblist);
 		sortVerbs(); // sort them
 		if (do_update) {
 			draw_verbs(current_tab);
@@ -924,12 +924,12 @@ Byond.subscribeTo('init_verbs', function (payload) {
 });
 
 Byond.subscribeTo('update_stat', function (payload) {
-	status_tab_parts = [payload[1]];
-	var parsed = payload[0];
+	status_tab_parts = [payload.ping_str];
+	var parsed = payload.global_data;
 
 	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
 
-	parsed = payload[2];
+	parsed = payload.other_str;
 
 	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
 
@@ -941,8 +941,8 @@ Byond.subscribeTo('update_stat', function (payload) {
 });
 
 Byond.subscribeTo('update_mc', function (payload) {
-	mc_tab_parts = payload[0];
-	mc_tab_parts.splice(0, 0, ["Location:", payload[1]]);
+	mc_tab_parts = payload.mc_data;
+	mc_tab_parts.splice(0, 0, ["Location:", payload.coord_entry]);
 
 	if (!verb_tabs.includes("MC")) {
 		verb_tabs.push("MC");
@@ -1057,10 +1057,10 @@ Byond.subscribeTo('update_tickets', function (T) {
 	}
 });
 
-Byond.subscribeTo('remove_listedturf', remove_listedturf());
+Byond.subscribeTo('remove_listedturf', remove_listedturf);
 
-Byond.subscribeTo('remove_sdql2', remove_sdql2());
+Byond.subscribeTo('remove_sdql2', remove_sdql2);
 
-Byond.subscribeTo('remove_mc', remove_mc());
+Byond.subscribeTo('remove_mc', remove_mc);
 
 Byond.subscribeTo('add_verb_list', add_verb_list(payload));
