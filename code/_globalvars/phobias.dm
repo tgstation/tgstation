@@ -390,7 +390,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	"birds" = typecacheof(list(
 		/obj/item/clothing/head/chicken,
 		/obj/item/clothing/head/griffin,
-		/obj/item/clothing/head/helmet/space/freedom,
 		/obj/item/clothing/mask/gas/owl_mask,
 		/obj/item/clothing/mask/gas/plaguedoctor,
 		/obj/item/clothing/shoes/griffin,
