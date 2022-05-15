@@ -422,6 +422,9 @@ function remove_interviews() {
 
 function iconError() {
 	var that = this;
+	if(that === undefined) {
+		return;
+	}
 	setTimeout(function () {
 		var current_attempts = that.id; // a bit of a hack, change this if we need to call on img id's later
 		if (!current_attempts)
