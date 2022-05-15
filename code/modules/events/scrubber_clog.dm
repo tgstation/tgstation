@@ -8,7 +8,7 @@
 /datum/round_event/scrubber_clog
 	announceWhen = 1
 	startWhen = 10
-	endWhen = 6000 //Maybe add a negative result in end() to prevent people from just ignoring the event?
+	endWhen = 6000
 	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber //Scrubber selected for the event
 	var/mob/spawned_mob = /mob/living/basic/cockroach //What mob will be spawned
 	var/severity = "Minor" //Severity of the event (how dangerous are the spawned mobs, and at what quantity)
@@ -25,6 +25,7 @@
 	if(!scrubber)
 		CRASH("Unable to find suitable scrubber.")
 	spawned_mob = get_mob()
+	endWhen = rand(5000,7000)
 	maximum_spawns = rand(3, 5)
 	spawn_delay = rand(10,15)
 
@@ -130,8 +131,9 @@
 /datum/round_event/scrubber_clog/strange
 	severity = "Strange"
 
-/datum/round_event/scrubber_clog/critical/setup()
+/datum/round_event/scrubber_clog/strange/setup()
 	. = ..()
+	endWhen = rand(6000,8000)
 	maximum_spawns = 3
 	spawn_delay = rand(10, 25) //Wide range, for maximum utility/comedy
 
