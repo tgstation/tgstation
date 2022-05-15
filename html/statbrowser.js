@@ -1,6 +1,5 @@
 // Polyfills and compatibility ------------------------------------------------
 var decoder = decodeURIComponent || unescape;
-var textContentKey = (typeof document.body.textContent != 'undefined') ? 'textContent' : 'innerText';
 if (!Array.prototype.includes) {
 	Array.prototype.includes = function (thing) {
 		for (var i = 0; i < this.length; i++) {
@@ -267,7 +266,7 @@ function tab_change(tab) {
 	} else if (tab == turfname) {
 		draw_listedturf();
 	} else {
-		statcontentdiv[textContentKey] = "Loading...";
+		statcontentdiv.textContext = "Loading...";
 	}
 	Byond.winset(Byond.windowId, {
 		'is-visible': true,
