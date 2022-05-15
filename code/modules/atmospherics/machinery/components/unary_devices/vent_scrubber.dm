@@ -477,7 +477,7 @@
 		return
 
 	to_chat(user, span_notice("You begin pumping the [name] with your plunger."))
-	if(do_after(user, 60, target = src))
+	if(do_after(user, 6 SECONDS, target = src))
 		to_chat(user, span_notice("You finish pumping the [name]."))
 		clogged = FALSE
 
@@ -487,10 +487,12 @@
 	clogged = TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/produce_mob(datum/source, spawned_mob, living_mobs)
-	if(welded == FALSE)
-		var/mob/new_mob = new spawned_mob(src.loc)
-		living_mobs += new_mob
-		src.visible_message(span_warning("[new_mob] crawls out of [name]!"))
+	if(welded)
+		return
+
+	var/mob/new_mob = new spawned_mob(get_turf(src))
+	living_mobs += new_mob
+	visible_message(span_warning("[new_mob] crawls out of [src]!"))
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/unclog()
 	clogged = FALSE

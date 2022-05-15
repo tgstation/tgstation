@@ -6,16 +6,24 @@
 	earliest_start = 5 MINUTES
 
 /datum/round_event/scrubber_clog
-	announceWhen = 1
-	startWhen = 10
-	endWhen = 6000
-	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber //Scrubber selected for the event
-	var/mob/spawned_mob = /mob/living/basic/cockroach //What mob will be spawned
-	var/severity = "Minor" //Severity of the event (how dangerous are the spawned mobs, and at what quantity)
-	var/maximum_spawns = 3 //Cap on the number of spawned mobs that can be alive at once
-	var/spawn_delay = 10 //Interval between mob spawns
-	var/list/living_mobs = list() //Used to track/limit produced mobs
-	var/clogged = TRUE //Used for tracking if the clog signal should be sent
+	announceWhen = 1 SECONDS
+	startWhen = 10 SECONDS
+	endWhen = 10 MINUTES
+
+	///Scrubber selected for the event
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber
+	///What mob will be spawned
+	var/mob/spawned_mob = /mob/living/basic/cockroach
+	///Severity of the event (how dangerous are the spawned mobs, and at what quantity)
+	var/severity = "Minor"
+	///Cap on the number of spawned mobs that can be alive at once
+	var/maximum_spawns = 3
+	///Interval between mob spawns
+	var/spawn_delay = 10
+	///Used to track/limit produced mobs
+	var/list/living_mobs = list()
+	///Used for tracking if the clog signal should be sent
+	var/clogged = TRUE
 
 /datum/round_event/scrubber_clog/announce()
 	priority_announce("[severity] biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Custodial Notification")
