@@ -426,7 +426,7 @@ function iconError() {
 		return;
 	}
 	setTimeout(function () {
-		var current_attempts = that.getAttribute("data-attempts") || 0
+		var current_attempts = Number(that.getAttribute("data-attempts")) || 0
 		if (!current_attempts)
 			that.id = 1;
 		if (current_attempts > imageRetryLimit)
