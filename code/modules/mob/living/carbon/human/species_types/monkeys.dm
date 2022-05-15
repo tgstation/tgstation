@@ -7,8 +7,9 @@
 	attack_effect = ATTACK_EFFECT_BITE
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/bite.ogg'
-	mutant_organs = list(/obj/item/organ/tail/monkey)
-	mutant_bodyparts = list("tail_monkey" = "Monkey")
+	external_organs = list(
+		/obj/item/organ/external/tail/monkey = "Monkey"
+	)
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
@@ -71,10 +72,6 @@
 	. = ..()
 	H.pass_flags |= PASSTABLE
 	H.butcher_results = knife_butcher_results
-	if(!H.dna.features["tail_monkey"] || H.dna.features["tail_monkey"] == "None")
-		H.dna.features["tail_monkey"] = "Monkey"
-		handle_mutant_bodyparts(H)
-
 	H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	H.dna.activate_mutation(/datum/mutation/human/race)
 

@@ -106,7 +106,7 @@
 	id = "liztail"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
-	build_path = /obj/item/organ/tail/lizard/fake
+	build_path = /obj/item/organ/external/tail/lizard/fake
 	category = list(SPECIES_LIZARD)
 
 /datum/design/lizard_tongue
@@ -122,7 +122,7 @@
 	id = "monkeytail"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
-	build_path = /obj/item/organ/tail/monkey
+	build_path = /obj/item/organ/external/tail/monkey
 	category = list("other","initial")
 
 /datum/design/cat_tail
@@ -130,7 +130,7 @@
 	id = "cattail"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
-	build_path = /obj/item/organ/tail/cat
+	build_path = /obj/item/organ/external/tail/cat
 	category = list(SPECIES_HUMAN)
 
 /datum/design/cat_ears

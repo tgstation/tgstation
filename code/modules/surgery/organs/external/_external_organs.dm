@@ -58,6 +58,8 @@
 	if(!limb)
 		return FALSE
 	reciever.external_organs.Add(src)
+	if(slot)
+		reciever.external_organs_slot[slot] = src
 	limb.external_organs.Add(src)
 	ownerlimb = limb
 	. = ..()
@@ -79,6 +81,8 @@
 			ownerlimb.synchronize_bodytypes(organ_owner)
 		ownerlimb = null
 
+	if(slot)
+		organ_owner.external_organs_slot[slot] = null
 	organ_owner.external_organs.Remove(src)
 	organ_owner.update_body_parts()
 
@@ -112,7 +116,7 @@
 
 ///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse)
 /obj/item/organ/external/proc/generate_icon_cache()
-	return "[sprite_datum.icon_state]_[feature_key]"
+	return "[sprite_datum.icon_state]_[render_key ? render_key : feature_key]"
 
 /**This exists so sprite accessories can still be per-layer without having to include that layer's
 *  number in their sprite name, which causes issues when those numbers change.
@@ -143,7 +147,7 @@
 
 ///Return a dumb glob list for this specific feature (called from parse_sprite)
 /obj/item/organ/external/proc/get_global_feature_list()
-	return null
+	CRASH("External organ has no feature list, it will render invisible")
 
 ///Check whether we can draw the overlays. You generally don't want lizard snouts to draw over an EVA suit
 /obj/item/organ/external/proc/can_draw_on_bodypart(mob/living/carbon/human/human)
@@ -172,6 +176,7 @@
 				return
 			var/mob/living/carbon/human/human_owner = ownerlimb.owner
 			draw_color = human_owner.hair_color
+	return TRUE
 
 ///Colorizes the limb it's inserted to, if required.
 /obj/item/organ/external/proc/override_color(rgb_value)

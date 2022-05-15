@@ -4,3 +4,7 @@
 #define ORGAN_COLOR_OVERRIDE (1<<1)
 ///Uses the parent's haircolor
 #define ORGAN_COLOR_HAIR (1<<2)
+
+///Tail wagging
+#define WAG_ABLE (1<<0)
+#define WAG_WAGGING (1<<1)

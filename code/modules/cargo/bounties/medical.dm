@@ -71,13 +71,13 @@
 	name = "Lizard Tail"
 	description = "The Wizard Federation has made off with Nanotrasen's supply of lizard tails. While CentCom is dealing with the wizards, can the station spare a tail of their own?"
 	reward = CARGO_CRATE_VALUE * 6
-	wanted_types = list(/obj/item/organ/tail/lizard = TRUE)
+	wanted_types = list(/obj/item/organ/external/tail/lizard = TRUE)
 
 /datum/bounty/item/medical/cat_tail
 	name = "Cat Tail"
 	description = "Central Command has run out of heavy duty pipe cleaners. Can you ship over a cat tail to help us out?"
 	reward = CARGO_CRATE_VALUE * 6
-	wanted_types = list(/obj/item/organ/tail/cat = TRUE)
+	wanted_types = list(/obj/item/organ/external/tail/cat = TRUE)
 
 /datum/bounty/item/medical/chainsaw
 	name = "Chainsaw"

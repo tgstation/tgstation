@@ -273,7 +273,7 @@
 		/datum/heretic_knowledge/spell/cleave,
 	)
 	required_atoms = list(
-		/obj/item/organ/tail = 1,
+		/obj/item/organ/external/tail = 1,
 		/obj/item/organ/stomach = 1,
 		/obj/item/organ/tongue = 1,
 		/obj/item/pen = 1,

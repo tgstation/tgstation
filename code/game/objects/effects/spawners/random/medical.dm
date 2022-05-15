@@ -59,8 +59,8 @@
 		/obj/item/organ/appendix,
 		/obj/item/organ/liver/fly,
 		/obj/item/organ/lungs/plasmaman,
-		/obj/item/organ/tail/cat,
-		/obj/item/organ/tail/lizard,
+		/obj/item/organ/external/tail/cat,
+		/obj/item/organ/external/tail/lizard,
 	)
 
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner

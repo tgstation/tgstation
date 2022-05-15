@@ -490,7 +490,7 @@
 	. = ..()
 	var/static/list/potential_organs = list(
 		/obj/item/organ/appendix,
-		/obj/item/organ/tail,
+		/obj/item/organ/external/tail,
 		/obj/item/organ/eyes,
 		/obj/item/organ/tongue,
 		/obj/item/organ/ears,

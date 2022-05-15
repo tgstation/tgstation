@@ -684,15 +684,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/obj/item/bodypart/head/noggin = source.get_bodypart(BODY_ZONE_HEAD)
 
-	if(mutant_bodyparts["spines"])
-		if(!source.dna.features["spines"] || source.dna.features["spines"] == "None" || source.wear_suit && (source.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "spines"
-
-	if(mutant_bodyparts["waggingspines"])
-		if(!source.dna.features["spines"] || source.dna.features["spines"] == "None" || source.wear_suit && (source.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "waggingspines"
-		else if (mutant_bodyparts["tail"])
-			bodyparts_to_add -= "waggingspines"
 
 	if(mutant_bodyparts["ears"])
 		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || !IS_ORGANIC_LIMB(noggin))
@@ -709,10 +700,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		for(var/bodypart in bodyparts_to_add)
 			var/datum/sprite_accessory/accessory
 			switch(bodypart)
-				if("spines")
-					accessory = GLOB.spines_list[source.dna.features["spines"]]
-				if("waggingspines")
-					accessory = GLOB.animated_spines_list[source.dna.features["spines"]]
 				if("ears")
 					accessory = GLOB.ears_list[source.dna.features["ears"]]
 				if("body_markings")
@@ -721,8 +708,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					accessory = GLOB.legs_list[source.dna.features["legs"]]
 				if("caps")
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
-				if("tail_monkey")
-					accessory = GLOB.tails_list_monkey[source.dna.features["tail_monkey"]]
 
 			if(!accessory || accessory.icon_state == "none")
 				continue
@@ -1711,7 +1696,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * lost_tail - the tail that was removed
  * on_species_init - whether or not this was called when the species was initialized, or if it was called due to an ingame means (like surgery)
  */
-/datum/species/proc/on_tail_lost(mob/living/carbon/human/tail_owner, obj/item/organ/tail/lost_tail, on_species_init = FALSE)
+/datum/species/proc/on_tail_lost(mob/living/carbon/human/tail_owner, obj/item/organ/external/tail/lost_tail, on_species_init = FALSE)
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "right_tail_regained")
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "wrong_tail_regained")
 	stop_wagging_tail(tail_owner)
@@ -1733,7 +1718,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * lost_tail - the tail that was added
  * on_species_init - whether or not this was called when the species was initialized, or if it was called due to an ingame means (like surgery)
  */
-/datum/species/proc/on_tail_regain(mob/living/carbon/human/tail_owner, obj/item/organ/tail/found_tail, on_species_init = FALSE)
+/datum/species/proc/on_tail_regain(mob/living/carbon/human/tail_owner, obj/item/organ/external/tail/found_tail, on_species_init = FALSE)
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_lost")
 	SEND_SIGNAL(tail_owner, COMSIG_CLEAR_MOOD_EVENT, "tail_balance_lost")
 
@@ -1827,6 +1812,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if ( \
 			(preference.relevant_mutant_bodypart in mutant_bodyparts) \
 			|| (preference.relevant_species_trait in species_traits) \
+			|| (preference.relevant_external_organ in external_organs)
 		)
 			features += preference.savefile_key
 

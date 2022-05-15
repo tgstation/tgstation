@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/head/lizard,
 		/obj/item/clothing/shoes/cowboy/lizard,
 		/obj/item/food/kebab/tail,
-		/obj/item/organ/tail/lizard,
+		/obj/item/organ/external/tail/lizard,
 		/obj/item/reagent_containers/food/drinks/bottle/lizardwine,
 		/obj/item/toy/plush/lizard_plushie,
 	)),
