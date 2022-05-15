@@ -42436,7 +42436,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "Engineering-External"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general/turf/open/floor/iron/smooth,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/turf/open/floor/iron/smooth,
 /area/station/engineering/lobby)
 "nLb" = (
 /obj/machinery/blackbox_recorder,
