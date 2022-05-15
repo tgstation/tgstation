@@ -145,20 +145,22 @@
 /datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
 	SIGNAL_HANDLER
 
-	var/mob/living/simple_animal/sloth/cargo_sloth = locate(/mob/living/simple_animal/sloth/citrus) || locate(/mob/living/simple_animal/sloth/paperwork)
+	var/mob/living/simple_animal/sloth/cargo_sloth = GLOB.cargo_sloth
 	if(!cargo_sloth)
 		return
 
 	cargorilla = new(cargo_sloth.loc)
 	cargorilla.name = cargo_sloth.name
-	cargorilla.being_polled_for = TRUE // We do a poll on roundstart
-	qdel(cargo_sloth)
-
+	// We do a poll on roundstart, don't let ghosts in early
+	cargorilla.being_polled_for = TRUE
 	INVOKE_ASYNC(src, .proc/make_id_for_gorilla)
 
-	var/obj/vehicle/sealed/mecha/working/ripley/cargo/cargo_mech = locate()
-	if(cargo_mech)
-		qdel(cargo_mech)
+	// hm our sloth looks funny today
+	qdel(cargo_sloth)
+
+	// monkey carries the crates, the age of robot is over
+	if(GLOB.cargo_ripley)
+		qdel(GLOB.cargo_ripley)
 
 /// Makes an ID card for the gorilla
 /datum/station_trait/cargorilla/proc/make_id_for_gorilla()

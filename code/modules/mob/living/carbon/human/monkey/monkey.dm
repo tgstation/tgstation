@@ -29,6 +29,8 @@
 		helmet.attack_self(src) // todo encapsulate toggle
 
 
+GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
+
 /mob/living/carbon/human/species/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
 	name = "Pun Pun" //C A N O N
 	unique_name = FALSE
@@ -42,6 +44,12 @@
 	var/memory_saved = FALSE
 
 /mob/living/carbon/human/species/monkey/punpun/Initialize(mapload)
+
+	if(GLOB.the_one_and_only_punpun)
+		stack_trace("Someone's been making duplicate Pun-Puns.")
+		return INITIALIZE_HINT_QDEL
+
+	GLOB.the_one_and_only_punpun = src
 	Read_Memory()
 
 	var/name_to_use = name
@@ -68,16 +76,24 @@
 	if(relic_mask)
 		equip_to_slot_or_del(new relic_mask, ITEM_SLOT_MASK)
 
+/mob/living/carbon/human/species/monkey/punpun/Destroy()
+	if(GLOB.the_one_and_only_punpun == src)
+		GLOB.the_one_and_only_punpun = null
+
+	return ..()
+
 /mob/living/carbon/human/species/monkey/punpun/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory(FALSE, FALSE)
 		memory_saved = TRUE
-	..()
+
+	return ..()
 
 /mob/living/carbon/human/species/monkey/punpun/death(gibbed)
 	if(!memory_saved)
 		Write_Memory(TRUE, gibbed)
-	..()
+
+	return ..()
 
 /mob/living/carbon/human/species/monkey/punpun/proc/Read_Memory()
 	if(fexists("data/npc_saves/Punpun.sav")) //legacy compatability to convert old format to new
