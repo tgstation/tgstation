@@ -28,11 +28,11 @@
 	icon_state = "tray"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/t_ray)
 	cooldown_time = 0.5 SECONDS
 	/// T-ray scan range.
-	var/range = 2
+	var/range = 4
 
 /obj/item/mod/module/t_ray/on_active_process(delta_time)
 	t_ray_scan(mod.wearer, 0.8 SECONDS, range)
@@ -200,6 +200,9 @@
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
 /obj/item/mod/module/constructor/on_use()
+	. = ..()
+	if(!.)
+		return
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_power_cost)
 

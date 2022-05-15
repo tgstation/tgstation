@@ -288,6 +288,52 @@
 	range = 6
 
 /obj/item/mod/module/power_kick
+	name = "MOD power kick module"
+	desc = "This module uses high-power myomer to generate an incredible amount of energy, transferred into the power of a kick."
+	icon_state = "power_kick"
+	module_type = MODULE_ACTIVE
+	removable = FALSE
+	use_power_cost = DEFAULT_CHARGE_DRAIN*5
+	incompatible_modules = list(/obj/item/mod/module/power_kick)
+	cooldown_time = 5 SECONDS
+	var/damage = 20
+	var/wounding_power = 20
+	var/knockdown_time = 2 SECONDS
+
+/obj/item/mod/module/power_kick/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	mod.wearer.visible_message(span_warning("[mod.wearer] starts charging a kick!"), \
+		blind_message = span_hear("You hear a charging sound."))
+	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
+	balloon_alert(mod.wearer, "you start charging...")
+	animate(mod.wearer, 0.3 SECONDS, pixel_z = 16, flags = ANIMATION_RELATIVE)
+	addtimer(CALLBACK(mod.wearer, /atom.proc/SpinAnimation, 3, 2), 0.3 SECONDS)
+	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
+		animate(mod.wearer, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE)
+		return
+	animate(mod.wearer)
+	drain_power(use_power_cost)
+	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
+	var/angle = get_angle(mod.wearer, target) + 180
+	mod.wearer.transform = mod.wearer.transform.Turn(angle)
+	mod.wearer.throw_at(target, range = 7, speed = 2, thrower = mod.wearer, spin = FALSE, gentle = TRUE, callback = CALLBACK(src, .proc/on_throw_end, target, -angle))
+
+/obj/item/mod/module/power_kick/proc/on_throw_end(atom/target, angle)
+	if(!mod?.wearer)
+		return
+	mod.wearer.transform = mod.wearer.transform.Turn(angle)
+	animate(mod.wearer, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE)
+	if(isliving(target))
+		var/mob/living/living_target = target
+		living_target.apply_damage(damage, BRUTE, mod.wearer.zone_selected, wound_bonus = wounding_power)
+		living_target.Knockdown(knockdown_time)
+	else if(target.uses_integrity)
+		target.take_damage(damage, BRUTE, MELEE)
+	else
+		return
+	mod.wearer.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 
 /obj/item/mod/module/chameleon
 	name = "MOD chameleon module"
@@ -295,14 +341,64 @@
 	icon_state = "chameleon"
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/chameleon)
+	allowed_inactive = TRUE
 	var/list/possible_disguises
 	var/current_disguise
+	var/saved_appearance
 
 /obj/item/mod/module/chameleon/on_install()
-	possible_disguises = typesof(get_path_by_slot(mod.slot_flags))
+	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), /proc/cmp_typepaths_asc)
+	for(var/clothing_path in all_disguises)
+		var/obj/item/clothing = clothing_path
+		if(!initial(clothing.icon_state))
+			continue
+		var/chameleon_item_name = "[initial(clothing.name)] ([initial(clothing.icon_state)])"
+		possible_disguises[chameleon_item_name] = clothing_path
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
 	possible_disguises = null
 
 /obj/item/mod/module/chameleon/on_use()
+	if(mod.active || mod.activating)
+		balloon_alert(mod.wearer, "suit active!")
+		return
 	. = ..()
+	if(!.)
+		return
+	if(saved_appearance)
+		return_look()
+		return
+	var/picked_name = tgui_input_list(mod.wearer, "Select look to change into", "Chameleon Settings", possible_disguises)
+	if(!possible_disguises[picked_name] || mod.active || mod.activating)
+		return
+	update_look(possible_disguises[picked_name])
+
+/obj/item/mod/module/chameleon/proc/update_look(obj/item/picked_item)
+	saved_appearance = mod.appearance
+	mod.name = initial(picked_item.name)
+	mod.desc = initial(picked_item.desc)
+	mod.icon_state = initial(picked_item.icon_state)
+	mod.icon = initial(picked_item.icon)
+	mod.worn_icon = initial(picked_item.worn_icon)
+	mod.alternate_worn_layer = initial(picked_item.alternate_worn_layer)
+	mod.lefthand_file = initial(picked_item.lefthand_file)
+	mod.righthand_file = initial(picked_item.righthand_file)
+	mod.worn_icon_state = initial(picked_item.worn_icon_state)
+	mod.inhand_icon_state = initial(picked_item.inhand_icon_state)
+	mod.wearer.update_clothing(mod.slot_flags)
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/return_look)
+
+/obj/item/mod/module/chameleon/proc/return_look()
+	mod.appearance = saved_appearance
+	mod.icon_state = "[mod.skin]-[initial(mod.icon_state)]"
+	var/list/mod_skin = mod.theme.skins[mod.skin]
+	mod.icon = mod_skin[MOD_ICON_OVERRIDE]
+	mod.worn_icon = mod_skin[MOD_WORN_ICON_OVERRIDE]
+	mod.alternate_worn_layer = mod_skin[CONTROL_LAYER]
+	mod.lefthand_file = initial(mod.lefthand_file)
+	mod.righthand_file = initial(mod.righthand_file)
+	mod.worn_icon_state = null
+	mod.inhand_icon_state = null
+	saved_appearance = null
+	mod.wearer.update_clothing(mod.slot_flags)
+	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)

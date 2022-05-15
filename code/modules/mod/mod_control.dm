@@ -609,7 +609,8 @@
 		CRASH("[src] tried to set skin while active!")
 	skin = new_skin
 	var/list/used_skin = theme.skins[new_skin]
-	alternate_worn_layer = used_skin[CONTROL_LAYER]
+	if(used_skin[CONTROL_LAYER])
+		alternate_worn_layer = used_skin[CONTROL_LAYER]
 	var/list/skin_updating = mod_parts.Copy() + src
 	for(var/obj/item/part as anything in skin_updating)
 		if(used_skin[MOD_ICON_OVERRIDE])

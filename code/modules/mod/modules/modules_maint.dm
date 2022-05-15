@@ -160,6 +160,9 @@
 	cooldown_time = 30 SECONDS
 
 /obj/item/mod/module/tanner/on_use()
+	. = ..()
+	if(!.)
+		return
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
 	var/datum/reagents/holder = new()
 	holder.add_reagent(/datum/reagent/spraytan, 10)
@@ -180,6 +183,9 @@
 	cooldown_time = 15 SECONDS
 
 /obj/item/mod/module/balloon/on_use()
+	. = ..()
+	if(!.)
+		return
 	if(!do_after(mod.wearer, 10 SECONDS, target = mod))
 		return FALSE
 	mod.wearer.adjustOxyLoss(20)
@@ -203,6 +209,9 @@
 	var/num_sheets_dispensed = 0
 
 /obj/item/mod/module/paper_dispenser/on_use()
+	. = ..()
+	if(!.)
+		return
 	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
 		return FALSE
 

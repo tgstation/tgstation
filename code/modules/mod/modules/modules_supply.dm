@@ -18,6 +18,9 @@
 	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay_state = FALSE)
 
 /obj/item/mod/module/gps/on_use()
+	. = ..()
+	if(!.)
+		return
 	attack_self(mod.wearer)
 
 ///Hydraulic Clamp - Lets you pick up and drop crates.
@@ -199,6 +202,9 @@
 	ores += ore
 
 /obj/item/mod/module/orebag/on_use()
+	. = ..()
+	if(!.)
+		return
 	for(var/obj/item/ore as anything in ores)
 		ore.forceMove(drop_location())
 		ores -= ore
@@ -477,7 +483,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/items/modsuit/ballin.ogg', 100)
+	playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE)
 	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
 	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
 	mod.wearer.add_filter("mod_outline", 3, outline_filter(color = "#000000AA"))
@@ -499,7 +505,7 @@
 	if(!.)
 		return
 	if(!deleting)
-		playsound(src, 'sound/items/modsuit/ballout.ogg', 100)
+		playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE, frequency = -1)
 	mod.wearer.base_pixel_y = 0
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
 	addtimer(CALLBACK(mod.wearer, /atom.proc/remove_filter, list("mod_ball", "mod_blur", "mod_outline")), animate_time)
@@ -514,6 +520,9 @@
 	UnregisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE)
 
 /obj/item/mod/module/sphere_transform/on_use()
+	. = ..()
+	if(!.)
+		return
 	if(!lavaland_equipment_pressure_check(get_turf(src)))
 		balloon_alert(mod.wearer, "too much pressure!")
 		playsound(src, 'sound/weapons/gun/general/dry_fire.ogg', 25, TRUE)
@@ -579,8 +588,6 @@
 	var/damage = 15
 	/// Damage multiplier on hostile fauna.
 	var/fauna_boost = 4
-	/// Damage multiplier on objects
-	var/object_boost = 2
 	/// Image overlaid on explosion.
 	var/static/image/explosion_image
 
@@ -605,5 +612,5 @@
 	for(var/mob/living/mob in range(1, src))
 		mob.apply_damage(12 * (ishostile(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
 	for(var/obj/object in range(1, src))
-		object.take_damage(damage * object_boost, BRUTE, BOMB)
+		object.take_damage(damage, BRUTE, BOMB)
 	qdel(src)

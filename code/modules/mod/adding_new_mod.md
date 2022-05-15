@@ -227,6 +227,9 @@ Now, we want to override the on_use proc for our new effect. You can read about 
 
 ```dm
 /obj/item/mod/module/neuron_healer/on_use()
+	. = ..()
+	if(!.)
+		return
 	for(var/mob/living/carbon/carbon_mob in range(5, src))
 		if(carbon_mob == mod.wearer)
 			continue

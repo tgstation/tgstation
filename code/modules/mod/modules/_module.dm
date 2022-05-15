@@ -43,6 +43,8 @@
 	var/list/pinned_to = list()
 	/// If we're allowed to use this module while phased out.
 	var/allowed_in_phaseout = FALSE
+	/// If we're allowed to use this module while the suit is disabled.
+	var/allowed_inactive = FALSE
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -71,7 +73,7 @@
 
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
-	if(!mod.active || mod.activating || module_type == MODULE_PASSIVE)
+	if(((!mod.active || mod.activating) && !allowed_inactive) || module_type == MODULE_PASSIVE)
 		if(mod.wearer)
 			balloon_alert(mod.wearer, "not active!")
 		return
@@ -143,16 +145,16 @@
 /obj/item/mod/module/proc/on_use()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		balloon_alert(mod.wearer, "on cooldown!")
-		return
+		return FALSE
 	if(!check_power(use_power_cost))
 		balloon_alert(mod.wearer, "not enough charge!")
-		return
+		return FALSE
 	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
 		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
-		return
+		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
-		return
+		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
 	mod.wearer.update_inv_back()
@@ -183,12 +185,7 @@
 		on_active_process(delta_time)
 	else
 		drain_power(idle_power_cost * delta_time)
-		on_inactive_process(delta_time)
 	return TRUE
-
-/// Called on the MODsuit's process if it is an inactive module
-/obj/item/mod/module/proc/on_inactive_process(delta_time)
-	return
 
 /// Called on the MODsuit's process if it is an active module
 /obj/item/mod/module/proc/on_active_process(delta_time)

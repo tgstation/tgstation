@@ -9,7 +9,6 @@
 	heat_protection = HEAD
 	cold_protection = HEAD
 	obj_flags = IMMUTABLE_SLOW
-	var/alternate_layer = NECK_LAYER
 
 /obj/item/clothing/suit/mod
 	name = "MOD chestplate"
