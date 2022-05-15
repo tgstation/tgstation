@@ -1,3 +1,8 @@
+//These globs are to make sure that each flora instance doesn't have to make a new typepath if its type already made it; aka performance junk
+GLOBAL_LIST_EMPTY(flora_required_tools_typepaths)
+GLOBAL_LIST_EMPTY(flora_disallowed_tools_typepaths)
+GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
+
 /obj/structure/flora
 	name = "flora"
 	desc = "Some sort of plant."
@@ -70,9 +75,17 @@
 		if(flora_flags & FLORA_STONE)
 			required_tools += FLORA_HARVEST_STONE_TOOLS
 	
-	required_tools = typecacheof(required_tools)
-	disallowed_tools = typecacheof(disallowed_tools)
-	uprooting_tools = typecacheof(uprooting_tools)
+	//ugly-looking performance optimization
+	if(!flora_required_tools_typepaths[type])
+		flora_required_tools_typepaths[type] = typecacheof(required_tools)
+	if(!flora_disallowed_tools_typepaths[type])
+		flora_disallowed_tools_typepaths[type] = typecacheof(disallowed_tools)
+	if(!flora_uprooting_tools_typepaths[type])
+		flora_uprooting_tools_typepaths[type] = typecacheof(uprooting_tools)
+	
+	required_tools = flora_required_tools_typepaths[type]
+	disallowed_tools = flora_disallowed_tools_typepaths[type]
+	uprooting_tools = flora_uprooting_tools_typepaths[type]
 
 /obj/structure/flora/attackby(obj/item/W, mob/living/user, params)
 	if(user.combat_mode)
@@ -152,16 +165,17 @@
  * Returns: A list where each value is (product_type = amount_of_products)
  */
 /obj/structure/flora/proc/get_products_list()
-	. = list()
 	if(!LAZYLEN(product_types))
-		return
+		return list()
+	var/list/product_list = list()
 
 	var/harvest_amount = rand(harvest_amount_low, harvest_amount_high)
 	for(var/iteration in 1 to harvest_amount)
 		var/chosen_product = pick_weight(product_types)
-		if(!.[chosen_product])
-			.[chosen_product] = 0
-		.[chosen_product]++
+		if(!product_list[chosen_product])
+			product_list[chosen_product] = 0
+		product_list[chosen_product]++
+	return product_list
 
 /*
  * A helper proc that determines if a user can currently harvest this flora with whatever tool they're trying to use.
