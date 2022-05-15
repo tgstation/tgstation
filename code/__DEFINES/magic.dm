@@ -52,10 +52,10 @@
 #define SPELL_REQUIRES_WIZARD_GARB (1 << 0)
 /// Whether the spell can only be cast by humans (mob type, not species)
 #define SPELL_REQUIRES_HUMAN (1 << 1)
-/// Whether the spell can only be cast by mobs that are physical entities (not PAIs or brains)
-#define SPELL_REQUIRES_NON_ABSTRACT (1 << 2)
+/// Whether the spell can be cast by mobs who are brains
+#define SPELL_CASTABLE_AS_BRAIN (1 << 2)
 /// Whether the spell can be cast while phased, such as blood crawling or ethereal jaunting
-#define SPELL_REQUIRES_UNPHASED (1 << 3)
+#define SPELL_CASTABLE_WHILE_PHASED (1 << 3)
 /// Whether the spell can be cast while the user has antimagic on them corresponding to the spell's magic type
 #define SPELL_REQUIRES_NO_ANTIMAGIC (1 << 4)
 /// Whether the spell can be cast on the centcom z level
@@ -66,13 +66,13 @@
 #define SPELL_REQUIRES_MIME_VOW (1 << 7)
 
 DEFINE_BITFIELD(spell_requirements, list(
+	"SPELL_CASTABLE_AS_BRAIN" = SPELL_CASTABLE_AS_BRAIN,
+	"SPELL_CASTABLE_WHILE_PHASED" = SPELL_CASTABLE_WHILE_PHASED,
 	"SPELL_REQUIRES_HUMAN" = SPELL_REQUIRES_HUMAN,
 	"SPELL_REQUIRES_MIME_VOW" = SPELL_REQUIRES_MIME_VOW,
 	"SPELL_REQUIRES_MIND" = SPELL_REQUIRES_MIND,
-	"SPELL_REQUIRES_NON_ABSTRACT" = SPELL_REQUIRES_NON_ABSTRACT,
 	"SPELL_REQUIRES_NO_ANTIMAGIC" = SPELL_REQUIRES_NO_ANTIMAGIC,
 	"SPELL_REQUIRES_OFF_CENTCOM" = SPELL_REQUIRES_OFF_CENTCOM,
-	"SPELL_REQUIRES_UNPHASED" = SPELL_REQUIRES_UNPHASED,
 	"SPELL_REQUIRES_WIZARD_GARB" = SPELL_REQUIRES_WIZARD_GARB,
 ))
 

@@ -8,7 +8,7 @@
 	button_icon_state = "ninja_cloak"
 
 	cooldown_time = 6 SECONDS
-	spell_requirements = NONE
+	spell_requirements = SPELL_CASTABLE_WHILE_PHASED
 
 	jaunt_type = /obj/effect/dummy/phased_mob/mirror_walk
 

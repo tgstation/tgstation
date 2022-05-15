@@ -15,11 +15,6 @@
 	/// All possible types we can become
 	var/list/atom/possible_shapes
 
-/datum/action/cooldown/spell/shapeshift/New(Target)
-	. = ..()
-	// Any shapeshifting should require non-abstract form
-	spell_requirements |= SPELL_REQUIRES_NON_ABSTRACT
-
 /datum/action/cooldown/spell/shapeshift/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
@@ -38,8 +33,8 @@
 		shapeshift_type = possible_shapes[1]
 		return TRUE
 
-	var/static/list/shape_names_to_types = list()
-	var/static/list/shape_names_to_image = list()
+	var/list/shape_names_to_types = list()
+	var/list/shape_names_to_image = list()
 	if(!length(shape_names_to_types) || !length(shape_names_to_image))
 		for(var/atom/path as anything in possible_shapes)
 			var/shape_name = initial(path.name)
@@ -125,7 +120,7 @@
 /datum/action/cooldown/spell/shapeshift/proc/do_shapeshift(mob/living/caster)
 	if(is_shifted(caster))
 		to_chat(caster, span_warning("You're already shapeshifted!"))
-		CRASH("[type] called do_shapeshift while ")
+		CRASH("[type] called do_shapeshift while shapeshifted.")
 
 	var/mob/living/new_shape = new shapeshift_type(caster.loc)
 	var/obj/shapeshift_holder/new_shape_holder = new(new_shape, src, caster)
@@ -142,7 +137,7 @@
 	var/mob/living/restored_player = current_shift.stored
 
 	current_shift.restore()
-	spell_requirements = initial(spell_requirements)
+	spell_requirements = initial(spell_requirements) // Miiight mess with admin stuff.
 
 	return restored_player
 

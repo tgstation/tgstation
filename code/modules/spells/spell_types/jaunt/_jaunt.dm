@@ -19,11 +19,6 @@
 	/// What dummy mob type do we put jaunters in on jaunt?
 	var/jaunt_type = /obj/effect/dummy/phased_mob
 
-/datum/action/cooldown/spell/jaunt/New(Target)
-	. = ..()
-	// No matter what any subtypes set, it should always require non-abstract and unphased for jaunt
-	spell_requirements |= (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
-
 /datum/action/cooldown/spell/jaunt/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
@@ -56,7 +51,7 @@
 /datum/action/cooldown/spell/jaunt/proc/enter_jaunt(mob/living/jaunter, turf/loc_override)
 	var/obj/effect/dummy/phased_mob/jaunt = new jaunt_type(loc_override || get_turf(jaunter), jaunter)
 	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, src, jaunt)
-	spell_requirements &= ~SPELL_REQUIRES_UNPHASED
+	ADD_TRAIT(jaunter, TRAIT_MAGICALLY_PHASED, REF(src))
 	return jaunt
 
 /**
@@ -79,7 +74,7 @@
 		jaunt.forceMove(loc_override)
 	jaunt.eject_jaunter()
 	SEND_SIGNAL(unjaunter, COMSIG_MOB_AFTER_EXIT_JAUNT, src)
-	spell_requirements |= SPELL_REQUIRES_UNPHASED
+	REMOVE_TRAIT(unjaunter, TRAIT_MAGICALLY_PHASED, REF(src))
 	return TRUE
 
 /// Simple helper to check if the passed mob is currently jaunting or not

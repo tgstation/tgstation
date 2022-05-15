@@ -439,8 +439,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Normally only present in the mind of a Research Director.
 #define TRAIT_ROD_SUPLEX "rod_suplex"
 
-/// This mob is currently in rod form.
-#define TRAIT_ROD_FORM "rod_form"
+/// This mob is phased out of reality from magic, either a jaunt or rod form
+#define TRAIT_MAGICALLY_PHASED "magically_phased"
 
 //SKILLS
 #define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"

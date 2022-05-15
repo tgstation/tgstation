@@ -103,8 +103,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
 		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
-	if(spell_requirements & SPELL_REQUIRES_UNPHASED)
-		RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
+	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
 
 /datum/action/cooldown/spell/Remove(mob/living/remove_from)
 	UnregisterSignal(remove_from, list(
@@ -157,7 +156,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 			to_chat(owner, span_warning("Some form of antimagic is preventing you from casting [src]!"))
 		return FALSE
 
-	if(((spell_requirements & SPELL_REQUIRES_UNPHASED) && istype(owner.loc, /obj/effect/dummy/phased_mob)) || HAS_TRAIT(owner, TRAIT_ROD_FORM))
+	if((!(spell_requirements & SPELL_CASTABLE_WHILE_PHASED)) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
 		if(feedback)
 			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE
@@ -183,9 +182,9 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 			return FALSE
 
 		// I'm not sure if this can even feasibly come into play anymore, but might as well keep it
-		if((spell_requirements & SPELL_REQUIRES_NON_ABSTRACT) && (isbrain(owner) || ispAI(owner)))
+		if((!(spell_requirements & SPELL_CASTABLE_AS_BRAIN)) && isbrain(owner))
 			if(feedback)
-				to_chat(owner, span_warning("[src] can only be cast by physical beings!"))
+				to_chat(owner, span_warning("[src] can't be cast in this state!"))
 			return FALSE
 
 	return TRUE
