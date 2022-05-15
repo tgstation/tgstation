@@ -28,15 +28,23 @@
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
 
+/obj/item/organ/external/tail/generate_icon_cache()
+	. = list()
+	. += "[sprite_datum.icon_state]"
+	. += "[feature_key]"
+	if((wag_flags & WAG_ABLE) && (wag_flags & WAG_WAGGING))
+		. += "wagging"
+	return jointext(., "_")
+
 /obj/item/organ/external/tail/proc/wag()
 	if(!(wag_flags & WAG_ABLE))
 		return
 
 	if(!(wag_flags & WAG_WAGGING))
-		feature_key = "wagging[render_key]"
+		render_key = "wagging[render_key]"
 		wag_flags |= WAG_WAGGING
 	else
-		feature_key = initial(render_key)
+		render_key = initial(render_key)
 		wag_flags &= ~WAG_WAGGING
 
 	owner.update_body_parts()
