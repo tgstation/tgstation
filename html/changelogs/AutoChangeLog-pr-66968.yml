@@ -1,0 +1,4 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - spellcheck: "fixed an outdated quip about buying scipapers in the experiment status"
