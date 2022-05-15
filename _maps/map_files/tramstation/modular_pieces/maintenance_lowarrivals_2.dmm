@@ -99,7 +99,7 @@
 "S" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance/glass{
-	req_access_txt = "12"
+	req_access_txt = ACCESS_MAINT_TUNNELS
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)

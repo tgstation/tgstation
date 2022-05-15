@@ -49,7 +49,7 @@
 /// - - - ENGINEERING 40-59 - - -
 /// Engineering general access, power monitor, power flow control console
 #define ACCESS_ENGINEERING 40
-#define ACCESS_ATMOS 41
+#define ACCESS_ATMOSPHERICS 41
 #define ACCESS_MAINT_TUNNELS 42
 ///APCs, EngiVend/YouTool, engineering equipment lockers
 #define ACCESS_ENGINE_EQUIP 43
@@ -164,7 +164,7 @@
 #define ACCESS_CENT_CAPTAIN 186
 #define ACCESS_CENT_BAR 187
 /// Special Ops. Captain's display case, Marauder and Seraph mechs.
-#define ACCESS_CENT_SPECOPS 188
+#define ACCESS_CENT_SPECOPS 188 ///Remind me to separate to captain, centcomm, and syndicate mech access later -SonofSpace
 
 /// - - - ANTAGONIST - - -
 /// SYNDICATE
@@ -278,7 +278,7 @@
 	ACCESS_BRIG_ENTRANCE, \
 	ACCESS_XENOBIOLOGY, \
 	ACCESS_MINING_STATION, \
-	ACCESS_MAILSORTING, \
+	ACCESS_MAIL_SORTING, \
 	ACCESS_MINING, \
 	ACCESS_RESEARCH, \
 	ACCESS_THEATRE, \
@@ -289,7 +289,7 @@
 	ACCESS_LAWYER, \
 	ACCESS_LIBRARY, \
 	ACCESS_HYDROPONICS, \
-	ACCESS_CHEMISTRY, \
+	ACCESS_PLUMBING, \
 	ACCESS_CONSTRUCTION, \
 	ACCESS_CARGO, \
 	ACCESS_ROBOTICS, \
@@ -301,12 +301,12 @@
 	ACCESS_EXTERNAL_AIRLOCKS, \
 	ACCESS_MAINT_TUNNELS, \
 	ACCESS_ENGINE_EQUIP, \
-	ACCESS_ENGINE, \
+	ACCESS_ENGINEERING, \
 	ACCESS_GENETICS, \
-	ACCESS_RND, \
+	ACCESS_SCIENCE, \
 	ACCESS_MORGUE, \
 	ACCESS_MEDICAL, \
-	ACCESS_FORENSICS, \
+	ACCESS_DETECTIVE, \
 	ACCESS_BRIG, \
 	ACCESS_SECURITY, \
 	ACCESS_ATMOSPHERICS, \
@@ -318,12 +318,12 @@
 /// Command staff/secure accesses, think bridge/armoury, AI upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
 	ACCESS_MINISAT, \
-	ACCESS_TCOMSAT, \
+	ACCESS_TCOMMS, \
 	ACCESS_KEYCARD_AUTH, \
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_VAULT, \
 	ACCESS_TECH_STORAGE, \
-	ACCESS_HEADS, \
+	ACCESS_COMMAND, \
 	ACCESS_TELEPORTER, \
 	ACCESS_ARMORY, \
 	ACCESS_AI_UPLOAD, \
@@ -368,10 +368,11 @@
 /// Away missions/gateway/space ruins.  Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_AWAY)
 #define AWAY_ACCESS list( \
 	ACCESS_AWAY_GENERAL, \
-	ACCESS_AWAY_MAINT, \
-	ACCESS_AWAY_MED, \
+	ACCESS_AWAY_COMMAND, \
+	ACCESS_AWAY_MAINTENANCE, \
+	ACCESS_AWAY_MEDICAL, \
 	ACCESS_AWAY_SEC, \
-	ACCESS_AWAY_ENGINE, \
+	ACCESS_AWAY_ENGINEERING, \
 	ACCESS_AWAY_GENERIC1, \
 	ACCESS_AWAY_GENERIC2, \
 	ACCESS_AWAY_GENERIC3, \
@@ -415,7 +416,7 @@
 	ACCESS_SECURITY, \
 	ACCESS_BRIG, \
 	ACCESS_ARMORY, \
-	ACCESS_FORENSICS, \
+	ACCESS_DETECTIVE, \
 	ACCESS_COURT, \
 	ACCESS_MECH_SECURITY, \
 	ACCESS_HOS, \
@@ -426,7 +427,7 @@
 #define REGION_ACCESS_MEDBAY list( \
 	ACCESS_MEDICAL, \
 	ACCESS_MORGUE, \
-	ACCESS_CHEMISTRY, \
+	ACCESS_PLUMBING, \
 	ACCESS_VIROLOGY, \
 	ACCESS_SURGERY, \
 	ACCESS_MECH_MEDICAL, \
@@ -439,7 +440,7 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
 #define REGION_ACCESS_RESEARCH list( \
 	ACCESS_RESEARCH, \
-	ACCESS_RND, \
+	ACCESS_SCIENCE, \
 	ACCESS_ORDNANCE, \
 	ACCESS_ORDNANCE_STORAGE, \
 	ACCESS_GENETICS, \
@@ -457,13 +458,13 @@
 	ACCESS_CONSTRUCTION, \
 	ACCESS_AUX_BASE, \
 	ACCESS_MAINT_TUNNELS, \
-	ACCESS_ENGINE, \
+	ACCESS_ENGINEERING, \
 	ACCESS_ENGINE_EQUIP, \
 	ACCESS_EXTERNAL_AIRLOCKS, \
 	ACCESS_TECH_STORAGE, \
 	ACCESS_ATMOSPHERICS, \
 	ACCESS_MECH_ENGINE, \
-	ACCESS_TCOMSAT, \
+	ACCESS_TCOMMS, \
 	ACCESS_MINISAT, \
 	ACCESS_CE, \
 )
@@ -471,7 +472,7 @@
 #define REGION_SUPPLY "Supply"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
 #define REGION_ACCESS_SUPPLY list( \
-	ACCESS_MAILSORTING, \
+	ACCESS_MAIL_SORTING, \
 	ACCESS_MINING, \
 	ACCESS_MINING_STATION, \
 	ACCESS_MECH_MINING, \
@@ -484,7 +485,7 @@
 #define REGION_COMMAND "Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all command regional accesses that are overseen by the Captain.
 #define REGION_ACCESS_COMMAND list( \
-	ACCESS_HEADS, \
+	ACCESS_COMMAND, \
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_KEYCARD_AUTH, \
 	ACCESS_CHANGE_IDS, \

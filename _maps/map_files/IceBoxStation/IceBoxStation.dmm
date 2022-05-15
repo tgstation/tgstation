@@ -231,8 +231,7 @@
 /area/station/maintenance/fore)
 "afe" = (
 /obj/machinery/door/airlock/external{
-	name = "Atmospherics Internal Airlock";
-	req_access_txt = "24"
+	name = "Atmospherics Internal Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
@@ -703,13 +702,13 @@
 	id = "xenobiomain";
 	name = "Containment Blast Doors";
 	pixel_y = -6;
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/machinery/button/door/directional/west{
 	id = "misclab";
 	name = "Test Chamber Blast Doors";
 	pixel_y = 6;
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -1052,7 +1051,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 4";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1248,7 +1247,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "kitchen";
 	name = "Counter Shutters Control";
-	req_access_txt = "28"
+	req_access_txt = ACCESS_KITCHEN
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -1480,7 +1479,7 @@
 	name = "Virology Access Button";
 	pixel_x = -24;
 	pixel_y = 5;
-	req_access_txt = "39"
+	req_access_txt = ACCESS_VIROLOGY
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -1517,7 +1516,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor{
 	name = "Armory Desk";
-	req_access_txt = "3"
+	req_access_txt = ACCESS_ARMORY
 	},
 /obj/machinery/door/window/left/directional/north{
 	name = "Armory Desk"
@@ -2029,7 +2028,7 @@
 	name = "Visitation Shutters";
 	pixel_x = 6;
 	pixel_y = -24;
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/machinery/button/flasher{
 	id = "visitorflash";
@@ -2433,7 +2432,7 @@
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	dir = 4;
 	name = "High-Risk Modules";
-	req_access_txt = "20"
+	req_access_txt = ACCESS_CAPTAIN
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -2444,7 +2443,7 @@
 /obj/machinery/door/window/right/directional/west{
 	dir = 1;
 	name = "Security Checkpoint";
-	req_access_txt = "1"
+	req_access_txt = ACCESS_SECURITY
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -2455,7 +2454,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "labor";
 	name = "Labor Camp Lockdown";
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -3070,7 +3069,7 @@
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "Head of Personnel's Desk";
-	req_access_txt = "57"
+	req_access_txt = ACCESS_HOP
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "hop";
@@ -3158,7 +3157,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "robotics2";
 	name = "Shutters Control Button";
-	req_access_txt = "29"
+	req_access_txt = ACCESS_ROBOTICS
 	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
@@ -3420,7 +3419,7 @@
 	name = "Anti-Riot Shutters";
 	pixel_x = -7;
 	pixel_y = 32;
-	req_one_access_txt = "1;4"
+	req_access_txt = ACCESS_SECURITY
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -4078,7 +4077,7 @@
 	name = "Armory Shutters";
 	pixel_x = -9;
 	pixel_y = 30;
-	req_access_txt = "3"
+	req_access_txt = ACCESS_ARMORY
 	},
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun{
@@ -5365,8 +5364,7 @@
 /area/station/security/interrogation)
 "bLp" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Chemical Storage";
-	req_access_txt = "12"
+	name = "Chemical Storage"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/mapping_helpers/airlock/unres{
@@ -5441,7 +5439,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Core Modules";
-	req_access_txt = "20"
+	req_access_txt = ACCESS_CAPTAIN
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -5485,7 +5483,7 @@
 	id = "kitchen_counter";
 	name = "Counter Shutters Control";
 	pixel_x = -25;
-	req_access_txt = "28"
+	req_access_txt = ACCESS_KITCHEN
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -5875,7 +5873,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor{
 	name = "Warden Desk";
-	req_access_txt = "3"
+	req_access_txt = ACCESS_ARMORY
 	},
 /obj/item/paper_bin{
 	pixel_x = -3;
@@ -7586,7 +7584,7 @@
 	dir = 8;
 	icon_state = "left";
 	name = "Pharmacy Desk";
-	req_access_txt = "69"
+	req_access_txt = ACCESS_PHARMACY
 	},
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
@@ -7610,7 +7608,7 @@
 	id = "xenobio10";
 	layer = 4;
 	name = "Xenobio Pen 10 Blast DOors";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -7957,8 +7955,7 @@
 "cBk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
-	name = "Auxiliary Tool Storage";
-	req_access_txt = "12"
+	name = "Auxiliary Tool Storage"
 	},
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
@@ -8018,7 +8015,7 @@
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Button";
 	pixel_y = -24;
-	req_access_txt = "39"
+	req_access_txt = ACCESS_VIROLOGY
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -9995,10 +9992,9 @@
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "engineering external airlock";
-	opacity = 0;
-	req_access_txt = "10;24"
+	opacity = 0
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "Engineering-External"
 	},
 /turf/open/floor/plating,
@@ -10356,7 +10352,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 8";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio8";
@@ -10380,7 +10376,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/window/brigdoor/right/directional/east{
-	req_access_txt = "3"
+	req_access_txt = ACCESS_ARMORY
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
@@ -11694,7 +11690,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	name = "Secure Art Exhibition";
-	req_access_txt = "37"
+	req_access_txt = ACCESS_LIBRARY
 	},
 /obj/effect/spawner/random/structure/table_fancy,
 /turf/open/floor/wood,
@@ -11842,7 +11838,7 @@
 	dir = 8;
 	icon_state = "left";
 	name = "Research Division Delivery";
-	req_access_txt = "47"
+	req_access_txt = ACCESS_RESEARCH
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -12053,7 +12049,7 @@
 	id = "xenobio7";
 	layer = 4;
 	name = "Xenobio Pen 7 Blast DOors";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -12961,7 +12957,7 @@
 /obj/machinery/door/window/left/directional/south{
 	dir = 4;
 	name = "Test Chamber";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -13343,7 +13339,7 @@
 /obj/machinery/door/window/right/directional/south{
 	dir = 8;
 	name = "Monkey Pen";
-	req_one_access_txt = "9"
+	req_access_txt = ACCESS_GENETICS
 	},
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/engine,
@@ -13812,7 +13808,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 7";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio7";
@@ -13910,10 +13906,9 @@
 /area/station/commons/vacant_room/office)
 "eyg" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Evidence Storage";
-	req_one_access_txt = "1;4"
+	name = "Evidence Storage"
 	},
-/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/general/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -14780,7 +14775,6 @@
 "eLv" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
-	req_access_txt = "2";
 	shuttledocked = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -14795,7 +14789,7 @@
 	id = "xenobio9";
 	layer = 4;
 	name = "Xenobio Pen 9 Blast DOors";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -15623,7 +15617,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 9";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -16316,7 +16310,7 @@
 "fmi" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Foyer";
-	req_one_access_txt = "32;19"
+	req_access_txt = ACCESS_ENGINEERING
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16406,7 +16400,7 @@
 	name = "Bridge Blast Door Control";
 	pixel_x = 28;
 	pixel_y = -2;
-	req_access_txt = "19"
+	req_access_txt = ACCESS_COMMAND
 	},
 /obj/machinery/keycard_auth{
 	pixel_x = 29;
@@ -16526,7 +16520,7 @@
 	id = "pharmacy_shutters";
 	name = "Pharmacy Shutter Controls";
 	pixel_y = 55;
-	req_access_txt = "69"
+	req_access_txt = ACCESS_PHARMACY
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -16548,7 +16542,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 1";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio1";
@@ -16584,8 +16578,7 @@
 /area/station/security/prison)
 "fqy" = (
 /obj/machinery/door/airlock/external{
-	name = "Atmospherics External Airlock";
-	req_access_txt = "24"
+	name = "Atmospherics External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -16746,7 +16739,7 @@
 "fsR" = (
 /obj/machinery/door/morgue{
 	name = "Relic Closet";
-	req_access_txt = "22"
+	req_access_txt = ACCESS_CHAPEL_OFFICE
 	},
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
@@ -17188,7 +17181,7 @@
 "fAR" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -17247,7 +17240,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "chemistry_access_shutters";
 	name = "Chemistry Access Shutter Control";
-	req_access_txt = "5"
+	req_access_txt = ACCESS_MEDICAL
 	},
 /obj/item/stack/medical/suture,
 /obj/effect/turf_decal/tile/blue/full,
@@ -17788,7 +17781,7 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
 	name = "Research Director Observation";
-	req_access_txt = "30"
+	req_access_txt = ACCESS_RD
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -17873,20 +17866,20 @@
 	name = "Prison Wing Lockdown";
 	pixel_x = 5;
 	pixel_y = 8;
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/machinery/button/door{
 	id = "Trial Transfer";
 	name = "Trial Transfer Lockdown";
 	pixel_x = -7;
 	pixel_y = 8;
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/machinery/button/door{
 	id = "Secure Gate";
 	name = "Cell Shutters";
 	pixel_x = -7;
-	pixel_y = -3
+	pixel_y = -3req_access_txt = ACCESS_BRIG
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -18005,7 +17998,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -18302,7 +18295,7 @@
 	name = "Test Chamber Blast Doors";
 	pixel_x = 4;
 	pixel_y = 2;
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -18622,8 +18615,7 @@
 /area/station/maintenance/starboard/fore)
 "fYC" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Server Room";
-	req_access_txt = "30"
+	name = "Server Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/rd,
 /turf/open/floor/iron/dark,
@@ -18941,7 +18933,7 @@
 	id = "gene_shutters";
 	name = "Genetics Privacy Shutters";
 	pixel_y = -4;
-	req_access_txt = "9"
+	req_access_txt = ACCESS_GENETICS
 	},
 /obj/machinery/light_switch/directional/west{
 	pixel_x = -34;
@@ -18951,7 +18943,7 @@
 	id = "gene_desk_shutters";
 	name = "Genetics Desk Shutters";
 	pixel_y = 6;
-	req_access_txt = "9"
+	req_access_txt = ACCESS_GENETICS
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -19140,7 +19132,7 @@
 /obj/machinery/button/door/directional/south{
 	id = "stationawaygate";
 	name = "Gateway Access Shutter Control";
-	req_access_txt = "31"
+	req_access_txt = ACCESS_CARGO
 	},
 /turf/open/floor/iron,
 /area/station/command/gateway)
@@ -19403,7 +19395,7 @@
 	name = "Mech Bay Door Control";
 	pixel_x = 4;
 	pixel_y = 3;
-	req_access_txt = "29"
+	req_access_txt = ACCESS_ROBOTICS
 	},
 /obj/item/folder/red{
 	pixel_x = -5;
@@ -19924,7 +19916,7 @@
 "gvC" = (
 /obj/machinery/door/window{
 	name = "Gateway Chamber";
-	req_access_txt = "62"
+	
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -20187,7 +20179,7 @@
 	name = "Antechamber Turret Control";
 	pixel_y = -24;
 	req_access = null;
-	req_access_txt = "65"
+	req_access_txt = ACCESS_MINISAT
 	},
 /obj/machinery/light/small/directional/south,
 /obj/machinery/camera/motion/directional/south{
@@ -21262,7 +21254,7 @@
 /obj/machinery/door/window/right/directional/east{
 	dir = 8;
 	name = "Pharmacy Desk";
-	req_access_txt = "69"
+	req_access_txt = ACCESS_PHARMACY
 	},
 /obj/item/folder/white,
 /obj/item/pen,
@@ -21326,7 +21318,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Engineering Desk";
-	req_access_txt = "11"
+	req_access_txt = ACCESS_ENGINE_EQUIP
 	},
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin{
@@ -21497,7 +21489,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 1";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -21686,7 +21678,7 @@
 	id = "xenobio4";
 	layer = 4;
 	name = "Xenobio Pen 4 Blast Door";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -21892,7 +21884,7 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Security Delivery";
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /turf/open/floor/plating,
 /area/station/security/processing)
@@ -22113,7 +22105,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	dir = 4;
-	req_access_txt = "63"
+	req_access_txt = ACCESS_BRIG_ENTRANCE
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "medsecprivacy";
@@ -22175,22 +22167,6 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/station/maintenance/starboard/fore)
-"hcR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/medical{
-	name = "Surgery B";
-	req_access_txt = "45"
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue/full,
-/obj/effect/mapping_helpers/airlock/access/all/medical/surgery,
-/turf/open/floor/iron/white/smooth_large,
-/area/station/medical/medbay/aft)
 "hcS" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/sign/departments/xenobio{
@@ -22453,7 +22429,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "Skynet_launch";
 	name = "Mech Bay Door Control";
-	req_access_txt = "29"
+	req_access_txt = ACCESS_ROBOTICS
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics/mechbay)
@@ -24174,7 +24150,7 @@
 	id = "Lakeview_Bathroom";
 	pixel_x = 22;
 	pixel_y = -10;
-	req_access_txt = "29"
+	req_access_txt = ACCESS_ROBOTICS
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/eva/lower)
@@ -24250,7 +24226,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 11";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -24538,7 +24514,7 @@
 /obj/machinery/door/window/right/directional/east{
 	dir = 1;
 	name = "Bridge Delivery";
-	req_access_txt = "19"
+	req_access_txt = ACCESS_COMMAND
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -24608,7 +24584,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "pharmacy_shutters2";
 	name = "Pharmacy Shutter Control";
-	req_access_txt = "69"
+	req_access_txt = ACCESS_PHARMACY
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -24899,7 +24875,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	name = "Mass Driver";
-	req_access_txt = "22"
+	req_access_txt = ACCESS_CHAPEL_OFFICE
 	},
 /obj/machinery/mass_driver/chapelgun{
 	dir = 4
@@ -25080,7 +25056,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	name = "Secure Art Exhibition";
-	req_access_txt = "37"
+	req_access_txt = ACCESS_LIBRARY
 	},
 /obj/effect/spawner/random/structure/table_fancy,
 /turf/open/floor/wood,
@@ -25638,7 +25614,7 @@
 	id = "pharmacy_shutters3";
 	name = "Pharmacy Shutter Controls";
 	pixel_y = 55;
-	req_access_txt = "69"
+	req_access_txt = ACCESS_PHARMACY
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -25848,7 +25824,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 5";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -26087,7 +26063,7 @@
 "irY" = (
 /obj/machinery/door/window/brigdoor/right/directional/north{
 	name = "Flash Storage";
-	req_access_txt = "3"
+	req_access_txt = ACCESS_ARMORY
 	},
 /obj/machinery/recharge_station,
 /turf/open/floor/iron/smooth,
@@ -27428,7 +27404,7 @@
 	dir = 1;
 	icon_state = "left";
 	name = "Pharmacy Desk";
-	req_access_txt = "69"
+	req_access_txt = ACCESS_PHARMACY
 	},
 /obj/item/folder/white,
 /obj/item/pen,
@@ -27704,7 +27680,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 3";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -27751,8 +27727,7 @@
 /area/station/maintenance/port/aft)
 "iTR" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Utilities Closet";
-	req_access_txt = "48, 24"
+	name = "Utilities Closet"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -27886,7 +27861,7 @@
 "iVQ" = (
 /obj/machinery/door/morgue{
 	name = "Private Study";
-	req_access_txt = "37"
+	req_access_txt = ACCESS_LIBRARY
 	},
 /turf/open/floor/engine/cult,
 /area/station/service/library)
@@ -28095,7 +28070,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "chemistry_access_shutters";
 	name = "Chemistry Access Shutter Control";
-	req_access_txt = "5"
+	req_access_txt = ACCESS_MEDICAL
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/corner,
@@ -28536,7 +28511,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 4";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -28554,7 +28529,7 @@
 /obj/machinery/door/window/right/directional/south{
 	dir = 4;
 	name = "Genetics Desk";
-	req_one_access_txt = "9"
+	req_access_txt = ACCESS_GENETICS
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "gene_desk_shutters";
@@ -29468,7 +29443,7 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Flash Storage";
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -29789,7 +29764,7 @@
 /obj/machinery/door/window/brigdoor/right/directional/north{
 	dir = 8;
 	name = "Medbay Access";
-	req_access_txt = "5"
+	req_access_txt = ACCESS_MEDICAL
 	},
 /obj/structure/railing/corner{
 	dir = 4
@@ -29848,7 +29823,7 @@
 "jCW" = (
 /obj/machinery/door/window/right/directional/west{
 	name = "Apiary";
-	req_access_txt = "35"
+	req_access_txt = ACCESS_HYDROPONICS
 	},
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
@@ -30870,7 +30845,7 @@
 "jSd" = (
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "Secure Weapons Storage";
-	req_access_txt = "3"
+	req_access_txt = ACCESS_ARMORY
 	},
 /turf/open/floor/iron/dark/textured,
 /area/ai_monitored/security/armory)
@@ -31355,8 +31330,7 @@
 /area/station/service/kitchen/diner)
 "kbk" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Teleporter Maintenance";
-	req_access_txt = "17"
+	name = "Teleporter Maintenance"
 	},
 /obj/structure/sign/warning/secure_area{
 	pixel_x = -32
@@ -32001,7 +31975,7 @@
 "klW" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32535,7 +32509,7 @@
 /obj/machinery/button/door/directional/south{
 	id = "engsm";
 	name = "Radiation Shutters Control";
-	req_access_txt = "10"
+	req_access_txt = ACCESS_ENGINEERING
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -33437,7 +33411,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/west{
 	name = "Delivery Desk";
-	req_access_txt = "50"
+	req_access_txt = ACCESS_MAIL_SORTING
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
@@ -33784,7 +33758,7 @@
 "kOw" = (
 /obj/machinery/door/window/left/directional/west{
 	name = "Janitorial Delivery";
-	req_access_txt = "26"
+	req_access_txt = ACCESS_JANITOR
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/spawner/random/trash/mess,
@@ -34656,7 +34630,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 3";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -34988,7 +34962,7 @@
 	dir = 2;
 	icon_state = "left";
 	name = "Robotics Desk";
-	req_access_txt = "29"
+	req_access_txt = ACCESS_ROBOTICS
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "robotics";
@@ -35221,7 +35195,7 @@
 	pixel_x = 32;
 	pixel_y = -24;
 	req_access = null;
-	req_access_txt = "65"
+	req_access_txt = ACCESS_MINISAT
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35733,7 +35707,7 @@
 	icon_state = "right";
 	name = "First-Aid Supplies";
 	red_alert_access = 1;
-	req_access_txt = "5"
+	req_access_txt = ACCESS_MEDICAL
 	},
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark/smooth_large,
@@ -35872,7 +35846,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 2;
 	name = "Kitchen Window";
-	req_access_txt = "28"
+	req_access_txt = ACCESS_KITCHEN
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen_counter";
@@ -36302,7 +36276,7 @@
 	},
 /obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "Research Director Observation";
-	req_access_txt = "30"
+	req_access_txt = ACCESS_RD
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
@@ -36653,7 +36627,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 8;
 	name = "Hydroponics Desk";
-	req_access_txt = "35"
+	req_access_txt = ACCESS_HYDROPONICS
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -37137,7 +37111,7 @@
 "lSj" = (
 /obj/machinery/door/window/brigdoor/right/directional/south{
 	name = "Research Director Observation";
-	req_access_txt = "30"
+	req_access_txt = ACCESS_RD
 	},
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/stripes/line,
@@ -37401,7 +37375,7 @@
 "lXB" = (
 /obj/machinery/door/window/right/directional/east{
 	name = "Robotics Surgery";
-	req_access_txt = "29"
+	req_access_txt = ACCESS_ROBOTICS
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
@@ -38040,7 +38014,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/west{
 	name = "Cargo Desk";
-	req_access_txt = "31"
+	req_access_txt = ACCESS_CARGO
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -38214,8 +38188,7 @@
 /area/station/science/breakroom)
 "mnd" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Courtroom";
-	req_access_txt = "42"
+	name = "Courtroom"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38823,7 +38796,7 @@
 	id = "xenobio3";
 	layer = 4;
 	name = "Xenobio Pen 3 Blast Door";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -39094,9 +39067,7 @@
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "mCv" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -39197,7 +39168,7 @@
 	id = "cmoprivacy";
 	name = "CMO Shutter Control";
 	pixel_y = 23;
-	req_access_txt = "40"
+	req_access_txt = ACCESS_CMO
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -39390,7 +39361,7 @@
 	id = "xenobio8";
 	layer = 4;
 	name = "Xenobio Pen 8 Blast DOors";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -40198,7 +40169,7 @@
 /obj/machinery/door/window/right/directional/west{
 	dir = 1;
 	name = "Terrarium";
-	req_access_txt = "35"
+	req_access_txt = ACCESS_HYDROPONICS
 	},
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/machinery/door/firedoor/border_only{
@@ -40505,7 +40476,7 @@
 	name = "Inner Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -6;
-	req_access_txt = "2";
+	req_access_txt = ACCESS_BRIG;
 	specialfunctions = 4
 	},
 /obj/machinery/button/door/directional/north{
@@ -40513,7 +40484,7 @@
 	name = "Outer Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 6;
-	req_access_txt = "2";
+	req_access_txt = ACCESS_BRIG;
 	specialfunctions = 4
 	},
 /obj/item/paper/crumpled{
@@ -40586,7 +40557,7 @@
 	name = "Service Bay Turret Control";
 	pixel_x = 27;
 	req_access = null;
-	req_access_txt = "65"
+	req_access_txt = ACCESS_MINISAT
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -41420,7 +41391,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 11";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -42107,7 +42078,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 10";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio10";
@@ -42252,7 +42223,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/right/directional/west{
 	name = "Hydroponics Desk";
-	req_access_txt = "35"
+	req_access_txt = ACCESS_HYDROPONICS
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -42411,7 +42382,7 @@
 	id = "xenobio2";
 	layer = 4;
 	name = "Xenobio Pen 2 Blast Door";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -42457,13 +42428,12 @@
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "engineering external airlock";
-	opacity = 0;
-	req_access_txt = "10;24"
+	opacity = 0
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "Engineering-External"
 	},
-/turf/open/floor/iron/smooth,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general/turf/open/floor/iron/smooth,
 /area/station/engineering/lobby)
 "nLb" = (
 /obj/machinery/blackbox_recorder,
@@ -43166,7 +43136,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 7";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -43251,7 +43221,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "teledoor";
 	name = "MiniSat Teleporter Shutters Control";
-	req_access_txt = "17;65"
+	req_one_access_txt = list(ACCESS_TELEPORTER,ACCESS_MINISAT)
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -43787,7 +43757,7 @@
 /obj/machinery/door/window/brigdoor/right/directional/south{
 	dir = 8;
 	name = "Observation Deck";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/structure/railing/corner{
 	dir = 1
@@ -43993,7 +43963,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "aux_base_shutters";
 	name = "Public Shutters Control";
-	req_access_txt = "72"
+	req_access_txt = ACCESS_AUX_BASE
 	},
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
@@ -44802,7 +44772,7 @@
 "osE" = (
 /obj/machinery/door/window/left/directional/east{
 	name = "Coffin Storage";
-	req_access_txt = "22"
+	req_access_txt = ACCESS_CHAPEL_OFFICE
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
@@ -44876,7 +44846,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 10";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -44917,7 +44887,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/left/directional/east{
 	name = "Drone Bay Access";
-	req_access_txt = "31"
+	req_access_txt = ACCESS_CARGO
 	},
 /obj/effect/turf_decal/trimline/yellow/mid_joiner{
 	dir = 1
@@ -45506,13 +45476,13 @@
 	id = "misclab";
 	name = "Test Chamber Blast Doors";
 	pixel_y = 6;
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/machinery/button/door/directional/east{
 	id = "xenobiomain";
 	name = "Xenobiology Containment Blast Door";
 	pixel_y = -6;
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -45588,7 +45558,7 @@
 	id = "xenobio11";
 	layer = 4;
 	name = "Xenobio Pen 11 Blast DOors";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -45933,7 +45903,7 @@
 /obj/structure/cable,
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Brig Reception";
-	req_one_access_txt = "1"
+	req_access_txt = ACCESS_SECURITY
 	},
 /obj/machinery/door/window/right/directional/east{
 	name = "Brig Reception"
@@ -46130,7 +46100,7 @@
 	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/effect/mapping_helpers/trapdoor_placer,
 /turf/open/floor/glass/reinforced,
@@ -47409,7 +47379,7 @@
 "pkh" = (
 /obj/machinery/door/morgue{
 	name = "Confession Booth (Chaplain)";
-	req_access_txt = "22"
+	req_access_txt = ACCESS_CHAPEL_OFFICE
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -47438,7 +47408,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "robotics";
 	name = "Shutters Control Button";
-	req_access_txt = "29"
+	req_access_txt = ACCESS_ROBOTICS
 	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
@@ -47625,7 +47595,7 @@
 	id = "Prison Gate";
 	name = "Prison Wing Lockdown";
 	pixel_x = 7;
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
@@ -48201,7 +48171,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 8";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -48478,7 +48448,7 @@
 /obj/machinery/door/window{
 	dir = 1;
 	name = "AI Core Door";
-	req_access_txt = "16"
+	req_access_txt = ACCESS_AI_UPLOAD
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit,
@@ -48697,7 +48667,7 @@
 /obj/machinery/door/window/left/directional/east{
 	icon_state = "right";
 	name = "Incoming Mail";
-	req_access_txt = "50"
+	req_access_txt = ACCESS_MAIL_SORTING
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -51474,7 +51444,7 @@
 	name = "Virology Access Console";
 	pixel_x = 8;
 	pixel_y = 25;
-	req_access_txt = "39"
+	req_access_txt = ACCESS_VIROLOGY
 	},
 /obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/iron/white,
@@ -53295,7 +53265,7 @@
 "reQ" = (
 /obj/machinery/door/window/brigdoor{
 	name = "Research Director Observation";
-	req_access_txt = "30"
+	req_access_txt = ACCESS_RD
 	},
 /obj/structure/railing/corner{
 	dir = 8
@@ -53808,7 +53778,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 6";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio6";
@@ -53832,7 +53802,7 @@
 	dir = 4;
 	name = "First-Aid Supplies";
 	red_alert_access = 1;
-	req_access_txt = "5"
+	req_access_txt = ACCESS_MEDICAL
 	},
 /obj/machinery/status_display/evac/directional/west,
 /obj/effect/turf_decal/tile/blue/full,
@@ -56147,7 +56117,7 @@
 	},
 /obj/machinery/door/window/right/directional/south{
 	name = "Research and Development Desk";
-	req_one_access_txt = "7"
+	req_access_txt = ACCESS_SCIENCE
 	},
 /obj/item/paper_bin{
 	pixel_x = -3;
@@ -56480,7 +56450,7 @@
 /obj/machinery/door/window/right/directional/north{
 	dir = 8;
 	name = "Library Desk Door";
-	req_access_txt = "37"
+	req_access_txt = ACCESS_LIBRARY
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -56995,7 +56965,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 2";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -57231,8 +57201,7 @@
 /area/station/maintenance/starboard/fore)
 "sxS" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Mining Aux Mechbay";
-	req_access_txt = "48"
+	name = "Mining Aux Mechbay"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -57832,7 +57801,7 @@
 	dir = 4;
 	icon_state = "right";
 	name = "Captain's Desk Door";
-	req_access_txt = "20"
+	req_access_txt = ACCESS_CAPTAIN
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58487,7 +58456,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 8;
 	name = "graveyard access";
-	req_one_access_txt = "22"
+	req_access_txt = ACCESS_CHAPEL_OFFICE
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -58724,7 +58693,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 9";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio9";
@@ -59076,7 +59045,7 @@
 	id = "xenobio5";
 	layer = 4;
 	name = "Xenobio Pen 5 Blast Door";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -59580,8 +59549,7 @@
 "tmY" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/research{
-	name = "Ordnance Lab";
-	req_access_txt = "8"
+	name = "Ordnance Lab"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59847,7 +59815,7 @@
 /obj/item/pen,
 /obj/machinery/door/window/brigdoor/right/directional/west{
 	name = "Brig Reception";
-	req_one_access_txt = "1"
+	req_access_txt = ACCESS_SECURITY
 	},
 /obj/machinery/door/window/left/directional/east{
 	name = "Brig Reception"
@@ -60169,7 +60137,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Atmospherics Desk";
-	req_access_txt = "24"
+	req_access_txt = ACCESS_ATMOSPHERICS
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "atmos";
@@ -60523,13 +60491,13 @@
 	id = "hopqueue";
 	name = "Queue Shutters Control";
 	pixel_x = -6;
-	req_access_txt = "57"
+	req_access_txt = ACCESS_HOP
 	},
 /obj/machinery/button/door/directional/north{
 	id = "hop";
 	name = "Privacy Shutters Control";
 	pixel_x = 6;
-	req_access_txt = "57"
+	req_access_txt = ACCESS_HOP
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -60883,14 +60851,14 @@
 	layer = 4;
 	name = "Loading Doors";
 	pixel_y = -8;
-	req_access_txt = "31"
+	req_access_txt = ACCESS_CARGO
 	},
 /obj/machinery/button/door/directional/west{
 	id = "QMLoaddoor2";
 	layer = 4;
 	name = "Loading Doors";
 	pixel_y = 8;
-	req_access_txt = "31"
+	req_access_txt = ACCESS_CARGO
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -61031,8 +60999,7 @@
 "tIo" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Kill Chamber";
-	normalspeed = 0;
-	req_access_txt = "55"
+	normalspeed = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
@@ -61370,7 +61337,7 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/structure/closet/secure_closet/bar{
-	req_access_txt = "25"
+	req_access_txt = ACCESS_BAR
 	},
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
@@ -61840,7 +61807,7 @@
 	id = "executionfireblast";
 	name = "Transfer Area Lockdown";
 	pixel_y = -6;
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/structure/railing,
 /obj/machinery/door/window/left/directional/south,
@@ -62064,7 +62031,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 2";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -62163,7 +62130,7 @@
 	id = "xenobio1";
 	layer = 4;
 	name = "Xenobio Pen 1 Blast Door";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -62187,7 +62154,7 @@
 	normaldoorcontrol = 1;
 	pixel_x = 6;
 	pixel_y = 9;
-	req_access_txt = "63"
+	req_access_txt = ACCESS_SECURITY
 	},
 /obj/machinery/button/door/directional/west{
 	id = "outerbrig";
@@ -62195,7 +62162,7 @@
 	normaldoorcontrol = 1;
 	pixel_x = 6;
 	pixel_y = -2;
-	req_access_txt = "63"
+	req_access_txt = ACCESS_SECURITY
 	},
 /obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/dark/textured_large,
@@ -63088,7 +63055,7 @@
 	icon_state = "right";
 	name = "First-Aid Supplies";
 	red_alert_access = 1;
-	req_access_txt = "5"
+	req_access_txt = ACCESS_MEDICAL
 	},
 /obj/structure/table/glass,
 /obj/item/mod/module/plasma_stabilizer,
@@ -63276,7 +63243,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 5";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -63389,7 +63356,7 @@
 /obj/machinery/door/window/left/directional/west{
 	dir = 2;
 	name = "Atmospherics Delivery";
-	req_access_txt = "24"
+	req_access_txt = ACCESS_ATMOSPHERICS
 	},
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/siding/yellow/corner,
@@ -63520,8 +63487,7 @@
 /area/station/security/prison)
 "uzT" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Utilities Closet";
-	req_access_txt = "48, 24"
+	name = "Utilities Closet"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -64421,7 +64387,7 @@
 "uOH" = (
 /obj/machinery/door/window/right/directional/south{
 	name = "Ordnance Freezer Chamber Access";
-	req_access_txt = "8"
+	req_access_txt = ACCESS_ORDNANCE
 	},
 /turf/open/floor/iron,
 /area/station/science/mixing)
@@ -65186,7 +65152,7 @@
 	name = "Atmospherics Turret Control";
 	pixel_x = -27;
 	req_access = null;
-	req_access_txt = "65"
+	req_access_txt = ACCESS_MINISAT
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -66266,7 +66232,7 @@
 	id = "Biohazard";
 	name = "Biohazard Shutter Control";
 	pixel_x = -6;
-	req_access_txt = "47"
+	req_access_txt = ACCESS_RESEARCH
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
@@ -66826,7 +66792,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/right/directional/north{
 	dir = 4;
-	req_access_txt = "63"
+	req_access_txt = ACCESS_BRIG_ENTRANCE
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "medsecprivacy";
@@ -67901,8 +67867,7 @@
 /area/ai_monitored/turret_protected/aisat/maint)
 "vUN" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Warehouse";
-	req_access_txt = "54"
+	name = "Cargo Warehouse"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -68494,7 +68459,7 @@
 	id = "xenobio6";
 	layer = 4;
 	name = "Xenobio Pen 6 Blast DOors";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
@@ -68679,7 +68644,7 @@
 /obj/machinery/door/window/left/directional/south{
 	dir = 8;
 	name = "Test Chamber";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/engine,
@@ -69112,7 +69077,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
 	name = "Medbay Delivery";
-	req_access_txt = "5"
+	req_access_txt = ACCESS_MEDICAL
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -69587,7 +69552,7 @@
 	name = "Trial Transfer Lockdown";
 	pixel_x = -7;
 	pixel_y = -23;
-	req_access_txt = "2"
+	req_access_txt = ACCESS_BRIG
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -70569,7 +70534,7 @@
 	id = "rnd";
 	name = "Shutters Control Button";
 	pixel_x = 7;
-	req_access_txt = "47"
+	req_access_txt = ACCESS_RESEARCH
 	},
 /turf/open/floor/iron/checker,
 /area/station/science/lab)
@@ -70833,7 +70798,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "chemistry_lower_shutters";
 	name = "Chemistry Exterior Shutter Control";
-	req_access_txt = "33"
+	req_access_txt = ACCESS_PLUMBING
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -71425,27 +71390,27 @@
 	id = "Biohazard";
 	name = "Biohazard Shutter Control";
 	pixel_x = -6;
-	req_access_txt = "47"
+	req_access_txt = ACCESS_RESEARCH
 	},
 /obj/machinery/button/door/directional/south{
 	id = "rnd2";
 	name = "Research Lab Shutter Control";
 	pixel_x = 6;
-	req_access_txt = "47"
+	req_access_txt = ACCESS_RESEARCH
 	},
 /obj/machinery/button/door/directional/south{
 	id = "xenobiomain";
 	name = "Xenobiology Containment Blast Door";
 	pixel_x = -6;
 	pixel_y = -34;
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/machinery/button/door/directional/south{
 	id = "misclab";
 	name = "Test Chamber Blast Doors";
 	pixel_x = 6;
 	pixel_y = -34;
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/rd)
@@ -71792,7 +71757,7 @@
 	id = "Disposal Exit";
 	name = "Disposal Vent Control";
 	pixel_y = 4;
-	req_access_txt = "12"
+	req_access_txt = ACCESS_MAINT_TUNNELS
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -71951,18 +71916,18 @@
 	id = "atmos";
 	name = "Atmospherics Lockdown";
 	pixel_y = 10;
-	req_access_txt = "10"
+	req_access_txt = ACCESS_ENGINEERING
 	},
 /obj/machinery/button/door/directional/west{
 	id = "Secure Storage";
 	name = "Engineering Secure Storage";
-	req_access_txt = "11"
+	req_access_txt = ACCESS_ENGINE_EQUIP
 	},
 /obj/machinery/button/door/directional/west{
 	id = "Engineering";
 	name = "Engineering Lockdown";
 	pixel_y = -10;
-	req_access_txt = "10"
+	req_access_txt = ACCESS_ENGINEERING
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/heads_quarters/ce)
@@ -72676,7 +72641,7 @@
 	dir = 2;
 	icon_state = "left";
 	name = "Chemistry Lab Access Hatch";
-	req_access_txt = "33"
+	req_access_txt = ACCESS_PLUMBING
 	},
 /obj/structure/sign/departments/chemistry{
 	pixel_y = 32
@@ -73093,7 +73058,7 @@
 	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen 6";
-	req_access_txt = "55"
+	req_access_txt = ACCESS_XENOBIOLOGY
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -73519,7 +73484,7 @@
 	dir = 8;
 	icon_state = "left";
 	name = "Robotics Desk";
-	req_access_txt = "29"
+	req_access_txt = ACCESS_ROBOTICS
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "robotics2";
@@ -74061,8 +74026,7 @@
 /area/station/maintenance/starboard/upper)
 "xTz" = (
 /obj/machinery/door/airlock/atmos{
-	name = "Turbine Access";
-	req_access_txt = "24"
+	name = "Turbine Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
@@ -75074,7 +75038,7 @@
 "ykJ" = (
 /obj/machinery/door/window/left/directional/south{
 	name = "Engineering Delivery";
-	req_access_txt = "10"
+	req_access_txt = ACCESS_ENGINEERING
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
@@ -246541,7 +246505,7 @@ cTJ
 klc
 aSo
 aSo
-hcR
+mmB
 aSo
 aSo
 aSo
