@@ -426,7 +426,7 @@ function iconError() {
 		return;
 	}
 	setTimeout(function () {
-		var current_attempts = that.id; // a bit of a hack, change this if we need to call on img id's later
+		var current_attempts = that.getAttribute("data-attempts") || 0
 		if (!current_attempts)
 			that.id = 1;
 		if (current_attempts > imageRetryLimit)
@@ -434,7 +434,7 @@ function iconError() {
 		var src = that.src;
 		that.src = null;
 		that.src = src + '#' + current_attempts;
-		that.id++;
+		that.setAttribute("data-attempts", current_attempts + 1)
 		draw_listedturf();
 	}, imageRetryDelay);
 }
@@ -448,15 +448,11 @@ function draw_listedturf() {
 			img.src = part[2];
 			img.id = part[1];
 			storedimages[part[1]] = part[2];
-			img.onerror = function () {
-				iconError();
-			};
+			img.onerror = iconError
 			table.appendChild(img);
 		} else {
 			var img = document.createElement("img");
-			img.onerror = function () {
-				iconError();
-			};
+			img.onerror = iconError
 			img.src = storedimages[part[1]];
 			img.id = part[1];
 			table.appendChild(img);
