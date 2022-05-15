@@ -806,7 +806,22 @@ window.onload = function () {
 	Byond.command("Update-Verbs");
 };
 
-Byond.subscribeTo('update_spells', init_spells);
+Byond.subscribeTo('update_spells', function (payload) {
+	spell_tabs = payload.spell_tabs;
+	var do_update = false;
+	if (spell_tabs.includes(current_tab)) {
+		do_update = true;
+	}
+	init_spells();
+	if (payload.verblist) {
+		spells = payload.verblist;
+		if (do_update) {
+			draw_spells(current_tab);
+		}
+	} else {
+		remove_spells();
+	}
+});
 
 Byond.subscribeTo('remove_verb_list', function (v) {
 	var to_remove = v;
