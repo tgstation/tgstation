@@ -471,6 +471,10 @@
 	if(!clogged)
 		return
 
+	if(welded)
+		to_chat(user, span_notice("You cannot pump the [name] if it's welded shut!."))
+		return
+
 	to_chat(user, span_notice("You begin pumping the [name] with your plunger."))
 	if(do_after(user, 60, target = src))
 		to_chat(user, span_notice("You finish pumping the [name]."))

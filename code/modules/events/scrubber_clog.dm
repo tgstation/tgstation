@@ -38,7 +38,7 @@
 
 /datum/round_event/scrubber_clog/proc/get_mob()
 	switch(severity)
-		if("Minor") //Spawns harmless nuisance mobs.
+		if("Minor") //Spawns completely harmless nuisance mobs.
 			var/list/minor_mobs = list(
 				/mob/living/simple_animal/mouse,
 				/mob/living/basic/cockroach,
@@ -58,29 +58,34 @@
 			var/list/critical_mobs = list(
 				/mob/living/simple_animal/hostile/carp,
 				/mob/living/simple_animal/hostile/bee/toxin,
-				/mob/living/simple_animal/hostile/mushroom //I'm PRETTY sure these guys are hostile to crew? Maybe not?
+				/mob/living/basic/cockroach/glockroach,
 				)
 			return pick(critical_mobs)
 
-		if("Strange") //Useful or silly mobs. Still hazardous. Very low weight. Also on the chopping block for removal if need be.
+		if("Strange") //Useful or silly mobs. Still hazardous. Very low weight.
 			var/list/strange_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
-				/mob/living/basic/cockroach/glockroach,
 				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/pet/gondola,
+				/mob/living/simple_animal/hostile/mushroom
 				/mob/living/simple_animal/hostile/lightgeist
 				)
 			return pick(strange_mobs)
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production
 	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG)
+	SEND_SIGNAL(scrubber, COMSIG_PRODUCE_MOB, spawned_mob, living_mobs) //The first one's free!
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob
 	if(activeFor % spawn_delay == 0 && scrubber.is_clogged() == TRUE)
-		if(living_mobs.len < maximum_spawns && clogged) //Find a way to remove dead mobs from mob list
+		life_check()
+		if(living_mobs.len < maximum_spawns && clogged)
 			SEND_SIGNAL(scrubber, COMSIG_PRODUCE_MOB, spawned_mob, living_mobs)
 
-/datum/round_event/scrubber_clog/proc/remove_from_list() //Use this for handling additions/removal from the produced mob list
+/datum/round_event/scrubber_clog/proc/life_check()
+	for(var/mob/living/mob_check in living_mobs)
+		if(mob_check.health <= 0 || !mob_check.health)
+			living_mobs -= mob_check
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Major Scrubber Clog"
