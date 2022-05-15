@@ -132,9 +132,9 @@
 	name = "Cargo Gorilla"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 1
-	force = TRUE
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
-	/// The gorilla we created
+
+	/// The gorilla we created, we only hold this ref until the round starts.
 	var/mob/living/simple_animal/hostile/gorilla/cargo_domestic/cargorilla
 
 /datum/station_trait/cargorilla/New()
@@ -151,6 +151,7 @@
 
 	cargorilla = new(cargo_sloth.loc)
 	cargorilla.name = cargo_sloth.name
+	cargorilla.being_polled_for = TRUE // We do a poll on roundstart
 	qdel(cargo_sloth)
 
 	INVOKE_ASYNC(src, .proc/make_id_for_gorilla)

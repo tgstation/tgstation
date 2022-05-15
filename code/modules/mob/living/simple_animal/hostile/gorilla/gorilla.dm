@@ -154,7 +154,7 @@
 		"Do you want to play as a Cargorilla?",
 		jobban_type = ROLE_SENTIENCE,
 		poll_time = 30 SECONDS,
-		target_mob = gorilla,
+		target_mob = src,
 	)
 
 	being_polled_for = FALSE
