@@ -209,10 +209,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 
-	// Instantiate tgui panel
-	tgui_panel = new(src, "browseroutput")
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
+	stat_panel.subscribe(src, .proc/on_stat_panel_message)
+
+	// Instantiate tgui panel
+	tgui_panel = new(src, "browseroutput")
 
 	set_right_click_menu_mode(TRUE)
 
@@ -337,17 +339,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(SSinput.initialized)
 		set_macros()
 
-	// Initialize tgui panel
-	// src << browse(file('html/statbrowser.html'), "window=statbrowser")
+	// Initialize stat panel
 	stat_panel.initialize(
 		inline_html = file2text('html/statbrowser.html'),
 		inline_js = file2text('html/statbrowser.js'),
 		inline_css = file2text('html/statbrowser.css'),
 	)
 	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
-	tgui_panel.initialize()
 
-	stat_panel.subscribe(src, .proc/on_stat_panel_message)
+	// Initialize tgui panel
+	tgui_panel.initialize()
 
 	if(alert_mob_dupe_login && !holder)
 		var/dupe_login_message = "Your ComputerID has already logged in with another key this round, please log out of this one NOW or risk being banned!"
@@ -1152,15 +1153,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.
 	else
 		SSambience.remove_ambience_client(src)
-
-/**
- * Handles incoming messages from the stat-panel TGUI.
- */
-/client/proc/on_stat_panel_message(type, payload)
-	if(type == "Update-Verbs")
-		init_verbs()
-	if(type == "Remove-Tabs")
-		panel_tabs -= payload["tabs"]
 
 /// Checks if this client has met the days requirement passed in, or if
 /// they are exempt from it.

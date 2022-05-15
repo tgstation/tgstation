@@ -257,6 +257,17 @@ SUBSYSTEM_DEF(statpanels)
 /// Stat panel window declaration
 /client/var/datum/tgui_window/stat_panel
 
+/**
+ * Handles incoming messages from the stat-panel TGUI.
+ */
+/client/proc/on_stat_panel_message(type, payload)
+	if(type == "Update-Verbs")
+		init_verbs()
+		return
+	if(type == "Remove-Tabs")
+		panel_tabs -= payload["tabs"]
+		return
+
 /// verbs that send information from the browser UI
 /client/verb/set_tab(tab as text|null)
 	set name = "Set Tab"
