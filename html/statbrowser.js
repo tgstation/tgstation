@@ -926,23 +926,33 @@ Byond.subscribeTo('init_verbs', function (payload) {
 Byond.subscribeTo('update_stat', function (payload) {
 	status_tab_parts = [payload[1]];
 	var parsed = payload[0];
+
 	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+
 	parsed = payload[2];
+
 	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
-	if (current_tab == "Status")
+
+	if (current_tab == "Status") {
 		draw_status();
-	else if (current_tab == "Debug Stat Panel")
+	} else if (current_tab == "Debug Stat Panel") {
 		draw_debug();
+	}
 });
 
 Byond.subscribeTo('update_mc', function (payload) {
 	mc_tab_parts = payload[0];
 	mc_tab_parts.splice(0, 0, ["Location:", payload[1]]);
-	if (!verb_tabs.includes("MC"))
+
+	if (!verb_tabs.includes("MC")) {
 		verb_tabs.push("MC");
+	}
+
 	createStatusTab("MC");
-	if (current_tab == "MC")
+
+	if (current_tab == "MC") {
 		draw_mc();
+	}
 });
 
 Byond.subscribeTo('remove_spells', function () {
@@ -1047,21 +1057,10 @@ Byond.subscribeTo('update_tickets', function (T) {
 	}
 });
 
-Byond.subscribe(function (type, payload) {
-	if (type === "remove_listedturf") {
-		remove_listedturf();
-		return;
-	}
-	if (type === "remove_sdql2") {
-		remove_sdql2();
-		return;
-	}
-	if (type === "remove_mc") {
-		remove_mc();
-		return;
-	}
-	if (type === "add_verb_list") {
-		add_verb_list(payload);
-		return;
-	}
-});
+Byond.subscribeTo('remove_listedturf', remove_listedturf());
+
+Byond.subscribeTo('remove_sdql2', remove_sdql2());
+
+Byond.subscribeTo('remove_mc', remove_mc());
+
+Byond.subscribeTo('add_verb_list', add_verb_list(payload));
