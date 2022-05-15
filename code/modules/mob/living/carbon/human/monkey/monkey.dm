@@ -59,7 +59,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 
 	. = ..()
 
-	if(!GLOB.the_one_and_only_punpun)
+	if(!GLOB.the_one_and_only_punpun && mapload)
 		GLOB.the_one_and_only_punpun = src
 
 	fully_replace_character_name(real_name, name_to_use)

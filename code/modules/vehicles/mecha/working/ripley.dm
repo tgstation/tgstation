@@ -170,7 +170,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/working/ripley/cargo)
 	HC.attach(src)
 
 	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
-	if(!GLOB.cargo_ripley)
+	if(!GLOB.cargo_ripley && mapload)
 		GLOB.cargo_ripley = src
 
 /obj/vehicle/sealed/mecha/working/ripley/cargo/Destroy()
