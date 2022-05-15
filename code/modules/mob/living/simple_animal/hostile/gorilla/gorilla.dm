@@ -142,7 +142,7 @@
 		return ..()
 
 	var/become_gorilla = tgui_alert(user, "Become a Cargorilla?", "Confirm", list("Yes", "No"))
-	if(become_gorilla != "Yes" || QDELETED(src) || QDELETED(user))
+	if(become_gorilla != "Yes" || QDELETED(src) || QDELETED(user) || being_polled_for || mind || client)
 		return
 
 	enter_ghost(user)
