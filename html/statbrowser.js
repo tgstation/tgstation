@@ -1063,4 +1063,4 @@ Byond.subscribeTo('remove_sdql2', remove_sdql2);
 
 Byond.subscribeTo('remove_mc', remove_mc);
 
-Byond.subscribeTo('add_verb_list', add_verb_list(payload));
+Byond.subscribeTo('add_verb_list', add_verb_list);
