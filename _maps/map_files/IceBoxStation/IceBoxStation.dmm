@@ -16311,8 +16311,7 @@
 /area/station/hallway/primary/aft)
 "fmi" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Engineering Foyer";
-	req_access_txt = "40"
+	name = "Engineering Foyer"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16321,9 +16320,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/atmos,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "fmr" = (
@@ -19918,8 +19915,7 @@
 /area/station/tcommsat/server)
 "gvC" = (
 /obj/machinery/door/window{
-	name = "Gateway Chamber";
-	
+	name = "Gateway Chamber"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
