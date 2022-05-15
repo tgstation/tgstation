@@ -244,7 +244,7 @@
 	name = "Garage Door Button";
 	pixel_x = -23;
 	pixel_y = 22;
-	req_access_txt = ACCESS_RESEARCH
+	req_access_txt = "101"
 	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)

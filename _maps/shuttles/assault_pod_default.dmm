@@ -16,7 +16,7 @@
 /obj/machinery/door/airlock/centcom{
 	aiControlDisabled = 1;
 	name = "Assault Pod";
-	req_access_txt = ACCESS_SYNDICATE
+	req_access_txt = "300"
 	},
 /obj/docking_port/mobile/assault_pod{
 	name = "steel rain";
@@ -36,7 +36,7 @@
 /obj/machinery/door/airlock/centcom{
 	aiControlDisabled = 1;
 	name = "Assault Pod";
-	req_access_txt = ACCESS_SYNDICATE
+	req_access_txt = "300"
 	},
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
@@ -61,7 +61,7 @@
 "R" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Assault Pod";
-	req_access_txt = ACCESS_SYNDICATE
+	req_access_txt = "300"
 	},
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)

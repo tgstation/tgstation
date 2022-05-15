@@ -44,7 +44,7 @@
 "aD" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Bio Containment";
-	req_access_txt = ACCESS_RESEARCH
+	req_access_txt = "101"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,

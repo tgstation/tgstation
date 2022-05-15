@@ -42,7 +42,7 @@
 	id = "gulagshuttleflasher";
 	name = "Flash Control";
 	pixel_y = -26;
-	req_access_txt = ACCESS_SECURITY
+	req_access_txt = "20"
 	},
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral,
@@ -74,7 +74,7 @@
 "i" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Labor Shuttle Airlock";
-	req_access_txt = ACCESS_BRIG
+	req_access_txt = "22"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -87,7 +87,7 @@
 "j" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Labor Shuttle Airlock";
-	req_access_txt = ACCESS_BRIG
+	req_access_txt = "22"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{

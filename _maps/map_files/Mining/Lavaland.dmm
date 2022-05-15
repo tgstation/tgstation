@@ -188,7 +188,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "labor";
 	name = "Labor Camp Lockdown";
-	req_access_txt = ACCESS_BRIG
+	req_access_txt = "22"
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)

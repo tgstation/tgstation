@@ -57,7 +57,7 @@
 "U" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance/glass{
-	req_access_txt = ACCESS_MAINT_TUNNELS
+	req_access_txt = "42"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/iron/smooth,
