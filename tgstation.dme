@@ -212,6 +212,7 @@
 #include "code\__DEFINES\dcs\signals\signals_customizable.dm"
 #include "code\__DEFINES\dcs\signals\signals_cytology.dm"
 #include "code\__DEFINES\dcs\signals\signals_datum.dm"
+#include "code\__DEFINES\dcs\signals\signals_event.dm"
 #include "code\__DEFINES\dcs\signals\signals_fish.dm"
 #include "code\__DEFINES\dcs\signals\signals_food.dm"
 #include "code\__DEFINES\dcs\signals\signals_gib.dm"

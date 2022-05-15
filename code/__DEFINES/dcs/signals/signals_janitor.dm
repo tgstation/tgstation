@@ -15,10 +15,3 @@
 #define COMSIG_TURF_IS_WET "check_turf_wet"
 ///(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"
-
-
-// Vent Clog Event signals
-/// Called when a vent is clogged (spawned_mob, maximum_spawns)
-#define COMSIG_VENT_CLOG "clog_vent"
-/// Called when a vent is unclogged
-#define COMSIG_VENT_UNCLOG "unclog_vent"

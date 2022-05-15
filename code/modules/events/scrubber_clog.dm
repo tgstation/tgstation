@@ -6,13 +6,16 @@
 	earliest_start = 5 MINUTES
 
 /datum/round_event/scrubber_clog
-	announceWhen = 1
-	startWhen = 5
-	var/obj/scrubber //Scrubber selected for the event
+	announceWhen = 1 SECONDS
+	startWhen = 5 SECONDS
+	endWhen = 10 MINUTES //Maybe add a negative result in end() to prevent people from just ignoring the event?
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber //Scrubber selected for the event
 	var/mob/spawned_mob = /mob/living/basic/cockroach //What mob will be spawned
 	var/severity = "Minor" //Severity of the event (how dangerous are the spawned mobs, and at what quantity)
 	var/maximum_spawns = 3 //Cap on the number of spawned mobs that can be alive at once
-	var/spawn_delay = 10 SECONDS //Interval between mob spawns
+	var/spawn_delay = 10 //Interval between mob spawns
+	var/list/living_mobs = list() //Used to track/limit produced mobs
+	var/clogged = TRUE //Used for tracking if the clog signal should be sent
 
 /datum/round_event/scrubber_clog/announce()
 	priority_announce("[severity] biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Custodial Notification")
@@ -23,7 +26,7 @@
 		CRASH("Unable to find suitable scrubber.")
 	spawned_mob = get_mob()
 	maximum_spawns = rand(3, 5)
-	spawn_delay = rand(10 SECONDS, 15 SECONDS)
+	spawn_delay = rand(10,15)
 
 /datum/round_event/scrubber_clog/proc/get_scrubber()
 	var/list/scrubber_list = list()
@@ -69,8 +72,19 @@
 				)
 			return pick(strange_mobs)
 
-/datum/round_event/scrubber_clog/start()
-	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG, spawned_mob, maximum_spawns, spawn_delay)
+/datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production
+	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG)
+
+/datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob
+	priority_announce("Pre-spawn_delay check", "Debug Alert")
+	if(activeFor % spawn_delay == 0)
+		priority_announce("Interval met", "Debug Alert")
+		if(living_mobs.len < maximum_spawns && clogged) //Find a way to remove dead mobs from mob list
+			priority_announce("Sending mob production alert", "Debug Alert")
+			SEND_SIGNAL(scrubber, COMSIG_PRODUCE_MOB, spawned_mob, living_mobs)
+	if(scrubber.is_clogged() == FALSE)
+		priority_announce("Scrubber unclogged, ending", "Debug Alert")
+		end()
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Major Scrubber Clog"
@@ -85,8 +99,7 @@
 /datum/round_event/scrubber_clog/major/setup()
 	. = ..()
 	maximum_spawns = rand(2,4)
-	spawn_delay = rand(15 SECONDS,20 SECONDS)
-
+	spawn_delay = rand(15,20)
 
 /datum/round_event_control/scrubber_clog/critical
 	name = "Critical Scrubber Clog"
@@ -102,8 +115,7 @@
 /datum/round_event/scrubber_clog/critical/setup()
 	. = ..()
 	maximum_spawns = 3
-	spawn_delay = rand(15 SECONDS, 25 SECONDS)
-
+	spawn_delay = rand(15, 25)
 
 /datum/round_event/scrubber_clog/critical/announce()
 	priority_announce("Potentially hazardous lifesigns detected in the [get_area(scrubber)] ventilation network.", "Security Alert")
@@ -120,7 +132,7 @@
 /datum/round_event/scrubber_clog/critical/setup()
 	. = ..()
 	maximum_spawns = 3
-	spawn_delay = rand(10 SECONDS, 25 SECONDS) //Wide range, for maximum utility/comedy
+	spawn_delay = rand(10, 25) //Wide range, for maximum utility/comedy
 
 /datum/round_event/scrubber_clog/strange/announce()
 	priority_announce("Unusual lifesign readings detected in the [get_area(scrubber)] ventilation network.", "Lifesign Alert")

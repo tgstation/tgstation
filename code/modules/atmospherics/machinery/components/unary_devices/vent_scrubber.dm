@@ -38,6 +38,7 @@
 	///Radio connection from the air alarm
 	var/radio_filter_in
 
+	//Enables the use of plunger_act for ending the vent clog random event
 	var/clogged = FALSE
 
 	COOLDOWN_DECLARE(check_turfs_cooldown)
@@ -473,26 +474,21 @@
 	to_chat(user, span_notice("You begin pumping the [name] with your plunger."))
 	if(do_after(user, 60, target = src))
 		to_chat(user, span_notice("You finish pumping the [name]."))
-		SEND_SIGNAL(src, COMSIG_VENT_UNCLOG)
+		clogged = FALSE
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog(datum/source, spawned_mob, maximum_spawns, spawn_delay) //Spawns new spawned_mob at every spawn_delay interval, with a maximum of maximum_spawns.
-	SIGNAL_HANDLER																								//Unclogs on plunge, and will not produce mobs while welded.
-	RegisterSignal(src, COMSIG_VENT_UNCLOG, .proc/unclog)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog(datum/source)
+	SIGNAL_HANDLER
+	RegisterSignal(src, COMSIG_PRODUCE_MOB, .proc/produce_mob)
 	clogged = TRUE
 
-	while(clogged)
-		if(welded == FALSE)
-			new spawned_mob(src.loc) //currently checking which of the two spawn methods works better
-			var/mob/new_mob = new spawned_mob(src.loc)
-			src.visible_message(span_warning("[new_mob] crawls out of the [name]!"))
-			SEND_SIGNAL(src, COMSIG_VENT_UNCLOG) //So it doesnt loop forever
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/produce_mob(datum/source, spawned_mob, living_mobs)
+	if(welded == FALSE)
+		var/mob/new_mob = new spawned_mob(src.loc)
+		living_mobs += new_mob
+		src.visible_message(span_warning("[new_mob] crawls out of [name]!"))
 
-
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/unclog()
-	SIGNAL_HANDLER
-	clogged = FALSE
-
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/is_clogged()
+	return clogged
 
 #undef SIPHONING
 #undef SCRUBBING
