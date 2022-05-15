@@ -31728,7 +31728,6 @@
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
 "iJY" = (
-/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
