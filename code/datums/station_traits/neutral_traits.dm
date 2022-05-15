@@ -141,6 +141,7 @@
 	. = ..()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/replace_cargo)
 
+/// Replace some cargo equipment and 'personnel' with a gorilla.
 /datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
 	SIGNAL_HANDLER
 
@@ -152,13 +153,19 @@
 	cargorilla.name = cargo_sloth.name
 	qdel(cargo_sloth)
 
-	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(cargorilla.loc)
-	gorilla_id.registered_name = cargorilla.name
-	cargorilla.put_in_hands(gorilla_id, del_on_fail = TRUE)
+	INVOKE_ASYNC(src, .proc/make_id_for_gorilla)
 
 	var/obj/vehicle/sealed/mecha/working/ripley/cargo/cargo_mech = locate()
 	if(cargo_mech)
 		qdel(cargo_mech)
+
+/// Makes an ID card for the gorilla
+/datum/station_trait/cargorilla/proc/make_id_for_gorilla()
+	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(cargorilla.loc)
+	gorilla_id.registered_name = cargorilla.name
+	gorilla_id.update_label()
+
+	cargorilla.put_in_hands(gorilla_id, del_on_fail = TRUE)
 
 /datum/station_trait/cargorilla/on_round_start()
 	if(!cargorilla)
