@@ -128,10 +128,12 @@ function createStatusTab(name) {
 		else
 			name = splitName[0];
 	}
-	if (document.getElementById(name) || name.trim() == "")
+	if (document.getElementById(name) || name.trim() == "") {
 		return;
-	if (!verb_tabs.includes(name) && !permanent_tabs.includes(name))
+	}
+	if (!verb_tabs.includes(name) && !permanent_tabs.includes(name)) {
 		return;
+	}
 	var B = document.createElement("BUTTON");
 	B.onclick = function () {
 		tab_change(name);
@@ -142,8 +144,9 @@ function createStatusTab(name) {
 	B.className = "button";
 	//ORDERING ALPHABETICALLY
 	B.style.order = name.charCodeAt(0);
-	if (name == "Status" || name == "MC")
+	if (name == "Status" || name == "MC") {
 		B.style.order = name == "Status" ? 1 : 2;
+	}
 	//END ORDERING
 	menu.appendChild(B);
 	SendTabToByond(name);
@@ -151,8 +154,9 @@ function createStatusTab(name) {
 }
 
 function removeStatusTab(name) {
-	if (!document.getElementById(name) || permanent_tabs.includes(name))
+	if (!document.getElementById(name) || permanent_tabs.includes(name)) {
 		return;
+	}
 	for (var i = verb_tabs.length - 1; i >= 0; --i) {
 		if (verb_tabs[i] == name) {
 			verb_tabs.splice(i, 1);
@@ -181,8 +185,9 @@ window.onresize = function () {
 }
 
 function addPermanentTab(name) {
-	if (!permanent_tabs.includes(name))
+	if (!permanent_tabs.includes(name)) {
 		permanent_tabs.push(name);
+	}
 	createStatusTab(name);
 }
 
@@ -196,9 +201,11 @@ function removePermanentTab(name) {
 }
 
 function checkStatusTab() {
-	for (var i = 0; i < menu.children.length; i++)
-		if (!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id))
+	for (var i = 0; i < menu.children.length; i++) {
+		if (!verb_tabs.includes(menu.children[i].id) && !permanent_tabs.includes(menu.children[i].id)) {
 			menu.removeChild(menu.children[i]);
+		}
+	}
 }
 
 function remove_verb(v) {
@@ -566,14 +573,16 @@ function draw_listedturf() {
 function remove_listedturf() {
 	removePermanentTab(turfname);
 	checkStatusTab();
-	if (current_tab == turfname)
+	if (current_tab == turfname) {
 		tab_change("Status");
+	}
 }
 
 function remove_mc() {
 	removeStatusTab("MC");
-	if (current_tab == "MC")
+	if (current_tab == "MC") {
 		tab_change("Status");
+	}
 };
 
 function draw_sdql2() {
@@ -603,8 +612,9 @@ function draw_sdql2() {
 function draw_tickets() {
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("table");
-	if (!tickets)
+	if (!tickets) {
 		return;
+	}
 	for (var i = 0; i < tickets.length; i++) {
 		var part = tickets[i];
 		var tr = document.createElement("tr");
@@ -664,8 +674,9 @@ function draw_interviews() {
 	// List interviews if any are open
 	var table = document.createElement("table");
 	table.className = "interview_panel_table";
-	if (!interviewManager)
+	if (!interviewManager) {
 		return;
+	}
 	for (var i = 0; i < interviewManager.interviews.length; i++) {
 		var part = interviewManager.interviews[i];
 		var tr = document.createElement("tr");
@@ -952,8 +963,9 @@ Byond.subscribeTo('init_spells', function () {
 });
 
 Byond.subscribeTo('check_spells', function () {
-	for (var v = 0; v < spell_tabs.length; v++)
+	for (var v = 0; v < spell_tabs.length; v++) {
 		spell_cat_check(spell_tabs[v]);
+	}
 });
 
 Byond.subscribeTo('create_debug', function () {
@@ -981,14 +993,16 @@ Byond.subscribeTo('remove_admin_tabs', function () {
 
 Byond.subscribeTo('update_listedturf', function (TC) {
 	turfcontents = TC;
-	if (current_tab == turfname)
+	if (current_tab == turfname) {
 		draw_listedturf();
+	}
 });
 
 Byond.subscribeTo('update_interviews', function (I) {
 	interviewManager = I;
-	if (current_tab == "Tickets")
+	if (current_tab == "Tickets") {
 		draw_interviews();
+	}
 });
 
 Byond.subscribeTo('update_split_admin_tabs', function (status) {
@@ -1017,8 +1031,9 @@ Byond.subscribeTo('update_sdql2', function (S) {
 		verb_tabs.push("SDQL2");
 		addPermanentTab("SDQL2");
 	}
-	if (current_tab == "SDQL2")
+	if (current_tab == "SDQL2") {
 		draw_sdql2();
+	}
 });
 
 Byond.subscribeTo('update_tickets', function (T) {
@@ -1027,8 +1042,9 @@ Byond.subscribeTo('update_tickets', function (T) {
 		verb_tabs.push("Tickets");
 		addPermanentTab("Tickets");
 	}
-	if (current_tab == "Tickets")
+	if (current_tab == "Tickets") {
 		draw_tickets();
+	}
 });
 
 Byond.subscribe(function (type, payload) {
