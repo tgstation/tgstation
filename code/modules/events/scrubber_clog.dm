@@ -76,7 +76,7 @@
 	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG)
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob
-	if(activeFor % spawn_delay == 0 || scrubber.is_clogged() == TRUE)
+	if(activeFor % spawn_delay == 0 && scrubber.is_clogged() == TRUE)
 		if(living_mobs.len < maximum_spawns && clogged) //Find a way to remove dead mobs from mob list
 			SEND_SIGNAL(scrubber, COMSIG_PRODUCE_MOB, spawned_mob, living_mobs)
 
