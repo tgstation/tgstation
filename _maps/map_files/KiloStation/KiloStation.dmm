@@ -45195,7 +45195,8 @@
 /obj/machinery/door/airlock/command{
 	name = "Armoury"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/hos/obj/machinery/door/poddoor/shutters{
+/obj/effect/mapping_helpers/airlock/access/all/security/hos,
+/obj/machinery/door/poddoor/shutters{
 	id = "frontarmory";
 	name = "Front Armoury Shutter"
 	},

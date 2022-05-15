@@ -9994,7 +9994,8 @@
 	name = "engineering external airlock";
 	opacity = 0
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "Engineering-External"
 	},
 /turf/open/floor/plating,
@@ -13908,7 +13909,8 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Evidence Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -17879,7 +17881,8 @@
 	id = "Secure Gate";
 	name = "Cell Shutters";
 	pixel_x = -7;
-	pixel_y = -3req_access_txt = "22"
+	pixel_y = -3;
+	req_access_txt = "22"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
