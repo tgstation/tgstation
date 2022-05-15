@@ -6,9 +6,9 @@
 	earliest_start = 5 MINUTES
 
 /datum/round_event/scrubber_clog
-	announceWhen = 1 SECONDS
-	startWhen = 5 SECONDS
-	endWhen = 10 MINUTES //Maybe add a negative result in end() to prevent people from just ignoring the event?
+	announceWhen = 1
+	startWhen = 10
+	endWhen = 6000 //Maybe add a negative result in end() to prevent people from just ignoring the event?
 	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber //Scrubber selected for the event
 	var/mob/spawned_mob = /mob/living/basic/cockroach //What mob will be spawned
 	var/severity = "Minor" //Severity of the event (how dangerous are the spawned mobs, and at what quantity)
@@ -76,15 +76,11 @@
 	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG)
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob
-	priority_announce("Pre-spawn_delay check", "Debug Alert")
-	if(activeFor % spawn_delay == 0)
-		priority_announce("Interval met", "Debug Alert")
+	if(activeFor % spawn_delay == 0 || scrubber.is_clogged() == TRUE)
 		if(living_mobs.len < maximum_spawns && clogged) //Find a way to remove dead mobs from mob list
-			priority_announce("Sending mob production alert", "Debug Alert")
 			SEND_SIGNAL(scrubber, COMSIG_PRODUCE_MOB, spawned_mob, living_mobs)
-	if(scrubber.is_clogged() == FALSE)
-		priority_announce("Scrubber unclogged, ending", "Debug Alert")
-		end()
+
+/datum/round_event/scrubber_clog/proc/remove_from_list() //Use this for handling additions/removal from the produced mob list
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Major Scrubber Clog"
