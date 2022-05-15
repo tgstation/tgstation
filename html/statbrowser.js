@@ -784,6 +784,17 @@ function add_verb_list(payload) {
 	}
 };
 
+function init_spells() {
+	var cat = "";
+	for (var i = 0; i < spell_tabs.length; i++) {
+		cat = spell_tabs[i];
+		if (cat.length > 0) {
+			verb_tabs.push(cat);
+			createStatusTab(cat);
+		}
+	}
+}
+
 document.addEventListener("mouseup", restoreFocus);
 document.addEventListener("keyup", restoreFocus);
 
@@ -796,22 +807,7 @@ window.onload = function () {
 	Byond.command("Update-Verbs");
 };
 
-Byond.subscribeTo('update_spells', function (payload) {
-	spell_tabs = payload.spell_tabs;
-	var do_update = false;
-	if (spell_tabs.includes(current_tab)) {
-		do_update = true;
-	}
-	init_spells();
-	if (payload.verblist) {
-		spells = payload.verblist;
-		if (do_update) {
-			draw_spells(current_tab);
-		}
-	} else {
-		remove_spells();
-	}
-});
+Byond.subscribeTo('update_spells', init_spells);
 
 Byond.subscribeTo('remove_verb_list', function (v) {
 	var to_remove = v;
