@@ -42,7 +42,7 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT(potential_rider, TRAIT_CANT_RIDE))
-		return
+		return COMPONENT_BLOCK_BUCKLE
 
 	var/arms_needed = 0
 	if(ride_check_flags & RIDER_NEEDS_ARMS)
@@ -101,7 +101,7 @@
 			amount_equipped++
 		else
 			qdel(inhand)
-			break
+			return FALSE
 
 	if(amount_equipped >= amount_required)
 		return TRUE

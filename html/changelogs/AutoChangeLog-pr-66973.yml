@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - bugfix: "Lightning bolt spell will give tesla shock immunity when granted by an admin"
