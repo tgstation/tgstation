@@ -64,7 +64,7 @@ function createStatusTab(name) {
 		this.blur();
 	};
 	B.id = name;
-	B[textContentKey] = name;
+	B.textContent = name;
 	B.className = "button";
 	//ORDERING ALPHABETICALLY
 	B.style.order = name.charCodeAt(0);
@@ -278,21 +278,21 @@ function set_byond_tab(tab) {
 }
 
 function draw_debug() {
-	statcontentdiv[textContentKey] = "";
+	statcontentdiv.textContent = "";
 	var wipeverbstabs = document.createElement("div");
 	var link = document.createElement("a");
 	link.onclick = function () { wipe_verbs() };
-	link[textContentKey] = "Wipe All Verbs";
+	link.textContent = "Wipe All Verbs";
 	wipeverbstabs.appendChild(link);
 	document.getElementById("statcontent").appendChild(wipeverbstabs);
 	var wipeUpdateVerbsTabs = document.createElement("div");
 	var updateLink = document.createElement("a");
 	updateLink.onclick = function () { update_verbs() };
-	updateLink[textContentKey] = "Wipe and Update All Verbs";
+	updateLink.textContent = "Wipe and Update All Verbs";
 	wipeUpdateVerbsTabs.appendChild(updateLink);
 	document.getElementById("statcontent").appendChild(wipeUpdateVerbsTabs);
 	var text = document.createElement("div");
-	text[textContentKey] = "Verb Tabs:";
+	text.textContent = "Verb Tabs:";
 	document.getElementById("statcontent").appendChild(text);
 	var table1 = document.createElement("table");
 	for (var i = 0; i < verb_tabs.length; i++) {
@@ -307,42 +307,42 @@ function draw_debug() {
 		}
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
-		td1[textContentKey] = part;
+		td1.textContent = part;
 		var a = document.createElement("a");
 		a.onclick = function (part) {
 			return function () { removeStatusTab(part) };
 		}(part);
-		a[textContentKey] = " Delete Tab " + part;
+		a.textContent = " Delete Tab " + part;
 		td1.appendChild(a);
 		tr.appendChild(td1);
 		table1.appendChild(tr);
 	}
 	document.getElementById("statcontent").appendChild(table1);
 	var header2 = document.createElement("div");
-	header2[textContentKey] = "Verbs:";
+	header2.textContent = "Verbs:";
 	document.getElementById("statcontent").appendChild(header2);
 	var table2 = document.createElement("table");
 	for (var v = 0; v < verbs.length; v++) {
 		var part2 = verbs[v];
 		var trr = document.createElement("tr");
 		var tdd1 = document.createElement("td");
-		tdd1[textContentKey] = part2[0];
+		tdd1.textContent = part2[0];
 		var tdd2 = document.createElement("td");
-		tdd2[textContentKey] = part2[1];
+		tdd2.textContent = part2[1];
 		trr.appendChild(tdd1);
 		trr.appendChild(tdd2);
 		table2.appendChild(trr);
 	}
 	document.getElementById("statcontent").appendChild(table2);
 	var text3 = document.createElement("div");
-	text3[textContentKey] = "Permanent Tabs:";
+	text3.textContent = "Permanent Tabs:";
 	document.getElementById("statcontent").appendChild(text3);
 	var table3 = document.createElement("table");
 	for (var i = 0; i < permanent_tabs.length; i++) {
 		var part3 = permanent_tabs[i];
 		var trrr = document.createElement("tr");
 		var tddd1 = document.createElement("td");
-		tddd1[textContentKey] = part3;
+		tddd1.textContent = part3;
 		trrr.appendChild(tddd1);
 		table3.appendChild(trrr);
 	}
@@ -354,13 +354,13 @@ function draw_status() {
 		createStatusTab("Status");
 		current_tab = "Status";
 	}
-	statcontentdiv[textContentKey] = '';
+	statcontentdiv.textContent = '';
 	for (var i = 0; i < status_tab_parts.length; i++) {
 		if (status_tab_parts[i].trim() == "") {
 			document.getElementById("statcontent").appendChild(document.createElement("br"));
 		} else {
 			var div = document.createElement("div");
-			div[textContentKey] = status_tab_parts[i];
+			div.textContent = status_tab_parts[i];
 			document.getElementById("statcontent").appendChild(div);
 		}
 	}
@@ -370,21 +370,21 @@ function draw_status() {
 }
 
 function draw_mc() {
-	statcontentdiv[textContentKey] = "";
+	statcontentdiv.textContent = "";
 	var table = document.createElement("table");
 	for (var i = 0; i < mc_tab_parts.length; i++) {
 		var part = mc_tab_parts[i];
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
-		td1[textContentKey] = part[0];
+		td1.textContent = part[0];
 		var td2 = document.createElement("td");
 		if (part[2]) {
 			var a = document.createElement("a");
 			a.href = "?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
-			a[textContentKey] = part[1];
+			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
-			td2[textContentKey] = part[1];
+			td2.textContent = part[1];
 		}
 		tr.appendChild(td1);
 		tr.appendChild(td2);
@@ -436,7 +436,7 @@ function iconError() {
 	}, imageRetryDelay);
 }
 function draw_listedturf() {
-	statcontentdiv[textContentKey] = "";
+	statcontentdiv.textContent = "";
 	var table = document.createElement("table");
 	for (var i = 0; i < turfcontents.length; i++) {
 		var part = turfcontents[i];
@@ -489,7 +489,7 @@ function draw_listedturf() {
 				window.location.href = clickcatcher;
 			}
 		}(part);
-		b[textContentKey] = part[0];
+		b.textContent = part[0];
 		table.appendChild(b);
 		table.appendChild(document.createElement("br"));
 	}
@@ -512,21 +512,21 @@ function remove_mc() {
 };
 
 function draw_sdql2() {
-	statcontentdiv[textContentKey] = "";
+	statcontentdiv.textContent = "";
 	var table = document.createElement("table");
 	for (var i = 0; i < sdql2.length; i++) {
 		var part = sdql2[i];
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
-		td1[textContentKey] = part[0];
+		td1.textContent = part[0];
 		var td2 = document.createElement("td");
 		if (part[2]) {
 			var a = document.createElement("a");
 			a.href = "?src=" + part[2] + ";statpanel_item_click=left";
-			a[textContentKey] = part[1];
+			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
-			td2[textContentKey] = part[1];
+			td2.textContent = part[1];
 		}
 		tr.appendChild(td1);
 		tr.appendChild(td2);
@@ -536,7 +536,7 @@ function draw_sdql2() {
 }
 
 function draw_tickets() {
-	statcontentdiv[textContentKey] = "";
+	statcontentdiv.textContent = "";
 	var table = document.createElement("table");
 	if (!tickets) {
 		return;
@@ -545,20 +545,20 @@ function draw_tickets() {
 		var part = tickets[i];
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
-		td1[textContentKey] = part[0];
+		td1.textContent = part[0];
 		var td2 = document.createElement("td");
 		if (part[2]) {
 			var a = document.createElement("a");
 			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=left;action=ticket";
-			a[textContentKey] = part[1];
+			a.textContent = part[1];
 			td2.appendChild(a);
 		} else if (part[3]) {
 			var a = document.createElement("a");
 			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
-			a[textContentKey] = part[1];
+			a.textContent = part[1];
 			td2.appendChild(a);
 		} else {
-			td2[textContentKey] = part[1];
+			td2.textContent = part[1];
 		}
 		tr.appendChild(td1);
 		tr.appendChild(td2);
@@ -570,12 +570,12 @@ function draw_tickets() {
 function draw_interviews() {
 	var body = document.createElement("div");
 	var header = document.createElement("h3");
-	header[textContentKey] = "Interviews";
+	header.textContent = "Interviews";
 	body.appendChild(header);
 	var manDiv = document.createElement("div");
 	manDiv.className = "interview_panel_controls"
 	var manLink = document.createElement("a");
-	manLink[textContentKey] = "Open Interview Manager Panel";
+	manLink.textContent = "Open Interview Manager Panel";
 	manLink.href = "?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=left";
 	manDiv.appendChild(manLink);
 	body.appendChild(manDiv);
@@ -588,8 +588,8 @@ function draw_interviews() {
 		var tr = document.createElement("tr");
 		var stat_name = document.createElement("td");
 		var stat_text = document.createElement("td");
-		stat_name[textContentKey] = key;
-		stat_text[textContentKey] = interviewManager.status[key];
+		stat_name.textContent = key;
+		stat_text.textContent = interviewManager.status[key];
 		tr.appendChild(stat_name);
 		tr.appendChild(stat_text);
 		statsDiv.appendChild(tr);
@@ -608,7 +608,7 @@ function draw_interviews() {
 		var tr = document.createElement("tr");
 		var td = document.createElement("td");
 		var a = document.createElement("a");
-		a[textContentKey] = part["status"];
+		a.textContent = part["status"];
 		a.href = "?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=left";
 		td.appendChild(a);
 		tr.appendChild(td);
@@ -618,22 +618,22 @@ function draw_interviews() {
 }
 
 function draw_spells(cat) {
-	statcontentdiv[textContentKey] = "";
+	statcontentdiv.textContent = "";
 	var table = document.createElement("table");
 	for (var i = 0; i < spells.length; i++) {
 		var part = spells[i];
 		if (part[0] != cat) continue;
 		var tr = document.createElement("tr");
 		var td1 = document.createElement("td");
-		td1[textContentKey] = part[1];
+		td1.textContent = part[1];
 		var td2 = document.createElement("td");
 		if (part[3]) {
 			var a = document.createElement("a");
 			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
-			a[textContentKey] = part[2];
+			a.textContent = part[2];
 			td2.appendChild(a);
 		} else {
-			td2[textContentKey] = part[2];
+			td2.textContent = part[2];
 		}
 		tr.appendChild(td1);
 		tr.appendChild(td2);
@@ -651,7 +651,7 @@ function make_verb_onclick(command) {
 }
 
 function draw_verbs(cat) {
-	statcontentdiv[textContentKey] = "";
+	statcontentdiv.textContent = "";
 	var table = document.createElement("div");
 	var additions = {}; // additional sub-categories to be rendered
 	table.className = "grid-container";
@@ -685,7 +685,7 @@ function draw_verbs(cat) {
 			a.onclick = make_verb_onclick(command.replace(/\s/g, "-"));
 			a.className = "grid-item";
 			var t = document.createElement("span");
-			t[textContentKey] = command;
+			t.textContent = command;
 			t.className = "grid-item-text";
 			a.appendChild(t);
 			(subCat ? additions[subCat] : table).appendChild(a);
@@ -701,7 +701,7 @@ function draw_verbs(cat) {
 		if (additions.hasOwnProperty(cat)) {
 			// do addition here
 			var header = document.createElement("h3");
-			header[textContentKey] = cat;
+			header.textContent = cat;
 			content.appendChild(header);
 			content.appendChild(additions[cat]);
 		}
