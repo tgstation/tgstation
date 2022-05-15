@@ -6,7 +6,7 @@
 	/// The moveforce of the throw done by the repulsion.
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
-/datum/action/cooldown/spell/aoe/magic_missile/get_things_to_cast_on(atom/center)
+/datum/action/cooldown/spell/aoe/repulse/get_things_to_cast_on(atom/center)
 	var/list/things = list()
 	for(var/atom/movable/nearby_movable in view(aoe_radius, center))
 		if(nearby_movable == owner || nearby_movable == center)

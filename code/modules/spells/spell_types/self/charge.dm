@@ -25,10 +25,8 @@
 		var/mob/living/pulled_living = cast_on.pulling
 		var/pulled_has_spells = FALSE
 
-		for(var/obj/effect/proc_holder/spell/spell in pulled_living.mob_spell_list | pulled_living.mind?.spell_list)
-			spell.charge_counter = spell.charge_max
-			spell.recharging = FALSE
-			spell.update_appearance()
+		for(var/datum/action/cooldown/spell/spell in pulled_living.actions)
+			spell.reset_spell_cooldown()
 			pulled_has_spells = TRUE
 
 		if(pulled_has_spells)

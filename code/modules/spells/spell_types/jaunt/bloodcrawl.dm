@@ -85,11 +85,6 @@
  * If forced is TRUE, it will override exit_blood_time, and if we're currently consuming someone.
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/try_exit_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter, forced = FALSE)
-	if(equip_blood_hands && iscarbon(jaunter))
-		for(var/obj/item/bloodcrawl/blood_hand in jaunter.held_items)
-			jaunter.temporarilyRemoveItemFromInventory(blood_hand, force = TRUE)
-			qdel(blood_hand)
-
 	if(!forced)
 		if(jaunter.notransform)
 			to_chat(jaunter, span_warning("You cannot exit yet!!"))
@@ -103,6 +98,11 @@
 
 	if(!exit_jaunt(jaunter, get_turf(blood)))
 		return FALSE
+
+	if(equip_blood_hands && iscarbon(jaunter))
+		for(var/obj/item/bloodcrawl/blood_hand in jaunter.held_items)
+			jaunter.temporarilyRemoveItemFromInventory(blood_hand, force = TRUE)
+			qdel(blood_hand)
 
 	blood.visible_message(span_boldwarning("[jaunter] rises out of [blood]!"))
 	return TRUE
@@ -191,7 +191,7 @@
 	on_victim_start_consume(victim, jaunter)
 
 	for(var/i in 1 to 3)
-		playsound(get_turf(src), consume_sound, 50, TRUE)
+		playsound(get_turf(jaunter), consume_sound, 50, TRUE)
 		if(!do_after(jaunter, 3 SECONDS, victim))
 			to_chat(jaunter, span_danger("You lose your victim!"))
 			return FALSE

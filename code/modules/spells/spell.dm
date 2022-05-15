@@ -7,44 +7,42 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
  *
  * This is the base action for how many of the game's
  * spells (and spell adjacent) abilities function.
- *
- * These spells function off of a cooldown-based system,
- * but can be ajusted to function with other methods
- * via components or otherwise.
+ * These spells function off of a cooldown-based system.
  *
  * ## Pre-spell checks:
  * - [can_cast_spell][/datum/action/cooldown/spell/can_cast_spell] checks if the OWNER
  * of the spell is able to cast the spell.
  * - [is_valid_target][/datum/action/cooldown/spell/is_valid_target] checks if the TARGET
- * THE SPELL IS BEING CAST ON is a valid target for the spell. NOTE: The CAST TARGET is often THE SAME as
- * THE OWNER OF THE SPELL, but is not always: click_to_activate spells will pass the clicked target
- * into is_valid_target, while every other spell will use owner in is_valid_target.
+ * THE SPELL IS BEING CAST ON is a valid target for the spell. NOTE: The CAST TARGET is often THE SAME as THE OWNER OF THE SPELL,
+ * but is not always - depending on how [Pre Activate][/datum/action/cooldown/spell/PreActivate] is resolved.
  * - [can_invoke][/datum/action/cooldown/spell/can_invoke] is run in can_cast_spell to check if
  * the OWNER of the spell is able to say the current invocation.
  *
  * ## The spell chain:
  * - [before_cast][/datum/action/cooldown/spell/before_cast] is the last chance for being able
- * to interrupt a spell cast. Returning FALSE from it will stop a spell from casting. You can hook
+ * to interrupt a spell cast. Returning FALSE from it will stop the rest of the spell from casting. You can hook
  * additional checks into this.
  * - [spell_feedback][/datum/action/cooldown/spell/spell_feedback] is called right before cast, and handles
  * invocation and sound effects. Overridable, if you want a special method of invocation or sound effects,
- * or if you wish to call it in a different location (such as after_cast).
+ * or you want your spell to handle invocation / sound via special means.
  * - [cast][/datum/action/cooldown/spell/cast] is where the brunt of the spell effects should be done
  * and implemented.
- * - [after_cast][/datum/action/cooldown/spell/after_cast] is any aftermath, final effects that follow
- * the main cast of the spell.
+ * - [after_cast][/datum/action/cooldown/spell/after_cast] is the aftermath - final effects that follow
+ * the main cast of the spell. By now, the spell cooldown has already started
  *
  * ## Other procs called / may be called within the chain:
- * - [invocation][/datum/action/cooldown/spell/invocation] handles saying any vocal invocations the spell
- * may have, and can be overriden or extended. Called by spell_feedback().
+ * - [invocation][/datum/action/cooldown/spell/invocation] handles saying any vocal (or emotive) invocations the spell
+ * may have, and can be overriden or extended. Called by spell_feedback.
  * - [reset_spell_cooldown][/datum/action/cooldown/spell/reset_spell_cooldown] is a way to handle reverting a spell's
- * cooldown and making it ready again if it fails to go off during cast. Not called anywhere by default.
+ * cooldown and making it ready again if it fails to go off at any point. Not called anywhere by default. If you
+ * want to cancel a spell in before_cast and would like the cooldown restart, call this.
  *
  * ## Other procs of note:
  * - [level_spell][/datum/action/cooldown/spell/level_spell] is where the process of adding a spell level is handled.
- * this can be extended if you wish to add special effects on level.
+ * this can be extended if you wish to add unique effects on level up for wizards.
  * - [delevel_spell][/datum/action/cooldown/spell/delevel_spell] is where the process of removing a spell level is handled.
- * this can be extended if you wish to add special effects on level.
+ * this can be extended if you wish to undo unique effects on level up for wizards.
+ * - [update_spell_name][/datum/action/cooldown/spell/update_spell_name] updates the prefix of the spell name based on its level.
  */
 /datum/action/cooldown/spell
 	name = "Spell"
@@ -152,9 +150,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
 		return FALSE
 
-	// If the spell requires the user has no antimagic equipped,
-	// and they're holding antimagic that corresponds with the spell's antimagic,
-	// then they can't actually cast the spell
+	// If the spell requires the user has no antimagic equipped, and they're holding antimagic
+	// that corresponds with the spell's antimagic, then they can't actually cast the spell
 	if((spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC) && !owner.can_cast_magic(antimagic_flags))
 		if(feedback)
 			to_chat(owner, span_warning("Some form of antimagic is preventing you from casting [src]!"))
@@ -195,7 +192,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 /**
  * Check if the target we're casting on is a valid target.
- * For self-casted spells, the target being checked / cast_on is the caster.
+ * For self-casted spells, the target being checked (cast_on) is the caster.
  *
  * Return TRUE if cast_on is valid, FALSE otherwise
  */
@@ -203,8 +200,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	return TRUE
 
 // The actual cast chain occurs here, in Activate().
-// You should not be overriding or extending Activate() for spells -
-// defer to any of the cast chain procs instead.
+// You should generally not be overriding or extending Activate() for spells.
+// Defer to any of the cast chain procs instead.
 /datum/action/cooldown/spell/Activate(atom/cast_on)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -290,7 +287,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 		if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
 			var/datum/effect_system/smoke = new smoke_type()
-			smoke.set_up(smoke_amt, get_turf(owner))
+			smoke.set_up(smoke_amt, location = get_turf(owner))
 			smoke.start()
 
 /// Provides feedback after a spell cast occurs, in the form of a cast sound and/or invocation
