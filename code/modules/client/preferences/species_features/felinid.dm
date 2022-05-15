@@ -9,7 +9,7 @@
 	return assoc_to_keys(GLOB.tails_list_human)
 
 /datum/preference/choiced/tail_human/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["tail_human"] = value
+	target.dna.features["tail"] = value
 
 /datum/preference/choiced/tail_human/create_default_value()
 	var/datum/sprite_accessory/tails/human/cat/tail = /datum/sprite_accessory/tails/human/cat

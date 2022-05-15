@@ -62,7 +62,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  */
 /obj/item/organ/proc/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
 	if(!iscarbon(reciever) || owner == reciever)
-		return
+		return FALSE
 
 	var/obj/item/organ/replaced = reciever.getorganslot(slot)
 	if(replaced)
@@ -82,6 +82,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	for(var/datum/action/action as anything in actions)
 		action.Grant(reciever)
 	STOP_PROCESSING(SSobj, src)
+	return TRUE
 
 /*
  * Remove the organ from the select mob.

@@ -30,7 +30,7 @@
 		if(!default_part || default_part == "None")
 			if(tail_type)
 				tail_owner.dna.features["tail_human"] = tail_owner.dna.species.mutant_bodyparts["tail_human"] = tail_type
-				tail_owner.dna.update_uf_block(DNA_HUMAN_TAIL_BLOCK)
+				tail_owner.dna.update_uf_block(DNA_TAIL_BLOCK)
 			else
 				tail_owner.dna.species.mutant_bodyparts["tail_human"] = tail_owner.dna.features["tail_human"]
 			tail_owner.update_body()
@@ -62,7 +62,7 @@
 		if(!default_part || default_part == "None")
 			if(tail_type)
 				tail_owner.dna.features["tail_lizard"] = tail_owner.dna.species.mutant_bodyparts["tail_lizard"] = tail_type
-				tail_owner.dna.update_uf_block(DNA_LIZARD_TAIL_BLOCK)
+				tail_owner.dna.update_uf_block(DNA_TAIL_BLOCK)
 			else
 				tail_owner.dna.species.mutant_bodyparts["tail_lizard"] = tail_owner.dna.features["tail_lizard"]
 
@@ -113,7 +113,7 @@
 			tail_owner.dna.species.mutant_bodyparts |= "tail_monkey"
 			if(tail_type)
 				tail_owner.dna.features["tail_monkey"] = tail_type
-				tail_owner.dna.update_uf_block(DNA_MONKEY_TAIL_BLOCK)
+				tail_owner.dna.update_uf_block(DNA_TAIL_BLOCK)
 			tail_owner.update_body()
 
 /obj/item/organ/tail/monkey/Remove(mob/living/carbon/human/tail_owner, special = FALSE)

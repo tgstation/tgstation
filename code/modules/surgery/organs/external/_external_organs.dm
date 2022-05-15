@@ -16,9 +16,10 @@
 	///Convert the bitflag define into the actual layer define
 	var/static/list/all_layers = list(EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND)
 
-	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_firemoth_mothwings'. 'mothwings' would then be feature_key
+	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth'. 'mothwings' would then be feature_key
 	var/feature_key = ""
-
+	///Similar to feature key, but overrides it in the case you need more fine control over the iconstate, like with Tails.
+	var/render_key = ""
 	/// The savefile_key of the preference this relates to. Used for the preferences UI.
 	var/preference
 
@@ -33,8 +34,11 @@
 	///Reference to the limb we're inside of
 	var/obj/item/bodypart/ownerlimb
 
-	///Does this organ use it's own color instead of bodypart/var/draw_color?
-	var/overrides_color = FALSE
+	///The color this organ draws with. Updated by bodypart/inherit_color()
+	var/draw_color
+
+	///Where does this organ inherit it's color from?
+	var/color_source = ORGAN_COLOR_INHERIT
 
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
 	var/external_bodytypes = NONE
@@ -49,20 +53,20 @@
 		set_sprite(mob_sprite)
 
 /obj/item/organ/external/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
-	var/obj/item/bodypart/limb = reciever.get_bodypart(zone)
+	var/obj/item/bodypart/limb = reciever.get_bodypart(deprecise_zone(zone))
 
 	if(!limb)
 		return FALSE
-
+	reciever.external_organs.Add(src)
 	limb.external_organs.Add(src)
 	ownerlimb = limb
-
 	. = ..()
 
 	limb.contents.Add(src)
 	if(external_bodytypes)
 		limb.synchronize_bodytypes(reciever)
 
+	inherit_color()
 	reciever.update_body_parts()
 
 /obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special)
@@ -75,6 +79,7 @@
 			ownerlimb.synchronize_bodytypes(organ_owner)
 		ownerlimb = null
 
+	organ_owner.external_organs.Remove(src)
 	organ_owner.update_body_parts()
 
 /obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
@@ -84,17 +89,17 @@
 	bodypart.contents.Add(src)
 
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
-/obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, physique, image_color)
+/obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, physique)
 	if(!sprite_datum)
 		return
 
 	var/gender = (physique == FEMALE) ? "f" : "m"
-	var/finished_icon_state = (sprite_datum.gender_specific ? gender : "m") + "_" + feature_key + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(image_layer)
+	var/finished_icon_state = (sprite_datum.gender_specific ? gender : "m") + "_" + (render_key ? render_key : feature_key) + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(image_layer)
 	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -image_layer)
 	appearance.dir = image_dir
 
-	if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/
-		appearance.color = image_color
+	if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/ | This comment isn't true.
+		appearance.color = draw_color
 
 	if(sprite_datum.center)
 		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
@@ -153,9 +158,25 @@
 
 	set_sprite(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
 
+///Give the organ it's color. Force will override the existing one.
+/obj/item/organ/external/proc/inherit_color(force)
+	if(draw_color && !force)
+		return
+	switch(color_source)
+		if(ORGAN_COLOR_OVERRIDE)
+			draw_color = override_color(draw_color)
+		if(ORGAN_COLOR_INHERIT)
+			draw_color = ownerlimb.draw_color
+		if(ORGAN_COLOR_HAIR)
+			if(!ishuman(ownerlimb.owner))
+				return
+			var/mob/living/carbon/human/human_owner = ownerlimb.owner
+			draw_color = human_owner.hair_color
+
 ///Colorizes the limb it's inserted to, if required.
 /obj/item/organ/external/proc/override_color(rgb_value)
-	return
+	CRASH("External organ color set to override with no override proc.")
+
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns
@@ -283,7 +304,7 @@
 
 	dna_block = DNA_POD_HAIR_BLOCK
 
-	overrides_color = TRUE
+	color_source = ORGAN_COLOR_OVERRIDE
 
 /obj/item/organ/external/pod_hair/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))

@@ -15,6 +15,8 @@
 	var/list/internal_organs = list()
 	///Same as [above][/mob/living/carbon/var/internal_organs], but stores "slot ID" - "organ" pairs for easy access.
 	var/list/internal_organs_slot = list()
+	///External organs. This is mostly here for the purposes of mass-updating organ colors.
+	var/list/external_organs = list()
 	///Can't talk. Value goes down every life proc. NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
 	var/silent = 0
 	///How many dream images we have left to send
