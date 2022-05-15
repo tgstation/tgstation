@@ -1,0 +1,4 @@
+author: "OperativeLyn"
+delete-after: True
+changes: 
+  - bugfix: "Removed a windoor inside of a wall in IceBox."
