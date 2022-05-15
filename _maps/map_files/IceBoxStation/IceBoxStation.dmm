@@ -61558,6 +61558,10 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"tSt" = (
+/obj/structure/sign/painting/library,
+/turf/closed/wall,
+/area/station/service/library)
 "tSx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -66400,9 +66404,6 @@
 	},
 /area/station/security/brig)
 "vvJ" = (
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -250863,7 +250864,7 @@ gUo
 gjc
 bLQ
 rzc
-hUD
+tSt
 hUD
 hUD
 hUD
