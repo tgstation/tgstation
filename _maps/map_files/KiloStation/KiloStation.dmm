@@ -17027,7 +17027,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "aux_base_shutters";
 	name = "Auxiliary Base Shutters Toggle";
-	req_access_txt = AUX_BASE
+	req_access_txt = "47"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
