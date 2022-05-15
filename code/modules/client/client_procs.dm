@@ -1157,10 +1157,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
  * Handles incoming messages from the stat-panel TGUI.
  */
 /client/proc/on_stat_panel_message(type, payload)
-	if(type == "Update-Verbs")
-		init_verbs()
-	if(type == "Remove-Tabs")
-		panel_tabs -= payload["tabs"]
+	switch(type)
+		if("Update-Verbs")
+			init_verbs()
+		if("Remove-Tabs")
+			panel_tabs -= payload["tab"]
+		if("Send-Tabs")
+			panel_tabs |= payload["tab"]
+		if("Reset-Tabs")
+			panel_tabs = list()
+		if("Set-Tab")
+			stat_tab = payload["tab"]
+			SSstatpanels.immediate_send_stat_data(src)
 
 /// Checks if this client has met the days requirement passed in, or if
 /// they are exempt from it.

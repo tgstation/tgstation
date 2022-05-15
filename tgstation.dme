@@ -165,7 +165,6 @@
 #include "code\__DEFINES\stat.dm"
 #include "code\__DEFINES\stat_tracking.dm"
 #include "code\__DEFINES\station.dm"
-#include "code\__DEFINES\statpanel.dm"
 #include "code\__DEFINES\status_effects.dm"
 #include "code\__DEFINES\storage.dm"
 #include "code\__DEFINES\strippable.dm"
