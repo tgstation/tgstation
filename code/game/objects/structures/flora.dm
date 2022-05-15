@@ -75,17 +75,17 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 		if(flora_flags & FLORA_STONE)
 			required_tools += FLORA_HARVEST_STONE_TOOLS
 	
-	//ugly-looking performance optimization
-	if(!flora_required_tools_typepaths[type])
-		flora_required_tools_typepaths[type] = typecacheof(required_tools)
-	if(!flora_disallowed_tools_typepaths[type])
-		flora_disallowed_tools_typepaths[type] = typecacheof(disallowed_tools)
-	if(!flora_uprooting_tools_typepaths[type])
-		flora_uprooting_tools_typepaths[type] = typecacheof(uprooting_tools)
+	//ugly-looking performance optimization. what the glob bro
+	if(!GLOB.flora_required_tools_typepaths[type])
+		GLOB.flora_required_tools_typepaths[type] = typecacheof(required_tools)
+	if(!GLOB.flora_disallowed_tools_typepaths[type])
+		GLOB.flora_disallowed_tools_typepaths[type] = typecacheof(disallowed_tools)
+	if(!GLOB.flora_uprooting_tools_typepaths[type])
+		GLOB.flora_uprooting_tools_typepaths[type] = typecacheof(uprooting_tools)
 	
-	required_tools = flora_required_tools_typepaths[type]
-	disallowed_tools = flora_disallowed_tools_typepaths[type]
-	uprooting_tools = flora_uprooting_tools_typepaths[type]
+	required_tools = GLOB.flora_required_tools_typepaths[type]
+	disallowed_tools = GLOB.flora_disallowed_tools_typepaths[type]
+	uprooting_tools = GLOB.flora_uprooting_tools_typepaths[type]
 
 /obj/structure/flora/attackby(obj/item/W, mob/living/user, params)
 	if(user.combat_mode)
