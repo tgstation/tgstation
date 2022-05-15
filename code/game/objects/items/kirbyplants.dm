@@ -17,7 +17,7 @@
 	var/trimmable = TRUE
 	var/list/static/random_plant_states
 
-/obj/item/kirbyplants/ComponentInitialize()
+/obj/item/kirbyplants/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/tactical)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
