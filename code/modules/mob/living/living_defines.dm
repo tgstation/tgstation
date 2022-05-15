@@ -159,7 +159,7 @@
 	//this stuff is here to make it simple for admins to mess with custom held sprites
 	var/icon/held_lh = 'icons/mob/pets_held_lh.dmi'//icons for holding mobs
 	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
-	var/icon/head_icon = 'icons/mob/pets_held.dmi'//what it looks like on your head
+	var/icon/head_icon = 'icons/mob/animal_item_head.dmi'//what it looks like on your head
 	var/held_state = ""//icon state for the above
 
 	///If combat mode is on or not
