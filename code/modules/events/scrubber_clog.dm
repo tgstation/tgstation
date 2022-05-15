@@ -1,7 +1,7 @@
 /datum/round_event_control/scrubber_clog
 	name = "Minor Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog
-	weight = 25 //All weight values are very subject to change.
+	weight = 25
 	max_occurrences = 3
 	earliest_start = 5 MINUTES
 
@@ -94,7 +94,7 @@
 /datum/round_event_control/scrubber_clog/major
 	name = "Major Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog/major
-	weight = 12 //Subject to change
+	weight = 12
 	max_occurrences = 3
 	earliest_start = 10 MINUTES
 
@@ -109,7 +109,7 @@
 /datum/round_event_control/scrubber_clog/critical
 	name = "Critical Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog/critical
-	weight = 8 //Subject to change
+	weight = 8
 	min_players = 15
 	max_occurrences = 1
 	earliest_start = 25 MINUTES
@@ -128,7 +128,7 @@
 /datum/round_event_control/scrubber_clog/strange
 	name = "Strange Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog/strange
-	weight = 5 //Subject to change
+	weight = 5
 	max_occurrences = 1
 
 /datum/round_event/scrubber_clog/strange
