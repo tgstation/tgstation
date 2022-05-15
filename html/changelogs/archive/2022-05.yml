@@ -679,3 +679,33 @@
       spam
   magatsuchi:
   - bugfix: fixes broken admin ticket links
+2022-05-15:
+  FlamingCheese:
+  - bugfix: Removed that one firelock in icebox xenobio that caused the fire alarm
+      to trigger on roundstart
+  JohnFulpWillard:
+  - bugfix: There is now only one Tom in Deltastation permabrig.
+  - bugfix: Icebox's vault now properly has access requirements.
+  PestoVerde322:
+  - bugfix: fixed the icon behaviour of the manual valve
+  PositiveEntropy, Retlaw34, PacifistDalek:
+  - imageadd: Resprites the fire extinguishers once more!
+  RandomGamer123:
+  - bugfix: Biogenerators don't take 1% of a power cell to grind a single melon
+  SmArtKar:
+  - balance: Hierophant trophy now deals damage that it was supposed to deal.
+  Thunder12345:
+  - admin: Attack logs for stripping people and equipping items to them have been
+      reformatted to match all other attack logs, improving readability.
+  VioletN:
+  - bugfix: Fixed the two primary traitor objectives calculating reputation incorrectly
+      at round end
+  - bugfix: Fixed the reputation value of objectives having a misplaced decimal point
+      in the round end report
+  YakumoChen:
+  - spellcheck: Boritos flavours have more flavour!
+  d0sboots:
+  - bugfix: suit_storage slot now shows the item it has equipped
+  san7890:
+  - bugfix: If you ever chance upon Multi-Z Debug Station, rest assured that it now
+      uses the right kind of space.
