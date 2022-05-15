@@ -83,6 +83,9 @@
 		if(living_mobs.len < maximum_spawns && clogged)
 			SEND_SIGNAL(scrubber, COMSIG_PRODUCE_MOB, spawned_mob, living_mobs)
 
+/datum/round_event/scrubber_clog/end() //No end announcement. If you want to take the easy way out and just leave the vent welded, you must open it at your own peril
+	SEND_SIGNAL(scrubber, COMSIG_VENT_UNCLOG)
+
 /datum/round_event/scrubber_clog/proc/life_check()
 	for(var/mob/living/mob_check in living_mobs)
 		if(mob_check.health <= 0 || !mob_check.health)

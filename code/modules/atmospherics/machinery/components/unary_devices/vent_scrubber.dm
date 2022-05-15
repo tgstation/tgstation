@@ -45,6 +45,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	RegisterSignal(src, COMSIG_VENT_CLOG, .proc/clog)
+	RegisterSignal(src, COMSIG_VENT_UNCLOG, .proc/unclog)
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
 	. = ..()
@@ -490,6 +491,9 @@
 		var/mob/new_mob = new spawned_mob(src.loc)
 		living_mobs += new_mob
 		src.visible_message(span_warning("[new_mob] crawls out of [name]!"))
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/unclog()
+	clogged = FALSE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/is_clogged()
 	return clogged
