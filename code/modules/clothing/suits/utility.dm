@@ -38,13 +38,6 @@
 	icon_state = "firesuit"
 	inhand_icon_state = "firefighter"
 
-/obj/item/clothing/suit/fire/heavy
-	name = "heavy firesuit"
-	desc = "An old, bulky thermal protection suit."
-	icon_state = "thermal"
-	inhand_icon_state = "ro_suit"
-	slowdown = 1.5
-
 /obj/item/clothing/suit/fire/atmos
 	name = "firesuit"
 	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."

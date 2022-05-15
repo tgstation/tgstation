@@ -395,7 +395,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/mask/gas/plaguedoctor,
 		/obj/item/clothing/shoes/griffin,
 		/obj/item/clothing/suit/chickensuit,
-		/obj/item/clothing/suit/space/freedom,
 		/obj/item/clothing/suit/toggle/owlwings,
 		/obj/item/clothing/under/costume/griffin,
 		/obj/item/clothing/under/costume/owl,
