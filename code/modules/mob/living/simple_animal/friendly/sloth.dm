@@ -43,7 +43,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/simple_animal/sloth)
 	if(!GLOB.cargo_sloth)
 		GLOB.cargo_sloth = src
 
-/mob/living/simple_animal/sloth/paperwork/Destroy()
+/mob/living/simple_animal/sloth/Destroy()
 	if(GLOB.cargo_sloth == src)
 		GLOB.cargo_sloth = null
 
