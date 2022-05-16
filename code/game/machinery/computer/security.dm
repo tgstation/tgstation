@@ -605,7 +605,7 @@ What a mess.*/
 						if(length(crimes))
 							default_description += "\n[wanted_name] is wanted for the following crimes:\n"
 							for(var/datum/data/crime/c in active2.fields["crim"])
-								if(c.crimeStatus != "Not Served")
+								if(c.crimeStatus == "Not Served")
 									default_description += "\n[c.crimeName]\n"
 									default_description += "[c.crimeDetails]\n"
 
