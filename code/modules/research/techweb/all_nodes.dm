@@ -195,6 +195,7 @@
 	description = "Basic medical tools and equipment."
 	design_ids = list(
 		"beaker",
+		"biopsy_tool",
 		"blood_filter",
 		"bonesetter",
 		"cautery",
@@ -314,7 +315,6 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"beer_dispenser",
-		"biopsy_tool",
 		"blood_pack",
 		"chem_dispenser",
 		"chem_heater",
