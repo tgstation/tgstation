@@ -106,10 +106,13 @@
 "M" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Bar Excess Storage";
-	req_one_access_txt = "12;25"
+	name = "Bar Excess Storage"
 	},
 /obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "O" = (

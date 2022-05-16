@@ -56,13 +56,13 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "z" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/aft)
 "E" = (
