@@ -32,6 +32,9 @@
 		if(A.area_flags & AREA_USES_STARLIGHT)
 			for(var/turf/open/space/S in A)
 				S.set_light(S.light_range * 3, S.light_power * 0.5)
+		if(istype(A, /area/station/service/kitchen))
+			for(var/turf/open/seymour in A)
+				seymour.set_light(1, 0.75)
 
 /datum/round_event/aurora_caelus/tick()
 	if(activeFor % 5 == 0)
@@ -42,6 +45,9 @@
 			if(A.area_flags & AREA_USES_STARLIGHT)
 				for(var/turf/open/space/S in A)
 					S.set_light(l_color = aurora_color)
+			if(istype(A, /area/station/service/kitchen))
+				for(var/turf/open/seymour in A)
+					seymour.set_light(l_color = aurora_color)
 
 /datum/round_event/aurora_caelus/end()
 	for(var/area in GLOB.sortedAreas)
@@ -49,6 +55,9 @@
 		if(A.area_flags & AREA_USES_STARLIGHT)
 			for(var/turf/open/space/S in A)
 				fade_to_black(S)
+		if(istype(A, /area/station/service/kitchen))
+			for(var/turf/open/seymour in A)
+				fade_to_black(seymour)
 	priority_announce("The aurora caelus event is now ending. Starlight conditions will slowly return to normal. When this has concluded, please return to your workplace and continue work as normal. Have a pleasant shift, [station_name()], and thank you for watching with us.",
 	sound = 'sound/misc/notice2.ogg',
 	sender_override = "Nanotrasen Meteorology Division")
