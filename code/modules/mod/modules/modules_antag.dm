@@ -318,13 +318,21 @@
 	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
 	var/angle = get_angle(mod.wearer, target) + 180
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
-	mod.wearer.throw_at(target, range = 7, speed = 2, thrower = mod.wearer, spin = FALSE, gentle = TRUE, callback = CALLBACK(src, .proc/on_throw_end, target, -angle))
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_IMPACT, .proc/on_throw_impact)
+	mod.wearer.throw_at(target, range = 7, speed = 2, thrower = mod.wearer, spin = FALSE, gentle = TRUE, callback = CALLBACK(src, .proc/on_throw_end, mod.wearer, -angle))
 
-/obj/item/mod/module/power_kick/proc/on_throw_end(atom/target, angle)
+/obj/item/mod/module/power_kick/proc/on_throw_end(mob/user, angle)
+	if(!user)
+		return
+	user.transform = user.transform.Turn(angle)
+	animate(user, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE)
+
+/obj/item/mod/module/power_kick/proc/on_throw_impact(mob/living/source, atom/target, datum/thrownthing/thrownthing)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
 	if(!mod?.wearer)
 		return
-	mod.wearer.transform = mod.wearer.transform.Turn(angle)
-	animate(mod.wearer, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE)
 	if(isliving(target))
 		var/mob/living/living_target = target
 		living_target.apply_damage(damage, BRUTE, mod.wearer.zone_selected, wound_bonus = wounding_power)

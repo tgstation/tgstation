@@ -255,12 +255,12 @@
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
 	mod.wearer.throw_at(get_ranged_target_turf_direct(mod.wearer, target, power), \
 		range = power, speed = max(round(0.2*power), 1), thrower = mod.wearer, spin = FALSE, \
-		callback = CALLBACK(src, .proc/on_throw_end, target, -angle))
+		callback = CALLBACK(src, .proc/on_throw_end, mod.wearer, -angle))
 
-/obj/item/mod/module/hydraulic/proc/on_throw_end(atom/target, angle)
-	if(!mod?.wearer)
+/obj/item/mod/module/hydraulic/proc/on_throw_end(mob/user, angle)
+	if(!user)
 		return
-	mod.wearer.transform = mod.wearer.transform.Turn(angle)
+	user.transform = user.transform.Turn(angle)
 
 /obj/item/mod/module/disposal_connector
 	name = "MOD disposal selector module"
