@@ -1,0 +1,6 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Tank compressors' icons now visibly update when being rotated"
+  - bugfix: "Tank compressors' rotation after reconstruction actually work properly"
+  - code_imp: "`/obj/machinery/atmospherics/components/proc/connect_nodes()` actually gets called on every node of the atmospheric component"

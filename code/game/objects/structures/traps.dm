@@ -216,7 +216,7 @@
 	to_chat(L, span_danger("<B>The ground quakes beneath your feet!</B>"))
 	L.Paralyze(100)
 	L.adjustBruteLoss(35)
-	var/obj/structure/flora/rock/giant_rock = new(get_turf(src))
+	var/obj/structure/flora/rock/style_random/giant_rock = new(get_turf(src))
 	QDEL_IN(giant_rock, 200)
 
 
