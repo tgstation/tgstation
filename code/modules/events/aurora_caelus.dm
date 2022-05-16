@@ -33,14 +33,19 @@
 			for(var/turf/open/space/S in A)
 				S.set_light(S.light_range * 3, S.light_power * 0.5)
 		if(istype(A, /area/station/service/kitchen))
-			for(var/turf/open/seymour in A)
-				seymour.set_light(1, 0.75)
+			for(var/turf/open/kitchen in A)
+				kitchen.set_light(1, 0.75)
 			if(prob(1) || SSevents.holidays?[APRIL_FOOLS])
-				for(var/obj/machinery/oven/steamed_hams in A)
-					steamed_hams.balloon_alert_to_viewers("oh ye gods!")
-					var/turf/ruined_roast = get_turf(steamed_hams)
+				var/obj/machinery/oven/albany_expression = locate() in A
+				if(albany_expression)
+					albany_expression.balloon_alert_to_viewers("oh egads!")
+					var/turf/ruined_roast = get_turf(albany_expression)
 					ruined_roast.atmos_spawn_air("plasma=100;TEMP=1000")
 					break // we only want one oven to catch on fire
+				for(var/mob/living/carbon/human/seymour in GLOB.human_list)
+					if(seymour.mind && istype(seymour.mind.assigned_role, /datum/job/cook))
+						seymour.say("My roast is ruined!!!", forced = "ruined roast")
+						seymour.emote("scream")
 				
 
 /datum/round_event/aurora_caelus/tick()
