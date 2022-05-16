@@ -121,6 +121,7 @@
 	hitsound_wall = 'sound/weapons/batonextend.ogg'
 	suppressed = SUPPRESSED_VERY
 	hit_threshhold = LATTICE_LAYER
+	/// Reference to the beam following the projectile.
 	var/line
 
 /obj/projectile/tether/fire(setAngle)
@@ -217,6 +218,7 @@
 	device = /obj/item/reagent_containers/spray/mister
 	incompatible_modules = list(/obj/item/mod/module/mister)
 	cooldown_time = 0.5 SECONDS
+	/// Volume of our reagent holder.
 	var/volume = 500
 
 /obj/item/mod/module/mister/Initialize(mapload)

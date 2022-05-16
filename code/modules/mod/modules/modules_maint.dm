@@ -237,6 +237,8 @@
 	drain_power(use_power_cost)
 	num_sheets_dispensed++
 
+
+///Stamper - Extends a stamp that can switch between accept/deny modes.
 /obj/item/mod/module/stamp
 	name = "MOD stamper module"
 	desc = "A module installed into the wrist of the suit, this functions as a high-power stamp, \

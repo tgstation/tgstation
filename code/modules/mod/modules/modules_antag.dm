@@ -18,8 +18,10 @@
 	use_mod_colors = TRUE
 	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
-	/// Slowdown added to the suit.
-	var/added_slowdown = -0.5
+	/// Speed added to the control unit.
+	var/speed_added = 0.5
+	/// Speed that we actually added.
+	var/actual_speed_added = 0
 	/// Armor values added to the suit parts.
 	var/list/armor_values = list(MELEE = 25, BULLET = 30, LASER = 15, ENERGY = 15)
 	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
@@ -38,7 +40,8 @@
 	if(!.)
 		return
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	mod.slowdown += added_slowdown
+	actual_speed_added = max(0, min(mod.active_slowdown, speed_added))
+	mod.slowdown -= actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
 	var/list/parts = mod.mod_parts + mod
 	for(var/obj/item/part as anything in parts)
@@ -56,7 +59,7 @@
 		return
 	if(!deleting)
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	mod.slowdown -= added_slowdown
+	mod.slowdown += actual_speed_added
 	mod.wearer.update_equipment_speed_mods()
 	var/list/parts = mod.mod_parts + mod
 	var/list/removed_armor = armor_values.Copy()
@@ -287,6 +290,7 @@
 /obj/projectile/bullet/incendiary/backblast/flamethrower
 	range = 6
 
+///Power kick - Lets the user launch themselves at someone to kick them.
 /obj/item/mod/module/power_kick
 	name = "MOD power kick module"
 	desc = "This module uses high-power myomer to generate an incredible amount of energy, transferred into the power of a kick."
@@ -297,7 +301,7 @@
 	incompatible_modules = list(/obj/item/mod/module/power_kick)
 	cooldown_time = 5 SECONDS
 	var/damage = 20
-	var/wounding_power = 20
+	var/wounding_power = 35
 	var/knockdown_time = 2 SECONDS
 
 /obj/item/mod/module/power_kick/on_select_use(atom/target)
@@ -343,6 +347,7 @@
 		return
 	mod.wearer.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 
+///Chameleon - lets the suit disguise as any item that would fit on that slot.
 /obj/item/mod/module/chameleon
 	name = "MOD chameleon module"
 	desc = "A module using chameleon technology to disguise the suit as another object."
@@ -410,3 +415,28 @@
 	saved_appearance = null
 	mod.wearer.update_clothing(mod.slot_flags)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+
+///Plate Compression - Compresses the suit to normal size
+/obj/item/mod/module/plate_compression
+	name = "MOD plate compression module"
+	desc = "A module that keeps the suit in a very tightly fit state, lowering the overall size. \
+		Due to the pressure on all the parts, typical storage modules do not fit."
+	icon_state = "plate_compression"
+	complexity = 2
+	incompatible_modules = list(/obj/item/mod/module/plate_compression, /obj/item/mod/module/storage)
+	var/new_size = WEIGHT_CLASS_NORMAL
+	var/old_size
+
+/obj/item/mod/module/plate_compression/on_install()
+	old_size = mod.w_class
+	mod.w_class = new_size
+
+/obj/item/mod/module/plate_compression/on_uninstall(deleting = FALSE)
+	mod.w_class = old_size
+	old_size = null
+	if(!mod.loc)
+		return
+	var/datum/component/storage/holding_storage = mod.loc.GetComponent(/datum/component/storage)
+	if(!holding_storage || holding_storage.max_w_class >= mod.w_class)
+		return
+	mod.forceMove(drop_location())

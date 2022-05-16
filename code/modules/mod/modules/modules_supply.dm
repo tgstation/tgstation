@@ -372,6 +372,8 @@
 	var/list/armor_values = list(MELEE = 4, BULLET = 1, LASER = 2, ENERGY = 2, BOMB = 4)
 	/// Speed added when you're fully covered in ash.
 	var/speed_added = 0.5
+	/// Speed that we actually added.
+	var/actual_speed_added = 0
 	/// Turfs that let us accrete ash.
 	var/static/list/accretion_turfs
 	/// Turfs that let us keep ash.
@@ -442,7 +444,8 @@
 			mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
 			animate(mod.wearer, 1 SECONDS, color = null, flags = ANIMATION_PARALLEL)
 			playsound(src, 'sound/effects/sparks1.ogg', 100, TRUE)
-			mod.slowdown -= speed_added
+			actual_speed_added = max(0, min(mod.active_slowdown, speed_added))
+			mod.slowdown -= actual_speed_added
 			mod.wearer.update_equipment_speed_mods()
 	else if(is_type_in_typecache(mod.wearer.loc, keep_turfs))
 		return
@@ -450,7 +453,7 @@
 		if(traveled_tiles <= 0)
 			return
 		if(traveled_tiles == max_traveled_tiles)
-			mod.slowdown += speed_added
+			mod.slowdown += actual_speed_added
 			mod.wearer.update_equipment_speed_mods()
 		traveled_tiles--
 		var/list/parts = mod.mod_parts + mod

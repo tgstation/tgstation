@@ -50,6 +50,29 @@
 	progression_minimum = 20 MINUTES
 	cost = 2
 
+/datum/uplink_item/suits/chameleon
+	name = "MODsuit Chameleon Module"
+	desc = "A MODsuit module that lets the suit disguise itself as other objects."
+	item = /obj/item/mod/module/noslip
+	progression_minimum = 20 MINUTES
+	cost = 1
+
+/datum/uplink_item/suits/plate_compression
+	name = "MODsuit Plate Compression Module"
+	desc = "A MODsuit module that lets the suit disguise itself as other objects."
+	item = /obj/item/mod/module/noslip
+	progression_minimum = 20 MINUTES
+	cost = 2
+
+// Medium progression cost
+
+/datum/uplink_item/suits/noslip
+	name = "MODsuit Anti-Slip Module"
+	desc = "A MODsuit module preventing the user from slipping on water."
+	item = /obj/item/mod/module/noslip
+	progression_minimum = 90 MINUTES
+	cost = 2
+
 // Very high progression cost
 
 /datum/uplink_item/suits/modsuit/elite_traitor
@@ -61,10 +84,3 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	progression_minimum = 90 MINUTES
 	cost = 16
-
-/datum/uplink_item/suits/noslip
-	name = "MODsuit Anti-Slip Module"
-	desc = "A MODsuit module preventing the user from slipping on water."
-	item = /obj/item/mod/module/noslip
-	progression_minimum = 90 MINUTES
-	cost = 4
