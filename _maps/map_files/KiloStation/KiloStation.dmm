@@ -71741,29 +71741,6 @@
 	dir = 8;
 	pixel_x = -28
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
-	pixel_x = 8;
-	pixel_y = 32
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/pump{
-	name = "Lil Pump"
-	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Ordnance Mixing Lab";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
-/obj/machinery/airalarm/mixingchamber{
-	dir = 8;
-	pixel_x = -28
-	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/mixing/chamber)
 "uap" = (
