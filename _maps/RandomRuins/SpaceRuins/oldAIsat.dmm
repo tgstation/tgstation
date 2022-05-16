@@ -241,7 +241,7 @@
 /turf/template_noop,
 /area/template_noop)
 "aU" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/tcommsat/oldaisat)
 "aV" = (

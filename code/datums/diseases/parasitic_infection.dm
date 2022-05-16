@@ -6,7 +6,7 @@
 	agent = "Consuming Live Parasites"
 	spread_text = "Non-Biological"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 1
+	spreading_modifier = 1
 	desc = "If left untreated the subject will passively lose nutrients, and eventually lose their liver."
 	severity = DISEASE_SEVERITY_HARMFUL
 	disease_flags = CAN_CARRY|CAN_RESIST

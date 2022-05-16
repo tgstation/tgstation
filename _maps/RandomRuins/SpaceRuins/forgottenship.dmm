@@ -764,7 +764,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cp" = (
 /obj/machinery/door/window{
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "fire" = 70, "acid" = 100);
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 0, "fire" = 70, "acid" = 100);
 	name = "Control room";
 	req_one_access_txt = "150"
 	},
@@ -1152,7 +1152,7 @@
 	},
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/grunge{
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "fire" = 90, "acid" = 90);
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 0, "fire" = 90, "acid" = 90);
 	desc = "Vault airlock preventing air from going out.";
 	name = "Syndicate Vault Airlock";
 	req_one_access_txt = "150"

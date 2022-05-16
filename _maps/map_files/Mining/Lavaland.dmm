@@ -646,7 +646,7 @@
 "cT" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/closet/crate/secure/loot,
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /obj/structure/cable,
@@ -2897,7 +2897,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/structure/sign/warning/gasmask{
+/obj/structure/sign/warning/gas_mask{
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,

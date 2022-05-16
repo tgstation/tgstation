@@ -90,7 +90,16 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 /obj/machinery/computer/holodeck/LateInitialize()//from here linked is populated and the program list is generated. its also set to load the offline program
 	linked = GLOB.areas_by_type[mapped_start_area]
+	if(!linked)
+		log_mapping("[src] at [AREACOORD(src)] has no matching holodeck area.")
+		qdel(src)
+		return
+
 	bottom_left = locate(linked.x, linked.y, src.z)
+	if(!bottom_left)
+		log_mapping("[src] at [AREACOORD(src)] has an invalid holodeck area.")
+		qdel(src)
+		return
 
 	var/area/computer_area = get_area(src)
 	if(istype(computer_area, /area/holodeck))
@@ -99,22 +108,17 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		return
 
 	// the following is necessary for power reasons
-	if(!linked)
-		log_world("No matching holodeck area found")
-		qdel(src)
-		return
-	else if (!offline_program)
+	if(!offline_program)
 		stack_trace("Holodeck console created without an offline program")
 		qdel(src)
 		return
 
+	linked.linked = src
+	var/area/my_area = get_area(src)
+	if(my_area)
+		linked.power_usage = my_area.power_usage
 	else
-		linked.linked = src
-		var/area/my_area = get_area(src)
-		if(my_area)
-			linked.power_usage = my_area.power_usage
-		else
-			linked.power_usage = list(AREA_USAGE_LEN)
+		linked.power_usage = list(AREA_USAGE_LEN)
 
 	COOLDOWN_START(src, holodeck_cooldown, HOLODECK_CD)
 	generate_program_list()
@@ -269,7 +273,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			spawned -= holo_atom
 			continue
 
-		RegisterSignal(holo_atom, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+		RegisterSignal(holo_atom, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
 		holo_atom.flags_1 |= HOLOGRAM_1
 
 		if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
@@ -279,10 +283,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			var/atom/holo_effect_product = holo_effect.activate(src)//change name
 			if(istype(holo_effect_product))
 				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
-				RegisterSignal(holo_effect_product, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+				RegisterSignal(holo_effect_product, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
 			if(islist(holo_effect_product))
 				for(var/atom/atom_product as anything in holo_effect_product)
-					RegisterSignal(atom_product, COMSIG_PARENT_PREQDELETED, .proc/remove_from_holo_lists)
+					RegisterSignal(atom_product, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
 			continue
 
 		if(isobj(holo_atom))
@@ -309,7 +313,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	spawned -= holo_atom
 	if(!holo_atom)
 		return
-	UnregisterSignal(holo_atom, COMSIG_PARENT_PREQDELETED)
+	UnregisterSignal(holo_atom, COMSIG_PARENT_QDELETING)
 	var/turf/target_turf = get_turf(holo_atom)
 	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
 		atom_contents.forceMove(target_turf)
@@ -328,7 +332,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 /obj/machinery/computer/holodeck/proc/remove_from_holo_lists(datum/to_remove, _forced)
 	SIGNAL_HANDLER
 	spawned -= to_remove
-	UnregisterSignal(to_remove, COMSIG_PARENT_PREQDELETED)
+	UnregisterSignal(to_remove, COMSIG_PARENT_QDELETING)
 
 /obj/machinery/computer/holodeck/process(delta_time)
 	if(damaged && DT_PROB(5, delta_time))

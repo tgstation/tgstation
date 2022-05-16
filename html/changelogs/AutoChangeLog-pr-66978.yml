@@ -1,0 +1,6 @@
+author: "DragonTrance"
+delete-after: True
+changes: 
+  - refactor: "Flora code is much more organized :)"
+  - rscadd: "Flora (trees, plants, etc) can be uprooted with a shovel, which can then be dragged around."
+  - code_imp: "Moved \"kirbyplants\" into their own .dm file, instead of just finding a comfortable spot in flora code"

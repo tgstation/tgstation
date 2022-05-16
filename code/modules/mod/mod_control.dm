@@ -7,7 +7,7 @@
 
 /obj/item/mod/control
 	name = "MOD control unit"
-	desc = "The control unit of a Modular Outerwear Device, a powered, back-mounted suit that protects against various environments."
+	desc = "The control unit of a Modular Outerwear Device, a powered suit that protects against various environments."
 	icon_state = "control"
 	inhand_icon_state = "mod_control"
 	w_class = WEIGHT_CLASS_BULKY
@@ -27,7 +27,6 @@
 	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
 	alternate_worn_layer = HANDS_LAYER+0.1 //we want it to go above generally everything, but not hands
 	/// The MOD's theme, decides on some stuff like armor and statistics.
@@ -98,6 +97,7 @@
 	if(new_theme)
 		theme = new_theme
 	theme = GLOB.mod_themes[theme]
+	slot_flags = theme.slot_flags
 	extended_desc = theme.extended_desc
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
@@ -118,7 +118,7 @@
 	mod_parts += gauntlets
 	boots = new /obj/item/clothing/shoes/mod(src)
 	mod_parts += boots
-	var/list/all_parts = mod_parts.Copy() + src
+	var/list/all_parts = mod_parts + src
 	for(var/obj/item/part as anything in all_parts)
 		part.name = "[theme.name] [part.name]"
 		part.desc = "[part.desc] [theme.desc]"
@@ -129,7 +129,6 @@
 		part.cold_protection = NONE
 		part.max_heat_protection_temperature = theme.max_heat_protection_temperature
 		part.min_cold_protection_temperature = theme.min_cold_protection_temperature
-		part.permeability_coefficient = theme.permeability_coefficient
 		part.siemens_coefficient = theme.siemens_coefficient
 	for(var/obj/item/part as anything in mod_parts)
 		RegisterSignal(part, COMSIG_ATOM_DESTRUCTION, .proc/on_part_destruction)
@@ -200,7 +199,8 @@
 		. += span_notice("Charge: [core ? "[get_charge_percent()]%" : "No core"].")
 		. += span_notice("Selected module: [selected_module || "None"].")
 	if(!open && !active)
-		. += span_notice("You could put it on your <b>back</b> to turn it on.")
+		if(!wearer)
+			. += span_notice("You could equip it to turn it on.")
 		. += span_notice("You could open the cover with a <b>screwdriver</b>.")
 	else if(open)
 		. += span_notice("You could close the cover with a <b>screwdriver</b>.")
@@ -239,7 +239,7 @@
 
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()
-	if(slot == ITEM_SLOT_BACK)
+	if(slot == slot_flags)
 		set_wearer(user)
 	else if(wearer)
 		unset_wearer()
@@ -250,7 +250,7 @@
 		unset_wearer()
 
 /obj/item/mod/control/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_BACK)
+	if(slot == slot_flags)
 		return TRUE
 
 /obj/item/mod/control/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs)
@@ -265,10 +265,12 @@
 		for(var/obj/item/part as anything in mod_parts)
 			seal_part(part, seal = FALSE)
 	for(var/obj/item/part as anything in mod_parts)
-		conceal(null, part)
+		retract(null, part)
 	if(active)
 		finish_activation(on = FALSE)
 	unset_wearer()
+	var/mob/old_wearer = old_loc
+	old_wearer.temporarilyRemoveItemFromInventory(src)
 
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
 	if(user != wearer)
@@ -436,7 +438,7 @@
 	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc == src)
 			continue
-		conceal(null, part)
+		retract(null, part)
 	return ..()
 
 /obj/item/mod/control/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
@@ -455,6 +457,7 @@
 	wearer = user
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_SET, wearer)
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+	RegisterSignal(wearer, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_equip()
@@ -462,10 +465,20 @@
 /obj/item/mod/control/proc/unset_wearer()
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_unequip()
-	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
+	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_SPECIES_GAIN))
 	wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null
+
+/obj/item/mod/control/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
+
+	var/list/all_parts = mod_parts + src
+	for(var/obj/item/part in all_parts)
+		if(!(part.slot_flags in new_species.no_equip) || is_type_in_list(new_species, part.species_exception))
+			continue
+		forceMove(drop_location())
+		return
 
 /obj/item/mod/control/proc/quick_module(mob/user)
 	if(!length(modules))
@@ -598,7 +611,7 @@
 	toggle_activate(wearer, force_deactivate = TRUE)
 
 /obj/item/mod/control/proc/set_mod_color(new_color)
-	var/list/all_parts = mod_parts.Copy() + src
+	var/list/all_parts = mod_parts + src
 	for(var/obj/item/part as anything in all_parts)
 		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		part.add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
@@ -611,7 +624,7 @@
 	var/list/used_skin = theme.skins[new_skin]
 	if(used_skin[CONTROL_LAYER])
 		alternate_worn_layer = used_skin[CONTROL_LAYER]
-	var/list/skin_updating = mod_parts.Copy() + src
+	var/list/skin_updating = mod_parts + src
 	for(var/obj/item/part as anything in skin_updating)
 		if(used_skin[MOD_ICON_OVERRIDE])
 			part.icon = used_skin[MOD_ICON_OVERRIDE]
@@ -638,9 +651,12 @@
 		part.alternate_worn_layer = category[UNSEALED_LAYER]
 		mod_parts[part] = part.alternate_worn_layer
 		if(!category[CAN_OVERSLOT])
+			if(overslotting_parts[part])
+				var/obj/item/overslot = overslotting_parts[part]
+				overslot.forceMove(drop_location())
 			overslotting_parts -= part
 			continue
-		overslotting_parts[part] = null
+		overslotting_parts |= part
 	wearer?.regenerate_icons()
 
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, direction)
@@ -658,7 +674,7 @@
 		uninstall(part)
 		return
 	if(part in mod_parts)
-		conceal(wearer, part)
+		retract(wearer, part)
 		if(active)
 			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
 		return
@@ -680,6 +696,13 @@
 	if(QDELETED(src))
 		return
 	qdel(src)
+
+/obj/item/mod/control/proc/on_overslot_exit(datum/source, atom/movable/overslot, direction)
+	SIGNAL_HANDLER
+
+	if(overslot != overslotting_parts[source])
+		return
+	overslotting_parts[source] = null
 
 /obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER

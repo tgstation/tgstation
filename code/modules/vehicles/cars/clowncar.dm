@@ -82,7 +82,7 @@
 	. = ..()
 	if(prob(33))
 		visible_message(span_danger("[src] spews out a ton of space lube!"))
-		new /obj/effect/particle_effect/foam(loc) //YEET
+		new /obj/effect/particle_effect/fluid/foam(loc) //YEET
 
 /obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -90,7 +90,7 @@
 		return
 	var/obj/item/food/grown/banana/banana = I
 	atom_integrity += min(banana.seed.potency, max_integrity-atom_integrity)
-	to_chat(user, span_danger("You use the [banana] to repair the [src]!"))
+	to_chat(user, span_danger("You use the [banana] to repair [src]!"))
 	qdel(banana)
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
@@ -119,7 +119,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	to_chat(user, span_danger("You scramble \the [src]'s child safety lock, and a panel with six colorful buttons appears!"))
+	to_chat(user, span_danger("You scramble [src]'s child safety lock, and a panel with six colorful buttons appears!"))
 	initialize_controller_action_type(/datum/action/vehicle/sealed/roll_the_dice, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/cannon, VEHICLE_CONTROL_DRIVE)
 	AddElement(/datum/element/waddling)
@@ -154,7 +154,7 @@
 			var/datum/reagents/randomchems = new/datum/reagents(300)
 			randomchems.my_atom = src
 			randomchems.add_reagent(get_random_reagent_id(), 100)
-			var/datum/effect_system/foam_spread/foam = new
+			var/datum/effect_system/fluid_spread/foam/foam = new
 			foam.set_up(200, loc, randomchems)
 			foam.start()
 		if(3)
@@ -167,8 +167,8 @@
 			var/datum/reagents/funnychems = new/datum/reagents(300)
 			funnychems.my_atom = src
 			funnychems.add_reagent(/datum/reagent/consumable/superlaughter, 50)
-			var/datum/effect_system/smoke_spread/chem/smoke = new()
-			smoke.set_up(funnychems, 4)
+			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
+			smoke.set_up(4, location = src, carry = funnychems)
 			smoke.attach(src)
 			smoke.start()
 		if(5)
@@ -207,12 +207,12 @@
 		icon_state = "clowncar"
 		addtimer(CALLBACK(src, .proc/deactivate_cannon), 2 SECONDS)
 		playsound(src, 'sound/vehicles/clowncar_cannonmode2.ogg', 75)
-		visible_message(span_danger("The [src] starts going back into mobile mode."))
+		visible_message(span_danger("[src] starts going back into mobile mode."))
 	else
 		canmove = FALSE //anchor and activate canon
 		flick("clowncar_tofire", src)
 		icon_state = "clowncar_fire"
-		visible_message(span_danger("The [src] opens up and reveals a large cannon."))
+		visible_message(span_danger("[src] opens up and reveals a large cannon."))
 		addtimer(CALLBACK(src, .proc/activate_cannon), 2 SECONDS)
 		playsound(src, 'sound/vehicles/clowncar_cannonmode1.ogg', 75)
 	cannonmode = CLOWN_CANNON_BUSY

@@ -10,7 +10,6 @@
  * AI core prizes
  * Toy codex gigas
  * Skeleton toys
- * Cards
  * Toy nuke
  * Fake meteor
  * Foam armblade
@@ -27,13 +26,11 @@
  * Fake Pierced Reality
  * Intento
  */
-
 /obj/item/toy
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	force = 0
-
 
 /*
  * Balloons
@@ -44,7 +41,6 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	inhand_icon_state = "balloon-empty"
-
 
 /obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
@@ -152,7 +148,6 @@
 	else
 		return ..()
 
-
 /obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
 	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
 	if(monkey_pop) // Monkeys make money from popping bloons
@@ -191,13 +186,11 @@
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
 
-
 /obj/item/toy/balloon/syndicate/Destroy()
 	if(ismob(loc))
 		var/mob/M = loc
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
-
 
 /obj/item/toy/balloon/arrest
 	name = "arreyst balloon"
@@ -302,8 +295,6 @@
 	user.adjustOxyLoss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
 	user.death(FALSE)
 	user.ghostize(FALSE)
-
-
 
 /*
  * Toy gun: Why isn't this an /obj/item/gun?
@@ -412,7 +403,6 @@
 		clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
@@ -472,7 +462,6 @@
 	attack_verb_simple = list("prick", "absorb", "gore")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
-
 
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
@@ -580,7 +569,6 @@
 /*
  * Snap pops
  */
-
 /obj/item/toy/snappop
 	name = "snap pop"
 	desc = "Wow!"
@@ -734,461 +722,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /*
-|| A Deck of Cards for playing various games of chance ||
-*/
-/obj/item/toy/cards
-	resistance_flags = FLAMMABLE
-	max_integrity = 50
-	///The parent deck of the cards
-	var/datum/weakref/parentdeck
-	///Artistic style of the deck
-	var/deckstyle = "nanotrasen"
-	var/card_hitsound = null
-	var/card_force = 0
-	var/card_throwforce = 0
-	var/card_throw_speed = 3
-	var/card_throw_range = 7
-	var/list/card_attack_verb_continuous = list("attacks")
-	var/list/card_attack_verb_simple = list("attack")
-
-
-/obj/item/toy/cards/Initialize(mapload)
-	. = ..()
-	if(card_attack_verb_continuous)
-		card_attack_verb_continuous = string_list(card_attack_verb_continuous)
-	if(card_attack_verb_simple)
-		card_attack_verb_simple = string_list(card_attack_verb_simple)
-
-
-/obj/item/toy/cards/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!"))
-	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-	return BRUTELOSS
-
-/**
- * ## apply_card_vars
- *
- * Applies variables for supporting multiple types of card deck
- */
-/obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj)
-	if(!istype(sourceobj))
-		return
-
-/**
- * ## add_card
- *
- * Adds a card to the deck (or hand of cards).
- *
- * Arguments:
- * * mob/user - The user adding the card.
- * * list/cards - The list of cards the user is adding to.
- * * obj/item/toy/cards/card_to_add - The card (or hand of cards) that will be added back into the deck
- */
-/obj/item/toy/cards/proc/add_card(mob/user, list/cards, obj/item/toy/cards/card_to_add)
-	///Are we adding a hand of cards to the deck?
-	var/from_cardhand = FALSE
-	///Are we adding to a hand of cards?
-	var/to_cardhand = FALSE
-	if (istype(card_to_add, /obj/item/toy/cards/cardhand))
-		from_cardhand = TRUE
-	if (istype(src, /obj/item/toy/cards/cardhand))
-		to_cardhand = TRUE
-
-	if ((card_to_add.parentdeck != src.parentdeck) && (card_to_add.parentdeck != WEAKREF(src)))
-		to_chat(user, span_warning("You can't mix cards from other decks!"))
-		return
-	if (!user.temporarilyRemoveItemFromInventory(card_to_add))
-		to_chat(user, span_warning("The [from_cardhand ? "hand of cards" : "card"] is stuck to your hand, you can't add it to [to_cardhand ? "your hand" : "the deck"]!"))
-		return
-
-	if (from_cardhand)
-		var/obj/item/toy/cards/cardhand/cards_to_add = card_to_add
-		for (var/obj/item/toy/cards/singlecard/card in cards_to_add.cards)
-			card.loc = src
-			cards += card
-	else
-		var/obj/item/toy/cards/singlecard/card = card_to_add
-		card.loc = src
-		cards += card
-
-	user.visible_message(span_notice("[user] adds [from_cardhand ? "the hand of cards" : "a card"] to [to_cardhand ? "[user.p_their()] hand" : "the bottom of the deck"]."), span_notice("You add the [from_cardhand ? "hand of cards" : "card"] to [to_cardhand ? "your hand" : "the bottom of the deck"]."))
-	update_appearance()
-
-/**
- * ## draw_card
- *
- * Draws a card from the deck (or hand of cards).
- *
- * Arguments:
- * * mob/user - The user drawing from the deck.
- * * list/cards - The list of cards the user is drawing from.
- * * obj/item/toy/cards/singlecard/forced_card (optional) - Used to force the card drawn from the deck
- */
-/obj/item/toy/cards/proc/draw_card(mob/user, list/cards, obj/item/toy/cards/singlecard/forced_card = null)
-	if(isliving(user))
-		var/mob/living/living_user = user
-		if(!(living_user.mobility_flags & MOBILITY_PICKUP))
-			return
-	if(cards.len == 0)
-		to_chat(user, span_warning("There are no more cards to draw!"))
-		return
-
-	///Are we drawing from a hand of cards?
-	var/from_cardhand = FALSE
-	if (istype(src, /obj/item/toy/cards/cardhand))
-		from_cardhand = TRUE
-
-	var/obj/item/toy/cards/singlecard/card_to_draw
-	if (forced_card)
-		card_to_draw = forced_card
-	else
-		card_to_draw = cards[1]
-
-	cards -= card_to_draw
-	card_to_draw.pickup(user)
-	user.put_in_hands(card_to_draw)
-	user.visible_message(span_notice("[user] draws a card from [from_cardhand ? "[user.p_their()] hand" : "the deck"]."), span_notice("You draw a card from [from_cardhand ? "your hand" : "the deck"]."))
-	update_appearance()
-	return card_to_draw
-
-/obj/item/toy/cards/deck
-	name = "deck of cards"
-	desc = "A deck of space-grade playing cards."
-	icon = 'icons/obj/toy.dmi'
-	deckstyle = "nanotrasen"
-	icon_state = "deck_nanotrasen_full"
-	worn_icon_state = "card"
-	w_class = WEIGHT_CLASS_SMALL
-	///Deck shuffling cooldown.
-	COOLDOWN_DECLARE(shuffle_cooldown)
-	///Tracks holodeck cards, since they shouldn't be infinite
-	var/obj/machinery/computer/holodeck/holo = null
-	///Cards in this deck
-	var/list/cards = list()
-
-/obj/item/toy/cards/deck/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/drag_pickup)
-	populate_deck()
-
-/**
- * ## generate_card
- *
- * Generates a new playing card, and assigns all of the necessary variables.
- *
- * Arguments:
- * * name - The name of the playing card.
- */
-/obj/item/toy/cards/deck/proc/generate_card(name)
-	var/obj/item/toy/cards/singlecard/card_to_add = new/obj/item/toy/cards/singlecard()
-	if(holo)
-		holo.spawned += card_to_add
-	card_to_add.cardname = name
-	card_to_add.parentdeck = WEAKREF(src)
-	card_to_add.apply_card_vars(card_to_add, src)
-	return card_to_add
-
-/**
- * ## populate_deck
- *
- * Generates all the cards within the deck.
- */
-/obj/item/toy/cards/deck/proc/populate_deck()
-	icon_state = "deck_[deckstyle]_full"
-	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
-		cards += generate_card("Ace of [suit]")
-		for(var/i in 2 to 10)
-			cards += generate_card("[i] of [suit]")
-		for(var/person in list("Jack", "Queen", "King"))
-			cards += generate_card("[person] of [suit]")
-
-/obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers)
-	if (!user.combat_mode)
-		draw_card(user, cards)
-	else
-		return ..()
-
-/obj/item/toy/cards/deck/update_icon_state()
-	switch(cards.len)
-		if(27 to INFINITY)
-			icon_state = "deck_[deckstyle]_full"
-		if(11 to 27)
-			icon_state = "deck_[deckstyle]_half"
-		if(1 to 11)
-			icon_state = "deck_[deckstyle]_low"
-		else
-			icon_state = "deck_[deckstyle]_empty"
-	return ..()
-
-#define DECK_SHUFFLE_COOLDOWN 5 SECONDS
-/obj/item/toy/cards/deck/attack_self(mob/user)
-	if(!COOLDOWN_FINISHED(src, shuffle_cooldown))
-		return
-	COOLDOWN_START(src, shuffle_cooldown, DECK_SHUFFLE_COOLDOWN)
-	cards = shuffle(cards)
-	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-	user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
-#undef DECK_SHUFFLE_COOLDOWN
-
-/obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/cards/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
-		add_card(user, cards, item)
-	else
-		return ..()
-
-/obj/item/toy/cards/cardhand
-	name = "hand of cards"
-	desc = "A number of cards not in a deck, customarily held in ones hand."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "none"
-	worn_icon_state = "card"
-	w_class = WEIGHT_CLASS_TINY
-	///Cards in this hand of cards.
-	var/list/cards = list()
-	///List of cards to add into the hand on initialization (used for mapping mostly)
-	var/list/init_cards = list()
-
-/obj/item/toy/cards/cardhand/Initialize()
-	. = ..()
-	if (init_cards.len > 0)
-		for (var/card in init_cards)
-			var/obj/item/toy/cards/singlecard/new_card = new /obj/item/toy/cards/singlecard(src)
-			new_card.cardname = card
-			new_card.Flip()
-			cards += new_card
-		update_sprite()
-
-/obj/item/toy/cards/cardhand/add_card(mob/user, list/cards, obj/item/toy/cards/card_to_add)
-	. = ..()
-	interact(user)
-	update_sprite()
-
-/obj/item/toy/cards/cardhand/attack_self(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		if(!(human_user.mobility_flags & MOBILITY_USE))
-			return
-	if(user.stat || !ishuman(user))
-		return
-	interact(user)
-
-	var/list/handradial = list()
-	for(var/obj/item/toy/cards/singlecard/card in cards)
-		handradial[card] = image(icon = src.icon, icon_state = "sc_[card.name]_[deckstyle]")
-
-	var/obj/item/toy/cards/singlecard/choice = show_radial_menu(usr, src, handradial, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
-	if(!choice)
-		return FALSE
-	draw_card(user, cards, choice)
-
-	interact(user)
-	if(length(cards) == 1)
-		var/obj/item/toy/cards/singlecard/last_card = draw_card(user, cards)
-		qdel(src)
-		last_card.pickup(user)
-		user.put_in_hands(last_card)
-		to_chat(user, span_notice("You also take [last_card.cardname] and hold it."))
-	else
-		update_sprite()
-
-/obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/card, mob/living/user, params)
-	if(istype(card))
-		if (!card.flipped)
-			card.Flip() // flip so that the card appears properly in the hand
-		add_card(user, cards, card)
-	else
-		return ..()
-
-/obj/item/toy/cards/cardhand/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj)
-	..()
-	newobj.deckstyle = sourceobj.deckstyle
-	update_sprite()
-	newobj.card_hitsound = sourceobj.card_hitsound
-	newobj.card_force = sourceobj.card_force
-	newobj.card_throwforce = sourceobj.card_throwforce
-	newobj.card_throw_speed = sourceobj.card_throw_speed
-	newobj.card_throw_range = sourceobj.card_throw_range
-	newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
-	newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
-	newobj.resistance_flags = sourceobj.resistance_flags
-
-/**
- * ## check_menu
- *
- * Checks if we are allowed to interact with a radial menu
- *
- * Arguments:
- * * user - The mob interacting with a menu
- */
-/obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated())
-		return FALSE
-	return TRUE
-
-/**
- * ## update_sprite
- *
- * This proc updates the sprite for when you create a hand of cards
- */
-/obj/item/toy/cards/cardhand/proc/update_sprite()
-	cut_overlays()
-	var/overlay_cards = cards.len
-
-	var/k = overlay_cards == 2 ? 1 : overlay_cards - 2
-	for(var/i = k; i <= overlay_cards; i++)
-		var/obj/item/toy/cards/singlecard/card = cards[i]
-		var/card_overlay = image(icon = src.icon, icon_state = "sc_[card.cardname]_[deckstyle]", pixel_x = (1 - i + k) * 3, pixel_y = (1 - i + k) * 3)
-		add_overlay(card_overlay)
-
-/obj/item/toy/cards/singlecard
-	name = "card"
-	desc = "A playing card used to play card games like poker."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "singlecard_down_nanotrasen"
-	worn_icon_state = "card"
-	w_class = WEIGHT_CLASS_TINY
-	pixel_x = -5
-	///The name of the card
-	var/cardname = null
-	///is the card facedown (F), or faceup (T)?
-	var/flipped = FALSE
-
-/obj/item/toy/cards/singlecard/examine(mob/user)
-	. = ..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/cardUser = user
-		if(cardUser.is_holding(src))
-			cardUser.visible_message(span_notice("[cardUser] checks [cardUser.p_their()] card."), span_notice("The card reads: [cardname]."))
-		else
-			. += span_warning("You need to have the card in your hand to check it!")
-
-/**
- * ## Flip
- *
- * flips the card over
- */
-/obj/item/toy/cards/singlecard/verb/Flip()
-	set name = "Flip Card"
-	set category = "Object"
-	set src in range(1)
-	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
-		return
-	if(!flipped)
-		src.flipped = TRUE
-		if (cardname)
-			src.icon_state = "sc_[cardname]_[deckstyle]"
-			src.name = src.cardname
-		else
-			src.icon_state = "sc_Ace of Spades_[deckstyle]"
-			src.name = "What Card"
-		src.pixel_x = 5
-	else if(flipped)
-		src.flipped = FALSE
-		src.icon_state = "singlecard_down_[deckstyle]"
-		src.name = "card"
-		src.pixel_x = -5
-
-/**
- * ## do_cardhand
- *
- * Creates, or adds to an existing hand of cards
- *
- * Arguments:
- * * mob/living/user - the user
- * * list/cards - the list of cards being added together (/obj/item/toy/cards/singlecard)
- * * obj/item/toy/cards/cardhand/given_hand (optional) - the cardhand to add said cards into
- */
-/obj/item/toy/cards/singlecard/proc/do_cardhand(mob/living/user, list/cards, obj/item/toy/cards/cardhand/given_hand = null)
-	if (given_hand && (given_hand?.parentdeck != parentdeck))
-		to_chat(user, span_warning("You can't mix cards from other decks!"))
-		return
-	for (var/obj/item/toy/cards/singlecard/card in cards)
-		if (card.parentdeck != parentdeck)
-			to_chat(user, span_warning("You can't mix cards from other decks!"))
-			return
-
-	var/obj/item/toy/cards/cardhand/new_cardhand = given_hand
-	var/preexisting = TRUE // does the cardhand already exist, or are we making a new one
-	if (!new_cardhand)
-		preexisting = FALSE
-		new_cardhand = new /obj/item/toy/cards/cardhand(user.loc)
-
-	for (var/obj/item/toy/cards/singlecard/card in cards)
-		user.dropItemToGround(card) // drop them all so the loc will properly update
-		if (!card.flipped)
-			card.Flip() // flip so the card shows up in the cardhand properly
-		new_cardhand.cards += card
-
-	if (preexisting)
-		new_cardhand.interact(user)
-		new_cardhand.update_sprite()
-
-		user.visible_message(span_notice("[user] adds a card to [user.p_their()] hand."), span_notice("You add the [cardname] to your hand."))
-	else
-		new_cardhand.parentdeck = parentdeck
-		new_cardhand.apply_card_vars(new_cardhand, src)
-		to_chat(user, span_notice("You combine the cards into a hand."))
-
-		new_cardhand.pickup(user)
-		user.put_in_active_hand(new_cardhand)
-
-	for (var/obj/item/toy/cards/singlecard/card in cards)
-		card.loc = new_cardhand // move the cards into the cardhand
-
-/obj/item/toy/cards/singlecard/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/cards/singlecard/))
-		do_cardhand(user, list(src, item))
-	if(istype(item, /obj/item/toy/cards/cardhand/))
-		do_cardhand(user, list(src), item)
-	else
-		return ..()
-
-/obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
-	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
-		return
-	Flip()
-
-/obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newobj,obj/item/toy/cards/sourceobj)
-	..()
-	newobj.deckstyle = sourceobj.deckstyle
-	newobj.icon_state = "singlecard_down_[deckstyle]" // Without this the card is invisible until flipped. It's an ugly hack, but it works.
-	newobj.card_hitsound = sourceobj.card_hitsound
-	newobj.hitsound = newobj.card_hitsound
-	newobj.card_force = sourceobj.card_force
-	newobj.force = newobj.card_force
-	newobj.card_throwforce = sourceobj.card_throwforce
-	newobj.throwforce = newobj.card_throwforce
-	newobj.card_throw_speed = sourceobj.card_throw_speed
-	newobj.throw_speed = newobj.card_throw_speed
-	newobj.card_throw_range = sourceobj.card_throw_range
-	newobj.throw_range = newobj.card_throw_range
-	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
-	newobj.attack_verb_simple = newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
-
-/*
-|| Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
-*/
-
-/obj/item/toy/cards/deck/syndicate
-	name = "suspicious looking deck of cards"
-	desc = "A deck of space-grade playing cards. They seem unusually rigid."
-	icon_state = "deck_syndicate_full"
-	deckstyle = "syndicate"
-	card_hitsound = 'sound/weapons/bladeslice.ogg'
-	card_force = 5
-	card_throwforce = 10
-	card_throw_speed = 3
-	card_throw_range = 7
-	card_attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
-	card_attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
-	resistance_flags = NONE
-
-/*
  * Fake nuke
  */
-
 /obj/item/toy/nuke
 	name = "\improper Nuclear Fission Explosive toy"
 	desc = "A plastic model of a Nuclear Fission Explosive."
@@ -1222,16 +757,15 @@
 		to_chat(user, span_alert("Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display."))
 		sleep(5)
 
-
 /obj/item/toy/nuke/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
 		return
 	to_chat(user, span_warning("You short-circuit \the [src]."))
 	obj_flags |= EMAGGED
+
 /*
  * Fake meteor
  */
-
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
@@ -1286,7 +820,6 @@
 /*
  * Snowballs
  */
-
 /obj/item/toy/snowball
 	name = "snowball"
 	desc = "A compact ball of snow. Good for throwing at people."
@@ -1322,7 +855,6 @@
 /*
  * Clockwork Watch
  */
-
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
@@ -1348,7 +880,6 @@
 /*
  * Toy Dagger
  */
-
 /obj/item/toy/toy_dagger
 	name = "toy dagger"
 	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
@@ -1362,7 +893,6 @@
 /*
  * Xenomorph action figure
  */
-
 /obj/item/toy/toy_xeno
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "toy_xeno"
@@ -1387,7 +917,6 @@
 		return
 
 // TOY MOUSEYS :3 :3 :3
-
 /obj/item/toy/cattoy
 	name = "toy mouse"
 	desc = "A colorful toy mouse!"
@@ -1401,7 +930,6 @@
 /*
  * Action Figures
  */
-
 /obj/item/toy/figure
 	name = "\improper Non-Specific Action Figure action figure"
 	icon = 'icons/obj/toy.dmi'
@@ -1624,7 +1152,6 @@
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
 
-
 /obj/item/toy/dummy
 	name = "ventriloquist dummy"
 	desc = "It's a dummy, dummy."
@@ -1697,11 +1224,9 @@
 		cooldown = (world.time + 10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
 
-
 /*
  * Eldritch Toys
  */
-
 /obj/item/toy/eldritch_book
 	name = "Codex Cicatrix"
 	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
@@ -1724,7 +1249,6 @@
 /*
  * Fake tear
  */
-
 /obj/item/toy/reality_pierce
 	name = "Pierced reality"
 	desc = "Hah. You thought it was the real deal!"
@@ -1794,7 +1318,6 @@ GLOBAL_LIST_EMPTY(intento_players)
 #define TIME_TO_BEGIN 1.6 SECONDS
 #define TIME_PER_DEMO_STEP 0.6 SECONDS
 #define TIME_TO_RESET_ICON 0.5 SECONDS
-
 
 /obj/item/toy/intento
 	name = "\improper Intento"
@@ -1876,7 +1399,6 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 		state = STATE_STARTING
 		COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
-
 
 /obj/item/toy/intento/process()
 	if(next_icon_reset && next_icon_reset <= world.time)

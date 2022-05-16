@@ -17,7 +17,7 @@
 	icon_state = "fire0"
 	max_integrity = 250
 	integrity_failure = 0.4
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 90, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_ENVIRON
@@ -29,6 +29,8 @@
 
 	//Trick to get the glowing overlay visible from a distance
 	luminosity = 1
+	//We want to use area sensitivity, let us
+	always_area_sensitive = TRUE
 	///Buildstate for contruction steps. 2 = complete, 1 = no wires, 0 = circuit gone
 	var/buildstage = 2
 	///Our home area, set in Init. Due to loading step order, this seems to be null very early in the server setup process, which is why some procs use `my_area?` for var or list checks.
@@ -67,6 +69,28 @@
 		my_area = null
 	QDEL_NULL(soundloop)
 	return ..()
+
+// Area sensitivity is traditionally tied directly to power use, as an optimization
+// But since we want it for fire reacting, we disregard that
+/obj/machinery/firealarm/setup_area_power_relationship()
+	. = ..()
+	if(!.)
+		return
+	var/area/our_area = get_area(src)
+	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
+
+/obj/machinery/firealarm/on_enter_area(datum/source, area/area_to_register)
+	..()
+	RegisterSignal(area_to_register, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
+	handle_fire(area_to_register, area_to_register.fire)
+
+/obj/machinery/firealarm/on_exit_area(datum/source, area/area_to_unregister)
+	..()
+	UnregisterSignal(area_to_unregister, COMSIG_AREA_FIRE_CHANGED)
+
+/obj/machinery/firealarm/proc/handle_fire(area/source, new_fire)
+	SIGNAL_HANDLER
+	set_status()
 
 /**
  * Sets the sound state, and then calls update_icon()
@@ -177,7 +201,7 @@
 	if(my_area.fire)
 		return //area alarm already active
 	my_area.alarm_manager.send_alarm(ALARM_FIRE, my_area)
-	my_area.set_fire_alarm_effect()
+	// This'll setup our visual effects, so we only need to worry about the alarm
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.activate(FIRELOCK_ALARM_TYPE_GENERIC)
 	if(user)
@@ -195,10 +219,11 @@
 /obj/machinery/firealarm/proc/reset(mob/user)
 	if(!is_operational)
 		return
-	my_area.unset_fire_alarm_effects()
-	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-		firelock.reset()
 	my_area.alarm_manager.clear_alarm(ALARM_FIRE, my_area)
+	// Clears all fire doors and their effects for now
+	// They'll reclose if there's a problem
+	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
+		firelock.crack_open()
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 	soundloop.stop()
@@ -428,7 +453,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 		return
 	area.party = TRUE
 	if (!party_overlay)
-		party_overlay = iconstate2appearance('icons/turf/areas.dmi', "party")
+		party_overlay = iconstate2appearance('icons/area/areas_misc.dmi', "party")
 	area.add_overlay(party_overlay)
 
 /obj/item/circuit_component/firealarm
