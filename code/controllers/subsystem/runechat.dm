@@ -6,7 +6,7 @@ TIMER_SUBSYSTEM_DEF(runechat)
 	///associative list of the form: list(creation string = the chatmessage datum assigned to that string)
 	var/list/messages_by_creation_string = list()
 	///queue for runechat messages receiving client MeasureText() calls and ready to create the runechat images
-	var/list/message_queue = list()
+	var/list/datum/callback/message_queue = list()
 
 /datum/controller/subsystem/timer/runechat/fire(resumed)
 	. = ..() //poggers

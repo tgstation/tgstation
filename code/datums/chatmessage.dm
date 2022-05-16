@@ -103,11 +103,21 @@
 	all_hearers = list()
 
 /datum/chatmessage/Destroy()
-	for(var/client/hearer in hearers)
+	for(var/client/hearer in all_hearers)
 		LAZYREMOVEASSOC(hearer.seen_messages, message_loc, src)
 
 		if(istype(hearers[hearer], /image))
 			hearer.images -= hearers[hearer]
+
+	for(var/datum/callback/queued_callback as anything in SSrunechat.message_queue)
+		if(!queued_callback)
+			SSrunechat.message_queue -= queued_callback
+			continue
+
+		if(queued_callback.object == src)
+			SSrunechat.message_queue -= queued_callback
+			qdel(queued_callback)
+			break
 
 	if(!dropped_hash)
 		SSrunechat.messages_by_creation_string -= creation_parameters
@@ -118,6 +128,7 @@
 	hearers = null
 	all_hearers = null
 	approx_lines = null
+	fadertimer = null
 
 	return ..()
 
@@ -125,14 +136,13 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/datum/chatmessage/proc/on_hearer_qdel(datum/source)
+/datum/chatmessage/proc/on_hearer_qdel(client/hearer)
 	SIGNAL_HANDLER
-	if(!istype(source, /client))
+	if(!istype(hearer))
 		return
 
-	var/client/hearer = source
 	LAZYREMOVEASSOC(hearer.seen_messages, message_loc, src)
-	if(istype(hearers[hearer], /image))
+	if(istype(hearers?[hearer], /image))
 		var/image/seen_image = hearers[hearer]
 		messages -= seen_image
 
@@ -225,8 +235,8 @@
 	//fun fact: MeasureText() works by waiting for the client to send back the measurements for the text. meaning it works like a verb.
 	//procs like this are called at the last section of hte tick before it ends, meaning if the other portions used up most of it,
 	//then everything after this point is likely to overtime. queuing the message completion if the server is overloaded fixes this
-	if(!owned_by || QDELETED(src) || !all_hearers[owned_by])
-		return
+	if(!owned_by || QDELETED(src) || QDELETED(message_loc) || !all_hearers?[owned_by])
+		return //we should already have been qdel'd() if this evaluates to TRUE, doing it now would throw an error
 
 	var/mheight = WXH_TO_HEIGHT(measurement)
 	if(TICK_CHECK)
