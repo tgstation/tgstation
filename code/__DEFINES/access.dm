@@ -1,6 +1,6 @@
-// Security equipment, security records, gulag item storage, secbots
+// Security general access, security records, gulag item storage, secbots
 #define ACCESS_SECURITY 1
-/// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console
+/// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console, security equipment
 #define ACCESS_BRIG 2
 /// Armory, gulag teleporter, execution chamber
 #define ACCESS_ARMORY 3
