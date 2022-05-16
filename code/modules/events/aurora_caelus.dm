@@ -77,7 +77,7 @@
 /datum/round_event/aurora_caelus/proc/fade_to_black(turf/open/space/spess)
 	set waitfor = FALSE
 	var/new_light = initial(spess.light_range)
-	while(S.light_range > new_light)
+	while(spess.light_range > new_light)
 		spess.set_light(spess.light_range - 0.2)
 		sleep(30)
 	spess.set_light(new_light, initial(spess.light_power), initial(spess.light_color))
