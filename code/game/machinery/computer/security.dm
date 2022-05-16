@@ -371,6 +371,7 @@
 						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
 						<th>Crime</th>
+						<th>Sentence</th>
 						<th>Fine</th>
 						<th>Author</th>
 						<th>Time Added</th>
@@ -398,6 +399,7 @@
 						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
 						<th>Crime</th>
+						<th>Sentence</th>
 						<th>Details</th>
 						<th>Author</th>
 						<th>Time Added</th>
@@ -405,6 +407,7 @@
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["crim"])
 							dat += "<tr><td>[c.crimeName]</td>"
+							dat += "<td>[c.sentence] <A href='?src=[REF(src)];choice=Edit Field;field=crim_serve;cdataid=[c.dataId]'>\[X\]</A></td>"
 							if(!c.crimeDetails)
 								dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=add_details;cdataid=[c.dataId]'>\[+\]</A></td>"
 							else
@@ -850,6 +853,12 @@ What a mess.*/
 								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
 									return
 								GLOB.data_core.removeCrime(active1.fields["id"],href_list["cdataid"])
+					if("crim_serve")
+						if(istype(active1, /datum/data/record))
+							if(href_list["cdataid"])
+								if(!canUseSecurityRecordsConsole(usr, "delete", null, a2))
+									return
+								GLOB.data_core.serveCrime(active1.fields["id"],href_list["cdataid"])
 					if("add_details")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
