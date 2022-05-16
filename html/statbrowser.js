@@ -420,27 +420,21 @@ function remove_interviews() {
 	checkStatusTab();
 }
 
-function iconError() {
-	var that = this;
-	if(that === undefined) {
-		return;
-	}
-	if(current_tab != turfname) {
-		return;
-	}
+function iconError(e) {
 	setTimeout(function () {
-		var current_attempts = Number(that.getAttribute("data-attempts")) || 0
-		if (!current_attempts)
-			that.id = 1;
-		if (current_attempts > imageRetryLimit)
+		var node = e.target;
+		var current_attempts = Number(node.getAttribute("data-attempts")) || 0
+		if (current_attempts > imageRetryLimit) {
 			return;
-		var src = that.src;
-		that.src = null;
-		that.src = src + '#' + current_attempts;
-		that.setAttribute("data-attempts", current_attempts + 1)
+		}
+		var src = node.src;
+		node.src = null;
+		node.src = src + '#' + current_attempts;
+		node.setAttribute("data-attempts", current_attempts + 1)
 		draw_listedturf();
 	}, imageRetryDelay);
 }
+
 function draw_listedturf() {
 	statcontentdiv.textContent = "";
 	var table = document.createElement("table");
@@ -451,11 +445,11 @@ function draw_listedturf() {
 			img.src = part[2];
 			img.id = part[1];
 			storedimages[part[1]] = part[2];
-			img.onerror = iconError
+			img.onerror = iconError;
 			table.appendChild(img);
 		} else {
 			var img = document.createElement("img");
-			img.onerror = iconError
+			img.onerror = iconError;
 			img.src = storedimages[part[1]];
 			img.id = part[1];
 			table.appendChild(img);
