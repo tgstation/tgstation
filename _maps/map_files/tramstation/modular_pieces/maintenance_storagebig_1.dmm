@@ -22,11 +22,11 @@
 "o" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Mining Construction Storage";
-	req_one_access_txt = "12"
+	name = "Mining Construction Storage"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "r" = (

@@ -487,7 +487,7 @@
 	if(!last_move || isspaceturf(oldLoc)) //if we didn't sucessfully move, or if our old location was a spaceturf.
 		return
 	var/obj/effect/decal/cleanable/blood/tracks/B = new(oldLoc)
-	B.add_blood_DNA(return_blood_DNA())
+	B.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	B.setDir(direct)
 	bloodiness--
 

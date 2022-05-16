@@ -559,3 +559,189 @@
   - bugfix: Mulligan now properly randomizes ethereal color
   zxaber:
   - bugfix: Ripley mechs can no longer toggle to their nonexistant air tank.
+2022-05-12:
+  GoblinBackwards:
+  - balance: Fireball no longer has a 3 tile wide hitbox.
+  GoldenAlpharex:
+  - refactor: Refactored how legs are rendered, using dynamically-generated masks
+      to avoid left legs always displaying over right ones, or right legs above left
+      ones.
+  JohnFulpWillard:
+  - rscdel: 'The following job cartridges have been deleted: Detective, Lawyer, Janitor,
+      Curator, Roboticist and Scientist (without sensor pack).'
+  - balance: The following tablet apps has had their storage space cost lowered Robocontrol
+      12 -> 6, Power monitor 9 -> 8, Budget ordering 20 -> 10, Power alarms 5 -> 4,
+      Science hub 16 -> 10.
+  - balance: You no longer need an MC Scanner part to use the tablet's remote signalling
+      device application.
+  - balance: Cartridges no longer let you run applications off of them, but you can
+      still download applications off of them. Additionally, applications that were
+      once on a roundstart cartridge (or were a program you had pre-Ntos PDAs) has
+      been moved to be downloaded onto your tablet roundstart.
+  - qol: The Eject Disk button on the tablet's UI has been moved to the very top to
+      not clutter your UI as much.
+  Melbert:
+  - bugfix: High blood pressure effect is now applied correctly by opioid addiction
+  - spellcheck: opioid is now also spelled correctly
+  - refactor: Jitterriness is now a status effect
+  - bugfix: The first stage of addiction now actually occurs.
+  RandomGamer123:
+  - spellcheck: Removes some erroneous "the" in some clown car messages
+  Son-of-Space:
+  - bugfix: varedited access reqs were removed from the service hallway on IceBox
+      so mapping helpers can function correctly
+  - bugfix: maintenance access returned to the library door on IceBox station
+  san7890:
+  - bugfix: Nanotrasen will no longer install two separate APCs in the prison wing
+      of IceBoxStation.
+2022-05-13:
+  Ebb-Real:
+  - imageadd: Turned vapes into GAGS making them recolorable from vendors.
+  - imagedel: Removed the massive ammount of old icons for vapes.
+  Ghilker:
+  - bugfix: 'fix delimber anomaly from round removing you and other griefs remove:
+      delimber anomaly doesn''t change your organs anymore'
+  Guillaume Prata:
+  - qol: Removed Sutures/Ointment from the list of items you can hold in the exoslot
+      of your medical wintercoat as there is basically no reason for someone to carry
+      them on that slot and they kept getting placed there by the inventory shortcuts.
+  JohnFulpWillard:
+  - bugfix: Cult's antag UI now works from the start, rather than having to close
+      and reopen the tab to see your objectives.
+  - bugfix: Constable helmets no longer cause your hair to mysteriously disappear
+      when wearing one.
+  - bugfix: Jobs that are in several departments (like HoP, who is charged for Supply
+      but not Service) won't get charged lathe tax for any departments they are in.
+  MacBlaze1:
+  - bugfix: fixed dizziness causing hard crashes
+  Son-of-Space:
+  - bugfix: Realigns the DeltaStation holodeck to fit universal templates
+  - bugfix: It is no longer possible to access cargo through maintenance without appropriate
+      access on MetaStation
+  dragomagol:
+  - bugfix: non-cultists can now enter the pride ruin
+  san7890:
+  - bugfix: On IceBoxStation, Ice Moon Ruins will no longer vent out all their atmospherics
+      out the top of the map, since they magically now have ceilings.
+  - rscadd: 'However, this dark magick to give Ice Moon Ruins ceilings come at a cost:
+      avalanches over certain chasms are now much more likely, and can decimate certain
+      infrastructure. Nanotrasen has ensured that anything vital shouldn''t be impacted
+      by this, but do expect to see certain "unmaintained" catwalk sections be swept
+      up in an avalanche of sorts.'
+  timothymtorres:
+  - qol: Add randomized lockers, reagent tanks, and atmospherics equipment to Meta
+      maint.
+  - bugfix: Fix ordnance lab having exposed windows peeping into maint.  These have
+      been replaced with rwalls.
+  - bugfix: Fix wizard modsuit not having antimagic protection
+  wesoda25:
+  - qol: ethereals can now press the ghost button to cancel crystallization and permanently
+      vacate their body
+2022-05-14:
+  Crumpaloo - Main Sprites, PestoVerde322 - Soda Cans, Vending Machines and Posters, ErdinyoBarboza - PR and Small Fixes:
+  - imageadd: All drinks and bottles have been resprited
+  Guillaume Prata:
+  - bugfix: Surgery tools will now give silver back when recycled.
+  - bugfix: Whistles are small now. Rejoice not having to carry a whistle that was
+      the size of a bucket while trying to be the referee for a match.
+  - balance: Tier 2 tools (Jaws of life/Laser scalpel/Experimental welder) are changed
+      from Small to Medium sized so now you can't carry 49 Jaws of life in your backpack.
+  JohnFulpWillard:
+  - bugfix: The Captain's PDA now works, and their cartridge now spawns in their locker.
+  - balance: CPU, Sensor and Identify hardwares have all been removed from modular
+      PCs, this means AtmoZphere can run regardless of hardware, and running programs/updating
+      your PDA info, is no longer tied to hardware either.
+  - bugfix: Cook's CQC now properly works in the assigned areas outside the kitchen.
+  - bugfix: Cooks now properly get their Cook mail instead of just money.
+  - bugfix: Mapping configs can now once again set job position slots (and fully remove
+      jobs from maps that don't support them).
+  - balance: Mini-fridges can now hold slightly more things.
+  - bugfix: The new cult altar can't be spammed anymore.
+  Melbert:
+  - bugfix: Fixes some wonky vote formatting
+  - balance: Central Command's agency of supernatural structures have made it much
+      less likely for you to come across ancient altars
+  SmArtKar:
+  - bugfix: You can no longer use staff of storms to cheese the hell out of lavaland
+      bosses
+  Son-of-Space:
+  - bugfix: Fixed several inconsistent or niche access requirements on TramStation
+  - qol: Replaced all access requirement vars on doors with mapping helpers on TramStation
+  - bugfix: KiloStation maintenance airlock in EVA is properly named
+  - bugfix: Fixed several inconsistent or niche access requirements on DeltaStation
+  - qol: Replaced all access requirement vars on doors with mapping helpers on DeltaStation
+  Sylphet:
+  - bugfix: removes extra air alarm in bar maint
+  dragomagol:
+  - code_imp: pod cloning logging is now in investigate botany
+  fippe:
+  - bugfix: Botany and Service firelocks in Icebox moved around to stop fire alarm
+      spam
+  magatsuchi:
+  - bugfix: fixes broken admin ticket links
+2022-05-15:
+  FlamingCheese:
+  - bugfix: Removed that one firelock in icebox xenobio that caused the fire alarm
+      to trigger on roundstart
+  JohnFulpWillard:
+  - bugfix: There is now only one Tom in Deltastation permabrig.
+  - bugfix: Icebox's vault now properly has access requirements.
+  PestoVerde322:
+  - bugfix: fixed the icon behaviour of the manual valve
+  PositiveEntropy, Retlaw34, PacifistDalek:
+  - imageadd: Resprites the fire extinguishers once more!
+  RandomGamer123:
+  - bugfix: Biogenerators don't take 1% of a power cell to grind a single melon
+  SmArtKar:
+  - balance: Hierophant trophy now deals damage that it was supposed to deal.
+  Thunder12345:
+  - admin: Attack logs for stripping people and equipping items to them have been
+      reformatted to match all other attack logs, improving readability.
+  VioletN:
+  - bugfix: Fixed the two primary traitor objectives calculating reputation incorrectly
+      at round end
+  - bugfix: Fixed the reputation value of objectives having a misplaced decimal point
+      in the round end report
+  YakumoChen:
+  - spellcheck: Boritos flavours have more flavour!
+  d0sboots:
+  - bugfix: suit_storage slot now shows the item it has equipped
+  san7890:
+  - bugfix: If you ever chance upon Multi-Z Debug Station, rest assured that it now
+      uses the right kind of space.
+2022-05-16:
+  JohnFulpWillard:
+  - bugfix: Trying to fireman carry someone you can't fireman carry now properly makes
+      you not carry them permanently
+  MMMiracles:
+  - bugfix: Fixed a few areas on Tramstation where firelocks could enclose but had
+      no scrubber/vent.
+  - bugfix: The AI core cabling on Tramstation no longer loops between the solar panels
+      and the SMES.
+  MidoriWroth:
+  - qol: The Icebox kitchen was slightly expanded, giving it 3 more tiles of space
+      downstairs.
+  - bugfix: Finally gave the Icebox kitchen a condimaster.
+  OperativeLyn:
+  - bugfix: Removed a windoor inside of a wall in IceBox.
+  PositiveEntropy, Azlan, Axietheaxolotl:
+  - imageadd: Resprites all the Engineering Jumpsuits and Jumpskirts!
+  - imageadd: Resprites the firesuit!
+  - imageadd: Resprites all the hard hats!
+  - imageadd: Resprites the insulated gloves and Chief Engineer gloves!
+  - imageadd: Resprites the hazard vest!
+  SmArtKar:
+  - bugfix: Lightning bolt spell will give tesla shock immunity when granted by an
+      admin
+  Son-of-Space:
+  - bugfix: miners have general access to the cargo bay
+  - bugfix: Fixed several inconsistent or niche access requirements on TramStation's
+      modular pieces
+  - qol: Replaced all access requirement vars on doors with mapping helpers on TramStation's
+      modular pieces
+  castawaynont:
+  - bugfix: fixes the position of some paintings in the Curator's office on Icebox.
+  vincentiusvin:
+  - spellcheck: fixed an outdated quip about buying scipapers in the experiment status
+  xyc:
+  - bugfix: fixed the position of a few wallmounts in icebox's chapel.

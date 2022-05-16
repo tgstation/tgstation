@@ -1,0 +1,4 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - rscadd: "Tramstation now has crossing signals to help you not get hit by the tram (or jump in front of it at the last minute for comedy value)."

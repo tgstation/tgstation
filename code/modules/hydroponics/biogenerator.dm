@@ -167,20 +167,20 @@
 	if(processing)
 		to_chat(user, span_warning("The biogenerator is in the process of working."))
 		return
-	var/S = 0
+	var/processing_time = 0
 	for(var/obj/item/food/grown/I in contents)
-		S += 5
+		processing_time += 5
 		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
 			points += 1 * productivity
 		else
 			points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) * 10 * productivity
 		qdel(I)
-	if(S)
+	if(processing_time)
 		processing = TRUE
 		update_appearance()
 		playsound(loc, 'sound/machines/blender.ogg', 50, TRUE)
-		use_power(S * active_power_usage)
-		sleep(S + 15 / productivity)
+		use_power(processing_time * active_power_usage * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+		sleep(processing_time + 15 / productivity)
 		processing = FALSE
 		update_appearance()
 

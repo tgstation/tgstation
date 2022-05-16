@@ -268,7 +268,6 @@
 	atmos_init()
 	for(var/i in 1 to device_type)
 		var/obj/machinery/atmospherics/node = nodes[i]
-		node = nodes[1]
 		if(node)
 			node.atmos_init()
 			node.add_member(src)
