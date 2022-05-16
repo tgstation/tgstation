@@ -577,7 +577,7 @@ What a mess.*/
 </tr>"}
 						for(var/datum/data/crime/c in active2.fields["crim"])
 							P.info += "<tr><td>[c.crimeName]</td>"
-							p.info += "<td>[c.crimeStatus]</td>"
+							P.info += "<td>[c.crimeStatus]</td>"
 							P.info += "<td>[c.crimeDetails]</td>"
 							P.info += "<td>[c.author]</td>"
 							P.info += "<td>[c.time]</td>"
