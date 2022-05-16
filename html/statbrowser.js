@@ -425,6 +425,9 @@ function iconError() {
 	if(that === undefined) {
 		return;
 	}
+	if(current_tab != turfname) {
+		return;
+	}
 	setTimeout(function () {
 		var current_attempts = Number(that.getAttribute("data-attempts")) || 0
 		if (!current_attempts)

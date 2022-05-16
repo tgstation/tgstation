@@ -16,6 +16,8 @@ SUBSYSTEM_DEF(statpanels)
 	var/status_wait = 6
 	///how many subsystem fires between updates of the MC tab
 	var/mc_wait = 5
+	/// how many subsystem fires between updates of the turf examine tab
+	var/turf_wait = 2
 	///how many full runs this subsystem has completed. used for variable rate refreshes.
 	var/num_fires = 0
 
@@ -77,8 +79,9 @@ SUBSYSTEM_DEF(statpanels)
 				if(num_fires % default_wait == 0)
 					set_spells_tab(target, target_mob)
 
-			if(target_mob?.listed_turf && num_fires % default_wait == 0)
-				if(!target_mob.TurfAdjacent(target_mob.listed_turf))
+
+			if(target_mob?.listed_turf && num_fires % turf_wait == 0)
+				if(!target_mob.TurfAdjacent(target_mob.listed_turf) || isnull(target_mob.listed_turf))
 					target.stat_panel.send_message("remove_listedturf")
 					target_mob.listed_turf = null
 
