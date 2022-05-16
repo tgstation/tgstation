@@ -8649,8 +8649,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal)
 "cmi" = (
-/obj/structure/flora/ausbushes/stalkybush,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "cmj" = (
@@ -8682,9 +8682,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "cmG" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/rock/pile/style_random,
 /obj/machinery/light/floor,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
@@ -8767,8 +8767,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "cnK" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /obj/machinery/light/floor,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
@@ -10798,9 +10798,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "cRA" = (
-/obj/structure/flora/ausbushes/genericbush,
-/obj/structure/flora/ausbushes/pointybush,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/generic/style_random,
+/obj/structure/flora/bush/pointy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "cRQ" = (
@@ -13649,8 +13649,8 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library/abandoned)
 "dMy" = (
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "dMA" = (
@@ -18747,8 +18747,8 @@
 /turf/open/space,
 /area/station/solars/starboard/fore)
 "fju" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "fjx" = (
@@ -19971,9 +19971,9 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "fzw" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/rock/jungle,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "fzx" = (
@@ -29498,10 +29498,10 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "ihF" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/stalkybush,
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "ihN" = (
@@ -37803,10 +37803,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "kre" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -43620,10 +43620,10 @@
 	},
 /area/station/engineering/atmos/pumproom)
 "lTH" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/sunny/style_random,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -44568,8 +44568,8 @@
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
 "mhj" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/rock/jungle,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/rock/pile/jungle/style_random,
 /obj/machinery/light/floor,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
@@ -45161,8 +45161,8 @@
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "moY" = (
-/obj/structure/flora/tree/jungle,
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/tree/jungle/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "mpa" = (
@@ -55333,8 +55333,8 @@
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "pbk" = (
-/obj/structure/flora/ausbushes/reedbush,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/reed/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "pbm" = (
@@ -59838,8 +59838,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "qjr" = (
-/obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/flora/junglebush/c,
+/obj/structure/flora/bush/sunny/style_random,
+/obj/structure/flora/bush/jungle/c/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "qjy" = (
@@ -63210,8 +63210,8 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "rhK" = (
-/obj/structure/flora/ausbushes/stalkybush,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "rhV" = (
@@ -63941,8 +63941,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "rtT" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "rtX" = (
@@ -69013,9 +69013,9 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "sJj" = (
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/flora/ausbushes,
-/obj/structure/flora/junglebush,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/style_random,
+/obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "sJm" = (
@@ -76375,8 +76375,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "uCY" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/machinery/light/floor,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
@@ -76817,9 +76817,9 @@
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
 "uKD" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/rock,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "uKI" = (
@@ -79847,7 +79847,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "vys" = (
-/obj/structure/flora/junglebush/c,
+/obj/structure/flora/bush/jungle/c/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "vyF" = (
@@ -84153,9 +84153,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "wCc" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/large/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "wCd" = (
@@ -85644,9 +85644,9 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "xap" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/misc/grass,
 /area/station/hallway/primary/fore)
 "xav" = (

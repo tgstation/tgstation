@@ -38,12 +38,14 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)
 "z" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)
 "B" = (
@@ -81,9 +83,12 @@
 "M" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Water Closet";
-	req_one_access_txt = "12"
+	name = "Water Closet"
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)
 "N" = (
@@ -98,9 +103,11 @@
 /area/station/maintenance/port/fore)
 "S" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance/glass{
-	req_access_txt = "12"
+/obj/machinery/door/airlock/maintenance/glass,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/fore)
 "Y" = (

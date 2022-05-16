@@ -28,7 +28,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "aaK" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/security/prison/safe)
 "aaT" = (
@@ -1126,7 +1126,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage/gas)
 "atW" = (
-/obj/structure/flora/grass/green,
+/obj/structure/flora/grass/green/style_random,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "aue" = (
@@ -2259,9 +2259,8 @@
 /turf/open/floor/iron,
 /area/station/science/mixing)
 "aMO" = (
-/obj/machinery/vending/dinnerware,
 /obj/structure/sign/poster/random/directional/east,
-/turf/open/floor/iron/cafeteria,
+/turf/closed/wall,
 /area/station/service/kitchen)
 "aMP" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -3446,18 +3445,6 @@
 /obj/item/cultivator,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"bfd" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/iron/dark/side{
-	dir = 8
-	},
-/area/station/service/chapel)
 "bff" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
@@ -5711,7 +5698,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "bRb" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/security/prison/safe)
 "bRd" = (
@@ -6446,6 +6433,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "ccT" = (
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/service/chapel)
 "ccV" = (
@@ -8040,7 +8028,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
 "cCb" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "cCe" = (
@@ -8978,7 +8966,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "cSc" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/closet/crate{
 	name = "Le Caisee D'abeille"
 	},
@@ -9257,7 +9245,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/standard_air,
 /area/station/hallway/secondary/exit/departure_lounge)
 "cXl" = (
@@ -10787,7 +10775,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "dvi" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /obj/structure/railing,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
@@ -10820,7 +10808,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "dvY" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "dwv" = (
@@ -11863,7 +11851,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/misc/asteroid/snow/standard_air,
 /area/station/hallway/secondary/exit/departure_lounge)
 "dMH" = (
@@ -12685,7 +12673,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "ebd" = (
-/obj/structure/flora/rock/pile/icy,
+/obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "ebq" = (
@@ -13669,7 +13657,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "esF" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/aft)
 "esW" = (
@@ -16713,7 +16701,7 @@
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "fsm" = (
-/obj/structure/flora/rock/pile/icy,
+/obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "fsv" = (
@@ -17285,7 +17273,7 @@
 /area/station/maintenance/port/fore)
 "fDH" = (
 /obj/machinery/light/directional/north,
-/obj/structure/flora/rock/jungle,
+/obj/structure/flora/rock/pile/jungle/style_random,
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/medical/virology)
@@ -21962,13 +21950,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "gZK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/airalarm/directional/south,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/machinery/chem_master/condimaster,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "gZO" = (
@@ -22785,10 +22767,6 @@
 /obj/item/clothing/under/misc/burial,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
-"hlU" = (
-/obj/machinery/door/window/right/directional/east,
-/turf/closed/wall,
-/area/station/maintenance/starboard/lesser)
 "hmb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -25657,7 +25635,7 @@
 /turf/open/floor/iron,
 /area/station/science/misc_lab)
 "ijY" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "ijZ" = (
@@ -25771,7 +25749,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "ilZ" = (
@@ -27849,7 +27827,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "iUO" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "iUT" = (
@@ -28241,7 +28219,6 @@
 /area/station/security/courtroom)
 "jbu" = (
 /obj/structure/railing/corner,
-/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -28822,7 +28799,7 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
 "jlq" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/machinery/light/directional/east,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
@@ -29680,7 +29657,7 @@
 /turf/open/floor/plating,
 /area/mine/eva/lower)
 "jAv" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "jAO" = (
@@ -29731,8 +29708,8 @@
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "jBq" = (
-/obj/structure/flora/tree/jungle,
-/obj/structure/flora/junglebush,
+/obj/structure/flora/tree/jungle/style_random,
+/obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "jBw" = (
@@ -31046,7 +31023,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/obj/structure/flora/grass/green,
+/obj/structure/flora/grass/green/style_random,
 /turf/open/misc/asteroid/snow/standard_air,
 /area/station/hallway/secondary/exit/departure_lounge)
 "jUY" = (
@@ -31257,7 +31234,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "jZi" = (
@@ -32946,7 +32923,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/junglebush,
+/obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "kAZ" = (
@@ -33343,7 +33320,7 @@
 /turf/open/openspace,
 /area/station/science/xenobiology)
 "kHV" = (
-/obj/structure/flora/junglebush,
+/obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "kIi" = (
@@ -33866,7 +33843,7 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "kPw" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/aft)
 "kPC" = (
@@ -34634,7 +34611,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "lbf" = (
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/leavy/style_random,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/aft)
@@ -35267,7 +35244,7 @@
 /area/station/hallway/primary/central)
 "lkO" = (
 /obj/effect/landmark/event_spawn,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/aft)
 "lkS" = (
@@ -36268,7 +36245,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "lBD" = (
-/obj/structure/flora/grass/green,
+/obj/structure/flora/grass/green/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "lBR" = (
@@ -39371,7 +39348,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "mHw" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/aft)
 "mHB" = (
@@ -40200,7 +40177,7 @@
 	name = "Terrarium";
 	req_access_txt = "35"
 	},
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
@@ -41312,7 +41289,7 @@
 /area/station/security/prison)
 "npV" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/light/warm/directional/north,
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
@@ -41514,7 +41491,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "ntK" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "ntT" = (
@@ -45485,7 +45462,7 @@
 /area/station/commons/vacant_room/office)
 "oCT" = (
 /obj/item/instrument/harmonica,
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/grass,
 /area/station/security/prison/safe)
@@ -47203,7 +47180,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
 "pfw" = (
-/obj/structure/flora/grass/green,
+/obj/structure/flora/grass/green/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "pfO" = (
@@ -47581,7 +47558,7 @@
 /area/station/tcommsat/computer)
 "pnq" = (
 /obj/machinery/light/small/directional/north,
-/obj/structure/flora/grass/brown,
+/obj/structure/flora/grass/brown/style_random,
 /turf/open/misc/asteroid/snow/standard_air,
 /area/station/science/research)
 "pnA" = (
@@ -48449,7 +48426,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/disposal/incinerator)
 "pBN" = (
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass,
 /area/station/security/warden)
 "pBV" = (
@@ -51009,7 +50986,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
 /area/station/security/warden)
 "qsu" = (
@@ -52842,7 +52819,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "qXO" = (
-/obj/structure/flora/junglebush/c,
+/obj/structure/flora/bush/jungle/c/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "qXY" = (
@@ -58089,7 +58066,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore/greater)
 "sLr" = (
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner,
 /obj/item/throwing_star/toy,
@@ -58650,13 +58627,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/eva/lower)
 "sWj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "sWl" = (
@@ -59623,7 +59594,7 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "too" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/aft)
 "toq" = (
@@ -61570,6 +61541,10 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"tSt" = (
+/obj/structure/sign/painting/library,
+/turf/closed/wall,
+/area/station/service/library)
 "tSx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -62233,7 +62208,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "uer" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "ueu" = (
@@ -62651,8 +62626,8 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "ulj" = (
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/green,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/green/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "ulk" = (
@@ -63569,7 +63544,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "uBy" = (
-/obj/structure/flora/grass/brown,
+/obj/structure/flora/grass/brown/style_random,
 /obj/structure/railing{
 	dir = 9
 	},
@@ -63631,7 +63606,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "uCo" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /obj/item/shovel,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/aft)
@@ -65419,6 +65394,7 @@
 /area/station/maintenance/port/aft)
 "vhm" = (
 /obj/structure/sign/poster/random/directional/west,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "vhq" = (
@@ -66411,9 +66387,6 @@
 	},
 /area/station/security/brig)
 "vvJ" = (
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -70684,6 +70657,10 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/commons/lounge)
+"wMx" = (
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "wMz" = (
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	color = "#0000ff";
@@ -71812,7 +71789,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "xfZ" = (
-/obj/structure/flora/bush,
+/obj/structure/flora/bush/snow/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "xga" = (
@@ -71864,7 +71841,7 @@
 /turf/open/openspace,
 /area/station/service/hydroponics)
 "xgB" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /obj/structure/window/reinforced/spawner,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/station/maintenance/port/aft)
@@ -73538,7 +73515,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "xJF" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "xJG" = (
@@ -74408,7 +74385,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "xYw" = (
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/floor/grass,
 /area/station/maintenance/starboard/aft)
 "xYA" = (
@@ -74650,8 +74627,8 @@
 /area/station/maintenance/department/cargo)
 "ycj" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/flora/junglebush,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/jungle/a/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
@@ -179437,8 +179414,8 @@ fzK
 xqz
 ybm
 pXb
+ldY
 aMO
-cpY
 cpY
 tjo
 tjo
@@ -179694,7 +179671,7 @@ fzK
 kfG
 uZN
 pXb
-cpY
+gZK
 cpY
 tjo
 tjo
@@ -179950,9 +179927,9 @@ jFe
 fzK
 pqV
 pZE
+pXb
 sWj
 cpY
-xMq
 tjo
 tjo
 tjo
@@ -180207,9 +180184,9 @@ jre
 jre
 jre
 roc
-gZK
+pXb
+wMx
 cpY
-xMq
 xMq
 tjo
 tjo
@@ -181493,7 +181470,7 @@ aCo
 hMw
 jre
 xMq
-hlU
+jre
 nmg
 jre
 tjo
@@ -250874,7 +250851,7 @@ gUo
 gjc
 bLQ
 rzc
-hUD
+tSt
 hUD
 hUD
 hUD
@@ -252926,7 +252903,7 @@ lUC
 vhm
 oLG
 jbu
-bfd
+oxV
 oxV
 jbG
 gEE
