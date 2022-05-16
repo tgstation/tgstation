@@ -51,8 +51,11 @@
 /obj/item/clothing/neck/tie/greyscale/AltClick(mob/user)
 	. = ..()
 	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
-	// Heads of staff are experts at tying their ties.
 	var/tie_timer_actual = tie_timer
+	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
+	for(var/obj/structure/mirror/reflection in view(2, user))
+		tie_timer_actual = tie_timer_actual / 1.25
+	// Heads of staff are experts at tying their ties.
 	if(user.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 		tie_timer_actual = tie_timer_actual / 2
 	// Tie/Untie our tie
@@ -65,7 +68,7 @@
 		return
 	// Success!
 	is_tied = !is_tied
-	to_chat(user, span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"))
+	visible_message("[user] adjusts [user.p_their()] tie [HAS_TRAIT(user, TRAIT_BALD) ? "." : "and slicks back [user.p_their()] hair."]", span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"))
 	update_appearance(UPDATE_ICON)
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
