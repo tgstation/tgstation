@@ -205,6 +205,57 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	lower_left_corner_lift.create_multitile_platform(min_x, min_y, max_x, max_y, z)
 
+///returns the closest lift to the specified atom, prioritizing lifts on the same z level. used for comparing distance
+/datum/lift_master/proc/return_closest_platform_to(atom/comparison, allow_multiple_answers = FALSE)
+	if(!istype(comparison) || !comparison.z)
+		return FALSE
+
+	var/list/obj/structure/industrial_lift/candidate_platforms = list()
+
+	for(var/obj/structure/industrial_lift/platform as anything in lift_platforms)
+		if(platform.z == comparison.z)
+			candidate_platforms += platform
+
+	var/obj/structure/industrial_lift/winner = candidate_platforms[1]
+	var/winner_distance = get_dist(comparison, winner)
+
+	var/list/tied_winners = list(winner)
+
+	for(var/obj/structure/industrial_lift/platform_to_sort as anything in candidate_platforms)
+		var/platform_distance = get_dist(comparison, platform_to_sort)
+
+		if(platform_distance < winner_distance)
+			winner = platform_to_sort
+			winner_distance = platform_distance
+
+			if(allow_multiple_answers)
+				tied_winners = list(winner)
+
+		else if(platform_distance == winner_distance && allow_multiple_answers)
+			tied_winners += platform_to_sort
+
+	if(allow_multiple_answers)
+		return tied_winners
+
+	return winner
+
+///returns all industrial_lifts associated with this tram on the given z level or given atoms z level
+/datum/lift_master/proc/get_platforms_on_level(atom/atom_reference_OR_z_level_number)
+	var/z = atom_reference_OR_z_level_number
+	if(isatom(atom_reference_OR_z_level_number))
+		z = atom_reference_OR_z_level_number.z
+
+	if(!isnum(z) || z < 0 || z > world.maxz)
+		return null
+
+	var/list/platforms_in_z = list()
+
+	for(var/obj/structure/industrial_lift/lift_to_check as anything in lift_platforms)
+		if(lift_to_check.z)
+			platforms_in_z += lift_to_check
+
+	return platforms_in_z
+
 /**
  * Moves the lift UP or DOWN, this is what users invoke with their hand.
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
