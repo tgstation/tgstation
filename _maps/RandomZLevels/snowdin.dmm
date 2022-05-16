@@ -530,7 +530,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/dorm)
 "bP" = (
-/obj/structure/flora/tree/pine/xmas/presents,
+/obj/structure/flora/tree/pine/xmas,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "bQ" = (
@@ -3783,6 +3783,10 @@
 	},
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/outside)
+"kt" = (
+/obj/item/clothing/head/santa,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/snowdin/outside)
 "ku" = (
 /turf/closed/wall/ice,
 /area/awaymission/snowdin/cave/mountain)
@@ -6895,7 +6899,7 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "tt" = (
-/mob/living/simple_animal/hostile/skeleton/templar,
+/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tu" = (
@@ -6972,6 +6976,10 @@
 /obj/machinery/light/small/broken/directional/east,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/post/cavern2)
+"up" = (
+/obj/effect/spawner/random/exotic/snow_gear,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/igloo)
 "ur" = (
 /obj/machinery/door/airlock{
 	name = "Private Quarters"
@@ -7162,8 +7170,7 @@
 	},
 /area/awaymission/snowdin/outside)
 "vi" = (
-/obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear_strong,
+/mob/living/simple_animal/hostile/skeleton/templar,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=82;plasma=24;TEMP=120";
 	temperature = 120
@@ -8822,6 +8829,7 @@
 /area/awaymission/snowdin/cave)
 "BM" = (
 /obj/structure/table/wood,
+/obj/item/knife/combat/bone,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "BN" = (
@@ -9017,7 +9025,6 @@
 	desc = "It's a storage unit for a Syndicate boarding party."
 	},
 /obj/effect/turf_decal/bot_white,
-/obj/item/gun/ballistic/automatic/pistol,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -9183,13 +9190,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "Ds" = (
-/obj/item/grenade/c4,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/snowdin/cave)
+/obj/structure/closet/crate/wooden,
+/turf/open/floor/plating/snowed/cavern,
+/area/awaymission/snowdin/cave/cavern)
 "Dv" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plating/snowed/smoothed,
@@ -9284,7 +9287,7 @@
 /area/awaymission/snowdin/cave)
 "Eb" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "Ed" = (
@@ -10126,6 +10129,7 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "HQ" = (
 /obj/effect/turf_decal/stripes/line,
+/mob/living/simple_animal/hostile/netherworld/migo,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -12858,13 +12862,12 @@
 /area/awaymission/snowdin/post/messhall)
 "TT" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "TW" = (
-/obj/structure/closet/crate/wooden,
-/obj/effect/spawner/random/exotic/antag_gear_strong,
+/mob/living/simple_animal/hostile/skeleton/plasmaminer,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "TY" = (
@@ -13054,6 +13057,10 @@
 /obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
+"Vd" = (
+/mob/living/simple_animal/hostile/netherworld/migo,
+/turf/open/floor/iron/white,
+/area/awaymission/snowdin/post/mining_main/robotics)
 "Ve" = (
 /mob/living/simple_animal/hostile/skeleton/plasmaminer,
 /turf/open/misc/asteroid/snow/ice,
@@ -13365,6 +13372,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main/mechbay)
+"Xb" = (
+/mob/living/simple_animal/hostile/skeleton/eskimo,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/post/mining_main)
 "Xd" = (
 /obj/item/stack/rods,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -24891,7 +24902,7 @@ GP
 Go
 HE
 Gq
-Gq
+Xb
 HW
 IS
 HV
@@ -34278,7 +34289,7 @@ Zy
 Zy
 Zy
 bP
-Zy
+kt
 eo
 eo
 eo
@@ -36116,7 +36127,7 @@ Aa
 Zy
 Zy
 Aa
-zD
+up
 zD
 zD
 AA
@@ -36410,7 +36421,7 @@ CC
 CL
 CW
 Di
-Ds
+Di
 Di
 CC
 ka
@@ -52976,7 +52987,7 @@ WN
 WN
 WN
 WN
-QP
+WN
 WN
 WN
 WN
@@ -53482,7 +53493,7 @@ gc
 gV
 gc
 gc
-gc
+vi
 WN
 WN
 WN
@@ -53618,7 +53629,7 @@ eL
 eJ
 tp
 qi
-tt
+TW
 qi
 tp
 eJ
@@ -53977,7 +53988,7 @@ bh
 bh
 eJ
 eJ
-vi
+KP
 gc
 gc
 gV
@@ -54386,13 +54397,13 @@ eJ
 eJ
 tp
 qi
-tt
+TW
 tv
 qi
-tt
+TW
 qi
 tv
-tt
+TW
 qi
 tp
 eJ
@@ -54642,7 +54653,7 @@ eJ
 eJ
 eJ
 tp
-TW
+PH
 qi
 tp
 qi
@@ -55160,7 +55171,7 @@ eJ
 eJ
 tp
 qi
-tt
+TW
 qi
 tp
 eJ
@@ -57877,7 +57888,7 @@ eJ
 tp
 qi
 qi
-tt
+TW
 qi
 qi
 qi
@@ -58814,7 +58825,7 @@ GA
 GX
 Hu
 HL
-HL
+Vd
 IB
 Gx
 wM
@@ -59159,7 +59170,7 @@ eJ
 eJ
 eJ
 tp
-TW
+PH
 fD
 tp
 tp
@@ -60707,7 +60718,7 @@ eJ
 eJ
 UT
 WN
-WN
+Si
 eJ
 eJ
 eJ
@@ -67168,7 +67179,7 @@ fr
 qi
 tv
 qi
-tz
+TW
 tp
 qi
 tp
@@ -67377,7 +67388,7 @@ eJ
 gW
 tp
 PH
-PH
+Ds
 qi
 qi
 tp
@@ -67636,7 +67647,7 @@ tp
 qi
 tz
 qi
-tt
+TW
 qi
 qi
 qi
@@ -67884,7 +67895,7 @@ tk
 ox
 eJ
 tp
-TW
+PH
 fD
 tp
 PH
@@ -68454,7 +68465,7 @@ eJ
 tp
 tz
 qi
-TW
+PH
 tp
 eJ
 eJ
@@ -68655,7 +68666,7 @@ eJ
 eJ
 eJ
 tp
-tt
+tz
 qi
 tp
 tv
