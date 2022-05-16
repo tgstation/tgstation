@@ -35,6 +35,13 @@
 		if(istype(A, /area/station/service/kitchen))
 			for(var/turf/open/seymour in A)
 				seymour.set_light(1, 0.75)
+			if(prob(1) || SSevents.holidays?[APRIL_FOOLS])
+				for(var/obj/machinery/oven/steamed_hams in A)
+					steamed_hams.balloon_alert_to_viewers("oh ye gods!")
+					var/turf/ruined_roast = get_turf(steamed_hams)
+					ruined_roast.atmos_spawn_air("plasma=1000;TEMP=1000")
+					break // we only want one oven to catch on fire
+				
 
 /datum/round_event/aurora_caelus/tick()
 	if(activeFor % 5 == 0)
