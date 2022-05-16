@@ -53,14 +53,14 @@
 /datum/uplink_item/suits/chameleon
 	name = "MODsuit Chameleon Module"
 	desc = "A MODsuit module that lets the suit disguise itself as other objects."
-	item = /obj/item/mod/module/noslip
+	item = /obj/item/mod/module/chameleon
 	progression_minimum = 20 MINUTES
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/suits/plate_compression
 	name = "MODsuit Plate Compression Module"
-	desc = "A MODsuit module that lets the suit disguise itself as other objects."
-	item = /obj/item/mod/module/noslip
+	desc = "A MODsuit module that lets the suit compress into a smaller size. Not compatible with storage modules."
+	item = /obj/item/mod/module/plate_compression
 	progression_minimum = 20 MINUTES
 	cost = 2
 
