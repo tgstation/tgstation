@@ -581,16 +581,30 @@
 		/datum/reagent/toxin = -1)
 
 	virus_suspectibility = 0.5
-	resulting_atoms = list(/obj/effect/spawner/random/animal/frog = 1)
+	resulting_atoms = list(/obj/effect/spawner/random/animal/frog/vatgrown = 1)
 
-/datum/micro_organism/cell_line/frog/succeed_growing(obj/machinery/plumbing/growing_vat/vat) //TODO have this use the spawner somehow
-	var/list/frog_spawns = list(
-		/mob/living/simple_animal/hostile/retaliate/frog = 99,
-		/mob/living/simple_animal/hostile/retaliate/frog/rare = 1,
-	)
-	var/random_result = pick_weight(frog_spawns)
-	resulting_atoms = list()
-	resulting_atoms[random_result] = 1
+/datum/micro_organism/cell_line/frog/succeed_growing(obj/machinery/plumbing/growing_vat/vat) //TODO fix
+	var/list/spawner_resulting_atoms = list() //create a list to put the results of the spawners in
+
+	for(var/created_spawner in resulting_atoms) //for each spawner in the list
+		var/obj/effect/spawner/random/spawner = new created_spawner(get_turf(vat)) //create an instance of the spawner
+
+		for(var/x in 1 to resulting_atoms[created_spawner]) //for the count of resulting atoms for this spawner
+			var/lootspawn = pick_weight(fill_with_ones(spawner.loot)) //pick a random thing from the spawner loot list
+			while(islist(lootspawn))
+				lootspawn = pick_weight(fill_with_ones(lootspawn))
+
+			//spawner_resulting_atoms += lootspawn //add it to the new list
+			spawner_resulting_atoms[lootspawn] = x //add it to the new list
+
+	//fill_with_ones(spawner_resulting_atoms)
+	resulting_atoms = spawner_resulting_atoms
+	//TODO clean up created spawners
+
+	//test result:
+	//no message and it keeps spawning them
+	//same vat kept spawning the same type of them
+	//i guess it never managed to get to the parent proc
 	return ..()
 
 /datum/micro_organism/cell_line/walking_mushroom

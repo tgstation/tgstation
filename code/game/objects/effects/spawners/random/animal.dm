@@ -9,3 +9,7 @@
 		/mob/living/simple_animal/hostile/retaliate/frog = 99,
 		/mob/living/simple_animal/hostile/retaliate/frog/rare = 1,
 	)
+
+/obj/effect/spawner/random/animal/frog/vatgrown
+	name = "vatgrown frog spawner"
+	spawn_on_init = FALSE
