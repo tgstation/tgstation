@@ -69,7 +69,7 @@
 
 	victim.log_message(message, LOG_ATTACK, color="blue")
 
-/// TODO:
+/// Logging for bombs detonating
 /proc/log_bomber(atom/user, details, atom/bomb, additional_details, message_admins = TRUE)
 	var/bomb_message = "[details][bomb ? " [bomb.name] at [AREACOORD(bomb)]": ""][additional_details ? " [additional_details]" : ""]."
 

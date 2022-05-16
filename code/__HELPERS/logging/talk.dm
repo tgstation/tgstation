@@ -1,5 +1,5 @@
 /**
- * Helper for logging chat messages or other logs with arbitrary inputs(e.g. announcements)
+ * Helper for logging chat messages or other logs with arbitrary inputs (e.g. announcements)
  *
  * This proc compiles a log string by prefixing the tag to the message
  * and suffixing what it was forced_by if anything
@@ -16,7 +16,17 @@
 	var/suffix = forced_by ? " FORCED by [forced_by]" : ""
 	log_message("[prefix][custom_say_emote ? "*[custom_say_emote]*, " : ""]\"[message]\"[suffix]", message_type, log_globally = log_globally)
 
-/// Helper for logging of messages with only one sender and receiver
+/// Logging for generic spoken messages
+/proc/log_say(text)
+	if (CONFIG_GET(flag/log_say))
+		WRITE_LOG(GLOB.world_game_log, "SAY: [text]")
+
+/// Logging for whispered messages
+/proc/log_whisper(text)
+	if (CONFIG_GET(flag/log_whisper))
+		WRITE_LOG(GLOB.world_game_log, "WHISPER: [text]")
+
+/// Helper for logging of messages with only one sender and receiver (i.e. mind links)
 /proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)
 	if(!tag)
 		stack_trace("Unspecified tag for private message")
@@ -26,6 +36,7 @@
 	if(source != target)
 		target.log_talk(message, LOG_VICTIM, tag = "[tag] from [key_name(source)]", log_globally = FALSE)
 
+/// Logging for speech taking place over comms, as well as tcomms equipment
 /proc/log_telecomms(text)
 	if (CONFIG_GET(flag/log_telecomms))
 		WRITE_LOG(GLOB.world_telecomms_log, "TCOMMS: [text]")

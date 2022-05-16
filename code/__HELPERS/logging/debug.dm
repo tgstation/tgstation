@@ -41,6 +41,10 @@
 /proc/log_sql(text)
 	WRITE_LOG(GLOB.sql_error_log, "SQL: [text]")
 
+/// Logging for world/Topic
+/proc/log_topic(text)
+	WRITE_LOG(GLOB.world_game_log, "TOPIC: [text]")
+
 /* Log to the logfile only. */
 /proc/log_runtime(text)
 	WRITE_LOG(GLOB.world_runtime_log, text)
