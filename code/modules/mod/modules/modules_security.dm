@@ -169,7 +169,6 @@
 	on_use()
 
 ///Holster - Instantly holsters any not huge gun.
-
 /obj/item/mod/module/holster
 	name = "MOD holster module"
 	desc = "Based off typical storage compartments, this system allows the suit to holster a \

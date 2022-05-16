@@ -233,6 +233,7 @@ Now, we want to override the on_use proc for our new effect. We want to make sur
 ```
 
 After this, we want to put our special code, a basic effect of healing all mobs nearby for their brain damage and creating a beam to them.
+
 ```dm
 /obj/item/mod/module/neuron_healer/on_use()
 	. = ..()
