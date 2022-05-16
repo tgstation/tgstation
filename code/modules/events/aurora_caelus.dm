@@ -36,12 +36,11 @@
 			for(var/turf/open/kitchen in A)
 				kitchen.set_light(1, 0.75)
 			if(prob(1) || SSevents.holidays?[APRIL_FOOLS])
-				var/obj/machinery/oven/albany_expression = locate() in A
-				if(albany_expression)
-					albany_expression.balloon_alert_to_viewers("oh egads!")
-					var/turf/ruined_roast = get_turf(albany_expression)
+				var/obj/machinery/oven/roast_ruiner = locate() in A
+				if(roast_ruiner)
+					roast_ruiner.balloon_alert_to_viewers("oh egads!")
+					var/turf/ruined_roast = get_turf(roast_ruiner)
 					ruined_roast.atmos_spawn_air("plasma=100;TEMP=1000")
-					break // we only want one oven to catch on fire
 				for(var/mob/living/carbon/human/seymour in GLOB.human_list)
 					if(seymour.mind && istype(seymour.mind.assigned_role, /datum/job/cook))
 						seymour.say("My roast is ruined!!!", forced = "ruined roast")
