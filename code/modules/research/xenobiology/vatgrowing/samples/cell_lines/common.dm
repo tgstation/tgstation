@@ -581,7 +581,17 @@
 		/datum/reagent/toxin = -1)
 
 	virus_suspectibility = 0.5
-	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/frog = 1)
+	resulting_atoms = list(/obj/effect/spawner/random/animal/frog = 1)
+
+/datum/micro_organism/cell_line/frog/succeed_growing(obj/machinery/plumbing/growing_vat/vat) //TODO have this use the spawner somehow
+	var/list/frog_spawns = list(
+		/mob/living/simple_animal/hostile/retaliate/frog = 99,
+		/mob/living/simple_animal/hostile/retaliate/frog/rare = 1,
+	)
+	var/random_result = pick_weight(frog_spawns)
+	resulting_atoms = list()
+	resulting_atoms[random_result] = 1
+	return ..()
 
 /datum/micro_organism/cell_line/walking_mushroom
 	desc = "motile fungal hyphae"
