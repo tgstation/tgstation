@@ -40874,6 +40874,10 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Service-Botany Bottom 2"
 	},
+/obj/machinery/button/door/directional/south{
+	name = "Botany Shutters Control";
+	id = botany_shutters
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "niN" = (
@@ -70097,6 +70101,14 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
+"wEl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "botany_shutters";
+	name = "botany shutters"
+	},
+/turf/open/floor/plating,
+/area/station/service/hydroponics)
 "wEs" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -172469,12 +172481,12 @@ chg
 iDt
 scw
 scw
-hmb
-hmb
-hmb
-hmb
-hmb
-hmb
+wEl
+wEl
+wEl
+wEl
+wEl
+wEl
 gjq
 gjq
 gjq
@@ -172725,14 +172737,14 @@ iDt
 rcY
 scw
 scw
-hmb
-hmb
+wEl
+wEl
 hlP
 ahI
 ahI
 boV
-hmb
-hmb
+wEl
+wEl
 gjq
 gjq
 gjq
@@ -172982,14 +172994,14 @@ iDt
 rcY
 scw
 xMq
-hmb
+wEl
 gbF
 eYX
 sCZ
 sCZ
 lmm
 sRc
-hmb
+wEl
 gjq
 gjq
 gjq
@@ -173246,8 +173258,8 @@ jwm
 pqx
 hml
 vkg
-hmb
-hmb
+wEl
+wEl
 gjq
 gjq
 ebX
@@ -173504,8 +173516,8 @@ irF
 rdd
 lmm
 boV
-hmb
-hmb
+wEl
+wEl
 iDt
 qau
 iDt
@@ -174533,7 +174545,7 @@ nHO
 pZN
 wxL
 pRx
-hmb
+wEl
 neM
 iDt
 scw
@@ -174790,7 +174802,7 @@ vAu
 tja
 aQj
 mKv
-hmb
+wEl
 neM
 iDt
 iDt
