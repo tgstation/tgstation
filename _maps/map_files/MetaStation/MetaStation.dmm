@@ -19759,7 +19759,7 @@
 /obj/item/clothing/accessory/waistcoat,
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/under/suit/red,
-/obj/item/clothing/neck/tie/black,
+/obj/item/clothing/neck/tie/greyscale/black,
 /obj/item/clothing/under/suit/black,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -37209,7 +37209,7 @@
 /obj/structure/rack,
 /obj/item/clothing/under/color/blue,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/neck/tie/blue,
+/obj/item/clothing/neck/tie/greyscale/blue,
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
@@ -42611,7 +42611,7 @@
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/neck/tie/red,
+/obj/item/clothing/neck/tie/greyscale/red,
 /obj/item/clothing/head/soft/red,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

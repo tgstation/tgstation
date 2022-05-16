@@ -20857,7 +20857,7 @@
 /area/station/commons/locker)
 "fLc" = (
 /obj/structure/table/wood,
-/obj/item/clothing/neck/tie/red,
+/obj/item/clothing/neck/tie/greyscale/red,
 /obj/item/clothing/head/that,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -24391,7 +24391,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/costume,
 /obj/effect/spawner/random/clothing/costume,
-/obj/item/clothing/neck/tie/black,
+/obj/item/clothing/neck/tie/greyscale/black,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},

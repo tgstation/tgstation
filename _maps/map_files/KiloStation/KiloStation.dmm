@@ -47300,7 +47300,7 @@
 	dir = 4
 	},
 /obj/item/storage/briefcase,
-/obj/item/clothing/neck/tie/red,
+/obj/item/clothing/neck/tie/greyscale/red,
 /obj/item/clothing/head/bowler{
 	pixel_y = 8
 	},
@@ -49934,10 +49934,10 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/under/rank/civilian/lawyer/black,
-/obj/item/clothing/neck/tie/black{
+/obj/item/clothing/neck/tie/greyscale/black{
 	pixel_x = 6
 	},
-/obj/item/clothing/neck/tie/red,
+/obj/item/clothing/neck/tie/greyscale/red,
 /obj/item/clothing/mask/animal/small/jackal,
 /obj/item/clothing/mask/animal/small/jackal,
 /obj/structure/spider/stickyweb,
@@ -78477,7 +78477,7 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/neck/tie/red,
+/obj/item/clothing/neck/tie/greyscale/red,
 /obj/item/clothing/head/bowler{
 	pixel_x = -6;
 	pixel_y = 6
