@@ -567,9 +567,9 @@
 		. = ..()
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
-	add_blood_DNA(from.return_blood_DNA())
-	add_fingerprint_list(from.return_fingerprints())
-	add_hiddenprint_list(from.return_hiddenprints())
+	add_blood_DNA(GET_ATOM_BLOOD_DNA(from))
+	add_fingerprint_list(GET_ATOM_FINGERPRINTS(from))
+	add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(from))
 	fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
 
