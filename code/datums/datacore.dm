@@ -106,15 +106,17 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
  */
 /datum/datacore/proc/serveCrime(id, cDataId)
 	for(var/datum/data/record/R in security)
-		if(R.fields["id"] == id)
-			var/list/crimes = R.fields["crim"]
-			for(var/datum/data/crime/crime in crimes)
-				if(crime.dataId == text2num(cDataId))
-					if(crime.crimeStatus == "Not Served")
-						crime.crimeStatus = "Served"
-					else
-						crime.crimeStatus = "Not Served"
-					return
+		if(R.fields["id"] != id)
+			continue
+		var/list/crimes = R.fields["crim"]
+		for(var/datum/data/crime/crime in crimes)
+			if(crime.dataId != text2num(cDataId))
+				continue
+			if(crime.crimeStatus == "Not Served")
+				crime.crimeStatus = "Served"
+			else
+				crime.crimeStatus = "Not Served"
+			return
 
 /**
  * Deletes crime from security record.
