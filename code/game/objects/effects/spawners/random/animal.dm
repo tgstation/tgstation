@@ -6,5 +6,6 @@
 /obj/effect/spawner/random/animal/frog
 	name = "frog spawner"
 	loot = list(
-		/mob/living/simple_animal/hostile/retaliate/frog = 100,
+		/mob/living/simple_animal/hostile/retaliate/frog = 99,
+		/mob/living/simple_animal/hostile/retaliate/frog/rare = 1,
 	)
