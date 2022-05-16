@@ -29842,6 +29842,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
+"jDs" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "botany_shutters";
+	name = "botany shutters"
+	},
+/turf/open/floor/plating,
+/area/station/service/hydroponics)
 "jDt" = (
 /obj/machinery/pdapainter/security,
 /turf/open/floor/wood/large,
@@ -40876,7 +40884,7 @@
 	},
 /obj/machinery/button/door/directional/south{
 	name = "Botany Shutters Control";
-	id = botany_shutters
+	id = "botany_shutters"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -70101,14 +70109,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
-"wEl" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "botany_shutters";
-	name = "botany shutters"
-	},
-/turf/open/floor/plating,
-/area/station/service/hydroponics)
 "wEs" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -172481,12 +172481,12 @@ chg
 iDt
 scw
 scw
-wEl
-wEl
-wEl
-wEl
-wEl
-wEl
+jDs
+jDs
+jDs
+jDs
+jDs
+jDs
 gjq
 gjq
 gjq
@@ -172737,14 +172737,14 @@ iDt
 rcY
 scw
 scw
-wEl
-wEl
+jDs
+jDs
 hlP
 ahI
 ahI
 boV
-wEl
-wEl
+jDs
+jDs
 gjq
 gjq
 gjq
@@ -172994,14 +172994,14 @@ iDt
 rcY
 scw
 xMq
-wEl
+jDs
 gbF
 eYX
 sCZ
 sCZ
 lmm
 sRc
-wEl
+jDs
 gjq
 gjq
 gjq
@@ -173258,8 +173258,8 @@ jwm
 pqx
 hml
 vkg
-wEl
-wEl
+jDs
+jDs
 gjq
 gjq
 ebX
@@ -173516,8 +173516,8 @@ irF
 rdd
 lmm
 boV
-wEl
-wEl
+jDs
+jDs
 iDt
 qau
 iDt
@@ -174545,7 +174545,7 @@ nHO
 pZN
 wxL
 pRx
-wEl
+jDs
 neM
 iDt
 scw
@@ -174802,7 +174802,7 @@ vAu
 tja
 aQj
 mKv
-wEl
+jDs
 neM
 iDt
 iDt
