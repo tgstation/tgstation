@@ -6,7 +6,7 @@
 	extended_desc = "Nanotrasen Internal Requisition Network interface for supply purchasing using a department budget account."
 	requires_ntnet = TRUE
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
-	size = 20
+	size = 10
 	tgui_id = "NtosCargo"
 	///Are you actually placing orders with it?
 	var/requestonly = TRUE

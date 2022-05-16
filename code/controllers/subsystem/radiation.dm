@@ -57,6 +57,23 @@ SUBSYSTEM_DEF(radiation)
 		if (current_insulation <= pulse_information.threshold)
 			continue
 
+		/// Perceived chance of target getting irradiated.
+		var/perceived_chance
+		/// Intensity variable which will describe the radiation pulse.
+		/// It is used by perceived intensity, which diminishes over range. The chance of the target getting irradiated is determined by perceived_intensity.
+		/// Intensity is calculated so that the chance of getting irradiated at half of the max range is the same as the chance parameter.
+		var/intensity
+		/// Diminishes over range. Used by perceived chance, which is the actual chance to get irradiated.
+		var/perceived_intensity
+
+		if(pulse_information.chance < 100) // Prevents log(0) runtime if chance is 100%
+			intensity = -log(1 - pulse_information.chance / 100) * (1 + pulse_information.max_range / 2) ** 2
+			perceived_intensity = intensity * INVERSE((1 + get_dist_euclidian(source, target)) ** 2) // Diminishes over range.
+			perceived_intensity *= (current_insulation - pulse_information.threshold) * INVERSE(1 - pulse_information.threshold) // Perceived intensity decreases as objects that absorb radiation block its trajectory.
+			perceived_chance = 100 * (1 - NUM_E ** -perceived_intensity)
+		else
+			perceived_chance = 100
+
 		var/irradiation_result = SEND_SIGNAL(target, COMSIG_IN_THRESHOLD_OF_IRRADIATION, pulse_information)
 		if (irradiation_result & CANCEL_IRRADIATION)
 			continue
@@ -65,7 +82,7 @@ SUBSYSTEM_DEF(radiation)
 			target.AddComponent(/datum/component/radiation_countdown, pulse_information.minimum_exposure_time)
 			continue
 
-		if (!prob(pulse_information.chance))
+		if (!prob(perceived_chance))
 			continue
 
 		if (irradiate_after_basic_checks(target))

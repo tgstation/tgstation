@@ -1,4 +1,0 @@
-author: "xyc"
-delete-after: True
-changes: 
-  - bugfix: "tram medbay maint won't sometimes get double stacked cables and piping"

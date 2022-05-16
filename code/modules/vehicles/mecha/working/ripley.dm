@@ -16,6 +16,7 @@
 		MECHA_ARMOR = 1,
 	)
 	wreckage = /obj/structure/mecha_wreckage/ripley
+	mech_type = EXOSUIT_MODULE_RIPLEY
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 	enclosed = FALSE //Normal ripley has an open cockpit design

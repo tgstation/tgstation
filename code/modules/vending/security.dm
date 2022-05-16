@@ -15,11 +15,11 @@
 		/obj/item/food/donut/plain = 12,
 		/obj/item/storage/box/evidence = 6,
 		/obj/item/flashlight/seclite = 4,
-		/obj/item/restraints/legcuffs/bola/energy = 7
+		/obj/item/restraints/legcuffs/bola/energy = 7,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
-		/obj/item/storage/fancy/donut_box = 2
+		/obj/item/storage/fancy/donut_box = 2,
 	)
 	premium = list(
 		/obj/item/storage/belt/security/webbing = 5,
@@ -28,7 +28,7 @@
 		/obj/item/clothing/suit/armor/vest/blueshirt = 1,
 		/obj/item/clothing/gloves/tackler = 5,
 		/obj/item/grenade/stingbang = 1,
-		/obj/item/watertank/pepperspray = 2
+		/obj/item/watertank/pepperspray = 2,
 	)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_CREW

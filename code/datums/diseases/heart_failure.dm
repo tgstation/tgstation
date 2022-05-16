@@ -6,7 +6,7 @@
 	cure_text = "Heart replacement surgery to cure. Defibrillation (or as a last resort, uncontrolled electric shocking) may also be effective after the onset of cardiac arrest. Penthrite can also mitigate cardiac arrest."
 	agent = "Shitty Heart"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 1
+	spreading_modifier = 1
 	desc = "If left untreated the subject will die!"
 	severity = "Dangerous!"
 	disease_flags = CAN_CARRY|CAN_RESIST
@@ -37,7 +37,7 @@
 				to_chat(affected_mob, span_warning("You feel [pick("discomfort", "pressure", "a burning sensation", "pain")] in your chest."))
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, span_warning("You feel dizzy."))
-				affected_mob.add_confusion(6)
+				affected_mob.adjust_timed_status_effect(6 SECONDS, /datum/status_effect/confusion)
 			if(DT_PROB(1.5, delta_time))
 				to_chat(affected_mob, span_warning("You feel [pick("full", "nauseated", "sweaty", "weak", "tired", "short on breath", "uneasy")]."))
 		if(3 to 4)
@@ -53,7 +53,7 @@
 				affected_mob.losebreath += 4
 			if(DT_PROB(1.5, delta_time))
 				to_chat(affected_mob, span_danger("You feel very weak and dizzy..."))
-				affected_mob.add_confusion(8)
+				affected_mob.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/confusion)
 				affected_mob.adjustStaminaLoss(40, FALSE)
 				affected_mob.emote("cough")
 		if(5)

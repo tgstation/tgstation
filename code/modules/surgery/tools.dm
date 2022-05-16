@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	inhand_icon_state = "clamps"
-	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
+	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000, /datum/material/silver = 3000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -26,7 +26,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	inhand_icon_state = "clamps"
-	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
+	custom_materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -48,7 +48,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	inhand_icon_state = "cautery"
-	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
+	custom_materials = list(/datum/material/iron = 2500, /datum/material/glass = 750, /datum/material/silver = 1250)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -71,6 +71,7 @@
 	icon_state = "e_cautery"
 	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
 	hitsound = 'sound/items/welder.ogg'
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	light_system = MOVABLE_LIGHT
 	light_range = 1
@@ -111,7 +112,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
+	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/silver = 5000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
@@ -157,7 +158,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=1000)
+	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/silver = 2000)
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -197,7 +198,7 @@
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=1000)
+	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/silver = 5000)
 	attack_verb_continuous = list("attacks", "slashes", "saws", "cuts")
 	attack_verb_simple = list("attack", "slash", "saw", "cut")
 	sharpness = SHARP_EDGED
@@ -267,6 +268,7 @@
 	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver = 2000, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 	light_system = MOVABLE_LIGHT
 	light_range = 1
@@ -314,6 +316,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium = 5000)
 	icon_state = "adv_retractor"
+	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
 
 /obj/item/retractor/advanced/Initialize(mapload)
@@ -399,7 +402,7 @@
 	playsound(get_turf(patient), 'sound/items/ratchet.ogg', 20, TRUE)
 	if(patient.stat >= UNCONSCIOUS || HAS_TRAIT(patient, TRAIT_INCAPACITATED)) //if you're incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly line up a snip
 		amputation_speed_mod *= 0.5
-	if(patient.stat != DEAD && patient.jitteriness) //jittering will make it harder to secure the shears, even if you can't otherwise move
+	if(patient.stat != DEAD && patient.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to secure the shears, even if you can't otherwise move
 		amputation_speed_mod *= 1.5 //15*0.5*1.5=11.25, so staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to snip their head off, but staminacritting someone who isn't jittering will
 
 	if(do_after(user,  toolspeed * 15 SECONDS * amputation_speed_mod, target = patient))
@@ -430,7 +433,7 @@
 	icon_state = "bone setter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
+	custom_materials = list(/datum/material/iron = 5000,  /datum/material/glass = 2500, /datum/material/silver = 2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_SMALL

@@ -82,7 +82,7 @@
 	if(!affecting) //missing limb? we select the first bodypart (you can never have zero, because of chest)
 		affecting = bodyparts[1]
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
-	send_item_attack_message(I, user, parse_zone(affecting.body_zone), affecting)
+	send_item_attack_message(I, user, affecting.plaintext_zone, affecting)
 	if(I.force)
 		var/attack_direction = get_dir(user, src)
 		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction)
@@ -385,95 +385,99 @@
 	if(should_stun)
 		Paralyze(40)
 	//Jitter and other fluff.
-	jitteriness += 1000
-	do_jitter_animation(jitteriness)
+	do_jitter_animation(300)
+	adjust_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
 	adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/stutter)
-	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 20)
+	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 2 SECONDS)
 	return shock_damage
 
-///Called slightly after electrocute act to reduce jittering and apply a secondary stun.
+///Called slightly after electrocute act to apply a secondary stun.
 /mob/living/carbon/proc/secondary_shock(should_stun)
-	jitteriness = max(jitteriness - 990, 10)
 	if(should_stun)
 		Paralyze(60)
 
-/mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
+/mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
 	if(on_fire)
-		to_chat(M, span_warning("You can't put [p_them()] out with just your bare hands!"))
+		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
 
-	if(M == src && check_self_for_injuries())
+	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_HELP_ACT, helper) & COMPONENT_BLOCK_HELP_ACT)
+		return
+
+	if(helper == src)
+		check_self_for_injuries()
 		return
 
 	if(body_position == LYING_DOWN)
 		if(buckled)
-			to_chat(M, span_warning("You need to unbuckle [src] first to do that!"))
+			to_chat(helper, span_warning("You need to unbuckle [src] first to do that!"))
 			return
-		M.visible_message(span_notice("[M] shakes [src] trying to get [p_them()] up!"), \
-						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(M, src))
-		to_chat(M, span_notice("You shake [src] trying to pick [p_them()] up!"))
-		to_chat(src, span_notice("[M] shakes you to get you up!"))
-	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
-		M.visible_message(span_notice("[M] gives [src] a pat on the head to make [p_them()] feel better!"), \
-					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(M, src))
-		to_chat(M, span_notice("You give [src] a pat on the head to make [p_them()] feel better!"))
-		to_chat(src, span_notice("[M] gives you a pat on the head to make you feel better! "))
+		helper.visible_message(span_notice("[helper] shakes [src] trying to get [p_them()] up!"), \
+						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+		to_chat(helper, span_notice("You shake [src] trying to pick [p_them()] up!"))
+		to_chat(src, span_notice("[helper] shakes you to get you up!"))
+	else if(check_zone(helper.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
+		helper.visible_message(span_notice("[helper] gives [src] a pat on the head to make [p_them()] feel better!"), \
+					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+		to_chat(helper, span_notice("You give [src] a pat on the head to make [p_them()] feel better!"))
+		to_chat(src, span_notice("[helper] gives you a pat on the head to make you feel better! "))
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
-			to_chat(M, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
+			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
 
-	else if ((M.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.getorgan(/obj/item/organ/tail)))
-		M.visible_message(span_notice("[M] pulls on [src]'s tail!"), \
-					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(M, src))
-		to_chat(M, span_notice("You pull on [src]'s tail!"))
-		to_chat(src, span_notice("[M] pulls on your tail!"))
+	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.getorgan(/obj/item/organ/tail)))
+		helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
+					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+		to_chat(helper, span_notice("You pull on [src]'s tail!"))
+		to_chat(src, span_notice("[helper] pulls on your tail!"))
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH)) //How dare they!
-			to_chat(M, span_warning("[src] makes a grumbling noise as you pull on [p_their()] tail."))
+			to_chat(helper, span_warning("[src] makes a grumbling noise as you pull on [p_their()] tail."))
 		else
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "tailpulled", /datum/mood_event/tailpulled)
 
 	else
-		M.visible_message(span_notice("[M] hugs [src] to make [p_them()] feel better!"), \
-					null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(M, src))
-		to_chat(M, span_notice("You hug [src] to make [p_them()] feel better!"))
-		to_chat(src, span_notice("[M] hugs you to make you feel better!"))
+		helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
+					null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+		to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
+		to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
 
 		// Warm them up with hugs
-		share_bodytemperature(M)
+		share_bodytemperature(helper)
 
 		// No moodlets for people who hate touches
 		if(!HAS_TRAIT(src, TRAIT_BADTOUCH))
-			if(bodytemperature > M.bodytemperature)
-				if(!HAS_TRAIT(M, TRAIT_BADTOUCH))
-					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)
+			if(bodytemperature > helper.bodytemperature)
+				if(!HAS_TRAIT(helper, TRAIT_BADTOUCH))
+					SEND_SIGNAL(helper, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug) // Reciver always gets a mood for being hugged
 			else
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, M) // You got a warm hug
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, helper) // You got a warm hug
 
 		// Let people know if they hugged someone really warm or really cold
-		if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-			to_chat(src, span_warning("It feels like [M] is over heating as [M.p_they()] hug[M.p_s()] you."))
-		else if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-			to_chat(src, span_warning("It feels like [M] is freezing as [M.p_they()] hug[M.p_s()] you."))
+		if(helper.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+			to_chat(src, span_warning("It feels like [helper] is over heating as [helper.p_they()] hug[helper.p_s()] you."))
+		else if(helper.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			to_chat(src, span_warning("It feels like [helper] is freezing as [helper.p_they()] hug[helper.p_s()] you."))
 
 		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-			to_chat(M, span_warning("It feels like [src] is over heating as you hug [p_them()]."))
+			to_chat(helper, span_warning("It feels like [src] is over heating as you hug [p_them()]."))
 		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-			to_chat(M, span_warning("It feels like [src] is freezing as you hug [p_them()]."))
+			to_chat(helper, span_warning("It feels like [src] is freezing as you hug [p_them()]."))
 
-		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
-			var/datum/component/mood/hugger_mood = M.GetComponent(/datum/component/mood)
+		if(HAS_TRAIT(helper, TRAIT_FRIENDLY))
+			var/datum/component/mood/hugger_mood = helper.GetComponent(/datum/component/mood)
 			if (hugger_mood.sanity >= SANITY_GREAT)
 				new /obj/effect/temp_visual/heart(loc)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, helper)
 			else if (hugger_mood.sanity >= SANITY_DISTURBED)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, helper)
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
-			to_chat(M, span_warning("[src] looks visibly upset as you hug [p_them()]."))
+			to_chat(helper, span_warning("[src] looks visibly upset as you hug [p_them()]."))
 
-	SEND_SIGNAL(src, COMSIG_CARBON_HUGGED, M)
-	SEND_SIGNAL(M, COMSIG_CARBON_HUG, M, src)
+	SEND_SIGNAL(src, COMSIG_CARBON_HELP_ACT, helper)
+	SEND_SIGNAL(helper, COMSIG_CARBON_HELPED, src)
+
 	adjust_status_effects_on_shake_up()
 	set_resting(FALSE)
 	if(body_position != STANDING_UP && !resting && !buckled && !HAS_TRAIT(src, TRAIT_FLOORED))
