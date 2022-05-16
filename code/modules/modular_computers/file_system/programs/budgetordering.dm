@@ -68,6 +68,7 @@
 	. = ..()
 	var/list/data = get_header_data()
 	data["location"] = SSshuttle.supply.getStatusText()
+	data["department"] = "Cargo"
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	var/obj/item/card/id/id_card = card_slot?.GetID()
@@ -82,11 +83,8 @@
 		if(ACCESS_HEADS in id_card.access)
 			// If buyer is a departmental budget, replaces "Cargo" with that budget - we're not using the cargo budget here
 			data["department"] = addtext(buyer.account_holder, " Requisitions")
-		else
-			data["department"] = "Cargo"
 	else
 		requestonly = TRUE
-		data["department"] = "Cargo"
 	if(buyer)
 		data["points"] = buyer.account_balance
 
