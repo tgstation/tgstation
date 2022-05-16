@@ -78138,10 +78138,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
-"vaX" = (
-/mob/living/simple_animal/mouse/brown/tom,
-/turf/open/floor/iron,
-/area/station/security/prison)
 "vbf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -146180,7 +146176,7 @@ aaa
 aaa
 hLe
 fPP
-vaX
+vxr
 oQD
 vxr
 fZl

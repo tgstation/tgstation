@@ -1,4 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - bugfix: "KiloStation maintenance airlock in EVA is properly named"
