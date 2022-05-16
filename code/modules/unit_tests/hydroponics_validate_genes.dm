@@ -27,6 +27,5 @@
 				if(trait_gene.type != other_trait_gene.type)
 					continue
 				TEST_FAIL("[instantiated_seed] - [instantiated_seed.type] has a duplicate gene. (Duped gene: [trait_gene] - [trait_gene.type])")
-				break
 
 		qdel(instantiated_seed)
