@@ -2259,9 +2259,8 @@
 /turf/open/floor/iron,
 /area/station/science/mixing)
 "aMO" = (
-/obj/machinery/vending/dinnerware,
 /obj/structure/sign/poster/random/directional/east,
-/turf/open/floor/iron/cafeteria,
+/turf/closed/wall,
 /area/station/service/kitchen)
 "aMP" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -3446,18 +3445,6 @@
 /obj/item/cultivator,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"bfd" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/iron/dark/side{
-	dir = 8
-	},
-/area/station/service/chapel)
 "bff" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
@@ -6446,6 +6433,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "ccT" = (
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/service/chapel)
 "ccV" = (
@@ -21962,13 +21950,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "gZK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/airalarm/directional/south,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/machinery/chem_master/condimaster,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "gZO" = (
@@ -22785,10 +22767,6 @@
 /obj/item/clothing/under/misc/burial,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
-"hlU" = (
-/obj/machinery/door/window/right/directional/east,
-/turf/closed/wall,
-/area/station/maintenance/starboard/lesser)
 "hmb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -28241,7 +28219,6 @@
 /area/station/security/courtroom)
 "jbu" = (
 /obj/structure/railing/corner,
-/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -58650,13 +58627,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/eva/lower)
 "sWj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "sWl" = (
@@ -61570,6 +61541,10 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"tSt" = (
+/obj/structure/sign/painting/library,
+/turf/closed/wall,
+/area/station/service/library)
 "tSx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -65419,6 +65394,7 @@
 /area/station/maintenance/port/aft)
 "vhm" = (
 /obj/structure/sign/poster/random/directional/west,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "vhq" = (
@@ -66411,9 +66387,6 @@
 	},
 /area/station/security/brig)
 "vvJ" = (
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -70684,6 +70657,10 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/commons/lounge)
+"wMx" = (
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "wMz" = (
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	color = "#0000ff";
@@ -73334,6 +73311,7 @@
 /obj/effect/landmark/navigate_destination,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/supply/vault,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "xFI" = (
@@ -179436,8 +179414,8 @@ fzK
 xqz
 ybm
 pXb
+ldY
 aMO
-cpY
 cpY
 tjo
 tjo
@@ -179693,7 +179671,7 @@ fzK
 kfG
 uZN
 pXb
-cpY
+gZK
 cpY
 tjo
 tjo
@@ -179949,9 +179927,9 @@ jFe
 fzK
 pqV
 pZE
+pXb
 sWj
 cpY
-xMq
 tjo
 tjo
 tjo
@@ -180206,9 +180184,9 @@ jre
 jre
 jre
 roc
-gZK
+pXb
+wMx
 cpY
-xMq
 xMq
 tjo
 tjo
@@ -181492,7 +181470,7 @@ aCo
 hMw
 jre
 xMq
-hlU
+jre
 nmg
 jre
 tjo
@@ -250873,7 +250851,7 @@ gUo
 gjc
 bLQ
 rzc
-hUD
+tSt
 hUD
 hUD
 hUD
@@ -252925,7 +252903,7 @@ lUC
 vhm
 oLG
 jbu
-bfd
+oxV
 oxV
 jbG
 gEE
