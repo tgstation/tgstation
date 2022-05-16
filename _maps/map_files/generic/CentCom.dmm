@@ -123,8 +123,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "az" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "aA" = (
@@ -279,7 +279,7 @@
 /turf/open/floor/iron/smooth,
 /area/syndicate_mothership/control)
 "aU" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/basalt/wasteland{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -366,7 +366,7 @@
 	},
 /area/tdome/observation)
 "bh" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -457,7 +457,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "bw" = (
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "bx" = (
@@ -466,8 +466,8 @@
 	},
 /area/tdome/observation)
 "by" = (
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "bz" = (
@@ -568,11 +568,11 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "bM" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/tdome/administration)
 "bN" = (
@@ -660,15 +660,15 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership)
 "bZ" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "ca" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/machinery/light/directional/west,
 /turf/open/misc/asteroid,
 /area/tdome/administration)
@@ -803,7 +803,7 @@
 /turf/open/floor/iron,
 /area/centcom/courtroom)
 "cu" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -1174,7 +1174,7 @@
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
 "dv" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "dw" = (
@@ -1544,8 +1544,8 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "ex" = (
@@ -1620,9 +1620,9 @@
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
 "eH" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	icon_state = "asteroid5";
 	name = "plating"
@@ -1642,11 +1642,11 @@
 /turf/open/floor/wood/large,
 /area/centcom/holding)
 "eK" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/machinery/light/directional/south,
 /turf/open/misc/asteroid,
 /area/centcom/evacuation)
@@ -2084,12 +2084,12 @@
 /turf/open/space/basic,
 /area/space)
 "ga" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /obj/machinery/light/directional/south,
 /turf/open/floor/grass,
 /area/tdome/administration)
@@ -2124,8 +2124,8 @@
 /turf/open/floor/sepia,
 /area/centcom/holding)
 "gf" = (
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "gh" = (
@@ -2250,7 +2250,7 @@
 /turf/open/floor/iron/white,
 /area/tdome/observation)
 "gz" = (
-/obj/structure/flora/rock/icy{
+/obj/structure/flora/rock/icy/style_random{
 	pixel_x = -7
 	},
 /obj/effect/light_emitter{
@@ -2414,7 +2414,7 @@
 /turf/open/floor/iron,
 /area/centcom/armory)
 "gZ" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "hb" = (
@@ -2503,11 +2503,11 @@
 /turf/open/lava/plasma/ice_moon,
 /area/syndicate_mothership/control)
 "hm" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/machinery/light/directional/north,
 /turf/open/misc/asteroid,
 /area/centcom/evacuation)
@@ -2686,9 +2686,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "hG" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -2779,7 +2779,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "hS" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "hT" = (
@@ -3001,8 +3001,8 @@
 /turf/open/floor/iron,
 /area/centcom/prison)
 "iA" = (
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -4144,9 +4144,9 @@
 /turf/open/floor/iron,
 /area/centcom/fore)
 "lN" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -4542,11 +4542,11 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/syndicate_mothership/control)
 "mQ" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/centcom/control)
 "mR" = (
@@ -4749,8 +4749,8 @@
 /turf/open/floor/carpet,
 /area/syndicate_mothership/control)
 "nu" = (
-/obj/structure/flora/grass/both,
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/grass/both/style_random,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "nw" = (
@@ -5278,8 +5278,8 @@
 	},
 /area/syndicate_mothership/control)
 "oT" = (
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/both/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -5486,7 +5486,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "py" = (
@@ -5584,11 +5584,11 @@
 /turf/open/floor/iron,
 /area/tdome/observation)
 "pO" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/tdome/observation)
 "pQ" = (
@@ -5829,9 +5829,9 @@
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
 "qw" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	icon_state = "asteroid5";
 	name = "plating"
@@ -5846,47 +5846,47 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/syndicate_mothership/control)
 "qy" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qz" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qA" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /obj/machinery/light/directional/north,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qB" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qC" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /obj/machinery/light/directional/north,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qD" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qE" = (
@@ -5961,8 +5961,8 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "qW" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qX" = (
@@ -5970,8 +5970,8 @@
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qY" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qZ" = (
@@ -6123,9 +6123,9 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "rF" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -6138,9 +6138,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "rH" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron{
 	icon_state = "asteroid5";
@@ -6156,21 +6156,21 @@
 /turf/open/floor/iron,
 /area/centcom/fore)
 "rJ" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /obj/machinery/light/directional/west,
 /turf/open/floor/grass,
 /area/centcom/fore)
 "rK" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/control)
 "rM" = (
@@ -6218,20 +6218,20 @@
 /turf/open/floor/iron,
 /area/centcom/prison)
 "rT" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "rU" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "rV" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
@@ -6387,8 +6387,8 @@
 /turf/open/floor/iron,
 /area/tdome/observation)
 "sD" = (
-/obj/structure/flora/rock/pile,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "sE" = (
@@ -6888,11 +6888,11 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
 "uj" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/centcom/prison)
 "uk" = (
@@ -7113,37 +7113,37 @@
 /turf/open/floor/iron/white,
 /area/tdome/observation)
 "uY" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/floor/grass,
 /area/centcom/ferry)
 "uZ" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/ferry)
 "va" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/centcom/ferry)
 "vb" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/ferry)
 "vc" = (
@@ -7247,7 +7247,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "vq" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "vr" = (
@@ -7537,12 +7537,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "wj" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/tdome/administration)
 "wk" = (
@@ -8050,7 +8050,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "xE" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "xF" = (
@@ -8241,7 +8241,7 @@
 /turf/open/floor/iron,
 /area/centcom/ferry)
 "yq" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "yr" = (
@@ -8635,11 +8635,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
 "zA" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/tdome/administration)
 "zB" = (
@@ -8650,11 +8650,11 @@
 /turf/open/floor/iron/smooth,
 /area/syndicate_mothership/control)
 "zC" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/centcom/control)
 "zD" = (
@@ -8739,8 +8739,8 @@
 /turf/open/floor/iron/white,
 /area/centcom/control)
 "zL" = (
-/obj/structure/flora/grass/both,
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/grass/both/style_random,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "zM" = (
@@ -8924,7 +8924,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
 "Aj" = (
-/obj/structure/flora/rock/jungle{
+/obj/structure/flora/rock/pile/jungle/style_random{
 	pixel_x = -12;
 	pixel_y = 15
 	},
@@ -9337,7 +9337,7 @@
 /turf/open/floor/iron,
 /area/tdome/observation)
 "Bt" = (
-/obj/structure/flora/rock/icy{
+/obj/structure/flora/rock/icy/style_random{
 	pixel_x = -7
 	},
 /turf/open/misc/asteroid/snow/airless,
@@ -9631,11 +9631,11 @@
 	},
 /area/syndicate_mothership/control)
 "Cd" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /obj/machinery/light/directional/south,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
@@ -9752,11 +9752,11 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Cr" = (
-/obj/structure/flora/rock/pile/largejungle,
+/obj/structure/flora/rock/pile/jungle/large/style_random,
 /turf/open/misc/beach/sand,
 /area/centcom/holding)
 "Cs" = (
@@ -9772,14 +9772,14 @@
 /turf/open/floor/carpet,
 /area/syndicate_mothership/control)
 "Cu" = (
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /obj/structure/railing,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "Cv" = (
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/both/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -9959,7 +9959,7 @@
 /turf/open/misc/sandy_dirt,
 /area/centcom/holding)
 "CX" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -10060,8 +10060,8 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "Dp" = (
@@ -10574,7 +10574,7 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_chemicalwarfare)
 "EP" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -10971,8 +10971,8 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "FT" = (
@@ -11164,8 +11164,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "Gv" = (
-/obj/structure/flora/rock/pile,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Gw" = (
@@ -11247,8 +11247,8 @@
 /turf/open/floor/iron,
 /area/centcom/prison)
 "GD" = (
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "GE" = (
@@ -11387,9 +11387,9 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "Hi" = (
-/obj/structure/flora/rock/pile,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -11427,9 +11427,9 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "Hm" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	icon_state = "asteroid5";
 	name = "plating"
@@ -11504,11 +11504,11 @@
 /turf/open/misc/ice/icemoon,
 /area/syndicate_mothership/control)
 "HE" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/tdome/observation)
 "HF" = (
@@ -11572,7 +11572,7 @@
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
 "HQ" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "HS" = (
@@ -11739,7 +11739,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "In" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -12256,7 +12256,7 @@
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
 "JT" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "JU" = (
@@ -12352,7 +12352,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Ki" = (
@@ -12564,7 +12564,7 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/centcom/evacuation/ship)
 "KT" = (
-/obj/structure/flora/rock/pile/largejungle{
+/obj/structure/flora/rock/pile/jungle/large/style_random{
 	pixel_y = -3
 	},
 /turf/open/misc/ashplanet/wateryrock{
@@ -13177,7 +13177,7 @@
 /turf/open/floor/iron/white,
 /area/tdome/observation)
 "MT" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -13795,7 +13795,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/centcom/holding)
 "OC" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/basalt/wasteland{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -13810,9 +13810,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supplypod)
 "OE" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -13987,7 +13987,7 @@
 /turf/open/floor/iron/dark,
 /area/tdome/observation)
 "Pd" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "Pe" = (
@@ -14030,7 +14030,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supply)
 "Ph" = (
-/obj/structure/flora/rock/icy{
+/obj/structure/flora/rock/icy/style_random{
 	pixel_x = -7
 	},
 /turf/open/misc/asteroid/snow/icemoon,
@@ -14233,11 +14233,11 @@
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/one)
 "PL" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/centcom/evacuation)
 "PM" = (
@@ -14464,8 +14464,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/prison)
 "Qs" = (
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "Qu" = (
@@ -14567,9 +14567,9 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "QL" = (
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/centcom/holding)
@@ -14657,7 +14657,7 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
 "QW" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -15332,9 +15332,9 @@
 /turf/open/floor/iron,
 /area/centcom/armory)
 "SU" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron{
 	dir = 6;
@@ -15639,8 +15639,8 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/briefing)
 "TF" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "TG" = (
@@ -15867,17 +15867,17 @@
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/expansion_chemicalwarfare)
 "Ul" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/centcom/fore)
 "Um" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -15935,8 +15935,8 @@
 /turf/open/floor/sepia,
 /area/centcom/holding)
 "Uq" = (
-/obj/structure/flora/grass/both,
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/grass/both/style_random,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "Ur" = (
@@ -16244,7 +16244,7 @@
 /turf/open/floor/stone,
 /area/syndicate_mothership/control)
 "Vf" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/ironsand{
 	color = "#525252";
 	initial_gas_mix = "TEMP=2.7"
@@ -16295,11 +16295,11 @@
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/two)
 "Vl" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/tdome/administration)
 "Vm" = (
@@ -16369,7 +16369,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Vw" = (
@@ -16866,7 +16866,7 @@
 /turf/open/floor/iron/dark,
 /area/tdome/observation)
 "WJ" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "WK" = (
@@ -16982,7 +16982,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "WW" = (
@@ -17039,12 +17039,12 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "Xf" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/tdome/observation)
 "Xg" = (
@@ -17295,11 +17295,11 @@
 /turf/open/floor/sepia,
 /area/centcom/holding)
 "XJ" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/tdome/observation)
 "XK" = (
@@ -17445,15 +17445,15 @@
 	},
 /area/syndicate_mothership/control)
 "Yl" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Ym" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/centcom/control)
 "Yn" = (
@@ -17722,7 +17722,7 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
 "Zc" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/basalt/airless,
 /area/centcom/holding)
 "Zd" = (
@@ -17878,7 +17878,7 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/holding)
 "Zu" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/machinery/light/directional/north,
 /turf/open/floor/grass,
 /area/centcom/holding)

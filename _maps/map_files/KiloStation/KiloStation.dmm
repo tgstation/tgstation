@@ -70,7 +70,7 @@
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai)
 "aaO" = (
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "aaQ" = (
@@ -156,7 +156,7 @@
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai)
 "abJ" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "abM" = (
@@ -293,26 +293,26 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "acW" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "acZ" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "add" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "adf" = (
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "adg" = (
@@ -3133,8 +3133,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "aTb" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "aTe" = (
@@ -3216,7 +3216,7 @@
 /turf/open/floor/iron/goonplaque,
 /area/station/security/brig)
 "aUz" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "aUU" = (
@@ -3921,7 +3921,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/central)
 "bjz" = (
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/misc/asteroid,
 /area/station/maintenance/port/lesser)
 "bjB" = (
@@ -3968,7 +3968,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/cmo)
 "bjR" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "bkn" = (
@@ -5558,7 +5558,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "bHP" = (
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /obj/structure/chair,
 /turf/open/misc/asteroid,
 /area/station/maintenance/port/lesser)
@@ -5654,7 +5654,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "bKl" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "bKA" = (
@@ -5847,21 +5847,21 @@
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
 "bPK" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bPP" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bPR" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
@@ -5880,13 +5880,13 @@
 "bPZ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bQb" = (
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "bQn" = (
@@ -6108,7 +6108,7 @@
 "bTT" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bTZ" = (
@@ -6135,7 +6135,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
@@ -6143,7 +6143,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bUk" = (
@@ -6170,7 +6170,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
@@ -6193,7 +6193,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "bUy" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -6205,7 +6205,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner,
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bUC" = (
@@ -6221,20 +6221,20 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bUE" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bUF" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
@@ -7270,9 +7270,9 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "emmd";
 	name = "Emergency Medical Lockdown Shutters"
@@ -7607,12 +7607,12 @@
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "cnM" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/space/nearstation)
 "cnQ" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/space/nearstation)
@@ -7621,7 +7621,7 @@
 /turf/open/floor/plating,
 /area/space/nearstation)
 "cog" = (
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/space/nearstation)
@@ -7693,7 +7693,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "coy" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "coz" = (
@@ -7780,7 +7780,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
 "cqE" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "cqO" = (
@@ -8360,7 +8360,7 @@
 /turf/open/space/basic,
 /area/space)
 "cBD" = (
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/space/nearstation)
@@ -8382,7 +8382,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/chemistry)
 "cBN" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/space/nearstation)
@@ -9450,9 +9450,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/reedbush,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/reed/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "cSl" = (
@@ -9478,7 +9478,7 @@
 	},
 /area/station/maintenance/port/aft)
 "cSq" = (
-/obj/structure/flora/rock/pile{
+/obj/structure/flora/rock/pile/style_random{
 	pixel_x = 8;
 	pixel_y = 3
 	},
@@ -10767,9 +10767,9 @@
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/hop)
 "dkA" = (
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/leavy/style_random,
 /obj/machinery/light/small/directional/south,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "dkD" = (
@@ -10956,8 +10956,8 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/starboard)
 "dmU" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
@@ -11827,9 +11827,7 @@
 /turf/closed/wall/rust,
 /area/station/security/checkpoint/supply)
 "dyu" = (
-/obj/structure/flora/grass/jungle{
-	icon_state = "bushb1"
-	},
+/obj/structure/flora/bush/jungle/b,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "dyC" = (
@@ -12338,8 +12336,8 @@
 	},
 /area/station/maintenance/fore)
 "dHg" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/medical/psychology)
 "dHi" = (
@@ -13056,7 +13054,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "dRh" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/monastery)
 "dRm" = (
@@ -13455,7 +13453,7 @@
 	},
 /area/station/maintenance/port/greater)
 "dXI" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "dXN" = (
@@ -13650,9 +13648,9 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/commissary)
 "ear" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/machinery/light/directional/east,
 /mob/living/carbon/human/species/monkey{
 	name = "mankey"
@@ -14259,8 +14257,8 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "ejQ" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
@@ -14463,7 +14461,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "emd" = (
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -15196,8 +15194,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "evD" = (
-/obj/structure/flora/junglebush/large,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/large/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "evE" = (
@@ -15542,11 +15540,11 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "eAZ" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/genericbush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/generic/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/sunny/style_random,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -19877,7 +19875,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "fFH" = (
-/obj/structure/flora/junglebush/large,
+/obj/structure/flora/bush/large/style_random,
 /turf/open/floor/grass,
 /area/station/medical/psychology)
 "fFW" = (
@@ -19966,7 +19964,7 @@
 /area/station/maintenance/fore)
 "fIn" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
@@ -20058,7 +20056,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "fJq" = (
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/leavy/style_random,
 /obj/machinery/camera/directional/west{
 	c_tag = "Genetics Monkey Pen";
 	name = "science camera";
@@ -20111,8 +20109,8 @@
 	},
 /obj/structure/window/spawner,
 /obj/structure/window/spawner/north,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/dock)
 "fKf" = (
@@ -20188,9 +20186,9 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "fKJ" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/misc/asteroid,
 /area/station/maintenance/port/lesser)
 "fKS" = (
@@ -20345,7 +20343,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "fNy" = (
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/asteroid,
 /area/station/maintenance/port/lesser)
 "fNG" = (
@@ -20456,10 +20454,10 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/rd)
 "fOx" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -21229,9 +21227,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "fYU" = (
@@ -21632,8 +21630,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/chemistry)
 "gfz" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/stalky/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "gfD" = (
@@ -22589,12 +22587,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "gtd" = (
-/obj/structure/flora/ausbushes/palebush{
+/obj/structure/flora/bush/pale/style_random{
 	icon_state = "fullgrass_2"
 	},
-/obj/structure/flora/grass/jungle{
-	icon_state = "bushc2"
-	},
+/obj/structure/flora/bush/jungle/c/style_2,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "gtq" = (
@@ -25012,7 +25008,7 @@
 /area/station/maintenance/starboard/fore)
 "gZI" = (
 /obj/structure/water_source/puddle,
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/bush/reed/style_random{
 	pixel_y = 5
 	},
 /obj/effect/spawner/random/engineering/tracking_beacon,
@@ -26405,9 +26401,9 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/station/hallway/primary/fore)
@@ -26742,9 +26738,9 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/stalky/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "hyl" = (
@@ -26808,9 +26804,7 @@
 /turf/closed/wall/r_wall/rust,
 /area/station/science/misc_lab)
 "hzC" = (
-/obj/structure/flora/rock/pile{
-	icon_state = "basalt2"
-	},
+/obj/structure/flora/rock/icy/style_2,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "hzE" = (
@@ -27196,11 +27190,11 @@
 /turf/open/floor/plating,
 /area/station/security/execution/education)
 "hEE" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/station/maintenance/aft)
 "hEH" = (
@@ -28516,7 +28510,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/greater)
 "hVT" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /obj/machinery/light/directional/east,
 /turf/open/floor/grass,
 /area/station/service/chapel/monastery)
@@ -28683,7 +28677,7 @@
 	},
 /area/station/engineering/supermatter/room)
 "hZd" = (
-/obj/structure/flora/tree/jungle,
+/obj/structure/flora/tree/jungle/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/monastery)
 "hZg" = (
@@ -29878,7 +29872,7 @@
 	},
 /area/station/maintenance/port/lesser)
 "inw" = (
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -30170,7 +30164,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "iqk" = (
-/obj/structure/flora/rock/pile{
+/obj/structure/flora/rock/pile/style_random{
 	pixel_x = 4;
 	pixel_y = 3
 	},
@@ -30422,9 +30416,9 @@
 	},
 /area/station/maintenance/starboard/aft)
 "itZ" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/grass,
 /area/station/medical/psychology)
@@ -30810,10 +30804,10 @@
 /turf/closed/wall/rust,
 /area/station/maintenance/port/lesser)
 "ize" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/light/small/directional/north,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "izf" = (
@@ -32257,10 +32251,10 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "iUM" = (
@@ -32670,8 +32664,8 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/reed/style_random,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "emmd";
 	name = "Emergency Medical Lockdown Shutters"
@@ -32820,7 +32814,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/station/maintenance/starboard)
 "jbP" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -32936,7 +32930,7 @@
 	},
 /area/station/maintenance/port/lesser)
 "jdl" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "jdp" = (
@@ -33086,7 +33080,7 @@
 /obj/structure/sign/warning/electric_shock{
 	pixel_y = -32
 	},
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
@@ -34079,8 +34073,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/office)
 "juq" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/asteroid,
 /area/station/hallway/secondary/exit/departure_lounge)
 "jus" = (
@@ -34773,10 +34767,10 @@
 /turf/open/floor/iron/dark,
 /area/station/service/janitor)
 "jHo" = (
-/obj/structure/flora/junglebush,
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/jungle/a/style_random,
+/obj/structure/flora/bush/sunny/style_random,
 /obj/item/food/grown/banana,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
@@ -34899,7 +34893,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/pharmacy)
 "jJh" = (
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "jJs" = (
@@ -35462,11 +35456,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "jQV" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -35635,7 +35629,7 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "jTk" = (
-/obj/structure/flora/rock/pile{
+/obj/structure/flora/rock/pile/style_random{
 	pixel_x = -6;
 	pixel_y = -3
 	},
@@ -35771,7 +35765,7 @@
 /area/station/maintenance/port/fore)
 "jVZ" = (
 /obj/structure/water_source/puddle,
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/bush/reed/style_random{
 	pixel_y = 5
 	},
 /turf/open/floor/grass,
@@ -36147,8 +36141,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
 "kbA" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/item/plant_analyzer,
 /turf/open/floor/grass,
 /area/station/security/prison)
@@ -36731,9 +36725,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "kmK" = (
-/obj/structure/flora/rock/pile{
-	icon_state = "basalt"
-	},
+/obj/structure/flora/rock,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "kmM" = (
@@ -36966,11 +36958,11 @@
 	},
 /area/station/maintenance/starboard)
 "kqD" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/genericbush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/generic/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/sunny/style_random,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -38209,7 +38201,7 @@
 	},
 /area/station/maintenance/port/lesser)
 "kLm" = (
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "kLn" = (
@@ -38239,7 +38231,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "kLy" = (
-/obj/structure/flora/ausbushes/palebush{
+/obj/structure/flora/bush/pale/style_random{
 	icon_state = "fernybush_3"
 	},
 /turf/open/misc/asteroid,
@@ -39607,11 +39599,11 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/crew_quarters/bar)
 "lcS" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/genericbush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/generic/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/sunny/style_random,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -39869,7 +39861,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "lhJ" = (
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/grass,
 /area/station/science/genetics)
@@ -40401,8 +40393,8 @@
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "lqy" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/stalky/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "lqC" = (
@@ -41247,7 +41239,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/psychology)
 "lCC" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/monastery)
 "lCV" = (
@@ -41431,8 +41423,8 @@
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/station/tcommsat/server)
 "lEI" = (
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "lFr" = (
@@ -41635,11 +41627,11 @@
 /area/station/security/execution/education)
 "lIE" = (
 /obj/structure/cable,
-/obj/structure/flora/ausbushes/sparsegrass{
+/obj/structure/flora/bush/sparsegrass/style_random{
 	pixel_x = 7;
 	pixel_y = 3
 	},
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/security/prison)
 "lJd" = (
@@ -42692,8 +42684,8 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/hallway/primary/fore)
 "lYE" = (
@@ -43488,12 +43480,12 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /obj/structure/window/reinforced/spawner{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/station/hallway/primary/fore)
 "mjh" = (
@@ -43720,7 +43712,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
 "mlD" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/monastery)
 "mlH" = (
@@ -44175,9 +44167,9 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "emmd";
 	name = "Emergency Medical Lockdown Shutters"
@@ -44360,7 +44352,7 @@
 /obj/structure/window/spawner,
 /obj/structure/window/spawner/east,
 /obj/structure/window/spawner/north,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/dock)
 "mvW" = (
@@ -44610,15 +44602,13 @@
 /turf/open/floor/iron/checker,
 /area/station/service/hydroponics)
 "mzt" = (
-/obj/structure/flora/grass/jungle{
+/obj/structure/flora/grass/jungle/a/style_random{
 	icon_state = "grassb2"
 	},
-/obj/structure/flora/ausbushes/palebush{
+/obj/structure/flora/bush/pale/style_random{
 	icon_state = "brflowers_3"
 	},
-/obj/structure/flora/ausbushes/palebush{
-	icon_state = "fernybush_1"
-	},
+/obj/structure/flora/bush/ferny,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "mzB" = (
@@ -46345,7 +46335,7 @@
 /obj/structure/sign/departments/security{
 	pixel_y = -32
 	},
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
@@ -46670,7 +46660,7 @@
 	},
 /obj/structure/window/spawner,
 /obj/structure/window/spawner/north,
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/dock)
 "nal" = (
@@ -46722,9 +46712,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "nax" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/hallway/primary/fore)
 "naC" = (
@@ -47105,9 +47095,9 @@
 	},
 /area/station/engineering/storage/tech)
 "nfR" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
@@ -47173,7 +47163,7 @@
 /obj/structure/sign/departments/security{
 	pixel_y = -32
 	},
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
@@ -47512,7 +47502,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "noO" = (
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/tree/jungle/small/style_random,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -47996,7 +47986,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "nuL" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
@@ -48291,10 +48281,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/stalky/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "nzz" = (
@@ -48397,8 +48387,8 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "nBM" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/security/prison)
 "nBZ" = (
@@ -48455,9 +48445,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "nCA" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/reedbush,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/reed/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/light/directional/south,
 /turf/open/floor/grass,
 /area/station/hallway/primary/fore)
@@ -50117,11 +50107,11 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "oce" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/station/maintenance/port/lesser)
 "ocg" = (
@@ -50237,8 +50227,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "odE" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "oeF" = (
@@ -50328,7 +50318,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "ofz" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid,
 /area/station/maintenance/port/lesser)
 "ofA" = (
@@ -50349,8 +50339,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "ofB" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/medical/virology)
@@ -50733,9 +50723,9 @@
 /turf/open/floor/plating,
 /area/station/security/prison)
 "olv" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/stalky/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "olz" = (
@@ -51503,9 +51493,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "oxp" = (
-/obj/structure/flora/junglebush,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/jungle/a/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/sunny/style_random,
 /obj/machinery/light/directional/west,
 /turf/open/floor/grass,
 /area/station/medical/psychology)
@@ -51999,10 +51989,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "oEL" = (
@@ -52313,11 +52303,11 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/palebush,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/pale/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "oIy" = (
@@ -52432,9 +52422,9 @@
 	},
 /area/station/maintenance/starboard/fore)
 "oJH" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
@@ -52543,9 +52533,9 @@
 /obj/structure/window/reinforced/spawner{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/station/hallway/primary/fore)
@@ -52917,7 +52907,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "oSs" = (
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -53177,10 +53167,8 @@
 /turf/open/floor/iron/dark,
 /area/station/science/misc_lab)
 "oVP" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/rock/pile{
-	icon_state = "basalt"
-	},
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/rock,
 /turf/open/misc/asteroid,
 /area/station/hallway/secondary/exit/departure_lounge)
 "oVY" = (
@@ -53901,9 +53889,9 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/bridge)
 "pgh" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/cable,
 /turf/open/floor/grass,
 /area/station/security/prison)
@@ -54022,7 +54010,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "phQ" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -54270,9 +54258,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "pkE" = (
@@ -54520,9 +54508,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "poU" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -55399,8 +55387,8 @@
 /obj/structure/window/spawner,
 /obj/structure/window/spawner/west,
 /obj/structure/window/spawner/north,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/dock)
 "pBh" = (
@@ -55580,8 +55568,8 @@
 /turf/closed/wall/rust,
 /area/station/maintenance/aft)
 "pDP" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "pDT" = (
@@ -56444,8 +56432,8 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "pPD" = (
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "pPZ" = (
@@ -57085,10 +57073,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "qai" = (
@@ -57224,9 +57212,9 @@
 /turf/open/floor/carpet/red,
 /area/station/service/chapel/monastery)
 "qbO" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -57676,7 +57664,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "qip" = (
-/obj/structure/flora/junglebush/b,
+/obj/structure/flora/bush/jungle/b/style_random,
 /obj/machinery/airalarm/directional/east,
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
@@ -58617,7 +58605,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "qvq" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/lowpressure,
 /area/space/nearstation)
 "qvz" = (
@@ -58949,11 +58937,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
 "qAG" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/genericbush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/generic/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/sunny/style_random,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -58993,8 +58981,8 @@
 	},
 /obj/structure/window/spawner,
 /obj/structure/window/spawner/north,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/dock)
 "qBR" = (
@@ -59245,7 +59233,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "qFs" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /obj/machinery/light/directional/east,
 /turf/open/floor/grass,
 /area/station/service/chapel/monastery)
@@ -61173,10 +61161,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "rmI" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -61720,7 +61708,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/misc_lab)
 "rsX" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/monastery)
 "rsY" = (
@@ -62382,8 +62370,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "rBS" = (
-/obj/structure/flora/junglebush/b,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera/directional/west{
 	c_tag = "Virology Monkey Pen";
@@ -62904,8 +62892,8 @@
 	},
 /area/station/hallway/primary/port)
 "rJN" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/monastery)
 "rJO" = (
@@ -63081,11 +63069,11 @@
 	},
 /area/ai_monitored/command/nuke_storage)
 "rLG" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
@@ -64070,7 +64058,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "sac" = (
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/grass/jungle/b/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -64726,9 +64714,9 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/fore)
 "slh" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /obj/item/radio/intercom/directional/south,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "slo" = (
@@ -64866,10 +64854,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "snh" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/structure/cable,
 /turf/open/floor/grass,
 /area/station/security/prison)
@@ -65370,7 +65358,7 @@
 /turf/open/floor/iron/chapel,
 /area/station/service/chapel/monastery)
 "ssU" = (
-/obj/structure/flora/grass/jungle,
+/obj/structure/flora/grass/jungle/a/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -68074,9 +68062,7 @@
 	},
 /area/station/maintenance/disposal/incinerator)
 "tgU" = (
-/obj/structure/flora/rock/pile{
-	icon_state = "lavarocks2"
-	},
+/obj/structure/flora/rock/pile/style_2,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "tgZ" = (
@@ -68148,7 +68134,7 @@
 	},
 /area/station/maintenance/port/fore)
 "thK" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/cable,
 /turf/open/floor/grass,
@@ -68328,9 +68314,9 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard)
 "tlA" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/asteroid,
 /area/station/hallway/secondary/exit/departure_lounge)
 "tlJ" = (
@@ -68772,7 +68758,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "tre" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -69181,7 +69167,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "tyA" = (
-/obj/structure/flora/junglebush/c,
+/obj/structure/flora/bush/jungle/c/style_random,
 /turf/open/floor/grass,
 /area/station/medical/psychology)
 "tyD" = (
@@ -70233,7 +70219,7 @@
 /obj/structure/sign/warning/electric_shock{
 	pixel_y = -32
 	},
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/cable,
@@ -71017,7 +71003,7 @@
 /turf/closed/wall/rust,
 /area/station/maintenance/port/lesser)
 "tZX" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/station/maintenance/port/lesser)
 "uan" = (
@@ -71428,8 +71414,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "ugc" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -71532,7 +71518,7 @@
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "uiu" = (
-/obj/structure/flora/junglebush/b,
+/obj/structure/flora/bush/jungle/b/style_random,
 /turf/open/floor/grass,
 /area/station/medical/psychology)
 "uiE" = (
@@ -71559,9 +71545,7 @@
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
 "uiX" = (
-/obj/structure/flora/rock/pile{
-	icon_state = "basalt"
-	},
+/obj/structure/flora/rock,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "ujh" = (
@@ -74006,7 +73990,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
 "uWQ" = (
-/obj/structure/flora/rock/pile{
+/obj/structure/flora/rock/pile/style_random{
 	pixel_x = -6;
 	pixel_y = -3
 	},
@@ -74542,12 +74526,10 @@
 	},
 /area/station/maintenance/fore)
 "vdK" = (
-/obj/structure/flora/ausbushes/palebush{
+/obj/structure/flora/bush/pale/style_random{
 	icon_state = "fullgrass_2"
 	},
-/obj/structure/flora/grass/jungle{
-	icon_state = "grassb5"
-	},
+/obj/structure/flora/grass/jungle/b/style_5,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "vdS" = (
@@ -75197,7 +75179,7 @@
 /area/station/maintenance/port/fore)
 "vnH" = (
 /obj/item/radio/intercom/directional/west,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/grassy/style_random,
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/science/genetics)
@@ -75422,7 +75404,7 @@
 /turf/closed/wall/r_wall,
 /area/station/tcommsat/computer)
 "vqJ" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /obj/structure/sign/warning/electric_shock{
 	pixel_y = -32
 	},
@@ -75434,8 +75416,8 @@
 /area/station/engineering/storage/tech)
 "vrd" = (
 /obj/machinery/firealarm/directional/north,
-/obj/structure/flora/ausbushes/pointybush,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/pointy/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "vrf" = (
@@ -75552,8 +75534,8 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "vsJ" = (
-/obj/structure/flora/junglebush/b,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/jungle/b/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/station/medical/psychology)
 "vsR" = (
@@ -76591,9 +76573,9 @@
 /turf/closed/wall,
 /area/station/science/lab)
 "vGs" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/stalky/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics/garden)
 "vGt" = (
@@ -77368,11 +77350,11 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "vPF" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /obj/structure/cable,
 /turf/open/floor/grass,
 /area/station/security/prison)
@@ -77918,10 +77900,10 @@
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/storage/tech)
 "vVX" = (
-/obj/structure/flora/ausbushes/palebush{
+/obj/structure/flora/bush/pale/style_random{
 	icon_state = "fullgrass_2"
 	},
-/obj/structure/flora/ausbushes/palebush{
+/obj/structure/flora/bush/pale/style_random{
 	icon_state = "genericbush_1"
 	},
 /turf/open/misc/asteroid,
@@ -78167,7 +78149,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "vZn" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/monastery)
 "vZu" = (
@@ -78897,9 +78879,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "wjK" = (
@@ -79518,10 +79500,8 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
 "wqu" = (
-/obj/structure/flora/rock/pile{
-	icon_state = "basalt"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/rock,
 /turf/open/misc/asteroid,
 /area/space/nearstation)
 "wqx" = (
@@ -79823,7 +79803,7 @@
 /area/station/engineering/atmos)
 "wuP" = (
 /obj/structure/water_source/puddle,
-/obj/structure/flora/ausbushes/reedbush{
+/obj/structure/flora/bush/reed/style_random{
 	pixel_y = 5
 	},
 /turf/open/floor/grass,
@@ -80390,7 +80370,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "wDI" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/lowpressure,
 /area/space/nearstation)
 "wEj" = (
@@ -81480,9 +81460,9 @@
 	},
 /area/station/maintenance/port/greater)
 "wQK" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/misc/asteroid,
 /area/station/hallway/primary/central)
 "wQN" = (
@@ -82302,7 +82282,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "xcR" = (
-/obj/structure/flora/grass/jungle{
+/obj/structure/flora/grass/jungle/a/style_random{
 	icon_state = "bushc2"
 	},
 /turf/open/misc/asteroid,
@@ -82450,9 +82430,9 @@
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "xfZ" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/grass,
 /area/station/medical/psychology)
@@ -82873,7 +82853,7 @@
 	},
 /area/station/engineering/supermatter)
 "xlF" = (
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/service/chapel/monastery)
 "xlL" = (
@@ -82930,8 +82910,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "xmI" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/grass/jungle/b/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/grass,
 /area/station/medical/psychology)
@@ -83083,9 +83063,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "xoK" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "xoO" = (
@@ -83511,10 +83491,10 @@
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "xvj" = (
-/obj/structure/flora/ausbushes/stalkybush,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/stalky/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "xvr" = (
@@ -84226,8 +84206,8 @@
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
 "xFt" = (
-/obj/structure/flora/grass/jungle,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/grass/jungle/a/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 10
