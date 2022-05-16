@@ -421,6 +421,9 @@ function remove_interviews() {
 }
 
 function iconError(e) {
+	if(current_tab != turfname) {
+		return;
+	}
 	setTimeout(function () {
 		var node = e.target;
 		var current_attempts = Number(node.getAttribute("data-attempts")) || 0
