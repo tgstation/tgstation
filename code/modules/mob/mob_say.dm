@@ -26,7 +26,7 @@
 		return
 
 	if(message)
-		VERB_CALLBACK(VERB_CALLBACK(src, /mob/proc/whisper, message), SSspeech_controller)
+		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, /mob/proc/whisper, message), SSspeech_controller)
 
 ///whisper a message
 /mob/proc/whisper(message, datum/language/language=null)
@@ -43,7 +43,7 @@
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	VERB_CALLBACK(VERB_CALLBACK(src, /mob/proc/emote, "me", 1, message, TRUE), SSspeech_controller)
+	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, /mob/proc/emote, "me", 1, message, TRUE), SSspeech_controller)
 
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(message)
