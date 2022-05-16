@@ -2534,7 +2534,9 @@
 /obj/machinery/power/apc/auto_name/directional/south{
 	start_charge = 0
 	},
-/obj/machinery/vending/hydronutrients,
+/obj/machinery/vending/hydronutrients{
+	onstation = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "gG" = (
@@ -2757,7 +2759,9 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "hr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/dinnerware,
+/obj/machinery/vending/dinnerware{
+	onstation = 0
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "hs" = (
