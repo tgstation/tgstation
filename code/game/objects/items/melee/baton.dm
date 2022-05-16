@@ -414,7 +414,15 @@
 		else
 			cell = new preload_cell_type(src)
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/convert)
+	RegisterSignal(src, list(COMSIG_ITEM_DROPPED, COMSIG_STORAGE_EXITED, COMSIG_ITEM_EQUIPPED, COMSIG_STORAGE_ENTERED), .proc/turn_off_baton)
 	update_appearance()
+
+/obj/item/melee/baton/security/proc/turn_off_baton()
+	SIGNAL_HANDLER
+	if(active)
+		active = FALSE
+		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		update_appearance()
 
 /obj/item/melee/baton/security/get_cell()
 	return cell
@@ -504,9 +512,10 @@
 
 /obj/item/melee/baton/security/attack_self(mob/user)
 	if(cell?.charge >= cell_hit_cost)
-		active = !active
-		balloon_alert(user, "turned [active ? "on" : "off"]")
-		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		if(do_after(user, 5 SECONDS, src, IGNORE_USER_LOC_CHANGE))
+			active = !active
+			balloon_alert(user, "turned [active ? "on" : "off"]")
+			playsound(src, SFX_SPARKS, 75, TRUE, -1)
 	else
 		active = FALSE
 		if(!cell)
