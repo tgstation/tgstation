@@ -35,7 +35,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 /datum/data/crime
 	name = "crime"
 	var/crimeName = ""
-	var/sentence = "Not Served"
+	var/crimeStatus = "Not Served"
 	var/crimeDetails = ""
 	var/author = ""
 	var/time = ""
@@ -99,7 +99,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 /**
  * Marks a crime as served for on the security record.
  *
- * Is used change the Sentence status of a single crime from Not Served to Served on someone's security record.
+ * Is used change the status of a single crime between "Served" and "Not Served" someone's security record.
  * Arguments:
  * * id - record id.
  * * cDataId - id of already existing crime.
@@ -110,7 +110,10 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 			var/list/crimes = R.fields["crim"]
 			for(var/datum/data/crime/crime in crimes)
 				if(crime.dataId == text2num(cDataId))
-					crime.sentence = "Served"
+					if(crime.crimeStatus = "Not Served")
+						crime.crimeStatus = "Served"
+					else
+						crime.crimeStatus = "Not Served"
 					return
 
 /**

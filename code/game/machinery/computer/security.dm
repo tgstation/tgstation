@@ -371,7 +371,6 @@
 						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
 						<th>Crime</th>
-						<th>Sentence</th>
 						<th>Fine</th>
 						<th>Author</th>
 						<th>Time Added</th>
@@ -399,7 +398,7 @@
 						dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 						<tr>
 						<th>Crime</th>
-						<th>Sentence</th>
+						<th>Status</th>
 						<th>Details</th>
 						<th>Author</th>
 						<th>Time Added</th>
@@ -407,7 +406,7 @@
 						</tr>"}
 						for(var/datum/data/crime/c in active2.fields["crim"])
 							dat += "<tr><td>[c.crimeName]</td>"
-							dat += "<td>[c.sentence] <A href='?src=[REF(src)];choice=Edit Field;field=crim_serve;cdataid=[c.dataId]'>\[X\]</A></td>"
+							dat += "<td>[c.crimeStatus] <A href='?src=[REF(src)];choice=Edit Field;field=crim_serve;cdataid=[c.dataId]'>\[X\]</A></td>"
 							if(!c.crimeDetails)
 								dat += "<td><A href='?src=[REF(src)];choice=Edit Field;field=add_details;cdataid=[c.dataId]'>\[+\]</A></td>"
 							else
@@ -572,11 +571,13 @@ What a mess.*/
 <tr>
 <th>Crime</th>
 <th>Details</th>
+<th>Status</th>
 <th>Author</th>
 <th>Time Added</th>
 </tr>"}
 						for(var/datum/data/crime/c in active2.fields["crim"])
 							P.info += "<tr><td>[c.crimeName]</td>"
+							p.info += "<td>[c.crimeStatus]</td>"
 							P.info += "<td>[c.crimeDetails]</td>"
 							P.info += "<td>[c.author]</td>"
 							P.info += "<td>[c.time]</td>"
@@ -604,8 +605,9 @@ What a mess.*/
 						if(length(crimes))
 							default_description += "\n[wanted_name] is wanted for the following crimes:\n"
 							for(var/datum/data/crime/c in active2.fields["crim"])
-								default_description += "\n[c.crimeName]\n"
-								default_description += "[c.crimeDetails]\n"
+								if(c.crimeStatus != "Not Served")
+									default_description += "\n[c.crimeName]\n"
+									default_description += "[c.crimeDetails]\n"
 
 						var/headerText = tgui_input_text(usr, "Enter a poster heading", "Print Wanted Poster", "WANTED", 7)
 
