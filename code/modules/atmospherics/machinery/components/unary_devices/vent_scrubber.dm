@@ -44,8 +44,6 @@
 	COOLDOWN_DECLARE(check_turfs_cooldown)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
-	RegisterSignal(src, COMSIG_VENT_CLOG, .proc/clog)
-	RegisterSignal(src, COMSIG_VENT_UNCLOG, .proc/unclog)
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
 	. = ..()
@@ -468,37 +466,32 @@
 	piping_layer = 4
 	icon_state = "scrub_map_on-4"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/plunger_act(obj/item/plunger/plunger, mob/living/user, reinforced)
 	if(!clogged)
 		return
 
 	if(welded)
-		to_chat(user, span_notice("You cannot pump the [name] if it's welded shut!."))
+		to_chat(user, span_notice("You cannot pump [src] if it's welded shut!"))
 		return
 
-	to_chat(user, span_notice("You begin pumping the [name] with your plunger."))
+	to_chat(user, span_notice("You begin pumping [src] with your plunger."))
 	if(do_after(user, 6 SECONDS, target = src))
-		to_chat(user, span_notice("You finish pumping the [name]."))
+		to_chat(user, span_notice("You finish pumping [src]."))
 		clogged = FALSE
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog(datum/source)
-	SIGNAL_HANDLER
-	RegisterSignal(src, COMSIG_PRODUCE_MOB, .proc/produce_mob)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/clog()
 	clogged = TRUE
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/produce_mob(datum/source, spawned_mob, living_mobs)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/unclog()
+	clogged = FALSE
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/produce_mob(spawned_mob, living_mobs)
 	if(welded)
 		return
 
 	var/mob/new_mob = new spawned_mob(get_turf(src))
 	living_mobs += new_mob
 	visible_message(span_warning("[new_mob] crawls out of [src]!"))
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/unclog()
-	clogged = FALSE
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/is_clogged()
-	return clogged
 
 #undef SIPHONING
 #undef SCRUBBING

@@ -82,21 +82,21 @@
 			return pick(strange_mobs)
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production
-	SEND_SIGNAL(scrubber, COMSIG_VENT_CLOG)
-	SEND_SIGNAL(scrubber, COMSIG_PRODUCE_MOB, spawned_mob, living_mobs) //The first one's free!
+	scrubber.proc/clog()
+	scrubber.proc/produce_mob() //The first one's free!
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob
-	if(activeFor % spawn_delay == 0 && scrubber.is_clogged() == TRUE)
+	if(activeFor % spawn_delay == 0 && scrubber.clogged == TRUE)
 		life_check()
 		if(living_mobs.len < maximum_spawns && clogged)
-			SEND_SIGNAL(scrubber, COMSIG_PRODUCE_MOB, spawned_mob, living_mobs)
+			scrubber.proc/produce_mob(spawned_mob, living_mobs)
 
 /datum/round_event/scrubber_clog/end() //No end announcement. If you want to take the easy way out and just leave the vent welded, you must open it at your own peril
-	SEND_SIGNAL(scrubber, COMSIG_VENT_UNCLOG)
+	scrubber.proc/unclog()
 
 /datum/round_event/scrubber_clog/proc/life_check()
 	for(var/mob/living/mob_check in living_mobs)
-		if(mob_check.health <= 0 || !mob_check.health)
+		if(mob_check.health <= 0)
 			living_mobs -= mob_check
 
 /datum/round_event_control/scrubber_clog/major
@@ -124,10 +124,10 @@
 
 /datum/round_event/scrubber_clog/critical
 	severity = "Critical"
+	maximum_spawns = 3
 
 /datum/round_event/scrubber_clog/critical/setup()
 	. = ..()
-	maximum_spawns = 3
 	spawn_delay = rand(15 SECONDS, 25 SECONDS)
 
 /datum/round_event/scrubber_clog/critical/announce()
@@ -141,11 +141,11 @@
 
 /datum/round_event/scrubber_clog/strange
 	severity = "Strange"
+	maximum_spawns = 3
 
 /datum/round_event/scrubber_clog/strange/setup()
 	. = ..()
 	endWhen = rand(10 MINUTES, 12 MINUTES)
-	maximum_spawns = 3
 	spawn_delay = rand(6 SECONDS, 25 SECONDS) //Wide range, for maximum utility/comedy
 
 /datum/round_event/scrubber_clog/strange/announce()
