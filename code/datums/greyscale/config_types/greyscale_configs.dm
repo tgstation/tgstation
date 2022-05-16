@@ -539,3 +539,13 @@
 /datum/greyscale_config/vape/open_high
 	name = "Open Vape High"
 	json_config = 'code/datums/greyscale/json_configs/vape_open_high.json'
+
+/datum/greyscale_config/ties
+	name = "Ties"
+	icon_file = 'icons/obj/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ties.json'
+
+/datum/greyscale_config/ties_worn
+	name = "Worn Ties"
+	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ties_worn.json'

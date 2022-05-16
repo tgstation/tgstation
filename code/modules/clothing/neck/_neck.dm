@@ -18,7 +18,7 @@
 			. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/neck/tie
-	name = "tie"
+	name = "clip-on tie"
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bluetie"
@@ -26,27 +26,107 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW
 
-/obj/item/clothing/neck/tie/blue
+/obj/item/clothing/neck/tie/greyscale
+	greyscale_colors = "#4d4e4e"
+	name = "slick tie"
+	desc = "A neosilk tie."
+	icon_state = "tie_greyscale_tied"
+	greyscale_config = /datum/greyscale_config/ties
+	greyscale_config_worn = /datum/greyscale_config/ties_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+	/// All ties start untied unless otherwise specified
+	var/is_tied = FALSE
+	/// How long it takes to tie the tie
+	var/tie_timer = 4 SECONDS
+
+/obj/item/clothing/neck/tie/greyscale/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_ICON)
+	if(usr)
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			H.update_clothing(ITEM_SLOT_NECK)
+	register_context()
+
+/obj/item/clothing/neck/tie/greyscale/AltClick(mob/user)
+	. = ..()
+	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
+	// Heads of staff are experts at tying their ties.
+	var/tie_timer_actual = tie_timer
+	if(user.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		tie_timer_actual = tie_timer_actual / 2
+	// Tie/Untie our tie
+	if(!do_after(user, tie_timer_actual))
+		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
+		return
+	// Clumsy & Dumb people have trouble tying their ties.
+	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
+		to_chat(user, span_notice("You just can't seem to get a proper grip on [src]!"))
+		return
+	// Success!
+	is_tied = !is_tied
+	to_chat(user, span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"))
+	update_appearance(UPDATE_ICON)
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.update_clothing(ITEM_SLOT_NECK)
+
+/obj/item/clothing/neck/tie/greyscale/update_icon()
+	. = ..()
+	// Normal strip & equip delay, along with 2 second self equip since you need to squeeze your head through the hole.
+	if(is_tied)
+		icon_state = "tie_greyscale_tied"
+		strip_delay = 4 SECONDS
+		equip_delay_other = 4 SECONDS
+		equip_delay_self = 2 SECONDS
+	else // Extremely quick strip delay, it's practically a ribbon draped around your neck
+		icon_state = "tie_greyscale_untied"
+		strip_delay = 1 SECONDS
+		equip_delay_other = 1 SECONDS
+		equip_delay_self = 0
+
+/obj/item/clothing/neck/tie/greyscale/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(is_tied)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Untie"
+	else
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Tie"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/clothing/neck/tie/greyscale/blue
 	name = "blue tie"
-	icon_state = "bluetie"
+	greyscale_colors = "#5275b6ff"
 
-/obj/item/clothing/neck/tie/red
+/obj/item/clothing/neck/tie/greyscale/red
 	name = "red tie"
-	icon_state = "redtie"
+	greyscale_colors = "#c23838ff"
 
-/obj/item/clothing/neck/tie/black
+/obj/item/clothing/neck/tie/greyscale/red/hitman
+	desc = "This is a $47,000 custom-tailored Référence Du Tueur À Gages tie. The clot is from neosilkworms raised at a tie microfarm in Cookwell, from a secret pattern passed down by monk tailors since the twenty-first century!"
+	tie_timer = 1 SECONDS // You're a professional.
+
+/obj/item/clothing/neck/tie/greyscale/black
 	name = "black tie"
-	icon_state = "blacktie"
+	greyscale_colors = "#151516ff"
 
 /obj/item/clothing/neck/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
 
+/obj/item/clothing/neck/tie/disco
+	name = "horrific necktie"
+	icon_state = "eldritch_tie"
+	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
+
 /obj/item/clothing/neck/tie/detective
 	name = "loose tie"
 	desc = "A loosely tied necktie, a perfect accessory for the over-worked detective."
 	icon_state = "detective"
+
+/obj/item/clothing/neck/tie/detective/examine(mob/user)
+	. = ..()
+	. += "Looking closely, you can see that it's actually a cleverly disguised clip-on."
 
 /obj/item/clothing/neck/maid
 	name = "maid neck cover"
@@ -243,8 +323,3 @@
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
-
-/obj/item/clothing/neck/tie/disco
-	name = "horrific necktie"
-	icon_state = "eldritch_tie"
-	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
