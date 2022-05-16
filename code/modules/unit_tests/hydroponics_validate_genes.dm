@@ -1,4 +1,4 @@
-/// Unit test to ensure plants don't have multiple of a plant type at once by default..
+/// Unit test to ensure plants don't have multiple of a plant type at once by default.
 /datum/unit_test/hydroponics_validate_genes
 
 /datum/unit_test/hydroponics_validate_genes/Run()
