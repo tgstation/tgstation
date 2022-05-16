@@ -354,6 +354,7 @@
 #include "code\__HELPERS\logging\mob.dm"
 #include "code\__HELPERS\logging\paper.dm"
 #include "code\__HELPERS\logging\pda.dm"
+#include "code\__HELPERS\logging\shuttle.dm"
 #include "code\__HELPERS\logging\talk.dm"
 #include "code\__HELPERS\logging\tool.dm"
 #include "code\__HELPERS\logging\ui.dm"
