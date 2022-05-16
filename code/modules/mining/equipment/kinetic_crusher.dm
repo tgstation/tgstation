@@ -439,4 +439,5 @@
 	if(isliving(target))
 		var/obj/effect/temp_visual/hierophant/chaser/chaser = new(get_turf(user), user, target, 3, TRUE)
 		chaser.monster_damage_boost = FALSE // Weaker cuz no cooldown
+		chaser.damage = 20
 		log_combat(user, target, "fired a chaser at", src)

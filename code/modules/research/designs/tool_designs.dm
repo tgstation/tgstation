@@ -11,7 +11,7 @@
 	materials = list(/datum/material/iron = 3500, /datum/material/silver = 1500, /datum/material/titanium = 2500)
 	build_path = /obj/item/screwdriver/power
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/jawsoflife
 	name = "Jaws of Life"
@@ -21,7 +21,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 	autolathe_exportable = FALSE
 
 /datum/design/exwelder
@@ -32,7 +32,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/plasma = 1500, /datum/material/uranium = 200)
 	build_path = /obj/item/weldingtool/experimental
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rpd
 	name = "Rapid Pipe Dispenser (RPD)"
@@ -41,7 +41,7 @@
 	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500)
 	build_path = /obj/item/pipe_dispenser
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/rcd_loaded
 	name = "Rapid Construction Device"
@@ -51,7 +51,7 @@
 	materials = list(/datum/material/iron = 60000, /datum/material/glass = 5000)  // costs more than what it did in the autolathe, this one comes loaded.
 	build_path = /obj/item/construction/rcd/loaded
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 
 /datum/design/rcd_upgrade/frames
@@ -62,7 +62,7 @@
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
 	build_path = /obj/item/rcd_upgrade/frames
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/simple_circuits
 	name = "RCD simple circuits designs upgrade"
@@ -72,7 +72,7 @@
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
 	build_path = /obj/item/rcd_upgrade/simple_circuits
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/furnishing
 	name = "RCD furnishing upgrade"
@@ -82,7 +82,7 @@
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
 	build_path = /obj/item/rcd_upgrade/furnishing
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_upgrade/silo_link
 	name = "Advanced RCD silo link upgrade"
@@ -92,7 +92,7 @@
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2500, /datum/material/silver = 2500, /datum/material/titanium = 2500, /datum/material/bluespace = 2500)
 	build_path = /obj/item/rcd_upgrade/silo_link
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rpd_upgrade/unwrench
 	name = "RPD unwrenching upgrade"
@@ -102,7 +102,7 @@
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500)
 	build_path = /obj/item/rpd_upgrade/unwrench
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rld_mini
 	name = "Mini Rapid Light Device (MRLD)"
@@ -112,7 +112,7 @@
 	materials = list(/datum/material/iron = 20000, /datum/material/glass = 10000, /datum/material/plastic = 8000, /datum/material/gold = 2000)
 	build_path = /obj/item/construction/rld/mini
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/geneshears
 	name = "Botanogenetic Plant Shears"
@@ -122,7 +122,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/silver=500)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/plumbing_rcd_sci
 	name = "Research Plumbing Constructor"
@@ -131,7 +131,7 @@
 	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic = 1000)
 	build_path = /obj/item/construction/plumbing/research
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/biopsy_tool
 	name = "Biopsy Tool"
@@ -140,7 +140,7 @@
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 3000)
 	build_path = /obj/item/biopsy_tool
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /////////////////////////////////////////
 //////////////Alien Tools////////////////
@@ -154,7 +154,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/alienwirecutters
 	name = "Alien Wirecutters"
@@ -164,7 +164,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/alienscrewdriver
 	name = "Alien Screwdriver"
@@ -174,7 +174,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/aliencrowbar
 	name = "Alien Crowbar"
@@ -184,7 +184,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/alienwelder
 	name = "Alien Welding Tool"
@@ -194,7 +194,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/alienmultitool
 	name = "Alien Multitool"
@@ -204,7 +204,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /////////////////////////////////////////
 /////////Alien Surgical Tools////////////
@@ -218,7 +218,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/silver = 1500, /datum/material/plasma = 500, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/alienhemostat
 	name = "Alien Hemostat"
@@ -228,7 +228,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/silver = 1500, /datum/material/plasma = 500, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/alienretractor
 	name = "Alien Retractor"
@@ -238,7 +238,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/silver = 1500, /datum/material/plasma = 500, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/aliensaw
 	name = "Alien Circular Saw"
@@ -248,7 +248,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/aliendrill
 	name = "Alien Drill"
@@ -258,7 +258,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/aliencautery
 	name = "Alien Cautery"
@@ -268,7 +268,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/silver = 1500, /datum/material/plasma = 500, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/wirebrush
 	name = "Wirebrush"
@@ -279,4 +279,4 @@
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
 	build_path = /obj/item/wirebrush
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

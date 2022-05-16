@@ -237,7 +237,7 @@
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	build_path = /obj/item/disk/design_disk/limbs
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /obj/item/disk/design_disk/limbs/felinid
 	name = "Felinid Organ Design Disk"

@@ -148,7 +148,7 @@ at the cost of risking a vicious bite.**/
 			if(!isnull(chosen_color) && user.canUseTopic(src, BE_CLOSE))
 				pants_color = chosen_color
 		if("Create Artefact")
-			if(!COOLDOWN_FINISHED(src, use_cooldown_duration))
+			if(!COOLDOWN_FINISHED(src, use_cooldown) || status != ALTAR_INACTIVE)
 				to_chat(user, span_warning("[src] is not ready to create something new yet..."))
 				return
 			pants_stageone()
