@@ -19,7 +19,7 @@
 	///Cap on the number of spawned mobs that can be alive at once
 	var/maximum_spawns = 3
 	///Interval between mob spawns
-	var/spawn_delay = 10
+	var/spawn_delay = 10 SECONDS
 	///Used to track/limit produced mobs
 	var/list/living_mobs = list()
 	///Used for tracking if the clog signal should be sent
@@ -33,9 +33,9 @@
 	if(!scrubber)
 		CRASH("Unable to find suitable scrubber.")
 	spawned_mob = get_mob()
-	endWhen = rand(5000,7000)
+	endWhen = rand(5 MINUTES , 10 MINUTES)
 	maximum_spawns = rand(3, 5)
-	spawn_delay = rand(10,15)
+	spawn_delay = rand(10 SECONDS, 15 SECONDS)
 
 /datum/round_event/scrubber_clog/proc/get_scrubber()
 	var/list/scrubber_list = list()
@@ -112,7 +112,7 @@
 /datum/round_event/scrubber_clog/major/setup()
 	. = ..()
 	maximum_spawns = rand(2,4)
-	spawn_delay = rand(15,20)
+	spawn_delay = rand(15 SECONDS, 20 SECONDS)
 
 /datum/round_event_control/scrubber_clog/critical
 	name = "Critical Scrubber Clog"
@@ -128,7 +128,7 @@
 /datum/round_event/scrubber_clog/critical/setup()
 	. = ..()
 	maximum_spawns = 3
-	spawn_delay = rand(15, 25)
+	spawn_delay = rand(15 SECONDS, 25 SECONDS)
 
 /datum/round_event/scrubber_clog/critical/announce()
 	priority_announce("Potentially hazardous lifesigns detected in the [get_area(scrubber)] ventilation network.", "Security Alert")
@@ -144,9 +144,9 @@
 
 /datum/round_event/scrubber_clog/strange/setup()
 	. = ..()
-	endWhen = rand(6000,8000)
+	endWhen = rand(10 MINUTES, 12 MINUTES)
 	maximum_spawns = 3
-	spawn_delay = rand(10, 25) //Wide range, for maximum utility/comedy
+	spawn_delay = rand(6 SECONDS, 25 SECONDS) //Wide range, for maximum utility/comedy
 
 /datum/round_event/scrubber_clog/strange/announce()
 	priority_announce("Unusual lifesign readings detected in the [get_area(scrubber)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
