@@ -5276,6 +5276,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron,
 /area/station/security/office)
 "bvj" = (
@@ -6424,6 +6425,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "bIG" = (
@@ -37162,6 +37164,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "kic" = (
@@ -44162,6 +44165,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "mcB" = (
@@ -52568,6 +52572,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "onR" = (
@@ -62786,6 +62791,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron,
 /area/station/security/office)
 "rdr" = (
@@ -76803,6 +76809,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "uKz" = (
@@ -83889,6 +83896,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
 "wyD" = (
