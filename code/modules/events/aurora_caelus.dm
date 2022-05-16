@@ -31,7 +31,7 @@
 		var/area/effected_area = area
 		if(effected_area.area_flags & AREA_USES_STARLIGHT)
 			for(var/turf/open/space/spess in effected_area)
-				spess.set_light(S.light_range * 3, spess.light_power * 0.5)
+				spess.set_light(spess.light_range * 3, spess.light_power * 0.5)
 		if(istype(effected_area, /area/station/service/kitchen))
 			for(var/turf/open/kitchen in effected_area)
 				kitchen.set_light(1, 0.75)
