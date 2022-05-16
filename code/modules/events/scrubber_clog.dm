@@ -82,17 +82,17 @@
 			return pick(strange_mobs)
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production
-	scrubber.proc/clog()
-	scrubber.proc/produce_mob() //The first one's free!
+	scrubber.clog()
+	scrubber.produce_mob() //The first one's free!
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob
 	if(activeFor % spawn_delay == 0 && scrubber.clogged == TRUE)
 		life_check()
 		if(living_mobs.len < maximum_spawns && clogged)
-			scrubber.proc/produce_mob(spawned_mob, living_mobs)
+			scrubber.produce_mob(spawned_mob, living_mobs)
 
 /datum/round_event/scrubber_clog/end() //No end announcement. If you want to take the easy way out and just leave the vent welded, you must open it at your own peril
-	scrubber.proc/unclog()
+	scrubber.unclog()
 
 /datum/round_event/scrubber_clog/proc/life_check()
 	for(var/mob/living/mob_check in living_mobs)
