@@ -269,13 +269,14 @@
 					return
 				to_chat(usr, "<b>Name:</b> [R.fields["name"]] <b>Criminal Status:</b> [R.fields["criminal"]]")
 				for(var/datum/data/crime/c in R.fields["crim"])
-					to_chat(usr, "<b>Crime:</b> [c.crimeName]")
-					if (c.crimeDetails)
-						to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
-					else
-						to_chat(usr, "<b>Details:</b> <A href='?src=[REF(src)];hud=s;add_details=1;cdataid=[c.dataId]'>\[Add details]</A>")
-					to_chat(usr, "Added by [c.author] at [c.time]")
-					to_chat(usr, "----------")
+					if(c.crimeStatus != "Served")
+						to_chat(usr, "<b>Crime:</b> [c.crimeName]")
+						if (c.crimeDetails)
+							to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
+						else
+							to_chat(usr, "<b>Details:</b> <A href='?src=[REF(src)];hud=s;add_details=1;cdataid=[c.dataId]'>\[Add details]</A>")
+						to_chat(usr, "Added by [c.author] at [c.time]")
+						to_chat(usr, "----------")
 				to_chat(usr, "<b>Notes:</b> [R.fields["notes"]]")
 				return
 
