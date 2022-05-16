@@ -263,13 +263,14 @@ at the cost of risking a vicious bite.**/
 /obj/structure/steam_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, steam_vent_interact))
-		to_chat(user, span_notice("\The [src] isn't ready to be adjusted yet."))
+		balloon_alert(user, "Not ready to adjust!")
 		return
 	vent_active = !vent_active
+	update_icon_state()
 	if(vent_active)
-		to_chat(user, span_notice("\The [src] is now on."))
+		balloon_alert(user, "Vent on.")
 	else
-		to_chat(user, span_notice("\The [src] is now off."))
+		balloon_alert(user, "Vent off.")
 		return
 	addtimer(CALLBACK(src, .proc/blow_steam), 1 SECONDS)
 	COOLDOWN_START(src, steam_vent_interact, 20 SECONDS)
@@ -280,24 +281,15 @@ at the cost of risking a vicious bite.**/
 /obj/structure/steam_vent/proc/blow_steam()
 	if(!vent_active)
 		return
-	new /obj/effect/particle_effect/smoke(loc)
-	set_opacity(TRUE)
-	addtimer(CALLBACK(src, .proc/reset_opacity), 9 SECONDS)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(range = 1, amount = 1, location = src)
+	smoke.start()
+	playsound(src, 'sound/machines/steam_hiss.ogg', 50, TRUE, -3)
 	addtimer(CALLBACK(src, .proc/blow_steam), steam_speed)
-
-/**
- * Simply handles resetting the opacity of the vent to simulate the smoke blocking line of sight.
- */
-/obj/structure/steam_vent/proc/reset_opacity()
-	set_opacity(FALSE)
 
 /obj/structure/steam_vent/update_icon_state()
 	. = ..()
-	switch(vent_active)
-		if(TRUE)
-			icon_state = "steam_vent"
-		if(FALSE)
-			icon_state = "steam_vent_off"
+	icon_state = "steam_vent[vent_active ? "": "_off"]"
 
 /obj/structure/steam_vent/fast
 	desc = "A device periodically filtering out moisture particles from the nearby walls and windows. It's only possible due to the moisture traps nearby. It's faster than most."
