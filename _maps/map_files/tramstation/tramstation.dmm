@@ -2157,7 +2157,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "aVp" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/science/genetics)
@@ -7830,7 +7830,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/left)
 "cHn" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "cHz" = (
@@ -9301,7 +9301,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
 /area/station/medical/virology)
@@ -10459,8 +10459,8 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/commons/dorms)
 "dww" = (
@@ -10623,7 +10623,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/left)
 "dyl" = (
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "dyq" = (
@@ -13439,7 +13439,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "eyX" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/carbon/human/species/monkey,
@@ -15431,7 +15431,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "fkU" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/grass,
 /area/station/science/genetics)
@@ -15651,8 +15651,8 @@
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/center)
 "fpf" = (
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/tree/palm,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/tree/palm/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "fpg" = (
@@ -23037,7 +23037,7 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "hSI" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/machinery/door/window/left/directional/west{
 	name = "Monkey Pen";
 	req_access_txt = "9"
@@ -23174,8 +23174,8 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/commons/dorms)
 "hVg" = (
@@ -28559,8 +28559,8 @@
 /turf/open/floor/iron/freezer,
 /area/station/security/prison)
 "jLF" = (
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/tree/palm,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/tree/palm/style_random,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/grass,
 /area/station/science/genetics)
@@ -30299,7 +30299,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "knw" = (
-/obj/structure/flora/tree/palm,
+/obj/structure/flora/tree/palm/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "knJ" = (
@@ -42449,7 +42449,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/science)
 "ooR" = (
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/sunny/style_random,
 /obj/item/food/grown/banana,
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/grass,
@@ -42577,8 +42577,8 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/commons/dorms)
 "oqY" = (
@@ -52804,7 +52804,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "rOZ" = (
@@ -54868,8 +54868,8 @@
 /turf/open/floor/iron/grimy,
 /area/station/hallway/secondary/entry)
 "sCO" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/medical/virology)
@@ -57336,7 +57336,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "tuv" = (
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "tuA" = (
@@ -57635,8 +57635,8 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass,
 /area/station/commons/dorms)
 "tzP" = (
@@ -59781,8 +59781,8 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "umQ" = (
-/obj/structure/flora/ausbushes/leafybush,
-/obj/structure/flora/tree/palm,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/tree/palm/style_random,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "umS" = (
@@ -63333,7 +63333,7 @@
 /area/station/cargo/miningdock/oresilo)
 "vvA" = (
 /obj/machinery/light/directional/east,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "vvC" = (
@@ -63931,7 +63931,7 @@
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
 "vFV" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/grass,
 /area/station/science/genetics)
@@ -65101,7 +65101,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "wdi" = (
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass,
 /area/station/medical/virology)
 "wdj" = (
@@ -69489,7 +69489,7 @@
 /turf/open/floor/plating,
 /area/station/security/processing)
 "xGA" = (
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/sunny/style_random,
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/grass,
 /area/station/science/genetics)
