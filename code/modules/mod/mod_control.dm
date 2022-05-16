@@ -626,10 +626,8 @@
 		alternate_worn_layer = used_skin[CONTROL_LAYER]
 	var/list/skin_updating = mod_parts + src
 	for(var/obj/item/part as anything in skin_updating)
-		if(used_skin[MOD_ICON_OVERRIDE])
-			part.icon = used_skin[MOD_ICON_OVERRIDE]
-		if(used_skin[MOD_WORN_ICON_OVERRIDE])
-			part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE]
+		part.icon = used_skin[MOD_ICON_OVERRIDE] || 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+		part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 		part.icon_state = "[skin]-[initial(part.icon_state)]"
 	for(var/obj/item/clothing/part as anything in mod_parts)
 		var/used_category
