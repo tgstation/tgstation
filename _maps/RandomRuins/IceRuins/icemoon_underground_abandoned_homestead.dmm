@@ -31,7 +31,7 @@
 	},
 /area/ruin/powered/shuttle)
 "ht" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "hM" = (
@@ -89,7 +89,7 @@
 /turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "tD" = (
-/obj/structure/flora/rock/pile/icy,
+/obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "uc" = (
@@ -232,7 +232,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "Fg" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "FS" = (
@@ -287,7 +287,7 @@
 /obj/structure/railing{
 	color = "#8a7453"
 	},
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Nz" = (

@@ -848,8 +848,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	/// Wielding status.
-	var/wielded = FALSE
 	/// The color of the slash we create
 	var/slash_color = COLOR_BLUE
 	/// Previous x position of where we clicked on the target's icon
@@ -861,41 +859,39 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/highfrequencyblade/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/highfrequencyblade/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed)
+	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /obj/item/highfrequencyblade/update_icon_state()
-	icon_state = "hfrequency[wielded]"
+	icon_state = "hfrequency[HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
 /obj/item/highfrequencyblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
-		if(wielded || prob(final_block_chance))
+		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
 			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 			return TRUE
 		return FALSE
-	if(prob(final_block_chance * (wielded ? 2 : 1)))
+	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
 
 /obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	slash(target, user, params)
 
 /obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		return
 	return ..()
 
 /obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
-	if(!wielded)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ..()
 	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
 		return
@@ -903,16 +899,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /// triggered on wield of two handed item
 /obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
 	update_icon(UPDATE_ICON_STATE)
 
 /// triggered on unwield of two handed item
 /obj/item/highfrequencyblade/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
 	update_icon(UPDATE_ICON_STATE)
 
 /obj/item/highfrequencyblade/proc/slash(atom/target, mob/living/user, params)

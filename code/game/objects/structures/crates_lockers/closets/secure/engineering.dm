@@ -7,7 +7,7 @@
 	..()
 
 	new /obj/item/storage/bag/garment/engineering_chief (src)
-	new /obj/item/computer_hardware/hard_drive/role/ce(src)
+	new /obj/item/computer_hardware/hard_drive/portable/command/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/areaeditor/blueprints(src)

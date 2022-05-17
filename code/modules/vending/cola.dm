@@ -16,18 +16,18 @@
 		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
 		/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
 		/obj/item/reagent_containers/food/drinks/waterbottle = 10,
-		/obj/item/reagent_containers/food/drinks/bottle/mushi_kombucha = 3
+		/obj/item/reagent_containers/food/drinks/bottle/mushi_kombucha = 3,
 	)
 	contraband = list(
 		/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,
-		/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6
+		/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6,
 	)
 	premium = list(
 		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,
 		/obj/item/reagent_containers/food/drinks/soda_cans/air = 1,
 		/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy = 1,
 		/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/rootbeer = 1
+		/obj/item/reagent_containers/food/drinks/bottle/rootbeer = 1,
 	)
 	refill_canister = /obj/item/vending_refill/cola
 	default_price = PAYCHECK_CREW * 0.7
@@ -91,15 +91,17 @@
 	name = "\improper Shambler's Vendor"
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers_juice"
-	products = list(/obj/item/reagent_containers/food/drinks/soda_cans/cola = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
-					/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 10)
+	products = list(
+		/obj/item/reagent_containers/food/drinks/soda_cans/cola = 10,
+		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
+		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,
+		/obj/item/reagent_containers/food/drinks/soda_cans/starkist = 10,
+		/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 10,
+		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
+		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
+		/obj/item/reagent_containers/food/drinks/soda_cans/sol_dry = 10,
+		/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 10,
+		)
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
 	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
 	light_mask = "shamblers-light-mask"
