@@ -36,7 +36,7 @@
 		return
 
 	var/mob/living/carbon/human/H = L
-	if(!H.dna || HAS_TRAIT(H, TRAIT_GENELESS))
+	if(!H.dna || HAS_TRAIT(H, TRAIT_GENELESS) || GODMODE)
 		return
 
 	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
