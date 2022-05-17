@@ -55,29 +55,6 @@ const typevars = (type) => {
       options: null,
       default_value: '',
     },
-    /*
-    { name: 'requires_wizard_garb', type: 'bool', options: null, default_value: false },
-    { name: 'requires_human', type: 'bool', options: null, default_value: false },
-    {
-      name: 'requires_non_abstract',
-      type: 'bool',
-      options: null,
-      default_value: false,
-    },
-    { name: 'requires_conscious', type: 'bool', options: null, default_value: false },
-    {
-      name: 'requires_unphased',
-      type: 'bool',
-      options: null,
-      default_value: false,
-    },
-    {
-      name: 'requires_no_antimagic',
-      type: 'bool',
-      options: null,
-      default_value: false,
-    },
-    */
     {
       name: 'invocation_type',
       type: 'string_enum',

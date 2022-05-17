@@ -111,8 +111,9 @@
 /datum/action/cooldown/alien/promote/Activate(atom/target)
 	var/obj/item/queen_promotion/existing_promotion = locate() in owner.held_items
 	if(existing_promotion)
-		to_chat(owner, span_noticealien("You discard [promotion]."))
-		qdel(promotion)
+		to_chat(owner, span_noticealien("You discard [existing_promotion]."))
+		owner.temporarilyRemoveItemFromInventory(existing_promotion)
+		qdel(existing_promotion)
 		return TRUE
 
 	if(!owner.get_empty_held_indexes())
