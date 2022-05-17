@@ -3,12 +3,14 @@
 /turf/closed/wall,
 /area/station/maintenance/department/security)
 "c" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "e" = (
@@ -56,10 +58,12 @@
 /area/station/maintenance/department/security)
 "U" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance/glass{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance/glass,
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "Y" = (

@@ -709,3 +709,79 @@
   san7890:
   - bugfix: If you ever chance upon Multi-Z Debug Station, rest assured that it now
       uses the right kind of space.
+2022-05-16:
+  JohnFulpWillard:
+  - bugfix: Trying to fireman carry someone you can't fireman carry now properly makes
+      you not carry them permanently
+  MMMiracles:
+  - bugfix: Fixed a few areas on Tramstation where firelocks could enclose but had
+      no scrubber/vent.
+  - bugfix: The AI core cabling on Tramstation no longer loops between the solar panels
+      and the SMES.
+  MidoriWroth:
+  - qol: The Icebox kitchen was slightly expanded, giving it 3 more tiles of space
+      downstairs.
+  - bugfix: Finally gave the Icebox kitchen a condimaster.
+  OperativeLyn:
+  - bugfix: Removed a windoor inside of a wall in IceBox.
+  PositiveEntropy, Azlan, Axietheaxolotl:
+  - imageadd: Resprites all the Engineering Jumpsuits and Jumpskirts!
+  - imageadd: Resprites the firesuit!
+  - imageadd: Resprites all the hard hats!
+  - imageadd: Resprites the insulated gloves and Chief Engineer gloves!
+  - imageadd: Resprites the hazard vest!
+  SmArtKar:
+  - bugfix: Lightning bolt spell will give tesla shock immunity when granted by an
+      admin
+  Son-of-Space:
+  - bugfix: miners have general access to the cargo bay
+  - bugfix: Fixed several inconsistent or niche access requirements on TramStation's
+      modular pieces
+  - qol: Replaced all access requirement vars on doors with mapping helpers on TramStation's
+      modular pieces
+  castawaynont:
+  - bugfix: fixes the position of some paintings in the Curator's office on Icebox.
+  vincentiusvin:
+  - spellcheck: fixed an outdated quip about buying scipapers in the experiment status
+  xyc:
+  - bugfix: fixed the position of a few wallmounts in icebox's chapel.
+2022-05-17:
+  Cheshify:
+  - balance: Snowdin.dmm is now in line with the design doc
+  Dorsidwarf:
+  - rscadd: Replaced table-crafting fried eggs with good old-fashioned frying on the
+      chef's griddle.
+  - bugfix: Changed the double-yolk sprite that only the fried-egg (And not foods
+      using it) had to a single.
+  DragonTrance:
+  - refactor: Flora code is much more organized :)
+  - rscadd: Flora (trees, plants, etc) can be uprooted with a shovel, which can then
+      be dragged around.
+  - code_imp: Moved "kirbyplants" into their own .dm file, instead of just finding
+      a comfortable spot in flora code
+  Melbert:
+  - code_imp: Adds radial support to stack crafting.
+  - qol: Cult buildings are now made via radial, instead of stack window.
+  - qol: Stack craftingnow uses balloon alerts.
+  RandomGamer123:
+  - bugfix: Tank compressors' icons now visibly update when being rotated
+  - bugfix: Tank compressors' rotation after reconstruction actually work properly
+  - code_imp: '`/obj/machinery/atmospherics/components/proc/connect_nodes()` actually
+      gets called on every node of the atmospheric component'
+  Son-of-Space:
+  - qol: Security General access has been simplified
+  - bugfix: Detectives ability to brig crew has been moved to skeleton crew access
+      to fit the job function
+  - bugfix: Detectives now have general access to all general areas of security consistently
+      across all stations
+  SuperNovaa41:
+  - refactor: Turned the forensics component into a datum.
+  Tastyfish:
+  - rscadd: Tramstation now has crossing signals to help you not get hit by the tram
+      (or jump in front of it at the last minute for comedy value).
+  san7890:
+  - code_imp: If you're looking into patching out Active Turfs, the logging message
+      that alerts you to said Active Turfs is now a bit more verbose to getting you
+      put on the right track.
+  timothymtorres:
+  - qol: Change drunk blur effect to scale based on intoxication
