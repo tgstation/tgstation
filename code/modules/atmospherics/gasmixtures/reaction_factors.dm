@@ -9,7 +9,7 @@
 	factor = list(
 		/datum/gas/miasma = "Miasma is consumed at 1 reaction rate.",
 		/datum/gas/oxygen = "Oxygen is produced at 1 reaction rate.",
-		"Temperature" = "Higher temperature increases the reaction rate.",
+		"Temperature" = "Reaction rate scales directly with temperature.",
 		"Energy" = "[MIASTER_STERILIZATION_ENERGY] joules of energy is released per rate.",
 	)
 
@@ -69,7 +69,7 @@
 		/datum/gas/nitrous_oxide = "Nitrous Oxide is consumed at 1 reaction rate. Minimum of [MINIMUM_MOLE_COUNT * 2] to occur.", //okay this one isn't made into a define yet.
 		/datum/gas/oxygen = "Oxygen is formed at 0.5 reaction rate",
 		/datum/gas/nitrogen = "Nitrogen is formed at 1 reaction rate",
-		"Temperature" = "Higher temperature increases the reaction rate. Can only happen between [N2O_DECOMPOSITION_MIN_TEMPERATURE] - [N2O_DECOMPOSITION_MAX_TEMPERATURE] kelvin.",
+		"Temperature" = "Reaction rate scales directly with temperature. Can only happen between [N2O_DECOMPOSITION_MIN_TEMPERATURE] - [N2O_DECOMPOSITION_MAX_TEMPERATURE] kelvin.",
 		"Energy" = "[N2O_DECOMPOSITION_ENERGY] joules of energy is released per reaction rate",
 	)
 
@@ -79,7 +79,7 @@
 		/datum/gas/nitrous_oxide = "Nitrous oxide is consumed at 1 reaction rate. If there is less nitrous oxide than plasma the reaction rate is slowed down.",
 		/datum/gas/bz = "BZ is formed at 2.5 reaction rate. A small malus up to half a mole per tick is applied if the reaction rate is constricted by nitrous oxide.",
 		/datum/gas/oxygen = "Oxygen is produced from the BZ malus. This only happens when the reaction rate is being constricted by the amount of nitrous oxide present. I.E. amount of nitrous oxide is less than the reaction rate.", // Less than the reaction rate AND half the plasma, but suppose that's not necessary to mention.
-		"Pressure" = "The lower the pressure the faster the reaction rate goes.",
+		"Pressure" = "Reaction rate scales inversely with pressure",
 		"Energy" = "[FIRE_CARBON_ENERGY_RELEASED] joules of energy is released per reaction rate",
 	)
 
@@ -101,7 +101,7 @@
 		/datum/gas/tritium = "20 moles of tritium needs to be present for the reaction to occur. Tritium is consumed at 1 reaction rate",
 		/datum/gas/nitrogen = "10 moles of tritium needs to be present for the reaction to occur. Nitrogen is consumed at 1 reaction rate",
 		/datum/gas/nitrium = "Nitrium is produced at 1 reaction rate",
-		"Temperature" = "Can only occur above [NITRIUM_FORMATION_MIN_TEMP] kelvins. Higher temperature increases the reaction rate.",
+		"Temperature" = "Can only occur above [NITRIUM_FORMATION_MIN_TEMP] kelvins. Reaction rate scales directly with temperature.",
 		"Energy" = "[NITRIUM_FORMATION_ENERGY] joules of energy is absorbed per reaction rate",
 	)
 
@@ -111,7 +111,7 @@
 		/datum/gas/nitrium = "Nitrium is consumed at 1 reaction rate",
 		/datum/gas/hydrogen = "Hydrogen is produced at 1 reaction rate",
 		/datum/gas/nitrogen = "Nitrogen is produced at 1 reaction rate",
-		"Temperature" = " Can only occur below [NITRIUM_DECOMPOSITION_MAX_TEMP]. Higher temperature increases the reaction rate.",
+		"Temperature" = " Can only occur below [NITRIUM_DECOMPOSITION_MAX_TEMP]. Reaction rate scales directly with temperature.",
 		"Energy" = "[NITRIUM_DECOMPOSITION_ENERGY] joules of energy is released per reaction rate",
 	)
 
@@ -141,7 +141,7 @@
 		/datum/gas/oxygen = "Oxygen is consumed at 20 reaction rate",
 		/datum/gas/carbon_dioxide = "Carbon dioxide is produced at 5 reaction rate.",
 		"Energy" = "[HALON_COMBUSTION_ENERGY] joules of energy is absorbed per reaction rate",
-		"Temperature" = "Can only occur above [FIRE_MINIMUM_TEMPERATURE_TO_EXIST] kelvin. Higher temperature increases the reaction rate.",
+		"Temperature" = "Can only occur above [FIRE_MINIMUM_TEMPERATURE_TO_EXIST] kelvin. Reaction rate scales directly with temperature.",
 	)
 
 /datum/gas_reaction/healium_formation/init_factors()
@@ -149,7 +149,7 @@
 		/datum/gas/bz = "BZ is consumed at 0.25 reaction rate",
 		/datum/gas/freon = "Freon is consumed at 2.75 reaction rate",
 		/datum/gas/healium = "Healium is produced at 3 reaction rate",
-		"Pressure" = "The higher the pressure the faster the reaction rate goes.",
+		"Pressure" = "Reaction rate scales directly with pressure",
 		"Temperature" = "Can only occur between [HEALIUM_FORMATION_MIN_TEMP] - [HEALIUM_FORMATION_MAX_TEMP] Kelvin.",
 		"Energy" = "[HEALIUM_FORMATION_ENERGY] joules of energy is released per reaction rate.",
 	)
@@ -159,7 +159,7 @@
 		/datum/gas/hypernoblium = "Hyper-Noblium is consumed at 0.01 reaction rate",
 		/datum/gas/nitrium = "Nitrium is consumed at 0.5 reaction rate",
 		/datum/gas/zauker = "Zauker is produced at 0.5 reaction rate",
-		"Pressure" = "The higher the pressure the faster the reaction rate goes.",
+		"Pressure" = "Reaction rate scales directly with pressure",
 		"Temperature" = "Can only occur between [ZAUKER_FORMATION_MIN_TEMPERATURE] - [ZAUKER_FORMATION_MAX_TEMPERATURE] kelvin",
 		"Energy" = "[ZAUKER_FORMATION_ENERGY] joules of energy is absorbed per reaction rate",
 	)
@@ -185,7 +185,7 @@
 	factor = list(
 		/datum/gas/hydrogen = "[PN_HYDROGEN_CONVERSION_THRESHOLD] moles of hydrogen needs to be present for the reaction to occur. Hydrogen is consumed at 1 reaction rate.",
 		/datum/gas/proto_nitrate = "[MINIMUM_MOLE_COUNT] moles of proto-nitrate needs to be present for the reaction to occur. Proto nitrate is produced at 0.5 reaction rate. Proto-nitrate increases reaction rate.",
-		"Pressure" = "The higher the pressure the faster the reaction rate goes.",
+		"Pressure" = "Reaction rate scales directly with pressure",
 		"Energy" = "[PN_HYDROGEN_CONVERSION_ENERGY] joules of energy is absorbed per reaction rate",
 	)
 

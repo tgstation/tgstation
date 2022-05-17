@@ -120,9 +120,9 @@
 /// The amount of energy released when a mole of N2O forms from nitrogen and oxygen in the presence of BZ.
 #define N2O_FORMATION_ENERGY 10000
 /// The optimal temperature for N2O formation.
-#define N2O_FORMATION_OPTIMAL_TEMPERATURE 225
+#define N2O_FORMATION_OPTIMAL_TEMPERATURE ((N2O_FORMATION_MIN_TEMPERATURE + N2O_FORMATION_MAX_TEMPERATURE) / 2)
 /// The temperature scale for N2O formation.
-#define N2O_FORMATION_TEMPERATURE_SCALE 25
+#define N2O_FORMATION_TEMPERATURE_SCALE (N2O_FORMATION_MAX_TEMPERATURE - N2O_FORMATION_OPTIMAL_TEMPERATURE)
 
 /// The minimum temperature N2O can decompose at.
 #define N2O_DECOMPOSITION_MIN_TEMPERATURE 1400
@@ -224,8 +224,8 @@
 /// The amount of energy half a mole of zauker forming from hypernoblium and nitrium consumes.
 #define ZAUKER_FORMATION_ENERGY 5000
 
-/// A divisor that determines the maximum nitrogen efficiency based on volume. A maximum decomposition rate of 20 can be achieved in a volume of 2,000L.
-#define ZAUKER_DECOMPOSITION_VOLUME_SCALING 125
+/// The maximum number of moles of zauker that can decompose per reaction tick.
+#define ZAUKER_DECOMPOSITION_MAX_RATE 20
 /// The amount of energy a mole of zauker decomposing in the presence of nitrogen releases.
 #define ZAUKER_DECOMPOSITION_ENERGY 460
 
@@ -234,13 +234,11 @@
 #define PN_FORMATION_MIN_TEMPERATURE 5000
 /// The maximum temperature proto-nitrate can form from pluoxium and hydrogen at.
 #define PN_FORMATION_MAX_TEMPERATURE 10000
-/// The lower temperature to achieve the highest thermal efficiency for proto-nitrate formation.
-#define PN_FORMATION_LOWER_TEMPERATURE_MAXIMUM_EFFICIENCY 6250
-/// The upper temperature to achieve the highest thermal efficiency for proto-nitrate formation.
-#define PN_FORMATION_UPPER_TEMPERATURE_MAXIMUM_EFFICIENCY 8750
-/// The temperature scale for proto-nitrate formation
-#define PN_FORMATION_TEMPERATURE_SCALE 1250
-/// The divisor for the maximum proto-nitrate formation rate. (Up to 1/10th of the minimum required gas scaled by their consumption rate can get consumed at once)
+/// The optimal temperature for proto-nitrate formation.
+#define PN_FORMATION_OPTIMAL_TEMPERATURE ((PN_FORMATION_MIN_TEMPERATURE + PN_FORMATION_MAX_TEMPERATURE) / 2)
+/// The temperature scale for proto-nitrate formation.
+#define PN_FORMATION_TEMPERATURE_SCALE (PN_FORMATION_MAX_TEMPERATURE - PN_FORMATION_OPTIMAL_TEMPERATURE)
+/// The divisor for the maximum proto-nitrate formation rate. (Up to 1/10th of the minimum required gas scaled by their consumption rate can get consumed at once).
 #define PN_FORMATION_DELTA 10
 /// The amount of energy 2.2 moles of proto-nitrate forming from pluoxium and hydrogen releases.
 #define PN_FORMATION_ENERGY 650

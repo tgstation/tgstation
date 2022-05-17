@@ -465,10 +465,9 @@
 /datum/gas_reaction/nitrousformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/minimal_mole_factor = min(cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/nitrogen][MOLES] * INVERSE(2))
-	var/thermal_efficiency = 1 - ((temperature - N2O_FORMATION_OPTIMAL_TEMPERATURE) / N2O_FORMATION_TEMPERATURE_SCALE) ** 2
-	var/bz_efficiency = 1 - NUM_E ** -(thermal_efficiency * cached_gases[/datum/gas/bz][MOLES] / minimal_mole_factor)
-	var/heat_efficency = min(minimal_mole_factor * bz_efficiency, cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/nitrogen][MOLES] * INVERSE(2))
+	var/thermal_efficiency = 1 - ((temperature - N2O_FORMATION_OPTIMAL_TEMPERATURE) / N2O_FORMATION_TEMPERATURE_SCALE) ** 2 // Parabolic curve that peaks at 1 when temperature is at optimal temperature.
+
+	var/heat_efficency = min(cached_gases[/datum/gas/bz][MOLES] * thermal_efficiency, cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/nitrogen][MOLES] * INVERSE(2))
 	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency * 2 < 0))
 		return NO_REACTION // Shouldn't produce gas from nothing.
 
@@ -704,9 +703,8 @@
 /datum/gas_reaction/nitrium_decomposition/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/oxygen_efficiency = 1 - NUM_E ** -(cached_gases[/datum/gas/oxygen][MOLES] / cached_gases[/datum/gas/nitrium][MOLES])
 	//This reaction is agressively slow. like, a tenth of a mole per fire slow. Keep that in mind
-	var/heat_efficency = min(cached_gases[/datum/gas/nitrium][MOLES] * oxygen_efficiency * temperature / NITRIUM_DECOMPOSITION_TEMP_DIVISOR, cached_gases[/datum/gas/nitrium][MOLES])
+	var/heat_efficency = min(cached_gases[/datum/gas/oxygen][MOLES] * temperature / NITRIUM_DECOMPOSITION_TEMP_DIVISOR, cached_gases[/datum/gas/nitrium][MOLES])
 
 	if (heat_efficency <= 0 || (cached_gases[/datum/gas/nitrium][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
@@ -845,7 +843,7 @@
 	var/minimal_mole_factor = min(cached_gases[/datum/gas/halon][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(20))
 	var/thermal_efficiency = 1 - NUM_E ** -((temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST) / HALON_COMBUSTION_TEMPERATURE_SCALE)
 
-	var/heat_efficency = min(thermal_efficiency * minimal_mole_factor / 10, cached_gases[/datum/gas/halon][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(20))
+	var/heat_efficency = min(thermal_efficiency * minimal_mole_factor / HALON_COMBUSTION_DELTA, cached_gases[/datum/gas/halon][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(20))
 	if (heat_efficency <= 0 || (cached_gases[/datum/gas/halon][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency * 20 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
@@ -973,8 +971,7 @@
 
 /datum/gas_reaction/zauker_decomp/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
-	var/nitrogen_efficiency = 1 - NUM_E ** -(min(cached_gases[/datum/gas/nitrogen][MOLES], air.volume / ZAUKER_DECOMPOSITION_VOLUME_SCALING) / cached_gases[/datum/gas/zauker][MOLES])
-	var/burned_fuel = min(cached_gases[/datum/gas/zauker][MOLES] * nitrogen_efficiency, cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/zauker][MOLES])
+	var/burned_fuel = min(ZAUKER_DECOMPOSITION_MAX_RATE, cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/zauker][MOLES])
 	if (burned_fuel <= 0 || cached_gases[/datum/gas/zauker][MOLES] - burned_fuel < 0)
 		return NO_REACTION
 
@@ -1018,7 +1015,7 @@
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/minimal_mole_factor = min(cached_gases[/datum/gas/pluoxium][MOLES] * INVERSE(0.2), cached_gases[/datum/gas/hydrogen][MOLES] * INVERSE(2))
-	var/thermal_efficiency = max(1 - ((temperature - PN_FORMATION_LOWER_TEMPERATURE_MAXIMUM_EFFICIENCY) / PN_FORMATION_TEMPERATURE_SCALE) ** 2, 1 - ((temperature - PN_FORMATION_UPPER_TEMPERATURE_MAXIMUM_EFFICIENCY) / PN_FORMATION_TEMPERATURE_SCALE) ** 2)
+	var/thermal_efficiency = 1 - ((temperature - PN_FORMATION_OPTIMAL_TEMPERATURE) / PN_FORMATION_TEMPERATURE_SCALE) ** 2
 
 	var/heat_efficency = min(minimal_mole_factor * thermal_efficiency / PN_FORMATION_DELTA, cached_gases[/datum/gas/pluoxium][MOLES] * INVERSE(0.2), cached_gases[/datum/gas/hydrogen][MOLES] * INVERSE(2))
 	if (heat_efficency <= 0 || (cached_gases[/datum/gas/pluoxium][MOLES] - heat_efficency * 0.2 < 0 ) || (cached_gases[/datum/gas/hydrogen][MOLES] - heat_efficency * 2 < 0)) //Shouldn't produce gas from nothing.
@@ -1058,10 +1055,9 @@
 /datum/gas_reaction/proto_nitrate_hydrogen_response/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	var/pressure = air.return_pressure()
-	var/proto_nitrate_efficiency = 1 - NUM_E ** -(cached_gases[/datum/gas/proto_nitrate][MOLES] / cached_gases[/datum/gas/hydrogen][MOLES])
 	var/pressure_efficiency = 1 - NUM_E ** -(pressure / PN_HYDROGEN_CONVERSION_PRESSURE_SCALE)
 
-	var/produced_amount = min(proto_nitrate_efficiency * pressure_efficiency * cached_gases[/datum/gas/hydrogen][MOLES], cached_gases[/datum/gas/hydrogen][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
+	var/produced_amount = min(cached_gases[/datum/gas/proto_nitrate][MOLES] * pressure_efficiency, cached_gases[/datum/gas/hydrogen][MOLES])
 	if (produced_amount <= 0 || cached_gases[/datum/gas/hydrogen][MOLES] - produced_amount < 0)
 		return NO_REACTION
 
