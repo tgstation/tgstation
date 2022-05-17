@@ -583,28 +583,24 @@
 	virus_suspectibility = 0.5
 	resulting_atoms = list(/obj/effect/spawner/random/animal/frog/vatgrown = 1)
 
-/datum/micro_organism/cell_line/frog/succeed_growing(obj/machinery/plumbing/growing_vat/vat) //TODO fix
+/datum/micro_organism/cell_line/frog/succeed_growing(obj/machinery/plumbing/growing_vat/vat) //TODO generalize, check if spawner, maybe do this in parent proc
 	var/list/spawner_resulting_atoms = list() //create a list to put the results of the spawners in
 
 	for(var/created_spawner in resulting_atoms) //for each spawner in the list
-		var/obj/effect/spawner/random/spawner = new created_spawner(get_turf(vat)) //create an instance of the spawner
+		var/obj/effect/spawner/random/spawner = new created_spawner(get_turf(vat)) //create an instance of the spawner to access its loot
 
 		for(var/x in 1 to resulting_atoms[created_spawner]) //for the count of resulting atoms for this spawner
 			var/lootspawn = pick_weight(fill_with_ones(spawner.loot)) //pick a random thing from the spawner loot list
 			while(islist(lootspawn))
 				lootspawn = pick_weight(fill_with_ones(lootspawn))
 
-			//spawner_resulting_atoms += lootspawn //add it to the new list
-			spawner_resulting_atoms[lootspawn] = x //add it to the new list
+			spawner_resulting_atoms[lootspawn] = x //and add it to the new list
 
-	//fill_with_ones(spawner_resulting_atoms)
 	resulting_atoms = spawner_resulting_atoms
 	//TODO clean up created spawners
 
 	//test result:
-	//no message and it keeps spawning them
-	//same vat kept spawning the same type of them
-	//i guess it never managed to get to the parent proc
+	//it works!
 	return ..()
 
 /datum/micro_organism/cell_line/walking_mushroom
