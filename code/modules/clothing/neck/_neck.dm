@@ -42,8 +42,9 @@
 /obj/item/clothing/neck/tie/greyscale/Initialize(mapload)
 	. = ..()
 	update_appearance(UPDATE_ICON)
-	if(usr)
-		usr.update_clothing(ITEM_SLOT_NECK)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_clothing(ITEM_SLOT_NECK)
 	register_context()
 
 /obj/item/clothing/neck/tie/greyscale/AltClick(mob/user)
