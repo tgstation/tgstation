@@ -495,7 +495,7 @@
 /datum/spellbook_entry/item/warpwhistle
 	name = "Warp Whistle"
 	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the beginning of every use."
-	item_path = /obj/item/warpwhistle
+	item_path = /obj/item/warp_whistle
 	category = "Mobility"
 	cost = 1
 

@@ -766,8 +766,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// trait associated to not having fine manipulation appendages such as hands
 #define LACKING_MANIPULATION_APPENDAGES_TRAIT "lacking-manipulation-appengades"
 #define HANDCUFFED_TRAIT "handcuffed"
-/// Trait granted by [/obj/item/warpwhistle]
-#define WARPWHISTLE_TRAIT "warpwhistle"
 ///Turf trait for when a turf is transparent
 #define TURF_Z_TRANSPARENT_TRAIT "turf_z_transparent"
 /// Trait applied by [/datum/component/soulstoned]

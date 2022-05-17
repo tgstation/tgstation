@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/door,
 	/obj/item/scrying,
-	/obj/item/warpwhistle,
+	/obj/item/warp_whistle,
 	/obj/item/immortality_talisman,
 	/obj/item/melee/ghost_sword))
 
@@ -98,7 +98,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/scrying,
 	/obj/item/spellbook,
 	/obj/item/storage/belt/wands/full,
-	/obj/item/warpwhistle))
+	/obj/item/warp_whistle))
 
 /*
  * Gives [to_equip] a random gun from a list.

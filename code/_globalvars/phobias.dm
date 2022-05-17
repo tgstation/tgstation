@@ -325,7 +325,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/storage/toolbox/haunted,
 		/obj/item/tome,
 		/obj/item/toy/eightball/haunted,
-		/obj/item/warpwhistle,
+		/obj/item/warp_whistle,
 		/obj/machinery/door/airlock/cult,
 		/obj/narsie,
 		/obj/structure/destructible/cult,
