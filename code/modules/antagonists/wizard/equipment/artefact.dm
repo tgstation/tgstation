@@ -346,6 +346,8 @@
 /obj/effect/temp_visual/teleporting_tornado/Initialize(mapload, obj/item/warp_whistle/whistle)
 	. = ..()
 	src.whistle = whistle
+	if(!whistle)
+		qdel(src)
 	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, .proc/check_teleport)
 	SSmove_manager.move_towards(src, get_turf(whistle.whistler))
 
@@ -369,5 +371,6 @@
 			animate(stored_mobs, pixel_y = null, time = 1 SECONDS)
 			stored_mobs.log_message("warped with [whistle].", LOG_ATTACK, color="red")
 
-	whistle.whistler = null
+	if(whistle)
+		whistle.whistler = null
 	return ..()
