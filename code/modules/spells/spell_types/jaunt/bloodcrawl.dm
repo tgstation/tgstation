@@ -53,16 +53,6 @@
 			if(!do_after(jaunter, enter_blood_time, target = blood))
 				return FALSE
 
-	if(equip_blood_hands && iscarbon(jaunter))
-		jaunter.drop_all_held_items()
-
-		var/obj/item/bloodcrawl/left_hand = new(jaunter)
-		var/obj/item/bloodcrawl/right_hand = new(jaunter)
-		left_hand.icon_state = "bloodhand_right" // Swapped intentionall
-		right_hand.icon_state = "bloodhand_left" // ..because perspective or something
-		jaunter.put_in_hands(left_hand)
-		jaunter.put_in_hands(right_hand)
-
 	// The actual turf we enter
 	var/turf/jaunt_turf = get_turf(blood)
 
@@ -72,6 +62,16 @@
 	if(!holder)
 		jaunter.notransform = FALSE
 		return FALSE
+
+	if(equip_blood_hands && iscarbon(jaunter))
+		jaunter.drop_all_held_items()
+		// Give them some bloody hands to prevent them from doing things
+		var/obj/item/bloodcrawl/left_hand = new(jaunter)
+		var/obj/item/bloodcrawl/right_hand = new(jaunter)
+		left_hand.icon_state = "bloodhand_right" // Icons swapped intentionally..
+		right_hand.icon_state = "bloodhand_left" // ..because perspective, or something
+		jaunter.put_in_hands(left_hand)
+		jaunter.put_in_hands(right_hand)
 
 	blood.visible_message(span_warning("[jaunter] sinks into [blood]!"))
 	playsound(jaunt_turf, 'sound/magic/enter_blood.ogg', 50, TRUE, -1)
@@ -91,7 +91,6 @@
 			return FALSE
 
 		if(exit_blood_time > 0 SECONDS)
-
 			blood.visible_message(span_warning("[blood] starts to bubble..."))
 			if(!do_after(jaunter, exit_blood_time, target = blood))
 				return FALSE
@@ -118,12 +117,12 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/exit_blood_effect(mob/living/exited)
 	var/turf/landing_turf = get_turf(exited)
 	playsound(landing_turf, 'sound/magic/exit_blood.ogg', 50, TRUE, -1)
-	var/obj/effect/decal/cleanable/came_from = locate() in landing_turf
 
 	// Make the mob have the color of the blood pool it came out of
-	var/new_color = rgb(149, 10, 10)
-	if(istype(came_from, /obj/effect/decal/cleanable/xenoblood))
-		new_color = rgb(43, 186, 0)
+	var/obj/effect/decal/cleanable/came_from = locate() in landing_turf
+	var/new_color = came_from?.get_blood_color()
+	if(!new_color)
+		return
 
 	exited.add_atom_colour(new_color, TEMPORARY_COLOUR_PRIORITY)
 	// ...but only for a few seconds
@@ -161,25 +160,21 @@
 			span_warning("[victim] kicks free of [blood] just before entering it!"),
 			blind_message = span_notice("You hear splashing and struggling."),
 		)
+		return FALSE
 
-	else if(victim.reagents?.has_reagent(/datum/reagent/consumable/ethanol/demonsblood, needs_metabolizing = TRUE))
-		jaunt_turf.visible_message(
-			span_warning("Something prevents [victim] from entering [blood]!"),
-			blind_message = span_notice("You hear a splash and a thud.")
-		)
-		to_chat(jaunter, span_warning("A strange force is blocking [victim] from entering!"))
+	if(SEND_SIGNAL(victim, COMSIG_LIVING_BLOOD_CRAWL_PRE_CONSUMED, src, jaunter, blood) & COMPONENT_STOP_CONSUMPTION)
+		return FALSE
 
-	else
-		victim.forceMove(jaunter)
-		victim.emote("scream")
-		jaunt_turf.visible_message(
-			span_boldwarning("[jaunter] drags [victim] into [blood]!"),
-			blind_message = span_notice("You hear a splash."),
-		)
+	victim.forceMove(jaunter)
+	victim.emote("scream")
+	jaunt_turf.visible_message(
+		span_boldwarning("[jaunter] drags [victim] into [blood]!"),
+		blind_message = span_notice("You hear a splash."),
+	)
 
-		jaunter.notransform = TRUE
-		consume_victim(victim, jaunter)
-		jaunter.notransform = FALSE
+	jaunter.notransform = TRUE
+	consume_victim(victim, jaunter)
+	jaunter.notransform = FALSE
 
 	return TRUE
 
@@ -192,29 +187,13 @@
 
 	for(var/i in 1 to 3)
 		playsound(get_turf(jaunter), consume_sound, 50, TRUE)
-		if(!do_after(jaunter, 3 SECONDS, victim)) // melbert todo broken
+		if(!do_after(jaunter, 3 SECONDS, victim))
 			to_chat(jaunter, span_danger("You lose your victim!"))
 			return FALSE
 		if(QDELETED(src))
 			return FALSE
 
-	if(victim.reagents?.has_reagent(/datum/reagent/consumable/ethanol/devilskiss, needs_metabolizing = TRUE))
-		to_chat(jaunter, span_boldwarning("AAH! THEIR FLESH! IT BURNS!"))
-		jaunter.apply_damage(25, BRUTE, wound_bonus = CANT_WOUND)
-
-		for(var/obj/effect/decal/cleanable/target in range(1, get_turf(victim)))
-			if(!target.can_bloodcrawl_in())
-				continue
-			victim.forceMove(get_turf(target))
-			victim.visible_message(span_warning("[target] violently expels [victim]!"))
-			exit_blood_effect(victim)
-			return FALSE
-
-		// Fuck it, just eject them, thanks to some split second cleaning
-		victim.forceMove(get_turf(victim))
-		victim.visible_message(span_warning("[victim] appears from nowhere, covered in blood!"))
-		exit_blood_effect(victim)
-
+	if(SEND_SIGNAL(victim, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED, src, jaunter) & COMPONENT_STOP_CONSUMPTION)
 		return FALSE
 
 	jaunter.revive(full_heal = TRUE, admin_revive = FALSE)
@@ -222,7 +201,7 @@
 	// No defib possible after laughter
 	victim.apply_damage(1000, BRUTE, wound_bonus = CANT_WOUND)
 	victim.death()
-	on_victim_consumed(victim)
+	on_victim_consumed(victim, jaunter)
 
 /**
  * Called when a victim starts to be consumed.
@@ -257,13 +236,10 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Grant(mob/grant_to)
 	. = ..()
 	if(owner)
-		// Registering this on preqdeleted, instead of qdeleted
-		// because qdeleted is already registered on owner from
-		// From Grant() earlier, and I don't wanna deal with it
-		RegisterSignal(owner, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_PREQDELETED), .proc/on_death)
+		RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_death)
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Remove(mob/living/removed_from)
-	UnregisterSignal(removed_from, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_PREQDELETED))
+	UnregisterSignal(removed_from, COMSIG_LIVING_DEATH)
 	return ..()
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/on_victim_start_consume(mob/living/victim, mob/living/jaunter)

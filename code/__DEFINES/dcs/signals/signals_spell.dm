@@ -51,6 +51,17 @@
 /// Sent from datum/action/cooldown/spell/jaunt/exit_jaunt, after the mob exited jaunt: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_AFTER_EXIT_JAUNT "spell_mob_after_exit_jaunt"
 
+/// Sent from/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/try_enter_jaunt,
+/// to any unconscious / critical mobs being dragged when the jaunter enters blood:
+/// (datum/action/cooldown/spell/jaunt/bloodcrawl/crawl, mob/living/jaunter, obj/effect/decal/cleanable/blood)
+#define COMSIG_LIVING_BLOOD_CRAWL_PRE_CONSUMED "living_pre_consumed_by_bloodcrawl"
+/// Sent from/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/consume_victim,
+/// to the victim being consumed by the slaughter demon.
+/// (datum/action/cooldown/spell/jaunt/bloodcrawl/crawl, mob/living/jaunter)
+#define COMSIG_LIVING_BLOOD_CRAWL_CONSUMED "living_consumed_by_bloodcrawl"
+	/// Return at any point to stop the bloodcrawl "consume" process from continuing.
+	#define COMPONENT_STOP_CONSUMPTION (1 << 0)
+
 // Signals for specific spells
 
 // Lichdom

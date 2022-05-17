@@ -41,6 +41,9 @@ Doesn't work on other aliens/AI.*/
 
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.adjustPlasma(-plasma_cost)
+	if(click_to_activate && carbon_owner.getPlasma() < plasma_cost)
+		unset_click_ability(owner, refund_cooldown = FALSE)
+
 	return TRUE
 
 /datum/action/cooldown/alien/set_statpanel_format()
@@ -320,7 +323,8 @@ Doesn't work on other aliens/AI.*/
 
 // Snowflake to check for multiple types of alien resin structures
 /datum/action/cooldown/alien/make_structure/resin/check_for_duplicate()
-	for(var/obj/structure/blocker_type as anything in structures)
+	for(var/blocker_name in structures)
+		var/blocker_type = structures[blocker_name]
 		if(locate(blocker_type) in owner.loc)
 			to_chat(owner, span_warning("There is already a resin structure there!"))
 			return FALSE
@@ -331,6 +335,7 @@ Doesn't work on other aliens/AI.*/
 	var/choice = tgui_input_list(owner, "Select a shape to build", "Resin building", structures)
 	if(isnull(choice) || QDELETED(src) || QDELETED(owner) || !check_for_duplicate() || !IsAvailable())
 		return FALSE
+
 	var/obj/structure/choice_path = structures[choice]
 	if(!ispath(choice_path))
 		return FALSE

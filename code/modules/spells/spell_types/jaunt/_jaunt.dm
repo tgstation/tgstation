@@ -50,8 +50,11 @@
  */
 /datum/action/cooldown/spell/jaunt/proc/enter_jaunt(mob/living/jaunter, turf/loc_override)
 	var/obj/effect/dummy/phased_mob/jaunt = new jaunt_type(loc_override || get_turf(jaunter), jaunter)
-	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, src, jaunt)
+	spell_requirements |= SPELL_CASTABLE_WHILE_PHASED
 	ADD_TRAIT(jaunter, TRAIT_MAGICALLY_PHASED, REF(src))
+
+	// This needs to happen at the end, after all the traits and stuff is handled
+	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, src, jaunt)
 	return jaunt
 
 /**
@@ -73,8 +76,11 @@
 	if(loc_override)
 		jaunt.forceMove(loc_override)
 	jaunt.eject_jaunter()
-	SEND_SIGNAL(unjaunter, COMSIG_MOB_AFTER_EXIT_JAUNT, src)
+	spell_requirements &= ~SPELL_CASTABLE_WHILE_PHASED
 	REMOVE_TRAIT(unjaunter, TRAIT_MAGICALLY_PHASED, REF(src))
+
+	// Ditto - this needs to happen at the end, after all the traits and stuff is handled
+	SEND_SIGNAL(unjaunter, COMSIG_MOB_AFTER_EXIT_JAUNT, src)
 	return TRUE
 
 /// Simple helper to check if the passed mob is currently jaunting or not

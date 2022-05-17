@@ -214,7 +214,7 @@
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out
 
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/do_steam_effects(mobloc)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/do_steam_effects(mobloc)
 	return
 
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/angelic

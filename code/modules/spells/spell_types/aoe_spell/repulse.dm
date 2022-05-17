@@ -70,6 +70,7 @@
 	sound = 'sound/magic/tail_swing.ogg'
 
 	cooldown_time = 15 SECONDS
+	spell_requirements = NONE
 
 	invocation_type = INVOCATION_NONE
 	antimagic_flags = NONE

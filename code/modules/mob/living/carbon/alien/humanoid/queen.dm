@@ -54,7 +54,7 @@
 	var/datum/action/cooldown/spell/aoe/repulse/xeno/tail_whip = new(src)
 	tail_whip.Grant(src)
 
-	var/datum/action/small_sprite/smallsprite = new(src)
+	var/datum/action/small_sprite/queen/smallsprite = new(src)
 	smallsprite.Grant(src)
 
 	var/datum/action/cooldown/alien/promote/promotion = new(src)
@@ -109,8 +109,8 @@
 	return TRUE
 
 /datum/action/cooldown/alien/promote/Activate(atom/target)
-	var/obj/item/queen_promotion/promotion = locate() in owner.held_items
-	if(promotion)
+	var/obj/item/queen_promotion/existing_promotion = locate() in owner.held_items
+	if(existing_promotion)
 		to_chat(owner, span_noticealien("You discard [promotion]."))
 		qdel(promotion)
 		return TRUE
@@ -119,11 +119,12 @@
 		to_chat(owner, span_warning("You must have an empty hand before preparing the parasite."))
 		return FALSE
 
-	if(!owner.put_in_hands(new promotion(owner.loc), del_on_fail = TRUE))
+	var/obj/item/queen_promotion/new_promotion = new(owner.loc)
+	if(!owner.put_in_hands(new_promotion, del_on_fail = TRUE))
 		to_chat(owner, span_noticealien("You fail to prepare a parasite."))
 		return FALSE
 
-	to_chat(owner, span_noticealien("Use [promotion] on one of your children to promote her to a Praetorian!"))
+	to_chat(owner, span_noticealien("Use [new_promotion] on one of your children to promote her to a Praetorian!"))
 	return TRUE
 
 /obj/item/queen_promotion
