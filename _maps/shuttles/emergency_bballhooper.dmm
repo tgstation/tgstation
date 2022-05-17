@@ -73,8 +73,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "gl" = (
-/obj/structure/chair/stool/directional/south,
 /obj/machinery/light/small/red/directional/east,
+/obj/structure/chair/stool/directional/south{
+	can_buckle = 1
+	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "go" = (
@@ -349,7 +351,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "zh" = (
-/obj/structure/chair/stool/directional/south,
+/obj/structure/chair/stool/directional/south{
+	can_buckle = 1
+	},
 /obj/item/restraints/handcuffs{
 	pixel_y = -7;
 	pixel_x = -5
@@ -728,8 +732,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "YB" = (
-/obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/blood,
+/obj/structure/chair/stool/directional/south{
+	can_buckle = 1
+	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "YF" = (
