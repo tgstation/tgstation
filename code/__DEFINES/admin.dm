@@ -111,9 +111,9 @@
 
 
 /// Shown to vicitm of staff of change and related effects.
-#define POLICY_POLYMORPH "polymorph"
+#define POLICY_POLYMORPH "Polymorph"
 /// Shown on top of policy verb window
-#define POLICY_VERB_HEADER "policy_verb_header"
+#define POLICY_VERB_HEADER "Policy Verb Header"
 
 //How many things you can spawn at once with spawn verb/create panel
 #define ADMIN_SPAWN_CAP 100
