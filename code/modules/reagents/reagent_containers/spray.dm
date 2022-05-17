@@ -219,7 +219,7 @@
 	return OXYLOSS
 
 /obj/item/reagent_containers/spray/pepper/get_waitstep(range)
-	return 1 //Fast and furious
+	return 2 //Fast and furious
 
 // Fix pepperspraying yourself
 /obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)
