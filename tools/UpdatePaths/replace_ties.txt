@@ -1,0 +1,5 @@
+#comment This replaces existing ties with updated GAGS sprites (https://github.com/tgstation/tgstation/pull/67053)
+
+/obj/item/clothing/neck/tie/red : /obj/item/clothing/neck/tie/greyscale/red
+/obj/item/clothing/neck/tie/blue : /obj/item/clothing/neck/tie/greyscale/blue
+/obj/item/clothing/neck/tie/black : /obj/item/clothing/neck/tie/greyscale/black
