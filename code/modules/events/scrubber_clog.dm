@@ -6,9 +6,9 @@
 	earliest_start = 5 MINUTES
 
 /datum/round_event/scrubber_clog
-	announceWhen = 1 SECONDS
-	startWhen = 10 SECONDS
-	endWhen = 10 MINUTES
+	announceWhen = 10
+	startWhen = 5
+	endWhen = 600
 
 	///Scrubber selected for the event.
 	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber
@@ -19,7 +19,7 @@
 	///Cap on the number of spawned mobs that can be alive at once.
 	var/maximum_spawns = 3
 	///Interval between mob spawns.
-	var/spawn_delay = 10 SECONDS
+	var/spawn_delay = 10
 	///Used to track/limit produced mobs.
 	var/list/living_mobs = list()
 	///Used for tracking if the clog signal should be sent.
@@ -33,9 +33,9 @@
 	if(!scrubber)
 		CRASH("Unable to find suitable scrubber.")
 	spawned_mob = get_mob()
-	endWhen = rand(5 MINUTES , 10 MINUTES)
+	endWhen = rand(300, 600)
 	maximum_spawns = rand(3, 5)
-	spawn_delay = rand(10 SECONDS, 15 SECONDS)
+	spawn_delay = rand(10, 15)
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
 	scrubber.clog()
@@ -104,7 +104,7 @@
 /datum/round_event/scrubber_clog/major/setup()
 	. = ..()
 	maximum_spawns = rand(2,4)
-	spawn_delay = rand(15 SECONDS, 20 SECONDS)
+	spawn_delay = rand(15,20)
 
 /datum/round_event/scrubber_clog/major/get_mob()
 	var/static/list/mob_list = list(
@@ -128,7 +128,7 @@
 
 /datum/round_event/scrubber_clog/critical/setup()
 	. = ..()
-	spawn_delay = rand(15 SECONDS, 25 SECONDS)
+	spawn_delay = rand(15,25)
 
 /datum/round_event/scrubber_clog/critical/announce()
 	priority_announce("Potentially hazardous lifesigns detected in the [get_area(scrubber)] ventilation network.", "Security Alert")
@@ -153,8 +153,8 @@
 
 /datum/round_event/scrubber_clog/strange/setup()
 	. = ..()
-	endWhen = rand(10 MINUTES, 12 MINUTES)
-	spawn_delay = rand(6 SECONDS, 25 SECONDS) //Wide range, for maximum utility/comedy
+	endWhen = rand(600, 720)
+	spawn_delay = rand(6, 25) //Wide range, for maximum utility/comedy
 
 /datum/round_event/scrubber_clog/strange/announce()
 	priority_announce("Unusual lifesign readings detected in the [get_area(scrubber)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
