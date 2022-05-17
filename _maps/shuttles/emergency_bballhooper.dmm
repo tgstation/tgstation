@@ -32,7 +32,9 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/chair/stool/directional/south{
-	can_buckle = 1
+	can_buckle = 1;
+	name = "FOOLS-SIT-DOWNER";
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
@@ -324,12 +326,14 @@
 /area/shuttle/escape/brig)
 "td" = (
 /obj/structure/window/reinforced/spawner,
-/obj/structure/chair/stool/directional/south{
-	can_buckle = 1
-	},
 /obj/item/restraints/handcuffs{
 	pixel_y = -7;
 	pixel_x = -5
+	},
+/obj/structure/chair/stool/directional/south{
+	can_buckle = 1;
+	name = "FOOLS-SIT-DOWNER";
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
@@ -375,7 +379,9 @@
 "xc" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/chair/stool/directional/south{
-	can_buckle = 1
+	can_buckle = 1;
+	name = "FOOLS-SIT-DOWNER";
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
@@ -931,7 +937,9 @@
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/chair/stool/directional/south{
-	can_buckle = 1
+	can_buckle = 1;
+	name = "FOOLS-SIT-DOWNER";
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
