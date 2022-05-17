@@ -1,5 +1,5 @@
 /// How long the chat message's spawn-in animation will occur for
-#define CHAT_MESSAGE_SPAWN_TIME 0.2 SECONDS
+#define CHAT_MESSAGE_SPAWN_TIME (0.2 SECONDS)
 /// How long the chat message will exist prior to any exponential decay
 #define CHAT_MESSAGE_LIFESPAN 5 SECONDS
 /// How long the chat message's end of life fading animation will occur for
