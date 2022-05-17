@@ -51,7 +51,7 @@
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()
 
-	if(is_type_in_list(W, contained_item) && (W.weight_class == WEIGHT_CLASS_TINY)
+	if(is_type_in_list(W, contained_item) && (W.w_class == WEIGHT_CLASS_TINY))
 		if(inserted_item)
 			to_chat(user, span_warning("There is already \a [inserted_item] in \the [src]!"))
 		else
