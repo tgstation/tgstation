@@ -8,7 +8,8 @@
  * when the verb finally processes but it was in range if the verb had processed immediately and overtimed.
  */
 
-///queuing tick_usage threshold for verbs that are high enough priority that they only queue if the server is overtiming. only use for critical verbs
+///queuing tick_usage threshold for verbs that are high enough priority that they only queue if the server is overtiming. 
+///ONLY use for critical verbs
 #define VERB_OVERTIME_QUEUE_THRESHOLD 100
 ///queuing tick_usage threshold for verbs that need lower latency more than most verbs.
 #define VERB_HIGH_PRIORITY_QUEUE_THRESHOLD 95
