@@ -37,64 +37,6 @@
 	maximum_spawns = rand(3, 5)
 	spawn_delay = rand(10 SECONDS, 15 SECONDS)
 
-/**
- * Finds a valid scrubber for the scrubber clog event.
- *
- * For evert scrubber in the round, checks if the scrubber turf is on-station, and is neither welded nor already clogged, and
- * adds it to a list. A random scrubber is picked from this list, and returned as the scrubber that will be used for the event.
- */
-
-/datum/round_event/scrubber_clog/proc/get_scrubber()
-	var/list/scrubber_list = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
-		var/turf/scrubber_turf = get_turf(scrubber)
-		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
-			scrubber_list += scrubber
-	return pick(scrubber_list)
-
-/**
- * Selects which mob will be spawned for a given scrubber clog event.
- *
- * Using a switch, this proc checks for the severity of the scrubber clog event, and will generate a pool of mobs based on the severity.
- * It will then pick from the list to determine the mob that will be spawned for the event.
- */
-
-/datum/round_event/scrubber_clog/proc/get_mob()
-	switch(severity)
-		if("Minor") //Spawns completely harmless nuisance mobs.
-			var/list/minor_mobs = list(
-				/mob/living/simple_animal/mouse,
-				/mob/living/basic/cockroach,
-				/mob/living/simple_animal/butterfly
-				)
-			return pick(minor_mobs)
-
-		if("Major") //Spawns potentially dangerous mobs.
-			var/list/major_mobs = list(
-				/mob/living/simple_animal/hostile/rat,
-				/mob/living/simple_animal/hostile/bee,
-				/mob/living/simple_animal/hostile/giant_spider
-				)
-			return pick(major_mobs)
-
-		if("Critical") //Higher impact mobs, but with a lower max spawn.
-			var/list/critical_mobs = list(
-				/mob/living/simple_animal/hostile/carp,
-				/mob/living/simple_animal/hostile/bee/toxin,
-				/mob/living/basic/cockroach/glockroach,
-				)
-			return pick(critical_mobs)
-
-		if("Strange") //Useful or silly mobs. Still hazardous. Very low weight.
-			var/list/strange_mobs = list(
-				/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
-				/mob/living/simple_animal/hostile/bear,
-				/mob/living/simple_animal/pet/gondola,
-				/mob/living/simple_animal/hostile/mushroom,
-				/mob/living/simple_animal/hostile/lightgeist
-				)
-			return pick(strange_mobs)
-
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
 	scrubber.clog()
 	scrubber.produce_mob() //The first one's free!
@@ -107,6 +49,35 @@
 
 /datum/round_event/scrubber_clog/end() //No end announcement. If you want to take the easy way out and just leave the vent welded, you must open it at your own peril.
 	scrubber.unclog()
+
+/**
+ * Selects which mob will be spawned for a given scrubber clog event.
+ *
+ * Creates a static list of mobs, which is different based on the severity of the event being run, and returns a pick() of it.
+ */
+
+/datum/round_event/scrubber_clog/proc/get_mob()
+	var/static/list/mob_list = list(
+				/mob/living/simple_animal/mouse,
+				/mob/living/basic/cockroach,
+				/mob/living/simple_animal/butterfly
+				)
+	return(pick(mob_list))
+
+/**
+ * Finds a valid scrubber for the scrubber clog event.
+ *
+ * For every scrubber in the round, checks if the scrubber turf is on-station, and is neither welded nor already clogged, and
+ * adds it to a list. A random scrubber is picked from this list, and returned as the scrubber that will be used for the event.
+ */
+
+/datum/round_event/scrubber_clog/proc/get_scrubber()
+	var/list/scrubber_list = list()
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber in GLOB.machines)
+		var/turf/scrubber_turf = get_turf(scrubber)
+		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
+			scrubber_list += scrubber
+	return pick(scrubber_list)
 
 /**
  * Checks which mobs in the mob spawn list are alive.
@@ -135,6 +106,14 @@
 	maximum_spawns = rand(2,4)
 	spawn_delay = rand(15 SECONDS, 20 SECONDS)
 
+/datum/round_event/scrubber_clog/major/get_mob()
+	var/static/list/mob_list = list(
+		/mob/living/simple_animal/hostile/rat,
+		/mob/living/simple_animal/hostile/bee,
+		/mob/living/simple_animal/hostile/giant_spider
+		)
+	return(pick(mob_list))
+
 /datum/round_event_control/scrubber_clog/critical
 	name = "Critical Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog/critical
@@ -154,6 +133,14 @@
 /datum/round_event/scrubber_clog/critical/announce()
 	priority_announce("Potentially hazardous lifesigns detected in the [get_area(scrubber)] ventilation network.", "Security Alert")
 
+/datum/round_event/scrubber_clog/critical/get_mob()
+	var/static/list/mob_list = list(
+		/mob/living/simple_animal/hostile/carp,
+		/mob/living/simple_animal/hostile/bee/toxin,
+		/mob/living/basic/cockroach/glockroach,
+		)
+	return(pick(mob_list))
+
 /datum/round_event_control/scrubber_clog/strange
 	name = "Strange Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog/strange
@@ -171,3 +158,13 @@
 
 /datum/round_event/scrubber_clog/strange/announce()
 	priority_announce("Unusual lifesign readings detected in the [get_area(scrubber)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
+
+/datum/round_event/scrubber_clog/strange/get_mob()
+	var/static/list/mob_list = list(
+		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
+		/mob/living/simple_animal/hostile/bear,
+		/mob/living/simple_animal/pet/gondola,
+		/mob/living/simple_animal/hostile/mushroom,
+		/mob/living/simple_animal/hostile/lightgeist
+		)
+	return(pick(mob_list))
