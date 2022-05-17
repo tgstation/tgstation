@@ -134,6 +134,7 @@
 	on_who.click_intercept = src
 	if(ranged_mousepointer)
 		on_who.client?.mouse_override_icon = ranged_mousepointer
+		on_who.update_mouse_pointer()
 	UpdateButtons()
 	return TRUE
 
@@ -149,6 +150,7 @@
 	on_who.click_intercept = null
 	if(ranged_mousepointer)
 		on_who.client?.mouse_override_icon = initial(on_who.client?.mouse_override_icon)
+		on_who.update_mouse_pointer()
 	UpdateButtons()
 	return TRUE
 
