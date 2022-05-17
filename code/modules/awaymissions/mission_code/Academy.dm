@@ -359,6 +359,7 @@
 /datum/outfit/butler
 	name = "Butler"
 	uniform = /obj/item/clothing/under/suit/black_really
+	neck = /obj/item/clothing/neck/tie/greyscale/red/tied
 	shoes = /obj/item/clothing/shoes/laceup
 	head = /obj/item/clothing/head/bowler
 	glasses = /obj/item/clothing/glasses/monocle

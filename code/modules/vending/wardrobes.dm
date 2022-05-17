@@ -387,6 +387,7 @@
 		/obj/item/clothing/suit/toggle/lawyer/purple = 1,
 		/obj/item/clothing/under/suit/black = 1,
 		/obj/item/clothing/under/suit/black/skirt = 1,
+		/obj/item/clothing/neck/tie/greyscale = 3,
 		/obj/item/clothing/suit/toggle/lawyer/black = 1,
 		/obj/item/clothing/under/rank/civilian/lawyer/beige = 1,
 		/obj/item/clothing/under/rank/civilian/lawyer/beige/skirt = 1,

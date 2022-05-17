@@ -67,6 +67,7 @@
 	items = list(
 		/obj/item/clothing/accessory/waistcoat,
 		/obj/item/clothing/under/suit/black,
+		/obj/item/clothing/neck/tie/greyscale/black,
 		/obj/item/clothing/head/that,
 	)
 

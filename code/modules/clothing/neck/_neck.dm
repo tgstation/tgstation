@@ -104,13 +104,22 @@
 	name = "red tie"
 	greyscale_colors = "#c23838ff"
 
+/obj/item/clothing/neck/tie/greyscale/red/tied
+	is_tied = TRUE
+
 /obj/item/clothing/neck/tie/greyscale/red/hitman
 	desc = "This is a $47,000 custom-tailored Référence Du Tueur À Gages tie. The clot is from neosilkworms raised at a tie microfarm in Cookwell, from a secret pattern passed down by monk tailors since the twenty-first century!"
 	tie_timer = 1 SECONDS // You're a professional.
 
+/obj/item/clothing/neck/tie/greyscale/red/hitman/tied
+	is_tied = TRUE
+
 /obj/item/clothing/neck/tie/greyscale/black
 	name = "black tie"
 	greyscale_colors = "#151516ff"
+
+/obj/item/clothing/neck/tie/greyscale/black/tied
+	is_tied = TRUE
 
 /obj/item/clothing/neck/tie/horrible
 	name = "horrible tie"

@@ -231,6 +231,7 @@
 	id = /obj/item/card/id/advanced/chameleon/black
 	id_trim = /datum/id_trim/reaper_assassin
 	uniform = /obj/item/clothing/under/suit/black
+	neck = /obj/item/clothing/neck/tie/greyscale/red/hitman/tied
 	belt = /obj/item/modular_computer/tablet/pda/heads
 	ears = /obj/item/radio/headset
 	gloves = /obj/item/clothing/gloves/color/black
@@ -389,6 +390,7 @@
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/mobster
 	uniform = /obj/item/clothing/under/suit/black_really
+	neck = /obj/item/clothing/neck/tie/greyscale/red/tied
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black

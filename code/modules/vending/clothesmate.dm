@@ -44,7 +44,7 @@
 		/obj/item/clothing/neck/stripedredscarf = 3,
 		/obj/item/clothing/neck/stripedbluescarf = 3,
 		/obj/item/clothing/neck/stripedgreenscarf = 3,
-		/obj/item/clothing/neck/tie/greyscale = 3,
+		/obj/item/clothing/neck/tie/greyscale = 6,
 		/obj/item/clothing/neck/tie/horrible = 3,
 		/obj/item/clothing/accessory/pride = 15,
 		/obj/item/storage/belt/fannypack = 3,
