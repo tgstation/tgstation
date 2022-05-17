@@ -373,4 +373,5 @@
 
 	if(whistle)
 		whistle.whistler = null
+		whistle = null
 	return ..()
