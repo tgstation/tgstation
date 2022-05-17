@@ -90,7 +90,7 @@
 		/datum/gas/tritium = "Tritium is consumed at 0.01 reaction rate",
 		/datum/gas/pluoxium = "Pluoxium is produced at 1 reaction rate",
 		/datum/gas/hydrogen = "Hydrogen is produced at 0.01 reaction rate",
-		"Pressure" = "The higher the pressure the faster the reaction rate goes.",
+		"Pressure" = "Reaction rate scales directly with pressure",
 		"Energy" = "[PLUOXIUM_FORMATION_ENERGY] joules of energy is released per reaction rate",
 		"Temperature" = "Can only occur between [PLUOXIUM_FORMATION_MIN_TEMP] - [PLUOXIUM_FORMATION_MAX_TEMP] Kelvin",
 	)
