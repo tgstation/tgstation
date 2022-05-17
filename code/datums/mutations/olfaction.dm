@@ -66,7 +66,7 @@
 /datum/action/cooldown/spell/olfaction/proc/pick_up_target(mob/living/caster, atom/sniffed)
 	var/mob/living/carbon/old_target = tracking_ref?.resolve()
 	var/list/possibles = list()
-	var/list/prints = sniffed.return_fingerprints()
+	var/list/prints = GET_ATOM_FINGERPRINTS(sniffed)
 	if(prints)
 		for(var/mob/living/carbon/to_check as anything in GLOB.carbon_list)
 			if(prints[md5(to_check.dna?.unique_identity)])

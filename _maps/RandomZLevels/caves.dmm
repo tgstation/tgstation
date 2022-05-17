@@ -504,6 +504,13 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
+"cK" = (
+/obj/structure/sign/warning/secure_area{
+	desc = "A warning sign which reads 'HOLY SHIT SWAGMAN WHAT ARE YOU DOING'.";
+	name = "\improper HOLY SHIT SWAGMAN WHAT ARE YOU DOING"
+	},
+/turf/closed/wall,
+/area/awaymission/caves/bmp_asteroid/level_two)
 "cN" = (
 /obj/machinery/door/window/left/directional/east,
 /obj/effect/decal/cleanable/xenoblood/xgibs,
@@ -1099,6 +1106,12 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
+"fL" = (
+/obj/structure/sign/departments/maint{
+	pixel_y = 32
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/bmp_asteroid)
 "fN" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
@@ -1365,12 +1378,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/caves/northblock)
-"hT" = (
-/obj/structure/flora/rock,
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_two)
 "jH" = (
 /obj/structure/spawner/mining/basilisk,
 /turf/open/misc/asteroid/basalt{
@@ -1443,6 +1450,12 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid/level_two)
+"nU" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_three)
 "nW" = (
 /obj/effect/mine/explosive{
 	desc = "Rusted mines planted out by the miners before, probably to keep the cave monsters at bay.";
@@ -1550,6 +1563,19 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
+"uA" = (
+/obj/structure/destructible/cult/item_dispenser/archives,
+/obj/item/stack/sheet/runed_metal{
+	amount = 25
+	},
+/obj/item/coin/antagtoken,
+/obj/item/book/granter/action/spell/summonitem{
+	name = "\proper an extremely flamboyant book"
+	},
+/turf/open/floor/engine/cult{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_four)
 "uN" = (
 /obj/structure/spider/stickyweb,
 /obj/machinery/sleeper{
@@ -1558,6 +1584,13 @@
 /mob/living/simple_animal/hostile/giant_spider/hunter,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
+"vo" = (
+/obj/structure/flora/rock/style_random,
+/obj/item/soulstone/anybody,
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_three)
 "vU" = (
 /obj/structure/noticeboard/directional/north,
 /obj/item/paper/fluff/awaymissions/caves/shipment_notice,
@@ -1591,19 +1624,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
-"xu" = (
-/obj/structure/destructible/cult/item_dispenser/archives,
-/obj/item/stack/sheet/runed_metal{
-	amount = 25
-	},
-/obj/item/coin/antagtoken,
-/obj/item/book/granter/action/spell/summonitem{
-	name = "\proper an extremely flamboyant book"
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_four)
 "yS" = (
 /obj/structure/closet/crate,
 /obj/item/paper/fluff/awaymissions/caves/shipment_receipt,
@@ -1620,25 +1640,12 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
-"yV" = (
-/obj/structure/flora/rock,
-/obj/item/soulstone/anybody,
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
 "zn" = (
 /obj/effect/landmark/awaystart,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"zH" = (
-/obj/structure/flora/rock,
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid/level_three)
 "zN" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark{
@@ -1894,12 +1901,6 @@
 /obj/machinery/light/small/built/directional/west,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
-"Mq" = (
-/obj/structure/flora/rock,
-/turf/open/misc/asteroid/basalt{
-	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
-	},
-/area/awaymission/caves/bmp_asteroid)
 "Mw" = (
 /obj/item/shard,
 /turf/open/misc/asteroid/basalt{
@@ -1969,6 +1970,12 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
+"OM" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid/level_two)
 "OX" = (
 /turf/closed/indestructible/oldshuttle{
 	desc = "Go through.";
@@ -1977,6 +1984,12 @@
 	name = "the other side"
 	},
 /area/space/nearstation)
+"OY" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid/basalt{
+	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
+	},
+/area/awaymission/caves/bmp_asteroid)
 "PS" = (
 /obj/machinery/light/small/built/directional/south,
 /obj/machinery/suit_storage_unit/mining{
@@ -2046,12 +2059,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
-"Vd" = (
-/obj/structure/sign/departments/maint{
-	pixel_y = 32
-	},
-/turf/open/floor/iron,
-/area/awaymission/caves/bmp_asteroid)
 "VK" = (
 /obj/effect/mob_spawn/ghost_role/human/skeleton{
 	name = "spooky skeleton remains"
@@ -2128,13 +2135,6 @@
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
-"ZN" = (
-/obj/structure/sign/warning/secure_area{
-	desc = "A warning sign which reads 'HOLY SHIT SWAGMAN WHAT ARE YOU DOING'.";
-	name = "\improper HOLY SHIT SWAGMAN WHAT ARE YOU DOING"
-	},
-/turf/closed/wall,
-/area/awaymission/caves/bmp_asteroid/level_two)
 "ZS" = (
 /obj/structure/barricade/wooden,
 /turf/open/misc/asteroid/basalt{
@@ -4996,7 +4996,7 @@ ah
 ah
 ah
 hq
-zH
+nU
 hq
 ak
 ak
@@ -5240,7 +5240,7 @@ ac
 ac
 ac
 hq
-zH
+nU
 hq
 hq
 ah
@@ -5954,7 +5954,7 @@ BK
 BK
 BK
 BK
-Mq
+OY
 BK
 bL
 bL
@@ -6206,7 +6206,7 @@ DO
 BK
 BK
 DO
-Mq
+OY
 BK
 BK
 BK
@@ -6273,7 +6273,7 @@ ah
 ah
 ah
 hq
-zH
+nU
 ac
 ac
 ac
@@ -6294,7 +6294,7 @@ ah
 ah
 ah
 hq
-zH
+nU
 hq
 hq
 hq
@@ -6566,7 +6566,7 @@ hq
 hq
 hq
 hq
-zH
+nU
 hq
 hq
 hq
@@ -6946,7 +6946,7 @@ BK
 BK
 BK
 BK
-Mq
+OY
 bL
 bL
 bL
@@ -7199,7 +7199,7 @@ bL
 bL
 bL
 BK
-Mq
+OY
 BK
 BK
 BK
@@ -7551,7 +7551,7 @@ ac
 ac
 ac
 hq
-zH
+nU
 ah
 ah
 ah
@@ -7561,7 +7561,7 @@ ah
 ah
 hq
 hq
-zH
+nU
 hq
 ah
 ah
@@ -7747,7 +7747,7 @@ dW
 FS
 fB
 dW
-Vd
+fL
 ev
 dX
 bL
@@ -7859,7 +7859,7 @@ ah
 ah
 ah
 hq
-zH
+nU
 hq
 hq
 hq
@@ -8009,7 +8009,7 @@ fT
 dX
 bL
 bL
-Mq
+OY
 BK
 bL
 bL
@@ -8604,7 +8604,7 @@ ah
 ah
 ah
 hq
-zH
+nU
 ah
 ah
 ah
@@ -8758,14 +8758,14 @@ BK
 cx
 cx
 cx
-Mq
+OY
 BK
 bM
 bM
 bM
 BK
 BK
-Mq
+OY
 cx
 cx
 cx
@@ -9358,7 +9358,7 @@ ac
 ac
 ac
 hq
-zH
+nU
 hq
 hq
 ah
@@ -9815,7 +9815,7 @@ bL
 bL
 bL
 bL
-Mq
+OY
 BK
 bL
 bL
@@ -9906,7 +9906,7 @@ ah
 ah
 ah
 ah
-zH
+nU
 ac
 ac
 ah
@@ -10689,7 +10689,7 @@ hq
 ac
 ac
 hq
-zH
+nU
 ac
 ac
 hq
@@ -10843,7 +10843,7 @@ BK
 BK
 BK
 BK
-Mq
+OY
 BK
 bL
 bL
@@ -11863,7 +11863,7 @@ BK
 cx
 cx
 BK
-Mq
+OY
 BK
 BK
 bL
@@ -11876,7 +11876,7 @@ bL
 bL
 bL
 bL
-Mq
+OY
 BK
 BK
 BK
@@ -12443,7 +12443,7 @@ ac
 ac
 ac
 hq
-zH
+nU
 hq
 hq
 hq
@@ -12489,7 +12489,7 @@ hq
 ac
 ac
 ac
-yV
+vo
 HK
 ac
 ZS
@@ -12726,7 +12726,7 @@ ah
 hq
 hq
 hq
-zH
+nU
 hq
 hq
 hq
@@ -13488,7 +13488,7 @@ ah
 hq
 hq
 hq
-zH
+nU
 hq
 ah
 ah
@@ -13622,7 +13622,7 @@ bL
 bL
 BK
 BK
-Mq
+OY
 BK
 cx
 cx
@@ -13655,7 +13655,7 @@ bL
 BK
 zS
 BK
-Mq
+OY
 BK
 fJ
 fQ
@@ -13978,7 +13978,7 @@ ac
 hq
 hq
 hq
-zH
+nU
 hq
 hq
 hq
@@ -14143,7 +14143,7 @@ cx
 BK
 BK
 BK
-Mq
+OY
 BK
 bL
 bL
@@ -14425,7 +14425,7 @@ dW
 BK
 BK
 BK
-Mq
+OY
 BK
 BK
 fJ
@@ -14791,7 +14791,7 @@ ah
 ah
 hq
 hq
-zH
+nU
 hq
 hq
 hq
@@ -16196,7 +16196,7 @@ BK
 BK
 BK
 BK
-Mq
+OY
 BK
 bL
 bL
@@ -16290,7 +16290,7 @@ hq
 hq
 ah
 ah
-zH
+nU
 hq
 hq
 ah
@@ -16714,7 +16714,7 @@ BK
 BK
 BK
 BK
-Mq
+OY
 BK
 BK
 bL
@@ -16817,7 +16817,7 @@ ah
 ah
 ah
 hq
-zH
+nU
 hq
 hq
 hq
@@ -17010,7 +17010,7 @@ fy
 gq
 gy
 fH
-Mq
+OY
 BK
 BK
 cx
@@ -17242,7 +17242,7 @@ BK
 BK
 BK
 BK
-Mq
+OY
 BK
 BK
 BK
@@ -17346,7 +17346,7 @@ hq
 hq
 hq
 hq
-zH
+nU
 hq
 hq
 ah
@@ -17491,7 +17491,7 @@ BK
 BK
 BK
 BK
-Mq
+OY
 BK
 BK
 mX
@@ -18566,7 +18566,7 @@ bM
 bM
 bM
 BK
-Mq
+OY
 BK
 bL
 bL
@@ -18865,7 +18865,7 @@ hq
 hq
 hq
 hq
-zH
+nU
 hq
 hq
 hq
@@ -20355,7 +20355,7 @@ bL
 bL
 BK
 BK
-Mq
+OY
 BK
 BK
 BK
@@ -53990,7 +53990,7 @@ bO
 oI
 oI
 oI
-hT
+OM
 oI
 oI
 oI
@@ -54750,7 +54750,7 @@ cH
 bQ
 bK
 oI
-hT
+OM
 bO
 bO
 bO
@@ -55784,7 +55784,7 @@ oI
 oI
 oI
 oI
-hT
+OM
 oI
 oI
 oI
@@ -56818,7 +56818,7 @@ bK
 bK
 bK
 oI
-hT
+OM
 bO
 bO
 bT
@@ -59657,7 +59657,7 @@ bK
 bK
 oI
 oI
-hT
+OM
 oI
 oI
 oI
@@ -59737,7 +59737,7 @@ ad
 ax
 aC
 ao
-xu
+uA
 ax
 ao
 ao
@@ -59888,7 +59888,7 @@ cm
 bR
 oI
 oI
-ZN
+cK
 bK
 bK
 bN
@@ -60913,7 +60913,7 @@ oI
 bK
 bK
 bK
-ZN
+cK
 oI
 oI
 bR
@@ -61207,7 +61207,7 @@ bK
 bK
 oI
 oI
-hT
+OM
 oI
 oI
 oI
@@ -61730,7 +61730,7 @@ oI
 oI
 oI
 oI
-hT
+OM
 bO
 bO
 bO
@@ -61984,7 +61984,7 @@ bO
 bO
 bO
 oI
-hT
+OM
 oI
 oI
 oI
@@ -62456,7 +62456,7 @@ bO
 bO
 bO
 bO
-hT
+OM
 oI
 oI
 oI
@@ -63738,7 +63738,7 @@ bS
 bQ
 oI
 oI
-hT
+OM
 oI
 oI
 bK
@@ -64036,7 +64036,7 @@ oI
 oI
 oI
 oI
-hT
+OM
 oI
 bO
 bO
@@ -64275,7 +64275,7 @@ bK
 bK
 oI
 oI
-hT
+OM
 oI
 oI
 oI
@@ -64544,7 +64544,7 @@ bK
 Cc
 oI
 oI
-hT
+OM
 oI
 bK
 bK
@@ -64817,7 +64817,7 @@ oI
 oI
 oI
 oI
-hT
+OM
 oI
 bO
 bO
@@ -65294,7 +65294,7 @@ bK
 oI
 oI
 oI
-hT
+OM
 CB
 oI
 bK

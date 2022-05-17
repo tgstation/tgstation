@@ -117,7 +117,7 @@
 	icon_state = "mini_fridge"
 	icon_welded = "welded_small"
 	max_mob_size = MOB_SIZE_SMALL
-	storage_capacity = 7
+	storage_capacity = 10
 
 /obj/structure/closet/mini_fridge/PopulateContents()
 	. = ..()
