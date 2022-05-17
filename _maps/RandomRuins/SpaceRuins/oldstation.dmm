@@ -1143,10 +1143,10 @@
 	name = "Artificial Program Core Room"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/structure/alien/weeds,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "oldstation-aisat"
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "dh" = (
@@ -2731,6 +2731,7 @@
 "hn" = (
 /obj/machinery/power/apc/sm_apc/directional/north,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/glass,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/beta/supermatter)
 "ho" = (
@@ -4852,11 +4853,13 @@
 /area/ruin/space/ancientstation/delta/hall)
 "mj" = (
 /obj/machinery/door/airlock/highsecurity,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/alien/weeds,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/xtracks,
 /obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "oldstation-aisat"
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/ai)
 "mk" = (
@@ -5621,12 +5624,12 @@
 	name = "Artificial Program Core Room"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/structure/alien/weeds,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "oldstation-aisat"
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "nW" = (
@@ -5784,8 +5787,10 @@
 /area/ruin/space/ancientstation/delta/hall)
 "on" = (
 /obj/machinery/door/airlock/highsecurity,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/alien/weeds,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "oldstation-aisat"
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/ai)
 "oo" = (
@@ -6516,6 +6521,7 @@
 	dir = 1;
 	pixel_y = 23
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/beta/supermatter)
 "uP" = (
@@ -6618,6 +6624,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/beta/supermatter)
 "wx" = (
@@ -6652,6 +6659,7 @@
 "xb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/beta/supermatter)
 "xr" = (
@@ -6941,6 +6949,12 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
+"Bn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/ruin/space/ancientstation/beta/supermatter)
 "Bq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -7017,6 +7031,7 @@
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Cs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/beta/supermatter)
 "CF" = (
@@ -7238,6 +7253,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Hb" = (
@@ -7261,6 +7277,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
+"Hj" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/ruin/space/ancientstation/beta/supermatter)
 "Hn" = (
 /turf/open/floor/engine/o2,
 /area/ruin/space/ancientstation/beta/atmos)
@@ -7353,6 +7373,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"Jf" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "Jo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -7435,6 +7459,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
+"Kp" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "Kt" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/firecloset/full,
@@ -7538,6 +7566,13 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/storage)
+"LG" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "LO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
@@ -7727,6 +7762,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
+"Pj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/ruin/space/ancientstation/beta/supermatter)
 "Pn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -7901,6 +7941,7 @@
 /area/ruin/space/ancientstation/beta/mining)
 "Sb" = (
 /obj/item/stack/rods/twentyfive,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Se" = (
@@ -8810,12 +8851,12 @@ gu
 TT
 hn
 jk
-Sk
+Hj
 Cs
 xb
 CM
 CM
-Sk
+Hj
 SK
 aa
 aa
@@ -8858,10 +8899,10 @@ oC
 KO
 He
 YN
-Sk
+Hj
 Sk
 GU
-Sk
+Pj
 Sk
 wo
 Sk
@@ -8908,12 +8949,12 @@ rW
 He
 YN
 Sk
-Sk
-Sk
-Sk
-Sk
-Sk
-Sk
+Hj
+Hj
+Hj
+Hj
+Hj
+Hj
 Ci
 tr
 Sy
@@ -8957,12 +8998,12 @@ He
 TT
 SK
 uL
+Hj
+Bn
+Pj
+Hj
 Sk
-Sk
-Sk
-Sk
-Sk
-Sk
+Hj
 Vl
 qr
 GR
@@ -9006,12 +9047,12 @@ JX
 aa
 xw
 Sk
+Hj
 Sk
 Sk
-Sk
-Sk
-Sk
-tr
+Pj
+Hj
+Kp
 SK
 dF
 aa
@@ -9055,11 +9096,11 @@ RK
 aa
 Xa
 Sk
+Pj
+Hj
+Pj
 Sk
-Sk
-Sk
-Sk
-tr
+Kp
 Sb
 Vl
 dF
@@ -9103,13 +9144,13 @@ SL
 MW
 aa
 Xa
-Sk
-Sk
-Sk
-Sk
-Sk
-tr
-tr
+Hj
+Pj
+Hj
+Hj
+Hj
+Kp
+LG
 rm
 zu
 dF
@@ -9152,12 +9193,12 @@ Bw
 TT
 aa
 yf
+Hj
+Hj
 Sk
-Sk
-Sk
-Sk
+Hj
 ru
-tr
+Jf
 rm
 rm
 zu
