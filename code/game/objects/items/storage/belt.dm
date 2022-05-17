@@ -653,6 +653,7 @@
 		/obj/item/lightreplacer,
 		/obj/item/melee/flyswatter,
 		/obj/item/paint/paint_remover,
+		/obj/item/plunger,
 		/obj/item/pushbroom,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
@@ -833,6 +834,5 @@
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,
 		/obj/item/seeds,
-		
 		/obj/item/shovel/spade,
 		))
