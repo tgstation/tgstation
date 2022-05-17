@@ -3,7 +3,11 @@
 	desc = "Used to view and edit personnel's security records."
 	icon_screen = "security"
 	icon_keyboard = "security_key"
+<<<<<<< HEAD
 	req_one_access = list(ACCESS_SECURITY, ACCESS_DETECTIVE, ACCESS_HOP)
+=======
+	req_one_access = list(ACCESS_SECURITY, ACCESS_HOP)
+>>>>>>> master
 	circuit = /obj/item/circuitboard/computer/secure_data
 	light_color = COLOR_SOFT_RED
 	var/rank = null

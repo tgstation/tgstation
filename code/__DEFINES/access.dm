@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /// Access IDs are broken down by department, department special functions/rooms, and departmental roles
 /// The first access for the department will always be its general access function
 /// Access for departmental roles will start with the head and go down in level of succession
@@ -34,6 +35,12 @@
 #define ACCESS_BRIG_ENTRANCE 21
 /// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console, security equipment
 #define ACCESS_BRIG 22
+=======
+// Security general access, security records, gulag item storage, secbots
+#define ACCESS_SECURITY 1
+/// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console, security equipment
+#define ACCESS_BRIG 2
+>>>>>>> master
 /// Armory, gulag teleporter, execution chamber
 #define ACCESS_ARMORY 23
 #define ACCESS_COURT 24

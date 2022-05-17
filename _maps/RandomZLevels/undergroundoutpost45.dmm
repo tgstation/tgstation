@@ -1914,13 +1914,13 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eA" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eB" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass{
 	heat_capacity = 1e+006
 	},
@@ -2004,7 +2004,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eO" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass{
 	heat_capacity = 1e+006
 	},
