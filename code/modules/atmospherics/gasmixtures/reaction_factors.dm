@@ -60,7 +60,7 @@
 		/datum/gas/nitrogen = " 20 moles of Nitrogen needs to be present for the reaction to occur. Nitrogen is consumed at 2 reaction rate",
 		/datum/gas/bz = "5 moles of BZ needs to be present for the reaction to occur. Not consumed.",
 		/datum/gas/nitrous_oxide = "Nitrous oxide is produced at 1 reaction rate",
-		"Temperature" = "Can only occur between [N2O_FORMATION_MIN_TEMPERATURE] - [N2O_FORMATION_MAX_TEMPERATURE] Kelvin",
+		"Temperature" = "Can only occur between [N2O_FORMATION_MIN_TEMPERATURE] - [N2O_FORMATION_MAX_TEMPERATURE] Kelvin. Peaks at [N2O_FORMATION_OPTIMAL_TEMPERATURE], and halts when it reaches its barriers.",
 		"Energy" = "[N2O_FORMATION_ENERGY] joules of energy is released per reaction rate",
 	)
 
@@ -178,7 +178,7 @@
 		/datum/gas/hydrogen = "Hydrogen is consumed at 2 reaction rate",
 		/datum/gas/proto_nitrate = "Proto-Nitrate is produced at 2.2 reaction rate",
 		"Energy" = "[PN_FORMATION_ENERGY] joules of energy is released per reaction rate",
-		"Temperature" = "Can only occur between [PN_FORMATION_MIN_TEMPERATURE] - [PN_FORMATION_MAX_TEMPERATURE] kelvin. Reaction rate peaks at [PN_FORMATION_LOWER_TEMPERATURE_MAXIMUM_EFFICIENCY] and [PN_FORMATION_UPPER_TEMPERATURE_MAXIMUM_EFFICIENCY] Kelvin, and drops at [PN_FORMATION_MIN_TEMPERATURE], 7,500, and [PN_FORMATION_MAX_TEMPERATURE] Kelvin.",
+		"Temperature" = "Can only occur between [PN_FORMATION_MIN_TEMPERATURE] - [PN_FORMATION_MAX_TEMPERATURE] kelvin. Reaction rate peaks at [PN_FORMATION_OPTIMAL_TEMPERATURE] Kelvin, and halts when it reaches its barriers.",
 	)
 
 /datum/gas_reaction/proto_nitrate_hydrogen_response/init_factors()
