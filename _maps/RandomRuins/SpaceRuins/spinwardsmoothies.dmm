@@ -16,12 +16,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/ruin/space/has_grav/spinwardsmoothies)
-"ge" = (
-/obj/structure/marker_beacon/violet,
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/ruin/space/has_grav/spinwardsmoothies)
 "mR" = (
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 10
@@ -373,7 +367,7 @@ YB
 Yn
 Yn
 Yn
-ge
+Aw
 Yn
 Yn
 Yn
