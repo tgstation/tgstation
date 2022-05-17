@@ -485,7 +485,7 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "by" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_starfury)
 "bB" = (
@@ -744,7 +744,7 @@
 /obj/effect/turf_decal/bot_white{
 	color = "#00A2FF"
 	},
-/obj/structure/sign/warning/coldtemp{
+/obj/structure/sign/warning/cold_temp{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/white/textured_large,
@@ -1134,7 +1134,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "dO" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'KEEP CLEAR: SHUTTLE BAY'";
 	icon_state = "space";
 	layer = 4;
@@ -1145,7 +1145,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "dS" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'KEEP CLEAR: SHUTTLE BAY'";
 	icon_state = "space";
 	layer = 4;
@@ -1269,7 +1269,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "ei" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'EXTERNAL AIRSHIELD'";
 	icon_state = "space";
 	layer = 4;
@@ -1304,7 +1304,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "eu" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'EXTERNAL AIRSHIELD'";
 	icon_state = "space";
 	layer = 4;
@@ -1486,7 +1486,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "eT" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'EXTERNAL AIRSHIELD'";
 	icon_state = "space";
 	layer = 4;
@@ -1560,7 +1560,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "fd" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'EXTERNAL AIRSHIELD'";
 	icon_state = "space";
 	layer = 4;
@@ -1836,7 +1836,7 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "gp" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'KEEP CLEAR: SHUTTLE BAY'";
 	icon_state = "space";
 	layer = 4;
@@ -1876,7 +1876,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
 "gC" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'KEEP CLEAR: SHUTTLE BAY'";
 	icon_state = "space";
 	layer = 4;
@@ -3199,7 +3199,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "jK" = (
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /obj/machinery/power/port_gen/pacman/super,
@@ -3240,7 +3240,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	pixel_y = 32
 	},
 /turf/open/floor/engine,
@@ -3531,7 +3531,7 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "kN" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
 	layer = 4;
@@ -3607,7 +3607,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "lf" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
 	layer = 4;
@@ -5064,7 +5064,7 @@
 	anchored = 1;
 	dir = 1
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = -32
 	},
 /obj/machinery/light/small/directional/south,
@@ -5231,7 +5231,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	pixel_x = 32
 	},
 /obj/structure/disposalpipe/segment,
@@ -5492,7 +5492,7 @@
 /obj/item/wrench,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/warning/chemdiamond{
+/obj/structure/sign/warning/chem_diamond{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/white/smooth_large,

@@ -538,14 +538,91 @@
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
 
-/obj/vehicle/sealed/mecha/fire_act() //Check if we should ignite the pilot of an open-canopy mech
-	. = ..()
-	if(enclosed || mecha_flags & SILICON_PILOT)
+///Called when a driver clicks somewhere. Handles everything like equipment, punches, etc.
+/obj/vehicle/sealed/mecha/proc/on_mouseclick(mob/user, atom/target, list/modifiers)
+	SIGNAL_HANDLER
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+		set_safety(user)
+		return COMSIG_MOB_CANCEL_CLICKON
+	if(weapons_safety)
 		return
-	for(var/mob/living/cookedalive as anything in occupants)
-		if(cookedalive.fire_stacks < 5)
-			cookedalive.adjust_fire_stacks(1)
-			cookedalive.ignite_mob()
+	if(isAI(user)) //For AIs: If safeties are off, use mech functions. If safeties are on, use AI functions.
+		. = COMSIG_MOB_CANCEL_CLICKON
+	if(modifiers[SHIFT_CLICK]) //Allows things to be examined.
+		return
+	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled
+		return
+	if(completely_disabled || is_currently_ejecting || (mecha_flags & CANNOT_INTERACT))
+		return
+	if(phasing)
+		balloon_alert(user, "not while [phasing]!")
+		return
+	if(user.incapacitated())
+		return
+	if(construction_state)
+		balloon_alert(user, "end maintenance first!")
+		return
+	if(!get_charge())
+		return
+	if(src == target)
+		return
+	var/dir_to_target = get_dir(src,target)
+	if(!(mecha_flags & OMNIDIRECTIONAL_ATTACKS) && dir_to_target && !(dir_to_target & dir))//wrong direction
+		return
+	if(internal_damage & MECHA_INT_CONTROL_LOST)
+		target = pick(view(3,target))
+	var/mob/living/livinguser = user
+	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
+		balloon_alert(user, "wrong seat for equipment!")
+		return
+	var/obj/item/mecha_parts/mecha_equipment/selected
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		selected = equip_by_category[MECHA_R_ARM]
+	else
+		selected = equip_by_category[MECHA_L_ARM]
+	if(!selected)
+		return
+	if(!Adjacent(target) && (selected.range & MECHA_RANGED))
+		if(HAS_TRAIT(livinguser, TRAIT_PACIFISM) && selected.harmful)
+			to_chat(livinguser, span_warning("You don't want to harm other living beings!"))
+			return
+		if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
+			return
+		INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
+		return
+	if((selected.range & MECHA_MELEE) && Adjacent(target))
+		if(isliving(target) && selected.harmful && HAS_TRAIT(livinguser, TRAIT_PACIFISM))
+			to_chat(livinguser, span_warning("You don't want to harm other living beings!"))
+			return
+		if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
+			return
+		INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
+		return
+	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_MELEE)))
+		to_chat(livinguser, span_warning("You're in the wrong seat to interact with your hands."))
+		return
+	var/on_cooldown = TIMER_COOLDOWN_CHECK(src, COOLDOWN_MECHA_MELEE_ATTACK)
+	var/adjacent = Adjacent(target)
+	if(SEND_SIGNAL(src, COMSIG_MECHA_MELEE_CLICK, livinguser, target, on_cooldown, adjacent) & COMPONENT_CANCEL_MELEE_CLICK)
+		return
+	if(on_cooldown || !adjacent)
+		return
+	if(internal_damage & MECHA_INT_CONTROL_LOST)
+		target = pick(oview(1,src))
+
+	if(!has_charge(melee_energy_drain))
+		return
+	use_power(melee_energy_drain)
+
+	if(force)
+		target.mech_melee_attack(src, user)
+		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
+
+/// middle mouse click signal wrapper for AI users
+/obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)
+	SIGNAL_HANDLER
+	if(isAI(user))
+		on_mouseclick(user, target, params)
 
 ///Displays a special speech bubble when someone inside the mecha speaks
 /obj/vehicle/sealed/mecha/proc/display_speech_bubble(datum/source, list/speech_args)
@@ -555,20 +632,6 @@
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(speech_args[SPEECH_MESSAGE])]",MOB_LAYER+1), speech_bubble_recipients, 30)
-
-/obj/vehicle/sealed/mecha/enter_checks(mob/M)
-	if(atom_integrity <= 0)
-		to_chat(M, span_warning("You cannot get in the [src], it has been destroyed!"))
-		return FALSE
-	if(M.buckled)
-		to_chat(M, span_warning("You can't enter the exosuit while buckled."))
-		log_message("Permission denied (Buckled).", LOG_MECHA)
-		return FALSE
-	if(M.has_buckled_mobs())
-		to_chat(M, span_warning("You can't enter the exosuit with other creatures attached to you!"))
-		log_message("Permission denied (Attached mobs).", LOG_MECHA)
-		return FALSE
-	return ..()
 
 
 /////////////////////////
@@ -585,25 +648,6 @@
 	req_access = list()
 	return allowed(M)
 
-
-///////////////////////
-///// Power stuff /////
-///////////////////////
-
-/obj/vehicle/sealed/mecha/proc/has_charge(amount)
-	return (get_charge()>=amount)
-
-/obj/vehicle/sealed/mecha/proc/get_charge()
-	return cell?.charge
-
-/obj/vehicle/sealed/mecha/proc/use_power(amount)
-	return (get_charge() && cell.use(amount))
-
-/obj/vehicle/sealed/mecha/proc/give_power(amount)
-	if(!isnull(get_charge()))
-		cell.give(amount)
-		return TRUE
-	return FALSE
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////

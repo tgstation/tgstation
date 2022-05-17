@@ -332,6 +332,9 @@
 			gas_input = clamp(_gas_input, 0, 250)
 	update_icon()
 
+/obj/machinery/atmospherics/components/binary/crystallizer/update_layer()
+	return
+
 #undef MIN_PROGRESS_AMOUNT
 #undef MIN_DEVIATION_RATE
 #undef MAX_DEVIATION_RATE

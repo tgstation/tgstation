@@ -274,68 +274,36 @@ const CfStep2 = (props, context) => {
           </Table.Cell>
         </Table.Row>
         {data.devtype !== 2 && (
-          <>
-            <Table.Row>
-              <Table.Cell bold position="relative">
-                <Tooltip
-                  content={multiline`
-                    A component critical for your device's functionality.
-                    It allows you to run programs from your hard drive.
-                    Advanced CPUs use more power, but allow you to run
-                    more programs on background at once.
-                  `}
-                  position="right">
-                  Processor Unit:
-                </Tooltip>
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  content="Standard"
-                  selected={data.hw_cpu === 1}
-                  onClick={() => act('hw_cpu', {
-                    cpu: '1',
-                  })} />
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  content="Advanced"
-                  selected={data.hw_cpu === 2}
-                  onClick={() => act('hw_cpu', {
-                    cpu: '2',
-                  })} />
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell bold position="relative">
-                <Tooltip
-                  content={multiline`
-                    An advanced wireless power relay that allows your device
-                    to connect to nearby area power controller to provide
-                    alternative power source. This component is currently
-                    unavailable on tablet computers due to size restrictions.
-                  `}
-                  position="right">
-                  Tesla Relay:
-                </Tooltip>
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  content="None"
-                  selected={data.hw_tesla === 0}
-                  onClick={() => act('hw_tesla', {
-                    tesla: '0',
-                  })} />
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  content="Standard"
-                  selected={data.hw_tesla === 1}
-                  onClick={() => act('hw_tesla', {
-                    tesla: '1',
-                  })} />
-              </Table.Cell>
-            </Table.Row>
-          </>
+          <Table.Row>
+            <Table.Cell bold position="relative">
+              <Tooltip
+                content={multiline`
+                  An advanced wireless power relay that allows your device
+                  to connect to nearby area power controller to provide
+                  alternative power source. This component is currently
+                  unavailable on tablet computers due to size restrictions.
+                `}
+                position="right">
+                Tesla Relay:
+              </Tooltip>
+            </Table.Cell>
+            <Table.Cell>
+              <Button
+                content="None"
+                selected={data.hw_tesla === 0}
+                onClick={() => act('hw_tesla', {
+                  tesla: '0',
+                })} />
+            </Table.Cell>
+            <Table.Cell>
+              <Button
+                content="Standard"
+                selected={data.hw_tesla === 1}
+                onClick={() => act('hw_tesla', {
+                  tesla: '1',
+                })} />
+            </Table.Cell>
+          </Table.Row>
         )}
       </Table>
       <Button

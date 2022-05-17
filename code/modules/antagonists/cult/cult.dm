@@ -58,9 +58,9 @@
 	owner.announce_objectives()
 
 /datum/antagonist/cult/on_gain()
+	add_objectives()
 	. = ..()
 	var/mob/living/current = owner.current
-	add_objectives()
 	if(give_equipment)
 		equip_cultist(TRUE)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")

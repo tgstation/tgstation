@@ -88,7 +88,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/lesser)
 "V" = (
-/obj/structure/flora/tree/pine{
+/obj/structure/flora/tree/pine/style_random{
 	desc = "A coniferous pine tree. How the hell did they manage to fit this in here?"
 	},
 /obj/item/food/deadmouse{

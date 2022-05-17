@@ -56,7 +56,6 @@
 #define EFFECT_IMMOBILIZE "immobilize"
 #define EFFECT_EYE_BLUR "eye_blur"
 #define EFFECT_DROWSY "drowsy"
-#define EFFECT_JITTER "jitter"
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN (1<<0)
