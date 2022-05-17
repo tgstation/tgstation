@@ -593,13 +593,12 @@
 			var/lootspawn = pick_weight(fill_with_ones(spawner.loot)) //pick a random thing from the spawner loot list
 			while(islist(lootspawn))
 				lootspawn = pick_weight(fill_with_ones(lootspawn))
-			spawner_resulting_atoms[lootspawn] = x //and add it to the new list
+			spawner_resulting_atoms[lootspawn] += 1 //and add it to the new list
 
 		spawner.Destroy() //clean up the used spawner
 
 	resulting_atoms = spawner_resulting_atoms
 	//TODO properly handle non-spawners
-	//TODO fix spawn counts
 	return ..()
 
 /datum/micro_organism/cell_line/walking_mushroom
