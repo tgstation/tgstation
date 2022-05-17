@@ -302,8 +302,11 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN*5
 	incompatible_modules = list(/obj/item/mod/module/power_kick)
 	cooldown_time = 5 SECONDS
+	/// Damage on kick.
 	var/damage = 20
+	/// The wound bonus of the kick.
 	var/wounding_power = 35
+	/// How long we knockdown for on the kick.
 	var/knockdown_time = 2 SECONDS
 
 /obj/item/mod/module/power_kick/on_select_use(atom/target)
@@ -359,9 +362,10 @@
 	incompatible_modules = list(/obj/item/mod/module/chameleon)
 	cooldown_time = 0.5 SECONDS
 	allowed_inactive = TRUE
+	/// A list of all the items the suit can disguise as.
 	var/list/possible_disguises = list()
-	var/current_disguise
-	var/saved_appearance
+	/// The path of the item we're disguised as.
+	var/obj/item/current_disguise
 
 /obj/item/mod/module/chameleon/on_install()
 	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), /proc/cmp_typepaths_asc)
@@ -373,6 +377,8 @@
 		possible_disguises[chameleon_item_name] = clothing_path
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
+	if(current_disguise)
+		return_look()
 	possible_disguises = null
 
 /obj/item/mod/module/chameleon/on_use()
@@ -382,31 +388,32 @@
 	. = ..()
 	if(!.)
 		return
-	if(saved_appearance)
+	if(current_disguise)
 		return_look()
 		return
 	var/picked_name = tgui_input_list(mod.wearer, "Select look to change into", "Chameleon Settings", possible_disguises)
 	if(!possible_disguises[picked_name] || mod.active || mod.activating)
 		return
-	update_look(possible_disguises[picked_name])
+	current_disguise = possible_disguises[picked_name]
+	update_look()
 
-/obj/item/mod/module/chameleon/proc/update_look(obj/item/picked_item)
-	saved_appearance = mod.appearance
-	mod.name = initial(picked_item.name)
-	mod.desc = initial(picked_item.desc)
-	mod.icon_state = initial(picked_item.icon_state)
-	mod.icon = initial(picked_item.icon)
-	mod.worn_icon = initial(picked_item.worn_icon)
-	mod.alternate_worn_layer = initial(picked_item.alternate_worn_layer)
-	mod.lefthand_file = initial(picked_item.lefthand_file)
-	mod.righthand_file = initial(picked_item.righthand_file)
-	mod.worn_icon_state = initial(picked_item.worn_icon_state)
-	mod.inhand_icon_state = initial(picked_item.inhand_icon_state)
+/obj/item/mod/module/chameleon/proc/update_look()
+	mod.name = initial(current_disguise.name)
+	mod.desc = initial(current_disguise.desc)
+	mod.icon_state = initial(current_disguise.icon_state)
+	mod.icon = initial(current_disguise.icon)
+	mod.worn_icon = initial(current_disguise.worn_icon)
+	mod.alternate_worn_layer = initial(current_disguise.alternate_worn_layer)
+	mod.lefthand_file = initial(current_disguise.lefthand_file)
+	mod.righthand_file = initial(current_disguise.righthand_file)
+	mod.worn_icon_state = initial(current_disguise.worn_icon_state)
+	mod.inhand_icon_state = initial(current_disguise.inhand_icon_state)
 	mod.wearer.update_clothing(mod.slot_flags)
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/return_look)
 
 /obj/item/mod/module/chameleon/proc/return_look()
-	mod.appearance = saved_appearance
+	mod.name = "[mod.theme.name] [initial(mod.name)]"
+	mod.desc = "[initial(mod.desc)] [mod.theme.desc]"
 	mod.icon_state = "[mod.skin]-[initial(mod.icon_state)]"
 	var/list/mod_skin = mod.theme.skins[mod.skin]
 	mod.icon = mod_skin[MOD_ICON_OVERRIDE] || 'icons/obj/clothing/modsuit/mod_clothing.dmi'
@@ -416,8 +423,8 @@
 	mod.righthand_file = initial(mod.righthand_file)
 	mod.worn_icon_state = null
 	mod.inhand_icon_state = null
-	saved_appearance = null
 	mod.wearer.update_clothing(mod.slot_flags)
+	current_disguise = null
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 
 ///Plate Compression - Compresses the suit to normal size
@@ -428,7 +435,9 @@
 	icon_state = "plate_compression"
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/plate_compression, /obj/item/mod/module/storage)
+	/// The size we set the suit to.
 	var/new_size = WEIGHT_CLASS_NORMAL
+	/// The suit's size before the module is installed.
 	var/old_size
 
 /obj/item/mod/module/plate_compression/on_install()
