@@ -22,7 +22,7 @@
 		src.trait_to_add = trait_to_add
 		ADD_TRAIT(parent, trait_to_add, REF(src))
 
-/datum/component/machine_power_modifier/Destroy(force, silent)
+/datum/component/machine_power_modifier/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MACHINERY_REFRESH_PARTS, COMSIG_OBJ_DECONSTRUCT))
 	if(trait_to_add)
 		REMOVE_TRAIT(parent, trait_to_add, REF(src))
@@ -45,5 +45,5 @@
 	SIGNAL_HANDLER
 
 	for(var/obj in objects_to_drop)
-		for(var/i in 1 to objects_to_drop[obj])
+		for(var/_ in 1 to objects_to_drop[obj])
 			new obj(source.loc)
