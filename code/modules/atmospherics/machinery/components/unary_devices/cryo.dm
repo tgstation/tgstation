@@ -459,7 +459,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			data["occupant"]["statstate"] = "bad"
 			
 		data["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
-		if(mob_occupant.bodytemperature < T0C) // Green if the mob can actually 
+		if(mob_occupant.bodytemperature < T0C) // Green if the mob can actually be healed by cryoxadone.
 			data["occupant"]["temperaturestatus"] = "good"
 		else
 			data["occupant"]["temperaturestatus"] = "bad"
