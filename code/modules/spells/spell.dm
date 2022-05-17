@@ -293,7 +293,7 @@
 			do_sparks(sparks_amt, FALSE, get_turf(owner))
 
 		if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
-			var/datum/effect_system/smoke = new smoke_type()
+			var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type()
 			smoke.set_up(smoke_amt, location = get_turf(owner))
 			smoke.start()
 
