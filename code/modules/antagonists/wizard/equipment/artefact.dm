@@ -348,6 +348,7 @@
 	src.whistle = whistle
 	if(!whistle)
 		qdel(src)
+		return
 	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, .proc/check_teleport)
 	SSmove_manager.move_towards(src, get_turf(whistle.whistler))
 
