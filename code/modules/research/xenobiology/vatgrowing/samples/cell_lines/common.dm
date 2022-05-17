@@ -581,7 +581,7 @@
 		/datum/reagent/toxin = -1)
 
 	virus_suspectibility = 0.5
-	resulting_atoms = list(/obj/effect/spawner/random/animal/frog/vatgrown = 1)
+	resulting_atoms = list(/obj/effect/spawner/random/animal/frog/vatgrown = 5)
 
 /datum/micro_organism/cell_line/frog/succeed_growing(obj/machinery/plumbing/growing_vat/vat) //TODO generalize, check if spawner, maybe do this in parent proc
 	var/list/spawner_resulting_atoms = list() //create a list to put the results of the spawners in
@@ -593,14 +593,13 @@
 			var/lootspawn = pick_weight(fill_with_ones(spawner.loot)) //pick a random thing from the spawner loot list
 			while(islist(lootspawn))
 				lootspawn = pick_weight(fill_with_ones(lootspawn))
-
 			spawner_resulting_atoms[lootspawn] = x //and add it to the new list
 
-	resulting_atoms = spawner_resulting_atoms
-	//TODO clean up created spawners
+		spawner.Destroy() //clean up the used spawner
 
-	//test result:
-	//it works!
+	resulting_atoms = spawner_resulting_atoms
+	//TODO properly handle non-spawners
+	//TODO fix spawn counts
 	return ..()
 
 /datum/micro_organism/cell_line/walking_mushroom
