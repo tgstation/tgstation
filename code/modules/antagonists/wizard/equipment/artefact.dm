@@ -370,7 +370,7 @@
 		for(var/mob/stored_mobs as anything in pickedup_mobs)
 			do_teleport(stored_mobs, ending_turfs, channel = TELEPORT_CHANNEL_MAGIC)
 			animate(stored_mobs, pixel_y = null, time = 1 SECONDS)
-			stored_mobs.log_message("warped with [whistle].", LOG_ATTACK, color="red")
+			stored_mobs.log_message("warped with [whistle].", LOG_ATTACK, color = "red")
 
 	if(whistle)
 		whistle.whistler = null
