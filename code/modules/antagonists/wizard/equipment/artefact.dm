@@ -323,7 +323,7 @@
 	var/turf/current_turf = get_turf(user)
 	var/turf/spawn_location = locate(user.x + pick(-7, 7), user.y, user.z)
 	playsound(current_turf,'sound/magic/warpwhistle.ogg', 200, TRUE)
-	new /obj/effect/temp_visual/teleporting_tornado(spawn_location, spawn_location, src)
+	new /obj/effect/temp_visual/teleporting_tornado(spawn_location, src)
 	COOLDOWN_START(src, whistle_cooldown, 4 SECONDS)
 
 ///Teleporting tornado, spawned by warp whistle, teleports the user if they manage to pick them up.
@@ -336,13 +336,14 @@
 	plane = ABOVE_GAME_PLANE
 	randomdir = FALSE
 	duration = 3 SECONDS
+	movement_type = PHASING
 
 	/// Reference to the whistle
 	var/obj/item/warp_whistle/whistle
 	/// List of all mobs currently held by the tornado.
 	var/list/pickedup_mobs = list()
 
-/obj/effect/temp_visual/teleporting_tornado/Initialize(mapload, turf/spawn_loc, obj/item/warp_whistle/whistle)
+/obj/effect/temp_visual/teleporting_tornado/Initialize(mapload, obj/item/warp_whistle/whistle)
 	. = ..()
 	src.whistle = whistle
 	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, .proc/check_teleport)
@@ -361,11 +362,12 @@
 
 /// Destroy the tornado and teleport everyone on it away.
 /obj/effect/temp_visual/teleporting_tornado/Destroy()
-	var/turf/ending_turfs = find_safe_turf()
-	for(var/mob/stored_mobs as anything in pickedup_mobs)
-		do_teleport(stored_mobs, ending_turfs, channel = TELEPORT_CHANNEL_MAGIC)
-		animate(stored_mobs, pixel_y = null, time = 2 SECONDS)
-		stored_mobs.log_message("warped with [whistle].", LOG_ATTACK, color="red")
+	if(!isnull(pickedup_mobs))
+		var/turf/ending_turfs = find_safe_turf()
+		for(var/mob/stored_mobs as anything in pickedup_mobs)
+			do_teleport(stored_mobs, ending_turfs, channel = TELEPORT_CHANNEL_MAGIC)
+			animate(stored_mobs, pixel_y = null, time = 1 SECONDS)
+			stored_mobs.log_message("warped with [whistle].", LOG_ATTACK, color="red")
 
 	whistle.whistler = null
 	return ..()
