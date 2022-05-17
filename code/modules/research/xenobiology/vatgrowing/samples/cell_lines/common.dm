@@ -583,26 +583,6 @@
 	virus_suspectibility = 0.5
 	resulting_atoms = list(/obj/effect/spawner/random/animal/frog/vatgrown = 5, /mob/living/simple_animal/mouse = 2,)
 
-/datum/micro_organism/cell_line/frog/succeed_growing(obj/machinery/plumbing/growing_vat/vat) //TODO generalize
-	var/list/spawner_checked_resulting_atoms = list() //create a list to put the results of the spawners in
-
-	for(var/resulting_atom in resulting_atoms) //for each resulting_atom in the list
-		if(ispath(resulting_atom, /obj/effect/spawner/random))
-			//if resulting_atom is a random spawner, get a random pick from it and add it to the list
-			var/obj/effect/spawner/random/random_spawner = new resulting_atom(get_turf(vat)) //create an instance of the spawner to access its loot
-			for(var/x in 1 to resulting_atoms[resulting_atom]) //for the count of resulting atoms for this specific spawner
-				var/lootspawn = pick_weight(fill_with_ones(random_spawner.loot)) //pick a weighed random thing from the spawner loot list
-				while(islist(lootspawn))
-					lootspawn = pick_weight(fill_with_ones(lootspawn))
-				spawner_checked_resulting_atoms[lootspawn] += 1 //and add it to the new list
-			random_spawner.Destroy() //clean up the used spawner
-		else
-			//else resulting_atom is not actually a random spawner, so you can just put it in the list as is
-			spawner_checked_resulting_atoms[resulting_atom] = resulting_atoms[resulting_atom]
-
-	resulting_atoms = spawner_checked_resulting_atoms
-	return ..()
-
 /datum/micro_organism/cell_line/walking_mushroom
 	desc = "motile fungal hyphae"
 	required_reagents = list(/datum/reagent/consumable/nutriment/protein)
