@@ -3951,14 +3951,6 @@
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
-"As" = (
-/obj/structure/table/wood,
-/obj/item/book/granter/action/spell/random,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/mineral,
-/area/space/nearstation)
 "AY" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/riot,
@@ -9311,9 +9303,9 @@ ab
 ab
 ab
 ab
-As
-As
-As
+ab
+ab
+ab
 ab
 ab
 ab

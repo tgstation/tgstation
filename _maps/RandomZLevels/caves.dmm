@@ -1569,7 +1569,7 @@
 	amount = 25
 	},
 /obj/item/coin/antagtoken,
-/obj/item/book/granter/action/spell/summonitem{
+/obj/item/book/granter/spell/summonitem{
 	name = "\proper an extremely flamboyant book"
 	},
 /turf/open/floor/engine/cult{

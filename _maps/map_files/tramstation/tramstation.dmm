@@ -21669,7 +21669,7 @@
 /area/station/cargo/drone_bay)
 "hmX" = (
 /obj/structure/table/wood,
-/obj/item/book/granter/action/spell/smoke/lesser{
+/obj/item/book/granter/spell/smoke/lesser{
 	name = "mysterious old book of cloud-chasing"
 	},
 /obj/item/soulstone/anybody/chaplain,

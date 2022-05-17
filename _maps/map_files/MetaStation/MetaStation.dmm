@@ -57534,7 +57534,7 @@
 /area/station/service/bar)
 "ukF" = (
 /obj/structure/table/wood,
-/obj/item/book/granter/action/spell/smoke/lesser{
+/obj/item/book/granter/spell/smoke/lesser{
 	name = "mysterious old book of cloud-chasing"
 	},
 /obj/item/reagent_containers/food/drinks/bottle/holywater{
