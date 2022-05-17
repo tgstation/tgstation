@@ -150,8 +150,6 @@
 #define PLUOXIUM_FORMATION_MIN_TEMP 50
 /// The maximum temperature pluoxium can form from carbon dioxide, oxygen, and tritium at.
 #define PLUOXIUM_FORMATION_MAX_TEMP T0C
-/// The maximum amount of pluoxium that can form from carbon dioxide, oxygen, and tritium per reaction tick.
-#define PLUOXIUM_FORMATION_MAX_RATE 5
 /// The amount of energy one mole of pluoxium forming from carbon dioxide, oxygen, and tritium releases.
 #define PLUOXIUM_FORMATION_ENERGY 250
 /// The pressure scaling factor for pluoxium formation efficiency. Higher values will mean you need more pressure to achieve the same efficiency.
