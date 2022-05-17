@@ -441,6 +441,12 @@
 /obj/item/toy/beach_ball/holoball,
 /turf/open/floor/iron/diagonal,
 /area/shuttle/escape)
+"DO" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/table,
+/obj/item/clothing/shoes/swagshoes,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
 "DW" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/trimline/red/warning,
@@ -932,7 +938,7 @@ go
 QN
 qM
 Uh
-bc
+DO
 Qy
 zB
 OK
