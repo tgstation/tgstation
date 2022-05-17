@@ -35,6 +35,10 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 ///Should we override the loop's glide?
 #define MOVEMENT_LOOP_IGNORE_GLIDE (1<<2)
 
+//Index defines for movement bucket data packets
+#define MOVEMENT_BUCKET_TIME 1
+#define MOVEMENT_BUCKET_LIST 2
+
 /**
  * currently_z_moving defines. Higher numbers mean higher priority.
  * This one is for falling down open space from stuff such as deleted tile, pit grate...

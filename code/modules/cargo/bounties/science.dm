@@ -3,7 +3,7 @@
 	name = "E.X.P.E.R.I-MENTORially Discovered Devices"
 	description = "Psst, hey. Don't tell the assistants, but we're undercutting them on the value of those 'strange objects' they've been finding. Fish one up and send us a discovered one by using the E.X.P.E.R.I-MENTOR."
 	reward = CARGO_CRATE_VALUE * 8
-	wanted_types = list(/obj/item/relic)
+	wanted_types = list(/obj/item/relic = TRUE)
 
 /datum/bounty/item/science/relic/applies_to(obj/O)
 	if(!..())
@@ -17,13 +17,16 @@
 	name = "Reformatted Tech Disk"
 	description = "It turns out the diskettes the BEPIS prints experimental nodes on are extremely space-efficient. Send us one of your spares when you're done with it."
 	reward = CARGO_CRATE_VALUE * 8
-	wanted_types = list(/obj/item/disk/tech_disk/major, /obj/item/disk/tech_disk/spaceloot)
+	wanted_types = list(
+		/obj/item/disk/tech_disk/major = TRUE,
+		/obj/item/disk/tech_disk/spaceloot = TRUE,
+	)
 
 /datum/bounty/item/science/genetics
 	name = "Genetics Disability Mutator"
 	description = "Understanding the humanoid genome is the first step to curing many spaceborn genetic defects, and exceeding our basest limits."
 	reward = CARGO_CRATE_VALUE * 2
-	wanted_types = list(/obj/item/dnainjector)
+	wanted_types = list(/obj/item/dnainjector = TRUE)
 	///What's the instability
 	var/desired_instability = 0
 
@@ -55,7 +58,7 @@
 	description = "Turns out that NTNet wasn't actually a fad afterall, who knew. Ship us some fully constructed tablets and send it turned on."
 	reward = CARGO_CRATE_VALUE * 6
 	required_count = 4
-	wanted_types = list(/obj/item/modular_computer/tablet)
+	wanted_types = list(/obj/item/modular_computer/tablet = TRUE)
 	var/require_powered = TRUE
 
 /datum/bounty/item/science/ntnet/applies_to(obj/O)
@@ -72,14 +75,14 @@
 	description = "Central command brass need something more powerful than a tablet, but more portable than a console. Help these old fogeys out by shipping us some working laptops. Send it turned on."
 	reward = CARGO_CRATE_VALUE * 3
 	required_count = 2
-	wanted_types = list(/obj/item/modular_computer/laptop)
+	wanted_types = list(/obj/item/modular_computer/laptop = TRUE)
 
 /datum/bounty/item/science/ntnet/console
 	name = "Modular Computer Console"
 	description = "Our big data devision needs more powerful hardware to play 'Outbomb Cuban Pe-', err, to closely monitor threats in your sector. Send us a working modular computer console."
 	reward = CARGO_CRATE_VALUE * 6
 	required_count = 1
-	wanted_types = list(/obj/machinery/modular_computer/console)
+	wanted_types = list(/obj/machinery/modular_computer/console = TRUE)
 	require_powered = FALSE
 
 /datum/bounty/item/science/ntnet/console/applies_to(obj/O)
@@ -90,3 +93,46 @@
 		return FALSE
 	return TRUE
 
+
+//******Anomaly Cores******
+/datum/bounty/item/science/ref_anomaly
+	name = "Refined Bluespace Core"
+	description = "We need a bluespace core to fit in a Phazon, ship us one, please."
+	reward = CARGO_CRATE_VALUE * 20
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/bluespace = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/can_get(obj/O)
+	var/anomaly_type = wanted_types[1]
+	if(SSresearch.created_anomaly_types[anomaly_type] >= SSresearch.anomaly_hard_limit_by_type[anomaly_type])
+		return FALSE
+	return TRUE
+
+/datum/bounty/item/science/ref_anomaly/flux
+	name = "Refined Flux Core"
+	description = "We're trying to make a tesla cannon to handle some moths, ship us a flux core, please."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/flux = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/pyro
+	name = "Refined Pyroclastic Core"
+	description = "We need to study a refined pyroclastic core, please send one."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/pyro = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/grav
+	name = "Refined Gravitational Core"
+	description = "Central R&D is trying to discover a way to make mechs float, send over a gravitational core."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/grav = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/vortex
+	name = "Refined Vortex Core"
+	description = "We're going to throw a vortex core into a wormhole to see what happens. Send one."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/vortex = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/hallucination
+	name = "Refined Hallucination Core"
+	description = "We're making a better version of space drugs, send us a core to help us replicate its effects."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/hallucination = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/delimber
+	name = "Refined Delimber Core"
+	description = "Our janitor lizard lost all their limbs, send us a delimber core to replace them."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/delimber = TRUE)

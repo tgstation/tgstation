@@ -13,7 +13,7 @@
 	outfit = /datum/outfit/job/miner
 	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
@@ -24,8 +24,7 @@
 
 	family_heirlooms = list(/obj/item/pickaxe/mini, /obj/item/shovel)
 	rpg_title = "Adventurer"
-	job_type_flags = JOB_STATION_JOB
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/miner
@@ -40,7 +39,7 @@
 		/obj/item/mining_voucher = 1,
 		/obj/item/stack/marker_beacon/ten = 1,
 		)
-	belt = /obj/item/pda/shaftminer
+	belt = /obj/item/modular_computer/tablet/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots/mining
@@ -52,7 +51,7 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/explorer
 
 	box = /obj/item/storage/box/survival/mining
-	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
+	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
 
 /datum/outfit/job/miner/equipped
 	name = "Shaft Miner (Equipment)"
@@ -61,7 +60,7 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	backpack_contents = list(
 		/obj/item/flashlight/seclite = 1,
-		/obj/item/gun/energy/kinetic_accelerator = 1,
+		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
 		/obj/item/knife/combat/survival = 1,
 		/obj/item/mining_voucher = 1,
 		/obj/item/stack/marker_beacon/ten = 1,
@@ -83,4 +82,4 @@
 	name = "Shaft Miner (Equipment + MODsuit)"
 	back = /obj/item/mod/control/pre_equipped/mining
 	suit = null
-	mask = /obj/item/clothing/mask/breath
+	mask = /obj/item/clothing/mask/gas/explorer

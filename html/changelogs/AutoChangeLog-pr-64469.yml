@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a hard delete with rod form. Also cleans up some rod code."
-  - bugfix: "Admin sending a looping rod will no longer make all following rods loop"

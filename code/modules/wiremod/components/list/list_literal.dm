@@ -97,16 +97,17 @@
 /obj/item/circuit_component/list_literal/input_received(datum/port/input/port)
 
 	var/list/new_literal = list()
+	var/datum/circuit_datatype/handler = GLOB.circuit_datatypes[list_options.value]
 	for(var/datum/port/input/entry_port as anything in entry_ports)
 		var/value = entry_port.value
 		// To prevent people from infinitely making lists to crash the server
 		if(islist(value) && get_list_count(value, max_list_count) >= max_list_count)
 			visible_message("[src] begins to overheat!")
 			return
-		if(isdatum(value))
-			new_literal += WEAKREF(value)
-		else
-			new_literal += list(value)
+		var/value_to_add = handler.convert_value(list_output, value)
+		if(isdatum(value_to_add))
+			value_to_add = WEAKREF(value_to_add)
+		new_literal += list(value_to_add)
 
 	list_output.set_output(new_literal)
 

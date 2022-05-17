@@ -79,10 +79,10 @@
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
-/obj/machinery/proc/powered(chan = power_channel)
+/obj/machinery/proc/powered(chan = power_channel, ignore_use_power = FALSE)
 	if(!loc)
 		return FALSE
-	if(!use_power)
+	if(!use_power && !ignore_use_power)
 		return TRUE
 
 	var/area/A = get_area(src) // make sure it's in an area
@@ -93,6 +93,7 @@
 
 // increment the power usage stats for an area
 /obj/machinery/proc/use_power(amount, chan = power_channel)
+	amount = max(amount * machine_power_rectifier, 0) // make sure we don't use negative power
 	var/area/A = get_area(src) // make sure it's in an area
 	A?.use_power(amount, chan)
 
@@ -167,16 +168,17 @@
 
 	if(machine_stat & BROKEN)
 		return
+	var/initial_stat = machine_stat
 	if(powered(power_channel))
-		if(machine_stat & NOPOWER)
+		set_machine_stat(machine_stat & ~NOPOWER)
+		if(initial_stat & NOPOWER)
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
 			. = TRUE
-		set_machine_stat(machine_stat & ~NOPOWER)
 	else
-		if(!(machine_stat & NOPOWER))
+		set_machine_stat(machine_stat | NOPOWER)
+		if(!(initial_stat & NOPOWER))
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
-		set_machine_stat(machine_stat | NOPOWER)
 	update_appearance()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf

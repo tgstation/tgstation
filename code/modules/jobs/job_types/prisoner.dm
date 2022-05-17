@@ -8,7 +8,7 @@
 	supervisors = "the security team"
 	selection_color = "#ffe1c3"
 	exp_granted_type = EXP_TYPE_CREW
-	paycheck = PAYCHECK_PRISONER
+	paycheck = PAYCHECK_LOWER
 
 	outfit = /datum/outfit/job/prisoner
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
@@ -23,8 +23,7 @@
 
 	family_heirlooms = list(/obj/item/pen/blue)
 	rpg_title = "Defeated Miniboss"
-	job_type_flags = JOB_STATION_JOB
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/prisoner
@@ -37,6 +36,11 @@
 	belt = null
 	ears = null
 	shoes = /obj/item/clothing/shoes/sneakers/orange
+
+/datum/outfit/job/prisoner/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(prob(1)) // D BOYYYYSSSSS
+		head = /obj/item/clothing/head/beanie/black/dboy
 
 /datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
 	. = ..()

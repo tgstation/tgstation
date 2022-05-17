@@ -5,6 +5,7 @@
 /datum/uplink_item/species_restricted
 	category = /datum/uplink_category/species
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	surplus = 0
 
 /datum/uplink_item/species_restricted/moth_lantern
 	name = "Extra-Bright Lantern"

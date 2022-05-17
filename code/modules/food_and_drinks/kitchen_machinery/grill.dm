@@ -85,8 +85,8 @@
 	else
 		grill_fuel -= GRILL_FUELUSAGE_IDLE * delta_time
 		if(DT_PROB(0.5, delta_time))
-			var/datum/effect_system/smoke_spread/bad/smoke = new
-			smoke.set_up(1, loc)
+			var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
+			smoke.set_up(1, location = loc)
 			smoke.start()
 	if(grilled_item)
 		SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILLED, src, delta_time)
@@ -134,22 +134,7 @@
 	return ..()
 
 /obj/machinery/grill/proc/finish_grill()
-	switch(grill_time) //no 0-20 to prevent spam
-		if(20 to 30)
-			grilled_item.name = "lightly-grilled [grilled_item.name]"
-			grilled_item.desc = "[grilled_item.desc] It's been lightly grilled."
-		if(30 to 80)
-			grilled_item.name = "grilled [grilled_item.name]"
-			grilled_item.desc = "[grilled_item.desc] It's been grilled."
-			grilled_item.foodtype |= FRIED
-		if(80 to 100)
-			grilled_item.name = "heavily grilled [grilled_item.name]"
-			grilled_item.desc = "[grilled_item.desc] It's been heavily grilled."
-			grilled_item.foodtype |= FRIED
-		if(100 to INFINITY) //grill marks reach max alpha
-			grilled_item.name = "Powerfully Grilled [grilled_item.name]"
-			grilled_item.desc = "A [grilled_item.name]. Reminds you of your wife, wait, no, it's prettier!"
-			grilled_item.foodtype |= FRIED
+	SEND_SIGNAL(grilled_item, COMSIG_GRILL_FOOD, grilled_item, grill_time)
 	grill_time = 0
 	UnregisterSignal(grilled_item, COMSIG_GRILL_COMPLETED)
 	grill_loop.stop()

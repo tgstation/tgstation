@@ -55,27 +55,30 @@
 
 		if(uplink_handler.progression_points < SStraitor.current_global_progression)
 			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
+
 		var/list/uplink_items = list()
 		for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-			if(item.item && (!length(item.restricted_roles) || (uplink_handler.assigned_role in item.restricted_roles)) \
-				&& !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
-				uplink_items += item
-			if(item.item && (!length(item.restricted_species) || (uplink_handler.assigned_species in item.restricted_species)) \
-				&& !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
-				uplink_items += item
+			if(item.item && !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
+				if(!length(item.restricted_roles) && !length(item.restricted_species))
+					uplink_items += item
+					continue
+				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
+					uplink_items += item
+					continue
 		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
 
 	if(give_objectives)
 		forge_traitor_objectives()
 
-	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
-
-	pick_employer(faction)
-
-	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
+	pick_employer()
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
+	return ..()
+
+/datum/antagonist/traitor/on_removal()
+	if(uplink_handler)
+		uplink_handler.has_objectives = FALSE
 	return ..()
 
 /datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
@@ -130,8 +133,10 @@
 	owner.special_role = null
 	return ..()
 
-/datum/antagonist/traitor/proc/pick_employer(faction)
+/datum/antagonist/traitor/proc/pick_employer()
+	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
 	var/list/possible_employers = list()
+
 	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
 	switch(faction)
@@ -140,6 +145,7 @@
 		if(FACTION_NANOTRASEN)
 			possible_employers -= GLOB.syndicate_employers
 	employer = pick(possible_employers)
+	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
 /datum/objective/traitor_progression
 	name = "traitor progression"
@@ -150,8 +156,8 @@
 
 /datum/objective/traitor_progression/New(text)
 	. = ..()
-	required_total_progression_points = round(rand(possible_range[1], possible_range[2]) / 60)
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_total_progression_points)
+	required_total_progression_points = round(rand(possible_range[1], possible_range[2]))
+	explanation_text = replacetext(explanation_text, "%REPUTATION%", DISPLAY_PROGRESSION(required_total_progression_points))
 
 /datum/objective/traitor_progression/check_completion()
 	if(!owner)
@@ -174,8 +180,8 @@
 
 /datum/objective/traitor_objectives/New(text)
 	. = ..()
-	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]) / 60)
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_progression_in_objectives)
+	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]))
+	explanation_text = replacetext(explanation_text, "%REPUTATION%", DISPLAY_PROGRESSION(required_progression_in_objectives))
 
 /datum/objective/traitor_objectives/check_completion()
 	if(!owner)
@@ -289,7 +295,7 @@
 		var/completed_objectives_text = "Completed Uplink Objectives: "
 		for(var/datum/traitor_objective/objective as anything in uplink_handler.completed_objectives)
 			if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
-				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [round(objective.progression_reward/600, 0.1)] Reputation)"
+				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [DISPLAY_PROGRESSION(objective.progression_reward)] Reputation)"
 		result += completed_objectives_text
 
 	var/special_role_text = lowertext(name)
@@ -319,7 +325,7 @@
 	gloves = /obj/item/clothing/gloves/color/yellow
 	mask = /obj/item/clothing/mask/gas
 	l_hand = /obj/item/melee/energy/sword
-	r_hand = /obj/item/gun/energy/kinetic_accelerator/crossbow
+	r_hand = /obj/item/gun/energy/recharge/ebow
 
 /datum/outfit/traitor/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/melee/energy/sword/sword = locate() in H.held_items

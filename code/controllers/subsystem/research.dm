@@ -48,17 +48,25 @@ SUBSYSTEM_DEF(research)
 	var/list/created_anomaly_types = list()
 	/// The hard limits of cores created for each anomaly type. For faster code lookup without switch statements.
 	var/list/anomaly_hard_limit_by_type = list(
-	ANOMALY_CORE_BLUESPACE = MAX_CORES_BLUESPACE,
-	ANOMALY_CORE_PYRO = MAX_CORES_PYRO,
-	ANOMALY_CORE_GRAVITATIONAL = MAX_CORES_GRAVITATIONAL,
-	ANOMALY_CORE_VORTEX = MAX_CORES_VORTEX,
-	ANOMALY_CORE_FLUX = MAX_CORES_FLUX
+		/obj/item/assembly/signaler/anomaly/bluespace = MAX_CORES_BLUESPACE,
+		/obj/item/assembly/signaler/anomaly/pyro = MAX_CORES_PYRO,
+		/obj/item/assembly/signaler/anomaly/grav = MAX_CORES_GRAVITATIONAL,
+		/obj/item/assembly/signaler/anomaly/vortex = MAX_CORES_VORTEX,
+		/obj/item/assembly/signaler/anomaly/flux = MAX_CORES_FLUX,
+		/obj/item/assembly/signaler/anomaly/hallucination = MAX_CORES_HALLUCINATION,
+		/obj/item/assembly/signaler/anomaly/delimber = MAX_CORES_DELIMBER,
 	)
+
+	/// Lookup list for ordnance briefers.
+	var/list/ordnance_experiments
+	/// Lookup list for scipaper partners.
+	var/list/scientific_partners
 
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
 	initialize_all_techweb_designs()
 	initialize_all_techweb_nodes()
+	populate_ordnance_experiments()
 	science_tech = new /datum/techweb/science
 	admin_tech = new /datum/techweb/admin
 	autosort_categories()
@@ -293,3 +301,17 @@ SUBSYSTEM_DEF(research)
 			else
 				techweb_boost_items[path] = list(node.id = node.boost_item_paths[path])
 		CHECK_TICK
+
+/datum/controller/subsystem/research/proc/populate_ordnance_experiments()
+	ordnance_experiments = list()
+	scientific_partners = list()
+
+	for (var/datum/experiment/ordnance/experiment_path as anything in subtypesof(/datum/experiment/ordnance))
+		if (initial(experiment_path.experiment_proper))
+			ordnance_experiments += new experiment_path()
+	for(var/partner_path in subtypesof(/datum/scientific_partner))
+		var/datum/scientific_partner/partner = new partner_path
+		if(!partner.accepted_experiments.len)
+			for (var/datum/experiment/ordnance/ordnance_experiment as anything in ordnance_experiments)
+				partner.accepted_experiments += ordnance_experiment.type
+		scientific_partners += partner

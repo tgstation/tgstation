@@ -67,7 +67,7 @@
 	message_admins("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
 	log_game("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
 	update_gland_hud()
-	var/atom/movable/screen/alert/mind_control/mind_alert = owner.throw_alert("mind_control", /atom/movable/screen/alert/mind_control)
+	var/atom/movable/screen/alert/mind_control/mind_alert = owner.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
 	mind_alert.command = command
 	addtimer(CALLBACK(src, .proc/clear_mind_control), mind_control_duration)
 	return TRUE
@@ -76,7 +76,7 @@
 	if(!ownerCheck() || !active_mind_control)
 		return FALSE
 	to_chat(owner, span_userdanger("You feel the compulsion fade, and you <i>completely forget</i> about your previous orders."))
-	owner.clear_alert("mind_control")
+	owner.clear_alert(ALERT_MIND_CONTROL)
 	active_mind_control = FALSE
 	return TRUE
 
@@ -85,7 +85,7 @@
 	if(initial(uses) == 1)
 		uses = initial(uses)
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	hud.remove_from_hud(owner)
+	hud.remove_atom_from_hud(owner)
 	clear_mind_control()
 	..()
 
@@ -94,7 +94,7 @@
 	if(special != 2 && uses) // Special 2 means abductor surgery
 		Start()
 	var/datum/atom_hud/abductor/hud = GLOB.huds[DATA_HUD_ABDUCTOR]
-	hud.add_to_hud(owner)
+	hud.add_atom_to_hud(owner)
 	update_gland_hud()
 
 /obj/item/organ/heart/gland/on_life(delta_time, times_fired)

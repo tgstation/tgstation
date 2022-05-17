@@ -33,6 +33,7 @@
 	icon_state = "explosion"
 	opacity = TRUE
 	anchored = TRUE
+	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_x = -32
@@ -56,8 +57,8 @@
 /datum/effect_system/explosion/smoke
 
 /datum/effect_system/explosion/smoke/proc/create_smoke()
-	var/datum/effect_system/smoke_spread/S = new
-	S.set_up(2, location)
+	var/datum/effect_system/fluid_spread/smoke/S = new
+	S.set_up(2, location = location)
 	S.start()
 
 /datum/effect_system/explosion/smoke/start()

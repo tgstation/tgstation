@@ -1,22 +1,13 @@
-/*
-//////////////////////////////////////
-
-Choking
-
-	Very very noticable.
-	Lowers resistance.
-	Decreases stage speed.
-	Decreases transmittablity tremendously.
-	Moderate Level.
-
-Bonus
-	Inflicts spikes of oxyloss
-
-//////////////////////////////////////
-*/
+/**Choking
+ * Very very noticable.
+ * Lowers resistance
+ * Decreases stage speed
+ * Greatly decreases transmissibility
+ * Moderate Level.
+ * Bonus: Inflicts spikes of oxyloss
+ */
 
 /datum/symptom/choking
-
 	name = "Choking"
 	desc = "The virus causes inflammation of the host's air conduits, leading to intermittent choking."
 	stealth = -3

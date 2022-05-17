@@ -33,15 +33,6 @@ SUBSYSTEM_DEF(job)
 	/// Lazylist of mob:occupation_string pairs.
 	var/list/dynamic_forced_occupations
 
-	/// A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.
-	var/list/station_jobs = list()
-	/// A list of all Head of Staff jobs.
-	var/list/head_of_staff_jobs = list()
-	/// A list of additional jobs that have various icons associated with them including sechud and card trims.
-	var/list/additional_jobs_with_icons = list()
-	/// A list of jobs associed with Centcom and should use the standard NT Centcom icons.
-	var/list/centcom_jobs = list()
-
 	/**
 	 * Keys should be assigned job roles. Values should be >= 1.
 	 * Represents the chain of command on the station. Lower numbers mean higher priority.
@@ -127,7 +118,7 @@ SUBSYSTEM_DEF(job)
 		if(!job.config_check())
 			continue
 		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
-			testing("Removed [job.type] due to map config")
+			log_job_debug("Removed [job.title] due to map config")
 			continue
 		new_all_occupations += job
 		name_occupations[job.title] = job
@@ -250,6 +241,7 @@ SUBSYSTEM_DEF(job)
 
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			JobDebug("GRJ job lacks spawn positions to be eligible, Player: [player], Job: [job]")
+			continue
 
 		if(istype(job, GetJobType(overflow_role))) // We don't want to give him assistant, that's boring!
 			JobDebug("GRJ skipping overflow role, Player: [player], Job: [job]")
@@ -435,7 +427,7 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				// Filter any job that doesn't fit the current level.
-				var/player_job_level = player.client.prefs.job_preferences[job.title]
+				var/player_job_level = player.client?.prefs.job_preferences[job.title]
 				if(isnull(player_job_level))
 					JobDebug("FOC player job not enabled, Player: [player]")
 					continue
@@ -737,7 +729,7 @@ SUBSYSTEM_DEF(job)
 
 ///Lands specified mob at a random spot in the hallways
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)
-	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/hallway))
+	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/station/hallway))
 
 	if(!spawn_turf)
 		SendToLateJoin(living_mob)
@@ -788,25 +780,6 @@ SUBSYSTEM_DEF(job)
 
 /// Builds various lists of jobs based on station, centcom and additional jobs with icons associated with them.
 /datum/controller/subsystem/job/proc/setup_job_lists()
-	for(var/datum/job/job as anything in subtypesof(/datum/job))
-		if(initial(job.job_type_flags) & JOB_STATION_JOB)
-			station_jobs |= initial(job.title)
-		if(initial(job.job_type_flags) & JOB_HEAD_JOB)
-			head_of_staff_jobs |= initial(job.title)
-
-	additional_jobs_with_icons |= list(
-		JOB_ERT_COMMANDER, JOB_ERT_OFFICER, JOB_ERT_ENGINEER, JOB_ERT_MEDICAL_DOCTOR,
-		JOB_ERT_CLOWN, JOB_ERT_CHAPLAIN, JOB_ERT_JANITOR, JOB_ERT_DEATHSQUAD,
-		JOB_SECURITY_OFFICER_MEDICAL, JOB_SECURITY_OFFICER_ENGINEERING, JOB_SECURITY_OFFICER_SCIENCE, JOB_SECURITY_OFFICER_SUPPLY,
-	)
-
-	centcom_jobs |= list(
-		JOB_CENTCOM, JOB_CENTCOM_OFFICIAL, JOB_CENTCOM_ADMIRAL, JOB_CENTCOM_COMMANDER, JOB_CENTCOM_VIP,
-		JOB_CENTCOM_BARTENDER, JOB_CENTCOM_CUSTODIAN, JOB_CENTCOM_THUNDERDOME_OVERSEER, JOB_CENTCOM_MEDICAL_DOCTOR,
-		JOB_CENTCOM_RESEARCH_OFFICER, JOB_CENTCOM_SPECIAL_OFFICER, JOB_CENTCOM_PRIVATE_SECURITY,
-	)
-
-
 	job_priorities_to_strings = list(
 		"[JP_LOW]" = "Low Priority",
 		"[JP_MEDIUM]" = "Medium Priority",

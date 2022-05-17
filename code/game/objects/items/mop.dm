@@ -14,15 +14,20 @@
 	attack_verb_simple = list("mop", "bash", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
 	var/mopcount = 0
-	var/mopcap = 15
-	var/mopspeed = 15
+	///Maximum volume of reagents it can hold.
+	var/max_reagent_volume = 15
+	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()
-	create_reagents(mopcap)
+	create_reagents(max_reagent_volume)
+	GLOB.janitor_devices += src
 
+/obj/item/mop/Destroy(force)
+	GLOB.janitor_devices -= src
+	return ..()
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
 	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
@@ -65,22 +70,14 @@
 			to_chat(user, span_notice("You finish mopping."))
 			clean(T, user)
 
-/obj/item/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	if(insertable)
-		J.put_in_cart(src, user)
-		J.mymop=src
-		J.update_appearance()
-	else
-		to_chat(user, span_warning("You are unable to fit your [name] into the [J.name]."))
-		return
-
-/obj/item/mop/cyborg
-	insertable = FALSE
+/obj/item/mop/cyborg/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
-	mopcap = 10
+	max_reagent_volume = 10
 	icon_state = "advmop"
 	inhand_icon_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
@@ -88,7 +85,7 @@
 	force = 12
 	throwforce = 14
 	throw_range = 4
-	mopspeed = 8
+	mopspeed = 0.8 SECONDS
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
 	/// Amount of reagent to refill per second
 	var/refill_rate = 0.5
@@ -108,7 +105,7 @@
 	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
 
 /obj/item/mop/advanced/process(delta_time)
-	var/amadd = min(mopcap - reagents.total_volume, refill_rate * delta_time)
+	var/amadd = min(max_reagent_volume - reagents.total_volume, refill_rate * delta_time)
 	if(amadd > 0)
 		reagents.add_reagent(refill_reagent, amadd)
 

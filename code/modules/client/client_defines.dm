@@ -1,8 +1,38 @@
-
+/**
+ * Client datum
+ *
+ * A datum that is created whenever a user joins a BYOND world, one will exist for every active connected
+ * player
+ *
+ * when they first connect, this client object is created and [/client/New] is called
+ *
+ * When they disconnect, this client object is deleted and [/client/Del] is called
+ *
+ * All client topic calls go through [/client/Topic] first, so a lot of our specialised
+ * topic handling starts here
+ */
 /client
-		//////////////////////
-		//BLACK MAGIC THINGS//
-		//////////////////////
+
+	/**
+	 * This line makes clients parent type be a datum
+	 *
+	 * By default in byond if you define a proc on datums, that proc will exist on nearly every single type
+	 * from icons to images to atoms to mobs to objs to turfs to areas, it won't however, appear on client
+	 *
+	 * instead by default they act like their own independent type so while you can do istype(icon, /datum)
+	 * and have it return true, you can't do istype(client, /datum), it will always return false.
+	 *
+	 * This makes writing oo code hard, when you have to consider this extra special case
+	 *
+	 * This line prevents that, and has never appeared to cause any ill effects, while saving us an extra
+	 * pain to think about
+	 *
+	 * This line is widely considered black fucking magic, and the fact it works is a puzzle to everyone
+	 * involved, including the current engine developer, lummox
+	 *
+	 * If you are a future developer and the engine source is now available and you can explain why this
+	 * is the way it is, please do update this comment
+	 */
 	parent_type = /datum
 		////////////////
 		//ADMIN THINGS//
@@ -40,8 +70,6 @@
 		/////////
 	///Player preferences datum for the client
 	var/datum/preferences/prefs = null
-	///last turn of the controlled mob, I think this is only used by mechs?
-	var/last_turn = 0
 	///Move delay of controlled mob, any keypresses inside this period will persist until the next proper move
 	var/move_delay = 0
 	///The visual delay to use for the current client.Move(), mostly used for making a client based move look like it came from some other slower source
@@ -103,8 +131,6 @@
 	///world.timeofday they connected
 	var/connection_timeofday
 
-	///If the client is currently in player preferences
-	var/inprefs = FALSE
 	///Used for limiting the rate of topic sends by the client to avoid abuse
 	var/list/topiclimiter
 	///Used for limiting the rate of clicks sends by the client to avoid abuse
@@ -136,14 +162,15 @@
 	var/obj/item/active_mousedown_item = null
 	///Used in MouseDrag to preserve the original mouse click parameters
 	var/mouseParams = ""
-	///Used in MouseDrag to preserve the last mouse-entered location.
-	var/mouseLocation = null
-	///Used in MouseDrag to preserve the last mouse-entered object.
-	var/mouseObject = null
+	///Used in MouseDrag to preserve the last mouse-entered location. Weakref
+	var/datum/weakref/mouse_location_ref = null
+	///Used in MouseDrag to preserve the last mouse-entered object. Weakref
+	var/datum/weakref/mouse_object_ref
 	//Middle-mouse-button click dragtime control for aimbot exploit detection.
 	var/middragtime = 0
-	//Middle-mouse-button clicked object control for aimbot exploit detection.
-	var/atom/middragatom
+	//Middle-mouse-button clicked object control for aimbot exploit detection. Weakref
+	var/datum/weakref/middle_drag_atom_ref
+
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
@@ -153,9 +180,6 @@
 
 	/// our current tab
 	var/stat_tab
-
-	/// whether our browser is ready or not yet
-	var/statbrowser_ready = FALSE
 
 	/// list of all tabs
 	var/list/panel_tabs = list()
@@ -171,13 +195,16 @@
 	var/turf/previous_turf
 	///world.time of when we can state animate()ing parallax again
 	var/dont_animate_parallax
-	///world.time of last parallax update
-	var/last_parallax_shift
-	///ds between parallax updates
-	var/parallax_throttle = 0
+	/// Direction our current area wants to move parallax
 	var/parallax_movedir = 0
+	/// How many parallax layers to show our client
 	var/parallax_layers_max = 4
+	/// Timer for the area directional animation
 	var/parallax_animate_timer
+	/// Do we want to do parallax animations at all?
+	/// Exists to prevent laptop fires
+	var/do_parallax_animations = TRUE
+
 	///Are we locking our movement input?
 	var/movement_locked = FALSE
 
@@ -221,3 +248,6 @@
 
 	/// Whether or not this client has the combo HUD enabled
 	var/combo_hud_enabled = FALSE
+
+	/// If this client has been fully initialized or not
+	var/fully_created = FALSE

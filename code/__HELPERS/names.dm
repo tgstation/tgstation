@@ -66,6 +66,9 @@ GLOBAL_VAR(command_name)
 		new_station_name = name + " "
 		name = ""
 
+	if(prob(1))
+		random = 999999999 //ridiculously long name in written numbers
+
 	// Prefix
 	var/holiday_name = pick(SSevents.holidays)
 	if(holiday_name)
@@ -94,9 +97,11 @@ GLOBAL_VAR(command_name)
 		if(4)
 			new_station_name += pick(GLOB.phonetic_alphabet)
 		if(5)
-			new_station_name += pick(GLOB.numbers_as_words)
+			new_station_name += convert_integer_to_words(rand(-1,99), capitalise = TRUE)
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
+		if(999999999)
+			new_station_name = "Space Station " + convert_integer_to_words(rand(111111111,999999999), capitalise = TRUE)
 	return new_station_name
 
 /proc/syndicate_name()
@@ -198,7 +203,12 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 								new_name += pick(GLOB.last_names)
 								. += new_name
 					if(2)
-						. += pick(SSjob.station_jobs)//Returns a job.
+						var/datum/job/job = pick(SSjob.joinable_occupations)
+						if(job)
+							. += job.title //Returns a job.
+						else
+							stack_trace("Failed to pick(SSjob.joinable_occupations) on generate_code_phrase()")
+							. += "Bug"
 				safety -= 1
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.

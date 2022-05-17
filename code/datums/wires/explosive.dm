@@ -50,20 +50,27 @@
 		var/obj/item/grenade/chem_grenade/grenade = holder
 		grenade.landminemode = sensor
 		sensor.proximity_monitor.set_ignore_if_not_on_turf(FALSE)
+	else if(istype(S,/obj/item/assembly/health))
+		var/obj/item/assembly/health/sensor = S
+		if(!sensor.secured)
+			sensor.toggle_secure()
+		if(!sensor.scanning)
+			sensor.toggle_scan()
 	fingerprint = S.fingerprintslast
 	return ..()
 
 /datum/wires/explosive/chem_grenade/explode()
-	var/obj/item/grenade/chem_grenade/G = holder
+	var/obj/item/grenade/chem_grenade/grenade = holder
 	var/obj/item/assembly/assembly = get_attached(get_wire(1))
-	message_admins("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
-	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
+	if(!grenade.dud_flags)
+		message_admins("\An [assembly] has pulsed [grenade] ([grenade.type]), which was installed by [fingerprint].")
+	log_game("\An [assembly] has pulsed [grenade] ([grenade.type]), which was installed by [fingerprint].")
 	var/mob/M = get_mob_by_ckey(fingerprint)
-	G.log_grenade(M) //Used in arm_grenade() too but this one conveys where the mob who triggered the bomb is
-	if(G.landminemode)
-		G.detonate() ///already armed
+	grenade.log_grenade(M) //Used in arm_grenade() too but this one conveys where the mob who triggered the bomb is
+	if(grenade.landminemode)
+		grenade.detonate() ///already armed
 	else
-		G.arm_grenade() //The one here conveys where the bomb was when it went boom
+		grenade.arm_grenade() //The one here conveys where the bomb was when it went boom
 
 
 /datum/wires/explosive/chem_grenade/detach_assembly(color)

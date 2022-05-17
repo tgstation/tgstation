@@ -60,21 +60,20 @@
 		var/turf/open/floor/plating/target_plating = exposed_turf
 		if(prob(10 + target_plating.burnt + 5*target_plating.broken)) //broken or burnt plating is more susceptible to being destroyed
 			target_plating.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-	if(isfloorturf(exposed_turf))
+	if(isfloorturf(exposed_turf) && prob(reac_volume))
 		var/turf/open/floor/target_floor = exposed_turf
-		if(prob(reac_volume))
-			target_floor.make_plating()
-		else if(prob(reac_volume))
-			target_floor.burn_tile()
-		if(isfloorturf(target_floor))
-			for(var/turf/nearby_turf in RANGE_TURFS(1, target_floor))
-				if(!locate(/obj/effect/hotspot) in nearby_turf)
-					new /obj/effect/hotspot(nearby_turf)
+		target_floor.make_plating()
+	else if(prob(reac_volume))
+		exposed_turf.burn_tile()
+	if(isfloorturf(exposed_turf))
+		for(var/turf/nearby_turf in RANGE_TURFS(1, exposed_turf))
+			if(!locate(/obj/effect/hotspot) in nearby_turf)
+				new /obj/effect/hotspot(nearby_turf)
 
 /datum/reagent/clf3/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	exposed_mob.adjust_fire_stacks(min(reac_volume/5, 10))
-	exposed_mob.IgniteMob()
+	exposed_mob.ignite_mob()
 	if(!locate(/obj/effect/hotspot) in exposed_mob.loc)
 		new /obj/effect/hotspot(exposed_mob.loc)
 
@@ -118,7 +117,7 @@
 	..()
 	if(!isplasmaman(M))
 		return
-	M.set_drugginess(15 * REM * delta_time)
+	M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
 	if(M.hallucination < volume)
 		M.hallucination += 5 * REM * delta_time
 
@@ -186,7 +185,7 @@
 	exposed_mob.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*exposed_mob.fire_stacks, 0.3)
 	exposed_mob.adjustFireLoss(burndmg, 0)
-	exposed_mob.IgniteMob()
+	exposed_mob.ignite_mob()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	metabolizer.adjust_fire_stacks(1 * REM * delta_time)
@@ -324,7 +323,7 @@
 	if(shock_timer >= rand(5, 30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
 		M.electrocute_act(rand(5, 20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(M, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	..()
 
 /datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/L)
@@ -372,7 +371,7 @@
 		return
 
 	if(reac_volume >= 1)
-		var/obj/effect/particle_effect/foam/firefighting/foam = (locate(/obj/effect/particle_effect/foam) in exposed_turf)
+		var/obj/effect/particle_effect/fluid/foam/firefighting/foam = (locate(/obj/effect/particle_effect/fluid/foam) in exposed_turf)
 		if(!foam)
 			foam = new(exposed_turf)
 		else if(istype(foam))

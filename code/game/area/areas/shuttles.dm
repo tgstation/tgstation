@@ -10,6 +10,7 @@
 	always_unpowered = FALSE
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	area_flags = NO_ALERTS
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "shuttle"
 	flags_1 = CAN_BE_DIRTY_1
 	area_limited_icon_smoothing = /area/shuttle
@@ -45,6 +46,10 @@
 	name = "Syndicate Infiltrator EVA"
 
 /area/shuttle/syndicate/hallway
+	name = "Syndicate Infiltrator Hall"
+
+/area/shuttle/syndicate/engineering
+	name = "Syndicate Infiltrator Engineering"
 
 /area/shuttle/syndicate/airlock
 	name = "Syndicate Infiltrator Airlock"
@@ -64,6 +69,12 @@
 /area/shuttle/hunter
 	name = "Hunter Shuttle"
 	static_lighting = FALSE
+	base_lighting_alpha = 255
+
+/area/shuttle/hunter/russian
+	name = "Russian Cargo Hauler"
+	requires_power = TRUE
+	static_lighting = TRUE
 
 ////////////////////////////White Ship////////////////////////////
 
@@ -98,6 +109,7 @@
 	name = "Hyperspace"
 	desc = "Weeeeee"
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 
 /area/shuttle/arrival
@@ -168,6 +180,7 @@
 	icon_state = "shuttlectf"
 	area_flags = NOTELEPORT
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 /area/shuttle/escape/arena
 	name = "The Arena"

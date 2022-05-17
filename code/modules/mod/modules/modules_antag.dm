@@ -1,6 +1,6 @@
 //Antag modules for MODsuits
 
-///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection.
+///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection. Also acts as a welding screen.
 /obj/item/mod/module/armor_booster
 	name = "MOD armor booster module"
 	desc = "A retrofitted series of retractable armor plates, allowing the suit to function as essentially power armor, \
@@ -11,23 +11,27 @@
 	module_type = MODULE_TOGGLE
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/armor_booster)
+	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
+	use_mod_colors = TRUE
 	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
 	/// Slowdown added to the suit.
 	var/added_slowdown = -0.5
 	/// Armor values added to the suit parts.
-	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
+	var/list/armor_values = list(MELEE = 25, BULLET = 30, LASER = 15, ENERGY = 15)
 	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
 
-/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
-	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
-	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
-	return ..()
+/obj/item/mod/module/armor_booster/on_suit_activation()
+	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+
+/obj/item/mod/module/armor_booster/on_suit_deactivation(deleting = FALSE)
+	if(deleting)
+		return
+	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
 /obj/item/mod/module/armor_booster/on_activation()
 	. = ..()
@@ -46,11 +50,12 @@
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			spaceproofed[clothing_part] = TRUE
 
-/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if(!deleting)
+		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	mod.slowdown -= added_slowdown
 	mod.wearer.update_equipment_speed_mods()
 	var/list/parts = mod.mod_parts + mod
@@ -66,10 +71,10 @@
 			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
 	spaceproofed = list()
 
-/obj/item/mod/module/armor_booster/elite
-	name = "MOD elite armor booster module"
-	armor_values = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60)
-	added_slowdown = -0.25
+/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
+	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
+	return ..()
 
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
@@ -111,7 +116,7 @@
 	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/shield_reaction)
 
-/obj/item/mod/module/energy_shield/on_suit_deactivation()
+/obj/item/mod/module/energy_shield/on_suit_deactivation(deleting = FALSE)
 	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
 	charges = shield.current_charges
 	qdel(shield)
@@ -155,7 +160,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_HOLY, MOD_TRAIT)
 
-/obj/item/mod/module/anti_magic/on_suit_deactivation()
+/obj/item/mod/module/anti_magic/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_HOLY, MOD_TRAIT)
 
@@ -168,9 +173,11 @@
 	icon_state = "magic_neutralizer"
 
 /obj/item/mod/module/anti_magic/wizard/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
 
-/obj/item/mod/module/anti_magic/wizard/on_suit_deactivation()
+/obj/item/mod/module/anti_magic/wizard/on_suit_deactivation(deleting = FALSE)
+	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
 
 ///Insignia - Gives you a skin specific stripe.
@@ -228,7 +235,7 @@
 /obj/item/mod/module/noslip/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
 
-/obj/item/mod/module/noslip/on_suit_deactivation()
+/obj/item/mod/module/noslip/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
 
 /obj/item/mod/module/springlock/bite_of_87
@@ -245,15 +252,39 @@
 /obj/item/mod/module/springlock/bite_of_87/on_install()
 	mod.activation_step_time *= 0.1
 
-/obj/item/mod/module/springlock/bite_of_87/on_uninstall()
+/obj/item/mod/module/springlock/bite_of_87/on_uninstall(deleting = FALSE)
 	mod.activation_step_time *= 10
 
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] || prob(1))
-		var/list/all_parts = mod.mod_parts.Copy() + mod
-		for(var/obj/item/part in all_parts) // turns the suit yellow
-			part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			part.add_atom_colour("#b17f00", FIXED_COLOUR_PRIORITY)
+		mod.set_mod_color("#b17f00")
 		mod.wearer.remove_atom_colour(WASHABLE_COLOUR_PRIORITY) // turns purple guy purple
 		mod.wearer.add_atom_colour("#704b96", FIXED_COLOUR_PRIORITY)
+
+///Flamethrower - Launches fire across the area.
+/obj/item/mod/module/flamethrower
+	name = "MOD flamethrower module"
+	desc = "A custom-manufactured flamethrower, used to burn through your path. Burn well."
+	icon_state = "flamethrower"
+	module_type = MODULE_ACTIVE
+	complexity = 3
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	incompatible_modules = list(/obj/item/mod/module/flamethrower)
+	cooldown_time = 2.5 SECONDS
+	overlay_state_inactive = "module_flamethrower"
+	overlay_state_active = "module_flamethrower_on"
+
+/obj/item/mod/module/flamethrower/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/backblast/flamethrower(mod.wearer.loc)
+	flame.preparePixelProjectile(target, mod.wearer)
+	flame.firer = mod.wearer
+	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
+	INVOKE_ASYNC(flame, /obj/projectile.proc/fire)
+	drain_power(use_power_cost)
+
+/obj/projectile/bullet/incendiary/backblast/flamethrower
+	range = 6

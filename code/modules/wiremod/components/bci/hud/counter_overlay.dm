@@ -21,7 +21,7 @@
 
 	var/obj/item/organ/cyberimp/bci/bci
 	var/list/numbers = list()
-	var/counter_appearance
+	var/datum/weakref/counter_appearance
 
 /obj/item/circuit_component/counter_overlay/populate_ports()
 	counter_number = add_input_port("Displayed Number", PORT_TYPE_NUMBER)
@@ -38,9 +38,13 @@
 
 /obj/item/circuit_component/counter_overlay/unregister_shell(atom/movable/shell)
 	bci = null
-	QDEL_NULL(counter_appearance)
-	for(var/number in numbers)
-		QDEL_NULL(number)
+	for(var/datum/weakref/number in numbers)
+		var/datum/atom_hud/number_overlay = number?.resolve()
+		QDEL_NULL(number_overlay)
+	numbers = list()
+
+	var/datum/atom_hud/overlay = counter_appearance?.resolve()
+	QDEL_NULL(overlay)
 	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
 
 /obj/item/circuit_component/counter_overlay/input_received(datum/port/input/port)
@@ -52,50 +56,74 @@
 	if(!owner || !istype(owner) || !owner.client)
 		return
 
-	for(var/number in numbers)
-		QDEL_NULL(number)
+	for(var/datum/weakref/number in numbers)
+		var/datum/atom_hud/number_overlay = number?.resolve()
+		QDEL_NULL(number_overlay)
 	numbers = list()
 
-	QDEL_NULL(counter_appearance)
-	var/image/counter = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_numbers", loc = owner)
-	if(image_pixel_x.value)
+	var/datum/atom_hud/overlay = counter_appearance?.resolve()
+	QDEL_NULL(overlay)
+
+	var/image/counter = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_numbers", loc = owner, layer = RIPPLE_LAYER)
+	counter.plane = ABOVE_LIGHTING_PLANE
+
+	if(image_pixel_x.value != null)
 		counter.pixel_x = image_pixel_x.value
-	if(image_pixel_y.value)
+	if(image_pixel_y.value != null)
 		counter.pixel_y = image_pixel_y.value
 
-	counter_appearance = WEAKREF(owner.add_alt_appearance(
+	var/datum/atom_hud/alternate_appearance/basic/one_person/alt_appearance = owner.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"counter_overlay_[REF(src)]",
 		counter,
 		owner,
-	))
+	)
+	alt_appearance.show_to(owner)
+
+	counter_appearance = WEAKREF(alt_appearance)
 
 	var/cleared_number = clamp(round(counter_number.value), 0, 999)
 
 	for(var/i = 1 to 3)
 		var/cur_num = round(cleared_number / (10 ** (3 - i))) % 10
-		var/image/number = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_number_[cur_num]", loc = owner)
+		var/image/number = image(icon = 'icons/hud/screen_bci.dmi', icon_state = "hud_number_[cur_num]", loc = owner, layer = RIPPLE_LAYER)
+		number.plane = ABOVE_LIGHTING_PLANE
 
-		if(image_pixel_x.value)
+		if(image_pixel_x.value != null)
 			number.pixel_x = image_pixel_x.value + (i - 1) * 9
-		if(image_pixel_y.value)
+		else
+			number.pixel_x = (i - 1) * 9
+
+		if(image_pixel_y.value != null)
 			number.pixel_y = image_pixel_y.value
 
-		numbers.Add(WEAKREF(owner.add_alt_appearance(
+		var/datum/atom_hud/alternate_appearance/basic/one_person/number_alt_appearance = owner.add_alt_appearance(
 			/datum/atom_hud/alternate_appearance/basic/one_person,
 			"counter_overlay_[REF(src)]_[i]",
 			number,
 			owner,
-		)))
+		)
+		number_alt_appearance.show_to(owner)
+
+		numbers += WEAKREF(number_alt_appearance)
 
 /obj/item/circuit_component/counter_overlay/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
-	QDEL_NULL(counter_appearance)
-	for(var/number in numbers)
-		QDEL_NULL(number)
+	for(var/datum/weakref/number in numbers)
+		var/datum/atom_hud/number_overlay = number?.resolve()
+		QDEL_NULL(number_overlay)
+	numbers = list()
+
+	var/datum/atom_hud/overlay = counter_appearance?.resolve()
+	overlay.hide_from(owner)
+	QDEL_NULL(overlay)
 
 /obj/item/circuit_component/counter_overlay/Destroy()
-	QDEL_NULL(counter_appearance)
-	for(var/number in numbers)
-		QDEL_NULL(number)
+	for(var/datum/weakref/number in numbers)
+		var/datum/atom_hud/number_overlay = number?.resolve()
+		QDEL_NULL(number_overlay)
+	numbers = list()
+
+	var/datum/atom_hud/overlay = counter_appearance?.resolve()
+	QDEL_NULL(overlay)
 	return ..()

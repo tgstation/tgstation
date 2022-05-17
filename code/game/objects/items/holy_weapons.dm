@@ -53,7 +53,6 @@
 	flags_inv = NONE
 	icon_state = "cage"
 	inhand_icon_state = "cage"
-	dynamic_hair_suffix = ""
 	worn_y_offset = 7
 
 /obj/item/clothing/head/helmet/chaplain/ancient
@@ -150,12 +149,13 @@
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
 		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		tip_text = "Clear rune", \
 		on_clear_callback = CALLBACK(src, .proc/on_cult_rune_removed), \
-		effects_we_clear = list(/obj/effect/rune, /obj/effect/eldritch))
+		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune))
 
 	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
 	if(!GLOB.holy_weapon_type && istype(src, /obj/item/nullrod))
@@ -197,7 +197,7 @@
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("punches", "cross counters", "pummels")
-	attack_verb_simple = list("punch", "cross counter", "pummel")
+	attack_verb_simple = list(SFX_PUNCH, "cross counter", "pummel")
 	menu_description = "An undroppable god hand dealing burn damage. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/godhand/Initialize(mapload)
@@ -478,7 +478,7 @@
 /obj/item/nullrod/clown
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "clownrender"
 	inhand_icon_state = "render"
 	worn_icon_state = "render"
@@ -607,7 +607,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = NONE
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/items_and_weapons.dmi'

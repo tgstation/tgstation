@@ -9,14 +9,13 @@
 // forced: whether or not to ignore no_teleport
 /proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
 	// teleporting most effects just deletes them
-	var/static/list/delete_atoms = typecacheof(list(
-		/obj/effect,
-		)) - typecacheof(list(
-		/obj/effect/dummy/chameleon,
-		/obj/effect/wisp,
-		/obj/effect/mob_spawn,
-		/obj/effect/immovablerod,
-		))
+	var/static/list/delete_atoms = zebra_typecacheof(list(
+		/obj/effect = TRUE,
+		/obj/effect/dummy/chameleon = FALSE,
+		/obj/effect/wisp = FALSE,
+		/obj/effect/mob_spawn = FALSE,
+		/obj/effect/immovablerod = FALSE,
+	))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
 		return FALSE
@@ -25,8 +24,6 @@
 	// if the precision is not specified, default to 0, but apply BoH penalties
 	if (isnull(precision))
 		precision = 0
-
-	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTED, destination, channel)
 
 	switch(channel)
 		if(TELEPORT_CHANNEL_BLUESPACE)
@@ -66,13 +63,20 @@
 	if(!destturf || !curturf || destturf.is_transition_turf())
 		return FALSE
 
-	var/area/A = get_area(curturf)
-	var/area/B = get_area(destturf)
-	if(!forced && (HAS_TRAIT(teleatom, TRAIT_NO_TELEPORT) || (A.area_flags & NOTELEPORT) || (B.area_flags & NOTELEPORT)))
-		return FALSE
+	var/area/from_area = get_area(curturf)
+	var/area/to_area = get_area(destturf)
+	if(!forced)
+		if(HAS_TRAIT(teleatom, TRAIT_NO_TELEPORT))
+			return FALSE
 
-	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, curturf, destturf))
-		return FALSE
+		if((from_area.area_flags & NOTELEPORT) || (to_area.area_flags & NOTELEPORT))
+			return FALSE
+
+		if(SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTED, destination, channel) & COMPONENT_BLOCK_TELEPORT)
+			return FALSE
+
+		if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, curturf, destturf) & COMPONENT_BLOCK_TELEPORT)
+			return FALSE
 
 	if(isobserver(teleatom))
 		teleatom.abstract_move(destturf)
@@ -88,6 +92,8 @@
 		var/mob/M = teleatom
 		M.cancel_camera()
 
+	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT)
+
 	return TRUE
 
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
@@ -101,7 +107,7 @@
 		effect.start()
 
 // Safe location finder
-/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = TRUE)
+/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
 	if(!zlevels)
 		if (zlevel)
 			zlevels = list(zlevel)
@@ -119,7 +125,7 @@
 			return random_location
 
 /// Checks if a given turf is a "safe" location
-/proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = TRUE, no_teleport = FALSE)
+/proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = FALSE, no_teleport = FALSE)
 	. = FALSE
 	if(!isfloorturf(random_location))
 		return

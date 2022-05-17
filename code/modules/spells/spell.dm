@@ -124,10 +124,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/nonabstract_req = FALSE //spell can only be cast by mobs that are physical entities
 	var/stat_allowed = FALSE //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/phase_allowed = FALSE // If true, the spell can be cast while phased, eg. blood crawling, ethereal jaunting
-	var/antimagic_allowed = FALSE // If false, the spell cannot be cast while under the effect of antimagic
+
+	/// This determines what type of antimagic is needed to block the spell (MAGIC_RESISTANCE, MAGIC_RESISTANCE_MIND, MAGIC_RESISTANCE_HOLY)
+	var/antimagic_flags = MAGIC_RESISTANCE
+
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_emote_self = null
-	var/invocation_type = "none" //can be none, whisper, emote and shout
+	var/invocation_type = INVOCATION_NONE //can be none, whisper, emote and shout
 	var/range = 7 //the range of the spell; outer radius for aoe spells
 	var/message = "" //whatever it says to the guy affected by it
 	var/selection_type = "view" //can be "range" or "view"
@@ -143,8 +146,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	var/sparks_spread = 0
 	var/sparks_amt = 0 //cropped at 10
-	var/smoke_spread = 0 //1 - harmless, 2 - harmful
-	var/smoke_amt = 0 //cropped at 10
+	/// The typepath of the smoke to create on cast.
+	var/smoke_spread = null
+	/// The amount of smoke to create on case. This is a range so a value of 5 will create enough smoke to cover everything within 5 steps.
+	var/smoke_amt = 0
 
 	var/centcom_cancast = TRUE //Whether or not the spell should be allowed on z2
 
@@ -154,6 +159,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	base_action = /datum/action/spell_action/spell
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	if(SEND_SIGNAL(user, COMSIG_MOB_PRE_CAST_SPELL, src) & COMPONENT_CANCEL_SPELL)
+		return FALSE
+
 	if(player_lock)
 		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
 			to_chat(user, span_warning("You shouldn't have this spell! Something's wrong."))
@@ -175,16 +183,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(user, span_warning("Not when you're incapacitated!"))
 		return FALSE
 
-	if(!antimagic_allowed)
-		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
-		if(antimagic)
-			if(isitem(antimagic))
-				to_chat(user, span_notice("[antimagic] is interfering with your magic."))
-			else
-				to_chat(user, span_warning("Magic seems to flee from you, you can't gather enough power to cast this spell."))
-			return FALSE
+	if(!user.can_cast_magic(antimagic_flags))
+		return FALSE
 
-	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
+	if(!phase_allowed && istype(user.loc, /obj/effect/dummy) || HAS_TRAIT(user, TRAIT_ROD_FORM))
 		to_chat(user, span_warning("[name] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE
 
@@ -197,17 +199,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		var/mob/living/carbon/human/H = user
 
-		var/static/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard))
-		if(clothes_req) //clothes check
-			var/passes_req = FALSE
-			if(istype(H.back, /obj/item/mod/control))
-				var/obj/item/mod/control/mod = H.back
-				if(istype(mod.theme, /datum/mod_theme/enchanted))
-					passes_req = TRUE
-			if(!passes_req && !is_type_in_typecache(H.wear_suit, casting_clothes))
+		if(clothes_req)
+			if(!(H.wear_suit?.clothing_flags & CASTING_CLOTHES))
 				to_chat(H, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
-			if(!passes_req && !is_type_in_typecache(H.head, casting_clothes))
+			if(!(H.head?.clothing_flags & CASTING_CLOTHES))
 				to_chat(H, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
 	else
@@ -228,7 +224,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
 	if(action)
-		action.UpdateButtonIcon()
+		action.UpdateButtons()
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
@@ -301,7 +297,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(recharging && charge_type == "recharge" && (charge_counter < charge_max))
 		charge_counter += delta_time * 10
 		if(charge_counter >= charge_max)
-			action.UpdateButtonIcon()
+			action.UpdateButtons()
 			charge_counter = charge_max
 			recharging = FALSE
 
@@ -318,7 +314,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	cast(targets,user=user)
 	after_cast(targets)
 	if(action)
-		action.UpdateButtonIcon()
+		action.UpdateButtons()
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
 	if(overlay)
@@ -346,19 +342,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			to_chat(target, text("[message]"))
 		if(sparks_spread)
 			do_sparks(sparks_amt, FALSE, location)
-		if(smoke_spread)
-			if(smoke_spread == 1)
-				var/datum/effect_system/smoke_spread/smoke = new
-				smoke.set_up(smoke_amt, location)
-				smoke.start()
-			else if(smoke_spread == 2)
-				var/datum/effect_system/smoke_spread/bad/smoke = new
-				smoke.set_up(smoke_amt, location)
-				smoke.start()
-			else if(smoke_spread == 3)
-				var/datum/effect_system/smoke_spread/sleeping/smoke = new
-				smoke.set_up(smoke_amt, location)
-				smoke.start()
+		if(ispath(smoke_spread, /datum/effect_system/fluid_spread/smoke)) // Dear god this code is :agony:
+			var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_spread()
+			smoke.set_up(smoke_amt, location = location)
+			smoke.start()
 
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets,mob/user = usr)
@@ -379,7 +366,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
 	if(action)
-		action.UpdateButtonIcon()
+		action.UpdateButtons()
 
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	if (!istype(target))
@@ -504,8 +491,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	perform(targets,user=user)
 
-/obj/effect/proc_holder/spell/proc/updateButtonIcon(status_only, force)
-	action.UpdateButtonIcon(status_only, force)
+/obj/effect/proc_holder/spell/proc/updateButtons(status_only, force)
+	action.UpdateButtons(status_only, force)
 
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))
@@ -545,7 +532,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(user.stat && !stat_allowed)
 		return FALSE
 
-	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
+	if(!user.can_cast_magic(antimagic_flags))
 		return FALSE
 
 	if(!ishuman(user))

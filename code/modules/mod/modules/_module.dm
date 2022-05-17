@@ -29,13 +29,17 @@
 	var/overlay_state_active
 	/// Overlay given to the user when the module is used, lasts until cooldown finishes
 	var/overlay_state_use
+	/// Icon file for the overlay.
+	var/overlay_icon_file = 'icons/mob/clothing/modsuit/mod_modules.dmi'
+	/// Does the overlay use the control unit's colors?
+	var/use_mod_colors = FALSE
 	/// What modules are we incompatible with?
 	var/list/incompatible_modules = list()
 	/// Cooldown after use
 	var/cooldown_time = 0
 	/// The mouse button needed to use this module
 	var/used_signal
-	/// List of mobs we are pinned to, linked with their action buttons
+	/// List of REF()s mobs we are pinned to, linked with their action buttons
 	var/list/pinned_to = list()
 	/// If we're allowed to use this module while phased out.
 	var/allowed_in_phaseout = FALSE
@@ -49,13 +53,13 @@
 	if(ispath(device))
 		device = new device(src)
 		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
-		RegisterSignal(device, COMSIG_PARENT_PREQDELETED, .proc/on_device_deletion)
+		RegisterSignal(device, COMSIG_PARENT_QDELETING, .proc/on_device_deletion)
 		RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 
 /obj/item/mod/module/Destroy()
 	mod?.uninstall(src)
 	if(device)
-		UnregisterSignal(device, COMSIG_PARENT_PREQDELETED)
+		UnregisterSignal(device, COMSIG_PARENT_QDELETING)
 		QDEL_NULL(device)
 	return ..()
 
@@ -69,7 +73,7 @@
 	return
 
 /// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
-/obj/item/mod/module/proc/on_uninstall()
+/obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is activated
@@ -77,7 +81,7 @@
 	return
 
 /// Called when the MODsuit is deactivated
-/obj/item/mod/module/proc/on_suit_deactivation()
+/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is equipped
@@ -96,7 +100,7 @@
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
-			on_deactivation(display_message = TRUE)
+			on_deactivation()
 		else
 			on_activation()
 	else
@@ -119,28 +123,29 @@
 		return FALSE
 	if(module_type == MODULE_ACTIVE)
 		if(mod.selected_module && !mod.selected_module.on_deactivation(display_message = FALSE))
-			return
+			return FALSE
 		mod.selected_module = src
 		if(device)
 			if(mod.wearer.put_in_hands(device))
 				balloon_alert(mod.wearer, "[device] extended")
 				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+				RegisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey)
 			else
 				balloon_alert(mod.wearer, "can't extend [device]!")
 				mod.wearer.transferItemToLoc(device, src, force = TRUE)
-				return
+				return FALSE
 		else
 			var/used_button = mod.wearer.client?.prefs.read_preference(/datum/preference/choiced/mod_select) || MIDDLE_CLICK
 			update_signal(used_button)
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 	active = TRUE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_ACTIVATED)
 	return TRUE
 
 /// Called when the module is deactivated
-/obj/item/mod/module/proc/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/proc/on_deactivation(display_message = TRUE, deleting = FALSE)
 	active = FALSE
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
@@ -149,10 +154,11 @@
 		if(device)
 			mod.wearer.transferItemToLoc(device, src, force = TRUE)
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
+			UnregisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN)
 		else
 			UnregisterSignal(mod.wearer, used_signal)
 			used_signal = null
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_DEACTIVATED)
 	return TRUE
 
@@ -171,8 +177,8 @@
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
-	mod.wearer.update_inv_back()
+	addtimer(CALLBACK(mod.wearer, /mob.proc/update_clothing, mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
+	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_USED)
 	return TRUE
 
@@ -195,7 +201,7 @@
 /obj/item/mod/module/proc/on_process(delta_time)
 	if(active)
 		if(!drain_power(active_power_cost * delta_time))
-			on_deactivation(display_message = TRUE)
+			on_deactivation()
 			return FALSE
 		on_active_process(delta_time)
 	else
@@ -247,7 +253,7 @@
 	if(part.loc == mod.wearer)
 		return
 	if(part == device)
-		on_deactivation(display_message = TRUE)
+		on_deactivation(display_message = FALSE)
 
 /// Called when the device gets deleted on active modules
 /obj/item/mod/module/proc/on_device_deletion(datum/source)
@@ -271,7 +277,9 @@
 		used_overlay = overlay_state_inactive
 	else
 		return
-	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/clothing/mod.dmi', used_overlay, layer = standing.layer + 0.1)
+	var/mutable_appearance/module_icon = mutable_appearance(overlay_icon_file, used_overlay, layer = standing.layer + 0.1)
+	if(!use_mod_colors)
+		module_icon.appearance_flags |= RESET_COLOR
 	. += module_icon
 
 /// Updates the signal used by active modules to be activated
@@ -285,14 +293,21 @@
 
 /// Pins the module to the user's action buttons
 /obj/item/mod/module/proc/pin(mob/user)
-	var/datum/action/item_action/mod/pinned_module/action = pinned_to[user]
+	var/datum/action/item_action/mod/pinned_module/action = pinned_to[REF(user)]
 	if(action)
 		qdel(action)
-		pinned_to[user] = null
 	else
 		action = new(mod, src, user)
 		action.Grant(user)
-		pinned_to[user] = action
+
+/// On drop key, concels a device item.
+/obj/item/mod/module/proc/dropkey(mob/living/user)
+	SIGNAL_HANDLER
+
+	if(user.get_active_held_item() != device)
+		return
+	on_deactivation()
+	return COMSIG_KB_ACTIVATED
 
 ///Anomaly Locked - Causes the module to not function without an anomaly.
 /obj/item/mod/module/anomaly_locked

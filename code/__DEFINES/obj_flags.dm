@@ -39,6 +39,8 @@
 #define NO_PIXEL_RANDOM_DROP (1<<17) //if dropped, it wont have a randomized pixel_x/pixel_y
 ///Can be equipped on digitigrade legs.
 #define IGNORE_DIGITIGRADE (1<<18)
+/// Has contextual screentips when HOVERING OVER OTHER objects
+#define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -60,6 +62,10 @@
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
 #define BLOCKS_SPEECH (1<<16)
 #define PLASMAMAN_HELMET_EXEMPT (1<<17) //prevents from placing on plasmaman helmet
+/// Prevents plasmamen from igniting when wearing this
+#define PLASMAMAN_PREVENT_IGNITION (1<<18)
+/// Usable as casting clothes by wizards (only matters for suits and headwear)
+#define CASTING_CLOTHES (1<<19)
 
 /// Flags for the organ_flags var on /obj/item/organ
 

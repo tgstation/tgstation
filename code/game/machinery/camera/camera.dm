@@ -8,9 +8,9 @@
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "camera" //mapping icon to represent upgrade states. if you want a different base icon, update default_camera_icon as well as this.
 	use_power = ACTIVE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 10
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
 	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 90, ACID = 50)
@@ -325,7 +325,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			return
 
 	// OTHER
-	if((istype(I, /obj/item/paper) || istype(I, /obj/item/pda)) && isliving(user))
+	if((istype(I, /obj/item/paper) || istype(I, /obj/item/modular_computer/tablet)) && isliving(user))
 		var/mob/living/paper_user = user
 
 		var/itemname = ""
@@ -334,10 +334,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			var/obj/item/paper/pressed_paper = I
 			itemname = pressed_paper.name
 			info = pressed_paper.info
-		else
-			var/obj/item/pda/pressed_pda = I
-			itemname = pressed_pda.name
-			info = pressed_pda.notehtml
+		if(istype(I, /obj/item/modular_computer/tablet))
+			var/obj/item/modular_computer/tablet/computer = I
+			itemname = computer.name
+			info = computer.note
 
 		itemname = sanitize(itemname)
 		to_chat(paper_user, span_notice("You hold \the [itemname] up to the camera..."))

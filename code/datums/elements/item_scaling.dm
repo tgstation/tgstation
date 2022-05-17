@@ -28,15 +28,19 @@
  * * overworld_scaling - Integer or float to scale the item in the overworld.
  * * storage_scaling - Integer or float to scale the item in storage/inventory.
  */
-/datum/element/item_scaling/Attach(datum/target, overworld_scaling, storage_scaling)
+/datum/element/item_scaling/Attach(atom/target, overworld_scaling, storage_scaling)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
+
 	// Initial scaling set to overworld_scaling when item is spawned.
 	scale(target, overworld_scaling)
 
 	src.overworld_scaling = overworld_scaling
 	src.storage_scaling = storage_scaling
+
+	// Make sure overlays also inherit the scaling.
+	ADD_KEEP_TOGETHER(target, ITEM_SCALING_TRAIT)
 
 	// Object scaled when dropped/thrown OR when exiting a storage component.
 	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_STORAGE_EXITED), .proc/scale_overworld)
@@ -50,13 +54,16 @@
  * Arguments:
  * * target - Datum which the element is attached to.
  */
-/datum/element/item_scaling/Detach(datum/target)
+/datum/element/item_scaling/Detach(atom/target)
 	UnregisterSignal(target, list(
 		COMSIG_ITEM_PICKUP,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_STORAGE_ENTERED,
 		COMSIG_STORAGE_EXITED,
 	))
+
+	REMOVE_KEEP_TOGETHER(target, ITEM_SCALING_TRAIT)
+
 	return ..()
 
 /**

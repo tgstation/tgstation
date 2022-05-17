@@ -1,4 +1,0 @@
-author: "tastyfish"
-delete-after: True
-changes: 
-  - server: "Added some more CI linter checks for maps, that are otherwise caught at runtime. This will likely fail downstream maps if they're double stacking objects which aren't allowed to stack, or misplacing APC's."

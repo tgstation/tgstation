@@ -73,10 +73,9 @@
  * Returns TRUE if there are mobs buckled to this atom and FALSE otherwise
  */
 /atom/movable/proc/has_buckled_mobs()
-	if(!buckled_mobs)
-		return FALSE
 	if(length(buckled_mobs))
 		return TRUE
+	return FALSE
 
 /**
  * Set a mob as buckled to src
@@ -116,7 +115,7 @@
 		RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
 	M.set_buckled(src)
 	buckled_mobs |= M
-	M.throw_alert("buckled", /atom/movable/screen/alert/buckled)
+	M.throw_alert(ALERT_BUCKLED, /atom/movable/screen/alert/buckled)
 	M.set_glide_size(glide_size)
 
 	M.Move(loc)
@@ -132,7 +131,7 @@
 	if(.)
 		if(resistance_flags & ON_FIRE) //Sets the mob on fire if you buckle them to a burning atom/movableect
 			M.adjust_fire_stacks(1)
-			M.IgniteMob()
+			M.ignite_mob()
 
 /**
  * Set a mob as unbuckled from src
@@ -152,7 +151,7 @@
 	. = buckled_mob
 	buckled_mob.set_buckled(null)
 	buckled_mob.set_anchored(initial(buckled_mob.anchored))
-	buckled_mob.clear_alert("buckled")
+	buckled_mob.clear_alert(ALERT_BUCKLED)
 	buckled_mob.set_glide_size(DELAY_TO_GLIDE_SIZE(buckled_mob.total_multiplicative_slowdown()))
 	buckled_mobs -= buckled_mob
 	if(anchored)

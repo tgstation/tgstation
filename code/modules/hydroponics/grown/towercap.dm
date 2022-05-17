@@ -44,12 +44,39 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
 	var/plank_name = "wooden planks"
-	var/static/list/accepted = typecacheof(list(/obj/item/food/grown/tobacco,
-	/obj/item/food/grown/tea,
-	/obj/item/food/grown/ash_flora/mushroom_leaf,
-	/obj/item/food/grown/ambrosia/vulgaris,
-	/obj/item/food/grown/ambrosia/deus,
-	/obj/item/food/grown/wheat))
+	var/static/list/accepted = typecacheof(list(
+		/obj/item/food/grown/tobacco,
+		/obj/item/food/grown/tea,
+		/obj/item/food/grown/ash_flora/mushroom_leaf,
+		/obj/item/food/grown/ambrosia/vulgaris,
+		/obj/item/food/grown/ambrosia/deus,
+		/obj/item/food/grown/wheat,
+	))
+
+/obj/item/grown/log/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	register_context()
+
+/obj/item/grown/log/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.get_sharpness())
+		// May be a little long, but I think "cut into planks" for steel caps may be confusing.
+		context[SCREENTIP_CONTEXT_LMB] = "Cut into [plank_name]"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(CheckAccepted(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Make torch"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.get_sharpness())
@@ -109,10 +136,40 @@
 	max_integrity = 30
 	density = FALSE
 	anchored = TRUE
+	buckle_lying = 90
+	/// Overlay we apply when impaling a mob.
+	var/mutable_appearance/stab_overlay
 
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
+	stab_overlay = mutable_appearance(icon, "[icon_state]_stab", layer = ABOVE_MOB_LAYER, plane = GAME_PLANE_FOV_HIDDEN)
+
+/obj/structure/punji_sticks/intercept_zImpact(list/falling_movables, levels)
+	. = ..()
+	for(var/mob/living/fallen_mob in falling_movables)
+		if(LAZYLEN(buckled_mobs))
+			return
+		if(buckle_mob(fallen_mob, TRUE))
+			to_chat(fallen_mob, span_userdanger("You are impaled by [src]!"))
+			fallen_mob.apply_damage(25 * levels, BRUTE, sharpness = SHARP_POINTY)
+			if(iscarbon(fallen_mob))
+				var/mob/living/carbon/fallen_carbon = fallen_mob
+				fallen_carbon.emote("scream")
+				fallen_carbon.bleed(30)
+			add_overlay(stab_overlay)
+	. |= FALL_INTERCEPTED | FALL_NO_MESSAGE
+
+/obj/structure/punji_sticks/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
+	if(force)
+		return ..()
+	to_chat(buckled_mob, span_warning("You begin climbing out of [src]."))
+	buckled_mob.apply_damage(5, BRUTE, sharpness = SHARP_POINTY)
+	if(!do_after(buckled_mob, 5 SECONDS, target = src))
+		to_chat(buckled_mob, span_userdanger("You fail to detach yourself from [src]."))
+		return
+	cut_overlay(stab_overlay)
+	return ..()
 
 /obj/structure/punji_sticks/spikes
 	name = "wooden spikes"

@@ -51,18 +51,22 @@
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = ABOVE_MOB_LAYER
+			turret.plane = GAME_PLANE_UPPER
 		if(EAST)
 			turret.pixel_x = base_pixel_x - 12
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
+			turret.plane = GAME_PLANE
 		if(SOUTH)
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
+			turret.plane = GAME_PLANE
 		if(WEST)
 			turret.pixel_x = base_pixel_x + 12
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
+			turret.plane = GAME_PLANE
 
 /obj/vehicle/ridden/atv/welder_act(mob/living/user, obj/item/I)
 	if(atom_integrity >= max_integrity)
@@ -84,8 +88,8 @@
 		return PROCESS_KILL
 	if(DT_PROB(10, delta_time))
 		return
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(0, src)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(0, location = src)
 	smoke.start()
 
 /obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)

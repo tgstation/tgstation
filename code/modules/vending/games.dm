@@ -8,6 +8,8 @@
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/cards/deck = 5,
 		/obj/item/storage/dice = 10,
+		/obj/item/toy/cards/deck/blank = 3,
+		/obj/item/toy/cards/deck/blank/black = 3,
 		/obj/item/toy/cards/deck/cas = 3,
 		/obj/item/toy/cards/deck/cas/black = 3,
 		/obj/item/toy/cards/deck/kotahi = 3,
@@ -22,27 +24,30 @@
 		/obj/item/cardpack/series_one = 10,
 		/obj/item/cardpack/resin = 10,
 		/obj/item/storage/card_binder = 10,
-		/obj/item/skillchip/basketweaving=2,
-		/obj/item/skillchip/bonsai=2,
-		/obj/item/skillchip/wine_taster=2,
-		/obj/item/skillchip/light_remover=2,
-		/obj/item/skillchip/useless_adapter=5,
-		/obj/item/dyespray=3,
-		/obj/item/razor=3,
+		/obj/item/skillchip/basketweaving = 2,
+		/obj/item/skillchip/bonsai = 2,
+		/obj/item/skillchip/wine_taster = 2,
+		/obj/item/skillchip/light_remover = 2,
+		/obj/item/skillchip/useless_adapter = 5,
+		/obj/item/dyespray = 3,
+		/obj/item/razor = 3,
 		/obj/item/canvas/nineteen_nineteen = 5,
 		/obj/item/canvas/twentythree_nineteen = 5,
 		/obj/item/canvas/twentythree_twentythree = 5,
-		/obj/item/paint_palette = 3
+		/obj/item/paint_palette = 3,
+		/obj/item/wallframe/painting/large = 5,
 	)
 	contraband = list(
 		/obj/item/dice/fudge = 9,
-		/obj/item/clothing/shoes/wheelys/skishoes=4,
-		/obj/item/instrument/musicalmoth=1
+		/obj/item/clothing/shoes/wheelys/skishoes = 4,
+		/obj/item/instrument/musicalmoth = 1,
 	)
 	premium = list(
 		/obj/item/disk/holodisk = 5,
 		/obj/item/toy/crayon/spraycan = 3,
 		/obj/item/canvas/twentyfour_twentyfour = 5,
+		/obj/item/canvas/thirtysix_twentyfour = 3,
+		/obj/item/canvas/fortyfive_twentyseven = 3,
 		/obj/item/rcl = 2,
 		/obj/item/airlock_painter = 1,
 		/obj/item/melee/skateboard/pro = 3,
@@ -53,8 +58,8 @@
 		/obj/item/toy/captainsaid = 1,
 	)
 	refill_canister = /obj/item/vending_refill/games
-	default_price = PAYCHECK_ASSISTANT
-	extra_price = PAYCHECK_HARD * 1.25
+	default_price = PAYCHECK_CREW
+	extra_price = PAYCHECK_COMMAND * 1.25
 	payment_department = ACCOUNT_SRV
 	light_mask = "games-light-mask"
 

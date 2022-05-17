@@ -6,6 +6,7 @@
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "time"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	pixel_x = -64
 	pixel_y = -64
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -15,8 +16,7 @@
 	var/duration = 140
 	var/datum/proximity_monitor/advanced/timestop/chronofield
 	alpha = 125
-	var/check_anti_magic = FALSE
-	var/check_holy = FALSE
+	var/antimagic_flags = NONE
 	///if true, immune atoms moving ends the timestop instead of duration.
 	var/channelled = FALSE
 
@@ -45,12 +45,13 @@
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
-	chronofield = new(src, freezerange, TRUE, immune, check_anti_magic, check_holy, channelled)
+	chronofield = new (src, freezerange, TRUE, immune, antimagic_flags, channelled)
 	if(!channelled)
 		QDEL_IN(src, duration)
 
+
 /obj/effect/timestop/magic
-	check_anti_magic = TRUE
+	antimagic_flags = MAGIC_RESISTANCE
 
 ///indefinite version, but only if no immune atoms move.
 /obj/effect/timestop/channelled
@@ -62,18 +63,16 @@
 	var/list/frozen_mobs = list() //cached separately for processing
 	var/list/frozen_structures = list() //Also machinery, and only frozen aestethically
 	var/list/frozen_turfs = list() //Only aesthetically
-	var/check_anti_magic = FALSE
-	var/check_holy = FALSE
+	var/antimagic_flags = NONE
 	///if true, this doesn't time out after a duration but rather when an immune atom inside moves.
 	var/channelled = FALSE
 
 	var/static/list/global_frozen_atoms = list()
 
-/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, check_anti_magic, check_holy, channelled)
+/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, antimagic_flags, channelled)
 	..()
 	src.immune = immune
-	src.check_anti_magic = check_anti_magic
-	src.check_holy = check_holy
+	src.antimagic_flags = antimagic_flags
 	src.channelled = channelled
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
@@ -98,7 +97,7 @@
 		return FALSE
 	if(ismob(A))
 		var/mob/M = A
-		if(M.anti_magic_check(check_anti_magic, check_holy))
+		if(M.can_block_magic(antimagic_flags))
 			immune[A] = TRUE
 			return
 	var/frozen = TRUE

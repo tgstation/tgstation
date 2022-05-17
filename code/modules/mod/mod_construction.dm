@@ -51,42 +51,33 @@
 	new /obj/item/mod/core/standard(drop_location())
 	qdel(src)
 
-/obj/item/mod/construction/armor
+/obj/item/mod/construction/plating
 	name = "MOD external plating"
 	desc = "External plating used to finish a MOD control unit."
 	icon_state = "standard-plating"
 	var/datum/mod_theme/theme = /datum/mod_theme
 
-/obj/item/mod/construction/armor/Initialize(mapload)
+/obj/item/mod/construction/plating/Initialize(mapload)
 	. = ..()
 	var/datum/mod_theme/used_theme = GLOB.mod_themes[theme]
 	name = "MOD [used_theme.name] external plating"
 	desc = "[desc] [used_theme.desc]"
 	icon_state = "[used_theme.default_skin]-plating"
 
-/obj/item/mod/construction/armor/engineering
+/obj/item/mod/construction/plating/engineering
 	theme = /datum/mod_theme/engineering
 
-/obj/item/mod/construction/armor/atmospheric
+/obj/item/mod/construction/plating/atmospheric
 	theme = /datum/mod_theme/atmospheric
 
-/obj/item/mod/construction/armor/mining
-	theme = /datum/mod_theme/mining
-
-/obj/item/mod/construction/armor/medical
+/obj/item/mod/construction/plating/medical
 	theme = /datum/mod_theme/medical
 
-/obj/item/mod/construction/armor/security
+/obj/item/mod/construction/plating/security
 	theme = /datum/mod_theme/security
 
-/obj/item/mod/construction/armor/cosmohonk
+/obj/item/mod/construction/plating/cosmohonk
 	theme = /datum/mod_theme/cosmohonk
-
-/obj/item/mod/paint
-	name = "MOD paint kit"
-	desc = "This kit will repaint your MODsuit to something unique."
-	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
-	icon_state = "paintkit"
 
 #define START_STEP "start"
 #define CORE_STEP "core"
@@ -130,7 +121,7 @@
 		if(WRENCHED_ASSEMBLY_STEP)
 			display_text = "The assembly seems <b>loose</b>..."
 		if(SCREWED_ASSEMBLY_STEP)
-			display_text = "All it's missing is <b>external armor</b>..."
+			display_text = "All it's missing is <b>external plating</b>..."
 	. += span_notice(display_text)
 
 /obj/item/mod/construction/shell/attackby(obj/item/part, mob/user, params)
@@ -235,13 +226,13 @@
 					balloon_alert(user, "assembly unsecured")
 					step = BOOTS_STEP
 		if(SCREWED_ASSEMBLY_STEP)
-			if(istype(part, /obj/item/mod/construction/armor)) //Construct
-				var/obj/item/mod/construction/armor/external_armor = part
+			if(istype(part, /obj/item/mod/construction/plating)) //Construct
+				var/obj/item/mod/construction/plating/external_plating = part
 				if(!user.transferItemToLoc(part, src))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				balloon_alert(user, "suit finished")
-				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_armor.theme, null, core)
+				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_plating.theme, null, core)
 				core = null
 				qdel(src)
 				user.put_in_hands(mod)

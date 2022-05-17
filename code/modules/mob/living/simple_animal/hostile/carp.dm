@@ -66,6 +66,8 @@
 	var/static/list/carp_colors_rare = list(
 		"silver" = "#fdfbf3"
 	)
+	/// Is the carp tamed?
+	var/tamed = FALSE
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload, mob/tamer)
 	AddElement(/datum/element/simple_flying)
@@ -83,10 +85,24 @@
 		else
 			make_tameable()
 
+/mob/living/simple_animal/hostile/carp/revive(full_heal, admin_revive)
+	if (tamed)
+		var/datum/weakref/friendref = ai_controller.blackboard[BB_HOSTILE_FRIEND]
+		var/mob/living/friend = friendref?.resolve()
+		if(friend)
+			tamed(friend)
+	return ..()
+
+/mob/living/simple_animal/hostile/carp/death(gibbed)
+	if (tamed)
+		can_buckle = FALSE
+	return ..()
+
 /mob/living/simple_animal/hostile/carp/proc/make_tameable()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
 
 /mob/living/simple_animal/hostile/carp/proc/tamed(mob/living/tamer)
+	tamed = TRUE
 	can_buckle = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
@@ -247,6 +263,7 @@
 	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
 	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
 	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT) //carp can take the disk off the captain
+	ADD_TRAIT(src, TRAIT_CAN_USE_NUKE, INNATE_TRAIT) //carp SMART
 
 /mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
 	if(disky)
@@ -283,6 +300,11 @@
 			update_icon()
 		else
 			disky.melee_attack_chain(src, attacked_target)
+		return
+
+	if(istype(attacked_target, /obj/machinery/nuclearbomb))
+		var/obj/machinery/nuclearbomb/nuke = attacked_target
+		nuke.ui_interact(src)
 		return
 	return ..()
 

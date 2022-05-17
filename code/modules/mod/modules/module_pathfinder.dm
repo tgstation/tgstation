@@ -6,7 +6,7 @@
 		very control unit of the suit, allowing it flight at highway speeds, \
 		and to be able to locate the second part of the system; \
 		a pathfinding implant installed into the base of the user's spine, \
-		broadcasting their location to the suit and allowing them to recall it to their back at any time. \
+		broadcasting their location to the suit and allowing them to recall it to their person at any time. \
 		The implant is stored in the module and needs to be injected in a human to function. \
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
@@ -150,17 +150,18 @@
 	button_icon_state = "recall"
 	/// The cooldown for the recall.
 	COOLDOWN_DECLARE(recall_cooldown)
-	/// The implant we are linked to.
-	var/obj/item/implant/mod/implant
 
 /datum/action/item_action/mod_recall/New(Target)
 	..()
-	implant = Target
+	if(!istype(Target, /obj/item/implant/mod))
+		qdel(src)
+		return
 
 /datum/action/item_action/mod_recall/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
+	var/obj/item/implant/mod/implant = target
 	if(!COOLDOWN_FINISHED(src, recall_cooldown))
 		implant.balloon_alert(implant.imp_in, "on cooldown!")
 		return
