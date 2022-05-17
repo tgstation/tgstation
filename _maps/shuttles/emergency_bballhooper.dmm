@@ -179,15 +179,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"hl" = (
-/obj/structure/extinguisher_cabinet/directional/north{
-	name = "USE WHEN OVERHEATING"
-	},
-/obj/machinery/computer/emergency_shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/purple,
-/area/shuttle/escape)
 "iT" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -283,11 +274,15 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "sa" = (
-/obj/machinery/vending/wallmed/directional/east{
-	name = "Hooper's First Medical Kit"
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/item/paper/crumpled{
+	info = "HOLY FUCKING SHIT THIS WAS A MISTAKE -KY";
+	name = "The Commisioner's Note";
+	pixel_x = -9;
+	pixel_y = 9
 	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "st" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -299,9 +294,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/shrink_ccw,
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"sP" = (
-/obj/machinery/status_display/evac/directional/west,
-/turf/open/floor/mineral/titanium/purple,
+"su" = (
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "sQ" = (
 /obj/machinery/door/airlock/public/glass{
@@ -321,23 +316,16 @@
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
-"tq" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Announcer's Box"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
-/turf/open/floor/mineral/titanium/purple,
-/area/shuttle/escape)
 "tQ" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/turf/open/floor/mineral/titanium/purple,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"uh" = (
-/obj/structure/table,
-/obj/item/paper/crumpled{
-	info = "HOLY FUCKING SHIT THIS WAS A MISTAKE -KY";
-	name = "The Commisioner's Note"
+"uk" = (
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 1
+	},
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
@@ -372,6 +360,12 @@
 /obj/item/storage/fancy/donut_box,
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"yG" = (
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "yJ" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -415,6 +409,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"AW" = (
+/obj/structure/extinguisher_cabinet/directional/north{
+	name = "USE WHEN OVERHEATING"
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
 "Ba" = (
 /obj/structure/table,
 /obj/machinery/light/small/directional/west,
@@ -429,7 +429,25 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "By" = (
-/obj/machinery/light/cold/directional/east,
+/obj/machinery/door/window/left/directional/north{
+	name = "MEDICAL INFIRMARY"
+	},
+/obj/machinery/shower{
+	dir = 8;
+	name = "emergency shower";
+	pixel_y = -4
+	},
+/obj/machinery/vending/wallmed/directional/east{
+	name = "Hooper's First Medical Kit"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"BJ" = (
+/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/door/airlock/command/glass{
+	name = "Announcer's Box"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "BL" = (
@@ -509,12 +527,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"Fh" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "Fp" = (
 /obj/machinery/light/cold/directional/north,
@@ -613,20 +625,16 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"MD" = (
-/obj/machinery/door/window/left/directional/north{
-	name = "MEDICAL INFIRMARY"
-	},
-/obj/machinery/shower{
-	dir = 8;
-	name = "emergency shower";
-	pixel_y = -4
-	},
-/turf/open/floor/mineral/titanium/blue,
+"KW" = (
+/turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
-"MF" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
+"MD" = (
+/obj/machinery/light/cold/directional/east,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
@@ -695,6 +703,16 @@
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"Rh" = (
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup{
+	pixel_x = 0
+	},
+/turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "Sd" = (
 /obj/machinery/stasis{
@@ -827,7 +845,7 @@ Ea
 "}
 (2,1,1) = {"
 NO
-QN
+KW
 NO
 Qy
 Qy
@@ -844,7 +862,7 @@ Tf
 "}
 (3,1,1) = {"
 NO
-QN
+KW
 NO
 gY
 Qy
@@ -861,7 +879,7 @@ Tf
 "}
 (4,1,1) = {"
 NO
-vt
+su
 IJ
 NO
 IJ
@@ -878,7 +896,7 @@ Tf
 "}
 (5,1,1) = {"
 go
-QN
+KW
 sQ
 zh
 td
@@ -895,7 +913,7 @@ Tf
 "}
 (6,1,1) = {"
 go
-QN
+KW
 ca
 YB
 YS
@@ -912,7 +930,7 @@ Tf
 "}
 (7,1,1) = {"
 go
-QN
+KW
 xc
 gl
 BT
@@ -929,7 +947,7 @@ Tf
 "}
 (8,1,1) = {"
 NO
-vt
+QN
 IJ
 NO
 IJ
@@ -946,10 +964,10 @@ Tf
 "}
 (9,1,1) = {"
 NO
-QN
-Sd
-Ba
-Ia
+vt
+BJ
+qL
+go
 Qy
 HO
 Jv
@@ -964,9 +982,9 @@ Tf
 (10,1,1) = {"
 go
 QN
-QD
-Uh
-bc
+uk
+qL
+go
 Qy
 HO
 bx
@@ -981,9 +999,9 @@ Tf
 (11,1,1) = {"
 go
 QN
-xA
-Uh
-Uh
+Rh
+qL
+go
 Qy
 pC
 OK
@@ -998,9 +1016,9 @@ Tf
 (12,1,1) = {"
 go
 QN
-qM
-Uh
-DO
+yG
+qL
+go
 Qy
 zB
 eF
@@ -1014,10 +1032,10 @@ Tf
 "}
 (13,1,1) = {"
 NO
-QN
+AW
 MD
 sa
-Ja
+go
 Qy
 zB
 Jv
@@ -1031,7 +1049,7 @@ Tf
 "}
 (14,1,1) = {"
 NO
-tq
+QN
 IJ
 NO
 IJ
@@ -1048,10 +1066,10 @@ Tf
 "}
 (15,1,1) = {"
 NO
-vt
-sP
-qL
-go
+Uh
+Sd
+Ba
+Ia
 Qy
 Ut
 vu
@@ -1065,10 +1083,10 @@ Tf
 "}
 (16,1,1) = {"
 go
-QN
-QN
-MF
-go
+Uh
+QD
+Uh
+bc
 Qy
 pZ
 eg
@@ -1082,10 +1100,10 @@ Tf
 "}
 (17,1,1) = {"
 go
-QN
-qL
-uh
-go
+Uh
+xA
+Uh
+Uh
 Qy
 mq
 ff
@@ -1099,10 +1117,10 @@ Tf
 "}
 (18,1,1) = {"
 go
-QN
-QN
-Fh
-go
+Uh
+qM
+Uh
+DO
 Qy
 df
 df
@@ -1116,10 +1134,10 @@ Tf
 "}
 (19,1,1) = {"
 NO
-hl
+Uh
 By
 tQ
-go
+Ja
 Qy
 Qy
 Qy
