@@ -71,10 +71,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"es" = (
-/obj/machinery/food_cart,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "eF" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
@@ -1178,7 +1174,7 @@ Ja
 Tg
 Qy
 Qy
-es
+Qy
 Qy
 Qy
 gY
