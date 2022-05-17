@@ -172,7 +172,7 @@ GLOBAL_PROTECT(href_token)
 
 /// Returns the feedback forum thread for the admin holder's owner, as according to DB.
 /datum/admins/proc/feedback_link()
-	if(!((world.time - last_forum_access_time) > 10 SECONDS))
+	if(world.time - last_forum_access_time <= 10 SECONDS)
 		return cached_forum_link
 
 	last_forum_access_time = world.time
