@@ -90,6 +90,9 @@
 	crack.dir = dir
 	. += crack
 
+/obj/machinery/atmospherics/components/unary/hypertorus/update_layer()
+	return
+
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	name = "HFR fuel input port"
 	desc = "Input port for the Hypertorus Fusion Reactor, designed to take in only Hydrogen and Tritium in gas forms."
