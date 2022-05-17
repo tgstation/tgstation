@@ -43,9 +43,7 @@
 	. = ..()
 	update_appearance(UPDATE_ICON)
 	if(usr)
-		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
-			H.update_clothing(ITEM_SLOT_NECK)
+		usr.update_clothing(ITEM_SLOT_NECK)
 	register_context()
 
 /obj/item/clothing/neck/tie/greyscale/AltClick(mob/user)
@@ -54,10 +52,10 @@
 	var/tie_timer_actual = tie_timer
 	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
 	for(var/obj/structure/mirror/reflection in view(2, user))
-		tie_timer_actual = tie_timer_actual / 1.25
+		tie_timer_actual /= 1.25
 	// Heads of staff are experts at tying their ties.
-	if(user.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-		tie_timer_actual = tie_timer_actual / 2
+	if(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		tie_timer_actual /= 2
 	// Tie/Untie our tie
 	if(!do_after(user, tie_timer_actual))
 		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
@@ -68,11 +66,9 @@
 		return
 	// Success!
 	is_tied = !is_tied
-	visible_message("[user] adjusts [user.p_their()] tie [HAS_TRAIT(user, TRAIT_BALD) ? "." : "and slicks back [user.p_their()] hair."]", span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"))
+	user.visible_message("[user] adjusts [user.p_their()] tie [HAS_TRAIT(user, TRAIT_BALD) ? "." : "and slicks back [user.p_their()] hair."]", span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"))
 	update_appearance(UPDATE_ICON)
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.update_clothing(ITEM_SLOT_NECK)
+	user.update_clothing(ITEM_SLOT_NECK)
 
 /obj/item/clothing/neck/tie/greyscale/update_icon()
 	. = ..()
