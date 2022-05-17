@@ -38,7 +38,8 @@
 		wanted_clothing_type = pick_weight(list(
 			/obj/item/clothing/head/chefhat = 3,
 			/obj/item/clothing/shoes/sneakers/black = 3,
-			/obj/item/clothing/gloves/color/black = 1))
+			/obj/item/clothing/gloves/color/black = 1,
+		))
 		return
 
 	var/list/orderable = list()
