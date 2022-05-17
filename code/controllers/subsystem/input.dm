@@ -60,31 +60,6 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 
 	return TRUE
 
-/*
-///queue a click from usr onto clicked_atom with the given mouse handling arguments. only works if usr is the player mob clicking.
-/datum/controller/subsystem/verb_manager/input/proc/queue_click_from_usr(atom/clicked_atom, atom/location, control, params)
-	if(control != "mapwindow.map" || !ismob(usr) || QDELING(usr) || QDELETED(clicked_atom))
-		return FALSE
-
-	//high priority because clicks should be as low latency as possible, deferring to the beginning of the next SSinput run should rarely delay
-	//a click by more than a few milliseconds, but since the MC almost always resumes after every other sleeping proc this isnt guaranteed
-	if(!TICK_CHECK_HIGH_PRIORITY \
-		|| average_click_delay >= MAXIMUM_CLICK_LATENCY \
-		|| FOR_ADMINS_IF_CLICKS_BROKE_immediately_execute_all_clicks \
-		|| usr.client?.holder \
-		|| !initialized \
-		|| !(runlevels & Master.current_runlevel))
-
-		clicked_atom.Click(location, control, params)//this is why it works via usr and not a passed in mob arg. atom/Click() assumes usr is correct
-		current_clicks++
-		average_click_delay = MC_AVG_FAST_UP_SLOW_DOWN(average_click_delay, 0)//non delayed clicks count as a 0
-		return TRUE
-
-	queued_clicks += VERB_CALLBACK(src, .proc/wrap_Click, clicked_atom, location, control, params)
-	return TRUE
-*/
-
-
 ///stupid workaround for byond not recognizing the /atom/Click typepath for the queued click callbacks
 /atom/proc/wrap_Click(location, control, params)
 	if(usr)
