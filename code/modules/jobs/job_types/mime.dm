@@ -112,7 +112,7 @@
 		// Gives the user a vow ability too, if they don't already have one
 		var/datum/action/cooldown/spell/vow_of_silence/vow = locate() in user.actions
 		if(!vow && user.mind)
-			vow = new(user.mind) // melbert todo cl
+			vow = new(user.mind)
 			vow.Grant(user)
 
 		picked_spell_type = new picked_spell_type(user.mind || user)

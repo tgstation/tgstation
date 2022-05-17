@@ -17,7 +17,7 @@
 
 /obj/item/book/granter/action/spell/mindswap/on_reading_finished()
 	. = ..()
-	visible_message(span_notice("[src] begins to shake and shift.")) // melbert todo cl
+	visible_message(span_notice("[src] begins to shake and shift."))
 	action_name = pick(
 		"fireball",
 		"smoke",

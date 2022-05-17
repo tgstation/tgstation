@@ -191,7 +191,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Corrosive Acid"
 	desc = "Drench an object in acid, destroying it over time."
 	button_icon_state = "alien_acid"
-	click_to_activate = TRUE // MELBERT TODO cl
+	click_to_activate = TRUE
 	unset_after_click = FALSE
 	plasma_cost = 200
 
@@ -216,7 +216,7 @@ Doesn't work on other aliens/AI.*/
 		to_chat(on_who, span_noticealien("You empty your corrosive acid glands."))
 
 	if(isalienadult(on_who))
-		var/mob/living/carbon/alien/humanoid/alien = on_who // MELBERT TODO cl
+		var/mob/living/carbon/alien/humanoid/alien = on_who
 		alien.drooling = FALSE
 		alien.update_icons()
 

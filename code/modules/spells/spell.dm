@@ -1,7 +1,3 @@
-
-/// Needed for the badmin verb for now
-GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
-
 /**
  * # The spell action
  *
@@ -118,6 +114,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 /datum/action/cooldown/spell/IsAvailable()
 	return ..() && can_cast_spell(feedback = FALSE)
+
+/datum/action/cooldown/spell/set_click_ability(mob/on_who)
+	if(SEND_SIGNAL(on_who, COMSIG_MOB_SPELL_ACTIVATED, src) & COMPONENT_CANCEL_SPELL)
+		return FALSE
+
+	return ..()
 
 // Where the cast chain is called from, via the parent call
 /datum/action/cooldown/spell/PreActivate(atom/target)
@@ -335,7 +337,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		return FALSE
 
 	var/mob/living/living_owner = owner
-	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE)) // melbert todo cl
+	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
 		if(feedback)
 			to_chat(owner, span_warning("You can't get form to invoke [src]!"))
 		return FALSE

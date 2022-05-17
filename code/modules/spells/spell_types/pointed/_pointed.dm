@@ -29,23 +29,23 @@
 		deactive_msg = "You dispel [src]."
 
 /datum/action/cooldown/spell/pointed/set_click_ability(mob/on_who)
-	if(!can_cast_spell(feedback = FALSE))
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 
 	on_activation(on_who)
-	return ..()
 
 // Note: Destroy() calls Remove(), Remove() calls unset_click_ability() if our spell is active.
 /datum/action/cooldown/spell/pointed/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
+	. = ..()
+	if(!.)
+		return
+
 	on_deactivation(on_who, refund_cooldown = refund_cooldown)
-	return ..()
 
 /// Called when the spell is activated / the click ability is set to our spell
 /datum/action/cooldown/spell/pointed/proc/on_activation(mob/on_who)
 	SHOULD_CALL_PARENT(TRUE)
-
-	if(SEND_SIGNAL(on_who, COMSIG_MOB_POINTED_SPELL_ACTIVATED, src) & COMPONENT_CANCEL_SPELL)
-		return FALSE
 
 	to_chat(on_who, span_notice("[active_msg] <B>Left-click to activate the spell on a target!</B>"))
 	if(base_icon_state)
@@ -56,7 +56,6 @@
 /datum/action/cooldown/spell/pointed/proc/on_deactivation(mob/on_who, refund_cooldown = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	SEND_SIGNAL(on_who, COMSIG_MOB_POINTED_SPELL_DEACTIVATED, src)
 	if(refund_cooldown)
 		// Only send the "deactivation" message if they're willingly disabling the ability
 		to_chat(on_who, span_notice("[deactive_msg]"))

@@ -75,7 +75,7 @@
 
 /// If we have a marked item and it's in our hand, we will try to unlink it
 /datum/action/cooldown/spell/summonitem/proc/try_unlink_item(mob/living/caster)
-	to_chat(caster, span_notice("You begin removing the mark on [marked_item]...")) // MELBERT TODO CL
+	to_chat(caster, span_notice("You begin removing the mark on [marked_item]..."))
 	if(!do_after(caster, 5 SECONDS, marked_item))
 		to_chat(caster, span_notice("You decide to keep [marked_item] marked."))
 		return FALSE

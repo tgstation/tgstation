@@ -194,7 +194,7 @@
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
-	RegisterSignal(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_POINTED_SPELL_ACTIVATED), .proc/on_spell_cast)
+	RegisterSignal(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_ACTIVATED), .proc/on_spell_cast)
 	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, .proc/on_item_afterattack)
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, .proc/fix_influence_network)
 
@@ -202,7 +202,7 @@
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= FACTION_HERETIC
-	UnregisterSignal(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_POINTED_SPELL_ACTIVATED, COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_MOB_LOGIN))
+	UnregisterSignal(our_mob, list(COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_SPELL_DEACTIVATED, COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_MOB_LOGIN))
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
@@ -212,11 +212,11 @@
 		knowledge.on_gain(new_body)
 
 /*
- * Signal proc for [COMSIG_MOB_BEFORE_SPELL_CAST].
+ * Signal proc for [COMSIG_MOB_BEFORE_SPELL_CAST] and [COMSIG_MOB_SPELL_ACTIVATED].
  *
- * Checks if our heretic has TRAIT_ALLOW_HERETIC_CASTING.
+ * Checks if our heretic has [TRAIT_ALLOW_HERETIC_CASTING] or is ascended.
  * If so, allow them to cast like normal.
- * If not, cancel the cast.
+ * If not, cancel the cast, and returns [COMPONENT_CANCEL_SPELL].
  */
 /datum/antagonist/heretic/proc/on_spell_cast(mob/living/source, datum/action/cooldown/spell/spell)
 	SIGNAL_HANDLER

@@ -92,10 +92,6 @@
 		target.balloon_alert(source, "invalid body!")
 		return COMPONENT_BLOCK_HAND_USE
 
-	if(HAS_TRAIT(target, TRAIT_HUSK))
-		target.balloon_alert(source, "husked!")
-		return COMPONENT_BLOCK_HAND_USE
-
 	target.grab_ghost()
 
 	// The grab failed, so they're mindless or playerless. We can't continue

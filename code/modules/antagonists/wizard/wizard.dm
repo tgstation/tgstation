@@ -148,9 +148,12 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 				objectives += hijack_objective
 
 /datum/antagonist/wizard/on_removal()
-	for(var/datum/action/cooldown/spell/spell in owner.current?.actions)
+	// Currently removes all spells regardless of innate or not. Could be improved.
+	for(var/datum/action/cooldown/spell/spell in owner.current.actions)
 		if(spell.target == owner)
 			qdel(spell)
+			owner.current.actions -= spell
+
 	return ..()
 
 /datum/antagonist/wizard/proc/equip_wizard()

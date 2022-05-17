@@ -51,7 +51,7 @@
 	difficulty = 8
 	locked = TRUE
 
-/datum/action/cooldown/spell/pointed/mindread // MELBERT TODO CL
+/datum/action/cooldown/spell/pointed/mindread
 	name = "Mindread"
 	desc = "Read the target's mind."
 	button_icon_state = "mindread"
@@ -64,7 +64,7 @@
 /datum/action/cooldown/spell/pointed/mindread/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
 		return FALSE
-	var/mob/living/living_cast_on = cast_on // MELBERT TODO CL
+	var/mob/living/living_cast_on = cast_on
 	if(!living_cast_on.mind)
 		to_chat(owner, span_warning("[cast_on] has no mind to read!"))
 		return FALSE

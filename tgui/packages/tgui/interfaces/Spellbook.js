@@ -269,8 +269,8 @@ const Loadouts = (props, context) => {
             author="Jegudiel Worldshaker"
             blurb={multiline`
                 The power of the mighty Mjolnir! Best not to lose it.
-                This loadout has Summon Item, Mutate, Blink, and
-                Force Wall. Mutate is your utility in this case:
+                This loadout has Summon Item, Mutate, Blink, Force Wall,
+                and, Tesla Blast. Mutate is your utility in this case:
                 Use it for limited ranged fire and getting out of bad blinks.
               `} />
         </Stack>

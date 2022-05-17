@@ -214,7 +214,8 @@
 	if(charges <= 0)
 		qdel(src)
 
-// melbert todo cl
+// melbert todo: readd the hallucination spell
+
 /datum/action/innate/cult/blood_spell/veiling
 	name = "Conceal Presence"
 	desc = "Alternates between hiding and revealing nearby cult structures and runes."

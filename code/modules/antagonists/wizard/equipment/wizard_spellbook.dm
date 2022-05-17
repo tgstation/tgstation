@@ -261,7 +261,7 @@
 				/datum/spellbook_entry/mutate = 1,
 				/datum/spellbook_entry/forcewall = 1,
 				/datum/spellbook_entry/blink = 1,
-				/datum/spellbook_entry/teslablast = 1, // MELBERT TODO CL
+				/datum/spellbook_entry/teslablast = 1,
 			)
 		if(WIZARD_LOADOUT_WIZARMY) //(Soulstones>2, Staff of Change>2, A Necromantic Stone>2, Teleport>2, Ethereal Jaunt>2) = 10
 			wanted_spells = list(

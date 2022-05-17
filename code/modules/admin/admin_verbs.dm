@@ -667,7 +667,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		return
 
 	var/list/spell_list = list()
-	for(var/datum/action/cooldown/spell/to_add as anything in GLOB.spells)
+	for(var/datum/action/cooldown/spell/to_add as anything in subtypesof(/datum/action/cooldown/spell))
 		var/spell_name = initial(to_add.name)
 		if(spell_name == "Spell" || findtext(spell_name, "SDQL"))
 			continue
@@ -703,7 +703,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	if(!spell_recipient.mind)
 		to_chat(usr, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
-			and as such will not be transferred if their mind changes body (IE, mindswap)."))
+			and as such will not be transferred if their mind changes body (Such as from Mindswap)."))
 
 /client/proc/remove_spell(mob/removal_target in GLOB.mob_list)
 	set category = "Admin.Fun"

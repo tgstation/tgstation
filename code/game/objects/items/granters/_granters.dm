@@ -1,6 +1,8 @@
-
-///books that teach things (intrinsic actions like bar flinging, spells like fireball or smoke, or martial arts)///
-
+/**
+ * Books that teach things.
+ *
+ * (Intrinsic actions like bar flinging, spells like fireball or smoke, or martial arts)
+ */
 /obj/item/book/granter
 	due_date = 0
 	unique = 1

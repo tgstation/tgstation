@@ -2,11 +2,13 @@
 
 // Generic spell signals
 
+/// Sent from /datum/action/cooldown/spell/set_click_ability() to the caster: (datum/action/cooldown/spell/spell)
+#define COMSIG_MOB_SPELL_ACTIVATED "mob_spell_active"
 /// Sent from /datum/action/cooldown/spell/before_cast() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on)
 #define COMSIG_MOB_BEFORE_SPELL_CAST "mob_spell_pre_cast"
 /// Sent from /datum/action/cooldown/spell/before_cast() to the spell: (atom/cast_on)
 #define COMSIG_SPELL_BEFORE_CAST "spell_pre_cast"
-	/// Return from COMSIG_MOB_BEFORE_SPELL_CAST or COMSIG_SPELL_BEFORE_CAST to cease the cast.
+	/// Return to cease the cast from occurring.
 	#define COMPONENT_CANCEL_SPELL (1<<0)
 // Sent from /datum/action/cooldown/spell/cast() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on)
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
@@ -20,12 +22,6 @@
 #define COMSIG_SPELL_CAST_RESET "spell_cast_reset"
 
 // Spell type signals
-
-// Pointed
-/// Sent from /datum/action/cooldown/spell/pointed/on_activation() to the caster: (datum/action/cooldown/spell/spell)
-#define COMSIG_MOB_POINTED_SPELL_ACTIVATED "mob_spell_pointed_active"
-/// Sent from /datum/action/cooldown/spell/pointed/on_deactivation() to the caster: (datum/action/cooldown/spell/spell)
-#define COMSIG_MOB_POINTED_SPELL_DEACTIVATED "mob_spell_pointed_deactive"
 
 // Pointed projectiles
 /// Sent from /datum/action/cooldown/spell/pointed/projectile/on_cast_hit: (atom/hit, atom/firer, obj/projectile/source)
