@@ -67,7 +67,7 @@
 		return
 	// Success!
 	is_tied = !is_tied
-	user.visible_message("[user] adjusts [user.p_their()] tie[HAS_TRAIT(user, TRAIT_BALD) ? "." : " and slicks back [user.p_their()] hair."]", span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"))
+	user.visible_message("[user] adjusts [user.p_their()] tie[HAS_TRAIT(user, TRAIT_BALD) ? "." : " and runs a hand across [user.p_their()] head."]", span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"))
 	update_appearance(UPDATE_ICON)
 	user.update_clothing(ITEM_SLOT_NECK)
 
