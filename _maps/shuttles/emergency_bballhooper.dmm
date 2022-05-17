@@ -69,6 +69,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 9
 	},
+/obj/effect/turf_decal/trimline/blue/corner,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "eF" = (
@@ -237,6 +238,9 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "pg" = (
@@ -272,11 +276,17 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
 "qM" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"rb" = (
+/obj/structure/window/reinforced/spawner/north,
 /obj/structure/reagent_dispensers/watertank{
 	name = "HATERADE";
 	desc = "Use this to water down those salty haters."
 	},
-/obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "sa" = (
@@ -336,6 +346,13 @@
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/escape)
+"uF" = (
+/obj/structure/rack,
+/obj/item/latexballon{
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "vt" = (
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium/purple,
@@ -363,9 +380,13 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "xA" = (
-/obj/structure/table,
-/obj/item/storage/fancy/donut_box,
 /obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/item/tank/internals/anesthetic,
+/obj/item/clothing/mask/breath/medical{
+	pixel_y = 2;
+	pixel_x = 5
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "yG" = (
@@ -410,11 +431,13 @@
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
 	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"Ad" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "AW" = (
 /obj/structure/extinguisher_cabinet/directional/north{
@@ -466,6 +489,9 @@
 	},
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 2
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -606,8 +632,39 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "JR" = (
+/obj/structure/table,
+/obj/item/clothing/head/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = 8;
+	pixel_y = -5
+	},
 /obj/machinery/light/cold/directional/north,
+/obj/item/clothing/head/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = 8;
+	pixel_y = 7
+	},
 /obj/machinery/status_display/evac/directional/north,
+/obj/item/clothing/head/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/item/clothing/head/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = -7;
+	pixel_y = 7
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "JW" = (
@@ -657,6 +714,9 @@
 	},
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 10
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -736,6 +796,9 @@
 /obj/effect/turf_decal/trimline/red/filled/warning{
 	dir = 8
 	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "SV" = (
@@ -749,11 +812,36 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Tg" = (
-/obj/item/latexballon{
-	pixel_y = 5
+/obj/structure/table,
+/obj/item/clothing/head/hardhat/dblue{
+	pixel_x = 8;
+	pixel_y = -5;
+	name = "Hopping Jezzerton's Helmet"
 	},
-/obj/structure/rack{
-	name = "Referee's Gear"
+/obj/item/clothing/head/hardhat/dblue{
+	pixel_x = 8;
+	pixel_y = 1;
+	name = "Hopping Jezzerton's Helmet"
+	},
+/obj/item/clothing/head/hardhat/dblue{
+	pixel_x = 8;
+	pixel_y = 9;
+	name = "Hopping Jezzerton's Helmet"
+	},
+/obj/item/clothing/head/hardhat/dblue{
+	pixel_x = -7;
+	pixel_y = -5;
+	name = "Hopping Jezzerton's Helmet"
+	},
+/obj/item/clothing/head/hardhat/dblue{
+	pixel_x = -7;
+	pixel_y = 1;
+	name = "Hopping Jezzerton's Helmet"
+	},
+/obj/item/clothing/head/hardhat/dblue{
+	pixel_x = -7;
+	pixel_y = 9;
+	name = "Hopping Jezzerton's Helmet"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -772,6 +860,12 @@
 /area/shuttle/escape)
 "Ty" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/red/corner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -916,7 +1010,7 @@ KW
 sQ
 zh
 td
-Ad
+Qy
 Cf
 Sv
 Tu
@@ -1151,10 +1245,10 @@ Tf
 (19,1,1) = {"
 NO
 Uh
-QD
+rb
 Uh
 mV
-Qy
+uF
 Qy
 Qy
 Qy
