@@ -172,6 +172,18 @@
 	icon_state = "datadisk[rand(0,6)]"
 	add_overlay("datadisk_gene")
 
+/obj/item/disk/data/debug
+	name = "\improper CentCom DNA disk"
+	desc = "A debug item for genetics"
+	custom_materials = null
+
+/obj/item/disk/data/debug/Initialize(mapload)
+	. = ..()
+	// Grabs all instances of mutations and adds them to the disk
+	for(var/datum/mutation/human/mut as anything in subtypesof(/datum/mutation/human))
+		var/datum/mutation/human/ref = GET_INITIALIZED_MUTATION(mut)
+		mutations += ref
+
 /obj/item/disk/data/attack_self(mob/user)
 	read_only = !read_only
 	to_chat(user, span_notice("You flip the write-protect tab to [read_only ? "protected" : "unprotected"]."))
