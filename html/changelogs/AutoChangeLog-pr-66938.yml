@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - code_imp: "Adds radial support to stack crafting."
-  - qol: "Cult buildings are now made via radial, instead of stack window."
-  - qol: "Stack craftingnow uses balloon alerts."
