@@ -7,7 +7,7 @@
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 60 SECONDS
 	cooldown_reduction_per_rank =  10 SECONDS
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_MIND
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_MIND|SPELL_CASTABLE_AS_BRAIN
 	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND
 
 	invocation = "GIN'YU CAPAN"
@@ -94,22 +94,7 @@
 		to_chat(caster, span_warning("[to_swap.p_their(TRUE)] mind is resisting your spell!"))
 		return FALSE
 
-	// MIND TRANSFER BEGIN // MELBERT TODO TEST THIS NEW FORM OF MIND SWAP PLS
-
-	/*
-	// Put the swappee's mind in a ghost temorarily
-	var/mob/dead/observer/to_swap_ghost = to_swap.ghostize()
-	// Do the swap
-	caster.mind.transfer_to(to_swap)
-	to_swap_ghost.mind.transfer_to(caster)
-
-	// Manually transfer the swappee's key back into the swapper's body,
-	// as the mind of the swappee was "not active" during transfer
-	if(to_swap_ghost.key)
-		caster.key = to_swap_ghost.key
-	// Clean up the ghost
-	qdel(to_swap_ghost)
-	*/
+	// MIND TRANSFER BEGIN
 
 	var/datum/mind/caster_mind = caster.mind
 	var/datum/mind/to_swap_mind = to_swap.mind
@@ -119,16 +104,16 @@
 	caster_mind.transfer_to(to_swap)
 	to_swap_mind.transfer_to(caster)
 
-	// Just in case the swappee's key
-	// wasn't grabbed by transfer_fo
+	// Just in case the swappee's key wasn't grabbed by transfer_to...
 	if(to_swap_key)
 		caster.key = to_swap_key
 
 	// MIND TRANSFER END
 
-	// Here we knock both mobs out for a time.
+	// Now we knock both mobs out for a time.
 	caster.Unconscious(unconscious_amount_caster)
 	to_swap.Unconscious(unconscious_amount_victim)
+
 	// Only the caster and victim hear the sounds,
 	// that way no one knows for sure if the swap happened
 	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))

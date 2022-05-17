@@ -181,11 +181,15 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 				to_chat(owner, span_warning("[src] can only be cast by humans!"))
 			return FALSE
 
-		// I'm not sure if this can even feasibly come into play anymore, but might as well keep it
 		if((!(spell_requirements & SPELL_CASTABLE_AS_BRAIN)) && isbrain(owner))
 			if(feedback)
 				to_chat(owner, span_warning("[src] can't be cast in this state!"))
 			return FALSE
+
+		// Being put into a card form breaks a lot of spells, so we'll just forbid them in these states
+		if(ispAI(owner) || (isAI(owner) && istype(owner.loc, /obj/item/aicard)))
+			return FALSE
+
 
 	return TRUE
 

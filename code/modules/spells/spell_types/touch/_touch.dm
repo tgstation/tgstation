@@ -94,7 +94,6 @@
 		remove_hand(cast_on, reset_cooldown_after = TRUE)
 		return
 
-	// MELBERT TODO need a way to pause cooldown for this
 	create_hand(cast_on)
 	return ..()
 

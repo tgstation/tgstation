@@ -93,7 +93,7 @@
 		if(exit_blood_time > 0 SECONDS)
 
 			blood.visible_message(span_warning("[blood] starts to bubble..."))
-			if(!do_after(jaunter, exit_blood_time, target = blood)) // melbert todo broken
+			if(!do_after(jaunter, exit_blood_time, target = blood))
 				return FALSE
 
 	if(!exit_jaunt(jaunter, get_turf(blood)))
@@ -192,7 +192,7 @@
 
 	for(var/i in 1 to 3)
 		playsound(get_turf(jaunter), consume_sound, 50, TRUE)
-		if(!do_after(jaunter, 3 SECONDS, victim))
+		if(!do_after(jaunter, 3 SECONDS, victim)) // melbert todo broken
 			to_chat(jaunter, span_danger("You lose your victim!"))
 			return FALSE
 		if(QDELETED(src))
