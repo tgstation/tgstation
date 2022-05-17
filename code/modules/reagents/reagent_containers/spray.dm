@@ -68,7 +68,6 @@
 	else
 		reagents.trans_to(reagent_puff, amount_per_transfer_from_this, 1/range)
 	reagent_puff.color = mix_color_from_reagents(reagent_puff.reagents.reagent_list)
-	var/wait_step = max(round(2+3/range), 2)
 
 	var/puff_reagent_string = reagent_puff.reagents.get_reagent_log_string()
 	var/turf/src_turf = get_turf(src)
@@ -77,7 +76,10 @@
 	log_game("[key_name(user)] fired a puff of reagents from \a [src] with a range of \[[range]\] and containing [puff_reagent_string] at [AREACOORD(src_turf)].")
 
 	// do_spray includes a series of step_towards and sleeps. As a result, it will handle deletion of the chempuff.
-	do_spray(target, wait_step, reagent_puff, range, puff_reagent_left, user)
+	do_spray(target, get_waitstep(range), reagent_puff, range, puff_reagent_left, user)
+
+/obj/item/reagent_containers/spray/proc/get_waitstep(range)
+	return max(round(2+3/range), 2)
 
 /// Handles exposing atoms to the reagents contained in a spray's chempuff. Deletes the chempuff when it's completed.
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
@@ -215,6 +217,9 @@
 /obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!"))
 	return OXYLOSS
+
+/obj/item/reagent_containers/spray/pepper/get_waitstep(range)
+	return 1 //Fast and furious
 
 // Fix pepperspraying yourself
 /obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)

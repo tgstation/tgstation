@@ -188,9 +188,9 @@
 		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_cyborg(target, user)
 	else
-		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+		target.apply_damage(stamina_damage * (trait_check ? 0.7 : 1), STAMINA, BODY_ZONE_CHEST)
 		target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override) * (trait_check ? 0.1 : 1))
-		additional_effects_non_cyborg(target, user)
+		additional_effects_non_cyborg(target, user, trait_check)
 	return TRUE
 
 /// Description for trying to stun when still on cooldown.
@@ -225,7 +225,7 @@
 	return .
 
 /// Contains any special effects that we apply to living, non-cyborg mobs we stun. Does not include applying a knockdown, dealing stamina damage, etc.
-/obj/item/melee/baton/proc/additional_effects_non_cyborg(mob/living/target, mob/living/user)
+/obj/item/melee/baton/proc/additional_effects_non_cyborg(mob/living/target, mob/living/user, trait_check)
 	return
 
 /// Contains any special effects that we apply to cyborgs we stun. Does not include flashing the cyborg's screen, hardstunning them, etc.
@@ -244,19 +244,20 @@
 		return FALSE
 	user.visible_message(span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"), span_userdanger("You accidentally hit yourself over the head with [src]!"))
 
+	var/trait_check = HAS_TRAIT(user, TRAIT_BATON_RESISTANCE)
 	if(iscyborg(user))
 		if(affect_cyborg)
 			user.flash_act(affect_silicon = TRUE)
-			user.Paralyze(clumsy_knockdown_time)
+			user.Paralyze(clumsy_knockdown_time * (trait_check ? 0.1 : 1))
 			additional_effects_cyborg(user, user) // user is the target here
 			if(on_stun_sound)
 				playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 		else
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
-		user.Knockdown(clumsy_knockdown_time)
-		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
-		additional_effects_non_cyborg(user, user) // user is the target here
+		user.Knockdown(clumsy_knockdown_time * (trait_check ? 0.1 : 1))
+		user.apply_damage(stamina_damage * (trait_check ? 0.7 : 1), STAMINA, BODY_ZONE_HEAD)
+		additional_effects_non_cyborg(user, user, trait_check) // user is the target here
 		if(on_stun_sound)
 			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 
@@ -369,9 +370,9 @@
 /obj/item/melee/baton/telescopic/contractor_baton/get_wait_description()
 	return span_danger("The baton is still charging!")
 
-/obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-	target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+/obj/item/melee/baton/telescopic/contractor_baton/additional_effects_non_cyborg(mob/living/target, mob/living/user, trait_check)
+	target.set_timed_status_effect(40 SECONDS * (trait_check ? 0.5 : 1), /datum/status_effect/jitter, only_if_higher = TRUE)
+	target.adjust_timed_status_effect(40 SECONDS * (trait_check ? 0.5 : 1), /datum/status_effect/speech/stutter)
 
 /obj/item/melee/baton/security
 	name = "stun baton"
@@ -561,13 +562,13 @@
  * After a target is hit, we apply some status effects.
  * After a period of time, we then check to see what stun duration we give.
  */
-/obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user)
-	target.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-	target.set_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
-	target.set_timed_status_effect(16 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
+/obj/item/melee/baton/security/additional_effects_non_cyborg(mob/living/target, mob/living/user, trait_check)
+	target.set_timed_status_effect(40 SECONDS * (trait_check ? 0.5 : 1), /datum/status_effect/jitter, only_if_higher = TRUE)
+	target.set_timed_status_effect(10 SECONDS * (trait_check ? 0.1 : 1), /datum/status_effect/confusion, only_if_higher = TRUE)
+	target.set_timed_status_effect(16 SECONDS * (trait_check ? 0.5 : 1), /datum/status_effect/speech/stutter, only_if_higher = TRUE)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 2 SECONDS)
+	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 2 SECONDS * (trait_check ? 1.5 : 1))
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
