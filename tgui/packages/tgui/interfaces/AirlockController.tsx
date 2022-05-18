@@ -54,7 +54,7 @@ export const AirlockController = (_, context) => {
   );
 };
 
-/** Displays the buttons atop the window to cycle the airlock */
+/** Displays the buttons on top of the window to cycle the airlock */
 const AirLockButtons = (_, context) => {
   const { act, data } = useBackend<AirlockControllerData>(context);
   const { airlockState } = data;
