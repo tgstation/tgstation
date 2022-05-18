@@ -35641,10 +35641,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/medical/exam_room)
-"jTL" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space/nearstation)
 "jUa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
@@ -131441,8 +131437,8 @@ aaa
 aaa
 aaa
 jbt
-jTL
-jTL
+sJS
+sJS
 jNn
 hFA
 tqZ
