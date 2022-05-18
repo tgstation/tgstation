@@ -34,7 +34,12 @@
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/organ_damage, ORGAN_SLOT_HEART, 2)
+	AddElement(/datum/element/organ_damage, ORGAN_SLOT_HEART, 5)
+
+/mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete/death()
+	new /mob/living/simple_animal/hostile/megafauna/clockwork_golem/broken(loc)
+	. = ..()
+
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/broken
 	icon_state = "clockwork_golem_broken"
