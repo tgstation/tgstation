@@ -188,7 +188,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "labor";
 	name = "Labor Camp Lockdown";
-	req_access_txt = "22"
+	req_access_txt = "brig"
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -2712,7 +2712,7 @@
 /area/mine/production)
 "wk" = (
 /obj/structure/closet/secure_closet/engineering_welding{
-	req_access = ACCESS_MINING_STATION
+	req_access_txt = "mining station"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown{
