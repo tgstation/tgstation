@@ -34,7 +34,7 @@
 		return
 
 	if(currently_channeling)
-		stat_panel_data[PANEL_DISPLAY_STATUS] = "CHANNELING"
+		.[PANEL_DISPLAY_STATUS] = "CHANNELING"
 
 /datum/action/cooldown/spell/tesla/can_cast_spell(feedback = TRUE)
 	. = ..()

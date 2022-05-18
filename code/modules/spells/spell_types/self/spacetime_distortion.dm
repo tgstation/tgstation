@@ -33,7 +33,7 @@
 		return
 
 	if(!ready)
-		stat_panel_data[PANEL_DISPLAY_STATUS] = "NOT READY"
+		.[PANEL_DISPLAY_STATUS] = "NOT READY"
 
 /datum/action/cooldown/spell/spacetime_dist/cast(atom/cast_on)
 	. = ..()
