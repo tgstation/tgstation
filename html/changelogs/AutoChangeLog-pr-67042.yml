@@ -1,0 +1,15 @@
+author: "Fikou, Onule"
+delete-after: True
+changes: 
+  - balance: "Doubles the range of the MOD Pathfinder AI"
+  - bugfix: "Fixes modules rendering below MODsuits"
+  - code_imp: "Adds the ability for MOD modules to be used when the suit is inactive.
+grammar: Some MODsuit stuff should have better descriptions."
+  - bugfix: "Armor Booster and Ash Accretion can no longer boost your speed to 9000"
+  - balance: "Doubles t-ray MOD module range, from 2 to 4 (t-ray scanner is 3)."
+  - balance: "Puts the noslip MOD module lower in traitor progression, lowers its' price to 2."
+  - imageadd: "New sprites for the magnetic harness MOD  module by Onule."
+  - rscadd: "Brings back the holster MOD module, it can now be used when the suit is inactive, can be printed with security suit research."
+  - rscadd: "Adds the power kick MOD module for the ERT Commander. It's a powerful kick."
+  - rscadd: "Adds the plate compression MOD module from the uplink. It lowers the suit size to normal while making it uncompatible with storage modules."
+  - rscadd: "Adds the chameleon MOD module from the uplink. It lets you disguise the suit as any back item while it's off."

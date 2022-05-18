@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - code_imp: "If you're looking into patching out Active Turfs, the logging message that alerts you to said Active Turfs is now a bit more verbose to getting you put on the right track."

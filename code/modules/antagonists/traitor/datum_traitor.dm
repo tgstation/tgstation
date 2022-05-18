@@ -1,6 +1,3 @@
-///Divide uplink_handler.progression_points by this to get the number of reputation points, which is displayed in-game. (e.g. 300 progression_points is 5 reputation points)
-#define PROGRESSION_POINT_FACTOR 60
-
 /datum/antagonist/traitor
 	name = "\improper Traitor"
 	roundend_category = "traitors"
@@ -159,8 +156,8 @@
 
 /datum/objective/traitor_progression/New(text)
 	. = ..()
-	required_total_progression_points = round(rand(possible_range[1], possible_range[2]) / PROGRESSION_POINT_FACTOR)
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_total_progression_points)
+	required_total_progression_points = round(rand(possible_range[1], possible_range[2]))
+	explanation_text = replacetext(explanation_text, "%REPUTATION%", DISPLAY_PROGRESSION(required_total_progression_points))
 
 /datum/objective/traitor_progression/check_completion()
 	if(!owner)
@@ -170,7 +167,7 @@
 		return FALSE
 	if(!traitor.uplink_handler)
 		return FALSE
-	if(traitor.uplink_handler.progression_points / PROGRESSION_POINT_FACTOR < required_total_progression_points)
+	if(traitor.uplink_handler.progression_points < required_total_progression_points)
 		return FALSE
 	return TRUE
 
@@ -183,8 +180,8 @@
 
 /datum/objective/traitor_objectives/New(text)
 	. = ..()
-	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]) / PROGRESSION_POINT_FACTOR)
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_progression_in_objectives)
+	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]))
+	explanation_text = replacetext(explanation_text, "%REPUTATION%", DISPLAY_PROGRESSION(required_progression_in_objectives))
 
 /datum/objective/traitor_objectives/check_completion()
 	if(!owner)
@@ -199,7 +196,7 @@
 		if(objective.objective_state != OBJECTIVE_STATE_COMPLETED)
 			continue
 		total_points += objective.progression_reward
-	if(total_points / PROGRESSION_POINT_FACTOR < required_progression_in_objectives)
+	if(total_points < required_progression_in_objectives)
 		return FALSE
 	return TRUE
 
@@ -298,7 +295,7 @@
 		var/completed_objectives_text = "Completed Uplink Objectives: "
 		for(var/datum/traitor_objective/objective as anything in uplink_handler.completed_objectives)
 			if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
-				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [round(objective.progression_reward/PROGRESSION_POINT_FACTOR, 0.1)] Reputation)"
+				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [DISPLAY_PROGRESSION(objective.progression_reward)] Reputation)"
 		result += completed_objectives_text
 
 	var/special_role_text = lowertext(name)
@@ -336,5 +333,3 @@
 	sword.worn_icon_state = "e_sword_on_red"
 
 	H.update_inv_hands()
-
-#undef PROGRESSION_POINT_FACTOR
