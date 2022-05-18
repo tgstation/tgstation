@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - rscadd: "Charliestation now has a Supermatter and Gravity generator chamber."
+  - balance: "Charliestation now requires the gravity generator to have functional gravity. Its botany also has a biogenerator and nutriment vendor."
