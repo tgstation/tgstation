@@ -10,7 +10,7 @@
 	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 
-	if(bodytemperature < TCRYO || (HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature < BLOOD_STOP_TEMP || (HAS_TRAIT(src, TRAIT_HUSK))) //cold or husked people do not pump the blood.
 		return
 
 	//Blood regeneration if there is some space

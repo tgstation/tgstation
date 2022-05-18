@@ -109,11 +109,10 @@
 #define STICKYBAN_DB_CACHE_TIME 10 SECONDS
 #define STICKYBAN_ROGUE_CHECK_TIME 5
 
-
-/// Shown to vicitm of staff of change and related effects.
-#define POLICY_POLYMORPH "polymorph"
-/// Shown on top of policy verb window
-#define POLICY_VERB_HEADER "policy_verb_header"
+/// Reference index for policy.json to locate any policy text applicable to polymorphed/staff of changed mobs.
+#define POLICY_POLYMORPH "Polymorph"
+/// Reference index for policy.json to locate any policy text that is shown as a header in the OOC > Show Policy verb.
+#define POLICY_VERB_HEADER "Policy Verb Header"
 
 //How many things you can spawn at once with spawn verb/create panel
 #define ADMIN_SPAWN_CAP 100

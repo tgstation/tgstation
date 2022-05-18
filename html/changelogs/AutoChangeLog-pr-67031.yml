@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - config: "In case you were really keen on using Virtual Reality Hub stuff in your code, do keep in mind that we've removed references to it in config."
