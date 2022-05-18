@@ -312,6 +312,18 @@
 	message_queue = null
 
 /**
+ * public
+ *
+ * Replaces the inline HTML content.
+ *
+ * required inline_html string HTML to inject
+ */
+/datum/tgui_window/proc/replace_html(inline_html)
+	if(!inline_html)
+		return
+	send_message("replace_html", inline_html)
+
+/**
  * private
  *
  * Callback for handling incoming tgui messages.
