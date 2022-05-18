@@ -42,15 +42,15 @@
 	if(!tase_checks(target))
 		return
 	. = ..()
-	var/mob/living/carbon/C = target
-	var/area/Location = get_area(C)
+	var/mob/living/carbon/victim = target
+	var/area/Location = get_area(victim)
 	var/list/gibbable_areas = list(/area/station/command/bridge, /area/station/command/heads_quarters/captain)
-	for(var/area/A as anything in gibbable_areas)
-		if (istype(Location, A))
-			C.gib()
+	for(var/area/area_to_check as anything in gibbable_areas)
+		if (istype(Location, area_to_check))
+			victim.gib()
 			return
-	C.Paralyze(10 SECONDS)
-	C.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+	victim.Paralyze(10 SECONDS)
+	victim.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
 
 
 /obj/projectile/energy/electrode/tider
