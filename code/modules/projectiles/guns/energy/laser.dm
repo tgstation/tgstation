@@ -187,3 +187,41 @@
 	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit shards of frozen angry robots into the bad guys. While it doesn't manipulate temperature in of itself, it does cause an internal explosion in anyone who is severely hot."
 	icon_state = "cryopistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
+
+// The Secura!
+/obj/item/gun/energy/laser/secura
+	name = "\improper Secura HX-62"
+	desc = "The Secura is a merging of laser weapon technology and forcefield technology. Capable of producing forcefield barriers to protect the wielder without compromising shooting capabilites, this weapon proves exceptionally useful in riot suppression, terrorist insurgencies and inquisitorial purges."
+	icon_state = "secura"
+	inhand_icon_state = null
+	shaded_charge = TRUE
+	ammo_x_offset = 1
+	weapon_weight = WEAPON_HEAVY
+	projectile_damage_multiplier = 0.5
+	ammo_type = list(/obj/item/ammo_casing/energy/laser)
+	var/obj/item/forcefield_projector/forcebarrier
+
+/obj/item/gun/energy/laser/secura/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 1 SECONDS, TRUE, 0.3, 0.1)
+	forcebarrier = new /obj/item/forcefield_projector(src)
+
+/obj/item/gun/energy/laser/secura/examine(mob/user)
+	. = ..()
+	if(forcebarrier) //just in case something happens
+		. += span_notice("Right-click to use the forcefield projector.")
+		. += span_notice("Alt-click to drop the forcefield barriers.")
+		. += span_notice("It is currently sustaining [LAZYLEN(forcebarrier.current_fields)]/[forcebarrier.max_fields] fields, and it's [round((forcebarrier.shield_integrity/forcebarrier.max_shield_integrity)*100)]% charged.")
+
+/obj/item/gun/energy/laser/secura/AltClick(mob/user)
+	if(forcebarrier)
+		forcebarrier.attack_self(user)
+	else
+		. = ..()
+
+/obj/item/gun/energy/laser/secura/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	if(forcebarrier)
+		forcebarrier.afterattack(target, user, proximity_flag)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	else
+		. = ..()
