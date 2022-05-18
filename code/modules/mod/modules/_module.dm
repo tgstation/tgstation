@@ -43,6 +43,8 @@
 	var/list/pinned_to = list()
 	/// If we're allowed to use this module while phased out.
 	var/allowed_in_phaseout = FALSE
+	/// If we're allowed to use this module while the suit is disabled.
+	var/allowed_inactive = FALSE
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -68,33 +70,10 @@
 	if(HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		. += span_notice("Complexity level: [complexity]")
 
-/// Called from MODsuit's install() proc, so when the module is installed.
-/obj/item/mod/module/proc/on_install()
-	return
-
-/// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
-/obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
-	return
-
-/// Called when the MODsuit is activated
-/obj/item/mod/module/proc/on_suit_activation()
-	return
-
-/// Called when the MODsuit is deactivated
-/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
-	return
-
-/// Called when the MODsuit is equipped
-/obj/item/mod/module/proc/on_equip()
-	return
-
-/// Called when the MODsuit is unequipped
-/obj/item/mod/module/proc/on_unequip()
-	return
 
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
-	if(!mod.active || mod.activating || module_type == MODULE_PASSIVE)
+	if(((!mod.active || mod.activating) && !allowed_inactive) || module_type == MODULE_PASSIVE)
 		if(mod.wearer)
 			balloon_alert(mod.wearer, "not active!")
 		return
@@ -210,6 +189,30 @@
 
 /// Called on the MODsuit's process if it is an active module
 /obj/item/mod/module/proc/on_active_process(delta_time)
+	return
+
+/// Called from MODsuit's install() proc, so when the module is installed.
+/obj/item/mod/module/proc/on_install()
+	return
+
+/// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
+/obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
+	return
+
+/// Called when the MODsuit is activated
+/obj/item/mod/module/proc/on_suit_activation()
+	return
+
+/// Called when the MODsuit is deactivated
+/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
+	return
+
+/// Called when the MODsuit is equipped
+/obj/item/mod/module/proc/on_equip()
+	return
+
+/// Called when the MODsuit is unequipped
+/obj/item/mod/module/proc/on_unequip()
 	return
 
 /// Drains power from the suit charge

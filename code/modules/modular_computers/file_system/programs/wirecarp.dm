@@ -11,7 +11,7 @@
 	tgui_id = "NtosNetMonitor"
 	program_icon = "network-wired"
 
-/datum/computer_file/program/ntnetmonitor/ui_act(action, params)
+/datum/computer_file/program/ntnetmonitor/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -49,6 +49,20 @@
 				return
 			SSnetworks.station_network.toggle_function(text2num(params["id"]))
 			return TRUE
+		if("toggle_mass_pda")
+			if(!SSnetworks.station_network)
+				return
+			var/mob/user = ui.user
+
+			var/obj/item/modular_computer/target_tablet = locate(params["ref"]) in GLOB.TabletMessengers
+			if(!istype(target_tablet))
+				return
+			var/obj/item/computer_hardware/hard_drive/drive = target_tablet.all_components[MC_HDD]
+			if(!drive)
+				to_chat(user, span_boldnotice("Target tablet somehow is lacking a hard drive."))
+				return
+			for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+				messenger_app.spam_mode = !messenger_app.spam_mode
 
 /datum/computer_file/program/ntnetmonitor/ui_data(mob/user)
 	if(!SSnetworks.station_network)
@@ -72,5 +86,20 @@
 	for(var/i in SSnetworks.logs)
 		data["ntnetlogs"] += list(list("entry" = i))
 	data["ntnetmaxlogs"] = SSnetworks.setting_maxlogcount
+
+	data["tablets"] = list()
+	for(var/obj/item/modular_computer/messenger in GetViewableDevices())
+		var/list/tablet_data = list()
+		if(messenger.saved_identification)
+			var/obj/item/computer_hardware/hard_drive/drive = messenger.all_components[MC_HDD]
+			if(!drive)
+				continue
+			for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+				tablet_data["enabled_spam"] += messenger_app.spam_mode
+
+			tablet_data["name"] += messenger.saved_identification
+			tablet_data["ref"] += REF(messenger)
+
+		data["tablets"] += list(tablet_data)
 
 	return data

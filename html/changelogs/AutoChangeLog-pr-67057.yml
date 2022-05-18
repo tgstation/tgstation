@@ -1,0 +1,4 @@
+author: "ReinaCoder"
+delete-after: True
+changes: 
+  - bugfix: "The bluespace pen slot has been removed from tablets. Now only tiny items can fit, spray cans and smoking pipes are now small items meaning they will no longer fit into pen slots."

@@ -20,7 +20,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "bY" = (
-/obj/structure/flora/stump,
+/obj/structure/flora/tree/stump,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "cj" = (
@@ -97,7 +97,7 @@
 /turf/closed/wall,
 /area/icemoon/underground/explored)
 "ks" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -114,7 +114,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "lg" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /obj/effect/decal/remains/human,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -143,8 +143,8 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "mI" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/grass/both/style_random,
 /obj/structure/fence{
 	dir = 8
 	},
@@ -162,14 +162,14 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "oF" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "pc" = (
 /turf/open/misc/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored)
 "pj" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "pH" = (
@@ -177,7 +177,7 @@
 /turf/closed/wall/mineral/wood,
 /area/ruin/powered)
 "pI" = (
-/obj/structure/flora/rock/pile/icy,
+/obj/structure/flora/rock/pile/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "pP" = (
@@ -319,7 +319,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Bq" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Cd" = (
@@ -335,7 +335,7 @@
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "Dm" = (
-/obj/structure/flora/grass/brown,
+/obj/structure/flora/grass/brown/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "DI" = (
@@ -348,7 +348,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered)
 "DM" = (
-/obj/structure/flora/bush,
+/obj/structure/flora/bush/snow/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Ed" = (
@@ -412,7 +412,7 @@
 /turf/open/floor/carpet,
 /area/ruin/powered)
 "Kd" = (
-/obj/structure/flora/grass/green,
+/obj/structure/flora/grass/green/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "LZ" = (
@@ -481,14 +481,14 @@
 /obj/item/restraints/legcuffs/beartrap{
 	armed = 1
 	},
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "QR" = (
 /turf/closed/wall/rust,
 /area/ruin/powered)
 "Rv" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Sk" = (
@@ -506,12 +506,12 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Tc" = (
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "TW" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "UI" = (

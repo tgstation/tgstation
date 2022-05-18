@@ -230,8 +230,8 @@
 	assignment = "Detective"
 	trim_state = "trim_detective"
 	sechud_icon_state = SECHUD_DETECTIVE
-	extra_access = list()
-	minimal_access = list(ACCESS_BRIG, ACCESS_COURT, ACCESS_FORENSICS, ACCESS_BRIG_ENTRANCE,ACCESS_MAINT_TUNNELS, ACCESS_MORGUE,
+	extra_access = list(ACCESS_BRIG)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_COURT, ACCESS_FORENSICS, ACCESS_BRIG_ENTRANCE,ACCESS_MAINT_TUNNELS, ACCESS_MORGUE,
 					ACCESS_MECH_SECURITY, ACCESS_MINERAL_STOREROOM, ACCESS_WEAPONS)
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOS, ACCESS_CHANGE_IDS)
 	job = /datum/job/detective
@@ -482,8 +482,8 @@
 	assignment = "Shaft Miner"
 	trim_state = "trim_shaftminer"
 	sechud_icon_state = SECHUD_SHAFT_MINER
-	extra_access = list(ACCESS_CARGO, ACCESS_MAINT_TUNNELS, ACCESS_QM)
-	minimal_access = list(ACCESS_AUX_BASE, ACCESS_MAILSORTING, ACCESS_MECH_MINING, ACCESS_MINERAL_STOREROOM, ACCESS_MINING,
+	extra_access = list(ACCESS_MAINT_TUNNELS, ACCESS_QM)
+	minimal_access = list(ACCESS_CARGO, ACCESS_AUX_BASE, ACCESS_MAILSORTING, ACCESS_MECH_MINING, ACCESS_MINERAL_STOREROOM, ACCESS_MINING,
 					ACCESS_MINING_STATION)
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/shaft_miner
@@ -491,7 +491,7 @@
 /// ID card obtained from the mining Disney dollar points vending machine.
 /datum/id_trim/job/shaft_miner/spare
 	extra_access = list()
-	minimal_access = list(ACCESS_MAILSORTING, ACCESS_MECH_MINING, ACCESS_MINERAL_STOREROOM, ACCESS_MINING, ACCESS_MINING_STATION)
+	minimal_access = list(ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_MECH_MINING, ACCESS_MINERAL_STOREROOM, ACCESS_MINING, ACCESS_MINING_STATION)
 	template_access = null
 
 /datum/id_trim/job/station_engineer
