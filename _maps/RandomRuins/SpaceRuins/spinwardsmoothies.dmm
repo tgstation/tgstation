@@ -29,7 +29,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "rf" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
@@ -37,11 +37,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "sJ" = (
-/obj/structure/flora/rock/pile/largejungle,
+/obj/structure/flora/rock/pile/jungle/large/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "sP" = (
@@ -54,7 +54,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "uX" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
@@ -87,7 +87,7 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "CK" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /obj/machinery/light,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
@@ -136,7 +136,7 @@
 /turf/open/floor/bamboo,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "Gd" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "JG" = (
@@ -155,11 +155,11 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "OI" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "Pk" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "PO" = (
@@ -192,7 +192,7 @@
 /turf/closed/wall/mineral/wood,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "UZ" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
