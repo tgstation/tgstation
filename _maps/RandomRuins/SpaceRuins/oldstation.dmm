@@ -591,7 +591,7 @@
 "bH" = (
 /obj/machinery/door/firedoor/closed,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
+/turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "bI" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1135,7 +1135,7 @@
 "df" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/alien/weeds,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/hall)
 "dg" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1147,7 +1147,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "oldstation-aisat"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/hall)
 "dh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2166,7 +2166,6 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "fK" = (
 /obj/machinery/door/airlock/security,
-/obj/machinery/door/firedoor/closed,
 /obj/machinery/door/poddoor{
 	id = "ancient"
 	},
@@ -2174,6 +2173,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "fL" = (
@@ -2366,7 +2366,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
+/turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "gn" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
@@ -2493,7 +2493,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "gA" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
@@ -2917,7 +2917,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "hK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4860,7 +4860,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "oldstation-aisat"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "mk" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5561,7 +5561,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/hall)
 "nM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5627,7 +5627,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "oldstation-aisat"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/hall)
 "nW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5788,7 +5788,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "oldstation-aisat"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/ruin/space/ancientstation/delta/ai)
 "oo" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6331,6 +6331,13 @@
 "rm" = (
 /turf/closed/mineral/random,
 /area/ruin/space/ancientstation/beta/supermatter)
+"rq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/hall)
 "ru" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -6596,7 +6603,7 @@
 /area/ruin/space/ancientstation/delta/ai)
 "wa" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/gravity)
 "wb" = (
 /obj/machinery/door/firedoor,
@@ -6790,9 +6797,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
 /area/ruin/space/ancientstation/beta/gravity)
-"zu" = (
-/turf/closed/mineral/random,
-/area/template_noop)
 "zw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -7143,6 +7147,21 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/storage)
+"EI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = -23
+	},
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/hall)
 "EP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -7221,8 +7240,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "GO" = (
-/turf/open/floor/plating{
-	heat_capacity = 1e+006;
+/turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/ancientstation/beta/storage)
@@ -7518,7 +7536,6 @@
 /area/ruin/space/ancientstation/beta/storage)
 "KV" = (
 /obj/machinery/firealarm/directional/south,
-/obj/structure/cable,
 /obj/machinery/light_switch/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -7791,7 +7808,6 @@
 /area/ruin/space/ancientstation/delta/hall)
 "PC" = (
 /obj/machinery/door/airlock/security,
-/obj/machinery/door/firedoor/closed,
 /obj/machinery/door/poddoor{
 	id = "ancient"
 	},
@@ -7799,6 +7815,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "PS" = (
@@ -7808,7 +7825,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "PV" = (
 /obj/item/kirbyplants{
@@ -9149,7 +9166,7 @@ Hj
 Kp
 LG
 rm
-zu
+ac
 dF
 aa
 aa
@@ -9198,7 +9215,7 @@ ru
 Jf
 rm
 rm
-zu
+ac
 dF
 aa
 aa
@@ -10026,10 +10043,10 @@ Pd
 go
 zH
 hq
-eO
+EI
 ih
 rv
-dm
+rq
 cO
 MZ
 NE
