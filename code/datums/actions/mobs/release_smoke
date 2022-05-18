@@ -1,0 +1,15 @@
+/datum/action/cooldown/mob_cooldown/release_smoke
+	name = "Meteors"
+	icon_icon = 'icons/mob/actions/actions_ccult.dmi'
+	button_icon_state = "clockcult_smoke"
+	desc = "Release smoke stored in the steam engine."
+	cooldown_time = 2 SECONDS
+	/// The sound releasing the smoke makes
+	var/smoke_sound = 'sound/creatures/clockwork_golem_smoke.ogg'
+
+/datum/action/cooldown/mob_cooldown/release_smoke/Activate(atom/target_atom)
+	playsound(owner, smoke_sound)
+	smoke_location = get_turf(owner)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(3, location = smoke_location)
+	smoke.start()

@@ -296,7 +296,7 @@
 	if(istype(firer, /mob/living/simple_animal/hostile/megafauna/colossus))
 		colossus = firer
 		colossus.say("Perish.", spans = list("colossus", "yell"))
-	
+
 	var/finale_counter = 10
 	for(var/i in 1 to 20)
 		if(finale_counter > 4 && colossus)
@@ -325,3 +325,20 @@
 			colossus.telegraph()
 			colossus.dir_shots.attack_sequence(firer, target)
 		SLEEP_CHECK_DEATH(1 SECONDS, firer)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast
+	name = "Fire Kinetic Accelerator"
+	icon_icon = 'icons/mob/actions/actions_ccult.dmi'
+	button_icon_state = "clockwork_cannon"
+	background_icon_state = "bg_clock"
+	desc = "Fires a ruby energy blast."
+	cooldown_time = 5 SECONDS
+	projectile_type = /obj/projectile/kinetic/miner
+	projectile_sound = 'sound/creatures/clockwork_golem_blast.ogg'
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast/Activate(atom/target_atom)
+	. = ..()
+	playsound(owner, projectile_sound)
+	owner.visible_message(span_danger("[owner] fires the proto-kinetic accelerator!"))
+	owner.face_atom(target_atom)
+	new /obj/effect/temp_visual/dir_setting/firing_effect(owner.loc, owner.dir)

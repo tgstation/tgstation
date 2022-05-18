@@ -3493,6 +3493,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\_megafauna.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\blood_drunk_miner.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\bubblegum.dm"
+#include "code\modules\mob\living\simple_animal\hostile\megafauna\clockwork_golem.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\clockwork_knight.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\colossus.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\demonic_frost_miner.dm"

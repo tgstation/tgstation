@@ -118,6 +118,7 @@
 #define ATTACK_EFFECT_SLASH "slash"
 #define ATTACK_EFFECT_DISARM "disarm"
 #define ATTACK_EFFECT_BITE "bite"
+#define ATTACK_EFFECT_DRILL "drill"
 #define ATTACK_EFFECT_MECHFIRE "mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN "mech_toxin"
 #define ATTACK_EFFECT_BOOP "boop" //Honk
