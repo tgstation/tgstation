@@ -182,7 +182,7 @@
 		crystal_cascade_location.ChangeTurf(/turf/closed/indestructible/supermatter_wall)
 
 /**
- * Adds a bit of spicyness to the cascade by breaking lights and turning emergency maint access on
+ * Adds a bit of spiciness to the cascade by breaking lights and turning emergency maint access on
  */
 /datum/supermatter_delamination/proc/create_cascade_ambience()
 	break_lights_on_station()
