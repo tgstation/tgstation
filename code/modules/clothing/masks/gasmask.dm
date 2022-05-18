@@ -6,7 +6,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "gas_alt"
-	permeability_coefficient = 0.01
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	///Max numbers of installable filters
@@ -99,8 +99,7 @@
 	desc = "Improved gas mask utilized by atmospheric technicians. It's flameproof!"
 	icon_state = "gas_atmos"
 	inhand_icon_state = "gas_atmos"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 10)
-	permeability_coefficient = 0.001
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 20, ACID = 10)
 	resistance_flags = FIRE_PROOF
 	max_filters = 3
 
@@ -130,7 +129,7 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
 	tint = 2
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 55)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 100, ACID = 55)
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = MASKCOVERSEYES
@@ -155,7 +154,6 @@
 	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
 	inhand_icon_state = "gas_mask"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 2,ENERGY = 2, BOMB = 0, BIO = 75, FIRE = 0, ACID = 0)
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
 
@@ -386,3 +384,24 @@
 	flags_inv = HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "driscoll_mask"
+
+/obj/item/clothing/mask/gas/prop
+	name = "prop gas mask"
+	desc = "A prop gas mask designed for appearance. Unlike a normal gas mask this does not filter gasses or protect against pepper spray."
+	icon_state = "gas_prop"
+	inhand_icon_state = "gas_prop"
+	clothing_flags = NONE
+	flags_cover = MASKCOVERSMOUTH
+	resistance_flags = FLAMMABLE
+	has_fov = FALSE
+
+/obj/item/clothing/mask/gas/atmosprop
+	name = "prop atmospheric gas mask"
+	desc = "A prop atmospheric gas mask designed for appearance. Unlike a normal atmospheric gas mask this does not filter gasses or protect against pepper spray."
+	worn_icon_state = "gas_prop_atmos"
+	icon_state = "gas_atmos"
+	inhand_icon_state = "gas_atmos"
+	clothing_flags = NONE
+	flags_cover = MASKCOVERSMOUTH
+	resistance_flags = FLAMMABLE
+	has_fov = FALSE

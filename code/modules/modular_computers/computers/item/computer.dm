@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
-	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 
 	var/bypass_state = FALSE // bypassing the set icon state
 
@@ -45,6 +45,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/max_hardware_size = 0 // Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5 // Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
+	/// Amount of programs that can be ran at once
+	var/max_idle_programs = 2
+
 	/// List of "connection ports" in this computer and the components with which they are plugged
 	var/list/all_components = list()
 	/// Lazy List of extra hardware slots that can be used modularly.
@@ -69,14 +72,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
 
-	var/obj/item/paicard/pai = null
+	/// Stored pAI in the computer
+	var/obj/item/paicard/inserted_pai = null
 
 	var/datum/action/item_action/toggle_computer_light/light_butt
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 
-	var/obj/item/computer_hardware/identifier/id = all_components[MC_IDENTIFY]
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src
@@ -84,11 +87,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	idle_threads = list()
 	if(looping_sound)
 		soundloop = new(src, enabled)
-	if(id)
-		id.UpdateDisplay()
+	UpdateDisplay()
 	if(has_light)
 		light_butt = new(src)
 	update_appearance()
+	register_context()
 	Add_Messenger()
 
 /obj/item/modular_computer/Destroy()
@@ -105,8 +108,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	QDEL_NULL(soundloop)
 	Remove_Messenger()
 
-	if(istype(pai))
-		QDEL_NULL(pai)
+	if(istype(inserted_pai))
+		QDEL_NULL(inserted_pai)
 	if(istype(light_butt))
 		QDEL_NULL(light_butt)
 
@@ -249,7 +252,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		update_appearance()
 		update_slot_icon()
 
-	return FALSE
+	return TRUE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -298,6 +301,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	. += get_modular_computer_parts_examine(user)
 
+/obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
+	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove Disk"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/item/modular_computer/update_icon_state()
 	if(!bypass_state)
 		icon_state = enabled ? icon_state_powered : icon_state_unpowered
@@ -326,6 +337,18 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	else
 		turn_on(user)
 
+/obj/item/modular_computer/CtrlShiftClick(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	var/obj/item/computer_hardware/hard_drive/ssd = all_components[MC_SDD]
+	if(!ssd)
+		return
+	if(uninstall_component(ssd, usr))
+		user.put_in_hands(ssd)
+		playsound(src, 'sound/machines/card_slide.ogg', 50)
+
 /obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
 	if(atom_integrity <= integrity_failure * max_integrity)
@@ -340,7 +363,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(recharger)
 		recharger.enabled = 1
 
-	if(all_components[MC_CPU] && use_power()) // use_power() checks if the PC is powered
+	if(use_power()) // use_power() checks if the PC is powered
 		if(issynth)
 			to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
 		else
@@ -544,6 +567,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	else
 		set_light(0)
 	update_appearance()
+	if(light_butt)
+		update_action_buttons(force = TRUE) // must force if just the overlays changed.
 	return TRUE
 
 /**
@@ -561,6 +586,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	set_light_color(color)
 	update_light()
 	return TRUE
+
+/obj/item/modular_computer/proc/UpdateDisplay()
+	name = "[saved_identification] ([saved_job])"
 
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
 	if(!deconstructable)
@@ -597,11 +625,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return
 
 	// Insert a PAI.
-	if(istype(W, /obj/item/paicard) && !pai)
+	if(istype(W, /obj/item/paicard) && !inserted_pai)
 		if(!user.transferItemToLoc(W, src))
 			return
-		pai = W
-		pai.slotted = TRUE
+		inserted_pai = W
+		inserted_pai.slotted = TRUE
 		to_chat(user, span_notice("You slot \the [W] into [src]."))
 		return
 
@@ -624,6 +652,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	// Insert new hardware
 	if(istype(W, /obj/item/computer_hardware) && upgradable)
 		if(install_component(W, user))
+			playsound(src, 'sound/machines/card_slide.ogg', 50)
 			return
 
 	if(W.tool_behaviour == TOOL_WRENCH)

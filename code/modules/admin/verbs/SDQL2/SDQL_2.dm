@@ -725,7 +725,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 
 /datum/sdql2_query/proc/SDQL_print(object, list/text_list, print_nulls = TRUE)
 	if(isdatum(object))
-		text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
+		text_list += "<A HREF='?_src_=vars;[HrefToken(forceGlobal = TRUE)];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
 		if(istype(object, /atom))
 			var/atom/A = object
 			var/turf/T = A.loc
@@ -1023,10 +1023,14 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		if(lowertext(copytext(expression[start + 1], 1, 3)) != "0x") //3 == length("0x") + 1
 			to_chat(usr, span_danger("Invalid pointer syntax: [expression[start + 1]]"), confidential = TRUE)
 			return null
-		v = locate("\[[expression[start + 1]]]")
-		if(!v)
-			to_chat(usr, span_danger("Invalid pointer: [expression[start + 1]]"), confidential = TRUE)
+		var/datum/located = locate("\[[expression[start + 1]]]")
+		if(!istype(located))
+			to_chat(usr, span_danger("Invalid pointer: [expression[start + 1]] - null or not datum"), confidential = TRUE)
 			return null
+		if(!located.can_vv_mark())
+			to_chat(usr, span_danger("Pointer [expression[start+1]] cannot be marked"), confidential = TRUE)
+			return null
+		v = located
 		start++
 		long = start < expression.len
 	else if(expression[start] == "(" && long)

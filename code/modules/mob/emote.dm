@@ -1,15 +1,15 @@
 ///How confused a carbon must be before they will vomit
-#define BEYBLADE_PUKE_THRESHOLD 30
+#define BEYBLADE_PUKE_THRESHOLD 30 SECONDS
 ///How must nutrition is lost when a carbon pukes
 #define BEYBLADE_PUKE_NUTRIENT_LOSS 60
 ///How often a carbon becomes penalized
 #define BEYBLADE_DIZZINESS_PROBABILITY 20
 ///How long the screenshake lasts
-#define BEYBLADE_DIZZINESS_VALUE 10
-///How much confusion a carbon gets when penalized
-#define BEYBLADE_CONFUSION_INCREMENT 10
-///A max for how penalized a carbon will be for beyblading
-#define BEYBLADE_CONFUSION_LIMIT 40
+#define BEYBLADE_DIZZINESS_DURATION 20 SECONDS
+///How much confusion a carbon gets every time they are penalized
+#define BEYBLADE_CONFUSION_INCREMENT 10 SECONDS
+///A max for how much confusion a carbon will be for beyblading
+#define BEYBLADE_CONFUSION_LIMIT 40 SECONDS
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
 /mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
@@ -115,19 +115,19 @@
 		return
 	if(!iscarbon(user))
 		return
-	var/current_confusion = user.get_confusion()
-	if(current_confusion > BEYBLADE_PUKE_THRESHOLD)
+
+	if(user.get_timed_status_effect_duration(/datum/status_effect/confusion) > BEYBLADE_PUKE_THRESHOLD)
 		user.vomit(BEYBLADE_PUKE_NUTRIENT_LOSS, distance = 0)
 		return
+
 	if(prob(BEYBLADE_DIZZINESS_PROBABILITY))
 		to_chat(user, span_warning("You feel woozy from spinning."))
-		user.Dizzy(BEYBLADE_DIZZINESS_VALUE)
-		if(current_confusion < BEYBLADE_CONFUSION_LIMIT)
-			user.add_confusion(BEYBLADE_CONFUSION_INCREMENT)
+		user.set_timed_status_effect(BEYBLADE_DIZZINESS_DURATION, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		user.adjust_timed_status_effect(BEYBLADE_CONFUSION_INCREMENT, /datum/status_effect/confusion, max_duration = BEYBLADE_CONFUSION_LIMIT)
 
 #undef BEYBLADE_PUKE_THRESHOLD
 #undef BEYBLADE_PUKE_NUTRIENT_LOSS
 #undef BEYBLADE_DIZZINESS_PROBABILITY
-#undef BEYBLADE_DIZZINESS_VALUE
+#undef BEYBLADE_DIZZINESS_DURATION
 #undef BEYBLADE_CONFUSION_INCREMENT
 #undef BEYBLADE_CONFUSION_LIMIT

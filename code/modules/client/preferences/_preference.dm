@@ -240,6 +240,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		// things running pre-assets-initialization.
 		if (!isnull(Master.current_initializing_subsystem))
 			extra_info = "Info was attempted to be retrieved while [Master.current_initializing_subsystem] was initializing."
+		else if (!MC_RUNNING())
+			extra_info = "Info was attempted to be retrieved before the MC started, but not while it was actively initializing a subsystem"
 
 		CRASH("Preference type `[preference_type]` is invalid! [extra_info]")
 

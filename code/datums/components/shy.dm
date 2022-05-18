@@ -89,7 +89,7 @@
 		for(var/mob/living/person in strangers)
 			if(person == owner)
 				continue
-			if(!is_type_in_typecache(person, mob_whitelist))
+			if(is_type_in_typecache(person, mob_whitelist))
 				continue
 			if(!person.key && !keyless_shy)
 				continue

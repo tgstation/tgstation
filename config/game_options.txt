@@ -159,9 +159,6 @@ ALLOW_AI_MULTICAM
 
 ## AWAY MISSIONS ###
 
-## Uncomment to load the virtual reality hub map
-#VIRTUAL_REALITY
-
 ## Uncomment to load one of the missions from awaymissionconfig.txt or away_missions/ at roundstart.
 #ROUNDSTART_AWAY
 
@@ -211,13 +208,6 @@ NEAR_DEATH_EXPERIENCE
 #SILENT_AI
 #SILENT_BORG
 
-## SANDBOX PANEL AUTOCLOSE ###
-## The sandbox panel's item spawning dialog now stays open even after you click an option.
-## If you find that your players are abusing the sandbox panel, this option may slow them down
-## without preventing people from using it properly.
-## Only functions in sandbox game mode.
-#SANDBOX_AUTOCLOSE
-
 ## ROUNDSTART SILICON LAWS ###
 ## This controls what the AI's laws are at the start of the round.
 ## Set to 0/commented out for "off", silicons will just start with Asimov.
@@ -246,6 +236,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS peacekeeper
 #RANDOM_LAWS reporter
 #RANDOM_LAWS hulkamania
+#RANDOM_LAWS ten_commandments
 
 ## Bad idea laws. Probably shouldn't enable these
 #RANDOM_LAWS syndie
@@ -278,6 +269,7 @@ LAW_WEIGHT liveandletlive,3
 LAW_WEIGHT peacekeeper,3
 LAW_WEIGHT reporter,4
 LAW_WEIGHT hulkamania,4
+LAW_WEIGHT ten_commandments,4
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0

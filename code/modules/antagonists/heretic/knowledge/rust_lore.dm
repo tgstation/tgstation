@@ -11,6 +11,7 @@
  *   Armorer's Ritual
  *
  * Mark of Rust
+ * Ritual of Knowledge
  * Aggressive Spread
  * > Sidepaths:
  *   Curse of Corrosion
@@ -24,32 +25,21 @@
  *
  * Rustbringer's Oath
  */
-/datum/heretic_knowledge/limited_amount/base_rust
+/datum/heretic_knowledge/limited_amount/starting/base_rust
 	name = "Blacksmith's Tale"
 	desc = "Opens up the Path of Rust to you. \
 		Allows you to transmute a knife with any trash item into a Rusty Blade. \
 		You can only create two at a time."
 	gain_text = "\"Let me tell you a story\", said the Blacksmith, as he gazed deep into his rusty blade."
 	next_knowledge = list(/datum/heretic_knowledge/rust_fist)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/limited_amount/base_ash,
-		/datum/heretic_knowledge/limited_amount/base_flesh,
-		/datum/heretic_knowledge/final/ash_final,
-		/datum/heretic_knowledge/final/flesh_final,
-		/datum/heretic_knowledge/final/void_final,
-		/datum/heretic_knowledge/limited_amount/base_void,
-		)
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/trash = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
-	limit = 2
-	cost = 1
-	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_RUST
 
-/datum/heretic_knowledge/limited_amount/base_rust/on_research(mob/user)
+/datum/heretic_knowledge/limited_amount/starting/base_rust/on_research(mob/user)
 	. = ..()
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	our_heretic.heretic_path = route
@@ -86,10 +76,10 @@
 
 /datum/heretic_knowledge/rust_regen
 	name = "Leeching Walk"
-	desc = "Grants you passive healing and stun resistance while standing over rust."
+	desc = "Grants you passive healing and resistance to batons while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
 	next_knowledge = list(
-		/datum/heretic_knowledge/rust_mark,
+		/datum/heretic_knowledge/mark/rust_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 		/datum/heretic_knowledge/essence,
@@ -107,23 +97,23 @@
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].
  *
- * Checks if we should have stun resistance on the new turf.
+ * Checks if we should have baton resistance on the new turf.
  */
 /datum/heretic_knowledge/rust_regen/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
 	var/turf/mover_turf = get_turf(source)
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
-		ADD_TRAIT(source, TRAIT_STUNRESISTANCE, type)
+		ADD_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
 		return
 
-	REMOVE_TRAIT(source, TRAIT_STUNRESISTANCE, type)
+	REMOVE_TRAIT(source, TRAIT_BATON_RESISTANCE, type)
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
  *
  * Gradually heals the heretic ([source]) on rust,
- * including stuns and stamina damage.
+ * including baton knockdown and stamina damage.
  */
 /datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, delta_time, times_fired)
 	SIGNAL_HANDLER
@@ -139,48 +129,17 @@
 	source.adjustStaminaLoss(-2)
 	source.AdjustAllImmobility(-5)
 
-/datum/heretic_knowledge/rust_mark
+/datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
 	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \
 		When triggered, the victim's organs and equipment will have a 75% chance to sustain damage and may be destroyed."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/rust)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/ash_mark,
-		/datum/heretic_knowledge/flesh_mark,
-		/datum/heretic_knowledge/void_mark,
-	)
-	cost = 2
 	route = PATH_RUST
-
-/datum/heretic_knowledge/rust_mark/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-
-/datum/heretic_knowledge/rust_mark/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
-
-/datum/heretic_knowledge/rust_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
-
-	target.apply_status_effect(/datum/status_effect/eldritch/rust)
-
-/datum/heretic_knowledge/rust_mark/proc/on_eldritch_blade(mob/living/user, mob/living/target)
-	SIGNAL_HANDLER
-
-	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
-	if(!istype(mark))
-		return
-
-	mark.on_effect()
+	mark_type = /datum/status_effect/eldritch/rust
 
 /datum/heretic_knowledge/knowledge_ritual/rust
 	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/knowledge_ritual/ash,
-		/datum/heretic_knowledge/knowledge_ritual/void,
-		/datum/heretic_knowledge/knowledge_ritual/flesh,
-	)
 	route = PATH_RUST
 
 /datum/heretic_knowledge/spell/area_conversion
@@ -189,7 +148,7 @@
 		Already rusted surfaces are destroyed."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
 	next_knowledge = list(
-		/datum/heretic_knowledge/rust_blade_upgrade,
+		/datum/heretic_knowledge/blade_upgrade/rust,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/crucible,
@@ -198,29 +157,15 @@
 	cost = 1
 	route = PATH_RUST
 
-/datum/heretic_knowledge/rust_blade_upgrade
+/datum/heretic_knowledge/blade_upgrade/rust
 	name = "Toxic Blade"
 	desc = "Your Rusty Blade now poisons enemies on attack."
 	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/ash_blade_upgrade,
-		/datum/heretic_knowledge/flesh_blade_upgrade,
-		/datum/heretic_knowledge/void_blade_upgrade,
-	)
-	cost = 2
 	route = PATH_RUST
 
-/datum/heretic_knowledge/rust_blade_upgrade/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-
-/datum/heretic_knowledge/rust_blade_upgrade/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
-
-/datum/heretic_knowledge/rust_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
-	SIGNAL_HANDLER
-
+/datum/heretic_knowledge/blade_upgrade/rust/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	// No user == target check here, cause it's technically good for the heretic?
 	target.reagents?.add_reagent(/datum/reagent/eldritch, 5)
 
@@ -232,7 +177,7 @@
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/cleave,
+		/datum/heretic_knowledge/rifle,
 		/datum/heretic_knowledge/final/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
 	)
@@ -253,10 +198,10 @@
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE
 	/// A typepath to an area that we must finish the ritual in.
-	var/area/ritual_location = /area/command/bridge
+	var/area/ritual_location = /area/station/command/bridge
 	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
-		TRAIT_STUNIMMUNE,
+		TRAIT_BATON_RESISTANCE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_PUSHIMMUNE,
 		TRAIT_SHOCKIMMUNE,

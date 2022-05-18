@@ -123,8 +123,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "az" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "aA" = (
@@ -279,7 +279,7 @@
 /turf/open/floor/iron/smooth,
 /area/syndicate_mothership/control)
 "aU" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/basalt/wasteland{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -366,7 +366,7 @@
 	},
 /area/tdome/observation)
 "bh" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -417,12 +417,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/centcom/control)
-"bq" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_mixing_input{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/syndicate_mothership/expansion_bombthreat)
 "br" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -463,7 +457,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "bw" = (
-/obj/structure/flora/tree/jungle/small,
+/obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "bx" = (
@@ -472,8 +466,8 @@
 	},
 /area/tdome/observation)
 "by" = (
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "bz" = (
@@ -574,11 +568,11 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "bM" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/tdome/administration)
 "bN" = (
@@ -606,10 +600,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
-"bR" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/admin/storage)
 "bS" = (
 /obj/structure/closet{
 	anchored = 1;
@@ -670,15 +660,15 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership)
 "bZ" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "ca" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/machinery/light/directional/west,
 /turf/open/misc/asteroid,
 /area/tdome/administration)
@@ -711,10 +701,6 @@
 /obj/structure/mirror/directional/west,
 /turf/open/floor/iron/white,
 /area/tdome/observation)
-"ce" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/armory)
 "cf" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -817,7 +803,7 @@
 /turf/open/floor/iron,
 /area/centcom/courtroom)
 "cu" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -992,10 +978,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/structure/sign/poster/contraband/c20r{
 	pixel_x = 32
 	},
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
 /area/syndicate_mothership/expansion_bombthreat)
 "cR" = (
@@ -1188,7 +1174,7 @@
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
 "dv" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "dw" = (
@@ -1367,7 +1353,7 @@
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/clothing/mask/animal/pig,
 /obj/item/clothing/mask/animal/horsehead,
-/obj/item/clothing/mask/animal/rat,
+/obj/item/clothing/mask/animal/small/rat,
 /obj/item/clothing/mask/fakemoustache{
 	pixel_y = 9
 	},
@@ -1558,8 +1544,8 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "ex" = (
@@ -1634,9 +1620,9 @@
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
 "eH" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	icon_state = "asteroid5";
 	name = "plating"
@@ -1656,11 +1642,11 @@
 /turf/open/floor/wood/large,
 /area/centcom/holding)
 "eK" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/machinery/light/directional/south,
 /turf/open/misc/asteroid,
 /area/centcom/evacuation)
@@ -1971,10 +1957,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/centcom/fore)
-"fC" = (
-/obj/structure/sign/warning/nosmoking,
-/turf/closed/indestructible/riveted,
-/area/tdome/observation)
 "fD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -2102,12 +2084,12 @@
 /turf/open/space/basic,
 /area/space)
 "ga" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /obj/machinery/light/directional/south,
 /turf/open/floor/grass,
 /area/tdome/administration)
@@ -2142,8 +2124,8 @@
 /turf/open/floor/sepia,
 /area/centcom/holding)
 "gf" = (
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "gh" = (
@@ -2268,7 +2250,7 @@
 /turf/open/floor/iron/white,
 /area/tdome/observation)
 "gz" = (
-/obj/structure/flora/rock/icy{
+/obj/structure/flora/rock/icy/style_random{
 	pixel_x = -7
 	},
 /obj/effect/light_emitter{
@@ -2319,6 +2301,14 @@
 /obj/machinery/status_display/ai/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
+"gG" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/portable_atmospherics/pump{
+	desc = "A betrayer to pump-kind.";
+	name = "Lil Pump"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/syndicate_mothership/expansion_bombthreat)
 "gH" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/sofa/corp/right{
@@ -2386,6 +2376,10 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
+"gS" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/ferry)
 "gT" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -2420,7 +2414,7 @@
 /turf/open/floor/iron,
 /area/centcom/armory)
 "gZ" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "hb" = (
@@ -2509,11 +2503,11 @@
 /turf/open/lava/plasma/ice_moon,
 /area/syndicate_mothership/control)
 "hm" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/machinery/light/directional/north,
 /turf/open/misc/asteroid,
 /area/centcom/evacuation)
@@ -2692,9 +2686,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "hG" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -2785,7 +2779,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "hS" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "hT" = (
@@ -3007,8 +3001,8 @@
 /turf/open/floor/iron,
 /area/centcom/prison)
 "iA" = (
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -3059,10 +3053,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/centcom/prison)
-"iI" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/prison/cells)
 "iJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -3603,11 +3593,8 @@
 /turf/open/floor/catwalk_floor/titanium,
 /area/syndicate_mothership/control)
 "kf" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
+/obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump/on,
-/obj/machinery/light/small/red/directional/east,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "kg" = (
@@ -3623,13 +3610,28 @@
 /area/syndicate_mothership/expansion_chemicalwarfare)
 "ki" = (
 /obj/structure/rack,
+/obj/machinery/light/cold/directional/west,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/item/stock_parts/micro_laser/high{
+	pixel_x = 12
+	},
 /obj/item/wrench{
 	desc = "A little smidgeon of Freon...";
 	name = "Freon"
 	},
-/obj/machinery/light/cold/directional/west,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
+/obj/item/stock_parts/micro_laser/high{
+	pixel_x = -4;
+	pixel_y = -8
+	},
+/obj/item/stock_parts/micro_laser/high{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/stock_parts/micro_laser/high{
+	pixel_x = -8;
+	pixel_y = -4
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -3822,6 +3824,10 @@
 	icon_state = "alien19"
 	},
 /area/abductor_ship)
+"kR" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/admin/storage)
 "kS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -4138,9 +4144,9 @@
 /turf/open/floor/iron,
 /area/centcom/fore)
 "lN" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -4203,7 +4209,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 10
 	},
-/obj/machinery/light/small/directional/east,
+/obj/machinery/light/cold/directional/east,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "lV" = (
@@ -4536,11 +4542,11 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/syndicate_mothership/control)
 "mQ" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/centcom/control)
 "mR" = (
@@ -4581,6 +4587,17 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
 /area/centcom/prison)
+"mU" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/machinery/door/puzzle/keycard/syndicate_bio,
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/smooth_half{
+	dir = 4
+	},
+/area/syndicate_mothership/expansion_bioterrorism)
 "mV" = (
 /obj/machinery/shower{
 	pixel_y = 12
@@ -4732,8 +4749,8 @@
 /turf/open/floor/carpet,
 /area/syndicate_mothership/control)
 "nu" = (
-/obj/structure/flora/grass/both,
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/grass/both/style_random,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "nw" = (
@@ -5261,8 +5278,8 @@
 	},
 /area/syndicate_mothership/control)
 "oT" = (
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/both/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -5303,7 +5320,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "oY" = (
-/turf/open/floor/engine,
+/turf/open/floor/engine/vacuum,
 /area/syndicate_mothership/expansion_bombthreat)
 "oZ" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
@@ -5469,23 +5486,9 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
-"px" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/sign/warning/securearea{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron,
-/area/centcom/ferry)
 "py" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -5581,24 +5584,13 @@
 /turf/open/floor/iron,
 /area/tdome/observation)
 "pO" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/tdome/observation)
-"pP" = (
-/obj/structure/table/reinforced,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/computer_hardware/hard_drive/role/quartermaster,
-/obj/item/gps/mining,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/iron,
-/area/centcom/supply)
 "pQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -5782,6 +5774,10 @@
 /obj/item/food/grown/apple,
 /turf/open/floor/plastic,
 /area/syndicate_mothership/expansion_fridgerummage)
+"qq" = (
+/obj/structure/sign/warning/no_smoking,
+/turf/closed/indestructible/riveted,
+/area/centcom/admin)
 "qr" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/tile/green{
@@ -5833,9 +5829,9 @@
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
 "qw" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	icon_state = "asteroid5";
 	name = "plating"
@@ -5850,47 +5846,47 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/syndicate_mothership/control)
 "qy" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qz" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qA" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /obj/machinery/light/directional/north,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qB" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qC" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /obj/machinery/light/directional/north,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qD" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qE" = (
@@ -5920,6 +5916,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/supplypod)
+"qK" = (
+/obj/machinery/air_sensor{
+	chamber_id = "nukiebase";
+	name = "syndicate ordnance gas sensor"
+	},
+/turf/open/floor/engine/vacuum,
+/area/syndicate_mothership/expansion_bombthreat)
 "qM" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -5958,8 +5961,8 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "qW" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qX" = (
@@ -5967,8 +5970,8 @@
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qY" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "qZ" = (
@@ -6100,10 +6103,6 @@
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/admin)
-"rz" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/ferry)
 "rB" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
@@ -6124,9 +6123,9 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "rF" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -6139,9 +6138,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "rH" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron{
 	icon_state = "asteroid5";
@@ -6157,21 +6156,21 @@
 /turf/open/floor/iron,
 /area/centcom/fore)
 "rJ" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /obj/machinery/light/directional/west,
 /turf/open/floor/grass,
 /area/centcom/fore)
 "rK" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/control)
 "rM" = (
@@ -6219,20 +6218,20 @@
 /turf/open/floor/iron,
 /area/centcom/prison)
 "rT" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "rU" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
 "rV" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/window/reinforced,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
@@ -6244,6 +6243,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"rY" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/armory)
 "rZ" = (
 /obj/machinery/shower{
 	dir = 8
@@ -6384,8 +6387,8 @@
 /turf/open/floor/iron,
 /area/tdome/observation)
 "sD" = (
-/obj/structure/flora/rock/pile,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "sE" = (
@@ -6613,6 +6616,20 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/admin)
+"tn" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/structure/sign/warning/secure_area{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/centcom/ferry)
 "to" = (
 /obj/machinery/computer/shuttle/ferry{
 	dir = 4
@@ -6707,7 +6724,6 @@
 /turf/open/floor/iron/textured_large,
 /area/syndicate_mothership/control)
 "tC" = (
-/obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 6
 	},
@@ -6809,10 +6825,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/control)
-"tP" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/indestructible/riveted,
-/area/centcom/control)
 "tR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -6876,11 +6888,11 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
 "uj" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/centcom/prison)
 "uk" = (
@@ -7070,7 +7082,7 @@
 /obj/machinery/door/poddoor/incinerator_ordmix{
 	id = "syn_ordmix_vent"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/engine/vacuum,
 /area/syndicate_mothership/expansion_bombthreat)
 "uV" = (
 /obj/item/paper_bin,
@@ -7101,39 +7113,46 @@
 /turf/open/floor/iron/white,
 /area/tdome/observation)
 "uY" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/leafybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/leavy/style_random,
 /turf/open/floor/grass,
 /area/centcom/ferry)
 "uZ" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/ferry)
 "va" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/centcom/ferry)
 "vb" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/ferry)
+"vc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
+/area/syndicate_mothership/expansion_bombthreat)
 "vd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -7228,7 +7247,7 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "vq" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "vr" = (
@@ -7325,13 +7344,6 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron,
 /area/centcom/control)
-"vI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/turf/open/floor/plating,
-/area/syndicate_mothership/expansion_bombthreat)
 "vJ" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
@@ -7525,12 +7537,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
 "wj" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/tdome/administration)
 "wk" = (
@@ -7539,6 +7551,15 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/holding)
+"wo" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "wq" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
@@ -8029,7 +8050,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "xE" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "xF" = (
@@ -8046,6 +8067,16 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/control)
+"xP" = (
+/obj/docking_port/stationary{
+	dwidth = 25;
+	height = 50;
+	id = "emergency_syndicate";
+	name = "Syndicate Auxiliary Shuttle Dock";
+	width = 50
+	},
+/turf/open/misc/asteroid/snow/airless,
+/area/syndicate_mothership)
 "xQ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/south,
@@ -8210,7 +8241,7 @@
 /turf/open/floor/iron,
 /area/centcom/ferry)
 "yq" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "yr" = (
@@ -8488,7 +8519,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
 "zh" = (
@@ -8604,11 +8635,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
 "zA" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/tdome/administration)
 "zB" = (
@@ -8619,11 +8650,11 @@
 /turf/open/floor/iron/smooth,
 /area/syndicate_mothership/control)
 "zC" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/centcom/control)
 "zD" = (
@@ -8708,8 +8739,8 @@
 /turf/open/floor/iron/white,
 /area/centcom/control)
 "zL" = (
-/obj/structure/flora/grass/both,
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/grass/both/style_random,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "zM" = (
@@ -8893,7 +8924,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
 "Aj" = (
-/obj/structure/flora/rock/jungle{
+/obj/structure/flora/rock/pile/jungle/style_random{
 	pixel_x = -12;
 	pixel_y = 15
 	},
@@ -9306,7 +9337,7 @@
 /turf/open/floor/iron,
 /area/tdome/observation)
 "Bt" = (
-/obj/structure/flora/rock/icy{
+/obj/structure/flora/rock/icy/style_random{
 	pixel_x = -7
 	},
 /turf/open/misc/asteroid/snow/airless,
@@ -9600,11 +9631,11 @@
 	},
 /area/syndicate_mothership/control)
 "Cd" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /obj/machinery/light/directional/south,
 /turf/open/floor/grass,
 /area/centcom/evacuation)
@@ -9640,9 +9671,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/evacuation)
 "Ch" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/heater,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -9719,11 +9752,11 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Cr" = (
-/obj/structure/flora/rock/pile/largejungle,
+/obj/structure/flora/rock/pile/jungle/large/style_random,
 /turf/open/misc/beach/sand,
 /area/centcom/holding)
 "Cs" = (
@@ -9739,14 +9772,14 @@
 /turf/open/floor/carpet,
 /area/syndicate_mothership/control)
 "Cu" = (
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /obj/structure/railing,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "Cv" = (
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/both/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -9886,6 +9919,16 @@
 "CN" = (
 /turf/closed/indestructible/syndicate,
 /area/syndicate_mothership/expansion_bioterrorism)
+"CP" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "CQ" = (
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
@@ -9916,7 +9959,7 @@
 /turf/open/misc/sandy_dirt,
 /area/centcom/holding)
 "CX" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -10017,8 +10060,8 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "Dp" = (
@@ -10117,17 +10160,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
-"DB" = (
-/obj/effect/turf_decal/siding/wideplating/dark,
-/obj/effect/turf_decal/siding/wideplating/dark{
-	dir = 1
-	},
-/obj/machinery/door/puzzle/keycard/syndicate_bio,
-/obj/structure/fans/tiny,
-/turf/open/floor/iron/smooth_half{
-	dir = 4
-	},
-/area/syndicate_mothership/expansion_bioterrorism)
 "DC" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -10149,6 +10181,10 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"DF" = (
+/obj/structure/sign/warning/no_smoking,
+/turf/closed/indestructible/riveted,
+/area/tdome/observation)
 "DG" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -10480,7 +10516,7 @@
 /obj/machinery/igniter/incinerator_ordmix{
 	id = "syn_ordmix_igniter"
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/vacuum,
 /area/syndicate_mothership/expansion_bombthreat)
 "EI" = (
 /obj/effect/turf_decal/siding/thinplating{
@@ -10538,7 +10574,7 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_chemicalwarfare)
 "EP" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -10739,12 +10775,16 @@
 /turf/open/floor/plating,
 /area/centcom/prison)
 "Fp" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
+"Fq" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/control)
 "Fr" = (
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/mineral/titanium,
@@ -10883,6 +10923,15 @@
 	dir = 8
 	},
 /area/syndicate_mothership/control)
+"FL" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "FM" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
@@ -10890,6 +10939,17 @@
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/mineral/titanium/tiled,
 /area/syndicate_mothership/expansion_bioterrorism)
+"FO" = (
+/obj/structure/table/reinforced,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/gps/mining,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/centcom/supply)
 "FP" = (
 /obj/structure/window/reinforced/survival_pod{
 	name = "Tinted Window";
@@ -10911,8 +10971,8 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "FT" = (
@@ -11104,8 +11164,8 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "Gv" = (
-/obj/structure/flora/rock/pile,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Gw" = (
@@ -11187,8 +11247,8 @@
 /turf/open/floor/iron,
 /area/centcom/prison)
 "GD" = (
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "GE" = (
@@ -11313,10 +11373,23 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
+"Hh" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("nukiebase" = "Burn Chamber");
+	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
+	dir = 1;
+	name = "Ordnance Chamber Monitor"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/cold/directional/west{
+	dir = 2
+	},
+/turf/open/floor/mineral/titanium/tiled/yellow,
+/area/syndicate_mothership/expansion_bombthreat)
 "Hi" = (
-/obj/structure/flora/rock/pile,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/railing{
 	dir = 8
 	},
@@ -11354,9 +11427,9 @@
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "Hm" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	icon_state = "asteroid5";
 	name = "plating"
@@ -11431,11 +11504,11 @@
 /turf/open/misc/ice/icemoon,
 /area/syndicate_mothership/control)
 "HE" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/tdome/observation)
 "HF" = (
@@ -11498,13 +11571,8 @@
 "HN" = (
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
-"HO" = (
-/obj/effect/turf_decal/stripes/box,
-/obj/machinery/portable_atmospherics/pump,
-/turf/open/floor/mineral/plastitanium,
-/area/syndicate_mothership/expansion_bombthreat)
 "HQ" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "HS" = (
@@ -11624,7 +11692,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
-/turf/open/misc/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership/expansion_bombthreat)
 "Ig" = (
 /turf/closed/wall/mineral/diamond,
@@ -11645,15 +11713,15 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evacuation/ship)
 "Ik" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/machinery/light/small/red/directional/south,
 /obj/structure/sign/poster/contraband/fun_police{
 	pixel_x = -32
+	},
+/obj/machinery/light/cold/directional/south,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -11671,7 +11739,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "In" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -11926,16 +11994,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/tdome/arena)
-"IV" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/mineral/plastitanium/red,
-/area/syndicate_mothership/expansion_bombthreat)
 "IW" = (
 /obj/effect/landmark/thunderdome/two,
 /obj/effect/turf_decal/stripes/line{
@@ -12198,7 +12256,7 @@
 /turf/open/floor/mineral/titanium,
 /area/syndicate_mothership/control)
 "JT" = (
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "JU" = (
@@ -12294,7 +12352,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Ki" = (
@@ -12506,7 +12564,7 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/centcom/evacuation/ship)
 "KT" = (
-/obj/structure/flora/rock/pile/largejungle{
+/obj/structure/flora/rock/pile/jungle/large/style_random{
 	pixel_y = -3
 	},
 /turf/open/misc/ashplanet/wateryrock{
@@ -12548,6 +12606,22 @@
 /obj/structure/cable,
 /turf/open/floor/iron/textured_large,
 /area/syndicate_mothership/control)
+"KY" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/analyzer{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/pipe_dispenser{
+	desc = "A device used to rapidly pipe things. This one has a curious abundance of warning labels.";
+	name = "Syndicate Rapid Pipe Dispenser (RPD)";
+	pixel_y = -3
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/syndicate_mothership/expansion_bombthreat)
 "KZ" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
@@ -12812,13 +12886,6 @@
 /obj/structure/speaking_tile,
 /turf/closed/mineral/ash_rock,
 /area/awaymission/errorroom)
-"Ma" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 8
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/syndicate_mothership/expansion_bombthreat)
 "Mb" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/siding/red/corner{
@@ -12830,12 +12897,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/syndicate_mothership/control)
 "Mc" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 8
-	},
-/obj/machinery/camera/autoname/directional/south{
-	network = list("nukie")
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -13114,7 +13177,7 @@
 /turf/open/floor/iron/white,
 /area/tdome/observation)
 "MT" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -13732,7 +13795,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/centcom/holding)
 "OC" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/basalt/wasteland{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -13747,9 +13810,9 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supplypod)
 "OE" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -13924,7 +13987,7 @@
 /turf/open/floor/iron/dark,
 /area/tdome/observation)
 "Pd" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "Pe" = (
@@ -13967,7 +14030,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supply)
 "Ph" = (
-/obj/structure/flora/rock/icy{
+/obj/structure/flora/rock/icy/style_random{
 	pixel_x = -7
 	},
 /turf/open/misc/asteroid/snow/icemoon,
@@ -14170,11 +14233,11 @@
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/one)
 "PL" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/centcom/evacuation)
 "PM" = (
@@ -14401,8 +14464,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/prison)
 "Qs" = (
-/obj/structure/flora/tree/dead,
-/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/dead/style_random,
+/obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "Qu" = (
@@ -14504,9 +14567,9 @@
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "QL" = (
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
 /area/centcom/holding)
@@ -14594,7 +14657,7 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
 "QW" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -15269,9 +15332,9 @@
 /turf/open/floor/iron,
 /area/centcom/armory)
 "SU" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron{
 	dir = 6;
@@ -15417,6 +15480,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
+"Th" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "nukiebase";
+	desc = "Has a valve and pump attached to it. Slightly more menacing than Nanotrasen's standard.";
+	dir = 1;
+	name = "syndicate air injector"
+	},
+/turf/open/floor/engine/vacuum,
+/area/syndicate_mothership/expansion_bombthreat)
 "Ti" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -15567,8 +15639,8 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/briefing)
 "TF" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/centcom/holding)
 "TG" = (
@@ -15795,17 +15867,17 @@
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/expansion_chemicalwarfare)
 "Ul" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/centcom/fore)
 "Um" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/iron{
 	dir = 6;
 	icon_state = "asteroid8";
@@ -15863,8 +15935,8 @@
 /turf/open/floor/sepia,
 /area/centcom/holding)
 "Uq" = (
-/obj/structure/flora/grass/both,
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/grass/both/style_random,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/syndicate_mothership/control)
 "Ur" = (
@@ -16073,11 +16145,11 @@
 /turf/open/floor/iron/cafeteria,
 /area/centcom/holding)
 "UT" = (
-/obj/machinery/atmospherics/pipe/smart/simple/general/visible{
-	dir = 5
-	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bombthreat)
@@ -16172,7 +16244,7 @@
 /turf/open/floor/stone,
 /area/syndicate_mothership/control)
 "Vf" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/ironsand{
 	color = "#525252";
 	initial_gas_mix = "TEMP=2.7"
@@ -16223,11 +16295,11 @@
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/two)
 "Vl" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/tdome/administration)
 "Vm" = (
@@ -16297,7 +16369,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Vw" = (
@@ -16440,7 +16512,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/engine,
+/turf/open/floor/engine/vacuum,
 /area/syndicate_mothership/expansion_bombthreat)
 "VV" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -16794,7 +16866,7 @@
 /turf/open/floor/iron/dark,
 /area/tdome/observation)
 "WJ" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "WK" = (
@@ -16910,7 +16982,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "WW" = (
@@ -16967,12 +17039,12 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/syndicate_mothership/expansion_bioterrorism)
 "Xf" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/tdome/observation)
 "Xg" = (
@@ -17196,6 +17268,9 @@
 	pixel_x = 5;
 	pixel_y = -29
 	},
+/obj/machinery/camera/autoname/directional/south{
+	network = list("nukie")
+	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
 "XH" = (
@@ -17220,11 +17295,11 @@
 /turf/open/floor/sepia,
 /area/centcom/holding)
 "XJ" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
+/obj/structure/flora/bush/generic/style_random,
 /turf/open/floor/grass,
 /area/tdome/observation)
 "XK" = (
@@ -17370,15 +17445,15 @@
 	},
 /area/syndicate_mothership/control)
 "Yl" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Ym" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/grassy/style_random,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/centcom/control)
 "Yn" = (
@@ -17500,10 +17575,6 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/syndicate_mothership)
-"YI" = (
-/obj/structure/sign/warning/nosmoking,
-/turf/closed/indestructible/riveted,
-/area/centcom/admin)
 "YJ" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -17606,9 +17677,16 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
 	},
-/obj/machinery/light/small/red/directional/west,
+/obj/machinery/airalarm/unlocked{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/syndicate_mothership/expansion_bombthreat)
+"YX" = (
+/obj/structure/sign/warning/secure_area,
+/turf/closed/indestructible/riveted,
+/area/centcom/prison/cells)
 "YY" = (
 /obj/item/storage/medkit/toxin,
 /obj/item/storage/medkit/o2{
@@ -17644,7 +17722,7 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
 "Zc" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/basalt/airless,
 /area/centcom/holding)
 "Zd" = (
@@ -17800,7 +17878,7 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/holding)
 "Zu" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/machinery/light/directional/north,
 /turf/open/floor/grass,
 /area/centcom/holding)
@@ -17863,8 +17941,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/plasma,
 /obj/machinery/light/cold/directional/east,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/syndicate_mothership/expansion_bombthreat)
 "ZE" = (
@@ -24600,7 +24678,7 @@ we
 br
 Bq
 fQ
-DB
+mU
 qM
 uk
 EE
@@ -25372,8 +25450,8 @@ ay
 Bq
 Fn
 kv
-Ma
-IV
+wo
+CP
 ki
 Td
 Zp
@@ -25630,7 +25708,7 @@ Bq
 fQ
 of
 Ch
-BD
+FL
 uu
 tk
 rE
@@ -25891,10 +25969,10 @@ HZ
 HZ
 HZ
 Nv
-HO
+gG
 XG
 kv
-oY
+qK
 EH
 kv
 kb
@@ -26143,7 +26221,7 @@ br
 Bq
 fQ
 of
-Fp
+KY
 UT
 Fp
 zg
@@ -26151,7 +26229,7 @@ Gw
 tC
 kf
 nE
-bq
+Th
 oY
 kv
 kb
@@ -26406,8 +26484,8 @@ BD
 Us
 Ks
 Mc
+Hh
 Yg
-kv
 uU
 uU
 kv
@@ -26658,8 +26736,8 @@ tz
 ng
 kv
 Me
-vI
 bF
+vc
 Ia
 Hl
 sh
@@ -34861,7 +34939,7 @@ Ff
 Ff
 Ff
 Ff
-Ff
+xP
 Zb
 ll
 ll
@@ -53902,7 +53980,7 @@ vE
 wt
 xg
 wt
-px
+tn
 mD
 pD
 pX
@@ -55444,7 +55522,7 @@ mD
 ss
 fw
 tr
-rz
+gS
 SM
 WR
 RH
@@ -55684,7 +55762,7 @@ aa
 aa
 On
 On
-YI
+qq
 On
 gI
 pE
@@ -56211,7 +56289,7 @@ dz
 Nr
 Xq
 Rg
-rz
+gS
 wz
 TK
 xR
@@ -56472,7 +56550,7 @@ mD
 su
 fw
 wh
-rz
+gS
 NN
 MJ
 TI
@@ -57245,11 +57323,11 @@ fw
 ts
 mD
 Ya
-ce
+rY
 ST
 VO
 ST
-ce
+rY
 Ya
 Ya
 aa
@@ -58007,7 +58085,7 @@ On
 YU
 YU
 Rj
-bR
+kR
 YU
 oe
 qR
@@ -58259,7 +58337,7 @@ iF
 yd
 oM
 pi
-pP
+FO
 Tq
 YU
 Sh
@@ -58295,7 +58373,7 @@ at
 QC
 QC
 QC
-fC
+DF
 QC
 QC
 QC
@@ -59044,11 +59122,11 @@ xh
 wu
 mD
 Ya
-ce
+rY
 Ya
 Ya
 Ya
-ce
+rY
 Ya
 Ya
 Dq
@@ -59817,7 +59895,7 @@ ys
 mR
 zF
 Am
-tP
+Fq
 iu
 io
 gl
@@ -61116,7 +61194,7 @@ Mu
 Mu
 Mu
 aB
-fC
+DF
 BW
 BW
 NV
@@ -62862,7 +62940,7 @@ aa
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb
@@ -62874,7 +62952,7 @@ iB
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb
@@ -63147,7 +63225,7 @@ io
 io
 io
 io
-tP
+Fq
 UO
 io
 io
@@ -65432,7 +65510,7 @@ aa
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb
@@ -65444,7 +65522,7 @@ iB
 Jb
 ir
 iB
-iI
+YX
 ir
 iB
 Jb

@@ -47,7 +47,7 @@
 
 /datum/uplink_item/bundles_tc/firestarter
 	name = "Spetsnaz Pyro bundle"
-	desc = "For systematic suppression of carbon lifeforms in close quarters: Contains a lethal New Russian backpack spray, Elite hardsuit, \
+	desc = "For systematic suppression of carbon lifeforms in close quarters: Contains an Elite MODsuit with a flamethrower attachment, \
 			Stechkin APS machine pistol, two incendiary magazines, a minibomb and a stimulant syringe. \
 			Order NOW and comrade Boris will throw in an extra tracksuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
@@ -330,6 +330,12 @@
 	desc = "A 3-round magazine of soporific ammo designed for use with .50 sniper rifles. Put your enemies to sleep today!"
 	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
 	cost = 6
+
+/datum/uplink_item/ammo/sniper/marksman
+	name = ".50 Marksman Magazine"
+	desc = "A 5-round magazine of marksman ammo designed for use with .50 sniper rifles. Blast your enemies with instant shots!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
+	cost = 5
 
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"
@@ -630,6 +636,28 @@
 			within a short duration and will rapidly recharge while not under fire."
 	item = /obj/item/mod/module/energy_shield
 	cost = 15
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/suits/energy_shield
+	name = "MODsuit Energy Shield Module"
+	desc = "An energy shield module for a MODsuit. The shields can handle up to three impacts \
+			within a short duration and will rapidly recharge while not under fire."
+	item = /obj/item/mod/module/energy_shield
+	cost = 15
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/suits/injector
+	name = "MODsuit Injector Module"
+	desc = "An injector module for a MODsuit. It is an extendable piercing injector with 30u capacity."
+	item = /obj/item/mod/module/injector
+	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/suits/holster
+	name = "MODsuit Holster Module"
+	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
+	item = /obj/item/mod/module/holster
+	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/device_tools/magboots

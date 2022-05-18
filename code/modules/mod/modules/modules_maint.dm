@@ -127,7 +127,7 @@
 	rave_number++
 	if(rave_number > length(rainbow_order))
 		rave_number = 1
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 	rave_screen.update_colour(rainbow_order[rave_number])
 
 /obj/item/mod/module/visor/rave/get_configuration()
@@ -237,6 +237,8 @@
 	drain_power(use_power_cost)
 	num_sheets_dispensed++
 
+
+///Stamper - Extends a stamp that can switch between accept/deny modes.
 /obj/item/mod/module/stamp
 	name = "MOD stamper module"
 	desc = "A module installed into the wrist of the suit, this functions as a high-power stamp, \

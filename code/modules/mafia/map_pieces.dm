@@ -28,6 +28,7 @@
 
 /area/mafia
 	name = "Mafia Minigame"
+	icon = 'icons/area/areas_centcom.dmi'
 	icon_state = "mafia"
 	static_lighting = FALSE
 

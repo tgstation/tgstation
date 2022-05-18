@@ -11,6 +11,8 @@
 		/obj/effect/anomaly/grav = /obj/item/clothing/suit/armor/reactive/repulse,
 		/obj/effect/anomaly/flux = /obj/item/clothing/suit/armor/reactive/tesla,
 		/obj/effect/anomaly/bluespace = /obj/item/clothing/suit/armor/reactive/teleport,
+		/obj/effect/anomaly/delimber = /obj/item/clothing/suit/armor/reactive/delimbering,
+		/obj/effect/anomaly/hallucination = /obj/item/clothing/suit/armor/reactive/hallucinating,
 		)
 
 	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
@@ -151,8 +153,8 @@
 	for(var/mob/living/carbon/carbon_victim in range(6, owner))
 		if(carbon_victim != owner)
 			carbon_victim.adjust_fire_stacks(8)
-			carbon_victim.IgniteMob()
-	owner.set_fire_stacks(-20)
+			carbon_victim.ignite_mob()
+	owner.set_wet_stacks(20)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
@@ -160,7 +162,7 @@
 	owner.visible_message(span_danger("[src] just makes [attack_text] worse by spewing molten death on [owner]!"))
 	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
 	owner.adjust_fire_stacks(12)
-	owner.IgniteMob()
+	owner.ignite_mob()
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return FALSE
 
@@ -323,3 +325,129 @@
 
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
+
+//Hallucinating
+
+/obj/item/clothing/suit/armor/reactive/hallucinating
+	name = "reactive hallucinating armor"
+	desc = "An experimental suit of armor with sensitive detectors hooked up to the mind of the wearer, sending mind pulses that causes hallucinations around you."
+	cooldown_message = span_danger("The connection is currently out of sync... Recalibrating.")
+	emp_message = span_warning("You feel the backsurge of a mind pulse.")
+	var/range = 3
+
+/obj/item/clothing/suit/armor/reactive/hallucinating/dropped(mob/user)
+	..()
+	if(istype(user))
+		REMOVE_TRAIT(user, TRAIT_MADNESS_IMMUNE, "reactive_hallucinating_armor")
+
+/obj/item/clothing/suit/armor/reactive/hallucinating/equipped(mob/user, slot)
+	..()
+	if(slot_flags & slot) //Was equipped to a valid slot for this item?
+		ADD_TRAIT(user, TRAIT_MADNESS_IMMUNE, "reactive_hallucinating_armor")
+
+/obj/item/clothing/suit/armor/reactive/hallucinating/cooldown_activation(mob/living/carbon/human/owner)
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(1, 1, src)
+	sparks.start()
+	..()
+
+/obj/item/clothing/suit/armor/reactive/hallucinating/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message(span_danger("[src] blocks [attack_text], sending out mental pulses!"))
+	hallucination_pulse(owner)
+	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/hallucinating/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of mental energy into [owner] from the surrounding environment!"))
+	owner.hallucination += 25
+	owner.hallucination = clamp(owner.hallucination, 0, 150)
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/hallucinating/proc/hallucination_pulse(mob/living/carbon/human/owner)
+	var/turf/location = get_turf(owner)
+	for(var/mob/living/carbon/human/near in view(location, range))
+		// If they are immune to hallucinations.
+		if (HAS_TRAIT(near, TRAIT_MADNESS_IMMUNE) || (near.mind && HAS_TRAIT(near.mind, TRAIT_MADNESS_IMMUNE)))
+			continue
+
+		// Everyone else gets hallucinations.
+		var/dist = sqrt(1 / max(1, get_dist(near, location)))
+		near.hallucination += 25 * dist
+		near.hallucination = clamp(near.hallucination, 0, 150)
+
+//Delimbering
+
+/obj/item/clothing/suit/armor/reactive/delimbering
+	name = "reactive delimbering armor"
+	desc = "An experimental suit of armor with sensitive detectors hooked up to a biohazard release valve. It scrambles the bodies of those around."
+	cooldown_message = span_danger("The connection is currently out of sync... Recalibrating.")
+	emp_message = span_warning("You feel the armor squirm.")
+	///Range of the effect.
+	var/range = 5
+	///Lists for zones and bodyparts to swap and randomize
+	var/static/list/zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/static/list/chests
+	var/static/list/heads
+	var/static/list/l_arms
+	var/static/list/r_arms
+	var/static/list/l_legs
+	var/static/list/r_legs
+
+/obj/item/clothing/suit/armor/reactive/delimbering/Initialize(mapload)
+	. = ..()
+	if(!chests)
+		chests = typesof(/obj/item/bodypart/chest)
+	if(!heads)
+		heads = typesof(/obj/item/bodypart/head)
+	if(!l_arms)
+		l_arms = typesof(/obj/item/bodypart/l_arm)
+	if(!r_arms)
+		r_arms = typesof(/obj/item/bodypart/r_arm)
+	if(!l_legs)
+		l_legs = typesof(/obj/item/bodypart/l_leg)
+	if(!r_legs)
+		r_legs = typesof(/obj/item/bodypart/r_leg)
+
+/obj/item/clothing/suit/armor/reactive/delimbering/cooldown_activation(mob/living/carbon/human/owner)
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(1, 1, src)
+	sparks.start()
+	..()
+
+/obj/item/clothing/suit/armor/reactive/delimbering/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message(span_danger("[src] blocks [attack_text], biohazard body scramble released!"))
+	delimber_pulse(owner, FALSE)
+	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/delimbering/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of biohazard material into [owner] from the surrounding environment!"))
+	delimber_pulse(owner, TRUE)
+	return TRUE
+
+/obj/item/clothing/suit/armor/reactive/delimbering/proc/delimber_pulse(mob/living/carbon/human/owner, can_hit_owner = FALSE)
+	for(var/mob/living/carbon/nearby in range(range, src))
+		if(!can_hit_owner && nearby == owner)
+			continue
+		if(nearby.run_armor_check(attack_flag = BIO, absorb_text = "Your armor protects you from [src]!") >= 100)
+			continue //We are protected
+		var/picked_zone = pick(zones)
+		var/obj/item/bodypart/picked_user_part = nearby.get_bodypart(picked_zone)
+		var/obj/item/bodypart/picked_part
+		switch(picked_zone)
+			if(BODY_ZONE_HEAD)
+				picked_part = pick(heads)
+			if(BODY_ZONE_CHEST)
+				picked_part = pick(chests)
+			if(BODY_ZONE_L_ARM)
+				picked_part = pick(l_arms)
+			if(BODY_ZONE_R_ARM)
+				picked_part = pick(r_arms)
+			if(BODY_ZONE_L_LEG)
+				picked_part = pick(l_legs)
+			if(BODY_ZONE_R_LEG)
+				picked_part = pick(r_legs)
+		var/obj/item/bodypart/new_part = new picked_part()
+		new_part.replace_limb(nearby, TRUE)
+		qdel(picked_user_part)
+		nearby.update_body(TRUE)
+		balloon_alert(nearby, "something has changed about you")

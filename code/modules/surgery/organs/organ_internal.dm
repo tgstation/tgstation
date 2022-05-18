@@ -10,7 +10,9 @@
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
 	var/organ_flags = ORGAN_EDIBLE
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
-	var/damage = 0 //total damage this organ has sustained
+	/// Total damage this organ has sustained
+	/// Should only ever be modified by applyOrganDamage
+	var/damage = 0
 	///Healing factor and decay factor function on % of maxhealth, and do not work by applying a static number per tick
 	var/healing_factor = 0 //fraction of maxhealth healed per on_life(), set to 0 for generic organs
 	var/decay_factor = 0 //same as above but when without a living owner, set to 0 for generic organs
@@ -74,8 +76,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	SEND_SIGNAL(reciever, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
 	owner = reciever
-	reciever.internal_organs |= src
-	reciever.internal_organs_slot[slot] = src
+	reciever.slot_in_organ(src, slot)
 	moveToNullspace()
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
 	for(var/datum/action/action as anything in actions)
@@ -123,8 +124,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 	applyOrganDamage(decay_factor * maxHealth * delta_time)
 
+/// Called once every life tick on every organ in a carbon's body
+/// NOTE: THIS IS VERY HOT. Be careful what you put in here
+/// To give you some scale, if there's 100 carbons in the game, they each have maybe 9 organs
+/// So that's 900 calls to this proc every life process. Please don't be dumb
 /obj/item/organ/proc/on_life(delta_time, times_fired) //repair organ damage if the organ is not failing
-	check_failing_thresholds() // Check if an organ should/shouldnt be failing
 	if(organ_flags & ORGAN_FAILING)
 		handle_failing_organs(delta_time)
 		return
@@ -135,6 +139,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
 		applyOrganDamage(decay_factor * maxHealth * delta_time)
 		return
+
+	if(!damage) // No sense healing if you're not even hurt bro
+		return
+
 	///Damage decrements by a percent of its maxhealth
 	var/healing_amount = healing_factor
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health

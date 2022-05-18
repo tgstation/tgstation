@@ -3,6 +3,7 @@
 	filedesc = "Direct Messenger"
 	category = PROGRAM_CATEGORY_MISC
 	program_icon_state = "command"
+	program_state = PROGRAM_STATE_BACKGROUND
 	extended_desc = "This program allows old-school communication with other modular devices."
 	size = 8
 	usage_flags = PROGRAM_TABLET
@@ -44,6 +45,8 @@
 	var/is_silicon = FALSE
 	/// Whether or not we're in a mime PDA.
 	var/mime_mode = FALSE
+	/// Whether this app can send messages to all.
+	var/spam_mode = FALSE
 
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
 	var/list/dictionary = list()
@@ -157,7 +160,7 @@
 					to_chat(usr, span_notice("ERROR: Device has receiving disabled."))
 					return
 				if(sending_virus)
-					var/obj/item/computer_hardware/hard_drive/role/virus/disk = computer.all_components[MC_HDD_JOB]
+					var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
 					if(istype(disk))
 						disk.send_virus(target, usr)
 						return(UI_UPDATE)
@@ -175,8 +178,6 @@
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	var/obj/item/computer_hardware/hard_drive/role/disk = computer.all_components[MC_HDD_JOB]
-
 	data["owner"] = computer.saved_identification
 	data["messages"] = messages
 	data["ringer_status"] = ringer_status
@@ -186,10 +187,11 @@
 	data["sortByJob"] = sort_by_job
 	data["isSilicon"] = is_silicon
 	data["photo"] = photo_path
+	data["canSpam"] = spam_mode
 
+	var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
 	if(disk)
-		data["canSpam"] = disk.CanSpam()
-		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/role/virus)
+		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/portable/virus)
 		data["sending_virus"] = sending_virus
 
 	return data
@@ -271,8 +273,8 @@
 	// If it didn't reach, note that fact
 	if (!signal.data["done"])
 		to_chat(user, span_notice("ERROR: Server isn't responding."))
-		//if(!silent)
-			//playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
+		if(ringer_status)
+			playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
 	if(allow_emojis)
@@ -283,22 +285,22 @@
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]
-	message_data["contents"] = html_decode(signal.data["message"])
+	message_data["contents"] = html_decode(signal.format_message())
 	message_data["outgoing"] = TRUE
 	message_data["ref"] = signal.data["ref"]
 	message_data["photo"] = signal.data["photo"]
 
 	// Show it to ghosts
-	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.data["message"]]")
+	var/ghost_message = span_name("[message_data["name"]] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[signal.format_target()]")]: <span class='message'>[signal.format_message()]")
 	for(var/mob/M in GLOB.player_list)
 		if(isobserver(M) && (M.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 
 	// Log in the talk log
-	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [initial(message_data["name"])] to [signal.format_target()]")
+	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
 	if(rigged)
 		log_bomber(user, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
-	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [signal.data["message"]]"))
+	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [signal.format_message()]"))
 
 	if (ringer_status)
 		computer.send_sound()
@@ -316,7 +318,7 @@
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]
-	message_data["contents"] = html_decode(signal.data["message"])
+	message_data["contents"] = signal.format_message()
 	message_data["outgoing"] = FALSE
 	message_data["ref"] = signal.data["ref"]
 	message_data["automated"] = signal.data["automated"]
@@ -324,14 +326,14 @@
 	messages += list(message_data)
 
 	var/mob/living/L = null
-	if(computer.loc && isliving(computer.loc))
-		L = computer.loc
+	if(holder.holder.loc && isliving(holder.holder.loc))
+		L = holder.holder.loc
 	//Maybe they are a pAI!
 	else
-		L = get(computer, /mob/living/silicon)
+		L = get(holder.holder, /mob/living/silicon)
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
-		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "Mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
+		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
@@ -359,7 +361,7 @@
 		switch(href_list["choice"])
 			if("Message")
 				send_message(usr, list(locate(href_list["target"])))
-			if("Mess_us_up")
+			if("mess_us_up")
 				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
 					var/obj/item/modular_computer/tablet/comp = computer
 					comp.explode(usr, from_message_menu = TRUE)
