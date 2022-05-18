@@ -171,7 +171,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_XENO_HOST "xeno_host"
 #define TRAIT_STUNIMMUNE "stun_immunity"
-#define TRAIT_STUNRESISTANCE "stun_resistance"
+#define TRAIT_BATON_RESISTANCE "baton_resistance"
 /// Anti Dual-baton cooldown bypass exploit.
 #define TRAIT_IWASBATONED "iwasbatoned"
 #define TRAIT_SLEEPIMMUNE "sleep_immunity"
@@ -197,8 +197,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NODISMEMBER "dismember_immunity"
 #define TRAIT_NOFIRE "nonflammable"
 #define TRAIT_NOFIRE_SPREAD "no_fire_spreading"
-/// Prevents plasmamen from self-igniting
-#define TRAIT_NOSELFIGNITION "no_selfignition"
+/// Prevents plasmamen from self-igniting if only their helmet is missing
+#define TRAIT_NOSELFIGNITION_HEAD_ONLY "no_selfignition_head_only"
 #define TRAIT_NOGUNS "no_guns"
 #define TRAIT_NOHUNGER "no_hunger"
 #define TRAIT_NOMETABOLISM "no_metabolism"
@@ -211,12 +211,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
 #define TRAIT_TOXINLOVER "toxinlover"
+/// Gets a mood boost from being in the hideout.
+#define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
 #define TRAIT_FASTMED "fast_med_use"
 #define TRAIT_NOBREATH "no_breath"
 #define TRAIT_ANTIMAGIC "anti_magic"
 #define TRAIT_HOLY "holy"
-/// Like antimagic, but doesn't block the user from casting
+/// This allows a person who has antimagic to cast spells without getting blocked
 #define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
 #define TRAIT_DEPRESSION "depression"
 #define TRAIT_JOLLY "jolly"
@@ -242,6 +244,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PRESENT_VISION "present-vision"
 #define TRAIT_DISK_VERIFIER "disk-verifier"
 #define TRAIT_NOMOBSWAP "no-mob-swap"
+/// Can examine IDs to see if they are roundstart.
+#define TRAIT_ID_APPRAISER "id_appraiser"
 /// Gives us turf, mob and object vision through walls
 #define TRAIT_XRAY_VISION "xray_vision"
 /// Gives us mob vision through walls and slight night vision
@@ -254,13 +258,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NEGATES_GRAVITY "negates_gravity"
 /// Lets us scan reagents
 #define TRAIT_REAGENT_SCANNER "reagent_scanner"
+/// Lets us scan machine parts and tech unlocks
+#define TRAIT_RESEARCH_SCANNER "research_scanner"
 /// Can weave webs into cloth
 #define TRAIT_WEB_WEAVER "web_weaver"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_SURGEON "surgeon"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
-#define TRAIT_MAGIC_CHOKE "magic_choke"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
 #define TRAIT_BOOZE_SLIDER "booze-slider"
 /// We place people into a fireman carry quicker than standard
@@ -359,6 +364,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DONT_WRITE_MEMORY "dont_write_memory"
 /// This mob can be painted with the spraycan
 #define TRAIT_SPRAY_PAINTABLE "spray_paintable"
+/// This person is blushing
+#define TRAIT_BLUSHING "blushing"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
@@ -372,7 +379,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // You can stare into the abyss, but it does not stare back.
 // You're immune to the hallucination effect of the supermatter, either
 // through force of will, or equipment. Present on /mob or /datum/mind
-#define TRAIT_SUPERMATTER_MADNESS_IMMUNE "supermatter_madness_immune"
+#define TRAIT_MADNESS_IMMUNE "supermatter_madness_immune"
 
 // You can stare into the abyss, and it turns pink.
 // Being close enough to the supermatter makes it heal at higher temperatures
@@ -416,6 +423,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
 #define TRAIT_ROYAL_METABOLISM "royal_metabolism"
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
+#define TRAIT_BALLMER_SCIENTIST "ballmer_scientist"
 
 /// This mob can strip other mobs.
 #define TRAIT_CAN_STRIP "can_strip"
@@ -570,6 +578,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait for customizable reagent holder
 #define TRAIT_CUSTOMIZABLE_REAGENT_HOLDER "customizable_reagent_holder"
 
+/// Used to prevent multiple floating blades from triggering over the same target
+#define TRAIT_BEING_BLADE_SHIELDED "being_blade_shielded"
+
 /* Traits for ventcrawling.
  * Both give access to ventcrawling, but *_NUDE requires the user to be
  * wearing no clothes and holding no items. If both present, *_ALWAYS
@@ -647,7 +658,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// The item is magically cursed
 #define CURSED_ITEM_TRAIT(item_type) "cursed_item_[item_type]"
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
+/// A trait given by any status effect
 #define STATUS_EFFECT_TRAIT "status-effect"
+/// A trait given by a specific status effect (not sure why we need both but whatever!)
+#define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
+
 #define CLOTHING_TRAIT "clothing"
 #define HELMET_TRAIT "helmet"
 /// inherited from the mask
@@ -808,6 +823,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define AI_ANCHOR_TRAIT "ai_anchor"
 /// Trait from [/datum/antagonist/nukeop/clownop]
 #define CLOWNOP_TRAIT "clownop"
+/// Trait from [/datum/antagonist/thief]
+#define THIEF_TRAIT "thief"
 
 ///Traits given by station traits
 #define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
@@ -825,6 +842,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
 
+/// Denotes that this id card was given via the job outfit, aka the first ID this player got.
+#define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
 /// ID cards with this trait will attempt to forcibly occupy the front-facing ID card slot in wallets.
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
 /// Traits granted to items due to their chameleon properties.

@@ -4,9 +4,9 @@
 	if(unique_name)
 		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medhud.add_to_hud(src)
+	medhud.add_atom_to_hud(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -25,13 +25,14 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
-	if(LAZYLEN(status_effects))
-		for(var/s in status_effects)
-			var/datum/status_effect/S = s
-			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
-				qdel(S)
-			else
-				S.be_replaced()
+	for(var/datum/status_effect/effect as anything in status_effects)
+		// The status effect calls on_remove when its mob is deleted
+		if(effect.on_remove_on_mob_delete)
+			qdel(effect)
+
+		else
+			effect.be_replaced()
+
 	if(ranged_ability)
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
@@ -832,20 +833,13 @@
 	bodytemperature = get_body_temp_normal(apply_change=FALSE)
 	set_blindness(0)
 	set_blurriness(0)
-	set_dizziness(0)
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
 	hallucination = 0
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	extinguish_mob()
-	fire_stacks = 0
-	set_confusion(0)
-	dizziness = 0
 	set_drowsyness(0)
-	stuttering = 0
-	slurring = 0
-	jitteriness = 0
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, admin_revive)
 
@@ -1071,30 +1065,35 @@
 	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
-	var/was_weightless = alerts[ALERT_GRAVITY] && istype(alerts[ALERT_GRAVITY], /atom/movable/screen/alert/weightless)
-	var/was_negative = alerts[ALERT_GRAVITY] && istype(alerts[ALERT_GRAVITY], /atom/movable/screen/alert/negative)
+	var/atom/movable/screen/alert/gravity_alert = alerts[ALERT_GRAVITY]
 	switch(gravity)
-		if(NEGATIVE_GRAVITY_RANGE)
-			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/negative)
-			if(!was_negative)
+		if(-INFINITY to NEGATIVE_GRAVITY)
+			if(!istype(gravity_alert, /atom/movable/screen/alert/negative))
+				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/negative)
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
 				flipped_matrix.e = -flipped_matrix.e
 				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT)
 				base_pixel_y += 4
-		if(WEIGHTLESS_RANGE)
-			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
-			if(!was_weightless)
+		if(NEGATIVE_GRAVITY + 0.01 to 0)
+			if(!istype(gravity_alert, /atom/movable/screen/alert/weightless))
+				throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
 				ADD_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
-		if(STANDRARD_GRAVITY_RANGE)
-			clear_alert(ALERT_GRAVITY)
-		if(HIGH_GRAVITY_RANGE)
+		if(0.01 to STANDARD_GRAVITY)
+			if(gravity_alert)
+				clear_alert(ALERT_GRAVITY)
+		if(STANDARD_GRAVITY + 0.01 to GRAVITY_DAMAGE_THRESHOLD - 0.01)
 			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/highgravity)
-		if(CRUSHING_GRAVITY_RANGE)
+		if(GRAVITY_DAMAGE_THRESHOLD to INFINITY)
 			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/veryhighgravity)
-	if(!(gravity in WEIGHTLESS_RANGE) && was_weightless)
+
+	// If we had no gravity alert, or the same alert as before, go home
+	if(!gravity_alert || alerts[ALERT_GRAVITY] == gravity_alert)
+		return
+	// By this point we know that we do not have the same alert as we used to
+	if(istype(gravity_alert, /atom/movable/screen/alert/weightless))
 		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
-	if(!(gravity in NEGATIVE_GRAVITY_RANGE) && was_negative)
+	if(istype(gravity_alert, /atom/movable/screen/alert/negative))
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
 		flipped_matrix.e = -flipped_matrix.e
@@ -1109,13 +1108,6 @@
 		throw_at(S, 14, 3, src, TRUE)
 	else if(!src.mob_negates_gravity())
 		step_towards(src,S)
-
-/mob/living/proc/do_jitter_animation(jitteriness)
-	var/amplitude = min(4, (jitteriness/100) + 1)
-	var/pixel_x_diff = rand(-amplitude, amplitude)
-	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	animate(src, pixel_x = pixel_x_diff, pixel_y = pixel_y_diff , time = 2, loop = 6, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
-	animate(pixel_x = -pixel_x_diff , pixel_y = -pixel_y_diff , time = 2, flags = ANIMATION_RELATIVE)
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
 	var/loc_temp = environment ? environment.temperature : T0C
@@ -1155,10 +1147,6 @@
 	if(!near_camera(src))
 		return FALSE
 	return TRUE
-
-//used in datum/reagents/reaction() proc
-/mob/living/proc/get_permeability_protection(list/target_zones)
-	return 0
 
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
 	return
@@ -1383,27 +1371,28 @@
 		G.Recall()
 		to_chat(G, span_holoparasite("Your summoner has changed form!"))
 
-/mob/living/proc/fakefireextinguish()
-	return
-
-/mob/living/proc/fakefire()
-	return
-
 /mob/living/proc/unfry_mob() //Callback proc to tone down spam from multiple sizzling frying oil dipping.
 	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
 
 //Mobs on Fire
-/mob/living/proc/IgniteMob()
-	if(fire_stacks > 0 && !on_fire)
-		on_fire = TRUE
-		src.visible_message(span_warning("[src] catches fire!"), \
-						span_userdanger("You're set on fire!"))
-		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire)
-		update_fire()
-		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
-		return TRUE
-	return FALSE
+
+/// Global list that containes cached fire overlays for mobs
+GLOBAL_LIST_EMPTY(fire_appearances)
+
+/mob/living/proc/ignite_mob()
+	if(fire_stacks <= 0)
+		return FALSE
+
+	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
+	if(!fire_status || fire_status.on_fire)
+		return FALSE
+
+	return fire_status.ignite()
+
+/mob/living/proc/update_fire()
+	var/datum/status_effect/fire_handler/fire_handler = has_status_effect(/datum/status_effect/fire_handler)
+	if(fire_handler)
+		fire_handler.update_overlay()
 
 /**
  * Extinguish all fire on the mob
@@ -1412,16 +1401,10 @@
  * Signals the extinguishing.
  */
 /mob/living/proc/extinguish_mob()
-	if(!on_fire)
+	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
+	if(!fire_status || !fire_status.on_fire)
 		return
-	on_fire = FALSE
-	fire_stacks = min(0, fire_stacks) //Makes sure we don't get rid of negative firestacks.
-	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
-		qdel(F)
-	clear_alert(ALERT_FIRE)
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
-	SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
-	update_fire()
+	remove_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 
 /**
  * Adjust the amount of fire stacks on a mob
@@ -1429,10 +1412,19 @@
  * This modifies the fire stacks on a mob.
  *
  * Vars:
- * * add_fire_stacks: int The amount to modify the fire stacks
+ * * stacks: int The amount to modify the fire stacks
+ * * fire_type: type Type of fire status effect that we apply, should be subtype of /datum/status_effect/fire_handler/fire_stacks
  */
-/mob/living/proc/adjust_fire_stacks(add_fire_stacks)
-	set_fire_stacks(fire_stacks + add_fire_stacks)
+
+/mob/living/proc/adjust_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks)
+	if(stacks < 0)
+		stacks = max(-fire_stacks, stacks)
+	apply_status_effect(fire_type, stacks)
+
+/mob/living/proc/adjust_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks)
+	if(stacks < 0)
+		stacks = max(fire_stacks, stacks)
+	apply_status_effect(wet_type, stacks)
 
 /**
  * Set the fire stacks on a mob
@@ -1442,38 +1434,95 @@
  *
  * Vars:
  * * stacks: int The amount to set fire_stacks to
+ * * fire_type: type Type of fire status effect that we apply, should be subtype of /datum/status_effect/fire_handler/fire_stacks
+ * * remove_wet_stacks: bool If we remove all wet stacks upon doing this
  */
-/mob/living/proc/set_fire_stacks(stacks)
-	fire_stacks = clamp(stacks, -20, 20)
-	if(fire_stacks <= 0)
-		extinguish_mob()
 
+/mob/living/proc/set_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks, remove_wet_stacks = TRUE)
+	if(stacks < 0) //Shouldn't happen, ever
+		CRASH("set_fire_stacks recieved negative [stacks] fire stacks")
+
+	if(remove_wet_stacks)
+		remove_status_effect(/datum/status_effect/fire_handler/wet_stacks)
+
+	if(stacks == 0)
+		remove_status_effect(fire_type)
+		return
+
+	apply_status_effect(fire_type, stacks, TRUE)
+
+/mob/living/proc/set_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks, remove_fire_stacks = TRUE)
+	if(stacks < 0)
+		CRASH("set_wet_stacks recieved negative [stacks] wet stacks")
+
+	if(remove_fire_stacks)
+		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks)
+
+	if(stacks == 0)
+		remove_status_effect(wet_type)
+		return
+
+	apply_status_effect(wet_type, stacks, TRUE)
 
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()
-/mob/living/proc/spreadFire(mob/living/L)
-	if(!istype(L))
+/mob/living/proc/spreadFire(mob/living/spread_to)
+	if(!istype(spread_to))
 		return
 
 	// can't spread fire to mobs that don't catch on fire
-	if(HAS_TRAIT(L, TRAIT_NOFIRE_SPREAD) || HAS_TRAIT(src, TRAIT_NOFIRE_SPREAD))
+	if(HAS_TRAIT(spread_to, TRAIT_NOFIRE_SPREAD) || HAS_TRAIT(src, TRAIT_NOFIRE_SPREAD))
 		return
 
-	if(on_fire)
-		if(L.on_fire) // If they were also on fire
-			var/firesplit = (fire_stacks + L.fire_stacks)/2
-			set_fire_stacks(firesplit)
-			L.set_fire_stacks(firesplit)
-		else // If they were not
-			set_fire_stacks(fire_stacks / 2)
-			L.adjust_fire_stacks(fire_stacks)
-			if(L.IgniteMob()) // Ignite them
-				log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
+	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
+	var/datum/status_effect/fire_handler/fire_stacks/their_fire_status = spread_to.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
+	if(fire_status && fire_status.on_fire)
+		if(their_fire_status && their_fire_status.on_fire)
+			var/firesplit = (fire_stacks + spread_to.fire_stacks) / 2
+			var/fire_type = (spread_to.fire_stacks > fire_stacks) ? their_fire_status.type : fire_status.type
+			set_fire_stacks(firesplit, fire_type)
+			spread_to.set_fire_stacks(firesplit, fire_type)
+			return
 
-	else if(L.on_fire) // If they were on fire and we were not
-		L.set_fire_stacks(L.fire_stacks / 2)
-		adjust_fire_stacks(L.fire_stacks)
-		IgniteMob() // Ignite us
+		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
+		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
+		if(spread_to.ignite_mob())
+			log_game("[key_name(src)] bumped into [key_name(spread_to)] and set them on fire")
+		return
+
+	if(!their_fire_status || !their_fire_status.on_fire)
+		return
+
+	spread_to.adjust_fire_stacks(-spread_to.fire_stacks / 2, their_fire_status.type)
+	adjust_fire_stacks(spread_to.fire_stacks, their_fire_status.type)
+	ignite_mob()
+
+/**
+ * Sets fire overlay of the mob.
+ *
+ * Vars:
+ * * stacks: Current amount of fire_stacks
+ * * on_fire: If we're lit on fire
+ * * last_icon_state: Holds last fire overlay icon state, used for optimization
+ * * suffix: Suffix for the fire icon state for special fire types
+ *
+ * This should return last_icon_state for the fire status efect
+ */
+
+/mob/living/proc/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
+	return last_icon_state
+
+/**
+ * Handles effects happening when mob is on normal fire
+ *
+ * Vars:
+ * * delta_time
+ * * times_fired
+ * * fire_handler: Current fire status effect that called the proc
+ */
+
+/mob/living/proc/on_fire_stack(delta_time, times_fired, datum/status_effect/fire_handler/fire_stacks/fire_handler)
+	return
 
 //Mobs on Fire end
 
@@ -1606,10 +1655,11 @@
 	return result
 
 /mob/living/reset_perspective(atom/A)
-	if(..())
-		update_sight()
-		update_fullscreen()
-		update_pipe_vision()
+	if(!..())
+		return
+	update_sight()
+	update_fullscreen()
+	update_pipe_vision()
 
 /// Proc used to handle the fullscreen overlay updates, realistically meant for the reset_perspective() proc.
 /mob/living/proc/update_fullscreen()
@@ -1632,14 +1682,8 @@
 				return FALSE
 		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
 			return FALSE
-		if(NAMEOF(src, druggy))
-			set_drugginess(var_value)
-			. = TRUE
 		if(NAMEOF(src, resting))
 			set_resting(var_value)
-			. = TRUE
-		if(NAMEOF(src, fire_stacks))
-			set_fire_stacks(var_value)
 			. = TRUE
 		if(NAMEOF(src, lying_angle))
 			set_lying_angle(var_value)
@@ -1693,6 +1737,19 @@
 			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[getStaminaLoss()]</a>
 		</font>
 	"}
+
+/mob/living/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPEECH_IMPEDIMENT, "Impede Speech (Slurring, stuttering, etc)")
+
+/mob/living/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(href_list[VV_HK_GIVE_SPEECH_IMPEDIMENT])
+		if(!check_rights(NONE))
+			return
+		admin_give_speech_impediment(usr)
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
@@ -2213,3 +2270,25 @@
 	if(SEND_SIGNAL(src, COMSIG_LIVING_WRITE_MEMORY, dead, gibbed) & COMPONENT_DONT_WRITE_MEMORY)
 		return FALSE
 	return TRUE
+
+/// Admin only proc for giving a certain speech impediment to this mob
+/mob/living/proc/admin_give_speech_impediment(mob/admin)
+	if(!admin || !check_rights(NONE))
+		return
+
+	var/list/impediments = list()
+	for(var/datum/status_effect/possible as anything in typesof(/datum/status_effect/speech))
+		if(!initial(possible.id))
+			continue
+
+		impediments[initial(possible.id)] = possible
+
+	var/chosen = tgui_input_list(admin, "What speech impediment?", "Impede Speech", impediments)
+	if(!chosen || !ispath(impediments[chosen], /datum/status_effect/speech) || QDELETED(src) || !check_rights(NONE))
+		return
+
+	var/duration = tgui_input_number(admin, "How long should it last (in seconds)? Max is infinite duration.", "Duration", 0, INFINITY, 0 SECONDS)
+	if(!isnum(duration) || duration <= 0 || QDELETED(src) || !check_rights(NONE))
+		return
+
+	adjust_timed_status_effect(duration SECONDS, impediments[chosen])

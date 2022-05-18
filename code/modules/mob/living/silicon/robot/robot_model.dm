@@ -489,7 +489,7 @@
 /// Start the process of disabling the buffer. Plays some effects, waits a bit, then finishes
 /datum/action/toggle_buffer/proc/deactivate_wash()
 	var/mob/living/silicon/robot/robot_owner = owner
-	var/time_left = timeleft(wash_audio.timerid) // We delay by the timer of our wash cause well, we want to hear the ramp down
+	var/time_left = timeleft(wash_audio.timer_id) // We delay by the timer of our wash cause well, we want to hear the ramp down
 	var/finished_by = time_left + 2.6 SECONDS
 	// Need to ensure that people don't spawn the deactivate button
 	COOLDOWN_START(src, toggle_cooldown, finished_by)
@@ -638,7 +638,7 @@
 		/obj/item/weldingtool/mini,
 		/obj/item/extinguisher/mini,
 		/obj/item/storage/bag/sheetsnatcher/borg,
-		/obj/item/gun/energy/kinetic_accelerator/cyborg,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)

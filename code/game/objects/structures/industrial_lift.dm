@@ -304,7 +304,6 @@ GLOBAL_LIST_EMPTY(lifts)
 			//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
 			var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
 			collided.throw_at(throw_target, 200, 4, callback = land_slam)
-
 	set_glide_size(gliding_amount)
 	forceMove(destination)
 	for(var/atom/movable/thing as anything in things_to_move)
@@ -432,7 +431,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST)
 		)
 
-	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = FALSE)
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user, loc), require_near = TRUE, tooltips = FALSE)
 	if (!in_range(src, user))
 		return  // nice try
 

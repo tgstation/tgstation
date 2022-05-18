@@ -15,7 +15,7 @@
 	maxbodytemp = INFINITY
 	unique_name = 1
 	combat_mode = TRUE
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	initial_language_holder = /datum/language_holder/empty
 	retreat_distance = null //! retreat doesn't obey pass_flags, so won't work on blob mobs.
@@ -198,7 +198,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
 	// On death, create a small smoke of harmful gas (s-Acid)
-	var/datum/effect_system/smoke_spread/chem/S = new
+	var/datum/effect_system/fluid_spread/smoke/chem/spores = new
 	var/turf/location = get_turf(src)
 
 	// Create the reagents to put into the air
@@ -212,9 +212,9 @@
 		reagents.add_reagent(/datum/reagent/toxin/spore, 10)
 
 	// Attach the smoke spreader and setup/start it.
-	S.attach(location)
-	S.set_up(reagents, death_cloud_size, location, silent = TRUE)
-	S.start()
+	spores.attach(location)
+	spores.set_up(death_cloud_size, location = location, carry = reagents, silent = TRUE)
+	spores.start()
 	if(factory)
 		factory.spore_delay = world.time + factory.spore_cooldown //put the factory on cooldown
 

@@ -30,9 +30,11 @@
 	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, .proc/check_mounting)
 	if(isvehicle(target))
 		RegisterSignal(target, COMSIG_SPEED_POTION_APPLIED, .proc/check_potion)
+	if(ismob(target))
+		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/handle_removal)
 
 /datum/element/ridable/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED))
+	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED, COMSIG_LIVING_DEATH))
 	return ..()
 
 /// Someone is buckling to this movable, which is literally the only thing we care about (other than speed potions)
@@ -40,7 +42,9 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT(potential_rider, TRAIT_CANT_RIDE))
-		return
+		//Do not prevent buckle, but stop any riding, do not block buckle here
+		//There are things that are supposed to buckle (like slimes) but not ride the creature
+		return NONE
 
 	var/arms_needed = 0
 	if(ride_check_flags & RIDER_NEEDS_ARMS)
@@ -99,7 +103,7 @@
 			amount_equipped++
 		else
 			qdel(inhand)
-			break
+			return FALSE
 
 	if(amount_equipped >= amount_required)
 		return TRUE
@@ -143,8 +147,13 @@
 			qdel(O)
 	return TRUE
 
+/datum/element/ridable/proc/handle_removal(datum/source)
+	SIGNAL_HANDLER
 
+	var/atom/movable/ridden = source
+	ridden.unbuckle_all_mobs()
 
+	Detach(source)
 
 /obj/item/riding_offhand
 	name = "offhand"

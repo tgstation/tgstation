@@ -13,11 +13,12 @@ export const ArmPane=(props:{weapon:MechWeapon}, context) => {
   } = props.weapon;
   const {
     power_level,
+    weapons_safety,
   } = data;
   return (
     <Stack fill vertical>
-      <Stack.Item bold>
-        {name}
+      <Stack.Item bold color={weapons_safety ? "red" : ""}>
+        {weapons_safety ? "SAFETY OVERRIDE IN EFFECT" : name}
       </Stack.Item>
       <Stack.Item>
         <Stack>
@@ -62,7 +63,7 @@ export const ArmPane=(props:{weapon:MechWeapon}, context) => {
       <Stack.Item>
         <Snowflake weapon={props.weapon} />
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item color={weapons_safety ? "red" : ""}>
         {desc}
       </Stack.Item>
     </Stack>
@@ -117,7 +118,6 @@ const BallisticStats = (props: {weapon: MechWeapon}, context) => {
 const MECHA_SNOWFLAKE_ID_SLEEPER = "sleeper_snowflake";
 const MECHA_SNOWFLAKE_ID_SYRINGE = "syringe_snowflake";
 const MECHA_SNOWFLAKE_ID_MODE = "mode_snowflake";
-const MECHA_SNOWFLAKE_ID_EXTINGUISHER = "extinguisher_snowflake";
 
 // Handles all the snowflake buttons and whatever
 const Snowflake = (props: {weapon: MechWeapon}, context) => {
@@ -129,8 +129,6 @@ const Snowflake = (props: {weapon: MechWeapon}, context) => {
       return <SnowflakeSleeper weapon={props.weapon} />;
     case MECHA_SNOWFLAKE_ID_SYRINGE:
       return <SnowflakeSyringe weapon={props.weapon} />;
-    case MECHA_SNOWFLAKE_ID_EXTINGUISHER:
-      return <SnowflakeExtinguisher weapon={props.weapon} />;
     case MECHA_SNOWFLAKE_ID_MODE:
       return <SnowflakeMode weapon={props.weapon} />;
     default:

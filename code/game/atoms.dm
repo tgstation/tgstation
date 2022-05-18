@@ -7,7 +7,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND|LONG_GLIDE
 
 	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
 	var/pass_flags_self = NONE
@@ -30,8 +30,12 @@
 	///Reagents holder
 	var/datum/reagents/reagents = null
 
-	///This atom's HUD (med/sec, etc) images. Associative list.
+	///all of this atom's HUD (med/sec, etc) images. Associative list of the form: list(hud category = hud image or images for that category).
+	///most of the time hud category is associated with a single image, sometimes its associated with a list of images.
+	///not every hud in this list is actually used. for ones available for others to see, look at active_hud_list.
 	var/list/image/hud_list = null
+	///all of this atom's HUD images which can actually be seen by players with that hud
+	var/list/image/active_hud_list = null
 	///HUD images that this atom can provide.
 	var/list/hud_possible
 
@@ -155,6 +159,8 @@
 	var/damage_deflection = 0
 
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
+	var/datum/forensics/forensics
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -300,10 +306,13 @@
 	if(alternate_appearances)
 		for(var/current_alternate_appearance in alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/selected_alternate_appearance = alternate_appearances[current_alternate_appearance]
-			selected_alternate_appearance.remove_from_hud(src)
+			selected_alternate_appearance.remove_atom_from_hud(src)
 
 	if(reagents)
 		QDEL_NULL(reagents)
+
+	if(forensics)
+		QDEL_NULL(forensics)
 
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
@@ -884,9 +893,9 @@
 	var/new_blood_dna = injected_mob.get_blood_dna_list()
 	if(!new_blood_dna)
 		return FALSE
-	var/old_length = blood_DNA_length()
+	var/old_length = GET_ATOM_BLOOD_DNA_LENGTH(src)
 	add_blood_DNA(new_blood_dna)
-	if(blood_DNA_length() == old_length)
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src) == old_length)
 		return FALSE
 	return TRUE
 
@@ -1444,6 +1453,8 @@
 		choices += list("[initial(current_option_type.name)]" = option_image)
 
 	var/pick = show_radial_menu(user, src, choices, radius = 36, require_near = TRUE)
+	if(!pick)
+		return
 
 	StartProcessingAtom(user, processed_object, choices_to_options[pick])
 
@@ -2207,6 +2218,6 @@
  * * caller- The movable we're checking pass flags for, if we're making any such checks
  **/
 /atom/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
-	if(istype(caller) && (caller.pass_flags & pass_flags_self))
+	if(caller && (caller.pass_flags & pass_flags_self))
 		return TRUE
 	. = !density

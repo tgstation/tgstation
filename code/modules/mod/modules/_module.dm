@@ -53,13 +53,13 @@
 	if(ispath(device))
 		device = new device(src)
 		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
-		RegisterSignal(device, COMSIG_PARENT_PREQDELETED, .proc/on_device_deletion)
+		RegisterSignal(device, COMSIG_PARENT_QDELETING, .proc/on_device_deletion)
 		RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 
 /obj/item/mod/module/Destroy()
 	mod?.uninstall(src)
 	if(device)
-		UnregisterSignal(device, COMSIG_PARENT_PREQDELETED)
+		UnregisterSignal(device, COMSIG_PARENT_QDELETING)
 		QDEL_NULL(device)
 	return ..()
 
@@ -73,7 +73,7 @@
 	return
 
 /// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
-/obj/item/mod/module/proc/on_uninstall()
+/obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is activated
@@ -81,7 +81,7 @@
 	return
 
 /// Called when the MODsuit is deactivated
-/obj/item/mod/module/proc/on_suit_deactivation()
+/obj/item/mod/module/proc/on_suit_deactivation(deleting = FALSE)
 	return
 
 /// Called when the MODsuit is equipped
@@ -140,12 +140,12 @@
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 	active = TRUE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_ACTIVATED)
 	return TRUE
 
 /// Called when the module is deactivated
-/obj/item/mod/module/proc/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/proc/on_deactivation(display_message = TRUE, deleting = FALSE)
 	active = FALSE
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
@@ -158,7 +158,7 @@
 		else
 			UnregisterSignal(mod.wearer, used_signal)
 			used_signal = null
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_DEACTIVATED)
 	return TRUE
 
@@ -177,8 +177,8 @@
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
-	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
-	mod.wearer.update_inv_back()
+	addtimer(CALLBACK(mod.wearer, /mob.proc/update_clothing, mod.slot_flags), cooldown_time+1) //need to run it a bit after the cooldown starts to avoid conflicts
+	mod.wearer.update_clothing(mod.slot_flags)
 	SEND_SIGNAL(src, COMSIG_MODULE_USED)
 	return TRUE
 

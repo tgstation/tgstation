@@ -32,15 +32,16 @@
 	callTime = 250;
 	can_move_docking_ports = 1;
 	dir = 8;
-	dwidth = 11;
-	height = 17;
+	dwidth = 14;
+	height = 23;
 	id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Salvage Ship";
 	port_direction = 8;
 	preferred_direction = 4;
-	width = 33
+	width = 16;
+	dheight = 18
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/cargo)
@@ -392,7 +393,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "aK" = (
-/obj/structure/sign/warning/enginesafety,
+/obj/structure/sign/warning/engine_safety,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "aL" = (
@@ -441,7 +442,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /obj/machinery/airalarm/all_access{

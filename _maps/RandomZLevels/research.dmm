@@ -515,7 +515,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bV" = (
-/obj/structure/sign/warning/nosmoking/circle{
+/obj/structure/sign/warning/no_smoking/circle{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -815,8 +815,8 @@
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
-/obj/item/dnainjector/xraymut,
-/obj/item/dnainjector/xraymut,
+/obj/item/dnainjector/thermal,
+/obj/item/dnainjector/thermal,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "dg" = (
@@ -2131,7 +2131,6 @@
 	read_only = 1
 	},
 /obj/item/firing_pin/dna,
-/obj/item/dnainjector/hulkmut,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "hZ" = (
@@ -2190,8 +2189,7 @@
 	},
 /obj/item/firing_pin/dna/dredd,
 /obj/item/firing_pin/dna/dredd,
-/obj/item/dnainjector/lasereyesmut,
-/obj/item/dnainjector/lasereyesmut,
+/obj/item/dnainjector/insulated,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
 "io" = (
@@ -3462,7 +3460,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/escapepods)
 "mK" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -3471,7 +3469,7 @@
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mL" = (
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/ferny/style_random,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -3480,7 +3478,7 @@
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mM" = (
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/grassy/style_random,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -3593,24 +3591,32 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "na" = (
-/turf/closed/wall/mineral/plasma,
-/area/space/nearstation)
+/obj/structure/closet/crate,
+/obj/item/disk/data{
+	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
+	name = "encrypted genetic data disk";
+	read_only = 1
+	},
+/obj/item/disk/data{
+	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
+	name = "encrypted genetic data disk";
+	read_only = 1
+	},
+/obj/item/firing_pin/dna,
+/obj/item/dnainjector/thermal,
+/turf/open/floor/iron/dark,
+/area/awaymission/research/interior/secure)
 "nb" = (
-/obj/structure/table/wood,
-/obj/item/book/granter/spell/random,
-/turf/open/floor/mineral/plasma,
-/area/space/nearstation)
-"nc" = (
-/mob/living/simple_animal/hostile/netherworld,
-/turf/open/floor/mineral/plasma,
-/area/space/nearstation)
-"nd" = (
-/obj/structure/healingfountain,
-/turf/open/floor/mineral/plasma,
-/area/space/nearstation)
-"ne" = (
-/turf/open/floor/mineral/plasma,
-/area/space/nearstation)
+/obj/structure/closet/crate,
+/obj/item/disk/data{
+	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines.";
+	name = "encrypted genetic data disk";
+	read_only = 1
+	},
+/obj/item/firing_pin/dna,
+/obj/item/dnainjector/telemut,
+/turf/open/floor/iron/dark,
+/area/awaymission/research/interior/secure)
 "nf" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/research/interior/engineering)
@@ -9039,11 +9045,11 @@ ab
 ab
 ab
 ab
-na
-na
-na
-na
-na
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -9296,11 +9302,11 @@ ab
 ab
 ab
 ab
-na
-nb
-nb
-nb
-na
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -9553,11 +9559,11 @@ ab
 ab
 ab
 ab
-na
-nc
-ne
-nc
-na
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -9810,11 +9816,11 @@ ab
 ab
 ab
 ab
-na
-nd
-ne
-nd
-na
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -10067,11 +10073,11 @@ ab
 ab
 ab
 ab
-na
-na
-ne
-na
-na
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -10325,9 +10331,9 @@ ab
 ab
 ab
 ab
-na
-ne
-na
+ab
+ab
+ab
 ab
 ab
 ab
@@ -10581,10 +10587,10 @@ ab
 ab
 ab
 ab
-na
-na
-ne
-na
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -10838,10 +10844,10 @@ ab
 ab
 ab
 ab
-na
-ne
-ne
-na
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -11095,10 +11101,10 @@ ab
 ab
 ab
 aa
-na
-na
-na
-na
+aa
+aa
+aa
+aa
 ab
 ab
 ab
@@ -30588,8 +30594,8 @@ eW
 dc
 cQ
 hT
-hT
-dd
+na
+nb
 cQ
 ad
 ad

@@ -81,7 +81,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/turf/real_destination = get_turf(target_atom)
 	destination_turf = real_destination
 	special_target = specific_target
-	loopy_rod = force_looping
+	loopy_rod ||= force_looping
 
 	SSpoints_of_interest.make_point_of_interest(src)
 
@@ -211,8 +211,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
-		var/datum/effect_system/smoke_spread/smoke = new
-		smoke.set_up(2, get_turf(src))
+		var/datum/effect_system/fluid_spread/smoke/smoke = new
+		smoke.set_up(2, location = get_turf(src))
 		smoke.start()
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800
