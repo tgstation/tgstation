@@ -1,3 +1,9 @@
+/// Sets the direction of the mecha and all of its occcupents, required for FOV. Alternatively one could make a recursive contents registration and register topmost direction changes in the fov component
+/obj/vehicle/sealed/mecha/setDir(newdir)
+	. = ..()
+	for(var/mob/living/occupant as anything in occupants)
+		occupant.setDir(newdir)
+
 ///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	SIGNAL_HANDLER
@@ -141,74 +147,3 @@
 		var/mob/mob_obstacle = obstacle
 		if(mob_obstacle.move_resist <= move_force)
 			step(obstacle, dir)
-
-/obj/vehicle/sealed/mecha/proc/moved_inside(mob/living/newoccupant)
-	if(!(newoccupant?.client))
-		return FALSE
-	if(ishuman(newoccupant) && !Adjacent(newoccupant))
-		return FALSE
-	add_occupant(newoccupant)
-	newoccupant.forceMove(src)
-	newoccupant.update_mouse_pointer()
-	add_fingerprint(newoccupant)
-	log_message("[newoccupant] moved in as pilot.", LOG_MECHA)
-	setDir(dir_in)
-	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
-	set_mouse_pointer()
-	if(!internal_damage)
-		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
-	return TRUE
-
-/obj/vehicle/sealed/mecha/proc/mmi_move_inside(obj/item/mmi/brain_obj, mob/user)
-	if(!(mecha_flags & MMI_COMPATIBLE))
-		to_chat(user, span_warning("This mecha is not compatible with MMIs!"))
-		return FALSE
-	if(!brain_obj.brain_check(user))
-		return FALSE
-	var/mob/living/brain/brain_mob = brain_obj.brainmob
-	if(LAZYLEN(occupants) >= max_occupants)
-		to_chat(user, span_warning("It's full!"))
-		return FALSE
-	if(dna_lock && (!brain_mob.stored_dna || (dna_lock != brain_mob.stored_dna.unique_enzymes)))
-		to_chat(user, span_warning("Access denied. [name] is secured with a DNA lock."))
-		return FALSE
-
-	visible_message(span_notice("[user] starts to insert an MMI into [name]."))
-
-	if(!do_after(user, 4 SECONDS, target = src))
-		to_chat(user, span_notice("You stop inserting the MMI."))
-		return FALSE
-	if(LAZYLEN(occupants) < max_occupants)
-		return mmi_moved_inside(brain_obj, user)
-	to_chat(user, span_warning("Maximum occupants exceeded!"))
-	return FALSE
-
-/obj/vehicle/sealed/mecha/proc/mmi_moved_inside(obj/item/mmi/brain_obj, mob/user)
-	if(!(Adjacent(brain_obj) && Adjacent(user)))
-		return FALSE
-	if(!brain_obj.brain_check(user))
-		return FALSE
-
-	var/mob/living/brain/brain_mob = brain_obj.brainmob
-	if(!user.transferItemToLoc(brain_obj, src))
-		to_chat(user, span_warning("[brain_obj] is stuck to your hand, you cannot put it in [src]!"))
-		return FALSE
-
-	brain_obj.set_mecha(src)
-	add_occupant(brain_mob)//Note this forcemoves the brain into the mech to allow relaymove
-	mecha_flags |= SILICON_PILOT
-	brain_mob.reset_perspective(src)
-	brain_mob.remote_control = src
-	brain_mob.update_mouse_pointer()
-	setDir(dir_in)
-	log_message("[brain_obj] moved in as pilot.", LOG_MECHA)
-	if(!internal_damage)
-		SEND_SOUND(brain_obj, sound('sound/mecha/nominal.ogg',volume=50))
-	log_game("[key_name(user)] has put the MMI/posibrain of [key_name(brain_mob)] into [src] at [AREACOORD(src)]")
-	return TRUE
-
-/// Sets the direction of the mecha and all of its occcupents, required for FOV. Alternatively one could make a recursive contents registration and register topmost direction changes in the fov component
-/obj/vehicle/sealed/mecha/setDir(newdir)
-	. = ..()
-	for(var/mob/living/occupant as anything in occupants)
-		occupant.setDir(newdir)

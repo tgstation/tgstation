@@ -1,0 +1,5 @@
+author: "robbertapir"
+delete-after: True
+changes: 
+  - bugfix: "Attacking people, atmos omni tanks, supplypods and paintings with deep-fried items no longer shows an error sprite."
+  - bugfix: "Animations for attacking people, atmos omni tanks, supplypods and paintings with items are no longer black."

@@ -35,10 +35,10 @@
 /area/station/maintenance/department/cargo)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
 /obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "A" = (
@@ -60,9 +60,9 @@
 /area/station/maintenance/department/cargo)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance/glass{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance/glass,
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "H" = (

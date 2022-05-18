@@ -45,6 +45,8 @@
 	var/is_silicon = FALSE
 	/// Whether or not we're in a mime PDA.
 	var/mime_mode = FALSE
+	/// Whether this app can send messages to all.
+	var/spam_mode = FALSE
 
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
 	var/list/dictionary = list()
@@ -185,11 +187,7 @@
 	data["sortByJob"] = sort_by_job
 	data["isSilicon"] = is_silicon
 	data["photo"] = photo_path
-
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	if(card_slot)
-		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : ""
-		data["canSpam"] = (ACCESS_LAWYER in id_card?.access)
+	data["canSpam"] = spam_mode
 
 	var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
 	if(disk)
@@ -299,7 +297,7 @@
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 
 	// Log in the talk log
-	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [initial(message_data["name"])] to [signal.format_target()]")
+	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
 	if(rigged)
 		log_bomber(user, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
 	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [signal.format_message()]"))
