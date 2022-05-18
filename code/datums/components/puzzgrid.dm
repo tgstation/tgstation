@@ -1,4 +1,4 @@
-#define PUZZGRID_CELL_COUNT 4
+#define PUZZGRID_GROUP_COUNT 4
 
 /// Attaches a puzzgrid to the atom.
 /// You are expected to pass in the puzzgrid, likely from create_random_puzzgrid().
@@ -13,11 +13,19 @@
 	/// Callback that will be called when you lose, either through running out of time or running out of lives
 	var/datum/callback/on_fail_callback
 
+	/// The world timestamp for when the puzzgrid will fail, if timer was set in Initialize
 	var/time_to_finish
 
+	/// Every answer, in text, including already solved ones
 	var/list/all_answers
+
+	/// The answers, in text, that are currently selected
 	var/list/selected_answers = list()
+
+	/// The puzzgrid groups that have already been solved
 	var/list/datum/puzzgrid_group/solved_groups = list()
+
+	/// The number of lives left
 	var/lives = 3
 
 	COOLDOWN_DECLARE(wrong_group_select_cooldown)
@@ -85,7 +93,7 @@
 
 	selected_answers |= answer
 
-	if (selected_answers.len < PUZZGRID_CELL_COUNT)
+	if (selected_answers.len < PUZZGRID_GROUP_COUNT)
 		return TRUE
 
 	var/list/current_selected_answers = selected_answers
@@ -129,14 +137,14 @@
 /datum/component/puzzgrid/proc/out_of_lives()
 	var/atom/movable/movable_parent = parent
 	if (istype(movable_parent))
-		movable_parent.say("Ran out of lives!")
+		movable_parent.say("Ran out of lives!", forced = "puzzgrid component")
 
 	fail()
 
 /datum/component/puzzgrid/proc/out_of_time()
 	var/atom/movable/movable_parent = parent
 	if (istype(movable_parent))
-		movable_parent.say("Ran out of time!")
+		movable_parent.say("Ran out of time!", forced = "puzzgrid component")
 
 	fail()
 
@@ -156,7 +164,10 @@
 
 		answers += span_boldnotice("<p>[answers_encoded.Join(", ")]</p>") + span_notice("<p>[html_encode(puzzgrid_group.description)]</p>")
 
-	atom_parent.audible_message(answers.Join("<p>-----</p>"))
+	var/message = answers.Join("<p>-----</p>")
+
+	for (var/mob/mob as anything in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
+		to_chat(mob, message)
 
 /datum/component/puzzgrid/ui_data(mob/user)
 	return list(
@@ -269,4 +280,4 @@
 	var/list/answers = list()
 	var/description
 
-#undef PUZZGRID_CELL_COUNT
+#undef PUZZGRID_GROUP_COUNT
