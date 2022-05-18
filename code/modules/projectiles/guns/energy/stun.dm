@@ -6,6 +6,11 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 
+/obj/item/gun/energy/taser/tider // admin only. fun.
+	name = "tider taser"
+	desc = "A low-capacity, energy-based stun gun used by security teams to subdue targets at range. This model only works on assistants."
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/tider)
+
 /obj/item/gun/energy/e_gun/advtaser
 	name = "hybrid taser"
 	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."

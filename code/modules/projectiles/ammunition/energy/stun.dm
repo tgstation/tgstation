@@ -24,3 +24,6 @@
 
 /obj/item/ammo_casing/energy/disabler/hos
 	e_cost = 60
+
+/obj/item/ammo_casing/energy/electrode/tider
+	projectile_type = /obj/projectile/energy/electrode/tider

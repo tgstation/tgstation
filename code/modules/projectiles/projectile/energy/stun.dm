@@ -12,6 +12,9 @@
 	muzzle_type = /obj/effect/projectile/muzzle/stun
 	impact_type = /obj/effect/projectile/impact/stun
 
+/obj/projectile/energy/electrode/proc/tase_checks()
+	return TRUE
+
 /obj/projectile/energy/electrode/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - burst into sparks!
@@ -28,3 +31,23 @@
 /obj/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	do_sparks(1, TRUE, src)
 	..()
+
+/obj/projectile/energy/electrode/tider/on_hit(atom/target)
+	. = ..()
+	if (tase_checks(target))
+		var/mob/living/carbon/C = target
+		C.Paralyze(10 SECONDS)
+		C.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+
+/obj/projectile/energy/electrode/tider
+	name = "tider taser"
+
+// We only want to activate on Assistants.
+/obj/projectile/energy/electrode/tider/tase_checks(mob/target)
+	if(!ishuman(target))
+		return FALSE
+	var/mob/living/carbon/human/human_target = target
+	if(istype(human_target.mind.assigned_role, /datum/job/assistant))
+		return TRUE
+	human_target.balloon_alert_to_viewers("not an assistant, can't tase!")
+	return FALSE
