@@ -28,16 +28,30 @@
 		else if((C.status_flags & CANKNOCKDOWN) && !HAS_TRAIT(C, TRAIT_STUNIMMUNE))
 			addtimer(CALLBACK(C, /mob/living/carbon.proc/do_jitter_animation, 20), 5)
 
+/obj/projectile/energy/electrode/tider
+	paralyze = 0
+	stutter = 0
+	jitter = 0
+
+
 /obj/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	do_sparks(1, TRUE, src)
 	..()
 
 /obj/projectile/energy/electrode/tider/on_hit(atom/target)
+	if(!tase_checks(target))
+		return
 	. = ..()
-	if (tase_checks(target))
-		var/mob/living/carbon/C = target
-		C.Paralyze(10 SECONDS)
-		C.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+	var/mob/living/carbon/C = target
+	var/area/Location = get_area(C)
+	var/list/gibbable_areas = list(/area/station/command/bridge, /area/station/command/heads_quarters/captain)
+	for(var/area/A as anything in gibbable_areas)
+		if (istype(Location, A))
+			C.gib()
+			return
+	C.Paralyze(10 SECONDS)
+	C.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+
 
 /obj/projectile/energy/electrode/tider
 	name = "tider taser"
@@ -47,6 +61,8 @@
 	if(!ishuman(target))
 		return FALSE
 	var/mob/living/carbon/human/human_target = target
+	if (!human_target.mind)
+		return FALSE
 	if(istype(human_target.mind.assigned_role, /datum/job/assistant))
 		return TRUE
 	human_target.balloon_alert_to_viewers("not an assistant, can't tase!")
