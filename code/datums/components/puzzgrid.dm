@@ -154,8 +154,6 @@
 	qdel(src)
 
 /datum/component/puzzgrid/proc/report_answers()
-	var/atom/atom_parent = parent
-
 	var/list/answers = list()
 	for (var/datum/puzzgrid_group/puzzgrid_group as anything in puzzgrid.groups)
 		var/list/answers_encoded = list()
