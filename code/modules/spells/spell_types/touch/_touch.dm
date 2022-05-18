@@ -39,7 +39,7 @@
 		return
 
 	if(attached_hand)
-		stat_panel_data[PANEL_DISPLAY_STATUS] = "ACTIVE"
+		.[PANEL_DISPLAY_STATUS] = "ACTIVE"
 
 /datum/action/cooldown/spell/touch/can_cast_spell(feedback = TRUE)
 	. = ..()
