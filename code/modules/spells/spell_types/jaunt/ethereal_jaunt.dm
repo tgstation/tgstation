@@ -116,7 +116,8 @@
 		found_exit = possible_exit
 		break
 
-	if(!found_exit)
+	// We moved, but couldn't find another exit
+	if(get_turf(cast_on) != start_point && !found_exit)
 		to_chat(cast_on, span_danger("Unable to find an unobstructed space, you find yourself ripped back to where you started."))
 		found_exit = start_point
 
