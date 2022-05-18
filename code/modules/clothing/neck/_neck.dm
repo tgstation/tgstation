@@ -42,9 +42,6 @@
 /obj/item/clothing/neck/tie/greyscale/Initialize(mapload)
 	. = ..()
 	update_appearance(UPDATE_ICON)
-	if(ismob(loc))
-		var/mob/wearer = loc
-		wearer.update_clothing(ITEM_SLOT_NECK)
 	register_context()
 
 /obj/item/clothing/neck/tie/greyscale/AltClick(mob/user)
@@ -95,10 +92,12 @@
 
 /obj/item/clothing/neck/tie/greyscale/blue
 	name = "blue tie"
+	icon_state = "tie_greyscale_untied"
 	greyscale_colors = "#5275b6ff"
 
 /obj/item/clothing/neck/tie/greyscale/red
 	name = "red tie"
+	icon_state = "tie_greyscale_untied"
 	greyscale_colors = "#c23838ff"
 
 /obj/item/clothing/neck/tie/greyscale/red/tied
@@ -106,6 +105,7 @@
 
 /obj/item/clothing/neck/tie/greyscale/red/hitman
 	desc = "This is a $47,000 custom-tailored Référence Du Tueur À Gages tie. The clot is from neosilkworms raised at a tie microfarm in Cookwell, from a secret pattern passed down by monk tailors since the twenty-first century!"
+	icon_state = "tie_greyscale_untied"
 	tie_timer = 1 SECONDS // You're a professional.
 
 /obj/item/clothing/neck/tie/greyscale/red/hitman/tied
@@ -113,6 +113,7 @@
 
 /obj/item/clothing/neck/tie/greyscale/black
 	name = "black tie"
+	icon_state = "tie_greyscale_untied"
 	greyscale_colors = "#151516ff"
 
 /obj/item/clothing/neck/tie/greyscale/black/tied
