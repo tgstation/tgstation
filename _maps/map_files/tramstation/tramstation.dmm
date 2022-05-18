@@ -38681,7 +38681,7 @@
 	dir = 4
 	},
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
+	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
 	name = "AI Antechamber turret control";
 	pixel_y = -25
 	},
@@ -70566,7 +70566,7 @@
 /area/station/science/mixing/chamber)
 "xWW" = (
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	name = "AI Upload turret control";
 	pixel_x = 25;
 	req_access_txt = "65"

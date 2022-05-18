@@ -79806,7 +79806,7 @@
 "wwj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
 	name = "AI Upload turret control";
 	pixel_x = -30
@@ -83762,7 +83762,7 @@
 /area/station/maintenance/department/bridge)
 "xzg" = (
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
+	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
 	name = "Antechamber Turret Control";
 	pixel_y = 28;
 	req_access_txt = "65"
