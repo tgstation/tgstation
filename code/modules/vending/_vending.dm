@@ -608,7 +608,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 							span_userdanger("Your body is maimed underneath the mass of [src]!"))
 					if(6) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
-						if(O)
+						if(O && !(C.status_flags & GODMODE))
 							C.visible_message(span_danger("[O] explodes in a shower of gore beneath [src]!"), \
 								span_userdanger("Oh f-"))
 							O.dismember()
