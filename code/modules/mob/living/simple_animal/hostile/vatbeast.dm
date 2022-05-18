@@ -113,7 +113,7 @@
 	playsound(owner, 'sound/effects/assslap.ogg', 90)
 	var/atom/throw_target = get_edge_target_turf(to_slap, owner.dir)
 	living_to_slap.throw_at(throw_target, 6, 4, owner)
-	living_to_slap.apply_damage(30)
+	living_to_slap.apply_damage(30, BRUTE)
 
 	StartCooldown()
 	return TRUE

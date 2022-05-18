@@ -32,20 +32,19 @@
 	return isliving(cast_on) && !HAS_TRAIT(owner, TRAIT_NO_SOUL)
 
 /datum/action/cooldown/spell/lichdom/cast(mob/living/cast_on)
-	. = ..()
 	var/obj/item/marked_item = cast_on.get_active_held_item()
-	if(marked_item.item_flags & ABSTRACT)
+	if(!marked_item || marked_item.item_flags & ABSTRACT)
 		return
 	if(HAS_TRAIT(marked_item, TRAIT_NODROP))
 		to_chat(cast_on, span_warning("[marked_item] is stuck to your hand - it wouldn't be a wise idea to place your soul into it."))
 		return
 	// I ensouled the nuke disk once.
-	// But it's a really mean tactic,
-	// so we probably should disallow it.
+	// But it's a really mean tactic, so we probably should disallow it.
 	if(SEND_SIGNAL(marked_item, COMSIG_ITEM_IMBUE_SOUL, src, cast_on) & COMPONENT_BLOCK_IMBUE)
 		to_chat(cast_on, span_warning("[marked_item] is not suitable for emplacement of your fragile soul."))
 		return
 
+	. = ..()
 	playsound(cast_on, 'sound/effects/pope_entry.ogg', 100)
 
 	to_chat(cast_on, span_green("You begin to focus your very being into [marked_item]..."))

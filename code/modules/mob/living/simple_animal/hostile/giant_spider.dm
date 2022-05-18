@@ -157,11 +157,20 @@
 	if(hurt_spider.stat == DEAD)
 		to_chat(src, span_warning("You're a nurse, not a miracle worker."))
 		return
-	visible_message(span_notice("[src] begins wrapping the wounds of [hurt_spider]."),span_notice("You begin wrapping the wounds of [hurt_spider]."))
-	if(do_after(src, 2 SECONDS, target = hurt_spider, interaction_key = INTERACTION_SPIDER_KEY))
-		hurt_spider.heal_overall_damage(20, 20)
-		new /obj/effect/temp_visual/heal(get_turf(hurt_spider), "#80F5FF")
-		visible_message(span_notice("[src] wraps the wounds of [hurt_spider]."),span_notice("You wrap the wounds of [hurt_spider]."))
+	visible_message(
+		span_notice("[src] begins wrapping the wounds of [hurt_spider]."),
+		span_notice("You begin wrapping the wounds of [hurt_spider]."),
+	)
+
+	if(!do_after(src, 2 SECONDS, target = hurt_spider, interaction_key = INTERACTION_SPIDER_KEY))
+		return
+
+	hurt_spider.heal_overall_damage(20, 20)
+	new /obj/effect/temp_visual/heal(get_turf(hurt_spider), "#80F5FF")
+	visible_message(
+		span_notice("[src] wraps the wounds of [hurt_spider]."),
+		span_notice("You wrap the wounds of [hurt_spider]."),
+	)
 
 /**
  * # Tarantula
@@ -291,7 +300,7 @@
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_alien"
 
-/datum/action/innate/spider/lay_web
+/datum/action/innate/spider/lay_web // Todo: Unify this with the genetics power
 	name = "Spin Web"
 	desc = "Spin a web to slow down potential prey."
 	check_flags = AB_CHECK_CONSCIOUS
@@ -304,7 +313,7 @@
 
 	if(DOING_INTERACTION(owner, INTERACTION_SPIDER_KEY))
 		return FALSE
-	if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider))
+	if(!isspider(owner))
 		return FALSE
 
 	var/mob/living/simple_animal/hostile/giant_spider/spider = owner
@@ -334,6 +343,7 @@
 		)
 
 	spider.stop_automated_movement = TRUE
+
 	if(do_after(spider, 4 SECONDS * spider.web_speed, target = spider_turf))
 		if(spider.loc == spider_turf)
 			if(web)
@@ -373,6 +383,7 @@
 
 	to_chat(on_who, span_notice("You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B>"))
 	button_icon_state = "wrap_0"
+	UpdateButtons()
 
 /datum/action/cooldown/wrap/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
@@ -458,6 +469,8 @@
 	if(!.)
 		return FALSE
 
+	if(!isspider(owner))
+		return FALSE
 	var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 	if(eggs)
 		to_chat(owner, span_warning("There is already a cluster of eggs here!"))
@@ -474,22 +487,18 @@
 		span_notice("You begin to lay a cluster of eggs."),
 	)
 
-	var/mob/living/simple_animal/animal_owner = owner
-	if(istype(animal_owner))
-		animal_owner.stop_automated_movement = TRUE
+	var/mob/living/simple_animal/hostile/giant_spider/spider = owner
+	spider.stop_automated_movement = TRUE
 
 	if(do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = INTERACTION_SPIDER_KEY))
-		if(isspider(owner))
-			var/mob/living/simple_animal/hostile/giant_spider/spider = owner
-			var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
-			if(!eggs || !isturf(spider.loc))
-				var/obj/effect/mob_spawn/ghost_role/spider/new_eggs = new egg_type(get_turf(spider))
-				new_eggs.directive = spider.directive
-				new_eggs.faction = spider.faction
-				UpdateButtons(TRUE)
+		var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
+		if(!eggs || !isturf(spider.loc))
+			var/obj/effect/mob_spawn/ghost_role/spider/new_eggs = new egg_type(get_turf(spider))
+			new_eggs.directive = spider.directive
+			new_eggs.faction = spider.faction
+			UpdateButtons(TRUE)
 
-	if(istype(animal_owner))
-		animal_owner.stop_automated_movement = FALSE
+	spider.stop_automated_movement = FALSE
 
 /datum/action/innate/spider/lay_eggs/enriched
 	name = "Lay Enriched Eggs"
@@ -709,3 +718,5 @@
 /mob/living/simple_animal/hostile/giant_spider/viper/wizard/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+#undef INTERACTION_SPIDER_KEY

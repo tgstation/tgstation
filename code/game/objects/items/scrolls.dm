@@ -15,6 +15,7 @@
 
 /obj/item/teleportation_scroll/Initialize(mapload)
 	. = ..()
+	// In the future, this can be generalized into just "magic scrolls that give you a specific spell".
 	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
 	if(teleport)
 		teleport.name = name
@@ -52,6 +53,6 @@
 	if(!teleport.Activate(user))
 		return
 	if(--uses <= 0)
-		to_chat(user, span_warning("[src] has run out of uses and crumbles to dust!"))
+		to_chat(user, span_warning("[src] runs out of uses and crumbles to dust!"))
 		qdel(src)
 	return TRUE
