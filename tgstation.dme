@@ -966,7 +966,6 @@
 #include "code\datums\elements\nerfed_pulling.dm"
 #include "code\datums\elements\obj_regen.dm"
 #include "code\datums\elements\openspace_item_click_handler.dm"
-#include "code\datums\elements\organ_damage.dm"
 #include "code\datums\elements\pet_bonus.dm"
 #include "code\datums\elements\plant_backfire.dm"
 #include "code\datums\elements\point_of_interest.dm"
