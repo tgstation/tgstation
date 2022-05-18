@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
  * W = T' * C1 - W1
  * W = (W1+W2) / (C1+C2) * C1 - W1
  * W = (W1C1 + W2C1) / (C1+C2) - W1
- * W = (W1C1 + W2C1) - (W1 * (C1+C2)) / (C1+C2)
+ * W = ((W1C1 + W2C1) - (W1 * (C1+C2))) / (C1+C2)
  * W = ((W1C1 + W2C1) - (W1C1 + W1C2)) / (C1+C2)
  * W = (W1C1 - W1C1 + W2C1 - W1C2) / (C1+C2)
  * W = (W2C1 - W1C2) / (C1+C2)
