@@ -785,3 +785,18 @@
       put on the right track.
   timothymtorres:
   - qol: Change drunk blur effect to scale based on intoxication
+2022-05-18:
+  JohnFulpWillard:
+  - balance: Sending PDA's to all is now configured by the WireCarp app, rather than
+      being tied to Law office access.
+  MTandi:
+  - bugfix: Experiments now work on non-station z-levels
+  Melbert:
+  - bugfix: Fixes mind restoration causing dizziness instead of healing it
+  magatsuchi:
+  - config: adds config to allow for name links in adminwho
+  oranges:
+  - bugfix: Slimes will once again feed on monkeys
+  san7890:
+  - config: In case you were really keen on using Virtual Reality Hub stuff in your
+      code, do keep in mind that we've removed references to it in config.
