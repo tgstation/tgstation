@@ -128,7 +128,7 @@ The areas used here are STRICTLY on the CC Z level.
 	loading_id = "5"
 
 //THUNDERDOME
-/area/centcom/central_command_areas/tdome
+/area/centcom/tdome
 	name = "Thunderdome"
 	icon_state = "thunder"
 	static_lighting = TRUE
@@ -136,31 +136,31 @@ The areas used here are STRICTLY on the CC Z level.
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 
-/area/centcom/central_command_areas/tdome/arena
+/area/centcom/tdome/arena
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
-/area/centcom/central_command_areas/tdome/arena_source
+/area/centcom/tdome/arena_source
 	name = "Thunderdome Arena Template"
 	icon_state = "thunder"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
-/area/centcom/central_command_areas/tdome/tdome1
+/area/centcom/tdome/tdome1
 	name = "Thunderdome (Team 1)"
 	icon_state = "thunder_team_one"
 
-/area/centcom/central_command_areas/tdome/tdome2
+/area/centcom/tdome/tdome2
 	name = "Thunderdome (Team 2)"
 	icon_state = "thunder_team_two"
 
-/area/centcom/central_command_areas/tdome/administration
+/area/centcom/tdome/administration
 	name = "Thunderdome Administration"
 	icon_state = "thunder_admin"
 
-/area/centcom/central_command_areas/tdome/observation
+/area/centcom/tdome/observation
 	name = "Thunderdome Observation"
 	icon_state = "thunder_observe"
 

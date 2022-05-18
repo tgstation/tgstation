@@ -60,7 +60,7 @@
 /area/ctf/flag_room2 : /area/centcom/ctf/flag_room2
 
 /area/space : /area/misc/space
-/area/space/nearstation : /area/misc/space
+/area/space/nearstation : /area/misc/space/nearstation
 /area/start : /area/misc/start
 /area/testroom : /area/misc/testroom
 

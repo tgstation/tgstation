@@ -157,7 +157,7 @@
 		/area/shuttle,
 		/area/centcom,
 		/area/centcom/asteroid,
-		/area/centcom/central_command_areas/tdome,
+		/area/centcom/tdome,
 		/area/centcom/wizard_station,
 		/area/misc/hilbertshotel,
 		/area/misc/hilbertshotelstorage

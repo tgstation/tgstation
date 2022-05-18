@@ -1282,7 +1282,7 @@
 "dH" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "dJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3744,7 +3744,7 @@
 /obj/item/solar_assembly,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "jE" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/ancientstation/beta/hall)
@@ -4496,7 +4496,7 @@
 /area/ruin/space/has_grav/ancientstation/charlie/kitchen)
 "lz" = (
 /turf/open/floor/plating/airless,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "lB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/east,
@@ -4643,7 +4643,7 @@
 /obj/machinery/power/solar,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "lT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
@@ -4874,7 +4874,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "mz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6456,7 +6456,7 @@
 "yp" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "yu" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering"

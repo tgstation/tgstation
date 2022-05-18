@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/rock,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "ab" = (
 /turf/open/space,
-/area/space)
+/area/misc/space)
 "ac" = (
 /turf/closed/mineral/volcanic,
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -1989,7 +1989,7 @@
 	icon_state = "black";
 	name = "the other side"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "PS" = (
 /obj/machinery/light/small/built/directional/south,
 /obj/machinery/suit_storage_unit/mining{

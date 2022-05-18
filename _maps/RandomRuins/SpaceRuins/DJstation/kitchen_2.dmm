@@ -6,7 +6,7 @@
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "h" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless{
@@ -29,7 +29,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "B" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -38,7 +38,7 @@
 	pixel_y = 2
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "I" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -47,7 +47,7 @@
 	pixel_y = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "J" = (
 /obj/modular_map_connector,
 /obj/machinery/door/airlock/public/glass{
@@ -76,7 +76,7 @@
 "V" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "W" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
