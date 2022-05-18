@@ -239,7 +239,7 @@
 		RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_death)
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Remove(mob/living/remove_from)
-	UnregisterSignal(removed_from, COMSIG_LIVING_DEATH)
+	UnregisterSignal(remove_from, COMSIG_LIVING_DEATH)
 	return ..()
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/on_victim_start_consume(mob/living/victim, mob/living/jaunter)
