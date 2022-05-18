@@ -46,7 +46,7 @@
 			uniform_compatible = TRUE
 		if((!human_owner.wear_suit) || (human_owner.wear_suit.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)) || !(human_owner.wear_suit.body_parts_covered & LEGS)) //Checks suit compatability
 			suit_compatible = TRUE
-		if(human_owner.shoes && !(human_owner.shoes.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+		if(human_owner.shoes && !(human_owner.shoes.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
 			human_owner.dropItemToGround(human_owner.shoes, TRUE)
 
 		if((uniform_compatible && suit_compatible) || (suit_compatible && human_owner.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
