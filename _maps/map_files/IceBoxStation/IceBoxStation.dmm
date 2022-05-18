@@ -51512,7 +51512,6 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/structure/table,
 /obj/item/rcl/pre_loaded,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms/laundry)
