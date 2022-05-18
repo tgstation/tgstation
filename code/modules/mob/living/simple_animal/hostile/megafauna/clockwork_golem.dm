@@ -5,12 +5,17 @@
 	speak_emote = list("clanks")
 	vision_range = 9
 	melee_queue_distance = 10
+	pixel_x = -16
 	ranged = TRUE
 	gps_name = "Clockwork Signal"
 	del_on_death = TRUE
 	deathmessage = "cracks, beaking into multiple pieces."
 	deathsound = SFX_CLOCKFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
+
+/mob/living/simple_animal/hostile/megafauna/clockwork_golem/Initialize(mapload)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete
 	icon_state = "clockwork_golem_complete"
