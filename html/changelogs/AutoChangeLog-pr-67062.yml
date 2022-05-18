@@ -1,0 +1,5 @@
+author: "fippefi"
+delete-after: True
+changes: 
+  - balance: "Buffed PACMAN generators to make the map-spawned gens more usable as backup sources of power."
+  - qol: "PACMAN now tells you if it will use uranium or plasma when you screwdriver the board"
