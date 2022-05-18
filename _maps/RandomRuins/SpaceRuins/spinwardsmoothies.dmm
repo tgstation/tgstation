@@ -14,14 +14,16 @@
 	pixel_y = 14
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/ruin/space/has_grav/spinwardsmoothies)
+/turf/template_noop,
+/area/space/nearstation)
 "mR" = (
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 10
 	},
 /obj/machinery/hydroponics/constructable,
-/turf/open/floor/bamboo,
+/turf/open/floor/bamboo{
+	smoothing_flags = 0
+	},
 /area/ruin/space/has_grav/spinwardsmoothies)
 "qT" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -45,7 +47,9 @@
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
 "sP" = (
-/turf/open/floor/bamboo,
+/turf/open/floor/bamboo{
+	smoothing_flags = 0
+	},
 /area/ruin/space/has_grav/spinwardsmoothies)
 "ti" = (
 /obj/machinery/vending/boozeomat/all_access{
@@ -81,8 +85,8 @@
 "Aw" = (
 /obj/structure/marker_beacon/violet,
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/ruin/space/has_grav/spinwardsmoothies)
+/turf/template_noop,
+/area/space/nearstation)
 "AW" = (
 /turf/open/floor/grass,
 /area/ruin/space/has_grav/spinwardsmoothies)
@@ -99,7 +103,9 @@
 	dir = 8
 	},
 /obj/machinery/hydroponics/constructable,
-/turf/open/floor/bamboo,
+/turf/open/floor/bamboo{
+	smoothing_flags = 0
+	},
 /area/ruin/space/has_grav/spinwardsmoothies)
 "Dh" = (
 /obj/structure/table/wood,
@@ -141,12 +147,9 @@
 /area/ruin/space/has_grav/spinwardsmoothies)
 "JG" = (
 /obj/structure/table/wood/fancy,
-/obj/effect/turf_decal/siding/thinplating/terracotta{
-	dir = 6
-	},
 /obj/machinery/reagentgrinder,
-/obj/effect/turf_decal/siding/thinplating/terracotta{
-	dir = 1
+/obj/effect/turf_decal/siding/thinplating/terracotta/end{
+	dir = 4
 	},
 /turf/open/floor/bamboo,
 /area/ruin/space/has_grav/spinwardsmoothies)
@@ -165,10 +168,10 @@
 "PO" = (
 /obj/structure/rack,
 /turf/closed/mineral,
-/area/ruin/space/has_grav/spinwardsmoothies)
+/area/space/nearstation)
 "Qi" = (
 /turf/closed/mineral,
-/area/ruin/space/has_grav/spinwardsmoothies)
+/area/space/nearstation)
 "QG" = (
 /obj/structure/chair/sofa/corp{
 	dir = 4
@@ -201,7 +204,9 @@
 /obj/effect/turf_decal/siding/thinplating/terracotta{
 	dir = 9
 	},
-/turf/open/floor/bamboo,
+/turf/open/floor/bamboo{
+	smoothing_flags = 0
+	},
 /area/ruin/space/has_grav/spinwardsmoothies)
 "XS" = (
 /obj/machinery/vending/hydroseeds{
@@ -212,8 +217,8 @@
 /area/ruin/space/has_grav/spinwardsmoothies)
 "Yn" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/ruin/space/has_grav/spinwardsmoothies)
+/turf/template_noop,
+/area/space/nearstation)
 "YB" = (
 /turf/template_noop,
 /area/template_noop)
