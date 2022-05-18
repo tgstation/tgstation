@@ -2732,7 +2732,7 @@
 /obj/machinery/power/apc/sm_apc/directional/north,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "ho" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3668,7 +3668,7 @@
 /area/ruin/space/ancientstation/charlie/storage)
 "jk" = (
 /obj/structure/cable,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "jl" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4569,7 +4569,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "lv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5368,7 +5368,7 @@
 "nn" = (
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/spawner/random/maintenance,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "no" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5601,9 +5601,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/ancientstation/beta/hall)
-"nR" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space/ancientstation/delta/hall)
 "nS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6393,7 +6390,7 @@
 /area/ruin/space/ancientstation/delta/storage)
 "sb" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "sk" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6522,7 +6519,7 @@
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "uP" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6625,7 +6622,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "wx" = (
 /turf/closed/wall,
@@ -6660,7 +6657,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "xr" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6953,7 +6950,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Bq" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7001,7 +6998,7 @@
 	name = "Engineering External Access"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Cj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7017,7 +7014,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
 "Cq" = (
 /turf/open/floor/iron,
@@ -7032,7 +7029,7 @@
 "Cs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "CF" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7045,7 +7042,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "CM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Dg" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7254,7 +7251,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Hb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7279,7 +7276,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "Hj" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Hn" = (
 /turf/open/floor/engine/o2,
@@ -7765,7 +7762,7 @@
 "Pj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Pn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7954,7 +7951,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "Sk" = (
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "Sn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -8351,7 +8348,7 @@
 /area/ruin/space/ancientstation/charlie/engie)
 "YN" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
-/turf/open/floor/engine,
+/turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "YZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -11349,7 +11346,7 @@ zL
 bE
 aa
 Wv
-nR
+VV
 nn
 bE
 Vb
@@ -11398,7 +11395,7 @@ dE
 bE
 aa
 Wv
-nR
+VV
 sb
 bE
 Ij
