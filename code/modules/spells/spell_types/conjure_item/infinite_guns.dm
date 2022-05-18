@@ -10,9 +10,10 @@
 	delete_old = FALSE
 
 /datum/action/cooldown/spell/conjure_item/infinite_guns/Remove(mob/living/remove_from)
-	var/obj/item/existing = remove_from.is_holding_item_of_type(item_type)
-	if(existing)
-		qdel(existing)
+	if(!QDELETED(remove_from))
+		var/obj/item/existing = remove_from.is_holding_item_of_type(item_type)
+		if(existing)
+			qdel(existing)
 
 	return ..()
 

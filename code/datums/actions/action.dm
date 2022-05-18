@@ -91,14 +91,14 @@
 	GiveAction(M)
 
 /// Remove the passed mob from being owner of our action
-/datum/action/proc/Remove(mob/M)
+/datum/action/proc/Remove(mob/remove_from)
 	SHOULD_CALL_PARENT(TRUE)
 
 	for(var/datum/hud/hud in viewers)
 		if(!hud.mymob)
 			continue
 		HideFrom(hud.mymob)
-	LAZYREMOVE(M.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
+	LAZYREMOVE(remove_from.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
 	viewers = list()
 
 	if(owner)

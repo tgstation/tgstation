@@ -29,8 +29,9 @@
 	ADD_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, type)
 
 /datum/action/cooldown/spell/pointed/projectile/lightningbolt/Remove(mob/living/remove_from)
-	. = ..()
-	REMOVE_TRAIT(remove_from, TRAIT_TESLA_SHOCKIMMUNE, type)
+	if(!QDELETED(remove_from))
+		REMOVE_TRAIT(remove_from, TRAIT_TESLA_SHOCKIMMUNE, type)
+	return ..()
 
 /datum/action/cooldown/spell/pointed/projectile/lightningbolt/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	. = ..()

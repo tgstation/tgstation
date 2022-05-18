@@ -16,13 +16,14 @@
 	var/drop_message = span_notice("You draw the power out of your hand.")
 
 /datum/action/cooldown/spell/touch/Destroy()
-	// If we have an owner, the hand is hand..led in Remove() (which Destroy() calls)
+	// If we have an owner, the hand is cleaned up in Remove(), which Destroy() calls.
 	if(!owner)
 		QDEL_NULL(attached_hand)
 	return ..()
 
 /datum/action/cooldown/spell/touch/Remove(mob/living/remove_from)
-	remove_hand(remove_from)
+	if(!QDELETED(remove_from))
+		remove_hand(remove_from)
 	return ..()
 
 /datum/action/cooldown/spell/touch/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)

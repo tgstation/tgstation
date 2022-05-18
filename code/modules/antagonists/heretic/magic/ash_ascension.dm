@@ -15,52 +15,40 @@
 
 	/// The radius of the fire ring
 	var/fire_radius = 1
-	/// How long it lasts
+	/// How long it the ring lasts
 	var/duration = 1 MINUTES
-	///Determines if you get the fire ring effect
-	var/current_timer
 
 /datum/action/cooldown/spell/fire_sworn/Remove(mob/living/remove_from)
-	if(current_timer)
-		end_cast(remove_from)
+	if(!QDELETED(remove_from))
+		remove_from.remove_status_effect(/datum/status_effect/fire_ring)
 	return ..()
 
-/datum/action/cooldown/spell/fire_sworn/cast(atom/cast_on)
+/datum/action/cooldown/spell/fire_sworn/is_valid_target(atom/cast_on)
+	return isliving(cast_on)
+
+/datum/action/cooldown/spell/fire_sworn/cast(mob/living/cast_on)
 	. = ..()
-	cast_on.AddComponent(/datum/component/fire_ring, fire_radius)
+	cast_on.apply_status_effect(/datum/status_effect/fire_ring, duration, fire_radius)
 
-/datum/action/cooldown/spell/fire_sworn/after_cast(atom/cast_on)
-	. = ..()
-	if(current_timer)
-		deltimer(current_timer)
-	current_timer = addtimer(CALLBACK(src, .proc/end_cast, cast_on), duration, TIMER_UNIQUE|TIMER_STOPPABLE)
-
-/datum/action/cooldown/spell/fire_sworn/proc/end_cast(atom/remove_from)
-	qdel(remove_from.GetComponent(/datum/component/fire_ring))
-	current_timer = null
-
-/// Simple component for adding a ring of fire around a mob
-/// Separate from the fire_sworn action, as actions process on fastprocessing on their own.
-/datum/component/fire_ring
-	/// The radius of the ring around us
+/// Simple status effect for adding a ring of fire around a mob.
+/datum/status_effect/fire_ring
+	id = "fire_ring"
+	tick_interval = 0.1 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+	/// The radius of the ring around us.
 	var/ring_radius = 1
 
-/datum/component/fire_ring/Initialize(ring_radus = 1)
-	if(!isliving(parent))
-		return COMPONENT_INCOMPATIBLE
-
-	src.ring_radius = ring_radius
-	START_PROCESSING(SSfastprocess, src)
-
-/datum/component/fire_ring/Destroy(force, silent)
-	STOP_PROCESSING(SSfastprocess, src)
+/datum/status_effect/fire_ring/on_creation(mob/living/new_owner, duration = 1 MINUTES, radius = 1)
+	src.duration = duration
+	src.ring_radius = radius
 	return ..()
 
-/datum/component/fire_ring/process(delta_time)
-	var/mob/living/owner = parent
-	if(QDELETED(owner) || !istype(owner) || owner.stat == DEAD)
+/datum/status_effect/fire_ring/tick(delta_time, times_fired)
+	if(QDELETED(owner) || owner.stat == DEAD)
 		qdel(src)
-		return PROCESS_KILL
+		return
+
 	if(!isturf(owner.loc))
 		return
 
@@ -91,7 +79,7 @@
 
 /datum/action/cooldown/spell/fire_cascade/cast(atom/cast_on)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/fire_cascade, cast_on, flame_radius)
+	INVOKE_ASYNC(src, .proc/fire_cascade, get_turf(cast_on), flame_radius)
 
 /// Spreads a huge wave of fire in a radius around us, staggered between levels
 /datum/action/cooldown/spell/fire_cascade/proc/fire_cascade(atom/centre, flame_radius = 1)

@@ -104,12 +104,13 @@
 	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
 
 /datum/action/cooldown/spell/Remove(mob/living/remove_from)
-	UnregisterSignal(remove_from, list(
-		COMSIG_MOB_AFTER_EXIT_JAUNT,
-		COMSIG_MOB_ENTER_JAUNT,
-		COMSIG_MOB_EQUIPPED_ITEM,
-		COMSIG_MOVABLE_Z_CHANGED,
-	))
+	if(!QDELETED(remove_from))
+		UnregisterSignal(remove_from, list(
+			COMSIG_MOB_AFTER_EXIT_JAUNT,
+			COMSIG_MOB_ENTER_JAUNT,
+			COMSIG_MOB_EQUIPPED_ITEM,
+			COMSIG_MOVABLE_Z_CHANGED,
+		))
 	return ..()
 
 /datum/action/cooldown/spell/IsAvailable()

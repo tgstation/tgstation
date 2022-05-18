@@ -24,8 +24,9 @@
 	var/sound/charge_sound
 
 /datum/action/cooldown/spell/tesla/Remove(mob/living/remove_from)
-	. = ..()
-	reset_tesla(remove_from)
+	if(!QDELETED(remove_from))
+		reset_tesla(remove_from)
+	return ..()
 
 /datum/action/cooldown/spell/tesla/can_cast_spell(feedback = TRUE)
 	. = ..()

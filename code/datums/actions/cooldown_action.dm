@@ -34,9 +34,9 @@
 /datum/action/cooldown/IsAvailable()
 	return ..() && (next_use_time <= world.time)
 
-/datum/action/cooldown/Remove(mob/living/user)
-	if(click_to_activate && user.click_intercept == src)
-		unset_click_ability(user, refund_cooldown = FALSE)
+/datum/action/cooldown/Remove(mob/living/remove_from)
+	if(click_to_activate && !QDELETED(remove_from) && remove_from.click_intercept == src)
+		unset_click_ability(remove_from, refund_cooldown = FALSE)
 	return ..()
 
 /// Starts a cooldown time to be shared with similar abilities
