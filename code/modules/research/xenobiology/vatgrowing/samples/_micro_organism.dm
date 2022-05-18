@@ -110,19 +110,20 @@
 
 ///Goes through the resulting_atoms of this cell_line and turns any /obj/effect/spawner/random entries into weighed random picks from its loot list.
 ///This happens recursively until there are no more random spawners in resulting_atoms. Or unitl enough iterations have happened to give up.
-///Returns TRUE if the proc succeeded in processing all random spawners, and false if gave up after going through too many iterations.
+///Returns TRUE if the proc succeeded in processing all random spawners, and FALSE if gave up after going through too many iterations.
 ///Note that all spawners used in resulting_atoms MUST have spawn_on_init set to FALSE.
-/datum/micro_organism/cell_line/proc/process_resulting_spawners(obj/machinery/plumbing/growing_vat/vat, var/iterations = 0)
-	if(!is_type_in_list(/obj/effect/spawner/random, resulting_atoms)) //there are no random spawners in here, we can stop
-		return TRUE
+/datum/micro_organism/cell_line/proc/process_resulting_spawners(obj/machinery/plumbing/growing_vat/vat, var/current_iteration = 0)
+	for(var/resulting_atom as anything in resulting_atoms) //return if there are no spawners in resulting_atoms
+		if(ispath(resulting_atom, /obj/effect/spawner/random))
+			break
+		return TRUE //no spawners were found, we can stop the recursion
 
-	if(iterations > 10) //at this rate it might go on forever, we won't stick around to find out though
+	if(current_iteration > 10) //at this rate it might go on forever, we won't stick around to find out though
 		WARNING("Could not process all cell_line.resulting_atoms random spawners, exceeded maximum allowed iterations!")
 		return FALSE
 
 	var/list/spawner_checked_resulting_atoms = list() //create a list to put the new results into
-
-	for(var/resulting_atom in resulting_atoms) //go through each resulting_atom
+	for(var/resulting_atom as anything in resulting_atoms) //go through each resulting_atom
 		if(ispath(resulting_atom, /obj/effect/spawner/random))
 			//if resulting_atom is a random spawner, get a random pick from it and add it to the list
 			var/obj/effect/spawner/random/random_spawner = new resulting_atom(get_turf(vat)) //create an instance of the spawner to access its loot
@@ -137,8 +138,7 @@
 			spawner_checked_resulting_atoms[resulting_atom] = resulting_atoms[resulting_atom]
 
 	resulting_atoms = spawner_checked_resulting_atoms //replace the old list with the new one
-	return process_resulting_spawners(vat, iterations++) //spawners might spawn more spawners, keep going recursively until there are no spawners
-//TODO fix this putting down frog spawners instead of the frogs
+	return process_resulting_spawners(vat, ++current_iteration) //spawners might spawn more spawners, keep going recursively until there are no spawners
 
 ///Overriden to show more info like needs, supplementary and supressive reagents and also growth.
 /datum/micro_organism/cell_line/get_details(show_details)
