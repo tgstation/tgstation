@@ -1415,6 +1415,7 @@
 #include "code\game\objects\effects\spawners\structure.dm"
 #include "code\game\objects\effects\spawners\xeno_egg_delivery.dm"
 #include "code\game\objects\effects\spawners\random\ai_module.dm"
+#include "code\game\objects\effects\spawners\random\animal.dm"
 #include "code\game\objects\effects\spawners\random\bureaucracy.dm"
 #include "code\game\objects\effects\spawners\random\clothing.dm"
 #include "code\game\objects\effects\spawners\random\contraband.dm"
