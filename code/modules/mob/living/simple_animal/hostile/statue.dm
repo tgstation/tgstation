@@ -59,10 +59,12 @@
 /mob/living/simple_animal/hostile/netherworld/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
 	// Give spells
-	LAZYINITLIST(mob_spell_list)
-	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
-	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
-	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
+	var/obj/effect/proc_holder/spell/aoe_turf/flicker_lights/flicker = new(src)
+	var/obj/effect/proc_holder/spell/aoe_turf/blindness/blind = new(src)
+	var/obj/effect/proc_holder/spell/targeted/night_vision/night_vision = new(src)
+	AddSpell(flicker)
+	AddSpell(blind)
+	AddSpell(night_vision)
 
 	// Set creator
 	if(creator)
