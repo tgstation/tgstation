@@ -1,5 +1,5 @@
 /datum/action/cooldown/spell/pointed/mind_transfer
-	name = "Mind Transfer"
+	name = "Mind Swap"
 	desc = "This spell allows the user to switch bodies with a target next to him."
 	button_icon_state = "mindswap"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
@@ -25,6 +25,8 @@
 	var/unconscious_amount_victim = 40 SECONDS
 	/// List of mobs we cannot mindswap into.
 	var/static/list/mob/living/blacklisted_mobs = typecacheof(list(
+		/mob/living/brain,
+		/mob/living/silicon/pai,
 		/mob/living/simple_animal/hostile/imp/slaughter,
 		/mob/living/simple_animal/hostile/megafauna,
 	))
@@ -50,7 +52,7 @@
 		to_chat(owner, span_warning("You can only swap minds with living beings!"))
 		return FALSE
 	if(is_type_in_typecache(cast_on, blacklisted_mobs))
-		to_chat(owner, span_warning("This creature is too powerful to control!"))
+		to_chat(owner, span_warning("This creature is too [pick("powerful", "strange", "arcane", "obscene")] to control!"))
 		return FALSE
 	if(isguardian(cast_on))
 		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
@@ -63,7 +65,8 @@
 		to_chat(owner, span_warning("You don't particularly want to be dead!"))
 		return FALSE
 	if(!living_target.mind)
-		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] doesn't appear to have a mind to swap into!."))
+		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] doesn't appear to have a mind to swap into!"))
+		return FALSE
 	if(!living_target.key && target_requires_key)
 		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] appear[living_target.p_s()] to be catatonic! \
 			Not even magic can affect [living_target.p_their()] vacant mind."))

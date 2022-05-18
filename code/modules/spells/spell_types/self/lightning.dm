@@ -4,7 +4,6 @@
 		You can move freely while it charges. The arc jumps between targets and can knock them down."
 	button_icon_state = "lightning"
 
-	sound = 'sound/magic/lightningbolt.ogg'
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 6.75 SECONDS
 
@@ -76,10 +75,11 @@
 
 	var/mob/living/carbon/to_zap_first = get_target(cast_on)
 	if(QDELETED(to_zap_first))
-		to_chat(cast_on, span_warning("No targets nearby!"))
+		cast_on.balloon_alert(cast_on, "no targets nearby!")
 		reset_spell_cooldown()
 		return FALSE
 
+	playsound(get_turf(cast_on), 'sound/magic/lightningbolt.ogg', 50, TRUE)
 	zap_target(cast_on, to_zap_first)
 	reset_tesla(cast_on)
 	return TRUE
