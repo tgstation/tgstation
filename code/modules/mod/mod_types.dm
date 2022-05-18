@@ -377,3 +377,8 @@
 	theme = /datum/mod_theme/elite
 
 INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/syndicate_empty)
+
+/obj/item/mod/control/pre_equipped/ntuplinkagent_empty
+	theme = /datum/mod_theme/ntagent
+
+INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/ntuplinkagent_empty)

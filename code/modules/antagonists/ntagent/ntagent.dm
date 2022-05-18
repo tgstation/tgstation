@@ -5,7 +5,7 @@
 	show_name_in_check_antagonists = TRUE
 	job_rank = ROLE_NT_AGENT
 	show_to_ghosts = FALSE
-	preview_outfit = /datum/outfit/ntagent
+	preview_outfit = /datum/outfit/ntagent_preview
 	suicide_cry = "Syndicate i sikeyim!!!"
 
 /datum/antagonist/ntagent/on_gain()
