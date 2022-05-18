@@ -59257,8 +59257,7 @@
 "uQG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Engineering Storage";
-	req_access = list("engineering")
+	name = "Engineering Storage"
 	},
 /obj/effect/turf_decal/bot{
 	dir = 1

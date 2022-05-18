@@ -45595,8 +45595,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	name = "Bar Backroom";
-	req_access = list("bar")
+	name = "Bar Backroom"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -73472,7 +73471,6 @@
 /obj/machinery/computer/med_data/laptop{
 	dir = 8;
 	pixel_y = 1;
-	req_one_access = null;
 	req_one_access = list("detective","medical","genetics")
 	},
 /obj/item/toy/figure/geneticist,
@@ -75430,7 +75428,6 @@
 	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	name = "Antechamber Turret Control";
 	pixel_x = -32;
-	req_access = null;
 	req_access = list("minisat")
 	},
 /obj/machinery/camera/directional/west{
