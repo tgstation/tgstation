@@ -581,7 +581,7 @@
 		/datum/reagent/toxin = -1)
 
 	virus_suspectibility = 0.5
-	resulting_atoms = list(/obj/effect/spawner/random/animal/frog/vatgrown = 5, /mob/living/simple_animal/mouse = 2,)
+	resulting_atoms = list(/obj/effect/spawner/random/animal/frog/vatgrown = 1)
 
 /datum/micro_organism/cell_line/walking_mushroom
 	desc = "motile fungal hyphae"
