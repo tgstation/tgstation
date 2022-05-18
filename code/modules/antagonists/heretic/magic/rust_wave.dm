@@ -88,7 +88,7 @@
 	range = 15
 	speed = 1
 
-/obj/projectile/magic/spell/rust_wave/Moved(atom/OldLoc, Dir)
+/obj/projectile/magic/aoe/rust_wave/Moved(atom/OldLoc, Dir)
 	. = ..()
 	playsound(src, 'sound/items/welder.ogg', 75, TRUE)
 	var/list/turflist = list()

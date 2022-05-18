@@ -33,6 +33,14 @@
 	if(attached_hand)
 		button.color = COLOR_GREEN
 
+/datum/action/cooldown/spell/touch/set_statpanel_format()
+	. = ..()
+	if(!islist(.))
+		return
+
+	if(attached_hand)
+		stat_panel_data[PANEL_DISPLAY_STATUS] = "ACTIVE"
+
 /datum/action/cooldown/spell/touch/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)

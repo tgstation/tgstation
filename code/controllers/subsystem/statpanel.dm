@@ -166,9 +166,9 @@ SUBSYSTEM_DEF(statpanels)
 	target.spell_tabs.Cut()
 
 	for(var/action_data in actions)
-		target.spell_tabs |= action_data[PANEL_DISPLAY_PANEL]
+		target.spell_tabs |= action_data[1]
 
-	target.stat_panel.send_message("update_spells", list(spell_tabs = target.spell_tabs))
+	target.stat_panel.send_message("update_spells", list(spell_tabs = target.spell_tabs, actions = actions))
 
 /datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
 	var/list/overrides = list()

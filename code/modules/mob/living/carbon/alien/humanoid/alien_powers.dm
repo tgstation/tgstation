@@ -48,7 +48,10 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien/set_statpanel_format()
 	. = ..()
-	.[PANEL_DISPLAY_COOLDOWN] = "[plasma_cost]"
+	if(!islist(.))
+		return
+
+	.[PANEL_DISPLAY_STATUS] = "PLASMA - [plasma_cost]"
 
 /datum/action/cooldown/alien/make_structure
 	/// The type of structure the action makes on use

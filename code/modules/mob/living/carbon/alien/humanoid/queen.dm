@@ -92,7 +92,10 @@
 
 /datum/action/cooldown/alien/promote/set_statpanel_format()
 	. = ..()
-	.[PANEL_DISPLAY_COOLDOWN] = "[promotion_plasma_cost]"
+	if(!islist(.))
+		return
+
+	.[PANEL_DISPLAY_STATUS] = "PLASMA - [promotion_plasma_cost]"
 
 /datum/action/cooldown/alien/promote/IsAvailable()
 	. = ..()

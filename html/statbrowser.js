@@ -813,8 +813,8 @@ Byond.subscribeTo('update_spells', function (payload) {
 		do_update = true;
 	}
 	init_spells();
-	if (payload.verblist) {
-		spells = payload.verblist;
+	if (payload.actions) {
+		spells = payload.actions;
 		if (do_update) {
 			draw_spells(current_tab);
 		}

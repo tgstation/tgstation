@@ -104,11 +104,12 @@
 		return
 
 	UnregisterSignal(holder, COMSIG_MOVABLE_MOVED)
-	// Caster escaped our holder somehow
+	// The caster escaped our holder somehow?
 	if(cast_on.loc != holder)
 		qdel(holder)
 		return
 
+	// Pick an exit turf to deposit the jaunter
 	var/turf/found_exit
 	for(var/turf/possible_exit as anything in exit_point_list)
 		if(possible_exit.is_blocked_turf_ignore_climbable())
@@ -116,9 +117,12 @@
 		found_exit = possible_exit
 		break
 
-	// We moved, but couldn't find another exit
-	if(get_turf(cast_on) != start_point && !found_exit)
-		to_chat(cast_on, span_danger("Unable to find an unobstructed space, you find yourself ripped back to where you started."))
+	// No valid exit was found
+	if(!found_exit)
+		// It's possible no exit was found, because we literally didn't even move
+		if(get_turf(cast_on) != start_point)
+			to_chat(cast_on, span_danger("Unable to find an unobstructed space, you find yourself ripped back to where you started."))
+		// Either way, default to where we started
 		found_exit = start_point
 
 	exit_point_list = null
