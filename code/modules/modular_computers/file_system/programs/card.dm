@@ -59,7 +59,7 @@
 	var/list/managers = SSid_access.sub_department_managers_tgui
 	for(var/access_as_text in managers)
 		var/list/info = managers[access_as_text]
-		var/access = text2num(access_as_text)
+		var/access = (access_as_text)
 		if((access in id_card.access) && ((target_dept in info["regions"]) || !target_dept))
 			region_access |= info["regions"]
 			job_templates |= info["templates"]

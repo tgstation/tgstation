@@ -4,25 +4,25 @@
 
 // These are mutually exclusive; can't have req_any and req_all
 /obj/effect/mapping_helpers/airlock/access/any/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.req_access_txt == "0")
+	if(airlock.req_access != null)
+		log_mapping("[src] at [AREACOORD(src)] tried to set req_one_access, but req_access was already set!")
+	else
 		var/list/access_list = get_access()
 		// Overwrite if there is no access set, otherwise add onto existing access
-		if(airlock.req_one_access_txt == "0")
-			airlock.req_one_access_txt = access_list.Join(";")
+		if(airlock.req_one_access == null)
+			airlock.req_one_access = access_list
 		else
-			airlock.req_one_access_txt += ";[access_list.Join(";")]"
-	else
-		log_mapping("[src] at [AREACOORD(src)] tried to set req_one_access, but req_access was already set!")
+			airlock.req_one_access += access_list
 
 /obj/effect/mapping_helpers/airlock/access/all/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.req_one_access_txt == "0")
-		var/list/access_list = get_access()
-		if(airlock.req_access_txt == "0")
-			airlock.req_access_txt = access_list.Join(";")
-		else
-			airlock.req_access_txt += ";[access_list.Join(";")]"
+	if(airlock.req_one_access != null)
+		log_mapping("[src] at [AREACOORD(src)] tried to set req_one_access, but req_access was already set!")
 	else
-		log_mapping("[src] at [AREACOORD(src)] tried to set req_access, but req_one_access was already set!")
+		var/list/access_list = get_access()
+		if(airlock.req_access == null)
+			airlock.req_access = access_list
+		else
+			airlock.req_access_txt += access_list
 
 /obj/effect/mapping_helpers/airlock/access/proc/get_access()
 	var/list/access = list()
