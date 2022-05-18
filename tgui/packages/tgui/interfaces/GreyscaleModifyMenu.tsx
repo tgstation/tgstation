@@ -221,7 +221,7 @@ const PreviewDisplay = (props, context) => {
         </Table.Row>
       </Table>
       {
-        !!data.generate_full_preview
+        !!data.unlocked
           && `Time Spent: ${data.sprites.time_spent}ms`
       }
       <Divider />
