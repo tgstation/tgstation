@@ -37,16 +37,6 @@
 /// Forces the wizard to emote to cast the spell.
 #define INVOCATION_EMOTE "emote"
 
-// The type of smoke spells give off after being casted
-/// No smoke is made on cast
-#define NO_SMOKE 0
-/// Smoke is made, but it's harmless (just conceals them)
-#define SMOKE_HARMLESS 1
-/// Smoke is made, and it chokes people (not deadly, makes them drop held items)
-#define SMOKE_HARMFUL 2
-/// Smoke it made, and it sleeps people
-#define SMOKE_SLEEPING 3
-
 // Bitflags for spell requirements
 /// Whether the spell requires wizard clothes to cast
 #define SPELL_REQUIRES_WIZARD_GARB (1 << 0)

@@ -8,9 +8,9 @@
 #define COMSIG_MOB_BEFORE_SPELL_CAST "mob_spell_pre_cast"
 /// Sent from /datum/action/cooldown/spell/before_cast() to the spell: (atom/cast_on)
 #define COMSIG_SPELL_BEFORE_CAST "spell_pre_cast"
-	/// Return to cease the cast from occurring.
-	#define COMPONENT_CANCEL_SPELL (1<<0)
-// Sent from /datum/action/cooldown/spell/cast() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on)
+	/// Return from any of the above signals to prevent the cast or activation.
+	#define COMPONENT_CANCEL_SPELL (1 << 0)
+/// Sent from /datum/action/cooldown/spell/cast() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on)
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
 /// Sent from /datum/action/cooldown/spell/cast() to the spell: (atom/cast_on)
 #define COMSIG_SPELL_CAST "spell_cast"

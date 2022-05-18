@@ -38,7 +38,7 @@
 		return FALSE
 
 	var/mob/living/living_cast_on = cast_on
-	if(ishuman(living_cast_on) && !living_cast_on.get_bodypart(BODY_ZONE_HEAD)) // melbert cl todo
+	if(ishuman(living_cast_on) && !living_cast_on.get_bodypart(BODY_ZONE_HEAD))
 		to_chat(owner, span_warning("You have no nose!"))
 		return FALSE
 

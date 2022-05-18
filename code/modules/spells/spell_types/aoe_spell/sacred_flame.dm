@@ -31,7 +31,7 @@
 	// Let people who got afflicted know they're suddenly a matchstick
 	// But skip the caster - they'll know anyways.
 	if(victim != caster)
-		to_chat(victim, span_warning("You suddenly feel very flammable.")) // melbert cl todo
+		to_chat(victim, span_warning("You suddenly feel very flammable."))
 
 /datum/action/cooldown/spell/aoe/sacred_flame/cast(mob/living/cast_on)
 	. = ..()

@@ -5,7 +5,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_OBSERVER
 	movement_type = FLOATING
-	/// The mob who's jaunting in this mob
+	/// The movable which's jaunting in this dummy
 	var/atom/movable/jaunter
 	/// The delay between moves while jaunted
 	var/movedelay = 0

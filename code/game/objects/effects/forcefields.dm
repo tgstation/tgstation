@@ -41,8 +41,8 @@
 
 /// Cult forcefields
 /obj/effect/forcefield/cult
-	desc = "An unholy shield that blocks all attacks."
 	name = "glowing wall"
+	desc = "An unholy shield that blocks all attacks."
 	icon = 'icons/effects/cult/effects.dmi'
 	icon_state = "cultshield"
 	can_atmos_pass = ATMOS_PASS_NO

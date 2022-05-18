@@ -32,6 +32,8 @@
 
 	invocation = "DOOOOOOOOOOOOOOOOOOOOM!!!"
 	invocation_type = INVOCATION_SHOUT
+	spell_requirements = NONE
+	antimagic_flags = NONE
 
 /datum/action/cooldown/spell/void/is_valid_target(atom/cast_on)
 	return isturf(cast_on.loc)

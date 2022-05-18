@@ -50,8 +50,11 @@
 /datum/mutation/human/thermal/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
-	owner.update_sight()
+
+	// Something went wront and we still have the thermal vision from our power, no cheating.
+	if(HAS_TRAIT_FROM(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION))
+		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+		owner.update_sight()
 
 /datum/mutation/human/thermal/modify()
 	. = ..()
@@ -77,6 +80,13 @@
 	var/eye_damage = 10
 	/// The duration of the thermal vision
 	var/thermal_duration = 10 SECONDS
+
+/datum/action/cooldown/spell/thermal_vision/Remove(mob/living/remove_from)
+	. = ..()
+	if(!QDELETED(remove_from))
+		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
+		owner.update_sight()
+	return ..()
 
 /datum/action/cooldown/spell/thermal_vision/is_valid_target(atom/cast_on)
 	return isliving(cast_on) && !HAS_TRAIT(cast_on, TRAIT_THERMAL_VISION)

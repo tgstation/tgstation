@@ -85,7 +85,7 @@
 			// if we clicked ourself and we're already set, unset and return
 			return unset_click_ability(user, refund_cooldown = TRUE)
 
-		else if (istype(already_set))
+		else if(istype(already_set))
 			// if we have an active set already, unset it before we set our's
 			already_set.unset_click_ability(user, refund_cooldown = TRUE)
 
