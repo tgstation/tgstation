@@ -109,7 +109,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		if(R.fields["id"] != id)
 			continue
 		var/list/crimes = R.fields["crim"]
-		for(var/datum/data/crime/crime in crimes)
+		for(var/datum/data/crime/crime as anything in crimes)
 			if(crime.dataId != text2num(cDataId))
 				continue
 			if(crime.crimeStatus == "Not Served")
