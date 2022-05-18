@@ -229,14 +229,6 @@
 	icon_state = "policehelm"
 
 
-/obj/item/clothing/head/helmet/constable
-	name = "constable helmet"
-	desc = "A british looking helmet."
-	icon_state = "constable"
-	inhand_icon_state = "constable"
-	custom_price = PAYCHECK_COMMAND * 1.5
-	worn_y_offset = 4
-
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."

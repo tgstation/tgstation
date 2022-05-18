@@ -95,6 +95,8 @@
 	var/list/active_addictions
 	///List of objective-specific equipment that couldn't properly be given to the mind
 	var/list/failed_special_equipment
+	/// A list to keep track of which books a person has read (to prevent people from reading the same book again and again for positive mood events)
+	var/list/book_titles_read
 
 /datum/mind/New(_key)
 	key = _key
@@ -808,7 +810,7 @@
 		if(istype(S, spell))
 			spell_list -= S
 			qdel(S)
-	current?.client << output(null, "statbrowser:check_spells")
+	current?.client.stat_panel.send_message("check_spells")
 
 /datum/mind/proc/RemoveAllSpells()
 	for(var/obj/effect/proc_holder/S in spell_list)

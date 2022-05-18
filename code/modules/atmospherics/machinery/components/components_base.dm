@@ -3,6 +3,7 @@
 
 /obj/machinery/atmospherics/components
 	hide = FALSE
+	layer = GAS_PUMP_LAYER
 	///Is the component welded?
 	var/welded = FALSE
 	///Should the component should show the pipe underneath it?
@@ -267,7 +268,6 @@
 	atmos_init()
 	for(var/i in 1 to device_type)
 		var/obj/machinery/atmospherics/node = nodes[i]
-		node = nodes[1]
 		if(node)
 			node.atmos_init()
 			node.add_member(src)
@@ -284,3 +284,6 @@
 		disconnect_nodes()
 		return
 	connect_nodes()
+
+/obj/machinery/atmospherics/components/update_layer()
+	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.001)

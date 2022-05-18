@@ -14,6 +14,8 @@ You can use the run_loc_floor_bottom_left and run_loc_floor_top_right to get tur
 GLOBAL_DATUM(current_test, /datum/unit_test)
 GLOBAL_VAR_INIT(failed_any_test, FALSE)
 GLOBAL_VAR(test_log)
+/// When unit testing, all logs sent to log_mapping are stored here and retrieved in log_mapping unit test.
+GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 
 /datum/unit_test
 	//Bit of metadata for the future maybe
@@ -98,6 +100,7 @@ GLOBAL_VAR(test_log)
 		"[test.succeeded ? TEST_OUTPUT_GREEN("PASS") : TEST_OUTPUT_RED("FAIL")]: [test_path] [duration / 10]s",
 	)
 	var/list/fail_reasons = test.fail_reasons
+	var/map_name = SSmapping.config.map_name
 
 	for(var/reasonID in 1 to LAZYLEN(fail_reasons))
 		var/text = fail_reasons[reasonID][1]
@@ -111,7 +114,7 @@ GLOBAL_VAR(test_log)
 		var/annotation_text = replacetext(text, "%", "%25")
 		annotation_text = replacetext(annotation_text, "\n", "%0A")
 
-		log_world("::error file=[file],line=[line],title=[test_path]::[annotation_text]")
+		log_world("::error file=[file],line=[line],title=[map_name]: [test_path]::[annotation_text]")
 
 		// Normal log message
 		log_entry += "\tREASON #[reasonID]: [text] at [file]:[line]"

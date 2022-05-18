@@ -59,8 +59,10 @@
 "U" = (
 /obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
