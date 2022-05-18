@@ -862,7 +862,7 @@
 /obj/structure/barricade/wooden,
 /obj/machinery/door/airlock/command{
 	name = "Charlie Station Access";
-	req_access_txt = "away general"
+	req_access = list("away general")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
@@ -3123,7 +3123,7 @@
 "is" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemical Storage";
-	req_access_txt = "away general"
+	req_access = list("away general")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
@@ -3667,7 +3667,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/command{
 	name = "Charlie Station Access";
-	req_access_txt = "away general"
+	req_access = list("away general")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -3722,7 +3722,7 @@
 /obj/item/assembly/flash/handheld,
 /obj/item/storage/box/firingpins,
 /obj/structure/closet/crate/secure/weapon{
-	req_access_txt = "away sec"
+	req_access = list("away sec")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/delta/hall)
@@ -4511,7 +4511,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Prototype Laboratory";
-	req_access_txt = "away general"
+	req_access = list("away general")
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
@@ -4521,7 +4521,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Prototype Laboratory";
-	req_access_txt = "away general"
+	req_access = list("away general")
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7377,7 +7377,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/secure/engineering{
 	name = "plasma tank crate";
-	req_access_txt = "away engineering"
+	req_access = list("away engineering")
 	},
 /obj/item/tank/internals/plasma/full,
 /obj/item/tank/internals/plasma/full,
