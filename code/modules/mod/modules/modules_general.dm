@@ -7,7 +7,7 @@
 		the surface of the suit, useful for storing various bits, and or bobs."
 	icon_state = "storage"
 	complexity = 3
-	incompatible_modules = list(/obj/item/mod/module/storage)
+	incompatible_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/plate_compression)
 	/// The storage component of the module.
 	var/datum/component/storage/concrete/storage
 	/// Max weight class of items in the storage.
@@ -186,7 +186,7 @@
 	name = "MOD eating apparatus module"
 	desc = "A favorite by Miners, this modification to the helmet utilizes a nanotechnology barrier infront of the mouth \
 		to allow eating and drinking while retaining protection and atmosphere. However, it won't free you from masks, \
-		and it will do nothing to improve the taste of a goliath steak."
+		lets pepper spray pass through and it will do nothing to improve the taste of a goliath steak."
 	icon_state = "apparatus"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
@@ -228,7 +228,7 @@
 ///Flashlight - Gives the suit a customizable flashlight.
 /obj/item/mod/module/flashlight
 	name = "MOD flashlight module"
-	desc = "A simple pair of flashlights installed on the left and right sides of the helmet, \
+	desc = "A simple pair of configurable flashlights installed on the left and right sides of the helmet, \
 		useful for providing light in a variety of ranges and colors. \
 		Some survivalists prefer the color green for their illumination, for reasons unknown."
 	icon_state = "flashlight"
@@ -240,7 +240,7 @@
 	overlay_state_inactive = "module_light"
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_color = COLOR_WHITE
-	light_range = 3
+	light_range = 4
 	light_power = 1
 	light_on = FALSE
 	/// Charge drain per range amount.
@@ -266,10 +266,8 @@
 	set_light_on(active)
 
 /obj/item/mod/module/flashlight/on_process(delta_time)
-	. = ..()
-	if(!.)
-		return
 	active_power_cost = base_power * light_range
+	return ..()
 
 /obj/item/mod/module/flashlight/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()

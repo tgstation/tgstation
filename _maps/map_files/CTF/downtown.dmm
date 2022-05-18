@@ -69,7 +69,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "bg" = (
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/misc/grass,
 /area/ctf)
 "bs" = (
@@ -1852,7 +1852,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "KL" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/misc/grass,
 /area/ctf)
 "KN" = (

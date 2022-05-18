@@ -60,8 +60,9 @@
 				mytray.mutateweed()
 			if(1   to 32)
 				mytray.mutatepest(user)
-			else if(prob(20))
-				mytray.visible_message(span_warning("Nothing happens..."))
+			else
+				if(prob(20))
+					mytray.visible_message(span_warning("Nothing happens..."))
 
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.heal_bodypart_damage(5 * REM * delta_time, 5 * REM * delta_time)
@@ -162,21 +163,22 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.IsSleeping() || M.IsUnconscious())
-		var/power = -0.00003 * (M.bodytemperature ** 2) + 3
-		if(M.bodytemperature < T0C)
-			M.adjustOxyLoss(-3 * power * REM * delta_time, 0)
-			M.adjustBruteLoss(-power * REM * delta_time, 0)
-			M.adjustFireLoss(-power * REM * delta_time, 0)
-			M.adjustToxLoss(-power * REM * delta_time, 0, TRUE) //heals TOXINLOVERs
-			M.adjustCloneLoss(-power * REM * delta_time, 0)
-			for(var/i in M.all_wounds)
-				var/datum/wound/iter_wound = i
-				iter_wound.on_xadone(power * REAGENTS_EFFECT_MULTIPLIER * delta_time)
-			REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
-			. = TRUE
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
+	if(M.bodytemperature >= T0C || !HAS_TRAIT(M, TRAIT_KNOCKEDOUT))
+		..()
+		return
+	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
+	M.adjustOxyLoss(-3 * power * REM * delta_time, 0)
+	M.adjustBruteLoss(-power * REM * delta_time, 0)
+	M.adjustFireLoss(-power * REM * delta_time, 0)
+	M.adjustToxLoss(-power * REM * delta_time, 0, TRUE) //heals TOXINLOVERs
+	M.adjustCloneLoss(-power * REM * delta_time, 0)
+	for(var/i in M.all_wounds)
+		var/datum/wound/iter_wound = i
+		iter_wound.on_xadone(power * REAGENTS_EFFECT_MULTIPLIER * delta_time)
+	REMOVE_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
 	..()
+	return TRUE
 
 // Healing
 /datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)

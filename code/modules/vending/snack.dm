@@ -23,16 +23,16 @@
 		/obj/item/food/semki = 6,
 		/obj/item/reagent_containers/food/drinks/dry_ramen = 3,
 		/obj/item/storage/box/gum = 3,
-		/obj/item/food/energybar = 6
+		/obj/item/food/energybar = 6,
 	)
 	contraband = list(
 		/obj/item/food/syndicake = 6,
 		/obj/item/food/peanuts/ban_appeal = 3,
-		/obj/item/food/candy/bronx = 1
+		/obj/item/food/candy/bronx = 1,
 	)
 	premium = list(
 		/obj/item/food/spacers_sidekick = 3,
-		/obj/item/food/pistachios = 3
+		/obj/item/food/pistachios = 3,
 	)
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)
