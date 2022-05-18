@@ -56,7 +56,7 @@
 
 	var/spellnum = 1
 	for(var/datum/action/spell as anything in actions)
-		if(!istype(spell, /datum/action/cooldown/spell) || !istype(spell, /datum/action/innate/cult/create_rune))
+		if(!(type in construct_spells))
 			continue
 
 		var/pos = 2 + spellnum * 31
@@ -65,6 +65,15 @@
 		spell.default_button_position = "6:[pos],4:-2" // Set the default position to this random position
 		spellnum++
 
+	/*
+	if(runetype)
+		var/pos = 2+spellnum*31
+		if(construct_spells.len >= 4)
+			pos -= 31*(construct_spells.len - 4)
+		our_rune = new runetype(src)
+		our_rune.default_button_position = "6:[pos],4:-2" // Set the default position to this random position
+		our_rune.Grant(src)
+	*/
 	if(icon_state)
 		add_overlay("glow_[icon_state]_[theme]")
 
