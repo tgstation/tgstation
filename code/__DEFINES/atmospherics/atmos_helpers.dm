@@ -94,11 +94,11 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
  * Not immediately obvious, but saves us operation time.
  * 
  * Arguments:
- * * temperature_delta: T2 - T1. [datum/gas_mixture/var/temperature]
- * * heat_capacity_one:  gasmix one's [datum/gas_mixture/proc/heat_capacity]
- * * heat_capacity_two: gasmix two's [datum/gas_mixture/proc/heat_capacity]
+ * * temperature_delta: T2 - T1. [/datum/gas_mixture/var/temperature]
+ * * heat_capacity_one:  gasmix one's [/datum/gas_mixture/proc/heat_capacity]
+ * * heat_capacity_two: gasmix two's [/datum/gas_mixture/proc/heat_capacity]
  * Returns: The energy gained by gas mixture one. Negative if gas mixture one loses energy.
- * Honestly the heat capacity is interchangeable, just make sure the delta is right
+ * Honestly the heat capacity is interchangeable, just make sure the delta is right.
  */
 #define CALCULATE_CONDUCTION_ENERGY(temperature_delta, heat_capacity_one, heat_capacity_two)\
 	(temperature_delta * heat_capacity_one * heat_capacity_two / (heat_capacity_one+heat_capacity_two))
