@@ -234,6 +234,7 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
 	cache_stacks()
 	update_overlay()
+	owner.extinguish_mob()
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)

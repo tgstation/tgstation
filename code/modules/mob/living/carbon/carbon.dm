@@ -260,7 +260,6 @@
 	if(fire_stacks <= 0 && !QDELETED(src))
 		visible_message(span_danger("[src] successfully extinguishes [p_them()]self!"), \
 			span_notice("You extinguish yourself."))
-		extinguish_mob()
 	return
 
 /mob/living/carbon/resist_restraints()
