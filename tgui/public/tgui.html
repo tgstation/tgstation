@@ -487,11 +487,11 @@ window.update.flushQueue = function (listener) {
   }
 };
 
-Byond.subscribeTo("replace_html", function(inline_html) {
-  let children = document.body.childNodes;
+Byond.subscribeTo("replace_html", function (inline_html) {
+  var children = document.body.childNodes;
 
-  for (let i = 0; i < children.length; i++) {
-    if (children[i].nodeValue == " tgui:inline-html-start ") {;
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].nodeValue == " tgui:inline-html-start ") {
       while (children[i].nodeValue != " tgui:inline-html-end ") {
         children[i].remove();
       }
@@ -499,7 +499,12 @@ Byond.subscribeTo("replace_html", function(inline_html) {
     }
   }
 
-  document.body.insertAdjacentHTML("afterbegin", "<!-- tgui:inline-html-start -->" + inline_html + "<!-- tgui:inline-html-end -->");
+  document.body.insertAdjacentHTML(
+    "afterbegin",
+    "<!-- tgui:inline-html-start -->"
+      + inline_html
+      + "<!-- tgui:inline-html-end -->"
+  );
 });
 
 // Signal tgui that we're ready to receive updates
