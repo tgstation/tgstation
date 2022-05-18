@@ -1,3 +1,4 @@
+/// Basic smoke spell.
 /datum/action/cooldown/spell/smoke
 	name = "Smoke"
 	desc = "This spell spawns a cloud of smoke at your location. \
@@ -21,9 +22,10 @@
 	cooldown_time = 36 SECONDS
 	spell_requirements = NONE
 
-	smoke_type = /datum/effect_system/fluid_spread/smoke/bad
+	smoke_type = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 2
 
+/// Unused smoke that makes people sleep. Used to be for cult?
 /datum/action/cooldown/spell/smoke/disable
 	name = "Paralysing Smoke"
 	desc = "This spell spawns a cloud of paralysing smoke."

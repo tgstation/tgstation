@@ -87,7 +87,6 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /datum/action/cooldown/spell, list())
 
 	var/static/list/enum_vars = list(
 		"invocation_type" = list(INVOCATION_NONE, INVOCATION_WHISPER, INVOCATION_SHOUT, INVOCATION_EMOTE),
-		"smoke_type" = list(NO_SMOKE, SMOKE_HARMLESS, SMOKE_HARMFUL, SMOKE_SLEEPING),
 	)
 
 	//base64 representations of any icons that may need to be displayed

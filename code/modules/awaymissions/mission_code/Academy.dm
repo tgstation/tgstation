@@ -376,7 +376,7 @@
 	spell_requirements = NONE
 	spell_max_level = 0 //cannot be improved
 
-	smoke_type = SMOKE_HARMLESS
+	smoke_type = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 2
 
 	var/datum/weakref/summon_weakref
