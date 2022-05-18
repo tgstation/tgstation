@@ -20,7 +20,7 @@
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = local_turf.return_air()
 	var/datum/gas_mixture/removed
-	if(produces_gas)
+	if(produces_gas && !hypermatter_state)
 		//Remove gas from surrounding area
 		removed = env.remove(gasefficency * env.total_moles())
 	else
@@ -35,7 +35,7 @@
 		else
 			psy_overlay = FALSE
 	damage_archived = damage
-	if(!removed || !removed.total_moles() || isspaceturf(local_turf)) //we're in space or there is no gas to process
+	if((!removed || !removed.total_moles() || isspaceturf(local_turf)) && !hypermatter_state) //we're in space or there is no gas to process
 		if(takes_damage)
 			damage += max((power / 1000) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
 		if(!istype(env, /datum/gas_mixture/immutable) && produces_gas && power) //There is no gas to process, but we are not in a space turf. Lets make them.
@@ -53,20 +53,25 @@
 			env.merge(removed)
 			air_update_turf(FALSE, FALSE)
 	else
-		if(takes_damage)
-			//causing damage
-			deal_damage(removed)
 
-		//registers the current enviromental gases in the various lists and vars
-		setup_lists(removed)
-		//some gases can have special interactions
-		special_gases_interactions(env, removed)
-		//main power calculations proc
-		power_calculations(env, removed)
-		//irradiate at this point
-		emit_radiation()
-		//handles temperature increase and gases made by the crystal
-		temperature_gas_production(env, removed)
+		if(!hypermatter_state)
+			if(takes_damage)
+				//causing damage
+				deal_damage(removed)
+
+			//registers the current enviromental gases in the various lists and vars
+			setup_lists(removed)
+			//some gases can have special interactions
+			special_gases_interactions(env, removed)
+			//main power calculations proc
+			power_calculations(env, removed)
+			//irradiate at this point
+			emit_radiation()
+			//handles temperature increase and gases made by the crystal
+			temperature_gas_production(env, removed)
+
+		else
+			handle_hypermatter_state()
 
 	if(check_cascade_requirements(anomaly_event))
 		cascade_initiated = TRUE
@@ -87,14 +92,14 @@
 
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
-	if(power_changes)
+	if(power_changes && !hypermatter_state)
 		power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor) * (1 - (0.2 * psyCoeff)),0)
 	//After this point power is lowered
 	//This wraps around to the begining of the function
 	//Handle high power zaps/anomaly generation
 	handle_high_power(removed)
 
-	if(prob(15))
+	if(prob(15) && !hypermatter_state)
 		supermatter_pull(loc, min(power/850, 3))//850, 1700, 2550
 
 	//Tells the engi team to get their butt in gear
@@ -103,13 +108,19 @@
 	if(damage == 0 && has_destabilizing_crystal)
 		has_destabilizing_crystal = FALSE
 
+	if(COOLDOWN_FINISHED(src, hypermatter_cooldown))
+		hypermatter_state = FALSE
+
+	update_appearance()
+
 	return TRUE
 
 /obj/machinery/power/supermatter_crystal/proc/handle_crystal_sounds()
 	//We vary volume by power, and handle OH FUCK FUSION IN COOLING LOOP noises.
-	if(power)
-		soundloop.volume = clamp((50 + (power / 50)), 50, 100)
-	if(damage >= 300)
+	if(power || hypermatter_state)
+		var/volume_amount = hypermatter_state ? 25 : (power / 50)
+		soundloop.volume = clamp((50 + volume_amount), 50, 100)
+	if(damage >= 300 || hypermatter_state)
 		soundloop.mid_sounds = list('sound/machines/sm/loops/delamming.ogg' = 1)
 	else
 		soundloop.mid_sounds = list('sound/machines/sm/loops/calm.ogg' = 1)
@@ -117,7 +128,7 @@
 	//We play delam/neutral sounds at a rate determined by power and damage
 	if(last_accent_sound >= world.time || !prob(20))
 		return
-	var/aggression = min(((damage / 800) * (power / 2500)), 1.0) * 100
+	var/aggression = hypermatter_state ? rand(25, 75) : min(((damage / 800) * (power / 2500)), 1.0) * 100
 	if(damage >= 300)
 		playsound(src, SFX_SM_DELAM, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
 	else
@@ -259,14 +270,13 @@
 		//Removes at least 40 matter power
 		matter_power = max(matter_power - removed_matter, 0)
 
-	var/temp_factor = 50
-	if(gasmix_power_ratio > 0.8)
-		//with a perfect gas mix, make the power more based on heat
-		icon_state = "[base_icon_state]_glow"
-	else
+	var/temp_factor = 0
+	if(gasmix_power_ratio <= 0.8)
 		//in normal mode, power is less effected by heat
 		temp_factor = 30
-		icon_state = base_icon_state
+	else
+		//with a perfect gas mix, make the power more based on heat
+		temp_factor = 50
 
 	//if there is more pluox and n2 then anything else, we receive no power increase from heat
 	if(power_changes)

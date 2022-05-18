@@ -3755,6 +3755,7 @@
 #include "code\modules\power\supermatter\supermatter_cascade_components.dm"
 #include "code\modules\power\supermatter\supermatter_delamination.dm"
 #include "code\modules\power\supermatter\supermatter_hit_procs.dm"
+#include "code\modules\power\supermatter\supermatter_hypermatter_state.dm"
 #include "code\modules\power\supermatter\supermatter_process.dm"
 #include "code\modules\power\supermatter\supermatter_radiation.dm"
 #include "code\modules\power\tesla\coil.dm"

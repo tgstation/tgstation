@@ -267,6 +267,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Reference to the warp effect
 	var/atom/movable/supermatter_warp_effect/warp
 
+	///Cooldown for the hypermatter state
+	COOLDOWN_DECLARE(hypermatter_cooldown)
+	///Are we in an hypermatter state?
+	var/hypermatter_state = FALSE
+
+	var/hypermatter_power_amount
+
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	uid = gl_uid++
@@ -303,6 +310,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		move_resist = MOVE_FORCE_OVERPOWERING // Avoid being moved by statues or other memes
 
 	update_constants()
+
+	underlays += image(icon, loc, "crystal_base")
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	if(warp)
@@ -427,6 +436,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	. = ..()
 	if(final_countdown)
 		. += "casuality_field"
+
+/obj/machinery/power/supermatter_crystal/update_appearance(updates)
+	. = ..()
+	if(gasmix_power_ratio > 0.8 && !hypermatter_state)
+		icon_state = "[base_icon_state]_glow"
+	else if(!hypermatter_state)
+		icon_state = base_icon_state
+	else
+		icon_state = "hypermatter"
 
 /obj/machinery/power/supermatter_crystal/proc/countdown()
 	set waitfor = FALSE

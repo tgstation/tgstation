@@ -18,6 +18,15 @@
 	if(!istype(projectile.firer, /obj/machinery/power/emitter) && power_changes)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_ENGINE)
 	if(projectile.armor_flag != BULLET || kiss_power)
+		if(istype(projectile, /obj/projectile/energy/nuclear_particle))
+			var/obj/projectile/energy/nuclear_particle/particle = projectile
+			hypermatter_power_amount += particle.internal_power * 0.1
+			if(particle.internal_power >= 5000)
+				var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
+				var/hypermatter_timer = max(old_time_left + 10 SECONDS, 5 MINUTES)
+				COOLDOWN_START(src, hypermatter_cooldown, hypermatter_timer)
+				hypermatter_state = TRUE
+			return BULLET_ACT_HIT
 		if(kiss_power)
 			psyCoeff = 1
 			psy_overlay = TRUE
@@ -106,7 +115,30 @@
 			qdel(destabilizing_crystal)
 		return
 
+	if(istype(item, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen) && anomaly_event)
+		var/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen/coated_metal_h2 = item
+		var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
+		var/hypermatter_timer = max(old_time_left + coated_metal_h2.amount * 30 SECONDS, 5 MINUTES)
+		COOLDOWN_START(src, hypermatter_cooldown, hypermatter_timer)
+		hypermatter_state = TRUE
+		hypermatter_power_amount += 50000
+		power += 2000
+		qdel(coated_metal_h2)
+		return
+
 	return ..()
+
+/obj/machinery/power/supermatter_crystal/Bumped(atom/movable/bumped_atom)
+	if(!istype(bumped_atom, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen) || !anomaly_event)
+		return ..()
+	var/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen/coated_metal_h2 = bumped_atom
+	var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
+	var/hypermatter_timer = max(old_time_left + coated_metal_h2.amount * 30 SECONDS, 5 MINUTES)
+	COOLDOWN_START(src, hypermatter_cooldown, hypermatter_timer)
+	hypermatter_state = TRUE
+	hypermatter_power_amount += 50000
+	power += 2000
+	qdel(coated_metal_h2)
 
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
