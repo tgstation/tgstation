@@ -87,6 +87,6 @@
 /datum/action/cooldown/spell/jaunt/proc/is_jaunting(mob/living/user)
 	return istype(user.loc, /obj/effect/dummy/phased_mob)
 
-/datum/action/cooldown/spell/jaunt/Remove(mob/living/user)
-	exit_jaunt(user)
+/datum/action/cooldown/spell/jaunt/Remove(mob/living/remove_from)
+	exit_jaunt(remove_from)
 	return ..()

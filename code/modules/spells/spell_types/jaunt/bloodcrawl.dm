@@ -238,7 +238,7 @@
 	if(owner)
 		RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_death)
 
-/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Remove(mob/living/removed_from)
+/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Remove(mob/living/remove_from)
 	UnregisterSignal(removed_from, COMSIG_LIVING_DEATH)
 	return ..()
 

@@ -19,8 +19,7 @@
 	var/duration = 1 MINUTES
 
 /datum/action/cooldown/spell/fire_sworn/Remove(mob/living/remove_from)
-	if(!QDELETED(remove_from))
-		remove_from.remove_status_effect(/datum/status_effect/fire_ring)
+	remove_from.remove_status_effect(/datum/status_effect/fire_ring)
 	return ..()
 
 /datum/action/cooldown/spell/fire_sworn/is_valid_target(atom/cast_on)

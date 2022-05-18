@@ -15,8 +15,8 @@
 	. = ..()
 	spell_requirements |= SPELL_REQUIRES_HUMAN // The spell involves mutations, so it always require human / dna
 
-/datum/action/cooldown/spell/apply_mutations/Remove()
-	remove_mutations(owner)
+/datum/action/cooldown/spell/apply_mutations/Remove(mob/living/remove_from)
+	remove_mutations(remove_from)
 	return ..()
 
 /datum/action/cooldown/spell/apply_mutations/is_valid_target(atom/cast_on)

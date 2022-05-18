@@ -22,8 +22,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/touch/Remove(mob/living/remove_from)
-	if(!QDELETED(remove_from))
-		remove_hand(remove_from)
+	remove_hand(remove_from)
 	return ..()
 
 /datum/action/cooldown/spell/touch/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)

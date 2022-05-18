@@ -35,7 +35,7 @@
 	return ..() && (next_use_time <= world.time)
 
 /datum/action/cooldown/Remove(mob/living/remove_from)
-	if(click_to_activate && !QDELETED(remove_from) && remove_from.click_intercept == src)
+	if(click_to_activate && remove_from.click_intercept == src)
 		unset_click_ability(remove_from, refund_cooldown = FALSE)
 	return ..()
 
