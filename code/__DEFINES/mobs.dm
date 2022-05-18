@@ -594,7 +594,7 @@
 #define SHOES_LAYER 20
 /// Ears layer (Spessmen have ears? Wow)
 #define EARS_LAYER 19
-/// Suit layer (armor, hardsuits, etc.)
+/// Suit layer (armor, coats, etc.)
 #define SUIT_LAYER 18
 /// Glasses layer
 #define GLASSES_LAYER 17
