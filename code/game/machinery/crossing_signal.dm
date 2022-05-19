@@ -56,7 +56,7 @@
 /obj/machinery/crossing_signal/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, span_notice("You disable the [src]'s motion sensors."))
+	balloon_alert(user, "disabled motion sensors")
 	if(signal_state != XING_STATE_GREEN)
 		set_signal_state(XING_STATE_GREEN)
 	obj_flags |= EMAGGED
