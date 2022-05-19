@@ -263,8 +263,7 @@
 	//clear the old since this one is going to have some new value
 	RemoveElement(/datum/element/venomous)
 	AddElement(/datum/element/venomous, new_venom, list(1, new_venom_amt), methods = INJECT)
-	update_appearance(UPDATE_NAME)
-	update_body()
+	update_appearance()
 
 /mob/living/simple_animal/hostile/bee/proc/pollinate(obj/machinery/hydroponics/Hydro)
 	if(!istype(Hydro) || !Hydro.myseed || Hydro.plant_status == HYDROTRAY_PLANT_DEAD || Hydro.recent_bee_visit)
@@ -398,7 +397,6 @@
 		)
 		return ..()
 
-	else
 	var/datum/reagent/mut_reagent = syringe.reagents.get_master_reagent_id()
 	if(!syringe.reagents.has_reagent(mut_reagent, 5))
 		to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))

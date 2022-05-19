@@ -45,7 +45,7 @@
 	if (min_amount_added > max_amount_added)
 		var/tmp_amt = min_amount_added
 		min_amount_added = max_amount_added
-		max_amount_added = min_amount_added
+		max_amount_added = tmp_amt
 
 	if(!islist(venom))
 		venom = list((venom) = max_amount_added)
@@ -168,9 +168,3 @@
 	else if(methods)
 		tmp_holder.expose(target, methods)
 	QDEL_NULL(tmp_holder)
-
-	var/datum/reagents/tmp_holder = new(INFINITY, NO_REACT)
-	tmp_holder.my_atom = source
-	venom.copy_to(tmp_holder, amount_added, preserve_data = TRUE, no_react = TRUE)
-	tmp_holder.trans_to(target, tmp_holder.total_volume, 1, methods = methods, ignore_stomach = TRUE)
-	QDEL_NULL(tmp_holder) // Reagents have circular refs. This makes sure we don't wind up with 5000 of these eating up memory because something forgot to clean up.
