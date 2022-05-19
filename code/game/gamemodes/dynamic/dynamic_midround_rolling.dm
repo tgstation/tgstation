@@ -87,7 +87,7 @@
 
 	var/heavy_coefficient = CLAMP01((next_midround_roll - midround_light_upper_bound) / (midround_heavy_lower_bound - midround_light_upper_bound))
 
-	var/chance 100 * (heavy_coefficient * max(1, chance_modifier))
+	var/chance = 100 * (heavy_coefficient * max(1, chance_modifier))
 	var/sigval = SEND_SIGNAL(src, COMSIG_DYNAMIC_GET_HEAVY_MIDROUND_INJECTION_CHANCE, chance, dry_run)
 	if (sigval & FORCE_HEAVY_MIDROUND)
 		return 100
