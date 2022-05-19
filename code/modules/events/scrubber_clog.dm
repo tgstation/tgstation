@@ -14,8 +14,6 @@
 	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber
 	///What mob will be spawned
 	var/mob/spawned_mob = /mob/living/basic/cockroach
-	///Severity of the event (how dangerous are the spawned mobs, and at what quantity).
-	var/severity = "Minor"
 	///Cap on the number of spawned mobs that can be alive at once.
 	var/maximum_spawns = 3
 	///Interval between mob spawns.
@@ -26,7 +24,7 @@
 	var/clogged = TRUE
 
 /datum/round_event/scrubber_clog/announce()
-	priority_announce("[severity] biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Custodial Notification")
+	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Custodial Notification")
 
 /datum/round_event/scrubber_clog/setup()
 	scrubber = get_scrubber()
@@ -98,9 +96,6 @@
 	max_occurrences = 3
 	earliest_start = 10 MINUTES
 
-/datum/round_event/scrubber_clog/major
-	severity = "Major"
-
 /datum/round_event/scrubber_clog/major/setup()
 	. = ..()
 	maximum_spawns = rand(2,4)
@@ -114,6 +109,9 @@
 		)
 	return(pick(mob_list))
 
+	/datum/round_event/scrubber_clog/announce()
+		priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Infestation Alert")
+
 /datum/round_event_control/scrubber_clog/critical
 	name = "Critical Scrubber Clog"
 	typepath = /datum/round_event/scrubber_clog/critical
@@ -123,7 +121,6 @@
 	earliest_start = 25 MINUTES
 
 /datum/round_event/scrubber_clog/critical
-	severity = "Critical"
 	maximum_spawns = 3
 
 /datum/round_event/scrubber_clog/critical/setup()
@@ -148,7 +145,6 @@
 	max_occurrences = 1
 
 /datum/round_event/scrubber_clog/strange
-	severity = "Strange"
 	maximum_spawns = 3
 
 /datum/round_event/scrubber_clog/strange/setup()
