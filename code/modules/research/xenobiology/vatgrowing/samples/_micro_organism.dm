@@ -108,10 +108,15 @@
 		return
 	QDEL_NULL(vat.biological_sample)
 
-///Goes through the resulting_atoms of this cell_line and turns any /obj/effect/spawner/random entries into weighed random picks from its loot list.
-///This happens recursively until there are no more random spawners in resulting_atoms. Or unitl enough iterations have happened to give up.
-///Returns TRUE if the proc succeeded in processing all random spawners, and FALSE if gave up after going through too many iterations.
-///Note that all spawners used in resulting_atoms MUST have spawn_on_init set to FALSE.
+/**
+ * Goes through the resulting_atoms of this cell_line and turns any /obj/effect/spawner/random entries into weighed random picks from its loot list.
+ *
+ * This happens recursively until there are no more random spawners in resulting_atoms. Or unitl enough iterations have happened to give up.
+ * Note that all spawners used in resulting_atoms MUST have spawn_on_init set to FALSE.
+ * Returns TRUE if the proc succeeded in processing all random spawners, and FALSE if gave up after going through too many iterations.
+ * * vat - The growing vat that contains the cell line
+ * * current_iteration - Used for recursion, don't fill in this parameter unless you're calling from inside this proc
+ */
 /datum/micro_organism/cell_line/proc/convert_spawners_in_resulting_atoms(obj/machinery/plumbing/growing_vat/vat, var/current_iteration = 0)
 	for(var/resulting_atom as anything in resulting_atoms) //return if there are no spawners in resulting_atoms
 		if(ispath(resulting_atom, /obj/effect/spawner/random))
