@@ -11,7 +11,7 @@
 	var/datum/extra_info
 	///The thing we're moving about
 	var/atom/movable/moving
-	///Defines how different move loops override each other. Lower numbers beat higher numbers
+	///Defines how different move loops override each other. Higher numbers beat lower numbers
 	var/priority = MOVEMENT_DEFAULT_PRIORITY
 	///Bitfield of different things that affect how a loop operates
 	var/flags
@@ -43,6 +43,12 @@
 	src.delay = max(delay, world.tick_lag) //Please...
 	src.lifetime = timeout
 	return TRUE
+
+///proc that exists so we can check if this exact moveloop datum already exists (in terms of vars) and so we can stop it from needlessly create a new one to overwrite the old one
+/datum/move_loop/proc/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay = 1, timeout = INFINITY)
+	SHOULD_CALL_PARENT(TRUE)
+	if(loop_type == type && priority == src.priority && flags == src.flags && delay == src.delay && timeout == lifetime)
+		return TRUE
 
 /datum/move_loop/proc/start_loop()
 	SHOULD_CALL_PARENT(TRUE)
@@ -142,6 +148,10 @@
 		return
 	direction = dir
 
+/datum/move_loop/move/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, dir)
+	if(..() && direction == dir)
+		return TRUE
+
 /datum/move_loop/move/move()
 	var/atom/old_loc = moving.loc
 	moving.Move(get_step(moving, direction), direction)
@@ -217,6 +227,10 @@
 
 	if(!isturf(target))
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because we don't care
+
+/datum/move_loop/has_target/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing)
+	if(..() && chasing == target)
+		return TRUE
 
 /datum/move_loop/has_target/Destroy()
 	target = null
@@ -342,6 +356,10 @@
 	if(istype(id, /obj/item/card/id))
 		RegisterSignal(id, COMSIG_PARENT_QDELETING, .proc/handle_no_id) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
 
+/datum/move_loop/has_target/jps/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first)
+	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && id == src.id && simulated_only == src.simulated_only && avoid == src.avoid)
+		return TRUE
+
 /datum/move_loop/has_target/jps/start_loop()
 	. = ..()
 	INVOKE_ASYNC(src, .proc/recalculate_path)
@@ -392,6 +410,10 @@
 	if(!.)
 		return
 	distance = dist
+
+/datum/move_loop/has_target/dist_bound/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, dist = 0)
+	if(..() && distance == dist)
+		return TRUE
 
 ///Returns FALSE if the movement should pause, TRUE otherwise
 /datum/move_loop/has_target/dist_bound/proc/check_dist()
@@ -536,6 +558,10 @@
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/update_slope) //If it can move, update your slope when it does
 		RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 	update_slope()
+
+/datum/move_loop/has_target/move_towards/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, home = FALSE)
+	if(..() && home == src.home)
+		return TRUE
 
 /datum/move_loop/has_target/move_towards/Destroy()
 	if(home)
@@ -684,6 +710,10 @@
 	if(!.)
 		return
 	potential_directions = directions
+
+/datum/move_loop/move_rand/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, list/directions)
+	if(..() && (length(potential_directions | directions) == length(potential_directions))) //i guess this could be usefull if actually it really has yet to move
+		return TRUE
 
 /datum/move_loop/move_rand/move()
 	var/list/potential_dirs = potential_directions.Copy()
