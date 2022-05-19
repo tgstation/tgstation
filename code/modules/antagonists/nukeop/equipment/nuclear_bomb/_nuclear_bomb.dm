@@ -416,7 +416,6 @@ GLOBAL_VAR(station_nuke_source)
 
 /// Arms the nuke, or disarms it if it's already active.
 /obj/machinery/nuclearbomb/proc/toggle_nuke_armed()
-	var/turf/our_turf = get_turf(src)
 	if(safety)
 		to_chat(usr, span_danger("The safety is still on."))
 		return
@@ -429,6 +428,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /// Arms the nuke, making it active and triggering all pinpointers to start counting down (+delta alert)
 /obj/machinery/nuclearbomb/proc/arm_nuke(mob/armer)
+	var/turf/our_turf = get_turf(src)
 	message_admins("\The [src] was armed at [ADMIN_VERBOSEJMP(our_turf)] by [armer ? ADMIN_LOOKUPFLW(armer) : "an unknown user"].")
 	log_game("\The [src] was armed at [loc_name(our_turf)] by [armer ? key_name(armer) : "an unknown user"].")
 
@@ -445,6 +445,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /// Disarms the nuke, reverting all pinpointers and the security level
 /obj/machinery/nuclearbomb/proc/disarm_nuke(mob/disarmer)
+	var/turf/our_turf = get_turf(src)
 	message_admins("\The [src] at [ADMIN_VERBOSEJMP(our_turf)] was disarmed by [disarmer ? ADMIN_LOOKUPFLW(disarmer) : "an unknown user"].")
 	log_game("\The [src] at [loc_name(our_turf)] was disarmed by [disarmer ? key_name(disarmer) : "an unknown user"].")
 
@@ -502,7 +503,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /obj/machinery/nuclearbomb/proc/actually_explode()
 	if(!core)
-		Cinematic(CINEMATIC_NUKE_NO_CORE, world)
+		play_cinematic(/datum/cinematic/nuke/no_core, world)
 		SSticker.roundend_check_paused = FALSE
 		return
 
@@ -556,33 +557,56 @@ GLOBAL_VAR(station_nuke_source)
 	SSticker.roundend_check_paused = FALSE
 
 /obj/machinery/nuclearbomb/proc/really_actually_explode(detonation_status)
-	var/turf/bomb_location = get_turf(src)
-	Cinematic(
-		get_cinematic_type(detonation_status),
-		world,
-		CALLBACK(SSticker, /datum/controller/subsystem/ticker/proc/station_explosion_detonation, src)
-	)
+	play_cinematic(get_cinematic_type(detonation_status), world, CALLBACK(SSticker, /datum/controller/subsystem/ticker/proc/station_explosion_detonation, src))
 
+	var/turf/bomb_location = get_turf(src)
+	var/list/z_levels_to_blow = list()
 	if(detonation_status == DETONATION_HIT_STATION)
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/kill_everyone_on_z, SSmapping.levels_by_trait(ZTRAIT_STATION))
+		z_levels_to_blow |= SSmapping.levels_by_trait(ZTRAIT_STATION)
 
 	// Don't kill people in the station if the nuke missed, even if we are technically on the same z-level
 	else if(detonation_status != DETONATION_NEAR_MISSED_STATION)
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/kill_everyone_on_z, bomb_location.z)
+		z_levels_to_blow |= bomb_location.z
+
+	if(length(z_levels_to_blow))
+		nuke_effects(z_levels_to_blow)
+
+/// Cause nuke effects to the passed z-levels.
+/obj/machinery/nuclearbomb/proc/nuke_effects(list/affected_z_levels)
+	INVOKE_ASYNC(GLOBAL_PROC, .proc/callback_on_everyone_on_z, affected_z_levels, CALLBACK(GLOBAL_PROC, /proc/nuke_gib))
 
 /// Gets what type of cinematic this nuke showcases depending on where we detonated.
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(detonation_status)
 	if(isnull(detonation_status))
-		return CINEMATIC_SELFDESTRUCT_MISS
+		return /datum/cinematic/nuke/self_destruct_miss
 
-	return CINEMATIC_SELFDESTRUCT
+	return /datum/cinematic/nuke/self_destruct
 
 #undef NUKE_RADIUS
 
 /**
- * Gibs everyone in the list of z-levels you provide.
+ * Helper proc that handles gibbing someone who has been nuked.
  */
-/proc/kill_everyone_on_z(list/z_levels)
+/proc/nuke_gib(mob/living/gibbed)
+	if(istype(gibbed.loc, /obj/structure/closet/secure_closet/freezer))
+		var/obj/structure/closet/secure_closet/freezer/freezer = gibbed.loc
+		if(!freezer.jones)
+			to_chat(gibbed, span_boldannounce("You hold onto [freezer] as the nuclear bomb goes off. \
+				Luckily, as [freezer] is lead-lined, you survive."))
+			freezer.jones = TRUE
+			return FALSE
+
+	if(gibbed.stat == DEAD)
+		return FALSE
+
+	to_chat(gibbed, span_userdanger("You are shredded to atoms!"))
+	gibbed.gib()
+	return TRUE
+
+/**
+ * Invokes a callback on every living mob on the provided z level.
+ */
+/proc/callback_on_everyone_on_z(list/z_levels, datum/callback/to_do)
 	if(!z_levels)
 		CRASH("kill_everone_on_z called without any z-levels.")
 	if(!islist(z_levels))
@@ -593,16 +617,4 @@ GLOBAL_VAR(station_nuke_source)
 		if(target_turf && !(target_turf.z in z_levels))
 			continue
 
-		if(istype(victim.loc, /obj/structure/closet/secure_closet/freezer))
-			var/obj/structure/closet/secure_closet/freezer/freezer = victim.loc
-			if(!freezer.jones)
-				to_chat(victim, span_boldannounce("You hold onto [freezer] as the nuclear bomb goes off. \
-					Luckily, as [freezer] is lead-lined, you survive."))
-				freezer.jones = TRUE
-				continue
-
-		if(victim.stat == DEAD)
-			continue
-
-		to_chat(victim, span_userdanger("You are shredded to atoms!"))
-		victim.gib()
+		to_do.Invoke(victim)

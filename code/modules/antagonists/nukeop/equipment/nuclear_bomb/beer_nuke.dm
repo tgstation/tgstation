@@ -30,7 +30,7 @@
 	SSticker.roundend_check_paused = FALSE
 	var/turf/bomb_location = get_turf(src)
 	if(!bomb_location)
-		disarm()
+		disarm_nuke()
 		return
 	if(is_station_level(bomb_location.z))
 		addtimer(CALLBACK(src, .proc/really_actually_explode), 11 SECONDS)
@@ -51,7 +51,7 @@
 	var/datum/effect_system/fluid_spread/foam/foam = new
 	foam.set_up(200, location = get_turf(src), carry = R)
 	foam.start()
-	disarm()
+	disarm_nuke()
 
 /obj/machinery/nuclearbomb/beer/proc/stationwide_foam()
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")
