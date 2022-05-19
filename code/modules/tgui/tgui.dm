@@ -95,12 +95,20 @@
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
-		window.initialize(
-			strict_mode = TRUE,
-			fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
-			assets = list(
-				get_asset_datum(pooled ? /datum/asset/simple/tgui : /datum/asset/simple/tgui_say),
-			))
+		if(pooled)
+			window.initialize(
+				strict_mode = TRUE,
+				fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
+				assets = list(
+					get_asset_datum(/datum/asset/simple/tgui),
+				))
+		else
+			window.initialize(
+				strict_mode = TRUE,
+				fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
+				inline_js = file2text('tgui/public/tgui-say.bundle.js'),
+				inline_css = file2text('tgui/public/tgui-say.bundle.css'),
+			)
 	else
 		window.send_message("ping")
 	var/flush_queue = window.send_asset(get_asset_datum(
