@@ -73,6 +73,9 @@
 /obj/item/mod/construction/plating/medical
 	theme = /datum/mod_theme/medical
 
+/obj/item/mod/construction/plating/security
+	theme = /datum/mod_theme/security
+
 /obj/item/mod/construction/plating/cosmohonk
 	theme = /datum/mod_theme/cosmohonk
 

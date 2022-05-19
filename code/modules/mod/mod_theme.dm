@@ -615,6 +615,7 @@
 		leading to an overall lower capacity for modules."
 	default_skin = "security"
 	armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 25, BIO = 100, FIRE = 75, ACID = 75, WOUND = 15)
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 3
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	allowed_suit_storage = list(

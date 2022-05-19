@@ -1525,6 +1525,7 @@
 	description = "Security suits for space crime handling."
 	prereq_ids = list("mod_advanced", "sec_basic")
 	design_ids = list(
+		"mod_plating_security",
 		"mod_visor_sechud",
 		"mod_stealth",
 		"mod_mag_harness",

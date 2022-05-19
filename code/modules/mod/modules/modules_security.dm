@@ -224,6 +224,7 @@
 /obj/item/mod/module/megaphone
 	name = "MOD megaphone module"
 	desc = "A microchip megaphone linked to a MODsuit, for very important purposes, like: loudness."
+	icon_state = "megaphone"
 	module_type = MODULE_TOGGLE
 	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
@@ -238,7 +239,7 @@
 		return
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, .proc/handle_speech)
 
-/obj/item/mod/module/megaphone/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/megaphone/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -259,6 +260,7 @@
 		space-proofing. And thus: criminal capture! Creates a prisoner transport bag \
 		around the apprehended that has breathable atmos and even stabilizes critical \
 		conditions."
+	icon_state = "criminalcapture"
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
@@ -341,6 +343,7 @@
 	icon_state = "delivery"
 	inhand_icon_state = "flashbang"
 	det_time = 3 SECONDS
+	/// Mob that threw the grenade.
 	var/mob/living/thrower
 
 /obj/item/grenade/mirage/arm_grenade(mob/user, delayoverride, msg, volume)
@@ -359,6 +362,7 @@
 /obj/item/mod/module/projectile_dampener
 	name = "MOD projectile dampener module"
 	desc = "Using technology from peaceborgs, this module weakens all projectiles in nearby range."
+	icon_state = "projectile_dampener"
 	module_type = MODULE_TOGGLE
 	complexity = 3
 	active_power_cost = DEFAULT_CHARGE_DRAIN
@@ -391,7 +395,7 @@
 	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, .proc/dampen_projectile)
 	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, .proc/release_projectile)
 
-/obj/item/mod/module/projectile_dampener/on_deactivation(display_message)
+/obj/item/mod/module/projectile_dampener/on_deactivation(display_message, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -406,22 +410,3 @@
 	projectile.damage /= damage_multiplier
 	projectile.speed /= speed_multiplier
 	projectile.cut_overlay(projectile_effect)
-
-///Espionage -
-/obj/item/mod/module/espionage
-	name = "MOD espionage module"
-	desc = "Based off typical storage compartments, this system allows the suit to holster a \
-		standard firearm across its surface and allow for extremely quick retrieval. \
-		While some users prefer the chest, others the forearm for quick deployment, \
-		some law enforcement prefer the holster to extend from the thigh."
-	icon_state = "espionage"
-	module_type = MODULE_USABLE
-	complexity = 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	incompatible_modules = list(/obj/item/mod/module/espionage)
-	cooldown_time = 0.5 SECONDS
-
-/obj/item/mod/module/holster/on_use()
-	. = ..()
-	if(!.)
-		return
