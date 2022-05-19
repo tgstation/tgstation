@@ -29,6 +29,10 @@
 /datum/id_trim/away/old/apc
 	access = list(ACCESS_ENGINE_EQUIP)
 
+/// Trim for the oldstation ruin/Charlie station
+/datum/id_trim/away/old/robo
+	access = list(ACCESS_ROBOTICS)
+
 /// Trim for the cat surgeon ruin.
 /datum/id_trim/away/cat_surgeon
 	assignment = "Cat Surgeon"

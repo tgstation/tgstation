@@ -797,6 +797,13 @@
 	desc = "A special ID card that allows access to APC terminals."
 	trim = /datum/id_trim/away/old/apc
 
+/obj/item/card/id/away/old/robo
+	name = "Delta Station Roboticist's ID card"
+	desc = "An ID card that allows access to bots maintenance protocols."
+	trim = /datum/id_trim/away/old/robo
+
+	/datum/id_trim/away/old/robo
+
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
 
