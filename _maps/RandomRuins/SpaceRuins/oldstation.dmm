@@ -437,7 +437,7 @@
 "bl" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/light_switch/directional/north,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "bm" = (
 /obj/effect/decal/cleanable/dirt,
@@ -999,7 +999,7 @@
 /turf/closed/mineral/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "cL" = (
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/ancientstation/beta/storage)
@@ -1548,7 +1548,7 @@
 /area/ruin/space/ancientstation/charlie/dorms)
 "eg" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "eh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2093,7 +2093,7 @@
 /area/ruin/space/ancientstation/delta/ai)
 "fA" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/ancientstation/beta/storage)
@@ -2276,7 +2276,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "fZ" = (
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "ga" = (
 /turf/closed/wall,
@@ -2436,9 +2436,7 @@
 /obj/structure/rack,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg2"
-	},
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "gv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3677,7 +3675,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "jm" = (
@@ -3857,6 +3854,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "jH" = (
@@ -5817,7 +5815,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "ot" = (
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "ou" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5863,7 +5861,7 @@
 	amount = 25
 	},
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "oy" = (
 /obj/structure/table,
@@ -5912,7 +5910,7 @@
 /area/ruin/space/ancientstation/beta/medbay)
 "oC" = (
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "oD" = (
 /obj/effect/decal/cleanable/xenoblood/xgibs/core,
@@ -6256,8 +6254,21 @@
 "pY" = (
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/power/apc/auto_name/directional/north,
-/turf/open/floor/plating/airless,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
+"qd" = (
+/obj/item/shard{
+	icon_state = "medium";
+	pixel_y = 5;
+	pixel_x = 6
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "qf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -6381,8 +6392,8 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "rW" = (
 /obj/effect/spawner/random/maintenance,
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
 	},
 /area/ruin/space/ancientstation/beta/storage)
 "rX" = (
@@ -6681,6 +6692,13 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
+"xH" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/ancientstation/beta/storage)
 "xL" = (
 /obj/machinery/door/airlock{
 	name = "Custodial Closet"
@@ -6699,13 +6717,13 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "yd" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "ye" = (
 /obj/effect/spawner/structure/window/hollow/reinforced,
@@ -6969,15 +6987,15 @@
 /turf/open/floor/engine/o2,
 /area/ruin/space/ancientstation/beta/atmos)
 "Bw" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plating/airless,
+/obj/structure/foamedmetal,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "Bz" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "BD" = (
 /obj/structure/closet/emcloset/anchored,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "BJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7011,6 +7029,10 @@
 "Ck" = (
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/beta/medbay)
+"Cn" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/beta/storage)
 "Cp" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Engineering External Access"
@@ -7140,12 +7162,14 @@
 /obj/structure/rack,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/item/tank/internals/emergency_oxygen,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/ruin/space/ancientstation/beta/storage)
 "ED" = (
 /obj/structure/closet/firecloset,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "EI" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7227,6 +7251,11 @@
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ancientstation/beta/hall)
+"FR" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/ancientstation/beta/storage)
 "FV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7240,7 +7269,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "GO" = (
-/turf/open/floor/plating/airless{
+/obj/structure/cable,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/ancientstation/beta/storage)
@@ -7487,6 +7518,7 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "storage room"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/storage)
 "KD" = (
@@ -7578,7 +7610,7 @@
 	dir = 1;
 	pixel_y = 23
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "LG" = (
 /obj/item/shard{
@@ -7935,7 +7967,7 @@
 /area/ruin/space/ancientstation/charlie/sec)
 "RR" = (
 /obj/effect/spawner/random/maintenance,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "RV" = (
 /obj/structure/cable,
@@ -8030,7 +8062,8 @@
 /area/ruin/space/ancientstation/beta/supermatter)
 "SL" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating/airless,
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/storage)
 "SM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -8910,7 +8943,7 @@ TT
 eg
 cL
 oC
-KO
+xH
 He
 YN
 Hj
@@ -9006,7 +9039,7 @@ np
 mV
 TT
 pY
-fZ
+Cn
 ED
 He
 TT
@@ -9055,7 +9088,7 @@ cr
 dM
 TT
 bl
-fZ
+Cn
 BD
 JX
 aa
@@ -9104,7 +9137,7 @@ Cq
 dM
 KA
 GO
-fZ
+Cn
 xU
 RK
 aa
@@ -9116,7 +9149,7 @@ Pj
 Sk
 Kp
 Sb
-Vl
+qd
 dF
 dF
 dF
@@ -9153,7 +9186,7 @@ mW
 mV
 He
 Lo
-fZ
+FR
 SL
 MW
 aa
