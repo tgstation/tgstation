@@ -26,7 +26,7 @@
 		return FALSE
 
 	command = tgui_input_text(cast_on, "Speak with the Voice of God", "Command")
-	if(QDELETED(src) || QDELETED(cast_on) || !can_cast_spell(feedback = FALSE))
+	if(QDELETED(src) || QDELETED(cast_on) || !can_cast_spell())
 		return FALSE
 	if(!command)
 		reset_spell_cooldown()

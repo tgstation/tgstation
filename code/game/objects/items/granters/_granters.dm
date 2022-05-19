@@ -45,6 +45,7 @@
 			reading = FALSE
 			return
 	if(do_after(user, 5 SECONDS, src))
+		uses--
 		on_reading_finished(user)
 	reading = FALSE
 

@@ -54,7 +54,7 @@
 	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIME_VOW
 	antimagic_flags = NONE
 
-	invocation = "" // Set via get_invocation_content().
+	invocation = ""
 	invocation_type = INVOCATION_EMOTE
 	invocation_self_message = span_notice("You form a blockade in front of yourself.")
 	spell_max_level = 1

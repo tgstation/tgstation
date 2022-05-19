@@ -80,7 +80,7 @@
 	var/sparks_amt = 0
 	/// The typepath of the smoke to create on cast.
 	var/smoke_type
-	/// The amount of smoke to create on case. This is a range so a value of 5 will create enough smoke to cover everything within 5 steps.
+	/// The amount of smoke to create on cast. This is a range, so a value of 5 will create enough smoke to cover everything within 5 steps.
 	var/smoke_amt = 0
 
 /datum/action/cooldown/spell/Grant(mob/grant_to)
@@ -94,26 +94,38 @@
 	if(!owner)
 		return
 
-	owner.client?.stat_panel.send_message("check_spells")
-
 	// Register some signals so our button's icon stays up to date
 	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
 		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
 		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
 	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
+	owner.client?.stat_panel.send_message("check_spells")
 
 /datum/action/cooldown/spell/Remove(mob/living/remove_from)
+
+	remove_from.client?.stat_panel.send_message("check_spells")
 	UnregisterSignal(remove_from, list(
 		COMSIG_MOB_AFTER_EXIT_JAUNT,
 		COMSIG_MOB_ENTER_JAUNT,
 		COMSIG_MOB_EQUIPPED_ITEM,
 		COMSIG_MOVABLE_Z_CHANGED,
 	))
+
 	return ..()
 
+//
 /datum/action/cooldown/spell/IsAvailable()
 	return ..() && can_cast_spell(feedback = FALSE)
+
+// We implement this check before parent call on Trigger,
+// so we can give feedback to people clicking on unavailable spells
+// (even though it's redundant, as Trigger checks IsAvailable / can_cast_spell)
+/datum/action/cooldown/spell/Trigger(trigger_flags, atom/target)
+	if(!can_cast_spell())
+		return FALSE
+
+	return ..()
 
 /datum/action/cooldown/spell/set_click_ability(mob/on_who)
 	if(SEND_SIGNAL(on_who, COMSIG_MOB_SPELL_ACTIVATED, src) & COMPONENT_CANCEL_SPELL)
@@ -121,10 +133,8 @@
 
 	return ..()
 
-// Where the cast chain is called from, via the parent call
+// Where the cast chain starts
 /datum/action/cooldown/spell/PreActivate(atom/target)
-	if(!can_cast_spell())
-		return FALSE
 	if(!is_valid_target(target))
 		return FALSE
 

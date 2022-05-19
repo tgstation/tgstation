@@ -14,16 +14,13 @@
 	var/target_radius = 7
 
 /datum/action/cooldown/spell/list_target/PreActivate(atom/caster)
-	if(!can_cast_spell())
-		return FALSE
-
 	var/list/list_targets = get_list_targets(caster, target_radius)
 	if(!length(list_targets))
 		caster.balloon_alert(caster, "no targets nearby!")
 		return FALSE
 
 	var/atom/chosen = tgui_input_list(caster, choose_target_message, name, sort_names(list_targets))
-	if(QDELETED(src) || QDELETED(caster) || QDELETED(chosen) || !can_cast_spell(feedback = FALSE))
+	if(QDELETED(src) || QDELETED(caster) || QDELETED(chosen) || !can_cast_spell())
 		return FALSE
 
 	if(get_dist(chosen, caster) < target_radius)

@@ -20,7 +20,7 @@
 		/obj/structure/mirror,
 	))
 
-/datum/action/cooldown/spell/jaunt/mirror_walk/can_cast_spell(feedback)
+/datum/action/cooldown/spell/jaunt/mirror_walk/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE

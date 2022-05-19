@@ -5,6 +5,7 @@
 	icon_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "invisible_chair"
 	panel = "Mime"
+	sound = null
 
 	school = SCHOOL_MIME
 	cooldown_time = 30 SECONDS

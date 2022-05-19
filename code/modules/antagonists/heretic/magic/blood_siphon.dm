@@ -17,11 +17,7 @@
 	cast_range = 9
 
 /datum/action/cooldown/spell/pointed/blood_siphon/can_cast_spell(feedback = TRUE)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	return isliving(owner)
+	return ..() && isliving(owner)
 
 /datum/action/cooldown/spell/pointed/blood_siphon/is_valid_target(atom/cast_on)
 	return ..() && isliving(cast_on)

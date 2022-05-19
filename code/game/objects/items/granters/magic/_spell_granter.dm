@@ -49,7 +49,7 @@
 	var/datum/action/cooldown/spell/new_spell = new granted_action(user.mind || user)
 	new_spell.Grant(user)
 	user.log_message("learned the spell [action_name] ([new_spell])", LOG_ATTACK, color = "orange")
-	if(uses <= 1)
+	if(uses <= 0)
 		user.visible_message(span_warning("[src] glows dark for a second!"))
 
 /obj/item/book/granter/action/spell/recoil(mob/living/user)

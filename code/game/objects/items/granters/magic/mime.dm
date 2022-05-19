@@ -6,7 +6,7 @@
 
 /obj/item/book/granter/action/spell/mime/attack_self(mob/user)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	// Gives the user a vow ability if they don't have one
@@ -14,8 +14,6 @@
 	if(!vow && user.mind)
 		vow = new(user.mind)
 		vow.Grant(user)
-
-	return TRUE
 
 /obj/item/book/granter/action/spell/mime/mimery_blockade
 	granted_action = /datum/action/cooldown/spell/forcewall/mime

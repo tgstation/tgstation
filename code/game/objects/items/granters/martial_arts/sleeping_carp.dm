@@ -21,7 +21,15 @@
 
 /obj/item/book/granter/martial/carp/on_reading_finished(mob/living/carbon/user)
 	. = ..()
+	update_appearance()
+
+/obj/item/book/granter/martial/carp/update_appearance(updates)
+	. = ..()
 	if(uses <= 0)
-		desc = "It's completely blank."
 		name = "empty scroll"
+		desc = "It's completely blank."
 		icon_state = "blankscroll"
+	else
+		name = initial(name)
+		desc = initial(desc)
+		icon_state = initial(icon_state)

@@ -1,4 +1,3 @@
-
 /datum/action/cooldown/spell/pointed/projectile/finger_guns
 	name = "Finger Guns"
 	desc = "Shoot up to three mimed bullets from your fingers that damage and mute their targets. \
@@ -7,11 +6,12 @@
 	icon_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "finger_guns0"
 	panel = "Mime"
+	sound = null
 
 	school = SCHOOL_MIME
 	cooldown_time = 30 SECONDS
 
-	invocation = "" // Set by get_invocation_content()
+	invocation = ""
 	invocation_type = INVOCATION_EMOTE
 	invocation_self_message = span_danger("You fire your finger gun!")
 
