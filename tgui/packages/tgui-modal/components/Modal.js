@@ -5,7 +5,7 @@ import { Component } from 'inferno';
 import { dragStartHandler, recallWindowGeometry, resizeStartHandler } from '../../tgui/drag';
 import { Layout } from '../../tgui/layouts/Layout';
 
-const DEFAULT_SIZE = [400, 600];
+const DEFAULT_SIZE = [300, 200];
 
 export class Modal extends Component {
   componentDidMount() {
@@ -13,29 +13,7 @@ export class Modal extends Component {
     Byond.winset(Byond.windowId, {
       'can-close': Boolean(canClose),
     });
-    this.updateGeometry();
-  }
-
-  componentDidUpdate(prevProps) {
-    const shouldUpdateGeometry = (
-      this.props.width !== prevProps.width
-      || this.props.height !== prevProps.height
-    );
-    if (shouldUpdateGeometry) {
-      this.updateGeometry();
-    }
-  }
-
-  updateGeometry() {
-
-    const options = {
-      size: DEFAULT_SIZE,
-    };
-    if (this.props.width && this.props.height) {
-      options.size = [this.props.width, this.props.height];
-    }
-
-    recallWindowGeometry(options);
+    recallWindowGeometry({ size: DEFAULT_SIZE });
   }
 
   render() {
@@ -46,8 +24,6 @@ export class Modal extends Component {
       children,
       buttons,
     } = this.props;
-    const { debugLayout } = useDebug(this.context);
-    const dispatch = useDispatch(this.context);
     return (
       <Layout
         className="Window"
@@ -57,21 +33,14 @@ export class Modal extends Component {
           title={title}
           onDragStart={dragStartHandler}
           onClose={() => {
-            logger.log('pressed close');
-            dispatch(backendSuspendStart());
+            Byond.sendMessage('button');
           }}
           canClose={canClose}>
           {buttons}
         </TitleBar>
         <div
-          className={classes([
-            'Window__rest',
-            debugLayout && 'debug-layout',
-          ])}>
+          className="Window__rest">
           {children}
-          {showDimmer && (
-            <div className="Window__dimmer" />
-          )}
         </div>
         {fancy && (
           <>

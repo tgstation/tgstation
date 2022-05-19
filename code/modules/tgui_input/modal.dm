@@ -14,7 +14,7 @@
 	modal.wait()
 
 /datum/tgui_modal
-	/// Boolean field des cribing if the tgui_modal was closed by the user.
+	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 	/// The title of the TGUI window
 	var/title
@@ -35,7 +35,7 @@
 			inline_js = file2text('tgui/public/tgui-modal.bundle.js'),
 			inline_css = file2text('tgui/public/tgui-modal.bundle.css'),
 		)
-	initialize()
+	window.subscribe(src, .proc/on_message)
 
 /datum/tgui_modal/proc/close(mob/user)
 	closed = TRUE
@@ -44,9 +44,6 @@
 /datum/tgui_modal/proc/wait()
 	while(!closed && !QDELETED(src))
 		stoplag(1)
-
-/datum/tgui_modal/proc/initialize()
-	window.subscribe(src, .proc/on_message)
 
 /datum/tgui_modal/proc/on_message(type, payload)
 	if (type == "button")
