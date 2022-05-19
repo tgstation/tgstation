@@ -11,7 +11,6 @@
 
 /datum/dynamic_ruleset/midround // Can be drafted once in a while during a round
 	ruletype = "Midround"
-	// MOTHBLOCKS TODO: Unit test that everything has this set
 	var/midround_ruleset_style
 	/// If the ruleset should be restricted from ghost roles.
 	var/restrict_ghost_roles = TRUE
