@@ -583,6 +583,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				no_eyeslay.pixel_x += add_pixel_x
 				no_eyeslay.pixel_y += add_pixel_y
 				standing += no_eyeslay
+			else
+				eye_organ.refresh()
 
 			if(!no_eyeslay)
 				for(var/eye_overlay in eye_organ.generate_body_overlay(species_human))
