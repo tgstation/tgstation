@@ -413,8 +413,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
 	var/list/filelist = flist(path)
 	for(var/map in filelist)
-		var/datum/map_template/T = new(path = "[path][map]", rename = "[map]")
-		map_templates[T.name] = T
+		var/datum/map_template/template = new(path = "[path][map]", rename = "[map]")
+		map_templates[template.name] = template
 
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
@@ -428,54 +428,50 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	banned += generateMapList("spaceruinblacklist.txt")
 	banned += generateMapList("iceruinblacklist.txt")
 
-	for(var/item in sort_list(subtypesof(/datum/map_template/ruin), /proc/cmp_ruincost_priority))
-		var/datum/map_template/ruin/ruin_type = item
+	for(var/datum/map_template/ruin/ruin_type as anything in sort_list(subtypesof(/datum/map_template/ruin), /proc/cmp_ruincost_priority))
 		// screen out the abstract subtypes
 		if(!initial(ruin_type.id))
 			continue
-		var/datum/map_template/ruin/R = new ruin_type()
+		var/datum/map_template/ruin/ruin_template = new ruin_type()
 
-		if(banned.Find(R.mappath))
+		if(banned.Find(ruin_template.mappath))
 			continue
 
-		map_templates[R.name] = R
-		ruins_templates[R.name] = R
+		map_templates[ruin_template.name] = ruin_template
+		ruins_templates[ruin_template.name] = ruin_template
 
-		if (!(R.ruin_type in themed_ruins))
-			themed_ruins[R.ruin_type] = list()
-		themed_ruins[R.ruin_type][R.name] = R
+		if (!(ruin_template.ruin_type in themed_ruins))
+			themed_ruins[ruin_template.ruin_type] = list()
+		themed_ruins[ruin_template.ruin_type][ruin_template.name] = ruin_template
 	SEND_SIGNAL(src, COMSIG_MAPPING_PRELOADING_RUINS, map_templates, ruins_templates, themed_ruins)
 
 /datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
 	var/list/unbuyable = generateMapList("unbuyableshuttles.txt")
 
-	for(var/item in subtypesof(/datum/map_template/shuttle))
-		var/datum/map_template/shuttle/shuttle_type = item
+	for(var/datum/map_template/shuttle/shuttle_type as anything in subtypesof(/datum/map_template/shuttle))
 		if(!(initial(shuttle_type.suffix)))
 			continue
 
-		var/datum/map_template/shuttle/S = new shuttle_type()
-		if(unbuyable.Find(S.mappath))
-			S.who_can_purchase = null
+		var/datum/map_template/shuttle/shuttle_template = new shuttle_type()
+		if(unbuyable.Find(shuttle_template.mappath))
+			shuttle_template.who_can_purchase = null
 
-		shuttle_templates[S.shuttle_id] = S
-		map_templates[S.shuttle_id] = S
+		shuttle_templates[shuttle_template.shuttle_id] = shuttle_template
+		map_templates[shuttle_template.shuttle_id] = shuttle_template
 	SEND_SIGNAL(src, COMSIG_MAPPING_PRELOADING_SHUTTLES, map_templates, shuttle_templates)
 
 /datum/controller/subsystem/mapping/proc/preloadShelterTemplates()
-	for(var/item in subtypesof(/datum/map_template/shelter))
-		var/datum/map_template/shelter/shelter_type = item
+	for(var/datum/map_template/shelter/shelter_type as anything in subtypesof(/datum/map_template/shelter))
 		if(!(initial(shelter_type.mappath)))
 			continue
-		var/datum/map_template/shelter/S = new shelter_type()
+		var/datum/map_template/shelter/shelter_template = new shelter_type()
 
-		shelter_templates[S.shelter_id] = S
-		map_templates[S.shelter_id] = S
+		shelter_templates[shelter_template.shelter_id] = shelter_template
+		map_templates[shelter_template.shelter_id] = shelter_template
 	SEND_SIGNAL(src, COMSIG_MAPPING_PRELOADING_SHELTERS, map_templates, shelter_templates)
 
 /datum/controller/subsystem/mapping/proc/preloadHolodeckTemplates()
-	for(var/item in subtypesof(/datum/map_template/holodeck))
-		var/datum/map_template/holodeck/holodeck_type = item
+	for(var/datum/map_template/holodeck/holodeck_type as anything in subtypesof(/datum/map_template/holodeck))
 		if(!(initial(holodeck_type.mappath)))
 			continue
 		var/datum/map_template/holodeck/holo_template = new holodeck_type()
