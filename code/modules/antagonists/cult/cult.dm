@@ -496,14 +496,14 @@
 	shoes = /obj/item/clothing/shoes/cult/alt
 	r_hand = /obj/item/melee/blood_magic/stun
 
-/datum/outfit/cultist/post_equip(mob/living/carbon/human/H, visualsOnly)
-	H.eye_color_left = BLOODCULT_EYE
-	H.eye_color_right = BLOODCULT_EYE
-	var/obj/item/organ/eyes/eyes = H.getorgan(/obj/item/organ/eyes)
+/datum/outfit/cultist/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+	equipped.eye_color_left = BLOODCULT_EYE
+	equipped.eye_color_right = BLOODCULT_EYE
+	var/obj/item/organ/eyes/eyes = equipped.getorgan(/obj/item/organ/eyes)
 	if(eyes)
 		eyes.refresh()
-	H.update_body()
+	equipped.update_body()
 
-	var/obj/item/clothing/suit/hooded/hooded = locate() in H
+	var/obj/item/clothing/suit/hooded/hooded = locate() in equipped
 	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms
 	hooded.ToggleHood()
