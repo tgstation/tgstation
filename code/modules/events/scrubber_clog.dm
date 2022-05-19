@@ -30,6 +30,9 @@
 	scrubber = get_scrubber()
 	if(!scrubber)
 		CRASH("Unable to find suitable scrubber.")
+
+	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
+
 	spawned_mob = get_mob()
 	endWhen = rand(300, 600)
 	maximum_spawns = rand(3, 5)
@@ -47,6 +50,8 @@
 
 /datum/round_event/scrubber_clog/end() //No end announcement. If you want to take the easy way out and just leave the vent welded, you must open it at your own peril.
 	scrubber.unclog()
+	scrubber = null
+	living_mobs.Cut()
 
 /**
  * Selects which mob will be spawned for a given scrubber clog event.
@@ -88,6 +93,28 @@
 	for(var/mob/living/mob_check in living_mobs)
 		if(mob_check.health <= 0)
 			living_mobs -= mob_check
+
+/**
+ * Finds a new scrubber for the event if the original is destroyed.
+ *
+ * This is used when the scrubber for the event is destroyed. It picks a new scrubber and announces that the event has moved elsewhere.
+ * Handles the scrubber ref if there are no valid scrubbers to replace it with.
+ */
+
+/datum/round_event/scrubber_clog/proc/scrubber_move()
+	SIGNAL_HANDLER
+	scrubber = null //If by some great calamity, the last valid scrubber is destroyed, the ref is cleared.
+	scrubber = get_scrubber()
+	if(!scrubber)
+		CRASH("Unable to find suitable scrubber.")
+
+	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
+
+	switch(pick(1,2))
+		if(1)
+			priority_announce("Lifesign readings have moved to a new location in the ventilation network. New location: [get_area(scrubber)]", "Lifesign Notification")
+		if(2)
+			priority_announce("Lifesign readings have moved to a new location in the ventilation network. New location is unknown at this time.", "Lifesign Notification")
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Major Scrubber Clog"

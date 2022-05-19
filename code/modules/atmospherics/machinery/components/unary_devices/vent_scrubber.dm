@@ -515,7 +515,7 @@
 		return
 
 	var/mob/new_mob = new spawned_mob(get_turf(src))
-	living_mobs += new_mob
+	living_mobs += WEAKREF(new_mob)
 	visible_message(span_warning("[new_mob] crawls out of [src]!"))
 
 #undef SIPHONING
