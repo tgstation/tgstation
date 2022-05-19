@@ -312,6 +312,16 @@
 	message_queue = null
 
 /**
+ * public
+ *
+ * Replaces the inline HTML content.
+ *
+ * required inline_html string HTML to inject
+ */
+/datum/tgui_window/proc/replace_html(inline_html = "")
+	client << output(url_encode(inline_html), "[id].browser:replaceHtml")
+
+/**
  * private
  *
  * Callback for handling incoming tgui messages.
