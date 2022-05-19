@@ -149,6 +149,19 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Any midround after this point is guaranteed to be heavy
 	var/midround_heavy_lower_bound = 55 MINUTES
 
+	/// If there are less than this many players readied, threat level will be lowered.
+	/// This number should be kept fairly low, as there are other measures that population
+	/// impacts Dynamic, such as the requirements variable on rulesets.
+	var/low_pop_player_threshold = 20
+
+	/// The maximum threat that can roll with *zero* players.
+	/// As the number of players approaches `low_pop_player_threshold`, the maximum
+	/// threat level will increase.
+	/// For example, if `low_pop_minimum_threat` is 50, `low_pop_player_threshold` is 20,
+	/// and the number of readied players is 10, then the highest threat that can roll is
+	/// lerp(50, 100, 10 / 20), AKA 75.
+	var/low_pop_minimum_threat = 50
+
 	/// The chance for latejoins to roll when ready
 	var/latejoin_roll_chance = 50
 
@@ -352,6 +365,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/generate_threat()
 	var/relative_threat = LORENTZ_DISTRIBUTION(threat_curve_centre, threat_curve_width)
 	threat_level = clamp(round(lorentz_to_amount(relative_threat), 0.1), 0, max_threat_level)
+
+	if (SSticker.totalPlayersReady < low_pop_player_threshold)
+		threat_level = min(threat_level, LERP(low_pop_minimum_threat, max_threat_level, SSticker.totalPlayersReady / low_pop_player_threshold))
 
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, threat_curve_centre, threat_curve_width), 0.01)*100
 

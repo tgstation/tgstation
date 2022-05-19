@@ -393,7 +393,7 @@
 	required_candidates = 1
 	weight = 1
 	cost = 10
-	requirements = list(90,90,90,80,60,40,30,20,10,10)
+	requirements = list(90,90,90,80,60,50,40,40,40,40)
 	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
