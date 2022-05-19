@@ -688,6 +688,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
  * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
+ * * no_id: When true, doors with public access will count as impassible
 */
 /turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only, no_id = FALSE)
 	var/static/space_type_cache = typecacheof(/turf/open/space)

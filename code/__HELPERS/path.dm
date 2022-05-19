@@ -376,6 +376,7 @@
  * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
  * * ID: An ID card that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
+ * * no_id: When true, doors with public access will count as impassible
 */
 /turf/proc/LinkBlockedWithAccess(turf/destination_turf, caller, ID, no_id = FALSE)
 	if(destination_turf.x != x && destination_turf.y != y) //diagonal
