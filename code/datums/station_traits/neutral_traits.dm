@@ -264,6 +264,7 @@
 	var/datum/game_mode/dynamic/mode = SSticker.mode
 	UnregisterSignal(mode, list(
 		COMSIG_DYNAMIC_INITIALIZING_RULESETS,
+		COMSIG_DYNAMIC_TRY_HIJACK_RANDOM_EVENT,
 	))
 
 	log_game("DYNAMIC (ARTIFACT OF KIN): The Artifact of Kin has been deleted and will no longer warp antag spawn rates.")
@@ -329,7 +330,7 @@
 	if(!round_event_control.dynamic_should_hijack)
 		return NONE
 	if (isnull(LAZYACCESS(altered_rulesets, /datum/round_event_control)))
-		pick_event()
+		pick_event() // Need to pick a random one or late spawners will never show up.
 	if (round_event_control == LAZYACCESS(altered_rulesets, /datum/round_event_control))
 		return NONE
 	return CANCEL_PRE_RANDOM_EVENT
