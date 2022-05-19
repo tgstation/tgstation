@@ -214,9 +214,9 @@
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_notice("PM to-<b>Admins</b>: <span class='linkify'>[rawmsg]</span>"),
 			confidential = TRUE)
-		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>External</i>: [keywordparsedmsg]</font>", player_message = "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, FALSE)]</b> to <i>External</i>: [msg]</font>")
+		var/datum/admin_help/new_admin_help = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>External</i>: [keywordparsedmsg]</font>", player_message = "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, FALSE)]</b> to <i>External</i>: [msg]</font>")
 		externalreplyamount--
-		send2adminchat("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
+		send2adminchat("[new_admin_help ? "#[new_admin_help.id] " : ""]Reply: [ckey]", rawmsg)
 	else
 		var/badmin = FALSE //Lets figure out if an admin is getting bwoinked.
 		if(holder && recipient.holder && !current_ticket) //Both are admins, and this is not a reply to our own ticket.

@@ -783,7 +783,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	GLOB.admin_help_ui_handler.ui_interact(mob)
 	to_chat(src, span_boldnotice("Adminhelp failing to open or work? <a href='?src=[REF(src)];tguiless_adminhelp=1'>Click here</a>"))
 
-/client/verb/viewlatestticket()
+/client/verb/view_latest_ticket()
 	set category = "Admin"
 	set name = "View Latest Ticket"
 
@@ -815,35 +815,36 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 // LOGGING
 //
 
-//Use this proc when an admin takes action that may be related to an open ticket on what
-//what can be a client, ckey, or mob
-//log_in_blackbox: Whether or not this message with the blackbox system.
-//If disabled, this message should be logged with a different proc call
-/proc/admin_ticket_log(what, message, log_in_blackbox = TRUE, player_message)
-	var/client/C
+/// Use this proc when an admin takes action that may be related to an open ticket on what
+/// what can be a client, ckey, or mob
+/// player_message: If the message should be shown in the player ticket panel, fill this out
+/// log_in_blackbox: Whether or not this message with the blackbox system.
+/// If disabled, this message should be logged with a different proc call
+/proc/admin_ticket_log(what, message, player_message, log_in_blackbox = TRUE)
+	var/client/mob_client
 	var/mob/Mob = what
 	if(istype(Mob))
-		C = Mob.client
+		mob_client = Mob.client
 	else
-		C = what
-	if(istype(C) && C.current_ticket)
+		mob_client = what
+	if(istype(mob_client) && mob_client.current_ticket)
 		if (isnull(player_message))
-			C.current_ticket.AddInteraction(message)
+			mob_client.current_ticket.AddInteraction(message)
 		else
-			C.current_ticket.AddInteraction(message, player_message)
+			mob_client.current_ticket.AddInteraction(message, player_message)
 		if(log_in_blackbox)
-			SSblackbox.LogAhelp(C.current_ticket.id, "Interaction", message, C.ckey, usr.ckey)
-		return C.current_ticket
+			SSblackbox.LogAhelp(mob_client.current_ticket.id, "Interaction", message, mob_client.ckey, usr.ckey)
+		return mob_client.current_ticket
 	if(istext(what)) //ckey
-		var/datum/admin_help/AH = GLOB.ahelp_tickets.CKey2ActiveTicket(what)
-		if(AH)
+		var/datum/admin_help/active_admin_help = GLOB.ahelp_tickets.CKey2ActiveTicket(what)
+		if(active_admin_help)
 			if (isnull(player_message))
-				AH.AddInteraction(message)
+				active_admin_help.AddInteraction(message)
 			else
-				AH.AddInteraction(message, player_message)
+				active_admin_help.AddInteraction(message, player_message)
 			if(log_in_blackbox)
-				SSblackbox.LogAhelp(AH.id, "Interaction", message, what, usr.ckey)
-			return AH
+				SSblackbox.LogAhelp(active_admin_help.id, "Interaction", message, what, usr.ckey)
+			return active_admin_help
 
 //
 // HELPER PROCS
