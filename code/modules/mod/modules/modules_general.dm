@@ -149,7 +149,7 @@
 	return TRUE
 
 /obj/item/mod/module/jetpack/proc/get_user()
-	var/mob/user = mod?.wearer
+	var/mob/user = mod.wearer
 	if(!ismob(user))
 		return null
 	return user
