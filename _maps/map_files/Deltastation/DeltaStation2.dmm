@@ -49820,10 +49820,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/service/library)
-"nDJ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall,
-/area/holodeck/rec_center)
 "nDM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -53835,9 +53831,6 @@
 "oFK" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/station/hallway/secondary/entry)
-"oFQ" = (
-/turf/open/space/basic,
-/area/space/nearstation)
 "oGb" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -57286,10 +57279,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
-"pBE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space/nearstation)
 "pBF" = (
 /obj/structure/table,
 /obj/item/camera,
@@ -58425,10 +58414,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/aft)
-"pQb" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
 "pQd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -62374,9 +62359,6 @@
 	dir = 4
 	},
 /area/station/engineering/lobby)
-"qWa" = (
-/turf/open/space/basic,
-/area/station/commons/fitness/recreation)
 "qWk" = (
 /turf/closed/wall,
 /area/station/science/xenobiology)
@@ -80196,11 +80178,6 @@
 /obj/item/multitool/circuit,
 /turf/open/floor/iron/dark,
 /area/station/science/misc_lab)
-"vCK" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
-/area/holodeck/rec_center)
 "vCM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -85361,10 +85338,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
-"wVL" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/station/commons/fitness/recreation)
 "wVO" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -145994,8 +145967,8 @@ qOn
 aaa
 qYo
 eqU
-oFQ
-pQb
+aaa
+mfC
 pEx
 lfb
 dFi
@@ -146251,8 +146224,8 @@ fIQ
 kYk
 fIQ
 fIQ
-wVL
-pBE
+aad
+mfC
 swS
 aXN
 ooD
@@ -146507,9 +146480,9 @@ cFF
 cFF
 cFF
 cFF
-vCK
-qWa
-pQb
+fIQ
+aaa
+mfC
 mfC
 mfC
 mfC
@@ -146764,10 +146737,10 @@ cFF
 sHM
 cFF
 cFF
-vCK
-qWa
-pQb
-qWa
+fIQ
+aaa
+mfC
+qYo
 aad
 aad
 aad
@@ -147021,10 +146994,10 @@ cFF
 cFF
 cFF
 cTi
-nDJ
-wVL
-aJD
-qWa
+qOn
+aad
+uKw
+qYo
 aad
 aaa
 aaa
@@ -147278,10 +147251,10 @@ cFF
 sHM
 cFF
 cFF
-vCK
-qWa
-pQb
-qWa
+fIQ
+aaa
+mfC
+qYo
 aad
 aaa
 aaa
@@ -147535,10 +147508,10 @@ cFF
 cFF
 cFF
 cFF
-vCK
-qWa
-pQb
-qWa
+fIQ
+aaa
+mfC
+qYo
 aad
 aaa
 aaa
@@ -147792,10 +147765,10 @@ cFF
 cFF
 cFF
 cFF
-vCK
-wVL
-pBE
-qWa
+fIQ
+aad
+mfC
+qYo
 aad
 xTK
 aaa
@@ -148049,10 +148022,10 @@ cFF
 cFF
 cFF
 xVV
-nDJ
-qWa
-pQb
-qWa
+qOn
+aaa
+mfC
+qYo
 aad
 xTK
 qYo
@@ -148306,10 +148279,10 @@ cFF
 cFF
 cFF
 cFF
-vCK
-qWa
-pQb
-qWa
+fIQ
+aaa
+mfC
+qYo
 aad
 aaa
 aaa
@@ -148563,10 +148536,10 @@ cFF
 cFF
 cFF
 cFF
-vCK
-wVL
-aJD
-qWa
+fIQ
+aad
+uKw
+qYo
 aad
 xTK
 aaa
@@ -148821,9 +148794,9 @@ fIQ
 fIQ
 fIQ
 fIQ
-qWa
-pQb
-qWa
+aaa
+mfC
+qYo
 aad
 xTK
 aaa
@@ -149078,9 +149051,9 @@ qOn
 aaa
 qYo
 eqU
-oFQ
-pQb
-qWa
+aaa
+mfC
+qYo
 aad
 xTK
 aaa
@@ -149337,7 +149310,7 @@ mfC
 uKw
 mfC
 mfC
-qWa
+qYo
 aad
 aaa
 aaa
