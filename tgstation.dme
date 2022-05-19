@@ -1224,6 +1224,7 @@
 #include "code\game\gamemodes\dynamic\dynamic.dm"
 #include "code\game\gamemodes\dynamic\dynamic_hijacking.dm"
 #include "code\game\gamemodes\dynamic\dynamic_logging.dm"
+#include "code\game\gamemodes\dynamic\dynamic_midround_rolling.dm"
 #include "code\game\gamemodes\dynamic\dynamic_rulesets.dm"
 #include "code\game\gamemodes\dynamic\dynamic_rulesets_latejoin.dm"
 #include "code\game\gamemodes\dynamic\dynamic_rulesets_midround.dm"
