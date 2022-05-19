@@ -1,0 +1,5 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - balance: "Midround rolls will now happen more frequently, with their power scaling up over time."
+  - bugfix: "Fixed midrounds not logging properly."

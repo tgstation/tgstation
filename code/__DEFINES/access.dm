@@ -1,6 +1,6 @@
-// Security equipment, security records, gulag item storage, secbots
+// Security general access, security records, gulag item storage, secbots
 #define ACCESS_SECURITY 1
-/// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console
+/// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console, security equipment
 #define ACCESS_BRIG 2
 /// Armory, gulag teleporter, execution chamber
 #define ACCESS_ARMORY 3
@@ -490,7 +490,7 @@
 	/obj/item/modular_computer/tablet/pda/heads/cmo = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/heads/ce = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/heads/rd = list(REGION_COMMAND), \
-	/obj/item/modular_computer/tablet/pda/captain = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/pda/heads/captain = list(REGION_COMMAND), \
 	/obj/item/modular_computer/tablet/pda/cargo = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/tablet/pda/quartermaster = list(REGION_SUPPLY), \
 	/obj/item/modular_computer/tablet/pda/shaftminer = list(REGION_SUPPLY), \

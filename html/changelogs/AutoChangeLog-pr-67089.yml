@@ -1,0 +1,4 @@
+author: "SpaceSmithers"
+delete-after: True
+changes: 
+  - bugfix: "Removes a duplicate table in the Laundry Room of IceboxStation"
