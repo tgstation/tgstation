@@ -40,9 +40,9 @@ module.exports = (env = {}, argv) => {
         './packages/tgui-polyfill',
         './packages/tgui-panel',
       ],
-      'tgui-say': [
+      'tgui-modal': [
         './packages/tgui-polyfill',
-        './packages/tgui-say',
+        './packages/tgui-modal',
       ],
     },
     output: {

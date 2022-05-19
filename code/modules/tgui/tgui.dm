@@ -35,8 +35,6 @@
 	var/refreshing = FALSE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
-	/// Requesting an unpooled window
-	var/pooled = TRUE
 	/// Rate limit client refreshes to prevent DoS.
 	COOLDOWN_DECLARE(refresh_cooldown)
 
@@ -52,7 +50,7 @@
  *
  * return datum/tgui The requested UI.
  */
-/datum/tgui/New(mob/user, datum/src_object, interface, title, pooled)
+/datum/tgui/New(mob/user, datum/src_object, interface, title)
 	log_tgui(user,
 		"new [interface] fancy [user?.client?.prefs.read_preference(/datum/preference/toggle/tgui_fancy)]",
 		src_object = src_object)
@@ -60,7 +58,6 @@
 	src.src_object = src_object
 	src.window_key = "[REF(src_object)]-main"
 	src.interface = interface
-	src.pooled = pooled
 	if(title)
 		src.title = title
 	src.state = src_object.ui_state(user)
@@ -85,30 +82,18 @@
 	process_status()
 	if(status < UI_UPDATE)
 		return FALSE
-	// Request a pooled or hot window depending on parameters
-	if(pooled)
-		window = SStgui.request_pooled_window(user)
-	else
-		window = new(user.client, "unpooled", pooled = FALSE)
+	window = SStgui.request_pooled_window(user)
 	if(!window)
 		return FALSE
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
-		if(pooled)
-			window.initialize(
-				strict_mode = TRUE,
-				fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
-				assets = list(
-					get_asset_datum(/datum/asset/simple/tgui),
-				))
-		else
-			window.initialize(
-				strict_mode = TRUE,
-				fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
-				inline_js = file2text('tgui/public/tgui-say.bundle.js'),
-				inline_css = file2text('tgui/public/tgui-say.bundle.css'),
-			)
+		window.initialize(
+			strict_mode = TRUE,
+			fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
+			assets = list(
+				get_asset_datum(/datum/asset/simple/tgui),
+			))
 	else
 		window.send_message("ping")
 	var/flush_queue = window.send_asset(get_asset_datum(

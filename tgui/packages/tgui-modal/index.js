@@ -1,11 +1,11 @@
 import './styles/main.scss';
-import { TguiSay } from './TguiSay';
+import { TguiModal } from './TguiModal';
 import { setupGlobalEvents } from 'tgui/events';
 import { createRenderer } from 'tgui/renderer';
 
 const renderApp = createRenderer(() => {
   return (
-    <TguiSay />
+    <TguiModal />
   );
 });
 

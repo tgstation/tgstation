@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "tgui-say",
+  "name": "tgui-modal",
   "version": "1.0",
   "dependencies": {
     "common": "workspace:*",
