@@ -8191,6 +8191,19 @@ resolve@^2.0.0-next.3:
   languageName: unknown
   linkType: soft
 
+"tgui-say@workspace:packages/tgui-say":
+  version: 0.0.0-use.local
+  resolution: "tgui-say@workspace:packages/tgui-say"
+  dependencies:
+    common: "workspace:*"
+    dompurify: ^2.3.1
+    inferno: ^7.4.8
+    tgui: "workspace:*"
+    tgui-dev-server: "workspace:*"
+    tgui-polyfill: "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "tgui-workspace@workspace:.":
   version: 0.0.0-use.local
   resolution: "tgui-workspace@workspace:."

@@ -35,6 +35,8 @@
 	var/refreshing = FALSE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
+	/// Requesting an unpooled window
+	var/pooled = TRUE
 	/// Rate limit client refreshes to prevent DoS.
 	COOLDOWN_DECLARE(refresh_cooldown)
 
@@ -47,12 +49,10 @@
  * required src_object datum The object or datum which owns the UI.
  * required interface string The interface used to render the UI.
  * optional title string The title of the UI.
- * optional ui_x int Deprecated: Window width.
- * optional ui_y int Deprecated: Window height.
  *
  * return datum/tgui The requested UI.
  */
-/datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
+/datum/tgui/New(mob/user, datum/src_object, interface, title, pooled)
 	log_tgui(user,
 		"new [interface] fancy [user?.client?.prefs.read_preference(/datum/preference/toggle/tgui_fancy)]",
 		src_object = src_object)
@@ -60,12 +60,10 @@
 	src.src_object = src_object
 	src.window_key = "[REF(src_object)]-main"
 	src.interface = interface
+	src.pooled = pooled
 	if(title)
 		src.title = title
 	src.state = src_object.ui_state(user)
-	// Deprecated
-	if(ui_x && ui_y)
-		src.window_size = list(ui_x, ui_y)
 
 /datum/tgui/Destroy()
 	user = null
@@ -87,7 +85,8 @@
 	process_status()
 	if(status < UI_UPDATE)
 		return FALSE
-	window = SStgui.request_pooled_window(user)
+	// Request a pooled or hot window depending on parameters
+	window = pooled ? SStgui.request_pooled_window(user) : SStgui.request_unpooled_window(user)
 	if(!window)
 		return FALSE
 	opened_at = world.time
@@ -97,7 +96,7 @@
 			strict_mode = TRUE,
 			fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
 			assets = list(
-				get_asset_datum(/datum/asset/simple/tgui),
+				 get_asset_datum(pooled ? /datum/asset/simple/tgui : /datum/asset/simple/tgui_say),
 			))
 	else
 		window.send_message("ping")

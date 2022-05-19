@@ -1,7 +1,7 @@
 //Speech verbs.
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
-/mob/verb/say_verb(message as text)
+/mob/verb/say_verb(message = "" as text)
 	set name = "Say"
 	set category = "IC"
 	set instant = TRUE
@@ -9,6 +9,9 @@
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
+
+	if(message == "")
+		tgui_say(usr, "Say")
 
 	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
 	//by queuing this for next tick the mc can compensate for its cost instead of having speech delay the start of the next tick

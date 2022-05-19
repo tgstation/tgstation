@@ -4229,6 +4229,7 @@
 #include "code\modules\tgui\tgui_input_list.dm"
 #include "code\modules\tgui\tgui_input_number.dm"
 #include "code\modules\tgui\tgui_input_text.dm"
+#include "code\modules\tgui\tgui_say.dm"
 #include "code\modules\tgui\tgui_window.dm"
 #include "code\modules\tgui\states\admin.dm"
 #include "code\modules\tgui\states\always.dm"
