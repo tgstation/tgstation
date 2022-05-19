@@ -13,6 +13,7 @@
 /mob/living/simple_animal/hostile/bee
 	name = "bee"
 	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
+	base_icon_state = "bee"
 	icon_state = ""
 	icon_living = ""
 	icon = 'icons/mob/bees.dmi'
@@ -50,19 +51,32 @@
 	minbodytemp = 0
 	del_on_death = 1
 
+	/// The reagent acting as the venom for this bee.
 	var/datum/reagent/beegent = null //hehe, beegent
+	/// The amount of beegent this bee contains.
+	var/beegent_amount = 5
+	/// The apiary this bee calls home.
 	var/obj/structure/beebox/beehome = null
+	/// How many ticks this bee has been idling in the apiary.
 	var/idle = 0
+	/// Whether this bee is a queen bee.
 	var/isqueen = FALSE
-	var/icon_base = "bee"
+	/// A static typecache of apiary types this bee is compatible with.
 	var/static/beehometypecache = typecacheof(/obj/structure/beebox)
+	/// A static typecache of hydroponics trays this bee can pollinate.
 	var/static/hydroponicstypecache = typecacheof(/obj/machinery/hydroponics)
 
 /mob/living/simple_animal/hostile/bee/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	generate_bee_visuals()
+
+	create_reagents(max(beegent_amount, 5), REAGENT_HOLDER_ALIVE | INJECTABLE | DRAWABLE)
+	if (beegent && beegent_amount > 0)
+		assign_reagent(beegent, beegent_amount)
+
+	update_appearance()
+
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/clickbox, x_offset = -2, y_offset = -2)
 	AddComponent(/datum/component/swarming)
@@ -72,10 +86,13 @@
 	if(flags_1 & HOLOGRAM_1)
 		return
 	var/obj/item/clothing/head/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
-	if(beegent)
-		reee[beegent.type] = 5
+	var/list/breeagents = reagents.reagent_list
+	for(var/datum/reagent/beeagent as anything in breeagents)
+		reee[beeagent.type] += beeagent.volume
 	holder.AddComponent(/datum/component/edible, reee, null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+
 	L.visible_message(span_warning("[L] scoops up [src]!"))
 	L.put_in_hands(holder)
 
@@ -86,19 +103,58 @@
 	beegent = null
 	return ..()
 
+/mob/living/simple_animal/hostile/bee/update_name(updates)
+	name = initial(name)
+	if (beegent)
+		var/datum/reagent/actual_beegent = reagents.get_reagent(beegent)
+		if (actual_beegent)
+			name = "[actual_beegent.name] [name]"
+	real_name = name
+	return ..()
+
+/mob/living/simple_animal/hostile/bee/update_overlays()
+	. = ..()
+
+	icon_state = "[base_icon_state]_base"
+	. += "[base_icon_state]_base"
+
+	var/col = BEE_DEFAULT_COLOUR
+	if (beegent)
+		var/datum/reagent/actual_beegent = reagents.get_reagent(beegent)
+		if (actual_beegent)
+			col = actual_beegent.color
+
+	var/static/mutable_appearance/beeagent_overlay
+	beeagent_overlay = beeagent_overlay || mutable_appearance('icons/mob/bees.dmi')
+	beeagent_overlay.icon_state = "[base_icon_state]_grey"
+	beeagent_overlay.color = col
+	. += beeagent_overlay
+	. += "[base_icon_state]_wings"
+
 
 /mob/living/simple_animal/hostile/bee/death(gibbed)
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
+
 	if((flags_1 & HOLOGRAM_1))
 		return ..()
+
 	var/obj/item/trash/bee/bee_to_eat = new(loc)
 	bee_to_eat.pixel_x = pixel_x
 	bee_to_eat.pixel_y = pixel_y
+
 	if(beegent)
 		bee_to_eat.beegent = beegent
-		bee_to_eat.reagents.add_reagent(beegent.type, 5)
+
+	var/list/reee = list()
+	var/list/breeagents = reagents.reagent_list
+	for(var/datum/reagent/beeagent as anything in breeagents)
+		reee[beeagent.type] += beeagent.volume
+
+	if (reee.len)
+		bee_to_eat.reagents.add_reagent_list(reee)
+
 	bee_to_eat.update_appearance()
 	beegent = null
 	return ..()
@@ -117,31 +173,13 @@
 		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line
 		var/atom/target_from = GET_TARGETS_FROM(src)
 		var/list/searched_for = oview(vision_range, target_from)
-		for(var/obj/A in searched_for)
-			. += A
-		for(var/mob/A in searched_for)
-			. += A
-
-/mob/living/simple_animal/hostile/bee/proc/generate_bee_visuals()
-	cut_overlays()
-
-	var/col = BEE_DEFAULT_COLOUR
-	if(beegent?.color)
-		col = beegent.color
-
-	icon_state = "[icon_base]_base"
-	add_overlay("[icon_base]_base")
-
-	var/static/mutable_appearance/greyscale_overlay
-	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/bees.dmi')
-	greyscale_overlay.icon_state = "[icon_base]_grey"
-	greyscale_overlay.color = col
-	add_overlay(greyscale_overlay)
-
-	add_overlay("[icon_base]_wings")
+		for(var/obj/found_obj in searched_for)
+			. += found_obj
+		for(var/mob/found_mob in searched_for)
+			. += found_mob
 
 
-//We don't attack beekeepers/people dressed as bees//Todo: bee costume
+//We don't attack beekeepers/people dressed as bees//Todo: bee costume// 6 years and counting
 /mob/living/simple_animal/hostile/bee/CanAttack(atom/the_target)
 	. = ..()
 	if(!.)
@@ -168,7 +206,9 @@
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/Hydro = target
 		pollinate(Hydro)
-	else if(istype(target, /obj/structure/beebox))
+		return
+
+	if(istype(target, /obj/structure/beebox))
 		if(target == beehome)
 			var/obj/structure/beebox/BB = target
 			forceMove(BB)
@@ -176,10 +216,10 @@
 			LoseTarget()
 			wanted_objects -= beehometypecache //so we don't attack beeboxes when not going home
 		return //no don't attack the goddamm box
-	else
-		. = ..()
-		if(. && beegent && isliving(target))
-			on_sting(target)
+
+	. = ..()
+	if(. && reagents.total_volume && isliving(target))
+		on_sting(target)
 
 /**
  * Handles exposing the target mob to the bees venom and injecting the target with the venom.
@@ -188,23 +228,43 @@
  * - [target][/mob/living]: The mob that has been stung.
  */
 /mob/living/simple_animal/hostile/bee/proc/on_sting(mob/living/target)
+	if(!reagents.total_volume)
+		return
+
 	var/sting_amt = rand(1, 5)
-
-	target.reagents?.add_reagent(beegent.type, sting_amt)
-	target.expose_reagents(list((beegent) = sting_amt), null, INJECT, volume_modifier = 1, show_message = TRUE)
 	if (target.reagents)
-		beegent.on_transfer(target, INJECT, sting_amt)
+		var/old_amt = beegent ? reagents.get_reagent_amount(beegent) : null
+		reagents.trans_to(target, sting_amt, methods = INJECT, ignore_stomach = TRUE)
+		if (old_amt > 0) // Refill beegent.
+			reagents.add_reagent(beegent, old_amt - reagents.get_reagent_amount(beegent))
+	else
+		reagents.expose(target, methods = INJECT, volume_modifier = min(sting_amt / reagents.total_volume, 1))
 
+/**
+ *
+ */
+/mob/living/simple_animal/hostile/bee/proc/assign_reagent(datum/reagent/new_venom, new_venom_amt = beegent_amount)
+	if (new_venom == beegent && new_venom_amt == beegent_amount)
+		return
+	if(!(isnull(new_venom) || ispath(new_venom, /datum/reagent)))
+		return
+	if (new_venom_amt < 0)
+		new_venom_amt = 0
 
-/mob/living/simple_animal/hostile/bee/proc/assign_reagent(datum/reagent/R)
-	if(istype(R))
-		beegent = R
-		name = "[initial(name)] ([R.name])"
-		real_name = name
-		//clear the old since this one is going to have some new value
-		RemoveElement(/datum/element/venomous)
-		AddElement(/datum/element/venomous, beegent.type, list(1, 5), methods = INJECT)
-		generate_bee_visuals()
+	if (beegent && beegent_amount > 0)
+		reagents.remove_reagent(beegent, beegent_amount)
+
+	beegent = new_venom
+	beegent_amount = new_venom_amt
+	if (new_venom && new_venom_amt > 0)
+		reagents.maximum_volume = max(reagents.maximum_volume, reagents.total_volume + new_venom_amt)
+		reagents.add_reagent(new_venom, new_venom_amt, ignore_splitting = TRUE)
+
+	//clear the old since this one is going to have some new value
+	RemoveElement(/datum/element/venomous)
+	AddElement(/datum/element/venomous, new_venom, list(1, new_venom_amt), methods = INJECT)
+	update_appearance(UPDATE_NAME)
+	update_body()
 
 /mob/living/simple_animal/hostile/bee/proc/pollinate(obj/machinery/hydroponics/Hydro)
 	if(!istype(Hydro) || !Hydro.myseed || Hydro.plant_status == HYDROTRAY_PLANT_DEAD || Hydro.recent_bee_visit)
@@ -271,7 +331,7 @@
 /mob/living/simple_animal/hostile/bee/queen
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
-	icon_base = "queen"
+	base_icon_state = "queen"
 	isqueen = TRUE
 
 //the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
@@ -296,43 +356,64 @@
 /mob/living/simple_animal/hostile/bee/proc/reagent_incompatible(mob/living/simple_animal/hostile/bee/B)
 	if(!B)
 		return FALSE
-	if(B.beegent && beegent && B.beegent.type != beegent.type || B.beegent && !beegent || !B.beegent && beegent)
-		return TRUE
-	return FALSE
+	if (B.beegent && B.beegent != beegent)
+		return FALSE
+	return TRUE
 
+/**
+ * The item representing a held queen bee.
+ * Contains the actual queen bee.
+ */
 /obj/item/queen_bee
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
 	inhand_icon_state = ""
 	icon = 'icons/mob/bees.dmi'
+	/// The queen be we are pretending to bee.
 	var/mob/living/simple_animal/hostile/bee/queen/queen
 
 
-/obj/item/queen_bee/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/syringe))
-		var/obj/item/reagent_containers/syringe/S = I
-		if(S.reagents.has_reagent(/datum/reagent/royal_bee_jelly)) //checked twice, because I really don't want royal bee jelly to be duped
-			if(S.reagents.has_reagent(/datum/reagent/royal_bee_jelly,5))
-				S.reagents.remove_reagent(/datum/reagent/royal_bee_jelly, 5)
-				var/obj/item/queen_bee/qb = new(user.drop_location())
-				qb.queen = new(qb)
-				if(queen?.beegent)
-					qb.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.
-				user.put_in_active_hand(qb)
-				user.visible_message(span_notice("[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"),span_warning("You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"))
-			else
-				to_chat(user, span_warning("You don't have enough royal bee jelly to split a bee in two!"))
-		else
-			var/datum/reagent/R = GLOB.chemical_reagents_list[S.reagents.get_master_reagent_id()]
-			if(R && S.reagents.has_reagent(R.type, 5))
-				S.reagents.remove_reagent(R.type,5)
-				queen.assign_reagent(R)
-				user.visible_message(span_warning("[user] injects [src]'s genome with [R.name], mutating its DNA!"),span_warning("You inject [src]'s genome with [R.name], mutating its DNA!"))
-				name = queen.name
-			else
-				to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
-	..()
+/obj/item/queen_bee/attackby(obj/item/tool, mob/user, params)
+	if(!istype(tool, /obj/item/reagent_containers/syringe))
+		return ..()
+
+	var/obj/item/reagent_containers/syringe/syringe = tool
+	if (syringe.reagents.has_reagent(/datum/reagent/royal_bee_jelly)) //checked twice, because I really don't want royal bee jelly to be duped
+		if(!syringe.reagents.has_reagent(/datum/reagent/royal_bee_jelly, 5))
+			to_chat(user, span_warning("You don't have enough royal bee jelly to split a bee in two!"))
+			return ..()
+
+
+		syringe.reagents.remove_reagent(/datum/reagent/royal_bee_jelly, 5)
+
+		var/obj/item/queen_bee/qb = new(user.drop_location())
+		qb.queen = new(qb)
+		if (queen?.beegent)
+			qb.queen.assign_reagent(queen.beegent)
+		user.put_in_active_hand(qb)
+		user.visible_message(
+			span_notice("[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!"),
+			span_warning("You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!")
+		)
+		return ..()
+
+	else
+	var/datum/reagent/mut_reagent = syringe.reagents.get_master_reagent_id()
+	if(!syringe.reagents.has_reagent(mut_reagent, 5))
+		to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
+		return ..()
+
+	var/datum/reagent/mut_reagent_name = syringe.reagents.get_reagent(mut_reagent)
+	mut_reagent_name = mut_reagent_name.name
+	syringe.reagents.remove_reagent(mut_reagent, 5)
+	queen.assign_reagent(mut_reagent)
+	user.visible_message(
+		span_warning("[user] injects [src]'s genome with [mut_reagent_name], mutating its DNA!"),
+		span_warning("You inject [src]'s genome with [mut_reagent_name], mutating its DNA!")
+	)
+	name = queen.name
+	return..()
 
 /obj/item/queen_bee/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] eats [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -373,6 +454,7 @@
 	desc = "No wonder the bees are dying out, you monster."
 	icon = 'icons/mob/bees.dmi'
 	icon_state = "bee_item"
+	/// The typepath of the venom of the bee this was created from.
 	var/datum/reagent/beegent
 
 /obj/item/trash/bee/Initialize(mapload)
@@ -383,5 +465,10 @@
 /obj/item/trash/bee/update_overlays()
 	. = ..()
 	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
-	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
+	var/col = BEE_DEFAULT_COLOUR
+	if (beegent)
+		var/datum/reagent/actual_beegent = reagents.has_reagent(beegent)
+		if (actual_beegent)
+			col = actual_beegent.color
+	body_overlay.color = col
 	. += body_overlay
