@@ -281,19 +281,30 @@ Works together with spawning an observer, noted above.
 */
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE)
-	if(key)
-		if(key[1] != "@") // Skip aghosts.
-			if(HAS_TRAIT(src, TRAIT_CORPSELOCKED) && can_reenter_corpse) //If you can re-enter the corpse you can't leave when corpselocked
-				return
-			stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
-			var/mob/dead/observer/ghost = new(src) // Transfer safety to observer spawning proc.
-			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
-			ghost.can_reenter_corpse = can_reenter_corpse
-			ghost.key = key
-			ghost.client?.init_verbs()
-			if(!can_reenter_corpse)// Disassociates observer mind from the body mind
-				ghost.mind = null
-			return ghost
+	if(!key)
+		return
+	if(key[1] == "@") // Skip aghosts.
+		return
+
+	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED))
+		if(can_reenter_corpse) //If you can re-enter the corpse you can't leave when corpselocked
+			return
+		if(ishuman(usr)) //following code only applies to those capable of having an ethereal heart, ie humans
+			var/mob/living/carbon/human/crystal_fella = usr
+			var/our_heart = crystal_fella.getorganslot(ORGAN_SLOT_HEART)
+			if(istype(our_heart, /obj/item/organ/heart/ethereal)) //so you got the heart?
+				var/obj/item/organ/heart/ethereal/ethereal_heart = our_heart
+				ethereal_heart.stop_crystalization_process(crystal_fella) //stops the crystallization process
+
+	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
+	var/mob/dead/observer/ghost = new(src) // Transfer safety to observer spawning proc.
+	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
+	ghost.can_reenter_corpse = can_reenter_corpse
+	ghost.key = key
+	ghost.client?.init_verbs()
+	if(!can_reenter_corpse)// Disassociates observer mind from the body mind
+		ghost.mind = null
+	return ghost
 
 /mob/living/ghostize(can_reenter_corpse = TRUE)
 	. = ..()
@@ -312,9 +323,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
-		ghostize(TRUE)
-		return TRUE
-	var/response = tgui_alert(usr, "Are you sure you want to ghost? If you ghost whilst still alive you cannot re-enter your body!", "Confirm Ghost Observe", list("Ghost", "Stay in Body"))
+		if(!HAS_TRAIT(src, TRAIT_CORPSELOCKED)) //corpse-locked have to confirm with the alert below
+			ghostize(TRUE)
+			return TRUE
+	var/response = tgui_alert(usr, "Are you sure you want to ghost? You won't be able to re-enter your body!", "Confirm Ghost Observe", list("Ghost", "Stay in Body"))
 	if(response != "Ghost")
 		return FALSE//didn't want to ghost after-all
 	ghostize(FALSE) // FALSE parameter is so we can never re-enter our body. U ded.
@@ -734,13 +746,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/show_data_huds()
 	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = GLOB.huds[hudtype]
-		H.add_hud_to(src)
+		var/datum/atom_hud/data_hud = GLOB.huds[hudtype]
+		data_hud.show_to(src)
 
 /mob/dead/observer/proc/remove_data_huds()
 	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = GLOB.huds[hudtype]
-		H.remove_hud_from(src)
+		var/datum/atom_hud/data_hud = GLOB.huds[hudtype]
+		data_hud.hide_from(src)
 
 /mob/dead/observer/verb/toggle_data_huds()
 	set name = "Toggle Sec/Med/Diag HUD"
@@ -831,6 +843,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return isAdminGhostAI(usr)
 
 /mob/dead/observer/is_literate()
+	return TRUE
+
+/mob/dead/observer/can_read(obj/O)
 	return TRUE
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)

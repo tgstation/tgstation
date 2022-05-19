@@ -31,7 +31,8 @@
 /obj/machinery/ecto_sniffer/proc/activate(mob/activator)
 	flick("ecto_sniffer_flick", src)
 	playsound(loc, 'sound/machines/ectoscope_beep.ogg', 75)
-	use_power(10)
+	use_power(active_power_usage)
+	say("Reporting [pick(world.file2list("strings/spook_levels.txt"))] levels of paranormal activity!")
 	if(activator?.ckey)
 		ectoplasmic_residues += activator.ckey
 		addtimer(CALLBACK(src, .proc/clear_residue, activator.ckey), 15 SECONDS)

@@ -1,9 +1,4 @@
 #define CAN_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE)
-///Used when setting the mode of the canisters, enabling us to switch the overlays
-//These are used as icon states later down the line for tier overlays
-#define CANISTER_TIER_1 1
-#define CANISTER_TIER_2 2
-#define CANISTER_TIER_3 3
 
 ///List of all the gases, used in labelling the canisters
 GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
@@ -42,9 +37,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#ffff00#000000"
 	density = TRUE
-	volume = 1000
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 80, ACID = 50)
-	max_integrity = 250
+	volume = 2000
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 80, ACID = 50)
+	max_integrity = 300
 	integrity_failure = 0.4
 	pressure_resistance = 7 * ONE_ATMOSPHERE
 	req_access = list()
@@ -68,9 +63,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	///Minimum pressure allower for release_pressure var
 	var/can_min_release_pressure = (ONE_ATMOSPHERE * 0.1)
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
-	var/heat_limit = 5000
+	var/heat_limit = 10000
 	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
-	var/pressure_limit = 46000
+	var/pressure_limit = 500000
 	///Maximum amount of heat that the canister can handle before taking damage
 	var/temperature_resistance = 1000 + T0C
 	///Initial temperature gas mixture
@@ -87,18 +82,30 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/timing = FALSE
 	///If true, the prototype canister requires engi access to be used
 	var/restricted = FALSE
-	///Set the tier of the canister and overlay used
-	var/mode = CANISTER_TIER_1
 	///Window overlay showing the gas inside the canister
 	var/image/window
 
+	var/shielding_powered = FALSE
+
+	var/obj/item/stock_parts/cell/internal_cell
+
+	var/cell_container_opened = FALSE
+
+	var/protected_contents = FALSE
+
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
+
+	if(mapload)
+		internal_cell = new /obj/item/stock_parts/cell/high(src)
 
 	if(existing_mixture)
 		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
+
+	if(ispath(gas_type, /datum/gas))
+		desc = "[GLOB.meta_gas_info[gas_type][META_GAS_NAME]]. [GLOB.meta_gas_info[gas_type][META_GAS_DESC]]"
 
 	update_window()
 
@@ -119,8 +126,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
-	if(mode)
-		. += span_notice("This canister is Tier [mode]. A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(heat_limit, "K", 0)]</b>.")
+	. += span_notice("A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(heat_limit, "K", 0)]</b>.")
+	if(internal_cell)
+		. += span_notice("The internal cell has [internal_cell.percent()]% of its total charge.")
+	else
+		. += span_notice("Warning, no cell installed, use a screwdriver to open the hatch and insert one.")
+	if(cell_container_opened)
+		. += span_notice("Cell hatch open, close it with a screwdriver.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
@@ -133,7 +145,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/antinoblium
 	name = "Antinoblium canister"
-	desc = "Antinoblium, we still don't know what it does, but it sells for a lot"
 	gas_type = /datum/gas/antinoblium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -141,21 +152,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/bz
 	name = "\improper BZ canister"
-	desc = "BZ, a powerful hallucinogenic nerve agent."
 	gas_type = /datum/gas/bz
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#9b5d7f#d0d2a0"
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Carbon dioxide canister"
-	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
 	gas_type = /datum/gas/carbon_dioxide
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#4e4c48"
 
 /obj/machinery/portable_atmospherics/canister/freon
 	name = "Freon canister"
-	desc = "Freon. Can absorb heat"
 	gas_type = /datum/gas/freon
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -163,7 +171,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/halon
 	name = "Halon canister"
-	desc = "Halon, removes oxygen from high temperature fires and cools down the area"
 	gas_type = /datum/gas/halon
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -171,7 +178,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/healium
 	name = "Healium canister"
-	desc = "Healium, causes deep sleep"
 	gas_type = /datum/gas/healium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -179,7 +185,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/helium
 	name = "Helium canister"
-	desc = "Helium, inert gas"
 	gas_type = /datum/gas/helium
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -187,7 +192,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/hydrogen
 	name = "Hydrogen canister"
-	desc = "Hydrogen, highly flammable"
 	gas_type = /datum/gas/hydrogen
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/stripe
@@ -195,7 +199,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/miasma
 	name = "Miasma canister"
-	desc = "Miasma. Makes you wish your nose was blocked."
 	gas_type = /datum/gas/miasma
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -203,49 +206,42 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Nitrogen canister"
-	desc = "Nitrogen gas. Reportedly useful for something."
 	gas_type = /datum/gas/nitrogen
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#d41010"
 
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "Nitrous oxide canister"
-	desc = "Nitrous oxide gas. Known to cause drowsiness."
 	gas_type = /datum/gas/nitrous_oxide
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#c63e3b#f7d5d3"
 
 /obj/machinery/portable_atmospherics/canister/nitrium
 	name = "Nitrium canister"
-	desc = "Nitrium gas. Feels great 'til the acid eats your lungs."
 	gas_type = /datum/gas/nitrium
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#7b4732"
 
 /obj/machinery/portable_atmospherics/canister/nob
 	name = "Hyper-noblium canister"
-	desc = "Hyper-Noblium. More noble than all other gases."
 	gas_type = /datum/gas/hypernoblium
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#6399fc#b2b2b2"
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Oxygen canister"
-	desc = "Oxygen. Necessary for human life."
 	gas_type = /datum/gas/oxygen
 	greyscale_config = /datum/greyscale_config/canister/stripe
 	greyscale_colors = "#2786e5#e8fefe"
 
 /obj/machinery/portable_atmospherics/canister/pluoxium
 	name = "Pluoxium canister"
-	desc = "Pluoxium. Like oxygen, but more bang for your buck."
 	gas_type = /datum/gas/pluoxium
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#2786e5"
 
 /obj/machinery/portable_atmospherics/canister/proto_nitrate
 	name = "Proto Nitrate canister"
-	desc = "Proto Nitrate, reacts differently with various gases"
 	gas_type = /datum/gas/proto_nitrate
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -253,21 +249,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/plasma
 	name = "Plasma canister"
-	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	gas_type = /datum/gas/plasma
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#f62800#000000"
 
 /obj/machinery/portable_atmospherics/canister/tritium
 	name = "Tritium canister"
-	desc = "Tritium. Inhalation might cause irradiation."
 	gas_type = /datum/gas/tritium
 	greyscale_config = /datum/greyscale_config/canister/hazard
 	greyscale_colors = "#3fcd40#000000"
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "Water vapor canister"
-	desc = "Water Vapor. We get it, you vape."
 	gas_type = /datum/gas/water_vapor
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -275,7 +268,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/zauker
 	name = "Zauker canister"
-	desc = "Zauker, highly toxic"
 	gas_type = /datum/gas/zauker
 	filled = 1
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
@@ -288,7 +280,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	desc = "Don't be a badmin."
 	heat_limit = 1e12
 	pressure_limit = 1e14
-	mode = CANISTER_TIER_3
 
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
 	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/tritium)
@@ -331,7 +322,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	name = "prototype canister"
 	greyscale_config = /datum/greyscale_config/prototype_canister
 	greyscale_colors = "#ffffff#a50021#ffffff"
-	mode = NONE
 
 /obj/machinery/portable_atmospherics/canister/proto/default
 	name = "prototype canister"
@@ -349,29 +339,6 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	gas_type = /datum/gas/oxygen
 	filled = 1
 	release_pressure = ONE_ATMOSPHERE*2
-
-/obj/machinery/portable_atmospherics/canister/tier_1
-	heat_limit = 5000
-	pressure_limit = 46000
-	mode = CANISTER_TIER_1
-
-/obj/machinery/portable_atmospherics/canister/tier_2
-	heat_limit = 500000
-	pressure_limit = 4600000
-	volume = 3000
-	max_integrity = 300
-	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
-	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
-	mode = CANISTER_TIER_2
-
-/obj/machinery/portable_atmospherics/canister/tier_3
-	heat_limit = 1e12
-	pressure_limit = 9.2e13
-	volume = 5000
-	max_integrity = 500
-	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
-	can_min_release_pressure = (ONE_ATMOSPHERE / 50)
-	mode = CANISTER_TIER_3
 
 /**
  * Called on Initialize(), fill the canister with the gas_type specified up to the filled level (half if 0.5, full if 1)
@@ -399,10 +366,16 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/update_overlays()
 	. = ..()
+
+	if(shielding_powered)
+		. += mutable_appearance(canister_overlay_file, "shielding")
+		. += emissive_appearance(canister_overlay_file, "shielding")
+
+	if(cell_container_opened)
+		. += mutable_appearance(canister_overlay_file, "cell_hatch")
+
 	var/isBroken = machine_stat & BROKEN
 	///Function is used to actually set the overlays
-	if(mode)
-		. += mutable_appearance(canister_overlay_file, "tier[mode]")
 	if(isBroken)
 		. += mutable_appearance(canister_overlay_file, "broken")
 	if(holding)
@@ -450,7 +423,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	add_overlay(window)
 
 /obj/machinery/portable_atmospherics/canister/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > temperature_resistance * mode
+	return (exposed_temperature > temperature_resistance && !shielding_powered)
 
 /obj/machinery/portable_atmospherics/canister/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(5, BURN, 0)
@@ -464,17 +437,43 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		new /obj/item/stack/sheet/iron (drop_location(), 5)
 		qdel(src)
 		return
-	switch(mode)
-		if(CANISTER_TIER_1)
-			new /obj/item/stack/sheet/iron (drop_location(), 10)
-		if(CANISTER_TIER_2)
-			new /obj/item/stack/sheet/iron (drop_location(), 10)
-			new /obj/item/stack/sheet/plasteel (drop_location(), 5)
-		if(CANISTER_TIER_3)
-			new /obj/item/stack/sheet/iron (drop_location(), 10)
-			new /obj/item/stack/sheet/plasteel (drop_location(), 5)
-			new /obj/item/stack/sheet/bluespace_crystal (drop_location(), 1)
+	new /obj/item/stack/sheet/iron (drop_location(), 10)
+	if(internal_cell)
+		internal_cell.forceMove(drop_location())
 	qdel(src)
+
+/obj/machinery/portable_atmospherics/canister/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/active_cell = item
+		if(!cell_container_opened)
+			balloon_alert(user, "open the hatch first")
+			return
+		if(!user.transferItemToLoc(active_cell, src))
+			return
+		if(internal_cell)
+			user.put_in_hands(internal_cell)
+			balloon_alert(user, "you successfully replace the cell")
+		else
+			balloon_alert(user, "you successfully install the cell")
+		internal_cell = active_cell
+		return
+	return ..()
+
+/obj/machinery/portable_atmospherics/canister/screwdriver_act(mob/living/user, obj/item/screwdriver)
+	if(screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
+		return
+	screwdriver.play_tool_sound(src, 50)
+	cell_container_opened = !cell_container_opened
+	to_chat(user, span_notice("You [cell_container_opened ? "open" : "close"] the cell container hatch of [src]."))
+	update_appearance()
+	return TRUE
+
+/obj/machinery/portable_atmospherics/canister/crowbar_act(mob/living/user, obj/item/tool)
+	if(!cell_container_opened || !internal_cell)
+		return
+	internal_cell.forceMove(drop_location())
+	balloon_alert(user, "you successfully remove the cell")
+	return TRUE
 
 /obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
 	. = ..()
@@ -509,6 +508,11 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			return TRUE
 		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
 	return TRUE
+
+/obj/machinery/portable_atmospherics/canister/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == internal_cell)
+		internal_cell = null
 
 /obj/machinery/portable_atmospherics/canister/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
@@ -554,6 +558,28 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	else if(valve_open && holding)
 		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
+/obj/machinery/portable_atmospherics/canister/process(delta_time)
+
+	var/our_pressure = air_contents.return_pressure()
+	var/our_temperature = air_contents.return_temperature()
+
+	protected_contents = FALSE
+	if(shielding_powered)
+		var/power_factor = round(log(10, max(our_pressure - pressure_limit, 1)) + log(10, max(our_temperature - heat_limit, 1)))
+		var/power_consumed = power_factor * 250 * delta_time
+		if(powered(AREA_USAGE_EQUIP, ignore_use_power = TRUE))
+			use_power(power_consumed, AREA_USAGE_EQUIP)
+			protected_contents = TRUE
+		else if(internal_cell?.use(power_consumed * 0.025))
+			protected_contents = TRUE
+		else
+			shielding_powered = FALSE
+
+	///function used to check the limit of the canisters and also set the amount of damage that the canister can receive, if the heat and pressure are way higher than the limit the more damage will be done
+	if(!excited && !protected_contents && (our_temperature > heat_limit || our_pressure > pressure_limit))
+		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
+		excited = TRUE
+
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	if(machine_stat & BROKEN)
 		return PROCESS_KILL
@@ -574,7 +600,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/our_temperature = air_contents.return_temperature()
 
 	///function used to check the limit of the canisters and also set the amount of damage that the canister can receive, if the heat and pressure are way higher than the limit the more damage will be done
-	if(our_temperature > heat_limit || our_pressure > pressure_limit)
+	if(!protected_contents && (our_temperature > heat_limit || our_pressure > pressure_limit))
 		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
 		excited = TRUE
 	update_appearance()
@@ -629,6 +655,11 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				"tankPressure" = round(holding_mix.return_pressure())
 			)
 		)
+	. += list(
+		"shielding" = shielding_powered,
+		"has_cell" = (internal_cell ? TRUE : FALSE),
+		"cell_charge" = internal_cell?.percent()
+	)
 
 /obj/machinery/portable_atmospherics/canister/ui_act(action, params)
 	. = ..()
@@ -736,6 +767,13 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the [span_boldannounce("air")].", INVESTIGATE_ATMOS)
 				replace_tank(usr, FALSE)
 				. = TRUE
+
+		if("shielding")
+			shielding_powered = !shielding_powered
+			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
+			investigate_log("[key_name(usr)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
+			. = TRUE
+
 	update_appearance()
 
 /obj/machinery/portable_atmospherics/canister/unregister_holding()

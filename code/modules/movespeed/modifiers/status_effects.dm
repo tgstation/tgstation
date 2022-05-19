@@ -16,3 +16,8 @@
 	variable = TRUE
 	blacklisted_movetypes = (FLYING|FLOATING)
 
+/datum/movespeed_modifier/status_effect/power_chord
+	multiplicative_slowdown = -0.2
+
+/datum/movespeed_modifier/status_effect/hazard_area
+	multiplicative_slowdown = 4

@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/gun/magic/staff/honk,
 		/obj/item/instrument/bikehorn,
 		/obj/item/megaphone/clown,
-		/obj/item/pda/clown,
+		/obj/item/modular_computer/tablet/pda/clown,
 		/obj/item/pneumatic_cannon/pie,
 		/obj/item/stack/ore/bananium,
 		/obj/item/stack/tile/mineral/bananium,
@@ -309,11 +309,8 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/suit/hooded/cultrobes,
 		/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/under/rank/civilian/chaplain,
-		/obj/item/clothing/under/rank/civilian/chaplain,
 		/obj/item/cult_bastard,
 		/obj/item/gun/magic/staff,
-		/obj/item/gun/magic/staff,
-		/obj/item/gun/magic/wand,
 		/obj/item/gun/magic/wand,
 		/obj/item/melee/cultblade,
 		/obj/item/necromantic_stone,
@@ -333,6 +330,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/narsie,
 		/obj/structure/destructible/cult,
 		/obj/structure/spirit_board,
+		/obj/item/toy/cards/deck/tarot,
 	)),
 
 	"aliens" = typecacheof(list(
@@ -423,7 +421,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 
 	"insects" = typecacheof(list(
-		/obj/item/clothing/mask/animal/rat/bee,
+		/obj/item/clothing/mask/animal/small/bee,
 		/obj/item/clothing/suit/hooded/bee_costume,
 		/obj/item/toy/plush/beeplushie,
 		/obj/item/toy/plush/moth,
@@ -493,7 +491,6 @@ GLOBAL_LIST_INIT(phobia_species, list(
 	"conspiracies" = typecacheof(list(
 		/datum/species/abductor,
 		/datum/species/lizard,
-		/datum/species/synth,
 	)),
 	"insects" = typecacheof(list(
 		/datum/species/fly,

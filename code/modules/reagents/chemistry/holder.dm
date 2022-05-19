@@ -542,7 +542,7 @@
 
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
-		log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
+		log_combat(transfered_by, target_atom, "transferred reagents ([get_external_reagent_log_string(transfer_log)]) from [my_atom] to")
 
 	update_total()
 	R.update_total()
@@ -1047,7 +1047,7 @@
 	var/list/mix_message = list()
 	for(var/datum/equilibrium/equilibrium as anything in reaction_list)
 		mix_message += end_reaction(equilibrium)
-	if(length(mix_message))
+	if(my_atom && length(mix_message))
 		my_atom.audible_message(span_notice("[icon2html(my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] [mix_message.Join()]"))
 	finish_reacting()
 
@@ -1465,28 +1465,39 @@
 	ph = clamp(total_ph/total_volume, 0, 14)
 
 /**
- * Used in attack logs for reagents in pills and such
+ * Outputs a log-friendly list of reagents based on an external reagent list.
  *
  * Arguments:
- * * external_list - assoc list of reagent type = list(REAGENT_TRANSFER_AMOUNT = amounts, REAGENT_PURITY = purity)
+ * * external_list - Assoc list of (reagent_type) = list(REAGENT_TRANSFER_AMOUNT = amounts, REAGENT_PURITY = purity)
  */
-/datum/reagents/proc/log_list(external_list)
-	if((external_list && !length(external_list)) || !length(reagent_list))
+/datum/reagents/proc/get_external_reagent_log_string(external_list)
+	if(!length(external_list))
 		return "no reagents"
 
-
-
 	var/list/data = list()
-	if(external_list)
-		for(var/r in external_list)
-			var/list/qualities = external_list[r]
-			data += "[r] ([round(qualities[REAGENT_TRANSFER_AMOUNT], 0.1)]u, [qualities[REAGENT_PURITY]] purity)"
-	else
-		for(var/datum/reagent/reagent as anything in reagent_list) //no reagents will be left behind
-			data += "[reagent.type] ([round(reagent.volume, 0.1)]u, [reagent.purity] purity)"
-			//Using types because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
+
+	for(var/reagent_type in external_list)
+		var/list/qualities = external_list[reagent_type]
+		data += "[reagent_type] ([round(qualities[REAGENT_TRANSFER_AMOUNT], 0.1)]u, [qualities[REAGENT_PURITY]] purity)"
+
 	return english_list(data)
 
+/**
+ * Outputs a log-friendly list of reagents based on the internal reagent_list.
+ *
+ * Arguments:
+ * * external_list - Assoc list of (reagent_type) = list(REAGENT_TRANSFER_AMOUNT = amounts, REAGENT_PURITY = purity)
+ */
+/datum/reagents/proc/get_reagent_log_string()
+	if(!length(reagent_list))
+		return "no reagents"
+
+	var/list/data = list()
+
+	for(var/datum/reagent/reagent as anything in reagent_list)
+		data += "[reagent.type] ([round(reagent.volume, 0.1)]u, [reagent.purity] purity)"
+
+	return english_list(data)
 
 /////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////UI / REAGENTS LOOKUP CODE/////////////////////////////

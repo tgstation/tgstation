@@ -37,14 +37,22 @@
 	///Current layers in use by aquarium contents
 	var/list/used_layers = list()
 
-	var/alive_fish = 0
-	var/dead_fish = 0
+	/// /obj/item/fish in the aquarium - does not include things with aquarium visuals that are not fish
+	var/list/tracked_fish = list()
 
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	RegisterSignal(src,COMSIG_PARENT_ATTACKBY, .proc/feed_feedback)
 
+/obj/structure/aquarium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived,/obj/item/fish))
+		tracked_fish += arrived
+
+/obj/structure/aquarium/Exited(atom/movable/gone, direction)
+	. = ..()
+	tracked_fish -= gone
 
 /obj/structure/aquarium/proc/request_layer(layer_type)
 	/**
@@ -98,9 +106,10 @@
 	panel_open = !panel_open
 	update_appearance()
 
-/obj/structure/aquarium/wrench_act(mob/living/user, obj/item/I)
-	if(default_unfasten_wrench(user,I))
-		return TRUE
+/obj/structure/aquarium/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/aquarium/attackby(obj/item/I, mob/living/user, params)
 	if(broken)
@@ -117,9 +126,6 @@
 				update_appearance()
 			return TRUE
 	else
-		// This signal exists so we common items instead of adding component on init can just register creation of one in response.
-		// This way we can avoid the cost of 9999 aquarium components on rocks that will never see water in their life.
-		SEND_SIGNAL(I,COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
 		var/datum/component/aquarium_content/content_component = I.GetComponent(/datum/component/aquarium_content)
 		if(content_component && content_component.is_ready_to_insert(src))
 			if(user.transferItemToLoc(I,src))
@@ -138,7 +144,6 @@
 /obj/structure/aquarium/interact(mob/user)
 	if(!broken && user.pulling && isliving(user.pulling))
 		var/mob/living/living_pulled = user.pulling
-		SEND_SIGNAL(living_pulled, COMSIG_AQUARIUM_BEFORE_INSERT_CHECK,src)
 		var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
 		if(content_component && content_component.is_ready_to_insert(src))
 			try_to_put_mob_in(user)
@@ -169,6 +174,13 @@
 /obj/structure/aquarium/proc/admire(mob/user)
 	to_chat(user,span_notice("You take a moment to watch [src]."))
 	if(do_after(user, 5 SECONDS, target = src))
+		var/alive_fish = 0
+		var/dead_fish = 0
+		for(var/obj/item/fish/fish in tracked_fish)
+			if(fish.status == FISH_ALIVE)
+				alive_fish++
+			else
+				dead_fish++
 		//Check if there are live fish - good mood
 		//All fish dead - bad mood.
 		//No fish - nothing.
@@ -255,3 +267,14 @@
 #undef AQUARIUM_LAYER_STEP
 #undef AQUARIUM_MIN_OFFSET
 #undef AQUARIUM_MAX_OFFSET
+
+
+/obj/structure/aquarium/prefilled/Initialize(mapload)
+	. = ..()
+
+	new /obj/item/aquarium_prop/rocks(src)
+	new /obj/item/aquarium_prop/seaweed(src)
+
+	new /obj/item/fish/goldfish(src)
+	new /obj/item/fish/angelfish(src)
+	new /obj/item/fish/guppy(src)

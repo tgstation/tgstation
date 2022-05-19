@@ -158,9 +158,18 @@
 	for(var/choice in potentialspawns)
 		var/mob/living/simple_animal/hostile/giant_spider/spider = choice
 		spider_list[initial(spider.name)] = choice
+
 		var/datum/radial_menu_choice/option = new
 		option.image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
-		option.info = span_boldnotice("[initial(spider.menu_description)]")
+
+		var/datum/reagent/spider_poison = initial(spider.poison_type)
+		var/spider_description = initial(spider.menu_description)
+		if(initial(spider.poison_per_bite))
+			spider_description += " [initial(spider_poison.name)] injection of [initial(spider.poison_per_bite)]u per bite."
+		else
+			spider_description += " Does not inject [initial(spider_poison.name)]."
+		option.info = span_boldnotice(spider_description)
+
 		display_spiders[initial(spider.name)] = option
 	sort_list(display_spiders)
 	var/chosen_spider = show_radial_menu(user, egg, display_spiders, radius = 38)

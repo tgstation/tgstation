@@ -52,6 +52,9 @@ SUBSYSTEM_DEF(air)
 	var/list/queued_for_activation
 	var/display_all_groups = FALSE
 
+	var/list/reaction_handbook
+	var/list/gas_handbook
+
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
@@ -91,6 +94,7 @@ SUBSYSTEM_DEF(air)
 	setup_pipenets()
 	setup_turf_visuals()
 	process_adjacent_rebuild()
+	atmos_handbooks_init()
 	return ..()
 
 
@@ -539,7 +543,11 @@ SUBSYSTEM_DEF(air)
 		var/starting_ats = active_turfs.len
 		sleep(world.tick_lag)
 		var/timer = world.timeofday
-		log_mapping("There are [starting_ats] active turfs at roundstart caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required).")
+
+		log_mapping("There are [starting_ats] active turfs at roundstart caused by a difference of the air between the adjacent turfs. \
+		To locate these active turfs, go into the \"Debug\" tab of your stat-panel. Then hit the verb that says \"Mapping Verbs - Enable\". \
+		Now, you can see all of the associated coordinates using \"Mapping -> Show roundstart AT list\" verb.")
+
 		for(var/turf/T in active_turfs)
 			GLOB.active_turfs_startlist += T
 

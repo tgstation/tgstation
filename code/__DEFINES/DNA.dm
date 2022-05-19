@@ -17,8 +17,11 @@
 
 
 //Mutation classes. Normal being on them, extra being additional mutations with instability and other being stuff you dont want people to fuck with like wizard mutate
+/// A mutation that can be activated and deactived by completing a sequence
 #define MUT_NORMAL 1
+/// A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console
 #define MUT_EXTRA 2
+/// Cannot be interacted with by players through normal means. I.E. wizards mutate
 #define MUT_OTHER 3
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
@@ -26,7 +29,8 @@
 
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
 
-#define DNA_EYE_COLOR_BLOCK 4
+#define DNA_EYE_COLOR_LEFT_BLOCK 4
+#define DNA_EYE_COLOR_RIGHT_BLOCK 4
 #define DNA_FACIAL_HAIR_COLOR_BLOCK 2
 #define DNA_FACIAL_HAIRSTYLE_BLOCK 6
 #define DNA_GENDER_BLOCK 5
@@ -68,30 +72,28 @@
 #define NOBLOOD 6
 #define NOTRANSSTING 7
 #define NOZOMBIE 8
-/// Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
-#define DIGITIGRADE 9
-#define NO_UNDERWEAR 10
-#define NOSTOMACH 11
-#define NO_DNA_COPY 12
-#define DRINKSBLOOD 13
+#define NO_UNDERWEAR 9
+#define NOSTOMACH 10
+#define NO_DNA_COPY 11
+#define DRINKSBLOOD 12
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define DYNCOLORS 14
-#define AGENDER 15
+#define DYNCOLORS 13
+#define AGENDER 14
 /// Do not draw eyes or eyeless overlay
-#define NOEYESPRITES 16
+#define NOEYESPRITES 15
 /// Used for determining which wounds are applicable to this species.
 /// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
-#define HAS_FLESH 17
+#define HAS_FLESH 16
 /// if we have bones (can suffer bone wounds)
-#define HAS_BONE 18
+#define HAS_BONE 17
 ///If we have a limb-specific overlay sprite
-#define HAS_MARKINGS 19
+#define HAS_MARKINGS 18
 /// Do not draw blood overlay
-#define NOBLOODOVERLAY 20
+#define NOBLOODOVERLAY 19
 ///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
-#define NOAUGMENTS 21
+#define NOAUGMENTS 20
 ///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
-#define BLOOD_CLANS 22
+#define BLOOD_CLANS 21
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
@@ -149,12 +151,13 @@
 #define CHROMOSOME_NONE 1
 #define CHROMOSOME_USED 2
 
-//used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their body_type for the actual sprites, which is not genetic)
+//used for mob's genetic gender (mainly just for pronouns, members of sexed species with plural gender refer to their physique for the actual sprites, which is not genetic)
 #define G_MALE 1
 #define G_FEMALE 2
 #define G_PLURAL 3
 
-///Organ slot processing order for life proc
+/// Defines how a mob's internal_organs_slot is ordered
+/// Exists so Life()'s organ process order is consistent
 GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_BRAIN,
 	ORGAN_SLOT_APPENDIX,
@@ -187,42 +190,10 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_XENO_NEUROTOXINGLAND,
 	ORGAN_SLOT_XENO_EGGSAC,))
 
-//Defines for Species IDs
-#define SPECIES_HUMAN "human"
-#define SPECIES_FELINE "felinid"
-#define SPECIES_MOTH "moth"
-#define SPECIES_ETHEREAL "ethereal"
-#define SPECIES_PLASMAMAN "plasmaman"
-#define SPECIES_FLY "fly"
-#define SPECIES_MONKEY "monkey"
-#define SPECIES_JELLYPERSON "jelly"
-#define SPECIES_SLIMEPERSON "slime"
-#define SPECIES_LUMINESCENT "lum"
-#define SPECIES_STARGAZER "stargazer"
-#define SPECIES_LIZARD "lizard"
-#define SPECIES_LIZARD_ASH "ashlizard"
-#define SPECIES_LIZARD_SILVER "silverlizard"
-#define SPECIES_DULLAHAN "dullahan"
-#define SPECIES_SKELETON "skeleton"
-#define SPECIES_VAMPIRE "vampire"
-#define SPECIES_ZOMBIE "memezombies"
-#define SPECIES_ZOMBIE_HALLOWEEN "zombie"
-#define SPECIES_ADDICT "goofzombies"
-
-#define SPECIES_ABDUCTOR "abductor"
-#define SPECIES_ANDROID "android"
-#define SPECIES_MUSHROOM "mush"
-#define SPECIES_PODPERSON "pod"
-#define SPECIES_SHADOW "shadow"
-#define SPECIES_NIGHTMARE "nightmare"
-#define SPECIES_SNAIL "snail"
-#define SPECIES_SYNTH "synth"
-#define SPECIES_SYNTH_MILITARY "military_synth"
-
 //Defines for Golem Species IDs
-#define SPECIES_GOLEM "iron_golem"
-#define SPECIES_GOLEM_ADAMANTINE "adamantine_golem"
-#define SPECIES_GOLEM_PLASMA "plasma_golem"
+#define SPECIES_GOLEM "golem"
+#define SPECIES_GOLEM_ADAMANTINE "a_golem"
+#define SPECIES_GOLEM_PLASMA "p_golem"
 #define SPECIES_GOLEM_DIAMOND "diamond_golem"
 #define SPECIES_GOLEM_GOLD "gold_golem"
 #define SPECIES_GOLEM_SILVER "silver_golem"
@@ -235,16 +206,16 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_GOLEM_SAND "sand_golem"
 #define SPECIES_GOLEM_GLASS "glass_golem"
 #define SPECIES_GOLEM_BLUESPACE "bluespace_golem"
-#define SPECIES_GOLEM_BANANIUM "bananium_golem"
-#define SPECIES_GOLEM_CULT "runic_golem"
-#define SPECIES_GOLEM_CLOTH "cloth_golem"
+#define SPECIES_GOLEM_BANANIUM "ba_golem"
+#define SPECIES_GOLEM_CULT "cultgolem"
+#define SPECIES_GOLEM_CLOTH "clothgolem"
 #define SPECIES_GOLEM_PLASTIC "plastic_golem"
 #define SPECIES_GOLEM_BRONZE "bronze_golem"
-#define SPECIES_GOLEM_CARDBOARD "cardboard_golem"
+#define SPECIES_GOLEM_CARDBOARD "c_golem"
 #define SPECIES_GOLEM_LEATHER "leather_golem"
-#define SPECIES_GOLEM_DURATHREAD "durathread_golem"
-#define SPECIES_GOLEM_BONE "bone_golem"
-#define SPECIES_GOLEM_SNOW "snow_golem"
+#define SPECIES_GOLEM_DURATHREAD "d_golem"
+#define SPECIES_GOLEM_BONE "b_golem"
+#define SPECIES_GOLEM_SNOW "sn_golem"
 #define SPECIES_GOLEM_HYDROGEN "metallic_hydrogen_golem"
 
 // Defines for used in creating "perks" for the species preference pages.

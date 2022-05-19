@@ -57,6 +57,6 @@
 		var/mob/living/L = target
 		if(L.mob_biotypes & MOB_PLANT)
 			L.show_message(span_notice("The radiation beam leaves you feeling disoriented!"))
-			L.Dizzy(15)
+			L.set_timed_status_effect(30 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			L.emote("flip")
 			L.emote("spin")

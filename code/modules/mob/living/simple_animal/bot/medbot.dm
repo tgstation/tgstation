@@ -42,7 +42,6 @@
 	var/skin
 	var/mob/living/carbon/patient
 	var/mob/living/carbon/oldpatient
-	var/oldloc
 	var/last_found = 0
 	/// How much healing do we do at a time?
 	var/heal_amount = 2.5
@@ -152,7 +151,6 @@
 	..()
 	patient = null
 	oldpatient = null
-	oldloc = null
 	last_found = world.time
 	update_appearance()
 
@@ -358,7 +356,13 @@
 	if(QDELETED(patient))
 		if(medical_mode_flags & MEDBOT_SPEAK_MODE && prob(1))
 			if(bot_cover_flags & BOT_COVER_EMAGGED && prob(30))
-				var/list/i_need_scissors = list('sound/voice/medbot/fuck_you.ogg', 'sound/voice/medbot/turn_off.ogg', 'sound/voice/medbot/im_different.ogg', 'sound/voice/medbot/close.ogg', 'sound/voice/medbot/shindemashou.ogg')
+				var/list/i_need_scissors = list(
+					'sound/voice/medbot/fuck_you.ogg',
+					'sound/voice/medbot/turn_off.ogg',
+					'sound/voice/medbot/im_different.ogg',
+					'sound/voice/medbot/close.ogg',
+					'sound/voice/medbot/shindemashou.ogg',
+				)
 				playsound(src, pick(i_need_scissors), 70)
 			else
 				var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',"Delicious!" = 'sound/voice/medbot/delicious.ogg', "Why are we still here? Just to suffer?" = 'sound/voice/medbot/why.ogg')
@@ -366,7 +370,7 @@
 				speak(message)
 				playsound(src, messagevoice[message], 50)
 		var/scan_range = (medical_mode_flags & MEDBOT_STATIONARY_MODE ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
-		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
+		patient = scan(list(/mob/living/carbon/human), oldpatient, scan_range)
 		oldpatient = patient
 
 	if(patient && (get_dist(src,patient) <= 1) && !tending) //Patient is next to us, begin treatment!
@@ -567,8 +571,6 @@
 			tending = FALSE
 
 /mob/living/simple_animal/bot/medbot/explode()
-	bot_mode_flags &= ~BOT_MODE_ON
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	drop_part(medkit_type, Tsec)
@@ -577,9 +579,7 @@
 
 	if(bot_cover_flags & BOT_COVER_EMAGGED && prob(25))
 		playsound(src, 'sound/voice/medbot/insult.ogg', 50)
-
-	do_sparks(3, TRUE, src)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/medbot/proc/declare(crit_patient)
 	if(!COOLDOWN_FINISHED(src, last_patient_message))

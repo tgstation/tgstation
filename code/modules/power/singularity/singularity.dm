@@ -137,7 +137,7 @@
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			if(current_size <= STAGE_TWO)
-				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_SINGULO)
+				investigate_log("has been destroyed by a heavy explosion.", INVESTIGATE_ENGINE)
 				qdel(src)
 				return
 
@@ -257,7 +257,7 @@
 		resolved_singularity.singularity_size = current_size
 
 	if(current_size == allowed_size)
-		investigate_log("<font color='red'>grew to size [current_size]</font>", INVESTIGATE_SINGULO)
+		investigate_log("grew to size [current_size].", INVESTIGATE_ENGINE)
 		return TRUE
 	else if(current_size < (--temp_allowed_size))
 		expand(temp_allowed_size)
@@ -266,7 +266,7 @@
 
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)
-		investigate_log("collapsed.", INVESTIGATE_SINGULO)
+		investigate_log("collapsed.", INVESTIGATE_ENGINE)
 		qdel(src)
 		return FALSE
 	switch(energy)//Some of these numbers might need to be changed up later -Mport
@@ -396,7 +396,7 @@
 			span_userdanger("You feel an inner fire as your skin bursts into flames!")
 		)
 		burned_mob.adjust_fire_stacks(5)
-		burned_mob.IgniteMob()
+		burned_mob.ignite_mob()
 	return
 
 /obj/singularity/proc/mezzer()
@@ -430,7 +430,7 @@
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)
 	var/dist = max((current_size - 2),1)
-	investigate_log("has been destroyed by another singularity.", INVESTIGATE_SINGULO)
+	investigate_log("has been destroyed by another singularity.", INVESTIGATE_ENGINE)
 	explosion(
 		src,
 		devastation_range = dist,

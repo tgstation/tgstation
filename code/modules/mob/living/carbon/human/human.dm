@@ -8,6 +8,7 @@
 	create_bodyparts()
 
 	setup_human_dna()
+	prepare_huds() //Prevents a nasty runtime on human init
 
 	if(dna.species)
 		INVOKE_ASYNC(src, .proc/set_species, dna.species.type)
@@ -292,14 +293,14 @@
 					return
 
 				var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
-				for (var/obj/item/pda/P in GLOB.PDAs)
-					if(P.owner == R.fields["name"])
+				for (var/obj/item/modular_computer/tablet in GLOB.TabletMessengers)
+					if(tablet.saved_identification == R.fields["name"])
 						var/message = "You have been fined [fine] credits for '[t1]'. Fines may be paid at security."
-						var/datum/signal/subspace/messaging/pda/signal = new(src, list(
+						var/datum/signal/subspace/messaging/tablet_msg/signal = new(src, list(
 							"name" = "Security Citation",
 							"job" = "Citation Server",
 							"message" = message,
-							"targets" = list(STRINGIFY_PDA_TARGET(P.owner, P.ownjob)),
+							"targets" = list(tablet),
 							"automated" = TRUE
 						))
 						signal.send_to_receivers()
@@ -473,8 +474,7 @@
 		facial_hairstyle = "Shaved"
 	hairstyle = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
-	update_body()
-	update_hair()
+	update_body(is_creating = TRUE)
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	..()
@@ -759,12 +759,17 @@
 		regenerate_organs()
 	remove_all_embedded_objects()
 	set_heartattack(FALSE)
-	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
 	set_coretemperature(get_body_temp_normal(apply_change=FALSE))
 	heat_exposure_stacks = 0
+	return ..()
+
+/mob/living/carbon/human/is_nearsighted()
+	var/obj/item/clothing/glasses/eyewear = glasses
+	if(istype(eyewear) && eyewear.vision_correction)
+		return FALSE
 	return ..()
 
 /mob/living/carbon/human/is_literate()
@@ -1024,9 +1029,6 @@
 /mob/living/carbon/human/species/golem
 	race = /datum/species/golem
 
-/mob/living/carbon/human/species/golem/random
-	race = /datum/species/golem/random
-
 /mob/living/carbon/human/species/golem/adamantine
 	race = /datum/species/golem/adamantine
 
@@ -1147,12 +1149,6 @@
 /mob/living/carbon/human/species/snail
 	race = /datum/species/snail
 
-/mob/living/carbon/human/species/synth
-	race = /datum/species/synth
-
-/mob/living/carbon/human/species/synth/military
-	race = /datum/species/synth/military
-
 /mob/living/carbon/human/species/vampire
 	race = /datum/species/vampire
 
@@ -1161,6 +1157,3 @@
 
 /mob/living/carbon/human/species/zombie/infectious
 	race = /datum/species/zombie/infectious
-
-/mob/living/carbon/human/species/zombie/krokodil_addict
-	race = /datum/species/krokodil_addict

@@ -65,7 +65,9 @@
 /turf/open/floor/engine,
 /area/tcommsat/oldaisat)
 "ap" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron/airless,
 /area/tcommsat/oldaisat)
 "aq" = (
@@ -186,7 +188,9 @@
 /turf/open/floor/iron/airless,
 /area/tcommsat/oldaisat)
 "aN" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/iron/airless,
 /area/tcommsat/oldaisat)
@@ -237,7 +241,7 @@
 /turf/template_noop,
 /area/template_noop)
 "aU" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/tcommsat/oldaisat)
 "aV" = (

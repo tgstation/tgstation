@@ -662,6 +662,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	desc = "A metallic container containing tasty paint."
+	w_class = WEIGHT_CLASS_SMALL
 
 	instant = TRUE
 	edible = FALSE
@@ -749,6 +750,19 @@
 
 		return
 
+	if(ismob(target) && (HAS_TRAIT(target, TRAIT_SPRAY_PAINTABLE)))
+		if(actually_paints)
+			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+			SEND_SIGNAL(target, COMSIG_LIVING_MOB_PAINTED)
+		. = use_charges(user, 2, requires_full = FALSE)
+		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
+
+		if(pre_noise || post_noise)
+			playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
+		return .
+
+
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		if(actually_paints)
 			var/color_is_dark = is_color_dark(paint_color)
@@ -758,12 +772,13 @@
 				return FALSE
 
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-			if(isliving(target.loc))
+			if(isitem(target) && isliving(target.loc))
+				var/obj/item/target_item = target
 				var/mob/living/holder = target.loc
-				if(holder.is_holding(target))
+				if(holder.is_holding(target_item))
 					holder.update_inv_hands()
 				else
-					holder.regenerate_icons()
+					holder.update_clothing(target_item.slot_flags)
 			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)
 		. = use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
@@ -786,7 +801,7 @@
 
 	if(istype(target, /obj/item/bodypart) && actually_paints)
 		var/obj/item/bodypart/limb = target
-		if(limb.status == BODYPART_ROBOTIC)
+		if(!IS_ORGANIC_LIMB(limb))
 			var/list/skins = list()
 			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 			for(var/skin_option in style_list_icons)

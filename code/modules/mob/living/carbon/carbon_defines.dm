@@ -25,7 +25,10 @@
 	///Same as handcuffs but for legs. Bear traps use this.
 	var/obj/item/legcuffed = null
 
+	/// Measure of how disgusted we are. See DISGUST_LEVEL_GROSS and friends
 	var/disgust = 0
+	/// How disgusted we were LAST time we processed disgust. Helps prevent unneeded work
+	var/old_disgust = 0
 
 	//inventory slots
 	var/obj/item/back = null
@@ -74,7 +77,8 @@
 	/// A collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
 	var/list/hand_bodyparts = list()
 
-	var/icon_render_key = ""
+	///A cache of bodypart = icon to prevent excessive icon creation.
+	var/list/icon_render_keys = list()
 	var/static/list/limb_icon_cache = list()
 
 	//halucination vars
@@ -82,8 +86,6 @@
 	var/next_hallucination = 0
 	var/damageoverlaytemp = 0
 
-	///Overall drunkenness
-	var/drunkenness = 0
 	///used to halt stamina regen temporarily
 	var/stam_regen_start_time = 0
 

@@ -329,3 +329,17 @@
 	)
 	result = /obj/item/food/soup/oatmeal
 	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/zurek
+	name = "Zurek"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/flour = 5,
+		/obj/item/food/boiledegg = 1,
+		/obj/item/food/meat/cutlet = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/reagent_containers/glass/bowl = 1
+	)
+	result = /obj/item/food/soup/zurek
+	subcategory = CAT_SOUP

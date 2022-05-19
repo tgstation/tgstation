@@ -34,7 +34,8 @@
 	if(visualsOnly)
 		return
 	equipped_on.fully_replace_character_name(null,"Waldo")
-	equipped_on.eye_color = "#000000"
+	equipped_on.eye_color_left = "#000000"
+	equipped_on.eye_color_right = "#000000"
 	equipped_on.gender = MALE
 	equipped_on.skin_tone = "caucasian3"
 	equipped_on.hairstyle = "Business Hair 3"
@@ -159,15 +160,21 @@
 	back = /obj/item/storage/backpack
 	head = /obj/item/clothing/head/hunter
 	suit = /obj/item/clothing/suit/space/hunter
+	belt = /obj/item/gun/ballistic/automatic/pistol/fire_mag
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/hunter
 	glasses = /obj/item/clothing/glasses/sunglasses/gar
 	ears = /obj/item/radio/headset
 	r_pocket = /obj/item/restraints/handcuffs/cable
+	l_pocket = /obj/item/ammo_box/magazine/m9mm/fire
 	id = /obj/item/card/id/advanced/bountyhunter
-	l_hand = /obj/item/tank/internals/plasma/full
-	r_hand = /obj/item/flamethrower/full/tank
+	l_hand = /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
+
+	backpack_contents = list(
+		/obj/item/ammo_casing/shotgun/rubbershot = 4,
+		/obj/item/ammo_casing/shotgun/incendiary/no_trail = 4,
+	)
 
 /datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -218,18 +225,6 @@
 	backpack_contents = list(
 		/obj/item/bountytrap = 4
 		)
-
-/datum/outfit/bountysynth/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-	var/datum/species/synth/synthetic_appearance = new()
-	H.set_species(synthetic_appearance)
-	synthetic_appearance.assume_disguise(synthetic_appearance, H)
-	H.update_hair()
-	var/obj/item/card/id/W = H.wear_id
-	W.registered_name = H.real_name
-	W.update_label()
-	W.update_icon()
 
 //ids and ert code
 

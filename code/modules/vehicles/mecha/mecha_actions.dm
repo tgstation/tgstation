@@ -6,7 +6,6 @@
 		var/datum/action/vehicle/sealed/mecha/mecha = .
 		mecha.chassis = src
 
-
 /datum/action/vehicle/sealed/mecha
 	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
 	var/obj/vehicle/sealed/mecha/chassis
@@ -34,57 +33,17 @@
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 
+	if(!chassis.internal_tank) //Just in case.
+		chassis.use_internal_tank = FALSE
+		chassis.balloon_alert(owner, "no tank available!")
+		chassis.log_message("Switch to internal tank failed. No tank available.", LOG_MECHA)
+		return
+
 	chassis.use_internal_tank = !chassis.use_internal_tank
 	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
 	chassis.balloon_alert(owner, "taking air from [chassis.use_internal_tank ? "internal airtank" : "environment"]")
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)
-	UpdateButtonIcon()
-
-/datum/action/vehicle/sealed/mecha/mech_cycle_equip
-	name = "Cycle Equipment"
-	button_icon_state = "mech_cycle_equip_off"
-
-/datum/action/vehicle/sealed/mecha/mech_cycle_equip/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
-		return
-
-	var/list/available_equipment = list()
-	for(var/e in chassis.equipment)
-		var/obj/item/mecha_parts/mecha_equipment/equipment = e
-		if(equipment.selectable)
-			available_equipment += equipment
-
-	if(available_equipment.len == 0)
-		chassis.balloon_alert(owner, "no equipment available")
-		playsound(chassis,'sound/machines/terminal_error.ogg', 40, FALSE)
-		return
-	if(!chassis.selected)
-		chassis.selected = available_equipment[1]
-		chassis.balloon_alert(owner, "[chassis.selected] selected")
-		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
-		button_icon_state = "mech_cycle_equip_on"
-		playsound(chassis,'sound/machines/piston_raise.ogg', 40, TRUE)
-		UpdateButtonIcon()
-		return
-	var/number = 0
-	for(var/equipment in available_equipment)
-		number++
-		if(equipment != chassis.selected)
-			continue
-		if(available_equipment.len == number)
-			chassis.selected = null
-			chassis.balloon_alert(owner, "switched to no equipment")
-			button_icon_state = "mech_cycle_equip_off"
-			playsound(chassis,'sound/machines/piston_lower.ogg', 40, TRUE)
-		else
-			chassis.selected = available_equipment[number+1]
-			chassis.balloon_alert(owner, "switched to [chassis.selected]")
-			button_icon_state = "mech_cycle_equip_on"
-			playsound(chassis,'sound/machines/piston_raise.ogg', 40, TRUE)
-		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
-		UpdateButtonIcon()
-		return
-
+	UpdateButtons()
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_lights
 	name = "Toggle Lights"
@@ -106,7 +65,7 @@
 	chassis.balloon_alert(owner, "toggled lights [chassis.mecha_flags & LIGHTS_ON ? "on":"off"]")
 	playsound(chassis,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
 	chassis.log_message("Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/vehicle/sealed/mecha/mech_view_stats
 	name = "View Stats"
@@ -116,9 +75,7 @@
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 
-	var/datum/browser/popup = new(owner , "exosuit")
-	popup.set_content(chassis.get_stats_html(owner))
-	popup.open()
+	chassis.ui_interact(owner)
 
 
 /datum/action/vehicle/sealed/mecha/strafe
@@ -152,7 +109,7 @@
 
 	for(var/occupant in occupants)
 		var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/strafe)
-		action?.UpdateButtonIcon()
+		action?.UpdateButtons()
 
 ///swap seats, for two person mecha
 /datum/action/vehicle/sealed/mecha/swap_seat

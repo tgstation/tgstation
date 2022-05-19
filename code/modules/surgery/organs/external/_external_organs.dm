@@ -33,6 +33,12 @@
 	///Reference to the limb we're inside of
 	var/obj/item/bodypart/ownerlimb
 
+	///Does this organ use it's own color instead of bodypart/var/draw_color?
+	var/overrides_color = FALSE
+
+	///Does this organ have any bodytypes to pass to it's ownerlimb?
+	var/external_bodytypes = NONE
+
 /**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
 * I'm sorry
@@ -54,6 +60,8 @@
 	. = ..()
 
 	limb.contents.Add(src)
+	if(external_bodytypes)
+		limb.synchronize_bodytypes(reciever)
 
 	reciever.update_body_parts()
 
@@ -63,6 +71,8 @@
 	if(ownerlimb)
 		ownerlimb.external_organs.Remove(src)
 		ownerlimb.contents.Remove(src)
+		if(external_bodytypes) //Happens after removal from contents, and before ownerlimb is null.
+			ownerlimb.synchronize_bodytypes(organ_owner)
 		ownerlimb = null
 
 	organ_owner.update_body_parts()
@@ -74,11 +84,11 @@
 	bodypart.contents.Add(src)
 
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
-/obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, body_type, image_color)
+/obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, physique, image_color)
 	if(!sprite_datum)
 		return
 
-	var/gender = (body_type == FEMALE) ? "f" : "m"
+	var/gender = (physique == FEMALE) ? "f" : "m"
 	var/finished_icon_state = (sprite_datum.gender_specific ? gender : "m") + "_" + feature_key + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(image_layer)
 	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -image_layer)
 	appearance.dir = image_dir
@@ -143,6 +153,10 @@
 
 	set_sprite(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
 
+///Colorizes the limb it's inserted to, if required.
+/obj/item/organ/external/proc/override_color(rgb_value)
+	return
+
 ///The horns of a lizard!
 /obj/item/organ/external/horns
 	zone = BODY_ZONE_HEAD
@@ -190,6 +204,7 @@
 
 	feature_key = "snout"
 	preference = "feature_lizard_snout"
+	external_bodytypes = BODYTYPE_SNOUTED
 
 	dna_block = DNA_SNOUT_BLOCK
 
@@ -268,6 +283,8 @@
 
 	dna_block = DNA_POD_HAIR_BLOCK
 
+	overrides_color = TRUE
+
 /obj/item/organ/external/pod_hair/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!(human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return TRUE
@@ -275,3 +292,8 @@
 
 /obj/item/organ/external/pod_hair/get_global_feature_list()
 	return GLOB.pod_hair_list
+
+/obj/item/organ/external/pod_hair/override_color(rgb_value)
+	var/list/rgb_list = rgb2num(rgb_value)
+	return rgb(255 - rgb_list[1], 255 - rgb_list[2], 255 - rgb_list[3])
+

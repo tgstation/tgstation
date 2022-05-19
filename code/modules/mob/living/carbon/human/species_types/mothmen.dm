@@ -1,9 +1,8 @@
 /datum/species/moth
-	name = "Mothman"
+	name = "\improper Mothman"
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
 	say_mod = "flutters"
-	default_color = "00FF00"
 	species_traits = list(LIPS, HAS_FLESH, HAS_BONE, HAS_MARKINGS, TRAIT_ANTENNAE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
@@ -28,6 +27,15 @@
 	has_innate_wings = TRUE
 	payday_modifier = 0.75
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
+
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/moth,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/moth,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/moth,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/moth,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/moth,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/moth,
+	)
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C, datum/species/old_species, replace_current= TRUE, list/excluded_zones, visual_only)
 	. = ..()

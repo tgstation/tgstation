@@ -20,6 +20,8 @@
 #define META_GAS_ID 6
 ///Power of the gas when used in the current iteration of fusion
 #define META_GAS_FUSION_POWER 7
+///Short description of the gas.
+#define META_GAS_DESC 8
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)
@@ -28,8 +30,6 @@
 #define ONE_ATMOSPHERE 101.325
 /// -270.3degC
 #define TCMB 2.7
-/// -48.15degC
-#define TCRYO 225
 /// 0degC
 #define T0C 273.15
 /// 20degC
@@ -136,6 +136,9 @@
 ///Helper for small fires to grow
 #define FIRE_GROWTH_RATE 40000
 
+///Multiplier for the temperature shared to other turfs
+#define COLD_FIRE_SPREAD_RADIOSITY_SCALE 0.95
+
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
 #define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
 ///compared against for superconductivity
@@ -174,4 +177,6 @@
 #define KILL_EXCITED 3
 
 /// How many maximum iterations do we allow the Newton-Raphson approximation for gas pressure to do.
-#define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 10
+#define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 20
+/// We deal with big numbers and a lot of math, things are bound to get imprecise. Take this traveller.
+#define ATMOS_PRESSURE_ERROR_TOLERANCE 0.01

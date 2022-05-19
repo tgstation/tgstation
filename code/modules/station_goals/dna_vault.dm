@@ -59,65 +59,6 @@
 	return FALSE
 
 
-/obj/item/dna_probe
-	name = "DNA Sampler"
-	desc = "Can be used to take chemical and genetic samples of pretty much anything."
-	icon = 'icons/obj/syringe.dmi'
-	inhand_icon_state = "sampler"
-	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	icon_state = "sampler"
-	item_flags = NOBLUDGEON
-	var/list/animals = list()
-	var/list/plants = list()
-	var/list/dna = list()
-
-/obj/item/dna_probe/proc/clear_data()
-	animals = list()
-	plants = list()
-	dna = list()
-
-/obj/item/dna_probe/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity || !target)
-		return
-	//tray plants
-	if(istype(target, /obj/machinery/hydroponics))
-		var/obj/machinery/hydroponics/H = target
-		if(!H.myseed)
-			return
-		if(H.plant_status != HYDROTRAY_PLANT_HARVESTABLE)// So it's bit harder.
-			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
-			return
-		if(plants[H.myseed.type])
-			to_chat(user, span_notice("Plant data already present in local storage."))
-			return
-		plants[H.myseed.type] = 1
-		to_chat(user, span_notice("Plant data added to local storage."))
-
-	//animals
-	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
-	if(isanimal_or_basicmob(target) || is_type_in_typecache(target,non_simple_animals) || ismonkey(target))
-		if(isanimal(target))
-			var/mob/living/simple_animal/A = target
-			if(!A.healable)//simple approximation of being animal not a robot or similar
-				to_chat(user, span_alert("No compatible DNA detected."))
-				return
-		if(animals[target.type])
-			to_chat(user, span_alert("Animal data already present in local storage."))
-			return
-		animals[target.type] = 1
-		to_chat(user, span_notice("Animal data added to local storage."))
-
-	//humans
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(dna[H.dna.unique_identity])
-			to_chat(user, span_notice("Humanoid data already present in local storage."))
-			return
-		dna[H.dna.unique_identity] = 1
-		to_chat(user, span_notice("Humanoid data added to local storage."))
-
 /obj/machinery/dna_vault
 	name = "DNA Vault"
 	desc = "Break glass in case of apocalypse."
@@ -125,7 +66,7 @@
 	icon_state = "vault"
 	density = TRUE
 	anchored = TRUE
-	idle_power_usage = 5000
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	pixel_x = -32
 	pixel_y = -64
 	light_range = 3
@@ -228,15 +169,15 @@
 	if(istype(I, /obj/item/dna_probe))
 		var/obj/item/dna_probe/P = I
 		var/uploaded = 0
-		for(var/plant in P.plants)
+		for(var/plant in P.stored_dna_plants)
 			if(!plants[plant])
 				uploaded++
 				plants[plant] = 1
-		for(var/animal in P.animals)
+		for(var/animal in P.stored_dna_animal)
 			if(!animals[animal])
 				uploaded++
 				animals[animal] = 1
-		for(var/ui in P.dna)
+		for(var/ui in P.stored_dna_human)
 			if(!dna[ui])
 				uploaded++
 				dna[ui] = 1
@@ -279,3 +220,4 @@
 			to_chat(H, span_notice("Your arms move as fast as lightning."))
 			H.next_move_modifier = 0.5
 	power_lottery[H] = list()
+	use_power(active_power_usage)

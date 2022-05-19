@@ -1,7 +1,6 @@
 /datum/species/dullahan
 	name = "Dullahan"
 	id = SPECIES_DULLAHAN
-	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
@@ -16,7 +15,7 @@
 	mutanteyes = /obj/item/organ/eyes/dullahan
 	mutanttongue = /obj/item/organ/tongue/dullahan
 	mutantears = /obj/item/organ/ears/dullahan
-	limbs_id = "human"
+	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 
@@ -38,7 +37,6 @@
 	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
 
 	if(head)
-		head.no_update = TRUE
 		head.drop_limb()
 
 		if(!QDELETED(head)) //drop_limb() deletes the limb if no drop location exists and character setup dummies are located in nullspace.
@@ -49,7 +47,8 @@
 
 			// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
 			head.eyes = new /obj/item/organ/eyes(head)
-			head.eyes.eye_color = human.eye_color
+			head.eyes.eye_color_left = human.eye_color_left
+			head.eyes.eye_color_right = human.eye_color_right
 			head.update_icon_dropped()
 
 	human.set_safe_hunger_level()

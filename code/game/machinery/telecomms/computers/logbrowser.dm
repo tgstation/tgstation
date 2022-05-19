@@ -29,7 +29,7 @@
 		"network" = network,
 		"error" = error_message
 	)
-	
+
 	switch(screen)
 		if(MAIN_VIEW)
 			// If there are servers in the buffer, send them
@@ -46,9 +46,9 @@
 			var/list/packets = list()
 			for(var/datum/comm_log_entry/packet in SelectedServer.log_entries)
 				var/list/packet_out = list()
-				
+
 				packet_out["name"] = packet.name
-				
+
 				var/datum/language/language = packet.parameters["language"]
 				var/datum/language/language_instance = GLOB.language_datum_instances[language]
 				packet_out["language"] = language_instance.name
@@ -63,32 +63,32 @@
 				else
 					message_out = "(Unintelligible)"
 				packet_out["message"] = message_out
-				
+
 				var/mob/mobtype = packet.parameters["mobtype"]
 				var/race = "Unidentifiable"
 				if(ispath(mobtype, /mob/living/carbon/human) || ispath(mobtype, /mob/living/brain))
 					race = "Humanoid"
-				
+
 				// NT knows a lot about slimes, but not aliens. Can identify slimes
 				else if(ispath(mobtype, /mob/living/simple_animal/slime))
 					race = "Slime"
-				
+
 				// sometimes M gets deleted prematurely for AIs... just check the job
 				else if(ispath(mobtype, /mob/living/silicon) || packet.parameters["job"] == JOB_AI)
 					race = "Artificial Life"
-				
+
 				else if(isobj(mobtype))
 					race = "Machinery"
-				
+
 				else if(ispath(mobtype, /mob/living/simple_animal))
 					race = "Domestic Animal"
-				
+
 				packet_out["race"] = race
 				packet_out["source"] = packet.parameters["name"]
 				packet_out["job"] = packet.parameters["job"]
 				packet_out["type"] = packet.input_type
 				packet_out["ref"] = REF(packet)
-				
+
 				packets += list(packet_out)
 			server_out["packets"] = packets
 			data["server"] = server_out
@@ -99,25 +99,25 @@
 	. = ..()
 	if(.)
 		return
-	
+
 	error_message = ""
-	
+
 	. = TRUE
 	switch(action)
 		if("scan_network")
 			// Scan for a network
 			var/new_network = params["network_id"]
-			
+
 			if(length(new_network) > MAX_NETWORK_ID_LENGTH)
 				error_message = "OPERATION FAILED: NETWORK ID TOO LONG."
 				return
-			
+
 			if(servers.len > 0)
 				error_message = "OPERATION FAILED: BUFFER ALREADY POPULATED. PLEASE CLEAR THE BUFFER."
 				return
-			
+
 			network = new_network
-			
+
 			for(var/obj/machinery/telecomms/server/server in urange(25, src))
 				if(server.network == network)
 					servers.Add(server)
@@ -141,9 +141,11 @@
 			screen = MAIN_VIEW
 			return
 		if("delete_packet")
+			if(!SelectedServer)
+				return
 			// Delete a packet from server logs
 			var/datum/comm_log_entry/packet = locate(params["ref"])
-			if(!packet)
+			if(!(packet in SelectedServer.log_entries))
 				error_message = "OPERATION FAILED: PACKET NOT FOUND."
 				return
 			if(!src.allowed(usr) && !(obj_flags & EMAGGED))
@@ -156,6 +158,7 @@
 	return FALSE
 
 /obj/machinery/computer/telecomms/server/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "ServerMonitor", name)

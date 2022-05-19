@@ -13,6 +13,7 @@
 	base_icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	use_power = NO_POWER_USE
 	///Who are we sticking our needle in?
 	var/mob/living/carbon/attached
 	///Are we donating or injecting?
@@ -38,6 +39,7 @@
 	update_appearance()
 	if(use_internal_storage)
 		create_reagents(100, TRANSPARENT)
+	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
 /obj/machinery/iv_drip/Destroy()
 	attached = null
@@ -154,7 +156,7 @@
 			return
 		reagent_container = W
 		to_chat(user, span_notice("You attach [W] to [src]."))
-		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.log_list()])", LOG_ATTACK)
+		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([reagent_container.reagents.get_reagent_log_string()])", LOG_ATTACK)
 		add_fingerprint(user)
 		update_appearance()
 		return
@@ -232,7 +234,7 @@
 		return
 	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
 	var/datum/reagents/container = get_reagent_holder()
-	log_combat(usr, target, "attached", src, "containing: ([container.log_list()])")
+	log_combat(usr, target, "attached", src, "containing: ([container.get_reagent_log_string()])")
 	add_fingerprint(usr)
 	attached = target
 	START_PROCESSING(SSmachines, src)
@@ -342,11 +344,11 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/iv_drip, anchored)
 	AddComponent(/datum/component/simple_rotation)
-	
-/obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+
+/obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 #undef IV_TAKING
 #undef IV_INJECTING

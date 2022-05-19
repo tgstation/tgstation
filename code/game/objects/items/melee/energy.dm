@@ -221,7 +221,7 @@
 		"green" = LIGHT_COLOR_GREEN,
 		"purple" = LIGHT_COLOR_LAVENDER,
 		)
-	/// Whether this saber has beel multitooled.
+	/// Whether this saber has been multitooled.
 	var/hacked = FALSE
 
 /obj/item/melee/energy/sword/saber/Initialize(mapload)

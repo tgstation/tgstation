@@ -34,10 +34,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	density = TRUE
 	anchored = TRUE
 
-/obj/machinery/bsa/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I, 10)
-	return TRUE
+/obj/machinery/bsa/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool, time = 1 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/bsa/back
 	name = "Bluespace Artillery Generator"
@@ -142,7 +142,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	pixel_x = -192
 	bound_width = 352
 	bound_x = -192
-	appearance_flags = NONE //Removes default TILE_BOUND
+	appearance_flags = LONG_GLIDE //Removes default TILE_BOUND
 
 /obj/machinery/bsa/full/wrench_act(mob/living/user, obj/item/I)
 	return FALSE
@@ -258,6 +258,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	return GLOB.physical_state
 
 /obj/machinery/computer/bsa_control/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "BluespaceArtillery", name)
@@ -349,9 +350,9 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(notice)
 		return null
 	//Totally nanite construction system not an immersion breaking spawning
-	var/datum/effect_system/smoke_spread/s = new
-	s.set_up(4,get_turf(centerpiece))
-	s.start()
+	var/datum/effect_system/fluid_spread/smoke/fourth_wall_guard = new
+	fourth_wall_guard.set_up(4, location = get_turf(centerpiece))
+	fourth_wall_guard.start()
 	var/obj/machinery/bsa/full/cannon = new(get_turf(centerpiece),centerpiece.get_cannon_direction())
 	QDEL_NULL(centerpiece.front_ref)
 	QDEL_NULL(centerpiece.back_ref)

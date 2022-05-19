@@ -897,6 +897,37 @@ world
 		alpha_mask.Blend(image_overlay,ICON_OR)//OR so they are lumped together in a nice overlay.
 	return alpha_mask//And now return the mask.
 
+/**
+ * Helper proc to generate a cutout alpha mask out of an icon.
+ *
+ * Why is it a helper if it's so simple?
+ *
+ * Because BYOND's documentation is hot garbage and I don't trust anyone to actually
+ * figure this out on their own without sinking countless hours into it. Yes, it's that
+ * simple, now enjoy.
+ *
+ * But why not use filters?
+ *
+ * Filters do not allow for masks that are not the exact same on every dir. An example of a
+ * need for that can be found in [/proc/generate_left_leg_mask()].
+ *
+ * Arguments:
+ * * icon_to_mask - The icon file you want to generate an alpha mask out of.
+ * * icon_state_to_mask - The specific icon_state you want to generate an alpha mask out of.
+ *
+ * Returns an `/icon` that is the alpha mask of the provided icon and icon_state.
+ */
+/proc/generate_icon_alpha_mask(icon_to_mask, icon_state_to_mask)
+	var/icon/mask_icon = icon(icon_to_mask, icon_state_to_mask)
+	// I hate the MapColors documentation, so I'll explain what happens here.
+	// Basically, what we do here is that we invert the mask by using none of the original
+	// colors, and then the fourth group of number arguments is actually the alpha values of
+	// each of the original colors, which we multiply by 255 and subtract a value of 255 to the
+	// result for the matching pixels, while starting with a base color of white everywhere.
+	mask_icon.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 255,255,255,-255, 1,1,1,1)
+	return mask_icon
+
+
 /mob/proc/AddCamoOverlay(atom/A)//A is the atom which we are using as the overlay.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)//Don't really care for overlays/underlays.
 	//Now we need to culculate overlays+underlays and add them together to form an image for a mask.
@@ -1321,3 +1352,26 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
+
+///Checks if the given iconstate exists in the given file, caching the result. Setting scream to TRUE will print a stack trace ONCE.
+/proc/icon_exists(file, state, scream)
+	var/static/list/icon_states_cache = list()
+	if(icon_states_cache[file]?[state])
+		return TRUE
+
+	if(icon_states_cache[file]?[state] == FALSE)
+		return FALSE
+
+	var/list/states = icon_states(file)
+
+	if(!icon_states_cache[file])
+		icon_states_cache[file] = list()
+
+	if(state in states)
+		icon_states_cache[file][state] = TRUE
+		return TRUE
+	else
+		icon_states_cache[file][state] = FALSE
+		if(scream)
+			stack_trace("Icon Lookup for state: [state] in file [file] failed.")
+		return FALSE

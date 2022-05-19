@@ -4,12 +4,6 @@
  *
  * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
  */
-#define MAX_PAPER_LENGTH 5000
-#define MAX_PAPER_STAMPS 30 // Too low?
-#define MAX_PAPER_STAMPS_OVERLAYS 4
-#define MODE_READING 0
-#define MODE_WRITING 1
-#define MODE_STAMPING 2
 
 #define DEFAULT_ADD_INFO_COLOR "black"
 #define DEFAULT_ADD_INFO_FONT "Verdana"
@@ -116,7 +110,7 @@
 	if(contact_poison && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/clothing/gloves/G = H.gloves
-		if(!istype(G) || G.transfer_prints)
+		if(!istype(G) || !(G.body_parts_covered & HANDS) || HAS_TRAIT(G, TRAIT_FINGERPRINT_PASSTHROUGH) || HAS_TRAIT(H, TRAIT_FINGERPRINT_PASSTHROUGH))
 			H.reagents.add_reagent(contact_poison,contact_poison_volume)
 			contact_poison = null
 	. = ..()
@@ -137,7 +131,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.can_read(src) || usr.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
+	if(!usr.can_read(src) || usr.is_blind() || usr.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -169,13 +163,18 @@
 	if(!in_range(user, src) && !isobserver(user))
 		. += span_warning("You're too far away to read it!")
 		return
+
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return
+
 	if(user.can_read(src))
 		ui_interact(user)
 		return
 	. += span_warning("You cannot read it!")
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
-		// Are we on fire?  Hard ot read if so
+	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
 	if(!in_range(user, src) && !isobserver(user))
@@ -184,6 +183,9 @@
 		return UI_UPDATE
 	// Even harder to read if your blind...braile? humm
 	// .. or if you cannot read
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return UI_CLOSE
 	if(!user.can_read(src))
 		return UI_CLOSE
 	if(in_contents_of(/obj/machinery/door/airlock) || in_contents_of(/obj/item/clipboard))
@@ -209,7 +211,7 @@
 		if(user.is_holding(I)) //checking if they're holding it in case TK is involved
 			user.dropItemToGround(I)
 		user.adjust_fire_stacks(1)
-		user.IgniteMob()
+		user.ignite_mob()
 		return
 
 	if(user.is_holding(src)) //no TK shit here.
@@ -243,13 +245,16 @@
 		P.attackby(src, user)
 		return
 	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+		if(!user.can_write(P))
+			return
 		if(get_info_length() >= MAX_PAPER_LENGTH) // Sheet must have less than 5000 charaters
 			to_chat(user, span_warning("This sheet of paper is full!"))
 			return
+
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
-		if(!user.can_read(src))
+		if(!user.can_read(src) || user.is_blind())
 			//The paper window is 400x500
 			stamp(rand(0, 400), rand(0, 500), rand(0, 360), P.icon_state)
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [P.name]!"))
@@ -420,11 +425,11 @@
 				// the javascript was modified, somehow, outside of
 				// byond.  but right now we are logging it as
 				// the generated html might get beyond this limit
-				log_paper("[key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-MAX_PAPER_LENGTH]")
+				log_paper("[key_name(ui.user)] wrote to [name], and overwrote it by [paper_len - MAX_PAPER_LENGTH]: \"[in_paper]\"")
 			if(paper_len == 0)
 				to_chat(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
 			else
-				log_paper("[key_name(ui.user)] writing to paper [name]")
+				log_paper("[key_name(ui.user)] wrote to [name]: \"[in_paper]\"")
 				if(info != in_paper)
 					to_chat(ui.user, "You have added to your paper masterpiece!");
 					info = in_paper

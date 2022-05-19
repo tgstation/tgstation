@@ -321,7 +321,7 @@
 	gang_id = "TS"
 	acceptable_clothes = list(/obj/item/clothing/under/pants/classicjeans,
 		/obj/item/clothing/suit/jacket,
-		/obj/item/clothing/mask/bandana/skull)
+		/obj/item/clothing/mask/bandana/skull/black)
 	free_clothes = list(/obj/item/clothing/suit/jacket,
 		/obj/item/clothing/under/pants/classicjeans,
 		/obj/item/toy/crayon/spraycan)

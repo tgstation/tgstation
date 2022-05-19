@@ -15,7 +15,7 @@
 	icon_state = "mulebot0"
 	density = TRUE
 	move_resist = MOVE_FORCE_STRONG
-	animate_movement = FORWARD_STEPS
+	animate_movement = SLIDE_STEPS
 	health = 50
 	maxHealth = 50
 	speed = 3
@@ -487,7 +487,7 @@
 	if(!last_move || isspaceturf(oldLoc)) //if we didn't sucessfully move, or if our old location was a spaceturf.
 		return
 	var/obj/effect/decal/cleanable/blood/tracks/B = new(oldLoc)
-	B.add_blood_DNA(return_blood_DNA())
+	B.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	B.setDir(direct)
 	bloodiness--
 
@@ -742,7 +742,6 @@
 
 
 /mob/living/simple_animal/bot/mulebot/explode()
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
@@ -754,10 +753,8 @@
 		cell.update_appearance()
 		cell = null
 
-	do_sparks(3, TRUE, src)
-
 	new /obj/effect/decal/cleanable/oil(loc)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/mulebot/remove_air(amount) //To prevent riders suffocating
 	return loc ? loc.remove_air(amount) : null

@@ -23,11 +23,34 @@
 #define MECHA_MELEE (1 << 0)
 #define MECHA_RANGED (1 << 1)
 
-#define MECHA_FRONT_ARMOUR 1
-#define MECHA_SIDE_ARMOUR 2
-#define MECHA_BACK_ARMOUR 3
+#define MECHA_FRONT_ARMOUR "mechafront"
+#define MECHA_SIDE_ARMOUR "mechaside"
+#define MECHA_BACK_ARMOUR "mechaback"
+
+#define MECHA_WEAPON "mecha_weapon" //l and r arm weapon type
+#define MECHA_L_ARM "mecha_l_arm"
+#define MECHA_R_ARM "mecha_r_arm"
+#define MECHA_UTILITY "mecha_utility"
+#define MECHA_POWER "mecha_power"
+#define MECHA_ARMOR "mecha_armor"
 
 #define MECHA_LOCKED 0
 #define MECHA_SECURE_BOLTS 1
 #define MECHA_LOOSE_BOLTS 2
 #define MECHA_OPEN_HATCH 3
+
+// Some mechs must (at least for now) use snowflake handling of their UI elements, these defines are for that
+// when changing MUST update the same-named tsx file constants
+#define MECHA_SNOWFLAKE_ID_SLEEPER "sleeper_snowflake"
+#define MECHA_SNOWFLAKE_ID_SYRINGE "syringe_snowflake"
+#define MECHA_SNOWFLAKE_ID_MODE "mode_snowflake"
+#define MECHA_SNOWFLAKE_ID_EXTINGUISHER "extinguisher_snowflake"
+#define MECHA_SNOWFLAKE_ID_EJECTOR "ejector_snowflake"
+
+#define MECHA_AMMO_INCENDIARY "Incendiary bullet"
+#define MECHA_AMMO_BUCKSHOT "Buckshot shell"
+#define MECHA_AMMO_LMG "LMG bullet"
+#define MECHA_AMMO_MISSILE_HE "HE missile"
+#define MECHA_AMMO_MISSILE_AP "AP missile"
+#define MECHA_AMMO_FLASHBANG "Flashbang"
+#define MECHA_AMMO_CLUSTERBANG "Clusterbang"

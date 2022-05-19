@@ -73,10 +73,9 @@
  * Returns TRUE if there are mobs buckled to this atom and FALSE otherwise
  */
 /atom/movable/proc/has_buckled_mobs()
-	if(!buckled_mobs)
-		return FALSE
 	if(length(buckled_mobs))
 		return TRUE
+	return FALSE
 
 /**
  * Set a mob as buckled to src
@@ -132,7 +131,7 @@
 	if(.)
 		if(resistance_flags & ON_FIRE) //Sets the mob on fire if you buckle them to a burning atom/movableect
 			M.adjust_fire_stacks(1)
-			M.IgniteMob()
+			M.ignite_mob()
 
 /**
  * Set a mob as unbuckled from src

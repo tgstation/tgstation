@@ -518,7 +518,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "cK" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'HOLY SHIT SWAGMAN WHAT ARE YOU DOING'.";
 	name = "\improper HOLY SHIT SWAGMAN WHAT ARE YOU DOING"
 	},
@@ -739,7 +739,7 @@
 /area/awaymission/caves/northblock)
 "dA" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dB" = (
@@ -989,8 +989,8 @@
 /area/awaymission/caves/listeningpost)
 "eK" = (
 /obj/structure/table,
-/obj/item/gun/energy/kinetic_accelerator,
-/obj/item/gun/energy/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/item/gun/energy/recharge/kinetic_accelerator,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
@@ -1059,7 +1059,9 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "fq" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
@@ -1089,7 +1091,9 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "fA" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fB" = (
@@ -1116,7 +1120,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fL" = (
-/obj/structure/sign/departments/examroom{
+/obj/structure/sign/departments/maint{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -1388,7 +1392,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/northblock)
 "hT" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1630,7 +1634,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "yV" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /obj/item/soulstone/anybody,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
@@ -1643,7 +1647,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "zH" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1904,7 +1908,7 @@
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "Mq" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},

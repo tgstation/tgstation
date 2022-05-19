@@ -400,6 +400,19 @@
 		var/target = href_list["showmessageckeylinkless"]
 		browse_messages(target_ckey = target, linkless = 1)
 
+	else if(href_list["messageread"])
+		if(!isnum(href_list["message_id"]))
+			return
+		var/rounded_message_id = round(href_list["message_id"], 1)
+		var/datum/db_query/query_message_read = SSdbcore.NewQuery(
+			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE targetckey = :player_key AND id = :id",
+			list("id" = rounded_message_id, "player_key" = usr.ckey)
+		)
+		if(!query_message_read.warn_execute())
+			qdel(query_message_read)
+			return
+		qdel(query_message_read)
+
 	else if(href_list["messageedits"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -707,7 +720,7 @@
 			return
 		message_admins(span_danger("Admin [key_name_admin(usr)] AIized [key_name_admin(our_mob)]!"))
 		log_admin("[key_name(usr)] AIized [key_name(our_mob)].")
-		our_mob.AIize(TRUE, our_mob.client, move)
+		our_mob.AIize(our_mob.client, move)
 
 	else if(href_list["makerobot"])
 		if(!check_rights(R_SPAWN))
@@ -926,18 +939,7 @@
 		if(!ishuman(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
 			return
-		//let's keep it simple
-		//milk to plasmemes and skeletons, meat to lizards, electricity bars to ethereals, cookies to everyone else
-		var/cookiealt = /obj/item/food/cookie
-		if(isskeleton(H))
-			cookiealt = /obj/item/reagent_containers/food/condiment/milk
-		else if(isplasmaman(H))
-			cookiealt = /obj/item/reagent_containers/food/condiment/milk
-		else if(isethereal(H))
-			cookiealt = /obj/item/food/energybar
-		else if(islizard(H))
-			cookiealt = /obj/item/food/meat/slab
-		var/obj/item/new_item = new cookiealt(H)
+		var/obj/item/new_item = new H.dna.species.species_cookie(H)
 		if(H.put_in_hands(new_item))
 			H.update_inv_hands()
 		else
@@ -1727,7 +1729,7 @@
 		var/answer = href_list["slowquery"]
 		if(answer == "yes")
 			log_query_debug("[usr.key] | Reported a server hang")
-			if(tgui_alert(usr, "Had you just press any admin buttons?", "Query server hang report", list("Yes", "No")) == "Yes")
+			if(tgui_alert(usr, "Did you just press any admin buttons?", "Query server hang report", list("Yes", "No")) == "Yes")
 				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
 				if(response)
 					log_query_debug("[usr.key] | [response]")

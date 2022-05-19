@@ -66,11 +66,11 @@
 	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
 	soundloop.start()
 
-/obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
-	clear_grab()
+	clear_grab(playsound = !deleting)
 
 /obj/item/mod/module/anomaly_locked/kinesis/process(delta_time)
 	if(!mod.wearer.client || mod.wearer.incapacitated(IGNORE_GRAB))
@@ -97,6 +97,7 @@
 	if(grabbed_atom.Move(next_turf))
 		if(isitem(grabbed_atom) && (mod.wearer in next_turf))
 			var/obj/item/grabbed_item = grabbed_atom
+			clear_grab()
 			grabbed_item.pickup(mod.wearer)
 			mod.wearer.put_in_hands(grabbed_item)
 		return
@@ -219,6 +220,8 @@
 	COOLDOWN_DECLARE(coordinate_cooldown)
 
 /atom/movable/screen/fullscreen/kinesis/proc/on_move(atom/source, atom/oldloc, dir, forced)
+	SIGNAL_HANDLER
+
 	if(given_turf)
 		var/x_offset = source.loc.x - oldloc.x
 		var/y_offset = source.loc.y - oldloc.y
@@ -240,11 +243,11 @@
 	var/list/view = getviewsize(kinesis_user.client.view)
 	icon_x *= view[1]/FULLSCREEN_OVERLAY_RESOLUTION_X
 	icon_y *= view[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y
-	var/our_x = round(icon_x / world.icon_size)
-	var/our_y = round(icon_y / world.icon_size)
+	var/our_x = round(icon_x / world.icon_size, 1)
+	var/our_y = round(icon_y / world.icon_size, 1)
 	var/mob_x = kinesis_user.x
 	var/mob_y = kinesis_user.y
 	var/mob_z = kinesis_user.z
 	given_turf = locate(mob_x+our_x-round(view[1]/2),mob_y+our_y-round(view[2]/2),mob_z)
-	given_x = round(icon_x - world.icon_size * our_x)
-	given_y = round(icon_y - world.icon_size * our_y)
+	given_x = round(icon_x - world.icon_size * our_x, 1)
+	given_y = round(icon_y - world.icon_size * our_y, 1)

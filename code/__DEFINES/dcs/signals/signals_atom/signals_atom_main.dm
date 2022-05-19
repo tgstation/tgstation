@@ -3,8 +3,8 @@
 // All signals send the source datum of the signal as the first argument
 
 // /atom signals
-///from base of atom/proc/Initialize(): sent any time a new atom is created
-#define COMSIG_ATOM_CREATED "atom_created"
+///from base of atom/proc/Initialize(): sent any time a new atom is created in this atom
+#define COMSIG_ATOM_INITIALIZED_ON "atom_initialized_on"
 //from SSatoms InitAtom - Only if the  atom was not deleted or failed initialization
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE "atom_init_success"
 ///from base of atom/examine(): (/mob, list/examine_text)
@@ -78,8 +78,14 @@
 #define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 ///from base of atom/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 #define COMSIG_ATOM_HITBY "atom_hitby"
+///when an atom starts playing a song datum (datum/song)
+#define COMSIG_ATOM_STARTING_INSTRUMENT "atom_starting_instrument"
 
 ///When the transform or an atom is varedited through vv topic.
 #define COMSIG_ATOM_VV_MODIFY_TRANSFORM "atom_vv_modify_transform"
 
+/// generally called before temporary non-parallel animate()s on the atom (animation_duration)
+#define COMSIG_ATOM_TEMPORARY_ANIMATION_START "atom_temp_animate_start"
 
+/// from internal loop in /atom/proc/propagate_radiation_pulse: (atom/pulse_source)
+#define COMSIG_ATOM_PROPAGATE_RAD_PULSE "atom_propagate_radiation_pulse"

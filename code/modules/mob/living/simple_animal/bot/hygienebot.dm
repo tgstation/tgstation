@@ -50,13 +50,12 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/mob/living/simple_animal/bot/hygienebot/explode()
-	visible_message(span_boldannounce("[src] blows apart in a foamy explosion!"))
-	do_sparks(3, TRUE, src)
-	bot_mode_flags &= ~BOT_MODE_ON
-	new /obj/effect/particle_effect/foam(loc)
+	ADD_TRAIT(src, TRAIT_SPRAY_PAINTABLE, INNATE_TRAIT)
 
-	..()
+/mob/living/simple_animal/bot/hygienebot/explode()
+	new /obj/effect/particle_effect/fluid/foam(loc)
+
+	return ..()
 
 /mob/living/simple_animal/bot/hygienebot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -95,6 +94,8 @@
 	if(washing)
 		do_wash(loc)
 		for(var/AM in loc)
+			if (AM == src)
+				continue
 			do_wash(AM)
 		if(isopenturf(loc) && !(bot_cover_flags & BOT_COVER_EMAGGED))
 			var/turf/open/tile = loc
@@ -210,7 +211,7 @@
 	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))
 
 		var/obj/item/I = L.get_item_by_slot(X)
-		if(I && HAS_BLOOD_DNA(I))
+		if(I && GET_ATOM_BLOOD_DNA_LENGTH(I))
 			return FALSE
 	return TRUE
 
