@@ -1,12 +1,9 @@
 
 import { classes } from 'common/react';
-import { decodeHtmlEntities, toTitleCase } from 'common/string';
+import { toTitleCase } from 'common/string';
 import { Component } from 'inferno';
 import { dragStartHandler, recallWindowGeometry, resizeStartHandler } from '../../tgui/drag';
-import { createLogger } from '../../tgui/';
 import { Layout } from '../../tgui/layouts/Layout';
-
-const logger = createLogger('Window');
 
 const DEFAULT_SIZE = [400, 600];
 
@@ -16,7 +13,6 @@ export class Modal extends Component {
     Byond.winset(Byond.windowId, {
       'can-close': Boolean(canClose),
     });
-    logger.log('mounting');
     this.updateGeometry();
   }
 
@@ -58,7 +54,7 @@ export class Modal extends Component {
         theme={theme}>
         <TitleBar
           className="Window__titleBar"
-          title={title || decodeHtmlEntities(config.title)}
+          title={title}
           onDragStart={dragStartHandler}
           onClose={() => {
             logger.log('pressed close');
@@ -117,7 +113,7 @@ const WindowContent = props => {
 
 Window.Content = WindowContent;
 
-const TitleBar = (props, context) => {
+const TitleBar = (props) => {
   const {
     className,
     title,
@@ -127,7 +123,6 @@ const TitleBar = (props, context) => {
     onClose,
     children,
   } = props;
-  const dispatch = useDispatch(context);
   return (
     <div
       className={classes([
@@ -148,13 +143,6 @@ const TitleBar = (props, context) => {
           </div>
         )}
       </div>
-      {process.env.NODE_ENV !== 'production' && (
-        <div
-          className="TitleBar__devBuildIndicator"
-          onClick={() => dispatch(toggleKitchenSink())}>
-          <Icon name="bug" />
-        </div>
-      )}
       {Boolean(fancy && canClose) && (
         <div
           className="TitleBar__close TitleBar__clickable"
