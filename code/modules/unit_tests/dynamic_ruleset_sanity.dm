@@ -11,7 +11,7 @@
 		else if (!has_scaling_cost && !is_lone)
 			TEST_FAIL("[ruleset] has no scaling cost, but is also not a lone/highlander ruleset.")
 
-	for (var/datum/dynamic_ruleset/midround/ruleset as anything in subtypesof(/datum/dynamic_ruleset/midround))
+	for (var/datum/dynamic_ruleset/midround/ruleset as anything in subtypesof(/datum/dynamic_ruleset/midround) - /datum/dynamic_ruleset/midround/from_ghosts)
 		var/midround_ruleset_style = initial(ruleset.midround_ruleset_style)
 		if (midround_ruleset_style != MIDROUND_RULESET_STYLE_HEAVY && midround_ruleset_style != MIDROUND_RULESET_STYLE_LIGHT)
 			TEST_FAIL("[ruleset] has an invalid midround_ruleset_style, it should be MIDROUND_RULESET_STYLE_HEAVY or MIDROUND_RULESET_STYLE_LIGHT")
