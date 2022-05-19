@@ -745,3 +745,128 @@
   - spellcheck: fixed an outdated quip about buying scipapers in the experiment status
   xyc:
   - bugfix: fixed the position of a few wallmounts in icebox's chapel.
+2022-05-17:
+  Cheshify:
+  - balance: Snowdin.dmm is now in line with the design doc
+  Dorsidwarf:
+  - rscadd: Replaced table-crafting fried eggs with good old-fashioned frying on the
+      chef's griddle.
+  - bugfix: Changed the double-yolk sprite that only the fried-egg (And not foods
+      using it) had to a single.
+  DragonTrance:
+  - refactor: Flora code is much more organized :)
+  - rscadd: Flora (trees, plants, etc) can be uprooted with a shovel, which can then
+      be dragged around.
+  - code_imp: Moved "kirbyplants" into their own .dm file, instead of just finding
+      a comfortable spot in flora code
+  Melbert:
+  - code_imp: Adds radial support to stack crafting.
+  - qol: Cult buildings are now made via radial, instead of stack window.
+  - qol: Stack craftingnow uses balloon alerts.
+  RandomGamer123:
+  - bugfix: Tank compressors' icons now visibly update when being rotated
+  - bugfix: Tank compressors' rotation after reconstruction actually work properly
+  - code_imp: '`/obj/machinery/atmospherics/components/proc/connect_nodes()` actually
+      gets called on every node of the atmospheric component'
+  Son-of-Space:
+  - qol: Security General access has been simplified
+  - bugfix: Detectives ability to brig crew has been moved to skeleton crew access
+      to fit the job function
+  - bugfix: Detectives now have general access to all general areas of security consistently
+      across all stations
+  SuperNovaa41:
+  - refactor: Turned the forensics component into a datum.
+  Tastyfish:
+  - rscadd: Tramstation now has crossing signals to help you not get hit by the tram
+      (or jump in front of it at the last minute for comedy value).
+  san7890:
+  - code_imp: If you're looking into patching out Active Turfs, the logging message
+      that alerts you to said Active Turfs is now a bit more verbose to getting you
+      put on the right track.
+  timothymtorres:
+  - qol: Change drunk blur effect to scale based on intoxication
+2022-05-18:
+  JohnFulpWillard:
+  - balance: Sending PDA's to all is now configured by the WireCarp app, rather than
+      being tied to Law office access.
+  MTandi:
+  - bugfix: Experiments now work on non-station z-levels
+  Melbert:
+  - bugfix: Fixes mind restoration causing dizziness instead of healing it
+  magatsuchi:
+  - config: adds config to allow for name links in adminwho
+  oranges:
+  - bugfix: Slimes will once again feed on monkeys
+  san7890:
+  - config: In case you were really keen on using Virtual Reality Hub stuff in your
+      code, do keep in mind that we've removed references to it in config.
+2022-05-19:
+  Fikou, Onule:
+  - balance: Doubles the range of the MOD Pathfinder AI
+  - bugfix: Fixes modules rendering below MODsuits
+  - code_imp: 'Adds the ability for MOD modules to be used when the suit is inactive.
+      grammar: Some MODsuit stuff should have better descriptions.'
+  - bugfix: Armor Booster and Ash Accretion can no longer boost your speed to 9000
+  - balance: Doubles t-ray MOD module range, from 2 to 4 (t-ray scanner is 3).
+  - balance: Puts the noslip MOD module lower in traitor progression, lowers its'
+      price to 2.
+  - imageadd: New sprites for the magnetic harness MOD  module by Onule.
+  - rscadd: Brings back the holster MOD module, it can now be used when the suit is
+      inactive, can be printed with security suit research.
+  - rscadd: Adds the power kick MOD module for the ERT Commander. It's a powerful
+      kick.
+  - rscadd: Adds the plate compression MOD module from the uplink. It lowers the suit
+      size to normal while making it uncompatible with storage modules.
+  - rscadd: Adds the chameleon MOD module from the uplink. It lets you disguise the
+      suit as any back item while it's off.
+  Guillaume Prata:
+  - balance: RCDs can't deconstruct reinforced tiles directly anymore.
+  Ivniinvi:
+  - bugfix: Admins can no longer unprotect globals.
+  JohnFulpWillard:
+  - rscadd: Charliestation now has a Supermatter and Gravity generator chamber.
+  - balance: Charliestation now requires the gravity generator to have functional
+      gravity. Its botany also has a biogenerator and nutriment vendor.
+  LemonInTheDark:
+  - bugfix: Artificers can see their action buttons again
+  Melbert:
+  - bugfix: Restart Votes work once more
+  MidoriWroth:
+  - rscdel: Removed some redundant cables in Kilo maints
+  ReinaCoder:
+  - bugfix: The bluespace pen slot has been removed from tablets. Now only tiny items
+      can fit, spray cans and smoking pipes are now small items meaning they will
+      no longer fit into pen slots.
+  SmArtKar, SpadesSlick:
+  - imageadd: New sprites for xenobio shield wall generators
+  Sylphet:
+  - rscadd: Added Spinward Smoothies Space Ruin
+  - rscadd: Added six types of smoothies
+  Timberpoes:
+  - config: Changes the policy.json index for polymorphed mobs from "polymorph" to
+      "Polymorph".
+  - config: Changes the policy.json index for the policy verb header from "policy_verb_header"
+      to "Policy Verb Header".
+  - bugfix: Due to the config changes, Polymorph policy text will now be shown to
+      players when it previously wasn't.
+  Zonespace27:
+  - bugfix: The bounty console should no longer lock up for certain jobs after making
+      a new bounty.
+  dragomagol:
+  - bugfix: circuit speech is now logged properly
+  fippefi:
+  - balance: Buffed PACMAN generators to make the map-spawned gens more usable as
+      backup sources of power.
+  - qol: PACMAN now tells you if it will use uranium or plasma when you screwdriver
+      the board
+  robbertapir:
+  - bugfix: Attacking people, atmos omni tanks, supplypods and paintings with deep-fried
+      items no longer shows an error sprite.
+  - bugfix: Animations for attacking people, atmos omni tanks, supplypods and paintings
+      with items are no longer black.
+  vincentiusvin:
+  - bugfix: fixed cryoxadone not working in crit, it now checks for general unconsciousness.
+      So things like oxyloss knock out is included.
+  - qol: If the state or temperature of your cryo ui is red that means cryoxadone
+      wont be able to work.
+  - bugfix: added a missing tank dispenser to kilo toxins.
