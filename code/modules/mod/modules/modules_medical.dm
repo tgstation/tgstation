@@ -73,7 +73,7 @@
 /obj/item/mod/module/quick_carry/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
 
-/obj/item/mod/module/quick_carry/on_suit_deactivation()
+/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/advanced
@@ -85,7 +85,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
-/obj/item/mod/module/quick_carry/on_suit_deactivation()
+/obj/item/mod/module/quick_carry/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
@@ -128,7 +128,9 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/organ_thrower, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
+	/// How many organs the module can hold.
 	var/max_organs = 5
+	/// A list of all our organs.
 	var/organ_list = list()
 
 /obj/item/mod/module/organ_thrower/on_select_use(atom/target)
@@ -165,6 +167,7 @@
 	nodamage = TRUE
 	hitsound = 'sound/effects/attackblob.ogg'
 	hitsound_wall = 'sound/effects/attackblob.ogg'
+	/// A reference to the organ we "are".
 	var/obj/item/organ/organ
 
 /obj/projectile/organ/Initialize(mapload, obj/item/stored_organ)

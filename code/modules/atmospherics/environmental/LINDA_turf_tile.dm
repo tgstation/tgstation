@@ -5,6 +5,8 @@
 	var/heat_capacity = INFINITY //This should be opt in rather then opt out
 	///Archived version of the temperature on a turf
 	var/temperature_archived
+	///All currently stored conductivities changes
+	var/list/thermal_conductivities
 
 	///list of turfs adjacent to us that air can flow onto
 	var/list/atmos_adjacent_turfs

@@ -47,7 +47,7 @@
 
 /datum/uplink_item/bundles_tc/firestarter
 	name = "Spetsnaz Pyro bundle"
-	desc = "For systematic suppression of carbon lifeforms in close quarters: Contains a lethal New Russian backpack spray, Elite hardsuit, \
+	desc = "For systematic suppression of carbon lifeforms in close quarters: Contains an Elite MODsuit with a flamethrower attachment, \
 			Stechkin APS machine pistol, two incendiary magazines, a minibomb and a stimulant syringe. \
 			Order NOW and comrade Boris will throw in an extra tracksuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
@@ -331,6 +331,12 @@
 	item = /obj/item/ammo_box/magazine/sniper_rounds/soporific
 	cost = 6
 
+/datum/uplink_item/ammo/sniper/marksman
+	name = ".50 Marksman Magazine"
+	desc = "A 5-round magazine of marksman ammo designed for use with .50 sniper rifles. Blast your enemies with instant shots!"
+	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
+	cost = 5
+
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"
 	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
@@ -596,6 +602,12 @@
 	item = /obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded
 	cost = 140
 
+/datum/uplink_item/support/turretbox
+	name = "Disposable Sentry Gun"
+	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
+	item = /obj/item/storage/toolbox/emergency/turret/nukie
+	cost = 16
+
 /datum/uplink_item/stealthy_tools/combatbananashoes
 	name = "Combat Banana Shoes"
 	desc = "While making the wearer immune to most slipping attacks like regular combat clown shoes, these shoes \
@@ -624,6 +636,28 @@
 			within a short duration and will rapidly recharge while not under fire."
 	item = /obj/item/mod/module/energy_shield
 	cost = 15
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/suits/energy_shield
+	name = "MODsuit Energy Shield Module"
+	desc = "An energy shield module for a MODsuit. The shields can handle up to three impacts \
+			within a short duration and will rapidly recharge while not under fire."
+	item = /obj/item/mod/module/energy_shield
+	cost = 15
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/suits/injector
+	name = "MODsuit Injector Module"
+	desc = "An injector module for a MODsuit. It is an extendable piercing injector with 30u capacity."
+	item = /obj/item/mod/module/injector
+	cost = 2
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/suits/holster
+	name = "MODsuit Holster Module"
+	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."
+	item = /obj/item/mod/module/holster
+	cost = 2
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/device_tools/magboots
@@ -770,3 +804,44 @@
 	cost = 25
 	purchasable_from = UPLINK_CLOWN_OPS|UPLINK_NUKE_OPS
 	cant_discount = TRUE
+
+/datum/uplink_item/support/bomb_key
+	name = "Syndicate Ordnance Laboratory Access Card"
+	desc = "Do you fancy yourself an explosives expert? If so, then consider yourself lucky! With this special Authorization Key, \
+			you can blow those corpo suits away with your very own home-made explosive devices. Made in your local firebase's \
+			very own Ordnance Laboratory! *The Syndicate is not responsible for injuries or deaths sustained while utilizing the lab."
+	item = /obj/item/keycard/syndicate_bomb
+	cost = 15
+	purchasable_from = UPLINK_NUKE_OPS
+	cant_discount = TRUE
+
+/datum/uplink_item/support/bio_key
+	name = "Syndicate Bio-Weapon Laboratory Access Card"
+	desc = "In the right hands, even vile corpo technology can be turned into a vast arsenal of liberation and justice. From \
+			micro-organism symbiosis to slime-core weaponization, this special Authorization Key can let you push past the boundaries \
+			of bio-terrorism at breakneck speeds. As a bonus, these labs even come equipped with natural life support! *Plants not included."
+	item = /obj/item/keycard/syndicate_bio
+	cost = 17
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	cant_discount = TRUE
+
+/datum/uplink_item/support/chem_key
+	name = "Syndicate Chemical Plant Access Card"
+	desc = "For some of our best Operatives, watching corpo space stations blow up with a flash of retribution just isn't enough. \
+			Folks like those prefer a more personal touch to their artistry. For those interested, a special Authorization Key \
+			can be instantly delivered to your location. Create groundbreaking chemical agents, cook up, sell the best of drugs, \
+			and listen to the best classic music today!"
+	item = /obj/item/keycard/syndicate_chem
+	cost = 12
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	cant_discount = TRUE
+
+/datum/uplink_item/support/fridge_key
+	name = "Lopez's Access Card"
+	desc = "Hungry? So is everyone in Firebase Balthazord. Lopez is a great cook, don't get me wrong, but he's stubborn when it \
+			comes to the meal plans. Sometimes you just want to pig out. Listen, don't tell anyone, ok? I picked this out of his \
+			pocket during this morning's briefing. He's been looking for it since. Take it, get into the fridge, and cook up whatever \
+			you need before he gets back. And remember: DON'T TELL ANYONE! -M.T"
+	item = /obj/item/keycard/syndicate_fridge
+	cost = 5
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS

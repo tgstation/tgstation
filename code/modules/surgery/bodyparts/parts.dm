@@ -6,6 +6,7 @@
 	max_damage = 200
 	body_zone = BODY_ZONE_CHEST
 	body_part = CHEST
+	plaintext_zone = "chest"
 	is_dimorphic = TRUE
 	px_x = 0
 	px_y = 0
@@ -34,6 +35,7 @@
 	..()
 
 /obj/item/bodypart/chest/monkey
+	icon = 'icons/mob/animal_parts.dmi'
 	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_chest"
 	limb_id = SPECIES_MONKEY
@@ -70,6 +72,7 @@
 	max_stamina_damage = 50
 	body_zone = BODY_ZONE_L_ARM
 	body_part = ARM_LEFT
+	plaintext_zone = "left arm"
 	aux_zone = BODY_ZONE_PRECISE_L_HAND
 	aux_layer = HANDS_PART_LAYER
 	body_damage_coeff = 0.75
@@ -137,6 +140,7 @@
 
 
 /obj/item/bodypart/l_arm/monkey
+	icon = 'icons/mob/animal_parts.dmi'
 	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
@@ -167,6 +171,7 @@
 	max_damage = 50
 	body_zone = BODY_ZONE_R_ARM
 	body_part = ARM_RIGHT
+	plaintext_zone = "right arm"
 	aux_zone = BODY_ZONE_PRECISE_R_HAND
 	aux_layer = HANDS_PART_LAYER
 	body_damage_coeff = 0.75
@@ -235,6 +240,7 @@
 
 
 /obj/item/bodypart/r_arm/monkey
+	icon = 'icons/mob/animal_parts.dmi'
 	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
@@ -243,7 +249,6 @@
 	wound_resistance = -10
 	px_x = 5
 	px_y = -3
-
 /obj/item/bodypart/r_arm/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_r_arm"
@@ -253,7 +258,6 @@
 	can_be_disabled = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
-
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
@@ -265,6 +269,7 @@
 	max_damage = 50
 	body_zone = BODY_ZONE_L_LEG
 	body_part = LEG_LEFT
+	plaintext_zone = "left leg"
 	body_damage_coeff = 0.75
 	px_x = -2
 	px_y = 12
@@ -323,6 +328,7 @@
 		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/l_leg/monkey
+	icon = 'icons/mob/animal_parts.dmi'
 	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
@@ -354,11 +360,19 @@
 	max_damage = 50
 	body_zone = BODY_ZONE_R_LEG
 	body_part = LEG_RIGHT
+	plaintext_zone = "right leg"
 	body_damage_coeff = 0.75
 	px_x = 2
 	px_y = 12
 	max_stamina_damage = 50
 	can_be_disabled = TRUE
+	/// We store this here to generate our icon key more easily.
+	var/left_leg_mask_key
+	/// The associated list of all the left leg mask keys associated to their cached left leg masks.
+	/// It's static, so it's shared between all the left legs there is. Be careful.
+	/// Why? Both legs share the same layer for rendering, and since we don't want to do redraws on
+	/// each dir changes, we're doing it with a mask instead, which we cache for efficiency reasons.
+	var/static/list/left_leg_mask_cache = list()
 
 
 /obj/item/bodypart/r_leg/set_owner(new_owner)

@@ -69,6 +69,7 @@
 #define PATH_RUST "Rust Path"
 #define PATH_FLESH "Flesh Path"
 #define PATH_VOID "Void Path"
+#define PATH_BLADE "Blade Path"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
@@ -77,6 +78,12 @@
 
 /// A define used in ritual priority for heretics.
 #define MAX_KNOWLEDGE_PRIORITY 100
+
+/// Checks if the passed mob can become a heretic ghoul.
+/// - Must be a human (type, not species)
+/// - Skeletons cannot be husked (they are snowflaked instead of having a trait)
+/// - Monkeys are monkeys, not quite human (balance reasons)
+#define IS_VALID_GHOUL_MOB(mob) (ishuman(mob) && !isskeleton(mob) && !ismonkey(mob))
 
 /// Forces the blob to place the core where they currently are, ignoring any checks.
 #define BLOB_FORCE_PLACEMENT -1

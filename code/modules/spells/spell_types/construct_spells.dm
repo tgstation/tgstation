@@ -178,7 +178,7 @@
 	include_user = TRUE
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
-	smoke_spread = 3
+	smoke_spread = /datum/effect_system/fluid_spread/smoke/sleeping
 	smoke_amt = 4
 	action_icon_state = "smoke"
 	action_background_icon_state = "bg_cult"
@@ -207,7 +207,7 @@
 		return FALSE
 
 	var/mob/living/carbon/target = targets[1]
-	if(target.anti_magic_check(TRUE, TRUE))
+	if(target.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
 		to_chat(user, span_warning("The spell had no effect!"))
 		to_chat(target, span_warning("You feel a freezing darkness closing in on you, but it rapidly dissipates."))
 		return FALSE
@@ -325,7 +325,7 @@
 	knockdown = 50
 	hitsound = 'sound/weapons/punch3.ogg'
 	trigger_range = 0
-	check_holy = TRUE
+	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	ignored_factions = list("cult")
 	range = 15
 	speed = 7

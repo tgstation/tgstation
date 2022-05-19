@@ -36,7 +36,7 @@
 	inhand_icon_state = "utility"
 	worn_icon_state = "utility"
 	content_overlays = TRUE
-	custom_premium_price = PAYCHECK_MEDIUM * 2
+	custom_premium_price = PAYCHECK_CREW * 2
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
@@ -46,31 +46,31 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 21
 	STR.set_holdable(list(
+		/obj/item/airlock_painter,
+		/obj/item/analyzer,
+		/obj/item/assembly/signaler,
+		/obj/item/clothing/gloves,
+		/obj/item/construction/rcd,
 		/obj/item/crowbar,
+		/obj/item/extinguisher/mini,
+		/obj/item/flashlight,
+		/obj/item/forcefield_projector,
+		/obj/item/geiger_counter,
+		/obj/item/holosign_creator/atmos,
+		/obj/item/holosign_creator/engineering,
+		/obj/item/inducer,
+		/obj/item/lightreplacer,
+		/obj/item/multitool,
+		/obj/item/pipe_dispenser,
+		/obj/item/pipe_painter,
+		/obj/item/plunger,
+		/obj/item/radio,
 		/obj/item/screwdriver,
+		/obj/item/stack/cable_coil,
+		/obj/item/t_scanner,
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
-		/obj/item/multitool,
-		/obj/item/flashlight,
-		/obj/item/stack/cable_coil,
-		/obj/item/t_scanner,
-		/obj/item/analyzer,
-		/obj/item/geiger_counter,
-		/obj/item/extinguisher/mini,
-		/obj/item/radio,
-		/obj/item/clothing/gloves,
-		/obj/item/holosign_creator/atmos,
-		/obj/item/holosign_creator/engineering,
-		/obj/item/forcefield_projector,
-		/obj/item/assembly/signaler,
-		/obj/item/lightreplacer,
-		/obj/item/construction/rcd,
-		/obj/item/pipe_dispenser,
-		/obj/item/inducer,
-		/obj/item/plunger,
-		/obj/item/airlock_painter,
-		/obj/item/pipe_painter
 		))
 
 /obj/item/storage/belt/utility/chief
@@ -210,57 +210,56 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 21
 	STR.set_holdable(list(
-		/obj/item/healthanalyzer,
+		/obj/item/bikehorn/rubberducky,
+		/obj/item/blood_filter,
+		/obj/item/bonesetter,
+		/obj/item/cautery,
+		/obj/item/circular_saw,
+		/obj/item/clothing/glasses,
+		/obj/item/clothing/gloves,
+		/obj/item/clothing/neck/stethoscope,
+		/obj/item/clothing/mask/breath,
+		/obj/item/clothing/mask/muzzle,
+		/obj/item/clothing/mask/surgical,
+		/obj/item/construction/plumbing,
 		/obj/item/dnainjector,
+		/obj/item/extinguisher/mini,
+		/obj/item/flashlight/pen,
+		/obj/item/geiger_counter,
+		/obj/item/gun/syringe/syndicate,
+		/obj/item/healthanalyzer,
+		/obj/item/hemostat,
+		/obj/item/holosign_creator/medical,
+		/obj/item/implant,
+		/obj/item/implantcase,
+		/obj/item/implanter,
+		/obj/item/lazarus_injector,
+		/obj/item/lighter,
+		/obj/item/pinpointer/crew,
+		/obj/item/plunger,
+		/obj/item/radio,
+		/obj/item/reagent_containers/blood,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/medigel,
-		/obj/item/lighter,
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/spray,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/retractor,
+		/obj/item/scalpel,
+		/obj/item/shears,
+		/obj/item/stack/medical,
+		/obj/item/stack/sticky_tape, //surgical tape
+		/obj/item/stamp,
+		/obj/item/sensor_device,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
-		/obj/item/stack/medical,
-		/obj/item/flashlight/pen,
-		/obj/item/extinguisher/mini,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/sensor_device,
-		/obj/item/radio,
-		/obj/item/clothing/gloves/,
-		/obj/item/lazarus_injector,
-		/obj/item/bikehorn/rubberducky,
-		/obj/item/clothing/mask/surgical,
-		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/breath/medical,
 		/obj/item/surgical_drapes, //for true paramedics
-		/obj/item/scalpel,
-		/obj/item/circular_saw,
-		/obj/item/bonesetter,
 		/obj/item/surgicaldrill,
-		/obj/item/retractor,
-		/obj/item/cautery,
-		/obj/item/hemostat,
-		/obj/item/blood_filter,
-		/obj/item/geiger_counter,
-		/obj/item/clothing/neck/stethoscope,
-		/obj/item/stamp,
-		/obj/item/clothing/glasses,
-		/obj/item/wrench/medical,
-		/obj/item/clothing/mask/muzzle,
-		/obj/item/reagent_containers/blood,
 		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/gun/syringe/syndicate,
-		/obj/item/implantcase,
-		/obj/item/implant,
-		/obj/item/implanter,
-		/obj/item/pinpointer/crew,
-		/obj/item/holosign_creator/medical,
-		/obj/item/construction/plumbing,
-		/obj/item/plunger,
-		/obj/item/reagent_containers/spray,
-		/obj/item/shears,
-		/obj/item/stack/sticky_tape //surgical tape
+		/obj/item/wrench/medical,
 		))
 
 /obj/item/storage/belt/medical/paramedic
@@ -301,22 +300,21 @@
 	STR.max_items = 5
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
-		/obj/item/melee/baton,
-		/obj/item/grenade,
-		/obj/item/reagent_containers/spray/pepper,
-		/obj/item/restraints/handcuffs,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing/shotgun,
 		/obj/item/assembly/flash/handheld,
 		/obj/item/clothing/glasses,
-		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_box,
-		/obj/item/food/donut,
-		/obj/item/knife/combat,
-		/obj/item/flashlight/seclite,
-		/obj/item/melee/baton/telescopic,
-		/obj/item/radio,
 		/obj/item/clothing/gloves,
+		/obj/item/flashlight/seclite,
+		/obj/item/food/donut,
+		/obj/item/grenade,
+		/obj/item/holosign_creator/security,
+		/obj/item/knife/combat,
+		/obj/item/melee/baton,
+		/obj/item/radio,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
-		/obj/item/holosign_creator/security
 		))
 
 /obj/item/storage/belt/security/full/PopulateContents()
@@ -334,7 +332,7 @@
 	inhand_icon_state = "securitywebbing"
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
-	custom_premium_price = PAYCHECK_HARD * 3
+	custom_premium_price = PAYCHECK_COMMAND * 3
 
 /obj/item/storage/belt/security/webbing/ComponentInitialize()
 	. = ..()
@@ -356,44 +354,43 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 20
 	STR.set_holdable(list(
+		/obj/item/analyzer,
+		/obj/item/clothing/gloves,
 		/obj/item/crowbar,
+		/obj/item/extinguisher/mini,
+		/obj/item/flashlight,
+		/obj/item/gps,
+		/obj/item/key/lasso,
+		/obj/item/knife,
+		/obj/item/lighter,
+		/obj/item/mining_scanner,
+		/obj/item/multitool,
+		/obj/item/organ/regenerative_core,
+		/obj/item/pickaxe,
+		/obj/item/radio,
+		/obj/item/reagent_containers/food/drinks,
+		/obj/item/reagent_containers/food/drinks/bottle,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/pill,
+		/obj/item/resonator,
 		/obj/item/screwdriver,
+		/obj/item/shovel,
+		/obj/item/stack/cable_coil,
+		/obj/item/stack/marker_beacon,
+		/obj/item/stack/medical,
+		/obj/item/stack/ore,
+		/obj/item/stack/sheet/animalhide,
+		/obj/item/stack/sheet/bone,
+		/obj/item/stack/sheet/sinew,
+		/obj/item/storage/bag/ore,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/storage/pill_bottle,
+		/obj/item/survivalcapsule,
+		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
-		/obj/item/multitool,
-		/obj/item/flashlight,
-		/obj/item/stack/cable_coil,
-		/obj/item/analyzer,
-		/obj/item/extinguisher/mini,
-		/obj/item/radio,
-		/obj/item/clothing/gloves,
-		/obj/item/resonator,
-		/obj/item/mining_scanner,
-		/obj/item/pickaxe,
-		/obj/item/shovel,
-		/obj/item/stack/sheet/animalhide,
-		/obj/item/stack/sheet/sinew,
-		/obj/item/stack/sheet/bone,
-		/obj/item/lighter,
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/reagent_containers/food/drinks/bottle,
-		/obj/item/stack/medical,
-		/obj/item/knife,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/gps,
-		/obj/item/storage/bag/ore,
-		/obj/item/survivalcapsule,
-		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/reagent_containers/pill,
-		/obj/item/storage/pill_bottle,
-		/obj/item/stack/ore,
-		/obj/item/reagent_containers/food/drinks,
-		/obj/item/organ/regenerative_core,
 		/obj/item/wormhole_jaunter,
-		/obj/item/stack/marker_beacon,
-		/obj/item/key/lasso,
-		/obj/item/skeleton_key
 		))
 
 
@@ -499,27 +496,27 @@
 	while(contents.len <= amount)
 		rig_snacks = pick(list(
 		/obj/item/food/candy,
-		/obj/item/reagent_containers/food/drinks/dry_ramen,
-		/obj/item/food/chips,
-		/obj/item/food/sosjerky,
-		/obj/item/food/syndicake,
-		/obj/item/food/spacetwinkie,
 		/obj/item/food/cheesiehonkers,
-		/obj/item/food/nachos,
 		/obj/item/food/cheesynachos,
+		/obj/item/food/chips,
 		/obj/item/food/cubannachos,
-		/obj/item/food/nugget,
-		/obj/item/food/spaghetti/pastatomato,
-		/obj/item/food/rofflewaffles,
 		/obj/item/food/donkpocket,
+		/obj/item/food/nachos,
+		/obj/item/food/nugget,
+		/obj/item/food/rofflewaffles,
+		/obj/item/food/sosjerky,
+		/obj/item/food/spacetwinkie,
+		/obj/item/food/spaghetti/pastatomato,
+		/obj/item/food/syndicake,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola,
+		/obj/item/reagent_containers/food/drinks/dry_ramen,
 		/obj/item/reagent_containers/food/drinks/soda_cans/cola,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
 		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
-		/obj/item/reagent_containers/food/drinks/soda_cans/starkist,
-		/obj/item/reagent_containers/food/drinks/soda_cans/space_up,
-		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,
 		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
-		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
+		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,
+		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
+		/obj/item/reagent_containers/food/drinks/soda_cans/space_up,
+		/obj/item/reagent_containers/food/drinks/soda_cans/starkist,
 		))
 		new rig_snacks(src)
 
@@ -562,8 +559,8 @@
 
 /obj/item/storage/belt/military/assault/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 4,
+		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
 	), src)
 
 /obj/item/storage/belt/grenade
@@ -581,29 +578,28 @@
 	STR.max_combined_w_class = 60
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
+		/obj/item/food/grown/cherry_bomb,
+		/obj/item/food/grown/firelemon,
 		/obj/item/grenade,
-		/obj/item/screwdriver,
+		/obj/item/grenade/c4,
 		/obj/item/lighter,
 		/obj/item/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
-		/obj/item/grenade/c4,
-		/obj/item/food/grown/cherry_bomb,
-		/obj/item/food/grown/firelemon
+		/obj/item/screwdriver,
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/grenade/flashbang = 1,
-		/obj/item/grenade/smokebomb = 4,
-		/obj/item/grenade/empgrenade = 1,
-		/obj/item/grenade/empgrenade = 1,
-		/obj/item/grenade/frag = 10,
-		/obj/item/grenade/gluon = 4,
-		/obj/item/grenade/chem_grenade/incendiary = 2,
 		/obj/item/grenade/chem_grenade/facid = 1,
+		/obj/item/grenade/chem_grenade/incendiary = 2,
+		/obj/item/grenade/empgrenade = 2,
+		/obj/item/grenade/frag = 10,
+		/obj/item/grenade/flashbang = 1,
+		/obj/item/grenade/gluon = 4,
+		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/syndieminibomb = 2,
-		/obj/item/screwdriver = 1,
 		/obj/item/multitool = 1,
+		/obj/item/screwdriver = 1,
 	),src)
 
 
@@ -647,19 +643,19 @@
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
 	STR.set_holdable(list(
-		/obj/item/grenade/chem_grenade,
-		/obj/item/lightreplacer,
+		/obj/item/assembly/mousetrap,
+		/obj/item/clothing/gloves,
 		/obj/item/flashlight,
+		/obj/item/forcefield_projector,
+		/obj/item/grenade/chem_grenade,
+		/obj/item/holosign_creator,
+		/obj/item/key/janitor,
+		/obj/item/lightreplacer,
+		/obj/item/melee/flyswatter,
+		/obj/item/paint/paint_remover,
+		/obj/item/pushbroom,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
-		/obj/item/holosign_creator,
-		/obj/item/forcefield_projector,
-		/obj/item/key/janitor,
-		/obj/item/clothing/gloves,
-		/obj/item/melee/flyswatter,
-		/obj/item/assembly/mousetrap,
-		/obj/item/paint/paint_remover,
-		/obj/item/pushbroom
 		))
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
@@ -683,8 +679,8 @@
 	STR.max_combined_w_class = 18
 	STR.display_numerical_stacking = TRUE
 	STR.set_holdable(list(
+		/obj/item/ammo_casing/a762,
 		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_casing/a762
 		))
 
 /obj/item/storage/belt/fannypack
@@ -694,7 +690,7 @@
 	inhand_icon_state = "fannypack_leather"
 	worn_icon_state = "fannypack_leather"
 	dying_key = DYE_REGISTRY_FANNYPACK
-	custom_price = PAYCHECK_ASSISTANT * 2
+	custom_price = PAYCHECK_CREW * 2
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()
@@ -778,7 +774,7 @@
 	STR.rustle_sound = FALSE
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
-		/obj/item/melee/sabre
+		/obj/item/melee/sabre,
 		))
 
 /obj/item/storage/belt/sabre/examine(mob/user)
@@ -825,17 +821,18 @@
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
-		/obj/item/reagent_containers/spray/plantbgone,
-		/obj/item/plant_analyzer,
-		/obj/item/seeds,
-		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/cultivator,
-		/obj/item/reagent_containers/spray/pestspray,
-		/obj/item/hatchet,
-		/obj/item/graft,
-		/obj/item/secateurs,
 		/obj/item/geneshears,
+		/obj/item/graft,
+		/obj/item/gun/energy/floragun,
+		/obj/item/hatchet,
+		/obj/item/plant_analyzer,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/spray/pestspray,
+		/obj/item/reagent_containers/spray/plantbgone,
+		/obj/item/secateurs,
+		/obj/item/seeds,
+		
 		/obj/item/shovel/spade,
-		/obj/item/gun/energy/floragun
 		))

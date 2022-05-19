@@ -491,16 +491,16 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/disposaloutlet,
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /obj/machinery/light/directional/north,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bn" = (
 /obj/structure/window/spawner/east,
-/obj/structure/flora/ausbushes/palebush,
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/pale/style_random,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bo" = (
@@ -536,27 +536,27 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "br" = (
-/obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/flora/grass/jungle/b,
+/obj/structure/flora/bush/sunny/style_random,
+/obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bs" = (
 /obj/structure/window/spawner/east,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bt" = (
 /obj/structure/window/spawner,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/ausbushes/genericbush,
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
+/obj/structure/flora/bush/generic/style_random,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bu" = (
 /obj/structure/window/spawner/east,
-/obj/structure/flora/ausbushes/fernybush,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/bush/ferny/style_random,
+/obj/structure/flora/bush/flowers_yw/style_random,
+/obj/structure/flora/bush/sparsegrass/style_random,
 /obj/effect/decal/cleanable/glass,
 /turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)

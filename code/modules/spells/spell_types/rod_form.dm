@@ -40,10 +40,12 @@
 			rod_max_distance,
 			rod_damage_bonus,
 		)
+		ADD_TRAIT(caster, TRAIT_ROD_FORM, MAGIC_TRAIT)
 
 /// Wizard Version of the Immovable Rod.
 /obj/effect/immovablerod/wizard
 	notify = FALSE
+	loopy_rod = TRUE
 	dnd_style_level_up = FALSE
 	/// The wizard who's piloting our rod.
 	var/datum/weakref/our_wizard
@@ -73,7 +75,7 @@
 	return ..()
 
 /obj/effect/immovablerod/wizard/penetrate(mob/living/penetrated)
-	if(penetrated.anti_magic_check())
+	if(penetrated.can_block_magic())
 		penetrated.visible_message(
 			span_danger("[src] hits [penetrated], but it bounces back, then vanishes!"),
 			span_userdanger("[src] hits you... but it bounces back, then vanishes!"),
@@ -137,5 +139,6 @@
 	wizard.notransform = FALSE
 	wizard.forceMove(get_turf(src))
 	our_wizard = null
+	REMOVE_TRAIT(wizard, TRAIT_ROD_FORM, MAGIC_TRAIT)
 
 #undef BASE_WIZ_ROD_RANGE

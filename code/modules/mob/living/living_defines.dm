@@ -54,6 +54,10 @@
 	var/last_special = 0 ///Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/timeofdeath = 0
 
+	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
+	var/on_fire = FALSE
+	var/fire_stacks = 0
+
 	/**
 	  * Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	  *
@@ -74,9 +78,6 @@
 
 	/// Time of death
 	var/tod = null
-
-	var/on_fire = FALSE ///The "Are we on fire?" var
-	var/fire_stacks = 0 ///Tracks how many stacks of fire we have on, max is usually 20
 
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
@@ -100,7 +101,12 @@
 	var/usable_hands = 2
 
 	var/list/pipes_shown = list()
-	var/last_played_vent
+	var/last_played_vent = 0
+	/// The last direction we moved in a vent. Used to make holding two directions feel nice
+	var/last_vent_dir = 0
+	/// Cell tracker datum we use to manage the pipes around us, for faster ventcrawling
+	/// Should only exist if you're in a pipe
+	var/datum/cell_tracker/pipetracker
 
 	var/smoke_delay = 0 ///used to prevent spam with smoke reagent reaction on mob.
 
@@ -124,12 +130,6 @@
 
 	var/list/status_effects ///a list of all status effects the mob has
 	var/druggy = 0
-
-	//Speech
-	var/stuttering = 0
-	var/slurring = 0
-	var/cultslurring = 0
-	var/derpspeech = 0
 
 	var/list/implants = null
 

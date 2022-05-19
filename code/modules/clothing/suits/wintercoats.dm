@@ -17,8 +17,7 @@
 	allowed += list(
 		/obj/item/flashlight,
 		/obj/item/lighter,
-		/obj/item/modular_computer/tablet,
-		/obj/item/pda,
+		/obj/item/modular_computer/tablet/pda,
 		/obj/item/radio,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/tank/internals/emergency_oxygen,
@@ -170,6 +169,7 @@
 	inhand_icon_state = "coatmedical"
 	allowed = list(
 		/obj/item/flashlight/pen,
+		/obj/item/gun/syringe,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/glass/beaker,
@@ -177,8 +177,6 @@
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/gun/syringe,
-		/obj/item/stack/medical,
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,
 	)
@@ -422,7 +420,7 @@
 	icon_state = "coatminer"
 	inhand_icon_state = "coatminer"
 	allowed = list(
-		/obj/item/gun/energy/kinetic_accelerator,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
 		/obj/item/mining_scanner,
 		/obj/item/pickaxe,
 		/obj/item/resonator,

@@ -89,7 +89,7 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "aA" = (
-/obj/machinery/rnd/production/protolathe/department/engineering,
+/obj/machinery/rnd/production/protolathe/department/engineering/no_tax,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 9
 	},
@@ -179,7 +179,7 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "aX" = (
-/obj/structure/flora/rock/icy,
+/obj/structure/flora/rock/icy/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "ba" = (
@@ -532,13 +532,13 @@
 /turf/open/floor/plating,
 /area/ruin/planetengi)
 "cI" = (
-/obj/item/pda/clear{
+/obj/item/modular_computer/tablet/pda/clear{
 	note = "Chief's asked me to check on the machinery inside PDA. He's also worried about Build, but i'm sure Harry'll handle the construction. I just need to work on Internals. Fuck i'm hungry"
 	},
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "cJ" = (
-/obj/item/pda/engineering{
+/obj/item/modular_computer/tablet/pda/engineering{
 	note = "To-do: Check on SM status. Get a pint at eat. Nag the research manager for RCDs."
 	},
 /turf/open/floor/iron,

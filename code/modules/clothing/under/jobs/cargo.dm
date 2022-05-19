@@ -43,7 +43,7 @@
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	inhand_icon_state = "miner"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 0, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 80, ACID = 0, WOUND = 10)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/rank/cargo/miner/lavaland

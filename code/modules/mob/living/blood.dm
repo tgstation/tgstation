@@ -10,7 +10,7 @@
 	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 
-	if(bodytemperature < TCRYO || (HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature < BLOOD_STOP_TEMP || (HAS_TRAIT(src, TRAIT_HUSK))) //cold or husked people do not pump the blood.
 		return
 
 	//Blood regeneration if there is some space
@@ -61,32 +61,22 @@
 				death()
 
 	var/temp_bleed = 0
-	var/update_bleed_icons = FALSE
 	//Bleeding out
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		var/iter_bleed_rate = iter_part.get_part_bleed_rate()
+		var/iter_bleed_rate = iter_part.get_modified_bleed_rate()
 		temp_bleed += iter_bleed_rate * delta_time
-		iter_part.generic_bleedstacks = max(0, iter_part.generic_bleedstacks - 1)
-		if(iter_part.update_part_wound_overlay())
-			update_bleed_icons = TRUE
 
-	if(update_bleed_icons)
-		update_wound_overlays()
+		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
+			iter_part.adjustBleedStacks(-1, 0)
 
 	if(temp_bleed)
 		bleed(temp_bleed)
 		bleed_warn(temp_bleed)
 
-/// Has each bodypart update its bleed/wound overlay icon states. If any have changed, it has the owner update wound overlays and returns TRUE
+/// Has each bodypart update its bleed/wound overlay icon states
 /mob/living/carbon/proc/update_bodypart_bleed_overlays()
-	var/update_bleed_icons
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		if(iter_part.update_part_wound_overlay())
-			update_bleed_icons = TRUE
-
-	if(update_bleed_icons)
-		update_wound_overlays()
-	return update_bleed_icons
+		iter_part.update_part_wound_overlay()
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
@@ -110,7 +100,7 @@
 	var/bleed_amt = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/iter_bodypart = X
-		bleed_amt += iter_bodypart.get_part_bleed_rate()
+		bleed_amt += iter_bodypart.get_modified_bleed_rate()
 	return bleed_amt
 
 /mob/living/carbon/human/get_bleed_rate()
@@ -189,7 +179,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	for(var/i in bodyparts)
 		var/obj/item/bodypart/BP = i
-		BP.generic_bleedstacks = 0
+		BP.setBleedStacks(0)
 
 /****************************************************
 				BLOOD TRANSFERS
@@ -336,7 +326,7 @@
 				drop.transfer_mob_blood_dna(src)
 				return
 			else
-				temp_blood_DNA = drop.return_blood_DNA() //we transfer the dna from the drip to the splatter
+				temp_blood_DNA = GET_ATOM_BLOOD_DNA(drop) //we transfer the dna from the drip to the splatter
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(T, get_static_viruses())

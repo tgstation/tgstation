@@ -17,7 +17,7 @@
 	name = "glass"
 	desc = "Glass forged by melting sand."
 	color = "#88cdf1"
-	greyscale_colors = "#88cdf1"
+	greyscale_colors = "#88cdf196"
 	alpha = 150
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	integrity_modifier = 0.1
@@ -73,7 +73,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "diamond"
 	desc = "Highly pressurized carbon"
 	color = list(48/255, 272/255, 301/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
-	greyscale_colors = "#71c8f7"
+	greyscale_colors = "#71c8f784"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	alpha = 132
@@ -157,7 +157,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bluespace crystal"
 	desc = "Crystals with bluespace properties"
 	color = list(119/255, 217/255, 396/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
-	greyscale_colors = "#4e7dff"
+	greyscale_colors = "#4e7dffC8"
 	alpha = 200
 	categories = list(MAT_CATEGORY_ORE = TRUE)
 	beauty_modifier = 0.5
@@ -337,9 +337,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "hot ice"
 	desc = "A weird kind of ice, feels warm to the touch"
 	color = "#88cdf1"
-	greyscale_colors = "#88cdf1"
+	greyscale_colors = "#88cdf196"
 	alpha = 150
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/hot_ice
 	value_per_unit = 0.2
 	beauty_modifier = 0.2
@@ -361,9 +361,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "Metal Hydrogen"
 	desc = "Solid metallic hydrogen. Some say it should be impossible"
 	color = "#f2d5d7"
-	greyscale_colors = "#f2d5d7"
+	greyscale_colors = "#f2d5d796"
 	alpha = 150
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/metal_hydrogen
 	value_per_unit = 0.35
 	beauty_modifier = 0.35
@@ -400,7 +400,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Bialtaakid 'ant taerif ma hdha."
 	color = "#B77D31"
 	greyscale_colors = "#B77D31"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	value_per_unit = 0.0025
 	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 1.25, ENERGY = 0.5, BOMB = 0.5, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
@@ -430,7 +430,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Mir'ntrath barhah Nar'sie."
 	color = "#3C3434"
 	greyscale_colors = "#3C3434"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	value_per_unit = 0.75
 	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1, ENERGY = 1, BOMB = 1.2, BIO = 1.2, FIRE = 1.5, ACID = 1.5)
@@ -447,7 +447,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Clock Cult? Never heard of it."
 	color = "#92661A"
 	greyscale_colors = "#92661A"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/bronze
 	value_per_unit = 0.025
 	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
@@ -458,7 +458,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Ten thousand folds of pure starchy power."
 	color = "#E5DCD5"
 	greyscale_colors = "#E5DCD5"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/paperframes
 	value_per_unit = 0.0025
 	armor_modifiers = list(MELEE = 0.1, BULLET = 0.1, LASER = 0.1, ENERGY = 0.1, BOMB = 0.1, BIO = 0.1, FIRE = 0, ACID = 1.5)
@@ -484,7 +484,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "They say cardboard is used by hobos to make incredible things."
 	color = "#5F625C"
 	greyscale_colors = "#5F625C"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/cardboard
 	value_per_unit = 0.003
 	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 0, ACID = 1.5)
@@ -508,7 +508,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Man, building with this will make you the coolest caveman on the block."
 	color = "#e3dac9"
 	greyscale_colors = "#e3dac9"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/bone
 	value_per_unit = 0.05
 	armor_modifiers = list(MELEE = 1.2, BULLET = 0.75, LASER = 0.75, ENERGY = 1.2, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
@@ -519,7 +519,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "If it's good enough for pandas, it's good enough for you."
 	color = "#87a852"
 	greyscale_colors = "#87a852"
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
 	value_per_unit = 0.0025
 	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 0.5, ENERGY = 0.5, BOMB = 0.5, BIO = 0.51, FIRE = 0.5, ACID = 1.5)
@@ -532,7 +532,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "A light absorbing crystal"
 	color = COLOR_ALMOST_BLACK
 	greyscale_colors = COLOR_ALMOST_BLACK
-	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
+	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/zaukerite
 	value_per_unit = 0.45
 	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, FIRE = 0.1, ACID = 1)

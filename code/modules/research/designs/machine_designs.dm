@@ -7,7 +7,7 @@
 	id = "electrolyzer"
 	build_path = /obj/item/circuitboard/machine/electrolyzer
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/smes
 	name = "Machine Design (SMES Board)"
@@ -15,7 +15,7 @@
 	id = "smes"
 	build_path = /obj/item/circuitboard/machine/smes
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/announcement_system
 	name = "Machine Design (Automated Announcement System Board)"
@@ -23,7 +23,7 @@
 	id = "automated_announcement"
 	build_path = /obj/item/circuitboard/machine/announcement_system
 	category = list("Subspace Telecomms")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/turbine_computer
 	name = "Computer Design (Power Turbine Console Board)"
@@ -31,7 +31,7 @@
 	id = "power_turbine_console"
 	build_path = /obj/item/circuitboard/computer/turbine_computer
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/emitter
 	name = "Machine Design (Emitter Board)"
@@ -39,23 +39,31 @@
 	id = "emitter"
 	build_path = /obj/item/circuitboard/machine/emitter
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/board/power_compressor
-	name = "Machine Design (Power Compressor Board)"
-	desc = "The circuit board for a power compressor."
-	id = "power_compressor"
-	build_path = /obj/item/circuitboard/machine/power_compressor
+/datum/design/board/turbine_compressor
+	name = "Machine Design (Turbine Compressor Board)"
+	desc = "The circuit board for a turbine compressor."
+	id = "turbine_compressor"
+	build_path = /obj/item/circuitboard/machine/turbine_compressor
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/power_turbine
-	name = "Machine Design (Power Turbine Board)"
-	desc = "The circuit board for a power turbine."
-	id = "power_turbine"
-	build_path = /obj/item/circuitboard/machine/power_turbine
+/datum/design/board/turbine_rotor
+	name = "Machine Design (Turbine Rotor Board)"
+	desc = "The circuit board for a turbine rotor."
+	id = "turbine_rotor"
+	build_path = /obj/item/circuitboard/machine/turbine_rotor
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/turbine_stator
+	name = "Machine Design (Turbine Stator Board)"
+	desc = "The circuit board for a turbine stator."
+	id = "turbine_stator"
+	build_path = /obj/item/circuitboard/machine/turbine_stator
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/thermomachine
 	name = "Machine Design (Thermomachine Board)"
@@ -63,7 +71,7 @@
 	id = "thermomachine"
 	build_path = /obj/item/circuitboard/machine/thermomachine
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/space_heater
 	name = "Machine Design (Space Heater Board)"
@@ -80,7 +88,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/teleporter_station
 	category = list ("Teleportation Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/teleport_hub
 	name = "Machine Design (Teleportation Hub Board)"
@@ -89,7 +97,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/teleporter_hub
 	category = list ("Teleportation Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/quantumpad
 	name = "Machine Design (Quantum Pad Board)"
@@ -98,7 +106,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/quantumpad
 	category = list ("Teleportation Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/launchpad
 	name = "Machine Design (Bluespace Launchpad Board)"
@@ -107,7 +115,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/launchpad
 	category = list ("Teleportation Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/launchpad_console
 	name = "Machine Design (Bluespace Launchpad Console Board)"
@@ -116,7 +124,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/launchpad_console
 	category = list ("Teleportation Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/teleconsole
 	name = "Computer Design (Teleporter Console)"
@@ -125,14 +133,14 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/teleporter
 	category = list("Teleportation Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/cryotube
 	name = "Machine Design (Cryotube Board)"
 	desc = "The circuit board for a cryotube."
 	id = "cryotube"
 	build_path = /obj/item/circuitboard/machine/cryo_tube
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_MEDICAL
 	category = list ("Medical Machinery")
 
 /datum/design/board/chem_dispenser
@@ -140,14 +148,14 @@
 	desc = "The circuit board for a portable chem dispenser."
 	id = "chem_dispenser"
 	build_path = /obj/item/circuitboard/machine/chem_dispenser
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_MEDICAL
 	category = list ("Medical Machinery")
 
 /datum/design/board/chem_master
 	name = "Machine Design (Chem Master Board)"
 	desc = "The circuit board for a Chem Master 3000."
 	id = "chem_master"
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_MEDICAL
 	build_path = /obj/item/circuitboard/machine/chem_master
 	category = list ("Medical Machinery")
 
@@ -155,7 +163,7 @@
 	name = "Machine Design (Chemical Heater Board)"
 	desc = "The circuit board for a chemical heater."
 	id = "chem_heater"
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_MEDICAL
 	build_path = /obj/item/circuitboard/machine/chem_heater
 	category = list ("Medical Machinery")
 
@@ -163,7 +171,7 @@
 	name = "Machine Design (High-Performance Liquid Chromatography)"
 	desc = "The circuit board for a High-Performance Liquid Chromatography (Machine Board)"
 	id = "chem_mass_spec"
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_MEDICAL
 	build_path = /obj/item/circuitboard/machine/chem_mass_spec
 	category = list ("Medical Machinery")
 
@@ -173,7 +181,7 @@
 	id = "smoke_machine"
 	build_path = /obj/item/circuitboard/machine/smoke_machine
 	category = list ("Medical Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/reagentgrinder
 	name = "Machine Design (All-In-One Grinder)"
@@ -186,7 +194,7 @@
 	name = "Machine Design (Enhanced Interrogation Chamber)"
 	desc = "Allows for the construction of circuit boards used to build an Enhanced Interrogation Chamber."
 	id = "hypnochair"
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	build_path = /obj/item/circuitboard/machine/hypnochair
 	category = list("Misc. Machinery")
 
@@ -196,7 +204,7 @@
 	id = "biogenerator"
 	build_path = /obj/item/circuitboard/machine/biogenerator
 	category = list ("Hydroponics Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/hydroponics
 	name = "Machine Design (Hydroponics Tray Board)"
@@ -204,7 +212,7 @@
 	id = "hydro_tray"
 	build_path = /obj/item/circuitboard/machine/hydroponics
 	category = list ("Hydroponics Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/destructive_analyzer
 	name = "Machine Design (Destructive Analyzer Board)"
@@ -212,7 +220,7 @@
 	id = "destructive_analyzer"
 	build_path = /obj/item/circuitboard/machine/destructive_analyzer
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/experimentor
 	name = "Machine Design (E.X.P.E.R.I-MENTOR Board)"
@@ -220,7 +228,7 @@
 	id = "experimentor"
 	build_path = /obj/item/circuitboard/machine/experimentor
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/bepis
 	name = "Machine Design (B.E.P.I.S. Board)"
@@ -228,7 +236,7 @@
 	id = "bepis"
 	build_path = /obj/item/circuitboard/machine/bepis
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/protolathe
 	name = "Machine Design (Protolathe Board)"
@@ -237,7 +245,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/protolathe
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/protolathe/offstation
 	name = "Machine Design (Ancient Protolathe Board)"
@@ -246,7 +254,7 @@
 	build_type = AWAY_IMPRINTER
 	build_path = /obj/item/circuitboard/machine/protolathe/offstation
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/circuit_imprinter
 	name = "Machine Design (Circuit Imprinter Board)"
@@ -255,7 +263,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/circuit_imprinter
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/circuit_imprinter/offstation
 	name = "Machine Design (Ancient Circuit Imprinter Board)"
@@ -264,7 +272,7 @@
 	build_type = AWAY_IMPRINTER
 	build_path = /obj/item/circuitboard/machine/circuit_imprinter/offstation
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/rdservercontrol
 	name = "Computer Design (R&D Server Control Console Board)"
@@ -272,7 +280,7 @@
 	id = "rdservercontrol"
 	build_path = /obj/item/circuitboard/computer/rdservercontrol
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/rdserver
 	name = "Machine Design (R&D Server Board)"
@@ -280,7 +288,7 @@
 	id = "rdserver"
 	build_path = /obj/item/circuitboard/machine/rdserver
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/mechfab
 	name = "Machine Design (Exosuit Fabricator Board)"
@@ -288,7 +296,7 @@
 	id = "mechfab"
 	build_path = /obj/item/circuitboard/machine/mechfab
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/cyborgrecharger
 	name = "Machine Design (Cyborg Recharger Board)"
@@ -296,7 +304,7 @@
 	id = "cyborgrecharger"
 	build_path = /obj/item/circuitboard/machine/cyborgrecharger
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/mech_recharger
 	name = "Machine Design (Mechbay Recharger Board)"
@@ -304,13 +312,13 @@
 	id = "mech_recharger"
 	build_path = /obj/item/circuitboard/machine/mech_recharger
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/dnascanner
 	name = "Machine Design (DNA Scanner)"
 	desc = "The circuit board for a DNA Scanner."
 	id = "dnascanner"
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 	build_path = /obj/item/circuitboard/machine/dnascanner
 	category = list("Research Machinery")
 
@@ -320,7 +328,7 @@
 	id = "destructive_scanner"
 	build_path = /obj/item/circuitboard/machine/destructive_scanner
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/doppler_array
 	name = "Machine Design (Tachyon-Doppler Research Array Board)"
@@ -328,7 +336,7 @@
 	id = "doppler_array"
 	build_path = /obj/item/circuitboard/machine/doppler_array
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/anomaly_refinery
 	name = "Machine Design (Anomaly Refinery Board)"
@@ -336,7 +344,7 @@
 	id = "anomaly_refinery"
 	build_path = /obj/item/circuitboard/machine/anomaly_refinery
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/tank_compressor
 	name = "Machine Design (Tank Compressor Board)"
@@ -344,7 +352,7 @@
 	id = "tank_compressor"
 	build_path = /obj/item/circuitboard/machine/tank_compressor
 	category = list("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/microwave
 	name = "Machine Design (Microwave Board)"
@@ -360,7 +368,7 @@
 	id = "gibber"
 	build_path = /obj/item/circuitboard/machine/gibber
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/smartfridge
 	name = "Machine Design (Smartfridge Board)"
@@ -376,7 +384,7 @@
 	id = "monkey_recycler"
 	build_path = /obj/item/circuitboard/machine/monkey_recycler
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/seed_extractor
 	name = "Machine Design (Seed Extractor Board)"
@@ -384,7 +392,7 @@
 	id = "seed_extractor"
 	build_path = /obj/item/circuitboard/machine/seed_extractor
 	category = list ("Hydroponics Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/processor
 	name = "Machine Design (Food/Slime Processor Board)"
@@ -392,14 +400,14 @@
 	id = "processor"
 	build_path = /obj/item/circuitboard/machine/processor
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/soda_dispenser
 	name = "Machine Design (Portable Soda Dispenser Board)"
 	desc = "The circuit board for a portable soda dispenser."
 	id = "soda_dispenser"
 	build_path = /obj/item/circuitboard/machine/chem_dispenser/drinks
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 	category = list ("Misc. Machinery")
 
 /datum/design/board/beer_dispenser
@@ -407,7 +415,7 @@
 	desc = "The circuit board for a portable booze dispenser."
 	id = "beer_dispenser"
 	build_path = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 	category = list ("Misc. Machinery")
 
 /datum/design/board/recycler
@@ -465,7 +473,7 @@
 	id = "ore_redemption"
 	build_path = /obj/item/circuitboard/machine/ore_redemption
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/mining_equipment_vendor
 	name = "Machine Design (Mining Rewards Vendor Board)"
@@ -473,7 +481,7 @@
 	id = "mining_equipment_vendor"
 	build_path = /obj/item/circuitboard/machine/mining_equipment_vendor
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/tesla_coil
 	name = "Machine Design (Tesla Coil Board)"
@@ -481,7 +489,7 @@
 	id = "tesla_coil"
 	build_path = /obj/item/circuitboard/machine/tesla_coil
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
@@ -489,7 +497,7 @@
 	id = "grounding_rod"
 	build_path = /obj/item/circuitboard/machine/grounding_rod
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/ntnet_relay
 	name = "Machine Design (NTNet Relay Board)"
@@ -498,7 +506,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/ntnet_relay
 	category = list("Subspace Telecomms")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/limbgrower
 	name = "Machine Design (Limb Grower Board)"
@@ -506,7 +514,7 @@
 	id = "limbgrower"
 	build_path = /obj/item/circuitboard/machine/limbgrower
 	category = list("Medical Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/harvester
 	name = "Machine Design (Organ Harvester Board)"
@@ -514,7 +522,7 @@
 	id = "harvester"
 	build_path = /obj/item/circuitboard/machine/harvester
 	category = list("Medical Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/deepfryer
 	name = "Machine Design (Deep Fryer)"
@@ -522,7 +530,7 @@
 	id = "deepfryer"
 	build_path = /obj/item/circuitboard/machine/deep_fryer
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/griddle
 	name = "Machine Design (Griddle)"
@@ -530,7 +538,7 @@
 	id = "griddle"
 	build_path = /obj/item/circuitboard/machine/griddle
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/oven
 	name = "Machine Design (Oven)"
@@ -538,7 +546,7 @@
 	id = "oven"
 	build_path = /obj/item/circuitboard/machine/oven
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/donksofttoyvendor
 	name = "Machine Design (Donksoft Toy Vendor Board)"
@@ -562,7 +570,7 @@
 	id = "dish_drive"
 	build_path = /obj/item/circuitboard/machine/dish_drive
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/stacking_unit_console
 	name = "Machine Design (Stacking Machine Console)"
@@ -570,7 +578,7 @@
 	id = "stack_console"
 	build_path = /obj/item/circuitboard/machine/stacking_unit_console
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/stacking_machine
 	name = "Machine Design (Stacking Machine)"
@@ -578,7 +586,7 @@
 	id = "stack_machine"
 	build_path = /obj/item/circuitboard/machine/stacking_machine
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/ore_silo
 	name = "Machine Design (Ore Silo)"
@@ -586,7 +594,7 @@
 	id = "ore_silo"
 	build_path = /obj/item/circuitboard/machine/ore_silo
 	category = list ("Research Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/fat_sucker
 	name = "Machine Design (Lipid Extractor)"
@@ -594,7 +602,7 @@
 	id = "fat_sucker"
 	build_path = /obj/item/circuitboard/machine/fat_sucker
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/board/stasis
 	name = "Machine Design (Lifeform Stasis Unit)"
@@ -602,7 +610,7 @@
 	id = "stasis"
 	build_path = /obj/item/circuitboard/machine/stasis
 	category = list("Medical Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/spaceship_navigation_beacon
 	name = "Machine Design (Bluespace Navigation Gigabeacon)"
@@ -611,7 +619,7 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/spaceship_navigation_beacon
 	category = list ("Teleportation Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/medical_kiosk
 	name = "Machine Design (Medical Kiosk)"
@@ -619,7 +627,7 @@
 	id = "medical_kiosk"
 	build_path = /obj/item/circuitboard/machine/medical_kiosk
 	category = list ("Medical Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/medipen_refiller
 	name = "Machine Design (Medipen Refiller)"
@@ -627,7 +635,7 @@
 	id = "medipen_refiller"
 	build_path = /obj/item/circuitboard/machine/medipen_refiller
 	category = list ("Medical Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/plumbing_receiver
 	name = "Machine Design (Chemical Recipient)"
@@ -635,7 +643,7 @@
 	id = "plumbing_receiver"
 	build_path = /obj/item/circuitboard/machine/plumbing_receiver
 	category = list ("Teleportation Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 
 /datum/design/board/sheetifier
@@ -673,15 +681,7 @@
 	id = "skill_station"
 	build_path = /obj/item/circuitboard/machine/skill_station
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
-
-/datum/design/board/accounting
-	name = "Machine Design (Account Registration Device)"
-	desc = "The circuit board for a Account Registration Device."
-	id = "accounting"
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SERVICE
-	build_path = /obj/item/circuitboard/machine/accounting
-	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SERVICE
 
 //Hypertorus fusion reactor designs
 
@@ -691,7 +691,7 @@
 	id = "HFR_core"
 	build_path = /obj/item/circuitboard/machine/HFR_core
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/HFR_fuel_input
 	name = "Machine Design (HFR fuel input)"
@@ -699,7 +699,7 @@
 	id = "HFR_fuel_input"
 	build_path = /obj/item/circuitboard/machine/HFR_fuel_input
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/HFR_waste_output
 	name = "Machine Design (HFR waste output)"
@@ -707,7 +707,7 @@
 	id = "HFR_waste_output"
 	build_path = /obj/item/circuitboard/machine/HFR_waste_output
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/HFR_moderator_input
 	name = "Machine Design (HFR moderator input)"
@@ -715,7 +715,7 @@
 	id = "HFR_moderator_input"
 	build_path = /obj/item/circuitboard/machine/HFR_moderator_input
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/HFR_corner
 	name = "Machine Design (HFR corner)"
@@ -723,7 +723,7 @@
 	id = "HFR_corner"
 	build_path = /obj/item/circuitboard/machine/HFR_corner
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/HFR_interface
 	name = "Machine Design (HFR interface)"
@@ -731,7 +731,7 @@
 	id = "HFR_interface"
 	build_path = /obj/item/circuitboard/machine/HFR_interface
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/crystallizer
 	name = "Machine Design (Crystallizer)"
@@ -739,7 +739,7 @@
 	id = "crystallizer"
 	build_path = /obj/item/circuitboard/machine/crystallizer
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/board/exoscanner
 	name = "Machine Design (Scanner Array)"
@@ -747,7 +747,7 @@
 	id = "exoscanner"
 	build_path = /obj/item/circuitboard/machine/exoscanner
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/exodrone_launcher
 	name = "Machine Design (Exploration Drone Launcher)"
@@ -755,7 +755,7 @@
 	id = "exodrone_launcher"
 	build_path = /obj/item/circuitboard/machine/exodrone_launcher
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/component_printer
 	name = "Machine Design (Component Printer)"
@@ -763,7 +763,7 @@
 	id = "component_printer"
 	build_path = /obj/item/circuitboard/machine/component_printer
 	category = list("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/board/module_printer
 	name = "Machine Design (Module Duplicator)"
@@ -771,4 +771,4 @@
 	id = "module_duplicator"
 	build_path = /obj/item/circuitboard/machine/module_duplicator
 	category = list("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE

@@ -22,13 +22,6 @@
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	. = ..()
-	if(!.)
-		return
-	if(!istype(M, /obj/vehicle/sealed/mecha/working/ripley))
-		return FALSE
-
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/M)
 	. = ..()
 	cargo_holder = M
@@ -144,13 +137,11 @@
 	desc = "They won't know what clamped them! This time for real!"
 	killer_clamp = TRUE
 
-
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/fake//harmless fake for pranks
 	desc = "They won't know what clamped them!"
 	energy_drain = 0
 	clamp_damage = 0
 	killer_clamp = FALSE
-
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher
 	name = "exosuit extinguisher"
@@ -158,74 +149,72 @@
 	icon_state = "mecha_exting"
 	equip_cooldown = 5
 	energy_drain = 0
+	equipment_slot = MECHA_UTILITY
 	range = MECHA_MELEE|MECHA_RANGED
 	mech_flags = EXOSUIT_MODULE_WORKING
-	var/sprays_left = 0
+	///Minimum amount of reagent needed to activate.
+	var/required_amount = 80
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize(mapload)
 	. = ..()
-	create_reagents(1000)
-	reagents.add_reagent(/datum/reagent/water, 1000)
+	create_reagents(400)
+	reagents.add_reagent(/datum/reagent/water, 400)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/action(mob/source, atom/target, list/modifiers)
-	if(!action_checks(target) || get_dist(chassis, target)>3)
+/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/spray_extinguisher(mob/user)
+	if(reagents.total_volume < required_amount)
 		return
 
-	if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(chassis,target) <= 1)
-		var/obj/structure/reagent_dispensers/watertank/WT = target
-		WT.reagents.trans_to(src, 1000)
-		to_chat(source, "[icon2html(src, source)][span_notice("Extinguisher refilled.")]")
-		playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
-		return
+	for(var/turf/targetturf in RANGE_TURFS(1, chassis))
+		var/obj/effect/particle_effect/water/extinguisher/water = new /obj/effect/particle_effect/water/extinguisher(targetturf)
+		var/datum/reagents/water_reagents = new /datum/reagents(required_amount/8) //required_amount/8, because the water usage is split between eight sprays. As of this comment, required_amount/8 = 10u each.
+		water.reagents = water_reagents
+		water_reagents.my_atom = water
+		reagents.trans_to(water, required_amount/8)
+		water.move_at(get_step(chassis, get_dir(targetturf, chassis)), 2, 4) //Target is the tile opposite of the mech as the starting turf.
 
-	if(reagents.total_volume <= 0)
-		return
 	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 
-	sprays_left += 5
-	add_hiddenprint(source) //log prints so admins can figure out who touched it last.
-	log_combat(source, target, "fired an extinguisher at")
-	spray_extinguisher(target)
-	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/spray_extinguisher(atom/target)
-	var/direction = get_dir(chassis, target)
-	var/turf/T1 = get_turf(target)
-	var/turf/T2 = get_step(T1,turn(direction, 90))
-	var/turf/T3 = get_step(T1,turn(direction, -90))
-	var/list/targets = list(T1,T2,T3)
-
-	var/obj/effect/particle_effect/water/extinguisher/water = new /obj/effect/particle_effect/water/extinguisher(get_turf(chassis))
-	var/datum/reagents/water_reagents = new /datum/reagents(5)
-	water.reagents = water_reagents
-	water_reagents.my_atom = water
-	reagents.trans_to(water, 1)
-
-	var/delay = 2
-	var/datum/move_loop/our_loop = water.move_at(pick(targets), delay, 4)
-	RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, .proc/water_finished_moving)
-
-/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/water_finished_moving(datum/move_loop/has_target/source)
-	SIGNAL_HANDLER
-	sprays_left--
-	if(!sprays_left)
+/**
+ * Handles attemted refills of the extinguisher.
+ *
+ * The mech can only refill an extinguisher that is in front of it.
+ * Only water tank objects can be used.
+ */
+/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/attempt_refill(mob/user)
+	if(reagents.maximum_volume == reagents.total_volume)
 		return
-	extinguish(source.target)
+	var/turf/in_front = get_step(chassis, chassis.dir)
+	var/obj/structure/reagent_dispensers/watertank/refill_source = locate(/obj/structure/reagent_dispensers/watertank) in in_front
+	if(!refill_source)
+		to_chat(user, span_notice("Refill failed. No compatible tank found."))
+		return
+	if(!refill_source.reagents?.total_volume)
+		to_chat(user, span_notice("Refill failed. Source tank empty."))
+		return
+
+	refill_source.reagents.trans_to(src, reagents.maximum_volume)
+	playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_snowflake_data()
 	return list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_EXTINGUISHER,
 		"reagents" = reagents.total_volume,
 		"total_reagents" = reagents.maximum_volume,
+		"minimum_requ" = required_amount,
 	)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_equipment/extinguisher/ui_act(action, list/params)
 	. = ..()
-	if(!.)
-		return
-	if(!istype(M, /obj/vehicle/sealed/mecha/working))
-		return FALSE
-
+	if(.)
+		return TRUE
+	switch(action)
+		if("activate")
+			spray_extinguisher(usr)
+			return TRUE
+		if("refill")
+			attempt_refill(usr)
+			return TRUE
 
 #define MODE_DECONSTRUCT 0
 #define MODE_WALL 1
@@ -388,6 +377,8 @@
 		markone.capacitor = null
 	marktwo.update_part_values()
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
+		if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))
+			continue //the MK2 already has one.
 		var/righthandgun = markone.equip_by_category[MECHA_R_ARM] == equipment
 		equipment.detach(marktwo)
 		equipment.attach(marktwo, righthandgun)

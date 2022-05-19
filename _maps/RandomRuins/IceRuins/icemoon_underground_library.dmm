@@ -102,7 +102,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
 "ay" = (
-/obj/machinery/door/keycard/library,
+/obj/machinery/door/puzzle/keycard/library,
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)
 "az" = (

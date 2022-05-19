@@ -1045,35 +1045,35 @@
 	id = "mod_plating_engineering"
 	build_path = /obj/item/mod/construction/plating/engineering
 	materials = list(/datum/material/iron = 6000, /datum/material/gold = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 	research_icon_state = "engineering-plating"
 
 /datum/design/mod_plating/atmospheric
 	id = "mod_plating_atmospheric"
 	build_path = /obj/item/mod/construction/plating/atmospheric
 	materials = list(/datum/material/iron = 6000, /datum/material/titanium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 	research_icon_state = "atmospheric-plating"
 
 /datum/design/mod_plating/medical
 	id = "mod_plating_medical"
 	build_path = /obj/item/mod/construction/plating/medical
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 	research_icon_state = "medical-plating"
 
 /datum/design/mod_plating/security
 	id = "mod_plating_security"
 	build_path = /obj/item/mod/construction/plating/security
 	materials = list(/datum/material/iron = 6000, /datum/material/uranium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	research_icon_state = "security-plating"
 
 /datum/design/mod_plating/cosmohonk
 	id = "mod_plating_cosmohonk"
 	build_path = /obj/item/mod/construction/plating/cosmohonk
 	materials = list(/datum/material/iron = 6000, /datum/material/bananium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 	research_icon_state = "cosmohonk-plating"
 
 /datum/design/mod_paint_kit
@@ -1183,11 +1183,11 @@
 	build_path = /obj/item/mod/module/magboot
 	department_type = MODULE_ENGINEERING
 
-/datum/design/module/mod_holster
-	name = "MOD Module: Holster"
-	id = "mod_holster"
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
-	build_path = /obj/item/mod/module/holster
+/datum/design/module/mod_mag_harness
+	name = "MOD Module: Magnetic Harness"
+	id = "mod_mag_harness"
+	materials = list(/datum/material/iron = 1500, /datum/material/silver = 500)
+	build_path = /obj/item/mod/module/magnetic_harness
 	department_type = MODULE_SECURITY
 
 /datum/design/module/mod_tether
@@ -1345,9 +1345,16 @@
 /datum/design/module/mister_atmos
 	name = "MOD Module: Resin Mister"
 	id = "mod_mister_atmos"
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500, /datum/material/silver = 1000, /datum/material/titanium = 1500, /datum/material/uranium = 500)
+	materials = list(/datum/material/glass = 1000, /datum/material/titanium = 1500)
 	build_path = /obj/item/mod/module/mister/atmos
 	department_type = MODULE_ENGINEERING
+
+/datum/design/module/mod_holster
+	name = "MOD Module: Holster"
+	id = "mod_holster"
+	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
+	build_path = /obj/item/mod/module/holster
+	department_type = MODULE_SECURITY
 
 //MODsuit bepis modules
 
