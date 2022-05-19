@@ -554,22 +554,6 @@
 	source.Stun(1 SECONDS)
 	source.throw_at(further_behind_old_loc, 3, 1, gentle = TRUE) // Keeping this gentle so they don't smack into the heretic max speed
 
-/// A status effect used for specifying confusion on a living mob.
-/// Created automatically with /mob/living/set_confusion.
-/datum/status_effect/confusion
-	id = "confusion"
-	alert_type = null
-	var/strength
-
-/datum/status_effect/confusion/tick()
-	strength -= 1
-	if (strength <= 0)
-		owner.remove_status_effect(/datum/status_effect/confusion)
-		return
-
-/datum/status_effect/confusion/proc/set_strength(new_strength)
-	strength = new_strength
-
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
 	tick_interval = 6
@@ -864,8 +848,11 @@
 	if(prob(40))
 		var/obj/item/I = H.get_active_held_item()
 		if(I && H.dropItemToGround(I))
-			H.visible_message(span_notice("[H]'s hand convulses, and they drop their [I.name]!"),span_userdanger("Your hand convulses violently, and you drop what you were holding!"))
-			H.jitteriness += 5
+			H.visible_message(
+				span_notice("[H]'s hand convulses, and they drop their [I.name]!"),
+				span_userdanger("Your hand convulses violently, and you drop what you were holding!"),
+			)
+			H.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/jitter)
 
 /atom/movable/screen/alert/status_effect/convulsing
 	name = "Shaky Hands"
@@ -985,7 +972,7 @@
 			human_owner.vomit()
 		if(20 to 30)
 			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-			human_owner.Jitter(50)
+			human_owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 		if(30 to 40)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 5)
 		if(40 to 50)
@@ -1001,7 +988,7 @@
 		if(90 to 95)
 			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
-			human_owner.add_confusion(12)
+			human_owner.adjust_timed_status_effect(12 SECONDS, /datum/status_effect/confusion)
 
 /datum/status_effect/amok
 	id = "amok"

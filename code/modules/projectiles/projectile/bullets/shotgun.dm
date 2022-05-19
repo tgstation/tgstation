@@ -40,7 +40,7 @@
 	damage = 5
 	paralyze = 100
 	stutter = 10 SECONDS
-	jitter = 20
+	jitter = 40 SECONDS
 	range = 7
 	icon_state = "spark"
 	color = "#FFFF00"

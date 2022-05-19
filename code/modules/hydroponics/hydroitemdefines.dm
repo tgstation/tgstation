@@ -463,7 +463,7 @@
 		return
 	var/mob/living/carbon/human/H = AM
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
-		H.set_confusion(max(H.get_confusion(), 10))
+		H.set_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \

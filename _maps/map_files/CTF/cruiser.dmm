@@ -98,7 +98,7 @@
 /obj/structure/window/reinforced{
 	resistance_flags = 64
 	},
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass,
 /area/ctf)
 "dS" = (
@@ -583,7 +583,7 @@
 /obj/structure/window/reinforced{
 	resistance_flags = 64
 	},
-/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/bush/fullgrass/style_random,
 /turf/open/floor/grass,
 /area/ctf)
 "Hy" = (
@@ -622,7 +622,7 @@
 /obj/structure/window/reinforced{
 	resistance_flags = 64
 	},
-/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/bush/ferny/style_random,
 /turf/open/floor/grass,
 /area/ctf)
 "HZ" = (

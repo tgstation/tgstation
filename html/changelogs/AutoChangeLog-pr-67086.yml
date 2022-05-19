@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - admin: "Admins using the dsay verb will now have their rank(s) shown in a hoverable tooltip"

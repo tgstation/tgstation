@@ -153,7 +153,8 @@
 	var/unconscious = 0
 	var/eyeblur = 0
 	var/drowsy = 0
-	var/jitter = 0
+	/// Jittering applied on projectile hit
+	var/jitter = 0 SECONDS
 	/// Extra stamina damage applied on projectile hit (in addition to the main damage)
 	var/stamina = 0
 	/// Stuttering applied on projectile hit

@@ -102,12 +102,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "V" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "X" = (

@@ -95,8 +95,8 @@
 		/obj/item/clothing/accessory/waistcoat = 1,
 		/obj/item/clothing/head/that = 1,
 		/obj/item/clothing/head/fedora = 1,
-		/obj/item/clothing/head/cowboy_hat_white =1,
-		/obj/item/clothing/head/cowboy_hat_grey =1,
+		/obj/item/clothing/head/cowboy_hat_white = 1,
+		/obj/item/clothing/head/cowboy_hat_grey = 1,
 		/obj/item/clothing/glasses/monocle = 1,
 		/obj/item/clothing/head/sombrero = 1,
 		/obj/item/clothing/suit/poncho = 1,
@@ -193,7 +193,7 @@
 		/obj/item/clothing/under/costume/jabroni = 1,
 		/obj/item/clothing/under/costume/geisha = 1,
 		/obj/item/clothing/under/rank/centcom/officer/replica = 1,
-		/obj/item/clothing/under/rank/centcom/officer_skirt/replica = 1
+		/obj/item/clothing/under/rank/centcom/officer_skirt/replica = 1,
 	)
 	premium = list(/obj/item/clothing/under/suit/checkered = 1,
 		/obj/item/clothing/head/mailman = 1,
@@ -205,7 +205,7 @@
 		/obj/item/clothing/suit/jacket/letterman_nanotrasen = 1,
 		/obj/item/clothing/under/costume/swagoutfit = 1,
 		/obj/item/clothing/shoes/swagshoes = 1,
-		/obj/item/instrument/piano_synth/headphones/spacepods = 1
+		/obj/item/instrument/piano_synth/headphones/spacepods = 1,
 	)
 	refill_canister = /obj/item/vending_refill/clothing
 	default_price = PAYCHECK_CREW * 0.7 //Default of
