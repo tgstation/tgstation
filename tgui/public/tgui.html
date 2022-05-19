@@ -487,7 +487,7 @@ window.update.flushQueue = function (listener) {
   }
 };
 
-Byond.subscribeTo("replace_html", function (inline_html) {
+window.replaceHtml = function (inline_html) {
   var children = document.body.childNodes;
 
   for (var i = 0; i < children.length; i++) {
