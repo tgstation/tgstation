@@ -133,8 +133,11 @@
  * Station traits that guarantee some ruin spawn.
  */
 /datum/station_trait/ruin_spawn
-	name = "Ruin Spawn"
+	name = "Odd Debris Field"
+	report_message = "The debris surrounding the station seem to be oddly distributed. May be a sensor error."
+	show_in_report = TRUE
 	trait_type = STATION_TRAIT_ABSTRACT
+	can_revert = FALSE // Technically the admin can just nuke the ruin, but an automated way isn't supported.
 	/// The map template to guarantee a spawn of.
 	var/datum/map_template/ruin/ruin_path
 	/// The z-level theme to spawn the ruin on.
@@ -150,7 +153,7 @@
 
 /datum/station_trait/ruin_spawn/New()
 	. = ..()
-	if(!ispath(ruin, /datum/map_template/ruin) || !ruin_theme)
+	if(!ispath(ruin_path, /datum/map_template/ruin) || !ruin_theme)
 		stack_trace("A ruin spawn station trait without a ruin or ruin theme was loaded.")
 		return
 
@@ -191,3 +194,160 @@
 		ruin.always_place = ensure_spawn
 	if(!isnull(override_cost))
 		ruin.cost = override_cost
+
+
+/**
+ * Spawns a ruin that heavily influences antag spawns.
+ * Specifically, it ensures that only one type of antagonist can spawn.
+ */
+/datum/station_trait/ruin_spawn/artifact_of_kin
+	name = "Anomalous Debris"
+	show_in_report = TRUE
+	report_message = "Our sensors are picking up some anomalous activity in the debris field near the station."
+	weight = 1
+	ruin_path = /datum/map_template/ruin/artifact_of_kin
+	ensure_spawn = TRUE
+	override_cost = 0
+
+/datum/station_trait/ruin_spawn/artifact_of_kin/New()
+	. = ..()
+	show_in_report = prob(80)
+
+/datum/station_trait/ruin_spawn/artifact_of_kin/get_report()
+	return "[..()] - [report_message]"
+
+/**
+ * The space ruin that contains the actual artifact of kin.
+ */
+/datum/map_template/ruin/artifact_of_kin
+	id = "artifactofkin"
+	suffix = "artifactofkin.dmm" // TODO: Map it.
+	name = "Artifact of Kin"
+	description = "A strange alien structure that appears to influence antagonism in nearby space."
+	unpickable = TRUE
+	placement_weight = 0
+
+/**
+ * The actual structure responsible for altering antag spawn rates.
+ *
+ * Ensures that only a single type of antag spawns for roundstart, midrounds, and latejoins (picked separately).
+ */
+/obj/structure/artifact_of_kin
+	name = "Strange Obelisk "
+	desc = "A strange alien structure."
+	icon = 'icons/obj/singularity.dmi' // TODO: Custom sprite.
+	icon_state = "singularity_s7"
+	base_pixel_x = -96
+	base_pixel_y = -96
+	bound_height = 192
+	bound_width = 192
+
+	/// The set of rulesets that have replaced the default rulesets for each type of ruleset.
+	var/list/altered_rulesets
+	/// The rulesets that have been overriden. Replaces the overrides when the artifact is destroyed.
+	var/list/saved_rulesets
+
+
+/obj/structure/artifact_of_kin/Initialize(mapload)
+	. = ..()
+	if(!istype(SSticker.mode, /datum/game_mode/dynamic))
+		return
+
+	log_game("DYNAMIC (ARTIFACT OF KIN): An Artifact of Kin has been generated this round and will be warping antag spawn rates. Please discard this round from any analysis as an outlier.")
+	RegisterSignal(SSticker.mode, COMSIG_DYNAMIC_INITIALIZING_RULESETS, .proc/enforce_monoculture_rules)
+	RegisterSignal(SSticker.mode, COMSIG_DYNAMIC_TRY_HIJACK_RANDOM_EVENT, .proc/enforce_monoculture_events)
+
+/obj/structure/artifact_of_kin/Destroy()
+	if(!istype(SSticker.mode, /datum/game_mode/dynamic))
+		return ..()
+
+	var/datum/game_mode/dynamic/mode = SSticker.mode
+	UnregisterSignal(mode, list(
+		COMSIG_DYNAMIC_INITIALIZING_RULESETS,
+	))
+
+	log_game("DYNAMIC (ARTIFACT OF KIN): The Artifact of Kin has been deleted and will no longer warp antag spawn rates.")
+	if(!LAZYLEN(saved_rulesets))
+		return ..()
+
+	if (saved_rulesets[/datum/dynamic_ruleset/midround])
+		mode.midround_rules = saved_rulesets[/datum/dynamic_ruleset/midround]
+	if (saved_rulesets[/datum/dynamic_ruleset/latejoin])
+		mode.latejoin_rules = saved_rulesets[/datum/dynamic_ruleset/latejoin]
+	return ..()
+
+/**
+ * Picks a single type of ruleset for spawning.
+ */
+/obj/structure/artifact_of_kin/proc/enforce_monoculture_rules(datum/game_mode/dynamic/source, list/rulesets, ruleset_type)
+	SIGNAL_HANDLER
+	if (length(rulesets) < 2)
+		return
+
+	var/datum/dynamic_ruleset/altered_ruleset = LAZYACCESS(altered_rulesets, ruleset_type)
+	if(!altered_ruleset)
+		var/list/acceptable_rulesets = list()
+		for(var/datum/dynamic_ruleset/ruleset as anything in rulesets)
+			if(!ruleset.weight)
+				continue
+			if(!ruleset.acceptable(SSticker.totalPlayers, source.threat_level))
+				continue // Prevents unpickable rulesets like clown ops and meteors from being picked.
+
+			acceptable_rulesets[ruleset] = ruleset.weight
+
+		altered_ruleset = pick_weight(acceptable_rulesets)
+		if(!istype(altered_ruleset))
+			return
+
+		altered_ruleset = new altered_ruleset.type
+		source.configure_ruleset(altered_ruleset)
+
+		altered_ruleset.flags &= ~HIGH_IMPACT_RULESET // Loosen up the requirements a bit so if we roll an expensive ruleset some antags can still spawn.
+		altered_ruleset.weight = 100
+		altered_ruleset.repeatable = TRUE
+		altered_ruleset.repeatable_weight_decrease = 0
+
+		LAZYSET(altered_rulesets, ruleset_type, altered_ruleset)
+
+	if(!LAZYACCESS(saved_rulesets, ruleset_type))
+		LAZYSET(saved_rulesets, ruleset_type, rulesets.Copy())
+
+	rulesets.Cut()
+	if (altered_ruleset)
+		rulesets += altered_ruleset
+	return NONE
+
+/**
+ * Prevents all but one type of random even antag from spawning.
+ *
+ * Arguments:
+ * - [source][/datum/game_mode/dynamic]: The gamemode that is trying to hijack a random event spawn.
+ * - [round_event_control][/datum/round_event_control]: The random event controller that is trying to spawn.
+ */
+/obj/structure/artifact_of_kin/proc/enforce_monoculture_events(datum/game_mode/dynamic/source, datum/round_event_control/round_event_control)
+	SIGNAL_HANDLER
+	if(!round_event_control.dynamic_should_hijack)
+		return NONE
+	if (isnull(LAZYACCESS(altered_rulesets, /datum/round_event_control)))
+		pick_event()
+	if (round_event_control == LAZYACCESS(altered_rulesets, /datum/round_event_control))
+		return NONE
+	return CANCEL_PRE_RANDOM_EVENT
+
+/**
+ * Picks what random event antag we allow to spawn.
+ */
+/obj/structure/artifact_of_kin/proc/pick_event()
+	var/list/possible_events = list()
+	for(var/datum/round_event_control/control as anything in SSevents.control)
+		if(!control.dynamic_should_hijack)
+			continue
+		if(!control.weight)
+			continue
+		possible_events[control] = initial(control.weight)
+
+	var/datum/round_event_control/picked_event = pick_weight(possible_events)
+	if(!istype(picked_event))
+		picked_event = FALSE
+
+	LAZYSET(altered_rulesets, /datum/round_event_control, picked_event)

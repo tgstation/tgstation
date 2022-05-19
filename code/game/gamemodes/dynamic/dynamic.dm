@@ -370,6 +370,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		threat_level = min(threat_level, LERP(low_pop_minimum_threat, max_threat_level, SSticker.totalPlayersReady / low_pop_player_threshold))
 
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, threat_curve_centre, threat_curve_width), 0.01)*100
+	SEND_SIGNAL(src, COMSIG_DYNAMIC_GENERATE_THREAT, threat_level, peaceful_percentage)
 
 /// Generates the midround and roundstart budgets
 /datum/game_mode/dynamic/proc/generate_budgets()
@@ -377,6 +378,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	round_start_budget = round((lorentz_to_amount(relative_round_start_budget_scale) / 100) * threat_level, 0.1)
 	initial_round_start_budget = round_start_budget
 	mid_round_budget = threat_level - round_start_budget
+	SEND_SIGNAL(src, COMSIG_DYNAMIC_GENERATE_BUDGETS, round_start_budget, initial_round_start_budget, mid_round_budget)
 
 /datum/game_mode/dynamic/proc/setup_parameters()
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
@@ -389,17 +391,21 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	generate_budgets()
 	set_cooldowns()
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]! ([round_start_budget] round start budget)")
+	SEND_SIGNAL(src, COMSIG_DYNAMIC_SETUP_PARAMS)
 	return TRUE
 
 /datum/game_mode/dynamic/proc/setup_shown_threat()
-	if (prob(FAKE_REPORT_CHANCE))
+	var/fake_report = prob(FAKE_REPORT_CHANCE)
+	if (fake_report)
 		shown_threat = rand(1, 100)
 	else
 		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
+	SEND_SIGNAL(src, COMSIG_DYNAMIC_SETUP_SHOWN_THREAT, shown_threat, threat_level, fake_report)
 
 /datum/game_mode/dynamic/proc/set_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
 	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
+	SEND_SIGNAL(src, COMSIG_DYNAMIC_SETUP_COOLDOWNS, latejoin_injection_cooldown, latejoin_injection_cooldown_middle)
 
 /datum/game_mode/dynamic/pre_setup()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
@@ -479,6 +485,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		configure_ruleset(ruleset)
 		rulesets += ruleset
 
+	SEND_SIGNAL(src, COMSIG_DYNAMIC_INITIALIZING_RULESETS, rulesets, ruleset_subtype)
 	return rulesets
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.

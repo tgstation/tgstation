@@ -23,3 +23,5 @@
 	if (next_midround_injection() - world.time < time_range)
 		dynamic_log("Random event [round_event_control.name] tried to roll, but the next midround injection is too soon.")
 		return CANCEL_PRE_RANDOM_EVENT
+
+	return SEND_SIGNAL(src, COMSIG_DYNAMIC_TRY_HIJACK_RANDOM_EVENT, round_event_control)
