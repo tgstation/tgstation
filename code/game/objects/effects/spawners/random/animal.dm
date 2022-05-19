@@ -1,7 +1,7 @@
 /obj/effect/spawner/random/animal
 	name = "animal spawner"
 	desc = "Can I pet it?"
-	icon_state = "animal_hide"
+	icon_state = "corgi"
 
 /obj/effect/spawner/random/animal/frog
 	name = "frog spawner"
