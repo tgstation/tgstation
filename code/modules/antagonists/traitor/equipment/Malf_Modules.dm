@@ -358,17 +358,17 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/sec_left = seconds_remaining()
 	if(!sec_left)
 		timing = FALSE
-		detonate()
+		sound_to_playing_players('sound/machines/alarm.ogg')
+		addtimer(CALLBACK(src, .proc/detonate), 10 SECONDS)
+
 	else if(world.time >= next_announce)
 		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
 /obj/machinery/doomsday_device/proc/detonate()
-	sound_to_playing_players('sound/machines/alarm.ogg')
-	sleep(10 SECONDS)
 	play_cinematic(/datum/cinematic/malf, world, CALLBACK(GLOBAL_PROC, /proc/ending_helper))
 	callback_on_everyone_on_z(SSmapping.levels_by_trait(ZTRAIT_STATION), CALLBACK(GLOBAL_PROC, /proc/bring_doomsday))
-	to_chat(world, "<B>The AI cleansed the station of life with the doomsday device!</B>")
+	to_chat(world, span_bold("The AI cleansed the station of life with the doomsday device!"))
 
 /proc/bring_doomsday(mob/living/victim)
 	if(issilicon(victim))
