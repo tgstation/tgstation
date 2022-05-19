@@ -40,8 +40,10 @@
 	var/picture_size_y_max = 4
 	var/can_customise = TRUE
 	var/default_picture_name
+	///Whether the camera should print pictures immediately when a picture is taken.
+	var/print_picture = TRUE
 
-/obj/item/camera/Initialize()
+/obj/item/camera/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera), SHELL_CAPACITY_SMALL)
 
@@ -214,14 +216,15 @@
 	after_picture(user, picture)
 	SEND_SIGNAL(src, COMSIG_CAMERA_IMAGE_CAPTURED, target, user)
 	blending = FALSE
-
+	return picture
 
 /obj/item/camera/proc/flash_end()
 	set_light_on(FALSE)
 
 
 /obj/item/camera/proc/after_picture(mob/user, datum/picture/picture)
-	printpicture(user, picture)
+	if(print_picture)
+		printpicture(user, picture)
 
 /obj/item/camera/proc/printpicture(mob/user, datum/picture/picture) //Normal camera proc for creating photos
 	var/obj/item/photo/p = new(get_turf(src), picture)

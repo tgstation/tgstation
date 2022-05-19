@@ -23,16 +23,6 @@ export const NtosPhysScanner = (props, context) => {
           to use the physical scanner.
         </Section>
         <Section>
-          <Box bold>SELECTED MODE <br /> <br /></Box>
-          <Dropdown
-            options={available_modes}
-            selected={set_mode}
-            onSelected={(value) => act('selectMode', {
-              newMode: value,
-            })}
-          />
-        </Section>
-        <Section>
           <Box bold>
             LAST SAVED RESULT
             <br />

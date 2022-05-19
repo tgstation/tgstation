@@ -88,7 +88,7 @@
  *user is the person making the attack action
  *params is anything the pre_attack() proc had in the same-named variable.
 */
-/datum/computer_file/program/proc/tap(atom/A, mob/living/user, params)
+/datum/computer_file/program/proc/tap(atom/tapped_atom, mob/living/user, params)
 	return FALSE
 
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)

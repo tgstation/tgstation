@@ -248,6 +248,10 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/monkeycube = 1,
 		) = 8,
 
+	list(//data disks
+		/obj/item/computer_hardware/hard_drive/portable/maintenance/scanner = 1,
+	) = 6,
+
 	list(//modsuits
 		/obj/effect/spawner/random/mod/maint = 3,
 		/obj/item/mod/construction/broken_core = 1,

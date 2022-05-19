@@ -83,7 +83,7 @@
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
-		/datum/computer_file/program/phys_scanner/all,
+		/datum/computer_file/program/maintenance/phys_scanner,
 		/datum/computer_file/program/records/medical,
 	)
 
@@ -98,7 +98,6 @@
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
-		/datum/computer_file/program/phys_scanner/chemistry,
 		/datum/computer_file/program/signal_commander,
 	)
 
@@ -122,7 +121,6 @@
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
-		/datum/computer_file/program/phys_scanner/medical,
 	)
 
 /obj/item/modular_computer/tablet/pda/warden
@@ -183,7 +181,6 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#FAFAFA#000099#0097CA"
 	default_applications = list(
-		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
 	)
 
@@ -196,7 +193,6 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
 	default_applications = list(
-		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/robocontrol,
 	)
@@ -206,7 +202,6 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_split
 	greyscale_colors = "#FAFAFA#355FAC#57C451"
 	default_applications = list(
-		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/robocontrol,
 	)
@@ -215,9 +210,6 @@
 	name = "chemist PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#355FAC#EA6400"
-	default_applications = list(
-		/datum/computer_file/program/phys_scanner/chemistry,
-	)
 
 /**
  * Supply

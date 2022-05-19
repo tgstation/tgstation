@@ -20,7 +20,6 @@
 	. = ..()
 	store_file(new /datum/computer_file/program/records/security(src))
 	store_file(new /datum/computer_file/program/records/medical(src))
-	store_file(new /datum/computer_file/program/phys_scanner/all(src))
 
 /obj/item/computer_hardware/hard_drive/portable/command/cmo
 	name = "chief medical officer data disk"
@@ -28,7 +27,7 @@
 
 /obj/item/computer_hardware/hard_drive/portable/command/cmo/install_default_programs()
 	. = ..()
-	store_file(new /datum/computer_file/program/phys_scanner/all(src))
+	store_file(new /datum/computer_file/program/maintenance/phys_scanner(src))
 	store_file(new /datum/computer_file/program/records/medical(src))
 
 /obj/item/computer_hardware/hard_drive/portable/command/rd
@@ -38,7 +37,6 @@
 /obj/item/computer_hardware/hard_drive/portable/command/rd/install_default_programs()
 	. = ..()
 	store_file(new /datum/computer_file/program/signal_commander(src))
-	store_file(new /datum/computer_file/program/phys_scanner/chemistry(src))
 
 /obj/item/computer_hardware/hard_drive/portable/command/hos
 	name = "head of security data disk"
@@ -92,17 +90,12 @@
 
 /obj/item/computer_hardware/hard_drive/portable/medical/install_default_programs()
 	. = ..()
-	store_file(new /datum/computer_file/program/phys_scanner/medical(src))
 	store_file(new /datum/computer_file/program/records/medical(src))
 
 /obj/item/computer_hardware/hard_drive/portable/chemistry
 	name = "chemistry data disk"
 	desc = "Removable disk used to download chemistry-related tablet apps."
 	icon_state = "datadisk5"
-
-/obj/item/computer_hardware/hard_drive/portable/chemistry/install_default_programs()
-	. = ..()
-	store_file(new /datum/computer_file/program/phys_scanner/chemistry(src))
 
 /**
  * Supply
