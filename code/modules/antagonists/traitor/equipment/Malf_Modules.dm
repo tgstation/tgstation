@@ -359,22 +359,22 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(!sec_left)
 		timing = FALSE
 		sound_to_playing_players('sound/machines/alarm.ogg')
-		addtimer(CALLBACK(src, .proc/detonate), 10 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/play_cinematic, /datum/cinematic/malf, world, CALLBACK(src, .proc/trigger_doomsday)), 10 SECONDS)
 
 	else if(world.time >= next_announce)
 		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
-/obj/machinery/doomsday_device/proc/detonate()
-	play_cinematic(/datum/cinematic/malf, world, CALLBACK(GLOBAL_PROC, /proc/ending_helper))
-	callback_on_everyone_on_z(SSmapping.levels_by_trait(ZTRAIT_STATION), CALLBACK(GLOBAL_PROC, /proc/bring_doomsday))
+/obj/machinery/doomsday_device/proc/trigger_doomsday()
+	callback_on_everyone_on_z(SSmapping.levels_by_trait(ZTRAIT_STATION), CALLBACK(GLOBAL_PROC, /proc/bring_doomsday), src)
 	to_chat(world, span_bold("The AI cleansed the station of life with the doomsday device!"))
+	SSticker.force_ending = TRUE
 
-/proc/bring_doomsday(mob/living/victim)
+/proc/bring_doomsday(mob/living/victim, atom/source)
 	if(issilicon(victim))
 		return FALSE
 
-	to_chat(victim, span_userdanger("The blast wave from [src] tears you atom from atom!"))
+	to_chat(victim, span_userdanger("The blast wave from [source] tears you atom from atom!"))
 	victim.dust()
 	return TRUE
 

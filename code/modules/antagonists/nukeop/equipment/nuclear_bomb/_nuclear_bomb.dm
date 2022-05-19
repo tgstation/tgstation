@@ -1,5 +1,6 @@
-/// TRUE only if the station was actually hit by the nuke, otherwise FALSE
+/// Whether the station has been nuked itself. TRUE only if the station was actually hit by the nuke, otherwise FALSE
 GLOBAL_VAR_INIT(station_was_nuked, FALSE)
+/// The source of the last nuke that went off
 GLOBAL_VAR(station_nuke_source)
 
 /obj/machinery/nuclearbomb
@@ -10,29 +11,47 @@ GLOBAL_VAR(station_nuke_source)
 	anchored = FALSE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-	var/timer_set = 90
-	var/minimum_timer_set = 90
-	var/maximum_timer_set = 3600
-
-	var/numeric_input = ""
-	var/ui_mode = NUKEUI_AWAIT_DISK
-
-	var/timing = FALSE
-	var/exploding = FALSE
-	var/exploded = FALSE
-	var/detonation_timer = null
-	var/r_code = "ADMIN"
-	var/yes_code = FALSE
-	var/safety = TRUE
-	var/obj/item/disk/nuclear/auth = null
 	use_power = NO_POWER_USE
+
+	/// What the timer is set to, in seconds
+	var/timer_set = 90
+	/// What the min value the timer can be, in seconds
+	var/minimum_timer_set = 90
+	/// What the max value the timer can be, in seconds
+	var/maximum_timer_set = 3600
+	/// The current input of the numpad on the bomb
+	var/numeric_input = ""
+	/// What mode the UI currently is in
+	var/ui_mode = NUKEUI_AWAIT_DISK
+	/// Whether we're currently timing an explosive and counting down
+	var/timing = FALSE
+	/// Whether the timer has elapsed and we're currently exploding
+	var/exploding = FALSE
+	/// Whether we've actually fully exploded
+	var/exploded = FALSE
+	/// world time tracker for when we're going to explode
+	var/detonation_timer = null
+	/// The code we need to detonate this nuke. Starts as "admin", purposefully un-enterable
+	var/r_code = "ADMIN"
+	/// If TRUE, the correct code has been entered and we can start the nuke
+	var/yes_code = FALSE
+	/// Whether the nuke safety is on, can't explode if it is
+	var/safety = TRUE
+	/// The nuke disk currently inserted into the nuke
+	var/obj/item/disk/nuclear/auth
+	/// The alert level that was set before the nuke started, so we can revert to the correct level after
 	var/previous_level = ""
-	var/obj/item/nuke_core/core = null
+	/// The nuke core within the nuke, created in initialize
+	var/obj/item/nuke_core/core
+	/// The current state of deconstructing / opening up the nuke to access the core
 	var/deconstruction_state = NUKESTATE_INTACT
+	/// Overlay - flashing lights over the nuke
 	var/lights = ""
+	/// Overlay - shows the interior of the nuke
 	var/interior = ""
+	/// if TRUE, this nuke is actually a real nuke, and not a prank or toy
 	var/proper_bomb = TRUE //Please
+	/// A reference to the countdown that goes up over the nuke
 	var/obj/effect/countdown/nuclearbomb/countdown
 
 /obj/machinery/nuclearbomb/Initialize(mapload)
@@ -587,11 +606,11 @@ GLOBAL_VAR(station_nuke_source)
 /**
  * Helper proc that handles gibbing someone who has been nuked.
  */
-/proc/nuke_gib(mob/living/gibbed)
+/proc/nuke_gib(mob/living/gibbed, atom/source)
 	if(istype(gibbed.loc, /obj/structure/closet/secure_closet/freezer))
 		var/obj/structure/closet/secure_closet/freezer/freezer = gibbed.loc
 		if(!freezer.jones)
-			to_chat(gibbed, span_boldannounce("You hold onto [freezer] as the nuclear bomb goes off. \
+			to_chat(gibbed, span_boldannounce("You hold onto [freezer] as [source] goes off. \
 				Luckily, as [freezer] is lead-lined, you survive."))
 			freezer.jones = TRUE
 			return FALSE
@@ -599,14 +618,14 @@ GLOBAL_VAR(station_nuke_source)
 	if(gibbed.stat == DEAD)
 		return FALSE
 
-	to_chat(gibbed, span_userdanger("You are shredded to atoms!"))
+	to_chat(gibbed, span_userdanger("You are shredded to atoms by [source]!"))
 	gibbed.gib()
 	return TRUE
 
 /**
  * Invokes a callback on every living mob on the provided z level.
  */
-/proc/callback_on_everyone_on_z(list/z_levels, datum/callback/to_do)
+/proc/callback_on_everyone_on_z(list/z_levels, datum/callback/to_do, atom/optional_source)
 	if(!z_levels)
 		CRASH("kill_everone_on_z called without any z-levels.")
 	if(!islist(z_levels))
@@ -617,4 +636,4 @@ GLOBAL_VAR(station_nuke_source)
 		if(target_turf && !(target_turf.z in z_levels))
 			continue
 
-		to_do.Invoke(victim)
+		to_do.Invoke(victim, optional_source)
