@@ -11308,13 +11308,16 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "dIM" = (
-/obj/machinery/chem_master/condimaster,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Service - Hydroponics North";
 	dir = 9
+	},
+/obj/machinery/chem_master/condimaster{
+	desc = "Used to separate out liquids - useful for purifying botanical extracts. Also dispenses condiments.";
+	name = "SapMaster XP"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
