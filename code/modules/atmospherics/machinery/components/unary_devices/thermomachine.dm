@@ -123,9 +123,8 @@
 	balloon_alert(user, "temperature reset to [target_temperature] K")
 	update_appearance()
 
-/** Performs heat calculation for the freezer.
- * We just equalize the gasmix with an object at temp = var/target_temperature and heat cap = var/heat_capacity
- */
+/// Performs heat calculation for the freezer.
+/// We just equalize the gasmix with an object at temp = var/target_temperature and heat cap = var/heat_capacity
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	if(!on)
 		return

@@ -91,6 +91,12 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
  * W = (W2C1 - W1C2) / (C1+C2)
  * W = (T2*C2*C1 - T1*C1*C2) / (C1+C2)
  * W = (C1*C2) * (T2-T1) / (C1+C2)
+ * 
+ * W: Energy involved in the operation
+ * T': Combined temperature
+ * T1, C1, W1: Temp, heat cap, and thermal energy of the first gas mixture
+ * T2, C2, W2: Temp, heat cap, and thermal energy of the second gas mixture
+ *
  * Not immediately obvious, but saves us operation time.
  * 
  * Arguments:
