@@ -321,7 +321,7 @@
 /datum/tgui_window/proc/replace_html(inline_html = "")
 	client << output(url_encode(inline_html), is_browser \
 		? "[id]:replaceHtml" \
-		: "[id].browser:update")
+		: "[id].browser:replaceHtml")
 
 /**
  * private
