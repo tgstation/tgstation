@@ -109,7 +109,7 @@
 		)
 	return(pick(mob_list))
 
-	/datum/round_event/scrubber_clog/announce()
+	/datum/round_event/scrubber_clog/major/announce()
 		priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Infestation Alert")
 
 /datum/round_event_control/scrubber_clog/critical
