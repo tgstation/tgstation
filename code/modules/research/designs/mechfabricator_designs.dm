@@ -1062,6 +1062,14 @@
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 	research_icon_state = "medical-plating"
 
+/datum/design/mod_plating/security
+	id = "mod_plating_security"
+	build_path = /obj/item/mod/construction/plating/security
+	materials = list(/datum/material/iron = 6000, /datum/material/uranium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	research_icon_state = "security-plating"
+	build_type = PROTOLATHE
+
 /datum/design/mod_plating/cosmohonk
 	id = "mod_plating_cosmohonk"
 	build_path = /obj/item/mod/construction/plating/cosmohonk
