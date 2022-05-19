@@ -56,7 +56,7 @@
 3355198 = 8 # JohnGinnane
 3384919 = 10 # ORCACommander
 3503632 = 3 # BebeYoshi
-3589655 = 60 # Ryll-Ryll
+3589655 = 62 # Ryll-Ryll
 3625094 = 15 # MTandi
 3681297 = 14 # monster860
 3789327 = 17 # iprice
@@ -394,7 +394,7 @@
 28731893 = 7 # Dionant
 28809925 = 22 # GLACoding
 28861083 = 4 # Ketrai
-28870487 = 4 # Rhials
+28870487 = 7 # Rhials
 29008542 = 53 # MrDoomBringer
 29074600 = 10 # InterroLouis
 29100832 = -7 # MetalClone
@@ -461,7 +461,7 @@
 34965105 = 11 # rhomm-dev
 35031555 = 20 # Cyprex
 35091844 = -30 # XSlayer300
-35135081 = 569 # Mothblocks
+35135081 = 570 # Mothblocks
 35203040 = 4 # Kurgis
 35225170 = 2 # Colovorat
 35280504 = 5 # gwhit94
@@ -883,3 +883,4 @@
 103801033 = 3 # Spessman500
 103809013 = 3 # Quill-Weave
 104691697 = 3 # Hiderin0
+105393050 = 3 # SpaceSmithers
