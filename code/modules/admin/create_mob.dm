@@ -25,9 +25,6 @@
 	var/random_eye_color = random_eye_color()
 	human.eye_color_left = random_eye_color
 	human.eye_color_right = random_eye_color
-	var/obj/item/organ/eyes/eyes = human.getorgan(/obj/item/organ/eyes)
-	if(eyes)
-		eyes.refresh()
 	human.dna.blood_type = random_blood_type()
 
 	// Mutant randomizing, doesn't affect the mob appearance unless it's the specific mutant.

@@ -36,9 +36,6 @@
 	equipped_on.fully_replace_character_name(null,"Waldo")
 	equipped_on.eye_color_left = "#000000"
 	equipped_on.eye_color_right = "#000000"
-	var/obj/item/organ/eyes/eyes = equipped_on.getorgan(/obj/item/organ/eyes)
-	if(eyes)
-		eyes.refresh()
 	equipped_on.gender = MALE
 	equipped_on.skin_tone = "caucasian3"
 	equipped_on.hairstyle = "Business Hair 3"

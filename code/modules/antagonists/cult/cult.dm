@@ -499,9 +499,6 @@
 /datum/outfit/cultist/post_equip(mob/living/carbon/human/equipped, visualsOnly)
 	equipped.eye_color_left = BLOODCULT_EYE
 	equipped.eye_color_right = BLOODCULT_EYE
-	var/obj/item/organ/eyes/eyes = equipped.getorgan(/obj/item/organ/eyes)
-	if(eyes)
-		eyes.refresh()
 	equipped.update_body()
 
 	var/obj/item/clothing/suit/hooded/hooded = locate() in equipped

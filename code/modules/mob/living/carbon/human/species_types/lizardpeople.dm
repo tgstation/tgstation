@@ -229,9 +229,6 @@ Lizard subspecies: SILVER SCALED
 	new_silverscale.dna.features["mcolor"] = "#eeeeee"
 	new_silverscale.eye_color_left = "#0000a0"
 	new_silverscale.eye_color_right = "#0000a0"
-	var/obj/item/organ/eyes/eyes = new_silverscale.getorgan(/obj/item/organ/eyes)
-	if(eyes)
-		eyes.refresh()
 	..()
 	new_silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
 
@@ -240,9 +237,6 @@ Lizard subspecies: SILVER SCALED
 	was_silverscale.dna.features["mcolor"] = old_mutcolor
 	was_silverscale.eye_color_left = old_eye_color_left
 	was_silverscale.eye_color_right = old_eye_color_right
-	var/obj/item/organ/eyes/eyes = was_silverscale.getorgan(/obj/item/organ/eyes)
-	if(eyes)
-		eyes.refresh()
 
 	was_silverscale.remove_filter("silver_glint")
 	..()

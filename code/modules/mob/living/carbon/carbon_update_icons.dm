@@ -240,6 +240,10 @@
 	. += emissive_blocker(standing.icon, standing.icon_state, alpha = standing.alpha)
 
 /mob/living/carbon/update_body(is_creating)
+	var/obj/item/organ/eyes/eyes = getorgan(/obj/item/organ/eyes)
+	if(eyes)
+		eyes.refresh()
+
 	update_body_parts(is_creating)
 
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
