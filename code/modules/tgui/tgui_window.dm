@@ -319,7 +319,9 @@
  * required inline_html string HTML to inject
  */
 /datum/tgui_window/proc/replace_html(inline_html = "")
-	client << output(url_encode(inline_html), "[id].browser:replaceHtml")
+	client << output(url_encode(inline_html), is_browser \
+		? "[id]:replaceHtml" \
+		: "[id].browser:update")
 
 /**
  * private
