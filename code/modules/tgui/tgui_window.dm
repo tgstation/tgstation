@@ -319,7 +319,7 @@
  * required inline_html string HTML to inject
  */
 /datum/tgui_window/proc/replace_html(inline_html = "")
-	send_message("replace_html", inline_html)
+	client << output(url_encode(inline_html), "statbrowser:replaceHtml")
 
 /**
  * private
