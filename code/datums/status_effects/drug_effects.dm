@@ -77,6 +77,9 @@
 	human_owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/cannabis) //slows you down
 	human_owner.eye_color_left = BLOODCULT_EYE //makes cult eyes less obvious
 	human_owner.eye_color_right = BLOODCULT_EYE //makes cult eyes less obvious
+	var/obj/item/organ/eyes/eyes = human_owner.getorgan(/obj/item/organ/eyes)
+	if(eyes)
+		eyes.refresh()
 	human_owner.update_body() //updates eye color
 	ADD_TRAIT(human_owner, TRAIT_BLOODSHOT_EYES, type) //dilates blood vessels in eyes
 	ADD_TRAIT(human_owner, TRAIT_CLUMSY, type) //impairs motor coordination
@@ -91,6 +94,9 @@
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/cannabis)
 	human_owner.eye_color_left = original_eye_color_left
 	human_owner.eye_color_right = original_eye_color_right
+	var/obj/item/organ/eyes/eyes = human_owner.getorgan(/obj/item/organ/eyes)
+	if(eyes)
+		eyes.refresh()
 	human_owner.update_body()
 	REMOVE_TRAIT(human_owner, TRAIT_BLOODSHOT_EYES, type)
 	REMOVE_TRAIT(human_owner, TRAIT_CLUMSY, type)

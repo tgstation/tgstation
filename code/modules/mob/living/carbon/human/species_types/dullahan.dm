@@ -49,6 +49,9 @@
 			head.eyes = new /obj/item/organ/eyes(head)
 			head.eyes.eye_color_left = human.eye_color_left
 			head.eyes.eye_color_right = human.eye_color_right
+			var/obj/item/organ/eyes/eyes = human.getorgan(/obj/item/organ/eyes)
+			if(eyes)
+				eyes.refresh()
 			head.update_icon_dropped()
 
 	human.set_safe_hunger_level()

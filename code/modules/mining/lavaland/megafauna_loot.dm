@@ -728,6 +728,10 @@
 			consumer.eye_color_left = "#FEE5A3"
 			consumer.eye_color_right = "#FEE5A3"
 			consumer.set_species(/datum/species/lizard)
+			var/obj/item/organ/eyes/eyes = consumer.getorgan(/obj/item/organ/eyes)
+			if(eyes)
+				eyes.refresh()
+			consumer.update_body()
 		if(2)
 			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))
 			consumer.set_species(/datum/species/skeleton)

@@ -43,11 +43,11 @@
 		var/mob/living/carbon/human/human_owner = eye_owner
 		old_eye_color_left = human_owner.eye_color_left
 		old_eye_color_right = human_owner.eye_color_right
-		if(eye_color_left)
+		if(initial(eye_color_left))
 			human_owner.eye_color_left = eye_color_left
 		else
 			eye_color_left = human_owner.eye_color_left
-		if(eye_color_right)
+		if(initial(eye_color_right))
 			human_owner.eye_color_right = eye_color_right
 		else
 			eye_color_right = human_owner.eye_color_right
@@ -63,11 +63,11 @@
 		var/mob/living/carbon/human/affected_human = owner
 		old_eye_color_left = affected_human.eye_color_left
 		old_eye_color_right = affected_human.eye_color_right
-		if(eye_color_left)
+		if(initial(eye_color_left))
 			affected_human.eye_color_left = eye_color_left
 		else
 			eye_color_left = affected_human.eye_color_left
-		if(eye_color_right)
+		if(initial(eye_color_right))
 			affected_human.eye_color_right = eye_color_right
 		else
 			eye_color_right = affected_human.eye_color_right
@@ -84,9 +84,9 @@
 	..()
 	if(ishuman(eye_owner))
 		var/mob/living/carbon/human/human_owner = eye_owner
-		if(eye_color_left)
+		if(initial(eye_color_left))
 			human_owner.eye_color_left = old_eye_color_left
-		if(eye_color_right)
+		if(initial(eye_color_right))
 			human_owner.eye_color_right = old_eye_color_right
 		human_owner.update_body()
 	eye_owner.cure_blind(EYE_DAMAGE)

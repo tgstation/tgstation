@@ -30,6 +30,9 @@
 		human_parent.eye_color_right = BLOODCULT_EYE
 		human_parent.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
 		human_parent.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
+		var/obj/item/organ/eyes/eyes = human_parent.getorgan(/obj/item/organ/eyes)
+		if(eyes)
+			eyes.refresh()
 		human_parent.update_body()
 
 /**
@@ -45,6 +48,9 @@
 		human_parent.eye_color_right = initial(human_parent.eye_color_right)
 		human_parent.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
 		human_parent.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
+		var/obj/item/organ/eyes/eyes = human_parent.getorgan(/obj/item/organ/eyes)
+		if(eyes)
+			eyes.refresh()
 		human_parent.update_body()
 	UnregisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_HUMAN_MONKEYIZE, COMSIG_MONKEY_HUMANIZE))
 	return ..()
