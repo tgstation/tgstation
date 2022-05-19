@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - admin: "AI malf/combat purchases are now logged in uplink.log"
