@@ -18,22 +18,6 @@ const setupApp = () => {
   setupGlobalEvents({
     ignoreWindowFocus: true,
   });
-  // Unhide the panel
-  Byond.winset('output', {
-    'is-visible': false,
-  });
-  Byond.winset('browseroutput', {
-    'is-visible': true,
-    'is-disabled': false,
-    'pos': '0x0',
-    'size': '0x0',
-  });
-  // Resize the panel to match the non-browser output
-  Byond.winget('output').then(output => {
-    Byond.winset('browseroutput', {
-      'size': output.size,
-    });
-  });
   renderApp();
 };
 
