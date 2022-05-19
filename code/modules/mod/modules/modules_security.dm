@@ -327,7 +327,9 @@
 /obj/item/mod/module/dispenser/mirage
 	name = "MOD mirage grenade dispenser module"
 	desc = "This module can create mirage grenades at the user's liking. These grenades create holographic copies of the user."
+	icon_state = "mirage_grenade"
 	cooldown_time = 20 SECONDS
+	overlay_state_inactive = "module_mirage_grenade"
 	dispense_type = /obj/item/grenade/mirage
 
 /obj/item/mod/module/dispenser/mirage/on_use()
@@ -340,7 +342,7 @@
 /obj/item/grenade/mirage
 	name = "mirage grenade"
 	desc = "A special device that, when activated, produces a holographic copy of the user."
-	icon_state = "delivery"
+	icon_state = "mirage"
 	inhand_icon_state = "flashbang"
 	det_time = 3 SECONDS
 	/// Mob that threw the grenade.
