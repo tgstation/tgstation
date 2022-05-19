@@ -149,10 +149,7 @@
 	return TRUE
 
 /obj/item/mod/module/jetpack/proc/get_user()
-	var/mob/user = mod.wearer
-	if(!ismob(user))
-		return null
-	return user
+	return mod.wearer
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
