@@ -97,29 +97,6 @@ SUBSYSTEM_DEF(tgui)
 /**
  * public
  *
- * Requests a hot window outside of the pool.
- *
- * required user mob
- * return datum/tgui
- */
-/datum/controller/subsystem/tgui/proc/request_unpooled_window(mob/user)
-	if(!user.client)
-		return null
-	var/list/windows = user.client.tgui_windows
-	var/datum/tgui_window/window
-	if(!windows["unpooled"])
-		return window = new(user.client, "unpooled", pooled = FALSE)
-	window = windows["unpooled"]
-	// Skip windows with acquired locks
-	if(window.locked)
-		return null
-	if(window.status == TGUI_WINDOW_CLOSED)
-		window.status = TGUI_WINDOW_LOADING
-	return window
-
-/**
- * public
- *
  * Force closes all tgui windows.
  *
  * required user mob

@@ -86,7 +86,10 @@
 	if(status < UI_UPDATE)
 		return FALSE
 	// Request a pooled or hot window depending on parameters
-	window = pooled ? SStgui.request_pooled_window(user) : SStgui.request_unpooled_window(user)
+	if(pooled)
+		window = SStgui.request_pooled_window(user)
+	else
+		window = new(user.client, "unpooled", pooled = FALSE)
 	if(!window)
 		return FALSE
 	opened_at = world.time
@@ -96,7 +99,7 @@
 			strict_mode = TRUE,
 			fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
 			assets = list(
-				 get_asset_datum(pooled ? /datum/asset/simple/tgui : /datum/asset/simple/tgui_say),
+				get_asset_datum(pooled ? /datum/asset/simple/tgui : /datum/asset/simple/tgui_say),
 			))
 	else
 		window.send_message("ping")
