@@ -223,6 +223,7 @@
 #include "code\__DEFINES\dcs\signals\signals_janitor.dm"
 #include "code\__DEFINES\dcs\signals\signals_ladder.dm"
 #include "code\__DEFINES\dcs\signals\signals_light_eater.dm"
+#include "code\__DEFINES\dcs\signals\signals_mapping.dm"
 #include "code\__DEFINES\dcs\signals\signals_medical.dm"
 #include "code\__DEFINES\dcs\signals\signals_mind.dm"
 #include "code\__DEFINES\dcs\signals\signals_mod.dm"

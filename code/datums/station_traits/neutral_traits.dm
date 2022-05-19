@@ -127,3 +127,17 @@
 
 	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
 	GLOB.colored_assistant = new new_colored_assistant_type
+
+
+/**
+ * Station traits that guarantee some ruin spawn.
+ */
+/datum/station_trait/ruin
+	name = "Ruin Spawn"
+	trait_type = STATION_TRAIT_ABSTRACT
+	/// The map template to guarantee a spawn of.
+	var/datum/map_template/ruin
+	///
+	var/ruin_theme
+
+/datum/station_trait/ruin/

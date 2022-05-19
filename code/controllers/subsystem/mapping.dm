@@ -420,6 +420,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
 	preloadHolodeckTemplates()
+	SEND_SIGNAL(src, COMSIG_MAPPING_PRELOADED_TEMPLATES)
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -443,6 +444,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		if (!(R.ruin_type in themed_ruins))
 			themed_ruins[R.ruin_type] = list()
 		themed_ruins[R.ruin_type][R.name] = R
+	SEND_SIGNAL(src, COMSIG_MAPPING_PRELOADING_RUINS, map_templates, ruins_templates, themed_ruins)
 
 /datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
 	var/list/unbuyable = generateMapList("unbuyableshuttles.txt")
@@ -458,6 +460,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shuttle_templates[S.shuttle_id] = S
 		map_templates[S.shuttle_id] = S
+	SEND_SIGNAL(src, COMSIG_MAPPING_PRELOADING_SHUTTLES, map_templates, shuttle_templates)
 
 /datum/controller/subsystem/mapping/proc/preloadShelterTemplates()
 	for(var/item in subtypesof(/datum/map_template/shelter))
@@ -468,6 +471,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+	SEND_SIGNAL(src, COMSIG_MAPPING_PRELOADING_SHELTERS, map_templates, shelter_templates)
 
 /datum/controller/subsystem/mapping/proc/preloadHolodeckTemplates()
 	for(var/item in subtypesof(/datum/map_template/holodeck))
@@ -477,6 +481,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		var/datum/map_template/holodeck/holo_template = new holodeck_type()
 
 		holodeck_templates[holo_template.template_id] = holo_template
+	SEND_SIGNAL(src, COMSIG_MAPPING_PRELOADING_HOLODECKS, map_templates, holodeck_templates)
 
 //Manual loading of away missions.
 /client/proc/admin_away()
@@ -598,6 +603,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	for(var/biome_path in subtypesof(/datum/biome))
 		var/datum/biome/biome_instance = new biome_path()
 		biomes[biome_path] += biome_instance
+	SEND_SIGNAL(src, COMSIG_MAPPING_INITIALIZING_BIOMES, biomes)
 
 /datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
 	for(var/B in areas)
