@@ -132,12 +132,62 @@
 /**
  * Station traits that guarantee some ruin spawn.
  */
-/datum/station_trait/ruin
+/datum/station_trait/ruin_spawn
 	name = "Ruin Spawn"
 	trait_type = STATION_TRAIT_ABSTRACT
 	/// The map template to guarantee a spawn of.
-	var/datum/map_template/ruin
-	///
+	var/datum/map_template/ruin/ruin_path
+	/// The z-level theme to spawn the ruin on.
 	var/ruin_theme
+	/// Whether to allow duplicates of the ruin to spawn. If null it has no affect.
+	var/allow_duplicates
+	/// Whether to prevent the ruin from spawning. If null it has no affect.
+	var/prevent_spawn
+	/// Whether to ensure that the ruin spawns. If null it has no affect.
+	var/ensure_spawn
+	/// What to set the cost of the ruin to. If null it has no affect.
+	var/override_cost
 
-/datum/station_trait/ruin/
+/datum/station_trait/ruin_spawn/New()
+	. = ..()
+	if(!ispath(ruin, /datum/map_template/ruin) || !ruin_theme)
+		stack_trace("A ruin spawn station trait without a ruin or ruin theme was loaded.")
+		return
+
+	RegisterSignal(SSmapping, COMSIG_MAPPING_PRELOADING_RUINS, .proc/modify_ruin)
+
+/**
+ * Modifies the ruin this station trait targets.
+ *
+ * Arguments:
+ * - [source][/datum/controller/subsystem/mapping]:
+ * - [map_templates][/list]:
+ * - [ruin_templates][/list]:
+ * - [themed_ruins][/list]: A set of lists of ruins indexed by z-level trait.
+ */
+/datum/station_trait/ruin_spawn/proc/modify_ruin(datum/controller/subsystem/mapping/source, list/map_templates, list/ruin_templates, list/themed_ruins)
+	SIGNAL_HANDLER
+	var/datum/map_template/ruin/ruin = ruin_templates[initial(ruin_path.name)]
+	if(!ruin)
+		stack_trace("A ruin spawn station trait could not fetch the target ruin.")
+		return
+
+	if(!isnull(ruin_theme) && ruin_theme != ruin.ruin_type)
+		var/list/themes = islist(ruin.ruin_type) ? ruin.ruin_type : list(ruin.ruin_type)
+		for(var/theme in themes)
+			themed_ruins[ruin.ruin_type] -= ruin.name
+
+		ruin.ruin_type = ruin_theme
+
+		themes = islist(ruin.ruin_type) ? ruin.ruin_type : list(ruin.ruin_type)
+		for(var/theme in themes)
+			themed_ruins[ruin.ruin_type][ruin.name] = ruin
+
+	if(!isnull(allow_duplicates))
+		ruin.allow_duplicates = allow_duplicates
+	if(!isnull(prevent_spawn))
+		ruin.unpickable = prevent_spawn
+	if(!isnull(ensure_spawn))
+		ruin.always_place = ensure_spawn
+	if(!isnull(override_cost))
+		ruin.cost = override_cost
