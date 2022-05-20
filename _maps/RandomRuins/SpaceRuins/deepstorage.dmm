@@ -8,6 +8,7 @@
 "ae" = (
 /obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder,
+/obj/machinery/light/directional/south,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "af" = (
@@ -2803,13 +2804,20 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "xI" = (
-/obj/machinery/firealarm/directional/east,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "yf" = (
 /obj/machinery/chem_master,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
+"zi" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/dorm)
 "Az" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/ten_k{
@@ -3671,7 +3679,7 @@ fN
 ge
 dB
 gw
-gw
+zi
 gF
 JV
 tk
@@ -3777,9 +3785,9 @@ gm
 gy
 gG
 gF
-JV
-Az
 xI
+Az
+JV
 gF
 ab
 ab
