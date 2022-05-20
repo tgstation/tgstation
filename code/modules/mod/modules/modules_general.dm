@@ -212,8 +212,8 @@
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
 	desc = "A field inhibitor installed into the suit, protecting it against feedback such as \
-		electromagnetic pulses that would otherwise damage the electronic systems of the suit or devices on the wearer. \
-		However, it will take from the suit's power to do so. Luckily, your PDA already has one of these."
+		electromagnetic pulses that would otherwise damage the electronic systems of the suit or it's modules. \
+		However, it will take from the suit's power to do so."
 	icon_state = "empshield"
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
@@ -224,6 +224,19 @@
 
 /obj/item/mod/module/emp_shield/on_uninstall(deleting = FALSE)
 	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
+
+/obj/item/mod/module/emp_shield/advanced
+	name = "MOD advanced EMP shield module"
+	desc = "An advanced field inhibitor installed into the suit, protecting it against feedback such as \
+		electromagnetic pulses that would otherwise damage the electronic systems of the suit or electronic devices on the wearer, \
+		including augmentations. However, it will take from the suit's power to do so."
+	complexity = 2
+
+/obj/item/mod/module/emp_shield/advanced/on_suit_activation()
+	mod.wearer.AddElement(/datum/element/empprotection, EMP_PROTECT_SELFEMP_PROTECT_CONTENTS)
+
+/obj/item/mod/module/emp_shield/advanced/on_suit_deactivation(deleting)
+	mod.wearer.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 
 ///Flashlight - Gives the suit a customizable flashlight.
 /obj/item/mod/module/flashlight
