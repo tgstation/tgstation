@@ -876,6 +876,15 @@
 /datum/action/small_sprite/megafauna/legion
 	small_icon_state = "mega_legion"
 
+/datum/action/small_sprite/megafauna/clockwork_golem
+	small_icon_state = "clockwork_golem_complete_tiny"
+	icon_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "clockwork_golem_broken_tiny"
+	background_icon_state = "bg_clock"
+
+/datum/action/small_sprite/megafauna/clockwork_golem/broken
+	small_icon_state = "clockwork_golem_broken_tiny"
+
 /datum/action/small_sprite/mega_arachnid
 	small_icon = 'icons/mob/jungle/arachnid.dmi'
 	small_icon_state = "arachnid_mini"

@@ -184,6 +184,15 @@
 	icon_state = "liquify"
 	duration = 12
 
+/obj/effect/temp_visual/oil
+	name = "oil"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "oil_drop"
+	duration = 5
+
+/obj/effect/temp_visual/oil/out
+	icon_state = "oil_appear"
+
 /obj/effect/temp_visual/monkeyify
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "h2monkey"

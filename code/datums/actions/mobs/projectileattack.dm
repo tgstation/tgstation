@@ -16,6 +16,8 @@
 	var/default_projectile_spread = 0
 	/// The multiplier to the projectiles speed (a value of 2 makes it twice as slow, 0.5 makes it twice as fast)
 	var/projectile_speed_multiplier = 1
+	/// Time it takes for projectile to fire
+	var/fire_delay = 0
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/New(Target, projectile, homing, spread)
 	. = ..()
@@ -28,6 +30,7 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
 	StartCooldown(10 SECONDS)
+	SLEEP_CHECK_DEATH(fire_delay, src)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
 
@@ -327,18 +330,35 @@
 		SLEEP_CHECK_DEATH(1 SECONDS, firer)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast
-	name = "Fire Kinetic Accelerator"
+	name = "Shoot Energy Blast"
 	icon_icon = 'icons/mob/actions/actions_ccult.dmi'
 	button_icon_state = "clockwork_cannon"
 	background_icon_state = "bg_clock"
 	desc = "Fires a ruby energy blast."
-	cooldown_time = 5 SECONDS
-	projectile_type = /obj/projectile/kinetic/miner
+	cooldown_time = 15 SECONDS
+	projectile_type = /obj/projectile/bullet/ruby_blast
 	projectile_sound = 'sound/creatures/clockwork_golem_blast.ogg'
+	fire_delay = 6
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast/Activate(atom/target_atom)
+	playsound(owner, projectile_sound, 100)
 	. = ..()
-	playsound(owner, projectile_sound)
-	owner.visible_message(span_danger("[owner] fires the proto-kinetic accelerator!"))
+	owner.visible_message(span_danger("[owner] fires the ruby cannon!"))
 	owner.face_atom(target_atom)
-	new /obj/effect/temp_visual/dir_setting/firing_effect(owner.loc, owner.dir)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/oil_ball
+	name = "Shoot Oil Ball"
+	icon_icon = 'icons/mob/actions/actions_ccult.dmi'
+	button_icon_state = "clockwork_oil"
+	background_icon_state = "bg_clock"
+	desc = "Fires a ball of hot oil."
+	cooldown_time = 10 SECONDS
+	projectile_type = /obj/projectile/bullet/oil_ball
+	projectile_sound = 'sound/creatures/clockwork_golem_blast.ogg'
+	fire_delay = 6
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/oil_ball/Activate(atom/target_atom)
+	playsound(owner, projectile_sound, 100)
+	. = ..()
+	owner.visible_message(span_danger("[owner] fires a ball of hot oil!"))
+	owner.face_atom(target_atom)

@@ -1,0 +1,29 @@
+/mob/living/simple_animal/hostile/asteroid/clockwork_spider
+	name = "clockwork spider"
+	desc = "A tiny fragile looking mechanical spider."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "clockwork_spider"
+	icon_living = "clockwork_spider"
+	speak_emote = list("clicks")
+	speed = 1
+	move_to_delay = 2
+	maxHealth = 30
+	health = 30
+	obj_damage = 10
+	melee_damage_lower = 5
+	melee_damage_upper = 10
+	rapid_melee = 2
+	del_on_death = TRUE
+	dodging = TRUE
+	attack_verb_continuous = "slices"
+	attack_verb_simple = "slice"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
+	vision_range = 7
+	aggro_vision_range = 7
+	move_force = MOVE_FORCE_WEAK
+	move_resist = MOVE_FORCE_WEAK
+	pull_force = MOVE_FORCE_WEAK
+	loot = list(/obj/item/stack/sheet/bronze = 2, /obj/effect/decal/cleanable/oil)
+	stat_attack = HARD_CRIT
+	footstep_type = FOOTSTEP_MOB_CLAW
