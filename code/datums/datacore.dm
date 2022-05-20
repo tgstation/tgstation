@@ -105,10 +105,10 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
  * * cDataId - id of already existing crime.
  */
 /datum/datacore/proc/serveCrime(id, cDataId)
-	for(var/datum/data/record/R in security)
-		if(R.fields["id"] != id)
+	for(var/datum/data/record/checked_record in security)
+		if(checked_record.fields["id"] != id)
 			continue
-		var/list/crimes = R.fields["crim"]
+		var/list/crimes = checked_record.fields["crim"]
 		for(var/datum/data/crime/crime as anything in crimes)
 			if(crime.dataId != text2num(cDataId))
 				continue
