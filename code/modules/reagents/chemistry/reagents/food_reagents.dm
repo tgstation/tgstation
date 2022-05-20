@@ -200,7 +200,7 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 0
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 200 // Hyperglycaemic shock
 	taste_description = "sweetness"
@@ -212,6 +212,10 @@
 	if(chems.has_reagent(type, 1))
 		mytray.adjust_weedlevel(rand(1,2))
 		mytray.adjust_pestlevel(rand(1,2))
+
+/datum/reagent/consumable/sugar/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.satiety = max(M.satiety - (30 * REM * delta_time), 30)
+	. = ..()
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))

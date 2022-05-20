@@ -308,6 +308,29 @@ Behavior that's still missing from this component that original food items had t
 	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
 	if(eater == feeder)//If you're eating it yourself.
+
+		var/ate_in_service = is_type_in_list(get_area(eater), list(/area/station/service/kitchen, /area/station/service/cafeteria, /area/station/service/bar))
+		var/ate_at_table = find_adjacent_tables(eater)
+		var/ate_with_chair = eater.buckled
+		var/ate_with_utensils = eater.is_holding_item_of_type(/obj/item/kitchen)
+		if(ate_in_service)
+			eat_time *= 0.5
+		else
+			eat_time *= 1.5
+		if(ate_at_table)
+			eat_time *= 0.75
+		else
+			eat_time *= 1.25
+		if(ate_with_chair)
+			eat_time *= 0.75
+		else
+			eat_time *= 1.25
+		if(!(food_flags & FOOD_FINGER_FOOD))
+			if(ate_with_utensils)
+				eat_time *= 0.75
+			else
+				eat_time *= 1.25
+
 		if(eat_time && !do_mob(feeder, eater, eat_time, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
 			return
 		if(IsFoodGone(owner, feeder))
@@ -399,11 +422,40 @@ Behavior that's still missing from this component that original food items had t
 			On_Consume(eater, feeder)
 		checkLiked(fraction, eater)
 
+		var/ate_in_service = is_type_in_list(get_area(eater), list(/area/station/service/kitchen, /area/station/service/cafeteria, /area/station/service/bar))
+		var/ate_at_table = find_adjacent_tables(eater)
+		var/ate_with_chair = eater.buckled
+		var/ate_with_utensils = eater.is_holding_item_of_type(/obj/item/kitchen)
+		if(!ate_in_service)
+			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_service", /datum/mood_event/ate_event/no_service)
+		else
+			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_service", /datum/mood_event/ate_event/service)
+		if(!ate_at_table)
+			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_table", /datum/mood_event/ate_event/no_table)
+		else
+			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_table", /datum/mood_event/ate_event/table)
+		if(!ate_with_chair)
+			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_chair", /datum/mood_event/ate_event/no_chair)
+		else
+			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_chair", /datum/mood_event/ate_event/chair)
+		if(!(food_flags & FOOD_FINGER_FOOD))
+			if(!ate_with_utensils)
+				SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_utensils", /datum/mood_event/ate_event/no_utensils)
+			else
+				SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_utensils", /datum/mood_event/ate_event/utensils)
 		//Invoke our after eat callback if it is valid
 		if(after_eat)
 			after_eat.Invoke(eater, feeder, bitecount)
 
 		return TRUE
+
+/datum/component/edible/proc/find_adjacent_tables(mob/living/eater)
+	var/list/potential_tables = orange(1, eater)
+	for(var/obj/structure/table/table_to_eat_with in potential_tables)
+		if(istype(table_to_eat_with, /obj/structure/table) && eater.Adjacent(table_to_eat_with))
+			return TRUE
+		else
+			continue
 
 ///Checks whether or not the eater can actually consume the food
 /datum/component/edible/proc/CanConsume(mob/living/eater, mob/living/feeder)
