@@ -791,7 +791,7 @@
 
 	user.mind.transfer_to(switchy_mob)
 	switchy_mob.faction = user.faction.Copy()
-	switchy_animal.copy_languages(user, LANGUAGE_MIND)
+	switchy_mob.copy_languages(user, LANGUAGE_MIND)
 	user.death()
 	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))
 	to_chat(switchy_mob, span_warning("You are now [switchy_mob]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!"))
