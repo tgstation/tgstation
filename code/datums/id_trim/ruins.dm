@@ -31,7 +31,7 @@
 
 /// Trim for the oldstation ruin/Charlie station
 /datum/id_trim/away/old/robo
-	access = list(ACCESS_ROBOTICS)
+	access = list(ACCESS_AWAY_GENERAL, ACCESS_ROBOTICS)
 
 /// Trim for the cat surgeon ruin.
 /datum/id_trim/away/cat_surgeon
