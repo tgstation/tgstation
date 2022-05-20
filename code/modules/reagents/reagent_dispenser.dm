@@ -91,12 +91,28 @@
 	desc = "A tank full of industrial welding fuel. Do not consume."
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
+	var/obj/item/assembly_holder/rig = null
+	var/accepts_rig = TRUE
 
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
 
 	if(SSevents.holidays?[APRIL_FOOLS])
 		icon_state = "fuel_fools"
+
+/obj/structure/reagent_dispensers/fueltank/examine(mob/user)
+	. = ..()
+	if(get_dist(user, src) <= 2 && rig)
+		. += "<span class='notice'>There is some kind of device rigged to the tank.</span>"
+
+/obj/structure/reagent_dispensers/fueltank/attack_hand()
+	if(rig)
+		usr.visible_message("<span class='notice'>[usr] begins to detach [rig] from [src].</span>", "<span class='notice'>You begin to detach [rig] from [src].</span>")
+		if(do_after(usr, 20, target = src))
+			usr.visible_message("<span class='notice'>[usr] detaches [rig] from [src].</span>", "<span class='notice'>You detach [rig] from [src].</span>")
+			rig.forceMove(get_turf(usr))
+			rig = null
+			cut_overlays()
 
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
@@ -141,6 +157,23 @@
 			user.visible_message(span_danger("[user] catastrophically fails at refilling [user.p_their()] [I.name]!"), span_userdanger("That was stupid of you."))
 			log_bomber(user, "detonated a", src, "via welding tool")
 			boom()
+		return
+	if(istype(I, /obj/item/assembly_holder) && accepts_rig)
+		if(rig)
+			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
+			return ..()
+		user.visible_message("[user] begins rigging [I] to [src].", "You begin rigging [I] to [src]")
+		if(do_after(user, 20, target = src))
+			user.visible_message("<span class='notice'>[user] rigs [I] to [src].</span>", "<span class='notice'>You rig [I] to [src].</span>")
+			var/obj/item/assembly_holder/holder = I
+			if(locate(/obj/item/assembly/igniter) in holder.assemblies)
+				rig = holder
+				if(!user.transferItemToLoc(holder, src))
+					return
+				var/icon/test = getFlatIcon(holder)
+				test.Shift(NORTH, 1)
+				test.Shift(EAST, 6)
+				add_overlay(test)
 		return
 	return ..()
 
