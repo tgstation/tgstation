@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - balance: "RCDs can't deconstruct reinforced tiles directly anymore."

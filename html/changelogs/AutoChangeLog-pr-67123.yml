@@ -1,0 +1,4 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - rscadd: "You can now emag tram crossing signals to disable their motion sensors"

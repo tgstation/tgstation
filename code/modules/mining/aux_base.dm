@@ -17,7 +17,7 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	icon_keyboard = null
-	req_one_access = list(ACCESS_AUX_BASE, ACCESS_HEADS)
+	req_one_access = list(ACCESS_AUX_BASE, ACCESS_COMMAND)
 	circuit = /obj/item/circuitboard/computer/auxiliary_base
 	/// Shuttle ID of the base
 	var/shuttleId = "colony_drop"

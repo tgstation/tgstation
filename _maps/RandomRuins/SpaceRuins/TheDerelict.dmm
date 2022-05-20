@@ -188,7 +188,7 @@
 "bh" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Starboard Solar Access";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -501,7 +501,7 @@
 "cV" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
-	req_access_txt = "18"
+	req_access = list("eva")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -509,7 +509,7 @@
 "cW" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Secure Storage";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
@@ -533,7 +533,7 @@
 "da" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/gravity_generator)
@@ -635,7 +635,7 @@
 "dC" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -836,7 +836,7 @@
 "eB" = (
 /obj/machinery/door/window/left/directional/east{
 	name = "Heads of Staff";
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
@@ -1015,7 +1015,7 @@
 "fp" = (
 /obj/machinery/door/window{
 	name = "Captain's Quarters";
-	req_access_txt = "20"
+	req_access = list("captain")
 	},
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -1156,8 +1156,8 @@
 /area/ruin/space/derelict/singularity_engine)
 "fR" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Tech Storage";
-	req_access_txt = "23"
+	name = "tech_storage";
+	req_access = list("tech_storage")
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
@@ -1464,7 +1464,7 @@
 "hu" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access_txt = "6"
+	req_access = list("morgue")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/medical/chapel)
@@ -1524,7 +1524,7 @@
 "hG" = (
 /obj/machinery/door/morgue{
 	name = "coffin storage";
-	req_access_txt = "22"
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/medical/chapel)
@@ -1718,7 +1718,7 @@
 	},
 /obj/machinery/door/window{
 	dir = 4;
-	req_access_txt = "25"
+	req_access = list("bar")
 	},
 /obj/structure/closet/crate/coffin,
 /turf/open/floor/plating,
@@ -1792,7 +1792,7 @@
 "ja" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Med-Sci";
-	req_access_txt = "9"
+	req_access = list("genetics")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/medical)
@@ -1964,7 +1964,7 @@
 "jQ" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
-	req_access_txt = "7"
+	req_access = list("science")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -2031,7 +2031,7 @@
 "kh" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
-	req_access_txt = "7"
+	req_access = list("science")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -2124,7 +2124,7 @@
 "kR" = (
 /obj/machinery/door/airlock/security{
 	name = "Security";
-	req_access_txt = "1"
+	req_access = list("security")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -2178,7 +2178,7 @@
 "lh" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access";
-	req_access_txt = "24"
+	req_access = list("atmospherics")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
@@ -2325,7 +2325,7 @@
 "lP" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access";
-	req_access_txt = "24"
+	req_access = list("atmospherics")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
@@ -2551,7 +2551,7 @@
 "mW" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Aux Storage";
-	req_access_txt = "23"
+	req_access = list("tech_storage")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
@@ -2697,7 +2697,7 @@
 "nC" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Aft Solar Access";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -3598,7 +3598,7 @@
 "RF" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
-	req_access_txt = "10"
+	req_access = list("engineering")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron,
