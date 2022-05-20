@@ -2147,6 +2147,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "fP" = (
@@ -2282,6 +2283,10 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gg" = (
@@ -2292,6 +2297,9 @@
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gh" = (
@@ -2322,6 +2330,10 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gm" = (
@@ -2330,6 +2342,9 @@
 	name = "laundry bin"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gn" = (
@@ -2375,6 +2390,13 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gy" = (
@@ -2390,6 +2412,9 @@
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
 /obj/item/reagent_containers/blood/random,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "gz" = (
@@ -2436,9 +2461,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
 "gF" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/white,
-/area/ruin/space/has_grav/deepstorage/dorm)
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "gG" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/white,
@@ -2708,6 +2732,26 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
+"kV" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
+"lo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "po" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -2719,6 +2763,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
+"qJ" = (
+/obj/machinery/chem_heater/withbuffer,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "rz" = (
 /obj/machinery/conveyor{
 	dir = 6;
@@ -2730,6 +2778,18 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+"uC" = (
+/obj/machinery/chem_dispenser/fullupgrade,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
+"vF" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/ten_k{
+	name = "Pharmacy APC";
+	pixel_x = 25
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "wK" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular{
@@ -2739,6 +2799,12 @@
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
+"yq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Bb" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -2752,6 +2818,15 @@
 	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
+"GG" = (
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
+"GW" = (
+/obj/machinery/airalarm/away{
+	pixel_y = -25
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Ht" = (
 /obj/structure/table,
 /obj/item/storage/medkit/toxin{
@@ -2783,11 +2858,49 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
+"Mq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
+"Mv" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/dropper{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = 7
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
+"QY" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Pharmacy"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Rs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
+"Uw" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
+"Yz" = (
+/obj/machinery/chem_master,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 
 (1,1,1) = {"
 aa
@@ -3398,11 +3511,11 @@ ey
 dB
 ab
 ab
-ab
-ab
-ab
-ab
-ab
+gF
+gF
+gF
+gF
+gF
 ab
 ab
 ab
@@ -3450,11 +3563,11 @@ ez
 dB
 ab
 ab
-ab
-ab
-ab
-ab
-ab
+gF
+uC
+GG
+Yz
+gF
 ab
 ab
 aa
@@ -3502,11 +3615,11 @@ eA
 dB
 dB
 dB
-dB
-ab
-ab
-ab
-ab
+gF
+qJ
+Mq
+Mv
+gF
 ab
 ab
 aa
@@ -3554,11 +3667,11 @@ ge
 dB
 gw
 gw
-dB
-ab
-ab
-ab
-ab
+gF
+GG
+yq
+Uw
+gF
 ab
 ab
 aa
@@ -3605,12 +3718,12 @@ fO
 gf
 gl
 gx
+gx
+QY
+lo
+kV
+GW
 gF
-dB
-ab
-ab
-ab
-ab
 ab
 ab
 aa
@@ -3658,11 +3771,11 @@ gg
 gm
 gy
 gG
-dB
-ab
-ab
-ab
-ab
+gF
+GG
+vF
+GG
+gF
 ab
 ab
 aa
@@ -3710,11 +3823,11 @@ dB
 dB
 dB
 dB
-dB
-ab
-ab
-ab
-ab
+gF
+gF
+gF
+gF
+gF
 ab
 ab
 aa
@@ -3764,7 +3877,7 @@ cp
 ab
 ab
 ab
-Iy
+ab
 ab
 ab
 ab
