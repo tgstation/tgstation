@@ -184,7 +184,7 @@
 	req_access = list(ACCESS_SYNDICATE)
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/emp_shield/advanced,
+		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/flashlight,
@@ -193,7 +193,7 @@
 /obj/item/mod/control/pre_equipped/elite/flamethrower
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/emp_shield/advanced,
+		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/thermal_regulator,
 		/obj/item/mod/module/jetpack/advanced,
@@ -356,7 +356,6 @@
 		/obj/item/mod/module/quick_carry/advanced,
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/anomaly_locked/kinesis/prebuilt,
 	)
 
 //these exist for the prefs menu
