@@ -4,12 +4,19 @@
 	switch(detonation_status)
 		// The nuke detonated on station
 		if(DETONATION_HIT_STATION)
-			if(length(get_antag_minds(/datum/antagonist/nukeop)) && is_infiltrator_docked_at_centcom())
-				// And the ops escaped, they won!
-				return /datum/cinematic/nuke/ops_victory
+			// And it was detonated by nuke ops
+			if(length(get_antag_minds(/datum/antagonist/nukeop)))
+				if(is_infiltrator_docked_at_centcom())
+					// And the ops escaped, they won!
+					return /datum/cinematic/nuke/ops_victory
+				else
+					// And the ops failed to escape, mutually assured destruction!
+					return /datum/cinematic/nuke/mutual_destruction
+
+			// It was detonated by something or someone what wasn't nuke ops,
+			// throw it to the default explosion animation (self destruct)
 			else
-				// And the ops failed to escape, mutually assured destruction!
-				return /datum/cinematic/nuke/mutual_destruction
+				return ..()
 
 		// The nuke detonated on station Z, but in space
 		if(DETONATION_NEAR_MISSED_STATION)

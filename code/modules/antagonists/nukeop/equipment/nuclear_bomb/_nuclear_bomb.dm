@@ -508,7 +508,7 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/proc/explode()
 	if(safety)
 		timing = FALSE
-		return
+		return FALSE
 
 	exploding = TRUE
 	yes_code = FALSE
@@ -519,6 +519,7 @@ GLOBAL_VAR(station_nuke_source)
 	if(SSticker?.mode)
 		SSticker.roundend_check_paused = TRUE
 	addtimer(CALLBACK(src, .proc/actually_explode), 10 SECONDS)
+	return TRUE
 
 /obj/machinery/nuclearbomb/proc/actually_explode()
 	if(!core)
@@ -575,6 +576,8 @@ GLOBAL_VAR(station_nuke_source)
 	really_actually_explode(detonation_status)
 	SSticker.roundend_check_paused = FALSE
 
+	return detonation_status
+
 /obj/machinery/nuclearbomb/proc/really_actually_explode(detonation_status)
 	play_cinematic(get_cinematic_type(detonation_status), world, CALLBACK(SSticker, /datum/controller/subsystem/ticker/proc/station_explosion_detonation, src))
 
@@ -590,9 +593,11 @@ GLOBAL_VAR(station_nuke_source)
 	if(length(z_levels_to_blow))
 		nuke_effects(z_levels_to_blow)
 
+	return TRUE
+
 /// Cause nuke effects to the passed z-levels.
 /obj/machinery/nuclearbomb/proc/nuke_effects(list/affected_z_levels)
-	INVOKE_ASYNC(GLOBAL_PROC, .proc/callback_on_everyone_on_z, affected_z_levels, CALLBACK(GLOBAL_PROC, /proc/nuke_gib))
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/callback_on_everyone_on_z, affected_z_levels, CALLBACK(GLOBAL_PROC, /proc/nuke_gib), src)
 
 /// Gets what type of cinematic this nuke showcases depending on where we detonated.
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(detonation_status)
@@ -626,12 +631,13 @@ GLOBAL_VAR(station_nuke_source)
  * Invokes a callback on every living mob on the provided z level.
  */
 /proc/callback_on_everyone_on_z(list/z_levels, datum/callback/to_do, atom/optional_source)
-	if(!z_levels)
-		CRASH("kill_everone_on_z called without any z-levels.")
 	if(!islist(z_levels))
-		z_levels = list(z_levels)
+		CRASH("callback_on_everyone_on_z called [z_levels ? "with an invalid z-level list":"without any z-levels"].")
 
 	for(var/mob/living/victim as anything in GLOB.mob_living_list)
+		if(QDELETED(victim) || isnull(victim.loc))
+			continue
+
 		var/turf/target_turf = get_turf(victim)
 		if(target_turf && !(target_turf.z in z_levels))
 			continue

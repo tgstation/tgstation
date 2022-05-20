@@ -15,6 +15,8 @@
 
 	playing.start_cinematic(watchers)
 
+	return playing
+
 /// The cinematic screen showed to everyone
 /atom/movable/screen/cinematic
 	icon = 'icons/effects/station_explosion.dmi'
@@ -71,7 +73,7 @@
 
 	// Place the /atom/movable/screen/cinematic into everyone's screens, prevent them from moving
 	for(var/mob/watching_mob in watchers)
-		show_to(watching_mob, watching_mob.client)
+		show_to(watching_mob, GET_CLIENT(watching_mob))
 		RegisterSignal(watching_mob, COMSIG_MOB_CLIENT_LOGIN, .proc/show_to)
 		//Close watcher ui's
 		SStgui.close_user_uis(watching_mob)
