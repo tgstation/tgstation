@@ -233,7 +233,7 @@
 	complexity = 2
 
 /obj/item/mod/module/emp_shield/advanced/on_suit_activation()
-	mod.wearer.AddElement(/datum/element/empprotection, EMP_PROTECT_SELFEMP_PROTECT_CONTENTS)
+	mod.wearer.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 
 /obj/item/mod/module/emp_shield/advanced/on_suit_deactivation(deleting)
 	mod.wearer.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
