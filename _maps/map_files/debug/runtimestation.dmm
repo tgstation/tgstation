@@ -2108,6 +2108,10 @@
 /obj/item/storage/box/shipping,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"sQ" = (
+/mob/living/simple_animal/pet/cat/runtime,
+/turf/open/floor/iron,
+/area/station/medical/chemistry)
 "tE" = (
 /obj/machinery/door/airlock/research,
 /turf/open/floor/iron/dark,
@@ -7565,7 +7569,7 @@ ak
 ak
 bQ
 Ce
-Ce
+sQ
 cj
 vP
 Mh
