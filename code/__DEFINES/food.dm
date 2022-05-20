@@ -119,3 +119,6 @@
 #define DEFAULT_MAX_ICE_CREAM_SCOOPS 3
 // the vertical distance in pixels from an ice cream scoop and another.
 #define ICE_CREAM_SCOOP_OFFSET 4
+
+// How many times people need to eat in an area for it to be declared a place to count as a good place to eat?
+#define BREAK_ROOM_DESIGNATION 100

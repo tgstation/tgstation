@@ -102,6 +102,8 @@
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
+	///How many people have eaten in this area? If it's above 40, the area is considered a nice place to eat. // todo: make this a scaling bonus deal instead of a threshold after the mood refactor
+	var/times_eaten_counter = 0
 /**
  * A list of teleport locations
  *

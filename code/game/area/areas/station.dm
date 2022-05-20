@@ -482,6 +482,7 @@
 	mood_message = "I love being in the bar!"
 	mood_trait = TRAIT_EXTROVERT
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
+	times_eaten_counter = BREAK_ROOM_DESIGNATION
 
 /area/station/commons/fitness
 	name = "\improper Fitness Room"
@@ -557,10 +558,12 @@
 /area/station/service/cafeteria
 	name = "\improper Cafeteria"
 	icon_state = "cafeteria"
+	times_eaten_counter = BREAK_ROOM_DESIGNATION
 
 /area/station/service/kitchen
 	name = "\improper Kitchen"
 	icon_state = "kitchen"
+	times_eaten_counter = BREAK_ROOM_DESIGNATION
 
 /area/station/service/kitchen/coldroom
 	name = "\improper Kitchen Cold Room"
@@ -574,6 +577,7 @@
 /area/station/service/kitchen/abandoned
 	name = "\improper Abandoned Kitchen"
 	icon_state = "abandoned_kitchen"
+	times_eaten_counter = BREAK_ROOM_DESIGNATION
 
 /area/station/service/bar
 	name = "\improper Bar"

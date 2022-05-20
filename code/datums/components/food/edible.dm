@@ -308,8 +308,8 @@ Behavior that's still missing from this component that original food items had t
 	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
 	if(eater == feeder)//If you're eating it yourself.
-
-		var/ate_in_service = is_type_in_list(get_area(eater), list(/area/station/service/kitchen, /area/station/service/cafeteria, /area/station/service/bar))
+		var/area/current_area = get_area(eater)
+		var/ate_in_service = (current_area.times_eaten_counter >= BREAK_ROOM_DESIGNATION)
 		var/ate_at_table = find_adjacent_tables(eater)
 		var/ate_with_chair = eater.buckled
 		var/ate_with_utensils = eater.is_holding_item_of_type(/obj/item/kitchen)
@@ -421,8 +421,9 @@ Behavior that's still missing from this component that original food items had t
 		if(!owner.reagents.total_volume)
 			On_Consume(eater, feeder)
 		checkLiked(fraction, eater)
-
-		var/ate_in_service = is_type_in_list(get_area(eater), list(/area/station/service/kitchen, /area/station/service/cafeteria, /area/station/service/bar))
+		var/area/current_area = get_area(eater)
+		current_area.times_eaten_counter++
+		var/ate_in_service = (current_area.times_eaten_counter >= BREAK_ROOM_DESIGNATION)
 		var/ate_at_table = find_adjacent_tables(eater)
 		var/ate_with_chair = eater.buckled
 		var/ate_with_utensils = eater.is_holding_item_of_type(/obj/item/kitchen)
