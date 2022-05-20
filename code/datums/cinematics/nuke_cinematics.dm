@@ -1,4 +1,6 @@
+/// Simple, base cinematic for all animations based around a nuke detonating.
 /datum/cinematic/nuke
+	/// If set, this is the summary screen that pops up after the nuke is done.
 	var/after_nuke_summary_state
 
 /datum/cinematic/nuke/play_cinematic()
@@ -10,6 +12,7 @@
 	if(after_nuke_summary_state)
 		screen.icon_state = after_nuke_summary_state
 
+/// Specific effects for each type of cinematics goes here.
 /datum/cinematic/nuke/proc/play_nuke_effect()
 	return
 
@@ -91,5 +94,7 @@
 	cleanup_time = 0 SECONDS
 
 /datum/cinematic/nuke/far_explosion/play_cinematic()
+	// This one has no intro sequence.
+	// It's actually just a global sound, which makes you wonder why it's a cinematic.
 	play_cinematic_sound(sound('sound/effects/explosion_distant.ogg'))
 	special_callback?.Invoke()

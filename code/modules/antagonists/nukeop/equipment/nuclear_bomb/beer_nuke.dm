@@ -1,7 +1,9 @@
+/// A fake nuke that actually contains beer.
 /obj/machinery/nuclearbomb/beer
 	name = "\improper Nanotrasen-brand nuclear fission explosive"
 	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back."
 	proper_bomb = FALSE
+	/// The keg located within the beer nuke.
 	var/obj/structure/reagent_dispensers/beerkeg/keg
 
 /obj/machinery/nuclearbomb/beer/Initialize(mapload)
@@ -16,13 +18,15 @@
 	else
 		. += span_danger("It's empty.")
 
-/obj/machinery/nuclearbomb/beer/attackby(obj/item/W, mob/user, params)
-	if(W.is_refillable())
-		W.afterattack(keg, user, TRUE) // redirect refillable containers to the keg, allowing them to be filled
+/obj/machinery/nuclearbomb/beer/attackby(obj/item/weapon, mob/user, params)
+	if(weapon.is_refillable())
+		weapon.afterattack(keg, user, TRUE) // redirect refillable containers to the keg, allowing them to be filled
 		return TRUE // pretend we handled the attack, too.
-	if(istype(W, /obj/item/nuke_core_container))
+
+	if(istype(weapon, /obj/item/nuke_core_container))
 		to_chat(user, span_notice("[src] has had its plutonium core removed as a part of being decommissioned."))
 		return TRUE
+
 	return ..()
 
 /obj/machinery/nuclearbomb/beer/actually_explode()

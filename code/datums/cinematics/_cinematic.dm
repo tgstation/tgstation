@@ -1,6 +1,10 @@
-// Use to play cinematics.
-// Watcher can be world,mob, or a list of mobs
-// Blocks until sequence is done.
+/**
+ * Plays a cinematic, duh. Can be to a select few people, or everyone.
+ *
+ * cinematic_type - datum typepath to what cinematic you wish to play.
+ * watchers - a list of all mobs you are playing the cinematic to. If world, the cinematical will play globally to all players.
+ * special_callback - optional callback to be invoked mid-cinematic.
+ */
 /proc/play_cinematic(datum/cinematic/cinematic_type, watchers, datum/callback/special_callback)
 	if(!ispath(cinematic_type, /datum/cinematic))
 		CRASH("play_cinematic called with a non-cinematic type. (Got: [cinematic_type])")
@@ -11,6 +15,7 @@
 
 	playing.start_cinematic(watchers)
 
+/// The cinematic screen showed to everyone
 /atom/movable/screen/cinematic
 	icon = 'icons/effects/station_explosion.dmi'
 	icon_state = "station_intact"
@@ -19,6 +24,7 @@
 	screen_loc = "BOTTOM,LEFT+50%"
 	appearance_flags = APPEARANCE_UI | TILE_BOUND
 
+/// Cinematic datum. Used to show an animation to everyone.
 /datum/cinematic
 	/// A list of all clients watching the cinematic
 	var/list/client/watching = list()
@@ -49,7 +55,7 @@
 	locked.Cut()
 	return ..()
 
-// /datum/cinematic/proc/play(watchers)
+/// Actually goes through the process of showing the cinematic to the list of watchers.
 /datum/cinematic/proc/start_cinematic(list/watchers)
 	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PLAY_CINEMATIC, src) & COMPONENT_GLOB_BLOCK_CINEMATIC)
 		return
@@ -108,7 +114,7 @@
 	watching_mob.overlay_fullscreen("cinematic", /atom/movable/screen/fullscreen/cinematic_backdrop)
 	watching_client.screen += screen
 
-/// Simple helper to sounds from the cinematic
+/// Simple helper for playing sounds from the cinematic.
 /datum/cinematic/proc/play_cinematic_sound(sound_to_play)
 	if(is_global)
 		SEND_SOUND(world, sound_to_play)
@@ -116,7 +122,7 @@
 		for(var/client/watching_client as anything in watching)
 			SEND_SOUND(watching_client, sound_to_play)
 
-/// Invoke any special callbacks for actual effects synchronized with animation
+/// Invoke any special callbacks for actual effects synchronized with animation.
 /// (Such as a real nuke explosion happening midway)
 /datum/cinematic/proc/invoke_special_callback()
 	special_callback?.Invoke()
@@ -125,6 +131,7 @@
 /datum/cinematic/proc/play_cinematic()
 	return
 
+/// Stops the cinematic and removes it from all the viewers.
 /datum/cinematic/proc/stop_cinematic()
 	for(var/client/viewing_client as anything in watching)
 		viewing_client.mob.clear_fullscreen("cinematic")

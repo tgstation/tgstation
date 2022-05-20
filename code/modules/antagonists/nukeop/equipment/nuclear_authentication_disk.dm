@@ -1,5 +1,3 @@
-
-//==========DAT FUKKEN DISK===============
 /obj/item/disk
 	icon = 'icons/obj/module.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -10,6 +8,7 @@
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
 
+// DAT FUKKEN DISK.
 /obj/item/disk/nuclear
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
@@ -17,8 +16,11 @@
 	max_integrity = 250
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	/// Whether we're a real nuke disk or not.
 	var/fake = FALSE
+	/// The last secure location the disk was at.
 	var/turf/last_secured_location
+	/// The last world time the disk moved.
 	var/last_disk_move
 
 /obj/item/disk/nuclear/Initialize(mapload)
