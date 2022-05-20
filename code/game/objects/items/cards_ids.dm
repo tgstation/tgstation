@@ -802,8 +802,6 @@
 	desc = "An ID card that allows access to bots maintenance protocols."
 	trim = /datum/id_trim/away/old/robo
 
-	/datum/id_trim/away/old/robo
-
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
 
