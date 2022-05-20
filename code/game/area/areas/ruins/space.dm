@@ -284,6 +284,10 @@
 	name = "\improper Delta Station Storage"
 	icon_state = "os_delta_storage"
 
+/area/ruin/space/ancientstation/delta/biolab
+	name = "Delta Station Biolab"
+	icon_state = "os_delta_biolab"
+
 //DERELICT
 
 /area/ruin/space/derelict

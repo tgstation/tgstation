@@ -71,6 +71,20 @@
 	So basically, I'm stuck here until someone comes to rescue us. And I have no food or water. <br>If you're reading this, I'm probably dead. These things have taken over part of Delta station, and I think they somehow came from the AI core... \
 	Whatever you do, DON'T OPEN THE FIRELOCKS unless you have something to kill them. Look in security, maybe there might be some gear left in there. <br><br>So hungry... I don't want to go out like this..."
 
+/obj/item/paper/fluff/ruins/oldstation/biolab_note_molly
+	name = "Diary note - Molly"
+	info = "It has been several months since our Molly passed away. She was our most valuable crew member, especially compared to that prick that happily threw a party to make sure `that beef won't go to waste`...<br><br> \
+	Oh, how I miss her warm milk...<br><br>I've put Molly's biopsy in the fridge and almost completed the solution.<br><br> \
+	Next steps:<ul><li>Fill the growing vat with the broth (beaker nearby)</li><li>Add one dropper of the solution</li><li>Add Molly's biopsy to the vat</li></ul> \
+	Just need to make sure to use the correct bottle this time... I'll even mark it as `<b>Solution for Molly</b>`, or I tend to mix things up... Oh, I can already feel the endorphin release from hugging her again.<br><br> \
+	If everything goes well, I will try out those slimes the papers praising as the future of science. They say that the cell lines may be found on anything moldy and rotting, and these small blobs have crazy mutation potential when properly fed."
+
+/obj/item/paper/fluff/ruins/oldstation/biolab_note_emergency
+	name = "Diary note - Emergency"
+	info = "OH GOD, the station is still creaking from a heavy impact in the port direction. The power is down, coms not responding, the air supply pipe is depressurized and I can feel the artificial gravity weakening. \
+	The whole department is running around in panic. I'll just pray that engineers won't let the engine delaminate.<br><br> ...And the alien spawn have broken out of the containment area due to the impact and slipped into the vent.<br><br> \
+	I have a bad feeling about this, but I doubt that now is the right time to make guys hunt for what they call my `pet cockroach`... And RD is scary..."
+
 /obj/machinery/mod_installer
 	name = "modular outerwear device installator"
 	desc = "An ancient machine that mounts a MOD unit onto the occupant."
@@ -187,3 +201,17 @@
 		balloon_alert(user, "it's locked!")
 		return
 	open_machine()
+
+/obj/item/petri_dish/oldstation
+	name = "Molly's biopsy"
+	desc = "You can see a moldy piece of sandwich inside the dish."
+
+/obj/item/petri_dish/oldstation/Initialize(mapload)
+	. = ..()
+	sample = new
+	sample.GenerateSample(CELL_LINE_TABLE_COW, null, 1, 0)
+	var/datum/biological_sample/contamination = new
+	contamination.GenerateSample(CELL_LINE_TABLE_GRAPE, null, 1, 0)
+	sample.Merge(contamination)
+	sample.sample_color = COLOR_SAMPLE_BROWN
+	update_appearance()
