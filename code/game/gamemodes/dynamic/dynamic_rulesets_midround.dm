@@ -980,7 +980,34 @@
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return ..()
 
-
+<<<<<<< test
+/// Thief ruleset
+/datum/dynamic_ruleset/midround/opportunist
+	name = "Opportunist"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/thief
+	antag_flag = ROLE_OPPORTUNIST
+	antag_flag_override = ROLE_THIEF
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		ROLE_POSITRONIC_BRAIN,
+	)
+	required_candidates = 1
+	weight = 2
+	cost = 3 //Worth less than obsessed, but there's more of them.
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	repeatable = TRUE
+=======
+>>>>>>> master
 
 /// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.
 #undef MALF_ION_PROB
