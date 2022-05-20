@@ -35,7 +35,7 @@
 	desc = "A large, powerful nuclear accumulator. It is capable of storing a large amount of power."
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "nuclear_accumulator"
-	circuit = /obj/item/circuitboard/machine/tesla_coil
+	circuit = /obj/item/circuitboard/machine/nuclear_accumulator
 
 /obj/machinery/power/energy_accumulator/nuclear_accumulator/bullet_act(obj/projectile/projectile)
 	if(!istype(projectile, /obj/projectile/energy/nuclear_particle) || projectile.dir != turn(dir, 180))
@@ -60,6 +60,49 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/power/energy_accumulator/nuclear_accumulator/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+
+/obj/projectile/beam/nuclear_emitter/hitscan
+	hitscan = TRUE
+	tracer_type = /obj/effect/projectile/tracer/heavy_laser
+	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
+	impact_type = /obj/effect/projectile/impact/heavy_laser
+
+/obj/projectile/beam/nuclear_emitter/hitscan/Initialize(mapload)
+	. = ..()
+	color = color_matrix_rotate_hue(120)
+
+/obj/machinery/power/nuclear_emitter
+	name = "nuclear emitter"
+	desc = "A large, powerful nuclear emitter. It is capable of storing a large amount of power."
+	icon = 'icons/obj/supermatter.dmi'
+	icon_state = "nuclear_emitter"
+	circuit = /obj/item/circuitboard/machine/nuclear_emitter
+
+	var/beam_type = /obj/projectile/beam/nuclear_emitter/hitscan
+	var/internal_energy = 0
+	var/needed_energy_to_emit = 1000000
+
+/obj/machinery/power/nuclear_emitter/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/power/nuclear_emitter/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	default_change_direction_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/power/nuclear_emitter/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_deconstruction_crowbar(tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/power/nuclear_emitter/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
 	update_appearance()
