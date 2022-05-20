@@ -50,6 +50,7 @@
 
 	TEST_ASSERT(QDELETED(nuked), "The nuke victim next to the nuke wasn't gibbed by the nuke.")
 	TEST_ASSERT(QDELETED(nuke), "The nuke itself was not deleted after successfully exploding.")
+	mock_client.mob = null
 
 /// Used to track whenever a cinematic starts playing, so we can check if it's the right one.
 /datum/unit_test/nuke_cinematic/proc/check_cinematic(datum/source, datum/cinematic/playing)
