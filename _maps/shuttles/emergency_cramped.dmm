@@ -9,7 +9,7 @@
 "c" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock";
-	req_access_txt = "2"
+	req_access = list("brig")
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

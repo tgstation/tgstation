@@ -326,7 +326,7 @@
 	base_state = "rightsecure";
 	icon_state = "rightsecure";
 	name = "Thunderdome Booth";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -594,7 +594,7 @@
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	name = "CentCom Stand";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -746,7 +746,7 @@
 "ck" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -797,7 +797,7 @@
 "ct" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -1279,7 +1279,7 @@
 /obj/machinery/button/door/indestructible{
 	id = "thunderdomehea";
 	name = "Heavy Supply Control";
-	req_access_txt = "102"
+	req_access = list("cent_thunder")
 	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1594,7 +1594,7 @@
 "eD" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Office";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/stripes/line,
@@ -2274,7 +2274,7 @@
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	name = "CentCom Stand";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -2750,7 +2750,7 @@
 "hN" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -3216,7 +3216,7 @@
 /obj/machinery/button/door/indestructible{
 	id = "thunderdome";
 	name = "Main Blast Doors Control";
-	req_access_txt = "102"
+	req_access = list("cent_thunder")
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
@@ -3327,7 +3327,7 @@
 "jr" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Supply Shuttle";
-	req_access_txt = "106"
+	req_access = list("cent_storage")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3887,7 +3887,7 @@
 "kZ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -3896,7 +3896,7 @@
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	name = "CentCom Stand";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/machinery/light/directional/west,
 /obj/machinery/status_display/evac/directional/west,
@@ -3930,7 +3930,7 @@
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	name = "CentCom Stand";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/courtroom)
@@ -3947,7 +3947,7 @@
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	name = "CentCom Stand";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
@@ -4121,7 +4121,7 @@
 "lJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -4129,7 +4129,7 @@
 "lK" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Supply";
-	req_access_txt = "106"
+	req_access = list("cent_storage")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -4195,7 +4195,7 @@
 "lT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -4718,7 +4718,7 @@
 "nq" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -4779,7 +4779,7 @@
 "nC" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -5200,7 +5200,7 @@
 "oI" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Administration";
-	req_access_txt = "102"
+	req_access = list("cent_thunder")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -5426,7 +5426,7 @@
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "CentCom Customs";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/item/clipboard,
 /obj/item/folder/yellow,
@@ -5663,7 +5663,7 @@
 /obj/machinery/button/door/indestructible{
 	id = "thunderdomegen";
 	name = "General Supply Control";
-	req_access_txt = "102"
+	req_access = list("cent_thunder")
 	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -5940,7 +5940,7 @@
 "qS" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -6202,7 +6202,7 @@
 /area/syndicate_mothership/control)
 "rR" = (
 /obj/machinery/door/airlock/external/ruin{
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -6283,7 +6283,7 @@
 "sd" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Orbital Drop Pod Loading";
-	req_access_txt = "106"
+	req_access = list("cent_storage")
 	},
 /turf/open/floor/iron,
 /area/centcom/ferry)
@@ -6436,7 +6436,7 @@
 "sL" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -6535,14 +6535,14 @@
 "sY" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Supplypod Loading";
-	req_access_txt = "106"
+	req_access = list("cent_storage")
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/evacuation)
 "sZ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Supplypod Loading";
-	req_access_txt = "106"
+	req_access = list("cent_storage")
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/supplypod)
@@ -6680,7 +6680,7 @@
 "tu" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Supply";
-	req_access_txt = "106"
+	req_access = list("cent_storage")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -6747,7 +6747,7 @@
 "tF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Locker Room";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -6762,7 +6762,7 @@
 "tH" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Administration";
-	req_access_txt = "102"
+	req_access = list("cent_thunder")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -7063,7 +7063,7 @@
 "uO" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -7163,7 +7163,7 @@
 	dir = 1;
 	icon_state = "rightsecure";
 	name = "CentCom Customs";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/machinery/door/window,
 /obj/effect/turf_decal/bot,
@@ -7320,7 +7320,7 @@
 "vF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Office";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -7601,7 +7601,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7626,7 +7626,7 @@
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
 	pixel_y = 24;
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -7666,7 +7666,7 @@
 "wC" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Customs";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8214,7 +8214,7 @@
 "yj" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8247,7 +8247,7 @@
 "yr" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Briefing Room";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -9393,7 +9393,7 @@
 "BA" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -9523,7 +9523,7 @@
 "BM" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -9537,7 +9537,7 @@
 	dir = 1;
 	icon_state = "rightsecure";
 	name = "CentCom Customs";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -9561,7 +9561,7 @@
 	dir = 1;
 	icon_state = "rightsecure";
 	name = "CentCom Customs";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -9805,7 +9805,7 @@
 "Cz" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -10205,7 +10205,7 @@
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "CentCom Customs";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -10220,7 +10220,7 @@
 	dir = 8;
 	icon_state = "rightsecure";
 	name = "CentCom Customs";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -10732,7 +10732,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Administration";
-	req_access_txt = "102"
+	req_access = list("cent_thunder")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -12336,7 +12336,7 @@
 "Kf" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Storage";
-	req_access_txt = "106"
+	req_access = list("cent_storage")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -12778,7 +12778,7 @@
 "LD" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Cockpit";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /turf/open/floor/mineral/titanium,
 /area/centcom/evacuation/ship)
@@ -13082,7 +13082,7 @@
 /obj/machinery/door/window/right/directional/north{
 	dir = 4;
 	name = "Security Desk";
-	req_access_txt = "103"
+	req_access = list("cent specops")
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evacuation/ship)
@@ -13440,7 +13440,7 @@
 "NG" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -13564,7 +13564,7 @@
 "Oc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Office";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -13855,7 +13855,7 @@
 /area/syndicate_mothership/expansion_chemicalwarfare)
 "OJ" = (
 /obj/machinery/door/airlock/external/ruin{
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -13897,7 +13897,7 @@
 "OQ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Briefing Room";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -14683,7 +14683,7 @@
 "Ra" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
@@ -14779,7 +14779,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/vault{
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/machinery/door/poddoor/shutters/indestructible,
 /turf/open/floor/iron,
@@ -16107,7 +16107,7 @@
 "UO" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -16619,7 +16619,7 @@
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -16736,7 +16736,7 @@
 	name = "Hanger Bay Shutters";
 	pixel_x = -8;
 	pixel_y = 24;
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/machinery/button/door/indestructible{
 	id = "XCCsec3";
@@ -16932,7 +16932,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -16970,7 +16970,7 @@
 "WU" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Office";
-	req_access_txt = "109"
+	req_access = list("cent_captain")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/stripes/line,
@@ -17158,7 +17158,7 @@
 "Xt" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -18063,7 +18063,7 @@
 "ZX" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
-	req_access_txt = "101"
+	req_access = list("cent_general")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{

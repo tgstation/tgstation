@@ -96,7 +96,7 @@
 	name = "window shutters";
 	pixel_x = 26;
 	pixel_y = -6;
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/button/door{
@@ -104,7 +104,7 @@
 	name = "release bears";
 	pixel_x = 26;
 	pixel_y = 6;
-	req_access_txt = "20"
+	req_access = list("captain")
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
