@@ -118,7 +118,8 @@
 	weight = 4
 	cost = 8
 	minimum_players = 5
-	requirements = list(70,60,40,40,40,40,40,40,20,10)
+	antag_cap = list("denominator" = 24)
+	requirements = list(70,60,40,40,40,40,40,40,10,10)
 
 /datum/dynamic_ruleset/roundstart/ntagent/pre_execute(population)
 	. = ..()
