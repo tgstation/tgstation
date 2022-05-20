@@ -17,7 +17,7 @@
 	var/refilling = FALSE
 	///Can this dispenser be opened using a wrench?
 	var/openable = TRUE
-	///Is this dispenser slowly leaking it's reagent?
+	///Is this dispenser slowly leaking its reagent?
 	var/leaking = FALSE
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
@@ -31,7 +31,7 @@
 	if(can_be_tanked)
 		. += span_notice("Use a sheet of iron to convert this into a plumbing-compatible tank.")
 	if(leaking)
-		. += span_warning("It's tap is wrenched open!")
+		. += span_warning("Its tap is wrenched open!")
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
