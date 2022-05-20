@@ -367,7 +367,6 @@
 	ignite()
 
 /obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, params)
-	var/ignition_msg = item.ignition_effect(src, user)
-	if(ignition_msg)
+	if(item.ignition_effect(src, user))
 		ignite()
 	return ..()
