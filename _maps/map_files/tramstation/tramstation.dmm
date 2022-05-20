@@ -28932,6 +28932,10 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"jRx" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/medical)
 "jRA" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine,
@@ -70159,7 +70163,6 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "xQR" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
 /turf/open/floor/catwalk_floor,
@@ -163044,7 +163047,7 @@ whz
 whz
 whz
 whz
-vjz
+jRx
 whz
 dhe
 dhe
@@ -163301,7 +163304,7 @@ whz
 aTz
 hhv
 whz
-vjz
+jRx
 whz
 dhe
 dhe
