@@ -5,6 +5,11 @@
 "ab" = (
 /turf/closed/mineral/random/low_chance,
 /area/ruin/unpowered/no_grav)
+"ae" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "af" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/kitchen)
@@ -2732,17 +2737,7 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
-"kV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/pharmacy)
-"lo" = (
+"mW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
@@ -2763,10 +2758,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
-"qJ" = (
-/obj/machinery/chem_heater/withbuffer,
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/pharmacy)
 "rz" = (
 /obj/machinery/conveyor{
 	dir = 6;
@@ -2778,16 +2769,28 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
-"uC" = (
-/obj/machinery/chem_dispenser/fullupgrade,
+"tk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
-"vF" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/ten_k{
-	name = "Pharmacy APC";
-	pixel_x = 25
+"uG" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Pharmacy"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
+"wu" = (
+/obj/machinery/chem_dispenser/fullupgrade,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "wK" = (
@@ -2799,9 +2802,29 @@
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
-"yq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
+"xI" = (
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
+"yf" = (
+/obj/machinery/chem_master,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
+"Az" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/ten_k{
+	name = "Pharmacy APC";
+	pixel_x = 25
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
+"AI" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/dropper{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = 7
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
@@ -2812,21 +2835,16 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
+"Cp" = (
+/obj/machinery/chem_heater/withbuffer,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "EP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden{
 	dir = 4
 	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"GG" = (
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/pharmacy)
-"GW" = (
-/obj/machinery/airalarm/away{
-	pixel_y = -25
-	},
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Ht" = (
 /obj/structure/table,
 /obj/item/storage/medkit/toxin{
@@ -2845,9 +2863,22 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
+"Il" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Iy" = (
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
+"JV" = (
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Mp" = (
 /obj/structure/table,
 /obj/item/storage/medkit/brute{
@@ -2858,47 +2889,21 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
-"Mq" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/pharmacy)
-"Mv" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/dropper{
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/dropper{
-	pixel_y = 7
-	},
-/turf/open/floor/engine,
-/area/ruin/space/has_grav/deepstorage/pharmacy)
-"QY" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Pharmacy"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Rs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"Uw" = (
-/obj/structure/table/reinforced,
-/obj/machinery/reagentgrinder,
+"Uj" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
-"Yz" = (
-/obj/machinery/chem_master,
+"UQ" = (
+/obj/machinery/airalarm/away{
+	pixel_y = -25
+	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 
@@ -3564,9 +3569,9 @@ dB
 ab
 ab
 gF
-uC
-GG
-Yz
+wu
+JV
+yf
 gF
 ab
 ab
@@ -3616,9 +3621,9 @@ dB
 dB
 dB
 gF
-qJ
-Mq
-Mv
+Cp
+Uj
+AI
 gF
 ab
 ab
@@ -3668,9 +3673,9 @@ dB
 gw
 gw
 gF
-GG
-yq
-Uw
+JV
+tk
+ae
 gF
 ab
 ab
@@ -3719,10 +3724,10 @@ gf
 gl
 gx
 gx
-QY
-lo
-kV
-GW
+uG
+mW
+Il
+UQ
 gF
 ab
 ab
@@ -3772,9 +3777,9 @@ gm
 gy
 gG
 gF
-GG
-vF
-GG
+JV
+Az
+xI
 gF
 ab
 ab
