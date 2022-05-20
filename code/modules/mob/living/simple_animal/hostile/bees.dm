@@ -320,6 +320,7 @@
 	. = ..()
 	if(gone == queen)
 		queen = null
+		qdel(src)
 
 /obj/item/queen_bee/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/syringe))
