@@ -2738,6 +2738,10 @@
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/power)
+"lf" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "mW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -2805,6 +2809,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "xI" = (
 /obj/machinery/firealarm/directional/north,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "yf" = (
@@ -2902,6 +2907,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
+"RT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair/office/light,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/deepstorage/pharmacy)
 "Uj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -2912,6 +2922,7 @@
 /obj/machinery/airalarm/away{
 	pixel_y = -25
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 
@@ -3578,7 +3589,7 @@ ab
 ab
 gF
 wu
-JV
+RT
 yf
 gF
 ab
@@ -3681,7 +3692,7 @@ dB
 gw
 zi
 gF
-JV
+lf
 tk
 ae
 gF
