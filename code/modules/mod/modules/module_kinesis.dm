@@ -60,6 +60,9 @@
 		return
 	drain_power(use_power_cost)
 	grabbed_atom = target
+	if(isliving(grabbed_atom))
+		var/mob/living/grabbed_mob = grabbed_atom
+		grabbed_mob.Stun(mob_stun_time)
 	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
 	START_PROCESSING(SSfastprocess, src)
 	kinesis_icon = mutable_appearance(icon='icons/effects/effects.dmi', icon_state="kinesis", layer=grabbed_atom.layer-0.1)
@@ -256,3 +259,14 @@
 	given_turf = locate(mob_x+our_x-round(view[1]/2),mob_y+our_y-round(view[2]/2),mob_z)
 	given_x = round(icon_x - world.icon_size * our_x, 1)
 	given_y = round(icon_y - world.icon_size * our_y, 1)
+
+/obj/item/mod/module/anomaly_locked/kinesis/plus
+	name = "MOD kinesis+ module"
+	desc = "A modular plug-in to the forearm, this module was recently redeveloped in secret. \
+		The bane of all ne'er-do-wells, the kinesis+ module is a powerful tool that allows the user \
+		to manipulate the world around them. Like it's older counterpart, it's capable of manipulating \
+		structures, machinery, vehicles, and, thanks to the fruitful efforts of it's creators - living  \
+		beings. They can, however, still struggle after an initial burst of inertia."
+	complexity = 0
+	prebuilt = TRUE
+	stat_required = CONSCIOUS
