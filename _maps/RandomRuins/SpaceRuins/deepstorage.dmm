@@ -9,6 +9,10 @@
 /obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder,
 /obj/machinery/light/directional/south,
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_y = -1;
+	pixel_x = -15
+	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "af" = (
@@ -2740,6 +2744,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "lf" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "mW" = (
@@ -2839,6 +2844,13 @@
 /obj/item/reagent_containers/dropper{
 	pixel_y = 7
 	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_y = -1;
+	pixel_x = -4
+	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Bb" = (
@@ -2890,6 +2902,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "JV" = (
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Mp" = (
