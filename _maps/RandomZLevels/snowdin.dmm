@@ -447,7 +447,7 @@
 "bC" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Ready Room";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -689,7 +689,7 @@
 /area/awaymission/snowdin/post/dorm)
 "co" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -853,7 +853,7 @@
 "cG" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Dock";
-	req_access_txt = "48"
+	req_access = list("mining")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -1333,7 +1333,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post)
@@ -1353,7 +1353,7 @@
 "dQ" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Kitchen";
-	req_access_txt = "35"
+	req_access = list("hydroponics")
 	},
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron,
@@ -1807,7 +1807,7 @@
 	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Kitchen";
-	req_access_txt = "35"
+	req_access = list("hydroponics")
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/barricade/wooden/crude,
@@ -2438,7 +2438,7 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Misc Storage";
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/dorm)
@@ -2717,7 +2717,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Storage";
-	req_access_txt = "45"
+	req_access = list("surgery")
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -2735,7 +2735,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -2812,7 +2812,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "sec";
 	name = "security officer's locker";
-	req_access_txt = "201"
+	req_access = list("away_maintenance")
 	},
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash,
@@ -2842,7 +2842,7 @@
 /area/awaymission/snowdin/post/garage)
 "if" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
@@ -3701,7 +3701,7 @@
 "ke" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Ready Room";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -4354,7 +4354,7 @@
 	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics";
-	req_access_txt = "35"
+	req_access = list("hydroponics")
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -4701,7 +4701,7 @@
 "mq" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics";
-	req_access_txt = "35"
+	req_access = list("hydroponics")
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/cafeteria,
@@ -4850,7 +4850,7 @@
 	},
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access_txt = "32"
+	req_access = list("construction")
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -5226,7 +5226,7 @@
 "nX" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Hydroponics";
-	req_access_txt = "35"
+	req_access = list("hydroponics")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -5813,7 +5813,7 @@
 "pJ" = (
 /obj/machinery/door/airlock/vault{
 	name = "Armory";
-	req_access_txt = "3"
+	req_access = list("armory")
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/secpost)
@@ -6155,7 +6155,7 @@
 /area/awaymission/snowdin/post/engineering)
 "qC" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -6244,7 +6244,7 @@
 	name = "Turbine Access Console";
 	pixel_x = -8;
 	pixel_y = -26;
-	req_access_txt = "32"
+	req_access = list("construction")
 	},
 /obj/machinery/button/ignition{
 	id = "snowdin_turbine_ignitor";
@@ -6389,7 +6389,7 @@
 	heat_proof = 1;
 	id_tag = "snowdin_turbine_exterior";
 	name = "Turbine Exterior Airlock";
-	req_access_txt = "32"
+	req_access = list("construction")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
@@ -6599,7 +6599,7 @@
 	heat_proof = 1;
 	id_tag = "snowdin_turbine_interior";
 	name = "Turbine Interior Airlock";
-	req_access_txt = "32"
+	req_access = list("construction")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -6672,7 +6672,7 @@
 "su" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "SMES Storage";
-	req_access_txt = "32"
+	req_access = list("construction")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -6769,7 +6769,7 @@
 "sQ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Misc Storage";
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
@@ -6989,7 +6989,7 @@
 "us" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "SMES Storage";
-	req_access_txt = "32"
+	req_access = list("construction")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -7031,7 +7031,7 @@
 "uD" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Misc Storage";
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern1)
@@ -7419,7 +7419,7 @@
 "wR" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "SMES Storage";
-	req_access_txt = "32"
+	req_access = list("construction")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -7589,7 +7589,7 @@
 "xx" = (
 /obj/machinery/door/airlock/vault{
 	name = "Relic Storage";
-	req_access_txt = "3"
+	req_access = list("armory")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -8661,7 +8661,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "Bj" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/minipost)
@@ -9232,7 +9232,7 @@
 /area/awaymission/snowdin/cave)
 "DJ" = (
 /obj/machinery/door/airlock/hatch{
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
@@ -10026,7 +10026,7 @@
 "Hy" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Mech Lab";
-	req_access_txt = "29"
+	req_access = list("robotics")
 	},
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
@@ -10204,7 +10204,7 @@
 "Ic" = (
 /obj/machinery/door/airlock/research{
 	name = "Robotics Lab";
-	req_access_txt = "29"
+	req_access = list("robotics")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -10369,7 +10369,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "IE" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main/mechbay)
@@ -10410,7 +10410,7 @@
 /area/awaymission/snowdin/outside)
 "IN" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -10560,7 +10560,7 @@
 "Jj" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Misc Storage";
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
@@ -10840,7 +10840,7 @@
 "JZ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Misc Storage";
-	req_access_txt = "12"
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
@@ -11117,7 +11117,7 @@
 "KK" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
-	req_access_txt = "32"
+	req_access = list("construction")
 	},
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
@@ -11951,7 +11951,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/door/airlock/security{
 	name = "Security Checkpoint";
-	req_access_txt = "1"
+	req_access = list("security")
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/structure/cable,
@@ -12728,7 +12728,7 @@
 "SZ" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Ready Room";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -13628,7 +13628,7 @@
 "YA" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Dock";
-	req_access_txt = "48"
+	req_access = list("mining")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,

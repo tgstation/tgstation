@@ -155,19 +155,6 @@
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
 
-//Describe this disease to an admin in detail (for logging)
-/datum/disease/advance/admin_details()
-	var/list/name_symptoms = list()
-	for(var/datum/symptom/S in symptoms)
-		name_symptoms += S.name
-	return "[name] sym:[english_list(name_symptoms)] r:[totalResistance()] s:[totalStealth()] ss:[totalStageSpeed()] t:[totalTransmittable()]"
-
-/*
-
-	NEW PROCS
-
- */
-
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
 	if(!(IsSame(D)))

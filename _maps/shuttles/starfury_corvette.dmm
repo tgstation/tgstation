@@ -21,14 +21,14 @@
 	name = "Ship Turret Control";
 	pixel_x = 32;
 	pixel_y = -2;
-	req_access = list(150)
+	req_access = list("syndicate")
 	},
 /obj/machinery/button/door{
 	id = "SBC_corvette_blast";
 	name = "Corvette Blast Doors";
 	pixel_x = 32;
 	pixel_y = 8;
-	req_access_txt = "151"
+	req_access = list("syndicate_leader")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
@@ -68,7 +68,7 @@
 /obj/machinery/door/airlock/external{
 	id_tag = "SBC_corvette_bolt";
 	name = "Syndicate Corvette Airlock";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/docking_port/mobile/syndicate_corvette,
 /obj/structure/fans/tiny,
@@ -213,7 +213,7 @@
 /obj/machinery/door/airlock/external{
 	id_tag = "SBC_corvette_bolt";
 	name = "Syndicate Corvette Airlock";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
@@ -252,7 +252,7 @@
 "aK" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Corvette Ready Room";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
@@ -276,7 +276,7 @@
 "aP" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Syndicate Corvette Cockpit";
-	req_access_txt = "150"
+	req_access = list("syndicate")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)

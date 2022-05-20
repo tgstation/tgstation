@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Jetpacking in space without stabalizers feels good now"
+  - bugfix: "If you're pulling something in space, and release the pull, it'll follow behind you properly"

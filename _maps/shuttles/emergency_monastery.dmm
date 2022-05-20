@@ -556,7 +556,7 @@
 	dir = 2;
 	icon_state = "left";
 	name = "Curator Desk Door";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -1082,7 +1082,7 @@
 	base_state = "left";
 	icon_state = "left";
 	name = "Secure Art Exhibit";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1287,7 +1287,7 @@
 	dir = 1;
 	icon_state = "right";
 	name = "Coffin Storage";
-	req_one_access_txt = "22"
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1664,7 +1664,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
 	name = "Coffin Storage";
-	req_one_access_txt = "22"
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1706,7 +1706,7 @@
 "yA" = (
 /obj/machinery/door/morgue{
 	name = "Private Exhibit";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -2217,7 +2217,7 @@
 "ED" = (
 /obj/machinery/door/window/right/directional/north{
 	name = "Secure Art Exhibit";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -2997,7 +2997,7 @@
 "OH" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Monastery Maintenance";
-	req_one_access_txt = "22;24;10;11;37"
+	req_access = list("service","maint_tunnels")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3439,7 +3439,7 @@
 /obj/machinery/door/window/right/directional/north{
 	dir = 2;
 	name = "Curator Desk Door";
-	req_access_txt = "37"
+	req_access = list("library")
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -3960,7 +3960,7 @@
 "Zh" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 4;
-	req_one_access_txt = "63"
+	req_access = list("security")
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)

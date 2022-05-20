@@ -709,7 +709,7 @@
 /area/awaymission/beach)
 "cr" = (
 /obj/structure/closet/secure_closet/freezer/kitchen{
-	req_access = list(25)
+	req_access = list("kitchen")
 	},
 /obj/item/storage/fancy/egg_box,
 /obj/item/reagent_containers/food/condiment/milk,
