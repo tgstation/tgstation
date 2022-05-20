@@ -365,3 +365,9 @@
 /obj/effect/decal/cleanable/fuel_pool/bullet_act(obj/projectile/P)
 	. = ..()
 	ignite()
+
+/obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, params)
+	var/ignition_msg = item.ignition_effect(src, user)
+	if(ignition_msg)
+		ignite()
+	return ..()
