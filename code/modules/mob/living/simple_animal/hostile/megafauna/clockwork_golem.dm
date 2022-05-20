@@ -68,7 +68,9 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete/death()
-	new /mob/living/simple_animal/hostile/megafauna/clockwork_golem/broken(loc)
+	var/mob/living/simple_animal/hostile/megafauna/clockwork_golem/broken/new_golem = new /mob/living/simple_animal/hostile/megafauna/clockwork_golem/broken(loc)
+	if(client)
+		new_golem.mind.transfer_to(client)
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete/OpenFire()

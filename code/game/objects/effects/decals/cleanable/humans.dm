@@ -321,11 +321,6 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 		return TRUE
 	return FALSE
 
-/obj/effect/decal/cleanable/blood/footprints/can_oiljaunt_in()
-	if(blood_state == BLOOD_STATE_OIL)
-		return TRUE
-	return FALSE
-
 /obj/effect/decal/cleanable/blood/hitsplatter
 	name = "blood splatter"
 	pass_flags = PASSTABLE | PASSGRILLE
