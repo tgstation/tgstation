@@ -9438,7 +9438,7 @@
 "daN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	name = "AI Upload Access"
+	name = "ai_upload Access"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14588,7 +14588,7 @@
 /area/icemoon/underground/explored)
 "eJj" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Brig Entrance"
+	name = "brig_entrance"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15900,7 +15900,7 @@
 "ffn" = (
 /obj/structure/table,
 /obj/machinery/camera/motion/directional/west{
-	c_tag = "AI Upload West";
+	c_tag = "ai_upload West";
 	network = list("aiupload")
 	},
 /turf/open/floor/iron/dark,
@@ -16726,7 +16726,7 @@
 "fsR" = (
 /obj/machinery/door/morgue{
 	name = "Relic Closet";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
@@ -18482,7 +18482,7 @@
 /area/icemoon/underground/explored)
 "fWJ" = (
 /obj/machinery/camera/directional/north{
-	c_tag = "Tech Storage"
+	c_tag = "tech_storage"
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -18689,7 +18689,7 @@
 /area/ai_monitored/command/nuke_storage)
 "fZN" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure Tech Storage"
+	name = "Secure tech_storage"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
@@ -21305,7 +21305,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Engineering Desk";
-	req_access = list("engine equip")
+	req_access = list("engine_equip")
 	},
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin{
@@ -22086,7 +22086,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	dir = 4;
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "medsecprivacy";
@@ -24852,7 +24852,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	name = "Mass Driver";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /obj/machinery/mass_driver/chapelgun{
 	dir = 4
@@ -28069,7 +28069,7 @@
 	dwidth = 4;
 	height = 9;
 	id = "aux_base_zone";
-	name = "aux base zone";
+	name = "aux_base zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
 	width = 9
 	},
@@ -33386,7 +33386,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/west{
 	name = "Delivery Desk";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/table/reinforced,
@@ -43938,7 +43938,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "aux_base_shutters";
 	name = "Public Shutters Control";
-	req_access = list("aux base")
+	req_access = list("aux_base")
 	},
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
@@ -44747,7 +44747,7 @@
 "osE" = (
 /obj/machinery/door/window/left/directional/east{
 	name = "Coffin Storage";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
@@ -46421,7 +46421,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/camera/motion/directional/east{
-	c_tag = "AI Upload East";
+	c_tag = "ai_upload East";
 	network = list("aiupload")
 	},
 /turf/open/floor/iron/dark,
@@ -46450,7 +46450,7 @@
 "oUI" = (
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/ai_upload";
-	name = "AI Upload turret control";
+	name = "ai_upload turret control";
 	pixel_y = -25
 	},
 /obj/machinery/camera/directional/south{
@@ -47354,7 +47354,7 @@
 "pkh" = (
 /obj/machinery/door/morgue{
 	name = "Confession Booth (Chaplain)";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
@@ -48423,7 +48423,7 @@
 /obj/machinery/door/window{
 	dir = 1;
 	name = "AI Core Door";
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit,
@@ -48642,7 +48642,7 @@
 /obj/machinery/door/window/left/directional/east{
 	icon_state = "right";
 	name = "Incoming Mail";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -51092,7 +51092,7 @@
 /area/station/service/hydroponics)
 "qvg" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Brig Entrance"
+	name = "brig_entrance"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -58431,7 +58431,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 8;
 	name = "graveyard access";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -62028,8 +62028,8 @@
 /area/station/hallway/primary/central)
 "ucL" = (
 /obj/machinery/requests_console/directional/south{
-	department = "Tech Storage";
-	name = "Tech Storage Requests Console"
+	department = "tech_storage";
+	name = "tech_storage Requests Console"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
@@ -66093,7 +66093,7 @@
 /area/station/hallway/primary/central)
 "vsB" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Tech Storage"
+	name = "tech_storage"
 	},
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,
@@ -66762,7 +66762,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/right/directional/north{
 	dir = 4;
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "medsecprivacy";
@@ -71731,7 +71731,7 @@
 	id = "Disposal Exit";
 	name = "Disposal Vent Control";
 	pixel_y = 4;
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
@@ -71895,7 +71895,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "Secure Storage";
 	name = "Engineering Secure Storage";
-	req_access = list("engine equip")
+	req_access = list("engine_equip")
 	},
 /obj/machinery/button/door/directional/west{
 	id = "Engineering";

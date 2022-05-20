@@ -2712,7 +2712,7 @@
 /area/mine/production)
 "wk" = (
 /obj/structure/closet/secure_closet/engineering_welding{
-	req_access = list("mining station")
+	req_access = list("mining_station")
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/brown{

@@ -5931,7 +5931,7 @@
 	layer = 4.1;
 	name = "Secondary AI Core Access";
 	pixel_x = 4;
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /obj/effect/landmark/start/ai/secondary,
 /obj/item/radio/intercom/directional/north{
@@ -5967,7 +5967,7 @@
 	layer = 4.1;
 	name = "Tertiary AI Core Access";
 	pixel_x = -3;
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /obj/effect/landmark/start/ai/secondary,
 /obj/item/radio/intercom/directional/north{
@@ -6156,13 +6156,13 @@
 	id = "aicoredoor";
 	name = "AI Chamber Access Control";
 	pixel_x = -24;
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /obj/machinery/button/door/directional/south{
 	id = "aicorewindow";
 	name = "AI Core Shutters";
 	pixel_x = 24;
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
@@ -6475,7 +6475,7 @@
 	dir = 8;
 	icon_state = "leftsecure";
 	name = "Primary AI Core Access";
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -8297,7 +8297,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "aiuploadwindow";
-	name = "AI Upload Lockdown Door"
+	name = "ai_upload Lockdown Door"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -18977,7 +18977,7 @@
 /obj/machinery/door/window/brigdoor{
 	id = "medcell";
 	name = "Medical Cell";
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -25425,7 +25425,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/right/directional/south{
 	name = "Delivery Office Desk";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -32310,7 +32310,7 @@
 /obj/machinery/door/window/brigdoor{
 	id = "cargocell";
 	name = "Cargo Cell";
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
@@ -33992,7 +33992,7 @@
 	dir = 1;
 	icon_state = "left";
 	name = "Danger: Conveyor Access";
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
@@ -35323,7 +35323,7 @@
 	base_state = "left";
 	icon_state = "left";
 	name = "Danger: Conveyor Access";
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -39118,7 +39118,7 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
-	name = "AI Upload turret control";
+	name = "ai_upload turret control";
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -43571,7 +43571,7 @@
 	dwidth = 4;
 	height = 9;
 	id = "aux_base_zone";
-	name = "aux base zone";
+	name = "aux_base zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
 	width = 9
 	},
@@ -43631,7 +43631,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "construction";
 	name = "Auxiliary Construction Shutters";
-	req_access = list("aux base")
+	req_access = list("aux_base")
 	},
 /obj/machinery/camera/directional/west{
 	c_tag = "Auxiliary Construction";
@@ -44831,7 +44831,7 @@
 /obj/structure/closet/crate/secure{
 	desc = "A secure crate containing various materials for building a customised test-site.";
 	name = "Test Site Materials Crate";
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/light_switch/directional/west{
@@ -45351,7 +45351,7 @@
 	name = "Disposal Vent Control";
 	pixel_x = -25;
 	pixel_y = 4;
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /obj/structure/chair/stool/directional/west,
 /obj/machinery/light/small/directional/west,
@@ -54508,7 +54508,7 @@
 "oPL" = (
 /obj/machinery/door/window/right/directional/east{
 	name = "Danger: Conveyor Access";
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/machinery/conveyor/inverted{
@@ -54862,7 +54862,7 @@
 "oUc" = (
 /obj/machinery/door/window/left/directional/north{
 	name = "Crate Return Access";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/effect/turf_decal/loading_area{
 	dir = 1
@@ -66964,7 +66964,7 @@
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/door/window/left/directional/south{
 	name = "Ore Redemption Access";
-	req_access = list("mineral storeroom")
+	req_access = list("mineral_storeroom")
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -68694,7 +68694,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "aiuploadwindow";
-	name = "AI Upload Lockdown Door"
+	name = "ai_upload Lockdown Door"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -77779,7 +77779,7 @@
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -78056,7 +78056,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "brigprison";
 	name = "Prison Lockdown";
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -78678,7 +78678,7 @@
 	name = "Engineering Secure Storage Control";
 	pixel_x = -36;
 	pixel_y = 4;
-	req_access = list("engine equip")
+	req_access = list("engine_equip")
 	},
 /obj/machinery/button/door/directional/west{
 	id = "transitlock";
@@ -80216,7 +80216,7 @@
 	},
 /obj/machinery/door/window/right/directional/north{
 	name = "Incoming Mail";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -88365,7 +88365,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure Tech Storage"
+	name = "Secure tech_storage"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -89220,7 +89220,7 @@
 	dir = 1;
 	name = "Security Desk";
 	pixel_y = 8;
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

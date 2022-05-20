@@ -201,7 +201,7 @@
 /area/awaymission/research/interior/maint)
 "aP" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
@@ -737,7 +737,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Gateway Access";
-	req_access = list("away generic1")
+	req_access = list("away_generic1")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -941,7 +941,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Secure Storage C";
-	req_access = list("away generic1")
+	req_access = list("away_generic1")
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
@@ -950,7 +950,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Secure Storage D";
-	req_access = list("away generic1")
+	req_access = list("away_generic1")
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
@@ -1043,7 +1043,7 @@
 /area/awaymission/research/interior)
 "et" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
@@ -1150,7 +1150,7 @@
 /area/awaymission/research/interior/maint)
 "eH" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1214,7 +1214,7 @@
 "eQ" = (
 /obj/machinery/door/window/right/directional/north{
 	name = "Cell Door";
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1228,7 +1228,7 @@
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1622,7 +1622,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Power Storage";
-	req_access = list("away generic1")
+	req_access = list("away_generic1")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -1640,7 +1640,7 @@
 "gl" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Vault Storage";
-	req_access = list("away generic1")
+	req_access = list("away_generic1")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -2005,7 +2005,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Secure Storage A";
-	req_access = list("away generic1")
+	req_access = list("away_generic1")
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
@@ -2014,7 +2014,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Secure Storage B";
-	req_access = list("away generic1")
+	req_access = list("away_generic1")
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
@@ -3957,7 +3957,7 @@
 /area/awaymission/research/interior/cryo)
 "zn" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -4059,7 +4059,7 @@
 /area/awaymission/research/interior)
 "Do" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -4283,7 +4283,7 @@
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -4472,7 +4472,7 @@
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -4611,7 +4611,7 @@
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -4624,7 +4624,7 @@
 /area/awaymission/research/interior)
 "UA" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -4677,7 +4677,7 @@
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "outerbrig";
 	name = "Brig";
-	req_access = list("brig entrance")
+	req_access = list("brig_entrance")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8

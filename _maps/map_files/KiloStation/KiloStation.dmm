@@ -4356,7 +4356,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/directional/south{
-	c_tag = "Tech Storage";
+	c_tag = "tech_storage";
 	name = "engineering camera";
 	network = list("ss13","engine")
 	},
@@ -4444,7 +4444,7 @@
 /obj/machinery/door/window/right/directional/west{
 	dir = 4;
 	name = "Cargo Desk";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/item/flashlight,
 /turf/open/floor/plating,
@@ -6089,7 +6089,7 @@
 /obj/machinery/door/window/left/directional/west{
 	dir = 4;
 	name = "Cargo Desk";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/item/clipboard,
 /obj/item/folder,
@@ -7887,7 +7887,7 @@
 /area/space/nearstation)
 "crI" = (
 /obj/machinery/door/window/left/directional/north{
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -8400,7 +8400,7 @@
 	dir = 8;
 	icon_state = "leftsecure";
 	name = "Primary AI Core Access";
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "AI Core shutters";
@@ -8972,7 +8972,7 @@
 	dwidth = 4;
 	height = 9;
 	id = "aux_base_zone";
-	name = "aux base zone";
+	name = "aux_base zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
 	width = 9
 	},
@@ -9241,7 +9241,7 @@
 /obj/machinery/door/window/left/directional/west{
 	dir = 2;
 	name = "Cargo Desk";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -9790,7 +9790,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/directional/east{
-	c_tag = "Aft Hallway Tech Storage";
+	c_tag = "Aft Hallway tech_storage";
 	name = "aft camera"
 	},
 /obj/structure/disposalpipe/segment,
@@ -13244,7 +13244,7 @@
 "dUK" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
-	name = "Tech Storage"
+	name = "tech_storage"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16032,16 +16032,16 @@
 /area/station/service/chapel/dock)
 "eIP" = (
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the AI Upload.";
+	desc = "Used for watching the ai_upload.";
 	dir = 4;
-	name = "AI Upload Monitor";
+	name = "ai_upload Monitor";
 	network = list("aiupload");
 	pixel_x = -28
 	},
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/camera/motion/directional/west{
-	c_tag = "AI Upload Foyer";
+	c_tag = "ai_upload Foyer";
 	name = "upload camera";
 	network = list("aiupload")
 	},
@@ -16364,7 +16364,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "aux_base_shutters";
 	name = "Auxiliary Base Shutters Toggle";
-	req_access = list("aux base")
+	req_access = list("aux_base")
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
@@ -18906,7 +18906,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "Secure Storage";
 	name = "Secure Storage Toggle";
-	req_access = list("engine equip")
+	req_access = list("engine_equip")
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -21420,7 +21420,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "gravity";
 	name = "Gravity Generator Lockdown";
-	req_one_access = list("command","tech storage")
+	req_one_access = list("command","tech_storage")
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
@@ -21894,7 +21894,7 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/door/window/right/directional/south{
 	name = "Cargo Disposal";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -25861,7 +25861,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 2;
 	name = "Cargo Delivery Access";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -26016,7 +26016,7 @@
 /obj/machinery/door/window/left/directional/north{
 	dir = 2;
 	name = "Cargo Delivery Access";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/structure/plasticflaps/opaque,
 /obj/effect/turf_decal/delivery,
@@ -28789,7 +28789,7 @@
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "AI Core shutters";
@@ -30000,7 +30000,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/highsecurity{
-	name = "AI Upload"
+	name = "ai_upload"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -30639,7 +30639,7 @@
 	},
 /obj/machinery/door/morgue{
 	name = "Coffin Storage";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
@@ -31863,7 +31863,7 @@
 	layer = 4.1;
 	name = "Tertiary AI Core Access";
 	pixel_x = -3;
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai)
@@ -32774,7 +32774,7 @@
 "jat" = (
 /obj/structure/table,
 /obj/machinery/camera/directional/west{
-	c_tag = "AI Upload";
+	c_tag = "ai_upload";
 	name = "upload camera";
 	network = list("aiupload")
 	},
@@ -34866,13 +34866,13 @@
 	id = "AI Core shutters";
 	name = "AI Core Shutters Toggle";
 	pixel_x = 24;
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /obj/machinery/button/door/directional/north{
 	id = "AI Chamber entrance shutters";
 	name = "AI Chamber Lockdown";
 	pixel_x = -24;
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai)
@@ -37748,7 +37748,7 @@
 	id = "Secure Storage";
 	name = "Secure Storage Toggle";
 	pixel_x = 6;
-	req_access = list("engine equip")
+	req_access = list("engine_equip")
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
@@ -37953,7 +37953,7 @@
 "kGs" = (
 /obj/machinery/door/morgue{
 	name = "Religious Equipment";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
@@ -46743,7 +46743,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/camera/directional/north{
-	c_tag = "Secure Tech Storage";
+	c_tag = "Secure tech_storage";
 	name = "engineering camera";
 	network = list("ss13","engine")
 	},
@@ -50871,7 +50871,7 @@
 "oqN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
-	name = "Tech Storage"
+	name = "tech_storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron/dark,
@@ -51757,7 +51757,7 @@
 /obj/machinery/button/door/directional/west{
 	id = "gravity";
 	name = "Gravity Generator Lockdown";
-	req_one_access = list("command","tech storage")
+	req_one_access = list("command","tech_storage")
 	},
 /turf/open/floor/engine,
 /area/station/engineering/gravity_generator)
@@ -52584,7 +52584,7 @@
 /obj/machinery/door/window/right/directional/south{
 	dir = 4;
 	name = "Mail Chute";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -52850,7 +52850,7 @@
 "oTd" = (
 /obj/machinery/door/morgue{
 	name = "Mass Driver";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -55968,7 +55968,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "aux_base_shutters";
 	name = "Auxiliary Base Shutters Toggle";
-	req_access = list("aux base")
+	req_access = list("aux_base")
 	},
 /turf/open/floor/iron/dark,
 /area/construction/mining/aux_base)
@@ -56299,7 +56299,7 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/door/window/left/directional/south{
 	name = "Cargo Disposal";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "packageSort2";
@@ -59617,7 +59617,7 @@
 	id = "Disposal Exit";
 	name = "Disposal Vent Control";
 	pixel_y = 4;
-	req_access = list("maint tunnels")
+	req_access = list("maint_tunnels")
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -59799,7 +59799,7 @@
 /obj/machinery/door/window/left/directional/west{
 	dir = 4;
 	name = "Mailroom Desk";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
@@ -66164,7 +66164,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/camera/directional/north{
-	c_tag = "Brig Entrance"
+	c_tag = "brig_entrance"
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -70337,7 +70337,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 8;
 	name = "Ore Redemtion Window";
-	req_access = list("mineral storeroom")
+	req_access = list("mineral_storeroom")
 	},
 /turf/open/floor/plating,
 /area/station/cargo/office)
@@ -73912,7 +73912,7 @@
 "uUk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure Tech Storage"
+	name = "Secure tech_storage"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
@@ -74561,7 +74561,7 @@
 "vdy" = (
 /obj/machinery/door/morgue{
 	name = "Confession Booth (Chaplain)";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood/parquet,
@@ -78530,7 +78530,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/right/directional/north{
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -79806,7 +79806,7 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
-	name = "AI Upload turret control";
+	name = "ai_upload turret control";
 	pixel_x = -30
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -81454,7 +81454,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/highsecurity{
-	name = "AI Upload"
+	name = "ai_upload"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -84046,7 +84046,7 @@
 	layer = 4.1;
 	name = "Secondary AI Core Access";
 	pixel_x = 4;
-	req_access = list("ai upload")
+	req_access = list("ai_upload")
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai)
@@ -84767,7 +84767,7 @@
 /obj/machinery/door/window/left/directional/west{
 	dir = 1;
 	name = "Crate Return Door";
-	req_access = list("mail sorting")
+	req_access = list("mail_sorting")
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -85339,7 +85339,7 @@
 /obj/item/kirbyplants/random,
 /obj/machinery/status_display/ai/directional/east,
 /obj/machinery/camera/directional/north{
-	c_tag = "AI Upload Turrets";
+	c_tag = "ai_upload Turrets";
 	name = "upload camera";
 	network = list("aiupload")
 	},

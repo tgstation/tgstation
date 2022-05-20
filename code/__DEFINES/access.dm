@@ -10,26 +10,26 @@
 
 /// Command general access, EVA storage windoors, gateway shuters, AI integrity restorer, comms console
 #define ACCESS_COMMAND "command"
-#define ACCESS_AI_UPLOAD "ai upload"
+#define ACCESS_AI_UPLOAD "ai_upload"
 #define ACCESS_TELEPORTER "teleporter"
 #define ACCESS_EVA "eva"
 ///Request console announcements
-#define ACCESS_RC_ANNOUNCE "rc announce"
+#define ACCESS_RC_ANNOUNCE "rc_announce"
 /// Used for events which require at least two people to confirm them
-#define ACCESS_KEYCARD_AUTH "keycard auth"
+#define ACCESS_KEYCARD_AUTH "keycard_auth"
 #define ACCESS_MINISAT "minisat"
 /// NTnet diagnostics/monitoring software
 #define ACCESS_NETWORK "network"
 #define ACCESS_GATEWAY "gateway"
-#define ACCESS_ALL_PERSONAL_LOCKERS "all personal lockers"
-#define ACCESS_CHANGE_IDS "change ids"
+#define ACCESS_ALL_PERSONAL_LOCKERS "all_personal_lockers"
+#define ACCESS_CHANGE_IDS "change_ids"
 #define ACCESS_CAPTAIN "captain"
 #define ACCESS_HOP "hop"
 
 /// Security general access, security records, gulag item storage, secbots
 #define ACCESS_SECURITY "security"
 /// Outer brig doors
-#define ACCESS_BRIG_ENTRANCE "brig entrance"
+#define ACCESS_BRIG_ENTRANCE "brig_entrance"
 /// Brig cells+timers, permabrig, gulag+gulag shuttle, prisoner management console, security equipment
 #define ACCESS_BRIG "brig"
 /// Armory, gulag teleporter, execution chamber
@@ -44,15 +44,15 @@
 /// Engineering general access, power monitor, power flow control console
 #define ACCESS_ENGINEERING "engineering"
 #define ACCESS_ATMOSPHERICS "atmospherics"
-#define ACCESS_MAINT_TUNNELS "maint tunnels"
+#define ACCESS_MAINT_TUNNELS "maint_tunnels"
 ///APCs, EngiVend/YouTool, engineering equipment lockers
-#define ACCESS_ENGINE_EQUIP "engine equip"
+#define ACCESS_ENGINE_EQUIP "engine_equip"
 #define ACCESS_CONSTRUCTION "construction"
-#define ACCESS_TECH_STORAGE "tech storage"
+#define ACCESS_TECH_STORAGE "tech_storage"
 /// has access to the entire telecomms satellite / machinery
 #define ACCESS_TCOMMS "tcomms"
 /// Room and launching.
-#define ACCESS_AUX_BASE "aux base"
+#define ACCESS_AUX_BASE "aux_base"
 #define ACCESS_EXTERNAL_AIRLOCKS "external airlocks"
 #define ACCESS_CE "ce"
 
@@ -71,10 +71,10 @@
 
 ///Cargo general access
 #define ACCESS_CARGO "cargo"
-#define ACCESS_MAIL_SORTING "mail sorting"
+#define ACCESS_MAIL_SORTING "mail_sorting"
 /// For releasing minerals from the ORM
-#define ACCESS_MINERAL_STOREROOM "mineral storeroom"
-#define ACCESS_MINING_STATION "mining station"
+#define ACCESS_MINERAL_STOREROOM "mineral_storeroom"
+#define ACCESS_MINING_STATION "mining_station"
 #define ACCESS_VAULT "vault"
 #define ACCESS_QM "qm"
 #define ACCESS_MINING "mining"
@@ -82,7 +82,7 @@
 ///Science general access
 #define ACCESS_SCIENCE "science"
 #define ACCESS_RESEARCH "research"
-#define ACCESS_ORDNANCE_STORAGE "ordnance storage"
+#define ACCESS_ORDNANCE_STORAGE "ordnance_storage"
 #define ACCESS_RD "rd"
 #define ACCESS_GENETICS "genetics"
 #define ACCESS_ROBOTICS "robotics"
@@ -92,7 +92,7 @@
 ///Service general access
 #define ACCESS_SERVICE "service"
 #define ACCESS_THEATRE "theatre"
-#define ACCESS_CHAPEL_OFFICE "chapel office"
+#define ACCESS_CHAPEL_OFFICE "chapel_office"
 #define ACCESS_CREMATORIUM "crematorium"
 #define ACCESS_LIBRARY "library"
 #define ACCESS_BAR "bar"
@@ -104,45 +104,45 @@
 /// - - - AWAY MISSIONS - - -
 /*For generic away-mission/ruin access. Why would normal crew have access to a long-abandoned derelict
 	or a 2000 year-old temple? */
-#define ACCESS_AWAY_GENERAL "away general"
-#define ACCESS_AWAY_COMMAND "away command"
-#define ACCESS_AWAY_SEC "away sec"
-#define ACCESS_AWAY_ENGINEERING "away engineering"
-#define ACCESS_AWAY_MEDICAL "away medical"
-#define ACCESS_AWAY_SUPPLY "away supply"
-#define ACCESS_AWAY_SCIENCE "away science"
-#define ACCESS_AWAY_MAINTENANCE "away maintenance"
-#define ACCESS_AWAY_GENERIC1 "away generic1"
-#define ACCESS_AWAY_GENERIC2 "away generic2"
-#define ACCESS_AWAY_GENERIC3 "away generic3"
-#define ACCESS_AWAY_GENERIC4 "away generic4"
+#define ACCESS_AWAY_GENERAL "away_general"
+#define ACCESS_AWAY_COMMAND "away_command"
+#define ACCESS_AWAY_SEC "away_sec"
+#define ACCESS_AWAY_ENGINEERING "away_engineering"
+#define ACCESS_AWAY_MEDICAL "away_medical"
+#define ACCESS_AWAY_SUPPLY "away_supply"
+#define ACCESS_AWAY_SCIENCE "away_science"
+#define ACCESS_AWAY_MAINTENANCE "away_maintenance"
+#define ACCESS_AWAY_GENERIC1 "away_generic1"
+#define ACCESS_AWAY_GENERIC2 "away_generic2"
+#define ACCESS_AWAY_GENERIC3 "away_generic3"
+#define ACCESS_AWAY_GENERIC4 "away_generic4"
 
 /// - - - MECH - - -
 	// Mech Access, allows maintanenace of internal components and altering keycard requirements.
-#define ACCESS_MECH_MINING "mech mining"
-#define ACCESS_MECH_MEDICAL "mech medical"
-#define ACCESS_MECH_SECURITY "mech security"
-#define ACCESS_MECH_SCIENCE "mech science"
-#define ACCESS_MECH_ENGINE "mech engine"
+#define ACCESS_MECH_MINING "mech_mining"
+#define ACCESS_MECH_MEDICAL "mech_medical"
+#define ACCESS_MECH_SECURITY "mech_security"
+#define ACCESS_MECH_SCIENCE "mech_science"
+#define ACCESS_MECH_ENGINE "mech_engine"
 
 /// - - - ADMIN - - -
 	// Used for admin events and things of the like. Lots of extra space for more admin tools in the future
 /// General facilities. Centcom ferry.
-#define ACCESS_CENT_GENERAL "cent general"
-#define ACCESS_CENT_THUNDER "cent thunder"
-#define ACCESS_CENT_MEDICAL "cent medical"
-#define ACCESS_CENT_LIVING "cent living"
-#define ACCESS_CENT_STORAGE "cent storage"
-#define ACCESS_CENT_TELEPORTER "cent teleporter"
-#define ACCESS_CENT_CAPTAIN "cent captain"
-#define ACCESS_CENT_BAR "cent bar"
+#define ACCESS_CENT_GENERAL "cent_general"
+#define ACCESS_CENT_THUNDER "cent_thunder"
+#define ACCESS_CENT_MEDICAL "cent_medical"
+#define ACCESS_CENT_LIVING "cent_living"
+#define ACCESS_CENT_STORAGE "cent_storage"
+#define ACCESS_CENT_TELEPORTER "cent_teleporter"
+#define ACCESS_CENT_CAPTAIN "cent_captain"
+#define ACCESS_CENT_BAR "cent_bar"
 /// Special Ops. Captain's display case, Marauder and Seraph mechs.
 #define ACCESS_CENT_SPECOPS 188 ///Remind me to separate to captain, centcom, and syndicate mech access later -SonofSpace
 
 /// - - - ANTAGONIST - - -
 /// SYNDICATE
 #define ACCESS_SYNDICATE "syndicate"
-#define ACCESS_SYNDICATE_LEADER "syndicate leader"
+#define ACCESS_SYNDICATE_LEADER "syndicate_leader"
 /// BLOODCULT
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT "bloodcult"
@@ -285,7 +285,7 @@
 	ACCESS_SERVICE, \
 )
 
-/// Command staff/secure accesses, think bridge/armoury, AI upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
+/// Command staff/secure accesses, think bridge/armoury, ai_upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
 	ACCESS_MINISAT, \
 	ACCESS_TCOMMS, \

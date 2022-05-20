@@ -1156,8 +1156,8 @@
 /area/ruin/space/derelict/singularity_engine)
 "fR" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Tech Storage";
-	req_access = list("tech storage")
+	name = "tech_storage";
+	req_access = list("tech_storage")
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
@@ -1524,7 +1524,7 @@
 "hG" = (
 /obj/machinery/door/morgue{
 	name = "coffin storage";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/medical/chapel)
@@ -2551,7 +2551,7 @@
 "mW" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Aux Storage";
-	req_access = list("tech storage")
+	req_access = list("tech_storage")
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)

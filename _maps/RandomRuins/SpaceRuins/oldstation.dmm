@@ -1240,7 +1240,7 @@
 /obj/item/assembly/flash/handheld,
 /obj/item/storage/box/firingpins,
 /obj/structure/closet/crate/secure/weapon{
-	req_access = list("away sec")
+	req_access = list("away_sec")
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
@@ -1554,7 +1554,7 @@
 "ux" = (
 /obj/machinery/door/airlock/command{
 	name = "Charlie Station Access";
-	req_access = list("away general")
+	req_access = list("away_general")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3696,7 +3696,7 @@
 "EH" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemical Storage";
-	req_access = list("away general")
+	req_access = list("away_general")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
@@ -5215,7 +5215,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Prototype Laboratory";
-	req_access = list("away general")
+	req_access = list("away_general")
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
@@ -7435,7 +7435,7 @@
 "VA" = (
 /obj/machinery/door/airlock/command{
 	name = "Charlie Station Access";
-	req_access = list("away general")
+	req_access = list("away_general")
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
@@ -7537,7 +7537,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Prototype Laboratory";
-	req_access = list("away general")
+	req_access = list("away_general")
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

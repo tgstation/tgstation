@@ -399,14 +399,14 @@
 	name = "Bridge Lockdown";
 	normaldoorcontrol = 1;
 	pixel_x = -6;
-	req_access = list("syndicate leader");
+	req_access = list("syndicate_leader");
 	specialfunctions = 4
 	},
 /obj/machinery/button/door{
 	id = "syndie_battlecruier_bridge_blast";
 	name = "Bridge Blast Doors";
 	pixel_x = 6;
-	req_access = list("syndicate leader")
+	req_access = list("syndicate_leader")
 	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
@@ -935,7 +935,7 @@
 "dk" = (
 /obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "command desk";
-	req_access = list("syndicate leader")
+	req_access = list("syndicate_leader")
 	},
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
@@ -2063,7 +2063,7 @@
 	anchored = 1;
 	icon_state = "tac";
 	name = "Explosives Locker";
-	req_access = list("syndicate leader")
+	req_access = list("syndicate_leader")
 	},
 /obj/item/storage/belt/grenade/full,
 /obj/item/grenade/syndieminibomb{
@@ -2331,7 +2331,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "syndie_battlecruiser_mech";
 	name = "Mech Storage Shutters";
-	req_access = list("syndicate leader")
+	req_access = list("syndicate_leader")
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/pod/dark,
@@ -2617,7 +2617,7 @@
 "ii" = (
 /obj/machinery/door/airlock{
 	name = "Captain's Quarters";
-	req_access = list("syndicate leader")
+	req_access = list("syndicate_leader")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2667,7 +2667,7 @@
 	id = "syndie_battlecruiser_armory";
 	name = "Armory Bolt Control";
 	normaldoorcontrol = 1;
-	req_access = list("syndicate leader");
+	req_access = list("syndicate_leader");
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark,
@@ -2728,11 +2728,11 @@
 	anchored = 1;
 	icon_state = "hos";
 	name = "Captain's Locker";
-	req_access = list("syndicate leader")
+	req_access = list("syndicate_leader")
 	},
 /obj/item/storage/lockbox/medal{
 	req_access = null;
-	req_access = list("syndicate leader")
+	req_access = list("syndicate_leader")
 	},
 /obj/item/ammo_box/a357{
 	icon_state = "357-7";
@@ -4229,7 +4229,7 @@
 	id = "syndie_battlecruiser_armory";
 	name = "Armory Bolt Control";
 	normaldoorcontrol = 1;
-	req_access = list("syndicate leader");
+	req_access = list("syndicate_leader");
 	specialfunctions = 4
 	},
 /turf/open/floor/pod/dark,

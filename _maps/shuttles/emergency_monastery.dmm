@@ -1287,7 +1287,7 @@
 	dir = 1;
 	icon_state = "right";
 	name = "Coffin Storage";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1664,7 +1664,7 @@
 /obj/machinery/door/window/left/directional/east{
 	dir = 1;
 	name = "Coffin Storage";
-	req_access = list("chapel office")
+	req_access = list("chapel_office")
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -2997,7 +2997,7 @@
 "OH" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Monastery Maintenance";
-	req_access = list("service","maint tunnels")
+	req_access = list("service","maint_tunnels")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
