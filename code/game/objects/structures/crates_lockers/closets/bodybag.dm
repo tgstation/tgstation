@@ -316,9 +316,9 @@
 	air_contents = new(50) //liters
 	air_contents.temperature = T20C
 
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
+	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+	air_contents.gases[/datum/gas/nitrogen][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
 /obj/structure/closet/body_bag/environmental/prisoner/pressurized/Destroy()
 	if(air_contents)
@@ -360,3 +360,12 @@
 	weather_protection = list(TRAIT_WEATHER_IMMUNE)
 	breakout_time = 8 MINUTES
 	sinch_time = 20 SECONDS
+
+/obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate/refresh_air()
+	air_contents = null
+	air_contents = new(50) //liters
+	air_contents.temperature = T20C
+
+	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
+	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (ONE_ATMOSPHERE*50)/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
