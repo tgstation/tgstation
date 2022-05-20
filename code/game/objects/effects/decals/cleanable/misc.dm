@@ -315,3 +315,53 @@
 /obj/effect/decal/cleanable/ants/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "[icon_state]_light", alpha = src.alpha)
+
+/obj/effect/decal/cleanable/fuel_pool
+	name = "pool of fuel"
+	desc = "A pool of flammable fuel. It's probably wise to clean this off before something ignites it..."
+	icon_state = "fuel_pool"
+	layer = LOW_OBJ_LAYER
+	beauty = -50
+	clean_type = CLEAN_TYPE_BLOOD
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	var/burn_amount = 3
+	var/burning = FALSE
+	var/hotspot_type = /obj/effect/hotspot //For future
+
+/obj/effect/decal/cleanable/fuel_pool/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	for(var/obj/effect/decal/cleanable/fuel_pool/pool in get_turf(src)) //Can't use locate because we also belong to that turf
+		if(pool == src)
+			continue
+		pool.burn_amount = min(pool.burn_amount + 1, 10)
+		return INITIALIZE_HINT_QDEL
+
+/obj/effect/decal/cleanable/fuel_pool/fire_act(exposed_temperature, exposed_volume)
+	. = ..()
+	ignite()
+
+/obj/effect/decal/cleanable/fuel_pool/proc/ignite()
+	if(burning)
+		return
+	burning = TRUE
+	addtimer(CALLBACK(src, .proc/ignite_others), 0.5 SECONDS)
+	start_burn()
+
+/obj/effect/decal/cleanable/fuel_pool/proc/start_burn()
+	SIGNAL_HANDLER
+
+	if(!burn_amount)
+		qdel(src)
+		return
+
+	burn_amount -= 1
+	var/obj/effect/hotspot/hotspot = new hotspot_type(get_turf(src))
+	RegisterSignal(hotspot, COMSIG_PARENT_QDELETING, .proc/start_burn)
+
+/obj/effect/decal/cleanable/fuel_pool/proc/ignite_others()
+	for(var/obj/effect/decal/cleanable/fuel_pool/oil in range(1, get_turf(src)))
+		oil.ignite()
+
+/obj/effect/decal/cleanable/fuel_pool/bullet_act(obj/projectile/P)
+	. = ..()
+	ignite()

@@ -1158,10 +1158,21 @@
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.adjust_fire_stacks(reac_volume / 10)
 
-/datum/reagent/fuel/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustToxLoss(0.5*delta_time, 0)
+/datum/reagent/fuel/on_mob_life(mob/living/carbon/victim, delta_time, times_fired)
+	victim.adjustToxLoss(0.5 * delta_time, 0)
 	..()
 	return TRUE
+
+/datum/reagent/fuel/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+
+	if(!istype(exposed_turf) || isspaceturf(exposed_turf))
+		return
+
+	if((reac_volume < 5))
+		return
+
+	new /obj/effect/decal/cleanable/fuel_pool(exposed_turf)
 
 /datum/reagent/space_cleaner
 	name = "Space Cleaner"

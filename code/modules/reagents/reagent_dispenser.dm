@@ -15,6 +15,10 @@
 	var/can_be_tanked = TRUE
 	///Is this source self-replenishing?
 	var/refilling = FALSE
+	///Can this dispenser be opened using a wrench?
+	var/openable = TRUE
+	///Is this dispenser slowly leaking it's reagent?
+	var/leaking = FALSE
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
 	. = ..()
@@ -36,6 +40,7 @@
 /obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
 	if(W.is_refillable())
 		return FALSE //so we can refill them via their afterattack.
+
 	if(istype(W, /obj/item/stack/sheet/iron) && can_be_tanked)
 		var/obj/item/stack/sheet/iron/metal_stack = W
 		metal_stack.use(1)
@@ -47,8 +52,8 @@
 		new_tank.set_anchored(anchored)
 		qdel(src)
 		return FALSE
-	else
-		return ..()
+
+	return ..()
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
 	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
@@ -67,6 +72,21 @@
 			boom()
 	else
 		qdel(src)
+
+/obj/structure/reagent_dispensers/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!openable)
+		return FALSE
+	leaking = !leaking
+	to_chat(user, span_notice("You [leaking ? "open" : "close"] a small tap on the back of [src]."))
+	log_game("[key_name(user)] [leaking ? "opened" : "closed"] [src]")
+	if(leaking && reagents)
+		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
+
+/obj/structure/reagent_dispensers/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(leaking && reagents)
+		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
 
 /obj/structure/reagent_dispensers/watertank
 	name = "water tank"
@@ -159,6 +179,7 @@
 	anchored = TRUE
 	density = FALSE
 	can_be_tanked = FALSE
+	openable = FALSE
 
 /obj/structure/reagent_dispensers/wall/peppertank
 	name = "pepper spray refiller"
@@ -179,6 +200,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = TRUE
+	openable = FALSE
 	tank_volume = 500
 	var/paper_cups = 25 //Paper cups left from the cooler
 
