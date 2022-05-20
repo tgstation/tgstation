@@ -29,7 +29,7 @@
 /datum/round_event/scrubber_clog/setup()
 	scrubber = get_scrubber()
 	if(!scrubber)
-		end()
+		kill()
 		CRASH("Unable to find suitable scrubber.")
 
 	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
@@ -109,7 +109,7 @@
 	scrubber = null //If by some great calamity, the last valid scrubber is destroyed, the ref is cleared.
 	scrubber = get_scrubber()
 	if(!scrubber)
-		end()
+		kill()
 		CRASH("Unable to find suitable scrubber.")
 
 	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
