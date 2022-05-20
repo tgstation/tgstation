@@ -207,7 +207,7 @@
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/energy_shield/wizard,
-		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/emp_shield/advanced,
 	)
 
 /obj/item/mod/control/pre_equipped/prototype
@@ -304,7 +304,7 @@
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/welding,
-		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/emp_shield/advanced,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
 	)
@@ -317,6 +317,7 @@
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/hat_stabilizer,
 		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/emp_shield/advanced,
 	)
 
 /obj/item/mod/control/pre_equipped/chrono
@@ -349,11 +350,13 @@
 	applied_core = /obj/item/mod/core/infinite
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
+		/obj/item/mod/module/emp_shield/advanced,
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/quick_carry/advanced,
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/anomaly_locked/kinesis/prebuilt,
 	)
 
 //these exist for the prefs menu
