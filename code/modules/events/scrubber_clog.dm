@@ -24,11 +24,12 @@
 	var/clogged = TRUE
 
 /datum/round_event/scrubber_clog/announce()
-	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Custodial Notification")
+	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(scrubber)] area.", "Custodial Notification")
 
 /datum/round_event/scrubber_clog/setup()
 	scrubber = get_scrubber()
 	if(!scrubber)
+		end()
 		CRASH("Unable to find suitable scrubber.")
 
 	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
@@ -40,10 +41,10 @@
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
 	scrubber.clog()
-	scrubber.produce_mob() //The first one's free!
+	scrubber.produce_mob(spawned_mob, living_mobs) //The first one's free!
 
 /datum/round_event/scrubber_clog/tick() //Checks if spawn_interval is met, then sends signal to scrubber to produce a mob.
-	if(activeFor % spawn_delay == 0 && scrubber.clogged == TRUE)
+	if(activeFor % spawn_delay == 0 && scrubber.clogged)
 		life_check()
 		if(living_mobs.len < maximum_spawns && clogged)
 			scrubber.produce_mob(spawned_mob, living_mobs)
@@ -63,9 +64,9 @@
 	var/static/list/mob_list = list(
 				/mob/living/simple_animal/mouse,
 				/mob/living/basic/cockroach,
-				/mob/living/simple_animal/butterfly
-				)
-	return(pick(mob_list))
+				/mob/living/simple_animal/butterfly,
+	)
+	return pick(mob_list)
 
 /**
  * Finds a valid scrubber for the scrubber clog event.
@@ -80,6 +81,7 @@
 		var/turf/scrubber_turf = get_turf(scrubber)
 		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
 			scrubber_list += scrubber
+
 	return pick(scrubber_list)
 
 /**
@@ -90,9 +92,10 @@
  */
 
 /datum/round_event/scrubber_clog/proc/life_check()
-	for(var/mob/living/mob_check in living_mobs)
-		if(mob_check.health <= 0)
-			living_mobs -= mob_check
+	for(var/datum/weakref/mob_ref as anything in living_mobs)
+		var/mob/living/real_mob = mob_ref.resolve()
+		if(QDELETED(real_mob) || real_mob.stat == DEAD)
+			living_mobs -= mob_ref
 
 /**
  * Finds a new scrubber for the event if the original is destroyed.
@@ -101,20 +104,17 @@
  * Handles the scrubber ref if there are no valid scrubbers to replace it with.
  */
 
-/datum/round_event/scrubber_clog/proc/scrubber_move()
+/datum/round_event/scrubber_clog/proc/scrubber_move(datum/source)
 	SIGNAL_HANDLER
 	scrubber = null //If by some great calamity, the last valid scrubber is destroyed, the ref is cleared.
 	scrubber = get_scrubber()
 	if(!scrubber)
+		end()
 		CRASH("Unable to find suitable scrubber.")
 
 	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
 
-	switch(pick(1,2))
-		if(1)
-			priority_announce("Lifesign readings have moved to a new location in the ventilation network. New location: [get_area(scrubber)]", "Lifesign Notification")
-		if(2)
-			priority_announce("Lifesign readings have moved to a new location in the ventilation network. New location is unknown at this time.", "Lifesign Notification")
+	priority_announce("Lifesign readings have moved to a new location in the ventilation network. New Location: [prob(50) ? "Unknown.":"[get_area_name(scrubber)]."]", "Lifesign Notification")
 
 /datum/round_event_control/scrubber_clog/major
 	name = "Major Scrubber Clog"
@@ -132,12 +132,12 @@
 	var/static/list/mob_list = list(
 		/mob/living/simple_animal/hostile/rat,
 		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/hostile/giant_spider
+		/mob/living/simple_animal/hostile/giant_spider,
 		)
-	return(pick(mob_list))
+	return pick(mob_list)
 
 /datum/round_event/scrubber_clog/major/announce()
-	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area(scrubber)] area.", "Infestation Alert")
+	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [get_area_name(scrubber)] area.", "Infestation Alert")
 
 /datum/round_event_control/scrubber_clog/critical
 	name = "Critical Scrubber Clog"
@@ -155,15 +155,15 @@
 	spawn_delay = rand(15,25)
 
 /datum/round_event/scrubber_clog/critical/announce()
-	priority_announce("Potentially hazardous lifesigns detected in the [get_area(scrubber)] ventilation network.", "Security Alert")
+	priority_announce("Potentially hazardous lifesigns detected in the [get_area_name(scrubber)] ventilation network.", "Security Alert")
 
 /datum/round_event/scrubber_clog/critical/get_mob()
 	var/static/list/mob_list = list(
 		/mob/living/simple_animal/hostile/carp,
 		/mob/living/simple_animal/hostile/bee/toxin,
 		/mob/living/basic/cockroach/glockroach,
-		)
-	return(pick(mob_list))
+	)
+	return pick(mob_list)
 
 /datum/round_event_control/scrubber_clog/strange
 	name = "Strange Scrubber Clog"
@@ -180,7 +180,7 @@
 	spawn_delay = rand(6, 25) //Wide range, for maximum utility/comedy
 
 /datum/round_event/scrubber_clog/strange/announce()
-	priority_announce("Unusual lifesign readings detected in the [get_area(scrubber)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce("Unusual lifesign readings detected in the [get_area_name(scrubber)] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/round_event/scrubber_clog/strange/get_mob()
 	var/static/list/mob_list = list(
@@ -188,6 +188,6 @@
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/pet/gondola,
 		/mob/living/simple_animal/hostile/mushroom,
-		/mob/living/simple_animal/hostile/lightgeist
-		)
-	return(pick(mob_list))
+		/mob/living/simple_animal/hostile/lightgeist,
+	)
+	return pick(mob_list)

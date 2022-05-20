@@ -510,7 +510,7 @@
  * Relevant code for how the list is handled is in the scrubber_clog.dm file.
  */
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/produce_mob(spawned_mob, living_mobs)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/produce_mob(spawned_mob, list/living_mobs)
 	if(welded)
 		return
 
