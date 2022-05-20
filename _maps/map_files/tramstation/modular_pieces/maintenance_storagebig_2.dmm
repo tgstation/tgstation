@@ -69,7 +69,8 @@
 	name = "General Storage Access"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance/turf/open/floor/catwalk_floor,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
