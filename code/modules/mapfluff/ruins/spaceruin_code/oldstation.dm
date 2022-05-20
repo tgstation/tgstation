@@ -75,13 +75,13 @@
 	name = "Diary note - Molly"
 	info = "It has been several months since our Molly passed away. She was our most valuable crew member, especially compared to that prick that happily threw a party to make sure `that beef won't go to waste`...<br><br> \
 	Oh, how I miss her warm milk...<br><br>I've put Molly's biopsy in the fridge and almost completed the solution.<br><br> \
-	Next steps:<ul><li>Fill the growing vat with the broth (beaker nearby)</li><li>Add one dropper of the solution</li><li>Add Molly's biopsy to the vat</li></ul> \
-	Just need to make sure to use the correct bottle this time... I'll even mark it as `<b>Solution for Molly</b>`, or I tend to mix things up... Oh, I can already feel the endorphin release from hugging her again.<br><br> \
+	Next steps:<ul><li>Pour the broth to the growing vat (beaker nearby)</li><li>Add one dropper of the solution</li><li>Add Molly's biopsy to the vat</li></ul> \
+	Just need to make sure to use the correct bottle this time... I'll even mark it as `<b>Solution for Molly</b>`, or I tend to mix things up... <br>I can already feel the endorphin release from hugging her again.<br><br> \
 	If everything goes well, I will try out those slimes the papers praising as the future of science. They say that the cell lines may be found on anything moldy and rotting, and these small blobs have crazy mutation potential when properly fed."
 
 /obj/item/paper/fluff/ruins/oldstation/biolab_note_emergency
 	name = "Diary note - Emergency"
-	info = "OH GOD, the station is still creaking from a heavy impact in the port direction. The power is down, coms not responding, the air supply pipe is depressurized and I can feel the artificial gravity weakening. \
+	info = "OH GOD, the station is still creaking from a heavy impact in the port direction. The power is down, coms not responding, the air supply pipe depressurized and I can feel the artificial gravity weakening. \
 	The whole department is running around in panic. I'll just pray that engineers won't let the engine delaminate.<br><br> ...And the alien spawn have broken out of the containment area due to the impact and slipped into the vent.<br><br> \
 	I have a bad feeling about this, but I doubt that now is the right time to make guys hunt for what they call my `pet cockroach`... And RD is scary..."
 
@@ -202,9 +202,21 @@
 		return
 	open_machine()
 
+/obj/effect/spawner/structure/window/reinforced/damaged
+	name = "damaged reinforced window spawner"
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/fulltile/damaged)
+
+/obj/structure/window/reinforced/fulltile/damaged
+	var/integrity_min_factor = 0.2
+	var/integrity_max_factor = 0.8
+
+/obj/structure/window/reinforced/fulltile/damaged/Initialize(mapload)
+	. = ..()
+	atom_integrity = rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor)
+
 /obj/item/petri_dish/oldstation
 	name = "Molly's biopsy"
-	desc = "You can see a moldy piece of sandwich inside the dish."
+	desc = "You can see a moldy piece of sandwich inside the dish. Maybe it helped to preserve the bacteria for that long."
 
 /obj/item/petri_dish/oldstation/Initialize(mapload)
 	. = ..()
@@ -215,3 +227,19 @@
 	sample.Merge(contamination)
 	sample.sample_color = COLOR_SAMPLE_BROWN
 	update_appearance()
+
+/obj/item/reagent_containers/glass/beaker/oldstation
+	name = "Cultivation broth"
+	amount_per_transfer_from_this = 50
+	list_reagents = list(
+		// Required for CELL_LINE_TABLE_COW
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/cellulose = 5,
+		// Required for CELL_LINE_TABLE_GRAPE
+		/datum/reagent/toxin/slimejelly = 5,
+		/datum/reagent/yuck = 5,
+		/datum/reagent/consumable/vitfro = 5,
+		// Supplementary for CELL_LINE_TABLE_GRAPE
+		/datum/reagent/liquidgibs = 5
+	)
