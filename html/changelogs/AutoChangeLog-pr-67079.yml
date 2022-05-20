@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "supermatter cascade gas needed amount was broken and you'd needed around 200k Moles of antinob+hypernob (40% each at least) instead of \"just\" 20k Moles."
-  - balance: "changed how hypernob and antinob interact with the SM: heat capacity made similar (15 anti, -13 hyper), transmit modifier added (-5 anti, 3 hyper)"
-  - rscadd: "lights now break or set to emergency when the cascade starts, maintenance is set to emergency access"
