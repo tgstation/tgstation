@@ -44,7 +44,7 @@
 	src.lifetime = timeout
 	return TRUE
 
-///proc that exists so we can check if this exact moveloop datum already exists (in terms of vars) and so we can stop it from needlessly create a new one to overwrite the old one
+///check if this exact moveloop datum already exists (in terms of vars) so we can avoid creating a new one to overwrite the old duplicate
 /datum/move_loop/proc/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay = 1, timeout = INFINITY)
 	SHOULD_CALL_PARENT(TRUE)
 	if(loop_type == type && priority == src.priority && flags == src.flags && delay == src.delay && timeout == lifetime)
