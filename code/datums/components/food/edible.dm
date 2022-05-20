@@ -431,15 +431,15 @@ Behavior that's still missing from this component that original food items had t
 			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_service", /datum/mood_event/ate_event/no_service)
 		else
 			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_service", /datum/mood_event/ate_event/service)
-		if(!ate_at_table)
-			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_table", /datum/mood_event/ate_event/no_table)
-		else
-			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_table", /datum/mood_event/ate_event/table)
-		if(!ate_with_chair)
-			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_chair", /datum/mood_event/ate_event/no_chair)
-		else
-			SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_chair", /datum/mood_event/ate_event/chair)
-		if(!(food_flags & FOOD_FINGER_FOOD))
+		if(!(food_flags & FOOD_FINGER_FOOD) || HAS_TRAIT(eater, TRAIT_SNOB))
+			if(!ate_with_chair)
+				SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_chair", /datum/mood_event/ate_event/no_chair)
+			else
+				SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_chair", /datum/mood_event/ate_event/chair)
+			if(!ate_at_table)
+				SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_table", /datum/mood_event/ate_event/no_table)
+			else
+				SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_table", /datum/mood_event/ate_event/table)
 			if(!ate_with_utensils)
 				SEND_SIGNAL(eater, COMSIG_ADD_MOOD_EVENT, "ate_utensils", /datum/mood_event/ate_event/no_utensils)
 			else

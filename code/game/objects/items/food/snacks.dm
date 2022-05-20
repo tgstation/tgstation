@@ -126,7 +126,7 @@
 	name = "\improper Space Twinkie"
 	icon_state = "space_twinkie"
 	desc = "Guaranteed to survive longer than you will."
-	food_reagents = list(/datum/reagent/consumable/sugar = 4)
+	food_reagents = list(/datum/reagent/consumable/sugar = 4, /datum/reagent/consumable/nutriment = 1)
 	junkiness = 25
 	foodtypes = JUNKFOOD | GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
@@ -386,7 +386,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	icon_state = "boritosred"
 	trash_type = /obj/item/trash/boritos/red
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/astrotame = 1, /datum/reagent/consumable/cornmeal = 1)
-	tastes = list("fried corn" = 1, "nacho cheese" = 3) 
+	tastes = list("fried corn" = 1, "nacho cheese" = 3)
 
 /obj/item/food/cornchips/purple
 	name = "\improper Spicy Sweet Chili Boritos corn chips"
