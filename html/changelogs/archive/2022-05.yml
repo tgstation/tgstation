@@ -870,3 +870,30 @@
   - qol: If the state or temperature of your cryo ui is red that means cryoxadone
       wont be able to work.
   - bugfix: added a missing tank dispenser to kilo toxins.
+2022-05-20:
+  Ghilker:
+  - bugfix: supermatter cascade gas needed amount was broken and you'd needed around
+      200k Moles of antinob+hypernob (40% each at least) instead of "just" 20k Moles.
+  - balance: 'changed how hypernob and antinob interact with the SM: heat capacity
+      made similar (15 anti, -13 hyper), transmit modifier added (-5 anti, 3 hyper)'
+  - rscadd: lights now break or set to emergency when the cascade starts, maintenance
+      is set to emergency access
+  Mothblocks:
+  - balance: Midround rolls will now happen more frequently, with their power scaling
+      up over time.
+  - bugfix: Fixed midrounds not logging properly.
+  Rhials:
+  - bugfix: Radstorms now yield to the almighty GODMODE flag. Rejoice.
+  - bugfix: Removes some stray wires in Tram med maintenance
+  Ryll/Shaps:
+  - admin: Admins using the dsay verb will now have their rank(s) shown in a hoverable
+      tooltip
+  SmArtKar:
+  - bugfix: Fixes solid plasma breaking into plasmaglass shards
+  SpaceSmithers:
+  - bugfix: Removes a duplicate table in the Laundry Room of IceboxStation
+  dragomagol:
+  - admin: AI malf/combat purchases are now logged in uplink.log
+  nickup9:
+  - qol: Department heads are now able to check their department budgets when examining
+      their ID. NT IRN has also been updated for clarity.
