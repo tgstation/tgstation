@@ -110,7 +110,7 @@
 	return ..()
 
 /obj/item/mod/module/jetpack/proc/refresh_jetpack()
-	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_JETMODULE_ACTIVATED, COMSIG_MODULE_DEACTIVATED, JETMODULE_ACTIVATION_FAILED, get_mover, check_on_move, /datum/effect_system/trail_follow/ion/grav_allowed)
+	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, COMSIG_MODULE_TRIGGERED, get_mover, check_on_move, /datum/effect_system/trail_follow/ion/grav_allowed)
 
 /obj/item/mod/module/jetpack/proc/set_stabilizers(new_stabilizers)
 	if(stabilizers == new_stabilizers)
@@ -121,8 +121,6 @@
 /obj/item/mod/module/jetpack/on_activation()
 	. = ..()
 	if(!.)
-		return
-	if(SEND_SIGNAL(src, COMSIG_JETMODULE_ACTIVATED) & JETMODULE_ACTIVATION_FAILED)
 		return
 	if(full_speed)
 		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
