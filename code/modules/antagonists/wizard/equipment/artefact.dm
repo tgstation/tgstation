@@ -335,7 +335,7 @@
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE
 	randomdir = FALSE
-	duration = 3 SECONDS
+	duration = 10 SECONDS
 	movement_type = PHASING
 
 	/// Reference to the whistle
@@ -362,16 +362,17 @@
 	buckle_mob(crossed, TRUE, FALSE)
 	animate(src, alpha = 20, pixel_y = 400, time = 3 SECONDS)
 	animate(crossed, pixel_y = 400, time = 3 SECONDS)
+	addtimer(CALLBACK(src, .proc/send_away), 2 SECONDS)
+
+/obj/effect/temp_visual/teleporting_tornado/proc/send_away()
+	var/turf/ending_turfs = find_safe_turf()
+	for(var/mob/stored_mobs as anything in pickedup_mobs)
+		do_teleport(stored_mobs, ending_turfs, channel = TELEPORT_CHANNEL_MAGIC)
+		animate(stored_mobs, pixel_y = null, time = 1 SECONDS)
+		stored_mobs.log_message("warped with [whistle].", LOG_ATTACK, color = "red")
 
 /// Destroy the tornado and teleport everyone on it away.
 /obj/effect/temp_visual/teleporting_tornado/Destroy()
-	if(!isnull(pickedup_mobs))
-		var/turf/ending_turfs = find_safe_turf()
-		for(var/mob/stored_mobs as anything in pickedup_mobs)
-			do_teleport(stored_mobs, ending_turfs, channel = TELEPORT_CHANNEL_MAGIC)
-			animate(stored_mobs, pixel_y = null, time = 1 SECONDS)
-			stored_mobs.log_message("warped with [whistle].", LOG_ATTACK, color = "red")
-
 	if(whistle)
 		whistle.whistler = null
 		whistle = null
