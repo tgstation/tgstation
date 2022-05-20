@@ -344,7 +344,6 @@
 	if(burning)
 		return
 	burning = TRUE
-	addtimer(CALLBACK(src, .proc/ignite_others), 0.5 SECONDS)
 	start_burn()
 
 /obj/effect/decal/cleanable/fuel_pool/proc/start_burn()
@@ -357,6 +356,7 @@
 	burn_amount -= 1
 	var/obj/effect/hotspot/hotspot = new hotspot_type(get_turf(src))
 	RegisterSignal(hotspot, COMSIG_PARENT_QDELETING, .proc/start_burn)
+	addtimer(CALLBACK(src, .proc/ignite_others), 0.5 SECONDS)
 
 /obj/effect/decal/cleanable/fuel_pool/proc/ignite_others()
 	for(var/obj/effect/decal/cleanable/fuel_pool/oil in range(1, get_turf(src)))
