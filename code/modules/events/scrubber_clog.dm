@@ -135,7 +135,7 @@
 		/mob/living/simple_animal/hostile/rat,
 		/mob/living/simple_animal/hostile/bee,
 		/mob/living/simple_animal/hostile/giant_spider,
-		)
+	)
 	return pick(mob_list)
 
 /datum/round_event/scrubber_clog/major/announce()
