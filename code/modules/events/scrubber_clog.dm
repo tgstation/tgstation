@@ -81,7 +81,6 @@
 		var/turf/scrubber_turf = get_turf(scrubber)
 		if(scrubber_turf && is_station_level(scrubber_turf.z) && !scrubber.welded && !scrubber.clogged)
 			scrubber_list += scrubber
-
 	return pick(scrubber_list)
 
 /**
