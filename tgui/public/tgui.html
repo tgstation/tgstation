@@ -487,6 +487,26 @@ window.update.flushQueue = function (listener) {
   }
 };
 
+window.replaceHtml = function (inline_html) {
+  var children = document.body.childNodes;
+
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].nodeValue == " tgui:inline-html-start ") {
+      while (children[i].nodeValue != " tgui:inline-html-end ") {
+        children[i].remove();
+      }
+      children[i].remove();
+    }
+  }
+
+  document.body.insertAdjacentHTML(
+    "afterbegin",
+    "<!-- tgui:inline-html-start -->"
+      + inline_html
+      + "<!-- tgui:inline-html-end -->"
+  );
+};
+
 // Signal tgui that we're ready to receive updates
 Byond.sendMessage('ready');
 </script>
@@ -594,7 +614,9 @@ blink {
 
 <!-- tgui:inline-polyfill -->
 <!-- tgui:assets -->
+<!-- tgui:inline-html-start -->
 <!-- tgui:inline-html -->
+<!-- tgui:inline-html-end -->
 <!-- tgui:inline-js -->
 
 <!-- Root element for tgui interfaces -->

@@ -6,7 +6,7 @@
 	var/sanity = SANITY_NEUTRAL //Current sanity
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
-	var/sanity_level = 2 //To track what stage of sanity they're on
+	var/sanity_level = SANITY_LEVEL_NEUTRAL //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
@@ -234,32 +234,32 @@
 			setInsanityEffect(MAJOR_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
-			sanity_level = 6
+			sanity_level = SANITY_LEVEL_INSANE
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
-			sanity_level = 5
+			sanity_level = SANITY_LEVEL_CRAZY
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
-			sanity_level = 4
+			sanity_level = SANITY_LEVEL_UNSTABLE
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.remove_actionspeed_modifier(ACTIONSPEED_ID_SANITY)
-			sanity_level = 3
+			sanity_level = SANITY_LEVEL_DISTURBED
 		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
-			sanity_level = 2
+			sanity_level = SANITY_LEVEL_NEUTRAL
 		if(SANITY_GREAT+1 to INFINITY)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
-			sanity_level = 1
+			sanity_level = SANITY_LEVEL_GREAT
 	update_mood_icon()
 
 /datum/component/mood/proc/setInsanityEffect(newval)

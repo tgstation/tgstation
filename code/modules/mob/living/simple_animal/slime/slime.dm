@@ -221,7 +221,7 @@
 						Atkcool = TRUE
 						addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
 
-/mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0)
+/mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return 2
 
 /mob/living/simple_animal/slime/get_status_tab_items()
