@@ -84,6 +84,7 @@
 	log_game("[key_name(user)] [leaking ? "opened" : "closed"] [src]")
 	if(leaking && reagents)
 		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
+	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /obj/structure/reagent_dispensers/Moved(atom/OldLoc, Dir)
 	. = ..()
