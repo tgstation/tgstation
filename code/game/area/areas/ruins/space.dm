@@ -170,6 +170,7 @@
 
 /area/ruin/space/has_grav/deepstorage/pharmacy
 	name = "\improper Deep Storage Pharmacy"
+	
 //Ruin of Abandoned Zoo
 
 /area/ruin/space/has_grav/abandonedzoo
