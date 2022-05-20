@@ -6,7 +6,7 @@
 
 /obj/item/paper/fluff/ruins/oldstation/damagereport
 	name = "Damage Report"
-	info = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics, partially destroyed. Engine Core, destroyed.<br><br><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via solar array. Reestablish station atmospherics system to restore air."
+	info = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics and Engine Core, partially destroyed.<br><br><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via solar array. Reestablish station atmospherics system to restore air."
 
 /obj/item/paper/fluff/ruins/oldstation/protosuit
 	name = "B01-MOD modular suit Report"
@@ -66,10 +66,12 @@
 
 /obj/item/paper/fluff/ruins/oldstation/survivor_note
 	name = "To those who find this"
-	info = "You can barely make out a faded message... <br><br>I come back to the station after a simple mining mission, and nobody is here. Well, they COULD have gone to cryo... I didn't really check. Doesn't matter, I have bigger issues now. There is something out there. \
-	I have no fucking idea what they are, all I know is that they don't like me. On occasion I hear them hissing and clawing on the airlock... good idea I barricaded the way in. Bad news: the transit tube is still broken, the damn engineers never fixed it. \
-	So basically, I'm stuck here until someone comes to rescue us. And I have no food or water. <br>If you're reading this, I'm probably dead. These things have taken over part of Delta station, and I think they somehow came from the AI core... \
-	Whatever you do, DON'T OPEN THE FIRELOCKS unless you have something to kill them. Look in security, maybe there might be some gear left in there. <br><br>So hungry... I don't want to go out like this..."
+	info = "I was on a mission of an exploration drone reclamation, when I lost the signal. I've had just enough pressure to make it back to the station.... But this is really bad... <br><br> \
+	Beta looks like a smashed tin can, and Alpha is gone completely. I didn't manage to find anyone except those sleeping beauties and something I don't even know how to explain. The blood and gore is everywhere, those things took out the entire R&D. \
+	They're hissing and crawling behind the maintenance hatch that I welded off to not let them in.<br><br> \
+	I had a proximity sensor with me, so I donated my left cybernetic arm to make this little fella. One of janitor's bucket served as a perfect casing for him. <br><br> \
+	Here I thought that I'll die of malnutrition, when I started feeling the symptoms of hypercapnia. I will turn you off to save the battery. It's time for both us to sleep, little guy.<br><br> \
+	If you're reading this, I'm probably dead. I've opened Ramboo's maintenance pannel with my ID. Please let him help to clean up my remains..."
 
 /obj/item/paper/fluff/ruins/oldstation/biolab_note_molly
 	name = "Diary note - Molly"
