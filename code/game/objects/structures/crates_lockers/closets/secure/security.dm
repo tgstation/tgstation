@@ -228,7 +228,6 @@
 /obj/structure/closet/secure_closet/evidence
 	anchored = TRUE
 	name = "Secure Evidence Closet"
-	req_access = null
 	req_one_access = list("armory","detective")
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
