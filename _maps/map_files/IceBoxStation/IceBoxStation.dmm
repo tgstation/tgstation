@@ -3840,7 +3840,7 @@
 /area/station/engineering/storage_shared)
 "blm" = (
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
+	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
 	name = "Antechamber Turret Control";
 	pixel_y = -24;
 	req_access = null;
@@ -4980,7 +4980,7 @@
 	dir = 1
 	},
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat/atmos";
+	control_area = "/area/station/ai_monitored/turret_protected/aisat/atmos";
 	name = "Atmospherics Turret Control";
 	pixel_x = -27;
 	req_access = null;
@@ -16683,7 +16683,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "fra" = (
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	name = "ai_upload turret control";
 	pixel_y = -25
 	},
@@ -51702,7 +51702,7 @@
 /area/station/hallway/primary/starboard)
 "qHk" = (
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat/service";
+	control_area = "/area/station/ai_monitored/turret_protected/aisat/service";
 	name = "Service Bay Turret Control";
 	pixel_x = 27;
 	req_access = null;
@@ -51785,7 +51785,7 @@
 /area/station/engineering/atmos/project)
 "qIQ" = (
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat/hallway";
+	control_area = "/area/station/ai_monitored/turret_protected/aisat/hallway";
 	name = "Chamber Hallway Turret Control";
 	pixel_x = 32;
 	pixel_y = -24;

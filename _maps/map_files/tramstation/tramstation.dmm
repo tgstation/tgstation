@@ -19446,7 +19446,7 @@
 /area/station/security/prison/workout)
 "gIa" = (
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	name = "ai_upload turret control";
 	pixel_x = 25;
 	req_access = list("minisat")
@@ -38662,7 +38662,7 @@
 	dir = 4
 	},
 /obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
+	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
 	name = "AI Antechamber turret control";
 	pixel_y = -25
 	},
