@@ -1,4 +1,6 @@
+#define PUZZGRID_CONFIG "[global.config.directory]/puzzgrids.txt"
 #define PUZZGRID_GROUP_COUNT 4
+#define PUZZGRID_MAX_ATTEMPTS 10
 
 /// Attaches a puzzgrid to the atom.
 /// You are expected to pass in the puzzgrid, likely from create_random_puzzgrid().
@@ -193,9 +195,6 @@
 
 	return data
 
-#define PUZZGRID_CONFIG "[global.config.directory]/puzzgrids.txt"
-#define PUZZGRID_MAX_ATTEMPTS 10
-
 /// Returns a random puzzgrid from config.
 /// If config is empty, or no valid puzzgrids can be found in time, will return null.
 /proc/create_random_puzzgrid()
@@ -232,9 +231,6 @@
 
 	stack_trace("No valid puzzgrid config could be found in [PUZZGRID_MAX_ATTEMPTS] attempts, please check config_error. If it is empty, then seek line is failing.")
 	return null
-
-#undef PUZZGRID_CONFIG
-#undef PUZZGRID_MAX_ATTEMPTS
 
 /// Represents an individual puzzgrid
 /datum/puzzgrid
@@ -278,4 +274,33 @@
 	var/list/answers = list()
 	var/description
 
+/// Debug verb for validating that all puzzgrids can be created successfully.
+/// Locked behind a verb because it's fairly slow and memory intensive.
+/client/proc/validate_puzzgrids()
+	set name = "Validate Puzzgrid Config"
+	set category = "Debug"
+
+	var/line_number = 0
+
+	for (var/line in world.file2list(PUZZGRID_CONFIG))
+		line_number += 1
+
+		if (length(line) == 0)
+			continue
+
+		var/line_json_decoded = safe_json_decode(line)
+		if (isnull(line_json_decoded))
+			to_chat(src, span_warning("Line [line_number] in puzzgrids.txt is not a JSON: [line]"))
+			continue
+
+		var/datum/puzzgrid/puzzgrid = new
+		var/populate_result = puzzgrid.populate(line_json_decoded)
+
+		if (populate_result != TRUE)
+			to_chat(src, span_warning("Line [line_number] in puzzgrids.txt is not formatted correctly: [populate_result]"))
+
+	to_chat(src, span_notice("Validated. If you did not see any errors, you're in the clear."))
+
+#undef PUZZGRID_CONFIG
 #undef PUZZGRID_GROUP_COUNT
+#undef PUZZGRID_MAX_ATTEMPTS
