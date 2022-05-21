@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - bugfix: "Fixed ethereal revive crystal bugging out when buckled"
