@@ -41,14 +41,14 @@
 		else if(anchored && state == WINDOW_IN_FRAME)
 			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
 		else if(anchored && state == WINDOW_OUT_OF_FRAME)
-			. += span_notice("The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to [loc].")
+			. += span_notice("The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to [src].")
 		else if(!anchored)
-			. += span_notice("The window is <i>unscrewed</i> from [loc], and could be deconstructed by <b>wrenching</b>.")
+			. += span_notice("The window is <i>unscrewed</i> from [src], and could be deconstructed by <b>wrenching</b>.")
 	else
 		if(anchored)
-			. += span_notice("The window is <b>screwed</b> to [loc].")
+			. += span_notice("The window is <b>screwed</b> to [src].")
 		else
-			. += span_notice("The window is <i>unscrewed</i> from [loc], and could be deconstructed by <b>wrenching</b>.")
+			. += span_notice("The window is <i>unscrewed</i> from [src], and could be deconstructed by <b>wrenching</b>.")
 
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
@@ -192,6 +192,8 @@
 
 	add_fingerprint(user)
 
+	var/obj/structure/window_frame/our_frame = locate() in loc
+
 	if(I.tool_behaviour == TOOL_WELDER)
 		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount = 0))
@@ -208,14 +210,14 @@
 
 	if(!(flags_1 & NODECONSTRUCT_1) && !(reinf && state >= RWINDOW_FRAME_BOLTED))
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
-			if(fulltile && !anchored && !istype(loc, /turf/closed/wall/window_frame))
+			if(fulltile && !anchored && !our_frame)
 				to_chat(user, span_notice("You can only secure this window to a window frame!"))
 				return
 
-			to_chat(user, span_notice("You begin to [anchored ? "unscrew the window from":"screw the window to"] [loc]..."))
+			to_chat(user, span_notice("You begin to [anchored ? "unscrew the window from":"screw the window to"] [our_frame]..."))
 			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
 				set_anchored(!anchored)
-				to_chat(user, span_notice("You [anchored ? "fasten the window to":"unfasten the window from"] [loc]."))
+				to_chat(user, span_notice("You [anchored ? "fasten the window to":"unfasten the window from"] [our_frame]."))
 			return
 
 		else if(I.tool_behaviour == TOOL_WRENCH && !anchored)
@@ -305,7 +307,11 @@
 
 /obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
-		to_chat(user, span_warning("[src] cannot be rotated while it is fastened to [loc]!"))
+		var/fastened_to = loc
+		if(fulltile)
+			fastened_to = locate(/obj/structure/window_frame) in loc
+
+		to_chat(user, span_warning("[src] cannot be rotated while it is fastened to [fastened_to]!"))
 		return FALSE
 
 	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
@@ -354,7 +360,7 @@
 	if(!fulltile)
 		return
 
-	if(istype(loc, /turf/closed/wall/window_frame))
+	if(locate(/obj/structure/window_frame) in loc)
 		pixel_y = WINDOW_ON_FRAME_Y_OFFSET
 	else
 		pixel_y = WINDOW_OFF_FRAME_Y_OFFSET

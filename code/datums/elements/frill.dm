@@ -11,11 +11,11 @@ GLOBAL_LIST_EMPTY(frill_objects)
 	return GLOB.frill_objects["[icon_path]-[junction]-[alpha]-[pixel_x]-[pixel_y]-[plane]"] = mut_appearance
 
 /**
-  * Attached to smoothing atoms. Adds a globally-cached object to their vis_contents and updates based on junction changes.
-  ** ATTENTION: This element was supposed to be for atoms, but since only movables and turfs actually have vis_contents hacks have to be done.
-  ** For now it treats all of its targets as turfs, but that will runtime if an invalid variable access happens.
-  ** Yes, this is ugly. The alternative is making two different elements for the same purpose.
-  */
+ * Attached to smoothing atoms. Adds a globally-cached object to their vis_contents and updates based on junction changes.
+ * ATTENTION: This element was supposed to be for atoms, but since only movables and turfs actually have vis_contents hacks have to be done.
+ * For now it treats all of its targets as turfs, but that will runtime if an invalid variable access happens.
+ * Yes, this is ugly. The alternative is making two different elements for the same purpose.
+ */
 /datum/element/frill
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2
@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(frill_objects)
 /datum/element/frill/Detach(turf/target)
 
 	target.cut_overlay(get_frill_object(icon_path, target.smoothing_junction, pixel_y = 32))
-	target.cut_overlay(get_frill_object(icon_path, target.smoothing_junction, plane = WALL_PLANE, pixel_y = 32))
+	target.cut_overlay(get_frill_object(icon_path, target.smoothing_junction, plane = OVER_FRILL_PLANE, pixel_y = 32))
 	UnregisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE)
 	return ..()
 
@@ -47,9 +47,9 @@ GLOBAL_LIST_EMPTY(frill_objects)
 	if(!(source.smoothing_junction & NORTH))
 		turf_or_movable.cut_overlay(get_frill_object(icon_path, source.smoothing_junction, pixel_y = 32))
 	else
-		turf_or_movable.cut_overlay(get_frill_object(icon_path, source.smoothing_junction, plane = WALL_PLANE, pixel_y = 32))
+		turf_or_movable.cut_overlay(get_frill_object(icon_path, source.smoothing_junction, plane = OVER_FRILL_PLANE, pixel_y = 32))
 
 	if(!(new_junction & NORTH))
 		turf_or_movable.add_overlay(get_frill_object(icon_path, new_junction, pixel_y = 32))
 	else
-		turf_or_movable.add_overlay(get_frill_object(icon_path, new_junction, plane = WALL_PLANE, pixel_y = 32))
+		turf_or_movable.add_overlay(get_frill_object(icon_path, new_junction, plane = OVER_FRILL_PLANE, pixel_y = 32))

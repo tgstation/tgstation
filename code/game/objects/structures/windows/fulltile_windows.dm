@@ -1,12 +1,12 @@
 /obj/structure/window/fulltile
-	icon = 'icons/turf/walls/low_walls/windows/window_normal.dmi'
+	icon = 'icons/obj/smooth_structures/windows/window_normal.dmi'
 	icon_state = "window_normal"
 	base_icon_state = "window_normal"
 	frill_icon = 'icons/effects/frills/windows/window_normal_frill.dmi'
 	max_integrity = 50
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	smoothing_flags = SMOOTH_BITMASK
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
@@ -15,7 +15,7 @@
 	anchored = FALSE
 
 /obj/structure/window/plasma/fulltile
-	icon = 'icons/turf/walls/low_walls/windows/window_plasma.dmi'
+	icon = 'icons/obj/smooth_structures/windows/window_plasma.dmi'
 	icon_state = "window_plasma-0"
 	base_icon_state = "window_plasma"
 	frill_icon = 'icons/effects/frills/windows/window_plasma_frill.dmi'
@@ -31,7 +31,7 @@
 	anchored = FALSE
 
 /obj/structure/window/reinforced/plasma/fulltile
-	icon = 'icons/turf/walls/low_walls/windows/window_plasma_reinforced.dmi'
+	icon = 'icons/obj/smooth_structures/windows/window_plasma_reinforced.dmi'
 	icon_state = "window_plasma_reinforced-0"
 	base_icon_state = "window_plasma_reinforced"
 	frill_icon = 'icons/effects/frills/windows/window_reinforced_plasma_frill.dmi'
@@ -49,7 +49,7 @@
 	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/fulltile
-	icon = 'icons/turf/walls/low_walls/windows/window_reinforced.dmi'
+	icon = 'icons/obj/smooth_structures/windows/window_reinforced.dmi'
 	icon_state = "window_reinforced-0"
 	base_icon_state = "window_reinforced"
 	frill_icon = 'icons/effects/frills/windows/window_reinforced_frill.dmi'
@@ -67,7 +67,7 @@
 	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/tinted/fulltile
-	icon = 'icons/turf/walls/low_walls/windows/window_tinted.dmi'
+	icon = 'icons/obj/smooth_structures/windows/window_tinted.dmi'
 	icon_state = "window_tinted-0"
 	base_icon_state = "window_tinted"
 	frill_icon = 'icons/effects/frills/windows/window_tinted_frill.dmi'
@@ -79,7 +79,7 @@
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/ice
-	icon = 'icons/turf/walls/low_walls/windows/window_frosted.dmi'
+	icon = 'icons/obj/smooth_structures/windows/window_frosted.dmi'
 	icon_state = "window_frosted-0"
 	base_icon_state = "window_frosted"
 	frill_icon = 'icons/effects/frills/windows/window_frosted_frill.dmi'
@@ -90,7 +90,7 @@
 /obj/structure/window/reinforced/shuttle//this is called reinforced because it is reinforced w/titanium
 	name = "shuttle window"
 	desc = "A reinforced, air-locked pod window."
-	icon = 'icons/turf/walls/low_walls/windows/window_titanium.dmi'
+	icon = 'icons/obj/smooth_structures/windows/window_titanium.dmi'
 	icon_state = "window_titanium-0"
 	base_icon_state = "window_titanium"
 	frill_icon = 'icons/effects/frills/windows/window_titanium_frill.dmi'
@@ -122,7 +122,7 @@
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
 	desc = "A durable looking window made of an alloy of of plasma and titanium."
-	icon = 'icons/turf/walls/low_walls/windows/window_plastitanium.dmi'
+	icon = 'icons/obj/smooth_structures/windows/window_plastitanium.dmi'
 	icon_state = "window_plastitanium-0"
 	base_icon_state = "window_plastitanium"
 	frill_icon = 'icons/effects/frills/windows/window_plastitanium_frill.dmi'
