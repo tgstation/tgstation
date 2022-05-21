@@ -452,6 +452,8 @@ Behavior that's still missing from this component that original food items had t
 			food_taste_reaction = FOOD_DISLIKED
 		else if(foodtypes & H.dna.species.liked_food)
 			food_taste_reaction = FOOD_LIKED
+	if(food_flags & FOOD_SILVER_SPAWNED) // it's not real food
+		food_taste_reaction = FOOD_TOXIC
 
 	switch(food_taste_reaction)
 		if(FOOD_TOXIC)
