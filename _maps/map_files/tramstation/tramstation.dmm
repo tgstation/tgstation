@@ -10734,10 +10734,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/theater)
-"dDy" = (
-/obj/effect/turf_decal/siding/thinplating,
-/turf/open/floor/glass/reinforced,
-/area/station/security/warden)
 "dDB" = (
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External West";
@@ -25538,8 +25534,10 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "iLs" = (
-/obj/effect/turf_decal/siding/thinplating,
 /obj/effect/landmark/event_spawn,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 6
+	},
 /turf/open/floor/glass/reinforced,
 /area/station/security/warden)
 "iLN" = (
@@ -43204,12 +43202,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"oFN" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 6
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/security/warden)
 "oFT" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -43632,12 +43624,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
-"oNl" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 1
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/security/warden)
 "oNo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -46597,6 +46583,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
+"pLO" = (
+/turf/open/floor/iron/showroomfloor,
+/area/station/security/warden)
 "pLP" = (
 /obj/structure/rack,
 /obj/item/pickaxe/rusted,
@@ -156265,8 +156254,8 @@ pby
 hJC
 hNf
 ivd
-ouJ
-hhN
+pLO
+pLO
 qEF
 wtj
 wWN
@@ -156522,8 +156511,8 @@ apv
 pby
 bsV
 sBG
-oNl
-dDy
+ouJ
+hhN
 kCm
 wtj
 wWN
@@ -157036,7 +157025,7 @@ qSG
 pby
 bsV
 wZs
-oNl
+ahc
 iLs
 kQy
 wtj
@@ -157293,8 +157282,8 @@ pby
 raa
 hNf
 rUc
-ahc
-oFN
+pLO
+pLO
 nzz
 wtj
 wWN
