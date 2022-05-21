@@ -27,8 +27,6 @@
 	var/list/client/all_hearers
 	/// The location in which the message is appearing
 	var/atom/message_loc
-	/// the full edited message the speaker created, might be edited by subsequent hearers
-	var/template_message = ""
 	/// what language the message is spoken in.
 	var/datum/language/message_language
 	/// Contains the approximate amount of lines for height decay for each message image.
