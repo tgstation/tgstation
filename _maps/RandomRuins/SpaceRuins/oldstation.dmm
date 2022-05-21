@@ -4905,9 +4905,7 @@
 /area/ruin/space/ancientstation/charlie/dorms)
 "me" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/stack/cable_coil/cut{
-	amount = 1
-	},
+/obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "mg" = (
