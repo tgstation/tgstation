@@ -161,7 +161,7 @@
  * * extra_classes - the spans used for this message
  */
 /datum/chatmessage/proc/prepare_text(text, atom/target, mob/owner, datum/language/language, list/extra_classes)
-	set waitfor = FALSE //because this waits on client input
+	set waitfor = FALSE //because this waits on info passed from the client
 	/// Cached icons to show what language the user is speaking
 	var/static/list/language_icons
 
