@@ -332,6 +332,7 @@ Behavior that's still missing from this component that original food items had t
 				eat_time *= 1.25
 
 		if(eat_time && !do_mob(feeder, eater, eat_time, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
+			eat_time = initial(eat_time)
 			return
 		if(IsFoodGone(owner, feeder))
 			return
@@ -396,7 +397,7 @@ Behavior that's still missing from this component that original food items had t
 		)
 
 	TakeBite(eater, feeder)
-
+	eat_time = initial(eat_time)
 	//If we're not force-feeding and there's an eat delay, try take another bite
 	if(eater == feeder && eat_time)
 		INVOKE_ASYNC(src, .proc/TryToEat, eater, feeder)
@@ -427,6 +428,7 @@ Behavior that's still missing from this component that original food items had t
 		var/ate_at_table = find_adjacent_tables(eater)
 		if(HAS_TRAIT(eater, TRAIT_TABLE_EATING_ENJOYER) && !ate_at_table)
 			eater.balloon_alert_to_viewers("ate without table!")
+			playsound(get_turf(eater),'sound/effects/ate_without_table.ogg', 50, FALSE)
 			eater.death()
 		var/ate_with_chair = eater.buckled
 		var/ate_with_utensils = eater.is_holding_item_of_type(/obj/item/kitchen)
