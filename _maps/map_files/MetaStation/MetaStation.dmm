@@ -12185,7 +12185,6 @@
 /obj/structure/sign/warning/chem_diamond{
 	pixel_y = 32
 	},
-/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -65960,12 +65959,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"xie" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light_switch/directional/west,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "xip" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/bot,
@@ -91565,7 +91558,7 @@ gQG
 gQG
 gQG
 gQG
-xie
+gQG
 lcM
 lgT
 hDp
