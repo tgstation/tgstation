@@ -14817,13 +14817,8 @@
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
 "eLT" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	dir = 8;
-	name = "Hydroponics Desk";
-	req_access = list("hydroponics")
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/biogenerator,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "eMa" = (
@@ -25895,7 +25890,6 @@
 /turf/open/openspace,
 /area/station/cargo/storage)
 "irF" = (
-/obj/machinery/biogenerator,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -25909,6 +25903,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 10
 	},
+/obj/machinery/smartfridge,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "irO" = (
