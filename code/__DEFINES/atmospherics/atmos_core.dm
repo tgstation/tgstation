@@ -30,8 +30,6 @@
 #define ONE_ATMOSPHERE 101.325
 /// -270.3degC
 #define TCMB 2.7
-/// -48.15degC
-#define TCRYO 225
 /// 0degC
 #define T0C 273.15
 /// 20degC

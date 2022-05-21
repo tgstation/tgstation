@@ -168,3 +168,54 @@
 		return
 	mod.wearer.visible_message(span_warning("[src] reacts to the attack with a smoke of pepper spray!"), span_notice("Your [src] releases a cloud of pepper spray!"))
 	on_use()
+
+///Holster - Instantly holsters any not huge gun.
+/obj/item/mod/module/holster
+	name = "MOD holster module"
+	desc = "Based off typical storage compartments, this system allows the suit to holster a \
+		standard firearm across its surface and allow for extremely quick retrieval. \
+		While some users prefer the chest, others the forearm for quick deployment, \
+		some law enforcement prefer the holster to extend from the thigh."
+	icon_state = "holster"
+	module_type = MODULE_USABLE
+	complexity = 2
+	incompatible_modules = list(/obj/item/mod/module/holster)
+	cooldown_time = 0.5 SECONDS
+	allowed_inactive = TRUE
+	/// Gun we have holstered.
+	var/obj/item/gun/holstered
+
+/obj/item/mod/module/holster/on_use()
+	. = ..()
+	if(!.)
+		return
+	if(!holstered)
+		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
+		if(!holding)
+			balloon_alert(mod.wearer, "nothing to holster!")
+			return
+		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY)
+			balloon_alert(mod.wearer, "it doesn't fit!")
+			return
+		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
+			holstered = holding
+			balloon_alert(mod.wearer, "weapon holstered")
+			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
+	else if(mod.wearer.put_in_active_hand(holstered, forced = FALSE, ignore_animation = TRUE))
+		balloon_alert(mod.wearer, "weapon drawn")
+		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
+	else
+		balloon_alert(mod.wearer, "holster full!")
+
+/obj/item/mod/module/holster/on_uninstall(deleting = FALSE)
+	if(holstered)
+		holstered.forceMove(drop_location())
+
+/obj/item/mod/module/holster/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == holstered)
+		holstered = null
+
+/obj/item/mod/module/holster/Destroy()
+	QDEL_NULL(holstered)
+	return ..()
