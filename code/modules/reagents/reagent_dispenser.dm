@@ -95,6 +95,8 @@
 	var/obj/item/assembly_holder/rig = null
 	//whether it accepts assemblies or not
 	var/accepts_rig = TRUE
+	//overlay of attached assemblies
+	var/mutable_appearance/assembliesoverlay
 
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
@@ -119,7 +121,7 @@
 	user.visible_message(span_notice("[user] detaches [rig] from [src]."), span_notice("You detach [rig] from [src]."))
 	rig.forceMove(get_turf(user))
 	rig = null
-	cut_overlays()
+	cut_overlays(assembliesoverlay)
 	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
 /obj/structure/reagent_dispensers/fueltank/boom()
@@ -178,10 +180,10 @@
 				rig = holder
 				if(!user.transferItemToLoc(holder, src))
 					return
-				var/icon/test = getFlatIcon(holder)
-				test.Shift(NORTH, 1)
-				test.Shift(EAST, 6)
-				add_overlay(test)
+				assembliesoverlay = holder
+				assembliesoverlay.pixel_x += 6
+				assembliesoverlay.pixel_y += 1
+				add_overlay(assembliesoverlay)
 				RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/boom)
 		return
 	return ..()
