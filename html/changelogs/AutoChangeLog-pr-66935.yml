@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Electrolyzers that are anchored no longer consume 5kW even when turned off"
