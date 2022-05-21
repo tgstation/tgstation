@@ -182,7 +182,7 @@
 "fa" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen";
-	req_access_txt = "28"
+	req_access = list("kitchen")
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/ruin/pizzeria/kitchen)
@@ -798,7 +798,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock{
 	name = "Kitchen";
-	req_access_txt = "28"
+	req_access = list("kitchen")
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
 /turf/open/floor/iron/white/smooth_large,
@@ -1664,7 +1664,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance Access";
-	req_access_txt = "28"
+	req_access = list("kitchen")
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
 /turf/open/floor/iron/freezer,

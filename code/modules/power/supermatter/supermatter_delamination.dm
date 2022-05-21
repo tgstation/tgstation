@@ -173,12 +173,20 @@
 	SSshuttle.registerHostileEnvironment(src)
 	SSshuttle.supermatter_cascade = TRUE
 	call_explosion()
+	create_cascade_ambience()
 	pick_rift_location()
 	warn_crew()
 	supermatter_turf.ChangeTurf(/turf/closed/indestructible/supermatter_wall)
-	for(var/i in 1 to rand(1,3))
+	for(var/i in 1 to rand(2,5))
 		var/turf/crystal_cascade_location = get_turf(pick(GLOB.generic_event_spawns))
 		crystal_cascade_location.ChangeTurf(/turf/closed/indestructible/supermatter_wall)
+
+/**
+ * Adds a bit of spiciness to the cascade by breaking lights and turning emergency maint access on
+ */
+/datum/supermatter_delamination/proc/create_cascade_ambience()
+	break_lights_on_station()
+	make_maint_all_access()
 
 /**
  * Picks a random location for the rift
@@ -227,3 +235,14 @@
 /datum/supermatter_delamination/proc/the_end()
 	SSticker.news_report = SUPERMATTER_CASCADE
 	SSticker.force_ending = 1
+
+/**
+ * Break the lights on the station, have 35% of them be set to emergency
+ */
+/datum/supermatter_delamination/proc/break_lights_on_station()
+	for(var/obj/machinery/light/light_to_break in GLOB.machines)
+		if(prob(35))
+			light_to_break.emergency_mode = TRUE
+			light_to_break.update_appearance()
+			continue
+		light_to_break.break_light_tube()

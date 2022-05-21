@@ -297,7 +297,7 @@
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 
 	// Log in the talk log
-	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [initial(message_data["name"])] to [signal.format_target()]")
+	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [message_data["name"]] to [signal.format_target()]")
 	if(rigged)
 		log_bomber(user, "sent a rigged PDA message (Name: [message_data["name"]]. Job: [message_data["job"]]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
 	to_chat(user, span_info("PDA message sent to [signal.format_target()]: [signal.format_message()]"))
