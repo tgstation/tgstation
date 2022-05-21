@@ -19,9 +19,7 @@ const setupApp = () => {
     setupHotReloading();
     module.hot.accept([
       './components',
-    ], () => {
-      renderApp();
-    });
+    ], renderApp);
   }
 };
 
