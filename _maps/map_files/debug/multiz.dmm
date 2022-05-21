@@ -870,7 +870,7 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "ee" = (
 /turf/open/floor/iron{
@@ -927,7 +927,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "eE" = (
 /obj/machinery/light/directional/west,
@@ -978,7 +978,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/station/hallway/secondary/service)
 "eQ" = (
 /obj/structure/railing{
@@ -1269,6 +1269,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
+"uf" = (
+/turf/open/floor/engine/hull,
+/area/space/nearstation)
 "uv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -5859,9 +5862,9 @@ pV
 Bk
 pV
 pV
-pV
-pV
-pV
+uf
+uf
+uf
 pV
 pV
 eF
@@ -5913,9 +5916,9 @@ pV
 Bk
 pV
 pV
-pV
-pV
-pV
+uf
+uf
+uf
 pV
 pV
 TY
