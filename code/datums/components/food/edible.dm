@@ -317,16 +317,16 @@ Behavior that's still missing from this component that original food items had t
 			eat_time *= 0.5
 		else
 			eat_time *= 1.5
-		if(ate_at_table)
-			eat_time *= 0.75
-		else
-			eat_time *= 1.25
-		if(ate_with_chair)
-			eat_time *= 0.75
-		else
-			eat_time *= 1.25
 		if(!(food_flags & FOOD_FINGER_FOOD))
 			if(ate_with_utensils)
+				eat_time *= 0.75
+			else
+				eat_time *= 1.25
+			if(ate_at_table)
+				eat_time *= 0.75
+			else
+				eat_time *= 1.25
+			if(ate_with_chair)
 				eat_time *= 0.75
 			else
 				eat_time *= 1.25
