@@ -48,16 +48,17 @@
 			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 
 /datum/reagent/consumable/on_transfer(atom/A, methods=INGEST, trans_volume)
-	if(!iscarbon(A))
-		return
+	var/obj/item/organ/stomach/belly = A
+	if(!istype(belly))
+		return ..()
 	if(nutriment_factor)
-		if(!HAS_TRAIT(A, TRAIT_NUTRIMENT_PASTE_FAN))
+		if(!HAS_TRAIT(belly.owner, TRAIT_NUTRIMENT_PASTE_FAN))
 			if((methods & EATEN_FOOD) != EATEN_FOOD)
-				SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "nutriment_paste", /datum/mood_event/ate_event/nutriment_paste)
+				SEND_SIGNAL(belly.owner, COMSIG_ADD_MOOD_EVENT, "nutriment_paste", /datum/mood_event/ate_event/nutriment_paste)
 				eaten = FALSE
 		else
 			if((methods & EATEN_FOOD) == EATEN_FOOD)
-				SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "nutriment_paste", /datum/mood_event/ate_event/not_nutriment_paste)
+				SEND_SIGNAL(belly.owner, COMSIG_ADD_MOOD_EVENT, "nutriment_paste", /datum/mood_event/ate_event/not_nutriment_paste)
 				eaten = FALSE
 	..()
 
