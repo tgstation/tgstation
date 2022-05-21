@@ -174,6 +174,7 @@
 				test.Shift(NORTH, 1)
 				test.Shift(EAST, 6)
 				add_overlay(test)
+				RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, .proc/boom)
 		return
 	return ..()
 

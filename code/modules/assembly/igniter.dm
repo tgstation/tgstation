@@ -36,12 +36,9 @@
 	var/turf/location = get_turf(loc)
 	if(location)
 		location.hotspot_expose(heat, EXPOSED_VOLUME)
-	if(istype(loc, /obj/item/assembly_holder))
-		if(istype(loc.loc, /obj/structure/reagent_dispensers/fueltank))
-			var/obj/structure/reagent_dispensers/fueltank/tank = loc.loc
-			if(tank)
-				tank.boom(TRUE)
-		return
+	SEND_SIGNAL(holder.loc, COMSIG_IGNITER_ACTIVATE)
+	if(QDELETED(src))
+		return TRUE
 	sparks.start()
 	return TRUE
 
