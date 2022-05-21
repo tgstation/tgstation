@@ -68,8 +68,8 @@
 			for(var/turf/open/space/spess in affected_area)
 				fade_to_black(spess)
 		if(istype(affected_area, /area/station/service/kitchen))
-			for(var/turf/open/seymour in affected_area)
-				fade_to_black(seymour)
+			for(var/turf/open/the_turf_formerly_known_as_seymour_but_renamed_as_per_armhulenns_request_on_the_tgstation_discord_coding_channel in affected_area)
+				fade_to_black(the_turf_formerly_known_as_seymour_but_renamed_as_per_armhulenns_request_on_the_tgstation_discord_coding_channel)
 	priority_announce("The aurora caelus event is now ending. Starlight conditions will slowly return to normal. When this has concluded, please return to your workplace and continue work as normal. Have a pleasant shift, [station_name()], and thank you for watching with us.",
 	sound = 'sound/misc/notice2.ogg',
 	sender_override = "Nanotrasen Meteorology Division")
