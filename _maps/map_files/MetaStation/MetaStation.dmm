@@ -1956,7 +1956,8 @@
 /area/station/maintenance/starboard/greater)
 "aJv" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "aJz" = (
 /obj/structure/table/glass,
@@ -6810,9 +6811,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "cAm" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "cAn" = (
 /obj/structure/window/reinforced{
@@ -15582,9 +15583,9 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/storage/satellite)
 "fNa" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "fNh" = (
 /obj/machinery/door/poddoor/preopen{
@@ -19533,6 +19534,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"hkY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter)
 "hlb" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
@@ -34727,7 +34733,8 @@
 /area/station/hallway/primary/central)
 "muu" = (
 /obj/structure/sign/warning/electric_shock,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "mux" = (
 /obj/machinery/airalarm/directional/south,
@@ -41481,6 +41488,11 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/science/lab)
+"oOC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter)
 "oOE" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/iannewyear,
@@ -111539,11 +111551,11 @@ xdn
 jUx
 aXL
 aXL
-rHn
+tft
 mkr
 oNs
 mUr
-rHn
+tft
 hko
 hko
 uLp
@@ -111795,13 +111807,13 @@ cKx
 fXi
 nlE
 rHn
-rHn
-kww
+tft
+hkY
 fNa
 msu
 cAm
-fec
-rHn
+oOC
+tft
 fJP
 tYc
 mdk
@@ -112823,13 +112835,13 @@ bgs
 pWB
 mMr
 rHn
-rHn
-rHn
+tft
+tft
 aJv
 tft
 muu
-rHn
-rHn
+tft
+tft
 fJP
 dnV
 wBV

@@ -11597,6 +11597,11 @@
 "dvk" = (
 /turf/closed/wall/r_wall/rust,
 /area/station/maintenance/department/bridge)
+"dvp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter)
 "dvs" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/camera/autoname/directional/north,
@@ -12915,7 +12920,8 @@
 /area/station/command/heads_quarters/hop)
 "dPr" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "dPt" = (
 /obj/machinery/door/firedoor,
@@ -37332,9 +37338,9 @@
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai_upload)
 "kvM" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "kvU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -45513,9 +45519,9 @@
 	},
 /area/station/maintenance/starboard)
 "mMB" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "mMC" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -53567,14 +53573,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/maintenance/port/greater)
-"paN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/item/radio/intercom/directional/north,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "paU" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -69934,6 +69932,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/pumproom)
+"tJL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/meter,
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter)
 "tJX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -73933,10 +73936,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/engine/air,
 /area/station/engineering/atmos)
-"uWA" = (
-/obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall/rust,
-/area/station/engineering/supermatter)
 "uWM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -121452,11 +121451,11 @@ vxC
 iQT
 qOq
 tkO
-okp
+eVL
 uvG
 piZ
 vzQ
-lOX
+eVL
 hqW
 jbZ
 rea
@@ -121709,12 +121708,12 @@ wYx
 xQL
 okp
 dPr
-cYc
+tJL
 pXs
 fOz
 pXs
-lOX
-paN
+eVL
+hqW
 hNj
 piD
 uyK
@@ -121970,7 +121969,7 @@ mMB
 aRB
 aRB
 aRB
-okp
+eVL
 flx
 kOX
 rea
@@ -122736,12 +122735,12 @@ rea
 mSC
 pqH
 lOX
-uWA
-lhm
+dPr
+dvp
 lGp
 xlD
 lGp
-lOX
+eVL
 hqW
 hNj
 piD
@@ -122994,11 +122993,11 @@ mSC
 kHK
 aGQ
 oAk
-lOX
+eVL
 fCX
 cPM
 fCX
-okp
+eVL
 hqW
 lZV
 rea

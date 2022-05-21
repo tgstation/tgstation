@@ -6932,7 +6932,6 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bPI" = (
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "bPK" = (
@@ -30784,7 +30783,6 @@
 /turf/open/floor/iron,
 /area/station/tcommsat/server)
 "izg" = (
-/obj/machinery/light/small/directional/west,
 /obj/structure/sign/warning/radiation{
 	pixel_x = -32
 	},
@@ -34556,7 +34554,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "jBr" = (
-/obj/machinery/light/small/directional/south,
 /obj/structure/sign/warning/radiation{
 	pixel_y = -32
 	},
@@ -38551,6 +38548,7 @@
 	dir = 1;
 	pixel_y = 23
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "kDL" = (
@@ -49236,6 +49234,15 @@
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai_upload)
+"nwX" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/plasma/spawner/west{
+	dir = 4
+	},
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "nwY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -85061,6 +85068,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
+"wQE" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/plasma/spawner/west{
+	dir = 1
+	},
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "wQF" = (
 /obj/structure/table/wood,
 /obj/item/storage/dice,
@@ -110765,11 +110781,11 @@ jMM
 gAw
 jPd
 ehD
-sHT
+mWq
 xXZ
 fNc
 jBr
-sHT
+mWq
 vrs
 vrs
 qJI
@@ -111022,12 +111038,12 @@ vXc
 pqr
 cZv
 tcy
-sHT
+mWq
 vlN
 xUm
-vlN
+nwX
 sHT
-sHT
+mWq
 sHT
 mHc
 yeO
@@ -111279,11 +111295,11 @@ bpr
 anB
 ilG
 sUV
-sHT
+mWq
 msB
 kXR
 owf
-bdt
+wQE
 izg
 chY
 vUV
@@ -111793,7 +111809,7 @@ vog
 anB
 aVW
 mvM
-sHT
+mWq
 msB
 kXR
 owf
@@ -112051,11 +112067,11 @@ pqr
 qJs
 tcy
 sHT
-sHT
+mWq
 ePU
+mWq
 sHT
-sHT
-sHT
+mWq
 sHT
 jzC
 sLe
@@ -112311,7 +112327,7 @@ sHT
 kDE
 tsa
 bPI
-sHT
+mWq
 enR
 enR
 uxl

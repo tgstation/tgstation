@@ -24,7 +24,7 @@
 	//Random color time!
 	var/our_color = pick(particle_colors)
 	add_atom_colour(particle_colors[our_color], FIXED_COLOUR_PRIORITY)
-	set_light(4, 2, particle_colors[our_color]) //Range of 2, brightness of 1.5
+	set_light(2, 1.5, particle_colors[our_color]) //Range of 2, brightness of 1.5
 	src.internal_power = internal_power
 
 /obj/projectile/energy/nuclear_particle/on_hit(atom/target, blocked, pierce_hit)

@@ -301,14 +301,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
-"agm" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Supermatter Chamber";
-	network = list("engine");
-	pixel_x = 23
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "agt" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -41137,6 +41129,7 @@
 /area/station/maintenance/disposal/incinerator)
 "nnw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "nnx" = (
@@ -45769,6 +45762,20 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"oHY" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/camera/directional/north{
+	c_tag = "Supermatter Chamber";
+	network = list("engine");
+	pixel_x = 23
+	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "oIb" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
@@ -62071,7 +62078,8 @@
 /area/station/security/detectives_office)
 "ucO" = (
 /obj/structure/sign/warning/electric_shock,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "udg" = (
 /obj/structure/window/reinforced/spawner/north,
@@ -66267,7 +66275,8 @@
 /area/mine/laborcamp)
 "vuK" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "vuR" = (
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -73057,9 +73066,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "xBp" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "xBB" = (
 /obj/machinery/door/window/left/directional/north{
@@ -234474,11 +234483,11 @@ fab
 eDC
 uIV
 nXl
-wuo
-agm
+uLe
+esE
 fNN
 esE
-wuo
+uLe
 cSH
 oyz
 mLV
@@ -234735,7 +234744,7 @@ nnw
 cjD
 spF
 cjD
-wuo
+uLe
 pry
 kUz
 mLV
@@ -235760,10 +235769,10 @@ kFZ
 wuo
 vuK
 nnw
-mcG
+oHY
 oXM
 mcG
-wuo
+uLe
 pry
 kUz
 mLV
@@ -236016,11 +236025,11 @@ fab
 iag
 loc
 hNI
-wuo
+uLe
 esE
 fNN
 esE
-wuo
+uLe
 cSH
 iam
 mLV

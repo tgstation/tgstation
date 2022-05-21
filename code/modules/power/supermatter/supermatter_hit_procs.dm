@@ -117,12 +117,8 @@
 
 	if(istype(item, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen) && anomaly_event)
 		var/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen/coated_metal_h2 = item
-		var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
-		var/hypermatter_timer = max(old_time_left + coated_metal_h2.amount * 30 SECONDS, 5 MINUTES)
-		COOLDOWN_START(src, hypermatter_cooldown, hypermatter_timer)
-		hypermatter_state = TRUE
-		hypermatter_power_amount += 50000
-		power += 2000
+		var/hypermatter_time = coated_metal_h2.amount * 30 SECONDS
+		activate_hypermatter_state(hypermatter_time)
 		qdel(coated_metal_h2)
 		return
 
@@ -132,12 +128,8 @@
 	if(!istype(bumped_atom, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen) || !anomaly_event)
 		return ..()
 	var/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen/coated_metal_h2 = bumped_atom
-	var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
-	var/hypermatter_timer = max(old_time_left + coated_metal_h2.amount * 30 SECONDS, 5 MINUTES)
-	COOLDOWN_START(src, hypermatter_cooldown, hypermatter_timer)
-	hypermatter_state = TRUE
-	hypermatter_power_amount += 50000
-	power += 2000
+	var/hypermatter_time = coated_metal_h2.amount * 30 SECONDS
+	activate_hypermatter_state(hypermatter_time)
 	qdel(coated_metal_h2)
 
 //Do not blow up our internal radio
