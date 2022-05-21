@@ -104,9 +104,7 @@
 /area/ruin/space/ancientstation/charlie/bridge)
 "av" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer{
-	machine_stat = 1
-	},
+/obj/machinery/computer,
 /obj/item/paper/fluff/ruins/oldstation/damagereport,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -4907,7 +4905,9 @@
 /area/ruin/space/ancientstation/charlie/dorms)
 "me" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/stack/cable_coil/cut,
+/obj/item/stack/cable_coil/cut{
+	amount = 1
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "mg" = (
@@ -6278,13 +6278,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
-"pq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/structure/sign/warning/test_chamber/directional/south,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/delta/hall)
 "pv" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -6582,13 +6575,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
-"sE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/ruin/space/ancientstation/delta/hall)
 "sH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6704,7 +6690,9 @@
 "uu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window/plasma/spawner/east,
-/turf/open/floor/engine/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/space/ancientstation/beta/supermatter)
 "uy" = (
 /obj/effect/turf_decal/stripes/line{
@@ -6757,6 +6745,13 @@
 /obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"vv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/sign/warning/test_chamber/directional/south,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/hall)
 "vM" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -6768,13 +6763,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/engie)
-"vQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/structure/sign/warning/vacuum/directional/west,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/delta/hall)
 "vU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6920,10 +6908,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
-"xI" = (
-/obj/structure/sign/poster/contraband/space_cola,
-/turf/closed/wall,
-/area/ruin/space/ancientstation/charlie/sec)
 "xL" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Custodial Closet";
@@ -7111,6 +7095,13 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/engie)
+"zF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/safety_internals{
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/hall)
 "zG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7152,6 +7143,13 @@
 	},
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"zP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shard/plasma{
+	icon_state = "plasmasmall"
+	},
+/turf/open/floor/engine/airless,
+/area/ruin/space/ancientstation/beta/supermatter)
 "zY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
@@ -7186,6 +7184,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/delta/hall)
+"As" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/sign/warning/vacuum/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
 "Au" = (
@@ -7229,6 +7234,10 @@
 "AK" = (
 /turf/closed/wall,
 /area/ruin/space/ancientstation/beta/medbay)
+"AU" = (
+/obj/structure/sign/poster/contraband/space_cola,
+/turf/closed/wall,
+/area/ruin/space/ancientstation/charlie/sec)
 "AV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -7254,7 +7263,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/shard/plasma,
-/turf/open/floor/engine/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/space/ancientstation/beta/supermatter)
 "Bo" = (
 /obj/effect/spawner/structure/window/hollow/end{
@@ -7423,7 +7434,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/ancientstation/delta/biolab)
 "DF" = (
-/obj/item/shell/airlock,
+/obj/structure/door_assembly/door_assembly_eng,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "DJ" = (
@@ -7580,7 +7591,9 @@
 "Fw" = (
 /obj/item/stack/rods,
 /obj/structure/cable,
-/turf/open/floor/engine/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/space/ancientstation/beta/supermatter)
 "FE" = (
 /obj/machinery/door/firedoor,
@@ -7636,7 +7649,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4
 	},
-/turf/open/floor/engine/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/space/ancientstation/beta/supermatter)
 "Gz" = (
 /turf/closed/wall/rust,
@@ -8123,11 +8138,11 @@
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/directional/west,
 /obj/item/paper/fluff/ruins/oldstation/biolab_note_molly{
 	pixel_y = -10;
 	pixel_x = 7
 	},
+/obj/machinery/light/very_dim/directional/west,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
@@ -8208,7 +8223,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/greenglow,
-/turf/open/floor/engine/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/space/ancientstation/beta/supermatter)
 "ME" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -8391,7 +8408,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1
 	},
-/turf/open/floor/engine/airless,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
 /area/ruin/space/ancientstation/beta/supermatter)
 "Pn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -9159,6 +9178,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "Yz" = (
 /obj/effect/decal/cleanable/generic,
+/obj/item/stack/rods,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "YM" = (
@@ -9754,7 +9774,7 @@ YT
 BD
 UY
 Yz
-Hj
+zP
 ZD
 Hj
 GU
@@ -11817,7 +11837,7 @@ uY
 RP
 OV
 il
-xI
+AU
 eJ
 aa
 iv
@@ -12204,7 +12224,7 @@ RK
 dK
 hf
 Gz
-sE
+zF
 bE
 Wv
 Ij
@@ -12352,7 +12372,7 @@ nO
 ft
 Dg
 cD
-vQ
+As
 hC
 Hb
 oU
@@ -12654,7 +12674,7 @@ iF
 DJ
 wx
 ST
-pq
+vv
 uj
 UB
 UJ
