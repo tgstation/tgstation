@@ -10608,7 +10608,8 @@
 	},
 /obj/machinery/computer/security/telescreen/ce{
 	dir = 4;
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = -1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -11238,10 +11239,11 @@
 /obj/machinery/disposal/bin,
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/obj/item/radio/intercom/directional/south,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/storage/gas)
 "dBY" = (
@@ -31547,6 +31549,7 @@
 /obj/machinery/atmospherics/components/binary/pressure_valve/on{
 	name = "Waste Release"
 	},
+/obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "kgc" = (
@@ -37852,12 +37855,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/structure/table,
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -7
-	},
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/empty,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "miG" = (
@@ -51038,7 +51035,6 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "qvW" = (
-/obj/machinery/firealarm/directional/south,
 /obj/structure/table,
 /obj/item/storage/belt/utility,
 /obj/item/t_scanner,
@@ -61978,7 +61974,7 @@
 	dir = 8
 	},
 /obj/structure/sign/poster/official/build{
-	pixel_x = 32
+	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
@@ -71139,6 +71135,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
+"wUE" = (
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -7
+	},
+/obj/structure/table,
+/obj/item/stock_parts/cell/high/empty,
+/obj/machinery/cell_charger,
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/engineering/lobby)
 "wUJ" = (
 /obj/machinery/computer/atmos_alert,
 /obj/effect/turf_decal/tile/yellow{
@@ -74703,7 +74709,6 @@
 /area/station/cargo/storage)
 "ycX" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
-/obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "ycY" = (
@@ -236023,7 +236028,7 @@ vvv
 tTV
 jtA
 bID
-bID
+wUE
 miw
 tSA
 cMd
