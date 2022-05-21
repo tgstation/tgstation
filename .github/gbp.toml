@@ -4,6 +4,7 @@ reset_label = "GBP: Reset"
 [points]
 "Accessibility" = 3
 "Administration" = 2
+"Approved Balance/Rebalance" = 0
 "Atomic" = 2
 "Balance/Rebalance" = -5
 "Code Improvement" = 2
@@ -22,4 +23,3 @@ reset_label = "GBP: Reset"
 "Sound" = 3
 "Sprites" = 3
 "Unit Tests" = 6
-"Approved Balance/Rebalance" = 0
