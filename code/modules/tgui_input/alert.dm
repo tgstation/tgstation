@@ -19,6 +19,8 @@
 			user = client.mob
 		else
 			return
+	if(length(buttons) > 3)
+		CRASH("Error: TGUI Alert initiated with too many buttons. Use a list instead.")
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(length(buttons) == 2)
@@ -46,14 +48,16 @@
  * * autofocus - The bool that controls if this alert should grab window focus.
  */
 /proc/tgui_alert_async(mob/user, message = "", title, list/buttons = list("Ok"), datum/callback/callback, timeout = 0, autofocus = TRUE)
-	if (!user)
+	if(!user)
 		user = usr
-	if (!istype(user))
-		if (istype(user, /client))
+	if(!istype(user))
+		if(istype(user, /client))
 			var/client/client = user
 			user = client.mob
 		else
 			return
+	if(length(buttons) > 3)
+		CRASH("Error: TGUI Alert initiated with too many buttons")
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(length(buttons) == 2)

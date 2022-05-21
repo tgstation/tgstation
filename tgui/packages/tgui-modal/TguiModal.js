@@ -6,7 +6,7 @@ export const TguiModal = () => {
   return (
     <Modal>
       <Modal.Content>
-        Hello world
+        Helloworld
       </Modal.Content>
     </Modal>
   );

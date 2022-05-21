@@ -1,11 +1,10 @@
 import './styles/main.scss';
-import { TguiModal } from './TguiModal';
-import { setupGlobalEvents } from 'tgui/events';
 import { createRenderer } from 'tgui/renderer';
+import { Modal } from './components/Modal';
 
 const renderApp = createRenderer(() => {
   return (
-    <TguiModal />
+    <Modal><Modal.Content>ok</Modal.Content></Modal>
   );
 });
 
@@ -15,10 +14,15 @@ const setupApp = () => {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
-  setupGlobalEvents({
-    ignoreWindowFocus: true,
-  });
-  renderApp();
+  // Enable hot module reloading
+  if (module.hot) {
+    setupHotReloading();
+    module.hot.accept([
+      './components',
+    ], () => {
+      renderApp();
+    });
+  }
 };
 
 setupApp();

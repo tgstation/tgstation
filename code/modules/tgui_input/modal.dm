@@ -30,8 +30,6 @@
 /datum/tgui_modal/proc/open(mob/user)
 	window = new(user.client, "modal", FALSE)
 	window.initialize(
-			strict_mode = TRUE,
-			fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
 			inline_js = file2text('tgui/public/tgui-modal.bundle.js'),
 			inline_css = file2text('tgui/public/tgui-modal.bundle.css'),
 		)
