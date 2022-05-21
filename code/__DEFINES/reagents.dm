@@ -22,7 +22,7 @@
 // Reagent exposure methods.
 /// Used for splashing.
 #define TOUCH (1<<0)
-/// Used for ingesting the reagents. Food, drinks, inhaling smoke.
+/// Used for ingesting the reagents. Drinks, inhaling smoke, pills.
 #define INGEST (1<<1)
 /// Used by foams, sprays, and blob attacks.
 #define VAPOR (1<<2)
@@ -30,6 +30,10 @@
 #define PATCH (1<<3)
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
+/// Used for eating reagents via food items.
+#define FOOD (1<<5)
+/// Used to check if something was eaten.
+#define EATEN_FOOD (INGEST & FOOD)
 
 #define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
 ///Health threshold for synthflesh and rezadone to unhusk someone

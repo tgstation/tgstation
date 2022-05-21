@@ -18,13 +18,14 @@
 	/// How much nutrition this reagent supplies
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
 	var/quality = 0 //affects mood, typically higher for mixed drinks with more complex recipes'
+	var/eaten = TRUE
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	current_cycle++
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-			H.adjust_nutrition(nutriment_factor * REM * delta_time)
+			H.adjust_nutrition(eaten ? (nutriment_factor * REM * delta_time) : ((nutriment_factor * REM * delta_time) * 0.5))
 	if(length(reagent_removal_skip_list))
 		return
 	holder.remove_reagent(type, metabolization_rate * delta_time)
@@ -45,6 +46,19 @@
 			exposed_mob.mind?.add_memory(MEMORY_DRINK, list(DETAIL_DRINK = src), story_value = STORY_VALUE_OKAY)
 		if (FOOD_AMAZING)
 			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
+
+/datum/reagent/consumable/on_transfer(atom/A, methods=INGEST, trans_volume)
+	if(!iscarbon(A))
+		return
+	if(!HAS_TRAIT(A, TRAIT_NUTRIMENT_PASTE_FAN))
+		if(!(methods & EATEN_FOOD))
+			SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "nutriment_paste", /datum/mood_event/ate_event/nutriment_paste)
+			eaten = FALSE
+	else
+		if((methods & EATEN_FOOD))
+			SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "nutriment_paste", /datum/mood_event/ate_event/not_nutriment_paste)
+			eaten = FALSE
+	..()
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"

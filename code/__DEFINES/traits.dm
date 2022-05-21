@@ -885,3 +885,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Ignores body_parts_covered during the add_fingerprint() proc. Works both on the person and the item in the glove slot.
 #define TRAIT_FINGERPRINT_PASSTHROUGH "fingerprint_passthrough"
+
+/// Only enjoys nutriment paste, hates anything else.
+#define TRAIT_NUTRIMENT_PASTE_FAN "nutriment_paste_fan"
+
+/// Dies if they eat without a table.
+#define TRAIT_TABLE_EATING_ENJOYER "table_eating_enjoyer"

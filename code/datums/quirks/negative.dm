@@ -895,3 +895,14 @@
 		return TRUE
 
 	return FALSE
+
+/datum/quirk/ate_without_table
+	name = "Table Eating Enjoyer"
+	desc = "You find eating with a table incredibly important. The consequences of not eating with a table will be dire."
+	icon = "skull"
+	mob_trait = TRAIT_TABLE_EATING_ENJOYER
+	value = -8
+	gain_text = "<span class='danger'>You know that you must eat with a table to survive.</span>"
+	lose_text = "<span class='notice'>You think that now you can handle eating without a table.</span>"
+	medical_record_text = "Patient has a deadly allergic reaction to eating without a table."
+	hardcore_value = 4

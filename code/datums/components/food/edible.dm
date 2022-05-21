@@ -425,6 +425,9 @@ Behavior that's still missing from this component that original food items had t
 		current_area.times_eaten_counter++
 		var/ate_in_service = (current_area.times_eaten_counter >= BREAK_ROOM_DESIGNATION)
 		var/ate_at_table = find_adjacent_tables(eater)
+		if(HAS_TRAIT(eater, TRAIT_TABLE_EATING_ENJOYER) && !ate_at_table)
+			eater.balloon_alert_to_viewers("ate without table!")
+			eater.death()
 		var/ate_with_chair = eater.buckled
 		var/ate_with_utensils = eater.is_holding_item_of_type(/obj/item/kitchen)
 		if(!ate_in_service)
@@ -505,8 +508,6 @@ Behavior that's still missing from this component that original food items had t
 			food_taste_reaction = FOOD_DISLIKED
 		else if(foodtypes & H.dna.species.liked_food)
 			food_taste_reaction = FOOD_LIKED
-	if(food_flags & FOOD_SILVER_SPAWNED) // it's not real food
-		food_taste_reaction = FOOD_TOXIC
 
 	switch(food_taste_reaction)
 		if(FOOD_TOXIC)
