@@ -4097,6 +4097,7 @@
 #include "code\modules\spells\spell_types\lichdom.dm"
 #include "code\modules\spells\spell_types\lightning.dm"
 #include "code\modules\spells\spell_types\mime.dm"
+#include "code\modules\spells\spell_types\oil_jaunt.dm"
 #include "code\modules\spells\spell_types\personality_commune.dm"
 #include "code\modules\spells\spell_types\projectile.dm"
 #include "code\modules\spells\spell_types\rightandwrong.dm"

@@ -110,6 +110,12 @@
 	else
 		return 0
 
+/obj/effect/decal/cleanable/proc/can_oiljaunt_in()
+	if(blood_state == BLOOD_STATE_OIL)
+		return bloodiness
+	else
+		return 0
+
 /obj/effect/decal/cleanable/proc/handle_merge_decal(obj/effect/decal/cleanable/merger)
 	if(!merger)
 		return
