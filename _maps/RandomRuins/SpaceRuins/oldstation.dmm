@@ -4539,6 +4539,9 @@
 /turf/closed/mineral/plasma,
 /area/ruin/unpowered)
 "li" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
 /turf/closed/wall,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/delta/biolab)
@@ -6951,7 +6954,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
 "ze" = (
-/obj/effect/spawner/structure/window/hollow/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/charlie/engie)
 "zm" = (
@@ -7475,6 +7480,12 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
+"Fb" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/charlie/engie)
 "Fl" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
@@ -7868,7 +7879,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
 "Kp" = (
-/obj/effect/spawner/structure/window/hollow/reinforced,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/mining)
 "Kt" = (
@@ -8237,6 +8250,12 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
+"OK" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/beta/mining)
 "OQ" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -8514,6 +8533,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"Sd" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/charlie/engie)
 "Se" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8852,6 +8877,13 @@
 "VV" = (
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/delta/hall)
+"VX" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 6
+	},
+/turf/closed/wall,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/delta/biolab)
 "Wb" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -10181,7 +10213,7 @@ aa
 Ir
 gL
 gL
-Kp
+OK
 qh
 mJ
 no
@@ -10439,8 +10471,8 @@ aa
 eI
 eI
 eI
-fb
-ze
+Sd
+Fb
 kH
 ze
 fb
@@ -13338,7 +13370,7 @@ UA
 Wc
 ls
 ls
-li
+VX
 aa
 aa
 aa
