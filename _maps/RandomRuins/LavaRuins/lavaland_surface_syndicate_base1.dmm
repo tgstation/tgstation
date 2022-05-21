@@ -161,11 +161,11 @@
 /area/ruin/syndicate_lava_base/engineering)
 "bP" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/atmospherics/pipe/layer_manifold{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
@@ -299,7 +299,6 @@
 /area/ruin/syndicate_lava_base/virology)
 "do" = (
 /obj/structure/closet/secure_closet/medical1{
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1493,7 +1492,6 @@
 	lethal = 1;
 	name = "Base turret controls";
 	pixel_y = 30;
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /turf/open/floor/circuit/red,
@@ -1994,7 +1992,6 @@
 /area/ruin/syndicate_lava_base/bar)
 "lm" = (
 /obj/structure/closet/secure_closet/medical1{
-	req_access = null;
 	req_access = list("syndicate")
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2575,6 +2572,10 @@
 "pm" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer/atmos_control/noreconnect{
+	dir = 1;
+	atmos_chambers = list("lavalandsyndieo2" = "Oxygen Supply", "lavalandsyndien2" = "Nitrogen Supply", "lavalandsyndieco2" = "Carbon Dioxide Supply", "lavalandsyndieplasma" = "Plasma Supply")
+	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "pI" = (
@@ -2613,10 +2614,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/dormitories)
 "pU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "qa" = (
@@ -3397,13 +3398,11 @@
 /turf/open/floor/engine/plasma,
 /area/ruin/syndicate_lava_base/engineering)
 "CI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 9
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "CR" = (
@@ -3439,11 +3438,10 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/medbay)
 "Dt" = (
-/obj/structure/sign/warning/fire,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "Dx" = (
@@ -4039,12 +4037,12 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "OG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	name = "Plasma to Mix"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "OI" = (
@@ -4146,8 +4144,8 @@
 /obj/machinery/atmospherics/components/binary/pump/on{
 	target_pressure = 4500
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 8
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
+	dir = 4
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/engineering)
