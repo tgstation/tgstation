@@ -116,8 +116,8 @@
 		var/mob/living/consumed_mob = consumed_object
 		if(consumed_mob.status_flags & GODMODE)
 			return
-		message_admins("[src] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(src)].")
-		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
+		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_JMP(src)].")
+		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.forceMove(arrival_turf)
 		consumed_mob.Paralyze(100)
 		consumed_mob.adjustBruteLoss(30)
