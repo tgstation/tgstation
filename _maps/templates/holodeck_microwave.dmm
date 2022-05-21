@@ -45,6 +45,13 @@
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
+"u" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/brown/end{
+	dir = 4
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
 "x" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/trimline/brown/line{
@@ -90,11 +97,8 @@
 /area/template_noop)
 "H" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/trimline/brown/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/trimline/brown/line{
-	dir = 1
+/obj/effect/turf_decal/trimline/brown/end{
+	dir = 8
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
@@ -143,7 +147,7 @@
 a
 a
 a
-C
+H
 a
 a
 H
@@ -239,10 +243,10 @@ a
 a
 a
 a
-C
+u
 a
 a
-C
+u
 a
 a
 a
