@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Cell chargers no longer show up twice in Industrial Engineering's research node, and APC modules don't look like a Golem shell."
