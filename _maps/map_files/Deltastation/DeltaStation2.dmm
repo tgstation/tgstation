@@ -30537,13 +30537,20 @@
 "iwt" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/folder/yellow,
-/obj/item/pen,
+/obj/item/folder/yellow{
+	pixel_x = -6
+	},
+/obj/item/pen{
+	pixel_x = -6
+	},
 /obj/machinery/door/window/left/directional/south{
 	dir = 1;
 	req_access = list("cargo")
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/fluff/desk_bell{
+	pixel_x = 7
+	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "iwy" = (
@@ -58247,6 +58254,10 @@
 /obj/machinery/door/firedoor,
 /obj/item/storage/box/matches{
 	pixel_y = 5
+	},
+/obj/structure/fluff/desk_bell{
+	pixel_x = 7;
+	pixel_y = 10
 	},
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1

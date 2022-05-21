@@ -6091,8 +6091,16 @@
 	name = "Cargo Desk";
 	req_access = list("mail_sorting")
 	},
-/obj/item/clipboard,
-/obj/item/folder,
+/obj/item/clipboard{
+	pixel_y = -8
+	},
+/obj/item/folder{
+	pixel_y = -8
+	},
+/obj/structure/fluff/desk_bell{
+	pixel_x = -7;
+	pixel_y = 8
+	},
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "bTT" = (
@@ -70926,6 +70934,10 @@
 	dir = 8;
 	name = "bar sorting disposal pipe";
 	sortType = 19
+	},
+/obj/structure/fluff/desk_bell{
+	pixel_x = -7;
+	pixel_y = 8
 	},
 /turf/open/floor/wood,
 /area/station/service/bar)

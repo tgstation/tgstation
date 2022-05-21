@@ -15209,6 +15209,17 @@
 "fjq" = (
 /turf/open/floor/iron/stairs/medium,
 /area/station/hallway/secondary/construction/engineering)
+"fjr" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/structure/fluff/desk_bell{
+	pixel_x = 7
+	},
+/turf/open/floor/iron,
+/area/station/service/bar)
 "fjQ" = (
 /obj/structure/grille,
 /turf/closed/wall/r_wall,
@@ -29646,6 +29657,9 @@
 	dir = 1;
 	name = "Cargo Desk";
 	req_access = list("cargo")
+	},
+/obj/structure/fluff/desk_bell{
+	pixel_x = -7
 	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -104119,7 +104133,7 @@ tju
 nwb
 uZy
 dyc
-aeT
+fjr
 ykL
 xKV
 nxy

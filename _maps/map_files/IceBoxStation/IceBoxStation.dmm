@@ -236,6 +236,9 @@
 	name = "Cargo Desk";
 	req_access = list("cargo")
 	},
+/obj/structure/fluff/desk_bell{
+	pixel_x = 7
+	},
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "afp" = (
@@ -19233,6 +19236,9 @@
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/structure/table/wood,
+/obj/structure/fluff/desk_bell{
+	pixel_x = 7
+	},
 /turf/open/floor/iron,
 /area/station/service/bar)
 "gjM" = (
