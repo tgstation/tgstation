@@ -9589,7 +9589,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "dBz" = (
@@ -12185,6 +12184,7 @@
 /obj/structure/sign/warning/chem_diamond{
 	pixel_y = 32
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
