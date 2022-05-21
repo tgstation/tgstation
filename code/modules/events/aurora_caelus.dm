@@ -28,16 +28,16 @@
 
 /datum/round_event/aurora_caelus/start()
 	for(var/area in GLOB.sortedAreas)
-		var/area/effected_area = area
-		if(effected_area.area_flags & AREA_USES_STARLIGHT)
-			for(var/turf/open/space/spess in effected_area)
+		var/area/affected_area = area
+		if(affected_area.area_flags & AREA_USES_STARLIGHT)
+			for(var/turf/open/space/spess in affected_area)
 				spess.set_light(spess.light_range * 3, spess.light_power * 0.5)
-		if(istype(effected_area, /area/station/service/kitchen))
-			for(var/turf/open/kitchen in effected_area)
+		if(istype(affected_area, /area/station/service/kitchen))
+			for(var/turf/open/kitchen in affected_area)
 				kitchen.set_light(1, 0.75)
 			if(!prob(1) && !SSevents.holidays?[APRIL_FOOLS])
 				continue
-			var/obj/machinery/oven/roast_ruiner = locate() in effected_area
+			var/obj/machinery/oven/roast_ruiner = locate() in affected_area
 			if(roast_ruiner)
 				roast_ruiner.balloon_alert_to_viewers("oh egads!")
 				var/turf/ruined_roast = get_turf(roast_ruiner)
@@ -53,22 +53,22 @@
 		aurora_progress++
 		var/aurora_color = aurora_colors[aurora_progress]
 		for(var/area in GLOB.sortedAreas)
-			var/area/effected_area = area
-			if(effected_area.area_flags & AREA_USES_STARLIGHT)
-				for(var/turf/open/space/spess as anything in effected_area)
+			var/area/affected_area = area
+			if(affected_area.area_flags & AREA_USES_STARLIGHT)
+				for(var/turf/open/space/spess as anything in affected_area)
 					spess.set_light(l_color = aurora_color)
-			if(istype(effected_area, /area/station/service/kitchen))
-				for(var/turf/open/kitchen_floor in effected_area)
+			if(istype(affected_area, /area/station/service/kitchen))
+				for(var/turf/open/kitchen_floor in affected_area)
 					kitchen_floor.set_light(l_color = aurora_color)
 
 /datum/round_event/aurora_caelus/end()
 	for(var/area in GLOB.sortedAreas)
-		var/area/effected_area = area
-		if(effected_area.area_flags & AREA_USES_STARLIGHT)
-			for(var/turf/open/space/spess in effected_area)
+		var/area/affected_area = area
+		if(affected_area.area_flags & AREA_USES_STARLIGHT)
+			for(var/turf/open/space/spess in affected_area)
 				fade_to_black(spess)
-		if(istype(effected_area, /area/station/service/kitchen))
-			for(var/turf/open/seymour in effected_area)
+		if(istype(affected_area, /area/station/service/kitchen))
+			for(var/turf/open/seymour in affected_area)
 				fade_to_black(seymour)
 	priority_announce("The aurora caelus event is now ending. Starlight conditions will slowly return to normal. When this has concluded, please return to your workplace and continue work as normal. Have a pleasant shift, [station_name()], and thank you for watching with us.",
 	sound = 'sound/misc/notice2.ogg',
