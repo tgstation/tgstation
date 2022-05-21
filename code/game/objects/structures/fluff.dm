@@ -285,3 +285,43 @@
 /obj/structure/fluff/tram_rail/anchor
 	name = "tram rail anchor"
 	icon_state = "anchor"
+
+/obj/structure/fluff/desk_bell
+	name = "desk bell"
+	desc = "The cornerstone of any customer service job. You feel an unending urge to ring it."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "desk_bell"
+	pass_flags = PASSTABLE
+	layer = OBJ_LAYER
+	deconstructible = FALSE
+	anchored = FALSE
+	/// A cooldown timer so people don't pull out their autoclickers
+	var/fun_inhibitor = FALSE
+	/// The amount of times this bell has been rang, used to check the chance it breaks
+	var/times_rang = 0
+	/// Is this bell broken?
+	var/broken_ringer = FALSE
+
+/obj/structure/fluff/desk_bell/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(fun_inhibitor)
+		return TRUE
+	if(!broken_ringer)
+		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 70, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, TRUE)
+		flick("desk_bell_ring", src)
+		times_rang++
+		if((times_rang >= 10000) || prob(times_rang/100))
+			to_chat(user, span_notice("You hear [src]'s clapper fall off of its hinge. Nice job, you broke it."))
+			broken_ringer = TRUE
+	else
+		to_chat(user, span_notice("[src] is silent. Some idiot broke it."))
+	fun_inhibitor = TRUE
+	addtimer(CALLBACK(src, .proc/allow_fun), 0.4 SECONDS)
+	return TRUE
+
+/obj/structure/fluff/desk_bell/attackby(obj/item/weapon, mob/living/user, params)
+	. = ..()
+	times_rang += weapon.force
+
+/obj/structure/fluff/desk_bell/proc/allow_fun()
+	fun_inhibitor = FALSE
