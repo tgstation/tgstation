@@ -91,7 +91,9 @@
 	desc = "A tank full of industrial welding fuel. Do not consume."
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
+	//an assembly attached to the tank
 	var/obj/item/assembly_holder/rig = null
+	//whether it accepts assemblies or not
 	var/accepts_rig = TRUE
 
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
@@ -103,16 +105,22 @@
 /obj/structure/reagent_dispensers/fueltank/examine(mob/user)
 	. = ..()
 	if(get_dist(user, src) <= 2 && rig)
-		. += "<span class='notice'>There is some kind of device rigged to the tank.</span>"
+		. += span_notice("There is some kind of device rigged to the tank.")
 
-/obj/structure/reagent_dispensers/fueltank/attack_hand()
-	if(rig)
-		usr.visible_message("<span class='notice'>[usr] begins to detach [rig] from [src].</span>", "<span class='notice'>You begin to detach [rig] from [src].</span>")
-		if(do_after(usr, 20, target = src))
-			usr.visible_message("<span class='notice'>[usr] detaches [rig] from [src].</span>", "<span class='notice'>You detach [rig] from [src].</span>")
-			rig.forceMove(get_turf(usr))
-			rig = null
-			cut_overlays()
+/obj/structure/reagent_dispensers/fueltank/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!rig)
+		return
+	user.visible_message(span_notice("[user] begins to detach [rig] from [src]..."), span_notice("You begin to detach [rig] from [src]..."))
+	if(!do_after(user, 2 SECONDS, target = src))
+		return
+	user.visible_message(span_notice("[user] detaches [rig] from [src]."), span_notice("You detach [rig] from [src]."))
+	rig.forceMove(get_turf(user))
+	rig = null
+	cut_overlays()
+	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
@@ -160,11 +168,11 @@
 		return
 	if(istype(I, /obj/item/assembly_holder) && accepts_rig)
 		if(rig)
-			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
+			to_chat(user, span_warning("There is another device in the way!"))
 			return ..()
-		user.visible_message("[user] begins rigging [I] to [src].", "You begin rigging [I] to [src]")
+		user.visible_message(span_notice("[user] begins rigging [I] to [src]..."), span_notice("You begin rigging [I] to [src]..."))
 		if(do_after(user, 20, target = src))
-			user.visible_message("<span class='notice'>[user] rigs [I] to [src].</span>", "<span class='notice'>You rig [I] to [src].</span>")
+			user.visible_message(span_notice("[user] rigs [I] to [src]."), span_notice("You rig [I] to [src]."))
 			var/obj/item/assembly_holder/holder = I
 			if(locate(/obj/item/assembly/igniter) in holder.assemblies)
 				rig = holder
