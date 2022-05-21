@@ -1492,9 +1492,8 @@
 /area/construction)
 "FL" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden{
-	dir = 4;
-	icon_state = "pipe11-2"
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible/layer2{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/construction)
