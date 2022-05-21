@@ -33,7 +33,7 @@
 /// Used for eating reagents via food items.
 #define FOOD (1<<5)
 /// Used to check if something was eaten.
-#define EATEN_FOOD (INGEST & FOOD)
+#define EATEN_FOOD (INGEST | FOOD)
 
 #define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
 ///Health threshold for synthflesh and rezadone to unhusk someone

@@ -47,10 +47,12 @@
 		if (FOOD_AMAZING)
 			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 
-/datum/reagent/consumable/on_transfer(atom/A, methods=INGEST, trans_volume)
+/datum/reagent/consumable/on_transfer(atom/A, methods, trans_volume)
+	. = ..()
+	to_chat(world.log, A.type)
 	var/obj/item/organ/stomach/belly = A
 	if(!istype(belly))
-		return ..()
+		return .
 	if(nutriment_factor)
 		if(!HAS_TRAIT(belly.owner, TRAIT_NUTRIMENT_PASTE_FAN))
 			if((methods & EATEN_FOOD) != EATEN_FOOD)
@@ -60,7 +62,7 @@
 			if((methods & EATEN_FOOD) == EATEN_FOOD)
 				SEND_SIGNAL(belly.owner, COMSIG_ADD_MOOD_EVENT, "nutriment_paste", /datum/mood_event/ate_event/not_nutriment_paste)
 				eaten = FALSE
-	..()
+
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
