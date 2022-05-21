@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - balance: "Hitting someone in melee with the explosive lance now moves you to the same tile as them before it sets off the grenade."
