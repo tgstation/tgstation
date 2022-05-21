@@ -11882,6 +11882,10 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 12
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
 "dMp" = (
@@ -23367,6 +23371,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/sink{
+	pixel_y = 20
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "hyP" = (
@@ -27923,6 +27930,17 @@
 "iYb" = (
 /turf/closed/wall,
 /area/station/maintenance/central/greater)
+"iYs" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 12
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/aft)
 "iYt" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 1
@@ -31056,11 +31074,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "jYy" = (
-/obj/structure/mirror/directional/north,
 /obj/structure/sink{
 	pixel_y = 20
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/mirror/directional/south,
 /turf/open/floor/iron/freezer,
 /area/station/medical/break_room)
 "jYH" = (
@@ -32919,6 +32937,18 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"kBL" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/turf/open/floor/iron/white,
+/area/station/medical/medbay/central)
 "kBP" = (
 /obj/structure/table,
 /obj/item/paper,
@@ -50588,6 +50618,9 @@
 	dir = 4
 	},
 /obj/effect/spawner/random/vending/snackvend,
+/obj/structure/sign/departments/restroom{
+	pixel_y = -32
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
 "qnC" = (
@@ -72034,9 +72067,6 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
-	},
-/obj/structure/sign/departments/restroom{
-	pixel_y = -32
 	},
 /obj/machinery/light/small/directional/south,
 /obj/structure/chair/sofa/left{
@@ -243189,7 +243219,7 @@ xxg
 nDl
 uau
 hgh
-qQx
+kBL
 xPT
 cxA
 lka
@@ -246291,7 +246321,7 @@ sHd
 jih
 rkM
 eHU
-eHU
+iYs
 eHU
 rkM
 eHU
