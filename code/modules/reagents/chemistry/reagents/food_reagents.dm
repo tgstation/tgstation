@@ -52,11 +52,11 @@
 		return
 	if(nutriment_factor)
 		if(!HAS_TRAIT(A, TRAIT_NUTRIMENT_PASTE_FAN))
-			if(!(methods & EATEN_FOOD))
+			if((methods & EATEN_FOOD) != EATEN_FOOD)
 				SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "nutriment_paste", /datum/mood_event/ate_event/nutriment_paste)
 				eaten = FALSE
 		else
-			if((methods & EATEN_FOOD))
+			if((methods & EATEN_FOOD) == EATEN_FOOD)
 				SEND_SIGNAL(A, COMSIG_ADD_MOOD_EVENT, "nutriment_paste", /datum/mood_event/ate_event/not_nutriment_paste)
 				eaten = FALSE
 	..()
