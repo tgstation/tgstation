@@ -57007,7 +57007,6 @@
 	network = list("ss13","medbay")
 	},
 /obj/structure/bed/roller,
-/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "ucd" = (
