@@ -314,17 +314,17 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
 	interaction_flags_atom = NONE
-	/// Mob being eradicated by this field
+	///mob being eradicated by this field
 	var/mob/living/captured
-	/// Linked module. while this exists, the field will progress towards eradication. while it isn't, the field progresses away until it disappears. see attached for a special case
+	///linked module. while this exists, the field will progress towards eradication. while it isn't, the field progresses away until it disappears. see attached for a special case
 	var/obj/item/mod/module/tem/tem
-	/// Time in seconds before someone is eradicated, assuming progress isn't interrupted
+	///time in seconds before someone is eradicated, assuming progress isn't interrupted
 	var/timetokill = 3 SECONDS
-	/// The eradication appearance
+	///the eradication appearance
 	var/mutable_appearance/mob_underlay
-	/// The actual frame the animation is at in eradication, only changing when the progress towards eradication progresses enough to move to the next frame.
+	///the actual frame the animation is at in eradication, only changing when the progress towards eradication progresses enough to move to the next frame.
 	var/RPpos = null
-	/// If a TEM to link to isn't provided initially, this chrono field will progress towards eradication by itself without one.
+	///if a tem to link to isn't provided initially, this chrono field will progress towards eradication by itself without one.
 	var/attached = TRUE
 
 /obj/structure/chrono_field/Initialize(mapload, mob/living/target, obj/item/mod/module/tem/tem)
