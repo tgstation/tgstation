@@ -899,7 +899,7 @@
 /datum/quirk/ate_without_table
 	name = "Table Eating Enjoyer"
 	desc = "You find eating with a table incredibly important. The consequences of not eating with a table will be dire."
-	icon = "skull"
+	icon = "utensils"
 	mob_trait = TRAIT_TABLE_EATING_ENJOYER
 	value = -8
 	gain_text = "<span class='danger'>You know that you must eat with a table to survive.</span>"
