@@ -29,14 +29,8 @@
 	///The katana registered with the suit, used for recalling and catching the katana.  Set when the ninja outfit is created.
 	var/obj/item/energy_katana/energyKatana
 
-	///The space ninja's hood.
-	var/obj/item/clothing/head/helmet/space/space_ninja/n_hood
-	///The space ninja's shoes.
-	var/obj/item/clothing/shoes/space_ninja/n_shoes
 	///The space ninja's gloves.
 	var/obj/item/clothing/gloves/space_ninja/n_gloves
-	///The space ninja's mask.
-	var/obj/item/clothing/mask/gas/space_ninja/n_mask
 
 	///Whether or not the suit is currently booted up.  Starts off.
 	var/s_initialized = FALSE//Suit starts off.
@@ -155,30 +149,6 @@
 		s_coold = 5
 
 /**
- * Proc for changing the suit's appearance upon locking.
- *
- * Proc for when space ninja's suit locks.  If the user selects Original, gives it glowing lights, along with having an alternate sprite for female body types.
- * Yes, we do have nipLEDs, how could you tell?
- * If the user selects New Age, it applies new sprites to all the gear.
- * Arguments:
- * * ninja - The person wearing the suit.
- */
-/obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/ninja)
-	var/design_choice = tgui_alert(ninja, "Please choose your desired suit design.",,list("Original","New Age"))
-	switch(design_choice)
-		if("Original")
-			icon_state = ninja.physique == "female" ? "s-ninjanf" : "s-ninjan"
-			ninja.gloves.icon_state = "s-ninjan"
-			ninja.gloves.inhand_icon_state = "s-ninjan"
-		if("New Age")
-			icon_state ="ninja_new"
-			n_hood.icon_state = "ninja_newcowl"
-			n_gloves.icon_state = "ninja_new"
-			if(n_mask)
-				n_mask.icon_state = "ninja_new"
-
-
-/**
  * Proc called to lock the important gear pieces onto space ninja's body.
  *
  * Called during the suit startup to lock all gear pieces onto space ninja.
@@ -195,24 +165,11 @@
 		to_chat(ninja, span_danger("<B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR..."))
 		ninja.gib()
 		return FALSE
-	if(!istype(ninja.head, /obj/item/clothing/head/helmet/space/space_ninja))
-		to_chat(ninja, "[span_userdanger("ERROR")]: 100113 UNABLE TO LOCATE HEAD GEAR\nABORTING...")
-		return FALSE
-	if(!istype(ninja.shoes, /obj/item/clothing/shoes/space_ninja))
-		to_chat(ninja, "[span_userdanger("ERROR")]: 122011 UNABLE TO LOCATE FOOT GEAR\nABORTING...")
-		return FALSE
 	if(!istype(ninja.gloves, /obj/item/clothing/gloves/space_ninja))
 		to_chat(ninja, "[span_userdanger("ERROR")]: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
 		return FALSE
 	affecting = ninja
-	ADD_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	n_hood = ninja.head
-	ADD_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	n_shoes = ninja.shoes
-	ADD_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_gloves = ninja.gloves
-	ADD_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-	n_mask = ninja.wear_mask
 
 	ADD_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
 	return TRUE
@@ -229,19 +186,12 @@
 	affecting = null
 	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	icon_state = "s-ninja"
-	if(n_hood)//Should be attached, might not be attached.
-		REMOVE_TRAIT(n_hood, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-		n_hood.icon_state = "s-ninja"
-	if(n_shoes)
-		REMOVE_TRAIT(n_shoes, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	if(n_gloves)
 		n_gloves.icon_state = "black"
 		REMOVE_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 		n_gloves.draining = FALSE
 
 		REMOVE_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
-	if(n_mask)
-		n_mask.icon_state = "s-ninja"
 
 /**
  * Proc used to delete all the attachments and itself.
@@ -249,7 +199,5 @@
  * Can be called to entire rid of the suit pieces and the suit itself.
  */
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
-	QDEL_NULL(n_hood)
 	QDEL_NULL(n_gloves)
-	QDEL_NULL(n_shoes)
 	QDEL_NULL(src)

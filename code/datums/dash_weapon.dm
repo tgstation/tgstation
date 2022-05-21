@@ -35,16 +35,16 @@
 	if(!IsAvailable())
 		return FALSE
 
+	var/turf/current_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
 	if(target in view(user.client.view, user))
 		if(!do_teleport(user, target_turf, no_effects = TRUE))
 			user.balloon_alert(user, "dash blocked by location!")
 			return FALSE
-
-		var/obj/spot1 = new phaseout(get_turf(user), user.dir)
-		playsound(target_turf, dash_sound, 25, TRUE)
-		var/obj/spot2 = new phasein(get_turf(user), user.dir)
+		var/obj/spot1 = new phaseout(current_turf, user.dir)
+		var/obj/spot2 = new phasein(target_turf, user.dir)
 		spot1.Beam(spot2,beam_effect,time=2 SECONDS)
+		playsound(target_turf, dash_sound, 25, TRUE)
 		current_charges--
 		owner.update_action_buttons_icon()
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)

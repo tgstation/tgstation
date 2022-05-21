@@ -155,7 +155,7 @@
 				var/turf/T = pick_n_take(empty_shuttle_turfs)
 
 				new /obj/effect/decal/remains/human(T)
-				new /obj/item/clothing/shoes/space_ninja(T)
+				new /obj/item/clothing/shoes/jackboots/fast(T)
 				new /obj/item/clothing/mask/balaclava(T)
 
 				for(var/i in 1 to 5)

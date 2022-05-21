@@ -208,6 +208,15 @@
 		/obj/item/mod/module/emp_shield,
 	)
 
+/obj/item/mod/control/pre_equipped/ninja
+	theme = /datum/mod_theme/ninja
+	applied_cell = /obj/item/stock_parts/cell/ninja
+	initial_modules = list(
+		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/noslip,
+		/obj/item/mod/module/stealth/ninja,
+	)
+
 /obj/item/mod/control/pre_equipped/prototype
 	theme = /datum/mod_theme/prototype
 	req_access = list(ACCESS_AWAY_GENERAL)

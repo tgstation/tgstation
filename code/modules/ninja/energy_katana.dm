@@ -39,38 +39,22 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-/obj/item/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/energy_katana/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-
-	var/list/modifiers = params2list(click_parameters)
-
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && !target.density)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!target.density)
 		jaunt.teleport(user, target)
 
 /obj/item/energy_katana/pickup(mob/living/user)
 	. = ..()
 	jaunt.Grant(user, src)
-	user.update_icons()
 	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/energy_katana/dropped(mob/user)
 	. = ..()
-	jaunt.Remove(user)
-	user.update_icons()
-
-//If we hit the Ninja who owns this Katana, they catch it.
-//Works for if the Ninja throws it or it throws itself or someone tries
-//To throw it at the ninja
-/obj/item/energy_katana/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(ishuman(hit_atom))
-		var/mob/living/carbon/human/hit_human = hit_atom
-		if(istype(hit_human.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-			var/obj/item/clothing/suit/space/space_ninja/ninja_suit = hit_human.wear_suit
-			if(ninja_suit.energyKatana == src)
-				returnToOwner(hit_human, 0, 1)
-				return
-
-	..()
+	if(!QDELETED(jaunt))
+		jaunt.Remove(user)
 
 /obj/item/energy_katana/Destroy()
 	QDEL_NULL(spark_system)

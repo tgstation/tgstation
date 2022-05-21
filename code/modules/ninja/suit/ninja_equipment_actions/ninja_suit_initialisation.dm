@@ -69,7 +69,6 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 				s_busy = FALSE
 				return
 		if (NINJA_ICON_GENERATE_PHASE)
-			lockIcons(ninja)//Check for icons.
 			ninja.regenerate_icons()
 		if (NINJA_COMPLETE_PHASE - 1)
 			message += "<B>[display_energy(cell.charge)]</B>."

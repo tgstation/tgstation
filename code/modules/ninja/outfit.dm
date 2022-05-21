@@ -4,16 +4,14 @@
 	suit = /obj/item/clothing/suit/space/space_ninja
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/space_ninja
-	head = /obj/item/clothing/head/helmet/space/space_ninja
 	ears = /obj/item/radio/headset
-	shoes = /obj/item/clothing/shoes/space_ninja
-	gloves = /obj/item/clothing/gloves/space_ninja
+	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/grenade/c4/ninja
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 	internals_slot = ITEM_SLOT_RPOCKET
 	belt = /obj/item/energy_katana
+	back = /obj/item/mod/control/pre_equipped/ninja
 	implants = list(/obj/item/implant/explosive)
-
 
 /datum/outfit/ninja/post_equip(mob/living/carbon/human/human)
 	if(istype(human.wear_suit, suit))
