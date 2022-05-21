@@ -255,10 +255,10 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	custom_materials = list(/datum/material/iron=200)
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
-	volume = 70
+	possible_transfer_amounts = list(5,10,25,50,100,200)
+	volume = 200
 	flags_inv = HIDEHAIR
 	slot_flags = ITEM_SLOT_HEAD
 	resistance_flags = NONE
@@ -273,14 +273,49 @@
 		ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
 		ITEM_SLOT_DEX_STORAGE
 	)
+	var/kicked_over = FALSE
 
-/obj/item/reagent_containers/glass/bucket/wooden
-	name = "wooden bucket"
-	icon_state = "woodbucket"
-	inhand_icon_state = "woodbucket"
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 50)
-	resistance_flags = FLAMMABLE
+/obj/item/reagent_containers/glass/bucket/Initialize(mapload)
+	. = ..()
+	update_appearance()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/kicking_the_bucket,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/item/reagent_containers/glass/bucket/proc/bucket_got_kicked()
+	kicked_over = TRUE
+	update_appearance()
+	playsound(src, 'sound/effects/spray2.ogg', 50, TRUE)
+	visible_message(span_danger("\The [src] got kicked!"))
+	chem_splash(loc, null, 3, list(reagents))
+
+/obj/item/reagent_containers/glass/bucket/proc/kicking_the_bucket(datum/source, atom/movable/AM, thrown_at = FALSE)
+	SIGNAL_HANDLER
+	if(!reagents?.total_volume)
+		return
+
+	if(!isturf(loc) || !isliving(AM))
+		return
+	var/mob/living/kicker = AM
+	var/snap = TRUE
+	if(istype(kicker.buckled, /obj/vehicle))
+		var/obj/vehicle/ridden_vehicle = kicker.buckled
+		bucket_got_kicked()
+		ridden_vehicle.visible_message(span_danger("[ridden_vehicle] kicks \the [src]."))
+
+	if(!thrown_at && kicker.movement_type & (FLYING|FLOATING)) //won't kick the bucket if you are flying
+		snap = FALSE
+
+	else if(snap && isanimal(kicker))
+		var/mob/living/simple_animal/simple_kicker = kicker
+		if(simple_kicker.mob_size <= MOB_SIZE_TINY) //don't let small animals kick the bucket
+			snap = FALSE
+	if(snap)
+		bucket_got_kicked()
+		if(!thrown_at)
+			kicker.visible_message(span_danger("[kicker] kicks \the [src]."), \
+					span_userdanger("You trigger \the [src]!"))
 
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
@@ -319,6 +354,14 @@
 		slot_equipment_priority.Insert(index, ITEM_SLOT_HEAD)
 		return
 	return ..()
+
+/obj/item/reagent_containers/glass/bucket/wooden
+	name = "wooden bucket"
+	icon_state = "woodbucket"
+	inhand_icon_state = "woodbucket"
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 50)
+	resistance_flags = FLAMMABLE
 
 /obj/item/pestle
 	name = "pestle"
