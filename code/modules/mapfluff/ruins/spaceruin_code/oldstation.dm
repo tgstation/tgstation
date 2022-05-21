@@ -87,6 +87,10 @@
 	The whole department is running around in panic. I'll just pray that engineers won't let the engine delaminate.<br><br> ...And the alien spawn have broken out of the containment area due to the impact and slipped into the vent.<br><br> \
 	I have a bad feeling about this, but I doubt that now is the right time to make guys hunt for what they call my `pet cockroach`... And RD is scary..."
 
+/obj/item/paper/fluff/ruins/oldstation/apc_note
+	name = "DO NOT TOUCH!"
+	info = "This is a spare pre-charged APC battery for emergencies ONLY. DO NOT use it for stun prods, Bob."
+
 /obj/machinery/mod_installer
 	name = "modular outerwear device installator"
 	desc = "An ancient machine that mounts a MOD unit onto the occupant."
