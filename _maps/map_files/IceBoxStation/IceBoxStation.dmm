@@ -75009,10 +75009,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/central)
-"yjg" = (
-/obj/machinery/power/apc/highcap/five_k,
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers)
 "yjh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -170962,7 +170958,7 @@ tjo
 tjo
 tjo
 tjo
-yjg
+tjo
 tjo
 iDt
 tjo
