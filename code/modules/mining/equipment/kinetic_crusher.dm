@@ -450,6 +450,9 @@
 	denied_type = /obj/item/crusher_trophy/clockwork_rocket
 	bonus_value = 10
 
+/obj/item/crusher_trophy/clockwork_rocket/effect_desc()
+	return "mark detonation to do <b>[bonus_value]</b> more damage and decreases the crushers charge time by <b>[bonus_value * 0.1]</b>, while increasing the destabilizer shots range by <b>3</b> tiles and increasing its speed by <b>0.8</b> times"
+
 /obj/item/crusher_trophy/clockwork_rocket/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
 		marker.name = "extended [marker.name]"
 		marker.speed *= 0.8
@@ -466,6 +469,3 @@
 	if(.)
 		crusher.charge_time += bonus_value * 0.1
 		crusher.detonation_damage -= bonus_value
-
-/obj/item/crusher_trophy/clockwork_rocket/effect_desc()
-	return "mark detonation to do <b>[bonus_value]</b> more damage and decreases the crushers charge time by <b>[bonus_value * 0.1]</b>, while increasing the destabilizer shots range by <b>3</b> tiles and increasing its speed by <b>0.8</b> times"
