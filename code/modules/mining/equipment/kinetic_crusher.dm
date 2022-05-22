@@ -442,13 +442,13 @@
 		chaser.damage = 20
 		log_combat(user, target, "fired a chaser at", src)
 
-//clockwork golem
+//clockwork golem, increases detonation damage, market range/speed and decreases charge time.
 /obj/item/crusher_trophy/clockwork_rocket
 	name = "clockwork rocket"
 	desc = "Was used as a rocket to compress energy. Suitable as a trophy for a kinetic crusher."
 	icon_state = "clockwork_rocket"
 	denied_type = /obj/item/crusher_trophy/clockwork_rocket
-	bonus_value = 1
+	bonus_value = 10
 
 /obj/item/crusher_trophy/clockwork_rocket/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
 		marker.name = "extended [marker.name]"
@@ -458,9 +458,11 @@
 /obj/item/crusher_trophy/clockwork_rocket/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
-		crusher.charge_time -= bonus_value
+		crusher.charge_time -= bonus_value * 0.1
+		crusher.detonation_damage += bonus_value
 
 /obj/item/crusher_trophy/clockwork_rocket/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
-		crusher.charge_time += bonus_value
+		crusher.charge_time += bonus_value * 0.1
+		crusher.detonation_damage -= bonus_value

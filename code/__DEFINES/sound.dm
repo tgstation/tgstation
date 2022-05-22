@@ -135,7 +135,6 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 
 /// List of all of our sound keys.
 #define SFX_BODYFALL "bodyfall"
-#define SFX_CLOCKFALL "clockfall"
 #define SFX_BULLET_MISS "bullet_miss"
 #define SFX_CAN_OPEN "can_open"
 #define SFX_CLOWN_STEP "clown_step"

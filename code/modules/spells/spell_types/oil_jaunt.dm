@@ -40,7 +40,7 @@
 
 /obj/effect/proc_holder/spell/pointed/oil_jaunt/cast(list/targets, mob/user = usr)
 	play_sound("enter", user)
-	user.notransform = 1
+	user.notransform = TRUE
 	var/turf/target_loc
 	for(var/target in targets)
 		target_loc = get_turf(target)
@@ -53,12 +53,12 @@
 	play_sound("exit", user)
 	new jaunt_out_type(target_loc, user.dir)
 	holder.forceMove(target_loc)
-	sleep(5)
+	sleep(0.5 SECONDS)
 	mobloc = get_turf(user.loc)
-	holder.reappearing = 1
+	holder.reappearing = TRUE
 	qdel(holder)
-	user.notransform = 0
-	sleep(3)
+	user.notransform = FALSE
+	sleep(0.3 SECONDS)
 	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, type)
 
 /obj/effect/proc_holder/spell/pointed/oil_jaunt/proc/play_sound(type, mob/living/target)

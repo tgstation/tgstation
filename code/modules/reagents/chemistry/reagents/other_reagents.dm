@@ -1789,6 +1789,17 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = null
 
+/datum/reagent/fuel/oil/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	if(!istype(exposed_turf) || isspaceturf(exposed_turf)) // Is the turf valid
+		return
+	if(reac_volume < 10)
+		return
+
+	var/obj/effect/decal/cleanable/oil/oil = locate() in exposed_turf.contents
+	if(!oil)
+		oil = new(exposed_turf)
+
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."

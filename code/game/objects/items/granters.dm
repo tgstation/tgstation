@@ -343,7 +343,7 @@
 /obj/item/book/granter/spell/oiljaunt/recoil(mob/living/user)
 	..()
 	to_chat(user,span_warning("After trying to read the book, you realize it is too heavy to hold."))
-	user.Knockdown(30)
+	user.Knockdown(3 SECONDS)
 
 /obj/item/book/granter/spell/random
 	icon_state = "random_book"

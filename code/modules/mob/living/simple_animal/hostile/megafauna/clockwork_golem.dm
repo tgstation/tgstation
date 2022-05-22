@@ -26,18 +26,18 @@ Difficulty: Medium
 	gps_name = "Clockwork Signal"
 	del_on_death = TRUE
 	deathmessage = "cracks, beaking into multiple pieces."
-	deathsound = SFX_CLOCKFALL
+	deathsound = 'sound/creatures/clockwork_golem_dead.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/Initialize(mapload)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/death(gibbed)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(2, location = loc)
 	smoke.start()
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete
 	icon_state = "clockwork_golem_complete"
@@ -69,7 +69,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/organ_damage, ORGAN_SLOT_HEART, 15) // Yes, this is what it looks like.
+	AddElement(/datum/element/organ_damage, ORGAN_SLOT_HEART, 10) // Yes, this is what it looks like.
 	ruby_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast()
 	release_smoke = new /datum/action/cooldown/mob_cooldown/release_smoke()
 	oil_ball = new /datum/action/cooldown/mob_cooldown/projectile_attack/oil_ball()
@@ -88,7 +88,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete/death()
 	new /mob/living/simple_animal/hostile/megafauna/clockwork_golem/broken(loc)
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete/OpenFire()
 	if(client)
@@ -157,12 +157,12 @@ Difficulty: Medium
 
 /obj/projectile/bullet/oil_ball/on_ricochet(atom/A)
 	new /obj/effect/decal/cleanable/oil/slippery(get_turf(loc))
-	. = ..()
+	return ..()
 
 /obj/projectile/bullet/oil_ball/on_hit(atom/target, blocked = FALSE)
 	new /obj/effect/decal/cleanable/oil/slippery(get_turf(loc))
-	. = ..()
+	return ..()
 
 /obj/projectile/bullet/oil_ball/on_range()
 	new /obj/effect/decal/cleanable/oil/slippery(get_turf(loc))
-	. = ..()
+	return ..()
