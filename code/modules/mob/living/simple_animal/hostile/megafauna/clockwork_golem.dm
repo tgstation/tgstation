@@ -3,7 +3,6 @@
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("clanks")
-	melee_queue_distance = 10
 	pixel_x = -16
 	gps_name = "Clockwork Signal"
 	del_on_death = TRUE
@@ -38,6 +37,7 @@
 	speed = 12
 	move_to_delay = 12
 	ranged_cooldown_time = 10 SECONDS
+	loot = list(/obj/item/stack/sheet/bronze = 10, /obj/effect/decal/cleanable/oil)
 	small_sprite_type = /datum/action/small_sprite/megafauna/clockwork_golem
 	/// Ruby blast
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast/ruby_blast
@@ -50,7 +50,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/organ_damage, ORGAN_SLOT_HEART, 15)
+	AddElement(/datum/element/organ_damage, ORGAN_SLOT_HEART, 15) // Yes, this is what it looks like.
 	ruby_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast()
 	release_smoke = new /datum/action/cooldown/mob_cooldown/release_smoke()
 	oil_ball = new /datum/action/cooldown/mob_cooldown/projectile_attack/oil_ball()
@@ -90,8 +90,8 @@
 	desc = "A broken down version of a historical masterpiece."
 	health = 300
 	maxHealth = 300
-	attack_verb_continuous = "drills"
-	attack_verb_simple = "drill"
+	attack_verb_continuous = "cuts"
+	attack_verb_simple = "cut"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	vision_range = 9
@@ -103,9 +103,10 @@
 	dodge_prob = 50
 	speed = 1
 	move_to_delay = 2
+	melee_queue_distance = 10
 	robust_searching = TRUE
-	loot = list()
-	crusher_loot = list()
+	loot = list(/obj/item/stack/sheet/bronze = 10, /obj/effect/decal/cleanable/oil, /obj/item/book/granter/spell/oiljaunt)
+	crusher_loot = list(/obj/item/stack/sheet/bronze = 10, /obj/effect/decal/cleanable/oil, /obj/item/crusher_trophy/clockwork_rocket)
 	small_sprite_type = /datum/action/small_sprite/megafauna/clockwork_golem/broken
 
 /obj/projectile/bullet/ruby_blast
@@ -138,7 +139,6 @@
 /obj/projectile/bullet/oil_ball/on_ricochet(atom/A)
 	new /obj/effect/decal/cleanable/oil/slippery(get_turf(loc))
 	. = ..()
-
 
 /obj/projectile/bullet/oil_ball/on_hit(atom/target, blocked = FALSE)
 	new /obj/effect/decal/cleanable/oil/slippery(get_turf(loc))

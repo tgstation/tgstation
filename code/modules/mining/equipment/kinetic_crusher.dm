@@ -441,3 +441,28 @@
 		chaser.monster_damage_boost = FALSE // Weaker cuz no cooldown
 		chaser.damage = 20
 		log_combat(user, target, "fired a chaser at", src)
+
+//clockwork golem
+/obj/item/crusher_trophy/clockwork_rocket
+	name = "clockwork rocket"
+	desc = "Was used as a rocket to compress energy. Suitable as a trophy for a kinetic crusher."
+	icon_state = "clockwork rocket"
+	denied_type = /obj/item/crusher_trophy/clockwork_rocket
+	bonus_value = 1
+
+/obj/item/crusher_trophy/clockwork_rocket/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
+		marker.name = "extended [marker.name]"
+		marker.speed += 2
+		marker.range += 4
+
+/obj/item/crusher_trophy/clockwork_rocket/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
+	. = ..()
+	if(.)
+		crusher.light_range += bonus_value
+		crusher.charge_time -= bonus_value
+
+/obj/item/crusher_trophy/clockwork_rocket/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
+	. = ..()
+	if(.)
+		crusher.light_range -= bonus_value
+		crusher.charge_time += bonus_value

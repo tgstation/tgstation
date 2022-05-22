@@ -333,6 +333,18 @@
 	to_chat(user,span_warning("[src] suddenly vanishes!"))
 	qdel(src)
 
+/obj/item/book/granter/spell/oiljaunt
+	spell = /obj/effect/proc_holder/spell/pointed/oil_jaunt
+	spellname = "oiljaunt"
+	icon_state = "bookoiljaunt"
+	desc = "This book is sad, it is crying oil."
+	remarks = list("It is written in an ancient language, damn guess this is a waste of time.", "So I guess I am still trying to read this, I kind of think I know what it says.", "Everything begins with or without energy", "Become like oil, formless.", "Now you put oil in a book, it becomes the book.", "Now you put oil in yourself.", "Your time is running faster.")
+
+/obj/item/book/granter/spell/oiljaunt/recoil(mob/living/user)
+	..()
+	to_chat(user,span_warning("After trying to read the book, you realize it is too heavy to hold."))
+	user.Knockdown(30)
+
 /obj/item/book/granter/spell/random
 	icon_state = "random_book"
 
