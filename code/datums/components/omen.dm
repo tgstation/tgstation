@@ -71,6 +71,20 @@
 				qdel(src)
 			return
 
+	for(var/turf_content in our_guy_pos)
+		if(istype(turf_content, /obj/item/reagent_containers/glass/bucket))
+			to_chat(living_guy, span_warning("A malevolent force pushes the bucket into your path..."))
+			var/obj/item/reagent_containers/glass/bucket/darth_bucket = turf_content
+			INVOKE_ASYNC(darth_bucket, /obj/item/reagent_containers/glass/bucket/.proc/bucket_got_kicked, TRUE)
+			living_guy.apply_status_effect(/datum/status_effect/incapacitating/paralyzed, 10)
+			if(prob(13))
+				living_guy.adjustBruteLoss(666)
+				to_chat(living_guy, span_danger("Pain rushes through all your body..."))
+				living_guy.visible_message(span_danger("[living_guy] kicks \the bucket for real this time!!"))
+			if(!permanent)
+				qdel(src)
+			return
+
 	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
 		if(the_turf.zPassOut(living_guy, DOWN) && living_guy.can_z_move(DOWN, the_turf, z_move_flags = ZMOVE_FALL_FLAGS))
 			to_chat(living_guy, span_warning("A malevolent force guides you towards the edge..."))

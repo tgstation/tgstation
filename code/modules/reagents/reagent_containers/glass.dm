@@ -284,38 +284,40 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/reagent_containers/glass/bucket/proc/bucket_got_kicked()
-	kicked_over = TRUE
-	update_appearance()
-	playsound(src, 'sound/effects/spray2.ogg', 50, TRUE)
-	visible_message(span_danger("\The [src] got kicked!"))
-	chem_splash(loc, null, 3, list(reagents))
+	SpinAnimation(7,1)
+	playsound(src, 'sound/effects/slosh.ogg', 50, TRUE)
+	chem_splash(loc, null, 2, list(reagents))
 
 /obj/item/reagent_containers/glass/bucket/proc/kicking_the_bucket(datum/source, atom/movable/AM, thrown_at = FALSE)
 	SIGNAL_HANDLER
-	if(!reagents?.total_volume)
-		return
 
-	if(!isturf(loc) || !isliving(AM))
-		return
 	var/mob/living/kicker = AM
-	var/snap = TRUE
 	if(istype(kicker.buckled, /obj/vehicle))
 		var/obj/vehicle/ridden_vehicle = kicker.buckled
 		bucket_got_kicked()
 		ridden_vehicle.visible_message(span_danger("[ridden_vehicle] kicks \the [src]."))
+		return
 
-	if(!thrown_at && kicker.movement_type & (FLYING|FLOATING)) //won't kick the bucket if you are flying
-		snap = FALSE
+	if(kicker.m_intent == MOVE_INTENT_WALK) //calmly walking around the bucket and make the janitor proud
+		return
 
-	else if(snap && isanimal(kicker))
+	if(thrown_at && kicker.movement_type & (FLYING|FLOATING)) //won't kick the bucket if you are flying
+		return
+
+	if(reagents?.total_volume < 100) //this is to add some cost to this trap and prevent 1u bucket spam
+		return
+
+	if(!isturf(loc) || !isliving(AM))
+		return
+
+	if(isanimal(kicker))
 		var/mob/living/simple_animal/simple_kicker = kicker
 		if(simple_kicker.mob_size <= MOB_SIZE_TINY) //don't let small animals kick the bucket
-			snap = FALSE
-	if(snap)
-		bucket_got_kicked()
-		if(!thrown_at)
-			kicker.visible_message(span_danger("[kicker] kicks \the [src]."), \
-					span_userdanger("You trigger \the [src]!"))
+			return
+
+	bucket_got_kicked()
+	kicker.visible_message(span_danger("[kicker] kicks \the [src]."), \
+	span_userdanger("You kicked \the [src]!"))
 
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
@@ -354,6 +356,11 @@
 		slot_equipment_priority.Insert(index, ITEM_SLOT_HEAD)
 		return
 	return ..()
+
+/obj/item/reagent_containers/glass/bucket/cyborg
+	name = "internal bucket"
+	desc = "A bucket built into your chassis."
+	volume = 70 // Standard volume as they don't have to deal with carrying a bulky bucket
 
 /obj/item/reagent_containers/glass/bucket/wooden
 	name = "wooden bucket"
