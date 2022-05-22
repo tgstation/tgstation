@@ -59844,14 +59844,22 @@
 "qSr" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
+/obj/item/clipboard{
+	pixel_x = 3
+	},
+/obj/item/folder/yellow{
+	pixel_x = 3
+	},
 /obj/machinery/door/window/left/directional/west{
 	dir = 4;
 	name = "Mailroom Desk";
 	req_access = list("mail_sorting")
 	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/desk_bell{
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "qSC" = (
