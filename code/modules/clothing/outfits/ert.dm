@@ -292,7 +292,6 @@
 		/obj/item/grenade/clusterbuster/cleaner = 1,
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/mop/advanced = 1,
-		/obj/item/reagent_containers/glass/bucket = 1,
 		/obj/item/storage/box/lights/mixed = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)
@@ -416,7 +415,6 @@
 	back = /obj/item/storage/backpack/ert/janitor
 	backpack_contents = list(
 		/obj/item/mop/advanced = 1,
-		/obj/item/reagent_containers/glass/bucket = 1,
 		/obj/item/storage/box/lights/mixed = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 	)
