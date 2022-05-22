@@ -294,7 +294,7 @@
 	layer = OBJ_LAYER
 	anchored = FALSE
 	pass_flags = PASSTABLE // Able to place on tables
-	max_integrity = 2000 // To make attacking it not instantly break it
+	max_integrity = 5000 // To make attacking it not instantly break it
 	/// The amount of times this bell has been rang, used to check the chance it breaks
 	var/times_rang = 0
 	/// Is this bell broken?
@@ -308,12 +308,7 @@
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, ring_cooldown) && ring_cooldown_length)
 		return TRUE
-	if(!broken_ringer)
-		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 70, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-		flick("desk_bell_ring", src)
-		times_rang++
-		check_clapper(user)
-	else
+	if(!ring_bell(user))
 		to_chat(user, span_notice("[src] is silent. Some idiot broke it."))
 	if(ring_cooldown_length)
 		COOLDOWN_START(src, ring_cooldown, ring_cooldown_length)
@@ -322,7 +317,7 @@
 /obj/structure/fluff/desk_bell/attackby(obj/item/weapon, mob/living/user, params)
 	. = ..()
 	times_rang += weapon.force
-	check_clapper(user)
+	ring_bell(user)
 
 /obj/structure/fluff/desk_bell/screwdriver_act(mob/living/user, obj/item/tool)
 	if(broken_ringer)
@@ -341,6 +336,16 @@
 	if((times_rang >= 10000) || prob(times_rang/100))
 		to_chat(user, span_notice("You hear [src]'s clapper fall off of its hinge. Nice job, you broke it."))
 		broken_ringer = TRUE
+
+/// Ring the bell
+/obj/structure/fluff/desk_bell/proc/ring_bell(mob/living/user)
+	if(!broken_ringer)
+		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 70, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		flick("desk_bell_ring", src)
+		times_rang++
+		check_clapper(user)
+		return TRUE
+	return FALSE
 
 /obj/structure/fluff/desk_bell/speed_demon
 	desc = "The cornerstone of any customer service job. This one's been modified for hyper-performance."
