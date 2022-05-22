@@ -264,7 +264,7 @@
 
 	// Translate any existing messages upwards, apply exponential decay factors to timers
 	if (owned_by.seen_messages)
-		var/idx = 1
+		var/num_seen_messages = 1
 		var/combined_height = our_approx_lines
 
 		for(var/datum/chatmessage/preexisting_message as anything in owned_by.seen_messages[message_loc])
@@ -283,9 +283,9 @@
 			var/current_stage_2_time_left = preexisting_message.fade_times_by_image[other_message_image] - (world.time + CHAT_MESSAGE_SPAWN_TIME)
 
 			//how much time remains in the "fully visible" stage of animation, after we adjust it. round it down to the nearest tick
-			var/real_stage_2_time_left = round((current_stage_2_time_left) * (CHAT_MESSAGE_EXP_DECAY ** idx) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height), world.tick_lag)
+			var/real_stage_2_time_left = round((current_stage_2_time_left) * (CHAT_MESSAGE_EXP_DECAY ** num_seen_messages) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height), world.tick_lag)
 
-			idx++
+			num_seen_messages++
 
 			///used to take away time from CHAT_MESSAGE_SPAWN_TIME's addition to the fading time
 			var/non_abs_stage_2_time_left = real_stage_2_time_left
