@@ -292,6 +292,9 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/kicker = AM
+	if(!isturf(loc) || !isliving(AM))
+		return
+
 	if(istype(kicker.buckled, /obj/vehicle))
 		var/obj/vehicle/ridden_vehicle = kicker.buckled
 		bucket_got_kicked()
@@ -305,9 +308,6 @@
 		return
 
 	if(reagents?.total_volume < 100) //this is to add some cost to this trap and prevent 1u bucket spam
-		return
-
-	if(!isturf(loc) || !isliving(AM))
 		return
 
 	if(isanimal(kicker))
