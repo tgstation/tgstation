@@ -303,6 +303,8 @@
 	COOLDOWN_DECLARE(ring_cooldown)
 	/// The length of the cooldown. Setting it to 0 will skip all cooldowns.
 	var/ring_cooldown_length = 0.3 SECONDS
+	/// The sound the bell makes
+	var/ring_sound = 'sound/machines/microwave/microwave-end.ogg'
 
 /obj/structure/fluff/desk_bell/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -340,7 +342,7 @@
 /// Ring the bell
 /obj/structure/fluff/desk_bell/proc/ring_bell(mob/living/user)
 	if(!broken_ringer)
-		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 70, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, ring_sound, 70, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		flick("desk_bell_ring", src)
 		times_rang++
 		check_clapper(user)
