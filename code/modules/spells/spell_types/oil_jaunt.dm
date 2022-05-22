@@ -6,6 +6,7 @@
 	clothes_req = FALSE
 	invocation = "Gurlgle-gle blubf"
 	invocation_type = INVOCATION_WHISPER
+	range = 9
 	ranged_mousepointer = 'icons/effects/mouse_pointers/oil_target.dmi'
 	action_icon = 'icons/mob/actions/actions_ccult.dmi'
 	action_icon_state = "oil_jaunt"
