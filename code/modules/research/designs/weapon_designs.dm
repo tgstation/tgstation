@@ -196,7 +196,7 @@
 /datum/design/large_grenade
 	name = "Large Grenade"
 	desc = "A grenade that affects a larger area and use larger containers."
-	id = "large_Grenade"
+	id = "large_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/grenade/chem_grenade/large
@@ -206,7 +206,7 @@
 /datum/design/pyro_grenade
 	name = "Pyro Grenade"
 	desc = "An advanced grenade that is able to self ignite its mixture."
-	id = "pyro_Grenade"
+	id = "pyro_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/plasma = 500)
 	build_path = /obj/item/grenade/chem_grenade/pyro
@@ -216,7 +216,7 @@
 /datum/design/cryo_grenade
 	name = "Cryo Grenade"
 	desc = "An advanced grenade that rapidly cools its contents upon detonation."
-	id = "cryo_Grenade"
+	id = "cryo_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/silver = 500)
 	build_path = /obj/item/grenade/chem_grenade/cryo
@@ -226,7 +226,7 @@
 /datum/design/adv_grenade
 	name = "Advanced Release Grenade"
 	desc = "An advanced grenade that can be detonated several times, best used with a repeating igniter."
-	id = "adv_Grenade"
+	id = "adv_grenade"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 500)
 	build_path = /obj/item/grenade/chem_grenade/adv_release

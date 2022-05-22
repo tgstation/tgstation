@@ -75,7 +75,7 @@
 "o" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	req_access = list("cargo")
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
@@ -99,7 +99,7 @@
 "q" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Supply Shuttle Airlock";
-	req_access_txt = "31"
+	req_access = list("cargo")
 	},
 /obj/docking_port/mobile/supply{
 	dwidth = 3;
