@@ -283,7 +283,7 @@ If this fails, you're just gonna have to read over this doc. You can skip the th
 >
 > -- <cite>Armhulenn</cite>
 
-- The reference tracker, while powerful, is increadibly easy to break<br>
+- The reference tracker, while powerful, is incredibly easy to break<br>
 If it weren't for those unit tests we'd still be missing list["a"] = list(ref)
 - Everyone but me sucks, because everyone but me keeps adding new hard deletes
 - Garbage collection is a spook, best practice is to use a random reference in place of null, it scares the compiler demons
