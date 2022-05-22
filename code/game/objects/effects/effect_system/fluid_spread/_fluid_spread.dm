@@ -94,6 +94,7 @@
 	if(!group)
 		group = source?.group || new
 	group.add_node(src)
+	source?.transfer_fingerprints_to(src)
 
 /obj/effect/particle_effect/fluid/Destroy()
 	group.remove_node(src)
@@ -120,7 +121,9 @@
 	src.location = get_turf(location)
 	src.amount = amount
 
-/datum/effect_system/fluid_spread/start()
+/datum/effect_system/fluid_spread/start(mob/blame)
 	var/location = holder ? get_turf(holder) : src.location
 	var/obj/effect/particle_effect/fluid/flood = new effect_type(location, new /datum/fluid_group(amount))
+	if (blame)
+		flood.add_hiddenprint(blame)
 	flood.spread()

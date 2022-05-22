@@ -75,7 +75,9 @@
 		return null
 
 	var/atom/location = loc
-	return (!allow_duplicate_results && (locate(result_type) in location)) || (new result_type(location))
+	var/atom/movable/result = (!allow_duplicate_results && (locate(result_type) in location)) || (new result_type(location))
+	transfer_fingerprints_to(result)
+	return result
 
 /obj/effect/particle_effect/fluid/foam/process(delta_time)
 	var/ds_delta_time = delta_time SECONDS

@@ -80,7 +80,7 @@
 		for(var/mob/living/smoker in spread_turf)
 			smoke_mob(smoker, delta_time)
 
-		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group)
+		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group, src)
 		reagents.copy_to(spread_smoke, reagents.total_volume)
 		spread_smoke.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		spread_smoke.lifetime = lifetime
