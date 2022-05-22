@@ -103,7 +103,7 @@
 	bite_consumption = 4
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/toxin/amatoxin = 3, /datum/reagent/drug/mushroomhallucinogen = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("pie" = 1, "mushroom" = 1)
-	foodtypes = GRAIN | VEGETABLES | TOXIC | GROSS
+	foodtypes = GRAIN | VEGETABLES | TOXIC
 
 /obj/item/food/pie/plump_pie
 	name = "plump pie"

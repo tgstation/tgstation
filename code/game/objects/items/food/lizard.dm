@@ -33,7 +33,7 @@
 	icon_state = "raw_lizard_cheese"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/salt = 5)
 	tastes = list("meat" = 1, "salt" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT | RAW
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_headcheese/Initialize(mapload)
@@ -47,7 +47,7 @@
 	icon_state = "lizard_cheese"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/salt = 5)
 	tastes = list("cheese" = 1, "salt" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/headcheese/MakeProcessable()
@@ -60,7 +60,7 @@
 	icon_state = "lizard_cheese_slice"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/salt = 1)
 	tastes = list("cheese" = 1, "salt" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/shredded_lungs
@@ -70,7 +70,7 @@
 	icon_state = "lung_stirfry"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("meat" = 1, "heat" = 1, "veggies" = 1)
-	foodtypes = MEAT | VEGETABLES | GROSS
+	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/tsatsikh
@@ -80,7 +80,7 @@
 	icon_state = "tsatsikh"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5)
 	tastes = list("assorted minced organs" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/liver_pate
@@ -161,7 +161,7 @@
 	icon_state = "crispy_headcheese"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cooking_oil = 1)
 	tastes = list("cheese" = 1, "oil" = 1)
-	foodtypes = MEAT | VEGETABLES | NUTS | GROSS
+	foodtypes = MEAT | VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/kebab/picoss_skewers
@@ -409,7 +409,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 15)
 	tastes = list("bread" = 1, "herb" = 1, "oil" = 1, "garlic" = 1, "tomato" = 1, "meat" = 1)
 	slice_type = null
-	foodtypes = VEGETABLES | MEAT | NUTS | GROSS
+	foodtypes = VEGETABLES | MEAT | NUTS
 	boxtag = "Imperial Victory Flatbread"
 
 //Sandwiches/Toast Dishes
@@ -420,7 +420,7 @@
 	icon_state = "emperor_roll"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("bread" = 1, "cheese" = 1, "liver" = 1, "caviar" = 1)
-	foodtypes = VEGETABLES | NUTS | MEAT | GROSS | SEAFOOD
+	foodtypes = VEGETABLES | NUTS | MEAT | SEAFOOD
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -470,7 +470,7 @@
 	icon_state = "jellyfish_stew"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment = 3)
 	tastes = list("slime" = 1)
-	foodtypes = MEAT | VEGETABLES | GROSS
+	foodtypes = MEAT | VEGETABLES
 
 /obj/item/food/soup/rootbread_soup
 	name = "rootbread soup"
@@ -489,7 +489,7 @@
 	icon_state = "black_eggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("eggs" = 1, "greens" = 1, "blood" = 1)
-	foodtypes = MEAT | BREAKFAST | GROSS
+	foodtypes = MEAT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/patzikula
@@ -541,7 +541,7 @@
 	icon_state = "candied_mushrooms"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/caramel = 3)
 	tastes = list("savouriness" = 1, "sweetness" = 1)
-	foodtypes = SUGAR | VEGETABLES | GROSS
+	foodtypes = SUGAR | VEGETABLES
 
 //Misc Dishes
 /obj/item/food/sauerkraut

@@ -58,7 +58,7 @@
 	icon_state = "notasandwich"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("nothing suspicious" = 1)
-	foodtypes = GRAIN | GROSS
+	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jelliedtoast

@@ -615,7 +615,7 @@
 	desc = "A human meat, on a stick."
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("tender meat" = 3, "metal" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/kebab/monkey
@@ -696,7 +696,7 @@
 /obj/item/food/meat/slab/human
 	name = "meat"
 	tastes = list("tender meat" = 1)
-	foodtypes = MEAT | RAW | GROSS
+	foodtypes = MEAT | RAW
 	venue_value = FOOD_MEAT_HUMAN
 
 /obj/item/food/meat/slab/human/MakeGrillable()
@@ -718,13 +718,13 @@
 	desc = "Edible rocks, welcome to the future."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/iron = 3)
 	tastes = list("rock" = 1)
-	foodtypes = MEAT | RAW | GROSS
+	foodtypes = MEAT | RAW
 	venue_value = FOOD_MEAT_MUTANT_RARE
 
 /obj/item/food/meat/slab/human/mutant/golem/adamantine
 	icon_state = "agolemmeat"
 	desc = "From the slime pen to the rune to the kitchen, science."
-	foodtypes = MEAT | RAW | GROSS
+	foodtypes = MEAT | RAW
 
 /obj/item/food/meat/slab/human/mutant/lizard
 	icon_state = "lizardmeat"
@@ -770,7 +770,7 @@
 	icon_state = "skeletonmeat"
 	desc = "There's a point where this needs to stop, and clearly we have passed it."
 	tastes = list("bone" = 1)
-	foodtypes = GROSS
+	foodtypes = RAW
 	venue_value = FOOD_MEAT_MUTANT_RARE
 
 /obj/item/food/meat/slab/human/mutant/skeleton/MakeProcessable()
@@ -821,7 +821,7 @@
 /obj/item/food/meat/slab/mouse
 	name = "mouse meat"
 	desc = "A slab of mouse meat. Best not eat it raw."
-	foodtypes = RAW | MEAT | GROSS
+	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/mouse/Initialize(mapload)
 	. = ..()
@@ -831,7 +831,7 @@
 	name = "corgi meat"
 	desc = "Tastes like... well you know..."
 	tastes = list("meat" = 4, "a fondness for wearing hats" = 1)
-	foodtypes = RAW | MEAT | GROSS
+	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/corgi/Initialize(mapload)
 	. = ..()
@@ -840,7 +840,7 @@
 /obj/item/food/meat/slab/pug
 	name = "pug meat"
 	desc = "Tastes like... well you know..."
-	foodtypes = RAW | MEAT | GROSS
+	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/pug/Initialize(mapload)
 	. = ..()
@@ -1045,7 +1045,7 @@
 
 /obj/item/food/meat/steak/plain/human
 	tastes = list("tender meat" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT
 
 ///Make sure the steak has the correct name
 /obj/item/food/meat/steak/plain/human/OnMicrowaveCooked(datum/source, obj/item/source_item, cooking_efficiency = 1)
@@ -1152,7 +1152,7 @@
 
 /obj/item/food/meat/rawcutlet/plain/human
 	tastes = list("tender meat" = 1)
-	foodtypes = MEAT | RAW | GROSS
+	foodtypes = MEAT | RAW
 
 /obj/item/food/meat/rawcutlet/plain/human/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain/human, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
@@ -1251,7 +1251,7 @@
 
 /obj/item/food/meat/cutlet/plain/human
 	tastes = list("tender meat" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = MEAT
 
 /obj/item/food/meat/cutlet/plain/human/OnMicrowaveCooked(datum/source, atom/source_item, cooking_efficiency)
 	. = ..()

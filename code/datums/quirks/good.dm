@@ -235,3 +235,13 @@
 	medical_record_text = "Patient shows severe mood issues when consuming anything but nutriment paste."
 	mood_quirk = TRUE
 	hardcore_value = 4
+
+/datum/quirk/no_taste
+	name = "Ageusia"
+	desc = "You can't taste anything! Toxic food will still poison you."
+	icon = "meh-blank"
+	value = 8 // This lets you bypass all penalties for eating food items your species doesn't like, with the exception of toxic food. No idea why it was a zero cost quirk before.
+	mob_trait = TRAIT_AGEUSIA
+	gain_text = "<span class='notice'>You can't taste anything!</span>"
+	lose_text = "<span class='notice'>You can taste again!</span>"
+	medical_record_text = "Patient suffers from ageusia and is incapable of tasting food or reagents."

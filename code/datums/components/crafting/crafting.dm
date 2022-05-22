@@ -194,7 +194,7 @@
 	return TRUE
 
 
-/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
+/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R, time_override = null)
 	var/list/contents = get_surroundings(a,R.blacklist)
 	var/send_feedback = 1
 	if(check_contents(a, R, contents))
@@ -202,23 +202,23 @@
 			if(R.one_per_turf)
 				for(var/content in get_turf(a))
 					if(istype(content, R.result))
-						return ", object already present."
+						return ", object already present!"
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-			if(ismob(a) && !do_after(a, R.time, target = a))
-				return "."
+			if(ismob(a) && !do_after(a, time_override ? time_override : R.time, target = a))
+				return ", interrupted!"
 			contents = get_surroundings(a,R.blacklist)
 			if(!check_contents(a, R, contents))
-				return ", missing component."
+				return ", missing component!"
 			if(!check_tools(a, R, contents))
-				return ", missing tool."
+				return ", missing tool!"
 			var/list/parts = del_reqs(R, a)
 			var/atom/movable/I = new R.result (get_turf(a.loc))
 			I.CheckParts(parts, R)
 			if(send_feedback)
 				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
 			return I //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
-		return ", missing tool."
-	return ", missing component."
+		return ", missing tool!"
+	return ", missing component!"
 
 /*Del reqs works like this:
 
@@ -499,3 +499,21 @@
 	if(!learned_recipes)
 		learned_recipes = list()
 	learned_recipes |= R
+
+/datum/component/personal_crafting/proc/craft_until_cant(datum/crafting_recipe/recipe_to_use, mob/chef, turf/craft_location, craft_time)
+	var/list/surroundings = get_surroundings(chef)
+	if(!check_contents(chef, recipe_to_use, surroundings))
+		chef.balloon_alert_to_viewers("failed to craft, missing ingredients!")
+		return
+	if(!craft_time)
+		craft_time = recipe_to_use.time
+	craft_time = max(5, craft_time * 0.75) // speed up the more you craft in a batch
+	var/atom/movable/result = construct_item(chef, recipe_to_use, craft_time)
+	if(!istext(result)) //We made an item and didn't get a fail message
+		result.forceMove(craft_location)
+		chef.investigate_log("[key_name(chef)] crafted [recipe_to_use]", INVESTIGATE_CRAFTING)
+		recipe_to_use.on_craft_completion(chef, result)
+	else
+		chef.balloon_alert_to_viewers("failed to craft[result]")
+		return
+	INVOKE_ASYNC(src, .proc/craft_until_cant, recipe_to_use, chef, craft_location, craft_time)

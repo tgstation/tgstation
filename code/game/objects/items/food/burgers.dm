@@ -33,7 +33,7 @@
 	desc = "A bloody burger."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bun" = 2, "long pig" = 4)
-	foodtypes = MEAT | GRAIN | GROSS
+	foodtypes = MEAT | GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/human/CheckParts(list/parts_list)
@@ -49,7 +49,7 @@
 	name = "corgi burger"
 	desc = "You monster."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT
 	venue_value = FOOD_PRICE_EXOTIC
 
 
@@ -324,7 +324,7 @@
 	desc = "It's still warm. The steam coming off of it looks like baseball."
 	icon_state = "baseball"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	foodtypes = GRAIN | GROSS
+	foodtypes = GRAIN
 	custom_price = PAYCHECK_CREW * 0.8
 	venue_value = FOOD_PRICE_NORMAL
 
@@ -353,7 +353,7 @@
 	icon_state = "catburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("bun" = 4, "meat" = 2, "cat" = 2)
-	foodtypes = GRAIN | MEAT | GROSS
+	foodtypes = GRAIN | MEAT
 
 /obj/item/food/burger/crab
 	name = "crab burger"
