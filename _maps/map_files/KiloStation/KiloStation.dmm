@@ -4584,9 +4584,21 @@
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
 "bty" = (
+/obj/structure/closet/crate/engineering,
+/obj/item/circuitboard/machine/nuclear_accumulator,
+/obj/item/circuitboard/machine/nuclear_emitter,
+/obj/item/stack/sheet/mineral/titanium/fifty,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 5
+	},
+/obj/item/stack/sheet/plastitaniumglass{
+	amount = 5
+	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/plasma,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "btI" = (

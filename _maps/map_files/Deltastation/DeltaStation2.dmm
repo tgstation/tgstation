@@ -31700,10 +31700,22 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "iMU" = (
+/obj/structure/closet/crate/engineering,
+/obj/item/circuitboard/machine/nuclear_accumulator,
+/obj/item/circuitboard/machine/nuclear_emitter,
+/obj/item/stack/sheet/mineral/titanium/fifty,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 5
+	},
+/obj/item/stack/sheet/plastitaniumglass{
+	amount = 5
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/bot,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "iMV" = (

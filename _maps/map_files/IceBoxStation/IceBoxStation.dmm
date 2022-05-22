@@ -71278,6 +71278,22 @@
 "wXw" = (
 /turf/open/genturf/alternative,
 /area/icemoon/surface/outdoors/noruins)
+"wXX" = (
+/obj/structure/closet/crate/engineering,
+/obj/item/circuitboard/machine/nuclear_accumulator,
+/obj/item/circuitboard/machine/nuclear_emitter,
+/obj/item/stack/sheet/mineral/titanium/fifty,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 5
+	},
+/obj/item/stack/sheet/plastitaniumglass{
+	amount = 5
+	},
+/turf/open/floor/plating,
+/area/station/engineering/engine_smes)
 "wYb" = (
 /obj/structure/table,
 /obj/effect/turf_decal/stripes/red/line{
@@ -232414,7 +232430,7 @@ xYI
 mNY
 slb
 mNY
-hpd
+wXX
 hpd
 hpd
 wkw
