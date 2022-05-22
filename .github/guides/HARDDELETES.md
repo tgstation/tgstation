@@ -5,7 +5,17 @@
 4. [Techniques for fixing hard deletes](#techniques-for-fixing-hard-deletes)
 5. [Help my code is erroring how fix](#help-my-code-is-erroring-how-fix)
 
+
 ## What is Hard Deletion
+
+> Garbage collection is pretty gothic when you think about it. 
+>
+>An object in code is like a ghost, clinging to its former life, and especially to the people it knew. It can only pass on and truly die when it has dealt with its unfinished business. And only when its been forgotten by everyone who ever knew it. If even one other object remembers it, it has a connection to the living world that lets it keep hanging on
+>
+>There is a kind of sombre tone to fixing GC errors too, its almost shamanistic, making sure all these little objects clear up their final affairs in life before they die, to ensure they don't become ghosts
+>
+> -- <cite>Nanako</cite>
+
 Hard deletion is a very expensive operation that basically clears all references to some "thing" from memory. Objects that undergo this process are referred to as hard deletes, or simply harddels
 
 What follows is a discussion of the theory behind this, why we would ever do it, and the what we do to avoid doing it as often as possible
