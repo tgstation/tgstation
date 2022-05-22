@@ -6,14 +6,14 @@
  * Arguments:
  * * ninja_suit - The offending space ninja's suit.
  * * ninja - The human mob wearing the suit.
- * * ninja_gloves - The offending space ninja's gloves.
+ * * hacking_module - The offending space ninja's gloves.
  */
-/atom/proc/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
+/atom/proc/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	return INVALID_DRAIN
 
 //APC//
-/obj/machinery/power/apc/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/obj/machinery/power/apc/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
 
 	var/maxcapacity = FALSE //Safety check for batteries
@@ -25,7 +25,7 @@
 		spark_system.set_up(5, 0, loc)
 
 		while(cell.charge> 0 && !maxcapacity)
-			drain = rand(ninja_gloves.mindrain, ninja_gloves.maxdrain)
+			drain = rand(hacking_module.mindrain, hacking_module.maxdrain)
 
 			if(cell.charge < drain)
 				drain = cell.charge
@@ -44,7 +44,7 @@
 				break
 
 		if(!(obj_flags & EMAGGED))
-			flick("apc-spark", ninja_gloves)
+			flick("apc-spark", hacking_module)
 			playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
@@ -53,8 +53,8 @@
 	return drain_total
 
 //SMES//
-/obj/machinery/power/smes/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/obj/machinery/power/smes/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
 
 	var/maxcapacity = FALSE //Safety check for batteries
@@ -66,7 +66,7 @@
 		spark_system.set_up(5, 0, loc)
 
 		while(charge > 0 && !maxcapacity)
-			drain = rand(ninja_gloves.mindrain, ninja_gloves.maxdrain)
+			drain = rand(hacking_module.mindrain, hacking_module.maxdrain)
 
 			if(charge < drain)
 				drain = charge
@@ -88,8 +88,8 @@
 	return drain_total
 
 //CELL//
-/obj/item/stock_parts/cell/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/obj/item/stock_parts/cell/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
 
 	var/drain_total = 0
@@ -108,8 +108,8 @@
 	return drain_total
 
 //RD SERVER//
-/obj/machinery/rnd/server/master/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/obj/machinery/rnd/server/master/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
 
 	. = DRAIN_RD_HACK_FAILED
@@ -131,8 +131,8 @@
 		if(objective)
 			objective.completed = TRUE
 
-/obj/machinery/rnd/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/obj/machinery/rnd/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
 
 	. = DRAIN_RD_HACK_FAILED
@@ -152,8 +152,8 @@
 		objective.completed = TRUE
 
 //SECURITY CONSOLE//
-/obj/machinery/computer/secure_data/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/obj/machinery/computer/secure_data/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
 	AI_notify_hack()
 	if(do_after(ninja, 200))
@@ -168,10 +168,10 @@
 			objective.completed = TRUE
 
 //COMMUNICATIONS CONSOLE//
-/obj/machinery/computer/communications/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/obj/machinery/computer/communications/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
-	if(ninja_gloves.communication_console_hack_success)
+	if(hacking_module.communication_console_hack_success)
 		return
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
@@ -179,7 +179,7 @@
 	if(!do_after(ninja, 30 SECONDS, src))
 		return
 	hack_console(ninja)
-	ninja_gloves.communication_console_hack_success = TRUE
+	hacking_module.communication_console_hack_success = TRUE
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	if(!ninja_antag)
 		return
@@ -188,23 +188,23 @@
 		objective.completed = TRUE
 
 //AIRLOCK//
-/obj/machinery/door/airlock/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/obj/machinery/door/airlock/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
 
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
 		emag_act()
-		ninja_gloves.door_hack_counter++
+		hacking_module.door_hack_counter++
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
 			return
 		var/datum/objective/door_jack/objective = locate() in ninja_antag.objectives
-		if(objective && objective.doors_required <= ninja_gloves.door_hack_counter)
+		if(objective && objective.doors_required <= hacking_module.door_hack_counter)
 			objective.completed = TRUE
 
 //WIRE//
-/obj/structure/cable/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/obj/structure/cable/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
 
 	var/maxcapacity = FALSE //Safety check
@@ -214,7 +214,7 @@
 
 	var/datum/powernet/wire_powernet = powernet
 	while(!maxcapacity && src)
-		drain = (round((rand(ninja_gloves.mindrain, ninja_gloves.maxdrain))/2))
+		drain = (round((rand(hacking_module.mindrain, hacking_module.maxdrain))/2))
 		var/drained = 0
 		if(wire_powernet && do_after(ninja ,10, target = src))
 			drained = min(drain, delayed_surplus())
@@ -241,8 +241,8 @@
 	return drain_total
 
 //MECH//
-/obj/vehicle/sealed/mecha/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/obj/vehicle/sealed/mecha/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
 
 	var/maxcapacity = FALSE //Safety check
@@ -252,7 +252,7 @@
 	to_chat(occupants, "[icon2html(src, occupants)][span_danger("Warning: Unauthorized access through sub-route 4, block H, detected.")]")
 	if(get_charge())
 		while(cell.charge > 0 && !maxcapacity)
-			drain = rand(ninja_gloves.mindrain, ninja_gloves.maxdrain)
+			drain = rand(hacking_module.mindrain, hacking_module.maxdrain)
 			if(cell.charge < drain)
 				drain = cell.charge
 			if(ninja_suit.cell.charge + drain > ninja_suit.cell.maxcharge)
@@ -270,8 +270,8 @@
 	return drain_total
 
 //BORG//
-/mob/living/silicon/robot/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves || (ROLE_NINJA in faction))
+/mob/living/silicon/robot/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module || (ROLE_NINJA in faction))
 		return INVALID_DRAIN
 
 	to_chat(src, span_danger("Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2..."))
@@ -294,8 +294,8 @@
 			objective.completed = TRUE
 
 //CARBON MOBS//
-/mob/living/carbon/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
-	if(!ninja_suit || !ninja || !ninja_gloves)
+/mob/living/carbon/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
+	if(!ninja_suit || !ninja || !hacking_module)
 		return INVALID_DRAIN
 
 	. = DRAIN_MOB_SHOCK_FAILED

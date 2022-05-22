@@ -10,6 +10,7 @@
 	var/dash_sound = 'sound/magic/blink.ogg'
 	var/recharge_sound = 'sound/magic/charge.ogg'
 	var/beam_effect = "blur"
+	var/beam_length = 2 SECONDS
 	var/phasein = /obj/effect/temp_visual/dir_setting/ninja/phase
 	var/phaseout = /obj/effect/temp_visual/dir_setting/ninja/phase/out
 
@@ -43,7 +44,7 @@
 			return FALSE
 		var/obj/spot1 = new phaseout(current_turf, user.dir)
 		var/obj/spot2 = new phasein(target_turf, user.dir)
-		spot1.Beam(spot2,beam_effect,time=2 SECONDS)
+		spot1.Beam(spot2,beam_effect, time = beam_length)
 		playsound(target_turf, dash_sound, 25, TRUE)
 		current_charges--
 		owner.update_action_buttons_icon()

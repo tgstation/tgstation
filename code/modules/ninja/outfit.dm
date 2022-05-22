@@ -3,7 +3,7 @@
 	uniform = /obj/item/clothing/under/color/black
 	suit = /obj/item/clothing/suit/space/space_ninja
 	glasses = /obj/item/clothing/glasses/night
-	mask = /obj/item/clothing/mask/gas/space_ninja
+	mask = /obj/item/clothing/mask/gas/ninja
 	ears = /obj/item/radio/headset
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/grenade/c4/ninja

@@ -18,8 +18,6 @@
 	armor = list(MELEE = 40, BULLET = 30, LASER = 20,ENERGY = 30, BOMB = 30, BIO = 100, FIRE = 100, ACID = 100)
 	strip_delay = 12
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjastatus, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth)
-
 	///The person wearing the suit
 	var/mob/living/carbon/human/affecting = null
 	///The suit's spark system, used for... sparking.
@@ -28,9 +26,6 @@
 	var/datum/techweb/stored_research
 	///The katana registered with the suit, used for recalling and catching the katana.  Set when the ninja outfit is created.
 	var/obj/item/energy_katana/energyKatana
-
-	///The space ninja's gloves.
-	var/obj/item/clothing/gloves/space_ninja/n_gloves
 
 	///Whether or not the suit is currently booted up.  Starts off.
 	var/s_initialized = FALSE//Suit starts off.
@@ -105,47 +100,12 @@
 				cell.charge -= s_acost * delta_time
 		else
 			cell.charge = 0
-			cancel_stealth()
 
 	user.adjust_bodytemperature(BODYTEMP_NORMAL - user.bodytemperature)
-
-/obj/item/clothing/suit/space/space_ninja/ui_action_click(mob/user, action)
-	if(IS_NINJA_SUIT_INITIALIZATION(action))
-		toggle_on_off()
-		return TRUE
-	if(!s_initialized)
-		to_chat(user, span_warning("<b>ERROR</b>: suit offline. Please activate suit."))
-		return FALSE
-	if(s_coold > 0)
-		to_chat(user, span_warning("<b>ERROR</b>: suit is on cooldown."))
-		return FALSE
-	if(IS_NINJA_SUIT_STATUS(action))
-		ninjastatus()
-		return TRUE
-	if(IS_NINJA_SUIT_BOOST(action))
-		ninjaboost()
-		return TRUE
-	if(IS_NINJA_SUIT_EMP(action))
-		ninjapulse()
-		return TRUE
-	if(IS_NINJA_SUIT_STAR_CREATION(action))
-		ninjastar()
-		return TRUE
-	if(IS_NINJA_SUIT_NET_CREATION(action))
-		ninjanet()
-		return TRUE
-	if(IS_NINJA_SUIT_SWORD_RECALL(action))
-		ninja_sword_recall()
-		return TRUE
-	if(IS_NINJA_SUIT_STEALTH(action))
-		toggle_stealth()
-		return TRUE
-	return FALSE
 
 /obj/item/clothing/suit/space/space_ninja/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
 	if(stealth)
-		cancel_stealth()
 		s_coold = 5
 
 /**
@@ -165,11 +125,7 @@
 		to_chat(ninja, span_danger("<B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR..."))
 		ninja.gib()
 		return FALSE
-	if(!istype(ninja.gloves, /obj/item/clothing/gloves/space_ninja))
-		to_chat(ninja, "[span_userdanger("ERROR")]: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
-		return FALSE
 	affecting = ninja
-	n_gloves = ninja.gloves
 
 	ADD_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
 	return TRUE
@@ -186,12 +142,8 @@
 	affecting = null
 	REMOVE_TRAIT(src, TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	icon_state = "s-ninja"
-	if(n_gloves)
-		n_gloves.icon_state = "black"
-		REMOVE_TRAIT(n_gloves, TRAIT_NODROP, NINJA_SUIT_TRAIT)
-		n_gloves.draining = FALSE
 
-		REMOVE_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
+	REMOVE_TRAIT(ninja, TRAIT_NOGUNS, NINJA_SUIT_TRAIT)
 
 /**
  * Proc used to delete all the attachments and itself.
@@ -199,5 +151,4 @@
  * Can be called to entire rid of the suit pieces and the suit itself.
  */
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
-	QDEL_NULL(n_gloves)
 	QDEL_NULL(src)

@@ -29,12 +29,6 @@
 		to_chat(src, span_notice("You look at your arm and sigh."))
 		return
 
-	// Special glove functions:
-	// If the gloves do anything, have them return 1 to stop
-	// normal attack_hand() here.
-	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
-	if(proximity_flag && istype(G) && G.Touch(A,1,modifiers))
-		return
 	//This signal is needed to prevent gloves of the north star + hulk.
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
@@ -114,10 +108,6 @@
 	. = ..()
 	if(.)
 		return
-	if(gloves)
-		var/obj/item/clothing/gloves/G = gloves
-		if(istype(G) && G.Touch(A,0,modifiers)) // for magic gloves
-			return TRUE
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		Move_Pulled(A)

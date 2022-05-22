@@ -23,6 +23,8 @@
 	armour_penetration = 50
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
+	pickup_sound = 'sound/items/unsheath.ogg'
+	drop_sound = 'sound/items/sheath.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
@@ -44,12 +46,12 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(!target.density)
-		jaunt.teleport(user, target)
+		jaunt?.teleport(user, target)
 
-/obj/item/energy_katana/pickup(mob/living/user)
+/obj/item/energy_katana/equipped(mob/user, slot, initial)
 	. = ..()
-	jaunt.Grant(user, src)
-	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if(!QDELETED(jaunt))
+		jaunt.Grant(user, src)
 
 /obj/item/energy_katana/dropped(mob/user)
 	. = ..()
@@ -61,44 +63,15 @@
 	QDEL_NULL(jaunt)
 	return ..()
 
-/**
- * Proc called when the katana is recalled to its space ninja.
- *
- * Proc called when space ninja is hit with its suit's katana or the recall ability is used.
- * Arguments:
- * * user - To whom the katana is returning to.
- * * doSpark - whether or not the katana will spark when it returns.
- * * caught - boolean for whether or not the katana was caught or was teleported back.
- */
-/obj/item/energy_katana/proc/returnToOwner(mob/living/carbon/human/user, doSpark = TRUE, caught = FALSE)
-	if(!istype(user))
-		return
-	forceMove(get_turf(user))
-
-	if(doSpark)
-		spark_system.start()
-		playsound(get_turf(src), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-
-	var/msg = ""
-
-	if(user.put_in_hands(src))
-		msg = "Your Energy Katana teleports into your hand!"
-	else if(user.equip_to_slot_if_possible(src, ITEM_SLOT_BELT, 0, 1, 1))
-		msg = "Your Energy Katana teleports back to you, sheathing itself as it does so!</span>"
-	else
-		msg = "Your Energy Katana teleports to your location!"
-
-	if(caught)
-		if(loc == user)
-			msg = "You catch your Energy Katana!"
-		else
-			msg = "Your Energy Katana lands at your feet!"
-
-	if(msg)
-		to_chat(user, span_notice("[msg]"))
-
 /datum/action/innate/dash/ninja
 	current_charges = 3
 	max_charges = 3
 	charge_rate = 200
+	beam_length = 1 SECONDS
 	recharge_sound = null
+
+/datum/action/innate/dash/ninja/GiveAction(mob/viewer) //this action
+	return
+
+/datum/action/innate/dash/ninja/HideFrom(mob/viewer)
+	return
