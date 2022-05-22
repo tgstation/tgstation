@@ -48497,7 +48497,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/obj/structure/sign/departments/maint{
+/obj/structure/sign/departments/exam_room{
 	color = "#52B4E9";
 	pixel_y = -32
 	},

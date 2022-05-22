@@ -4224,7 +4224,7 @@
 /turf/open/space/basic,
 /area/space)
 "bhd" = (
-/obj/structure/sign/departments/maint,
+/obj/structure/sign/departments/exam_room,
 /turf/closed/wall,
 /area/station/medical/treatment_center)
 "bhh" = (
