@@ -89,7 +89,7 @@
 	if(DT_PROB(10, delta_time))
 		return
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, location = src)
+	smoke.set_up(0, holder = src, location = src)
 	smoke.start()
 
 /obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)

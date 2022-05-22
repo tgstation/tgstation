@@ -364,7 +364,7 @@
 
 /obj/effect/resin_container/proc/Smoke()
 	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
-	foaming.set_up(4, location = src)
+	foaming.set_up(4, holder = src, location = loc)
 	foaming.start()
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)

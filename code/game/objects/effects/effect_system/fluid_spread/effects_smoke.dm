@@ -424,6 +424,7 @@
 
 	if(mixcolor)
 		smoke.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
+	help_out_the_admins(foam, holder, location)
 	smoke.spread() // Making the smoke spread immediately.
 
 /**

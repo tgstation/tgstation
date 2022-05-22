@@ -1061,7 +1061,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	COOLDOWN_START(src, drag_cooldown, dragtime)
 	if(obj_flags & EMAGGED)
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(4, location = loc, carry = reagents, efficiency = 24)
+		puff.set_up(4, holder = src, location = loc, carry = reagents, efficiency = 24)
 		puff.start()
 		if(prob(5)) //small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, FALSE)
@@ -1075,7 +1075,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			return
 	else if(super)
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/puff = new
-		puff.set_up(1, location = loc, carry = reagents, efficiency = 24)
+		puff.set_up(1, holder = src, location = loc, carry = reagents, efficiency = 24)
 		puff.start()
 
 	handle_reagents()

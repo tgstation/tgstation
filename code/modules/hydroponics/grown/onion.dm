@@ -53,7 +53,7 @@
 	var/datum/effect_system/fluid_spread/smoke/chem/cry_about_it = new //Since the onion is destroyed when it's sliced,
 	var/splat_location = get_turf(src) //we need to set up the smoke beforehand
 	cry_about_it.attach(splat_location)
-	cry_about_it.set_up(0, location = splat_location, carry = reagents, silent = FALSE)
+	cry_about_it.set_up(0, holder = src, location = splat_location, carry = reagents, silent = FALSE)
 	cry_about_it.start()
 	qdel(cry_about_it)
 	return ..()

@@ -24,15 +24,15 @@
 	shuffle_inplace(moblocs)
 	shuffle_inplace(mobs)
 
-	for(var/mob/living/carbon/human/H in mobs)
+	for(var/mob/living/carbon/human/victim in mobs)
 		if(!moblocs)
 			break //locs aren't always unique, so this may come into play
-		do_teleport(H, moblocs[moblocs.len], channel = TELEPORT_CHANNEL_MAGIC)
+		do_teleport(victim, moblocs[moblocs.len], channel = TELEPORT_CHANNEL_MAGIC)
 		moblocs.len -= 1
 
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/victim in GLOB.alive_mob_list)
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(0, location = H.loc)
+		smoke.set_up(0, holder = victim, location = victim.loc)
 		smoke.start()
 
 //---//
@@ -58,15 +58,15 @@
 	shuffle_inplace(mobnames)
 	shuffle_inplace(mobs)
 
-	for(var/mob/living/carbon/human/H in mobs)
+	for(var/mob/living/carbon/human/victim in mobs)
 		if(!mobnames)
 			break
-		H.real_name = mobnames[mobnames.len]
+		victim.real_name = mobnames[mobnames.len]
 		mobnames.len -= 1
 
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/victim in GLOB.alive_mob_list)
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(0, location = H.loc)
+		smoke.set_up(0, holder = victim, location = victim.loc)
 		smoke.start()
 
 //---//
@@ -93,12 +93,12 @@
 
 	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new
 	while(mobs.len > 1)
-		var/mob/living/carbon/human/H = pick(mobs)
-		mobs -= H
-		swapper.cast(list(H), mobs[mobs.len], TRUE)
+		var/mob/living/carbon/human/victim = pick(mobs)
+		mobs -= victim
+		swapper.cast(list(victim), mobs[mobs.len], TRUE)
 		mobs -= mobs[mobs.len]
 
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/victim in GLOB.alive_mob_list)
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(0, location = H.loc)
+		smoke.set_up(0, holder = victim, location = victim.loc)
 		smoke.start()

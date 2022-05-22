@@ -155,7 +155,7 @@
 			randomchems.my_atom = src
 			randomchems.add_reagent(get_random_reagent_id(), 100)
 			var/datum/effect_system/fluid_spread/foam/foam = new
-			foam.set_up(200, loc, randomchems)
+			foam.set_up(200, holder = src, location = loc, carry = randomchems)
 			foam.start()
 		if(3)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car turns on its singularity disguise system."))
@@ -168,7 +168,7 @@
 			funnychems.my_atom = src
 			funnychems.add_reagent(/datum/reagent/consumable/superlaughter, 50)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
-			smoke.set_up(4, location = src, carry = funnychems)
+			smoke.set_up(4, holder = src, location = src, carry = funnychems)
 			smoke.attach(src)
 			smoke.start()
 		if(5)

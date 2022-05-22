@@ -117,13 +117,42 @@
 	/// The amount of smoke to produce.
 	var/amount = 10
 
-/datum/effect_system/fluid_spread/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location, ...)
-	src.location = get_turf(location)
+/datum/effect_system/fluid_spread/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location...)
+	src.holder = holder
+	src.location = location
 	src.amount = amount
 
-/datum/effect_system/fluid_spread/start(mob/blame)
-	var/location = holder ? get_turf(holder) : src.location
+/datum/effect_system/fluid_spread/start()
+	var/location = src.location || get_turf(holder)
 	var/obj/effect/particle_effect/fluid/flood = new effect_type(location, new /datum/fluid_group(amount))
-	if (blame)
-		flood.add_hiddenprint(blame)
+	help_out_the_admins(flood, holder, location)
 	flood.spread()
+
+/**
+ * Handles logging the beginning of a fluid flood.
+ *
+ * Arguments:
+ * - [flood][/obj/effect/particle_effect/fluid]: The first cell of the fluid flood.
+ * - [holder][/atom]: What the flood originated from.
+ * - [location][/atom]: Where the flood originated.
+ */
+/datum/effect_system/fluid_spread/proc/help_out_the_admins(obj/effect/particle_effect/fluid/flood, atom/holder, atom/location)
+	var/source_msg
+	var/blame_msg
+	var/loc_msg = "at [ADMIN_VERBOSEJMP(location)]"
+	if (holder)
+		holder.transfer_fingerprints_to(flood) // This is important. If this doesn't exist thermobarics are annoying to adjudicate.
+
+		source_msg = "from inside of [ismob(holder) ? ADMIN_LOOKUPFLW(holder) : ADMIN_VERBOSEJMP(holder)]"
+		var/lastkey = holder.fingerprintslast
+		if (lastkey)
+			var/mob/scapegoat = get_mob_by_key(lastkey)
+			blame_msg = "last touched by [ADMIN_LOOKUPFLW(scapegoat)]"
+		else
+			blame_msg = "with no known fingerprints"
+	else
+		source_msg = "with no known source"
+
+	if(!istype(holder, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
+		message_admins("\A [flood] flood started at [ADMIN_VERBOSEJMP(location)] [holder][blame_msg].")
+	log_game("\A [flood] flood started at [location || "nonexistant location"] [holder ? "from [holder] last touched by [holder || "N/A"]" : "with no known source"].")

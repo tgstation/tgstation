@@ -344,7 +344,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			do_sparks(sparks_amt, FALSE, location)
 		if(ispath(smoke_spread, /datum/effect_system/fluid_spread/smoke)) // Dear god this code is :agony:
 			var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_spread()
-			smoke.set_up(smoke_amt, location = location)
+			smoke.set_up(smoke_amt, holder = src, location = location)
 			smoke.start()
 
 

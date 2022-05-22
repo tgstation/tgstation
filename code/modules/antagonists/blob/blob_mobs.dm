@@ -213,7 +213,7 @@
 
 	// Attach the smoke spreader and setup/start it.
 	spores.attach(location)
-	spores.set_up(death_cloud_size, location = location, carry = reagents, silent = TRUE)
+	spores.set_up(death_cloud_size, holder = src, location = location, carry = reagents, silent = TRUE)
 	spores.start()
 	if(factory)
 		factory.spore_delay = world.time + factory.spore_cooldown //put the factory on cooldown

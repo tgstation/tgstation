@@ -190,6 +190,7 @@
 	foam.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 	if(!isnull(result_type))
 		foam.result_type = result_type
+	help_out_the_admins(foam, holder, location)
 	SSfoam.queue_spread(foam)
 
 

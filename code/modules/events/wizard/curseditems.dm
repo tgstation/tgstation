@@ -54,7 +54,7 @@
 				I.item_flags |= DROPDEL
 				I.name = "cursed " + I.name
 
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/victim in GLOB.alive_mob_list)
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(0, location = H.loc)
+		smoke.set_up(0, holder = victim, location = victim.loc)
 		smoke.start()
