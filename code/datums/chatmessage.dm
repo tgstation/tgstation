@@ -231,7 +231,8 @@
 
 	// Approximate text height
 	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
-	var/measurement = owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH)//resolving it to a var so the macro doesnt call MeasureText() twice
+	var/mheight
+	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight) //resolving it to a var so the macro doesnt call MeasureText() twice
 
 	//fun fact: MeasureText() works by waiting for the client to send back the measurements for the text. meaning it works like a verb.
 	//procs like this are called at the last section of hte tick before it ends, meaning if the other portions used up most of it,
@@ -239,7 +240,6 @@
 	if(!owned_by || QDELETED(src) || QDELETED(message_loc) || !all_hearers?[owned_by])
 		return //we should already have been qdel'd() if this evaluates to TRUE, doing it now would throw an error
 
-	var/mheight = WXH_TO_HEIGHT(measurement)
 	if(TICK_CHECK)
 		SSrunechat.message_queue += CALLBACK(src, .proc/generate_image, target, owner, complete_text, mheight)
 	else
