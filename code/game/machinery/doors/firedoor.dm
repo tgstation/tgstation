@@ -218,6 +218,9 @@
 			process_results(checked_turf)
 
 /obj/machinery/door/firedoor/proc/register_adjacent_turfs(atom/loc)
+	if(!loc)
+		return
+
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(loc), dir)
 
@@ -225,10 +228,14 @@
 			continue
 		process_results(checked_turf)
 		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
-		RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
+	RegisterSignal(loc, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
 
 
 /obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/loc)
+	if(!loc)
+		return
+
+	UnregisterSignal(loc, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(loc), dir)
 
@@ -236,7 +243,6 @@
 			continue
 
 		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
-		UnregisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/datum/gas_mixture/environment = checked_turf.return_air()
