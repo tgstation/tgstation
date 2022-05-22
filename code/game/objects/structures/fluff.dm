@@ -342,7 +342,7 @@
 /// Ring the bell
 /obj/structure/fluff/desk_bell/proc/ring_bell(mob/living/user)
 	if(!broken_ringer)
-		playsound(src, ring_sound, 70, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, ring_sound, 70, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		flick("desk_bell_ring", src)
 		times_rang++
 		check_clapper(user)
