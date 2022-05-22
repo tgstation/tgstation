@@ -139,7 +139,6 @@
 /datum/effect_system/fluid_spread/proc/help_out_the_admins(obj/effect/particle_effect/fluid/flood, atom/holder, atom/location)
 	var/source_msg
 	var/blame_msg
-	var/loc_msg = "at [ADMIN_VERBOSEJMP(location)]"
 	if (holder)
 		holder.transfer_fingerprints_to(flood) // This is important. If this doesn't exist thermobarics are annoying to adjudicate.
 
@@ -147,12 +146,12 @@
 		var/lastkey = holder.fingerprintslast
 		if (lastkey)
 			var/mob/scapegoat = get_mob_by_key(lastkey)
-			blame_msg = "last touched by [ADMIN_LOOKUPFLW(scapegoat)]"
+			blame_msg = " last touched by [ADMIN_LOOKUPFLW(scapegoat)]"
 		else
-			blame_msg = "with no known fingerprints"
+			blame_msg = " with no known fingerprints"
 	else
 		source_msg = "with no known source"
 
 	if(!istype(holder, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
-		message_admins("\A [flood] flood started at [ADMIN_VERBOSEJMP(location)] [holder][blame_msg].")
+		message_admins("\A [flood] flood started at [ADMIN_VERBOSEJMP(location)] [source_msg][blame_msg].")
 	log_game("\A [flood] flood started at [location || "nonexistant location"] [holder ? "from [holder] last touched by [holder || "N/A"]" : "with no known source"].")
