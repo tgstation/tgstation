@@ -1022,11 +1022,10 @@
  * * continuous_move - If this check is coming from something in the context of already drifting
  */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir, continuous_move) & COMSIG_MOVABLE_STOP_SPACEMOVE)
 	if(has_gravity())
 		return TRUE
 
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir) & COMSIG_MOVABLE_STOP_SPACEMOVE)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir, continuous_move) & COMSIG_MOVABLE_STOP_SPACEMOVE)
 		return TRUE
 
 	if(pulledby && (pulledby.pulledby != src || moving_from_pull))
