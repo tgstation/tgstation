@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - qol: "Moved around some overlapping wall objects in engineering on IceBox"
+  - qol: "Removed a 2x2 wall in engineering on IceBox"
