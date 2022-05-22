@@ -32,7 +32,7 @@
 		light_range = 0
 		return PROCESS_KILL
 
-	COOLDOWN_START(src, sm_wall_cooldown, rand(0, 5 SECONDS))
+	COOLDOWN_START(src, sm_wall_cooldown, rand(0, 3 SECONDS))
 
 	var/picked_dir = pick_n_take(available_dirs)
 	var/turf/next_turf = get_step_multiz(src, picked_dir)
@@ -45,8 +45,6 @@
 		if(isliving(checked_atom))
 			qdel(checked_atom)
 		else if(ismob(checked_atom)) // Observers, AI cameras.
-			continue
-		else if(istype(checked_atom, /obj/cascade_portal))
 			continue
 		else
 			qdel(checked_atom)
@@ -113,12 +111,16 @@
  */
 /obj/cascade_portal/proc/consume(atom/movable/consumed_object)
 	if(isliving(consumed_object))
+		var/list/arrival_turfs = get_area_turfs(/area/centcom/evacuation)
+		var/turf/arrival_turf = pick(arrival_turfs)
 		var/mob/living/consumed_mob = consumed_object
 		if(consumed_mob.status_flags & GODMODE)
 			return
-		message_admins("[src] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(src)].")
-		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
-		consumed_mob.dust(force = TRUE)
+		message_admins("[key_name_admin(consumed_mob)] has entered [src] [ADMIN_JMP(src)].")
+		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
+		consumed_mob.forceMove(arrival_turf)
+		consumed_mob.Paralyze(100)
+		consumed_mob.adjustBruteLoss(30)
 	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
 	else if(isobj(consumed_object))
