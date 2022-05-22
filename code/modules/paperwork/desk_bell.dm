@@ -34,7 +34,6 @@
 	if(broken_ringer)
 		if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "Fix"
-
 	else
 		var/click_context = "Ring"
 		if(prob(1))
