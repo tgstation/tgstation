@@ -1,0 +1,4 @@
+author: "MNarath1"
+delete-after: True
+changes: 
+  - bugfix: "fixes goliath not chasing people"
