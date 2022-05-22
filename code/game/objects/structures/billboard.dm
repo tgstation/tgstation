@@ -63,3 +63,8 @@
 /obj/structure/billboard/roadsign/error
 	desc = "A billboard notifying the reader how many miles are left until the next gas station. This is a static sign, so you have to wonder what sort of person would both print this and then hang it up."
 	icon_state = "billboard_roadsign_error"
+
+/obj/structure/billboard/smoothies
+	name = "\improper Spinward Smoothies billboard"
+	desc = "A billboard advertising Spinward Smoothies. "
+	icon_state = "billboard_smoothies"

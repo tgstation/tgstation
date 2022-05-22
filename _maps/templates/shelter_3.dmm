@@ -69,10 +69,7 @@
 /area/survivalpod)
 "m" = (
 /obj/structure/closet/secure_closet/bar{
-	req_access = 0;
-	req_access_txt = 0;
-	req_one_access = 0;
-	req_one_access_txt = "25;48"
+	req_one_access = list("bar","mining")
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/pod/dark,
@@ -95,10 +92,7 @@
 /area/survivalpod)
 "p" = (
 /obj/machinery/door/airlock/survival_pod/glass{
-	req_access = 0;
-	req_access_txt = 0;
-	req_one_access = 0;
-	req_one_access_txt = "25;48"
+	req_one_access = list("bar","mining")
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
@@ -133,10 +127,7 @@
 /area/survivalpod)
 "v" = (
 /obj/machinery/door/window/survival_pod{
-	req_access = 0;
-	req_access_txt = 0;
-	req_one_access = 0;
-	req_one_access_txt = "25;48"
+	req_one_access = list("bar","mining")
 	},
 /turf/open/floor/pod/dark,
 /area/survivalpod)

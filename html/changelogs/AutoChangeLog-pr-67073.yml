@@ -1,6 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - config: "Changes the policy.json index for polymorphed mobs from \"polymorph\" to \"Polymorph\"."
-  - config: "Changes the policy.json index for the policy verb header from \"policy_verb_header\" to \"Policy Verb Header\"."
-  - bugfix: "Due to the config changes, Polymorph policy text will now be shown to players when it previously wasn't."
