@@ -58,7 +58,7 @@
 	if(eye_owner.has_dna() && ishuman(eye_owner))
 		eye_owner.dna.species.handle_body(eye_owner) //updates eye icon
 
-/obj/item/organ/eyes/proc/refresh()
+/obj/item/organ/eyes/proc/refresh(call_update = TRUE)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/affected_human = owner
 		old_eye_color_left = affected_human.eye_color_left
@@ -75,7 +75,7 @@
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
 	owner.update_tint()
 	owner.update_sight()
-	if(owner.has_dna() && ishuman(owner))
+	if(call_update && owner.has_dna() && ishuman(owner))
 		var/mob/living/carbon/human/affected_human = owner
 		affected_human.dna.species.handle_body(affected_human) //updates eye icon
 
