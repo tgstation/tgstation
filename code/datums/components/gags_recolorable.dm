@@ -8,6 +8,10 @@
 
 /datum/component/gags_recolorable/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
 	SIGNAL_HANDLER
+
+	if(!isatom(parent))
+		return
+
 	if(!istype(attacking_item, /obj/item/toy/crayon/spraycan))
 		return
 	var/obj/item/toy/crayon/spraycan/can = attacking_item
@@ -15,10 +19,11 @@
 	if(can.is_capped || can.check_empty())
 		return
 
-	if(!isatom(parent))
-		return
-	var/atom/atom_parent = parent
+	INVOKE_ASYNC(src, .proc/open_ui, user, can)
+	return COMPONENT_NO_AFTERATTACK
 
+/datum/component/gags_recolorable/proc/open_ui(mob/user, obj/item/toy/crayon/spraycan/can)
+	var/atom/atom_parent = parent
 	var/list/allowed_configs = list()
 	var/config = initial(atom_parent.greyscale_config)
 	if(!config)
@@ -41,7 +46,6 @@
 		used_spraycan = can
 	)
 	menu.ui_interact(user)
-	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/gags_recolorable/proc/recolor(mob/user, obj/item/toy/crayon/spraycan/can, datum/greyscale_modify_menu/menu)
 	if(!isatom(parent))
