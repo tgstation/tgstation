@@ -44,6 +44,13 @@
 	update_appearance(UPDATE_ICON)
 	register_context()
 
+/obj/item/clothing/neck/tie/greyscale/examine(mob/user)
+	. = ..()
+	if(!is_tied)
+		. += "The tie can be tied with Alt-Click."
+	else
+		. += "The tie can be untied with Alt-Click."
+
 /obj/item/clothing/neck/tie/greyscale/AltClick(mob/user)
 	. = ..()
 	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
@@ -64,7 +71,10 @@
 		return
 	// Success!
 	is_tied = !is_tied
-	user.visible_message("[user] adjusts [user.p_their()] tie[HAS_TRAIT(user, TRAIT_BALD) ? "." : " and runs a hand across [user.p_their()] head."]", span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"))
+	user.visible_message(
+		span_notice("[user] adjusts [user.p_their()] tie[HAS_TRAIT(user, TRAIT_BALD) ? "" : " and runs a hand across [user.p_their()] head"]."),
+		span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"),
+	)
 	update_appearance(UPDATE_ICON)
 	user.update_clothing(ITEM_SLOT_NECK)
 
