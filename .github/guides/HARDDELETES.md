@@ -273,3 +273,14 @@ First, do a quick check.
 Are you doing anything to the object in `Initialize()` that you don't undo in `Destroy()`? I don't mean like, setting its name, but are you adding it to any lists, stuff like that
 
 If this fails, you're just gonna have to read over this doc. You can skip the theory if you'd like, but it's all pretty important for having an understanding of this problem
+
+## Misc facts
+
+> i like rust and all, buuut it removes garbage collecctor, and i pretend garbage collector is a cute girl checking my code
+>
+> -- <cite>Armhulenn</cite>
+
+- The reference tracker, while powerful, is increadibly easy to break<br>
+If it weren't for those unit tests we'd still be missing list["a"] = list(ref)
+- Everyone but me sucks, because everyone but me keeps adding new hard deletes
+- Garbage collection is a spook, best practice is to use a random reference in place of null, it scares the compiler demons
