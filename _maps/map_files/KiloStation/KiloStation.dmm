@@ -13488,9 +13488,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "dZe" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access = list("bar")
-	},
+/obj/structure/closet/secure_closet/bar,
 /obj/item/flashlight/lantern,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -14890,6 +14888,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/item/inspector,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "eso" = (
@@ -52022,9 +52021,8 @@
 /area/station/hallway/primary/starboard)
 "oHe" = (
 /obj/structure/table/reinforced,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/inspector,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "oHh" = (
@@ -56523,12 +56521,14 @@
 /area/station/security/courtroom)
 "pUA" = (
 /obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/taperecorder,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/item/paper_bin,
+/obj/item/taperecorder,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/pen,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "pUH" = (
@@ -65939,8 +65939,7 @@
 	dir = 4
 	},
 /obj/structure/sign/barsign{
-	pixel_y = 32;
-	req_access = list("bar")
+	pixel_y = 32
 	},
 /turf/open/floor/wood,
 /area/station/service/bar/atrium)

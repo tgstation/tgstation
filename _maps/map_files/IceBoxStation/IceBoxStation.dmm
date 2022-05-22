@@ -50939,6 +50939,8 @@
 /area/station/commons/vacant_room/commissary)
 "qsX" = (
 /obj/structure/table,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
 /obj/item/assembly/flash/handheld,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
@@ -72092,9 +72094,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/structure/closet/secure_closet/bar{
-	req_access = list("bar")
-	},
+/obj/structure/closet/secure_closet/bar,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/station/service/bar)

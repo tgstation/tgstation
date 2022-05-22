@@ -13851,9 +13851,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "eJo" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access = list("bar")
-	},
+/obj/structure/closet/secure_closet/bar,
 /obj/item/stack/spacecash/c100,
 /obj/item/stack/spacecash/c10,
 /turf/open/floor/wood,
@@ -16876,8 +16874,7 @@
 /area/station/science/xenobiology)
 "fOd" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Ladder Access Hatch";
-	req_one_access = null
+	name = "Ladder Access Hatch"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -18221,8 +18218,7 @@
 /area/station/maintenance/starboard/greater)
 "glk" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Ladder Access Hatch";
-	req_one_access = null
+	name = "Ladder Access Hatch"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -24059,8 +24055,7 @@
 /area/station/service/chapel/monastery)
 "ila" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Ladder Access Hatch";
-	req_one_access = null
+	name = "Ladder Access Hatch"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -24695,8 +24690,7 @@
 /area/station/science/research)
 "ivZ" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Ladder Access Hatch";
-	req_one_access = null
+	name = "Ladder Access Hatch"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -28728,14 +28722,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/prison)
-"jOF" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Ladder Access Hatch";
-	req_one_access = null
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
-/area/station/hallway/primary/tram/right)
 "jOM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -50871,8 +50857,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/hatch{
-	name = "Ladder Access Hatch";
-	req_one_access = null
+	name = "Ladder Access Hatch"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/left)
@@ -54300,8 +54285,7 @@
 /area/station/cargo/storage)
 "srb" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Ladder Access Hatch";
-	req_one_access = null
+	name = "Ladder Access Hatch"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -68026,6 +68010,8 @@
 /area/station/engineering/supermatter/room)
 "xfW" = (
 /obj/structure/table,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron,
 /area/station/security/office)
 "xgb" = (
@@ -183285,7 +183271,7 @@ vPB
 vrV
 pUv
 bMb
-jOF
+qDK
 bMb
 vUE
 vUE

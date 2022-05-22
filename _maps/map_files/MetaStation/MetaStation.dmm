@@ -4947,9 +4947,7 @@
 /turf/closed/wall,
 /area/station/medical/office)
 "bNf" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access = list("bar")
-	},
+/obj/structure/closet/secure_closet/bar,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/light_switch/directional/north,
 /turf/open/floor/wood,
@@ -36156,8 +36154,7 @@
 "mUD" = (
 /obj/structure/closet/secure_closet/bar{
 	pixel_x = -3;
-	pixel_y = -1;
-	req_access = list("bar")
+	pixel_y = -1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light_switch/directional/north,
@@ -53316,9 +53313,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/library,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 2
-	},
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "sQB" = (
@@ -55892,6 +55887,12 @@
 /obj/item/pen{
 	pixel_x = -3;
 	pixel_y = 8
+	},
+/obj/item/mod/module/plasma_stabilizer{
+	pixel_x = 16
+	},
+/obj/item/mod/module/thermal_regulator{
+	pixel_x = 16
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
