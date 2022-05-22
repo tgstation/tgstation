@@ -749,6 +749,7 @@
 #include "code\datums\components\force_move.dm"
 #include "code\datums\components\fov_handler.dm"
 #include "code\datums\components\fullauto.dm"
+#include "code\datums\components\gags_recolorable.dm"
 #include "code\datums\components\gas_leaker.dm"
 #include "code\datums\components\geiger_sound.dm"
 #include "code\datums\components\genetic_damage.dm"

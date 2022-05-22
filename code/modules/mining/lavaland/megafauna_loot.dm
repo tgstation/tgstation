@@ -283,6 +283,7 @@
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
+	AddComponent(/datum/component/gags_recolorable)
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(delta_time)
 	. = ..()
@@ -319,6 +320,7 @@
 	update_appearance()
 	AddComponent(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
 	AddElement(/datum/element/radiation_protected_clothing)
+	AddComponent(/datum/component/gags_recolorable)
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
