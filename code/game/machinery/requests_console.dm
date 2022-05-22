@@ -112,10 +112,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 
 /obj/machinery/requests_console/Initialize(mapload)
 	. = ..()
-	if(!(department) && (name != "requests console")) // if we have a map-set name, let's use that for the department.
+	if(!(department) && (name != "requests console")) // if we have a map-set name, let's default that for the department.
 		department = name
-	else if(!(department)) // if we have no department, we'll have to be Unknown
+	else if(!(department)) // if we have no department and no name, we'll have to be Unknown.
 		department = "Unknown"
+		name = "\improper [department] requests console"
 	else
 		name = "\improper [department] requests console" // and if we have a 'department', our name should reflect that.
 
