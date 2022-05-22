@@ -60,33 +60,34 @@
 // Fix the clapper
 /obj/structure/desk_bell/screwdriver_act(mob/living/user, obj/item/tool)
 	if(broken_ringer)
-		user.visible_message(span_notice("[user] starts repairing [src]..."), span_notice("You start repairing [src]..."))
+		balloon_alert(user, "repairing...")
 		tool.play_tool_sound(src)
-		if(tool.use_tool(src, user, 50))
-			user.visible_message(span_notice("[user] repairs [src]!"), span_notice("You repair the clapper inside [src]."))
+		if(tool.use_tool(src, user, 5 SECONDS))
+			balloon_alert_to_viewers("repaired")
+			playsound(user, 'sound/items/change_drill.ogg', 50, vary = TRUE)
 			broken_ringer = FALSE
 			times_rang = 0
 			return TOOL_ACT_TOOLTYPE_SUCCESS
 		return FALSE
-	..()
+	return ..()
 
 // Deconstruct
 /obj/structure/desk_bell/wrench_act_secondary(mob/living/user, obj/item/tool)
-	user.visible_message(span_notice("[user] starts taking [src] apart..."), span_notice("You start taking [src] apart..."))
+	balloon_alert(user, "taking apart...")
 	tool.play_tool_sound(src)
-	if(tool.use_tool(src, user, 50))
-		user.visible_message(span_notice("[user] disassembles [src]!"), span_notice("You break down [src] into scrap metal."))
-		playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
+	if(tool.use_tool(src, user, 5 SECONDS))
+		balloon_alert(user, "disassembled")
+		playsound(user, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
 		if(!broken_ringer) // Drop 2 if it's not broken.
 			new/obj/item/stack/sheet/iron(drop_location())
 		new/obj/item/stack/sheet/iron(drop_location())
 		qdel(src)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
-	..()
+	return ..()
 
 /// Check if the clapper breaks, and if it does, break it
 /obj/structure/desk_bell/proc/check_clapper(mob/living/user)
-	if((times_rang >= 10000) || prob(times_rang/100))
+	if(((times_rang >= 10000) || prob(times_rang/100)) && ring_cooldown_length)
 		to_chat(user, span_notice("You hear [src]'s clapper fall off of its hinge. Nice job, you broke it."))
 		broken_ringer = TRUE
 
