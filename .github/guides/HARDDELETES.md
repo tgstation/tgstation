@@ -1,12 +1,4 @@
 # Hard Deletes
-1. [What is hard deletion](#What-is-hard-deletion)
-2. [Causes of hard deletes](#causes-of-hard-deletes)
-3. [Detecting hard deletes](#detecting-hard-deletes)
-4. [Techniques for fixing hard deletes](#techniques-for-fixing-hard-deletes)
-5. [Help my code is erroring how fix](#help-my-code-is-erroring-how-fix)
-
-
-## What is Hard Deletion
 
 > Garbage collection is pretty gothic when you think about it. 
 >
@@ -15,6 +7,17 @@
 >There is a kind of sombre tone to fixing GC errors too, its almost shamanistic, making sure all these little objects clear up their final affairs in life before they die, to ensure they don't become ghosts
 >
 > -- <cite>Nanako</cite>
+
+### Table of contents
+
+1. [What is hard deletion](#What-is-hard-deletion)
+2. [Causes of hard deletes](#causes-of-hard-deletes)
+3. [Detecting hard deletes](#detecting-hard-deletes)
+4. [Techniques for fixing hard deletes](#techniques-for-fixing-hard-deletes)
+5. [Help my code is erroring how fix](#help-my-code-is-erroring-how-fix)
+
+
+## What is Hard Deletion
 
 Hard deletion is a very expensive operation that basically clears all references to some "thing" from memory. Objects that undergo this process are referred to as hard deletes, or simply harddels
 
