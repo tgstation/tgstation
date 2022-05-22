@@ -110,7 +110,7 @@
 	return ..()
 
 /obj/item/mod/module/jetpack/proc/refresh_jetpack()
-	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, COMSIG_MODULE_TRIGGERED, get_mover, check_on_move, /datum/effect_system/trail_follow/ion/grav_allowed)
+	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, MOD_ABORT_USE, get_mover, check_on_move, /datum/effect_system/trail_follow/ion/grav_allowed)
 
 /obj/item/mod/module/jetpack/proc/set_stabilizers(new_stabilizers)
 	if(stabilizers == new_stabilizers)

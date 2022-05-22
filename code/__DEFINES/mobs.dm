@@ -226,7 +226,7 @@
 #define MOOD_LEVEL_SAD3 -15
 #define MOOD_LEVEL_SAD4 -20
 
-//Sanity levels for humans
+//Sanity values for humans
 #define SANITY_MAXIMUM 150
 #define SANITY_GREAT 125
 #define SANITY_NEUTRAL 100
@@ -234,6 +234,14 @@
 #define SANITY_UNSTABLE 50
 #define SANITY_CRAZY 25
 #define SANITY_INSANE 0
+
+//Sanity levels for humans
+#define SANITY_LEVEL_GREAT 1
+#define SANITY_LEVEL_NEUTRAL 2
+#define SANITY_LEVEL_DISTURBED 3
+#define SANITY_LEVEL_UNSTABLE 4
+#define SANITY_LEVEL_CRAZY 5
+#define SANITY_LEVEL_INSANE 6
 
 //Nutrition levels for humans
 #define NUTRITION_LEVEL_FAT 600

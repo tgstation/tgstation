@@ -442,6 +442,8 @@
 	ethereal_heart.owner.visible_message(span_notice("The crystals fully encase [ethereal_heart.owner]!"))
 	to_chat(ethereal_heart.owner, span_notice("You are encased in a huge crystal!"))
 	playsound(get_turf(src), 'sound/effects/ethereal_crystalization.ogg', 50)
+	var/atom/movable/possible_chair = ethereal_heart.owner.buckled
+	possible_chair?.unbuckle_mob(ethereal_heart.owner, force = TRUE)
 	ethereal_heart.owner.forceMove(src) //put that ethereal in
 	add_atom_colour(ethereal_heart.ethereal_color, FIXED_COLOUR_PRIORITY)
 	crystal_heal_timer = addtimer(CALLBACK(src, .proc/heal_ethereal), CRYSTALIZE_HEAL_TIME, TIMER_STOPPABLE)
