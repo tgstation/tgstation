@@ -221,6 +221,7 @@
 	if(!loc)
 		return
 
+	RegisterSignal(loc, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(loc), dir)
 
@@ -228,7 +229,6 @@
 			continue
 		process_results(checked_turf)
 		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
-	RegisterSignal(loc, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
 
 
 /obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/loc)
