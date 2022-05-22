@@ -369,6 +369,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	"anime" = typecacheof(list(
 		/obj/item/clothing/head/kitty/genuine,
 		/obj/item/clothing/mask/gas/ninja,
+		/obj/item/clothing/under/syndicate/ninja,
 		/obj/item/clothing/under/costume/schoolgirl,
 		/obj/item/energy_katana,
 		/obj/item/food/chawanmushi,

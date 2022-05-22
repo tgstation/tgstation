@@ -244,15 +244,13 @@
 		due to its' reinforcements this one cannot be shorted by EMPs, it also reacts in a special way to incompatible DNAs."
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 
-/obj/item/mod/module/dna_lock/reinforced/dna_check(mob/user)
+/obj/item/mod/module/dna_lock/reinforced/on_mod_activation(datum/source, mob/user)
 	. = ..()
-	if(.)
+	if(. != MOD_CANCEL_ACTIVATE || !isliving(user))
 		return
-	if(!iscarbon(user))
-		return
-	var/mob/living/carbon/carbon_user = user
-	to_chat(carbon_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
-	carbon_user.gib()
+	var/mob/living/living_user = user
+	to_chat(living_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
+	living_user.gib()
 
 /obj/item/mod/module/dna_lock/reinforced/on_emp(datum/source, severity)
 	return

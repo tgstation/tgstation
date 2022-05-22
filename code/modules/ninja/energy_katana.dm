@@ -70,7 +70,7 @@
 	beam_length = 1 SECONDS
 	recharge_sound = null
 
-/datum/action/innate/dash/ninja/GiveAction(mob/viewer) //this action
+/datum/action/innate/dash/ninja/GiveAction(mob/viewer) //this action should be invisible, as its handled by right-click
 	return
 
 /datum/action/innate/dash/ninja/HideFrom(mob/viewer)

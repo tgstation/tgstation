@@ -23,5 +23,5 @@
 
 /datum/outfit/ninja_preview
 	uniform = /obj/item/clothing/under/syndicate/ninja
-	back = /obj/item/mod/control/pre_equipped/ninja_empty
+	back = /obj/item/mod/control/pre_equipped/empty/ninja
 	belt = /obj/item/energy_katana

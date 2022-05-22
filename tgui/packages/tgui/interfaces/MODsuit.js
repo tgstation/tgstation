@@ -337,7 +337,7 @@ const StatusReadout = (props, context) => {
                 textAlign="center">
                 <Button
                   color="transparent"
-                  icon="viruses"
+                  icon="wind"
                   tooltip="Type"
                   tooltipPosition="top" />
               </Table.Cell>
@@ -345,7 +345,7 @@ const StatusReadout = (props, context) => {
                 textAlign="center">
                 <Button
                   color="transparent"
-                  icon="arrow-trend-up"
+                  icon="bolt"
                   tooltip="Stage"
                   tooltipPosition="top" />
               </Table.Cell>

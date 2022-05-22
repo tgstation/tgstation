@@ -367,16 +367,18 @@
 	)
 
 //these exist for the prefs menu
-/obj/item/mod/control/pre_equipped/syndicate_empty
+/obj/item/mod/control/pre_equipped/empty
+
+/obj/item/mod/control/pre_equipped/empty/syndicate
 	theme = /datum/mod_theme/syndicate
 
-/obj/item/mod/control/pre_equipped/syndicate_empty/honkerative
+/obj/item/mod/control/pre_equipped/empty/syndicate/honkerative
 	applied_skin = "honkerative"
 
-/obj/item/mod/control/pre_equipped/syndicate_empty/elite
+/obj/item/mod/control/pre_equipped/empty/elite
 	theme = /datum/mod_theme/elite
 
-/obj/item/mod/control/pre_equipped/syndicate_empty/ninja
+/obj/item/mod/control/pre_equipped/empty/ninja
 	theme = /datum/mod_theme/ninja
 
-INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/syndicate_empty)
+INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/empty)
