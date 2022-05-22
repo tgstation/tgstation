@@ -55,7 +55,7 @@ Difficulty: Medium
 	ranged = TRUE
 	speed = 12
 	move_to_delay = 12
-	ranged_cooldown_time = 8 SECONDS
+	ranged_cooldown_time = 6 SECONDS
 	loot = list(/obj/item/stack/sheet/bronze/ten, /obj/effect/decal/cleanable/oil)
 	small_sprite_type = /datum/action/small_sprite/megafauna/clockwork_golem
 	/// Ruby blast
@@ -95,9 +95,9 @@ Difficulty: Medium
 		return
 	if(prob(40))
 		oil_ball.Trigger(target = target)
-	else if(prob(30))
+	else if(prob(35))
 		summon_spider.Trigger(target = target)
-	else if(prob(20))
+	else if(prob(30))
 		ruby_blast.Trigger(target = target)
 	else
 		release_smoke.Trigger(target = target)

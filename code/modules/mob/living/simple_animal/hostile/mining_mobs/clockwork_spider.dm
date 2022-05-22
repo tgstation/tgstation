@@ -7,8 +7,8 @@
 	speak_emote = list("clicks")
 	speed = 1
 	move_to_delay = 2
-	maxHealth = 30
-	health = 30
+	maxHealth = 100
+	health = 100
 	obj_damage = 10
 	melee_damage_lower = 5
 	melee_damage_upper = 10
