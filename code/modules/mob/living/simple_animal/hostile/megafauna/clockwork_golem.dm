@@ -1,3 +1,22 @@
+/*
+clockwork golem
+
+The clockwork golem spawns at the corpse of ravtar.
+
+The clockwork golem has four spells:
+Steam: Spawns steam to hide isself and release steam from his steam engine.
+Ruby Blast: Shoots a ball that explodes on impact.
+Oil Ball: Shoots an oil ball that knocks the target down, and can bounce from wall to walll leaving behind slippery oil puddles.
+Summon Spider: Spawns a spider that fights for the clockwork golem.
+
+When the clockwork golem dies, it leaves behind a spell book or trophy for your crusher:
+A. The spell book gives oil jaunt that activates when you are targeting and standing on a tile with oil.
+B. The trophy increases range, speed and cooldown of the bolt.
+
+Difficulty: Medium
+
+*/
+
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem
 	name = "clockwork golem"
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
