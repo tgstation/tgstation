@@ -289,7 +289,7 @@
 	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(istype(wearer) && DT_PROB(1, delta_time)) //cursed by bubblegum
-		if(DT_PROB(7.5, delta_time))
+		if(prob(7.5))
 			new /datum/hallucination/oh_yeah(wearer)
 			to_chat(wearer, span_colossus("<b>[pick("I AM IMMORTAL.","I SHALL TAKE BACK WHAT'S MINE.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b>"))
 		else
