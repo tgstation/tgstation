@@ -215,6 +215,7 @@
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/noslip,
 		/obj/item/mod/module/stealth/ninja,
+		/obj/item/mod/module/dispenser/ninja,
 	)
 
 /obj/item/mod/control/pre_equipped/prototype
