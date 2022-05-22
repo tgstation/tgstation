@@ -295,7 +295,7 @@
 	if (!beehome || loc == beehome)
 		return ..()
 
-	idle = min(100, ++idle)
+	idle = min(100, idle + 1)
 	if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
 		toggle_ai(AI_ON)
 		forceMove(beehome.drop_location())
