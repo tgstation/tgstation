@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Nuke cinematics should show up again, more often. Hopefully."
+  - bugfix: "Malfunctioning AI's Doomsday cinematic also shows again."
+  - code_imp: "Sorted, doc'd, and minorly improved the code of nuclear bombs."
+  - refactor: "Refactored cinematics a teeny bit."

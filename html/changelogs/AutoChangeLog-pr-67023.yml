@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new random event -- Scrubber Clog! Scrubbers may now randomly be clogged by mobs, which will result in them crawling out and getting all over the place. This can be fixed by pumping the scrubber with a plunger, or by just welding the scrubber shut and leaving it for a while."
+  - rscadd: "The plunger has been integrated into the janitor's arsenal. You may now purchase them from the Janidrobe and equip them into janibelts."

@@ -897,3 +897,82 @@
   nickup9:
   - qol: Department heads are now able to check their department budgets when examining
       their ID. NT IRN has also been updated for clarity.
+2022-05-21:
+  Fikou:
+  - bugfix: proximity monitors now work on stuff that was created inside it
+  LemonInTheDark:
+  - bugfix: Jetpacking in space without stabalizers feels good now
+  - bugfix: If you're pulling something in space, and release the pull, it'll follow
+      behind you properly
+  MidoriWroth:
+  - spellcheck: Tramstation botany's condimaster is now a sapmaster
+  NotRanged, SuperNovaa41:
+  - qol: There is a new verb in the Admin tab that lets you view your open Admin Help
+      ticket.
+  Rhials:
+  - bugfix: removes a stray windoor clipping into a wall in Tramstation science.
+  SmArtKar:
+  - bugfix: Fixes missing eye icon
+  - bugfix: Fixed vendors qdeling brains of GODMODEd admemes upon rolling a crit squash
+  - bugfix: Fixed 217-D Plasma Cutter and Exosuit PKA being uninstallable on ripley/clarke
+  Son-of-Space:
+  - refactor: Compartmentalized defines for access IDs and converts them from integers
+      to strings
+  - bugfix: Standardizes some access reqs on varedited objects like windoors and shutter
+      buttons
+  - bugfix: Some missed doors with access reqs instead of mapping helpers were fixed
+  Vladin, Professional Cleaner Association Representative:
+  - bugfix: Ceramic shards are no longer comically large, and can be fit inside trash
+      bags for cleanup.
+  YakumoChen:
+  - bugfix: 'Tram: Engine room external airlock access corrected.'
+  jlsnow301:
+  - refactor: Converted the airlock controller to TypeScript, added some visual effects
+  san7890:
+  - bugfix: 'Snowy floors should be snowy instead of being... Counter-Strike: Source
+      Missing Textures.'
+  - bugfix: The holodeck on DeltaStation will no longer vent all of its atmospherics
+      into space when a program is switched. Whoops.
+  tralezab:
+  - rscadd: Appraiser Skillchip is now available.
+  vincentiusvin:
+  - refactor: Refactored how the analyzer's last gasmix ui thing works. No gameplay
+      changes expected.
+  - code_imp: Reorganized tool usage code a bit. Also no gameplay changes expected.
+  wesoda25:
+  - rscadd: You can now emag tram crossing signals to disable their motion sensors
+2022-05-22:
+  Dmeto:
+  - bugfix: Restores Captains pen and QM survial pen in respective Pdas
+  Ghilker:
+  - bugfix: fix sm shards dusting when wrenching
+  Iamgoofball:
+  - balance: Hitting someone in melee with the explosive lance now moves you to the
+      same tile as them before it sets off the grenade.
+  - bugfix: Petting 10 animals no longer counts as individual mood bonuses, and will
+      instead replace eachother.
+  JohnFulpWillard:
+  - bugfix: Cyborgs once again can't PDA people anymore.
+  - bugfix: Cell chargers no longer show up twice in Industrial Engineering's research
+      node, and APC modules don't look like a Golem shell.
+  Maurukas:
+  - bugfix: Icebox's AI sat is now connected to the main power grid
+  Melbert:
+  - bugfix: Rust and Blade ascension make you stun immune again
+  Mothblocks:
+  - admin: Added a new Puzzgrid smite
+  RandomGamer123:
+  - bugfix: Electrolyzers that are anchored no longer consume 5kW even when turned
+      off
+  SmArtKar:
+  - bugfix: Fixed ethereal revive crystal bugging out when buckled
+  san7890:
+  - bugfix: Nanotrasen realized that intern they left to do announcements accidentally
+      obscured the location of where any potential blood cultists may be summoning
+      their eldritch deity, this should no longer happen whenever they tack this intern
+      on.
+  - spellcheck: There is now a space between the Staff's name and the thing that declares
+      them to be Staff in deadsay.
+  - bugfix: There are no longer two turfs on one tile in Hilbert's Research Facility.
+      In case you've stopped by and some portion of it has been oddly depressurized
+      (maybe? i dunno), you should be fine now.

@@ -1,0 +1,6 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - balance: "Halves the damage of EMPs to MODsuit users to 5 from 10"
+  - balance: "Puts EMP shields on the syndicate modsuit"
+  - rscadd: "Adds advanced EMP shield modules, they shield your whole body from EMPs. Available in the nukie uplink"
