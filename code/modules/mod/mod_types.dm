@@ -376,4 +376,7 @@
 /obj/item/mod/control/pre_equipped/syndicate_empty/elite
 	theme = /datum/mod_theme/elite
 
+/obj/item/mod/control/pre_equipped/syndicate_empty/ninja
+	theme = /datum/mod_theme/ninja
+
 INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/syndicate_empty)

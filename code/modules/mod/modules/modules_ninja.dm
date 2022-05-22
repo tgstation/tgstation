@@ -128,7 +128,7 @@
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/hack)
 
 /obj/item/mod/module/hacker/on_suit_deactivation(deleting = FALSE)
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(mod.wearer, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 
 /obj/item/mod/module/hacker/proc/hack(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
@@ -157,7 +157,7 @@
 	removable = FALSE
 	module_type = MODULE_USABLE
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
-	incompatible_modules = list(/obj/item/mod/module/hacker)
+	incompatible_modules = list(/obj/item/mod/module/weapon_recall)
 	cooldown_time = 0.5 SECONDS
 	/// The item linked to the module that will get recalled.
 	var/obj/item/linked_weapon
@@ -285,28 +285,31 @@
 
 /obj/item/mod/module/status_readout/add_ui_data()
 	. = ..()
-	.["time"] = station_time_timestamp()
-	.["userhealth"] = mod.wearer ? mod.wearer.health : 0
-	.["usermaxhealth"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
-	.["userbrute"] = mod.wearer ? mod.wearer.getBruteLoss() : 0
-	.["userburn"] = mod.wearer ? mod.wearer.getFireLoss() : 0
-	.["usertoxin"] = mod.wearer ? mod.wearer.getToxLoss() : 0
-	.["useroxy"] = mod.wearer ? mod.wearer.getOxyLoss() : 0
-	.["usertemp"] = mod.wearer ? mod.wearer.bodytemperature : 0
-	.["usernutrition"] = mod.wearer ? mod.wearer.nutrition : 0
-	.["userfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
-	.["userdna"] = mod.wearer ? mod.wearer.dna.unique_enzymes : null
-	.["viruses"] = null
+	.["statustime"] = station_time_timestamp()
+	.["statusid"] = GLOB.round_id
+	.["statushealth"] = mod.wearer ? mod.wearer.health : 0
+	.["statusmaxhealth"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
+	.["statusbrute"] = mod.wearer ? mod.wearer.getBruteLoss() : 0
+	.["statusburn"] = mod.wearer ? mod.wearer.getFireLoss() : 0
+	.["statustoxin"] = mod.wearer ? mod.wearer.getToxLoss() : 0
+	.["statusoxy"] = mod.wearer ? mod.wearer.getOxyLoss() : 0
+	.["statustemp"] = mod.wearer ? mod.wearer.bodytemperature : 0
+	.["statusnutrition"] = mod.wearer ? mod.wearer.nutrition : 0
+	.["statusfingerprints"] = mod.wearer ? md5(mod.wearer.dna.unique_identity) : null
+	.["statusdna"] = mod.wearer ? mod.wearer.dna.unique_enzymes : null
+	.["statusviruses"] = null
 	if(!length(mod.wearer?.diseases))
 		return
 	var/list/viruses = list()
 	for(var/datum/disease/virus as anything in mod.wearer.diseases)
-		viruses["name"] = virus.name
-		viruses["type"] = virus.spread_text
-		viruses["stage"] = virus.stage
-		viruses["maxstage"] = virus.max_stages
-		viruses["cure"] = virus.cure_text
-	.["viruses"] = viruses
+		var/list/virus_data = list()
+		virus_data["name"] = virus.name
+		virus_data["type"] = virus.spread_text
+		virus_data["stage"] = virus.stage
+		virus_data["maxstage"] = virus.max_stages
+		virus_data["cure"] = virus.cure_text
+		viruses += list(virus_data)
+	.["statusviruses"] = viruses
 
 ///Energy Net - Ensnares enemies in a net that prevents movement.
 /obj/item/mod/module/energy_net
@@ -324,6 +327,7 @@
 	if(!.)
 		return
 	if(!isliving(target))
+		balloon_alert(mod.wearer, "invalid target!")
 		return
 	var/mob/living/living_target = target
 	if(locate(/obj/structure/energy_net) in get_turf(living_target))
@@ -337,8 +341,7 @@
 	mod.wearer.say("Get over here!", forced = type)
 	var/obj/structure/energy_net/net = new /obj/structure/energy_net(living_target.drop_location())
 	net.affected_mob = living_target
-	mod.wearer.visible_message(span_danger("[mod.wearer] caught [living_target] with an energy net!"))
-	balloon_alert(mod.wearer, "target caught")
+	mod.wearer.visible_message(span_danger("[mod.wearer] caught [living_target] with an energy net!"), span_notice("You caught [living_target] with an energy net!"))
 	if(living_target.buckled)
 		living_target.buckled.unbuckle_mob(living_target, force = TRUE)
 	net.buckle_mob(living_target, force = TRUE)
@@ -376,7 +379,6 @@
 	mod.wearer.remove_status_effect(/datum/status_effect/speech/stutter)
 	mod.wearer.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
 	mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
-	balloon_alert(mod.wearer, "adrenaline boost used")
 	charged = FALSE
 	addtimer(CALLBACK(src, .proc/boost_aftereffects, mod.wearer), 7 SECONDS)
 
@@ -414,5 +416,5 @@
 /obj/item/mod/module/adrenaline_boost/proc/boost_aftereffects(mob/affected_mob)
 	if(!affected_mob)
 		return
-	affected_mob.reagents.add_reagent(reagent_required, reagent_required * 0.25)
+	affected_mob.reagents.add_reagent(reagent_required, reagent_required_amount * 0.25)
 	to_chat(affected_mob, span_danger("You are beginning to feel the after-effect of the injection."))

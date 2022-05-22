@@ -34,6 +34,7 @@
 /// Teleports user to target using do_teleport. Returns TRUE if teleport successful, FALSE otherwise.
 /datum/action/innate/dash/proc/teleport(mob/user, atom/target)
 	if(!IsAvailable())
+		user.balloon_alert(user, "no charges!")
 		return FALSE
 
 	var/turf/current_turf = get_turf(user)

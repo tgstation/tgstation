@@ -507,7 +507,7 @@
 		return
 	var/module_reference = display_names[pick]
 	var/obj/item/mod/module/picked_module = locate(module_reference) in modules
-	if(!istype(picked_module) || user.incapacitated())
+	if(!istype(picked_module))
 		return
 	picked_module.on_select()
 

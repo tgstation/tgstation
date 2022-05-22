@@ -1,7 +1,6 @@
 /datum/outfit/ninja
 	name = "Space Ninja"
-	uniform = /obj/item/clothing/under/color/black
-	suit = /obj/item/clothing/suit/space/space_ninja
+	uniform = /obj/item/clothing/under/syndicate/ninja
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/ninja
 	ears = /obj/item/radio/headset
@@ -21,3 +20,8 @@
 	if(istype(human.l_store, l_pocket))
 		var/obj/item/grenade/c4/ninja/charge = human.l_store
 		charge.set_detonation_area(human.mind?.has_antag_datum(/datum/antagonist/ninja))
+
+/datum/outfit/ninja_preview
+	uniform = /obj/item/clothing/under/syndicate/ninja
+	back = /obj/item/mod/control/pre_equipped/ninja_empty
+	belt = /obj/item/energy_katana

@@ -16,6 +16,6 @@
 
 /obj/item/clothing/under/syndicate/ninja
 	name = "ninja suit"
-	desc = "A nanoweave jumpsuit designed for maximum comfort and tacticality."
+	desc = "A nano-enhanced jumpsuit designed for maximum comfort and tacticality."
 	icon_state = "ninja_suit"
 	can_adjust = FALSE
