@@ -241,6 +241,7 @@
 /obj/item/mod/module/noslip/on_suit_deactivation(deleting = FALSE)
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
 
+//Bite of 87 Springlock - Equips faster, disguised as DNA lock.
 /obj/item/mod/module/springlock/bite_of_87
 
 /obj/item/mod/module/springlock/bite_of_87/Initialize(mapload)

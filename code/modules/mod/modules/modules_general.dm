@@ -95,38 +95,38 @@
 	var/stabilizers = FALSE
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
-	/// The ion trail particles left after the jetpack.
-	var/datum/effect_system/trail_follow/ion/grav_allowed/ion_trail
+	var/datum/callback/get_mover
+	var/datum/callback/check_on_move
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
-	ion_trail = new()
-	ion_trail.auto_process = FALSE
-	ion_trail.set_up(src)
+	get_mover = CALLBACK(src, .proc/get_user)
+	check_on_move = CALLBACK(src, .proc/allow_thrust)
+	refresh_jetpack()
 
 /obj/item/mod/module/jetpack/Destroy()
-	QDEL_NULL(ion_trail)
+	get_mover = null
+	check_on_move = null
 	return ..()
+
+/obj/item/mod/module/jetpack/proc/refresh_jetpack()
+	AddComponent(/datum/component/jetpack, stabilizers, COMSIG_MODULE_TRIGGERED, COMSIG_MODULE_DEACTIVATED, MOD_ABORT_USE, get_mover, check_on_move, /datum/effect_system/trail_follow/ion/grav_allowed)
+
+/obj/item/mod/module/jetpack/proc/set_stabilizers(new_stabilizers)
+	if(stabilizers == new_stabilizers)
+		return
+	stabilizers = new_stabilizers
+	refresh_jetpack()
 
 /obj/item/mod/module/jetpack/on_activation()
 	. = ..()
 	if(!.)
 		return
-	ion_trail.start()
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/move_react)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
 	if(full_speed)
 		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
-	if(!.)
-		return
-	ion_trail.stop()
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE)
 	if(full_speed)
 		mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
@@ -137,40 +137,17 @@
 /obj/item/mod/module/jetpack/configure_edit(key, value)
 	switch(key)
 		if("stabilizers")
-			stabilizers = text2num(value)
+			set_stabilizers(text2num(value))
 
-/obj/item/mod/module/jetpack/proc/move_react(mob/user)
-	SIGNAL_HANDLER
-
-	if(!active)//If jet dont work, it dont work
-		return
-	if(!isturf(mod.wearer.loc))//You can't use jet in nowhere or from mecha/closet
-		return
-	if(!(mod.wearer.movement_type & FLOATING) || mod.wearer.buckled)//You don't want use jet in gravity or while buckled.
-		return
-	if(mod.wearer.pulledby)//You don't must use jet if someone pull you
-		return
-	if(mod.wearer.throwing)//You don't must use jet if you thrown
-		return
-	if(user.client && length(user.client.keys_held & user.client.movement_keys))//You use jet when press keys. yes.
-		allow_thrust()
-
-/obj/item/mod/module/jetpack/proc/pre_move_react(mob/user)
-	SIGNAL_HANDLER
-
-	ion_trail.oldposition = get_turf(src)
-
-/obj/item/mod/module/jetpack/proc/spacemove_react(mob/user, movement_dir)
-	SIGNAL_HANDLER
-
-	if(active && (stabilizers || movement_dir))
-		return COMSIG_MOVABLE_STOP_SPACEMOVE
-
-/obj/item/mod/module/jetpack/proc/allow_thrust()
+/obj/item/mod/module/jetpack/proc/allow_thrust(use_fuel = TRUE)
+	if(!use_fuel)
+		return check_power(use_power_cost)
 	if(!drain_power(use_power_cost))
-		return
-	ion_trail.generate_effect()
+		return FALSE
 	return TRUE
+
+/obj/item/mod/module/jetpack/proc/get_user()
+	return mod.wearer
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
