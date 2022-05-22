@@ -446,7 +446,7 @@
 /obj/item/crusher_trophy/clockwork_rocket
 	name = "clockwork rocket"
 	desc = "Was used as a rocket to compress energy. Suitable as a trophy for a kinetic crusher."
-	icon_state = "clockwork rocket"
+	icon_state = "clockwork_rocket"
 	denied_type = /obj/item/crusher_trophy/clockwork_rocket
 	bonus_value = 1
 
