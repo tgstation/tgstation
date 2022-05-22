@@ -31,9 +31,12 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	icon_state = "req_comp_off"
 	base_icon_state = "req_comp"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
-	var/department = "" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
-	var/list/messages = list() //List of all messages
-	var/departmentType = 0 //bitflag, DEPRECATED. If maps no longer contain this var, delete it. Use the flags. -fippe
+	var/area/area // Reference to our area
+	var/areastring = null // Mapper helper to tie an apc to another area
+	var/auto_name = FALSE // Autonaming by area on?
+	var/department = "" //Department name (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
+	var/list/messages = list() // List of all messages
+	var/departmentType = 0 // bitflag, DEPRECATED. If maps no longer contain this var, delete it. Use the flags. -fippe
 		// 0 = none (not listed, can only replied to)
 		// assistance = 1
 		// supplies = 2
@@ -112,13 +115,29 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 
 /obj/machinery/requests_console/Initialize(mapload)
 	. = ..()
-	if(!(department) && (name != "requests console")) // if we have a map-set name, let's default that for the department.
-		department = name
-	else if(!(department)) // if we have no department and no name, we'll have to be Unknown.
-		department = "Unknown"
+
+	// Init by checking our area, stolen from APC code
+	var/area/our_area = get_area(loc)
+	if(areastring) // if we have an areastring override
+		area = get_area_instance_from_text(areastring)
+		if(!area)
+			area = our_area
+			stack_trace("Bad areastring path for [src], [areastring]")
+	else if(isarea(our_area) && areastring == null)
+		area = our_area
+
+	// Naming and department sets
+	if(auto_name) // If autonaming, just pick department and name from the area code.
+		department = "[get_area_name(area, TRUE)]"
 		name = "\improper [department] requests console"
 	else
-		name = "\improper [department] requests console" // and if we have a 'department', our name should reflect that.
+		if(!(department) && (name != "requests console")) // if we have a map-set name, let's default that for the department.
+			department = name
+		else if(!(department)) // if we have no department and no name, we'll have to be Unknown.
+			department = "Unknown"
+			name = "\improper [department] requests console"
+		else
+			name = "\improper [department] requests console" // and if we have a 'department', our name should reflect that.
 
 	GLOB.allConsoles += src
 
