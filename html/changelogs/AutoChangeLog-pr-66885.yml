@@ -1,5 +1,0 @@
-author: "VioletN"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the two primary traitor objectives calculating reputation incorrectly at round end"
-  - bugfix: "Fixed the reputation value of objectives having a misplaced decimal point in the round end report"

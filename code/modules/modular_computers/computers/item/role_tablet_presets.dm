@@ -21,11 +21,16 @@
 	name = "captain PDA"
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#FFD55B"
-	insert_type = /obj/item/pen/fountain
+	insert_type = /obj/item/pen/fountain/captain
 
 /obj/item/modular_computer/tablet/pda/heads/captain/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, .proc/tab_no_detonate)
+	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
+	if(!drive)
+		return
+	for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+		messenger_app.spam_mode = TRUE
 
 /obj/item/modular_computer/tablet/pda/heads/hop
 	name = "head of personnel PDA"
@@ -235,6 +240,7 @@
 	name = "quartermaster PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D6B328#6506CA#927444"
+	insert_type = /obj/item/pen/survival
 	default_applications = list(
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/budgetorders,
@@ -273,6 +279,14 @@
 	default_applications = list(
 		/datum/computer_file/program/records/security,
 	)
+
+/obj/item/modular_computer/tablet/pda/lawyer/Initialize(mapload)
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
+	if(!drive)
+		return
+	for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+		messenger_app.spam_mode = TRUE
 
 /obj/item/modular_computer/tablet/pda/botanist
 	name = "botanist PDA"

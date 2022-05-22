@@ -2,6 +2,15 @@
 "a" = (
 /turf/closed/wall,
 /area/station/maintenance/department/cargo)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance/glass,
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/watertank,
@@ -27,13 +36,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
-"l" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/cargo)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -56,13 +58,6 @@
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
-"q" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance/glass{
-	req_access_txt = "12"
-	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "s" = (
@@ -118,6 +113,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
 "N" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -140,6 +144,15 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/plating,
+/area/station/maintenance/department/cargo)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "X" = (
@@ -214,11 +227,11 @@ a
 (7,1,1) = {"
 a
 a
-l
+T
 a
 a
 D
-q
+b
 a
 "}
 (8,1,1) = {"
@@ -234,7 +247,7 @@ u
 (9,1,1) = {"
 a
 a
-l
+K
 a
 a
 a

@@ -36,12 +36,13 @@
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "General Storage Access";
-	req_one_access_txt = "12"
+	name = "General Storage Access"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/cable,
 /obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "p" = (
@@ -65,10 +66,10 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "General Storage Access";
-	req_one_access_txt = "12"
+	name = "General Storage Access"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "y" = (

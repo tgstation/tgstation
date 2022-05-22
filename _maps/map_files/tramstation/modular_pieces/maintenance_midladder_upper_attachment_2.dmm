@@ -11,6 +11,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance/glass,
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
 "t" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -33,14 +40,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
-"y" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
-/obj/modular_map_connector,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
 "A" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -58,16 +57,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
-"G" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance/glass{
-	req_access_txt = "12"
-	},
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/cargo)
 "H" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "N" = (
@@ -131,10 +131,10 @@ t
 a
 "}
 (3,1,1) = {"
-y
+M
 m
 m
-G
+p
 H
 P
 S

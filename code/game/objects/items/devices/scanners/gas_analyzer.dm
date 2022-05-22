@@ -22,6 +22,10 @@
 	var/barometer_accuracy // 0 is the best accuracy.
 	var/list/last_gasmix_data
 
+/obj/item/analyzer/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), .proc/on_analyze)
+
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
 	. += span_notice("Right-click [src] to open the gas reference.")
@@ -112,8 +116,8 @@
 	if (user.stat != CONSCIOUS || user.is_blind())
 		to_chat(user, span_warning("You're unable to see [src]'s results!"))
 		return
-
 	atmos_scan(user=user, target=get_turf(src), tool=src, silent=FALSE)
+	on_analyze(source=src, target=get_turf(src))
 
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
 	// Check if it requires visibility and if the user is you know, blind.
@@ -123,13 +127,27 @@
 
 	ui_interact(user)
 
+/// Called when our analyzer is used on something
+/obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
+	var/mixture = target.return_analyzable_air()
+	if(!mixture)
+		return FALSE
+	var/list/airs = islist(mixture) ? mixture : list(mixture)
+	var/list/new_gasmix_data = list()
+	for(var/datum/gas_mixture/air as anything in airs)
+		var/mix_name = capitalize(lowertext(target.name))
+		if(airs.len != 1) //not a unary gas mixture
+			mix_name += " - Node [airs.Find(air)]"
+		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
+	last_gasmix_data = new_gasmix_data
+
 /**
  * Outputs a message to the user describing the target's gasmixes.
  *
  * Gets called by analyzer_act, which in turn is called by tool_act.
  * Also used in other chat-based gas scans.
  */
-/proc/atmos_scan(mob/user, atom/target, obj/item/analyzer/tool, silent=FALSE)
+/proc/atmos_scan(mob/user, atom/target, obj/tool, silent=FALSE)
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
 		return FALSE
@@ -139,8 +157,6 @@
 	if(!silent && isliving(user))
 		user.visible_message(span_notice("[user] uses the analyzer on [icon2html(icon, viewers(user))] [target]."), span_notice("You use the analyzer on [icon2html(icon, user)] [target]."))
 	message += span_boldnotice("Results of analysis of [icon2html(icon, user)] [target].")
-
-	var/list/gasmix_data = list()
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	for(var/datum/gas_mixture/air as anything in airs)
@@ -172,11 +188,6 @@
 		else
 			message += airs.len > 1 ? span_notice("This node is empty!") : span_notice("[target] is empty!")
 			message += span_notice("Volume: [volume] L") // don't want to change the order volume appears in, suck it
-		
-		gasmix_data += list(gas_mixture_parser(air, mix_name))
-
-	if(istype(tool))
-		tool.last_gasmix_data = gasmix_data
 
 	// we let the join apply newlines so we do need handholding
 	to_chat(user, jointext(message, "\n"), type = MESSAGE_TYPE_INFO)
