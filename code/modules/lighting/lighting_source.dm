@@ -235,18 +235,24 @@
 	LAZYINITLIST(effect_str)
 	if (needs_update == LIGHTING_VIS_UPDATE)
 		for (var/datum/lighting_corner/corner as anything in new_corners)
+			if(!istype(corner))
+				continue
 			APPLY_CORNER(corner)
 			if (. != 0)
 				LAZYADD(corner.affecting, src)
 				effect_str[corner] = .
 	else
 		for (var/datum/lighting_corner/corner as anything in new_corners)
+			if(!istype(corner))
+				continue
 			APPLY_CORNER(corner)
 			if (. != 0)
 				LAZYADD(corner.affecting, src)
 				effect_str[corner] = .
 
 		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
+			if(!istype(corner))
+				continue
 			APPLY_CORNER(corner)
 			if (. != 0)
 				effect_str[corner] = .
