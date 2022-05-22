@@ -3997,7 +3997,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "bow" = (
-/obj/machinery/requests_console/directional/east,
+/obj/machinery/requests_console/directional/east{
+	department = "Locker Room";
+	name = "Locker Room Requests Console"
+	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "boP" = (
@@ -4757,7 +4760,9 @@
 	},
 /obj/machinery/requests_console/directional/south{
 	department = "Law Office";
-	name = "Law Office Requests Console"
+	name = "Law Office Requests Console";
+	anon_tips_receiver = 1;
+	assistance_requestable = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -12604,7 +12609,8 @@
 /obj/machinery/requests_console/directional/south{
 	department = "Medbay";
 	departmentType = 1;
-	name = "Medbay Requests Console"
+	name = "Medbay Requests Console";
+	assistance_requestable = 1
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
@@ -13563,7 +13569,10 @@
 /area/station/hallway/primary/starboard)
 "eqB" = (
 /obj/machinery/iv_drip,
-/obj/machinery/requests_console/directional/south,
+/obj/machinery/requests_console/directional/south{
+	department = "Morgue";
+	name = "Morgue Requests Console"
+	},
 /obj/effect/turf_decal/tile/neutral/full,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
@@ -18927,7 +18936,9 @@
 /obj/machinery/requests_console/directional/south{
 	department = "Atmospherics";
 	departmentType = 3;
-	name = "Atmospherics Requests Console"
+	name = "Atmospherics Requests Console";
+	assistance_requestable = 1;
+	supplies_requestable = 1
 	},
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/yellow{
@@ -21588,7 +21599,8 @@
 /obj/machinery/requests_console/directional/south{
 	department = "Janitorial";
 	departmentType = 1;
-	name = "Janitorial Requests Console"
+	name = "Janitorial Requests Console";
+	assistance_requestable = 1
 	},
 /turf/open/floor/iron,
 /area/station/service/janitor)
@@ -23394,7 +23406,9 @@
 /obj/machinery/requests_console/directional/south{
 	department = "Security";
 	departmentType = 5;
-	name = "Security Requests Console"
+	name = "Security Requests Console";
+	anon_tips_receiver = 1;
+	assistance_requestable = 1
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -26585,7 +26599,9 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/machinery/requests_console/directional/east{
-	name = "Bar Requests Console"
+	name = "Bar Requests Console";
+	department = "Bar";
+	supplies_requestable = 1
 	},
 /obj/structure/table/wood,
 /obj/machinery/camera/directional/east{
@@ -30847,7 +30863,9 @@
 /obj/machinery/requests_console/directional/east{
 	department = "Security";
 	departmentType = 5;
-	name = "Security Requests Console"
+	name = "Security Requests Console";
+	assistance_requestable = 1;
+	anon_tips_receiver = 1
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
@@ -34136,8 +34154,8 @@
 /area/station/hallway/primary/port)
 "kUb" = (
 /obj/machinery/requests_console/directional/south{
-	department = "tech_storage";
-	name = "tech_storage Requests Console"
+	department = "Tech Storage";
+	name = "Tech Storage Requests Console"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
@@ -36689,7 +36707,9 @@
 	announcementConsole = 1;
 	department = "Head of Personnel's Desk";
 	departmentType = 5;
-	name = "Head of Personnel's Requests Console"
+	name = "Head of Personnel's Requests Console";
+	anon_tips_receiver = 1;
+	assistance_requestable = 1
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -37704,7 +37724,9 @@
 	announcementConsole = 1;
 	department = "Bridge";
 	departmentType = 5;
-	name = "Bridge Requests Console"
+	name = "Bridge Requests Console";
+	anon_tips_receiver = 1;
+	assistance_requestable = 1
 	},
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
@@ -38453,7 +38475,8 @@
 /obj/machinery/requests_console/directional/south{
 	department = "Chemistry";
 	departmentType = 1;
-	name = "Chemistry Requests Console"
+	name = "Chemistry Requests Console";
+	assistance_requestable = 1
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
@@ -39327,7 +39350,9 @@
 	announcementConsole = 1;
 	department = "Bridge";
 	departmentType = 5;
-	name = "Bridge Requests Console"
+	name = "Bridge Requests Console";
+	anon_tips_receiver = 1;
+	assistance_requestable = 1
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -46560,7 +46585,9 @@
 /obj/machinery/requests_console/directional/east{
 	department = "Engineering";
 	departmentType = 3;
-	name = "Engineering Requests Console"
+	name = "Engineering Requests Console";
+	supplies_requestable = 1;
+	assistance_requestable = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
@@ -59457,7 +59484,9 @@
 /obj/machinery/requests_console/directional/south{
 	department = "Security";
 	departmentType = 5;
-	name = "Security Requests Console"
+	name = "Security Requests Console";
+	anon_tips_receiver = 1;
+	assistance_requestable = 1
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -72092,9 +72121,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/structure/closet/secure_closet/bar{
-	req_access = list("bar")
-	},
+/obj/structure/closet/secure_closet/bar,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/station/service/bar)
@@ -72499,7 +72526,9 @@
 /area/station/cargo/office)
 "xqz" = (
 /obj/machinery/requests_console/directional/north{
-	name = "Kitchen Requests Console"
+	name = "Kitchen Requests Console";
+	department = "Kitchen";
+	supplies_requestable = 1
 	},
 /obj/machinery/oven,
 /turf/open/floor/iron/cafeteria,
