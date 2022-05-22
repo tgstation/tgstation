@@ -1,0 +1,5 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - bugfix: "fixed lavaland syndiebase atmos distro being unconnected"
+  - bugfix: "gave the lavaland syndie atmos it's atmos control computer back"

@@ -376,6 +376,7 @@ rules:
     ignoreUrls: true,
     ignoreRegExpLiterals: true,
     ignoreStrings: true,
+    ignoreTemplateLiterals: true,
   }]
   ## Enforce a maximum number of lines per file
   # max-lines: error
