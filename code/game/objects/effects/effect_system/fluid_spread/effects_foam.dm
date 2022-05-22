@@ -175,7 +175,7 @@
 	QDEL_NULL(chemholder)
 	return ..()
 
-/datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location = null, datum/reagents/carry = null, result_type = null)
+/datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, result_type = null)
 	. = ..()
 	carry?.copy_to(chemholder, carry.total_volume)
 	if(!isnull(result_type))
