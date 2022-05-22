@@ -511,6 +511,8 @@
 	var/atom/movable/result = construct_item(chef, recipe_to_use, craft_time)
 	if(!istext(result)) //We made an item and didn't get a fail message
 		result.forceMove(craft_location)
+		result.pixel_x = rand(-10, 10)
+		result.pixel_y = rand(-10, 10)
 		chef.investigate_log("[key_name(chef)] crafted [recipe_to_use]", INVESTIGATE_CRAFTING)
 		recipe_to_use.on_craft_completion(chef, result)
 	else
