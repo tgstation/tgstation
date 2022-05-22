@@ -43665,12 +43665,8 @@
 /area/station/science/xenobiology)
 "odf" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 1;
-	name = "Public Mining APC";
-	pixel_y = 25
-	},
 /obj/item/reagent_containers/food/drinks/bottle/hooch,
+/obj/machinery/power/apc/five_k/directional/north,
 /turf/open/floor/plating,
 /area/mine/storage)
 "odt" = (
