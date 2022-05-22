@@ -20,6 +20,28 @@
 	/// The sound the bell makes
 	var/ring_sound = 'sound/machines/microwave/microwave-end.ogg'
 
+/obj/structure/desk_bell/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/desk_bell/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(broken_ringer)
+		if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "Fix"
+
+	else
+		var/click_context = "Ring"
+		if(prob(1))
+			click_context = "Annoy"
+		context[SCREENTIP_CONTEXT_LMB] = click_context
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/structure/desk_bell/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, ring_cooldown) && ring_cooldown_length)
