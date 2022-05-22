@@ -30548,7 +30548,7 @@
 	req_access = list("cargo")
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/fluff/desk_bell{
+/obj/structure/desk_bell{
 	pixel_x = 7
 	},
 /turf/open/floor/iron,
@@ -58255,7 +58255,7 @@
 /obj/item/storage/box/matches{
 	pixel_y = 5
 	},
-/obj/structure/fluff/desk_bell{
+/obj/structure/desk_bell{
 	pixel_x = 7;
 	pixel_y = 10
 	},

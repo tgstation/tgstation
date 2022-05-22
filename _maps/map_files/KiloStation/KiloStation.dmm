@@ -6097,7 +6097,7 @@
 /obj/item/folder{
 	pixel_y = -8
 	},
-/obj/structure/fluff/desk_bell{
+/obj/structure/desk_bell{
 	pixel_x = -7;
 	pixel_y = 8
 	},
@@ -70935,7 +70935,7 @@
 	name = "bar sorting disposal pipe";
 	sortType = 19
 	},
-/obj/structure/fluff/desk_bell{
+/obj/structure/desk_bell{
 	pixel_x = -7;
 	pixel_y = 8
 	},

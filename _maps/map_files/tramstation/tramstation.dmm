@@ -15215,7 +15215,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/structure/fluff/desk_bell{
+/obj/structure/desk_bell{
 	pixel_x = 7
 	},
 /turf/open/floor/iron,
@@ -29658,7 +29658,7 @@
 	name = "Cargo Desk";
 	req_access = list("cargo")
 	},
-/obj/structure/fluff/desk_bell{
+/obj/structure/desk_bell{
 	pixel_x = -7
 	},
 /turf/open/floor/iron,

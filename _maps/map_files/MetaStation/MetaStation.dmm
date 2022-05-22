@@ -6619,7 +6619,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
-/obj/structure/fluff/desk_bell{
+/obj/structure/desk_bell{
 	pixel_x = 7
 	},
 /turf/open/floor/iron,
@@ -42023,7 +42023,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/fluff/desk_bell{
+/obj/structure/desk_bell{
 	pixel_x = 7
 	},
 /turf/open/floor/iron,
