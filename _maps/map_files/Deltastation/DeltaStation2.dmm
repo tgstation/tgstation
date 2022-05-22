@@ -9135,7 +9135,9 @@
 	id = "chemisttop";
 	name = "Chemistry Lobby Shutters"
 	},
-/obj/item/folder/yellow,
+/obj/item/folder/yellow{
+	pixel_x = 5
+	},
 /obj/machinery/door/window/left/directional/north{
 	name = "Chemistry Desk"
 	},
@@ -9144,6 +9146,10 @@
 	req_access = list("pharmacy")
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/desk_bell{
+	pixel_x = -8;
+	pixel_y = -2
+	},
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "cvr" = (
@@ -13117,8 +13123,12 @@
 "dDm" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/folder,
-/obj/item/pen,
+/obj/item/folder{
+	pixel_x = -6
+	},
+/obj/item/pen{
+	pixel_x = -6
+	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Research Lab Desk";
 	req_access = list("science")
@@ -13128,6 +13138,9 @@
 	name = "Research and Development Shutter"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
 /turf/open/floor/iron,
 /area/station/science/lab)
 "dDP" = (
@@ -21224,6 +21237,10 @@
 	id = "cafe_counter";
 	name = "Kitchen Counter Shutters"
 	},
+/obj/structure/desk_bell{
+	pixel_x = -7;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/white/smooth_half{
 	dir = 1
 	},
@@ -25420,12 +25437,19 @@
 "gZK" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/folder/yellow,
-/obj/item/pen,
+/obj/item/folder/yellow{
+	pixel_x = -6
+	},
+/obj/item/pen{
+	pixel_x = -6
+	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/right/directional/south{
 	name = "Delivery Office Desk";
 	req_access = list("mail_sorting")
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
@@ -42996,9 +43020,17 @@
 	name = "Engineering Desk";
 	req_access = list("engineering")
 	},
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = -4
+	},
+/obj/item/pen{
+	pixel_x = -4
+	},
 /obj/machinery/door/firedoor,
+/obj/structure/desk_bell{
+	pixel_x = 8;
+	pixel_y = 9
+	},
 /turf/open/floor/iron/half{
 	dir = 8
 	},
@@ -55996,13 +56028,22 @@
 /area/station/hallway/primary/central/aft)
 "piI" = (
 /obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/pen{
+	pixel_x = -6;
+	pixel_y = 5
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/flasher/directional/east{
 	id = "hopflash";
 	pixel_x = 0;
 	pixel_y = 26
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
@@ -64104,7 +64145,12 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
-/obj/item/reagent_containers/food/drinks/britcup,
+/obj/item/reagent_containers/food/drinks/britcup{
+	pixel_x = -7
+	},
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
 /turf/open/floor/iron,
 /area/station/medical/medbay/lobby)
 "rxd" = (
@@ -85481,13 +85527,19 @@
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
 /obj/item/folder/white{
-	pixel_x = 2;
+	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/folder/yellow,
+/obj/item/folder/yellow{
+	pixel_x = -4
+	},
 /obj/machinery/door/window/right/directional/west{
 	name = "Hydroponics Desk";
 	req_access = list("hydroponics")
+	},
+/obj/structure/desk_bell{
+	pixel_x = 8;
+	pixel_y = 9
 	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
@@ -87272,8 +87324,12 @@
 "xwd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/folder,
-/obj/item/pen,
+/obj/item/folder{
+	pixel_x = -4
+	},
+/obj/item/pen{
+	pixel_x = -4
+	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "roboticsprivacy";
 	name = "Robotics Shutters"
@@ -87284,6 +87340,9 @@
 	},
 /obj/machinery/door/window/left/directional/east,
 /obj/effect/turf_decal/delivery,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "xwq" = (
