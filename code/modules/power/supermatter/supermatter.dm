@@ -311,7 +311,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	update_constants()
 
-	underlays += image(icon, loc, "crystal_base")
+	if(anomaly_event)
+		underlays += image(icon, loc, "crystal_base")
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	if(warp)
@@ -546,7 +547,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			new /obj/effect/anomaly/delimber(local_turf, null, FALSE)
 
 /obj/machinery/power/supermatter_crystal/proc/activate_hypermatter_state(time_to_add, power_to_add = 2000)
-	if(!anomaly_event)
+	if(!anomaly_event || damage > 0)
+		power += power_to_add * 2
 		return
 	var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
 	var/hypermatter_timer = max(old_time_left + time_to_add, 5 MINUTES)

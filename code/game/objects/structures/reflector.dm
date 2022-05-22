@@ -85,7 +85,9 @@
 	if(istype(P, /obj/projectile/energy/nuclear_particle) && particle_power_increase)
 		var/obj/projectile/energy/nuclear_particle/reflecting_particle = P
 		reflecting_particle.internal_power = max(reflecting_particle.internal_power + particle_power_increase, 0)
-		reflecting_particle.range = initial(reflecting_particle.range)
+		if(particle_power_increase > 0)
+			reflecting_particle.range += 10
+		reflecting_particle.update_colours()
 
 	if(auto_reflect(P, pdir, ploc, pangle) != BULLET_ACT_FORCE_PIERCE)
 		return ..()

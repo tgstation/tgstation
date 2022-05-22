@@ -118,9 +118,9 @@
 /obj/machinery/power/supermatter_crystal/proc/handle_crystal_sounds()
 	//We vary volume by power, and handle OH FUCK FUSION IN COOLING LOOP noises.
 	if(power || hypermatter_state)
-		var/volume_amount = hypermatter_state ? 25 : (power / 50)
+		var/volume_amount = hypermatter_state ? 0 : (power / 100)
 		soundloop.volume = clamp((50 + volume_amount), 50, 100)
-	if(damage >= 300 || hypermatter_state)
+	if(damage >= 300)
 		soundloop.mid_sounds = list('sound/machines/sm/loops/delamming.ogg' = 1)
 	else
 		soundloop.mid_sounds = list('sound/machines/sm/loops/calm.ogg' = 1)

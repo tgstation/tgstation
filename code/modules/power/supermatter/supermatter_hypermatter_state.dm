@@ -5,14 +5,14 @@
 	if(power)
 		power = max(power - 30, 0)
 
-		for(var/_ in 1 to rand(2, 4))
+		for(var/_ in 1 to rand(2, 6))
 			if(hypermatter_power_amount < 1000)
 				break
 			var/angle_to_shoot = pick(angles)
-			fire_nuclear_particle(angle_to_shoot, 1.2, 1000)
+			fire_nuclear_particle(angle_to_shoot, 1.2, 1000, "sm_nuclear_particle")
 			hypermatter_power_amount = max(hypermatter_power_amount - 100, 0)
 	else
-		hypermatter_power_amount = max(hypermatter_power_amount - 100, 0)
+		hypermatter_power_amount = max(hypermatter_power_amount - 200, 0)
 
 
 	if(prob(5))
