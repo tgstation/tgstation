@@ -127,6 +127,11 @@
 /obj/item/stack/sheet/bronze/thirty,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ratvar)
+"H" = (
+/obj/structure/fluff/clockwork/alloy_shards/large,
+/mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete,
+/turf/open/floor/bronze/filled/lavaland,
+/area/ruin/unpowered/ratvar)
 
 (1,1,1) = {"
 a
@@ -534,7 +539,7 @@ h
 h
 h
 h
-s
+H
 b
 l
 l
