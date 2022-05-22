@@ -61,12 +61,15 @@
  * * extra_classes - Extra classes to apply to the span that holds the text
  * * lifespan - The lifespan of the message in deciseconds
  */
-/datum/chatmessage/New(text, atom/target, datum/language/language, list/extra_classes = list(), lifespan = CHAT_MESSAGE_LIFESPAN)
+/datum/chatmessage/New(creation_parameters, text, atom/target, datum/language/language, list/extra_classes = list(), lifespan = CHAT_MESSAGE_LIFESPAN)
 	. = ..()
 	if (!istype(target))
 		CRASH("Invalid target given for chatmessage")
 
-	creation_parameters = "[text]-[REF(target)]-[language]-[list2params(extra_classes)]-[lifespan]-[world.time]"
+	if(istext(creation_parameters))
+		src.creation_parameters = creation_parameters
+	else
+		src.creation_parameters = "[text]-[REF(target)]-[language]-[list2params(extra_classes)]-[lifespan]-[world.time]"
 
 	current_z_idx++
 	// Reset z index if relevant
@@ -280,7 +283,9 @@
 			var/current_stage_2_time_left = preexisting_message.fade_times_by_image[other_message_image] - (world.time + CHAT_MESSAGE_SPAWN_TIME)
 
 			//how much time remains in the "fully visible" stage of animation, after we adjust it. round it down to the nearest tick
-			var/real_stage_2_time_left = round((current_stage_2_time_left) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height), world.tick_lag)
+			var/real_stage_2_time_left = round((current_stage_2_time_left) * (CHAT_MESSAGE_EXP_DECAY ** idx) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height), world.tick_lag)
+
+			idx++
 
 			///used to take away time from CHAT_MESSAGE_SPAWN_TIME's addition to the fading time
 			var/non_abs_stage_2_time_left = real_stage_2_time_left
@@ -359,7 +364,7 @@
 
 	approx_lines[message_image] = approximate_lines
 	if(set_time)
-		fade_times_by_image[message_image] = world.time  + lifespan + CHAT_MESSAGE_SPAWN_TIME
+		fade_times_by_image[message_image] = world.time + lifespan + CHAT_MESSAGE_SPAWN_TIME
 
 	LAZYADDASSOCLIST(associated_client.seen_messages, message_loc, src)
 	LAZYSET(messages, message_image, associated_client)
@@ -399,11 +404,12 @@
 		text_to_use = lang_treat(speaker, message_language, raw_message, spans, null, TRUE)
 		spans = spans ? spans.Copy() : list()
 
-	message_to_use = SSrunechat.messages_by_creation_string["[text_to_use]-[REF(speaker)]-[message_language]-[list2params(spans)]-[CHAT_MESSAGE_LIFESPAN]-[world.time]"]
+	var/message_parameters = "[text_to_use]-[REF(speaker)]-[message_language]-[list2params(spans)]-[CHAT_MESSAGE_LIFESPAN]-[world.time]"
+	message_to_use = SSrunechat.messages_by_creation_string[message_parameters]
 	//if an already existing message already has processed us as a hearer then we have to assume that this is from a new, identical message sent in the same tick
 	//as the already existing one. thats the only time this can happen. if this is the case then create a new chatmessage
 	if(!message_to_use || (message_to_use && message_to_use.all_hearers?[client]))
-		message_to_use = new /datum/chatmessage(text_to_use, speaker, message_language, spans)
+		message_to_use = new /datum/chatmessage(message_parameters, text_to_use, speaker, message_language, spans)
 
 	message_to_use.prepare_text(text_to_use, speaker, src, message_language, spans)
 
