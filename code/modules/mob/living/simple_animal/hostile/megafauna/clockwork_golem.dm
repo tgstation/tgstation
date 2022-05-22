@@ -24,8 +24,8 @@
 	icon_state = "clockwork_golem_complete"
 	icon_living = "clockwork_golem_complete"
 	desc = "Remnants of an ancient group of craftsman."
-	health = 1200
-	maxHealth = 1200
+	health = 1700
+	maxHealth = 1700
 	attack_verb_continuous = "drills"
 	attack_verb_simple = "drill"
 	attack_sound = 'sound/creatures/clockwork_golem_attack.ogg'
@@ -36,8 +36,8 @@
 	ranged = TRUE
 	speed = 12
 	move_to_delay = 12
-	ranged_cooldown_time = 10 SECONDS
-	loot = list(/obj/item/stack/sheet/bronze = 10, /obj/effect/decal/cleanable/oil)
+	ranged_cooldown_time = 8 SECONDS
+	loot = list(/obj/item/stack/sheet/bronze/ten, /obj/effect/decal/cleanable/oil)
 	small_sprite_type = /datum/action/small_sprite/megafauna/clockwork_golem
 	/// Ruby blast
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast/ruby_blast
@@ -105,8 +105,8 @@
 	move_to_delay = 2
 	melee_queue_distance = 10
 	robust_searching = TRUE
-	loot = list(/obj/item/stack/sheet/bronze = 10, /obj/effect/decal/cleanable/oil, /obj/item/book/granter/spell/oiljaunt)
-	crusher_loot = list(/obj/item/stack/sheet/bronze = 10, /obj/effect/decal/cleanable/oil, /obj/item/crusher_trophy/clockwork_rocket)
+	loot = list(/obj/item/stack/sheet/bronze/ten, /obj/effect/decal/cleanable/oil, /obj/item/book/granter/spell/oiljaunt)
+	crusher_loot = list(/obj/item/stack/sheet/bronze/ten, /obj/effect/decal/cleanable/oil, /obj/item/crusher_trophy/clockwork_rocket)
 	small_sprite_type = /datum/action/small_sprite/megafauna/clockwork_golem/broken
 
 /obj/projectile/bullet/ruby_blast

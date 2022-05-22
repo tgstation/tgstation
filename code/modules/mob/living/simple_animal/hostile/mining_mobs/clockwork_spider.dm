@@ -24,6 +24,6 @@
 	move_force = MOVE_FORCE_WEAK
 	move_resist = MOVE_FORCE_WEAK
 	pull_force = MOVE_FORCE_WEAK
-	loot = list(/obj/item/stack/sheet/bronze = 2, /obj/effect/decal/cleanable/oil)
+	loot = list(/obj/item/stack/sheet/bronze, /obj/effect/decal/cleanable/oil)
 	stat_attack = HARD_CRIT
 	footstep_type = FOOTSTEP_MOB_CLAW

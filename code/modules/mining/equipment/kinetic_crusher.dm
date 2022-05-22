@@ -452,17 +452,15 @@
 
 /obj/item/crusher_trophy/clockwork_rocket/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
 		marker.name = "extended [marker.name]"
-		marker.speed += 2
-		marker.range += 4
+		marker.speed *= 0.8
+		marker.range += 3
 
 /obj/item/crusher_trophy/clockwork_rocket/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
-		crusher.light_range += bonus_value
 		crusher.charge_time -= bonus_value
 
 /obj/item/crusher_trophy/clockwork_rocket/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
-		crusher.light_range -= bonus_value
 		crusher.charge_time += bonus_value
