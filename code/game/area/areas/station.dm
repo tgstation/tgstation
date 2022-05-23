@@ -1120,7 +1120,7 @@
 
 /area/station/security/processing
 	name = "\improper Labor Shuttle Dock"
-	icon_state = "sec_processing"
+	icon_state = "sec_labor_processing"
 
 /area/station/security/processing/cremation
 	name = "\improper Security Crematorium"
