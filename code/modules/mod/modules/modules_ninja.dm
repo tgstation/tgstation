@@ -81,6 +81,7 @@
 	name = "MOD camera vision module"
 	desc = "A module installed into the suit's helmet. This replaces the standard visor with a set of camera eyes, \
 		which protect from bright flashes as well as using special track-blocking technology. Become the unseen."
+	icon_state = "welding_camera"
 	removable = FALSE
 	complexity = 0
 	overlay_state_inactive = null
@@ -113,8 +114,6 @@
 	icon_state = "hacker"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/hacker)
-	/// Whether or not we're currently draining something
-	var/draining = FALSE
 	/// Minimum amount of power we can drain in a single drain action
 	var/mindrain = 200
 	/// Maximum amount of power we can drain in a single drain action
@@ -133,20 +132,16 @@
 /obj/item/mod/module/hacker/proc/hack(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || draining || !proximity)
+	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || !proximity)
 		return NONE
 	target.add_fingerprint(mod.wearer)
-	draining = TRUE
-	var/drain_amount = target.ninjadrain_act(mod, mod.wearer, src)
-	draining = FALSE
-	if(isnum(drain_amount)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
-		if(drain_amount)
-			to_chat(mod.wearer, span_notice("Gained <B>[display_energy(drain_amount)]</B> of energy from [target]."))
-		else
-			to_chat(mod.wearer, span_warning("[target] has run dry of energy, you must find another source!"))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return target.ninjadrain_act(mod.wearer, src)
+
+/obj/item/mod/module/hacker/proc/charge_message(atom/drained_atom, drain_amount)
+	if(drain_amount)
+		to_chat(mod.wearer, span_notice("Gained <B>[drain_amount/mod.get_max_charge()*100]%</B> of energy from [drained_atom]."))
 	else
-		return NONE
+		to_chat(mod.wearer, span_warning("[drained_atom] has run dry of energy, you must find another source!"))
 
 ///Weapon Recall - Teleports your katana to you, prevents gun use.
 /obj/item/mod/module/weapon_recall
@@ -242,6 +237,7 @@
 	desc = "A module which engages with the various locks and seals tied to the suit's systems, \
 		enabling it to only be worn by someone corresponding with the user's exact DNA profile; \
 		due to its' reinforcements this one cannot be shorted by EMPs, it also reacts in a special way to incompatible DNAs."
+	icon_state = "dnalock_ninja"
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 
 /obj/item/mod/module/dna_lock/reinforced/on_mod_activation(datum/source, mob/user)
@@ -259,6 +255,7 @@
 /obj/item/mod/module/emp_shield/pulse
 	name = "MOD EMP pulse module"
 	desc = "This modification to the EMP shield lets it \"launch\" it's electromagnetic field inhibitor, causing an EMP of it's own."
+	icon_state = "emp_pulse"
 	module_type = MODULE_USABLE
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
 	cooldown_time = 8 SECONDS

@@ -217,7 +217,7 @@
 		/obj/item/mod/module/dispenser/ninja,
 		/obj/item/mod/module/dna_lock/reinforced,
 		/obj/item/mod/module/emp_shield/pulse,
-		/obj/item/mod/module/status_readout
+		/obj/item/mod/module/status_readout,
 	)
 
 /obj/item/mod/control/pre_equipped/prototype
