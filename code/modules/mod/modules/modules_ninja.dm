@@ -139,7 +139,7 @@
 
 /obj/item/mod/module/hacker/proc/charge_message(atom/drained_atom, drain_amount)
 	if(drain_amount)
-		to_chat(mod.wearer, span_notice("Gained <B>[drain_amount/mod.get_max_charge()*100]%</B> of energy from [drained_atom]."))
+		to_chat(mod.wearer, span_notice("Gained <B>drain_amount</B> units of energy from [drained_atom]."))
 	else
 		to_chat(mod.wearer, span_warning("[drained_atom] has run dry of energy, you must find another source!"))
 
@@ -182,7 +182,8 @@
 		return
 	var/distance = get_dist(mod.wearer, linked_weapon)
 	var/in_view = (linked_weapon in view(mod.wearer))
-	if(!in_view && !drain_power(use_power_cost * distance * 10))
+	if(!in_view && !drain_power(use_power_cost * distance))
+		balloon_alert(mod.wearer, "not enough charge!")
 		return
 	linked_weapon.forceMove(linked_weapon.drop_location())
 	if(in_view)

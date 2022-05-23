@@ -38,6 +38,9 @@
 /obj/item/mod/core/proc/subtract_charge(amount)
 	return FALSE
 
+/obj/item/mod/core/proc/check_charge(amount)
+	return FALSE
+
 /obj/item/mod/core/proc/update_charge_alert()
 	mod.wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 
@@ -60,6 +63,9 @@
 	return TRUE
 
 /obj/item/mod/core/infinite/subtract_charge(amount)
+	return TRUE
+
+/obj/item/mod/core/infinite/check_charge(amount)
 	return TRUE
 
 /obj/item/mod/core/standard
@@ -119,6 +125,9 @@
 	if(!charge_source)
 		return FALSE
 	return charge_source.use(amount, TRUE)
+
+/obj/item/mod/core/standard/check_charge(amount)
+	return charge_amount() >= amount
 
 /obj/item/mod/core/standard/update_charge_alert()
 	var/obj/item/stock_parts/cell/charge_source = charge_source()
@@ -260,6 +269,9 @@
 	charge_source.adjust_charge(-amount*charge_modifier)
 	return TRUE
 
+/obj/item/mod/core/proc/check_charge(amount)
+	return charge_amount() >= amount*charge_modifier
+
 /obj/item/mod/core/ethereal/update_charge_alert()
 	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
 	if(charge_source)
@@ -308,6 +320,9 @@
 /obj/item/mod/core/plasma/subtract_charge(amount)
 	charge = max(0, charge - amount)
 	return TRUE
+
+/obj/item/mod/core/proc/check_charge(amount)
+	return charge_amount() >= amount
 
 /obj/item/mod/core/plasma/update_charge_alert()
 	var/remaining_plasma = charge_amount() / max_charge_amount()

@@ -225,7 +225,7 @@
 
 /// Checks if there is enough power in the suit
 /obj/item/mod/module/proc/check_power(amount)
-	if(mod.get_charge() < amount)
+	if(mod.check_charge(amount))
 		return FALSE
 	return TRUE
 

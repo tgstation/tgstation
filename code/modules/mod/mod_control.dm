@@ -592,6 +592,9 @@
 /obj/item/mod/control/proc/subtract_charge(amount)
 	return core?.subtract_charge(amount) || FALSE
 
+/obj/item/mod/control/proc/check_charge(amount)
+	return core?.check_charge(amount) || FALSE
+
 /obj/item/mod/control/proc/update_charge_alert()
 	if(!wearer)
 		return
