@@ -1,0 +1,4 @@
+author: "Fikou, unit0016"
+delete-after: True
+changes: 
+  - rscadd: "Chrono Legionnaire and Admin MODsuits now have the ability to hold mobs with kinesis."
