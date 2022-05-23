@@ -115,7 +115,7 @@
 			qdel(destabilizing_crystal)
 		return
 
-	if(istype(item, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen) && anomaly_event)
+	if(istype(item, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen))
 		var/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen/coated_metal_h2 = item
 		var/hypermatter_time = coated_metal_h2.amount * 30 SECONDS
 		activate_hypermatter_state(hypermatter_time)
@@ -125,7 +125,7 @@
 	return ..()
 
 /obj/machinery/power/supermatter_crystal/Bumped(atom/movable/bumped_atom)
-	if(!istype(bumped_atom, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen) || !anomaly_event)
+	if(!istype(bumped_atom, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen))
 		return ..()
 	var/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen/coated_metal_h2 = bumped_atom
 	var/hypermatter_time = coated_metal_h2.amount * 30 SECONDS
@@ -137,8 +137,13 @@
 	return
 
 /obj/machinery/power/supermatter_crystal/proc/wrench_act_callback(mob/user, obj/item/tool)
-	if(moveable)
-		default_unfasten_wrench(user, tool)
+	if(!moveable)
+		return
+	if(hypermatter_state)
+		balloon_alert(user, "this seems like a bad idea")
+		if(!do_after(user, 3 SECONDS, src))
+			return
+	default_unfasten_wrench(user, tool)
 
 /obj/machinery/power/supermatter_crystal/proc/consume_callback(matter_increase, damage_increase)
 	if(matter_increase && power_changes)

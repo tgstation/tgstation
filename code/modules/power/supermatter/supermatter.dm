@@ -28,6 +28,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	critical_machine = TRUE
 	base_icon_state = "darkmatter"
 
+	var/base_structure_icon = "crystal_base"
+
 	///The id of our supermatter
 	var/uid = 1
 	///The amount of supermatters that have been created this round
@@ -278,6 +280,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Are we in an hypermatter state?
 	var/hypermatter_state = FALSE
 
+	var/hypermatter_icon = "hypermatter"
+
 	var/hypermatter_power_amount
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
@@ -317,8 +321,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	update_constants()
 
-	if(anomaly_event)
-		underlays += image(icon, loc, "crystal_base")
+	underlays += image(icon, loc, base_structure_icon)
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	if(warp)
@@ -451,7 +454,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else if(!hypermatter_state)
 		icon_state = base_icon_state
 	else
-		icon_state = "hypermatter"
+		icon_state = hypermatter_icon
 
 /obj/machinery/power/supermatter_crystal/proc/countdown()
 	set waitfor = FALSE
@@ -553,7 +556,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			new /obj/effect/anomaly/delimber(local_turf, null, FALSE)
 
 /obj/machinery/power/supermatter_crystal/proc/activate_hypermatter_state(time_to_add, power_to_add = 2000)
-	if(!anomaly_event || damage > 0)
+	if(!anchored || damage > 0)
 		power += power_to_add * 2
 		return
 	var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
@@ -711,6 +714,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
 	base_icon_state = "darkmatter_shard"
 	icon_state = "darkmatter_shard"
+	base_structure_icon = "shard_base"
+	hypermatter_icon = "shard_hypermatter"
 	anchored = FALSE
 	gasefficency = 0.125
 	explosion_power = 12

@@ -1,5 +1,12 @@
 /obj/machinery/power/supermatter_crystal/proc/handle_hypermatter_state()
 
+	if(!anchored) //Don't unanchor the shards
+		damage += 150
+		hypermatter_state = FALSE
+		update_appearance()
+		return
+
+
 	var/static/list/angles = list(0, 45, 90, 135, 180, 225, 270, 315, 360)
 
 	if(power)
@@ -173,7 +180,7 @@
 	internal_energy = max(internal_energy - needed_energy_to_emit, 0)
 
 	Beam(crystal, DEFAULT_ZAP_ICON_STATE, time = 3 SECONDS, beam_color = color_matrix_rotate_hue(120))
-	playsound("sound/weapons/nuclear_emitter.ogg", 50, TRUE)
+	playsound(src, "sound/weapons/nuclear_emitter.ogg", 50, TRUE)
 	addtimer(CALLBACK(src, .proc/activate_hypermatter, crystal), 3 SECONDS)
 
 ///Activate the SM crystal into an hypermatter state
