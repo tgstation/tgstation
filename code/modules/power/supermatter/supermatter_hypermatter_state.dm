@@ -1,3 +1,4 @@
+///Handles the main process of the hypermatter
 /obj/machinery/power/supermatter_crystal/proc/handle_hypermatter_state()
 
 	if(!anchored) //Don't unanchor the shards

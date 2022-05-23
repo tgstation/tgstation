@@ -27,7 +27,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE
 	base_icon_state = "darkmatter"
-
+	///Icon for the underlay structure of the crystal.
 	var/base_structure_icon = "crystal_base"
 
 	///The id of our supermatter
@@ -279,9 +279,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	COOLDOWN_DECLARE(hypermatter_cooldown)
 	///Are we in an hypermatter state?
 	var/hypermatter_state = FALSE
-
+	///Icon of the hypermatter state
 	var/hypermatter_icon = "hypermatter"
-
+	///The amount of power we have in the hypermatter state
 	var/hypermatter_power_amount
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)

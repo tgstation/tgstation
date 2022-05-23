@@ -17,6 +17,7 @@
 		"cyan" = "#00FFFF",
 		"purple" = "#FF00FF"
 	)
+	///Internal energy to release on impact (used on the SM and the nuclear accumulator)
 	var/internal_power = 0
 
 /obj/projectile/energy/nuclear_particle/Initialize(mapload, internal_power = 0, icon_state)
