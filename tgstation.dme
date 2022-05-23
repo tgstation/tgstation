@@ -2949,6 +2949,7 @@
 #include "code\modules\hydroponics\grown\kronkus.dm"
 #include "code\modules\hydroponics\grown\melon.dm"
 #include "code\modules\hydroponics\grown\mushrooms.dm"
+#include "code\modules\hydroponics\grown\olive.dm"
 #include "code\modules\hydroponics\grown\onion.dm"
 #include "code\modules\hydroponics\grown\peas.dm"
 #include "code\modules\hydroponics\grown\pineapple.dm"
