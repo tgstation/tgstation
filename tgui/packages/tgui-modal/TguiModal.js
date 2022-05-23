@@ -1,14 +1,12 @@
-
-import { Modal } from './components/Modal';
+import { Window } from 'tgui/layouts';
+import { Button } from 'tgui/components';
 
 export const TguiModal = () => {
-
   return (
-    <Modal>
-      <Modal.Content>
-        Helloworld
-      </Modal.Content>
-    </Modal>
+    <Window>
+      <Window.Content>
+        <Button>Test</Button>
+      </Window.Content>
+    </Window>
   );
 };
-

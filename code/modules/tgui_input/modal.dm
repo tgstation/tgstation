@@ -1,5 +1,3 @@
-
-
 /proc/tgui_modal(mob/user, title = "Modal", max_length = MAX_MESSAGE_LEN)
 	if (!user)
 		user = usr

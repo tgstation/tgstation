@@ -1,11 +1,9 @@
 import './styles/main.scss';
 import { createRenderer } from 'tgui/renderer';
-import { Modal } from './components/Modal';
+import { TguiModal } from './TguiModal';
 
 const renderApp = createRenderer(() => {
-  return (
-    <Modal><Modal.Content>ok</Modal.Content></Modal>
-  );
+  return <TguiModal />;
 });
 
 const setupApp = () => {
@@ -14,13 +12,7 @@ const setupApp = () => {
     document.addEventListener('DOMContentLoaded', setupApp);
     return;
   }
-  // Enable hot module reloading
-  if (module.hot) {
-    setupHotReloading();
-    module.hot.accept([
-      './components',
-    ], renderApp);
-  }
+  renderApp();
 };
 
 setupApp();
