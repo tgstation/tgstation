@@ -31251,11 +31251,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/dark,
-/obj/machinery/requests_console/directional/west{
-	department = "Virology";
-	name = "Virology Requests Console";
-	receive_ore_updates = 1
-	},
+/obj/machinery/requests_console/auto_name/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "jZr" = (
@@ -49095,10 +49091,6 @@
 "pOb" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
-	},
-/obj/machinery/requests_console/auto_name/directional/south,
-/obj{
-	name = "---Merge conflict marker---"
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
