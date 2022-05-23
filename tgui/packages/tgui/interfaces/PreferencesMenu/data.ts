@@ -20,6 +20,7 @@ export enum Food {
   Sugar = "SUGAR",
   Toxic = "TOXIC",
   Vegetables = "VEGETABLES",
+  Bugs = "BUGS",
 }
 
 export enum JobPriority {

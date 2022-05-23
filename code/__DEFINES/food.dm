@@ -38,6 +38,7 @@
 	"NUTS", \
 	"SEAFOOD", \
 	"ORANGES", \
+	"BUGS", \
 )
 
 #define DRINK_NICE 1

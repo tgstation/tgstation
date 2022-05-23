@@ -20,6 +20,7 @@ const FOOD_ICONS = {
   [Food.Sugar]: "candy-cane",
   [Food.Toxic]: "biohazard",
   [Food.Vegetables]: "carrot",
+  [Food.Bugs]: "bug",
 };
 
 const FOOD_NAMES: Record<keyof typeof FOOD_ICONS, string> = {
@@ -37,12 +38,14 @@ const FOOD_NAMES: Record<keyof typeof FOOD_ICONS, string> = {
   [Food.Sugar]: "Sugar",
   [Food.Toxic]: "Toxic food",
   [Food.Vegetables]: "Vegetables",
+  [Food.Bugs]: "Bugs",
 };
 
 const IGNORE_UNLESS_LIKED: Set<Food> = new Set([
   Food.Cloth,
   Food.Gross,
   Food.Toxic,
+  Food.Bugs,
 ]);
 
 const notIn = function<T> (set: Set<T>) {
