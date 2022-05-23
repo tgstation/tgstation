@@ -12,6 +12,6 @@
 /obj/structure/sign/warning/chemdiamond : /obj/structure/sign/warning/chem_diamond {@OLD}
 /obj/structure/sign/warning/radshelter : /obj/structure/sign/warning/rad_shelter {@OLD}
 
-/obj/structure/sign/departments/examroom : /obj/structure/sign/departments/maint {@OLD}
-/obj/structure/sign/departments/mait : /obj/machinery/door/window/right/directional/east {@OLD}
+/obj/structure/sign/departments/examroom : /obj/structure/sign/departments/exam_room {@OLD}
+/obj/structure/sign/departments/mait : /obj/structure/sign/departments/maint {@OLD}
 /obj/structure/sign/departments/mait/alt : /obj/structure/sign/departments/maint/alt {@OLD}

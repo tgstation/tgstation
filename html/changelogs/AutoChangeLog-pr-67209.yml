@@ -1,0 +1,4 @@
+author: "Pepsilawn"
+delete-after: True
+changes: 
+  - bugfix: "Fixed incorrect departmental signs on Delta and Meta, as well as the Caves Gateway mission."
