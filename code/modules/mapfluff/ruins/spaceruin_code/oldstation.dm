@@ -221,7 +221,7 @@
 	atom_integrity = rand(max_integrity * integrity_min_factor, max_integrity * integrity_max_factor)
 
 /obj/item/petri_dish/oldstation
-	name = "Molly's biopsy"
+	name = "molly's biopsy"
 	desc = "You can see a moldy piece of sandwich inside the dish. Maybe it helped to preserve the bacteria for that long."
 
 /obj/item/petri_dish/oldstation/Initialize(mapload)
@@ -235,7 +235,7 @@
 	update_appearance()
 
 /obj/item/reagent_containers/glass/beaker/oldstation
-	name = "Cultivation broth"
+	name = "cultivation broth"
 	amount_per_transfer_from_this = 50
 	list_reagents = list(
 		// Required for CELL_LINE_TABLE_COW
@@ -249,3 +249,12 @@
 		// Supplementary for CELL_LINE_TABLE_GRAPE
 		/datum/reagent/liquidgibs = 5
 	)
+
+/obj/machinery/computer/old
+	name = "old computer"
+	circuit = /obj/item/circuitboard/computer
+
+/obj/machinery/computer/old/Initialize(mapload)
+	icon_keyboard = pick("generic_key", "med_key")
+	icon_screen = pick("generic", "comm_monitor", "comm_logs")
+	. = ..()
