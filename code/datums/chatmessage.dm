@@ -158,8 +158,9 @@
 	// Determine the font size
 	var/bold_font = FALSE
 	var/font_size = DEFAULT_FONT_SIZE
-	if (extra_classes.Find("megaphone"))
+	if (extra_classes.Find("command_headset"))
 		font_size = BIG_FONT_SIZE
+		bold_font = TRUE
 	else if (extra_classes.Find("italics") || extra_classes.Find("emote"))
 		font_size = WHISPER_FONT_SIZE
 	if (extra_classes.Find("yell"))
