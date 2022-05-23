@@ -111,7 +111,7 @@
  */
 /obj/cascade_portal/proc/consume(atom/movable/consumed_object)
 	if(isliving(consumed_object))
-		var/list/arrival_turfs = get_area_turfs(/area/centcom/evacuation)
+		var/list/arrival_turfs = get_area_turfs(/area/centcom/central_command_areas/evacuation)
 		var/turf/arrival_turf = pick(arrival_turfs)
 		var/mob/living/consumed_mob = consumed_object
 		if(consumed_mob.status_flags & GODMODE)
