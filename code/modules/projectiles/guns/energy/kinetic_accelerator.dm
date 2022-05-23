@@ -14,6 +14,7 @@
 	can_bayonet = TRUE
 	knife_x_offset = 20
 	knife_y_offset = 12
+	var/drop_oil = FALSE
 	var/mob/holder
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
@@ -50,6 +51,14 @@
 		MK.install(src, user)
 	else
 		..()
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/afterattack(atom/target, mob/living/user, flag, params)
+	if(drop_oil && can_shoot())
+		var/turf/current_turf = get_turf(loc)
+		var/obj/effect/decal/cleanable/oil/oil = locate() in current_turf.contents
+		if(!oil)
+			oil = new(current_turf)
+	return ..()
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/proc/get_remaining_mod_capacity()
 	var/current_capacity_used = 0
@@ -506,6 +515,22 @@
 	desc = "Makes your KA orange. All the fun of having explosive blasts without actually having explosive blasts."
 	chassis_icon = "kineticgun_h"
 	chassis_name = "hyper-kinetic accelerator"
+
+/obj/item/borg/upgrade/modkit/chassis_mod/clockwork
+	name = "clockwork chassis"
+	desc = "Makes your KA grey and clockwork like. Also drops oil after firing a blast."
+	cost = 10
+	chassis_icon = "kineticgun_c"
+	chassis_name = "clockwork-kinetic accelerator"
+
+/obj/item/borg/upgrade/modkit/chassis_mod/clockwork/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
+	. = ..()
+	if(.)
+		KA.drop_oil = TRUE
+
+/obj/item/borg/upgrade/modkit/chassis_mod/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	KA.drop_oil = initial(KA.drop_oil)
+	..()
 
 /obj/item/borg/upgrade/modkit/tracer
 	name = "white tracer bolts"

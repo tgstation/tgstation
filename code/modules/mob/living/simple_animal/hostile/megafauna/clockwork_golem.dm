@@ -49,14 +49,14 @@ Difficulty: Medium
 	attack_verb_simple = "drill"
 	attack_sound = 'sound/creatures/clockwork_golem_attack.ogg'
 	attack_vis_effect = ATTACK_EFFECT_DRILL
-	armour_penetration = 20
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	armour_penetration = 10
+	melee_damage_lower = 40
+	melee_damage_upper = 40
 	ranged = TRUE
 	speed = 12
 	move_to_delay = 12
 	ranged_cooldown_time = 6 SECONDS
-	loot = list(/obj/item/stack/sheet/bronze/ten, /obj/effect/decal/cleanable/oil)
+	loot = list(/obj/item/stack/sheet/bronze/ten, /obj/effect/decal/cleanable/oil, /obj/item/borg/upgrade/modkit/chassis_mod/clockwork)
 	small_sprite_type = /datum/action/small_sprite/megafauna/clockwork_golem
 	/// Ruby blast
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast/ruby_blast
@@ -69,7 +69,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_golem/complete/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/organ_damage, ORGAN_SLOT_HEART, 10) // Yes, this is what it looks like.
+	AddElement(/datum/element/organ_damage, ORGAN_SLOT_HEART, 5) // Yes, this is what it looks like.
 	ruby_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/ruby_blast()
 	release_smoke = new /datum/action/cooldown/mob_cooldown/release_smoke()
 	oil_ball = new /datum/action/cooldown/mob_cooldown/projectile_attack/oil_ball()
