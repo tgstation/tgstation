@@ -77,8 +77,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	max_integrity = 300
 	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
-
 /obj/machinery/requests_console/update_appearance(updates=ALL)
 	. = ..()
 	if(machine_stat & NOPOWER)
@@ -501,6 +499,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 			updateUsrDialog()
 		return
 	return ..()
+
+/obj/machinery/requests_console/auto_name // Register an autoname variant and then make the directional helpers before undefing all the magic bits
+	auto_name = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 
 #undef REQ_EMERGENCY_SECURITY
 #undef REQ_EMERGENCY_ENGINEERING
