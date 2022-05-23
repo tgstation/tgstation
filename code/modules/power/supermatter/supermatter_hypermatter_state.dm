@@ -1,22 +1,40 @@
-///Handles the main process of the hypermatter
+/**
+ * Handles the main process of the Hypermatter
+ *
+ * The Hypermatter state is a state where the crystal shuts down any gas process and instead starts to shoot out radiation particles
+ * that have an internal energy of 1000 kJ. This energy can be increased by reflecting those particles onto reflectors made with
+ * plastitanium glass and they can be reflected back into the crystal to increase its energy.
+ *
+ * This state can be achieved in two ways:
+ * - By feeding the SM plasma coated metallic hydrogen
+ * - By using the nuclear emitter onto the crystal (a device that shoots a beam towards the SM and consumes 1 MW per shoot, charge
+ * rate fixed at 20 kW/tick)
+ *
+ * This state is temporary and will revert back to normal SM after a maximum of 5 minutes and can be increased only to maximum 5 minutes.
+ * If a particle that has more than 5000 kJ of internal energy is reflected back into the crystal, it will increase it's time by 10 seconds
+ *
+ * For each particle shot the hypermatter energy is decreased by a tenth of the energy of the particle.
+ * For each particle that hit the crystal the hypermatter energy is increased by a tenth of the energy of the particle.
+ *
+ * The particles can be also sent to the nuclear acculumator to be used into power generation, the higher energy they have
+ * the more power they can generate.
+ */
 /obj/machinery/power/supermatter_crystal/proc/handle_hypermatter_state()
-
 	if(!anchored) //Don't unanchor the shards
 		damage += 150
 		hypermatter_state = FALSE
 		update_appearance()
 		return
 
-
-	var/static/list/angles = list(0, 45, 90, 135, 180, 225, 270, 315, 360)
+	var/static/list/angles_to_shoot = list(0, 45, 90, 135, 180, 225, 270, 315, 360)
 
 	if(power)
 		power = max(power - 30, 0)
 
-		for(var/_ in 1 to rand(2, 6))
+		for(var/_ in 1 to rand(2, 5))
 			if(hypermatter_power_amount < 1000)
 				break
-			var/angle_to_shoot = pick(angles)
+			var/angle_to_shoot = pick(angles_to_shoot)
 			fire_nuclear_particle(angle_to_shoot, 1.2, 1000, "sm_nuclear_particle")
 			hypermatter_power_amount = max(hypermatter_power_amount - 100, 0)
 	else
@@ -36,7 +54,7 @@
 			)
 
 	if(hypermatter_power_amount < 1000)
-		hypermatter_cooldown -= 5 SECONDS
+		COOLDOWN_REMOVE_TIME(src, hypermatter_cooldown, 5 SECONDS)
 
 /obj/machinery/power/energy_accumulator/nuclear_accumulator
 	name = "nuclear accumulator"
@@ -73,18 +91,6 @@
 	default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
-
-
-/obj/projectile/beam/nuclear_emitter/hitscan
-	hitscan = TRUE
-	range = 10
-	tracer_type = /obj/effect/projectile/tracer/heavy_laser
-	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
-	impact_type = /obj/effect/projectile/impact/heavy_laser
-
-/obj/projectile/beam/nuclear_emitter/hitscan/Initialize(mapload)
-	. = ..()
-	color = color_matrix_rotate_hue(120)
 
 /obj/machinery/power/nuclear_emitter
 	name = "nuclear emitter"
@@ -158,23 +164,23 @@
 	ready = FALSE
 
 	var/steps = 10
-	var/found = FALSE
 	var/turf/starting_point = get_turf(src)
 	var/obj/machinery/power/supermatter_crystal/crystal
-	while(steps > 0 || !found)
+	for(var/_ in 1 to steps)
 		var/turf/next_step = get_step(starting_point, dir)
 		if(!next_step || isclosedturf(next_step))
 			shooting = FALSE
 			return
 		for(var/atom/checked_atom in next_step.contents)
-			if(istype(checked_atom, /obj/machinery/power/supermatter_crystal))
-				crystal = checked_atom
-				found = TRUE
-				break
+			if(!istype(checked_atom, /obj/machinery/power/supermatter_crystal))
+				continue
+			crystal = checked_atom
+			break
+		if(crystal)
+			break
 		starting_point = next_step
-		steps--
 
-	if(!crystal)
+	if(!crystal) //If after the steps there is no crystal just return, we tried
 		shooting = FALSE
 		return
 
@@ -186,10 +192,7 @@
 
 ///Activate the SM crystal into an hypermatter state
 /obj/machinery/power/nuclear_emitter/proc/activate_hypermatter(obj/machinery/power/supermatter_crystal/crystal)
-
 	shooting = FALSE
-
 	if(!crystal)
 		return
-
 	crystal.activate_hypermatter_state(2.5 MINUTES, 3000)
