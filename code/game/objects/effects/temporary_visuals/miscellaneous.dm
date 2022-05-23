@@ -188,7 +188,7 @@
 	name = "oil"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "oil_drop"
-	duration = 5
+	duration = 10
 
 /obj/effect/temp_visual/oil/out
 	icon_state = "oil_appear"

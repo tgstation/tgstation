@@ -54,7 +54,7 @@
 	play_sound("exit", user)
 	new jaunt_out_type(target_loc, user.dir)
 	holder.forceMove(target_loc)
-	sleep(0.5 SECONDS)
+	sleep(1 SECONDS)
 	mobloc = get_turf(user.loc)
 	holder.reappearing = TRUE
 	qdel(holder)
