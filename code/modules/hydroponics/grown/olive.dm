@@ -24,3 +24,4 @@
 	foodtypes = FRUIT
 	grind_results = list(/datum/reagent/consumable/olivepaste = 0)
 	tastes = list("olive" = 1)
+	
