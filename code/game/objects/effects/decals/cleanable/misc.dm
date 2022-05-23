@@ -354,7 +354,7 @@
 	if(burning)
 		return
 	burning = TRUE
-	start_burn()
+	burn_process()
 
 /**
  * Spends 1 burn_amount and spawns a hotspot. If burn_amount is equal to 0, deletes the fuel pool.
@@ -362,7 +362,7 @@
  * THIS SHOULD NOT BE CALLED DIRECTLY.
  */
 
-/obj/effect/decal/cleanable/fuel_pool/proc/start_burn()
+/obj/effect/decal/cleanable/fuel_pool/proc/burn_process()
 	SIGNAL_HANDLER
 
 	burn_amount -= 1
@@ -373,7 +373,7 @@
 		qdel(src)
 		return
 
-	RegisterSignal(hotspot, COMSIG_PARENT_QDELETING, .proc/start_burn)
+	RegisterSignal(hotspot, COMSIG_PARENT_QDELETING, .proc/burn_process)
 
 /**
  * Ignites other oil pools around itself. Should not be called directly.
