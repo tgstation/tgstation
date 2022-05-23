@@ -373,6 +373,18 @@
 	soundloop.stop()
 	update_appearance()
 
+/// Type of microwave that automatically turns it self on erratically. Probably don't use this outside of the holodeck program "Microwave Paradise".
+/// You could also live your life with a microwave that will continously run in the background of everything and drain any hint of power. I think the former makes more sense.
+/obj/machinery/microwave/hell
+	desc = "Cooks and boils stuff. This one appears to be a bit... off."
+
+/obj/machinery/microwave/hell/Initialize()
+	. = ..()
+	//We want there to be some chance of them getting a working microwave (eventually).
+	if(prob(95))
+		//The microwave should turn off asynchronously from any other microwaves that initialize at the same time. Keep in mind this will not turn off, since there is nothing to call the proc that ends this microwave's looping
+		addtimer(CALLBACK(src, .proc/wzhzhzh), rand(0.5 SECONDS, 3 SECONDS))
+
 #undef MICROWAVE_NORMAL
 #undef MICROWAVE_MUCK
 #undef MICROWAVE_PRE
