@@ -31,7 +31,7 @@
 /// Default font size (defined in skin.dmf), those are 1 size bigger than in skin, to account 1px black outline
 #define DEFAULT_FONT_SIZE 8
 /// Big font size, used by megaphones and such
-#define BIG_FONT_SIZE 10
+#define BIG_FONT_SIZE 9
 /// Small font size, used mostly by whispering
 #define WHISPER_FONT_SIZE 7
 
@@ -363,7 +363,7 @@
 	if(is_bold)
 		value += length(string)
 	if(has_icon)
-		value += 8
+		value += CHAT_MESSAGE_ICON_SIZE
 	return value
 
 #undef CHAT_MESSAGE_SPAWN_TIME
