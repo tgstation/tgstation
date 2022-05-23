@@ -13244,7 +13244,7 @@
 "dUK" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
-	name = "tech_storage"
+	name = "Tech Storage"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16034,7 +16034,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the ai_upload.";
 	dir = 4;
-	name = "ai_upload Monitor";
+	name = "AI Upload Monitor";
 	network = list("aiupload");
 	pixel_x = -28
 	},
@@ -30000,7 +30000,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/highsecurity{
-	name = "ai_upload"
+	name = "AI Upload"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -50871,7 +50871,7 @@
 "oqN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
-	name = "tech_storage"
+	name = "Tech Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron/dark,
@@ -79806,7 +79806,7 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
-	name = "ai_upload turret control";
+	name = "AI Upload turret control";
 	pixel_x = -30
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -81454,7 +81454,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/highsecurity{
-	name = "ai_upload"
+	name = "AI Upload"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4

@@ -8297,7 +8297,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "aiuploadwindow";
-	name = "ai_upload Lockdown Door"
+	name = "AI Upload Lockdown Door"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -39118,7 +39118,7 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
-	name = "ai_upload turret control";
+	name = "AI Upload turret control";
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -68676,7 +68676,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "aiuploadwindow";
-	name = "ai_upload Lockdown Door"
+	name = "AI Upload Lockdown Door"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

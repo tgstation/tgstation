@@ -34169,7 +34169,7 @@
 "kUb" = (
 /obj/machinery/requests_console/directional/south{
 	department = "tech_storage";
-	name = "tech_storage Requests Console"
+	name = "Tech Storage Requests Console"
 	},
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
@@ -63392,7 +63392,7 @@
 "uyH" = (
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/ai_upload";
-	name = "ai_upload turret control";
+	name = "AI Upload turret control";
 	pixel_y = -25
 	},
 /obj/machinery/camera/directional/south{
@@ -69201,7 +69201,7 @@
 "wpx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	name = "ai_upload Access"
+	name = "AI Upload Access"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -74511,7 +74511,7 @@
 /area/station/commons/locker)
 "xZX" = (
 /obj/machinery/door/airlock/engineering{
-	name = "tech_storage"
+	name = "Tech Storage"
 	},
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,

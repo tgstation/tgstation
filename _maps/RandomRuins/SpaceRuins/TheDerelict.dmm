@@ -1156,7 +1156,7 @@
 /area/ruin/space/derelict/singularity_engine)
 "fR" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "tech_storage";
+	name = "Tech Storage";
 	req_access = list("tech_storage")
 	},
 /turf/open/floor/iron/airless,
