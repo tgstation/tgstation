@@ -17,7 +17,7 @@
 	var/refilling = FALSE
 	///Can this dispenser be opened using a wrench?
 	var/openable = FALSE
-	///Is this dispenser slowly leaking it's reagent?
+	///Is this dispenser slowly leaking its reagent?
 	var/leaking = FALSE
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
@@ -31,7 +31,7 @@
 	if(can_be_tanked)
 		. += span_notice("Use a sheet of iron to convert this into a plumbing-compatible tank.")
 	if(leaking)
-		. += span_warning("It's tap is wrenched open!")
+		. += span_warning("Its tap is wrenched open!")
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -84,7 +84,7 @@
 	log_game("[key_name(user)] [leaking ? "opened" : "closed"] [src]")
 	if(leaking && reagents)
 		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/reagent_dispensers/Moved(atom/OldLoc, Dir)
 	. = ..()
