@@ -176,10 +176,9 @@
 	create_cascade_ambience()
 	pick_rift_location()
 	warn_crew()
-	supermatter_turf.ChangeTurf(/turf/closed/indestructible/supermatter_wall)
+	new /obj/crystal_mass(supermatter_turf)
 	for(var/i in 1 to rand(4,6))
-		var/turf/crystal_cascade_location = get_turf(pick(GLOB.generic_event_spawns))
-		crystal_cascade_location.ChangeTurf(/turf/closed/indestructible/supermatter_wall)
+		new /obj/crystal_mass(get_turf(pick(GLOB.generic_event_spawns)))
 
 /**
  * Adds a bit of spiciness to the cascade by breaking lights and turning emergency maint access on
@@ -206,7 +205,7 @@
 	priority_announce("Unknown harmonance affecting local spatial substructure, all nearby matter is starting to crystallize.", "Central Command Higher Dimensional Affairs", 'sound/misc/bloblarm.ogg')
 	priority_announce("There's been a sector-wide electromagnetic pulse. All of our systems are heavily damaged, including those required for emergency shuttle navigation. \
 		We can only reasonably conclude that a supermatter cascade has been initiated on or near your station. \
-		Evacuation is no longer possible by conventional means; however, we managed to open a rift near the [span_boldannounce(get_area_name(cascade_rift))]. \
+		Evacuation is no longer possible by conventional means; however, we managed to open a rift near the [get_area_name(cascade_rift)]. \
 		All personnel are hereby advised to enter the rift using all means available. Retrieval of survivors will be conducted upon recovery of necessary facilities. \
 		Good l\[\[###!!!-")
 
