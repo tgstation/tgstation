@@ -139,7 +139,7 @@
 
 /obj/item/mod/module/hacker/proc/charge_message(atom/drained_atom, drain_amount)
 	if(drain_amount)
-		to_chat(mod.wearer, span_notice("Gained <B>drain_amount</B> units of energy from [drained_atom]."))
+		to_chat(mod.wearer, span_notice("Gained <B>[drain_amount]</B> units of energy from [drained_atom]."))
 	else
 		to_chat(mod.wearer, span_warning("[drained_atom] has run dry of energy, you must find another source!"))
 

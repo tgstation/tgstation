@@ -269,7 +269,7 @@
 	charge_source.adjust_charge(-amount*charge_modifier)
 	return TRUE
 
-/obj/item/mod/core/proc/check_charge(amount)
+/obj/item/mod/core/ethereal/check_charge(amount)
 	return charge_amount() >= amount*charge_modifier
 
 /obj/item/mod/core/ethereal/update_charge_alert()
@@ -321,7 +321,7 @@
 	charge = max(0, charge - amount)
 	return TRUE
 
-/obj/item/mod/core/proc/check_charge(amount)
+/obj/item/mod/core/plasma/check_charge(amount)
 	return charge_amount() >= amount
 
 /obj/item/mod/core/plasma/update_charge_alert()
