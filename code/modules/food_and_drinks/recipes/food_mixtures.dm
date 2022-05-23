@@ -249,3 +249,15 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/food/bread/corn(location)
+
+/datum/chemical_reaction/food/yoghurt
+	required_reagents = list(/datum/reagent/consumable/cream = 10, /datum/reagent/consumable/virus_food = 2)
+	results = list(/datum/reagent/consumable/yoghurt = 10)
+	mix_message = "The mixture thickens into yoghurt."
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/quality_oil_upconvert
+	required_reagents = list(/datum/reagent/consumable/quality_oil = 1, /datum/reagent/consumable/cooking_oil = 2)
+	results = list(/datum/reagent/consumable/quality_oil = 2)
+	mix_message = "The cooking oil dilutes the quality oil- how delightfully devilish..."
+	reaction_flags = REACTION_INSTANT

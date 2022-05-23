@@ -217,6 +217,36 @@
 	item_instance = /obj/item/food/ready_donk/donkhiladas
 	cost_per_order = 40
 
+/datum/orderable_item/tiziran_goods
+	name = "Tiziran Farm-Fresh Pack"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/storage/box/tiziran_goods
+	cost_per_order = 120
+
+/datum/orderable_item/tiziran_cans
+	name = "Tiziran Canned Goods Pack"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/storage/box/tiziran_goods
+	cost_per_order = 120
+
+/datum/orderable_item/tiziran_meats
+	name = "Tiziran Meatmarket Pack"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/storage/box/tiziran_meats
+	cost_per_order = 120
+
+/datum/orderable_item/mothic_goods
+	name = "Mothic Farm-Fresh Pack"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/storage/box/mothic_goods
+	cost_per_order = 120
+
+/datum/orderable_item/mothic_cans_sauces
+	name = "Mothic Pantry Pack"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/storage/box/mothic_cans_sauces
+	cost_per_order = 120
+
 //Reagents
 
 /datum/orderable_item/flour
