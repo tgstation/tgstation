@@ -110,8 +110,8 @@ TIMER_SUBSYSTEM_DEF(runechat)
 		if(length(letters[key]) == 3 || key == " ")
 			continue
 
-		letters[key] = list(null, null, null)
-		letters[key][NORMAL_FONT_INDEX] = WXH_TO_WIDTH(first_client.MeasureText(MAPTEXT(key)))
+		letters[key] = list()
+		letters[key] += WXH_TO_WIDTH(first_client.MeasureText(MAPTEXT(key)))
 		if(letters[key][NORMAL_FONT_INDEX] > max_char_width[NORMAL_FONT_INDEX])
 			max_char_width[NORMAL_FONT_INDEX] = letters[key][NORMAL_FONT_INDEX]
 		if(!first_client)
@@ -120,7 +120,7 @@ TIMER_SUBSYSTEM_DEF(runechat)
 				return
 			first_client = GLOB.clients[1]
 
-		letters[key][SMALL_FONT_INDEX] = WXH_TO_WIDTH(first_client.MeasureText("<span class='small'>[key]</span>"))
+		letters[key] += WXH_TO_WIDTH(first_client.MeasureText("<span class='small'>[key]</span>"))
 		if(letters[key][SMALL_FONT_INDEX] > max_char_width[SMALL_FONT_INDEX])
 			max_char_width[SMALL_FONT_INDEX] = letters[key][SMALL_FONT_INDEX]
 		if(!first_client)
@@ -129,6 +129,6 @@ TIMER_SUBSYSTEM_DEF(runechat)
 				return
 			first_client = GLOB.clients[1]
 
-		letters[key][BIG_FONT_INDEX] = WXH_TO_WIDTH(first_client.MeasureText("<span class='big'>[key]</span>"))
+		letters[key] += WXH_TO_WIDTH(first_client.MeasureText("<span class='big'>[key]</span>"))
 		if(letters[key][BIG_FONT_INDEX] > max_char_width[BIG_FONT_INDEX])
 			max_char_width[BIG_FONT_INDEX] = letters[key][BIG_FONT_INDEX]
