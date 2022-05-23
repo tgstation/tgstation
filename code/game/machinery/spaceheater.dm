@@ -13,7 +13,7 @@
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warranty void if used in engines."
 	max_integrity = 250
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 80, ACID = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 10)
 	circuit = /obj/item/circuitboard/machine/space_heater
 	//We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
@@ -129,6 +129,7 @@
 	cell.use(required_energy / efficiency)
 
 /obj/machinery/space_heater/RefreshParts()
+	. = ..()
 	var/laser = 0
 	var/cap = 0
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
@@ -152,15 +153,17 @@
 	if(cell)
 		cell.emp_act(severity)
 
+/obj/machinery/space_heater/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."), span_notice("You [panel_open ? "open" : "close"] the hatch on \the [src]."))
 		update_appearance()
-		return TRUE
-
-	if(default_unfasten_wrench(user, I))
 		return TRUE
 
 	if(default_deconstruction_crowbar(I))
@@ -337,8 +340,6 @@
 ///Slightly modified to ignore the open_hatch - it's always open, we hacked it.
 /obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, params)
 	add_fingerprint(user)
-	if(default_unfasten_wrench(user, item))
-		return
 	if(default_deconstruction_crowbar(item))
 		return
 	if(istype(item, /obj/item/stock_parts/cell))
@@ -360,7 +361,7 @@
 			return
 		replace_beaker(user, container)
 		to_chat(user, span_notice("You add [container] to [src]'s water bath."))
-		updateUsrDialog()
+		ui_interact(user)
 		return
 	//Dropper tools
 	if(beaker)
@@ -415,6 +416,7 @@
 	icon_state = "sheater-off"
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
+	. = ..()
 	var/lasers_rating = 0
 	var/capacitors_rating = 0
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)

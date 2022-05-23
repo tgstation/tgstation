@@ -515,13 +515,38 @@
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+	/// The number of cables needed to make a battery.
+	var/cables_needed_per_battery = 5
 
 /datum/plant_gene/trait/battery/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
 
+	our_plant.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+	RegisterSignal(our_plant, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
+
+/*
+ * Signal proc for [COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM] to add context to plant batteries.
+ */
+/datum/plant_gene/trait/battery/proc/on_requesting_context_from_item(
+	obj/item/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+	SIGNAL_HANDLER
+
+	if(!istype(held_item, /obj/item/stack/cable_coil))
+		return NONE
+
+	var/obj/item/stack/cable_coil/cabling = held_item
+	if(cabling.amount < cables_needed_per_battery)
+		return NONE
+
+	context[SCREENTIP_CONTEXT_LMB] = "Make [source.name] battery"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /*
  * When a plant with this gene is hit (attackby) with cables, we turn it into a battery.
@@ -538,7 +563,7 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/obj/item/stack/cable_coil/cabling = hit_item
-	if(!cabling.use(5))
+	if(!cabling.use(cables_needed_per_battery))
 		to_chat(user, span_warning("You need five lengths of cable to make a [our_plant] battery!"))
 		return
 
@@ -621,12 +646,12 @@
 	SIGNAL_HANDLER
 
 	our_plant.investigate_log("made smoke at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
-	var/datum/effect_system/smoke_spread/chem/smoke = new ()
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new ()
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/splat_location = get_turf(target)
-	var/smoke_amount = round(sqrt(our_seed.potency * 0.1), 1)
+	var/range = sqrt(our_seed.potency * 0.1)
 	smoke.attach(splat_location)
-	smoke.set_up(our_plant.reagents, smoke_amount, splat_location, 0)
+	smoke.set_up(round(range), location = splat_location, carry = our_plant.reagents, silent = FALSE)
 	smoke.start()
 	our_plant.reagents.clear_reagents()
 
@@ -823,6 +848,16 @@
 	name = "Endothermic Activity"
 	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+
+/// Prevents species mutation, while still allowing wild mutation harvest and Floral Somatoray species mutation.  Trait acts as a tag for hydroponics.dm to recognise.
+/datum/plant_gene/trait/never_mutate
+	name = "Prosophobic Inclination"
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+	
+/// Prevents stat mutation caused by instability.  Trait acts as a tag for hydroponics.dm to recognise.
+/datum/plant_gene/trait/stable_stats
+	name = "Symbiotic Resilience"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /// Traits for flowers, makes plants not decompose.

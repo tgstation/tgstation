@@ -107,7 +107,7 @@
 	required_candidates = 1
 	weight = 2
 	delay = 1 MINUTES // Prevents rule start while head is offstation.
-	cost = 20
+	cost = 10
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
@@ -192,6 +192,23 @@
 	)
 	required_candidates = 1
 	weight = 4
-	cost = 10
+	cost = 7
 	requirements = list(101,101,101,10,10,10,10,10,10,10)
 	repeatable = TRUE
+
+/datum/dynamic_ruleset/latejoin/heretic_smuggler/execute()
+	var/mob/picked_mob = pick(candidates)
+	assigned += picked_mob.mind
+	picked_mob.mind.special_role = antag_flag
+	var/datum/antagonist/heretic/new_heretic = picked_mob.mind.add_antag_datum(antag_datum)
+
+	// Heretics passively gain influence over time.
+	// As a consequence, latejoin heretics start out at a massive
+	// disadvantage if the round's been going on for a while.
+	// Let's give them some influence points when they arrive.
+	new_heretic.knowledge_points += round((world.time - SSticker.round_start_time) / new_heretic.passive_gain_timer)
+	// BUT let's not give smugglers a million points on arrival.
+	// Limit it to four missed passive gain cycles (4 points).
+	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
+
+	return TRUE

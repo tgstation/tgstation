@@ -7,7 +7,7 @@
 	dir = 4;
 	name = "Finds-The-Relics"
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "c" = (
 /obj/effect/decal/cleanable/dirt,
@@ -17,99 +17,98 @@
 /obj/effect/spawner/random/engineering/material,
 /obj/effect/spawner/random/engineering/material,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "n" = (
 /obj/item/stack/ore/glass{
 	pixel_x = 8;
 	pixel_y = 9
 	},
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "o" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/wirebrush,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "p" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "s" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/four,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "u" = (
 /obj/structure/holosign/barrier/engineering,
 /turf/template_noop,
 /area/template_noop)
 "x" = (
 /turf/closed/wall,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "z" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/stack/sheet/iron,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "B" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/girder,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "C" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "F" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/holosign/barrier/engineering,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "H" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "L" = (
 /obj/item/stack/ore/iron,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "N" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/holosign/barrier/engineering,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "O" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "R" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "S" = (
 /obj/item/shovel,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "U" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "W" = (
 /obj/item/paper{
 	info = "Its just a bunch of scratch marks with the corner slightly eaten.";
@@ -118,7 +117,7 @@
 /obj/item/pen{
 	pixel_x = 5
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "Y" = (
 /obj/item/relic,
@@ -131,18 +130,14 @@
 	pixel_y = -7
 	},
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid{
-	base_icon_state = "asteroid_dug";
-	dug = 1;
-	icon_state = "asteroid_dug"
-	},
+/turf/open/misc/asteroid/dug,
 /area/mine/explored)
 "Z" = (
 /obj/item/stack/ore/iron{
 	pixel_x = -9;
 	pixel_y = 11
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 
 (1,1,1) = {"

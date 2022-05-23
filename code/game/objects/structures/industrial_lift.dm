@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXITED =.proc/UncrossedRemoveItemFromLift,
 		COMSIG_ATOM_ENTERED = .proc/AddItemOnLift,
-		COMSIG_ATOM_CREATED = .proc/AddItemOnLift,
+		COMSIG_ATOM_INITIALIZED_ON = .proc/AddItemOnLift,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(!(potential_rider in lift_load))
 		return
 	if(isliving(potential_rider) && HAS_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED))
-		REMOVE_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)		
+		REMOVE_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
 	LAZYREMOVE(lift_load, potential_rider)
 	UnregisterSignal(potential_rider, COMSIG_PARENT_QDELETING)
 
@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(AM in lift_load)
 		return
 	if(isliving(AM) && !HAS_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED))
-		ADD_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)		
+		ADD_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
 	LAZYADD(lift_load, AM)
 	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
 
@@ -240,7 +240,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
-	///handles any special interactions objects could have with the lift/tram, handled on the item itself	
+	///handles any special interactions objects could have with the lift/tram, handled on the item itself
 	SEND_SIGNAL(destination, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER, things_to_move)
 
 	if(istype(destination, /turf/closed/wall))
@@ -304,7 +304,6 @@ GLOBAL_LIST_EMPTY(lifts)
 			//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
 			var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
 			collided.throw_at(throw_target, 200, 4, callback = land_slam)
-
 	set_glide_size(gliding_amount)
 	forceMove(destination)
 	for(var/atom/movable/thing as anything in things_to_move)
@@ -432,7 +431,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST)
 		)
 
-	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = FALSE)
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user, loc), require_near = TRUE, tooltips = FALSE)
 	if (!in_range(src, user))
 		return  // nice try
 
@@ -485,25 +484,23 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/obj/effect/landmark/tram/from_where
 	var/travel_direction
 
-GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
+GLOBAL_LIST_EMPTY_TYPED(central_trams, /obj/structure/industrial_lift/tram/central)
 
 /obj/structure/industrial_lift/tram/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/industrial_lift/tram/central//that's a surprise tool that can help us later
+/obj/structure/industrial_lift/tram/central
+	var/tram_id = "tram_station"
 
 /obj/structure/industrial_lift/tram/central/Initialize(mapload)
-	if(GLOB.central_tram)
-		return INITIALIZE_HINT_QDEL
-
 	. = ..()
-
-	SStramprocess.can_fire = TRUE
-	GLOB.central_tram = src
+	if(!SStramprocess.can_fire)
+		SStramprocess.can_fire = TRUE
+	GLOB.central_trams += src
 
 /obj/structure/industrial_lift/tram/central/Destroy()
-	GLOB.central_tram = null
+	GLOB.central_trams -= src
 	return ..()
 
 /obj/structure/industrial_lift/tram/LateInitialize()
@@ -593,6 +590,8 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 	icon_state = "tram"
 	/// The ID of that particular destination.
 	var/destination_id
+	/// The ID of the tram that can travel to use
+	var/tram_id = "tram_station"
 	/// Icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()
 

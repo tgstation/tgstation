@@ -114,7 +114,7 @@
 	icon_state = "purified_soulstone"
 	theme = THEME_HOLY
 
-/obj/item/soulstone/anybody/sparring/Initialize(mapload)
+/obj/item/soulstone/anybody/chaplain/sparring/Initialize(mapload)
 	. = ..()
 	name = "[GLOB.deity]'s punishment"
 	desc = "A prison for those who lost [GLOB.deity]'s game."
@@ -264,7 +264,9 @@
 		var/obj/item/soulstone/SS = O
 		if(!IS_CULTIST(user) && !IS_WIZARD(user) && !SS.theme == THEME_HOLY)
 			to_chat(user, span_danger("An overwhelming feeling of dread comes over you as you attempt to place [SS] into the shell. It would be wise to be rid of this quickly."))
-			user.Dizzy(30)
+			if(isliving(user))
+				var/mob/living/living_user = user
+				living_user.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			return
 		if(SS.theme == THEME_HOLY && IS_CULTIST(user))
 			SS.hot_potato(user)

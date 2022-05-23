@@ -41,6 +41,8 @@ SUBSYSTEM_DEF(air)
 	var/list/turf/active_super_conductivity = list()
 	var/list/turf/open/high_pressure_delta = list()
 	var/list/atom_process = list()
+	/// Reactions which will contribute to a hotspot's size.
+	var/list/hotspot_reactions
 
 	/// A cache of objects that perisists between processing runs when resumed == TRUE. Dangerous, qdel'd objects not cleared from this may cause runtimes on processing.
 	var/list/currentrun = list()
@@ -49,6 +51,9 @@ SUBSYSTEM_DEF(air)
 	var/map_loading = TRUE
 	var/list/queued_for_activation
 	var/display_all_groups = FALSE
+
+	var/list/reaction_handbook
+	var/list/gas_handbook
 
 
 /datum/controller/subsystem/air/stat_entry(msg)
@@ -82,12 +87,14 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/Initialize(timeofday)
 	map_loading = FALSE
 	gas_reactions = init_gas_reactions()
+	hotspot_reactions = init_hotspot_reactions()
 
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
 	setup_turf_visuals()
 	process_adjacent_rebuild()
+	atmos_handbooks_init()
 	return ..()
 
 
@@ -536,7 +543,11 @@ SUBSYSTEM_DEF(air)
 		var/starting_ats = active_turfs.len
 		sleep(world.tick_lag)
 		var/timer = world.timeofday
-		log_mapping("There are [starting_ats] active turfs at roundstart caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required).")
+
+		log_mapping("There are [starting_ats] active turfs at roundstart caused by a difference of the air between the adjacent turfs. \
+		To locate these active turfs, go into the \"Debug\" tab of your stat-panel. Then hit the verb that says \"Mapping Verbs - Enable\". \
+		Now, you can see all of the associated coordinates using \"Mapping -> Show roundstart AT list\" verb.")
+
 		for(var/turf/T in active_turfs)
 			GLOB.active_turfs_startlist += T
 

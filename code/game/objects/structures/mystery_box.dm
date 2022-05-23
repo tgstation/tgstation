@@ -20,7 +20,7 @@
 
 GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/energy/lasercannon,
-	/obj/item/gun/energy/kinetic_accelerator/crossbow/large,
+	/obj/item/gun/energy/recharge/ebow/large,
 	/obj/item/gun/energy/e_gun,
 	/obj/item/gun/energy/e_gun/advtaser,
 	/obj/item/gun/energy/e_gun/nuclear,
@@ -76,7 +76,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	pixel_y = -4
 	anchored = TRUE
 	density = TRUE
-	uses_integrity = FALSE
+	max_integrity = 99999
+	damage_deflection = 100
 
 	var/crate_open_sound = 'sound/machines/crate_open.ogg'
 	var/crate_close_sound = 'sound/machines/crate_close.ogg'
@@ -96,10 +97,18 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	var/list/valid_types
 	/// If the prize is a ballistic gun with an external magazine, should we grant the user a spare mag?
 	var/grant_extra_mag = TRUE
+	/// Stores the current sound channel we're using so we can cut off our own sounds as needed. Randomized after each roll
+	var/current_sound_channel
 
 /obj/structure/mystery_box/Initialize(mapload)
 	. = ..()
 	generate_valid_types()
+
+/obj/structure/mystery_box/Destroy()
+	QDEL_NULL(presented_item)
+	if(current_sound_channel)
+		SSsounds.free_sound_channel(current_sound_channel)
+	return ..()
 
 /obj/structure/mystery_box/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -133,7 +142,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	update_icon_state()
 	presented_item = new(loc)
 	presented_item.start_animation(src)
-	playsound(src, open_sound, 80, FALSE, channel = CHANNEL_MBOX)
+	current_sound_channel = SSsounds.reserve_sound_channel(src)
+	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	playsound(src, crate_open_sound, 80)
 
 /// The box has finished choosing, mark it as available for grabbing
@@ -161,6 +171,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 
 /// The cooldown between activations has finished, shake to show that
 /obj/structure/mystery_box/proc/ready_again()
+	SSsounds.free_sound_channel(current_sound_channel)
+	current_sound_channel = null
 	box_state = MYSTERY_BOX_STANDBY
 	Shake(10, 0, 0.5 SECONDS)
 
@@ -179,7 +191,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 				user.put_in_hands(extra_mag)
 
 	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)
-	playsound(src, grant_sound, 80, FALSE, channel = CHANNEL_MBOX)
+	playsound(src, grant_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	close_box()
 
 
@@ -221,8 +233,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	add_filter("weapon_rays", 3, list("type" = "rays", "size" = 28, "color" = COLOR_VIVID_YELLOW))
 
 /obj/mystery_box_item/Destroy(force)
-	. = ..()
 	parent_box = null
+	return ..()
 
 // this way, clicking on the prize will work the same as clicking on the box
 /obj/mystery_box_item/attack_hand(mob/living/user, list/modifiers)

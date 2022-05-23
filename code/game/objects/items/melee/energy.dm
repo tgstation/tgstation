@@ -156,7 +156,7 @@
 	icon_state = "e_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	force = 3
 	throwforce = 5
 	throw_speed = 3
@@ -221,7 +221,7 @@
 		"green" = LIGHT_COLOR_GREEN,
 		"purple" = LIGHT_COLOR_LAVENDER,
 		)
-	/// Whether this saber has beel multitooled.
+	/// Whether this saber has been multitooled.
 	var/hacked = FALSE
 
 /obj/item/melee/energy/sword/saber/Initialize(mapload)

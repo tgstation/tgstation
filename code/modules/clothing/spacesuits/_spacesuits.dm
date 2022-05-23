@@ -8,11 +8,9 @@
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	inhand_icon_state = "spaceold"
-	permeability_coefficient = 0.01
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 80, ACID = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	dynamic_hair_suffix = ""
-	dynamic_fhair_suffix = ""
+
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -30,7 +28,6 @@
 	icon_state = "spaceold"
 	inhand_icon_state = "s_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	permeability_coefficient = 0.02
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
@@ -135,33 +132,35 @@
 			else
 				. += "\The [cell] is firmly in place."
 
+/obj/item/clothing/suit/space/crowbar_act(mob/living/user, obj/item/tool)
+	toggle_spacesuit_cell(user)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/clothing/suit/space/screwdriver_act(mob/living/user, obj/item/tool)
+	var/range_low = 20 // Default min temp c
+	var/range_high = 45 // default max temp c
+	if(obj_flags & EMAGGED)
+		range_low = -20 // emagged min temp c
+		range_high = 120 // emagged max temp c
+
+	var/deg_c = input(user, "What temperature would you like to set the thermal regulator to? \
+		([range_low]-[range_high] degrees celcius)") as null|num
+	if(deg_c && deg_c >= range_low && deg_c <= range_high)
+		temperature_setting = round(T0C + deg_c, 0.1)
+		to_chat(user, span_notice("You see the readout change to [deg_c] c."))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 // object handling for accessing features of the suit
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		toggle_spacesuit_cell(user)
+	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/cell))
+		return ..()
+	if(cell)
+		to_chat(user, span_warning("[src] already has a cell installed."))
 		return
-	else if(cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
-		var/range_low = 20 // Default min temp c
-		var/range_high = 45 // default max temp c
-		if(obj_flags & EMAGGED)
-			range_low = -20 // emagged min temp c
-			range_high = 120 // emagged max temp c
-
-		var/deg_c = input(user, "What temperature would you like to set the thermal regulator to? \
-			([range_low]-[range_high] degrees celcius)") as null|num
-		if(deg_c && deg_c >= range_low && deg_c <= range_high)
-			temperature_setting = round(T0C + deg_c, 0.1)
-			to_chat(user, span_notice("You see the readout change to [deg_c] c."))
+	if(user.transferItemToLoc(I, src))
+		cell = I
+		to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
 		return
-	else if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
-		if(cell)
-			to_chat(user, span_warning("[src] already has a cell installed."))
-			return
-		if(user.transferItemToLoc(I, src))
-			cell = I
-			to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
-			return
-	return ..()
 
 /// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/AltClick(mob/living/user)
@@ -217,7 +216,7 @@
 		obj_flags |= EMAGGED
 		user.visible_message(span_warning("You emag [src], overwriting thermal regulator restrictions."))
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
-	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)

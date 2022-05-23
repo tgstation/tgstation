@@ -1,5 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an exploit allowing players to bypass crafting times on spears and cattleprods."
-  - balance: "Wired Rods are now bulky."

@@ -68,8 +68,7 @@
 	var/atom/movable/screen/robot/lamp/lampButton
 
 	///The reference to the built-in tablet that borgs carry.
-	var/obj/item/modular_computer/tablet/integrated/modularInterface
-	var/atom/movable/screen/robot/modPC/interfaceButton
+	var/atom/movable/screen/robot/modpc/interfaceButton
 
 	var/sight_mode = 0
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
@@ -94,7 +93,8 @@
 	var/scrambledcodes = FALSE
 	///Boolean of whether the borg is locked down or not
 	var/lockcharge = FALSE
-
+	///Boolean of whether the borg was locked by its AI or nothing
+	var/ai_lockdown = FALSE
 	///Random serial number generated for each cyborg upon its initialization
 	var/ident = 0
 	var/locked = TRUE

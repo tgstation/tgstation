@@ -2,6 +2,7 @@
   "private": true,
   "name": "tgui-workspace",
   "version": "4.3.0",
+  "packageManager": "yarn@3.1.1",
   "workspaces": [
     "packages/*"
   ],
@@ -55,6 +56,5 @@
     "webpack": "^5.50.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.2"
-  },
-  "packageManager": "yarn@3.1.1"
+  }
 }

@@ -81,6 +81,9 @@
 			return TRUE
 	return FALSE
 
+/turf/open/lava/rust_heretic_act()
+	return FALSE
+
 /turf/open/lava/singularity_act()
 	return
 
@@ -217,7 +220,7 @@
 	burn_living.adjustFireLoss(lava_damage * delta_time)
 	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.
 		burn_living.adjust_fire_stacks(lava_firestacks * delta_time)
-		burn_living.IgniteMob()
+		burn_living.ignite_mob()
 
 /turf/open/lava/smooth
 	name = "lava"

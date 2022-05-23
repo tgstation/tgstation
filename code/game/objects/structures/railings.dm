@@ -8,7 +8,7 @@
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	/// armor more or less consistent with grille. max_integrity about one time and a half that of a grille.
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 0, ACID = 0)
 	max_integrity = 75
 
 	var/climbable = TRUE
@@ -51,6 +51,9 @@
 			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
 
+/obj/structure/railing/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 /obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(!anchored)
@@ -83,8 +86,8 @@
 	return TRUE
 
 /obj/structure/railing/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
-	if (to_dir & dir)
-		return FALSE
+	if(!(to_dir & dir))
+		return TRUE
 	return ..()
 
 /obj/structure/railing/proc/on_exit(datum/source, atom/movable/leaving, direction)

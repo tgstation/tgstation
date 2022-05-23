@@ -83,6 +83,7 @@ Behavior that's still missing from this component that original food items had t
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
+		RegisterSignal(parent, COMSIG_GRILL_FOOD, .proc/GrillFood)
 		RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_ACT, .proc/OnMicrowaved)
 		RegisterSignal(parent, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/used_to_customize)
 
@@ -183,6 +184,29 @@ Behavior that's still missing from this component that original food items had t
 	our_atom.reagents.trans_to(fry_object, our_atom.reagents.total_volume)
 	qdel(our_atom)
 	return COMSIG_FRYING_HANDLED
+
+/datum/component/edible/proc/GrillFood(datum/source, atom/fry_object, grill_time)
+	SIGNAL_HANDLER
+
+	var/atom/this_food = parent
+
+	switch(grill_time) //no 0-20 to prevent spam
+		if(20 to 30)
+			this_food.name = "lightly-grilled [this_food.name]"
+			this_food.desc = "[this_food.desc] It's been lightly grilled."
+		if(30 to 80)
+			this_food.name = "grilled [this_food.name]"
+			this_food.desc = "[this_food.desc] It's been grilled."
+			foodtypes |= FRIED
+		if(80 to 100)
+			this_food.name = "heavily grilled [this_food.name]"
+			this_food.desc = "[this_food.desc] It's been heavily grilled."
+			foodtypes |= FRIED
+		if(100 to INFINITY) //grill marks reach max alpha
+			this_food.name = "Powerfully Grilled [this_food.name]"
+			this_food.desc = "A [this_food.name]. Reminds you of your wife, wait, no, it's prettier!"
+			foodtypes |= FRIED
+
 
 ///Called when food is created through processing (Usually this means it was sliced). We use this to pass the OG items reagents.
 /datum/component/edible/proc/OnProcessed(datum/source, atom/original_atom, list/chosen_processing_option)
@@ -328,19 +352,25 @@ Behavior that's still missing from this component that original food items had t
 			to_chat(feeder, span_warning("[eater] doesn't seem to have a mouth!"))
 			return
 		if(fullness <= (600 * (1 + eater.overeatduration / (2000 SECONDS))))
-			eater.visible_message(span_danger("[feeder] attempts to feed [eater] [parent]."), \
-									span_userdanger("[feeder] attempts to feed you [parent]."))
+			eater.visible_message(
+				span_danger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed [eater] [parent]." : "stuff [parent] down [eater]'s throat hole! Gross."]"),
+				span_userdanger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed you [parent]." : "stuff [parent] down your throat hole! Gross."]")
+			)
 		else
-			eater.visible_message(span_warning("[feeder] cannot force any more of [parent] down [eater]'s throat!"), \
-									span_warning("[feeder] cannot force any more of [parent] down your throat!"))
+			eater.visible_message(
+				span_danger("[feeder] cannot force any more of [parent] down [eater]'s [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]"),
+				span_userdanger("[feeder] cannot force any more of [parent] down your [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]")
+			)
 			return
 		if(!do_mob(feeder, eater)) //Wait 3 seconds before you can feed
 			return
 		if(IsFoodGone(owner, feeder))
 			return
-		log_combat(feeder, eater, "fed", owner.reagents.log_list())
-		eater.visible_message(span_danger("[feeder] forces [eater] to eat [parent]!"), \
-									span_userdanger("[feeder] forces you to eat [parent]!"))
+		log_combat(feeder, eater, "fed", owner.reagents.get_reagent_log_string())
+		eater.visible_message(
+			span_danger("[feeder] forces [eater] to eat [parent]!"),
+			span_userdanger("[feeder] forces you to eat [parent]!")
+		)
 
 	TakeBite(eater, feeder)
 

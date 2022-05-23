@@ -23,7 +23,7 @@ RLD
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=100000)
-	req_access_txt = "11"
+	req_access = list(ACCESS_ENGINE_EQUIP)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
@@ -167,7 +167,7 @@ RLD
 		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
-	if(!silo_mats || !silo_mats.mat_container)
+	if(!silo_mats || !silo_mats.mat_container || !silo_link)
 		if(silo_link)
 			to_chat(user, span_alert("Connected silo link is invalid. Reconnect to silo via multitool."))
 			return FALSE
@@ -227,7 +227,7 @@ RLD
 	worn_icon_state = "RCD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_premium_price = PAYCHECK_HARD * 10
+	custom_premium_price = PAYCHECK_COMMAND * 10
 	max_matter = 160
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
@@ -755,12 +755,16 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/pre_attack(atom/A, mob/user, params)
 	. = ..()
 	mode = construction_mode
+	if(!A.rcd_vals(user, src))
+		return
 	rcd_create(A, user)
 	return TRUE
 
 /obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
 	. = ..()
 	mode = RCD_DECONSTRUCT
+	if(!target.rcd_vals(user, src))
+		return
 	rcd_create(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

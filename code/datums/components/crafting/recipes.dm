@@ -241,18 +241,14 @@
 /datum/crafting_recipe/ebow
 	name = "Energy Crossbow"
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	result = /obj/item/gun/energy/kinetic_accelerator/crossbow/large
-	reqs = list(/obj/item/gun/energy/kinetic_accelerator = 1,
+	result = /obj/item/gun/energy/recharge/ebow/large
+	reqs = list(/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
 				/obj/item/stack/cable_coil = 5,
 				/obj/item/weaponcrafting/gunkit/ebow = 1,
 				/datum/reagent/uranium/radium = 15)
 	time = 200
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
-
-/datum/crafting_recipe/ebow/New()
-	..()
-	blacklist += subtypesof(/obj/item/gun/energy/kinetic_accelerator)
 
 /datum/crafting_recipe/xraylaser
 	name = "X-ray Laser Gun"
@@ -378,11 +374,11 @@
 	name = "Medbot"
 	result = /mob/living/simple_animal/bot/medbot
 	reqs = list(/obj/item/healthanalyzer = 1,
-				/obj/item/storage/firstaid = 1,
+				/obj/item/storage/medkit = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	parts = list(
-		/obj/item/storage/firstaid = 1,
+		/obj/item/storage/medkit = 1,
 		/obj/item/healthanalyzer = 1,
 		)
 	time = 40
@@ -390,22 +386,22 @@
 
 /datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
 	var/mob/living/simple_animal/bot/medbot/bot = result
-	var/obj/item/storage/firstaid/first_aid = bot.contents[3]
-	bot.firstaid = first_aid
+	var/obj/item/storage/medkit/medkit = bot.contents[3]
+	bot.medkit_type = medkit
 	bot.healthanalyzer = bot.contents[4]
 
-	if (istype(first_aid, /obj/item/storage/firstaid/fire))
+	if (istype(medkit, /obj/item/storage/medkit/fire))
 		bot.skin = "ointment"
-	else if (istype(first_aid, /obj/item/storage/firstaid/toxin))
+	else if (istype(medkit, /obj/item/storage/medkit/toxin))
 		bot.skin = "tox"
-	else if (istype(first_aid, /obj/item/storage/firstaid/o2))
+	else if (istype(medkit, /obj/item/storage/medkit/o2))
 		bot.skin = "o2"
-	else if (istype(first_aid, /obj/item/storage/firstaid/brute))
+	else if (istype(medkit, /obj/item/storage/medkit/brute))
 		bot.skin = "brute"
-	else if (istype(first_aid, /obj/item/storage/firstaid/advanced))
+	else if (istype(medkit, /obj/item/storage/medkit/advanced))
 		bot.skin = "advanced"
 
-	bot.damagetype_healer = initial(first_aid.damagetype_healed) ? initial(first_aid.damagetype_healed) : BRUTE
+	bot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
@@ -446,6 +442,18 @@
 				/obj/item/assembly/prox_sensor = 1)
 	tool_behaviors = list(TOOL_WELDER)
 	time = 40
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/vim
+	name = "Vim"
+	result = /obj/vehicle/sealed/car/vim
+	reqs = list(/obj/item/clothing/head/helmet/space/eva = 1,
+				/obj/item/bodypart/l_leg/robot = 1,
+				/obj/item/bodypart/r_leg/robot = 1,
+				/obj/item/flashlight = 1,
+				/obj/item/assembly/voice = 1)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 6 SECONDS //Has a four second do_after when building manually
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
@@ -658,7 +666,8 @@
 
 /datum/crafting_recipe/radiogloves/New()
 	..()
-	blacklist |= subtypesof(/obj/item/radio)
+	blacklist |= typesof(/obj/item/radio/headset)
+	blacklist |= typesof(/obj/item/radio/intercom)
 
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
@@ -772,6 +781,13 @@
 	reqs = list(/datum/reagent/water = 50, /obj/item/stack/sheet/mineral/wood = 1)
 	tool_paths = list(/obj/item/hatchet)
 	result = /obj/item/paper_bin/bundlenatural
+	category = CAT_MISC
+
+/datum/crafting_recipe/sillycup
+	name = "Paper Cup"
+	result =  /obj/item/reagent_containers/food/drinks/sillycup
+	time = 1 SECONDS
+	reqs = list(/obj/item/paper = 2)
 	category = CAT_MISC
 
 /datum/crafting_recipe/toysword
@@ -1105,14 +1121,14 @@
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
 
 /datum/crafting_recipe/rib
-	name = "Collosal Rib"
+	name = "Colossal Rib"
 	always_available = FALSE
 	reqs = list(
 		/obj/item/stack/sheet/bone = 10,
 		/datum/reagent/fuel/oil = 5,
 	)
 	result = /obj/structure/statue/bone/rib
-	subcategory = CAT_PRIMAL
+	category = CAT_PRIMAL
 
 /datum/crafting_recipe/skull
 	name = "Skull Carving"
@@ -1196,7 +1212,7 @@
 	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE))
 		return FALSE
 	var/turf/T = get_turf(user)
-	if(istype(T,/turf/open/water) || istype(T,/turf/open/floor/plating/beach/water))
+	if(istype(T, /turf/open/water))
 		return TRUE
 	var/obj/machinery/shower/S = locate() in T
 	if(S?.on)

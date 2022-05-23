@@ -133,7 +133,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	desc = "A large briefcase with a digital locking system."
 	force = 8
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	throw_speed = 2
 	throw_range = 4
 	w_class = WEIGHT_CLASS_BULKY
@@ -156,8 +156,7 @@
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	var/datum/component/storage/storage_space = GetComponent(/datum/component/storage)
-	for(var/i in 1 to storage_space.max_items - 2)
+	for(var/iterator in 1 to 5)
 		new /obj/item/stack/spacecash/c1000(src)
 
 ///Secure Safe
@@ -209,7 +208,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion."
 	can_hack_open = FALSE
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 70, BIO = 100, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 70, BIO = 0, FIRE = 80, ACID = 70)
 	max_integrity = 300
 	color = "#ffdd33"
 

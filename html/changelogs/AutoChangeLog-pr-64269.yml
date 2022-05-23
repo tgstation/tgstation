@@ -1,8 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes: 
-  - expansion: "Skateboards have been made considerably more radical"
-  - expansion: "While grinding on a table with a skateboard, if you grind on top of somebody you are likely to hurt them quite badly"
-  - expansion: "Colliding with another person will now always result in a crash, in which the person hit gets knocked over as well as the skater (protip: crash into someone while grind to double the stun time!)"
-  - expansion: "Colliding with a disposal unit while grinding will result in you getting dunked in! Wack!"
-  - bugfix: "fixed some skateboard related bugs, including the action button for ollieing always being red, and being able to ollie while dead"

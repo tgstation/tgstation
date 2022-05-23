@@ -19,6 +19,7 @@
 	icon = 'icons/obj/chempuff.dmi'
 	pass_flags = PASSTABLE | PASSGRILLE
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	///The mob who sourced this puff, if one exists
 	var/mob/user
 	///The sprayer who fired this puff
@@ -36,20 +37,24 @@
 /obj/effect/decal/chempuff/blob_act(obj/structure/blob/B)
 	return
 
-/obj/effect/decal/chempuff/proc/loop_ended(datum/source)
+/obj/effect/decal/chempuff/proc/end_life(datum/move_loop/engine)
+	QDEL_IN(src, engine.delay) //Gotta let it stop drifting
+	animate(src, alpha = 0, time = engine.delay)
+
+/obj/effect/decal/chempuff/proc/loop_ended(datum/move_loop/source)
 	SIGNAL_HANDLER
 	if(QDELETED(src))
 		return
-	qdel(src)
+	end_life(source)
 
 /obj/effect/decal/chempuff/proc/check_move(datum/move_loop/source, succeeded)
 	if(QDELETED(src)) //Reasons PLEASE WORK I SWEAR TO GOD
 		return
 	if(!succeeded) //If we hit something
-		qdel(src)
+		end_life(source)
 		return
 
-	var/puff_reagents_string = reagents.log_list()
+	var/puff_reagents_string = reagents.get_reagent_log_string()
 	var/travelled_max_distance = (source.lifetime - source.delay <= 0)
 	var/turf/our_turf = get_turf(src)
 
@@ -91,7 +96,7 @@
 
 	// Did we use up all the puff early?
 	if(lifetime < 0)
-		qdel(src)
+		end_life(source)
 
 /obj/effect/decal/fakelattice
 	name = "lattice"

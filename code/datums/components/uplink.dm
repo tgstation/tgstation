@@ -58,9 +58,9 @@
 		RegisterSignal(parent, COMSIG_IMPLANT_IMPLANTING, .proc/implanting)
 		RegisterSignal(parent, COMSIG_IMPLANT_OTHER, .proc/old_implant)
 		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, .proc/new_implant)
-	else if(istype(parent, /obj/item/pda))
-		RegisterSignal(parent, COMSIG_PDA_CHANGE_RINGTONE, .proc/new_ringtone)
-		RegisterSignal(parent, COMSIG_PDA_CHECK_DETONATE, .proc/check_detonate)
+	else if(istype(parent, /obj/item/modular_computer/tablet))
+		RegisterSignal(parent, COMSIG_TABLET_CHANGE_ID, .proc/new_ringtone)
+		RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, .proc/check_detonate)
 	else if(istype(parent, /obj/item/radio))
 		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
@@ -200,7 +200,7 @@
 			"restricted_roles" = item.restricted_roles,
 			"restricted_species" = item.restricted_species,
 			"progression_minimum" = item.progression_minimum,
-			"ref" = REF(item)
+			"ref" = REF(item),
 		))
 
 	var/list/remaining_stock = list()
@@ -218,6 +218,7 @@
 	data["has_objectives"] = uplink_handler.has_objectives
 	data["lockable"] = lockable
 	data["assigned_role"] = uplink_handler.assigned_role
+	data["assigned_species"] = uplink_handler.assigned_species
 	data["debug"] = uplink_handler.debug_mode
 	return data
 
@@ -246,6 +247,8 @@
 				item = SStraitor.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item)
 		if("lock")
+			if(!lockable)
+				return TRUE
 			active = FALSE
 			locked = TRUE
 			SStgui.close_uis(src)
@@ -319,7 +322,6 @@
 /datum/component/uplink/proc/new_implant(datum/source, datum/component/uplink/uplink)
 	SIGNAL_HANDLER
 
-	uplink.add_telecrystals(uplink_handler.telecrystals)
 	return COMPONENT_DELETE_NEW_IMPLANT
 
 // PDA signal responses
@@ -327,7 +329,6 @@
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
 	SIGNAL_HANDLER
 
-	var/obj/item/pda/master = parent
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
 		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
 			failsafe(user)
@@ -335,15 +336,13 @@
 		return
 	locked = FALSE
 	interact(null, user)
-	to_chat(user, span_hear("The PDA softly beeps."))
-	user << browse(null, "window=pda")
-	master.ui_mode = PDA_UI_HUB
+	to_chat(user, span_hear("The computer softly beeps."))
 	return COMPONENT_STOP_RINGTONE_CHANGE
 
 /datum/component/uplink/proc/check_detonate()
 	SIGNAL_HANDLER
 
-	return COMPONENT_PDA_NO_DETONATE
+	return COMPONENT_TABLET_NO_DETONATE
 
 // Radio signal responses
 
@@ -383,7 +382,7 @@
 /datum/component/uplink/proc/setup_unlock_code()
 	unlock_code = generate_code()
 	var/obj/item/P = parent
-	if(istype(parent,/obj/item/pda))
+	if(istype(parent,/obj/item/modular_computer/tablet))
 		unlock_note = "<B>Uplink Passcode:</B> [unlock_code] ([P.name])."
 	else if(istype(parent,/obj/item/radio))
 		unlock_note = "<B>Radio Frequency:</B> [format_frequency(unlock_code)] ([P.name])."
@@ -391,7 +390,7 @@
 		unlock_note = "<B>Uplink Degrees:</B> [english_list(unlock_code)] ([P.name])."
 
 /datum/component/uplink/proc/generate_code()
-	if(istype(parent,/obj/item/pda))
+	if(istype(parent,/obj/item/modular_computer/tablet))
 		return "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 	else if(istype(parent,/obj/item/radio))
 		return return_unused_frequency()

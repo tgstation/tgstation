@@ -6,7 +6,7 @@
 	var/sanity = SANITY_NEUTRAL //Current sanity
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
-	var/sanity_level = 2 //To track what stage of sanity they're on
+	var/sanity_level = SANITY_LEVEL_NEUTRAL //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
@@ -24,7 +24,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
-	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
+	RegisterSignal(parent, COMSIG_HERETIC_MASK_ACT, .proc/direct_sanity_drain)
 	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, .proc/on_slip)
 
 	var/mob/living/owner = parent
@@ -52,7 +52,7 @@
 	msg += span_notice("My current sanity: ") //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
-			msg += "[span_nicegreen("My mind feels like a temple!")]\n"
+			msg += "[span_boldnicegreen("My mind feels like a temple!")]\n"
 		if(SANITY_NEUTRAL to SANITY_GREAT)
 			msg += "[span_nicegreen("I have been feeling great lately!")]\n"
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
@@ -60,7 +60,7 @@
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			msg += "[span_warning("I'm feeling a little bit unhinged...")]\n"
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
-			msg += "[span_boldwarning("I'm freaking out!!")]\n"
+			msg += "[span_warning("I'm freaking out!!")]\n"
 		if(SANITY_INSANE to SANITY_CRAZY)
 			msg += "[span_boldwarning("AHAHAHAHAHAHAHAHAHAH!!")]\n"
 
@@ -73,25 +73,35 @@
 		if(3)
 			msg += "[span_boldwarning("I feel very upset.")]\n"
 		if(4)
-			msg += "[span_boldwarning("I'm a bit sad.")]\n"
+			msg += "[span_warning("I'm a bit sad.")]\n"
 		if(5)
-			msg += "[span_nicegreen("I'm alright.")]\n"
+			msg += "[span_grey("I'm alright.")]\n"
 		if(6)
 			msg += "[span_nicegreen("I feel pretty okay.")]\n"
 		if(7)
-			msg += "[span_nicegreen("I feel pretty good.")]\n"
+			msg += "[span_boldnicegreen("I feel pretty good.")]\n"
 		if(8)
-			msg += "[span_nicegreen("I feel amazing!")]\n"
+			msg += "[span_boldnicegreen("I feel amazing!")]\n"
 		if(9)
-			msg += "[span_nicegreen("I love life!")]\n"
+			msg += "[span_boldnicegreen("I love life!")]\n"
 
 	msg += "[span_notice("Moodlets:")]\n"//All moodlets
 	if(mood_events.len)
 		for(var/i in mood_events)
 			var/datum/mood_event/event = mood_events[i]
-			msg += event.description
+			switch(event.mood_change)
+				if(-INFINITY to MOOD_LEVEL_SAD2)
+					msg += span_boldwarning(event.description + "\n")
+				if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD1)
+					msg += span_warning(event.description + "\n")
+				if(MOOD_LEVEL_SAD1 to MOOD_LEVEL_HAPPY1)
+					msg += span_grey(event.description + "\n")
+				if(MOOD_LEVEL_HAPPY1 to MOOD_LEVEL_HAPPY2)
+					msg += span_nicegreen(event.description + "\n")
+				if(MOOD_LEVEL_HAPPY2 to INFINITY)
+					msg += span_boldnicegreen(event.description + "\n")
 	else
-		msg += "[span_nicegreen("I don't have much of a reaction to anything right now.")]\n"
+		msg += "[span_grey("I don't have much of a reaction to anything right now.")]\n"
 	to_chat(user, msg)
 
 ///Called after moodevent/s have been added/removed.
@@ -126,7 +136,6 @@
 		if(MOOD_LEVEL_HAPPY4 to INFINITY)
 			mood_level = 9
 	update_mood_icon()
-
 
 /datum/component/mood/proc/update_mood_icon()
 	var/mob/living/owner = parent
@@ -207,9 +216,6 @@
 	if(HAS_TRAIT(parent, TRAIT_JOLLY) && DT_PROB(0.416, delta_time))
 		add_event(null, "jolly", /datum/mood_event/jolly)
 
-
-
-
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.7
@@ -228,32 +234,32 @@
 			setInsanityEffect(MAJOR_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
-			sanity_level = 6
+			sanity_level = SANITY_LEVEL_INSANE
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
-			sanity_level = 5
+			sanity_level = SANITY_LEVEL_CRAZY
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
-			sanity_level = 4
+			sanity_level = SANITY_LEVEL_UNSTABLE
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.remove_actionspeed_modifier(ACTIONSPEED_ID_SANITY)
-			sanity_level = 3
+			sanity_level = SANITY_LEVEL_DISTURBED
 		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
-			sanity_level = 2
+			sanity_level = SANITY_LEVEL_NEUTRAL
 		if(SANITY_GREAT+1 to INFINITY)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
-			sanity_level = 1
+			sanity_level = SANITY_LEVEL_GREAT
 	update_mood_icon()
 
 /datum/component/mood/proc/setInsanityEffect(newval)
@@ -311,7 +317,6 @@
 		mood_events -= moodlet.category
 		qdel(moodlet)
 	update_mood()
-
 
 /datum/component/mood/proc/modify_hud(datum/source)
 	SIGNAL_HANDLER
@@ -415,7 +420,6 @@
 
 	add_event(null, "slipped", /datum/mood_event/slipped)
 
-
 /datum/component/mood/proc/HandleAddictions()
 	if(!iscarbon(parent))
 		return
@@ -431,4 +435,3 @@
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
-

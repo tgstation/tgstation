@@ -90,9 +90,9 @@
 /area/shuttle/escape)
 "as" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "bridge door";
-	req_access_txt = "19"
+	name = "bridge door"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "at" = (
@@ -125,9 +125,9 @@
 /area/shuttle/escape/brig)
 "az" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "security airlock";
-	req_access_txt = "63"
+	name = "security airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aA" = (
@@ -230,11 +230,11 @@
 /area/shuttle/escape)
 "aR" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/toxin,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aS" = (
@@ -252,11 +252,11 @@
 /area/shuttle/escape)
 "aU" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/brute,
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -281,9 +281,9 @@
 /area/shuttle/escape)
 "aZ" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "bridge door";
-	req_access_txt = "19"
+	name = "bridge door"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape/brig)
 "iP" = (

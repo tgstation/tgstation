@@ -10,7 +10,7 @@
 	icon_state = "glassbottle"
 	worn_icon_state = "bottle"
 	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
-	custom_price = PAYCHECK_EASY * 1.1
+	custom_price = PAYCHECK_CREW * 1.1
 	amount_per_transfer_from_this = 10
 	volume = 100
 	force = 15 //Smashing bottles over someone's head hurts.
@@ -29,33 +29,16 @@
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon_state = "glassbottlesmall"
 	volume = 50
-	custom_price = PAYCHECK_EASY * 0.9
+	custom_price = PAYCHECK_CREW * 0.9
 
 /obj/item/reagent_containers/food/drinks/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE)
-	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	if(bartender_check(target) && ranged)
 		return
+	SplashReagents(target, ranged, override_spillable = TRUE)
 	var/obj/item/broken_bottle/B = new (loc)
 	if(!ranged && thrower)
 		thrower.put_in_hands(B)
-	B.icon_state = icon_state
-
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
-	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	B.icon = I
-
-	if(isGlass)
-		if(prob(33))
-			var/obj/item/shard/S = new(drop_location())
-			target.Bumped(S)
-		playsound(src, "shatter", 70, TRUE)
-	else
-		B.force = 0
-		B.throwforce = 0
-		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
-	B.name = "broken [name]"
-	transfer_fingerprints_to(B)
+	B.mimic_broken(src, target)
 
 	qdel(src)
 	target.Bumped(B)
@@ -121,9 +104,6 @@
 	//Attack logs
 	log_combat(user, target, "attacked", src)
 
-	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
-	SplashReagents(target, override_spillable = TRUE)
-
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)
 
@@ -154,6 +134,28 @@
 	AddComponent(/datum/component/caltrop, min_damage = force)
 	AddComponent(/datum/component/butchering, 200, 55)
 
+/// Mimics the appearance and properties of the passed in bottle.
+/// Takes the broken bottle to mimic, and the thing the bottle was broken agaisnt as args
+/obj/item/broken_bottle/proc/mimic_broken(obj/item/reagent_containers/food/drinks/to_mimic, atom/target)
+	icon_state = to_mimic.icon_state
+	var/icon/drink_icon = new('icons/obj/drinks.dmi', icon_state)
+	drink_icon.Blend(broken_outline, ICON_OVERLAY, rand(5), 1)
+	drink_icon.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	icon = drink_icon
+
+	if(to_mimic.isGlass)
+		if(prob(33))
+			var/obj/item/shard/stab_with = new(to_mimic.drop_location())
+			target.Bumped(stab_with)
+		playsound(src, SFX_SHATTER, 70, TRUE)
+	else
+		force = 0
+		throwforce = 0
+		desc = "A carton with the bottom half burst open. Might give you a papercut."
+
+	name = "broken [to_mimic.name]"
+	to_mimic.transfer_fingerprints_to(src)
+
 /obj/item/reagent_containers/food/drinks/bottle/beer
 	name = "space beer"
 	desc = "Beer. In space."
@@ -161,7 +163,7 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 1)
@@ -177,8 +179,8 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
 	foodtype = SUGAR | JUNKFOOD
-	custom_price = PAYCHECK_HARD * 1.5
-	custom_premium_price = PAYCHECK_HARD * 2
+	custom_price = PAYCHECK_CREW * 1.5
+	custom_premium_price = PAYCHECK_CREW * 2
 
 /obj/item/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
@@ -187,7 +189,7 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
 	foodtype = GRAIN | ALCOHOL
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater gin"
@@ -254,7 +256,7 @@
 	desc = "A 40 full of malt liquor. Kicks stronger than, well, a rabid bear."
 	icon_state = "maltliquorbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 100)
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/reagent_containers/food/drinks/bottle/holywater
 	name = "flask of holy water"
@@ -446,7 +448,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
 	name = "orange juice"
 	desc = "Full of vitamins and deliciousness!"
-	custom_price = PAYCHECK_ASSISTANT
+	custom_price = PAYCHECK_CREW
 	icon_state = "orangejuice"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -459,7 +461,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
-	custom_price = PAYCHECK_ASSISTANT
+	custom_price = PAYCHECK_CREW
 	icon_state = "cream"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -472,7 +474,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
-	custom_price = PAYCHECK_ASSISTANT
+	custom_price = PAYCHECK_CREW
 	icon_state = "tomatojuice"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -485,7 +487,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
 	desc = "Sweet-sour goodness."
-	custom_price = PAYCHECK_ASSISTANT
+	custom_price = PAYCHECK_CREW
 	icon_state = "limejuice"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -498,7 +500,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/pineapplejuice
 	name = "pineapple juice"
 	desc = "Extremely tart, yellow juice."
-	custom_price = PAYCHECK_ASSISTANT
+	custom_price = PAYCHECK_CREW
 	icon_state = "pineapplejuice"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -511,7 +513,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
 	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
-	custom_price = PAYCHECK_ASSISTANT
+	custom_price = PAYCHECK_CREW
 	icon_state = "mentholbox"
 	inhand_icon_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -522,7 +524,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/grenadine
 	name = "Jester Grenadine"
 	desc = "Contains 0% real cherries!"
-	custom_price = PAYCHECK_ASSISTANT
+	custom_price = PAYCHECK_CREW
 	icon_state = "grenadine"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/grenadine = 100)
@@ -532,7 +534,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/applejack
 	name = "Buckin' Bronco's Applejack"
 	desc = "Kicks like a horse, tastes like an apple!"
-	custom_price = PAYCHECK_ASSISTANT
+	custom_price = PAYCHECK_CREW
 	icon_state = "applejack_bottle"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)
@@ -748,10 +750,3 @@
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
-
-/obj/item/reagent_containers/food/drinks/colocup/lean
-	name = "lean"
-	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
-	icon_state = "lean"
-	list_reagents = list(/datum/reagent/consumable/lean = 20)
-	random_sprite = FALSE

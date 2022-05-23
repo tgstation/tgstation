@@ -7,7 +7,7 @@
 	name = "white beanie"
 	desc = "A stylish beanie. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their heads."
 	icon_state = "beanie" //Default white
-	custom_price = PAYCHECK_ASSISTANT * 1.2
+	custom_price = PAYCHECK_CREW * 1.2
 
 /obj/item/clothing/head/beanie/black
 	name = "black beanie"
@@ -88,3 +88,19 @@
 	icon_state = "beanierasta"
 
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet
+
+/obj/item/clothing/head/beanie/black/dboy
+	name = "test subject beanie"
+	desc = "A dingy and torn black beanie. Is that slime or grease?"
+	/// Used for the extra flavor text the d-boy himself sees
+	var/datum/weakref/beanie_owner = null
+
+/obj/item/clothing/head/beanie/black/dboy/equipped(mob/user, slot)
+	. = ..()
+	if(iscarbon(user) && !beanie_owner)
+		beanie_owner = WEAKREF(user)
+
+/obj/item/clothing/head/beanie/black/dboy/examine(mob/user)
+	. = ..()
+	if(IS_WEAKREF_OF(user, beanie_owner))
+		. += span_purple("It's covered in otherworldly debris only your eyes have been ruined enough to see.")

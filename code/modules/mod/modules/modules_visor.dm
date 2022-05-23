@@ -20,23 +20,23 @@
 		return
 	if(hud_type)
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
-		hud.add_hud_to(mod.wearer)
+		hud.show_to(mod.wearer)
 	for(var/trait in visor_traits)
 		ADD_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
 
-/obj/item/mod/module/visor/on_deactivation(display_message = TRUE)
+/obj/item/mod/module/visor/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
 	if(!.)
 		return
 	if(hud_type)
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
-		hud.remove_hud_from(mod.wearer)
+		hud.hide_from(mod.wearer)
 	for(var/trait in visor_traits)
 		REMOVE_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
 
-//Medical Visor
+//Medical Visor - Gives you a medical HUD.
 /obj/item/mod/module/visor/medhud
 	name = "MOD medical visor module"
 	desc = "A heads-up display installed into the visor of the suit. This cross-references suit sensor data with a modern \
@@ -46,7 +46,7 @@
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
 	visor_traits = list(TRAIT_MEDICAL_HUD)
 
-//Diagnostic Visor
+//Diagnostic Visor - Gives you a diagnostic HUD.
 /obj/item/mod/module/visor/diaghud
 	name = "MOD diagnostic visor module"
 	desc = "A heads-up display installed into the visor of the suit. This uses a series of advanced sensors to access data \
@@ -56,7 +56,7 @@
 	hud_type = DATA_HUD_DIAGNOSTIC_ADVANCED
 	visor_traits = list(TRAIT_DIAGNOSTIC_HUD)
 
-//Security Visor
+//Security Visor - Gives you a security HUD.
 /obj/item/mod/module/visor/sechud
 	name = "MOD security visor module"
 	desc = "A heads-up display installed into the visor of the suit. This module is a heavily-retrofitted targeting system, \
@@ -66,16 +66,16 @@
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	visor_traits = list(TRAIT_SECURITY_HUD)
 
-//Meson Visor
+//Meson Visor - Gives you meson vision.
 /obj/item/mod/module/visor/meson
 	name = "MOD meson visor module"
 	desc = "A heads-up display installed into the visor of the suit. This module is based off well-loved meson scanner \
 		technology, used by construction workers and miners across the galaxy to see basic structural and terrain layouts \
 		through walls, regardless of lighting conditions. They say these also let you see behind you."
 	icon_state = "meson_visor"
-	visor_traits = list(TRAIT_MESON_VISION, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+	visor_traits = list(TRAIT_MESON_VISION, TRAIT_MADNESS_IMMUNE)
 
-//Thermal Visor
+//Thermal Visor - Gives you thermal vision.
 /obj/item/mod/module/visor/thermal
 	name = "MOD thermal visor module"
 	desc = "A heads-up display installed into the visor of the suit. This uses a small IR scanner to detect and identify \
@@ -84,7 +84,7 @@
 	icon_state = "thermal_visor"
 	visor_traits = list(TRAIT_THERMAL_VISION)
 
-//Night Visor
+//Night Visor - Gives you night vision.
 /obj/item/mod/module/visor/night
 	name = "MOD night visor module"
 	desc = "A heads-up display installed into the visor of the suit. Typical for both civilian and military applications, \

@@ -173,6 +173,60 @@
 	species.disliked_food = initial(species.disliked_food)
 	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
 
+/datum/quirk/heterochromatic
+	name = "Heterochromatic"
+	desc = "One of your eyes is a different color than the other!"
+	icon = "eye-low-vision" // Ignore the icon name, its actually a fairly good representation of different color eyes
+	value = 0
+	var/color
+
+/datum/quirk/heterochromatic/add()
+	color = color || quirk_holder.client?.prefs?.read_preference(/datum/preference/color/heterochromatic)
+	if(!color)
+		return
+
+	link_to_holder()
+
+/datum/quirk/heterochromatic/post_add()
+	if(color)
+		return
+
+	color = quirk_holder.client?.prefs?.read_preference(/datum/preference/color/heterochromatic)
+	if(!color)
+		return
+
+	link_to_holder()
+
+/datum/quirk/heterochromatic/remove()
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN)
+
+/datum/quirk/heterochromatic/proc/link_to_holder()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.eye_color_heterochromatic = TRUE
+	human_holder.eye_color_right = color
+	// We set override to TRUE as link to holder will be called whenever the preference is applied, given this quirk exists on the mob
+	RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal, override=TRUE)
+
+	var/obj/item/organ/eyes/eyes_of_the_holder = quirk_holder.getorgan(/obj/item/organ/eyes)
+	if(!eyes_of_the_holder)
+		return
+
+	eyes_of_the_holder.eye_color_right = color
+	eyes_of_the_holder.old_eye_color_right = color
+	eyes_of_the_holder.refresh()
+
+/datum/quirk/heterochromatic/proc/check_eye_removal(datum/source, obj/item/organ/eyes/removed)
+	SIGNAL_HANDLER
+
+	if(!istype(removed))
+		return
+
+	// Eyes were removed, remove heterochromia from the human holder and bid them adieu
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.eye_color_heterochromatic = FALSE
+	human_holder.eye_color_right = initial(human_holder.eye_color_right)
+	UnregisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN)
+
 /datum/quirk/monochromatic
 	name = "Monochromacy"
 	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."
@@ -215,25 +269,6 @@
 /datum/quirk/phobia/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)
-
-/datum/quirk/item_quirk/needswayfinder
-	name = "Navigationally Challenged"
-	desc = "Lacking familiarity with certain stations, you start with a wayfinding pinpointer where available."
-	icon = "route"
-	value = 0
-	medical_record_text = "Patient demonstrates a keen ability to get lost."
-
-/datum/quirk/item_quirk/needswayfinder/add_unique()
-	if(!GLOB.wayfindingbeacons.len)
-		return
-
-	var/mob/living/carbon/human/human_holder = quirk_holder
-
-	var/obj/item/pinpointer/wayfinding/wayfinder = new(get_turf(quirk_holder))
-	wayfinder.owner = human_holder.real_name
-	wayfinder.from_quirk = TRUE
-
-	give_item_to_holder(wayfinder, list(LOCATION_LPOCKET = ITEM_SLOT_LPOCKET, LOCATION_RPOCKET = ITEM_SLOT_RPOCKET, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/shifty_eyes
 	name = "Shifty Eyes"
@@ -438,7 +473,7 @@
  */
 /datum/quirk/gamer/proc/gamed()
 	SIGNAL_HANDLER
-	
+
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	// Remove withdrawal malus
 	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
@@ -446,7 +481,7 @@
 	if (gaming_withdrawal_timer)
 		deltimer(gaming_withdrawal_timer)
 	gaming_withdrawal_timer = addtimer(CALLBACK(src, .proc/enter_withdrawal), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
-	
+
 
 /datum/quirk/gamer/proc/gamer_moment()
 	// It was a heated gamer moment...

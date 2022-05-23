@@ -195,7 +195,7 @@
 
 /datum/outfit/cat_butcher
 	name = "Cat Butcher Uniform"
-	uniform = /obj/item/clothing/under/rank/medical/doctor/green
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/green
 	suit = /obj/item/clothing/suit/apron/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
@@ -219,4 +219,4 @@
 	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
 	id = /obj/item/card/id/advanced
 	l_pocket = /obj/item/paper/fluff/bee_objectives
-	mask = /obj/item/clothing/mask/animal/rat/bee
+	mask = /obj/item/clothing/mask/animal/small/bee

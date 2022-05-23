@@ -1,7 +1,7 @@
-//used for holding information about unique properties of maps
-//feed it json files that match the datum layout
-//defaults to box
-//  -Cyberboss
+//This file is used to contain unique properties of every map, and how we wish to alter them on a per-map basis.
+//Use JSON files that match the datum layout and you should be set from there.
+//Right now, we default to MetaStation to ensure something does indeed load by default.
+//  -san7890 (with regards to Cyberboss)
 
 /datum/map_config
 	// Metadata
@@ -28,11 +28,13 @@
 	var/shuttles = list(
 		"cargo" = "cargo_box",
 		"ferry" = "ferry_fancy",
-		"whiteship" = "whiteship_box",
-		"emergency" = "emergency_box")
+		"whiteship" = "whiteship_meta",
+		"emergency" = "emergency_meta")
 
 	/// Dictionary of job sub-typepath to template changes dictionary
 	var/job_changes = list()
+	/// List of additional areas that count as a part of the library
+	var/library_areas = list()
 
 /**
  * Proc that simply loads the default map config, which should always be functional.
@@ -174,6 +176,17 @@
 			log_world("map_config \"job_changes\" field is missing or invalid!")
 			return
 		job_changes = json["job_changes"]
+
+	if("library_areas" in json)
+		if(!islist(json["library_areas"]))
+			log_world("map_config \"library_areas\" field is missing or invalid!")
+			return
+		for(var/path_as_text in json["library_areas"])
+			var/path = text2path(path_as_text)
+			if(!ispath(path, /area))
+				stack_trace("Invalid path in mapping config for additional library areas: \[[path_as_text]\]")
+				continue
+			library_areas += path
 
 	defaulted = FALSE
 	return TRUE

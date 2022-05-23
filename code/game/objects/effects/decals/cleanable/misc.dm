@@ -12,10 +12,11 @@
 	icon_state = "ash"
 	mergeable_decal = FALSE
 	beauty = -50
+	decal_reagent = /datum/reagent/ash
+	reagent_amount = 30
 
 /obj/effect/decal/cleanable/ash/Initialize(mapload)
 	. = ..()
-	reagents.add_reagent(/datum/reagent/ash, 30)
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)
 
@@ -27,10 +28,8 @@
 	name = "large pile of ashes"
 	icon_state = "big_ash"
 	beauty = -100
-
-/obj/effect/decal/cleanable/ash/large/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/ash, 30) //double the amount of ash.
+	decal_reagent = /datum/reagent/ash
+	reagent_amount = 60
 
 /obj/effect/decal/cleanable/glass
 	name = "tiny shards"
@@ -48,6 +47,12 @@
 
 /obj/effect/decal/cleanable/glass/plasma
 	icon_state = "plasmatiny"
+
+/obj/effect/decal/cleanable/glass/titanium
+	icon_state = "titaniumtiny"
+
+/obj/effect/decal/cleanable/glass/plastitanium
+	icon_state = "plastitaniumtiny"
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -91,9 +96,13 @@
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return FALSE
 
+/obj/effect/decal/cleanable/greenglow/filled
+	decal_reagent = /datum/reagent/uranium
+	reagent_amount = 5
+
 /obj/effect/decal/cleanable/greenglow/filled/Initialize(mapload)
+	decal_reagent = pick(/datum/reagent/uranium, /datum/reagent/uranium/radium)
 	. = ..()
-	reagents.add_reagent(pick(/datum/reagent/uranium, /datum/reagent/uranium/radium), 5)
 
 /obj/effect/decal/cleanable/greenglow/ecto
 	name = "ectoplasmic puddle"
@@ -105,6 +114,7 @@
 	desc = "Somebody should remove that."
 	gender = NEUTER
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 	beauty = -100
@@ -267,19 +277,28 @@
 	beauty = -150
 	plane = GAME_PLANE
 	layer = LOW_OBJ_LAYER
-	var/ant_bite_damage = 0.1
-	var/ant_volume
+	decal_reagent = /datum/reagent/ants
+	reagent_amount = 5
+	/// Sound the ants make when biting
+	var/bite_sound = 'sound/weapons/bite.ogg'
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
+	reagent_amount = rand(3, 5)
 	. = ..()
-	ant_volume = rand(3, 5)
-	reagents.add_reagent(/datum/reagent/ants, ant_volume)
 	update_ant_damage()
 
-/obj/effect/decal/cleanable/ants/proc/update_ant_damage(spilled_ants)
-	ant_volume += spilled_ants
-	ant_bite_damage = min(10, round((ant_volume * 0.1),0.1)) // 100u ants = 10 max_damage
-	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
+/obj/effect/decal/cleanable/ants/handle_merge_decal(obj/effect/decal/cleanable/merger)
+	. = ..()
+	var/obj/effect/decal/cleanable/ants/ants = merger
+	ants.update_ant_damage()
+
+/obj/effect/decal/cleanable/ants/proc/update_ant_damage()
+	var/ant_bite_damage = min(10, round((reagents.get_reagent_amount(/datum/reagent/ants) * 0.1),0.1)) // 100u ants = 10 max_damage
+
+	var/ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN) /// Small amounts of ants won't be able to bite through shoes.
+	if(ant_bite_damage > 1)
+		ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
+
 	switch(ant_bite_damage)
 		if(0 to 1)
 			icon_state = initial(icon_state)
@@ -289,3 +308,10 @@
 			icon_state = "[initial(icon_state)]_3"
 		if(7.1 to 10)
 			icon_state = "[initial(icon_state)]_4"
+
+	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = ant_flags, soundfile = bite_sound)
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/effect/decal/cleanable/ants/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_light", alpha = src.alpha)

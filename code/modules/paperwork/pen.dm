@@ -25,9 +25,10 @@
 	custom_materials = list(/datum/material/iron=10)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
-	var/colour = "black" //what colour the ink is!
+	var/colour = "#000000" //what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
+	var/requires_gravity = TRUE // can you use this to write in zero-g
 	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
 
@@ -38,54 +39,61 @@
 /obj/item/pen/blue
 	desc = "It's a normal blue ink pen."
 	icon_state = "pen_blue"
-	colour = "blue"
+	colour = "#0000FF"
 
 /obj/item/pen/red
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
-	colour = "red"
+	colour = "#FF0000"
 	throw_speed = 4 // red ones go faster (in this case, fast enough to embed!)
 
 /obj/item/pen/invisible
 	desc = "It's an invisible pen marker."
 	icon_state = "pen"
-	colour = "white"
+	colour = "#FFFFFF"
 
 /obj/item/pen/fourcolor
 	desc = "It's a fancy four-color ink pen, set to black."
 	name = "four-color pen"
 	icon_state = "pen_4color"
-	colour = "black"
+	colour = "#000000"
 
 /obj/item/pen/fourcolor/attack_self(mob/living/carbon/user)
+	. = ..()
+	var/chosen_color = "black"
 	switch(colour)
-		if("black")
-			colour = "red"
+		if("#000000")
+			colour = "#FF0000"
+			chosen_color = "red"
 			throw_speed++
-		if("red")
-			colour = "green"
+		if("#FF0000")
+			colour = "#00FF00"
+			chosen_color = "green"
 			throw_speed = initial(throw_speed)
-		if("green")
-			colour = "blue"
+		if("#00FF00")
+			colour = "#0000FF"
+			chosen_color = "blue"
 		else
-			colour = "black"
-	to_chat(user, span_notice("\The [src] will now write in [colour]."))
-	desc = "It's a fancy four-color ink pen, set to [colour]."
+			colour = "#000000"
+	to_chat(user, span_notice("\The [src] will now write in [chosen_color]."))
+	desc = "It's a fancy four-color ink pen, set to [chosen_color]."
 
 /obj/item/pen/fountain
 	name = "fountain pen"
-	desc = "It's a common fountain pen, with a faux wood body."
+	desc = "It's a common fountain pen, with a faux wood body. Rumored to work in zero gravity situations."
 	icon_state = "pen-fountain"
 	font = FOUNTAIN_PEN_FONT
+	requires_gravity = FALSE // fancy spess pens
 
 /obj/item/pen/charcoal
 	name = "charcoal stylus"
 	desc = "It's just a wooden stick with some compressed ash on the end. At least it can write."
 	icon_state = "pen-charcoal"
-	colour = "dimgray"
+	colour = "#696969"
 	font = CHARCOAL_FONT
 	custom_materials = null
 	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
+	requires_gravity = FALSE // this is technically a pencil
 
 /datum/crafting_recipe/charcoal_stylus
 	name = "Charcoal Stylus"
@@ -101,7 +109,7 @@
 	force = 5
 	throwforce = 5
 	throw_speed = 4
-	colour = "crimson"
+	colour = "#DC143C"
 	custom_materials = list(/datum/material/gold = 750)
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
@@ -285,15 +293,6 @@
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-///syndicate prototype for smuggling missions
-/obj/item/pen/edagger/prototype
-	name = "odd pen"
-	desc = "It's an abnormal black ink pen, with weird chunks of metal sticking out of it..."
-	hidden_name = "prototype hardlight dagger"
-	hidden_desc = "Waffle Corp R&D's prototype for energy daggers. Hardlight may be inferior \
-	to energy weapons, but it's still surprisingly deadly."
-	hidden_icon = "eprototypedagger"
-
 /obj/item/pen/survival
 	name = "survival pen"
 	desc = "The latest in portable survival technology, this pen was designed as a miniature diamond pickaxe. Watchers find them very desirable for their diamond exterior."
@@ -309,4 +308,4 @@
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
 	font = FOUNTAIN_PEN_FONT
-	colour = "blue"
+	colour = "#0000FF"

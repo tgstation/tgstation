@@ -621,7 +621,7 @@
 			continue
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
-		oldT.change_area(old_area, underlying_area)
+		oldT.transfer_area_lighting(old_area, underlying_area)
 		oldT.empty(FALSE)
 
 		// Here we locate the bottommost shuttle boundary and remove all turfs above it
@@ -930,7 +930,7 @@
 			continue
 		engines += real_engine
 
-	if(engines[1])
+	if(engines.len > 0)
 		distant_source = engines[1]
 	else
 		for(var/A in areas)

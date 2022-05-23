@@ -6,7 +6,7 @@
 	name = "crate spawner"
 	icon_state = "crate_secure"
 	loot = list(
-		/obj/effect/spawner/random/structure/crate_loot = 745,
+		/obj/effect/spawner/random/structure/crate_loot = 744,
 		/obj/structure/closet/crate/trashcart/filled = 75,
 		/obj/effect/spawner/random/trash/moisture_trap = 50,
 		/obj/effect/spawner/random/trash/hobo_squat = 30,
@@ -14,6 +14,7 @@
 		/obj/effect/spawner/random/trash/mess = 30,
 		/obj/item/kirbyplants/fern = 20,
 		/obj/structure/closet/crate/decorations = 15,
+		/obj/structure/destructible/cult/pants_altar = 1,
 	)
 
 /obj/effect/spawner/random/structure/crate_abandoned
@@ -25,16 +26,18 @@
 /obj/effect/spawner/random/structure/girder
 	name = "girder spawner"
 	icon_state = "girder"
-	loot = list(
-		/obj/structure/girder = 4,
+	spawn_loot_chance = 90
+	loot = list( // 80% chance normal girder, 10% chance of displaced, 10% chance of nothing
+		/obj/structure/girder = 8,
 		/obj/structure/girder/displaced = 1,
 	)
 
 /obj/effect/spawner/random/structure/grille
 	name = "grille spawner"
 	icon_state = "grille"
-	loot = list(
-		/obj/structure/grille = 4,
+	spawn_loot_chance = 90
+	loot = list( // 80% chance normal grille, 10% chance of broken, 10% chance of nothing
+		/obj/structure/grille = 8,
 		/obj/structure/grille/broken = 1,
 	)
 
@@ -173,6 +176,7 @@
 /obj/effect/spawner/random/structure/barricade
 	name = "barricade spawner"
 	icon_state = "barricade"
+	spawn_loot_chance = 80
 	loot = list(
 		/obj/structure/barricade/wooden,
 		/obj/structure/barricade/wooden/crude,

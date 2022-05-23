@@ -14,10 +14,9 @@ SUBSYSTEM_DEF(mapping)
 	var/list/map_templates = list()
 
 	var/list/ruins_templates = list()
-	var/list/space_ruins_templates = list()
-	var/list/lava_ruins_templates = list()
-	var/list/ice_ruins_templates = list()
-	var/list/ice_ruins_underground_templates = list()
+
+	///List of ruins, separated by their theme
+	var/list/themed_ruins = list()
 
 	var/datum/space_level/isolated_ruins_z //Created on demand during ruin loading.
 
@@ -41,6 +40,7 @@ SUBSYSTEM_DEF(mapping)
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
 	var/space_levels_so_far = 0
+	///list of all the z level datums created representing the z levels in the world
 	var/list/z_list
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
@@ -67,6 +67,7 @@ SUBSYSTEM_DEF(mapping)
 			config = old_config
 	initialize_biomes()
 	loadWorld()
+	determine_fake_sale()
 	repopulate_sorted_areas()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
@@ -85,38 +86,10 @@ SUBSYSTEM_DEF(mapping)
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
 
-	// Load the virtual reality hub
-	if(CONFIG_GET(flag/virtual_reality))
-		to_chat(world, span_boldannounce("Loading virtual reality..."))
-		load_new_z_level("_maps/RandomZLevels/VR/vrhub.dmm", "Virtual Reality Hub")
-		to_chat(world, span_boldannounce("Virtual reality loaded."))
-
-	// Generate mining ruins
 	loading_ruins = TRUE
-	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
-	if (lava_ruins.len)
-		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), lava_ruins_templates)
-		for (var/lava_z in lava_ruins)
-			spawn_rivers(lava_z)
-
-	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
-	if (ice_ruins.len)
-		// needs to be whitelisted for underground too so place_below ruins work
-		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), ice_ruins_templates)
-		for (var/ice_z in ice_ruins)
-			spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
-
-	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
-	if (ice_ruins_underground.len)
-		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), ice_ruins_underground_templates)
-		for (var/ice_z in ice_ruins_underground)
-			spawn_rivers(ice_z, 4, level_trait(ice_z, ZTRAIT_BASETURF), /area/icemoon/underground/unexplored/rivers)
-
-	// Generate deep space ruins
-	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
-	if (space_ruins.len)
-		seedRuins(space_ruins, CONFIG_GET(number/space_budget), list(/area/space), space_ruins_templates)
+	setup_ruins()
 	loading_ruins = FALSE
+
 #endif
 	// Run map generation after ruin generation to prevent issues
 	run_map_generation()
@@ -129,6 +102,37 @@ SUBSYSTEM_DEF(mapping)
 	initialize_reserved_level(transit.z_value)
 	SSticker.OnRoundstart(CALLBACK(src, .proc/spawn_maintenance_loot))
 	return ..()
+
+/**
+ * ##setup_ruins
+ *
+ * Sets up all of the ruins to be spawned
+ */
+/datum/controller/subsystem/mapping/proc/setup_ruins()
+	// Generate mining ruins
+	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
+	if (lava_ruins.len)
+		seedRuins(lava_ruins, CONFIG_GET(number/lavaland_budget), list(/area/lavaland/surface/outdoors/unexplored), themed_ruins[ZTRAIT_LAVA_RUINS])
+		for (var/lava_z in lava_ruins)
+			spawn_rivers(lava_z)
+
+	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
+	if (ice_ruins.len)
+		// needs to be whitelisted for underground too so place_below ruins work
+		seedRuins(ice_ruins, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS])
+		for (var/ice_z in ice_ruins)
+			spawn_rivers(ice_z, 4, /turf/open/openspace/icemoon, /area/icemoon/surface/outdoors/unexplored/rivers)
+
+	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
+	if (ice_ruins_underground.len)
+		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), list(/area/icemoon/underground/unexplored), themed_ruins[ZTRAIT_ICE_RUINS_UNDERGROUND])
+		for (var/ice_z in ice_ruins_underground)
+			spawn_rivers(ice_z, 4, level_trait(ice_z, ZTRAIT_BASETURF), /area/icemoon/underground/unexplored/rivers)
+
+	// Generate deep space ruins
+	var/list/space_ruins = levels_by_trait(ZTRAIT_SPACE_RUINS)
+	if (space_ruins.len)
+		seedRuins(space_ruins, CONFIG_GET(number/space_budget), list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS])
 
 /datum/controller/subsystem/mapping/proc/wipe_reservations(wipe_safety_delay = 100)
 	if(clearing_reserved_turfs || !initialized) //in either case this is just not needed.
@@ -180,15 +184,22 @@ Used by the AI doomsday and the self-destruct nuke.
 		var/turf/open/floor/circuit/C = N
 		C.update_appearance()
 
+/datum/controller/subsystem/mapping/proc/determine_fake_sale()
+	if(length(SSmapping.levels_by_all_traits(list(ZTRAIT_STATION, ZTRAIT_NOPARALLAX))))
+		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakeice/loaded
+	else
+		GLOB.arcade_prize_pool += /obj/item/stack/tile/fakespace/loaded
+
+
 /datum/controller/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
 	initialized = SSmapping.initialized
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates
-	space_ruins_templates = SSmapping.space_ruins_templates
-	lava_ruins_templates = SSmapping.lava_ruins_templates
-	ice_ruins_templates = SSmapping.ice_ruins_templates
-	ice_ruins_underground_templates = SSmapping.ice_ruins_underground_templates
+
+	for (var/theme in SSmapping.themed_ruins)
+		themed_ruins[theme] = SSmapping.themed_ruins[theme]
+
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
 	unused_turfs = SSmapping.unused_turfs
@@ -378,24 +389,25 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 /datum/controller/subsystem/mapping/proc/mapvote()
 	if(map_voted || SSmapping.next_map_config) //If voted or set by other means.
 		return
-	if(SSvote.mode) //Theres already a vote running, default to rotation.
+	if(SSvote.current_vote) //Theres already a vote running, default to rotation.
 		maprotate()
-	SSvote.initiate_vote("map", "automatic map rotation")
+		return
+	SSvote.initiate_vote(/datum/vote/map_vote, "automatic map rotation")
 
-/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
-	if(!VM.MakeNextMap())
+/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/change_to)
+	if(!change_to.MakeNextMap())
 		next_map_config = load_default_map_config()
-		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
+		message_admins("Failed to set new map with next_map.json for [change_to.map_name]! Using default as backup!")
 		return
 
-	if (VM.config_min_users > 0 && GLOB.clients.len < VM.config_min_users)
-		message_admins("[VM.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-		log_game("[VM.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
-	if (VM.config_max_users > 0 && GLOB.clients.len > VM.config_max_users)
-		message_admins("[VM.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
-		log_game("[VM.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
+	if (change_to.config_min_users > 0 && GLOB.clients.len < change_to.config_min_users)
+		message_admins("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
+		log_game("[change_to.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
+	if (change_to.config_max_users > 0 && GLOB.clients.len > change_to.config_max_users)
+		message_admins("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
+		log_game("[change_to.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 
-	next_map_config = VM
+	next_map_config = change_to
 	return TRUE
 
 /datum/controller/subsystem/mapping/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
@@ -428,14 +440,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		map_templates[R.name] = R
 		ruins_templates[R.name] = R
 
-		if(istype(R, /datum/map_template/ruin/lavaland))
-			lava_ruins_templates[R.name] = R
-		else if(istype(R, /datum/map_template/ruin/icemoon/underground))
-			ice_ruins_underground_templates[R.name] = R
-		else if(istype(R, /datum/map_template/ruin/icemoon))
-			ice_ruins_templates[R.name] = R
-		else if(istype(R, /datum/map_template/ruin/space))
-			space_ruins_templates[R.name] = R
+		if (!(R.ruin_type in themed_ruins))
+			themed_ruins[R.ruin_type] = list()
+		themed_ruins[R.ruin_type][R.name] = R
 
 /datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
 	var/list/unbuyable = generateMapList("unbuyableshuttles.txt")

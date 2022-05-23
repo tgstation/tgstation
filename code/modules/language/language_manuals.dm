@@ -28,7 +28,7 @@
 		attack_self(user)
 		return
 
-	playsound(loc, "punch", 25, TRUE, -1)
+	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
 
 	if(M.stat == DEAD)
 		M.visible_message(span_danger("[user] smacks [M]'s lifeless corpse with [src]."), span_userdanger("[user] smacks your lifeless corpse with [src]."), span_hear("You hear smacking."))
@@ -99,6 +99,13 @@
 	// If they are not drone or silicon, we don't want them to learn this language.
 	if(!(isdrone(M) || issilicon(M)))
 		M.visible_message(span_danger("[user] beats [M] over the head with [src]!"), span_userdanger("[user] beats you over the head with [src]!"), span_hear("You hear smacking."))
+		return
+
+	return ..()
+
+/obj/item/language_manual/dronespeak_manual/attack_self(mob/living/user)
+	if(!(isdrone(user) || issilicon(user)))
+		to_chat(user, span_danger("You beat yourself over the head with [src]!"))
 		return
 
 	return ..()

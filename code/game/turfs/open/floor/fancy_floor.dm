@@ -13,6 +13,7 @@
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	footstep = FOOTSTEP_WOOD
+	turf_flags = NO_RUST
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
@@ -65,6 +66,10 @@
 
 /turf/open/floor/wood/cold
 	temperature = 255.37
+
+//Used in Snowcabin.dm
+/turf/open/floor/wood/freezing
+	temperature = 180
 
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -119,8 +124,6 @@
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	var/ore_type = /obj/item/stack/ore/glass
-	var/turfverb = "uproot"
 	tiled_dirt = FALSE
 
 /turf/open/floor/grass/setup_broken_states()
@@ -129,18 +132,10 @@
 /turf/open/floor/grass/Initialize(mapload)
 	. = ..()
 	spawniconchange()
+	AddComponent(/datum/component/diggable, /obj/item/stack/ore/glass, 2, "uproot")
 
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
-
-/turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
-	if((C.tool_behaviour == TOOL_SHOVEL) && params)
-		new ore_type(src, 2)
-		user.visible_message(span_notice("[user] digs up [src]."), span_notice("You [turfverb] [src]."))
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
-		make_plating()
-	if(..())
-		return
 
 /turf/open/floor/grass/fairy //like grass but fae-er
 	name = "fairygrass patch"
@@ -154,77 +149,55 @@
 /turf/open/floor/grass/fairy/spawniconchange()
 	icon_state = "fairygrass[rand(0,3)]"
 
-/turf/open/floor/grass/snow
+/turf/open/floor/fake_snow
 	gender = PLURAL
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	desc = "Looks cold."
 	icon_state = "snow"
-	ore_type = /obj/item/stack/sheet/mineral/snow
-	planetary_atmos = TRUE
+	flags_1 = NONE
 	floor_tile = null
 	initial_gas_mix = FROZEN_ATMOS
-	slowdown = 2
+	bullet_bounce_sound = null
+	tiled_dirt = FALSE
+
+	slowdown = 1.5
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/grass/snow/setup_broken_states()
+/turf/open/floor/fake_snow/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/diggable, /obj/item/stack/tile/mineral/snow, 2, "dig up")
+
+/turf/open/floor/fake_snow/setup_broken_states()
 	return list("snow_dug")
 
-/turf/open/floor/grass/snow/spawniconchange()
+/turf/open/floor/fake_snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
 
-/turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+/turf/open/floor/fake_snow/crowbar_act(mob/living/user, obj/item/I)
 	return
 
-/turf/open/floor/grass/snow/crowbar_act(mob/living/user, obj/item/I)
-	return
-
-/turf/open/floor/grass/snow/basalt //By your powers combined, I am captain planet
-	gender = NEUTER
-	name = "volcanic floor"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "basalt"
-	ore_type = /obj/item/stack/ore/glass/basalt
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
-	slowdown = 0
-
-/turf/open/floor/grass/snow/basalt/spawniconchange()
-	if(prob(15))
-		icon_state = "basalt[rand(0, 12)]"
-		set_basalt_light(src)
-
-/turf/open/floor/grass/snow/basalt/safe
-	planetary_atmos = FALSE
-
-/turf/open/floor/grass/snow/safe
-	slowdown = 1.5
-	planetary_atmos = FALSE
-
-/turf/open/floor/grass/snow/actually_safe
-	slowdown = 0
-	planetary_atmos = FALSE
-	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-
-
-/turf/open/floor/grass/fakebasalt //Heart is not a real planeteer power
+/turf/open/floor/fakebasalt
 	name = "aesthetic volcanic flooring"
 	desc = "Safely recreated turf for your hellplanet-scaping."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	floor_tile = /obj/item/stack/tile/basalt
-	ore_type = /obj/item/stack/ore/glass/basalt
-	turfverb = "dig up"
-	slowdown = 0
+	flags_1 = NONE
+	bullet_bounce_sound = null
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_dirt = FALSE
 
-/turf/open/floor/grass/fakebasalt/spawniconchange()
+/turf/open/floor/fakebasalt/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/diggable, /obj/item/stack/ore/glass/basalt, 2, "dig up")
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
@@ -798,6 +771,12 @@
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "basalt"
 	return TRUE
+
+/turf/open/floor/fakeice
+	desc = "Is it marble, polished to a mirror finish? Or just really, really grippy ice?"
+	icon = 'icons/turf/floors/ice_turf.dmi'
+	icon_state = "ice_turf-0"
+	base_icon_state = "ice_turf-0"
 
 /turf/open/floor/fakespace
 	icon = 'icons/turf/space.dmi'

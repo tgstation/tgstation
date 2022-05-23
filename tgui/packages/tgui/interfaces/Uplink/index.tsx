@@ -21,12 +21,14 @@ type UplinkItem = {
   restricted_roles: string,
   restricted_species: string,
   progression_minimum: number,
+  cost_override_string: string
   ref?: string,
 }
 
 type UplinkData = {
   telecrystals: number,
   progression_points: number,
+  lockable: BooleanLike,
   current_expected_progression: number,
   progression_scaling_deviance: number,
   current_progression_scaling: number,
@@ -152,6 +154,7 @@ export class Uplink extends Component<{}, UplinkState> {
       extra_purchasable,
       extra_purchasable_stock,
       current_stock,
+      lockable,
     } = data;
     const {
       allItems,
@@ -192,7 +195,7 @@ export class Uplink extends Component<{}, UplinkState> {
         ),
         cost: (
           <Box>
-            {item.cost} TC
+            {item.cost_override_string || `${item.cost} TC`}
             {has_progression
               ? (
                 <>
@@ -309,14 +312,16 @@ export class Uplink extends Component<{}, UplinkState> {
                       </Tabs.Tab>
                     </Tabs>
                   </Stack.Item>
-                  <Stack.Item mr={1}>
-                    <Button
-                      icon="times"
-                      content="Lock"
-                      color="transparent"
-                      onClick={() => act("lock")}
-                    />
-                  </Stack.Item>
+                  {!!lockable && (
+                    <Stack.Item mr={1}>
+                      <Button
+                        icon="times"
+                        content="Lock"
+                        color="transparent"
+                        onClick={() => act("lock")}
+                      />
+                    </Stack.Item>
+                  )}
                 </Stack>
               </Section>
             </Stack.Item>

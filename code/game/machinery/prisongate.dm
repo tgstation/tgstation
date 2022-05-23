@@ -8,11 +8,11 @@
 	/// roughly the same health/armor as an airlock
 	max_integrity = 450
 	damage_deflection = 30
-	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 0, FIRE = 80, ACID = 70)
 	use_power = IDLE_POWER_USE
 	power_channel = AREA_USAGE_EQUIP
-	idle_power_usage = 5
-	active_power_usage = 30
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.03
 	anchored = TRUE
 	/// dictates whether the gate barrier is up or not
 	var/gate_active = TRUE
@@ -25,11 +25,13 @@
 		gate_active = FALSE
 		flick("prisongate_turningoff", src)
 		icon_state = "prisongate_off"
+		update_use_power(IDLE_POWER_USE)
 	else
 		gate_active = TRUE
 		visible_message(span_notice("[src] whirrs back to life as its hardlight barrier fills the space between it."))
 		flick("prisongate_turningon", src)
 		icon_state = "prisongate_on"
+		update_use_power(ACTIVE_POWER_USE)
 
 /obj/machinery/prisongate/CanAllowThrough(atom/movable/gate_toucher, border_dir)
 	. = ..()
@@ -42,8 +44,7 @@
 				say("Stowaway detected in internal contents. Access denied.")
 				playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
 				COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
-				return FALSE
-			return TRUE
+			return FALSE
 	var/mob/living/carbon/the_toucher = gate_toucher
 	if(gate_active == FALSE)
 		return TRUE

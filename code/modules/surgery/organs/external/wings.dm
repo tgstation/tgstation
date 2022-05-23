@@ -78,7 +78,7 @@
 		return FALSE
 
 	var/datum/gas_mixture/environment = location.return_air()
-	if(environment && !(environment.return_pressure() > 30))
+	if(environment?.return_pressure() < HAZARD_LOW_PRESSURE + 10)
 		to_chat(human, span_warning("The atmosphere is too thin for you to fly!"))
 		return FALSE
 	else
@@ -176,7 +176,9 @@
 	return GLOB.moth_wings_list
 
 /obj/item/organ/external/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
-	return TRUE
+	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
+		return TRUE
+	return FALSE
 
 /obj/item/organ/external/wings/moth/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()

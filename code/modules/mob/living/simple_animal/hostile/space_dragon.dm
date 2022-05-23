@@ -28,7 +28,8 @@
  */
 /mob/living/simple_animal/hostile/space_dragon
 	name = "Space Dragon"
-	desc = "A vile, leviathan-esque creature that flies in the most unnatural way.  Looks slightly similar to a space carp."
+	desc = "A vile, leviathan-esque creature that flies in the most unnatural way. Looks slightly similar to a space carp."
+	gender = NEUTER
 	maxHealth = 320
 	health = 320
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0.5, OXY = 1)
@@ -88,8 +89,8 @@
 	var/rifts_charged = 0
 	/// Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.
 	var/objective_complete = FALSE
-	/// The innate ability to summon rifts
-	var/datum/action/innate/summon_rift/rift
+	/// The ability to make your sprite smaller
+	var/datum/action/small_sprite/space_dragon/small_sprite
 	/// The color of the space dragon.
 	var/chosen_color
 	/// Minimum devastation damage dealt coefficient based on max health
@@ -103,8 +104,9 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
-	rift = new
-	rift.Grant(src)
+	small_sprite = new
+	small_sprite.Grant(src)
+	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
 
 /mob/living/simple_animal/hostile/space_dragon/Login()
 	. = ..()
@@ -126,16 +128,18 @@
 		visible_message(span_danger("[src] vomits up [consumed_mob]!"))
 		consumed_mob.forceMove(loc)
 		consumed_mob.Paralyze(50)
+	if(!mind.has_antag_datum(/datum/antagonist/space_dragon))
+		return
 	if((rifts_charged == 3 || (SSshuttle.emergency.mode == SHUTTLE_DOCKED && rifts_charged > 0)) && !objective_complete)
 		victory()
 	if(riftTimer == -1)
 		return
 	riftTimer = min(riftTimer + 1, maxRiftTimer + 1)
 	if(riftTimer == (maxRiftTimer - 60))
-		to_chat(src, span_boldwarning("You have a minute left to summon the rift!  Get to it!"))
+		to_chat(src, span_boldwarning("You have a minute left to summon the rift! Get to it!"))
 		return
 	if(riftTimer >= maxRiftTimer)
-		to_chat(src, span_boldwarning("You've failed to summon the rift in a timely manner!  You're being pulled back from whence you came!"))
+		to_chat(src, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
 		destroy_rifts()
 		playsound(src, 'sound/magic/demon_dies.ogg', 100, TRUE)
 		QDEL_NULL(src)
@@ -200,10 +204,12 @@
 		destroy_rifts()
 	..()
 	add_dragon_overlay()
+	UnregisterSignal(small_sprite, COMSIG_ACTION_TRIGGER)
 
 /mob/living/simple_animal/hostile/space_dragon/revive(full_heal, admin_revive)
 	. = ..()
 	add_dragon_overlay()
+	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
 
 /mob/living/simple_animal/hostile/space_dragon/wabbajack_act(mob/living/new_mob)
 	empty_contents()
@@ -251,6 +257,8 @@
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/add_dragon_overlay()
 	cut_overlays()
+	if(!small_sprite.small)
+		return
 	if(stat == DEAD)
 		var/mutable_appearance/overlay = mutable_appearance(icon, "overlay_dead")
 		overlay.appearance_flags = RESET_COLOR
@@ -388,7 +396,7 @@
  * Empowers and depowers Space Dragon after a successful rift charge.
  * Empowered, Space Dragon regains all his health and becomes temporarily faster for 30 seconds, along with being tinted red.
  */
-/mob/living/simple_animal/hostile/space_dragon/proc/rift_empower(is_permanent)
+/mob/living/simple_animal/hostile/space_dragon/proc/rift_empower()
 	fully_heal()
 	add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
 	add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
@@ -489,7 +497,8 @@
 		var/datum/objective/summon_carp/main_objective = locate() in S.objectives
 		if(main_objective)
 			main_objective.completed = TRUE
-	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. Remaining crew are advised to evacuate as soon as possible.", "Central Command Wildlife Observations")
+	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds. \
+	Remaining crew are advised to evacuate as soon as possible.", "Central Command Wildlife Observations")
 	sound_to_playing_players('sound/creatures/space_dragon_roar.ogg')
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.carp_stored = 999999
@@ -511,12 +520,12 @@
 		return
 	var/area/A = get_area(S)
 	if(!(A.area_flags & VALID_TERRITORY))
-		to_chat(S, span_warning("You can't summon a rift here!  Try summoning somewhere secure within the station!"))
+		to_chat(S, span_warning("You can't summon a rift here! Try summoning somewhere secure within the station!"))
 		return
 	for(var/obj/structure/carp_rift/rift in S.rift_list)
 		var/area/RA = get_area(rift)
 		if(RA == A)
-			to_chat(S, span_warning("You've already summoned a rift in this area!  You have to summon again somewhere else!"))
+			to_chat(S, span_warning("You've already summoned a rift in this area! You have to summon again somewhere else!"))
 			return
 	to_chat(S, span_warning("You begin to open a rift..."))
 	if(do_after(S, 100, target = S))
@@ -527,7 +536,7 @@
 		S.riftTimer = -1
 		CR.dragon = S
 		S.rift_list += CR
-		to_chat(S, span_boldwarning("The rift has been summoned.  Prevent the crew from destroying it at all costs!"))
+		to_chat(S, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
 		notify_ghosts("The Space Dragon has opened a rift!", source = CR, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
 		qdel(src)
 
@@ -543,7 +552,7 @@
 /obj/structure/carp_rift
 	name = "carp rift"
 	desc = "A rift akin to the ones space carp use to travel long distances."
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	max_integrity = 300
 	icon = 'icons/obj/carp_rift.dmi'
 	icon_state = "carp_rift_carpspawn"
@@ -593,7 +602,7 @@
 	if(time_charged < max_charge)
 		. += span_notice("It seems to be [(time_charged / max_charge) * 100]% charged.")
 	else
-		. += span_warning("This one is fully charged.  In this state, it is poised to transport a much larger amount of carp than normal.")
+		. += span_warning("This one is fully charged. In this state, it is poised to transport a much larger amount of carp than normal.")
 
 	if(isobserver(user))
 		. += span_notice("It has [carp_stored] carp available to spawn as.")
@@ -666,8 +675,8 @@
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
-			dragon.rift = new
-			dragon.rift.Grant(dragon)
+			var/datum/action/innate/summon_rift/rift = new()
+			rift.Grant(dragon)
 			dragon.riftTimer = 0
 			dragon.rift_empower()
 		// Early return, nothing to do after this point.
@@ -677,7 +686,7 @@
 	if(charge_state < CHARGE_FINALWARNING && time_charged >= (max_charge * 0.5))
 		charge_state = CHARGE_FINALWARNING
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)].  Stop it at all costs!", "Central Command Wildlife Observations", ANNOUNCER_SPANOMALIES)
+		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!", "Central Command Wildlife Observations", ANNOUNCER_SPANOMALIES)
 
 /**
  * Used to create carp controlled by ghosts when the option is available.
@@ -715,7 +724,7 @@
 	var/datum/antagonist/space_dragon/S = dragon?.mind?.has_antag_datum(/datum/antagonist/space_dragon)
 	if(S)
 		S.carp += newcarp.mind
-	to_chat(newcarp, span_boldwarning("You have arrived in order to assist the space dragon with securing the rifts.  Do not jeopardize the mission, and protect the rifts at all costs!"))
+	to_chat(newcarp, span_boldwarning("You have arrived in order to assist the space dragon with securing the rifts. Do not jeopardize the mission, and protect the rifts at all costs!"))
 	carp_stored--
 	if(carp_stored <= 0 && charge_state < CHARGE_COMPLETED)
 		icon_state = "carp_rift"

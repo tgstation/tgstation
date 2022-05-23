@@ -34,11 +34,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	///Audio for when the gravgen is on
 	var/datum/looping_sound/gravgen/soundloop
 
-/obj/machinery/gravity_generator/main/Initialize(mapload)
+/obj/machinery/gravity_generator/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, TRUE)
 
-/obj/machinery/gravity_generator/main/Destroy()
+/obj/machinery/gravity_generator/Destroy()
 	QDEL_NULL(gravity_field)
 	QDEL_NULL(soundloop)
 	return ..()
@@ -133,7 +133,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main
 	icon_state = "on_8"
 	idle_power_usage = 0
-	active_power_usage = 3000
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 3
 	power_channel = AREA_USAGE_ENVIRON
 	sprite_number = 8
 	use_power = IDLE_POWER_USE
@@ -147,6 +147,12 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/current_overlay = null
 	var/broken_state = 0
 	var/setting = 1 //Gravity value when on
+
+///Station generator that spawns with gravity turned off.
+/obj/machinery/gravity_generator/main/station/off
+	on = FALSE
+	breaker = FALSE
+	charge_count = 0
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
@@ -173,6 +179,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		if(count <= 3) // Their sprite is the top part of the generator
 			part.set_density(FALSE)
 			part.layer = WALL_OBJ_LAYER
+			part.plane = GAME_PLANE_UPPER
 		part.sprite_number = count
 		part.main_part = src
 		parts += part
@@ -332,7 +339,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 /obj/machinery/gravity_generator/main/proc/complete_state_update()
 	update_appearance()
 	update_list()
-	updateUsrDialog()
 
 // Set the state of the gravity.
 /obj/machinery/gravity_generator/main/proc/set_state(new_state)
@@ -368,8 +374,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
 				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
-
-			updateDialog()
 
 			var/overlay_state = null
 			switch(charge_count)

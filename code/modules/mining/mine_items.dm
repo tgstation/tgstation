@@ -1,10 +1,11 @@
 /**********************Light************************/
 
-//this item is intended to give the effect of entering the mine, so that light gradually fades
+//this item is intended to give the effect of entering the mine, so that light gradually fades. we also use the base effect for certain lighting effects while mapping.
 /obj/effect/light_emitter
-	name = "Light emitter"
+	name = "light emitter"
+	icon_state = "lighting_marker"
 	anchored = TRUE
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	var/set_luminosity = 8
 	var/set_cap = 0
 
@@ -60,7 +61,7 @@
 	new /obj/item/storage/bag/plants(src)
 	new /obj/item/storage/bag/ore(src)
 	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
-	new /obj/item/gun/energy/kinetic_accelerator(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
@@ -83,7 +84,12 @@
 		to_chat(user, span_warning("You get a feeling that leaving the station might be a REALLY dumb idea..."))
 		dumb_rev_heads += user.mind
 		return
-	. = ..()
+
+	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z))
+		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
+		return
+
+	return ..()
 
 /obj/machinery/computer/shuttle/mining/common
 	name = "lavaland shuttle console"

@@ -47,23 +47,23 @@
 	head.flash2 = new(head)
 	chest = new(src)
 	chest.wired = TRUE
-	chest.cell = new /obj/item/stock_parts/cell/high/plus(chest)
+	chest.cell = new /obj/item/stock_parts/cell/high(chest)
 	update_appearance()
 
 /obj/item/robot_suit/update_overlays()
 	. = ..()
 	if(l_arm)
-		. += "[l_arm.icon_state]+o"
+		. += "[initial(l_arm.icon_state)]+o"
 	if(r_arm)
-		. += "[r_arm.icon_state]+o"
+		. += "[initial(r_arm.icon_state)]+o"
 	if(chest)
-		. += "[chest.icon_state]+o"
+		. += "[initial(chest.icon_state)]+o"
 	if(l_leg)
-		. += "[l_leg.icon_state]+o"
+		. += "[initial(l_leg.icon_state)]+o"
 	if(r_leg)
-		. += "[r_leg.icon_state]+o"
+		. += "[initial(r_leg.icon_state)]+o"
 	if(head)
-		. += "[head.icon_state]+o"
+		. += "[initial(head.icon_state)]+o"
 
 /obj/item/robot_suit/proc/check_completion()
 	if(l_arm && r_arm && l_leg && r_leg && head && head.flash1 && head.flash2 && chest && chest.wired && chest.cell)

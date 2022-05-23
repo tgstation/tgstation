@@ -17,8 +17,7 @@
 	base_icon_state = "chamber"
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
-	use_power = IDLE_POWER_USE
-	active_power_usage = 1500
+	plane = GAME_PLANE_UPPER
 	circuit = /obj/item/circuitboard/machine/bepis
 
 	///How much cash the UI and machine are depositing at a time.
@@ -84,6 +83,7 @@
 	return default_deconstruction_screwdriver(user, "chamber_open", "chamber", tool)
 
 /obj/machinery/rnd/bepis/RefreshParts()
+	. = ..()
 	var/C = 0
 	var/M = 0
 	var/L = 0

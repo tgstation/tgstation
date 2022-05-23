@@ -96,7 +96,7 @@
 * pH meter that will give a detailed or truncated analysis of all the reagents in of an object with a reagents datum attached to it. Only way of detecting purity for now.
 */
 /obj/item/ph_meter
-	name = "Chemistry Analyser"
+	name = "Chemical Analyzer"
 	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays nothing."
 	icon_state = "pHmeter"
 	icon = 'icons/obj/chemical.dmi'
@@ -222,7 +222,7 @@
 		attack_verb_simple = string_list(list("burn", "singe"))
 		START_PROCESSING(SSobj, src)
 	else
-		hitsound = "swing_hit"
+		hitsound = SFX_SWING_HIT
 		force = 0
 		attack_verb_continuous = null //human_defense.dm takes care of it
 		attack_verb_simple = null
@@ -242,7 +242,7 @@
 		user.visible_message(span_notice("[user] snuffs out [src]'s flame."))
 
 /obj/item/burner/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(lit && M.IgniteMob())
+	if(lit && M.ignite_mob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 	return ..()

@@ -1,11 +1,3 @@
-
-GLOBAL_LIST_EMPTY(cached_guar_rarity)
-GLOBAL_LIST_EMPTY(cached_rarity_table)
-//Global list of all cards by series, with cards cached by rarity to make those lookups faster
-GLOBAL_LIST_EMPTY(cached_cards)
-
-#define DEFAULT_TCG_DMI_ICON 'icons/runtime/tcg/default.dmi'
-#define DEFAULT_TCG_DMI "icons/runtime/tcg/default.dmi"
 #define TAPPED_ANGLE 90
 #define UNTAPPED_ANGLE 0
 
@@ -32,7 +24,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		datum_series = series
 	if(!datum_id)
 		datum_id = id
-	var/list/temp_list = GLOB.cached_cards[datum_series]
+	var/list/temp_list = SStrading_card_game.cached_cards[datum_series]
 	if(!temp_list)
 		return
 	var/datum/card/temp = temp_list["ALL"][datum_id]
@@ -51,11 +43,11 @@ GLOBAL_LIST_EMPTY(cached_cards)
  * This proc gets the card's associated card datum to play with
  */
 /obj/item/tcgcard/proc/extract_datum()
-	var/list/cached_cards = GLOB.cached_cards[series]
+	var/list/cached_cards = SStrading_card_game.cached_cards[series]
 	if(!cached_cards)
 		return null
 	if(!cached_cards["ALL"][id])
-		CRASH("A card without a datum has appeared, either the global list is empty, or you fucked up bad. Series{[series]} ID{[id]} Len{[GLOB.cached_cards.len]}")
+		CRASH("A card without a datum has appeared, either the global list is empty, or you fucked up bad. Series{[series]} ID{[id]} Len{[SStrading_card_game.cached_cards.len]}")
 	return cached_cards["ALL"][id]
 
 /obj/item/tcgcard/get_name_chaser(mob/user, list/name_chaser = list())
@@ -111,7 +103,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard/update_desc(updates)
 	. = ..()
 	if(!flipped)
-		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+		var/datum/card/template = SStrading_card_game.cached_cards[series]["ALL"][id]
 		desc = "<i>[template.desc]</i>"
 	else
 		desc = "It's the back of a trading card... no peeking!"
@@ -121,7 +113,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		icon_state = "cardback"
 		return ..()
 
-	var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
+	var/datum/card/template = SStrading_card_game.cached_cards[series]["ALL"][id]
 	icon_state = template.icon_state
 	return ..()
 
@@ -317,7 +309,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "cardback_nt"
 	w_class = WEIGHT_CLASS_TINY
-	custom_price = PAYCHECK_ASSISTANT * 1.5 //Effectively expensive as long as you're not a very high paying job... in which case, why are you playing trading card games?
+	custom_price = PAYCHECK_CREW * 2 //Effectively expensive as long as you're not a very high paying job... in which case, why are you playing trading card games?
 	///The card series to look in
 	var/series = "MEME"
 	///Chance of the pack having a coin in it out of 10
@@ -364,16 +356,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/cardpack/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 0.4, 1)
-	//Pass by refrance moment
-	//This lets us only have one rarity table per pack, badmins beware
-	if(GLOB.cached_rarity_table[type])
-		rarity_table = GLOB.cached_rarity_table[type]
-	else
-		GLOB.cached_rarity_table[type] = rarity_table
-	if(GLOB.cached_guar_rarity[type])
-		guar_rarity = GLOB.cached_guar_rarity[type]
-	else
-		GLOB.cached_guar_rarity[type] = guar_rarity
+	rarity_table = SStrading_card_game.get_rarity_table(type, rarity_table)
+	guar_rarity = SStrading_card_game.get_guarenteed_rarity_table(type, guar_rarity)
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
@@ -444,7 +428,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		//What we're doing here is using the cached the results of the rarity we find.
 		//This allows us to only have to run this once per rarity, ever.
 		//Unless you reload the cards of course, in which case we have to do this again.
-		var/list/cards = GLOB.cached_cards[series][rarity]
+		var/list/cards = SStrading_card_game.cached_cards[series][rarity]
 		if(cards.len)
 			toReturn += pick(cards)
 		else
@@ -482,10 +466,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /datum/card/New(list/data = list(), list/templates = list())
 	applyTemplates(data, templates)
 	apply(data)
+	applyKeywords(data | templates)
 
 ///For each var that the card datum and the json entry share, we set the datum var to the json entry
 /datum/card/proc/apply(list/data)
-	for(var/name in (vars & data))
+	for(var/name in (data & vars))
 		vars[name] = data[name]
 
 ///Applies a json file to a card datum
@@ -493,113 +478,13 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	apply(templates["default"])
 	apply(templates[data["template"]])
 
-///Loads all the card files
-/proc/loadAllCardFiles(cardFiles, directory)
-	var/list/templates = list()
-	for(var/cardFile in cardFiles)
-		loadCardFile(cardFile, directory, templates)
-
-///Prints all the cards names
-/proc/printAllCards()
-	for(var/card_set in GLOB.cached_cards)
-		message_admins("Printing the [card_set] set")
-		for(var/card in GLOB.cached_cards[card_set]["ALL"])
-			var/datum/card/toPrint = GLOB.cached_cards[card_set]["ALL"][card]
-			message_admins(toPrint.name)
-
-///Checks the passed type list for missing raritys, or raritys out of bounds
-/proc/checkCardpacks(cardPackList)
-	var/toReturn = ""
-	for(var/cardPack in cardPackList)
-		var/obj/item/cardpack/pack = new cardPack()
-		//Lets see if someone made a type yeah?
-		if(!GLOB.cached_cards[pack.series])
-			toReturn += "[pack.series] does not have any cards in it\n"
+///Searches for keywords in the card's variables, marked by wrapping them in {$}
+///Adds on hovor logic to them, using the passed in list
+///We use the changed_vars list just to make the var searching faster
+/datum/card/proc/applyKeywords(list/changed_vars)
+	for(var/name in (changed_vars & vars))
+		var/value = vars[name]
+		if(!istext(value))
 			continue
-		for(var/card in GLOB.cached_cards[pack.series]["ALL"])
-			var/datum/card/template = GLOB.cached_cards[pack.series]["ALL"][card]
-			if(template.rarity == "ALL")
-				toReturn += "[pack.type] has a rarity [template.rarity] on the card [template.id] that needs to be changed to something that isn't \"ALL\"\n"
-				continue
-			if(!(template.rarity in pack.rarity_table))
-				toReturn += "[pack.type] has a rarity [template.rarity] on the card [template.id] that does not exist\n"
-				continue
-		//Lets run a check to see if all the rarities exist that we want to exist exist
-		for(var/pack_rarity in pack.rarity_table)
-			if(!GLOB.cached_cards[pack.series][pack_rarity])
-				toReturn += "[pack.type] does not have the required rarity [pack_rarity]\n"
-		qdel(pack)
-	return toReturn
+		vars[name] = SStrading_card_game.resolve_keywords(value)
 
-///Checks the global card list for cards that don't override all the default values of the card datum
-/proc/checkCardDatums()
-	var/toReturn = ""
-	var/datum/thing = new()
-	for(var/series in GLOB.cached_cards)
-		var/cards = GLOB.cached_cards[series]["ALL"]
-		for(var/card in cards)
-			var/datum/card/target = GLOB.cached_cards[series]["ALL"][card]
-			var/toAdd = "The card [target.id] in [series] has the following default variables:"
-			var/shouldAdd = FALSE
-			for(var/current_var in (target.vars ^ thing.vars))
-				if(current_var == "icon" && target.vars[current_var] == DEFAULT_TCG_DMI)
-					continue
-				if(target.vars[current_var] == initial(target.vars[current_var]))
-					shouldAdd = TRUE
-					toAdd += "\n[current_var] with a value of [target.vars[current_var]]"
-			if(shouldAdd)
-				toReturn += toAdd
-	qdel(thing)
-	return toReturn
-
-///Used to test open a large amount of cardpacks
-/proc/checkCardDistribution(cardPack, batchSize, batchCount, guaranteed)
-	var/totalCards = 0
-	//Gotta make this look like an associated list so the implicit "does this exist" checks work proper later
-	var/list/cardsByCount = list("" = 0)
-	var/obj/item/cardpack/pack = new cardPack()
-	for(var/index in 1 to batchCount)
-		var/list/cards = pack.buildCardListWithRarity(batchSize, guaranteed)
-		for(var/id in cards)
-			totalCards++
-			cardsByCount[id] += 1
-	var/toSend = "Out of [totalCards] cards"
-	for(var/id in sort_list(cardsByCount, /proc/cmp_num_string_asc))
-		if(id)
-			var/datum/card/template = GLOB.cached_cards[pack.series]["ALL"][id]
-			toSend += "\nID:[id] [template.name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"
-	message_admins(toSend)
-	qdel(pack)
-
-///Empty the rarity cache so we can safely add new cards
-/proc/clearCards()
-	SStrading_card_game.loaded = FALSE
-	GLOB.cached_cards = list()
-
-///Reloads all card files
-/proc/reloadAllCardFiles(cardFiles, directory)
-	clearCards()
-	loadAllCardFiles(cardFiles, directory)
-	SStrading_card_game.loaded = TRUE
-
-///Loads the contents of a json file into our global card list
-/proc/loadCardFile(filename, directory = "strings/tcg")
-	var/list/json = json_decode(file2text("[directory]/[filename]"))
-	var/list/cards = json["cards"]
-	var/list/templates = list()
-	for(var/list/data in json["templates"])
-		templates[data["template"]] = data
-	for(var/list/data in cards)
-		var/datum/card/card = new(data, templates)
-		//Lets cache the id by rarity, for top speed lookup later
-		if(!GLOB.cached_cards[card.series])
-			GLOB.cached_cards[card.series] = list()
-			GLOB.cached_cards[card.series]["ALL"] = list()
-		if(!GLOB.cached_cards[card.series][card.rarity])
-			GLOB.cached_cards[card.series][card.rarity] = list()
-		GLOB.cached_cards[card.series][card.rarity] += card.id
-		//Let's actually store the datum here
-		GLOB.cached_cards[card.series]["ALL"][card.id] = card
-
-#undef DEFAULT_TCG_DMI_ICON
-#undef DEFAULT_TCG_DMI

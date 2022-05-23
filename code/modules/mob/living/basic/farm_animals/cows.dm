@@ -93,6 +93,7 @@
 	name = "wisdom cow"
 	desc = "Known for its wisdom, shares it with all."
 	gold_core_spawnable = FALSE
+	ai_controller = /datum/ai_controller/basic_controller/cow/wisdom
 
 /mob/living/basic/cow/wisdom/make_tameable()
 	return //cannot tame me!
@@ -108,7 +109,7 @@
 	if(!stat && !user.combat_mode)
 		to_chat(user, span_nicegreen("[src] whispers you some intense wisdoms and then disappears!"))
 		user.mind?.adjust_experience(pick(GLOB.skill_types), 500)
-		do_smoke(1, get_turf(src))
+		do_smoke(DIAMOND_AREA(1), get_turf(src))
 		qdel(src)
 		return
 	return ..()

@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 /obj/item/storage/book/bible/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, FALSE, TRUE)
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
 
 /obj/item/storage/book/bible/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -105,13 +105,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 /obj/item/storage/book/bible/proc/check_menu(mob/living/carbon/human/user)
 	if(GLOB.bible_icon_state)
 		return FALSE
-	if(!istype(user))
+	if(!istype(user) || !user.is_holding(src))
 		return FALSE
-	if(!user.is_holding(src))
-		return FALSE
-	if(!user.can_read(src))
-		return FALSE
-	if(user.incapacitated())
+	if(!user.can_read(src) || user.is_blind() || user.incapacitated())
 		return FALSE
 	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
 		return FALSE
@@ -132,23 +128,22 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(!ishuman(L))
 		return
 	var/mob/living/carbon/human/H = L
-	for(var/X in H.bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(BP.status == BODYPART_ROBOTIC)
+	for(var/obj/item/bodypart/bodypart as anything in H.bodyparts)
+		if(!IS_ORGANIC_LIMB(bodypart))
 			to_chat(user, span_warning("[src.deity_name] refuses to heal this metallic taint!"))
 			return 0
 
 	var/heal_amt = 10
-	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
+	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1, null, BODYTYPE_ORGANIC)
 
 	if(hurt_limbs.len)
 		for(var/X in hurt_limbs)
 			var/obj/item/bodypart/affecting = X
-			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
+			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYTYPE_ORGANIC))
 				H.update_damage_overlays()
 		H.visible_message(span_notice("[user] heals [H] with the power of [deity_name]!"))
 		to_chat(H, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
-		playsound(src.loc, "punch", 25, TRUE, -1)
+		playsound(src.loc, SFX_PUNCH, 25, TRUE, -1)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -174,7 +169,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 	if (M.stat == DEAD)
 		M.visible_message(span_danger("[user] smacks [M]'s lifeless corpse with [src]."))
-		playsound(src.loc, "punch", 25, TRUE, -1)
+		playsound(src.loc, SFX_PUNCH, 25, TRUE, -1)
 		return
 
 	if(user == M)
@@ -194,7 +189,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(smack)
 		M.visible_message(span_danger("[user] beats [M] over the head with [src]!"), \
 				span_userdanger("[user] beats [M] over the head with [src]!"))
-		playsound(src.loc, "punch", 25, TRUE, -1)
+		playsound(src.loc, SFX_PUNCH, 25, TRUE, -1)
 		log_combat(user, M, "attacked", src)
 
 /obj/item/storage/book/bible/afterattack(atom/bible_smacked, mob/user, proximity)
@@ -206,7 +201,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(isfloorturf(bible_smacked))
 		if(user.mind && (user.mind.holy_role))
 			var/area/current_area = get_area(bible_smacked)
-			if(!GLOB.chaplain_altars.len && istype(current_area, /area/service/chapel))
+			if(!GLOB.chaplain_altars.len && istype(current_area, /area/station/service/chapel))
 				make_new_altar(bible_smacked, user)
 				return
 			for(var/obj/effect/rune/nearby_runes in orange(2,user))

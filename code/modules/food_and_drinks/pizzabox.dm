@@ -215,8 +215,7 @@
 			to_chat(user, span_warning("[src] already has a bomb in it!"))
 	else if(istype(I, /obj/item/pen))
 		if(!open)
-			if(!user.is_literate())
-				to_chat(user, span_notice("You scribble illegibly on [src]!"))
+			if(!user.can_write(I))
 				return
 			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
@@ -358,6 +357,7 @@
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	if(ishuman(user))
 		attune_pizza(user)
+		to_chat(user, span_notice("Another pizza immediately appears in the box, what the hell?"))
 	return ..()
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/nommer) //tonight on "proc names I never thought I'd type"

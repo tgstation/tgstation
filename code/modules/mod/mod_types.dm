@@ -54,7 +54,6 @@
 
 /obj/item/mod/control/pre_equipped/loader
 	theme = /datum/mod_theme/loader
-	applied_cell = /obj/item/stock_parts/cell/high/plus
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/flashlight,
@@ -105,11 +104,11 @@
 
 /obj/item/mod/control/pre_equipped/security
 	theme = /datum/mod_theme/security
-	applied_cell = /obj/item/stock_parts/cell/high/plus
 	initial_modules = list(
 		/obj/item/mod/module/storage,
+		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/holster,
+		/obj/item/mod/module/pepper_shoulders,
 	)
 
 /obj/item/mod/control/pre_equipped/safeguard
@@ -117,9 +116,10 @@
 	applied_cell = /obj/item/stock_parts/cell/super
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/holster,
+		/obj/item/mod/module/pepper_shoulders,
 	)
 
 /obj/item/mod/control/pre_equipped/magnate
@@ -128,8 +128,8 @@
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/hat_stabilizer,
+		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
-		/obj/item/mod/module/holster,
 		/obj/item/mod/module/pathfinder,
 	)
 
@@ -137,6 +137,7 @@
 	theme = /datum/mod_theme/cosmohonk
 	initial_modules = list(
 		/obj/item/mod/module/storage,
+		/obj/item/mod/module/waddle,
 		/obj/item/mod/module/bikehorn,
 	)
 
@@ -145,34 +146,59 @@
 	applied_cell = /obj/item/stock_parts/cell/super
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/pathfinder,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
-		/obj/item/mod/module/holster,
 	)
 
-/obj/item/mod/control/pre_equipped/nuclear
-	theme = /datum/mod_theme/syndicate
-	applied_cell = /obj/item/stock_parts/cell/hyper
-	initial_modules = list(
-		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/jetpack/advanced,
-		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/holster,
-		/obj/item/mod/module/injector,
-	)
-
-/obj/item/mod/control/pre_equipped/elite
+/obj/item/mod/control/pre_equipped/traitor_elite
 	theme = /datum/mod_theme/elite
 	applied_cell = /obj/item/stock_parts/cell/bluespace
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
 		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/holster,
-		/obj/item/mod/module/injector,
+		/obj/item/mod/module/dna_lock,
+	)
+
+/obj/item/mod/control/pre_equipped/nuclear
+	theme = /datum/mod_theme/syndicate
+	applied_cell = /obj/item/stock_parts/cell/hyper
+	req_access = list(ACCESS_SYNDICATE)
+	initial_modules = list(
+		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/flashlight,
+	)
+
+/obj/item/mod/control/pre_equipped/elite
+	theme = /datum/mod_theme/elite
+	applied_cell = /obj/item/stock_parts/cell/bluespace
+	req_access = list(ACCESS_SYNDICATE)
+	initial_modules = list(
+		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/flashlight,
+	)
+
+/obj/item/mod/control/pre_equipped/elite/flamethrower
+	initial_modules = list(
+		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/thermal_regulator,
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/flamethrower,
 	)
 
 /obj/item/mod/control/pre_equipped/enchanted
@@ -181,12 +207,12 @@
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/energy_shield/wizard,
-		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/emp_shield/advanced,
 	)
 
 /obj/item/mod/control/pre_equipped/prototype
 	theme = /datum/mod_theme/prototype
-	applied_cell = /obj/item/stock_parts/cell/high/plus
+	req_access = list(ACCESS_AWAY_GENERAL)
 	initial_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/welding,
@@ -198,12 +224,13 @@
 /obj/item/mod/control/pre_equipped/responsory
 	theme = /datum/mod_theme/responsory
 	applied_cell = /obj/item/stock_parts/cell/hyper
+	req_access = list(ACCESS_CENT_GENERAL)
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/holster,
 	)
 	/// The insignia type, insignias show what sort of member of the ERT you're dealing with.
 	var/insignia_type = /obj/item/mod/module/insignia
@@ -217,11 +244,11 @@
 
 /obj/item/mod/control/pre_equipped/responsory/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
-	additional_module = /obj/item/mod/module/noslip
+	additional_module = /obj/item/mod/module/power_kick
 
 /obj/item/mod/control/pre_equipped/responsory/security
 	insignia_type = /obj/item/mod/module/insignia/security
-	additional_module = /obj/item/mod/module/gps
+	additional_module = /obj/item/mod/module/pepper_shoulders
 
 /obj/item/mod/control/pre_equipped/responsory/engineer
 	insignia_type = /obj/item/mod/module/insignia/engineer
@@ -250,17 +277,17 @@
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/holster,
 	)
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
 	insignia_type = /obj/item/mod/module/insignia/commander
-	additional_module = /obj/item/mod/module/noslip
+	additional_module = /obj/item/mod/module/power_kick
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/security
 	insignia_type = /obj/item/mod/module/insignia/security
-	additional_module = /obj/item/mod/module/gps
+	additional_module = /obj/item/mod/module/pepper_shoulders
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
@@ -273,21 +300,24 @@
 /obj/item/mod/control/pre_equipped/apocryphal
 	theme = /datum/mod_theme/apocryphal
 	applied_cell = /obj/item/stock_parts/cell/bluespace
+	req_access = list(ACCESS_CENT_SPECOPS)
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/welding,
-		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/emp_shield/advanced,
+		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/holster,
 	)
 
 /obj/item/mod/control/pre_equipped/corporate
 	theme = /datum/mod_theme/corporate
 	applied_core = /obj/item/mod/core/infinite
+	req_access = list(ACCESS_CENT_SPECOPS)
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
 		/obj/item/mod/module/hat_stabilizer,
-		/obj/item/mod/module/holster,
+		/obj/item/mod/module/magnetic_harness,
+		/obj/item/mod/module/emp_shield/advanced,
 	)
 
 /obj/item/mod/control/pre_equipped/chrono
@@ -320,6 +350,7 @@
 	applied_core = /obj/item/mod/core/infinite
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
+		/obj/item/mod/module/emp_shield/advanced,
 		/obj/item/mod/module/welding,
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/quick_carry/advanced,
@@ -331,10 +362,10 @@
 /obj/item/mod/control/pre_equipped/syndicate_empty
 	theme = /datum/mod_theme/syndicate
 
+/obj/item/mod/control/pre_equipped/syndicate_empty/honkerative
+	applied_skin = "honkerative"
+
 /obj/item/mod/control/pre_equipped/syndicate_empty/elite
 	theme = /datum/mod_theme/elite
 
 INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/syndicate_empty)
-
-/obj/item/mod/control/pre_equipped/syndicate_empty/honkerative
-	applied_skin = "honkerative"

@@ -17,8 +17,7 @@ LINEN BINS
 	icon_state = "sheetwhite"
 	inhand_icon_state = "sheetwhite"
 	slot_flags = ITEM_SLOT_NECK
-	layer = MOB_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
+	layer = BELOW_MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
@@ -39,19 +38,28 @@ LINEN BINS
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
 
-/obj/item/bedsheet/attack_self(mob/user)
+/obj/item/bedsheet/attack_self(mob/living/user)
 	if(!user.CanReach(src)) //No telekenetic grabbing.
 		return
 	if(!user.dropItemToGround(src))
 		return
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
+		plane = GAME_PLANE_UPPER
 		to_chat(user, span_notice("You cover yourself with [src]."))
 		pixel_x = 0
 		pixel_y = 0
 	else
 		layer = initial(layer)
+		plane = initial(plane)
 		to_chat(user, span_notice("You smooth [src] out beneath you."))
+	if(user.body_position == LYING_DOWN)    //The player isn't laying down currently
+		dir = user.dir
+	else
+		if(user.dir & WEST)    //The player is rotated to the right, lay the sheet left!
+			dir = WEST
+		else    //The player is rotated to the left, lay the sheet right!
+			dir = EAST
 	add_fingerprint(user)
 	return
 
@@ -311,7 +319,8 @@ LINEN BINS
 				/obj/item/bedsheet/ian,
 				/obj/item/bedsheet/cosmos,
 				/obj/item/bedsheet/nanotrasen))
-	new type(loc)
+	var/obj/item/bedsheet = new type(loc)
+	bedsheet.dir = dir
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/bedsheet/double
@@ -491,7 +500,8 @@ LINEN BINS
 				/obj/item/bedsheet/ian/double,
 				/obj/item/bedsheet/cosmos/double,
 				/obj/item/bedsheet/nanotrasen/double))
-	new type(loc)
+	var/obj/item/bedsheet = new type(loc)
+	bedsheet.dir = dir
 	return INITIALIZE_HINT_QDEL
 
 /obj/structure/bedsheetbin
@@ -538,6 +548,23 @@ LINEN BINS
 		update_appearance()
 	..()
 
+/obj/structure/bedsheetbin/screwdriver_act(mob/living/user, obj/item/tool)
+	if(flags_1 & NODECONSTRUCT_1)
+		return FALSE
+	if(amount)
+		to_chat(user, span_warning("The [src] must be empty first!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(tool.use_tool(src, user, 0.5 SECONDS, volume=50))
+		to_chat(user, span_notice("You disassemble the [src]."))
+		new /obj/item/stack/rods(loc, 2)
+		qdel(src)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/structure/bedsheetbin/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/bedsheet))
 		if(!user.transferItemToLoc(I, src))
@@ -546,20 +573,6 @@ LINEN BINS
 		amount++
 		to_chat(user, span_notice("You put [I] in [src]."))
 		update_appearance()
-
-	else if(default_unfasten_wrench(user, I, 5))
-		return
-
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(flags_1 & NODECONSTRUCT_1)
-			return
-		if(amount)
-			to_chat(user, span_warning("The [src] must be empty first!"))
-			return
-		if(I.use_tool(src, user, 5, volume=50))
-			to_chat(user, span_notice("You disassemble the [src]."))
-			new /obj/item/stack/rods(loc, 2)
-			qdel(src)
 
 	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.transferItemToLoc(I, src))

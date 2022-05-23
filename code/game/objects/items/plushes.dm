@@ -129,10 +129,8 @@
 				stuffed = FALSE
 			else
 				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
-				if(iscarbon(user))
-					var/mob/living/carbon/C = user
-					if(C.drunkenness < 50)
-						C.drunkenness = min(C.drunkenness + 20, 50)
+				user.adjust_drunk_effect(20, up_to = 50)
+
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
 				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
@@ -615,7 +613,7 @@
 		return ..()
 	if(splat)
 		to_chat(user, span_notice("[src] doesn't seem to be able to go hard right now."))
-		return	
+		return
 	if(going_hard)
 		to_chat(user, span_notice("[src] is already going too hard!"))
 		return
@@ -635,7 +633,7 @@
 		going_hard = FALSE
 		update_icon(UPDATE_OVERLAYS)
 	icon_state = "goat_splat"
-	playsound(src, "desecration", 50, TRUE)
+	playsound(src, SFX_DESECRATION, 50, TRUE)
 	visible_message(span_danger("[src] gets absolutely flattened!"))
 	splat = TRUE
 

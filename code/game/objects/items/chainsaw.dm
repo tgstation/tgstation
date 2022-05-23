@@ -16,35 +16,17 @@
 	custom_materials = list(/datum/material/iron=13000)
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5
 	var/on = FALSE
-	var/wielded = FALSE // track wielded status on item
-
-/obj/item/chainsaw/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
 /obj/item/chainsaw/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
-
-/// triggered on wield of two handed item
-/obj/item/chainsaw/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/chainsaw/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
 
 /obj/item/chainsaw/suicide_act(mob/living/carbon/user)
 	if(on)
@@ -70,7 +52,7 @@
 	if(on)
 		hitsound = 'sound/weapons/chainsawhit.ogg'
 	else
-		hitsound = "swing_hit"
+		hitsound = SFX_SWING_HIT
 
 	if(src == user.get_active_held_item()) //update inhands
 		user.update_inv_hands()

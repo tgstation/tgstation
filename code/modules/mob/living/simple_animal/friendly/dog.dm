@@ -525,7 +525,10 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if(saved_head)
 		place_on_head(new saved_head)
 
-/mob/living/simple_animal/pet/dog/corgi/ian/proc/Write_Memory(dead)
+/mob/living/simple_animal/pet/dog/corgi/ian/Write_Memory(dead, gibbed)
+	. = ..()
+	if(!.)
+		return
 	var/json_file = file("data/npc_saves/Ian.json")
 	var/list/file_data = list()
 	if(!dead)
@@ -674,7 +677,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	. = ..()
 	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, INNATE_TRAIT)
 
-/mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0)
+/mob/living/simple_animal/pet/dog/corgi/puppy/void/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return 1 //Void puppies can navigate space.
 
 
