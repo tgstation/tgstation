@@ -241,9 +241,9 @@
 /datum/crafting_recipe/food/pierogi
 	name = "Pierogi"
 	reqs = list(
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/grown/onion = 1,
-		/obj/item/food/bun = 1
+		/obj/item/food/grown/onion = 1
 	)
 	result = /obj/item/food/pierogi
 	subcategory = CAT_MISCFOOD

@@ -151,6 +151,25 @@
 	foodtypes = VEGETABLES | SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 
+// empty sushi for custom sushi
+/obj/item/food/sushi/empty
+	name = "sushi"
+	foodtypes = NONE
+	tastes = list()
+	icon_state = "vegetariansushiroll"
+	desc = "A roll of customized sushi."
+
+/obj/item/food/sushi/empty/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sushislice/empty, 4, 20)
+
+/obj/item/food/sushislice/empty
+	name = "sushi slice"
+	foodtypes = NONE
+	tastes = list()
+	icon_state = "vegetariansushislice"
+	desc = "A slice of customized sushi."
+
+
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
 /obj/item/food/tofu
