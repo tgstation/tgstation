@@ -53,6 +53,14 @@
 	if(tram_part)
 		UnregisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING)
 
+/obj/machinery/crossing_signal/emag_act(mob/living/user)
+	if(obj_flags & EMAGGED)
+		return
+	balloon_alert(user, "disabled motion sensors")
+	if(signal_state != XING_STATE_GREEN)
+		set_signal_state(XING_STATE_GREEN)
+	obj_flags |= EMAGGED
+
 /**
  * Finds the tram, just like the tram computer
  *
@@ -84,6 +92,9 @@
  * Returns whether we are still processing.
  */
 /obj/machinery/crossing_signal/proc/update_operating()
+	//emagged crossing signals dont update
+	if(obj_flags & EMAGGED)
+		return
 	// Immediately process for snappy feedback
 	var/should_process = process() != PROCESS_KILL
 	if(should_process)

@@ -459,7 +459,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	var/not_told = 0
 
 	var/list/valid_device_types = typecacheof(list(
-		/obj/machinery/computer/atmos_control, 
+		/obj/machinery/computer/atmos_control,
 		/obj/machinery/air_sensor,
 		/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
 		/obj/machinery/meter/monitored,
