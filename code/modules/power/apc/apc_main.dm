@@ -105,8 +105,7 @@
 	var/obj/machinery/computer/apc_control/remote_control = null
 	///Represents a signel source of power alarms for this apc
 	var/datum/alarm_handler/alarm_manager
-	// offset APC_PIXEL_OFFSET pixels in direction of dir
-	// this allows the APC to be embedded in a wall, yet still inside an area
+	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
 	var/offset_old
 
 /obj/machinery/power/apc/New(turf/loc, ndir, building=0)
