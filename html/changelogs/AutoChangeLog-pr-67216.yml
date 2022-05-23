@@ -1,0 +1,4 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - balance: "Emagged chem dispenser in the deepstorage ruin is replaced with a regular one."

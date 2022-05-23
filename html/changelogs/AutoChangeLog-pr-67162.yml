@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "Cascade rift is now a portal that teleports you to centcom evac instead of dusting you."
-  - balance: "There are more crystal walls spawned around the station and the timing of the cascade has been changed to start the one minute countdown after the portal has been eaten."
