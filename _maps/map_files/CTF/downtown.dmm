@@ -1555,7 +1555,7 @@
 /area/ctf)
 "Fs" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "hat store";
+	name = "Hat Store";
 	resistance_flags = 64
 	},
 /turf/open/floor/iron,
@@ -1867,7 +1867,7 @@
 /area/ctf)
 "Ll" = (
 /obj/machinery/door/airlock{
-	name = "hat store";
+	name = "Hat Store";
 	resistance_flags = 64
 	},
 /turf/open/floor/iron/dark,

@@ -24,7 +24,7 @@
 "ae" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate ship airlock";
+	name = "Syndicate Ship Airlock";
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -263,7 +263,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aU" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate ship airlock";
+	name = "Syndicate Ship Airlock";
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -318,7 +318,7 @@
 "be" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate ship airlock";
+	name = "Syndicate Ship Airlock";
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -467,7 +467,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bx" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Captain's room";
+	name = "Captain's Room";
 	req_access = list("syndicate")
 	},
 /obj/machinery/door/poddoor{
@@ -521,7 +521,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bF" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate ship airlock";
+	name = "Syndicate Ship Airlock";
 	req_access = list("syndicate")
 	},
 /obj/structure/cable,
@@ -567,7 +567,7 @@
 /obj/structure/cable,
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/external/ruin{
-	name = "Syndicate ship airlock";
+	name = "Syndicate Ship Airlock";
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -708,7 +708,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ch" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Captain's room";
+	name = "Captain's Room";
 	req_access = list("syndicate")
 	},
 /obj/machinery/door/poddoor{

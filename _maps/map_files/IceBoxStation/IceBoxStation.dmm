@@ -1424,7 +1424,7 @@
 "ayY" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
-	name = "maintenance external airlock";
+	name = "Maintenance External Airlock";
 	opacity = 0
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -3697,7 +3697,7 @@
 /area/station/security/prison/work)
 "bkk" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "brig_entrance"
+	name = "Brig Entrance"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6867,7 +6867,7 @@
 "cjL" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
-	name = "engineering external airlock";
+	name = "Engineering External Airlock";
 	opacity = 0
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
@@ -11614,7 +11614,7 @@
 "dHU" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
-	name = "maintenance external airlock";
+	name = "Maintenance External Airlock";
 	opacity = 0
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -22544,7 +22544,7 @@
 "hlk" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
-	name = "maintenance external airlock";
+	name = "Maintenance External Airlock";
 	opacity = 0
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -47795,7 +47795,7 @@
 /area/station/hallway/primary/port)
 "ptu" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "brig_entrance"
+	name = "Brig Entrance"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -51695,7 +51695,7 @@
 /area/station/engineering/atmos/pumproom)
 "qIH" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure tech_storage"
+	name = "Secure Tech Storage"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
@@ -65333,7 +65333,7 @@
 "vfv" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
-	name = "engineering external airlock";
+	name = "Engineering External Airlock";
 	opacity = 0
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -68187,7 +68187,7 @@
 "vZi" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
-	name = "maintenance external airlock";
+	name = "Maintenance External Airlock";
 	opacity = 0
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -69201,7 +69201,7 @@
 "wpx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	name = "ai_upload Access"
+	name = "AI Upload Access"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -74511,7 +74511,7 @@
 /area/station/commons/locker)
 "xZX" = (
 /obj/machinery/door/airlock/engineering{
-	name = "tech_storage"
+	name = "Tech Storage"
 	},
 /obj/structure/cable,
 /obj/effect/landmark/navigate_destination,

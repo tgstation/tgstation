@@ -2667,7 +2667,7 @@
 /area/station/service/hydroponics)
 "aMp" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "cargo maintenance"
+	name = "Cargo Maintenance"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3751,7 +3751,7 @@
 "bhk" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
-	name = "command maintenance"
+	name = "Command Maintenance"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -7601,7 +7601,7 @@
 /area/station/hallway/secondary/entry)
 "cmc" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "security maintenance"
+	name = "Security Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
@@ -10029,7 +10029,7 @@
 /area/station/security/detectives_office)
 "daG" = (
 /obj/machinery/door/airlock/maintenance/external{
-	name = "mass driver intersection"
+	name = "Mass Driver Intersection"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13244,7 +13244,7 @@
 "dUK" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
-	name = "tech_storage"
+	name = "Tech Storage"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13363,7 +13363,7 @@
 /area/station/science/mixing)
 "dWj" = (
 /obj/machinery/door/airlock/maintenance/external{
-	name = "mass driver intersection"
+	name = "Mass Driver Intersection"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13909,7 +13909,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "eeC" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "command maintenance"
+	name = "Command Maintenance"
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "brige-maint";
@@ -16144,7 +16144,7 @@
 /area/station/science/xenobiology)
 "eJy" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "mining dock maintenance"
+	name = "Mining Dock Maintenance"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -20212,7 +20212,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/maintenance{
-	name = "command maintenance"
+	name = "Command Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
@@ -22653,7 +22653,7 @@
 /area/station/service/chapel/funeral)
 "gtU" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "security maintenance"
+	name = "Security Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark,
@@ -25583,7 +25583,7 @@
 /area/station/hallway/primary/port)
 "hib" = (
 /obj/machinery/door/airlock/maintenance/external{
-	name = "construction zone"
+	name = "Construction Zone"
 	},
 /turf/open/floor/iron/dark,
 /area/construction/mining/aux_base)
@@ -25654,7 +25654,7 @@
 /area/station/medical/surgery/fore)
 "hjj" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "supermatter maintenance"
+	name = "Supermatter Maintenance"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -27830,7 +27830,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/maintenance{
-	name = "command maintenance"
+	name = "Command Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
@@ -29129,7 +29129,7 @@
 /area/station/hallway/primary/port)
 "idY" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "morgue maintenance"
+	name = "Morgue Maintenance"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -29607,7 +29607,7 @@
 /area/station/cargo/storage)
 "ikr" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "psychology maintenance"
+	name = "Psychology Maintenance"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -30000,7 +30000,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/highsecurity{
-	name = "ai_upload"
+	name = "AI Upload"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -32287,7 +32287,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
-	name = "service maintenance"
+	name = "Service Maintenance"
 	},
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33246,7 +33246,7 @@
 /area/station/service/chapel/dock)
 "jgB" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "kitchen coldroom maintenance"
+	name = "Kitchen Cold Room Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/iron/dark,
@@ -35545,7 +35545,7 @@
 "jRR" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
-	name = "security maintenance"
+	name = "Security Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
@@ -46554,7 +46554,7 @@
 /area/station/commons/fitness/recreation)
 "mZR" = (
 /obj/machinery/door/airlock/maintenance/external{
-	name = "transit intersection"
+	name = "Transit Intersection"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -50147,7 +50147,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance/external{
-	name = "transit intersection"
+	name = "Transit Intersection"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -50871,7 +50871,7 @@
 "oqN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
-	name = "tech_storage"
+	name = "Tech Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
 /turf/open/floor/iron/dark,
@@ -54774,7 +54774,7 @@
 /area/station/engineering/atmos/storage/gas)
 "pvs" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "security maintenance"
+	name = "Security Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/detective,
 /turf/open/floor/iron/dark,
@@ -54988,7 +54988,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
-	name = "kitchen maintenance"
+	name = "Kitchen Maintenance"
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -56591,7 +56591,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance/external{
-	name = "transit intersection"
+	name = "Transit Intersection"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
@@ -56623,7 +56623,7 @@
 /area/station/maintenance/department/bridge)
 "pWo" = (
 /obj/machinery/door/airlock/maintenance/external{
-	name = "transit intersection"
+	name = "Transit Intersection"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -58489,7 +58489,7 @@
 /area/station/maintenance/disposal/incinerator)
 "qwR" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "research lab maintenance"
+	name = "Research Lab Maintenance"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -60151,7 +60151,7 @@
 /area/station/science/mixing)
 "qXn" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "hydroponics maintenance"
+	name = "Hydroponics Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
 /turf/open/floor/iron/dark,
@@ -60487,7 +60487,7 @@
 /area/station/command/heads_quarters/captain)
 "rcN" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "xenobiology maintenance"
+	name = "Xenobiology Maintenance"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -62162,7 +62162,7 @@
 "rBE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/maintenance{
-	name = "atmospherics maintenance"
+	name = "Atmospherics Maintenance"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -64376,7 +64376,7 @@
 /area/station/maintenance/port/lesser)
 "sij" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "virology maintenance"
+	name = "Virology Maintenance"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -68160,7 +68160,7 @@
 /area/station/engineering/lobby)
 "tly" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "xenobiology maintenance"
+	name = "Xenobiology Maintenance"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/directions/evac{
@@ -73912,7 +73912,7 @@
 "uUk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure tech_storage"
+	name = "Secure Tech Storage"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tech_storage,
@@ -81454,7 +81454,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/highsecurity{
-	name = "ai_upload"
+	name = "AI Upload"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -84326,7 +84326,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance{
-	name = "medbay maintenance"
+	name = "Medbay Maintenance"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
@@ -84565,7 +84565,7 @@
 /area/station/service/chapel/dock)
 "xKW" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "mech bay maintenance"
+	name = "Mech Bay Maintenance"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/purple/corner{
@@ -85777,7 +85777,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance{
-	name = "security maintenance"
+	name = "Security Maintenance"
 	},
 /obj/structure/sign/directions/evac{
 	pixel_y = -24

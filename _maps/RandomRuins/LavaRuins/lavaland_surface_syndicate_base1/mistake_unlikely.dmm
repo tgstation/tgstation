@@ -88,7 +88,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "P" = (
 /obj/machinery/door/airlock/external{
-	name = "external experimentation";
+	name = "External Experimentation";
 	req_access = list("syndicate")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,

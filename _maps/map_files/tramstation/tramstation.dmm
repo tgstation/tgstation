@@ -3359,7 +3359,7 @@
 /area/station/science/research)
 "bsn" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "security maintenance hatch"
+	name = "Security Maintenance Hatch"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -11183,7 +11183,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/highsecurity{
-	name = "ai_upload Access"
+	name = "AI Upload Access"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
@@ -12436,7 +12436,7 @@
 /area/station/cargo/warehouse)
 "ehX" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "security maintenance hatch"
+	name = "Security Maintenance Hatch"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/decal/cleanable/dirt,
@@ -25770,7 +25770,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/security{
-	name = "Reeducation Center"
+	name = "Re-Education Center"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /turf/open/floor/iron/white,
@@ -31318,7 +31318,7 @@
 /area/station/security/prison/safe)
 "kDk" = (
 /obj/machinery/door/airlock/engineering{
-	name = "tech_storage"
+	name = "Tech Storage"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -51338,7 +51338,7 @@
 "rqD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "security maintenance hatch"
+	name = "Security Maintenance Hatch"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -54200,7 +54200,7 @@
 /area/station/science/lobby)
 "slV" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "security maintenance hatch"
+	name = "Security Maintenance Hatch"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/unres{
@@ -69956,7 +69956,7 @@
 /area/station/commons/dorms)
 "xLU" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "ai_upload Access"
+	name = "AI Upload Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

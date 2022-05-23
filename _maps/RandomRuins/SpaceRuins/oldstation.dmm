@@ -7418,7 +7418,7 @@
 /area/space/nearstation)
 "KA" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "storage room"
+	name = "Storage Room"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/storage)
