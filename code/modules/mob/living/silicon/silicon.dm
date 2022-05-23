@@ -85,13 +85,13 @@
 	modularInterface.saved_identification = real_name || name
 	if(istype(src, /mob/living/silicon/robot))
 		modularInterface.saved_job = "Cyborg"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated/borg)
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/robot)
 	if(istype(src, /mob/living/silicon/ai))
 		modularInterface.saved_job = "AI"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated)
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
 	if(istype(src, /mob/living/silicon/pai))
 		modularInterface.saved_job = "pAI Messenger"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/integrated)
+		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)

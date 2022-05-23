@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - rscadd: "Smoke expands through newly opened airlocks if it hasn't finished spreading."
