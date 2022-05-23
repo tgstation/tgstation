@@ -335,7 +335,7 @@
  * * string - string to measure width
  * * font size - font size that the displayed string will be in, used to calculate font size multiplier
  */
-/datum/chatmessage/proc/approx_str_width(var/string, var/font_size = DEFAULT_FONT_SIZE)
+/datum/chatmessage/proc/approx_str_width(string, ont_size = DEFAULT_FONT_SIZE)
 	var/value = 0
 	var/font_multiplier = font_size / DEFAULT_FONT_SIZE
 	for(var/i in 1 to length(string))
