@@ -462,7 +462,6 @@
 				continue
 			var/feature_key_name = dna.features[initial(organ_path.feature_key)]
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
-			new_organ.set_sprite(feature_key_name)
 			new_organ.Insert(src)
 
 		update_body_parts()

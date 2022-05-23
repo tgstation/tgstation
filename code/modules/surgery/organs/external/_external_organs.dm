@@ -20,6 +20,8 @@
 	var/feature_key = ""
 	///Similar to feature key, but overrides it in the case you need more fine control over the iconstate, like with Tails.
 	var/render_key = ""
+	///Stores the dna.features[feature_key], used for external organs that can be surgically removed or inserted.
+	var/stored_feature_id = ""
 	/// The savefile_key of the preference this relates to. Used for the preferences UI.
 	var/preference
 
@@ -43,6 +45,7 @@
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
 	var/external_bodytypes = NONE
 
+
 /**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
 * I'm sorry
@@ -52,11 +55,18 @@
 	if(mob_sprite)
 		set_sprite(mob_sprite)
 
+	if(!(organ_flags & ORGAN_UNREMOVABLE))
+		color = "#[random_color()]" //A temporary random color that gets overwritten on insertion.
+
 /obj/item/organ/external/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	var/obj/item/bodypart/limb = reciever.get_bodypart(deprecise_zone(zone))
 
 	if(!limb)
 		return FALSE
+
+	if(!stored_feature_id) //We only want this set *once*
+		stored_feature_id = reciever.dna.features[feature_key]
+
 	reciever.external_organs.Add(src)
 	if(slot)
 		reciever.external_organs_slot[slot] = src
@@ -82,7 +92,7 @@
 		ownerlimb = null
 
 	if(slot)
-		organ_owner.external_organs_slot[slot] = null
+		organ_owner.external_organs_slot.Remove(src)
 	organ_owner.external_organs.Remove(src)
 	organ_owner.update_body_parts()
 
@@ -94,6 +104,7 @@
 
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
 /obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, physique)
+	set_sprite(stored_feature_id)
 	if(!sprite_datum)
 		return
 
@@ -111,12 +122,17 @@
 	overlay_list += appearance
 
 /obj/item/organ/external/proc/set_sprite(sprite_name)
+	stored_feature_id = sprite_name
 	sprite_datum = get_sprite_datum(sprite_name)
-	cache_key = generate_icon_cache()
+	cache_key = jointext(generate_icon_cache(), "_")
 
 ///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse)
 /obj/item/organ/external/proc/generate_icon_cache()
-	return "[sprite_datum.icon_state]_[render_key ? render_key : feature_key]"
+	. = list()
+	. += "[sprite_datum?.icon_state]"
+	. += "[render_key ? render_key : feature_key]"
+	. += "[draw_color]"
+	return .
 
 /**This exists so sprite accessories can still be per-layer without having to include that layer's
 *  number in their sprite name, which causes issues when those numbers change.
@@ -176,6 +192,7 @@
 				return
 			var/mob/living/carbon/human/human_owner = ownerlimb.owner
 			draw_color = human_owner.hair_color
+	color = draw_color
 	return TRUE
 
 ///Colorizes the limb it's inserted to, if required.

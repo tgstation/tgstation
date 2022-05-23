@@ -2,6 +2,7 @@
 /obj/item/organ/external/tail
 	name = "tail"
 	desc = "A severed tail. What did you cut this off of?"
+	icon_state = "severedtail"
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
@@ -11,9 +12,6 @@
 	dna_block = DNA_TAIL_BLOCK
 	///Does this tail have a wagging sprite, and is it currently wagging?
 	var/wag_flags = NONE
-	///Stores dna.features[tail_lizard]
-	var/tail_appearance
-
 
 /obj/item/organ/external/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -24,10 +22,6 @@
 	. = ..()
 	if(.)
 		RegisterSignal(reciever, COMSIG_ORGAN_WAG_TAIL, .proc/wag)
-		if(!tail_appearance)
-			tail_appearance = reciever.dna.features[feature_key]
-		else
-			reciever.dna.features[feature_key] = tail_appearance
 
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special)
 	if(wag_flags & WAG_WAGGING)
@@ -36,12 +30,10 @@
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
 
 /obj/item/organ/external/tail/generate_icon_cache()
-	. = list()
-	. += "[sprite_datum.icon_state]"
-	. += "[feature_key]"
+	. = ..()
 	if((wag_flags & WAG_ABLE) && (wag_flags & WAG_WAGGING))
 		. += "wagging"
-	return jointext(., "_")
+	return .
 
 /obj/item/organ/external/tail/get_global_feature_list()
 	return GLOB.tails_list
@@ -61,7 +53,6 @@
 
 /obj/item/organ/external/tail/cat
 	name = "tail"
-	icon_state = "severedtail"
 	preference = "feature_human_tail"
 	feature_key = "tail_cat"
 	color_source = ORGAN_COLOR_HAIR

@@ -1010,6 +1010,9 @@
 /// Takes an organ to slot in, and the slot to put it in, and puts in inside our lists properly
 /// To be called once the organ is actually inside us. NOT a helper proc
 /mob/living/carbon/proc/slot_in_organ(obj/item/organ/insert, slot)
+	if(istype(insert, /obj/item/organ/external)) //organ/external/Insert() handles this on it's own.
+		return
+
 	internal_organs |= insert
 	internal_organs_slot[slot] = insert
 	/// internal_organs_slot must ALWAYS be ordered in the same way as organ_process_order

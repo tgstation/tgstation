@@ -51,7 +51,7 @@
 		if(zone == BODY_ZONE_CHEST)
 			returnorg = getorganszone(BODY_ZONE_PRECISE_GROIN)
 
-	for(var/obj/item/organ/organ as anything in internal_organs)
+	for(var/obj/item/organ/organ as anything in internal_organs + external_organs)
 		if(zone == organ.zone)
 			returnorg += organ
 	return returnorg
