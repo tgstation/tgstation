@@ -27,24 +27,21 @@
  */
 
 /// Sets this action as the active ability for the passed mob
-/datum/action/innate/proc/set_ranged_abiliity(mob/living/on_who, text_to_show)
+/datum/action/innate/proc/set_ranged_ability(mob/living/on_who, text_to_show)
 	if(text_to_show)
 		to_chat(on_who, text_to_show)
 	on_who.click_intercept = src
-	if(ranged_mousepointer)
-		on_who.client?.mouse_override_icon = ranged_mousepointer
 
 /// Removes this action as the active ability of the passed mob
 /datum/action/innate/proc/unset_ranged_ability(mob/living/on_who, text_to_show)
 	if(text_to_show)
 		to_chat(on_who, text_to_show)
 	on_who.click_intercept = null
-	if(ranged_mousepointer)
-		on_who.client?.mouse_override_icon = initial(owner.client?.mouse_pointer_icon)
 
 /// Handles whenever a mob clicks on something
 /datum/action/innate/proc/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
 	if(!IsAvailable())
+		unset_ranged_ability(caller)
 		return FALSE
 	if(!clicked_on)
 		return FALSE

@@ -242,18 +242,22 @@
 
 /datum/action/innate/cult/master/cultmark/Activate()
 	if(owner.click_intercept == src)
-		owner.click_intercept = null
-		to_chat(owner, span_cult("You cease the marking ritual."))
+		unset_ranged_ability(owner, span_cult("You cease the marking ritual."))
 	else
-		owner.click_intercept = src
-		to_chat(owner, span_cult("You prepare to mark a target for your cult. <b>Click a target to mark them!</b>"))
+		set_ranged_ability(owner, span_cult("You prepare to mark a target for your cult. <b>Click a target to mark them!</b>"))
 	return TRUE
 
-/datum/action/innate/cult/master/cultmark/proc/InterceptClickOn(mob/caller, params, atom/clicked_on)
+/datum/action/innate/cult/master/cultmark/InterceptClickOn(mob/caller, params, atom/clicked_on)
 	var/turf/caller_turf = get_turf(caller)
 	if(!isturf(caller_turf))
 		return FALSE
 
+	if(!(clicked_on in view(7, caller_turf)))
+		return FALSE
+
+	return ..()
+
+/datum/action/innate/cult/master/cultmark/do_ability(mob/living/caller, params, atom/clicked_on)
 	var/datum/antagonist/cult/cultist = caller.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
 	if(!cultist)
 		CRASH("[type] was casted by someone without a cult antag datum.")
@@ -266,20 +270,17 @@
 		to_chat(caller, span_cult("The cult has already designated a target!"))
 		return FALSE
 
-	if(!(clicked_on in view(7, caller_turf)))
-		return FALSE
-
 	if(cult_team.set_blood_target(clicked_on, caller, cult_mark_duration))
 		to_chat(caller, span_cult("The marking rite is complete! It will last for [DisplayTimeText(cult_mark_duration)] seconds."))
-		owner.click_intercept = null
+		unset_ranged_ability(caller)
 		COOLDOWN_START(src, cult_mark_cooldown, cult_mark_cooldown_duration)
 		UpdateButtons()
 		addtimer(CALLBACK(src, .proc/UpdateButtons), cult_mark_cooldown_duration + 1)
 		return TRUE
 
 	to_chat(caller, span_cult("The marking rite failed!"))
-	owner.click_intercept = null
-	return FALSE
+	unset_ranged_ability(caller)
+	return TRUE
 
 /datum/action/innate/cult/ghostmark //Ghost version
 	name = "Blood Mark your Target"
@@ -373,16 +374,14 @@
 
 /datum/action/innate/cult/master/pulse/Activate()
 	if(owner.click_intercept == src)
-		owner.click_intercept = null
-		to_chat(owner, span_cult("You cease your preparations."))
+		unset_ranged_ability(owner, span_cult("You cease your preparations."))
 	else
-		owner.click_intercept = src
-		to_chat(owner, span_cult("You prepare to tear through the fabric of reality... <b>Click a target to sieze them!</b>"))
+		set_ranged_ability(owner, span_cult("You prepare to tear through the fabric of reality... <b>Click a target to sieze them!</b>"))
 	return TRUE
 
-/datum/action/innate/cult/master/pulse/proc/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
+/datum/action/innate/cult/master/pulse/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
 	if(caller.incapacitated())
-		caller.click_intercept = null
+		unset_ranged_ability(caller)
 		return FALSE
 
 	var/turf/caller_turf = get_turf(caller)
@@ -395,6 +394,9 @@
 	if(clicked_on == caller)
 		return FALSE
 
+	return ..()
+
+/datum/action/innate/cult/master/pulse/do_ability(mob/living/caller, params, atom/clicked_on)
 	var/atom/throwee = throwee_ref?.resolve()
 
 	if(QDELETED(throwee))

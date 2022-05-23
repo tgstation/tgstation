@@ -110,20 +110,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(owner.click_intercept == src)
 		unset_ranged_ability(owner, disable_text)
 	else
-		set_ranged_abiliity(owner, enable_text)
+		set_ranged_ability(owner, enable_text)
 	return TRUE
 
-/datum/action/innate/ai/ranged/set_ranged_abiliity(mob/living/on_who, text_to_show)
+/datum/action/innate/ai/ranged/set_ranged_ability(mob/living/on_who, text_to_show)
 	. = ..()
-	if(text_to_show)
-		to_chat(on_who, text_to_show)
 	if(ranged_mousepointer)
 		on_who.client?.mouse_override_icon = ranged_mousepointer
 
 /datum/action/innate/ai/ranged/unset_ranged_ability(mob/living/on_who, text_to_show)
 	. = ..()
-	if(text_to_show)
-		to_chat(on_who, text_to_show)
 	if(ranged_mousepointer)
 		on_who.client?.mouse_override_icon = initial(owner.client?.mouse_pointer_icon)
 
@@ -434,7 +430,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		to_chat(caller, span_warning("That machine can't be overridden!"))
 		return FALSE
 
-	caller.playsound_local(caller, 'sound/misc/interference.ogg', 50, 0, use_reverb = FALSE)
+	caller.playsound_local(caller, 'sound/misc/interference.ogg', 50, FALSE, use_reverb = FALSE)
 	adjust_uses(-1)
 
 	if(uses)

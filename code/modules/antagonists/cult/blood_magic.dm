@@ -223,11 +223,9 @@
 
 /datum/action/innate/cult/blood_spell/horror/Activate()
 	if(owner.click_intercept == src)
-		unset_ranged_ability(owner, disable_text)
-		to_chat(on_who, span_cult("You dispel the magic..."))
+		unset_ranged_ability(owner, span_cult("You prepare to horrify a target..."))
 	else
-		set_ranged_abiliity(owner, enable_text)
-		to_chat(on_who, span_cult("You prepare to horrify a target..."))
+		set_ranged_ability(owner, span_cult("You dispel the magic..."))
 	return TRUE
 
 /datum/action/innate/cult/blood_spell/horror/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
@@ -249,8 +247,8 @@
 	clicked_on.hallucination = max(clicked_on.hallucination, 120)
 	SEND_SOUND(caller, sound('sound/effects/ghost.ogg', FALSE, TRUE, 50))
 
-	var/image/fake_image = image('icons/effects/cult/effects.dmi', clicked_on, "bloodsparkles", ABOVE_MOB_LAYER)
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", fake_image, NONE)
+	var/image/sparkle_image = image('icons/effects/cult/effects.dmi', clicked_on, "bloodsparkles", ABOVE_MOB_LAYER)
+	clicked_on.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", sparkle_image, NONE)
 
 	addtimer(CALLBACK(clicked_on, /atom/.proc/remove_alt_appearance, "cult_apoc", TRUE), 4 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
 	to_chat(caller, span_cultbold("[clicked_on] has been cursed with living nightmares!"))
