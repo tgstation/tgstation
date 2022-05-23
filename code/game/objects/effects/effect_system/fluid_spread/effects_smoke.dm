@@ -436,7 +436,7 @@
 			message_admins("Smoke: ([ADMIN_VERBOSEJMP(location)])[contained]. No associated key.")
 		log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
 
-/datum/effect_system/fluid_spread/smoke/chem/start()
+/datum/effect_system/fluid_spread/smoke/chem/start(log = FALSE)
 	var/start_loc = holder ? get_turf(holder) : src.location
 	var/mixcolor = mix_color_from_reagents(chemholder.reagent_list)
 	var/obj/effect/particle_effect/fluid/smoke/chem/smoke = new effect_type(start_loc, new /datum/fluid_group(amount))
