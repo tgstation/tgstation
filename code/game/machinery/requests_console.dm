@@ -115,14 +115,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	. = ..()
 
 	// Init by checking our area, stolen from APC code
-	var/area/our_area = get_area(loc)
-	if(areastring) // if we have an areastring override
-		area = get_area_instance_from_text(areastring)
-		if(!area)
-			area = our_area
-			stack_trace("Bad areastring path for [src], [areastring]")
-	else if(isarea(our_area) && areastring == null)
-		area = our_area
+	area = get_area(loc)
 
 	// Naming and department sets
 	if(auto_name) // If autonaming, just pick department and name from the area code.
