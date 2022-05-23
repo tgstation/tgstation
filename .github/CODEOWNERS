@@ -96,6 +96,9 @@
 /code/modules/mining/ @Fikou
 /code/modules/awaymissions/ @Fikou
 
+# Ghilker
+/icons/ass/ @Ghilker
+
 # Jordie0608
 
 /SQL/ @Jordie0608
@@ -135,7 +138,6 @@
 
 /_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
 /icons/ @Imaginos16 @Krysonism @Twaticus
-/icons/ass/ @Ghilker
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
