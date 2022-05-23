@@ -79,8 +79,10 @@
 ///Camera Vision - Prevents flashes, blocks tracking.
 /obj/item/mod/module/welding/camera_vision
 	name = "MOD camera vision module"
-	desc = "A module installed into the suit's helmet. This replaces the standard visor with a set of camera eyes, \
-		which protect from bright flashes as well as using special track-blocking technology. Become the unseen."
+	desc = "A module installed into the suit's helmet. This specialized piece of technology is built for subterfuge, \
+		replacing the standard visor with a nanotech display; capable of displaying specialized imagery at \
+		just the right frequency to jam all known forms of camera tracking and facial recognition, \
+		as well as automatically dimming incoming flashes of light to protect the user's eyes. Become the unseen."
 	icon_state = "welding_camera"
 	removable = FALSE
 	complexity = 0
@@ -102,15 +104,20 @@
 //Ninja Star Dispenser - Dispenses ninja stars.
 /obj/item/mod/module/dispenser/ninja
 	name = "MOD ninja star dispenser module"
-	desc = "This piece of Spider Clan technology can immediately print a ninja-star using pure electricity."
+	desc = "This piece of Spider Clan technology can exploit known energy-matter equivalence principles, \
+		using the nanites already hosted in the wearer's suit to transmute into monomolecular shuriken. \
+		While these lack the intense bleeding edge of conventional throwing stars, \
+		they have been set to electrify fleeing targets; and branded with the Spider Clan symbol."
 	dispense_type = /obj/item/throwing_star/stamina/ninja
 	cooldown_time = 0.5 SECONDS
 
 ///Hacker - This module hooks onto your right-clicks with empty hands and causes ninja actions.
 /obj/item/mod/module/hacker
 	name = "MOD hacker module"
-	desc = "This piece of Spider Clan technology hooks into the internal electronics of a machine to hack it. \
-		It can also zap people with electricity on disarming attacks."
+	desc = "Built for one purpose, electronic warfare, this module is built into the hands. \
+		Using near-field communication alongside precise electro-stimulation of the wires in machines, \
+		this decker's dream is normally used to pass through doors like a phantom. \
+		It's also capable of non-precise electro-stimulation of an assassin-saboteur's opponents on disarming attacks."
 	icon_state = "hacker"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/hacker)
@@ -146,8 +153,12 @@
 ///Weapon Recall - Teleports your katana to you, prevents gun use.
 /obj/item/mod/module/weapon_recall
 	name = "MOD weapon recall module"
-	desc = "This piece of Spider Clan technology connects to an energy katana that will be recalled \
-		to the user when the module is used. To emphasise blade mastery, it prevents the user from using ranged weaponry."
+	desc = "The cornerstone of a clanmember's life as a blademaster, and a module symbolizing their eternal bond with their weapon. \
+		This hooks to the micro bluespace drive inside an energy katana's handle, capable of recalling it to the user's \
+		skilled hands wherever they are. However, those that make such a bond with their weapon are cursed to \
+		fusing their existence with acts of combat, with a singular purpose; Cutting Down Their Opponent. \
+		Their hand a hand that is cutting, their body a body that is cutting, their mind, a mind that is cutting. \
+		Ranged weapons are forbidden."
 	icon_state = "recall"
 	removable = FALSE
 	module_type = MODULE_USABLE
@@ -236,8 +247,9 @@
 /obj/item/mod/module/dna_lock/reinforced
 	name = "MOD reinforced DNA lock module"
 	desc = "A module which engages with the various locks and seals tied to the suit's systems, \
-		enabling it to only be worn by someone corresponding with the user's exact DNA profile; \
-		due to its' reinforcements this one cannot be shorted by EMPs, it also reacts in a special way to incompatible DNAs."
+		enabling it to only be worn by someone corresponding with the user's exact DNA profile. \
+		Due to utilizing a skintight dampening shield, this one is entirely sealed against electromagnetic interference; \
+		it also dutifully protects the secrets of the Spider Clan from unknowing outsiders."
 	icon_state = "dnalock_ninja"
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 
@@ -255,7 +267,9 @@
 //EMP Pulse - In addition to normal shielding, can also launch an EMP itself.
 /obj/item/mod/module/emp_shield/pulse
 	name = "MOD EMP pulse module"
-	desc = "This modification to the EMP shield lets it \"launch\" it's electromagnetic field inhibitor, causing an EMP of it's own."
+	desc = "This module is normally set to activate on dramatic gestures, inverting and expanding the suit's \
+		EMP dampening shield to cause an electromagnetic pulse of its own. While this won't interfere with the wearer, \
+		it will piss off everyone around them."
 	icon_state = "emp_pulse"
 	module_type = MODULE_USABLE
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
@@ -272,7 +286,10 @@
 ///Status Readout - Puts a lot of information including health, nutrition, fingerprints, temperature to the suit TGUI.
 /obj/item/mod/module/status_readout
 	name = "MOD status readout module"
-	desc = "A module installed into the suit's spine. It reads out all information the user needs at all times."
+	desc = "A once-common module, this technology went unfortunately out of fashion; \
+		and right into the arachnid grip of the Spider Clan. This hooks into the suit's spine, \
+		capable of capturing and displaying all possible biometric data of the wearer; sleep, nutrition, fitness, fingerprints, \
+		and even useful information such as their overall health and wellness."
 	icon_state = "status"
 	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
@@ -310,7 +327,9 @@
 ///Energy Net - Ensnares enemies in a net that prevents movement.
 /obj/item/mod/module/energy_net
 	name = "MOD energy net module"
-	desc = "A custom-built energy net launcher that ensnares targets, preventing them from moving."
+	desc = "A custom-built net-thrower. While conventional implementations of this capturing device \
+		tilize monomolecular fibers or cutting razorwire, this uses hardlight technology to deploy a \
+		trapping field capable of immobilizing even the strongest opponents."
 	icon_state = "energy_net"
 	removable = FALSE
 	module_type = MODULE_ACTIVE
@@ -346,7 +365,12 @@
 ///Adrenaline Boost - Stops all stuns the ninja is affected with, increases his speed.
 /obj/item/mod/module/adrenaline_boost
 	name = "MOD adrenaline boost module"
-	desc = "Injects a secret chemical concoction into the user, stopping all immobilizations. Needs to be refilled with radium."
+	desc = "The secrets of the Spider Clan are many. The exact specifications of their suits, \
+		the techniques they use to make every singular cut make their enemies weep with admiration, \
+		but one of their greatest mysteries is the chemical compound their assassin-saboteurs use in times of need. \
+		It's capable of clearing any fatigue whatsoever from the user, any immobilizing effect, and can even \
+		cure total paralysis. All that's known is that the fluid requires radiation to properly 'cook,' \
+		so this module demands radium to be refilled with."
 	icon_state = "adrenaline_boost"
 	removable = FALSE
 	module_type = MODULE_USABLE

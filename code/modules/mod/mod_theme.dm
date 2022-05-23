@@ -1018,13 +1018,12 @@
 /datum/mod_theme/ninja
 	name = "ninja"
 	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
-	extended_desc = "This is a prototype powered exoskeleton, a design not seen in hundreds of years, the first \
-		post-void war era modular suit to ever be safely utilized by an operator. This ancient clunker is still functional, \
-		though it's missing several modern-day luxuries from updated Nakamura Engineering designs. \
-		Primarily, the suit's myoelectric suit layer is entirely non-existant, and the servos do very little to \
-		help distribute the weight evenly across the wearer's body, making it slow and bulky to move in. \
-		The internal heads-up display is rendered in nearly unreadable cyan, as the visor suggests, \
-		leaving the user unable to see long distances. However, the way the helmet retracts is pretty cool."
+	extended_desc = "A suit of nano-enhanced armor designed specifically for Spider Clan assassin-saboteurs. \
+		This MODsuit employs the cutting edge of stealth and combat technology, built skin-tight but just as durable as \
+		suits two or three times as thick. The nanomachines making up the outermost layer of armor \
+		are capable of shifting their form into almost-microscopic radiating fins, rendering the suit itself \
+		nigh-immune to even volcanic heat. It's entirely sealed against even the strongest acids, \
+		and the myoelectric artifical muscles of the suit leave it light as a feather during movement."
 	default_skin = "ninja"
 	armor = list(MELEE = 40, BULLET = 30, LASER = 20, ENERGY = 30, BOMB = 30, BIO = 100, FIRE = 100, ACID = 100, WOUND = 10)
 	resistance_flags = LAVA_PROOF|FIRE_PROOF|ACID_PROOF
