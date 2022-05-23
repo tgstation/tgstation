@@ -16,7 +16,7 @@
 	///Is this source self-replenishing?
 	var/refilling = FALSE
 	///Can this dispenser be opened using a wrench?
-	var/openable = TRUE
+	var/openable = FALSE
 	///Is this dispenser slowly leaking it's reagent?
 	var/leaking = FALSE
 
@@ -80,7 +80,7 @@
 	if(!openable)
 		return FALSE
 	leaking = !leaking
-	to_chat(user, span_notice("You [leaking ? "open" : "close"] a small tap on the back of [src]."))
+	balloon_alert(user, "[leaking ? "opened" : "closed"] [src]'s tap")
 	log_game("[key_name(user)] [leaking ? "opened" : "closed"] [src]")
 	if(leaking && reagents)
 		reagents.expose(get_turf(src), TOUCH, 10 / max(10, reagents.total_volume))
@@ -95,6 +95,7 @@
 	name = "water tank"
 	desc = "A water tank."
 	icon_state = "water"
+	openable = TRUE
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
@@ -108,12 +109,14 @@
 	icon_state = "foam"
 	reagent_id = /datum/reagent/firefighting_foam
 	tank_volume = 500
+	openable = TRUE
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
 	desc = "A tank full of industrial welding fuel. Do not consume."
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
+	openable = TRUE
 
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
@@ -182,7 +185,6 @@
 	anchored = TRUE
 	density = FALSE
 	can_be_tanked = FALSE
-	openable = FALSE
 
 /obj/structure/reagent_dispensers/wall/peppertank
 	name = "pepper spray refiller"
@@ -203,7 +205,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = TRUE
-	openable = FALSE
 	tank_volume = 500
 	var/paper_cups = 25 //Paper cups left from the cooler
 
@@ -233,6 +234,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	desc = "Beer is liquid bread, it's good for you..."
 	icon_state = "beer"
 	reagent_id = /datum/reagent/consumable/ethanol/beer
+	openable = TRUE
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
 	explosion(src, heavy_impact_range = 3, light_impact_range = 5, flame_range = 10, flash_range = 7)
@@ -253,6 +255,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	icon_state = "vat"
 	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/cooking_oil
+	openable = TRUE
 
 /obj/structure/reagent_dispensers/servingdish
 	name = "serving dish"
