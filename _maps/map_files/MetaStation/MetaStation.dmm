@@ -30403,7 +30403,6 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/structure/table,
 /obj/item/stock_parts/cell/high{
 	pixel_y = -4
 	},
