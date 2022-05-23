@@ -113,30 +113,19 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		set_ranged_abiliity(owner, enable_text)
 	return TRUE
 
-/datum/action/innate/ai/ranged/proc/set_ranged_abiliity(mob/living/on_who, text_to_show)
+/datum/action/innate/ai/ranged/set_ranged_abiliity(mob/living/on_who, text_to_show)
+	. = ..()
 	if(text_to_show)
 		to_chat(on_who, text_to_show)
-	on_who.click_intercept = src
 	if(ranged_mousepointer)
-		on_who.client?.mouse_pointer_icon = ranged_mousepointer
+		on_who.client?.mouse_override_icon = ranged_mousepointer
 
-/datum/action/innate/ai/ranged/proc/unset_ranged_ability(mob/living/on_who, text_to_show)
+/datum/action/innate/ai/ranged/unset_ranged_ability(mob/living/on_who, text_to_show)
+	. = ..()
 	if(text_to_show)
 		to_chat(on_who, text_to_show)
-	on_who.click_intercept = null
 	if(ranged_mousepointer)
-		on_who.client?.mouse_pointer_icon = initial(owner.client?.mouse_pointer_icon)
-
-/datum/action/innate/ai/ranged/proc/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
-	if(!IsAvailable())
-		return FALSE
-	if(!clicked_on)
-		return FALSE
-
-	return do_ability(caller, clicked_on)
-
-/datum/action/innate/ai/ranged/proc/do_ability(mob/living/caller, params, atom/clicked_on)
-	return FALSE
+		on_who.client?.mouse_override_icon = initial(owner.client?.mouse_pointer_icon)
 
 /// The base module type, which holds info about each ability.
 /datum/ai_module

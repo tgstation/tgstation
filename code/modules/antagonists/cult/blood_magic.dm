@@ -215,6 +215,55 @@
 		qdel(src)
 
 // melbert todo: readd the hallucination spell
+/datum/action/innate/cult/blood_spell/horror
+	name = "Hallucinations"
+	desc = "Gives hallucinations to a target at range. A silent and invisible spell."
+	button_icon_state = "horror"
+	charges = 4
+
+/datum/action/innate/cult/blood_spell/horror/Activate()
+	if(owner.click_intercept == src)
+		unset_ranged_ability(owner, disable_text)
+		to_chat(on_who, span_cult("You dispel the magic..."))
+	else
+		set_ranged_abiliity(owner, enable_text)
+		to_chat(on_who, span_cult("You prepare to horrify a target..."))
+	return TRUE
+
+/datum/action/innate/cult/blood_spell/horror/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
+	var/turf/caller_turf = get_turf(caller)
+	if(!isturf(caller_turf))
+		return FALSE
+
+	if(!ishuman(clicked_on) || get_dist(caller, clicked_on) > 7)
+		return FALSE
+
+	var/mob/living/carbon/human/human_clicked = clicked_on
+	if(IS_CULTIST(human_clicked))
+		return FALSE
+
+	return ..()
+
+/datum/action/innate/cult/blood_spell/horror/do_ability(mob/living/caller, params, mob/living/carbon/human/clicked_on)
+
+	clicked_on.hallucination = max(clicked_on.hallucination, 120)
+	SEND_SOUND(caller, sound('sound/effects/ghost.ogg', FALSE, TRUE, 50))
+
+	var/image/fake_image = image('icons/effects/cult/effects.dmi', clicked_on, "bloodsparkles", ABOVE_MOB_LAYER)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", fake_image, NONE)
+
+	addtimer(CALLBACK(clicked_on, /atom/.proc/remove_alt_appearance, "cult_apoc", TRUE), 4 MINUTES, TIMER_OVERRIDE|TIMER_UNIQUE)
+	to_chat(caller, span_cultbold("[clicked_on] has been cursed with living nightmares!"))
+
+	charges--
+	desc = base_desc
+	desc += "<br><b><u>Has [charges] use\s remaining</u></b>."
+	UpdateButtons()
+	if(charges <= 0)
+		to_chat(caller, span_cult("You have exhausted the spell's power!"))
+		qdel(src)
+
+	return TRUE
 
 /datum/action/innate/cult/blood_spell/veiling
 	name = "Conceal Presence"
