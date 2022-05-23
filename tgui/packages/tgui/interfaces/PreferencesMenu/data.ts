@@ -5,6 +5,7 @@ import { Gender } from "./preferences/gender";
 export enum Food {
   Alcohol = "ALCOHOL",
   Breakfast = "BREAKFAST",
+  Bugs = "BUGS",
   Cloth = "CLOTH",
   Dairy = "DAIRY",
   Fried = "FRIED",
@@ -20,7 +21,6 @@ export enum Food {
   Sugar = "SUGAR",
   Toxic = "TOXIC",
   Vegetables = "VEGETABLES",
-  Bugs = "BUGS",
 }
 
 export enum JobPriority {
