@@ -156,7 +156,7 @@
 	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
 	var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke = new
 	smoke.set_up(1, holder = src, location = get_turf(src), carry = capsaicin_holder)
-	smoke.start()
+	smoke.start(log = TRUE)
 	QDEL_NULL(capsaicin_holder) // Reagents have a ref to their holder which has a ref to them. No leaks please.
 
 /obj/item/mod/module/pepper_shoulders/proc/on_check_shields()

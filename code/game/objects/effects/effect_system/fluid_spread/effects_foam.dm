@@ -181,7 +181,7 @@
 	if(!isnull(result_type))
 		src.result_type = result_type
 
-/datum/effect_system/fluid_spread/foam/start()
+/datum/effect_system/fluid_spread/foam/start(log = FALSE)
 	var/obj/effect/particle_effect/fluid/foam/foam = new effect_type(location, new /datum/fluid_group(amount))
 	var/foamcolor = mix_color_from_reagents(chemholder.reagent_list)
 	if(reagent_scale > 1) // Make room in case we were created by a particularly stuffed payload.
@@ -190,7 +190,8 @@
 	foam.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 	if(!isnull(result_type))
 		foam.result_type = result_type
-	help_out_the_admins(foam, holder, location)
+	if (log)
+		help_out_the_admins(foam, holder, location)
 	SSfoam.queue_spread(foam)
 
 

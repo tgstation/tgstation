@@ -166,11 +166,11 @@
  * - location: Where to produce the smoke cloud.
  * - smoke_type: The smoke typepath to spawn.
  */
-/proc/do_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, smoke_type = /obj/effect/particle_effect/fluid/smoke)
+/proc/do_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, smoke_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.effect_type = smoke_type
 	smoke.set_up(amount = amount, holder = holder, location = location)
-	smoke.start()
+	smoke.start(log = log)
 
 /////////////////////////////////////////////
 // Quick smoke
@@ -322,7 +322,7 @@
 	. = ..()
 	blast = blast_radius
 
-/datum/effect_system/fluid_spread/smoke/freezing/start()
+/datum/effect_system/fluid_spread/smoke/freezing/start(log = FALSE)
 	if(blast)
 		for(var/turf/T in RANGE_TURFS(blast, location))
 			Chilled(T)
@@ -444,7 +444,8 @@
 
 	if(mixcolor)
 		smoke.add_atom_colour(mixcolor, FIXED_COLOUR_PRIORITY) // give the smoke color, if it has any to begin with
-	help_out_the_admins(smoke, holder, location)
+	if (log)
+		help_out_the_admins(smoke, holder, location)
 	smoke.spread() // Making the smoke spread immediately.
 
 /**

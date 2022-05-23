@@ -50,7 +50,7 @@ Burning extracts:
 
 	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 	smoke.set_up(7, holder = src, location = get_turf(user), carry = tmp_holder)
-	smoke.start()
+	smoke.start(log = TRUE)
 	..()
 
 /obj/item/slimecross/burning/purple
@@ -125,7 +125,7 @@ Burning extracts:
 	user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 10)
 	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 	smoke.set_up(7, holder = src, location = get_turf(user), carry = tmp_holder)
-	smoke.start()
+	smoke.start(log = TRUE)
 	..()
 
 /obj/item/slimecross/burning/silver

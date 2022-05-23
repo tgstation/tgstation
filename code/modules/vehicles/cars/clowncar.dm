@@ -156,7 +156,7 @@
 			randomchems.add_reagent(get_random_reagent_id(), 100)
 			var/datum/effect_system/fluid_spread/foam/foam = new
 			foam.set_up(200, holder = src, location = loc, carry = randomchems)
-			foam.start()
+			foam.start(log = TRUE)
 		if(3)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car turns on its singularity disguise system."))
 			icon = 'icons/obj/singularity.dmi'
@@ -170,7 +170,7 @@
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
 			smoke.set_up(4, holder = src, location = src, carry = funnychems)
 			smoke.attach(src)
-			smoke.start()
+			smoke.start(log = TRUE)
 		if(5)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car starts dropping an oil trail."))
 			RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/cover_in_oil)

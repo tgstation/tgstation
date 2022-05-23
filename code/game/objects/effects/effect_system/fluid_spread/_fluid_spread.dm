@@ -122,10 +122,11 @@
 	src.location = location
 	src.amount = amount
 
-/datum/effect_system/fluid_spread/start()
+/datum/effect_system/fluid_spread/start(log = FALSE)
 	var/location = src.location || get_turf(holder)
 	var/obj/effect/particle_effect/fluid/flood = new effect_type(location, new /datum/fluid_group(amount))
-	help_out_the_admins(flood, holder, location)
+	if (log) // Smoke is used as an aesthetic effect in a tonne of places and we don't want, say, a broken secway spamming admin chat.
+		help_out_the_admins(flood, holder, location)
 	flood.spread()
 
 /**
