@@ -43,7 +43,7 @@
 /turf/cordon/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
 	return FALSE
 
-/area/cordon
+/area/misc/cordon
 	name = "CORDON"
 	icon_state = "cordon"
 	static_lighting = FALSE
@@ -51,7 +51,7 @@
 	area_flags = UNIQUE_AREA|NOTELEPORT|HIDDEN_AREA|NO_ALERTS
 	requires_power = FALSE
 
-/area/cordon/Entered(atom/movable/arrived, area/old_area)
+/area/misc/cordon/Entered(atom/movable/arrived, area/old_area)
 	. = ..()
 	for(var/mob/living/enterer as anything in arrived.get_all_contents_type(/mob/living))
 		to_chat(enterer, span_userdanger("This was a bad idea..."))

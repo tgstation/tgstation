@@ -412,21 +412,6 @@
 	icon_state = "gateway"
 	ambience_index = AMBIENCE_ENGI
 
-//Command - AI Monitored
-
-/area/ai_monitored/command/storage/eva
-	name = "EVA Storage"
-	icon_state = "eva"
-	ambience_index = AMBIENCE_DANGER
-
-/area/ai_monitored/command/storage/eva/upper
-	name = "Upper EVA Storage"
-
-/area/ai_monitored/command/nuke_storage
-	name = "\improper Vault"
-	icon_state = "nuke_storage"
-	airlock_wires = /datum/wires/airlock/command
-
 //Commons
 
 /area/station/commons
@@ -828,19 +813,18 @@
 
 //Engineering - Construction
 
-/area/construction
+/area/station/construction
 	name = "\improper Construction Area"
-	icon = 'icons/area/areas_station.dmi'
 	icon_state = "construction"
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/construction/mining/aux_base
+/area/station/construction/mining/aux_base
 	name = "Auxiliary Base Construction"
 	icon_state = "aux_base_construction"
 	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
 
-/area/construction/storage_wing
+/area/station/construction/storage_wing
 	name = "\improper Storage Wing"
 	icon_state = "storage_wing"
 
@@ -1222,16 +1206,6 @@
 /area/station/security/checkpoint/customs/aft
 	name = "Aft Customs"
 	icon_state = "customs_point_aft"
-
-//Security - AI Monitored
-/area/ai_monitored/security/armory
-	name = "\improper Armory"
-	icon_state = "armory"
-	ambience_index = AMBIENCE_DANGER
-	airlock_wires = /datum/wires/airlock/security
-
-/area/ai_monitored/security/armory/upper
-	name = "Upper Armory"
 
 //Cargo
 

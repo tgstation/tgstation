@@ -3,12 +3,12 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "e" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "h" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -17,7 +17,7 @@
 	pixel_y = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "k" = (
 /obj/item/shard{
 	pixel_x = 3;
@@ -39,7 +39,7 @@
 	pixel_y = 4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "u" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -49,7 +49,7 @@
 "z" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "G" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -58,7 +58,7 @@
 	pixel_y = -4
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "M" = (
 /obj/item/shard{
 	pixel_x = -8;

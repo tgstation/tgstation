@@ -359,6 +359,16 @@
 		return FALSE
 	return TRUE
 
+/mob/living/simple_animal/hostile/bee/consider_wakeup()
+	// If bees are chilling in their nest, they're not actively looking for targets.
+	if (!beehome || loc == beehome)
+		return ..()
+
+	idle = min(100, idle + 1)
+	if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
+		toggle_ai(AI_ON)
+		forceMove(beehome.drop_location())
+
 /**
  * The item representing a held queen bee.
  * Contains the actual queen bee.
@@ -372,6 +382,21 @@
 	/// The queen be we are pretending to bee.
 	var/mob/living/simple_animal/hostile/bee/queen/queen
 
+/obj/item/queen_bee/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/obj/item/queen_bee/Destroy()
+	QDEL_NULL(queen)
+	return ..()
+
+/obj/item/queen_bee/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == queen)
+		queen = null
+		// the bee should not exist without a bee.
+		if(!QDELETED(src))
+			qdel(src)
 
 /obj/item/queen_bee/attackby(obj/item/tool, mob/user, params)
 	if(!istype(tool, /obj/item/reagent_containers/syringe))
@@ -419,26 +444,11 @@
 	qdel(src)
 	return TOXLOSS
 
-/obj/item/queen_bee/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+/obj/item/queen_bee/bought
 
 /obj/item/queen_bee/bought/Initialize(mapload)
 	. = ..()
 	queen = new(src)
-
-/obj/item/queen_bee/Destroy()
-	QDEL_NULL(queen)
-	return ..()
-
-/mob/living/simple_animal/hostile/bee/consider_wakeup()
-	if (beehome && loc == beehome) // If bees are chilling in their nest, they're not actively looking for targets
-		idle = min(100, ++idle)
-		if(idle >= BEE_IDLE_ROAMING && prob(BEE_PROB_GOROAM))
-			toggle_ai(AI_ON)
-			forceMove(beehome.drop_location())
-	else
-		..()
 
 /mob/living/simple_animal/hostile/bee/short
 	desc = "These bees seem unstable and won't survive for long."

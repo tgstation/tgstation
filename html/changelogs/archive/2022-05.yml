@@ -976,3 +976,57 @@
   - bugfix: There are no longer two turfs on one tile in Hilbert's Research Facility.
       In case you've stopped by and some portion of it has been oddly depressurized
       (maybe? i dunno), you should be fine now.
+2022-05-23:
+  Fikou:
+  - balance: Halves the damage of EMPs to MODsuit users to 5 from 10
+  - balance: Puts EMP shields on the syndicate modsuit
+  - rscadd: Adds advanced EMP shield modules, they shield your whole body from EMPs.
+      Available in the nukie uplink
+  Ghilker:
+  - rscadd: Cascade rift is now a portal that teleports you to centcom evac instead
+      of dusting you.
+  - balance: There are more crystal walls spawned around the station and the timing
+      of the cascade has been changed to start the one minute countdown after the
+      portal has been eaten.
+  MNarath1:
+  - bugfix: fixes goliath not chasing people
+  Melbert:
+  - bugfix: Fixes a rare hard-delete with queen bees.
+  - bugfix: Nuke cinematics should show up again, more often. Hopefully.
+  - bugfix: Malfunctioning AI's Doomsday cinematic also shows again.
+  - code_imp: Sorted, doc'd, and minorly improved the code of nuclear bombs.
+  - refactor: Refactored cinematics a teeny bit.
+  MidoriWroth:
+  - bugfix: Removes the unnecessary light switch in Meta Station medbay central.
+  PK_Sonikal:
+  - rscadd: The Survivalist Bunker, occasionally found by space explorers, now has
+      a pharmacy for chemistry.
+  Rhials:
+  - rscadd: Adds a new random event -- Scrubber Clog! Scrubbers may now randomly be
+      clogged by mobs, which will result in them crawling out and getting all over
+      the place. This can be fixed by pumping the scrubber with a plunger, or by just
+      welding the scrubber shut and leaving it for a while.
+  - rscadd: The plunger has been integrated into the janitor's arsenal. You may now
+      purchase them from the Janidrobe and equip them into janibelts.
+  Son-of-Space:
+  - qol: Moved around some overlapping wall objects in engineering on IceBox
+  - qol: Removed a 2x2 wall in engineering on IceBox
+  - bugfix: Swapped the public mining APC with its directional subtype version on
+      IceBox
+  - qol: some sinks were added to medbay on icebox
+  - qol: a poster in the way of AI/ghosts was moved on icebox.
+  - bugfix: The rest of the overlapping wall objects on IceBox are no longer overlapping.
+  - qol: Improved the view underneath the Warden's Office on Tramstation
+  TemporalOroboros:
+  - rscadd: Smoke expands through newly opened airlocks if it hasn't finished spreading.
+  san7890:
+  - bugfix: Nanotrasen's Reality Corrections Office has stumbled across an older station
+      with a bunch of abandoned spacemen abroad. Rather than rescue them, they elected
+      to fix the weird lighting issues their external portions had, and then flew
+      off. Those spaceman are still out there.
+  stylemistake:
+  - refactor: 'Improved UI for personal crafting: has category groups, better full-sized
+      UI, more space-efficient and readable compact mode.'
+  vincentiusvin:
+  - bugfix: fixed lavaland syndiebase atmos distro being unconnected
+  - bugfix: gave the lavaland syndie atmos it's atmos control computer back
