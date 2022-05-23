@@ -45,9 +45,9 @@
 		/area/station/command/heads_quarters/ce,
 		/area/station/science/robotics,
 		/area/station/maintenance,
-		/area/construction,
+		/area/station/construction,
 		/area/station/commons/vacant_room/commissary,
-		/area/survivalpod,
+		/area/misc/survivalpod,
 	))
 	if(is_type_in_typecache(A, engine_dirt_areas))
 		if(prob(3))
@@ -96,7 +96,7 @@
 
 		//Areas where gibs will be present. Robusting probably happened some time ago.
 	var/static/list/gib_covered_areas = typecacheof(list(
-		/area/ai_monitored/turret_protected,
+		/area/station/ai_monitored/turret_protected,
 		/area/station/security,
 		/area/station/command/heads_quarters/hos,
 	))
