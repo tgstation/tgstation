@@ -14,6 +14,7 @@
 	can_bayonet = TRUE
 	knife_x_offset = 20
 	knife_y_offset = 12
+	/// Checks if oil needs to get dropped when the KA fires.
 	var/drop_oil = FALSE
 	var/mob/holder
 	var/max_mod_capacity = 100
