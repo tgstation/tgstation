@@ -273,7 +273,6 @@
 		ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
 		ITEM_SLOT_DEX_STORAGE
 	)
-	var/kicked_over = FALSE
 
 /obj/item/reagent_containers/glass/bucket/Initialize(mapload)
 	. = ..()
@@ -283,11 +282,13 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+///Gets called when someone sucessfuly kicks a bucket, splashing it's reagents.
 /obj/item/reagent_containers/glass/bucket/proc/bucket_got_kicked()
 	SpinAnimation(7,1)
 	playsound(src, 'sound/effects/slosh.ogg', 50, TRUE)
 	chem_splash(loc, null, 2, list(reagents))
 
+///Checks when something has crossed the bucket and if the bucket will get kicked or not based on a few parameters
 /obj/item/reagent_containers/glass/bucket/proc/kicking_the_bucket(datum/source, atom/movable/AM, thrown_at = FALSE)
 	SIGNAL_HANDLER
 
