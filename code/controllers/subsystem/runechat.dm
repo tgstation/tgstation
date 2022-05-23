@@ -1,10 +1,13 @@
 TIMER_SUBSYSTEM_DEF(runechat)
 	name = "Runechat"
 	priority = FIRE_PRIORITY_RUNECHAT
-	/// List of most characters in the font. DO NOT CHANGE IT. ESPECIALLY VAREDIT.
+	/// Biggest calculated char width. Used if character is not included in the list bellow. Includes all font sizes.
+	var/list/max_char_width = list(0, 0, 0)
+	/// List of most characters in the font. Do not varedit it in game.
+	/// Format of it is as follows: character, size when normal, size when small, size when big.
 	var/list/letters = list(
 		//Special case, measuring " " returns 0 since it's empty string
-		" " = 2,
+		" " = list(2, 2, 2),
 		"." = null,
 		"," = null,
 		"?" = null,
@@ -84,8 +87,7 @@ TIMER_SUBSYSTEM_DEF(runechat)
 		"w" = null,
 		"x" = null,
 		"y" = null,
-		"z" = null,
-		MAX_CHAR_WIDTH = 0
+		"z" = null
 	)
 
 /datum/controller/subsystem/timer/runechat/PreInit()
@@ -97,16 +99,36 @@ TIMER_SUBSYSTEM_DEF(runechat)
 		addtimer(CALLBACK(src, .proc/init_runechat_list), 1 SECONDS, null, src)
 		return
 
-	var/client/C = GLOB.clients[1]
+	var/client/first_client = GLOB.clients[1]
 
 	for(var/key in letters)
-		if(!C)
+		if(!first_client)
 			if(!length(GLOB.clients))
 				addtimer(CALLBACK(src, .proc/init_runechat_list), 1 SECONDS, null, src)
 				return
-			C = GLOB.clients[1]
-		if(letters[key] || key == " ")
+			first_client = GLOB.clients[1]
+		if(length(letters[key]) == 3 || key == " ")
 			continue
-		letters[key] = WXH_TO_WIDTH(C.MeasureText(MAPTEXT(key)))
-		if(letters[key] > letters[MAX_CHAR_WIDTH])
-			letters[MAX_CHAR_WIDTH] = letters[key]
+
+		letters[key] = list(null, null, null)
+		letters[key][NORMAL_FONT_INDEX] = WXH_TO_WIDTH(first_client.MeasureText(MAPTEXT(key)))
+		if(letters[key][NORMAL_FONT_INDEX] > max_char_width[NORMAL_FONT_INDEX])
+			max_char_width[NORMAL_FONT_INDEX] = letters[key][NORMAL_FONT_INDEX]
+		if(!first_client)
+			if(!length(GLOB.clients))
+				addtimer(CALLBACK(src, .proc/init_runechat_list), 1 SECONDS, null, src)
+				return
+			first_client = GLOB.clients[1]
+
+		letters[key][SMALL_FONT_INDEX] = WXH_TO_WIDTH(first_client.MeasureText("<span class='small'>[key]</span>"))
+		if(letters[key][SMALL_FONT_INDEX] > max_char_width[SMALL_FONT_INDEX])
+			max_char_width[SMALL_FONT_INDEX] = letters[key][SMALL_FONT_INDEX]
+		if(!first_client)
+			if(!length(GLOB.clients))
+				addtimer(CALLBACK(src, .proc/init_runechat_list), 1 SECONDS, null, src)
+				return
+			first_client = GLOB.clients[1]
+
+		letters[key][BIG_FONT_INDEX] = WXH_TO_WIDTH(first_client.MeasureText("<span class='big'>[key]</span>"))
+		if(letters[key][BIG_FONT_INDEX] > max_char_width[BIG_FONT_INDEX])
+			max_char_width[BIG_FONT_INDEX] = letters[key][BIG_FONT_INDEX]
