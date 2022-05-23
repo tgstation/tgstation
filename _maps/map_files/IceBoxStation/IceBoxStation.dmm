@@ -9035,6 +9035,13 @@
 	dir = 8
 	},
 /obj/machinery/computer/security/qm,
+/obj/machinery/requests_console/directional/west{
+	department = "Quartermaster's Desk";
+	name = "Quartermaster's Desk Requests Console";
+	announcementConsole = 1;
+	supplies_requestable = 1;
+	assistance_requestable = 1
+	},
 /turf/open/floor/iron,
 /area/station/cargo/qm)
 "cRK" = (
