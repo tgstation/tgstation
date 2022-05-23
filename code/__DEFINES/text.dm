@@ -7,6 +7,9 @@
 /// Macro from Lummox used to get height from a MeasureText proc
 #define WXH_TO_HEIGHT(x) text2num(copytext(x, findtextEx(x, "x") + 1))
 
+/// Gets width from MeasureText proc
+#define WXH_TO_WIDTH(x) text2num(copytext(x, 1, findtextEx(x, "x") + 1))
+
 /// Removes characters incompatible with file names.
 #define SANITIZE_FILENAME(text) (GLOB.filename_forbidden_chars.Replace(text, ""))
 
@@ -57,3 +60,6 @@
 #define CULT_SHUTTLE_CURSE "cult_shuttle_curse.json"
 /// File location for eigenstasium lines
 #define EIGENSTASIUM_FILE "eigenstasium.json"
+
+/// Index of maximum possible char width in cache table
+#define MAX_CHAR_WIDTH "max_width"

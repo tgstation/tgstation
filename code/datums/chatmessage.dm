@@ -26,6 +26,15 @@
 /// The number of z-layer 'slices' usable by the chat message layering
 #define CHAT_LAYER_MAX_Z (CHAT_LAYER_MAX - CHAT_LAYER) / CHAT_LAYER_Z_STEP
 
+/// Approximation of the height
+#define APPROX_HEIGHT(font_size, lines) (font_size * 1.7 * lines) + 2
+/// Default font size (defined in skin.dmf), those are 1 size bigger than in skin, to account 1px black outline
+#define DEFAULT_FONT_SIZE 8
+/// Big font size, used by megaphones and such
+#define BIG_FONT_SIZE 10
+/// Small font size, used mostly by whispering
+#define WHISPER_FONT_SIZE 7
+
 /**
  * # Chat Message Overlay
  *
@@ -44,10 +53,6 @@
 	var/eol_complete
 	/// Contains the approximate amount of lines for height decay
 	var/approx_lines
-	/// Contains the reference to the next chatmessage in the bucket, used by runechat subsystem
-	var/datum/chatmessage/next
-	/// Contains the reference to the previous chatmessage in the bucket, used by runechat subsystem
-	var/datum/chatmessage/prev
 	/// The current index used for adjusting the layer of each sequential chat message such that recent messages will overlay older ones
 	var/static/current_z_idx = 0
 	/// Contains ID of assigned timer for end_of_life fading event
@@ -67,14 +72,13 @@
  * * lifespan - The lifespan of the message in deciseconds
  */
 /datum/chatmessage/New(text, atom/target, mob/owner, datum/language/language, list/extra_classes = list(), lifespan = CHAT_MESSAGE_LIFESPAN)
-	. = ..()
 	if (!istype(target))
 		CRASH("Invalid target given for chatmessage")
 	if(QDELETED(owner) || !istype(owner) || !owner.client)
 		stack_trace("/datum/chatmessage created with [isnull(owner) ? "null" : "invalid"] mob owner")
 		qdel(src)
 		return
-	INVOKE_ASYNC(src, .proc/generate_image, text, target, owner, language, extra_classes, lifespan)
+	generate_image(text, target, owner, language, extra_classes, lifespan)
 
 /datum/chatmessage/Destroy()
 	if (owned_by)
@@ -151,6 +155,13 @@
 		var/image/r_icon = image('icons/ui_icons/chat/chat_icons.dmi', icon_state = "emote")
 		LAZYADD(prefixes, "\icon[r_icon]")
 
+	// Determine the font size
+	var/font_size = DEFAULT_FONT_SIZE
+	if (extra_classes.Find("megaphone"))
+		font_size = BIG_FONT_SIZE
+	else if (extra_classes.Find("italics") || extra_classes.Find("emote"))
+		font_size = WHISPER_FONT_SIZE
+
 	// Append language icon if the language uses one
 	var/datum/language/language_instance = GLOB.language_datum_instances[language]
 	if (language_instance?.display_icon(owner))
@@ -161,24 +172,27 @@
 			LAZYSET(language_icons, language, language_icon)
 		LAZYADD(prefixes, "\icon[language_icon]")
 
+	// Approximate text height
+	approx_lines = CEILING(approx_str_width(text, font_size) / CHAT_MESSAGE_WIDTH, 1)
+
+	//Add on the icons. The icon isn't measured in str_width
 	text = "[prefixes?.Join("&nbsp;")][text]"
 
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
 
-	// Approximate text height
+	// Complete the text with rest of extra classes
 	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
-	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH))
-	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
 	// Translate any existing messages upwards, apply exponential decay factors to timers
 	message_loc = isturf(target) ? target : get_atom_on_turf(target)
 	if (owned_by.seen_messages)
 		var/idx = 1
 		var/combined_height = approx_lines
-		for(var/msg in owned_by.seen_messages[message_loc])
-			var/datum/chatmessage/m = msg
-			animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME)
+		for(var/datum/chatmessage/m as() in owned_by.seen_messages[message_loc])
+			if(!m?.message)
+				continue
+			animate(m.message, pixel_y = m.message.pixel_y + APPROX_HEIGHT(font_size, approx_lines), time = CHAT_MESSAGE_SPAWN_TIME)
 			combined_height += m.approx_lines
 
 			// When choosing to update the remaining time we have to be careful not to update the
@@ -204,7 +218,7 @@
 	message.pixel_y = target.maptext_height
 	message.pixel_x = (target.maptext_width * 0.5) - 16
 	message.maptext_width = CHAT_MESSAGE_WIDTH
-	message.maptext_height = mheight
+	message.maptext_height = APPROX_HEIGHT(font_size, approx_lines)
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
 	message.maptext = MAPTEXT(complete_text)
 
@@ -313,6 +327,23 @@
 			return "#[num2hex(x, 2)][num2hex(m, 2)][num2hex(c, 2)]"
 		if(5)
 			return "#[num2hex(c, 2)][num2hex(m, 2)][num2hex(x, 2)]"
+/**
+ * Approximates the chatmesseges width based on cached widths of each char.
+ * If the character is not found in this cache we assume the worst and add the highest possible value.
+ *
+ * Arguments:
+ * * string - string to measure width
+ * * font size - font size that the displayed string will be in, used to calculate font size multiplier
+ */
+/datum/chatmessage/proc/approx_str_width(var/string, var/font_size = DEFAULT_FONT_SIZE)
+	var/value = 0
+	var/font_multiplier = font_size / DEFAULT_FONT_SIZE
+	for(var/i in 1 to length(string))
+		var/size = SSrunechat.letters[string[i]]
+		if(!size)
+			size = SSrunechat.letters[MAX_CHAR_WIDTH]
+		value += size * font_multiplier
+	return value
 
 #undef CHAT_MESSAGE_SPAWN_TIME
 #undef CHAT_MESSAGE_LIFESPAN
@@ -324,3 +355,7 @@
 #undef CHAT_LAYER_Z_STEP
 #undef CHAT_LAYER_MAX_Z
 #undef CHAT_MESSAGE_ICON_SIZE
+#undef APPROX_HEIGHT
+#undef DEFAULT_FONT_SIZE
+#undef BIG_FONT_SIZE
+#undef WHISPER_FONT_SIZE
