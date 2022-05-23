@@ -168,7 +168,9 @@
 /area/ruin/space/has_grav/deepstorage/crusher
 	name = "\improper Deep Storage Recycler"
 
-
+/area/ruin/space/has_grav/deepstorage/pharmacy
+	name = "\improper Deep Storage Pharmacy"
+	
 //Ruin of Abandoned Zoo
 
 /area/ruin/space/has_grav/abandonedzoo
