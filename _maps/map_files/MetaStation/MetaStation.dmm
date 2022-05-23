@@ -2995,7 +2995,7 @@
 	},
 /obj/machinery/button/flasher{
 	id = "secentranceflasher";
-	name = "brig_entrance Flasher";
+	name = "Brig Entrance Flasher";
 	pixel_y = -3;
 	req_access = list("security")
 	},
@@ -12135,7 +12135,7 @@
 "esR" = (
 /obj/machinery/button/flasher{
 	id = "secentranceflasher";
-	name = "brig_entrance Flasher";
+	name = "Brig Entrance Flasher";
 	pixel_x = -6;
 	pixel_y = -38;
 	req_access = list("security")

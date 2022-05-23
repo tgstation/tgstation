@@ -3697,7 +3697,7 @@
 /area/station/security/prison/work)
 "bkk" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "brig_entrance"
+	name = "Brig Entrance"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -47795,7 +47795,7 @@
 /area/station/hallway/primary/port)
 "ptu" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "brig_entrance"
+	name = "Brig Entrance"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
