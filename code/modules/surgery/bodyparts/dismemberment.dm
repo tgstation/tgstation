@@ -460,7 +460,6 @@
 			var/zone = initial(organ_path.zone)
 			if(zone != limb_zone)
 				continue
-			var/feature_key_name = dna.features[initial(organ_path.feature_key)]
 			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
 			new_organ.Insert(src)
 

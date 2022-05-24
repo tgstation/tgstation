@@ -217,7 +217,7 @@
 
 	if(ishuman(slapped))
 		var/mob/living/carbon/human/human_slapped = slapped
-		human_slapped.dna?.species?.stop_wagging_tail(slapped)
+		SEND_SIGNAL(human_slapped, COMSIG_ORGAN_WAG_TAIL, FALSE)
 	user.do_attack_animation(slapped)
 
 	var/slap_volume = 50

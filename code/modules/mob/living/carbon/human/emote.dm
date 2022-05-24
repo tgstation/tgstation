@@ -104,7 +104,18 @@
 	. = ..()
 	if(!.)
 		return
-	SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL)
+	SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, TRUE)
+
+/datum/emote/living/carbon/human/stopwag
+	key = "stopwag"
+	key_third_person = "stopswag"
+	message = "stops wagging their tail."
+
+/datum/emote/living/carbon/human/stopwag/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	SEND_SIGNAL(user, COMSIG_ORGAN_WAG_TAIL, FALSE)
 
 /datum/emote/living/carbon/human/wing
 	key = "wing"

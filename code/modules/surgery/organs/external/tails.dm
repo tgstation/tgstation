@@ -12,6 +12,8 @@
 	dna_block = DNA_TAIL_BLOCK
 	///Does this tail have a wagging sprite, and is it currently wagging?
 	var/wag_flags = NONE
+	///The original owner of this tail
+	var/original_owner //Yay, snowflake code!
 
 /obj/item/organ/external/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -22,33 +24,47 @@
 	. = ..()
 	if(.)
 		RegisterSignal(reciever, COMSIG_ORGAN_WAG_TAIL, .proc/wag)
+		original_owner ||= reciever //One and done
+
+		SEND_SIGNAL(reciever, COMSIG_CLEAR_MOOD_EVENT, "tail_lost")
+		SEND_SIGNAL(reciever, COMSIG_CLEAR_MOOD_EVENT, "tail_balance_lost")
+
+		if(original_owner == reciever)
+			SEND_SIGNAL(reciever, COMSIG_CLEAR_MOOD_EVENT, "wrong_tail_regained")
+		else if(type in reciever.dna.species.external_organs)
+			SEND_SIGNAL(reciever, COMSIG_ADD_MOOD_EVENT, "wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
 
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special)
 	if(wag_flags & WAG_WAGGING)
-		wag()
+		wag(FALSE)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
 
+	if(type in organ_owner.dna.species.external_organs)
+		SEND_SIGNAL(organ_owner, COMSIG_ADD_MOOD_EVENT, "tail_lost", /datum/mood_event/tail_lost)
+		SEND_SIGNAL(organ_owner, COMSIG_ADD_MOOD_EVENT, "tail_balance_lost", /datum/mood_event/tail_balance_lost)
+
 /obj/item/organ/external/tail/generate_icon_cache()
 	. = ..()
-	if((wag_flags & WAG_ABLE) && (wag_flags & WAG_WAGGING))
+	if((wag_flags & WAG_WAGGING))
 		. += "wagging"
 	return .
 
 /obj/item/organ/external/tail/get_global_feature_list()
 	return GLOB.tails_list
 
-/obj/item/organ/external/tail/proc/wag()
+/obj/item/organ/external/tail/proc/wag(mob/user, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))
 		return
 
-	if(!(wag_flags & WAG_WAGGING))
-		render_key = "wagging[render_key]"
+	if(start)
+		render_key = "wagging[initial(render_key)]"
 		wag_flags |= WAG_WAGGING
+		if(stop_after)
+			addtimer(CALLBACK(src, .proc/wag, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	else
 		render_key = initial(render_key)
 		wag_flags &= ~WAG_WAGGING
-
 	owner.update_body_parts()
 
 /obj/item/organ/external/tail/cat
@@ -82,23 +98,23 @@
 		paired_spines.paired_tail = null
 		paired_spines = null
 
-
 /obj/item/organ/external/tail/lizard/inherit_color(force)
 	. = ..()
 	if(.)
 		paired_spines = ownerlimb.owner.getexternalorganslot(ORGAN_SLOT_EXTERNAL_SPINES) //I hate this so much.
 		paired_spines.paired_tail = src
 
-
-/obj/item/organ/external/tail/lizard/wag()
+/obj/item/organ/external/tail/lizard/wag(mob/user, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))
 		return
 
-	if(!(wag_flags & WAG_WAGGING))
-		render_key = "wagging[render_key]"
+	if(start)
+		render_key = "wagging[initial(render_key)]"
 		wag_flags |= WAG_WAGGING
+		if(stop_after)
+			addtimer(CALLBACK(src, .proc/wag, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 		if(paired_spines)
-			paired_spines.render_key = "wagging[paired_spines.render_key]"
+			paired_spines.render_key = "wagging[initial(paired_spines.render_key)]"
 	else
 		render_key = initial(render_key)
 		wag_flags &= ~WAG_WAGGING
