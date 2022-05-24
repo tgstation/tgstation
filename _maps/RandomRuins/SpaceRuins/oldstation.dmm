@@ -5861,6 +5861,12 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating/rust,
 /area/ruin/space/ancientstation/beta/hall)
+"wW" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/biolab)
 "wY" = (
 /obj/item/shard/plasma{
 	icon_state = "plasmasmall"
@@ -6420,6 +6426,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel/airless,
 /area/ruin/solars/ancientstation/charlie/solars)
+"AQ" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/biolab)
 "AR" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
@@ -7074,6 +7086,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"Hl" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/space/ancientstation/delta/biolab)
 "Hp" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -13330,6 +13348,55 @@ vB
 PK
 Ta
 VM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(86,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Hl
+AQ
+AQ
+AH
+AW
+AH
+AQ
+AW
+AW
+AH
+AQ
+AQ
+wW
 aa
 aa
 aa
