@@ -423,7 +423,7 @@
 	. = ..()
 	if (!unspooled)
 		if (firstflip)
-			to_chat(usr, "<span class='notice'>You flip the tape so you can record on the clean magnetic strip.</span>")
+			balloon_alert(user, "flipped tape to the clean strip")
 			firstflip = FALSE
 		else
 			to_chat(usr, "<span class='notice'>You flip the tape back around.</span>")
