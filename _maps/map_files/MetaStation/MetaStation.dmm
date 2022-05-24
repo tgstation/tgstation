@@ -11453,7 +11453,7 @@
 "ehZ" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "prison release";
-	name = "prisoner processing blast door"
+	name = "Prisoner Processing Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/button/door/directional/west{
@@ -32870,7 +32870,7 @@
 	base_state = "left";
 	dir = 2;
 	icon_state = "left";
-	name = "shower"
+	name = "Shower"
 	},
 /turf/open/floor/iron/freezer,
 /area/station/commons/fitness/recreation)
@@ -41671,7 +41671,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "corporate_privacy";
-	name = "showroom shutters"
+	name = "Showroom Shutters"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,

@@ -46079,7 +46079,7 @@
 "oOp" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "lawyer_blast";
-	name = "privacy door"
+	name = "Privacy Door"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
