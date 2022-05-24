@@ -52,6 +52,7 @@
 	favor_cost = 0
 
 /datum/religion_rites/song_tuner/evangelism/song_effect(mob/living/carbon/human/listener, atom/song_source)
+	// A ckey requirement is good to have for gaining favor, to stop monkey farms and such.
 	if(!GLOB.religious_sect || listener.mind?.holy_role || !listener.ckey)
 		return
 	GLOB.religious_sect.adjust_favor(0.2)
