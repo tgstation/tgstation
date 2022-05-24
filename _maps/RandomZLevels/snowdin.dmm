@@ -21,7 +21,7 @@
 /area/awaymission/snowdin/cave/mountain)
 "ad" = (
 /turf/open/space/basic,
-/area/space)
+/area/misc/space)
 "ae" = (
 /turf/closed/mineral/snowmountain,
 /area/awaymission/snowdin/cave/mountain)

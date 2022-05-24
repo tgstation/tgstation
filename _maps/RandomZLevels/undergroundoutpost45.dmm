@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
-/area/space)
+/area/misc/space)
 "ab" = (
 /turf/closed/indestructible/riveted,
 /area/awaymission/undergroundoutpost45/caves)
@@ -11967,7 +11967,7 @@
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "NT" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/misc/asteroid{

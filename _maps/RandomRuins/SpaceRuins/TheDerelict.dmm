@@ -6,7 +6,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "al" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -36,7 +36,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "as" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/solar_control)
@@ -136,7 +136,7 @@
 /obj/item/shard,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "aV" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "External Engineering"
@@ -356,7 +356,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "ch" = (
 /turf/closed/wall,
 /area/ruin/unpowered/no_grav)
@@ -413,7 +413,7 @@
 /area/ruin/space/derelict/bridge/access)
 "cz" = (
 /turf/open/floor/iron/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "cA" = (
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/swat,
@@ -1352,7 +1352,7 @@
 /obj/item/stock_parts/matter_bin,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "gR" = (
 /obj/item/shard{
 	icon_state = "small"
@@ -2848,7 +2848,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "op" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -2858,21 +2858,21 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oq" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oy" = (
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oz" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "oE" = (
 /obj/structure/frame/computer{
 	dir = 1
@@ -2883,7 +2883,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "oY" = (
 /obj/machinery/door/airlock/vault/derelict,
 /obj/structure/cable,
@@ -2893,7 +2893,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "po" = (
 /obj/structure/cable,
 /obj/item/stack/cable_coil/five,
@@ -2902,13 +2902,13 @@
 "pp" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "pM" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "pU" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -2919,7 +2919,7 @@
 	width = 35
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "pZ" = (
 /obj/machinery/air_sensor{
 	chamber_id = "ks13"
@@ -2935,7 +2935,7 @@
 "rk" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "rC" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/titanium{
@@ -2957,7 +2957,7 @@
 "sg" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "tc" = (
 /obj/item/wallframe/airalarm,
 /turf/open/floor/plating/airless,
@@ -2971,7 +2971,7 @@
 "tH" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "ux" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating/airless,
@@ -2989,11 +2989,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "uE" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "vo" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/gold{
@@ -3023,7 +3023,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "floorscorched2"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "wK" = (
 /turf/open/floor/iron/airless{
 	icon_state = "damaged3"
@@ -3052,7 +3052,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged3"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "yE" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
@@ -3069,7 +3069,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "yP" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
@@ -3080,12 +3080,12 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "zf" = (
 /obj/item/stack/sheet/glass,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "zg" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/two,
@@ -3102,7 +3102,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged4"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "zB" = (
 /obj/structure/table,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -3128,7 +3128,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "floorscorched1"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Av" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
@@ -3142,12 +3142,12 @@
 /obj/item/stack/rods,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "AH" = (
 /obj/item/cigbutt,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Ba" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/maintenance/two,
@@ -3156,7 +3156,7 @@
 "Bk" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Bs" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance/eight,
@@ -3165,12 +3165,12 @@
 "Bw" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "BZ" = (
 /obj/structure/lattice,
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Cm" = (
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating/airless,
@@ -3188,7 +3188,7 @@
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "DE" = (
 /obj/machinery/door/airlock/external/ruin{
 	name = "Escape Airlock"
@@ -3224,7 +3224,7 @@
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
-/area/solars/derelict_starboard)
+/area/ruin/solars/derelict_starboard)
 "El" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/airless,
@@ -3250,14 +3250,14 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged5"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Fu" = (
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "FU" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -3268,7 +3268,7 @@
 /area/ruin/space/derelict/bridge)
 "Gf" = (
 /turf/closed/wall,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Gz" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance,
@@ -3284,7 +3284,7 @@
 /obj/item/stack/cable_coil/cut,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "GP" = (
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -3348,7 +3348,7 @@
 /area/ruin/space/derelict/hallway/secondary)
 "IF" = (
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "IP" = (
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron/airless,
@@ -3358,7 +3358,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Jx" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -3367,16 +3367,16 @@
 	icon_state = "small"
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Kb" = (
 /turf/closed/wall/r_wall,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Kc" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Kf" = (
 /obj/item/paper/fluff/ruins/thederelict/vaultraider,
 /obj/effect/decal/remains/human{
@@ -3390,7 +3390,7 @@
 "Kl" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "KN" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -3453,7 +3453,7 @@
 /obj/item/stack/ore/iron,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "MQ" = (
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -3471,7 +3471,7 @@
 /obj/effect/spawner/random/maintenance,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Nx" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -3493,7 +3493,7 @@
 "NW" = (
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Ob" = (
 /obj/item/clothing/head/helmet/space/eva,
 /turf/open/floor/iron/airless,
@@ -3504,7 +3504,7 @@
 "Ox" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "OD" = (
 /obj/structure/closet/wardrobe/genetics_white,
 /obj/effect/spawner/random/maintenance/two,
@@ -3568,7 +3568,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/derelict_aft)
+/area/ruin/solars/derelict_aft)
 "QW" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
@@ -3594,7 +3594,7 @@
 "RB" = (
 /obj/structure/window/reinforced,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "RF" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Access";
@@ -3608,7 +3608,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Sm" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
@@ -3618,7 +3618,7 @@
 /obj/item/stack/ore/slag,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
@@ -3659,7 +3659,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged2"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "VV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/airless,
@@ -3680,7 +3680,7 @@
 /turf/open/floor/iron/airless{
 	icon_state = "damaged4"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Xu" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/iron/fifty,
@@ -3731,7 +3731,7 @@
 	dir = 1
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 
 (1,1,1) = {"
 aa
