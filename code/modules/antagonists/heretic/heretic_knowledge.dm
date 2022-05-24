@@ -68,6 +68,7 @@
  * * user - the heretic which we're applying things to
  */
 /datum/heretic_knowledge/proc/on_gain(mob/user)
+	return
 
 /**
  * Called when the knowledge is removed from a mob,
@@ -77,6 +78,7 @@
  * * user - the heretic which we're removing things from
  */
 /datum/heretic_knowledge/proc/on_lose(mob/user)
+	return
 
 /**
  * Determines if a heretic can actually attempt to invoke the knowledge as a ritual.
@@ -179,10 +181,14 @@
 
 /datum/heretic_knowledge/spell/on_gain(mob/user)
 	// Tracked on the mind, so it'll persist with body swaps
-	var/datum/action/cooldown/spell/created_spell = new spell_to_add(user.mind)
+	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve() || new spell_to_add(user.mind)
 	created_spell.Grant(user)
 	// We also keep a weakref here so it gets removed on deletion properly
 	created_spell_ref = WEAKREF(created_spell)
+
+/datum/heretic_knowledge/spell/on_lose(mob/user)
+	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve()
+	created_spell?.Remove(user)
 
 /*
  * A knowledge subtype for knowledge that can only
