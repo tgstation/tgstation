@@ -35,3 +35,16 @@
 	// Force show the panel to see if there are any errors
 	winset(src, "output", "is-disabled=1&is-visible=0")
 	winset(src, "browseroutput", "is-disabled=0;is-visible=1")
+
+/**
+ * reloads all current tgui_window instances
+ * in the debug category, but not locked behind permissions
+ */
+/client/verb/refresh_tgui()
+	set name = "Refresh TGUI"
+	set category = "Debug"
+
+	message_admins("start")
+	for(var/window in tgui_windows)
+		var/datum/tgui_window/path_window = tgui_windows[window]
+		path_window.reinitialize()
