@@ -5059,7 +5059,7 @@
 /area/ruin/space/ancientstation/beta/atmos)
 "pr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/stack/cable_coil/cut,
+/obj/item/stack/cable_coil/five,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/hall)
 "ps" = (
@@ -5219,12 +5219,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
-"qT" = (
-/obj/item/solar_assembly,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel/airless,
-/area/ruin/solars/ancientstation/charlie/solars)
 "qV" = (
 /obj/machinery/power/solar,
 /obj/structure/cable,
@@ -6774,12 +6768,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
-"DL" = (
-/obj/machinery/power/solar,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel/airless,
-/area/ruin/solars/ancientstation/charlie/solars)
 "Ea" = (
 /obj/effect/decal/cleanable/generic,
 /obj/structure/cable,
@@ -8720,7 +8708,8 @@
 /area/ruin/space/ancientstation/charlie/engie)
 "Wo" = (
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 4;
+	integrity_failure = .5
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -9818,9 +9807,9 @@ aa
 aa
 uh
 uh
-qT
+OX
 KX
-DL
+qV
 aa
 AO
 KX
@@ -9867,7 +9856,7 @@ aa
 aa
 uh
 uh
-qT
+OX
 KX
 AO
 uh
@@ -9918,7 +9907,7 @@ uh
 uh
 AO
 ze
-DL
+qV
 aa
 qV
 KX
@@ -10018,7 +10007,7 @@ AO
 KX
 AO
 aa
-qT
+OX
 KX
 AO
 aa
@@ -10063,9 +10052,9 @@ aa
 aa
 uh
 uh
-DL
+qV
 KX
-qT
+OX
 aa
 AO
 ze
@@ -10116,7 +10105,7 @@ AO
 KX
 AO
 aa
-DL
+qV
 KX
 AO
 aa
@@ -10412,7 +10401,7 @@ OX
 aa
 AO
 KX
-DL
+qV
 aa
 "}
 (26,1,1) = {"
@@ -10559,7 +10548,7 @@ AO
 uh
 AO
 ze
-DL
+qV
 aa
 "}
 (29,1,1) = {"
@@ -10606,9 +10595,9 @@ qV
 KX
 AO
 aa
-DL
+qV
 KX
-DL
+qV
 aa
 "}
 (30,1,1) = {"
