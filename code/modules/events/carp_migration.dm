@@ -24,6 +24,10 @@
 	startWhen = rand(40, 60)
 
 /datum/round_event/carp_migration/announce(fake)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_ALERT_CHANGES))
+		priority_announce("A large organic energy flux has been recorded near [station_name()], please stand by.", "Lifesign Alert")
+		return
+
 	priority_announce("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 
 

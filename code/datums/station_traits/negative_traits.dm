@@ -240,6 +240,15 @@
 
 	new /obj/effect/decal/cleanable/blood/gibs/torso(last_location)
 
+/datum/station_trait/announcement_changes
+	name = "Alert Database Failure"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 8
+	show_in_report = TRUE
+	report_message = "The announcement system database has been on the fritz. Some announcement alerts may warrant double-checking." //Make this less clunky for a player to ICly announce to the crew.
+	blacklist = list(/datum/station_trait/announcement_changes)
+	trait_to_give = STATION_TRAIT_ALERT_CHANGES
+
 // Abstract station trait used for traits that modify a random event in some way (their weight or max occurrences).
 /datum/station_trait/random_event_weight_modifier
 	name = "Random Event Modifier"

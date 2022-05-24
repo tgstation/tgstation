@@ -14,6 +14,10 @@
 
 
 /datum/round_event/disease_outbreak/announce(fake)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_ALERT_CHANGES))
+		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+		return
+
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK7)
 
 /datum/round_event/disease_outbreak/setup()
