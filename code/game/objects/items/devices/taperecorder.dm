@@ -426,7 +426,7 @@
 			balloon_alert(user, "flipped tape to the clean strip")
 			firstflip = FALSE
 		else
-			to_chat(usr, "<span class='notice'>You flip the tape back around.</span>")
+			balloon_alert(user, "flipped back around")
 		tapeflip()
 
 	if (unspooled)
