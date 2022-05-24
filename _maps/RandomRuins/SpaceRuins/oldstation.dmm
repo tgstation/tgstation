@@ -8713,8 +8713,7 @@
 /area/ruin/space/ancientstation/charlie/engie)
 "Wo" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	integrity_failure = .5
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
