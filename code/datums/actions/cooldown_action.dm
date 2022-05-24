@@ -119,7 +119,9 @@
 	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
 		return
 	. = Activate(target)
-	SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_FINISHED, src)
+	// There is a possibility our action (or owner) is qdeleted in Activate().
+	if(!QDELETED(src) && !QDELETED(owner))
+		SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_FINISHED, src)
 
 /// To be implemented by subtypes
 /datum/action/cooldown/proc/Activate(atom/target)

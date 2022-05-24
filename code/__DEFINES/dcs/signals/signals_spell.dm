@@ -2,14 +2,12 @@
 
 // Generic spell signals
 
-/// Return activated or pre-cast signals to prevent the spell from continuing.
-#define SPELL_CANCEL_CAST (1 << 0)
 
 /// Sent from /datum/action/cooldown/spell/before_cast() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on)
 #define COMSIG_MOB_BEFORE_SPELL_CAST "mob_spell_pre_cast"
 /// Sent from /datum/action/cooldown/spell/before_cast() to the spell: (atom/cast_on)
 #define COMSIG_SPELL_BEFORE_CAST "spell_pre_cast"
-	/// Return to prevent the spell from being cast
+	/// Return to prevent the spell cast from continuing.
 	#define SPELL_CANCEL_CAST (1 << 0)
 	/// Return from before cast signals to prevent the spell from giving off sound or invocation.
 	#define SPELL_NO_FEEDBACK (1 << 1)

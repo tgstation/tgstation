@@ -5,6 +5,7 @@
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "ninja_cloak"
 
+	spell_requirements = NONE
 	jaunt_type = /obj/effect/dummy/phased_mob/shadow
 
 /datum/action/cooldown/spell/jaunt/shadow_walk/cast(mob/living/cast_on)

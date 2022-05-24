@@ -260,7 +260,7 @@
 /obj/item/melee/touch_attack/mansus_fist/proc/remove_hand_with_no_refund(mob/holder)
 	var/datum/action/cooldown/spell/touch/hand_spell = spell_which_made_us?.resolve()
 	if(!QDELETED(hand_spell))
-		hand_spell.remove_hand(user, reset_cooldown_after = FALSE)
+		hand_spell.remove_hand(holder, reset_cooldown_after = FALSE)
 		return
 
 	// We have no spell associated for some reason, just delete us as normal.

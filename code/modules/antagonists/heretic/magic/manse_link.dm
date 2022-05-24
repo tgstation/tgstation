@@ -12,6 +12,7 @@
 
 	invocation = "PI'RC' TH' M'ND."
 	invocation_type = INVOCATION_SHOUT
+	spell_requirements = NONE
 
 	cast_range = 7
 

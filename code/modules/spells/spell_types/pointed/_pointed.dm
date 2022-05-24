@@ -43,6 +43,11 @@
 
 	on_deactivation(on_who, refund_cooldown = refund_cooldown)
 
+/datum/action/cooldown/spell/pointed/before_cast(atom/cast_on)
+	. = ..()
+	if(. & SPELL_CANCEL_CAST)
+		on_deactivation(owner, refund_cooldown = FALSE)
+
 /// Called when the spell is activated / the click ability is set to our spell
 /datum/action/cooldown/spell/pointed/proc/on_activation(mob/on_who)
 	SHOULD_CALL_PARENT(TRUE)

@@ -10,6 +10,8 @@
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "bloodcrawl"
 
+	spell_requirements = NONE
+
 	/// The time it takes to enter blood
 	var/enter_blood_time = 0 SECONDS
 	/// The time it takes to exit blood

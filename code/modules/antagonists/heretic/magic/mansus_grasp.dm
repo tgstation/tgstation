@@ -72,9 +72,7 @@
  */
 /obj/item/melee/touch_attack/mansus_fist/proc/after_clear_rune(obj/effect/target, mob/living/user)
 	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = spell_which_made_us?.resolve()
-	if(grasp)
-		grasp.spell_feedback()
-		playsound(get_turf(owner), grasp.sound, 50, TRUE)
+	grasp?.spell_feedback()
 
 	remove_hand_with_no_refund(user)
 

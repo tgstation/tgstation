@@ -421,3 +421,35 @@
 
 	name = "[spell_title][initial(name)]"
 	UpdateButtons()
+
+/// Debug proc for seeing at a glance what all spells have as set requirements
+/// Probably remove before merge, idk it might be useful in the future as a debug verb.
+/proc/debug_spell_requirements()
+	for(var/datum/action/cooldown/spell/spell as anything in typesof(/datum/action/cooldown/spell))
+		if(initial(spell.name) == "Spell")
+			continue
+
+		var/list/real_reqs = list()
+		var/reqs = initial(spell.spell_requirements)
+		if(reqs == NONE)
+			message_admins("[initial(spell.name)]: Usable by all / no requirements ")
+			continue
+
+		if(reqs & SPELL_CASTABLE_AS_BRAIN)
+			real_reqs += "Castable as brain"
+		if(reqs & SPELL_CASTABLE_WHILE_PHASED)
+			real_reqs += "Castable phased"
+		if(reqs & SPELL_REQUIRES_HUMAN)
+			real_reqs += "Must be human"
+		if(reqs & SPELL_REQUIRES_MIME_VOW)
+			real_reqs += "Must be miming"
+		if(reqs & SPELL_REQUIRES_MIND)
+			real_reqs += "Must have mind"
+		if(reqs & SPELL_REQUIRES_NO_ANTIMAGIC)
+			real_reqs += "Must have no antimagic"
+		if(reqs & SPELL_REQUIRES_OFF_CENTCOM)
+			real_reqs += "Must be off CC"
+		if(reqs & SPELL_REQUIRES_WIZARD_GARB)
+			real_reqs += "Must have wizard clothes"
+
+		message_admins("[initial(spell.name)]: [real_reqs.Join(", ")]")
