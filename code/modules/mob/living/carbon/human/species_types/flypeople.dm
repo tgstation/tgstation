@@ -25,7 +25,7 @@
 	mutantliver = /obj/item/organ/internal/liver/fly
 	mutantstomach = /obj/item/organ/internal/stomach/fly
 	mutantappendix = /obj/item/organ/internal/appendix/fly
-	mutant_organs = list(/obj/item/organ/fly, /obj/item/organ/fly/groin)
+	mutant_organs = list(/obj/item/organ/internal/fly, /obj/item/organ/internal/fly/groin)
 
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/fly,
@@ -161,14 +161,14 @@
 	return ..(updates & ~(UPDATE_NAME|UPDATE_ICON)) //don't set name or icon thank you
 
 //useless organs we throw in just to fuck with surgeons a bit more
-/obj/item/organ/fly
+/obj/item/organ/internal/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
 	visual = FALSE
 
-/obj/item/organ/fly/Initialize(mapload)
+/obj/item/organ/internal/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
-/obj/item/organ/fly/groin //appendix is the only groin organ so we gotta have one of these too lol
+/obj/item/organ/internal/fly/groin //appendix is the only groin organ so we gotta have one of these too lol
 	zone = BODY_ZONE_PRECISE_GROIN
