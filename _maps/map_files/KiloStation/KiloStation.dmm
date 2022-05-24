@@ -54666,7 +54666,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "pBo" = (
-/obj/item/book/granter/action/spell/smoke/lesser,
+/obj/item/book/granter/spell/smoke/lesser,
 /obj/structure/table/wood,
 /turf/open/floor/cult,
 /area/station/service/chapel/office)
