@@ -285,14 +285,14 @@
 				wipe()
 
 
-/obj/item/taperecorder/proc/wipe()
+/obj/item/taperecorder/proc/wipe(mob/user)
 	mytape.used_capacity = 0
 	mytape.storedinfo = new
 	mytape.timestamp = new
 	balloon_alert(user, "wiped tape")
 
 
-/obj/item/taperecorder/verb/print_transcript()
+/obj/item/taperecorder/verb/print_transcript(mob/user)
 	set name = "Print Transcript"
 	set category = "Object"
 
