@@ -6597,11 +6597,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"crQ" = (
-/obj/structure/sign/warning/electric_shock,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter)
 "crR" = (
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
@@ -11641,6 +11636,14 @@
 /obj/structure/closet/secure_closet/psychology,
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
+"dUI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "dUO" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
@@ -15317,6 +15320,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
+"fnQ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/warning/electric_shock/directional/east,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "fnS" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -55901,11 +55912,6 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
-"sSm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/item/radio/intercom/directional/west,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "sSr" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -67341,6 +67347,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
+"wQY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/sign/warning/fire/directional/west,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "wRf" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
@@ -100494,7 +100508,7 @@ uUT
 oby
 rlD
 uUT
-uUT
+wQY
 csM
 uUT
 uUT
@@ -101783,7 +101797,7 @@ vKT
 jyF
 jyF
 jyF
-crQ
+frN
 ima
 oiG
 xfC
@@ -102297,7 +102311,7 @@ vKT
 onW
 onW
 onW
-tfA
+frN
 tRf
 aqh
 rZW
@@ -103325,7 +103339,7 @@ mDx
 gvK
 gvK
 wPj
-sSm
+wPj
 gyC
 qgB
 cXJ
@@ -103580,9 +103594,9 @@ vXf
 vXf
 vXf
 vXf
+fnQ
 vXf
-vXf
-vXf
+dUI
 nRu
 vXf
 aFq

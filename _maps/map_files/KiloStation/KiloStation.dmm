@@ -49164,11 +49164,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
-"nYm" = (
-/obj/structure/sign/warning/fire,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter)
 "nYo" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral{
@@ -54089,6 +54084,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/light/directional/south,
+/obj/structure/sign/warning/fire/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "pqP" = (
@@ -66301,6 +66297,18 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/aft)
+"sQi" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/camera/directional/north,
+/turf/open/floor/circuit/green{
+	luminosity = 2
+	},
+/area/station/engineering/supermatter)
 "sQj" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
@@ -76183,17 +76191,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/ai)
-"vzQ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Supermatter Engine";
-	name = "supermatter camera";
-	network = list("engine")
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "vzV" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -84975,6 +84972,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/light/directional/south,
+/obj/structure/sign/warning/fire/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "xRh" = (
@@ -121451,7 +121449,7 @@ tkO
 eVL
 uvG
 piZ
-vzQ
+uvG
 eVL
 hqW
 jbZ
@@ -121704,9 +121702,9 @@ rea
 wYx
 xQL
 okp
-nYm
+eVL
 pHY
-pXs
+sQi
 fOz
 pXs
 eVL
@@ -122480,7 +122478,7 @@ bam
 mNt
 mNt
 mNt
-nYm
+eVL
 sMY
 hSt
 rea
@@ -122732,7 +122730,7 @@ rea
 mSC
 pqH
 lOX
-nYm
+eVL
 ohV
 lGp
 xlD

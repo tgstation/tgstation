@@ -3677,6 +3677,13 @@
 	dir = 1
 	},
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/camera/directional/east{
+	c_tag = "Engineering - Supermatter";
+	name = "engineering camera";
+	network = list("ss13","engine");
+	pixel_y = -6
+	},
+/obj/structure/sign/warning/radiation/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "bdD" = (
@@ -25297,17 +25304,6 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/misc/space/nearstation)
-"hfm" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Engineering - Supermatter";
-	name = "engineering camera";
-	network = list("ss13","engine")
-	},
-/obj/structure/sign/warning/radiation{
-	pixel_x = 32
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "hfo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -31753,12 +31749,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/science/research)
-"iUa" = (
-/obj/structure/sign/warning/radiation{
-	pixel_y = -32
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "iUl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -35234,6 +35224,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "jPk" = (
@@ -37295,6 +37286,7 @@
 	},
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /obj/machinery/light/small/directional/west,
+/obj/structure/sign/warning/radiation/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "kov" = (
@@ -42381,12 +42373,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"lId" = (
-/obj/structure/sign/warning/radiation{
-	pixel_x = -32
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "lIl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -45345,9 +45331,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
-	},
-/obj/structure/sign/warning/radiation{
-	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
@@ -69731,9 +69714,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/warning/radiation{
-	pixel_y = -32
-	},
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "sVb" = (
@@ -70330,6 +70310,7 @@
 "tcy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/light/directional/south,
+/obj/structure/sign/warning/radiation/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "tcB" = (
@@ -89403,12 +89384,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/science/research)
-"xXZ" = (
-/obj/structure/sign/warning/radiation{
-	pixel_y = 32
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "xYB" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -110751,9 +110726,9 @@ gAw
 jPd
 ehD
 mWq
-xXZ
+orZ
 fNc
-iUa
+orZ
 mWq
 vrs
 vrs
@@ -111006,7 +110981,7 @@ xMQ
 vXc
 pqr
 cZv
-tcy
+ehD
 mWq
 vlN
 xUm
@@ -111269,7 +111244,7 @@ msB
 kXR
 owf
 koq
-lId
+orZ
 chY
 vUV
 sst
@@ -111783,7 +111758,7 @@ msB
 kXR
 owf
 bdt
-hfm
+orZ
 tGr
 hCE
 sst

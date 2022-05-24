@@ -18,7 +18,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	name = "supermatter crystal"
 	desc = "A strangely translucent and iridescent crystal."
 	icon = 'icons/obj/supermatter.dmi'
-	icon_state = "darkmatter"
+	icon_state = "mapped_darkmatter"
 	density = TRUE
 	anchored = TRUE
 	layer = MOB_LAYER
@@ -320,6 +320,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		move_resist = MOVE_FORCE_OVERPOWERING // Avoid being moved by statues or other memes
 
 	update_constants()
+
+	update_appearance()
 
 	underlays += image(icon, loc, base_structure_icon)
 

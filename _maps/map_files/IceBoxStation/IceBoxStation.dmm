@@ -5431,6 +5431,16 @@
 /obj/structure/janitorialcart,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"bME" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Emitter Room"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "bMF" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -10555,8 +10565,6 @@
 /area/station/science/server)
 "dso" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "dsA" = (
@@ -11499,6 +11507,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/science/mixing)
+"dGH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/station/engineering/supermatter/room)
 "dGO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -21269,6 +21282,7 @@
 	},
 /obj/item/geiger_counter,
 /obj/item/clothing/glasses/meson,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gSy" = (
@@ -23203,11 +23217,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
-"hwY" = (
-/obj/structure/sign/warning/fire,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter)
 "hwZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -32445,15 +32454,17 @@
 /area/station/security/prison/work)
 "ktw" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/firealarm/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Engineering Supermatter Fore";
 	network = list("ss13","engine");
 	pixel_x = 23
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/airalarm/engine{
+	pixel_y = -24
+	},
 /turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
+/area/station/engineering/supermatter)
 "ktz" = (
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/wood,
@@ -33193,7 +33204,7 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/item/radio/intercom/directional/south,
+/obj/structure/sign/warning/fire/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "kGi" = (
@@ -41006,11 +41017,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"nnl" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter/room)
 "nnn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -46674,10 +46680,6 @@
 	},
 /area/station/security/prison)
 "oZA" = (
-/obj/machinery/airalarm/engine{
-	dir = 8;
-	pixel_x = -23
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -50571,11 +50573,6 @@
 "qmt" = (
 /turf/closed/wall,
 /area/mine/eva/lower)
-"qmF" = (
-/obj/structure/sign/warning/electric_shock,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter)
 "qmK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -64842,6 +64839,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "uXV" = (
@@ -234061,7 +234059,7 @@ qQs
 ban
 wdL
 dso
-nnl
+fDn
 raT
 raT
 brY
@@ -234318,8 +234316,8 @@ cGf
 atN
 fpD
 jFV
-szo
-vBm
+bME
+dGH
 vBm
 rQf
 rQf
@@ -235085,7 +235083,7 @@ okS
 bYw
 bYw
 bYw
-qmF
+uLe
 kcD
 ugq
 njT
@@ -235599,7 +235597,7 @@ okS
 imd
 imd
 imd
-hwY
+uLe
 utA
 qYQ
 xUb
@@ -235851,7 +235849,7 @@ gFR
 fab
 kFZ
 wuo
-hwY
+uLe
 nej
 fvy
 oXM

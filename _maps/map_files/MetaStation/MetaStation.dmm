@@ -3254,6 +3254,7 @@
 /obj/machinery/light/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/structure/sign/warning/electric_shock/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "bjH" = (
@@ -5724,6 +5725,15 @@
 "cnK" = (
 /turf/closed/wall,
 /area/station/engineering/main)
+"coE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/sign/warning/fire/directional/east,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "coI" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating{
@@ -17447,11 +17457,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/station/commons/fitness/recreation)
-"gCd" = (
-/obj/structure/sign/warning/electric_shock,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter)
 "gCn" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -18066,6 +18071,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/camera/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gMG" = (
@@ -18417,11 +18423,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
-"gSV" = (
-/obj/structure/sign/warning/fire,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/supermatter)
 "gTh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -34267,10 +34268,6 @@
 "mny" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
-	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Engineering Supermatter Starboard";
-	network = list("ss13","engine")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -50203,13 +50200,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
-"rLN" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Supermatter Chamber";
-	network = list("engine")
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "rMl" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -51027,6 +51017,20 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"rZz" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/camera/directional/west{
+	c_tag = "Supermatter Chamber";
+	network = list("engine");
+	pixel_y = -6
+	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "rZA" = (
 /obj/structure/sign/map/left{
 	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
@@ -111021,7 +111025,7 @@ stl
 xMX
 dRN
 otn
-dRN
+coE
 wdB
 oET
 mln
@@ -112053,8 +112057,8 @@ imP
 qZB
 oNs
 hRl
-epi
-rLN
+rZz
+oNs
 rtQ
 uLp
 lLu
@@ -112821,9 +112825,9 @@ mMr
 rHn
 tft
 tft
-gSV
 tft
-gCd
+tft
+tft
 tft
 tft
 fJP
