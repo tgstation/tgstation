@@ -84,7 +84,7 @@
 /datum/religion_rites/song_tuner/pain/song_effect(mob/living/carbon/human/listener, atom/song_source)
 	var/damage_dealt = 1
 	if(listener.mind?.holy_role)
-		damage_dealth *= 0.5
+		damage_dealt *= 0.5
 
 	listener.adjustBruteLoss(damage_dealt)
 
