@@ -5908,7 +5908,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/left/directional/south{
-	name = "kitchen access";
+	name = "Kitchen Access";
 	req_access = list("kitchen")
 	},
 /obj/machinery/light/small/directional/east,
@@ -27891,7 +27891,7 @@
 	},
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/door/window/left/directional/south{
-	name = "cage door"
+	name = "Cage Door"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -57646,7 +57646,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/door/window/left/directional/north{
-	name = "cage door"
+	name = "Cage Door"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -77027,7 +77027,7 @@
 "vLq" = (
 /obj/machinery/door/poddoor{
 	id = "trash";
-	name = "disposal bay door"
+	name = "Disposal Bay Door"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating{
@@ -77706,7 +77706,7 @@
 /area/station/maintenance/fore)
 "vUp" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "drone bay maintenance"
+	name = "Drone Bay Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
@@ -78289,7 +78289,7 @@
 /area/station/medical/morgue)
 "wbo" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "service maintenance"
+	name = "Service Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
