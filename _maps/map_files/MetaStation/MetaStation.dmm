@@ -2995,7 +2995,7 @@
 	},
 /obj/machinery/button/flasher{
 	id = "secentranceflasher";
-	name = "brig_entrance Flasher";
+	name = "Brig Entrance Flasher";
 	pixel_y = -3;
 	req_access = list("security")
 	},
@@ -12135,7 +12135,7 @@
 "esR" = (
 /obj/machinery/button/flasher{
 	id = "secentranceflasher";
-	name = "brig_entrance Flasher";
+	name = "Brig Entrance Flasher";
 	pixel_x = -6;
 	pixel_y = -38;
 	req_access = list("security")
@@ -12416,7 +12416,7 @@
 "ewR" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering{
-	name = "tech_storage"
+	name = "Tech Storage"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
@@ -29103,7 +29103,7 @@
 /obj/machinery/turretid{
 	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
-	name = "ai_upload turret control";
+	name = "AI Upload Turret Control";
 	pixel_y = 28
 	},
 /obj/item/radio/intercom/directional/north{
@@ -29117,7 +29117,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the ai_upload.";
 	dir = 4;
-	name = "ai_upload Monitor";
+	name = "AI Upload Monitor";
 	network = list("aiupload");
 	pixel_x = -29
 	},
@@ -39401,7 +39401,7 @@
 	dwidth = 4;
 	height = 9;
 	id = "aux_base_zone";
-	name = "aux_base zone";
+	name = "Aux Base Zone";
 	roundstart_template = /datum/map_template/shuttle/aux_base/default;
 	width = 9
 	},
@@ -63451,7 +63451,7 @@
 "wpJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	name = "ai_upload"
+	name = "AI Upload"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
