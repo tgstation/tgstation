@@ -19,7 +19,7 @@
 	pixel_y = 6
 	},
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "i" = (
 /turf/closed/wall,
 /area/ruin/space/djstation)
@@ -72,7 +72,7 @@
 /obj/structure/lattice,
 /obj/structure/grille/broken,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "P" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Rest Room"
@@ -85,7 +85,7 @@
 "U" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "W" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -99,7 +99,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Z" = (
 /obj/item/stack/sheet/mineral/wood{
 	pixel_x = 4;

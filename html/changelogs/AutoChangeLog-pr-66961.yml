@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - qol: "Change drunk blur effect to scale based on intoxication"

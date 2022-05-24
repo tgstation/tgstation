@@ -18,6 +18,12 @@
 	. += ..()
 	. += span_notice("The reinforcement rods are <b>wrenched</b> firmly in place.")
 
+/turf/open/floor/engine/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode) //no rcd destroying this flooring
+	if(passed_mode == RCD_DECONSTRUCT)
+		to_chat(user, span_warning("The flooring is too thick to be regularly deconstructed!"))
+		return FALSE
+	return ..()
+
 /turf/open/floor/engine/airless
 	initial_gas_mix = AIRLESS_ATMOS
 

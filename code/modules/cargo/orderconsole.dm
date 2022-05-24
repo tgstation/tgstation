@@ -98,6 +98,7 @@
 
 /obj/machinery/computer/cargo/ui_data()
 	var/list/data = list()
+	data["department"] = "Cargo" // Hardcoded here, for customization in budgetordering.dm AKA NT IRN
 	data["location"] = SSshuttle.supply.getStatusText()
 	var/datum/bank_account/D = SSeconomy.get_dep_account(cargo_account)
 	if(D)
