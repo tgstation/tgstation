@@ -15,6 +15,10 @@
 	///The original owner of this tail
 	var/original_owner //Yay, snowflake code!
 
+/obj/item/organ/external/tail/Destroy()
+	original_owner = null
+	return ..()
+
 /obj/item/organ/external/tail/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(human.wear_suit && (human.wear_suit.flags_inv & HIDEJUMPSUIT))
 		return FALSE
