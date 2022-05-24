@@ -109,7 +109,14 @@
 		return
 
 	var/gender = (physique == FEMALE) ? "f" : "m"
-	var/finished_icon_state = (sprite_datum.gender_specific ? gender : "m") + "_" + (render_key ? render_key : feature_key) + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(image_layer)
+	var/list/icon_state_builder = list()
+	icon_state_builder += sprite_datum.gender_specific ? gender : "m" //Male is default because sprite accessories are so ancient they predate the concept of not hardcoding gender
+	icon_state_builder += render_key ? render_key : feature_key
+	icon_state_builder += sprite_datum.icon_state
+	icon_state_builder += mutant_bodyparts_layertext(image_layer)
+
+	var/finished_icon_state = icon_state_builder.Join("_")
+
 	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -image_layer)
 	appearance.dir = image_dir
 
