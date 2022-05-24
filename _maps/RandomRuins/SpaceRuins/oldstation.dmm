@@ -6380,6 +6380,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "rk" = (
 /obj/structure/sign/poster/contraband/space_cola,
+/obj/structure/sign/poster/contraband/space_cola,
 /turf/closed/wall,
 /area/ruin/space/ancientstation/charlie/sec)
 "rm" = (
@@ -7636,7 +7637,7 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "storage room"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
 "Hg" = (
 /obj/effect/decal/cleanable/dirt,

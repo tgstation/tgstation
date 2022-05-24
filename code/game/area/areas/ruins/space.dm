@@ -255,6 +255,10 @@
 	name = "\improper Charlie Station Solar Array"
 	icon = 'icons/area/areas_ruins.dmi' // Solars inheriet areas_misc.dmi, not areas_ruin.dmi
 	icon_state = "os_charlie_solars"
+	requires_power = FALSE
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	sound_environment = SOUND_AREA_SPACE
+	base_lighting_alpha = 255
 
 /area/ruin/space/ancientstation/charlie/storage
 	name = "Charlie Station Storage"
