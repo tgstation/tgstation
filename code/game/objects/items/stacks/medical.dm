@@ -159,14 +159,14 @@
 		return
 
 	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 0.8 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
-		to_chat(user, span_warning("The bandage currently on [user==M ? "your" : "[M]'s"] [limb.name] is still in good condition!"))
+		to_chat(user, span_warning("The bandage currently on [user==M ? "your" : "[M]'s"] [limb.plaintext_zone] is still in good condition!"))
 		return
 
-	user.visible_message(span_warning("[user] begins wrapping the wounds on [M]'s [limb.name] with [src]..."), span_warning("You begin wrapping the wounds on [user == M ? "your" : "[M]'s"] [limb.name] with [src]..."))
+	user.visible_message(span_warning("[user] begins wrapping the wounds on [M]'s [limb.plaintext_zone] with [src]..."), span_warning("You begin wrapping the wounds on [user == M ? "your" : "[M]'s"] [limb.plaintext_zone] with [src]..."))
 	if(!do_after(user, (user == M ? self_delay : other_delay), target=M))
 		return
 
-	user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] to [M]'s [limb.name].</span></span>", "<span class='infoplain'><span class='green'>You bandage the wounds on [user == M ? "your" : "[M]'s"] [limb.name].</span></span>")
+	user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] to [M]'s [limb.plaintext_zone].</span></span>", "<span class='infoplain'><span class='green'>You bandage the wounds on [user == M ? "your" : "[M]'s"] [limb.plaintext_zone].</span></span>")
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
