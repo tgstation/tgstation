@@ -54,7 +54,7 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/atmospherics/pipe/(?<type>[/\w]*)
     echo "ERROR: found multiple identical pipes on the same tile, please remove them."
     st=1
 fi;
-if grep -rzoP 'machinery/door.*{([^}]|\n)*name = .*("|\s)(?!of|and|to)[a-z].*\n' --include=*.dmm
+if grep -rzoP 'machinery/door.*{([^}]|\n)*name = .*("|\s)(?!of|and|to)[a-z].*\n' --include=*.dmm;	then
     echo
     echo "ERROR: found door names without proper upper-casing. Please upper-case your door names."
     st=1
