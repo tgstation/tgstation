@@ -118,7 +118,6 @@
 	var/finished_icon_state = icon_state_builder.Join("_")
 
 	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -image_layer)
-	icon_exists(appearance.icon, finished_icon_state, TRUE)
 	appearance.dir = image_dir
 
 	if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/ | This comment isn't true.
