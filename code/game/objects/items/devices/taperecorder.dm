@@ -282,14 +282,14 @@
 			if("Eject")
 				eject(user)
 			if("Wipe")
-				wipeproc()
+				wipe()
 
 
-/obj/item/taperecorder/proc/wipeproc()
+/obj/item/taperecorder/proc/wipe()
 	mytape.used_capacity = 0
 	mytape.storedinfo = new
 	mytape.timestamp = new
-	to_chat(usr, "<span class='notice'>You wipe this side of the tape entirely.")
+	balloon_alert(user, "wiped tape")
 
 
 /obj/item/taperecorder/verb/print_transcript()
@@ -303,7 +303,7 @@
 	if(!mytape)
 		return
 	if(!canprint)
-		to_chat(usr, span_warning("The recorder can't print that fast!"))
+		balloon_alert(user, "recorder printer on cooldown")
 		return
 	if(recording || playing)
 		return
@@ -402,7 +402,7 @@
 			if("Wipe tape")
 				if(loc != user)
 					return
-				wipeproc()
+				wipe()
 			if("Unwind tape")
 				if(loc != user)
 					return
@@ -414,7 +414,7 @@
 		tapeflip()
 	. = ..()
 
-/obj/item/tape/proc/wipeproc()
+/obj/item/tape/proc/wipe()
 	used_capacity = 0
 	storedinfo = new
 	timestamp = new
@@ -430,22 +430,19 @@
 		tapeflip()
 
 	if (unspooled)
-		to_chat(usr, "<span class='notice'>You scrub the magnetic strip clean of its contents.")
-		wipeproc()
+		balloon_alert(user, "magnetic strip wiped")
+		wipe()
 
 /obj/item/tape/proc/unspool()
 	//Let's not add infinite amounts of overlays when our fire_act is called repeatedly
 	if(!unspooled)
 		add_overlay("ribbonoverlay")
 		unspooled = TRUE
-	return
 
 /obj/item/tape/proc/respool()
 	if (unspooled)
 		cut_overlay("ribbonoverlay")
 		unspooled = FALSE
-	return
-
 
 /obj/item/tape/proc/tapeflip()
 	//first we save a copy of our current side
