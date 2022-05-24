@@ -583,7 +583,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "cabinet";
 	name = "bartender's closet";
-	req_access = list(25)
+	req_access = list("bar")
 	},
 /obj/item/clothing/shoes/sandal{
 	desc = "A very fashionable pair of flip-flops.";
@@ -1026,7 +1026,7 @@
 /obj/structure/closet/secure_closet{
 	icon_state = "cabinet";
 	name = "booze storage";
-	req_access = list(25)
+	req_access = list("bar")
 	},
 /obj/item/storage/backpack/duffelbag,
 /obj/item/etherealballdeployer,

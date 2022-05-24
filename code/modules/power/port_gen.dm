@@ -81,13 +81,13 @@
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
 	circuit = /obj/item/circuitboard/machine/pacman
-	power_gen = 2500
+	power_gen = 5000
 	var/sheets = 0
-	var/max_sheets = 10
+	var/max_sheets = 50
 	var/sheet_name = ""
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
 	var/sheet_left = 0 // How much is left of the sheet
-	var/time_per_sheet = 50
+	var/time_per_sheet = 60
 	var/current_heat = 0
 
 /obj/machinery/power/port_gen/pacman/Initialize(mapload)
@@ -107,7 +107,7 @@
 	if(our_board.high_production_profile)
 		icon_state = "portgen1_0"
 		base_icon = "portgen1"
-		max_sheets = 5
+		max_sheets = 20
 		time_per_sheet = 20
 		power_gen = 15000
 		sheet_path = /obj/item/stack/sheet/mineral/uranium
@@ -272,10 +272,10 @@
 /obj/machinery/power/port_gen/pacman/super
 	icon_state = "portgen1_0"
 	base_icon = "portgen1"
-	max_sheets = 5
+	max_sheets = 20
 	time_per_sheet = 20
 	power_gen = 15000
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 
 /obj/machinery/power/port_gen/pacman/pre_loaded
-	sheets = 10
+	sheets = 50

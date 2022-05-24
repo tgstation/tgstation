@@ -683,7 +683,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		if("restricted")
 			restricted = !restricted
 			if(restricted)
-				req_access = list(ACCESS_ENGINE)
+				req_access = list(ACCESS_ENGINEERING)
 			else
 				req_access = list()
 				. = TRUE

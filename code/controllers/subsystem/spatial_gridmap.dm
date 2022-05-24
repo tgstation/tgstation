@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/list/grids_by_z_level = list()
 	///everything that spawns before us is added to this list until we initialize
 	var/list/waiting_to_add_by_type = list(SPATIAL_GRID_CONTENTS_TYPE_HEARING = list(), SPATIAL_GRID_CONTENTS_TYPE_CLIENTS = list(), SPATIAL_GRID_CONTENTS_TYPE_ATMOS = list())
-	///associative list of the form: movable.spatial_grid_key (string) -> inner list of spatial grid types for that key. 
+	///associative list of the form: movable.spatial_grid_key (string) -> inner list of spatial grid types for that key.
 	///inner lists contain contents channel types such as SPATIAL_GRID_CONTENTS_TYPE_HEARING etc.
 	///we use this to make adding to a cell static cost, and to save on memory
 	var/list/spatial_grid_categories = list()

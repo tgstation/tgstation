@@ -159,9 +159,6 @@ ALLOW_AI_MULTICAM
 
 ## AWAY MISSIONS ###
 
-## Uncomment to load the virtual reality hub map
-#VIRTUAL_REALITY
-
 ## Uncomment to load one of the missions from awaymissionconfig.txt or away_missions/ at roundstart.
 #ROUNDSTART_AWAY
 
