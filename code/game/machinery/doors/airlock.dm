@@ -571,6 +571,8 @@
 			. += note.examine(user)
 	if(seal)
 		. += "It's been braced with \a [seal]."
+	if(welded)
+		. += "It's welded shut."
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
