@@ -32387,7 +32387,6 @@
 /area/station/hallway/secondary/entry)
 "kVw" = (
 /obj/structure/table/wood,
-/obj/structure/table/wood,
 /obj/item/storage/crayons,
 /obj/item/toy/crayon/spraycan,
 /obj/item/toy/crayon/spraycan{
