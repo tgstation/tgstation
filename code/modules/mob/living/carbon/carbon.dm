@@ -945,14 +945,6 @@
 		to_chat(user, span_notice("You retrieve some of [src]\'s internal organs!"))
 	remove_all_embedded_objects()
 
-/mob/living/carbon/extinguish_mob()
-	for(var/X in get_equipped_items())
-		var/obj/item/I = X
-		I.wash(CLEAN_TYPE_ACID) //washes off the acid on our clothes
-		I.extinguish() //extinguishes our clothes
-	..()
-
-
 /mob/living/carbon/proc/create_bodyparts()
 	var/l_arm_index_next = -1
 	var/r_arm_index_next = 0
