@@ -1374,6 +1374,9 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/firealarm/directional/east,
+/obj/structure/curtain{
+	open = 0
+	},
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},
@@ -5892,7 +5895,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/hall)
@@ -8639,6 +8641,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/curtain{
+	open = 0
+	},
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
