@@ -307,11 +307,10 @@
 
 /datum/action/cooldown/spell/pointed/declare_evil/before_cast(mob/living/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(. & SPELL_CANCEL_CAST)
+		return
 
 	invocation = "[cast_on]! [declaration]"
-	return TRUE
 
 /datum/action/cooldown/spell/pointed/declare_evil/cast(mob/living/cast_on)
 	. = ..()

@@ -43,11 +43,9 @@
 
 /datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/before_cast(atom/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(. & SPELL_CANCEL_CAST)
+		return
 
 	var/mob/living/carbon/caster = cast_on
 	if(caster.incapacitated() || !caster.is_holding(target))
-		return FALSE
-
-	return TRUE
+		return . | SPELL_CANCEL_CAST

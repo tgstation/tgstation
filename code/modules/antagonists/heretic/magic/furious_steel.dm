@@ -48,7 +48,7 @@
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/before_cast(atom/cast_on)
 	if(isnull(blade_effect) || !length(blade_effect.blades))
-		return FALSE
+		return SPELL_CANCEL_CAST
 
 	return ..()
 

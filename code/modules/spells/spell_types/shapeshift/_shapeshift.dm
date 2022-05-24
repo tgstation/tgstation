@@ -23,15 +23,15 @@
 
 /datum/action/cooldown/spell/shapeshift/before_cast(atom/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(. & SPELL_CANCEL_CAST)
+		return
 
 	if(shapeshift_type)
-		return TRUE
+		return
 
 	if(length(possible_shapes) == 1)
 		shapeshift_type = possible_shapes[1]
-		return TRUE
+		return
 
 	var/list/shape_names_to_types = list()
 	var/list/shape_names_to_image = list()
@@ -50,16 +50,15 @@
 	)
 
 	if(!picked_type)
-		return FALSE
+		return . | SPELL_CANCEL_CAST
+
 	var/atom/shift_type = shape_names_to_types[picked_type]
 	if(!ispath(shift_type))
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 
 	shapeshift_type = shift_type || pick(possible_shapes)
 	if(QDELETED(src) || QDELETED(owner) || !can_cast_spell(feedback = FALSE))
-		return FALSE
-
-	return TRUE
+		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/shapeshift/cast(mob/living/cast_on)
 	. = ..()

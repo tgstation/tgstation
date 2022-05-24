@@ -22,17 +22,15 @@
 
 /datum/action/cooldown/spell/voice_of_god/before_cast(atom/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(. & SPELL_CANCEL_CAST)
+		return
 
 	command = tgui_input_text(cast_on, "Speak with the Voice of God", "Command")
 	if(QDELETED(src) || QDELETED(cast_on) || !can_cast_spell())
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 	if(!command)
 		reset_spell_cooldown()
-		return FALSE
-
-	return TRUE
+		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/voice_of_god/cast(atom/cast_on)
 	. = ..()

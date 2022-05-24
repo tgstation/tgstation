@@ -19,17 +19,16 @@
 
 /datum/action/cooldown/spell/list_target/telepathy/before_cast(atom/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(. & SPELL_CANCEL_CAST)
+		return
 
 	message = tgui_input_text(cast_on, "What do you wish to whisper to [cast_on]?", "[src]")
 	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
-		return FALSE
+		return . | SPELL_CANCEL_CAST
+
 	if(!message)
 		reset_spell_cooldown()
-		return FALSE
-
-	return TRUE
+		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/list_target/telepathy/cast(mob/living/cast_on)
 	. = ..()

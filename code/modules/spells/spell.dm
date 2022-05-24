@@ -16,8 +16,7 @@
  *
  * ## The spell chain:
  * - [before_cast][/datum/action/cooldown/spell/before_cast] is the last chance for being able
- * to interrupt a spell cast. Returning FALSE from it will stop the rest of the spell from casting. You can hook
- * additional checks into this.
+ * to interrupt a spell cast. This returns a bitflag. if SPELL_CANCEL_CAST is set, the spell will not continue.
  * - [spell_feedback][/datum/action/cooldown/spell/spell_feedback] is called right before cast, and handles
  * invocation and sound effects. Overridable, if you want a special method of invocation or sound effects,
  * or you want your spell to handle invocation / sound via special means.
@@ -128,7 +127,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/set_click_ability(mob/on_who)
-	if(SEND_SIGNAL(on_who, COMSIG_MOB_SPELL_ACTIVATED, src) & COMPONENT_CANCEL_SPELL)
+	if(SEND_SIGNAL(on_who, COMSIG_MOB_SPELL_ACTIVATED, src) & SPELL_CANCEL_CAST)
 		return FALSE
 
 	return ..()
@@ -227,20 +226,23 @@
 
 	// Pre-casting of the spell
 	// Pre-cast is the very last chance for a spell to cancel
-	// Stuff like target input would go here.
-	if(!before_cast(cast_on))
+	// Stuff like target input can go here.
+	var/precast_result = before_cast(cast_on)
+	if(precast_result & SPELL_CANCEL_CAST)
 		return FALSE
 
 	// Spell is officially being cast
-	// We do invocation and sound effects here, before cast
-	// (That way stuff like teleports or shape-shifts can be said before done)
-	spell_feedback()
+	if(!(precast_result & SPELL_NO_FEEDBACK))
+		// We do invocation and sound effects here, before actual cast
+		// That way stuff like teleports or shape-shifts can be invoked before ocurring
+		spell_feedback()
 
 	// Actually cast the spell. Main effects go here
 	cast(cast_on)
 
-	// The entire spell is done, start the actual cooldown at its set duration
-	StartCooldown()
+	if(!(precast_result & SPELL_NO_IMMEDIATE_COOLDOWN))
+		// The entire spell is done, start the actual cooldown at its set duration
+		StartCooldown()
 
 	// And then proceed with the aftermath of the cast
 	// Final effects that happen after all the casting is done can go here
@@ -255,19 +257,19 @@
  *
  * Can be used for target selection or to validate checks on the caster (cast_on).
  *
- * Return FALSE to cancel the spell casat before it occurs, TRUE to let it happen.
+ * Returns a bitflag.
+ * - SPELL_CANCEL_CAST will stop the spell from being cast.
+ * - SPELL_NO_FEEDBACK will prevent the spell from calling [proc/spell_feedback] on cast. (invocation, sounds)
+ * - SPELL_NO_IMMEDIATE_COOLDOWN will prevent the spell from starting its cooldown between cast and before after_cast.
  */
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST, cast_on) & COMPONENT_CANCEL_SPELL)
-		return FALSE
-
+	var/sig_return = SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST, cast_on)
 	if(owner)
-		if(SEND_SIGNAL(owner, COMSIG_MOB_BEFORE_SPELL_CAST, src, cast_on) & COMPONENT_CANCEL_SPELL)
-			return FALSE
+		sig_return |= SEND_SIGNAL(owner, COMSIG_MOB_BEFORE_SPELL_CAST, src, cast_on)
 
-	return TRUE
+	return sig_return
 
 /**
  * Actions done as the main effect of the spell.

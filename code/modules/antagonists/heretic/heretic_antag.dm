@@ -216,7 +216,7 @@
  *
  * Checks if our heretic has [TRAIT_ALLOW_HERETIC_CASTING] or is ascended.
  * If so, allow them to cast like normal.
- * If not, cancel the cast, and returns [COMPONENT_CANCEL_SPELL].
+ * If not, cancel the cast, and returns [SPELL_CANCEL_CAST].
  */
 /datum/antagonist/heretic/proc/on_spell_cast(mob/living/source, datum/action/cooldown/spell/spell)
 	SIGNAL_HANDLER
@@ -234,7 +234,7 @@
 
 	// We shouldn't be able to cast this! Cancel it.
 	source.balloon_alert(source, "you need a focus!")
-	return COMPONENT_CANCEL_SPELL
+	return SPELL_CANCEL_CAST
 
 /*
  * Signal proc for [COMSIG_MOB_ITEM_AFTERATTACK].

@@ -21,19 +21,19 @@
 
 /datum/action/cooldown/spell/personality_commune/before_cast(atom/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(. & SPELL_CANCEL_CAST)
+		return
 
 	var/datum/brain_trauma/severe/split_personality/trauma = target
 	if(!istype(trauma)) // hypothetically impossible but you never know
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 
 	to_send = tgui_input_text(cast_on, "What would you like to tell your other self?", "Commune")
 	if(QDELETED(src) || QDELETED(trauma)|| QDELETED(cast_on) || QDELETED(trauma.owner) || !can_cast_spell())
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 	if(!to_send)
 		reset_cooldown()
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 
 	return TRUE
 

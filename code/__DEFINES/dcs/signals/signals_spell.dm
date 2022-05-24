@@ -2,14 +2,25 @@
 
 // Generic spell signals
 
-/// Sent from /datum/action/cooldown/spell/set_click_ability() to the caster: (datum/action/cooldown/spell/spell)
-#define COMSIG_MOB_SPELL_ACTIVATED "mob_spell_active"
+/// Return activated or pre-cast signals to prevent the spell from continuing.
+#define SPELL_CANCEL_CAST (1 << 0)
+
 /// Sent from /datum/action/cooldown/spell/before_cast() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on)
 #define COMSIG_MOB_BEFORE_SPELL_CAST "mob_spell_pre_cast"
 /// Sent from /datum/action/cooldown/spell/before_cast() to the spell: (atom/cast_on)
 #define COMSIG_SPELL_BEFORE_CAST "spell_pre_cast"
-	/// Return from any of the above signals to prevent the cast or activation.
-	#define COMPONENT_CANCEL_SPELL (1 << 0)
+	/// Return to prevent the spell from being cast
+	#define SPELL_CANCEL_CAST (1 << 0)
+	/// Return from before cast signals to prevent the spell from giving off sound or invocation.
+	#define SPELL_NO_FEEDBACK (1 << 1)
+	/// Return from before cast signals to prevent the spell from going on cooldown before aftercast.
+	#define SPELL_NO_IMMEDIATE_COOLDOWN (1 << 2)
+
+/// Sent from /datum/action/cooldown/spell/set_click_ability() to the caster: (datum/action/cooldown/spell/spell)
+#define COMSIG_MOB_SPELL_ACTIVATED "mob_spell_active"
+	/// Same as spell_cancel_cast, as they're able to be used interchangeably
+	#define SPELL_CANCEL_ACTIVATION SPELL_CANCEL_CAST
+
 /// Sent from /datum/action/cooldown/spell/cast() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on)
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
 /// Sent from /datum/action/cooldown/spell/cast() to the spell: (atom/cast_on)

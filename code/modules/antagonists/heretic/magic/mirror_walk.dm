@@ -9,6 +9,7 @@
 
 	cooldown_time = 6 SECONDS
 	jaunt_type = /obj/effect/dummy/phased_mob/mirror_walk
+	spell_requirements = NONE
 
 	/// The time it takes to enter the mirror / phase out / enter jaunt.
 	var/phase_out_time = 1.5 SECONDS

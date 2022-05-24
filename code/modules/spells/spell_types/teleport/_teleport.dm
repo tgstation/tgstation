@@ -95,8 +95,8 @@
 
 /datum/action/cooldown/spell/teleport/area_teleport/before_cast(atom/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(. & SPELL_CANCEL_CAST)
+		return
 
 	var/area/target_area
 	if(randomise_selection)
@@ -105,12 +105,11 @@
 		target_area = tgui_input_list(cast_on, "Chose an area to teleport to.", "Teleport", GLOB.teleportlocs)
 
 	if(QDELETED(src) || QDELETED(cast_on) || !can_cast_spell())
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 	if(!target_area || isnull(GLOB.teleportlocs[target_area]))
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 
 	last_chosen_area_name = target_area
-	return TRUE
 
 /datum/action/cooldown/spell/teleport/area_teleport/cast(atom/cast_on)
 	if(isliving(cast_on))

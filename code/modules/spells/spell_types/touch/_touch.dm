@@ -61,7 +61,7 @@
  * Otherwise, registers signals and returns TRUE.
  */
 /datum/action/cooldown/spell/touch/proc/create_hand(mob/living/carbon/cast_on)
-	var/obj/item/melee/touch_attack/new_hand = new hand_path(cast_on)
+	var/obj/item/melee/touch_attack/new_hand = new hand_path(cast_on, src)
 	if(!cast_on.put_in_hands(new_hand, del_on_fail = TRUE))
 		reset_spell_cooldown()
 		if (cast_on.usable_hands == 0)
@@ -97,6 +97,10 @@
 	else
 		StartCooldown()
 
+// Touch spells don't go on cooldown OR give off an invocation until the hand is used itself.
+/datum/action/cooldown/spell/touch/before_cast(atom/cast_on)
+	return ..() | SPELL_NO_FEEDBACK | SPELL_NO_IMMEDIATE_COOLDOWN
+
 /datum/action/cooldown/spell/touch/cast(mob/living/carbon/cast_on)
 	if(!QDELETED(attached_hand) && (attached_hand in cast_on.held_items))
 		remove_hand(cast_on, reset_cooldown_after = TRUE)
@@ -104,19 +108,6 @@
 
 	create_hand(cast_on)
 	return ..()
-
-// Overrides spell_feedback, as invocation / sounds are done when the hand hits someone
-/datum/action/cooldown/spell/touch/spell_feedback()
-	return
-
-/datum/action/cooldown/spell/touch/after_cast(atom/cast_on)
-	. = ..()
-	// Soft resets our cooldown post "cast"-
-	// Our *actual* cooldown only begins
-	// when our touch hand hits someone
-	// (see: remove_hand() where it's done)
-	next_use_time = world.time
-	UpdateButtons()
 
 /**
  * Signal proc for [COMSIG_ITEM_AFTERATTACK] from our attached hand.
@@ -160,10 +151,7 @@
 	if(!cast_on_hand_hit(hand, victim, caster))
 		return
 
-	invocation()
-	if(sound)
-		playsound(get_turf(owner), sound, 50, TRUE)
-
+	spell_feedback()
 	remove_hand(caster)
 
 /**
@@ -245,6 +233,14 @@
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
+	/// A weakref to what spell made us.
+	var/datum/weakref/spell_which_made_us
+
+/obj/item/melee/touch_attack/Initialize(mapload, datum/action/cooldown/spell/spell)
+	. = ..()
+
+	if(spell)
+		spell_which_made_us = WEAKREF(spell)
 
 /obj/item/melee/touch_attack/attack(mob/target, mob/living/carbon/user)
 	if(!iscarbon(user)) //Look ma, no hands
@@ -253,3 +249,20 @@
 		to_chat(user, span_warning("You can't reach out!"))
 		return TRUE
 	return ..()
+
+/**
+ * When the hand component of a touch spell is qdel'd, (the hand is dropped or otherwise lost),
+ * the cooldown on the spell that made it is automatically refunded.
+ *
+ * However, if you want to consume the hand and not give a cooldown,
+ * such as adding a unique behavior to the hand specifically, this function will do that.
+ */
+/obj/item/melee/touch_attack/mansus_fist/proc/remove_hand_with_no_refund(mob/holder)
+	var/datum/action/cooldown/spell/touch/hand_spell = spell_which_made_us?.resolve()
+	if(!QDELETED(hand_spell))
+		hand_spell.remove_hand(user, reset_cooldown_after = FALSE)
+		return
+
+	// We have no spell associated for some reason, just delete us as normal.
+	holder.temporarilyRemoveItemFromInventory(src, force = TRUE)
+	qdel(src)

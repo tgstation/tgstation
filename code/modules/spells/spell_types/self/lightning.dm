@@ -48,8 +48,8 @@
 
 /datum/action/cooldown/spell/tesla/before_cast(atom/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(. & SPELL_CANCEL_CAST)
+		return
 
 	to_chat(cast_on, span_notice("You start gathering power..."))
 	charge_sound = new /sound('sound/magic/lightning_chargeup.ogg', channel = 7)
@@ -60,7 +60,7 @@
 	currently_channeling = TRUE
 	if(!do_after(cast_on, channel_time, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM)))
 		reset_tesla(cast_on)
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 
 	return TRUE
 

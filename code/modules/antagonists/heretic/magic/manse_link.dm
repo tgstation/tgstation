@@ -33,14 +33,12 @@
 
 /datum/action/cooldown/spell/pointed/manse_link/before_cast(mob/living/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(. & SPELL_CANCEL_CAST)
+		return
 
-	// If we link successfuly, we can start the full cooldown duration.
+	// If we fail to link, cancel the spell.
 	if(!do_linking(cast_on))
-		return FALSE
-
-	return TRUE
+		return . | SPELL_CANCEL_CAST
 
 /**
  * The actual process of linking [linkee] to our network.

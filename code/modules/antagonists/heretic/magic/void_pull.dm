@@ -22,7 +22,7 @@
 // Before the cast, we do some small AOE damage around the caster
 /datum/action/cooldown/spell/aoe/void_pull/before_cast(atom/cast_on)
 	. = ..()
-	if(!.)
+	if(. & SPELL_CANCEL_CAST)
 		return
 
 	new /obj/effect/temp_visual/voidin(cast_on.drop_location())

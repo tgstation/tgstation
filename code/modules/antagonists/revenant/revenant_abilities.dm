@@ -137,6 +137,7 @@
 	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
 
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
+	spell_requirements = NONE
 
 	/// If it's locked, and needs to be unlocked before use
 	var/locked = TRUE
@@ -189,26 +190,25 @@
 
 /datum/action/cooldown/spell/aoe/revenant/before_cast(mob/living/simple_animal/revenant/cast_on)
 	. = ..()
-	if(!.)
+	if(. & SPELL_CANCEL_CAST)
 		return FALSE
 
 	if(locked)
 		if(!cast_on.unlock(unlock_amount))
 			to_chat(cast_on, span_revenwarning("You don't have enough essence to unlock [initial(name)]!"))
 			reset_spell_cooldown()
-			return FALSE
+			return . | SPELL_CANCEL_CAST
 
 		name = "[initial(name)] ([cast_amount]E)"
 		to_chat(cast_on, span_revennotice("You have unlocked [initial(name)]!"))
 		panel = "Revenant Abilities"
 		locked = FALSE
 		reset_spell_cooldown()
-		return FALSE
+		return . | SPELL_CANCEL_CAST
 
 	if(!cast_on.castcheck(-cast_amount))
 		reset_spell_cooldown()
-		return FALSE
-	return TRUE
+		return . | SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/aoe/revenant/after_cast(mob/living/simple_animal/revenant/cast_on)
 	. = ..()
