@@ -2,11 +2,11 @@
 /obj/machinery/light_switch
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
-	icon_state = "light1"
+	icon_state = "light-nopower"
 	base_icon_state = "light"
 	desc = "Make dark."
 	power_channel = AREA_USAGE_LIGHT
-	use_power = NO_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	/// Set this to a string, path, or area instance to control that area
 	/// instead of the switch's location.
 	var/area/area = null
@@ -38,20 +38,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	luminosity = (machine_stat & NOPOWER) ? 0 : 1
 
 /obj/machinery/light_switch/update_icon_state()
+	icon_state = "[base_icon_state]"
 	if(machine_stat & NOPOWER)
-		icon_state = "[base_icon_state]-p"
+		icon_state += "-nopower"
 		return ..()
-	icon_state = "[base_icon_state][area.lightswitch ? 1 : 0]"
+	icon_state += "[area.lightswitch ? "-on" : "-off"]"
+	if(area.fire)
+		icon_state += "-alarm"
+		return ..()
 	return ..()
 
 /obj/machinery/light_switch/update_overlays()
 	. = ..()
-	if(!(machine_stat & NOPOWER))
-		. += emissive_appearance(icon, "[base_icon_state]-glow", alpha = src.alpha)
+	if(machine_stat & NOPOWER)
+		return ..()
+	var/emissive_icon = "[base_icon_state]-emissive[area.lightswitch ? "-on" : "-off"]"
+	if(area.fire)
+		emissive_icon += "-alarm"
+	. += emissive_appearance(icon, emissive_icon, alpha = src.alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
-	. += "It is [area.lightswitch ? "on" : "off"]."
+	if(machine_stat & NOPOWER)
+		. += "It is unpowered."
+	else
+		. += "It is [area.lightswitch ? "on" : "off"]."
+
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
@@ -80,6 +92,29 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		return
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()
+
+// Area sensitivity is traditionally tied directly to power use, as an optimization
+// But since we want it for fire reacting, we disregard that
+/obj/machinery/light_switch/setup_area_power_relationship()
+	. = ..()
+	if(!.)
+		return
+	var/area/our_area = get_area(src)
+	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
+
+/obj/machinery/light_switch/on_enter_area(datum/source, area/area_to_register)
+	..()
+	RegisterSignal(area_to_register, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
+	handle_fire(area_to_register, area_to_register.fire)
+
+/obj/machinery/light_switch/on_exit_area(datum/source, area/area_to_unregister)
+	..()
+	UnregisterSignal(area_to_unregister, COMSIG_AREA_FIRE_CHANGED)
+
+/obj/machinery/light_switch/proc/handle_fire(area/source, new_fire)
+	SIGNAL_HANDLER
+	update_overlays()
+	update_icon_state()
 
 /obj/item/circuit_component/light_switch
 	display_name = "Light Switch"
@@ -114,3 +149,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 /obj/item/circuit_component/light_switch/input_received(datum/port/input/port)
 	attached_switch?.set_lights(on_setting.value ? TRUE : FALSE)
+
+
+
