@@ -105,9 +105,6 @@
 	organ_owner.external_organs.Remove(src)
 	organ_owner.update_body_parts()
 
-	if((organ_flags & ORGAN_UNREMOVABLE) && !moving && !QDELETED(src))
-		qdel(src)
-
 /obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
 	if(src in bodypart)
 		CRASH("External organ tried to enter a bodypart it was already in.")
@@ -116,7 +113,7 @@
 	add_to_limb(bodypart)
 
 /obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
-	forceMove(bodypart)
+	forceMove(bodypart, check_dest = FALSE)
 	ownerlimb = bodypart
 	ownerlimb.contents |= src
 	ownerlimb.external_organs |= src

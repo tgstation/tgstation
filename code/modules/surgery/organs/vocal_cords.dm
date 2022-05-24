@@ -18,7 +18,7 @@
 /obj/item/organ/internal/vocal_cords/proc/handle_speech(message) //actually say the message
 	owner.say(message, spans = spans, sanitize = FALSE)
 
-/obj/item/organ/adamantine_resonator
+/obj/item/organ/internal/adamantine_resonator
 	visual = FALSE
 	name = "adamantine resonator"
 	desc = "Fragments of adamantine exist in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."

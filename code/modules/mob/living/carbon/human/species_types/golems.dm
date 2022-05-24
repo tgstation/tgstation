@@ -19,7 +19,8 @@
 		TRAIT_NODISMEMBER,
 	)
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
-	mutant_organs = list(/obj/item/organ/adamantine_resonator)
+	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
+	mutanttongue = /obj/item/organ/internal/vocal_cords/adamantine
 	speedmod = 2
 	payday_modifier = 0.75
 	armor = 55
@@ -87,7 +88,8 @@
 	name = "Adamantine Golem"
 	id = SPECIES_GOLEM_ADAMANTINE
 	meat = /obj/item/food/meat/slab/human/mutant/golem/adamantine
-	mutant_organs = list(/obj/item/organ/adamantine_resonator, /obj/item/organ/internal/vocal_cords/adamantine)
+	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
+	mutanttongue = /obj/item/organ/internal/vocal_cords/adamantine
 	fixed_mut_color = "#44eedd"
 	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems. Your unique mineral makeup makes you immune to most types of magic."
 	prefix = "Adamantine"
