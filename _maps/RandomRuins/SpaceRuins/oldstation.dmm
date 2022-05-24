@@ -6860,6 +6860,7 @@
 /obj/structure/transit_tube{
 	anchored = 0
 	},
+/obj/structure/lattice,
 /turf/template_noop,
 /area/misc/space/nearstation)
 "Fo" = (
@@ -7777,6 +7778,7 @@
 	dir = 4;
 	anchored = 0
 	},
+/obj/structure/lattice,
 /turf/template_noop,
 /area/misc/space/nearstation)
 "NZ" = (
