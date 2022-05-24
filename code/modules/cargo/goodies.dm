@@ -52,6 +52,13 @@
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat, /obj/item/storage/belt/bandolier)
 
+/datum/supply_pack/goody/voidshot
+	name = "Voidshot Ammo Box"
+	desc = "One box, containing seven NT voidshot shells. Not as outright lethal as military buckshot, but it's still plenty when it comes to maiming soft targets."
+	cost = PAYCHECK_COMMAND * 2.5
+	access_view = ACCESS_ARMORY
+	contains = list(/obj/item/storage/box/voidshot)
+
 /datum/supply_pack/goody/energy_single
 	name = "Energy Gun Single-Pack"
 	desc = "Contains one energy gun, capable of firing both nonlethal and lethal blasts of light."

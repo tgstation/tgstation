@@ -76,7 +76,7 @@
 	semi_auto = TRUE
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	/// If defined, the secondary tube is this type, if you want different shell loads
-	var/alt_mag_type
+	var/alt_mag_type = /obj/item/ammo_box/magazine/internal/shot/tube/voidshot
 	/// If TRUE, we're drawing from the alternate_magazine
 	var/toggled = FALSE
 	/// The B tube

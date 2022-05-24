@@ -78,9 +78,9 @@
 
 /obj/projectile/bullet/pellet
 	/// How much main damage we lose each tile we pass
-	var/tile_dropoff = 0.45
+	var/damage_dropoff_per_tile = 0.45
 	/// How much extra stamina damage we lose each tile we pass
-	var/tile_dropoff_s = 0.25
+	var/stamina_dropoff_per_tile = 0.25
 	/// This is added onto the speed for each tile the pellet travels (positive numbers making it slower)
 	var/speed_dropoff = 0
 	/// How many tiles the speed_dropoff applies for before it caps out
@@ -93,9 +93,9 @@
 		speed_dropoff_tiles--
 
 	if(damage > 0)
-		damage -= tile_dropoff
+		damage -= damage_dropoff_per_tile
 	if(stamina > 0)
-		stamina -= tile_dropoff_s
+		stamina -= stamina_dropoff_per_tile
 	if(damage < 0 && stamina < 0)
 		qdel(src)
 
@@ -104,7 +104,7 @@
 	name = "buckshot pellet"
 	damage = 9 // * 6 pellets = 54 brute
 	wound_bonus = 5
-	bare_wound_bonus = 7.5
+	bare_wound_bonus = 5
 	wound_falloff_tile = -1 // low damage + additional dropoff will already curb wounding potential anything past point blank
 	speed = 0.6
 	speed_dropoff = 0.2
@@ -117,11 +117,11 @@
 /obj/projectile/bullet/pellet/shotgun_voidshot
 	name = "voidshot pellet"
 	damage = 8 // * 5 pellets = 40 brute
-	tile_dropoff = 0.35
-	weak_against_armour = TRUE
+	damage_dropoff_per_tile = 0.3 // slightly longer ranged
 	wound_bonus = 10
 	bare_wound_bonus = 12.5
 	wound_falloff_tile = -1.5
+	weak_against_armour = TRUE
 	speed = 0.5
 	speed_dropoff = 0.3
 	speed_dropoff_tiles = 5
@@ -160,7 +160,7 @@
 	embedding = null
 
 /obj/projectile/bullet/pellet/shotgun_improvised
-	tile_dropoff = 0.35 //Come on it does 6 damage don't be like that.
+	damage_dropoff_per_tile = 0.35 //Come on it does 6 damage don't be like that.
 	damage = 6
 	wound_bonus = 0
 	bare_wound_bonus = 7.5

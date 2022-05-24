@@ -282,18 +282,19 @@
 
 /datum/supply_pack/security/ammo
 	name = "Ammo Crate"
-	desc = "Contains three boxes of beanbag shotgun shells, three boxes of rubbershot shotgun shells and one of each special .38 speedloarders. Requires Security access to open."
+	desc = "Contains two boxes each of voidshot, beanbag, and rubbershot shotgun shells, as well one of each kind of special .38 speedloaders. Requires Security access to open."
 	cost = CARGO_CRATE_VALUE * 8
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/storage/box/beanbag,
+	contains = list(/obj/item/storage/box/voidshot,
+					/obj/item/storage/box/voidshot,
 					/obj/item/storage/box/beanbag,
 					/obj/item/storage/box/beanbag,
-					/obj/item/storage/box/rubbershot,
 					/obj/item/storage/box/rubbershot,
 					/obj/item/storage/box/rubbershot,
 					/obj/item/ammo_box/c38/trac,
 					/obj/item/ammo_box/c38/hotshot,
-					/obj/item/ammo_box/c38/iceblox)
+					/obj/item/ammo_box/c38/iceblox,
+					/obj/item/ammo_box/c38/dumdum)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/security/armor
