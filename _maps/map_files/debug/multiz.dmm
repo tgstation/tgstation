@@ -1193,7 +1193,7 @@
 /area/station/hallway/primary/central)
 "uw" = (
 /turf/open/floor/engine/hull,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "vt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
