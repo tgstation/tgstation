@@ -14,6 +14,7 @@
 /datum/element/heretic_focus/Detach(datum/source)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	REMOVE_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING, ELEMENT_TRAIT(source))
 
 /**
  * Signal proc for [COMSIG_PARENT_EXAMINE].

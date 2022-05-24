@@ -57,6 +57,7 @@
 	allowed = list(/obj/item/melee/sickly_blade)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
 	flags_inv = NONE
+	body_parts_covered = CHEST|GROIN|ARMS
 	// slightly worse than normal cult robes
 	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
@@ -86,7 +87,7 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/void/MakeHood()
 	if(!isliving(loc))
-		CRASH("[src] attempted to make a hood on a non-carbon thing: [loc]")
+		CRASH("[src] attempted to make a hood on a non-living thing: [loc]")
 
 	var/mob/living/wearer = loc
 	if(!IS_HERETIC_OR_MONSTER(wearer))

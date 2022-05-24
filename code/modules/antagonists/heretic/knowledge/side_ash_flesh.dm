@@ -2,7 +2,7 @@
 /datum/heretic_knowledge/medallion
 	name = "Ashen Eyes"
 	desc = "Allows you to transmute a pair of eyes, a candle, and a glass shard into an Eldritch Medallion. \
-		The Eldritch Medallion grants you thermal vision while worn."
+		The Eldritch Medallion grants you thermal vision while worn, and also functions as a focus."
 	gain_text = "Piercing eyes guided them through the mundane. Neither darkness nor terror could stop them."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/ash_passage,
