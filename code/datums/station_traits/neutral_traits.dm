@@ -127,3 +127,12 @@
 
 	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
 	GLOB.colored_assistant = new new_colored_assistant_type
+
+/datum/station_trait/announcement_changes
+	name = "Alert Database Mishap"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 10
+	show_in_report = TRUE
+	report_message = "The Biohazard Alert Database was recently damaged by a nearby solar flare. Biohazard announcements may be mixed up as a result."
+	blacklist = list(/datum/station_trait/announcement_changes)
+	trait_to_give = STATION_TRAIT_ALERT_CHANGES
