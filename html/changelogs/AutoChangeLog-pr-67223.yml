@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "The PDA Messenger app is now undeletable, unavailable for download and also no longer takes space on the hardware, something something bluespace cloud storage. As a result, everyone should once again be spawning with the programs they were meant to spawn with in the first place."
