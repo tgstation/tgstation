@@ -99,7 +99,7 @@
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor{
 	id = "fslockdown";
-	name = "Ship blast door";
+	name = "Ship Blast Door";
 	state_open = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -472,7 +472,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "fscaproom";
-	name = "Captain's blast door";
+	name = "Captain's Blast Door";
 	state_open = 1
 	},
 /turf/open/floor/carpet/royalblack,
@@ -713,7 +713,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "fscaproom";
-	name = "Captain's blast door";
+	name = "Captain's Blast Door";
 	state_open = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -757,7 +757,7 @@
 /obj/structure/filingcabinet,
 /obj/machinery/door/window{
 	dir = 8;
-	name = "Syndicate interior door";
+	name = "Syndicate Interior Door";
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -765,7 +765,7 @@
 "cp" = (
 /obj/machinery/door/window{
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 0, "fire" = 70, "acid" = 100);
-	name = "Control room";
+	name = "Control Room";
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -920,7 +920,7 @@
 "cJ" = (
 /obj/machinery/door/window{
 	dir = 1;
-	name = "Spare equipment";
+	name = "Spare Equipment";
 	req_access = list("syndicate")
 	},
 /turf/open/floor/mineral/plastitanium/red,

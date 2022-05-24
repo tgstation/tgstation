@@ -206,7 +206,7 @@
 "aY" = (
 /obj/machinery/door/poddoor{
 	id = "smindicate";
-	name = "outer blast door"
+	name = "Outer Blast Door"
 	},
 /obj/docking_port/mobile/infiltrator,
 /obj/structure/fans/tiny,
