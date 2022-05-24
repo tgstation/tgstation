@@ -180,10 +180,11 @@
 	return ..()
 
 /datum/heretic_knowledge/spell/on_gain(mob/user)
-	// Tracked on the mind, so it'll persist with body swaps
-	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve() || new spell_to_add(user.mind)
+	// Added spells are tracked on the body, and not the mind,
+	// because we handle heretic mind transfers
+	// via the antag datum (on_gain and on_lose).
+	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve() || new spell_to_add(user)
 	created_spell.Grant(user)
-	// We also keep a weakref here so it gets removed on deletion properly
 	created_spell_ref = WEAKREF(created_spell)
 
 /datum/heretic_knowledge/spell/on_lose(mob/user)
