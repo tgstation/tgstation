@@ -132,6 +132,9 @@
 			if(!sending_and_receiving)
 				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
 				return
+			if(!spam_mode)
+				to_char(usr, span_notice("ERROR: Device does not have mass-messaging perms."))
+				return
 
 			var/list/targets = list()
 
