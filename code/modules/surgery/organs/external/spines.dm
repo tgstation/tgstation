@@ -22,7 +22,7 @@
 	if(.)
 		paired_tail = locate(/obj/item/organ/external/tail/lizard) in reciever.external_organs //We want specifically a lizard tail, so we don't use the slot.
 
-/obj/item/organ/external/spines/Remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/external/spines/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 	if(paired_tail)
 		paired_tail.paired_spines = null

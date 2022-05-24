@@ -46,7 +46,7 @@
 		else if(isstructure(parent))
 			RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/use_squeak)
 
-	if(istype(parent, /obj/item/organ/liver))
+	if(istype(parent, /obj/item/organ/internal/liver))
 		// Liver squeaking is depending on them functioning like a clown's liver
 		RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_COMEDY_METABOLISM), .proc/on_comedy_metabolism_removal)
 

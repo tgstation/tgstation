@@ -67587,7 +67587,7 @@
 	pixel_y = 4
 	},
 /obj/item/bodypart/chest,
-/obj/item/organ/heart,
+/obj/item/organ/internal/heart,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "vQG" = (

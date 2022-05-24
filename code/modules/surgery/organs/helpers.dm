@@ -6,14 +6,7 @@
  */
 /mob/proc/getorgan(typepath)
 	return
-/**
- * Get the organ object from the mob matching the passed in typepath
- *
- * Arguments:
- * * typepath The typepath of the organ to get
- */
-/mob/proc/getexternalorgan(typepath)
-	return
+
 /**
  * Get organ objects by zone
  *
@@ -33,14 +26,9 @@
 /mob/proc/getorganslot(slot)
 	return
 
-/mob/proc/getexternalorganslot(slot)
-	return
-
 /mob/living/carbon/getorgan(typepath)
-	return (locate(typepath) in internal_organs)
+	return (locate(typepath) in internal_organs + external_organs)
 
-/mob/living/carbon/getexternalorgan(typepath)
-	return (locate(typepath) in external_organs)
 
 /mob/living/carbon/getorganszone(zone, subzones = 0)
 	var/list/returnorg = list()
@@ -57,7 +45,7 @@
 	return returnorg
 
 /mob/living/carbon/getorganslot(slot)
-	return internal_organs_slot[slot]
+	. = internal_organs_slot[slot]
+	if(!.)
+		return external_organs_slot[slot]
 
-/mob/living/carbon/getexternalorganslot(slot)
-	return external_organs_slot[slot]

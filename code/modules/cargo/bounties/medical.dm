@@ -3,10 +3,10 @@
 	description = "Commander Johnson is in critical condition after suffering yet another heart attack. Doctors say he needs a new heart fast. Ship one, pronto! We'll take a better cybernetic one, if need be."
 	reward = CARGO_CRATE_VALUE * 5
 	wanted_types = list(
-		/obj/item/organ/heart = TRUE,
-		/obj/item/organ/heart/cybernetic = FALSE,
-		/obj/item/organ/heart/cybernetic/tier2 = TRUE,
-		/obj/item/organ/heart/cybernetic/tier3 = TRUE,
+		/obj/item/organ/internal/heart = TRUE,
+		/obj/item/organ/internal/heart/cybernetic = FALSE,
+		/obj/item/organ/internal/heart/cybernetic/tier2 = TRUE,
+		/obj/item/organ/internal/heart/cybernetic/tier3 = TRUE,
 	)
 
 /datum/bounty/item/medical/lung
@@ -15,17 +15,17 @@
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(
-		/obj/item/organ/lungs = TRUE,
-		/obj/item/organ/lungs/cybernetic = FALSE,
-		/obj/item/organ/lungs/cybernetic/tier2 = TRUE,
-		/obj/item/organ/lungs/cybernetic/tier3 = TRUE,
+		/obj/item/organ/internal/lungs = TRUE,
+		/obj/item/organ/internal/lungs/cybernetic = FALSE,
+		/obj/item/organ/internal/lungs/cybernetic/tier2 = TRUE,
+		/obj/item/organ/internal/lungs/cybernetic/tier3 = TRUE,
 	)
 
 /datum/bounty/item/medical/appendix
 	name = "Appendix"
 	description = "Chef Gibb of Central Command wants to prepare a meal using a very special delicacy: an appendix. If you ship one, he'll pay.  We'll take a better cybernetic one, if need be."
 	reward = CARGO_CRATE_VALUE * 5 //there are no synthetic appendixes
-	wanted_types = list(/obj/item/organ/appendix = TRUE)
+	wanted_types = list(/obj/item/organ/internal/appendix = TRUE)
 
 /datum/bounty/item/medical/ears
 	name = "Ears"
@@ -33,9 +33,9 @@
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(
-		/obj/item/organ/ears = TRUE,
-		/obj/item/organ/ears/cybernetic = FALSE,
-		/obj/item/organ/ears/cybernetic/upgraded = TRUE,
+		/obj/item/organ/internal/ears = TRUE,
+		/obj/item/organ/internal/ears/cybernetic = FALSE,
+		/obj/item/organ/internal/ears/cybernetic/upgraded = TRUE,
 	)
 
 /datum/bounty/item/medical/liver
@@ -44,10 +44,10 @@
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(
-		/obj/item/organ/liver = TRUE,
-		/obj/item/organ/liver/cybernetic = FALSE,
-		/obj/item/organ/liver/cybernetic/tier2 = TRUE,
-		/obj/item/organ/liver/cybernetic/tier3 = TRUE,
+		/obj/item/organ/internal/liver = TRUE,
+		/obj/item/organ/internal/liver/cybernetic = FALSE,
+		/obj/item/organ/internal/liver/cybernetic/tier2 = TRUE,
+		/obj/item/organ/internal/liver/cybernetic/tier3 = TRUE,
 	)
 
 /datum/bounty/item/medical/eye
@@ -56,8 +56,8 @@
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
 	wanted_types = list(
-		/obj/item/organ/eyes = TRUE,
-		/obj/item/organ/eyes/robotic = FALSE,
+		/obj/item/organ/internal/eyes = TRUE,
+		/obj/item/organ/internal/eyes/robotic = FALSE,
 	)
 
 /datum/bounty/item/medical/tongue
@@ -65,7 +65,7 @@
 	description = "A recent attack by Mime extremists has left staff at Station 23 speechless. Ship some spare tongues."
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
-	wanted_types = list(/obj/item/organ/tongue = TRUE)
+	wanted_types = list(/obj/item/organ/internal/tongue = TRUE)
 
 /datum/bounty/item/medical/lizard_tail
 	name = "Lizard Tail"

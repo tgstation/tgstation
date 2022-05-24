@@ -1199,7 +1199,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/syndi_cakes,
-/obj/item/organ/stomach,
+/obj/item/organ/internal/stomach,
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/showroomfloor,

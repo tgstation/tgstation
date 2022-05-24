@@ -68,6 +68,13 @@
 		organ.Remove(chest_owner)
 		organ.forceMove(chest_owner.loc)
 		. += organ
+
+	for(var/obj/item/organ/external/ext_organ as anything in src.external_organs)
+		if(!(ext_organ.organ_flags & ORGAN_UNREMOVABLE))
+			ext_organ.Remove(chest_owner)
+			ext_organ.forceMove(chest_owner.loc)
+			. += ext_organ
+
 	if(cavity_item)
 		cavity_item.forceMove(chest_owner.loc)
 		. += cavity_item
@@ -190,9 +197,12 @@
 //when a limb is dropped, the internal organs are removed from the mob and put into the limb
 /obj/item/organ/proc/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
 	Remove(bodypart_owner)
+	add_to_limb(bodypart)
+
+/obj/item/organ/proc/add_to_limb(obj/item/bodypart/bodypart)
 	forceMove(bodypart)
 
-/obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
 	Remove(head_owner) //Changeling brain concerns are now handled in Remove
 	forceMove(head)
 	head.brain = src
@@ -202,15 +212,15 @@
 		head.brainmob.forceMove(head)
 		head.brainmob.set_stat(DEAD)
 
-/obj/item/organ/eyes/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/eyes/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
 	head.eyes = src
 	..()
 
-/obj/item/organ/ears/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/ears/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
 	head.ears = src
 	..()
 
-/obj/item/organ/tongue/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
+/obj/item/organ/internal/tongue/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
 	head.tongue = src
 	..()
 

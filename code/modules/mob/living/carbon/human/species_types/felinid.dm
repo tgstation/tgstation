@@ -6,7 +6,7 @@
 
 	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
 
-	mutantears = /obj/item/organ/ears/cat
+	mutantears = /obj/item/organ/internal/ears/cat
 	external_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",
 	)
@@ -36,10 +36,10 @@
 			if(H.dna.features["ears"] == "None")
 				H.dna.features["ears"] = "Cat"
 		if(H.dna.features["ears"] == "Cat")
-			var/obj/item/organ/ears/cat/ears = new
+			var/obj/item/organ/internal/ears/cat/ears = new
 			ears.Insert(H, drop_if_replaced = FALSE)
 		else
-			mutantears = /obj/item/organ/ears
+			mutantears = /obj/item/organ/internal/ears
 	return ..()
 
 /proc/mass_purrbation()
@@ -72,7 +72,7 @@
 		var/datum/species/human/felinid/cat_species = H.dna.species
 		cat_species.original_felinid = FALSE
 	else
-		var/obj/item/organ/ears/cat/kitty_ears = new
+		var/obj/item/organ/internal/ears/cat/kitty_ears = new
 		var/obj/item/organ/external/tail/cat/kitty_tail = new
 		kitty_ears.Insert(H, TRUE, FALSE) //Gives nonhumans cat tail and ears
 		kitty_tail.Insert(H, TRUE, FALSE)
@@ -95,7 +95,7 @@
 				if(new_tail)
 					new_tail = new new_tail()
 					new_tail.Insert(H, TRUE, FALSE)
-			if(istype(current_organ, /obj/item/organ/ears/cat))
+			if(istype(current_organ, /obj/item/organ/internal/ears/cat))
 				var/obj/item/organ/new_ears = new target_species.mutantears
 				new_ears.Insert(H, TRUE, FALSE)
 	if(!silent)
@@ -106,7 +106,7 @@
 	human.hair_color = "#ffcccc" // pink
 	human.update_hair()
 
-	var/obj/item/organ/ears/cat/cat_ears = human.getorgan(/obj/item/organ/ears/cat)
+	var/obj/item/organ/internal/ears/cat/cat_ears = human.getorgan(/obj/item/organ/internal/ears/cat)
 	if (cat_ears)
 		cat_ears.color = human.hair_color
 		human.update_body()

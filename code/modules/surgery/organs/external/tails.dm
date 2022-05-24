@@ -38,7 +38,7 @@
 		else if(type in reciever.dna.species.external_organs)
 			SEND_SIGNAL(reciever, COMSIG_ADD_MOOD_EVENT, "wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
 
-/obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
 	if(wag_flags & WAG_WAGGING)
 		wag(FALSE)
 	. = ..()
@@ -93,9 +93,9 @@
 /obj/item/organ/external/tail/lizard/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 	if(.)
-		paired_spines = ownerlimb.owner.getexternalorganslot(ORGAN_SLOT_EXTERNAL_SPINES)
+		paired_spines = ownerlimb.owner.getorganslot(ORGAN_SLOT_EXTERNAL_SPINES)
 
-/obj/item/organ/external/tail/lizard/Remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/external/tail/lizard/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 	if(paired_spines)
 		paired_spines.render_key = initial(paired_spines.render_key) //Clears wagging
@@ -105,8 +105,9 @@
 /obj/item/organ/external/tail/lizard/inherit_color(force)
 	. = ..()
 	if(.)
-		paired_spines = ownerlimb.owner.getexternalorganslot(ORGAN_SLOT_EXTERNAL_SPINES) //I hate this so much.
-		paired_spines.paired_tail = src
+		paired_spines = ownerlimb.owner.getorganslot(ORGAN_SLOT_EXTERNAL_SPINES) //I hate this so much.
+		if(paired_spines)
+			paired_spines.paired_tail = src
 
 /obj/item/organ/external/tail/lizard/wag(mob/user, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))

@@ -96,7 +96,7 @@
 		/obj/item/pickaxe/drill/jackhammer = 30,
 		/obj/item/singularityhammer = 25,
 		/obj/item/fireaxe = 25,
-		/obj/item/organ/brain/alien = 17,
+		/obj/item/organ/internal/brain/alien = 17,
 		/obj/item/borg/upgrade/selfrepair = 17,
 		/obj/item/gun/ballistic/automatic/c20r/unrestricted = 16,
 		/obj/item/dualsaber = 15,
@@ -107,7 +107,7 @@
 		/obj/item/book/granter/spell/fireball = 10,
 		/obj/item/gun/magic/wand/resurrection = 10,
 		/obj/item/mjollnir = 10,
-		/obj/item/organ/heart/demon = 7,
+		/obj/item/organ/internal/heart/demon = 7,
 		/obj/item/uplink/old = 2,
 	)
 

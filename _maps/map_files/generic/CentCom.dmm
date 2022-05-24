@@ -17289,8 +17289,8 @@
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
-/obj/item/organ/heart/cybernetic/tier2,
-/obj/item/organ/heart/cybernetic/tier2,
+/obj/item/organ/internal/heart/cybernetic/tier2,
+/obj/item/organ/internal/heart/cybernetic/tier2,
 /obj/item/defibrillator,
 /turf/open/floor/sepia,
 /area/centcom/holding)

@@ -199,23 +199,23 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//why does it work this way? because traits also disable the downsides of not having an organ, removing organs but not having the trait will make your species die
 
 	///Replaces default brain with a different organ
-	var/obj/item/organ/brain/mutantbrain = /obj/item/organ/brain
+	var/obj/item/organ/internal/brain/mutantbrain = /obj/item/organ/internal/brain
 	///Replaces default heart with a different organ
-	var/obj/item/organ/heart/mutantheart = /obj/item/organ/heart
+	var/obj/item/organ/internal/heart/mutantheart = /obj/item/organ/internal/heart
 	///Replaces default lungs with a different organ
-	var/obj/item/organ/lungs/mutantlungs = /obj/item/organ/lungs
+	var/obj/item/organ/internal/lungs/mutantlungs = /obj/item/organ/internal/lungs
 	///Replaces default eyes with a different organ
-	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
+	var/obj/item/organ/internal/eyes/mutanteyes = /obj/item/organ/internal/eyes
 	///Replaces default ears with a different organ
-	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
+	var/obj/item/organ/internal/ears/mutantears = /obj/item/organ/internal/ears
 	///Replaces default tongue with a different organ
-	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
+	var/obj/item/organ/internal/tongue/mutanttongue = /obj/item/organ/internal/tongue
 	///Replaces default liver with a different organ
-	var/obj/item/organ/liver/mutantliver = /obj/item/organ/liver
+	var/obj/item/organ/internal/liver/mutantliver = /obj/item/organ/internal/liver
 	///Replaces default stomach with a different organ
-	var/obj/item/organ/stomach/mutantstomach = /obj/item/organ/stomach
+	var/obj/item/organ/internal/stomach/mutantstomach = /obj/item/organ/internal/stomach
 	///Replaces default appendix with a different organ.
-	var/obj/item/organ/appendix/mutantappendix = /obj/item/organ/appendix
+	var/obj/item/organ/internal/appendix/mutantappendix = /obj/item/organ/internal/appendix
 	///Forces an item into this species' hands. Only an honorary mutantthing because this is not an organ and not loaded in the same way, you've been warned to do your research.
 	var/obj/item/mutanthands
 
@@ -370,7 +370,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		if(oldorgan && (!should_have || replace_current) && !(oldorgan.zone in excluded_zones) && !(oldorgan.organ_flags & ORGAN_UNREMOVABLE))
 			if(slot == ORGAN_SLOT_BRAIN)
-				var/obj/item/organ/brain/brain = oldorgan
+				var/obj/item/organ/internal/brain/brain = oldorgan
 				if(!brain.decoy_override)//"Just keep it if it's fake" - confucius, probably
 					brain.before_organ_replacement(neworgan)
 					brain.Remove(C,TRUE, TRUE) //brain argument used so it doesn't cause any... sudden death.
@@ -563,7 +563,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		// eyes
 		if(!(NOEYESPRITES in species_traits))
-			var/obj/item/organ/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
+			var/obj/item/organ/internal/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
 			var/mutable_appearance/no_eyeslay
 			var/add_pixel_x = 0
 			var/add_pixel_y = 0
@@ -859,7 +859,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_EYES)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
-			var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
+			var/obj/item/organ/internal/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
 			if(E?.no_glasses)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)

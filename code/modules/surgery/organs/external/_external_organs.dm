@@ -58,11 +58,21 @@
 	if(!(organ_flags & ORGAN_UNREMOVABLE))
 		color = "#[random_color()]" //A temporary random color that gets overwritten on insertion.
 
+/obj/item/organ/external/Destroy()
+	if(owner)
+		// The special flag is important, because otherwise mobs can die
+		// while undergoing transformation into different mobs.
+		Remove(owner, special=TRUE)
+	return ..()
+
 /obj/item/organ/external/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	var/obj/item/bodypart/limb = reciever.get_bodypart(deprecise_zone(zone))
 
 	if(!limb)
 		return FALSE
+	. = ..()
+	if(!.)
+		return
 
 	if(!stored_feature_id) //We only want this set *once*
 		stored_feature_id = reciever.dna.features[feature_key]
@@ -70,18 +80,17 @@
 	reciever.external_organs.Add(src)
 	if(slot)
 		reciever.external_organs_slot[slot] = src
-	limb.external_organs.Add(src)
-	ownerlimb = limb
-	. = ..()
 
-	limb.contents.Add(src)
+	ownerlimb = limb
+	add_to_limb(ownerlimb)
+
 	if(external_bodytypes)
 		limb.synchronize_bodytypes(reciever)
 
 	inherit_color()
 	reciever.update_body_parts()
 
-/obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 
 	if(ownerlimb)
@@ -96,11 +105,22 @@
 	organ_owner.external_organs.Remove(src)
 	organ_owner.update_body_parts()
 
-/obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
-	. = ..()
+	if((organ_flags & ORGAN_UNREMOVABLE) && !moving && !QDELETED(src))
+		qdel(src)
 
-	bodypart.external_organs.Add(src)
-	bodypart.contents.Add(src)
+/obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
+	if(src in bodypart)
+		CRASH("External organ tried to enter a bodypart it was already in.")
+	if(owner)
+		Remove(owner, special = TRUE, moving = TRUE)
+	add_to_limb(bodypart)
+
+/obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
+	forceMove(bodypart)
+	ownerlimb = bodypart
+	ownerlimb.contents |= src
+	ownerlimb.external_organs |= src
+	inherit_color()
 
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
 /obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, physique)
@@ -288,7 +308,7 @@
 	RegisterSignal(reciever, COMSIG_HUMAN_BURNING, .proc/try_burn_antennae)
 	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, .proc/heal_antennae)
 
-/obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
 
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))

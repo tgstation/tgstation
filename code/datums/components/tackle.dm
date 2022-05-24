@@ -288,7 +288,7 @@
 			defense_mod += 2
 
 		if(islizard(T))
-			var/obj/item/organ/external/tail/el_tail = T.getexternalorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
+			var/obj/item/organ/external/tail/el_tail = T.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
 			if(!el_tail) // lizards without tails are off-balance
 				defense_mod -= 1
 			else if(el_tail.wag_flags & WAG_WAGGING) // lizard tail wagging is robust and can swat away assailants!
