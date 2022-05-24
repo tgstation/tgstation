@@ -1,0 +1,7 @@
+author: "timothymtorres, TheBonded"
+delete-after: True
+changes: 
+  - rscadd: "Added illiterate quirk that prevents a mob from reading or writing.  This prevents using books, paper, tablets, computers and some other objects."
+  - rscadd: "Ashlizards are given the illiterate quirk as a default species trait."
+  - rscadd: "Any mobs that are illiterate and attempt to use the lavaland shuttle console will still be able to bash the keyboard to send the ship."
+  - rscadd: "New severe brain trauma - Dyslexia.  It just makes you illiterate until it's fixed."
