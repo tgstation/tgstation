@@ -110,6 +110,7 @@
 #include "modsuit.dm"
 #include "modular_map_loader.dm"
 #include "ntnetwork_tests.dm"
+#include "nuke_cinematic.dm"
 #include "objectives.dm"
 #include "outfit_sanity.dm"
 #include "paintings.dm"

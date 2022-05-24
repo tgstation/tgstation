@@ -6,12 +6,12 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "j" = (
 /obj/effect/spawner/random/structure/grille,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "l" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -56,7 +56,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "P" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage{
@@ -79,7 +79,7 @@
 "V" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "W" = (
 /turf/open/floor/plastic,
 /area/ruin/space/djstation)

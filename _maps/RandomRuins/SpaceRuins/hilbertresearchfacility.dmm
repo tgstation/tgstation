@@ -787,13 +787,6 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"sa" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/space/basic,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "sj" = (
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
@@ -5179,7 +5172,7 @@ Ba
 Ba
 Ba
 Ba
-sa
+Ba
 Ok
 Bo
 Iy
