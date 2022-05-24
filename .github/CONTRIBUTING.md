@@ -64,6 +64,7 @@ These are the few directives we have for project maintainers.
     - Try to get secondary maintainer approval before merging if you are able to.
   - PRs with empty commits intended to generate a changelog.
 - Do not merge PRs that contain content from the [banned content list](./CONTRIBUTING.md#banned-content).
+- Do not close PRs purely for breaking a template if the same information is contained without it.
 
 These are not steadfast rules as maintainers are expected to use their best judgement when operating.
 
@@ -87,6 +88,7 @@ Things you **CAN** do:
 
 Things you **CAN'T** do:
 * [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
+* Close issues purely for breaking a template if the same information is contained without it.
 
 </details>
 

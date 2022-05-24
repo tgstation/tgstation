@@ -123,25 +123,18 @@
 
 /datum/job/New()
 	. = ..()
-	var/list/jobs_changes = get_map_changes()
-	if(!jobs_changes)
-		return
-	if(isnum(jobs_changes["spawn_positions"]))
-		spawn_positions = jobs_changes["spawn_positions"]
-	if(isnum(jobs_changes["total_positions"]))
-		total_positions = jobs_changes["total_positions"]
-
-/// Loads up map configs if necessary and returns job changes for this job.
-/datum/job/proc/get_map_changes()
-	var/string_type = "[type]"
-	var/list/splits = splittext(string_type, "/")
-	var/endpart = splits[splits.len]
-
 	var/list/job_changes = SSmapping.config.job_changes
-	if(!(endpart in job_changes))
-		return list()
+	if(!job_changes[title])
+		return TRUE
 
-	return job_changes[endpart]
+	var/list/job_positions_edits = job_changes[title]
+	if(!job_positions_edits)
+		return TRUE
+
+	if(isnum(job_positions_edits["spawn_positions"]))
+		spawn_positions = job_positions_edits["spawn_positions"]
+	if(isnum(job_positions_edits["total_positions"]))
+		total_positions = job_positions_edits["total_positions"]
 
 
 /// Executes after the mob has been spawned in the map. Client might not be yet in the mob, and is thus a separate variable.
@@ -230,10 +223,31 @@
 /datum/job/proc/config_check()
 	return TRUE
 
+/**
+ * # map_check
+ *
+ * Checks the map config for job changes
+ * If they have 0 spawn and total positions in the config, the job is entirely removed from occupations prefs for the round.
+ */
 /datum/job/proc/map_check()
-	var/list/job_changes = get_map_changes()
-	if(!job_changes)
+	var/list/job_changes = SSmapping.config.job_changes
+	if(!job_changes[title]) //no edits made
+		return TRUE
+
+	var/list/job_positions_edits = job_changes[title]
+	if(!job_positions_edits)
+		return TRUE
+
+	var/available_roundstart = TRUE
+	var/available_latejoin = TRUE
+	if(!isnull(job_positions_edits["spawn_positions"]) && (job_positions_edits["spawn_positions"] == 0))
+		available_roundstart = FALSE
+	if(!isnull(job_positions_edits["total_positions"]) && (job_positions_edits["total_positions"] == 0))
+		available_latejoin = FALSE
+
+	if(!available_roundstart && !available_latejoin) //map config disabled the job
 		return FALSE
+
 	return TRUE
 
 /datum/job/proc/radio_help_message(mob/M)
@@ -320,10 +334,7 @@
 	if(istype(PDA))
 		PDA.saved_identification = H.real_name
 		PDA.saved_job = J.title
-
-		var/obj/item/computer_hardware/identifier/id = PDA.all_components[MC_IDENTIFY]
-		if(id)
-			id.UpdateDisplay()
+		PDA.UpdateDisplay()
 
 
 /datum/outfit/job/get_chameleon_disguise_info()
@@ -363,7 +374,7 @@
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
 			return get_latejoin_spawn_point()
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
-			return get_safe_random_station_turf(typesof(/area/hallway)) || get_latejoin_spawn_point()
+			return get_safe_random_station_turf(typesof(/area/station/hallway)) || get_latejoin_spawn_point()
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 			var/obj/effect/landmark/start/hangover_spawn_point
 			for(var/obj/effect/landmark/start/hangover/hangover_landmark in GLOB.start_landmarks_list)

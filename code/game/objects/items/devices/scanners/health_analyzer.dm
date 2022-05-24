@@ -29,7 +29,6 @@
 
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
-
 	register_item_context()
 
 /obj/item/healthanalyzer/examine(mob/user)
@@ -41,6 +40,9 @@
 	return BRUTELOSS
 
 /obj/item/healthanalyzer/attack_self(mob/user)
+	if(!user.can_read(src) || user.is_blind())
+		return
+
 	scanmode = (scanmode + 1) % SCANMODE_COUNT
 	switch(scanmode)
 		if(SCANMODE_HEALTH)
@@ -49,6 +51,9 @@
 			to_chat(user, span_notice("You switch the health analyzer to report extra info on wounds."))
 
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
+	if(!user.can_read(src) || user.is_blind())
+		return
+
 	flick("[icon_state]-scan", src) //makes it so that it plays the scan animation upon scanning, including clumsy scanning
 
 	// Clumsiness/brain damage check
@@ -77,6 +82,9 @@
 	add_fingerprint(user)
 
 /obj/item/healthanalyzer/attack_secondary(mob/living/victim, mob/living/user, params)
+	if(!user.can_read(src) || user.is_blind())
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	chemscan(user, victim)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -101,10 +109,6 @@
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE, tochat = TRUE)
 	if(user.incapacitated())
-		return
-
-	if(user.is_blind())
-		to_chat(user, span_warning("You realize that your scanner has no accessibility support for the blind!"))
 		return
 
 	// the final list of strings to render
@@ -234,7 +238,7 @@
 
 			if(mode == SCANNER_VERBOSE)
 				for(var/obj/item/bodypart/limb as anything in damaged)
-					dmgreport += "<tr><td><font color='#cc3333'>[capitalize(parse_zone(limb.body_zone))]:</font></td>"
+					dmgreport += "<tr><td><font color='#cc3333'>[capitalize(limb.plaintext_zone)]:</font></td>"
 					dmgreport += "<td><font color='#cc3333'>[(limb.brute_dam > 0) ? "[CEILING(limb.brute_dam,1)]" : "0"]</font></td>"
 					dmgreport += "<td><font color='#ff9933'>[(limb.burn_dam > 0) ? "[CEILING(limb.burn_dam,1)]" : "0"]</font></td></tr>"
 			dmgreport += "</font></table>"
@@ -378,10 +382,6 @@
 	if(user.incapacitated())
 		return
 
-	if(user.is_blind())
-		to_chat(user, span_warning("You realize that your scanner has no accessibility support for the blind!"))
-		return
-
 	if(istype(target) && target.reagents)
 		var/render_list = list()
 
@@ -438,7 +438,7 @@
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
 
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src) || user.is_blind())
 		return
 
 	mode = !mode
@@ -453,10 +453,6 @@
 /// Displays wounds with extended information on their status vs medscanners
 /proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
 	if(!istype(patient) || user.incapacitated())
-		return
-
-	if(user.is_blind())
-		to_chat(user, span_warning("You realize that your scanner has no accessibility support for the blind!"))
 		return
 
 	var/render_list = ""
@@ -505,6 +501,9 @@
 			L.dropItemToGround(src)
 
 /obj/item/healthanalyzer/wound/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
+	if(!user.can_read(src) || user.is_blind())
+		return
+
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] scans [patient] for serious injuries."), span_notice("You scan [patient] for serious injuries."))
 

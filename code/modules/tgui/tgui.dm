@@ -94,6 +94,7 @@
 	window.acquire_lock(src)
 	if(!window.is_ready())
 		window.initialize(
+			strict_mode = TRUE,
 			fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
 			assets = list(
 				get_asset_datum(/datum/asset/simple/tgui),

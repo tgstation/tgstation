@@ -11,6 +11,7 @@
 
 	hardware_flag = PROGRAM_LAPTOP
 	max_hardware_size = 2
+	max_idle_programs = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	max_bays = 4
 

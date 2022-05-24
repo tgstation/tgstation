@@ -1,7 +1,6 @@
 /datum/species/snail
 	name = "Snailperson"
 	id = SPECIES_SNAIL
-	default_color = "336600" //vomit green
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,

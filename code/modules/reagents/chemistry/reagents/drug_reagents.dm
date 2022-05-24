@@ -84,7 +84,7 @@
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, span_notice("[smoke_message]"))
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
-	M.Jitter(0) //calms down any withdrawal jitters
+	M.remove_status_effect(/datum/status_effect/jitter)
 	M.AdjustStun(-50  * REM * delta_time)
 	M.AdjustKnockdown(-50 * REM * delta_time)
 	M.AdjustUnconscious(-50 * REM * delta_time)
@@ -107,7 +107,7 @@
 	overdose_threshold = 20
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/opiods = 18) //7.2 per 2 seconds
+	addiction_types = list(/datum/addiction/opioids = 18) //7.2 per 2 seconds
 
 
 /datum/reagent/drug/krokodil/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -164,7 +164,7 @@
 	M.AdjustParalyzed(-40 * REM * delta_time)
 	M.AdjustImmobilized(-40 * REM * delta_time)
 	M.adjustStaminaLoss(-2 * REM * delta_time, 0)
-	M.Jitter(2 * REM * delta_time)
+	M.set_timed_status_effect(4 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * delta_time)
 	if(DT_PROB(2.5, delta_time))
 		M.emote(pick("twitch", "shiver"))
@@ -279,8 +279,8 @@
 	..()
 
 /datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.jitteriness = 0
-	M.set_confusion(0)
+	M.remove_status_effect(/datum/status_effect/jitter)
+	M.remove_status_effect(/datum/status_effect/confusion)
 	M.disgust = 0
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * REM * delta_time)
 	..()
@@ -295,7 +295,7 @@
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_good_od)
 			if(2)
 				M.emote("sway")
-				M.Dizzy(25)
+				M.set_timed_status_effect(50 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
 			if(3)
 				M.emote("frown")
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_bad_od)
@@ -315,14 +315,14 @@
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	ADD_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 
 /datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	REMOVE_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 	..()
 
 /datum/reagent/drug/pumpup/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.Jitter(5 * REM * delta_time)
+	M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 
 	if(DT_PROB(2.5, delta_time))
 		to_chat(M, span_notice("[pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")]"))
@@ -336,7 +336,7 @@
 	to_chat(M, span_userdanger("You can't stop shaking, your heart beats faster and faster..."))
 
 /datum/reagent/drug/pumpup/overdose_process(mob/living/M, delta_time, times_fired)
-	M.Jitter(5 * REM * delta_time)
+	M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 	if(DT_PROB(2.5, delta_time))
 		M.drop_all_held_items()
 	if(DT_PROB(7.5, delta_time))
@@ -456,11 +456,11 @@
 			if(DT_PROB(5, delta_time))
 				psychonaut.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			psychonaut.Jitter(10 * REM * delta_time)
+			psychonaut.set_timed_status_effect(20 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 			if(DT_PROB(10, delta_time))
 				psychonaut.emote(pick("twitch","giggle"))
 		if (10 to INFINITY)
-			psychonaut.Jitter(20 * REM * delta_time)
+			psychonaut.set_timed_status_effect(40 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 			if(DT_PROB(16, delta_time))
 				psychonaut.emote(pick("twitch","giggle"))
 	..()
@@ -761,7 +761,7 @@
 	. = ..()
 	SEND_SIGNAL(kronkaine_fiend, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
 	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time)
-	kronkaine_fiend.Jitter(10 * REM * delta_time)
+	kronkaine_fiend.set_timed_status_effect(20 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 	kronkaine_fiend.AdjustSleeping(-20 * REM * delta_time)
 	kronkaine_fiend.adjust_drowsyness(-5 * REM * delta_time)
 	if(volume < 10)
@@ -774,6 +774,6 @@
 /datum/reagent/drug/kronkaine/overdose_process(mob/living/kronkaine_fiend, delta_time, times_fired)
 	. = ..()
 	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * delta_time)
-	kronkaine_fiend.Jitter(10 * REM * delta_time)
+	kronkaine_fiend.set_timed_status_effect(20 SECONDS * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
 	if(DT_PROB(10, delta_time))
 		to_chat(kronkaine_fiend, span_danger(pick("You feel like your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))

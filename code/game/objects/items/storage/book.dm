@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(isfloorturf(bible_smacked))
 		if(user.mind && (user.mind.holy_role))
 			var/area/current_area = get_area(bible_smacked)
-			if(!GLOB.chaplain_altars.len && istype(current_area, /area/service/chapel))
+			if(!GLOB.chaplain_altars.len && istype(current_area, /area/station/service/chapel))
 				make_new_altar(bible_smacked, user)
 				return
 			for(var/obj/effect/rune/nearby_runes in orange(2,user))

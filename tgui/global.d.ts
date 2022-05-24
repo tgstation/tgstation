@@ -72,6 +72,18 @@ type ByondType = {
   IS_LTE_IE11: boolean;
 
   /**
+   * If `true`, unhandled errors and common mistakes result in a blue screen
+   * of death, which stops this window from handling incoming messages and
+   * closes the active instance of tgui datum if there was one.
+   *
+   * It can be defined in window.initialize() in DM, or changed in runtime
+   * here via this property to `true` or `false`.
+   *
+   * It is recommended that you keep this ON to detect hard to find bugs.
+   */
+  strictMode: boolean;
+
+  /**
    * Makes a BYOND call.
    *
    * If path is empty, this will trigger a Topic call.

@@ -115,6 +115,7 @@
 	data["power_max"] = cell?.maxcharge
 	data["mecha_flags"] = mecha_flags
 	data["internal_damage"] = internal_damage
+	data["airtank_present"] = !!internal_tank
 	data["air_source"] = use_internal_tank ? "Internal Airtank" : "Environment"
 	data["airtank_pressure"] = int_tank_air ? round(int_tank_air.return_pressure(), 0.01) : null
 	data["airtank_temp"] = int_tank_air?.temperature
@@ -285,6 +286,8 @@
 			tgui_alert(usr, "Enzymes detected: " + dna_lock)
 			return FALSE
 		if("toggle_airsource")
+			if(!internal_tank)
+				return
 			use_internal_tank = !use_internal_tank
 			balloon_alert(usr, "taking air from [use_internal_tank ? "internal airtank" : "environment"]")
 			log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)

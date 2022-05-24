@@ -358,25 +358,25 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/sec_left = seconds_remaining()
 	if(!sec_left)
 		timing = FALSE
-		detonate()
+		sound_to_playing_players('sound/machines/alarm.ogg')
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/play_cinematic, /datum/cinematic/malf, world, CALLBACK(src, .proc/trigger_doomsday)), 10 SECONDS)
+
 	else if(world.time >= next_announce)
 		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
-/obj/machinery/doomsday_device/proc/detonate()
-	sound_to_playing_players('sound/machines/alarm.ogg')
-	sleep(100)
-	for(var/i in GLOB.mob_living_list)
-		var/mob/living/L = i
-		var/turf/T = get_turf(L)
-		if(!T || !is_station_level(T.z))
-			continue
-		if(issilicon(L))
-			continue
-		to_chat(L, span_userdanger("The blast wave from [src] tears you atom from atom!"))
-		L.dust()
-	to_chat(world, "<B>The AI cleansed the station of life with the doomsday device!</B>")
-	SSticker.force_ending = 1
+/obj/machinery/doomsday_device/proc/trigger_doomsday()
+	callback_on_everyone_on_z(SSmapping.levels_by_trait(ZTRAIT_STATION), CALLBACK(GLOBAL_PROC, /proc/bring_doomsday), src)
+	to_chat(world, span_bold("The AI cleansed the station of life with [src]!"))
+	SSticker.force_ending = TRUE
+
+/proc/bring_doomsday(mob/living/victim, atom/source)
+	if(issilicon(victim))
+		return FALSE
+
+	to_chat(victim, span_userdanger("The blast wave from [source] tears you atom from atom!"))
+	victim.dust()
+	return TRUE
 
 /// Hostile Station Lockdown: Locks, bolts, and electrifies every airlock on the station. After 90 seconds, the doors reset.
 /datum/ai_module/destructive/lockdown
@@ -607,7 +607,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			if(isspaceturf(victim_turf) && !victim_turf.Adjacent(found_intercom)) //Prevents getting honked in space
 				continue
 			if(honk_victim.soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 30, deafen_pwr = 60)) //Ear protection will prevent these effects
-				honk_victim.Jitter(60)
+				honk_victim.set_timed_status_effect(120 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 				to_chat(honk_victim, span_clown("HOOOOONK!"))
 
 /// Robotic Factory: Places a large machine that converts humans that go through it into cyborgs. Unlocking this ability removes shunting.

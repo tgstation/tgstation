@@ -17,6 +17,8 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SCI
 
+	liver_traits = list(TRAIT_BALLMER_SCIENTIST)
+
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	bounty_types = CIV_JOB_SCI
 	departments_list = list(

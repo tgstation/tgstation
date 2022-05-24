@@ -208,7 +208,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion."
 	can_hack_open = FALSE
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 70, BIO = 100, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 70, BIO = 0, FIRE = 80, ACID = 70)
 	max_integrity = 300
 	color = "#ffdd33"
 

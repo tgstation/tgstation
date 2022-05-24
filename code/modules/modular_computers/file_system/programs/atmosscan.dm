@@ -8,13 +8,6 @@
 	tgui_id = "NtosGasAnalyzer"
 	program_icon = "thermometer-half"
 
-/datum/computer_file/program/atmosscan/run_program(mob/living/user)
-	. = ..()
-	if (!.)
-		return
-	if(!computer?.get_modular_computer_part(MC_SENSORS)) //Giving a clue to users why the program is spitting out zeros.
-		to_chat(user, span_warning("\The [computer] flashes an error: \"hardware\\sensorpackage\\startup.bin -- file not found\"."))
-
 /datum/computer_file/program/atmosscan/ui_static_data(mob/user)
 	return return_atmos_handbooks()
 
@@ -22,12 +15,7 @@
 	var/list/data = get_header_data()
 	var/turf/turf = get_turf(computer)
 	var/datum/gas_mixture/air = turf?.return_air()
-	var/obj/item/computer_hardware/sensorpackage/air_sensor = computer?.get_modular_computer_part(MC_SENSORS)
 
-	if(!air_sensor)
-		data["gasmixes"] = list(gas_mixture_parser(null, "No Sensors Detected!"))
-		return data
-	
 	data["gasmixes"] = list(gas_mixture_parser(air, "Sensor Reading")) //Null air wont cause errors, don't worry.
 	return data
 

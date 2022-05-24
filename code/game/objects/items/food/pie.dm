@@ -268,3 +268,22 @@
 	icon_state = "baklavaslice"
 	tastes = list("nuts" = 1, "pie" = 1)
 	foodtypes = NUTS | SUGAR
+
+/obj/item/food/pie/frenchsilkpie
+	name = "french silk pie"
+	desc = "A decadent pie made of a creamy chocolate mousse filling topped with a layer of whipped cream and chocolate shavings. Sliceable."
+	icon_state = "frenchsilkpie"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("pie" = 1, "smooth chocolate" = 1, "whipped cream" = 1)
+	foodtypes = GRAIN | DAIRY | SUGAR
+
+/obj/item/food/pieslice/frenchsilk
+	name = "french silk pie slice"
+	desc = "A slice of french silk pie, filled with a chocolate mousse and topped with a layer of whipped cream and chocolate shavings. Delicious enough to make you cry."
+	icon_state = "frenchsilkpieslice"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	tastes = list("pie" = 1, "smooth chocolate" = 1, "whipped cream" = 1)
+	foodtypes = GRAIN | DAIRY | SUGAR
+
+/obj/item/food/pie/frenchsilkpie/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/frenchsilk, 5, 20)

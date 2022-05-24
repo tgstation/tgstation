@@ -64,7 +64,6 @@
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [picked_crate]")
 		drain_power(use_power_cost)
-		mod.wearer.update_inv_back()
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
@@ -79,7 +78,6 @@
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		drain_power(use_power_cost)
-		mod.wearer.update_inv_back()
 	else
 		balloon_alert(mod.wearer, "invalid target!")
 
@@ -255,12 +253,12 @@
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
 	mod.wearer.throw_at(get_ranged_target_turf_direct(mod.wearer, target, power), \
 		range = power, speed = max(round(0.2*power), 1), thrower = mod.wearer, spin = FALSE, \
-		callback = CALLBACK(src, .proc/on_throw_end, target, -angle))
+		callback = CALLBACK(src, .proc/on_throw_end, mod.wearer, -angle))
 
-/obj/item/mod/module/hydraulic/proc/on_throw_end(atom/target, angle)
-	if(!mod?.wearer)
+/obj/item/mod/module/hydraulic/proc/on_throw_end(mob/user, angle)
+	if(!user)
 		return
-	mod.wearer.transform = mod.wearer.transform.Turn(angle)
+	user.transform = user.transform.Turn(angle)
 
 /obj/item/mod/module/disposal_connector
 	name = "MOD disposal selector module"
@@ -372,6 +370,8 @@
 	var/list/armor_values = list(MELEE = 4, BULLET = 1, LASER = 2, ENERGY = 2, BOMB = 4)
 	/// Speed added when you're fully covered in ash.
 	var/speed_added = 0.5
+	/// Speed that we actually added.
+	var/actual_speed_added = 0
 	/// Turfs that let us accrete ash.
 	var/static/list/accretion_turfs
 	/// Turfs that let us keep ash.
@@ -442,7 +442,8 @@
 			mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
 			animate(mod.wearer, 1 SECONDS, color = null, flags = ANIMATION_PARALLEL)
 			playsound(src, 'sound/effects/sparks1.ogg', 100, TRUE)
-			mod.slowdown -= speed_added
+			actual_speed_added = max(0, min(mod.slowdown_active, speed_added))
+			mod.slowdown -= actual_speed_added
 			mod.wearer.update_equipment_speed_mods()
 	else if(is_type_in_typecache(mod.wearer.loc, keep_turfs))
 		return
@@ -450,7 +451,7 @@
 		if(traveled_tiles <= 0)
 			return
 		if(traveled_tiles == max_traveled_tiles)
-			mod.slowdown += speed_added
+			mod.slowdown += actual_speed_added
 			mod.wearer.update_equipment_speed_mods()
 		traveled_tiles--
 		var/list/parts = mod.mod_parts + mod
@@ -483,7 +484,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/items/modsuit/ballin.ogg', 100)
+	playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE)
 	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
 	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
 	mod.wearer.add_filter("mod_outline", 3, outline_filter(color = "#000000AA"))
@@ -505,7 +506,7 @@
 	if(!.)
 		return
 	if(!deleting)
-		playsound(src, 'sound/items/modsuit/ballout.ogg', 100)
+		playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE, frequency = -1)
 	mod.wearer.base_pixel_y = 0
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
 	addtimer(CALLBACK(mod.wearer, /atom.proc/remove_filter, list("mod_ball", "mod_blur", "mod_outline")), animate_time)
@@ -585,8 +586,6 @@
 	var/damage = 15
 	/// Damage multiplier on hostile fauna.
 	var/fauna_boost = 4
-	/// Damage multiplier on objects
-	var/object_boost = 2
 	/// Image overlaid on explosion.
 	var/static/image/explosion_image
 
@@ -611,5 +610,5 @@
 	for(var/mob/living/mob in range(1, src))
 		mob.apply_damage(12 * (ishostile(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
 	for(var/obj/object in range(1, src))
-		object.take_damage(damage * object_boost, BRUTE, BOMB)
+		object.take_damage(damage, BRUTE, BOMB)
 	qdel(src)

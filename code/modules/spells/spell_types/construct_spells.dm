@@ -178,7 +178,7 @@
 	include_user = TRUE
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
-	smoke_spread = 3
+	smoke_spread = /datum/effect_system/fluid_spread/smoke/sleeping
 	smoke_amt = 4
 	action_icon_state = "smoke"
 	action_background_icon_state = "bg_cult"

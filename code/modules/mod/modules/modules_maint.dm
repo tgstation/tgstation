@@ -127,7 +127,7 @@
 	rave_number++
 	if(rave_number > length(rainbow_order))
 		rave_number = 1
-	mod.wearer.update_inv_back()
+	mod.wearer.update_clothing(mod.slot_flags)
 	rave_screen.update_colour(rainbow_order[rave_number])
 
 /obj/item/mod/module/visor/rave/get_configuration()
@@ -237,6 +237,8 @@
 	drain_power(use_power_cost)
 	num_sheets_dispensed++
 
+
+///Stamper - Extends a stamp that can switch between accept/deny modes.
 /obj/item/mod/module/stamp
 	name = "MOD stamper module"
 	desc = "A module installed into the wrist of the suit, this functions as a high-power stamp, \
@@ -328,7 +330,7 @@
 	playsound(src, 'sound/effects/whirthunk.ogg', 75)
 	to_chat(mod.wearer, span_userdanger("That was stupid."))
 	mod.wearer.Stun(FLY_TIME, ignore_canstun = TRUE)
-	animate(mod.wearer, FLY_TIME, pixel_y = 256, alpha = 0)
+	animate(mod.wearer, FLY_TIME, pixel_z = 256, alpha = 0)
 	QDEL_IN(mod.wearer, FLY_TIME)
 
 #undef FLY_TIME

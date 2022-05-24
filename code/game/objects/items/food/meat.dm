@@ -100,6 +100,57 @@
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/fishtaco
+	name = "fish taco"
+	desc = "A taco with fish, cheese, and cabbage."
+	icon_state = "fishtaco"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("taco" = 4, "fish" = 2, "cheese" = 2, "cabbage" = 1)
+	foodtypes = SEAFOOD | DAIRY | GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/vegetariansushiroll
+	name = "vegetarian sushi roll"
+	desc = "A roll of simple vegetarian sushi with rice, carrots, and potatoes. Sliceable into pieces!"
+	icon_state = "vegetariansushiroll"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/vegetariansushiroll/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/vegetariansushislice, 4, 20)
+
+/obj/item/food/vegetariansushislice
+	name = "vegetarian sushi slice"
+	desc = "A slice of simple vegetarian sushi with rice, carrots, and potatoes."
+	icon_state = "vegetariansushislice"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("boiled rice" = 4, "carrots" = 2, "potato" = 2)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/spicyfiletsushiroll
+	name = "spicy filet sushi roll"
+	desc = "A roll of tasty, spicy sushi made with fish and vegetables. Sliceable into pieces!"
+	icon_state = "spicyfiletroll"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/capsaicin = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("boiled rice" = 4, "fish" = 2, "spicyness" = 2)
+	foodtypes = VEGETABLES | SEAFOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/spicyfiletsushiroll/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spicyfiletsushislice, 4, 20)
+
+/obj/item/food/spicyfiletsushislice
+	name = "spicy filet sushi slice"
+	desc = "A slice of tasty, spicy sushi made with fish and vegetables. Don't eat it too fast!."
+	icon_state = "spicyfiletslice"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("boiled rice" = 4, "fish" = 2, "spicyness" = 2)
+	foodtypes = VEGETABLES | SEAFOOD
+	w_class = WEIGHT_CLASS_SMALL
+
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
 /obj/item/food/tofu

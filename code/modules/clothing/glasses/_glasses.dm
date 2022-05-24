@@ -408,7 +408,7 @@
 /obj/item/clothing/glasses/blindfold/white/update_icon(updates=ALL, mob/living/carbon/human/user)
 	. = ..()
 	if(ishuman(user) && !colored_before)
-		add_atom_colour(user.eye_color, FIXED_COLOUR_PRIORITY)
+		add_atom_colour(user.eye_color_left, FIXED_COLOUR_PRIORITY) // I want this to be an average of the colors of both eyes, but that can be done later
 		colored_before = TRUE
 
 /obj/item/clothing/glasses/blindfold/white/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
@@ -419,7 +419,7 @@
 	var/mob/living/carbon/human/H = loc
 	var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
 	M.appearance_flags |= RESET_COLOR
-	M.color = H.eye_color
+	M.color = H.eye_color_left
 	. += M
 
 /obj/item/clothing/glasses/sunglasses/big
@@ -557,8 +557,8 @@
 		return
 	if(ishuman(user))
 		for(var/hud in hudlist)
-			var/datum/atom_hud/H = GLOB.huds[hud]
-			H.add_hud_to(user)
+			var/datum/atom_hud/our_hud = GLOB.huds[hud]
+			our_hud.show_to(user)
 		ADD_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
 		ADD_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
 		if(xray)
@@ -571,8 +571,8 @@
 	REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
 	if(ishuman(user))
 		for(var/hud in hudlist)
-			var/datum/atom_hud/H = GLOB.huds[hud]
-			H.remove_hud_from(user)
+			var/datum/atom_hud/our_hud = GLOB.huds[hud]
+			our_hud.hide_from(user)
 
 /obj/item/clothing/glasses/debug/AltClick(mob/user)
 	. = ..()
