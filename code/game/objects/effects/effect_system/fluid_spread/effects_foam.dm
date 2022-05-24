@@ -38,7 +38,7 @@
 
 /obj/effect/particle_effect/fluid/foam/Initialize(mapload)
 	. = ..()
-	create_reagents(1000)
+	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	SSfoam.start_processing(src)
