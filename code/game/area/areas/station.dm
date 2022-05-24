@@ -37,6 +37,10 @@
 	name = "EVA Maintenance"
 	icon_state = "maint_eva"
 
+/area/station/maintenance/department/eva/abandoned
+	name = "Abandoned EVA Storage"
+	icon_state = "maint_eva"
+
 /area/station/maintenance/department/electrical
 	name = "Electrical Maintenance"
 	icon_state = "maint_electrical"
