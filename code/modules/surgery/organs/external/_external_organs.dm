@@ -118,6 +118,7 @@
 	var/finished_icon_state = icon_state_builder.Join("_")
 
 	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -image_layer)
+	icon_exists(appearance.icon, finished_icon_state, TRUE)
 	appearance.dir = image_dir
 
 	if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/ | This comment isn't true.
@@ -147,11 +148,11 @@
 /obj/item/organ/external/proc/mutant_bodyparts_layertext(layer)
 	switch(layer)
 		if(BODY_BEHIND_LAYER)
-			return "_BEHIND"
+			return "BEHIND"
 		if(BODY_ADJ_LAYER)
-			return "_ADJ"
+			return "ADJ"
 		if(BODY_FRONT_LAYER)
-			return "_FRONT"
+			return "FRONT"
 
 ///Converts a bitflag to the right layer. I'd love to make this a static index list, but byond made an attempt on my life when i did
 /obj/item/organ/external/proc/bitflag_to_layer(layer)
