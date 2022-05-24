@@ -77,11 +77,21 @@
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/pellet
+	/// How much main damage we lose each tile we pass
 	var/tile_dropoff = 0.45
+	/// How much extra stamina damage we lose each tile we pass
 	var/tile_dropoff_s = 0.25
+	/// This is added onto the speed for each tile the pellet travels (positive numbers making it slower)
+	var/speed_dropoff = 0
+	/// How many tiles the speed_dropoff applies for before it caps out
+	var/speed_dropoff_tiles = 0
 
 /obj/projectile/bullet/pellet/Range()
 	..()
+	if(speed_dropoff_tiles > 0)
+		speed = max(speed + speed_dropoff, 0.1) // so we can't cause a divide by 0 or negative if someone adds an accelerating bullet
+		speed_dropoff_tiles--
+
 	if(damage > 0)
 		damage -= tile_dropoff
 	if(stamina > 0)
@@ -89,12 +99,35 @@
 	if(damage < 0 && stamina < 0)
 		qdel(src)
 
+// classic buckshot, military/syndie aligned, kills outright, more close range
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 7.5
+	damage = 9 // * 6 pellets = 54 brute
 	wound_bonus = 5
-	bare_wound_bonus = 5
-	wound_falloff_tile = -2.5 // low damage + additional dropoff will already curb wounding potential anything past point blank
+	bare_wound_bonus = 7.5
+	wound_falloff_tile = -1 // low damage + additional dropoff will already curb wounding potential anything past point blank
+	speed = 0.6
+	speed_dropoff = 0.2
+	speed_dropoff_tiles = 5
+	ricochets_max = 1
+	ricochet_chance = 100
+	ricochet_incidence_leeway = 50
+
+// special cargo buckshot-lite for NT, less pellets & damage, weak against armor, greater wounding power and slightly longer ranged
+/obj/projectile/bullet/pellet/shotgun_voidshot
+	name = "voidshot pellet"
+	damage = 8 // * 5 pellets = 40 brute
+	tile_dropoff = 0.35
+	weak_against_armour = TRUE
+	wound_bonus = 10
+	bare_wound_bonus = 12.5
+	wound_falloff_tile = -1.5
+	speed = 0.5
+	speed_dropoff = 0.3
+	speed_dropoff_tiles = 5
+	ricochets_max = 2
+	ricochet_chance = 100
+	ricochet_decay_damage = 0.9
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubbershot pellet"
@@ -102,7 +135,9 @@
 	stamina = 11
 	sharpness = NONE
 	embedding = null
-	speed = 1.2
+	speed = 0.6
+	speed_dropoff = 0.4
+	speed_dropoff_tiles = 5
 	ricochets_max = 4
 	ricochet_chance = 120
 	ricochet_decay_chance = 0.9

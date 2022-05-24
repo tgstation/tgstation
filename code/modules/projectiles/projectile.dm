@@ -286,7 +286,7 @@
 		var/organ_hit_text = ""
 		var/limb_hit = hit_limb
 		if(limb_hit)
-			organ_hit_text = " in \the [parse_zone(limb_hit)]"
+			organ_hit_text = " in \the [limb_hit.plaintext_zone]]"
 		if(suppressed==SUPPRESSED_VERY)
 			playsound(loc, hitsound, 5, TRUE, -1)
 		else if(suppressed)

@@ -76,11 +76,19 @@
 
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "buckshot shell"
-	desc = "A 12 gauge buckshot shell."
+	desc = "A 12 gauge military buckshot shell, for killing things outright and messily."
 	icon_state = "gshell"
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot
 	pellets = 6
 	variance = 25
+
+/obj/item/ammo_casing/shotgun/voidshot
+	name = "voidshot shell"
+	desc = "A lethal 12 gauge shotshell, more likely to maim its target than kill outright."
+	icon_state = "mgshell"
+	projectile_type = /obj/projectile/bullet/pellet/shotgun_voidshot
+	pellets = 5
+	variance = 20
 
 /obj/item/ammo_casing/shotgun/rubbershot
 	name = "rubber shot"

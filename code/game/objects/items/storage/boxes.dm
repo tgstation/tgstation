@@ -895,14 +895,24 @@
 		new /obj/item/ammo_casing/shotgun/rubbershot(src)
 
 /obj/item/storage/box/lethalshot
-	name = "box of lethal shotgun shots"
-	desc = "A box full of lethal shots, designed for riot shotguns."
+	name = "box of buckshot shells"
+	desc = "A box full of military buckshot shells, for highly lethal close combat."
 	icon_state = "lethalshot_box"
 	illustration = null
 
 /obj/item/storage/box/lethalshot/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/ammo_casing/shotgun/buckshot(src)
+
+/obj/item/storage/box/voidshot
+	name = "box of voidshot shells"
+	desc = "A box full of NT voidshot shells, for maiming enemies of the corp with less risk of breaking a window to space."
+	icon_state = "voidshot_box"
+	illustration = null
+
+/obj/item/storage/box/voidshot/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/ammo_casing/shotgun/voidshot(src)
 
 /obj/item/storage/box/beanbag
 	name = "box of beanbags"
