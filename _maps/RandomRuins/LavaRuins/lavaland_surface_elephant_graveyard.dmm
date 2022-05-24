@@ -286,7 +286,7 @@
 "oL" = (
 /obj/structure/bonfire/prelit,
 /obj/effect/decal/cleanable/ash,
-/obj/item/organ/tail/lizard,
+/obj/item/organ/external/tail/lizard,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/misc/asteroid/basalt/wasteland,
