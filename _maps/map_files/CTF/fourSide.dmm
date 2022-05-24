@@ -723,21 +723,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ctf)
-"YW" = (
-/obj/structure/barricade/security/ctf,
-/obj/structure/barricade/security/ctf,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/ctf)
 "Zd" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -1506,7 +1491,7 @@ ab
 sq
 ow
 ow
-YW
+ow
 sq
 ab
 cJ
@@ -2118,7 +2103,7 @@ ab
 ab
 ow
 ow
-YW
+ow
 ab
 ab
 ab
