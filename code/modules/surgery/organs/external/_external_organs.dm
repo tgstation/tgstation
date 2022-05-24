@@ -92,7 +92,7 @@
 		ownerlimb = null
 
 	if(slot)
-		organ_owner.external_organs_slot.Remove(src)
+		organ_owner.external_organs_slot.Remove(slot)
 	organ_owner.external_organs.Remove(src)
 	organ_owner.update_body_parts()
 
