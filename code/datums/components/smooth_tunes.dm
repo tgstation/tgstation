@@ -83,7 +83,6 @@
 ///Ends the effect when the song is no longer playing.
 /datum/component/smooth_tunes/proc/stop_singing(datum/source, finished)
 	SIGNAL_HANDLER
-
 	STOP_PROCESSING(SSobj, src)
 	if(viable_for_final_effect)
 		if(finished && linked_songtuner_rite && linked_song)
