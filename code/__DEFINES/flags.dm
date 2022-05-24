@@ -280,3 +280,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define SPACEVINE_HEAT_RESISTANT (1 << 0)
 /// Is the spacevine / flower bud cold resistant
 #define SPACEVINE_COLD_RESISTANT (1 << 1)
+
+// Flags for flora structures
+#define FLORA_HERBAL (1 << 0)
+#define FLORA_WOODEN (1 << 1)
+#define FLORA_STONE (1 << 2)

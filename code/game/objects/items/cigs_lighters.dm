@@ -585,6 +585,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 0
 	chem_volume = 200 // So we can fit densified chemicals plants
 	list_reagents = null
+	w_class = WEIGHT_CLASS_SMALL
 	///name of the stuff packed inside this pipe
 	var/packeditem
 

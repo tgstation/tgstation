@@ -29,6 +29,9 @@
 	var/inertia_moving = FALSE
 	///Delay in deciseconds between inertia based movement
 	var/inertia_move_delay = 5
+	///The last time we pushed off something
+	///This is a hack to get around dumb him him me scenarios
+	var/last_pushoff
 	/// Things we can pass through while moving. If any of this matches the thing we're trying to pass's [pass_flags_self], then we can pass through.
 	var/pass_flags = NONE
 	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
@@ -373,12 +376,14 @@
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
-	if(pulling)
-		SEND_SIGNAL(pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
-		pulling.set_pulledby(null)
-		setGrabState(GRAB_PASSIVE)
-		pulling = null
-
+	if(!pulling)
+		return
+	pulling.set_pulledby(null)
+	setGrabState(GRAB_PASSIVE)
+	var/atom/movable/old_pulling = pulling
+	pulling = null
+	SEND_SIGNAL(old_pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
+	SEND_SIGNAL(src, COMSIG_ATOM_NO_LONGER_PULLING, old_pulling)
 
 ///Reports the event of the change in value of the pulledby variable.
 /atom/movable/proc/set_pulledby(new_pulledby)
@@ -976,9 +981,10 @@
  *
  * Arguments:
  * * movement_dir - 0 when stopping or any dir when trying to move
+ * * continuous_move - If this check is coming from something in the context of already drifting
  */
-/atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir) & COMSIG_MOVABLE_STOP_SPACEMOVE)
+/atom/movable/proc/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir, continuous_move) & COMSIG_MOVABLE_STOP_SPACEMOVE)
 		return TRUE
 
 	if(has_gravity(src))
@@ -1000,16 +1006,15 @@
 
 
 /// Only moves the object if it's under no gravity
-/// Accepts the direction to move, and if the push should be instant
-/atom/movable/proc/newtonian_move(direction, instant = FALSE)
-	if(!isturf(loc) || Process_Spacemove(0))
+/// Accepts the direction to move, if the push should be instant, and an optional parameter to fine tune the start delay
+/atom/movable/proc/newtonian_move(direction, instant = FALSE, start_delay = 0)
+	if(!isturf(loc) || Process_Spacemove(direction, continuous_move = TRUE))
 		return FALSE
 
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction, start_delay) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
 		return TRUE
 
-	set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay))
-	AddComponent(/datum/component/drift, direction, instant)
+	AddComponent(/datum/component/drift, direction, instant, start_delay)
 
 	return TRUE
 
@@ -1164,23 +1169,19 @@
 	SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, master_storage)
 
 /atom/movable/proc/get_spacemove_backup()
-	var/atom/movable/dense_object_backup
 	for(var/checked_range in orange(1, get_turf(src)))
 		if(isarea(checked_range))
 			continue
-		else if(isturf(checked_range))
+		if(isturf(checked_range))
 			var/turf/turf = checked_range
 			if(!turf.density)
 				continue
 			return turf
-		else
-			var/atom/movable/checked_atom = checked_range
-			if(checked_atom.density || !checked_atom.CanPass(src, get_dir(src, checked_atom)))
-				if(checked_atom.anchored)
-					return checked_atom
-				dense_object_backup = checked_atom
-				break
-	. = dense_object_backup
+		var/atom/movable/checked_atom = checked_range
+		if(checked_atom.density || !checked_atom.CanPass(src, get_dir(src, checked_atom)))
+			if(checked_atom.last_pushoff == world.time)
+				continue
+			return checked_atom
 
 ///called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist_act(mob/living/user, obj/container)

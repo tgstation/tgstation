@@ -1345,9 +1345,16 @@
 /datum/design/module/mister_atmos
 	name = "MOD Module: Resin Mister"
 	id = "mod_mister_atmos"
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500, /datum/material/silver = 1000, /datum/material/titanium = 1500, /datum/material/uranium = 500)
+	materials = list(/datum/material/glass = 1000, /datum/material/titanium = 1500)
 	build_path = /obj/item/mod/module/mister/atmos
 	department_type = MODULE_ENGINEERING
+
+/datum/design/module/mod_holster
+	name = "MOD Module: Holster"
+	id = "mod_holster"
+	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
+	build_path = /obj/item/mod/module/holster
+	department_type = MODULE_SECURITY
 
 //MODsuit bepis modules
 

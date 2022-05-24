@@ -24,3 +24,21 @@
 		capacitor = cap
 	else
 		capacitor = new /obj/item/stock_parts/capacitor(src)
+
+///////////////////////
+///// Power stuff /////
+///////////////////////
+/obj/vehicle/sealed/mecha/proc/has_charge(amount)
+	return (get_charge()>=amount)
+
+/obj/vehicle/sealed/mecha/proc/get_charge()
+	return cell?.charge
+
+/obj/vehicle/sealed/mecha/proc/use_power(amount)
+	return (get_charge() && cell.use(amount))
+
+/obj/vehicle/sealed/mecha/proc/give_power(amount)
+	if(!isnull(get_charge()))
+		cell.give(amount)
+		return TRUE
+	return FALSE

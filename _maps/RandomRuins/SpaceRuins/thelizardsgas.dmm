@@ -337,9 +337,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "Hc" = (
-/obj/structure/flora/rock/pile{
-	icon_state = "basalt"
-	},
+/obj/structure/flora/rock,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "Io" = (
@@ -503,7 +501,7 @@
 	},
 /area/ruin/space/has_grav/thelizardsgas)
 "Um" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "UO" = (

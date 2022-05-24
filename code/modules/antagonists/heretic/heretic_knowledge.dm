@@ -373,7 +373,7 @@
 /datum/heretic_knowledge/curse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
-		fingerprints[requirements.return_fingerprints()] = 1
+		fingerprints[GET_ATOM_FINGERPRINTS(requirements)] = 1
 	list_clear_nulls(fingerprints)
 
 	// No fingerprints? No ritual

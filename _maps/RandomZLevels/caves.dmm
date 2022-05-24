@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/rock,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "ab" = (
 /turf/open/space,
-/area/space)
+/area/misc/space)
 "ac" = (
 /turf/closed/mineral/volcanic,
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -1120,7 +1120,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fL" = (
-/obj/structure/sign/departments/maint{
+/obj/structure/sign/departments/exam_room{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
@@ -1392,7 +1392,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/northblock)
 "hT" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1634,7 +1634,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "yV" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /obj/item/soulstone/anybody,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
@@ -1647,7 +1647,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "zH" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1908,7 +1908,7 @@
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "Mq" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -1989,7 +1989,7 @@
 	icon_state = "black";
 	name = "the other side"
 	},
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "PS" = (
 /obj/machinery/light/small/built/directional/south,
 /obj/machinery/suit_storage_unit/mining{

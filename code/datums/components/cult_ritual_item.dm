@@ -355,7 +355,7 @@
 		return
 	if(!check_if_in_ritual_site(cultist, cult_team))
 		return FALSE
-	priority_announce("Figments from an eldritch god are being summoned by [cultist.real_name] into [get_area(cultist)] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES)
+	priority_announce("Figments from an eldritch god are being summoned by [cultist.real_name] into [get_area(cultist)] from an unknown dimension. Disrupt the ritual at all costs!", "Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES, has_important_message = TRUE)
 	for(var/shielded_turf in spiral_range_turfs(1, cultist, 1))
 		LAZYADD(shields, new /obj/structure/emergency_shield/cult/narsie(shielded_turf))
 
