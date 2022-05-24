@@ -1,4 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - bugfix: "The rest of the overlapping wall objects on IceBox are no longer overlapping."

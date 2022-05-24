@@ -1320,7 +1320,7 @@
 "dH" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "dJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -2570,7 +2570,7 @@
 /area/ruin/space/ancientstation/beta/hall)
 "gU" = (
 /turf/open/floor/plating/airless,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "gV" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 5
@@ -2888,7 +2888,7 @@
 /obj/item/stack/rods,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "hO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/west,
@@ -3727,7 +3727,7 @@
 /obj/item/solar_assembly,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "jE" = (
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/beta/hall)
@@ -4465,7 +4465,7 @@
 /area/ruin/space/ancientstation/charlie/kitchen)
 "lz" = (
 /turf/open/floor/plating/airless,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "lB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/east,
@@ -4579,7 +4579,7 @@
 /obj/machinery/power/solar,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "lT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
@@ -4803,7 +4803,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "mz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6252,7 +6252,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "tC" = (
 /turf/closed/mineral/gold,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "tJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -6356,7 +6356,7 @@
 	},
 /obj/structure/cable,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "uY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -6470,7 +6470,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "wD" = (
 /turf/closed/mineral/uranium,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "wH" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -6702,7 +6702,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "Al" = (
 /turf/closed/mineral/iron,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Ao" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6753,7 +6753,7 @@
 	},
 /obj/structure/cable,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "AJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -6785,7 +6785,7 @@
 /area/ruin/space/ancientstation/charlie/hall)
 "Bk" = (
 /turf/closed/mineral/silver,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Bn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7093,7 +7093,7 @@
 	},
 /obj/structure/cable,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "FV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7198,7 +7198,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "HK" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -7209,7 +7209,7 @@
 	},
 /obj/structure/cable,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "HQ" = (
 /obj/structure/transit_tube{
 	dir = 4
@@ -7224,11 +7224,11 @@
 	},
 /obj/machinery/duct,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "HZ" = (
 /obj/structure/lattice,
 /turf/closed/mineral/plasma,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Ic" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -7320,7 +7320,7 @@
 "Jg" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Jo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -7340,7 +7340,7 @@
 /obj/machinery/power/rtg/old_station,
 /obj/structure/cable,
 /turf/template_noop,
-/area/solars/ancientstation/charlie/solars)
+/area/ruin/solars/ancientstation/charlie/solars)
 "JK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7415,7 +7415,7 @@
 "Kz" = (
 /obj/structure/lattice,
 /turf/closed/mineral/random,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "KA" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "storage room"
@@ -7447,7 +7447,7 @@
 /obj/structure/transit_tube,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "KK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7499,7 +7499,7 @@
 "Lg" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/mineral/random,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Lh" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/engine/o2,
@@ -7611,7 +7611,7 @@
 /obj/item/shard,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "NE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7837,7 +7837,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "QQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8033,7 +8033,7 @@
 /area/ruin/space/ancientstation/delta/hall)
 "SZ" = (
 /turf/closed/mineral/bscrystal,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "Td" = (
 /turf/closed/mineral/random,
 /area/ruin/space/ancientstation/beta/hall)
@@ -8088,7 +8088,7 @@
 /area/ruin/space/ancientstation/beta/hall)
 "Uu" = (
 /turf/closed/mineral/plasma,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "UA" = (
 /turf/closed/wall/rust,
 /area/ruin/space/ancientstation/delta/storage)
@@ -8117,7 +8117,7 @@
 /area/ruin/space/ancientstation/delta/proto)
 "UP" = (
 /turf/closed/mineral/random,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "UV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8357,12 +8357,12 @@
 	},
 /obj/machinery/duct,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "YH" = (
 /obj/structure/lattice,
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/space/nearstation)
+/area/misc/space/nearstation)
 "YM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,

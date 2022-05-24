@@ -76,7 +76,7 @@
 
 	// It would likely be a bad idea to teleport into an ai monitored area (ai sat)
 	var/area/phase_area = get_area(phase_turf)
-	if(istype(phase_area, /area/ai_monitored))
+	if(istype(phase_area, /area/station/ai_monitored))
 		to_chat(unjaunter, span_warning("It's probably not a very wise idea to exit the mirror's realm here."))
 		return FALSE
 

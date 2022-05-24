@@ -155,7 +155,7 @@
  * Return -1 on failure, or return the point value of the refund on success
  */
 /datum/spellbook_entry/proc/refund_spell(mob/living/carbon/human/user, obj/item/spellbook/book)
-	var/area/wizard_station/wizard_home = GLOB.areas_by_type[/area/wizard_station]
+	var/area/centcom/wizard_station/wizard_home = GLOB.areas_by_type[/area/centcom/wizard_station]
 	if(get_area(user) != wizard_home)
 		to_chat(user, span_warning("You can only refund spells at the wizard lair!"))
 		return -1

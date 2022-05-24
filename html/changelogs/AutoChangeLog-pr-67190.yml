@@ -1,4 +1,0 @@
-author: "Son-of-Space"
-delete-after: True
-changes: 
-  - bugfix: "Swapped the public mining APC with its directional subtype version on IceBox"
