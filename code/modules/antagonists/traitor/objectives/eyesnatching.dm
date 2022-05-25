@@ -150,7 +150,7 @@
 
 	var/obj/item/organ/eyes/eyeballies = victim.getorgan(/obj/item/organ/eyes)
 
-	if(!eyeballies)
+	if(!eyeballies || victim.is_eyes_covered())
 		return ..()
 
 	user.do_attack_animation(victim, used_item = src)
