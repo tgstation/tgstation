@@ -42,7 +42,7 @@
  */
 /client/verb/refresh_tgui()
 	set name = "Refresh TGUI"
-	set category = "Debug"
+	set category = "OOC"
 
 	message_admins("start")
 	for(var/window in tgui_windows)
