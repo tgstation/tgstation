@@ -6,7 +6,7 @@
 /obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
-	name = "blast shutters"
+	name = "Blast Shutters"
 	},
 /obj/structure/grille,
 /turf/open/floor/plating,

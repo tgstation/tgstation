@@ -84,7 +84,7 @@
 #define DOOR_VISION_DISTANCE 11 ///The maximum distance a door will see out to
 
 /obj/machinery/door/airlock
-	name = "airlock"
+	name = "Airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
 	max_integrity = 300

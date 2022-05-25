@@ -54,6 +54,11 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/atmospherics/pipe/(?<type>[/\w]*)
     echo "ERROR: found multiple identical pipes on the same tile, please remove them."
     st=1
 fi;
+if grep -rzoP 'machinery/door.*{([^}]|\n)*name = .*("|\s)(?!of|and|to)[a-z].*\n' _maps/**/*.dmm;	then
+    echo
+    echo "ERROR: found door names without proper upper-casing. Please upper-case your door names."
+    st=1
+fi;
 if grep -Pzo '/obj/machinery/power/apc[/\w]*?\{\n[^}]*?pixel_[xy] = -?[013-9]\d*?[^\d]*?\s*?\},?\n' _maps/**/*.dmm ||
 	grep -Pzo '/obj/machinery/power/apc[/\w]*?\{\n[^}]*?pixel_[xy] = -?\d+?[0-46-9][^\d]*?\s*?\},?\n' _maps/**/*.dmm ||
 	grep -Pzo '/obj/machinery/power/apc[/\w]*?\{\n[^}]*?pixel_[xy] = -?\d{3,1000}[^\d]*?\s*?\},?\n' _maps/**/*.dmm ;	then

@@ -195,7 +195,7 @@
 "ba" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "labor";
-	name = "labor camp blast door"
+	name = "Labor Camp Blast Door"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
