@@ -55,18 +55,18 @@ SUBSYSTEM_DEF(traitor)
 
 	/// List of high-security areas that we pick required ones from
 	var/list/allowed_areas = typecacheof(list(/area/station/command,
-											  /area/station/cargo/qm,
-											  /area/station/comms,
-											  /area/station/engineering,
-											  /area/station/science,
-											  /area/station/security)) - typecacheof(
-										 list(/area/station/engineering/hallway,
-										 	  /area/station/engineering/lobby,
-										 	  /area/station/engineering/storage,
-										 	  /area/station/science/lobby,
-										 	  /area/station/science/test_area,
-										 	  /area/station/security/prison,
-											  ))
+											/area/station/cargo/qm,
+											/area/station/comms,
+											/area/station/engineering,
+											/area/station/science,
+											/area/station/security)) - typecacheof(
+										list(/area/station/engineering/hallway,
+										 	/area/station/engineering/lobby,
+										 	/area/station/engineering/storage,
+										 	/area/station/science/lobby,
+										 	/area/station/science/test_area,
+										 	/area/station/security/prison,
+											))
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
 		if(!is_type_in_typecache(possible_area, allowed_areas) || initial(possible_area.outdoors))
