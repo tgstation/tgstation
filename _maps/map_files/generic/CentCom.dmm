@@ -167,7 +167,7 @@
 /obj/machinery/door/airlock/wood{
 	name = "Kitchen"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "aG" = (
 /obj/structure/railing/corner,
@@ -584,7 +584,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "bO" = (
 /obj/effect/landmark/holding_facility,
@@ -1103,7 +1103,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Dining Hall"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "dk" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1115,7 +1115,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Botanical Garden"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "dl" = (
 /obj/effect/turf_decal/siding/wood,
@@ -1125,7 +1125,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Guest Suite *B"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "dm" = (
 /obj/machinery/seed_extractor,
@@ -1146,6 +1146,7 @@
 /turf/open/floor/iron/grimy,
 /area/centcom/courtroom)
 "dq" = (
+/obj/effect/landmark/holding_facility,
 /turf/open/floor/stone,
 /area/centcom/holding)
 "dr" = (
@@ -1162,7 +1163,7 @@
 /area/centcom/holding)
 "dt" = (
 /obj/structure/closet/crate/freezer/blood,
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "du" = (
 /obj/effect/turf_decal/tile/bar,
@@ -1301,9 +1302,11 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "dO" = (
-/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
 /obj/effect/landmark/holding_facility,
-/turf/open/floor/wood/large,
+/turf/open/floor/wood/tile,
 /area/centcom/holding)
 "dP" = (
 /obj/machinery/light/cold/directional/east,
@@ -1456,7 +1459,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Guest Suite *A"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "el" = (
 /obj/structure/filingcabinet/medical,
@@ -1711,7 +1714,7 @@
 /obj/machinery/door/airlock/wood{
 	name = "Washroom"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "eU" = (
 /obj/machinery/hydroponics/constructable,
@@ -2009,9 +2012,8 @@
 /turf/open/floor/wood/parquet,
 /area/centcom/holding)
 "fM" = (
-/turf/closed/indestructible/fakedoor{
-	name = "Guest House Back Entrance"
-	},
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood/large,
 /area/centcom/holding)
 "fN" = (
 /obj/structure/closet/crate/bin,
@@ -2121,7 +2123,7 @@
 "ge" = (
 /obj/machinery/defibrillator_mount/directional/south,
 /obj/machinery/stasis,
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "gf" = (
 /obj/structure/flora/tree/pine/style_random,
@@ -2403,7 +2405,7 @@
 	name = "Momo";
 	radio_key = null
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "gX" = (
 /obj/structure/table/reinforced,
@@ -2418,7 +2420,7 @@
 /turf/open/floor/grass,
 /area/centcom/holding)
 "hb" = (
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "hc" = (
 /obj/structure/table/reinforced,
@@ -2617,7 +2619,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "East Wing"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "hz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -2703,6 +2705,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/landmark/holding_facility,
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
 "hJ" = (
@@ -6305,7 +6308,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "sq" = (
 /obj/machinery/computer/shuttle/white_ship{
@@ -7843,11 +7846,25 @@
 /turf/open/misc/sandy_dirt,
 /area/centcom/holding)
 "xb" = (
-/obj/structure/sign/painting/library{
-	pixel_y = 32
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding{
+	color = "#2e2e2e"
 	},
 /obj/effect/landmark/holding_facility,
-/turf/open/floor/wood/large,
+/turf/open/floor/iron/textured_half{
+	dir = 1
+	},
 /area/centcom/holding)
 "xc" = (
 /obj/machinery/door/airlock/external/ruin{
@@ -9104,7 +9121,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "AH" = (
 /turf/open/floor/iron,
@@ -10043,6 +10060,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
+/obj/effect/landmark/holding_facility,
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
 "Dn" = (
@@ -10054,7 +10072,7 @@
 	name = "Bar"
 	},
 /obj/machinery/duct,
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "Do" = (
 /obj/structure/railing/corner{
@@ -10129,7 +10147,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Dojo"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "Dx" = (
 /obj/structure/chair/bronze{
@@ -10883,6 +10901,23 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/syndicate_mothership/control)
+"FE" = (
+/obj/effect/turf_decal/tile/yellow/half,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half,
+/obj/effect/turf_decal/tile/neutral/half{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding{
+	color = "#2e2e2e"
+	},
+/obj/effect/landmark/holding_facility,
+/turf/open/floor/iron/textured_half{
+	dir = 4
+	},
+/area/centcom/holding)
 "FF" = (
 /obj/effect/turf_decal/siding/wideplating{
 	dir = 1
@@ -10990,7 +11025,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Blue"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "FV" = (
 /obj/structure/chair/pew/left{
@@ -11357,6 +11392,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
+"Hc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/mineral_door/paperframe{
+	name = "Spectator's Lounge"
+	},
+/turf/open/floor/iron/sepia,
+/area/centcom/holding)
 "He" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/mineral/plastitanium,
@@ -11551,10 +11596,8 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
 "HL" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/vault/rock,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/stone,
 /area/centcom/holding)
 "HM" = (
 /obj/effect/turf_decal/delivery,
@@ -13115,7 +13158,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Performance Room"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "MI" = (
 /obj/machinery/light/directional/north,
@@ -13435,6 +13478,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
+/obj/effect/landmark/holding_facility,
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
 "NG" = (
@@ -13740,7 +13784,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Shrine"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "Ov" = (
 /obj/structure/table/reinforced/rglass,
@@ -14018,7 +14062,7 @@
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "Pg" = (
 /obj/machinery/computer/auxiliary_base/directional/north,
@@ -14431,7 +14475,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Electrical Room"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "Qn" = (
 /obj/effect/turf_decal/siding/purple{
@@ -14476,7 +14520,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "Qv" = (
 /obj/effect/turf_decal/tile/red{
@@ -14787,7 +14831,7 @@
 "Rk" = (
 /obj/machinery/defibrillator_mount/directional/north,
 /obj/machinery/stasis,
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "Rl" = (
 /obj/structure/chair/comfy/brown{
@@ -14923,7 +14967,7 @@
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "RE" = (
 /obj/effect/turf_decal/siding/wood,
@@ -14933,7 +14977,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Guest Suite *D"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "RF" = (
 /obj/structure/table/reinforced,
@@ -15051,7 +15095,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Red"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "RZ" = (
 /obj/effect/turf_decal/trimline/red,
@@ -15064,7 +15108,7 @@
 	name = "Hattori";
 	radio_key = null
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "Sb" = (
 /obj/structure/table/wood,
@@ -15237,7 +15281,7 @@
 /area/centcom/holding)
 "SF" = (
 /obj/effect/turf_decal/siding/wood,
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "SG" = (
 /obj/machinery/light/directional/south,
@@ -15306,7 +15350,7 @@
 /obj/structure/mineral_door/paperframe{
 	name = "Guest Suite *C"
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "SQ" = (
 /obj/structure/filingcabinet/medical,
@@ -16052,10 +16096,8 @@
 /area/centcom/evacuation/ship)
 "UG" = (
 /obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/vault/rock,
+/obj/structure/closet/cabinet,
+/turf/open/floor/stone,
 /area/centcom/holding)
 "UH" = (
 /obj/machinery/light/directional/west,
@@ -16285,7 +16327,7 @@
 	icon_state = "plant-10"
 	},
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "Vk" = (
 /obj/effect/turf_decal/tile/brown,
@@ -16497,7 +16539,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "VT" = (
 /obj/structure/rack,
@@ -17186,7 +17228,7 @@
 /area/tdome/administration)
 "Xx" = (
 /obj/machinery/vending/dinnerware,
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "Xy" = (
 /obj/machinery/door/airlock/external/ruin{
@@ -17292,7 +17334,7 @@
 /obj/item/organ/heart/cybernetic/tier2,
 /obj/item/organ/heart/cybernetic/tier2,
 /obj/item/defibrillator,
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "XJ" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
@@ -17935,7 +17977,7 @@
 /obj/structure/window/paperframe{
 	can_atmos_pass = 0
 	},
-/turf/open/floor/sepia,
+/turf/open/floor/iron/sepia,
 /area/centcom/holding)
 "ZC" = (
 /obj/effect/turf_decal/stripes/line{
@@ -38828,7 +38870,7 @@ pJ
 pJ
 Oi
 MW
-AD
+FE
 ej
 YC
 YC
@@ -39856,7 +39898,7 @@ pJ
 pJ
 Oi
 yT
-ic
+xb
 dl
 YC
 YC
@@ -39864,8 +39906,8 @@ bs
 RN
 RN
 YC
-YC
-vz
+bO
+dO
 dQ
 cJ
 Rv
@@ -40121,7 +40163,7 @@ bs
 RN
 RN
 YC
-YC
+bO
 hI
 cf
 fO
@@ -41663,7 +41705,7 @@ bs
 RN
 RN
 YC
-YC
+bO
 NF
 QJ
 fO
@@ -41912,7 +41954,7 @@ pJ
 pJ
 Oi
 MW
-AD
+FE
 SP
 YC
 YC
@@ -41920,7 +41962,7 @@ bs
 RN
 RN
 YC
-YC
+bO
 Dl
 dQ
 xF
@@ -42171,8 +42213,8 @@ Oi
 dB
 hg
 sm
-bO
-dO
+YC
+aA
 fO
 fO
 fO
@@ -42428,8 +42470,8 @@ Nd
 fO
 fO
 fO
-xb
-bO
+eZ
+YC
 bS
 Rv
 gH
@@ -42685,8 +42727,8 @@ Oi
 Og
 fb
 sm
-bO
-bO
+YC
+YC
 hB
 Rv
 cP
@@ -42940,10 +42982,10 @@ pJ
 pJ
 Oi
 yT
-ic
+xb
 RE
-bO
-bO
+YC
+YC
 fO
 fO
 fO
@@ -43200,7 +43242,7 @@ FA
 gi
 sm
 WA
-WA
+fM
 fO
 eo
 QQ
@@ -43212,7 +43254,7 @@ Po
 QL
 YC
 YC
-Oi
+Nd
 Zc
 pJ
 Nd
@@ -43469,7 +43511,7 @@ KT
 QL
 YC
 YC
-Oi
+Nd
 pJ
 pJ
 Nd
@@ -44219,9 +44261,9 @@ hh
 hh
 OL
 Nd
-fg
-fM
-fg
+Oi
+Oi
+Oi
 Nd
 fg
 fg
@@ -45522,7 +45564,7 @@ AG
 AG
 AG
 AG
-Up
+Hc
 hb
 hb
 ge
