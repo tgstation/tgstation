@@ -466,7 +466,7 @@
 /datum/id_trim/job/security_officer/engineering
 	assignment = "Security Officer (Engineering)"
 	trim_state = "trim_securityofficer_engi"
-	department_access = list(ACCESS_ATMOSPHERICS, ACCESS_AUX_BASE, ACCESS_CONSTRUCTION, ACCESS_ENGINEERING, ACCESS_ENGINE_EQUIP, ACCESS_TCOMMS, ACCESS_TECH_STORAGE)
+	department_access = list(ACCESS_ATMOSPHERICS, ACCESS_AUX_BASE, ACCESS_CONSTRUCTION, ACCESS_ENGINEERING, ACCESS_TCOMMS, ACCESS_TECH_STORAGE)
 
 /datum/id_trim/job/security_officer/medical
 	assignment = "Security Officer (Medical)"
@@ -476,7 +476,7 @@
 /datum/id_trim/job/security_officer/science
 	assignment = "Security Officer (Science)"
 	trim_state = "trim_securityofficer_sci"
-	department_access = list(ACCESS_AUX_BASE, ACCESS_GENETICS ACCESS_ORDNANCE, ACCESS_ORDNANCE_STORAGE, ACCESS_RESEARCH, ACCESS_ROBOTICS, ACCESS_SCIENCE, ACCESS_XENOBIOLOGY, ACCESS_ROBOTICS)
+	department_access = list(ACCESS_AUX_BASE, ACCESS_GENETICS, ACCESS_ORDNANCE, ACCESS_ORDNANCE_STORAGE, ACCESS_RESEARCH, ACCESS_ROBOTICS, ACCESS_SCIENCE, ACCESS_XENOBIOLOGY, ACCESS_ROBOTICS)
 
 /datum/id_trim/job/shaft_miner
 	assignment = "Shaft Miner"
