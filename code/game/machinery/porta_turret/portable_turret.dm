@@ -894,9 +894,10 @@ DEFINE_BITFIELD(turret_flags, list(
 
 	if(control_area)
 		control_area_instance = get_area_instance_from_text(control_area)
+		if(!control_area_instance)
+			log_mapping("Bad control_area path for [src] at [AREACOORD(src)]: [control_area]")
 	if(!control_area_instance)
 		control_area_instance = get_area(src)
-		log_mapping("Bad control_area path for [src] at [AREACOORD(src)]: [control_area]")
 
 	for(var/obj/machinery/porta_turret/T in control_area_instance)
 		turrets |= WEAKREF(T)
