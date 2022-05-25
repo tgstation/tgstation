@@ -200,15 +200,5 @@ Temporary Items
 # Autowiki
 /tools/autowiki/node_modules
 
-
-
-
-/config
+/data/*
 /data
-config/word_filter.toml
-config/unbuyableshuttles.txt
-config/motd.txt
-config/game_options.txt
-config/config.txt
-config/admins.txt
-tgstation.dme
