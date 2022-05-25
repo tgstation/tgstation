@@ -311,7 +311,7 @@
 	result = /obj/item/food/popsicle/nogga_black
 	subcategory = CAT_ICE
 
-	/datum/crafting_recipe/food/mothsicle
+/datum/crafting_recipe/food/mothsicle
 	name = "Mothsicle"
 	reqs = list(
 		/obj/item/clothing/neck/scarf = 1,
