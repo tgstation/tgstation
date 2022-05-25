@@ -817,7 +817,7 @@
 /obj/item/razor,
 /obj/machinery/button/door/directional/west{
 	id = "starfury_surgery_shutters";
-	name = "privacy shutters";
+	name = "Privacy Shutters";
 	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/siding/blue,
@@ -934,7 +934,7 @@
 /area/shuttle/sbc_starfury)
 "dk" = (
 /obj/machinery/door/window/brigdoor/left/directional/north{
-	name = "command desk";
+	name = "Command Desk";
 	req_access = list("syndicate_leader")
 	},
 /obj/effect/turf_decal/siding/blue{

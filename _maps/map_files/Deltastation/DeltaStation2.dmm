@@ -3400,7 +3400,7 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
-	name = "Prison Blast door"
+	name = "Prison Blast Door"
 	},
 /obj/machinery/button/flasher{
 	id = "Cell 1";
@@ -4014,7 +4014,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	id = "hopblast";
-	name = "HoP Blast door"
+	name = "HoP Blast Door"
 	},
 /obj/machinery/door/airlock/command{
 	name = "Head of Personnel's Office"
@@ -5564,7 +5564,7 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
-	name = "Prison Blast door"
+	name = "Prison Blast Door"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -5824,7 +5824,7 @@
 "bCC" = (
 /obj/machinery/door/poddoor{
 	id = "justiceblast";
-	name = "Justice Blast door"
+	name = "Justice Blast Door"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -6103,7 +6103,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor{
 	id = "cargoload";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -7097,7 +7097,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "hosspace";
-	name = "HoS Space Blast door"
+	name = "Hos Space Blast Door"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -7645,7 +7645,7 @@
 "bYQ" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
-	name = "Prison Blast door"
+	name = "Prison Blast Door"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/pods{
@@ -7712,7 +7712,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "cargounload";
-	name = "supply dock unloading door"
+	name = "Supply Dock Unloading Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -12938,7 +12938,7 @@
 "dAH" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
-	name = "Atmospherics Lockdown Blast door"
+	name = "Atmospherics Lockdown Blast Door"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -17576,7 +17576,7 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgedoors";
-	name = "Bridge Access Blast door"
+	name = "Bridge Access Blast Door"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -20541,7 +20541,7 @@
 "fHj" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
-	name = "Prison Blast door"
+	name = "Prison Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -20644,7 +20644,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "councilblast";
-	name = "Council Chambers Blast door"
+	name = "Council Chambers Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/command/meeting_room/council)
@@ -21810,7 +21810,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "justicechamber";
-	name = "Justice Chamber Blast door"
+	name = "Justice Chamber Blast Door"
 	},
 /obj/structure/sign/warning/electric_shock{
 	pixel_x = 32
@@ -27836,7 +27836,7 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
-	name = "Prison Blast door"
+	name = "Prison Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/security/prison)
@@ -28033,7 +28033,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "brigwindows";
-	name = "Brig Front Blast door"
+	name = "Brig Front Blast Door"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -28935,7 +28935,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "hopblast";
-	name = "HoP Blast door"
+	name = "HoP Blast Door"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -30385,7 +30385,7 @@
 "iut" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "justicechamber";
-	name = "Justice Chamber Blast door"
+	name = "Justice Chamber Blast Door"
 	},
 /obj/machinery/door/window/brigdoor/right/directional/north{
 	dir = 2;
@@ -30843,7 +30843,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "hosprivacy";
-	name = "HoS Privacy Blast door"
+	name = "HoS Privacy Blast Door"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -36366,7 +36366,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgedoors";
-	name = "Bridge Access Blast door"
+	name = "Bridge Access Blast Door"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -38213,7 +38213,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
-	name = "Atmospherics Lockdown Blast door"
+	name = "Atmospherics Lockdown Blast Door"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -42325,7 +42325,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
-	name = "Atmospherics Lockdown Blast door"
+	name = "Atmospherics Lockdown Blast Door"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
@@ -43530,7 +43530,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "detectivewindows";
-	name = "Detective Privacy Blast door"
+	name = "Detective Privacy Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/security/detectives_office)
@@ -43809,7 +43809,7 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
-	name = "Atmospherics Lockdown Blast door"
+	name = "Atmospherics Lockdown Blast Door"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -44280,7 +44280,7 @@
 "mdF" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
-	name = "Prison Blast door"
+	name = "Prison Blast Door"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -49301,7 +49301,7 @@
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
-	name = "Atmospherics Lockdown Blast door"
+	name = "Atmospherics Lockdown Blast Door"
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
@@ -49621,7 +49621,7 @@
 "nBJ" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgedoors";
-	name = "Bridge Access Blast door"
+	name = "Bridge Access Blast Door"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -50958,7 +50958,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "hosroom";
-	name = "HoS Room Blast door"
+	name = "HoS Room Blast Door"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -54003,7 +54003,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "justicechamber";
-	name = "Justice Chamber Blast door"
+	name = "Justice Chamber Blast Door"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -54086,7 +54086,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "detectivewindows";
-	name = "Detective Privacy Blast door"
+	name = "Detective Privacy Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/security/detectives_office)
@@ -54344,7 +54344,7 @@
 "oNv" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
-	name = "Prison Blast door"
+	name = "Prison Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/button/door/directional/east{
@@ -63142,7 +63142,7 @@
 "rhx" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
-	name = "Prison Blast door"
+	name = "Prison Blast Door"
 	},
 /obj/machinery/door/airlock/security/glass{
 	name = "Permabrig Visitation"
@@ -64044,7 +64044,7 @@
 /obj/item/pen,
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
-	name = "Atmospherics Lockdown Blast door"
+	name = "Atmospherics Lockdown Blast Door"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/right/directional/west{
@@ -67501,7 +67501,7 @@
 "spe" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
-	name = "Prison Blast door"
+	name = "Prison Blast Door"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
@@ -69690,7 +69690,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor{
 	id = "cargoload";
-	name = "supply dock loading door"
+	name = "Supply Dock Loading Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -72590,7 +72590,7 @@
 "tEI" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigfront";
-	name = "Brig Blast door"
+	name = "Brig Blast Door"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
@@ -75306,7 +75306,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	id = "hopblast";
-	name = "HoP Blast door"
+	name = "HoP Blast Door"
 	},
 /obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Access Desk";
@@ -77195,7 +77195,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "brigwindows";
-	name = "Brig Front Blast door"
+	name = "Brig Front Blast Door"
 	},
 /obj/item/folder/red,
 /obj/item/pen,
@@ -78709,7 +78709,7 @@
 "vja" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigfront";
-	name = "Brig Blast door"
+	name = "Brig Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -80878,7 +80878,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "brigwindows";
-	name = "Brig Front Blast door"
+	name = "Brig Front Blast Door"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -82232,7 +82232,7 @@
 "wdj" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "surgeryb";
-	name = "privacy shutters"
+	name = "Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -83871,7 +83871,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridgewindows";
-	name = "Bridge View Blast door"
+	name = "Bridge View Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/command/bridge)
@@ -87900,7 +87900,7 @@
 "xDm" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
-	name = "Atmospherics Lockdown Blast door"
+	name = "Atmospherics Lockdown Blast Door"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -87913,7 +87913,7 @@
 "xDn" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigfront";
-	name = "Brig Blast door"
+	name = "Brig Blast Door"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
@@ -87953,7 +87953,7 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "cargounload";
-	name = "supply dock unloading door"
+	name = "Supply Dock Unloading Door"
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
@@ -88343,7 +88343,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Secure tech_storage"
+	name = "Secure Tech Storage"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
