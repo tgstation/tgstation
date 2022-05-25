@@ -74,7 +74,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				M.check_access()
 				if (ACCESS_MAINT_TUNNELS in M.req_access)
 					M.req_access = list()
-					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINE)
+					M.req_one_access = list(ACCESS_BRIG,ACCESS_ENGINEERING)
 			message_admins("[key_name_admin(holder)] made all maint doors engineering and brig access-only.")
 		if("maint_access_brig")
 			if(!is_debugger)
@@ -152,7 +152,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			log_admin("[key_name(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
 			message_admins(span_adminnotice("[key_name_admin(holder)] reset the thunderdome to default with delete_mobs==[delete_mobs]."))
 
-			var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena]
+			var/area/thunderdome = GLOB.areas_by_type[/area/centcom/tdome/arena]
 			if(delete_mobs == "Yes")
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs

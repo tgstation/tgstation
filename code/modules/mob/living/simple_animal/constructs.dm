@@ -63,6 +63,8 @@
 		spellnum++
 	if(runetype)
 		var/pos = 2+spellnum*31
+		if(construct_spells.len >= 4)
+			pos -= 31*(construct_spells.len - 4)
 		our_rune = new runetype(src)
 		our_rune.default_button_position = "6:[pos],4:-2" // Set the default position to this random position
 		our_rune.Grant(src)

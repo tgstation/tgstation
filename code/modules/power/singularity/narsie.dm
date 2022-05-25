@@ -218,7 +218,7 @@
 	if(QDELETED(GLOB.cult_narsie)) // uno
 		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
 		GLOB.cult_narsie = null
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 2), 2 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
 	priority_announce("An acausal dimensional event has been detected in your sector. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating solutions. SOLUTION ETA: 60 SECONDS.","Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_end_second_check), 50 SECONDS)
@@ -228,7 +228,7 @@
 	if(QDELETED(GLOB.cult_narsie)) // dos
 		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
 		GLOB.cult_narsie = null
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 2), 2 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
 	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: ONE MINUTE. ","Central Command Higher Dimensional Affairs")
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/narsie_start_destroy_station), 5 SECONDS)
@@ -257,7 +257,7 @@
 /proc/narsie_last_second_win()
 	set_security_level("red")
 	SSshuttle.lockdown = FALSE
-	INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
+	INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, CULT_FAILURE_NARSIE_KILLED)
 
 ///Helper to set the round to end asap. Current usage Cult round end code
 /proc/ending_helper()
@@ -267,13 +267,19 @@
  * Selects cinematic to play as part of the cult end depending on the outcome then ends the round afterward
  * called either when narsie eats everyone, or when [/proc/begin_the_end()] reaches it's conclusion
  */
-/proc/cult_ending_helper(ending_type = 0)
-	if(ending_type == 2) //narsie fukkin died
-		Cinematic(CINEMATIC_CULT_FAIL,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
-	else if(ending_type) //no explosion
-		Cinematic(CINEMATIC_CULT,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
-	else // explosion
-		Cinematic(CINEMATIC_CULT_NUKE,world,CALLBACK(GLOBAL_PROC,/proc/ending_helper))
+/proc/cult_ending_helper(ending_type = CULT_VICTORY_NUKE)
+	switch(ending_type)
+		// Narsie was killed
+		if(CULT_FAILURE_NARSIE_KILLED)
+			play_cinematic(/datum/cinematic/cult_fail, world, CALLBACK(GLOBAL_PROC, /proc/ending_helper))
+
+		// The cult "converted" (harvested) most of the station
+		if(CULT_VICTORY_MASS_CONVERSION)
+			play_cinematic(/datum/cinematic/cult_arm, world, CALLBACK(GLOBAL_PROC, /proc/ending_helper))
+
+		// The cult won, but centcom deployed a nuke. Default
+		if(CULT_VICTORY_NUKE)
+			play_cinematic(/datum/cinematic/nuke/cult, world, CALLBACK(GLOBAL_PROC, /proc/ending_helper))
 
 #undef NARSIE_CHANCE_TO_PICK_NEW_TARGET
 #undef NARSIE_CONSUME_RANGE

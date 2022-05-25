@@ -68,17 +68,21 @@
 	. = ..()
 	var/list/data = get_header_data()
 	data["location"] = SSshuttle.supply.getStatusText()
+	data["department"] = "Cargo"
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	var/obj/item/card/id/id_card = card_slot?.GetID()
 	if(id_card?.registered_account)
-		if((ACCESS_HEADS in id_card.access) || (ACCESS_QM in id_card.access))
+		if((ACCESS_COMMAND in id_card.access) || (ACCESS_QM in id_card.access))
 			requestonly = FALSE
 			buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
 			can_approve_requests = TRUE
 		else
 			requestonly = TRUE
 			can_approve_requests = FALSE
+		if(ACCESS_COMMAND in id_card.access)
+			// If buyer is a departmental budget, replaces "Cargo" with that budget - we're not using the cargo budget here
+			data["department"] = addtext(buyer.account_holder, " Requisitions")
 	else
 		requestonly = TRUE
 	if(buyer)

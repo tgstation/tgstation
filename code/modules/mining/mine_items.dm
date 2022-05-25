@@ -89,6 +89,30 @@
 		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
 		return
 
+	if(HAS_TRAIT(user, TRAIT_ILLITERATE))
+		to_chat(user, span_warning("You start mashing buttons at random!"))
+		if(do_after(user, 10 SECONDS, target = src))
+			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+			if(no_destination_swap)
+				if(M.mode == SHUTTLE_RECHARGING)
+					to_chat(usr, span_warning("Shuttle engines are not ready for use."))
+					return
+				if(M.mode != SHUTTLE_IDLE)
+					to_chat(usr, span_warning("Shuttle already in transit."))
+					return
+			var/destionation = M.getDockedId() == "mining_home" ? "mining_away" : "mining_home"
+			switch(SSshuttle.moveShuttle(shuttleId, destionation, 1))
+				if(0)
+					say("Shuttle departing. Please stand away from the doors.")
+					log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" towards \"[destionation]\", using [src].")
+					return TRUE
+				if(1)
+					to_chat(usr, span_warning("Invalid shuttle requested."))
+				else
+					to_chat(usr, span_warning("Unable to comply."))
+
+		return
+
 	return ..()
 
 /obj/machinery/computer/shuttle/mining/common

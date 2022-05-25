@@ -8,12 +8,12 @@
 	size = 10
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
-	required_access = list(ACCESS_HEADS, ACCESS_RND)
+	required_access = list(ACCESS_COMMAND, ACCESS_SCIENCE)
 	transfer_access = list(ACCESS_RESEARCH)
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
 	/// Access needed to lock/unlock the console
-	var/lock_access = ACCESS_RND
+	var/lock_access = ACCESS_SCIENCE
 	/// Determines if the console is locked, and consequently if actions can be performed with it
 	var/locked = FALSE
 	/// Used for compressing data sent to the UI via static_data as payload size is of concern

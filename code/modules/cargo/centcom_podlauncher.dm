@@ -28,7 +28,7 @@
 	var/static/list/ignored_atoms = typecacheof(list(null, /mob/dead, /obj/effect/landmark, /obj/docking_port, /obj/effect/particle_effect/sparks, /obj/effect/pod_landingzone, /obj/effect/hallucination/simple/supplypod_selector,  /obj/effect/hallucination/simple/dropoff_location))
 	var/turf/oldTurf //Keeps track of where the user was at if they use the "teleport to centcom" button, so they can go back
 	var/client/holder //client of whoever is using this datum
-	var/area/centcom/supplypod/loading/bay //What bay we're using to launch shit from.
+	var/area/centcom/central_command_areas/supplypod/loading/bay //What bay we're using to launch shit from.
 	var/bayNumber //Quick reference to what bay we're in. Usually set to the loading_id variable for the related area type
 	var/customDropoff = FALSE
 	var/picking_dropoff_turf = FALSE
@@ -68,9 +68,9 @@
 	else
 		var/mob/user_mob = user
 		holder = user_mob.client //if its a mob, assign the mob's client to holder
-	bay = locate(/area/centcom/supplypod/loading/one) in GLOB.sortedAreas //Locate the default bay (one) from the centcom map
+	bay = locate(/area/centcom/central_command_areas/supplypod/loading/one) in GLOB.sortedAreas //Locate the default bay (one) from the centcom map
 	bayNumber = bay.loading_id //Used as quick reference to what bay we're taking items from
-	var/area/pod_storage_area = locate(/area/centcom/supplypod/pod_storage) in GLOB.sortedAreas
+	var/area/pod_storage_area = locate(/area/centcom/central_command_areas/supplypod/pod_storage) in GLOB.sortedAreas
 	temp_pod = new(pick(get_area_turfs(pod_storage_area))) //Create a new temp_pod in the podStorage area on centcom (so users are free to look at it and change other variables if needed)
 	orderedArea = createOrderedArea(bay) //Order all the turfs in the selected bay (top left to bottom right) to a single list. Used for the "ordered" mode (launchChoice = 1)
 	selector = new(null, holder.mob)
@@ -655,15 +655,15 @@
 	preLaunch() //Fill acceptable turfs from orderedArea, then fill launchList from acceptableTurfs (see proc for more info)
 	refreshView()
 
-/area/centcom/supplypod/pod_storage/Initialize(mapload) //temp_pod holding area
+/area/centcom/central_command_areas/supplypod/pod_storage/Initialize(mapload) //temp_pod holding area
 	. = ..()
 	var/obj/imgbound = locate() in locate(200,SUPPLYPOD_X_OFFSET*-4.5, 1)
 	call(GLOB.podlauncher, "RegisterSignal")(imgbound, "ct[GLOB.podstyles[14][9]]", "[GLOB.podstyles[14][10]]dlauncher")
 
 /datum/centcom_podlauncher/proc/createOrderedArea(area/area_to_order) //This assumes the area passed in is a continuous square
 	if (isnull(area_to_order)) //If theres no supplypod bay mapped into centcom, throw an error
-		to_chat(holder.mob, "No /area/centcom/supplypod/loading/one (or /two or /three or /four) in the world! You can make one yourself (then refresh) for now, but yell at a mapper to fix this, today!")
-		CRASH("No /area/centcom/supplypod/loading/one (or /two or /three or /four) has been mapped into the centcom z-level!")
+		to_chat(holder.mob, "No /area/centcom/central_command_areas/supplypod/loading/one (or /two or /three or /four) in the world! You can make one yourself (then refresh) for now, but yell at a mapper to fix this, today!")
+		CRASH("No /area/centcom/central_command_areas/supplypod/loading/one (or /two or /three or /four) has been mapped into the centcom z-level!")
 	orderedArea = list()
 	if (length(area_to_order.contents)) //Go through the area passed into the proc, and figure out the top left and bottom right corners by calculating max and min values
 		var/startX = area_to_order.contents[1].x //Create the four values (we do it off a.contents[1] so they have some sort of arbitrary initial value. They should be overwritten in a few moments)
@@ -722,7 +722,7 @@
 		return
 	var/obj/structure/closet/supplypod/centcompod/toLaunch = DuplicateObject(temp_pod) //Duplicate the temp_pod (which we have been varediting or configuring with the UI) and store the result
 	toLaunch.update_appearance()//we update_appearance() here so that the door doesnt "flicker on" right after it lands
-	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/supplypod_temp_holding]
+	var/shippingLane = GLOB.areas_by_type[/area/centcom/central_command_areas/supplypod/supplypod_temp_holding]
 	toLaunch.forceMove(shippingLane)
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those
 		if(launchRandomItem)
