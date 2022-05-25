@@ -191,7 +191,7 @@
 "jR" = (
 /obj/machinery/door/poddoor/shutters/radiation{
 	id = "vault";
-	name = "secure containment vault";
+	name = "Secure Containment Vault";
 	resistance_flags = 64
 	},
 /turf/open/floor/engine,
