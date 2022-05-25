@@ -106,6 +106,9 @@
 		scar.victim = null
 		LAZYREMOVE(owner.all_scars, scar)
 
+	for(var/obj/item/organ/external/ext_organ as anything in external_organs)
+		ext_organ.transfer_to_limb(src, null) //Null is the second arg because the bodypart is being removed from it's owner.
+
 	var/mob/living/carbon/phantom_owner = set_owner(null) // so we can still refer to the guy who lost their limb after said limb forgets 'em
 
 	for(var/datum/surgery/surgery as anything in phantom_owner.surgeries) //if we had an ongoing surgery on that limb, we stop it.
@@ -201,6 +204,9 @@
 
 /obj/item/organ/proc/add_to_limb(obj/item/bodypart/bodypart)
 	forceMove(bodypart)
+
+/obj/item/organ/proc/remove_from_limb()
+	return
 
 /obj/item/organ/internal/brain/transfer_to_limb(obj/item/bodypart/head/head, mob/living/carbon/human/head_owner)
 	Remove(head_owner) //Changeling brain concerns are now handled in Remove
@@ -316,7 +322,7 @@
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
 		old_limb.attach_limb(limb_owner, TRUE)
 
-/obj/item/bodypart/head/replace_limb(mob/living/carbon/head_owner, special)
+/*/obj/item/bodypart/head/replace_limb(mob/living/carbon/head_owner, special)
 	if(!istype(head_owner))
 		return
 	var/obj/item/bodypart/head/head = head_owner.get_bodypart(body_zone)
@@ -324,6 +330,7 @@
 		return
 	if(head)
 		head.drop_limb(1)
+*/
 
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/new_limb_owner, special)
 	if(SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
@@ -357,7 +364,7 @@
 				break
 
 	for(var/obj/item/organ/limb_organ in contents)
-		limb_organ.Insert(new_limb_owner)
+		limb_organ.Insert(new_limb_owner, TRUE)
 
 	for(var/datum/wound/wound as anything in wounds)
 		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person

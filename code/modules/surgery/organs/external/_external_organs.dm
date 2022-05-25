@@ -87,30 +87,31 @@
 	if(external_bodytypes)
 		limb.synchronize_bodytypes(reciever)
 
-	inherit_color()
 	reciever.update_body_parts()
 
 /obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
-
 	if(ownerlimb)
-		ownerlimb.external_organs.Remove(src)
-		ownerlimb.contents.Remove(src)
-		if(external_bodytypes) //Happens after removal from contents, and before ownerlimb is null.
-			ownerlimb.synchronize_bodytypes(organ_owner)
-		ownerlimb = null
+		remove_from_limb()
 
-	if(slot)
-		organ_owner.external_organs_slot.Remove(slot)
-	organ_owner.external_organs.Remove(src)
-	organ_owner.update_body_parts()
+	if(organ_owner)
+		if(slot)
+			organ_owner.external_organs_slot.Remove(slot)
+		organ_owner.external_organs.Remove(src)
+		organ_owner.update_body_parts()
 
+///Transfers the organ to the limb, and to the limb's owner, if it has one.
 /obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
-	if(src in bodypart)
-		CRASH("External organ tried to enter a bodypart it was already in.")
 	if(owner)
 		Remove(owner, special = TRUE, moving = TRUE)
-	add_to_limb(bodypart)
+	else if(ownerlimb)
+		remove_from_limb()
+
+	if(bodypart_owner)
+		Insert(bodypart_owner)
+	else
+		add_to_limb(bodypart)
+
 
 /obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
 	forceMove(bodypart, check_dest = FALSE)
@@ -118,6 +119,14 @@
 	ownerlimb.contents |= src
 	ownerlimb.external_organs |= src
 	inherit_color()
+
+///Removes the organ from the limb. This proc assumes the organ_owner is null.
+/obj/item/organ/external/remove_from_limb()
+	ownerlimb.external_organs -= src
+	if(ownerlimb.owner && external_bodytypes)
+		ownerlimb.synchronize_bodytypes(ownerlimb.owner)
+	ownerlimb = null
+	moveToNullspace()
 
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
 /obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, physique)
