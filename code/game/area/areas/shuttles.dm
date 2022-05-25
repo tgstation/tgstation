@@ -239,7 +239,7 @@
 	name = "Tiny Freighter"
 
 // ----------- Arena Shuttle
-/area/shuttle_arena
+/area/shuttle/shuttle_arena
 	name = "arena"
 	has_gravity = STANDARD_GRAVITY
 	requires_power = FALSE

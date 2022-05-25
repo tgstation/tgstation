@@ -21,7 +21,7 @@
 	name = "captain PDA"
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#FFD55B"
-	insert_type = /obj/item/pen/fountain
+	insert_type = /obj/item/pen/fountain/captain
 
 /obj/item/modular_computer/tablet/pda/heads/captain/Initialize(mapload)
 	. = ..()
@@ -240,6 +240,7 @@
 	name = "quartermaster PDA"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D6B328#6506CA#927444"
+	insert_type = /obj/item/pen/survival
 	default_applications = list(
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/budgetorders,
