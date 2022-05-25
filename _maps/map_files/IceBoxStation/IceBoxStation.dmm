@@ -24163,13 +24163,6 @@
 /area/station/commons/locker)
 "hNz" = (
 /obj/machinery/requests_console/auto_name/directional/south,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/requests_console/directional/south{
-	department = "tech_storage";
-	name = "Tech Storage Requests Console"
-	},
 /turf/open/floor/plating,
 /area/station/engineering/storage/tech)
 "hNA" = (
