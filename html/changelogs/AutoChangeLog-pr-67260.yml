@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes: 
+  - bugfix: "One of Trams modular maintenance doors had its access removed, in favor of the already existing mapping helper."

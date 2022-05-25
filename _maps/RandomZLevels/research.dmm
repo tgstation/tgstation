@@ -969,7 +969,7 @@
 "eb" = (
 /obj/machinery/door/poddoor{
 	id = "cryopodg2";
-	name = "cryogenetic genetics blastdoor"
+	name = "Cryogenetic Blast Door"
 	},
 /turf/open/floor/iron/stairs,
 /area/awaymission/research/interior/genetics)
@@ -2021,7 +2021,7 @@
 "hK" = (
 /obj/machinery/door/poddoor{
 	id = "cryopodg1";
-	name = "cryogenetic genetics blastdoor"
+	name = "Cryogenetic Blast Door"
 	},
 /turf/open/floor/iron/stairs{
 	dir = 1
