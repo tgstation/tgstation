@@ -118,6 +118,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 /obj/item/circuit_component/light_switch/input_received(datum/port/input/port)
 	attached_switch?.set_lights(on_setting.value ? TRUE : FALSE)
-
-
-
