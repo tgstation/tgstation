@@ -1,5 +1,4 @@
 "a" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"b" = (/obj/modular_map_root/caves{key = "caves_lvl3segment3"; name = "lvl3segment3"},/turf/template_noop,/area/template_noop)
 "n" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
 "w" = (/turf/closed/indestructible/riveted,/area/template_noop)
 "x" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
@@ -45,5 +44,5 @@ NaxaaaaaaxxxxnnnnnaaTTTTTTTTTTTTTTTTTTTTTTTaaTTxxxxxxxxxxxxxxxxxxxxaaaxxxaaaaaaa
 NaxaaaaaxxxxxaaaaaaaaaaaaaaaaaTTTTTTTTaaaaaaaTaaaaaaxxxxxxxxaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaxaaxxxxaaaannnnnnnaaaaaaaaaaaaaN
 NaaaaaaaxxxxxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaannnnnnnnnaaaaaaaaaaaaN
 NaaaaaaaxxxxxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaN
-RRRRRRRRRRbRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 "}

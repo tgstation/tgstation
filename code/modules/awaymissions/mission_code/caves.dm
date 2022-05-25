@@ -1,6 +1,6 @@
 //Modular Map marker
 /obj/modular_map_root/caves
-	config_file = "strings/modular_maps/caves.toml"
+	config_file = "strings/modular_maps/Caves.toml"
 
 //Mech used by the clockwork miners
 /obj/vehicle/sealed/mecha/working/ripley/mk2/clockcult

@@ -1,0 +1,44 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/riveted/boss,
+/area/misc/space)
+"q" = (
+/obj/modular_map_connector,
+/turf/closed/indestructible/riveted/boss,
+/area/misc/space)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+q
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+"}
