@@ -164,7 +164,7 @@
 	objective.triangulation_locations[user_area.type] = FALSE
 	for(var/area/scan_area in objective.triangulation_locations)
 		if(objective.triangulation_locations[scan_area])
-			balloon_alert(user, "next scan in: [initial(scan_area.name)]")
+			say("Next scanning location is [initial(scan_area.name)]")
 			return
 
 	var/area/weakpoint_location = SStraitor.station_weakpoints[3]
