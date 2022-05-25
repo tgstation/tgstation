@@ -15,6 +15,10 @@
 		var/mob/living/simple_animal/hostile/retaliate/snake/bootsnake = new/mob/living/simple_animal/hostile/retaliate/snake(src)
 		occupants += bootsnake
 
+/obj/item/clothing/shoes/cowboy/Destroy()
+	for(var/mob/living//occupant in occupants)
+		occupant.forceMove(loc)
+	return ..()
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
