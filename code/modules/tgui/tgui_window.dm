@@ -132,7 +132,6 @@
 		inline_html = initial_inline_html,
 		inline_js = initial_inline_js,
 		inline_css = initial_inline_css)
-
 	for(var/datum/asset/asset in sent_assets)
 		send_asset(asset)
 
