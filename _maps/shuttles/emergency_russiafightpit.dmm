@@ -279,7 +279,7 @@
 "aZ" = (
 /obj/effect/decal/cleanable/shreds,
 /obj/machinery/door/window{
-	name = "fight pit"
+	name = "Fight Pit"
 	},
 /turf/open/floor/engine,
 /area/shuttle/escape)

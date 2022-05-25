@@ -612,7 +612,7 @@
 /obj/machinery/door/airlock/public/glass,
 /obj/machinery/door/poddoor{
 	id = "bigderelictcheckpoint";
-	name = "checkpoint security doors"
+	name = "Checkpoint Security Doors"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
