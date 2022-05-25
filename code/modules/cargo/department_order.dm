@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 			)
 			supply_data += list(target_group)
 		//skip packs we should not show, even if we should show the group
-		if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.DropPodOnly || pack.goody)
+		if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.drop_pod_only || pack.goody)
 			continue
 		//finally the pack data itself
 		target_group["packs"] += list(list(
@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	if(!pack)
 		say("Something went wrong!")
 		CRASH("requested supply pack id \"[id]\" not found!")
-	if(pack.hidden || pack.DropPodOnly || pack.special)
+	if(pack.hidden || pack.drop_pod_only || pack.special)
 		return
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"

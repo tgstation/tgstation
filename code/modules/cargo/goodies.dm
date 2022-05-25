@@ -167,3 +167,17 @@
 	desc = "A complete meal package for the terminally lazy. Contains one Ready-Donk meal."
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/food/ready_donk)
+
+/datum/supply_pack/goody/medipen_mutadone
+	name = "Emergency Mutadone Injector"
+	desc = "A single use autoinjector medipen for curing genetic defects. Useful for when you can't procure one from medbay."
+	cost = PAYCHECK_CREW * 2.5
+	contains = list(/obj/item/reagent_containers/hypospray/medipen/mutadone)
+
+/datum/supply_pack/goody/rapid_lighting_device
+	name = "Rapid Lighting Device (RLD)"
+	desc = "A device used to rapidly provide lighting sources to an area. Reload with iron, plasteel, glass or compressed matter cartridges."
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/construction/rld)
+
+
