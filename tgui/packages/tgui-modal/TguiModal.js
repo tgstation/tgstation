@@ -1,11 +1,13 @@
-import { Window } from 'tgui/layouts';
-import { Button } from 'tgui/components';
+import { Section, Input } from 'tgui/components';
+import { Window } from './components';
 
-export const TguiModal = () => {
+export const TguiModal = (props) => {
   return (
     <Window>
       <Window.Content>
-        <Button>Test</Button>
+        <Section fill>
+          <Input autoFocus fluid />
+        </Section>
       </Window.Content>
     </Window>
   );
