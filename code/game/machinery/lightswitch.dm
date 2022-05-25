@@ -43,19 +43,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		icon_state += "-nopower"
 		return ..()
 	icon_state += "[area.lightswitch ? "-on" : "-off"]"
-	if(area.fire)
-		icon_state += "-alarm"
-		return ..()
 	return ..()
 
 /obj/machinery/light_switch/update_overlays()
 	. = ..()
 	if(machine_stat & NOPOWER)
-		return ..()
-	var/emissive_icon = "[base_icon_state]-emissive[area.lightswitch ? "-on" : "-off"]"
-	if(area.fire)
-		emissive_icon += "-alarm"
-	. += emissive_appearance(icon, emissive_icon, alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]-emissive[area.lightswitch ? "-on" : "-off"]", alpha = src.alpha)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
@@ -63,7 +56,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		. += "It is unpowered."
 	else
 		. += "It is [area.lightswitch ? "on" : "off"]."
-
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
@@ -92,29 +84,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		return
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()
-
-// Area sensitivity is traditionally tied directly to power use, as an optimization
-// But since we want it for fire reacting, we disregard that
-/obj/machinery/light_switch/setup_area_power_relationship()
-	. = ..()
-	if(!.)
-		return
-	var/area/our_area = get_area(src)
-	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
-
-/obj/machinery/light_switch/on_enter_area(datum/source, area/area_to_register)
-	..()
-	RegisterSignal(area_to_register, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
-	handle_fire(area_to_register, area_to_register.fire)
-
-/obj/machinery/light_switch/on_exit_area(datum/source, area/area_to_unregister)
-	..()
-	UnregisterSignal(area_to_unregister, COMSIG_AREA_FIRE_CHANGED)
-
-/obj/machinery/light_switch/proc/handle_fire(area/source, new_fire)
-	SIGNAL_HANDLER
-	update_overlays()
-	update_icon_state()
 
 /obj/item/circuit_component/light_switch
 	display_name = "Light Switch"
