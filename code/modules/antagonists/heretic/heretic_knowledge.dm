@@ -290,6 +290,8 @@
  * Can be overriden to set or pass in additional vars of the status effect.
  */
 /datum/heretic_knowledge/mark/proc/create_mark(mob/living/source, mob/living/target)
+	if(target.stat == DEAD)
+		return
 	return target.apply_status_effect(mark_type)
 
 /**

@@ -19,7 +19,7 @@
 /obj/item/food/burger/plain/Initialize(mapload)
 	. = ..()
 	if(prob(1))
-		new/obj/effect/particle_effect/smoke(get_turf(src))
+		new/obj/effect/particle_effect/fluid/smoke(get_turf(src))
 		playsound(src, 'sound/effects/smoke.ogg', 50, TRUE)
 		visible_message(span_warning("Oh, ye gods! [src] is ruined! But what if...?"))
 		name = "steamed ham"
@@ -428,8 +428,8 @@
 
 /obj/item/food/burger/crazy/process(delta_time) // DIT EES HORRIBLE
 	if(DT_PROB(2.5, delta_time))
-		var/datum/effect_system/smoke_spread/bad/green/smoke = new
-		smoke.set_up(0, src)
+		var/datum/effect_system/fluid_spread/smoke/bad/green/smoke = new
+		smoke.set_up(0, location = src)
 		smoke.start()
 
 // empty burger you can customize

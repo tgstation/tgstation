@@ -12,22 +12,15 @@
 	var/zoom_out_amt = 5.5
 	var/zoom_amt = 10
 
-/obj/item/binoculars/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
 /obj/item/binoculars/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
 
 /obj/item/binoculars/Destroy()
 	listeningTo = null
 	return ..()
 
 /obj/item/binoculars/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_walk)
 	RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
 	listeningTo = user
@@ -50,8 +43,6 @@
 	attack_self(listeningTo) //Yes I have sinned, why do you ask?
 
 /obj/item/binoculars/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
 	if(listeningTo)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)

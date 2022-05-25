@@ -306,7 +306,7 @@
 /mob/living/simple_animal/hostile/construct/artificer/Initialize(mapload)
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
-	datahud.add_hud_to(src)
+	datahud.show_to(src)
 
 /mob/living/simple_animal/hostile/construct/artificer/Found(atom/A) //what have we found here?
 	if(isconstruct(A)) //is it a construct?

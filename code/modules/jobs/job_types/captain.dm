@@ -62,7 +62,7 @@
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/station_charter = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/captain
+	belt = /obj/item/modular_computer/tablet/pda/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/captain
@@ -89,7 +89,7 @@
 	var/list/job_changes = SSmapping.config.job_changes
 	if(!length(job_changes))
 		return
-	var/list/captain_changes = job_changes["captain"]
+	var/list/captain_changes = job_changes[JOB_CAPTAIN]
 	if(!length(captain_changes))
 		return
 	special_charter = captain_changes["special_charter"]

@@ -181,3 +181,13 @@
 	)
 	result = /mob/living/simple_animal/pet/cat/breadcat
 	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/frenchtoast
+	name = "Raw french toast"
+	reqs = list(
+		/obj/item/food/breadslice/plain = 1,
+		/obj/item/food/egg = 2,
+		/datum/reagent/consumable/milk = 5
+	)
+	result = /obj/item/food/raw_frenchtoast
+	subcategory = CAT_BREAD

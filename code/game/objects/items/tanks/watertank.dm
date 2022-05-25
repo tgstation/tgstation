@@ -324,12 +324,12 @@
 			balloon_alert(user, "too far!")
 			return
 		for(var/S in target)
-			if(istype(S, /obj/effect/particle_effect/foam/metal/resin) || istype(S, /obj/structure/foamedmetal/resin))
+			if(istype(S, /obj/effect/particle_effect/fluid/foam/metal/resin) || istype(S, /obj/structure/foamedmetal/resin))
 				balloon_alert(user, "already has resin!")
 				return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/particle_effect/foam/metal/resin/F = new (get_turf(target))
-			F.amount = 0
+			var/obj/effect/particle_effect/fluid/foam/metal/resin/foam = new (get_turf(target))
+			foam.group.target_size = 0
 			metal_synthesis_cooldown++
 			addtimer(CALLBACK(src, .proc/reduce_metal_synth_cooldown), 10 SECONDS)
 		else
@@ -363,8 +363,9 @@
 	anchored = TRUE
 
 /obj/effect/resin_container/proc/Smoke()
-	var/obj/effect/particle_effect/foam/metal/resin/S = new /obj/effect/particle_effect/foam/metal/resin(get_turf(loc))
-	S.amount = 4
+	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
+	foaming.set_up(4, location = src)
+	foaming.start()
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 

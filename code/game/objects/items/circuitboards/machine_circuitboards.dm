@@ -187,16 +187,22 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/port_gen/pacman
 	req_components = list(
-		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stack/cable_coil = 2,
-		/obj/item/stock_parts/capacitor = 1)
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/iron = 5
+	)
 	needs_anchored = FALSE
+	var/high_production_profile = FALSE
 
-/obj/item/circuitboard/machine/pacman/super
-	name = "SUPERPACMAN-type Generator (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/port_gen/pacman/super
+/obj/item/circuitboard/machine/pacman/examine(mob/user)
+	. = ..()
+	var/message = high_production_profile ? "high production - high consumption" : "low production - low consumption"
+	. += span_notice("It's set to [message].")
+	. += span_notice("You can switch the mode by using a screwdriver on [src].")
+
+/obj/item/circuitboard/machine/pacman/screwdriver_act(mob/living/user, obj/item/tool)
+	high_production_profile = !high_production_profile
+	var/message = high_production_profile ? "high production - high consumption" : "low production - low consumption"
+	to_chat(user, span_notice("You set the board for [message]"))
 
 /obj/item/circuitboard/machine/turbine_compressor
 	name = "Turbine - Inlet Compressor (Machine Board)"
@@ -226,6 +232,9 @@
 	name = "Departmental Protolathe - Engineering (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/protolathe/department/engineering
+
+/obj/item/circuitboard/machine/protolathe/department/engineering/no_tax
+	build_path = /obj/machinery/rnd/production/protolathe/department/engineering/no_tax
 
 /obj/item/circuitboard/machine/rtg
 	name = "RTG (Machine Board)"

@@ -265,7 +265,7 @@
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	hoodtype = /obj/item/clothing/head/hooded/hostile_environment
-	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -273,6 +273,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_flags = THICKMATERIAL
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
+	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/pickaxe)
 
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
@@ -294,13 +295,15 @@
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	clothing_flags = SNUG_FIT|THICKMATERIAL
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSMOUTH
 	actions_types = list()
 
 /obj/item/clothing/head/hooded/hostile_environment/Initialize(mapload)
@@ -722,7 +725,8 @@
 		if(1)
 			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities."))
 			consumer.dna.features = list("mcolor" = "#A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
-			consumer.eye_color = "#FEE5A3"
+			consumer.eye_color_left = "#FEE5A3"
+			consumer.eye_color_right = "#FEE5A3"
 			consumer.set_species(/datum/species/lizard)
 		if(2)
 			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))
@@ -1021,7 +1025,7 @@
 	targeted_turfs += target_turf
 	balloon_alert(user, "you aim at [target_turf]...")
 	new /obj/effect/temp_visual/telegraphing/thunderbolt(target_turf)
-	addtimer(CALLBACK(src, .proc/throw_thunderbolt, target_turf, power_boosted), 1.5 SECONDS)
+	addtimer(CALLBACK(src, .proc/throw_thunderbolt, target_turf, power_boosted, user), 1.5 SECONDS)
 	thunder_charges--
 	addtimer(CALLBACK(src, .proc/recharge), thunder_charge_time)
 	log_game("[key_name(user)] fired the staff of storms at [AREACOORD(target_turf)].")
@@ -1030,7 +1034,7 @@
 	thunder_charges = min(thunder_charges + 1, max_thunder_charges)
 	playsound(src, 'sound/magic/charge.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
-/obj/item/storm_staff/proc/throw_thunderbolt(turf/target, boosted)
+/obj/item/storm_staff/proc/throw_thunderbolt(turf/target, boosted, mob/user)
 	targeted_turfs -= target
 	new /obj/effect/temp_visual/thunderbolt(target)
 	var/list/affected_turfs = list(target)
@@ -1045,6 +1049,13 @@
 		for(var/mob/living/hit_mob in turf)
 			to_chat(hit_mob, span_userdanger("You've been struck by lightning!"))
 			hit_mob.electrocute_act(15 * (isanimal(hit_mob) ? 3 : 1) * (turf == target ? 2 : 1) * (boosted ? 2 : 1), src, flags = SHOCK_TESLA|SHOCK_NOSTUN)
+			if(!ishostile(hit_mob))
+				continue
+
+			var/mob/living/simple_animal/hostile/hit_hostile = hit_mob
+			if(hit_hostile.stat == CONSCIOUS && !hit_hostile.target && hit_hostile.AIStatus != AI_OFF && !hit_hostile.client) //Mimicks what would happen on a melee attack
+				hit_hostile.FindTarget(list(user), 1)
+
 		for(var/obj/hit_thing in turf)
 			hit_thing.take_damage(20, BURN, ENERGY, FALSE)
 	playsound(target, 'sound/magic/lightningbolt.ogg', 100, TRUE)

@@ -74,6 +74,8 @@
 	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
 
+	SEND_SIGNAL(src, COMSIG_CARBON_PRE_BREATHE)
+
 	var/datum/gas_mixture/environment
 	if(loc)
 		environment = loc.return_air()
@@ -81,7 +83,7 @@
 	var/datum/gas_mixture/breath
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby?.grab_state >= GRAB_KILL) || (lungs?.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 		else if(health <= crit_threshold)
@@ -426,123 +428,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	var/restingpwr = 0.5 + 2 * resting
 
-	//Dizziness
-	if(dizziness)
-		var/old_dizzy = dizziness
-		dizziness = max(dizziness - (restingpwr * delta_time), 0)
-
-		if(client)
-			//Want to be able to offset things by the time the animation should be "playing" at
-			var/time = world.time
-			var/delay = 0
-			var/pixel_x_diff = 0
-			var/pixel_y_diff = 0
-
-			var/amplitude = old_dizzy*(sin(old_dizzy * (time)) + 1) // This shit is annoying at high strengthvar/pixel_x_diff = 0
-			var/x_diff = amplitude * sin(old_dizzy * time)
-			var/y_diff = amplitude * cos(old_dizzy * time)
-			pixel_x_diff += x_diff
-			pixel_y_diff += y_diff
-			// Brief explanation. We're basically snapping between different pixel_x/ys instantly, with delays between
-			// Doing this with relative changes. This way we don't override any existing pixel_x/y values
-			// We use EASE_OUT here for similar reasons, we want to act at the end of the delay, not at its start
-			// Relative animations are weird, so we do actually need this
-			animate(client, pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
-			delay += 0.3 SECONDS // This counts as a 0.3 second wait, so we need to shift the sine wave by that much
-
-			x_diff = amplitude * sin(dizziness * (time + delay))
-			y_diff = amplitude * cos(dizziness * (time + delay))
-			pixel_x_diff += x_diff
-			pixel_y_diff += y_diff
-			animate(pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
-
-			// Now we reset back to our old pixel_x/y, since these animates are relative
-			animate(pixel_x = -pixel_x_diff, pixel_y = -pixel_y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
-
 	if(drowsyness)
 		adjust_drowsyness(-1 * restingpwr * delta_time)
 		blur_eyes(1 * delta_time)
 		if(DT_PROB(2.5, delta_time))
 			AdjustSleeping(10 SECONDS)
 
-	//Jitteriness
-	if(jitteriness)
-		do_jitter_animation(jitteriness)
-		jitteriness = max(jitteriness - (restingpwr * delta_time), 0)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "jittery", /datum/mood_event/jittery)
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
-
 	if(silent)
 		silent = max(silent - (0.5 * delta_time), 0)
 
 	if(hallucination)
 		handle_hallucinations(delta_time, times_fired)
-
-	if(drunkenness)
-		drunkenness = max(drunkenness - ((0.005 + (drunkenness * 0.02)) * delta_time), 0)
-		if(drunkenness >= 6)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
-			if(DT_PROB(16, delta_time))
-				adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/drunk)
-			jitteriness = max(jitteriness - (1.5 * delta_time), 0)
-			throw_alert(ALERT_DRUNK, /atom/movable/screen/alert/drunk)
-			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
-		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
-			clear_alert(ALERT_DRUNK)
-			sound_environment_override = SOUND_ENVIRONMENT_NONE
-
-		if(drunkenness >= 11)
-			var/datum/status_effect/speech/slurring/drunk/already_slurring = has_status_effect(/datum/status_effect/speech/slurring/drunk)
-			if(!already_slurring || already_slurring.duration - world.time <= 10 SECONDS)
-				adjust_timed_status_effect(1.2 SECONDS * delta_time, /datum/status_effect/speech/slurring/drunk)
-
-		if(mind && (is_scientist_job(mind.assigned_role) || is_research_director_job(mind.assigned_role)))
-			if(SSresearch.science_tech)
-				if(drunkenness >= 12.9 && drunkenness <= 13.8)
-					drunkenness = round(drunkenness, 0.01)
-					if(DT_PROB(2.5, delta_time))
-						say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
-				if(drunkenness > 26) // by this point you're into windows ME territory
-					if(DT_PROB(2.5, delta_time))
-						say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
-
-		if(drunkenness >= 41)
-			if(DT_PROB(16, delta_time))
-				add_confusion(2)
-			Dizzy(5 * delta_time)
-
-		if(drunkenness >= 51)
-			if(DT_PROB(1.5, delta_time))
-				add_confusion(15)
-				vomit() // vomiting clears toxloss, consider this a blessing
-			Dizzy(12.5 * delta_time)
-
-		if(drunkenness >= 61)
-			if(DT_PROB(30, delta_time))
-				blur_eyes(5)
-
-		if(drunkenness >= 71)
-			blur_eyes(2.5 * delta_time)
-
-		if(drunkenness >= 81)
-			adjustToxLoss(0.5 * delta_time)
-			if(!stat && DT_PROB(2.5, delta_time))
-				to_chat(src, span_warning("Maybe you should lie down for a bit..."))
-
-		if(drunkenness >= 91)
-			adjustToxLoss(0.5 * delta_time)
-			adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * delta_time)
-			if(DT_PROB(10, delta_time) && !stat)
-				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z)) //QoL mainly
-					to_chat(src, span_warning("You're so tired... but you can't miss that shuttle..."))
-				else
-					to_chat(src, span_warning("Just a quick nap..."))
-					Sleeping(900)
-
-		if(drunkenness >= 101)
-			adjustToxLoss(1 * delta_time) //Let's be honest you shouldn't be alive by now
 
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)

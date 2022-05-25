@@ -13,7 +13,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "aG" = (
-/obj/structure/sign/warning/coldtemp,
+/obj/structure/sign/warning/cold_temp,
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "ba" = (
@@ -256,7 +256,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "AX" = (
-/obj/structure/sign/warning/nosmoking/circle,
+/obj/structure/sign/warning/no_smoking/circle,
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "BZ" = (
@@ -511,7 +511,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/powered/mailroom)
 "Xa" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "XO" = (

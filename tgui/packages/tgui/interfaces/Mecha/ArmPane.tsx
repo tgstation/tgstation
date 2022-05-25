@@ -13,11 +13,12 @@ export const ArmPane=(props:{weapon:MechWeapon}, context) => {
   } = props.weapon;
   const {
     power_level,
+    weapons_safety,
   } = data;
   return (
     <Stack fill vertical>
-      <Stack.Item bold>
-        {name}
+      <Stack.Item bold color={weapons_safety ? "red" : ""}>
+        {weapons_safety ? "SAFETY OVERRIDE IN EFFECT" : name}
       </Stack.Item>
       <Stack.Item>
         <Stack>
@@ -62,7 +63,7 @@ export const ArmPane=(props:{weapon:MechWeapon}, context) => {
       <Stack.Item>
         <Snowflake weapon={props.weapon} />
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item color={weapons_safety ? "red" : ""}>
         {desc}
       </Stack.Item>
     </Stack>

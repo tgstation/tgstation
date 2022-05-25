@@ -7,11 +7,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "e" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "f" = (
 /turf/template_noop,
 /area/template_noop)
@@ -19,23 +19,23 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "j" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "o" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "q" = (
 /obj/item/clothing/head/cone{
 	pixel_y = -8
@@ -44,71 +44,71 @@
 /area/template_noop)
 "v" = (
 /turf/closed/wall/rust,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "z" = (
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "C" = (
 /turf/closed/wall,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "F" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/pickaxe/improvised,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "G" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/girder,
 /obj/item/stack/sheet/iron/five,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "H" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/clothing/glasses/welding,
 /obj/item/crowbar,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "J" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "L" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "M" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "O" = (
 /obj/item/stack/ore/glass,
 /obj/effect/spawner/random/decoration/glowstick,
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "R" = (
 /obj/item/stack/ore/glass,
 /turf/open/misc/asteroid,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "T" = (
 /turf/closed/wall/rock/porous,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "U" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "V" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "W" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/mecha_wreckage/ripley,
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 
 (1,1,1) = {"
 f

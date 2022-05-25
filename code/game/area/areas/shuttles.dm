@@ -10,6 +10,7 @@
 	always_unpowered = FALSE
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	area_flags = NO_ALERTS
+	icon = 'icons/area/areas_station.dmi'
 	icon_state = "shuttle"
 	flags_1 = CAN_BE_DIRTY_1
 	area_limited_icon_smoothing = /area/shuttle

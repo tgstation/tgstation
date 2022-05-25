@@ -67,7 +67,7 @@
 	if(!limb.current_gauze)
 		return ..()
 
-	var/list/msg = list("The cuts on [victim.p_their()] [limb.name] are wrapped with ")
+	var/list/msg = list("The cuts on [victim.p_their()] [limb.plaintext_zone] are wrapped with ")
 	// how much life we have left in these bandages
 	switch(limb.current_gauze.absorption_capacity)
 		if(0 to 1.25)
@@ -135,7 +135,7 @@
 		if(demotes_to)
 			replace_wound(demotes_to)
 		else
-			to_chat(victim, span_green("The cut on your [limb.name] has stopped bleeding!"))
+			to_chat(victim, span_green("The cut on your [limb.plaintext_zone] has stopped bleeding!"))
 			qdel(src)
 
 
@@ -188,13 +188,13 @@
 			continue
 		user.ForceContractDisease(iter_disease)
 
-	user.visible_message(span_notice("[user] begins licking the wounds on [victim]'s [limb.name]."), span_notice("You begin licking the wounds on [victim]'s [limb.name]..."), ignored_mobs=victim)
-	to_chat(victim, span_notice("[user] begins to lick the wounds on your [limb.name]."))
+	user.visible_message(span_notice("[user] begins licking the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You begin licking the wounds on [victim]'s [limb.plaintext_zone]..."), ignored_mobs=victim)
+	to_chat(victim, span_notice("[user] begins to lick the wounds on your [limb.plaintext_zone]."))
 	if(!do_after(user, base_treat_time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 
-	user.visible_message(span_notice("[user] licks the wounds on [victim]'s [limb.name]."), span_notice("You lick some of the wounds on [victim]'s [limb.name]"), ignored_mobs=victim)
-	to_chat(victim, span_green("[user] licks the wounds on your [limb.name]!"))
+	user.visible_message(span_notice("[user] licks the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You lick some of the wounds on [victim]'s [limb.plaintext_zone]"), ignored_mobs=victim)
+	to_chat(victim, span_green("[user] licks the wounds on your [limb.plaintext_zone]!"))
 	adjust_blood_flow(-0.5)
 
 	if(blood_flow > minimum_flow)
@@ -213,7 +213,7 @@
 /// If someone's putting a laser gun up to our cut to cauterize it
 /datum/wound/slash/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.25 : 1)
-	user.visible_message(span_warning("[user] begins aiming [lasgun] directly at [victim]'s [limb.name]..."), span_userdanger("You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.name]..."))
+	user.visible_message(span_warning("[user] begins aiming [lasgun] directly at [victim]'s [limb.plaintext_zone]..."), span_userdanger("You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
 	if(!do_after(user, base_treat_time  * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 	var/damage = lasgun.chambered.loaded_projectile.damage
@@ -222,7 +222,7 @@
 	if(!lasgun.process_fire(victim, victim, TRUE, null, limb.body_zone))
 		return
 	victim.emote("scream")
-	adjust_blood_flow(-damage / (5 * self_penalty_mult)) // 20 / 5 = 4 bloodflow removed, p good
+	blood_flow -= damage / (5 * self_penalty_mult) // 20 / 5 = 4 bloodflow removed, p good
 	victim.visible_message(span_warning("The cuts on [victim]'s [limb.name] scar over!"))
 
 /// If someone is using either a cautery tool or something with heat to cauterize this cut
@@ -230,7 +230,7 @@
 	var/improv_penalty_mult = (I.tool_behaviour == TOOL_CAUTERY ? 1 : 1.25) // 25% longer and less effective if you don't use a real cautery
 	var/self_penalty_mult = (user == victim ? 1.5 : 1) // 50% longer and less effective if you do it to yourself
 
-	user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.name] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]..."))
+	user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
 	if(!do_after(user, base_treat_time * self_penalty_mult * improv_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 
@@ -249,7 +249,7 @@
 /// If someone is using a suture to close this cut
 /datum/wound/slash/proc/suture(obj/item/stack/medical/suture/I, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.4 : 1)
-	user.visible_message(span_notice("[user] begins stitching [victim]'s [limb.name] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]..."))
+	user.visible_message(span_notice("[user] begins stitching [victim]'s [limb.plaintext_zone] with [I]..."), span_notice("You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
 
 	if(!do_after(user, base_treat_time * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return

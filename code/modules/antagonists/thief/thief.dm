@@ -55,18 +55,18 @@
 
 /datum/antagonist/thief/proc/create_hideout()
 	var/list/possible_hideout_locations = list(
-		/area/maintenance/space_hut/cabin,
-		/area/maintenance/space_hut/observatory,
-		/area/service/kitchen/abandoned,
-		/area/service/electronic_marketing_den,
-		/area/service/abandoned_gambling_den,
-		/area/service/abandoned_gambling_den/gaming,
-		/area/service/theater/abandoned,
-		/area/service/library/abandoned,
-		/area/service/hydroponics/garden/abandoned,
-		/area/medical/abandoned,
-		/area/science/research/abandoned,
-		/area/maintenance/department/crew_quarters/bar,
+		/area/station/maintenance/space_hut/cabin,
+		/area/station/maintenance/space_hut/observatory,
+		/area/station/service/kitchen/abandoned,
+		/area/station/service/electronic_marketing_den,
+		/area/station/service/abandoned_gambling_den,
+		/area/station/service/abandoned_gambling_den/gaming,
+		/area/station/service/theater/abandoned,
+		/area/station/service/library/abandoned,
+		/area/station/service/hydroponics/garden/abandoned,
+		/area/station/medical/abandoned,
+		/area/station/science/research/abandoned,
+		/area/station/maintenance/department/crew_quarters/bar,
 	)
 	//remove every hideout location that isn't on this map
 	possible_hideout_locations = special_list_filter(possible_hideout_locations, CALLBACK(src, .proc/filter_nonexistent_areas))
@@ -154,7 +154,7 @@
 	glasses = /obj/item/clothing/glasses/night
 	gloves = /obj/item/clothing/gloves/color/latex
 	back = /obj/item/storage/backpack/duffelbag/syndie
-	mask = /obj/item/clothing/mask/bandana/color/red
+	mask = /obj/item/clothing/mask/bandana/red
 
 /datum/outfit/thief/post_equip(mob/living/carbon/human/thief, visualsOnly=FALSE)
 	// This outfit is used by the assets SS, which is ran before the atoms SS

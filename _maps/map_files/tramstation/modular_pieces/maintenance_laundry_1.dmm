@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/wall,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "b" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/cone{
@@ -13,12 +13,12 @@
 /obj/item/clothing/head/cone,
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "c" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "d" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet,
@@ -28,18 +28,18 @@
 	amount = 10
 	},
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "t" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Storage";
@@ -48,12 +48,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "N" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "P" = (
 /turf/template_noop,
 /area/template_noop)
@@ -64,7 +64,7 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "T" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/dirt,
@@ -75,7 +75,7 @@
 /obj/item/clothing/head/hardhat,
 /obj/item/clothing/head/hardhat,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "U" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -84,7 +84,7 @@
 	},
 /obj/item/storage/crayons,
 /turf/open/floor/plating,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 
 (1,1,1) = {"
 a

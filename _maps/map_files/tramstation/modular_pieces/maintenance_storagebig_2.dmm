@@ -10,19 +10,19 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "i" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -32,7 +32,7 @@
 /obj/item/storage/toolbox/electrical,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -43,13 +43,13 @@
 /obj/structure/cable,
 /obj/modular_map_connector,
 /turf/open/floor/catwalk_floor,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "q" = (
-/obj/structure/sign/warning/nosmoking{
+/obj/structure/sign/warning/no_smoking{
 	pixel_y = 32
 	},
 /turf/template_noop,
@@ -60,7 +60,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "u" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -70,7 +70,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet,
@@ -78,7 +78,7 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "A" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -87,7 +87,7 @@
 	},
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "D" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -95,43 +95,43 @@
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "F" = (
 /turf/closed/wall,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "J" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "N" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "O" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "U" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "Y" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth_corner,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 "Z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/central)
+/area/station/maintenance/port/central)
 
 (1,1,1) = {"
 F

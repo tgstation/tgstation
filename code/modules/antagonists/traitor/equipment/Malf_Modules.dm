@@ -607,7 +607,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 			if(isspaceturf(victim_turf) && !victim_turf.Adjacent(found_intercom)) //Prevents getting honked in space
 				continue
 			if(honk_victim.soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 30, deafen_pwr = 60)) //Ear protection will prevent these effects
-				honk_victim.Jitter(60)
+				honk_victim.set_timed_status_effect(120 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 				to_chat(honk_victim, span_clown("HOOOOONK!"))
 
 /// Robotic Factory: Places a large machine that converts humans that go through it into cyborgs. Unlocking this ability removes shunting.

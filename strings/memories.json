@@ -195,7 +195,7 @@
 		"The borging of %PROTAGONIST."
 	],
 	"borged_starts":[
-		"%PROTAGONIST havign their brain put into a robot",
+		"%PROTAGONIST having their brain put into a robot",
 		"%PROTAGONIST getting turned into a bucket of bolts"
 	],
 	"borged_moods":[
@@ -418,5 +418,29 @@
 	"nuke_code_starts":[
 		"The number %NUKE_CODE written on a sticky note with the words \"FOR SYNDICATE EYES ONLY\" scrawled next to it.",
 		"A piece of paper with the number %NUKE_CODE being handed to %PROTAGONIST from a figure in a blood-red hardsuit."
+	],
+	"playing_cards_names":[
+		"The %CARDGAME of %PROTAGONIST with %PLAYERS."
+	],
+	"playing_cards_starts":[
+		"%PLAYERS are waiting for %PROTAGONIST to start the %CARDGAME",
+		"The %CARDGAME has been setup by %DEALER",
+		"%DEALER starts shuffling the deck for the %CARDGAME"
+	],
+	"playing_cards_moods":[
+		"%PROTAGONIST %MOOD as they hold the %HELD_CARD_ITEM for the %CARDGAME.",
+		"%PROTAGONIST %MOOD as they pickup the %HELD_CARD_ITEM.",
+		"%PROTAGONIST %MOOD as they put down the %HELD_CARD_ITEM."
+	],
+	"playing_52_pickup_names":[
+		"%PROTAGONIST tricking %DEUTERAGONIST into playing 52 pickup with %WHAT_BY."
+	],
+	"playing_52_pickup_starts":[
+		"%PROTAGONIST tosses the %WHAT_BY at %DEUTERAGONIST spilling cards all over the floor",
+		"A %WHAT_BY thrown by %PROTAGONIST splatters across %DEUTERAGONIST face"
+	],
+	"playing_52_pickup_moods":[
+		"%PROTAGONIST %MOOD as they taunt %DEUTERAGONIST.",
+		"%DEUTERAGONIST %MOOD as they shamefully pickup the cards."
 	]
 }

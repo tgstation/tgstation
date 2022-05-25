@@ -1,5 +1,6 @@
 /area/ai_monitored
 	name = "\improper AI Monitored Area"
+	icon = 'icons/area/areas_station.dmi'
 	var/list/obj/machinery/camera/motioncameras = list()
 	var/list/datum/weakref/motionTargets = list()
 	sound_environment = SOUND_ENVIRONMENT_ROOM

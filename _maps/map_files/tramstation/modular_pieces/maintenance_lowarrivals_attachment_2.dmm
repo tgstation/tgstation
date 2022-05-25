@@ -9,47 +9,47 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "q" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "G" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "H" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/tank,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "O" = (
 /turf/closed/wall,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "U" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "W" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/mopbucket,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 
 (1,1,1) = {"
 O

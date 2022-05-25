@@ -2169,7 +2169,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -2197,7 +2197,7 @@
 	c_tag = "Bunker entrance";
 	network = list("bunker1")
 	},
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -2222,7 +2222,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /obj/structure/cable,
@@ -2348,7 +2348,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = -32
 	},
 /obj/structure/cable,

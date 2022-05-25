@@ -148,7 +148,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "aX" = (
-/obj/structure/frame/computer,
+/obj/machinery/computer/terminal/derelict/security,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "aZ" = (
@@ -625,11 +625,11 @@
 /turf/closed/wall,
 /area/ruin/space/derelict/bridge)
 "dA" = (
-/obj/structure/sign/warning/electricshock,
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/singularity_engine)
 "dB" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/singularity_engine)
 "dC" = (
@@ -643,7 +643,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/gravity_generator)
 "dD" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	name = "ENGINEERING ACCESS"
 	},
 /turf/closed/wall/r_wall,
@@ -970,8 +970,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "fh" = (
-/obj/structure/table,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/computer/terminal/derelict/bridge{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "fj" = (
@@ -2203,7 +2205,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lp" = (
-/obj/structure/chair/stool/directional/west,
+/obj/structure/chair/stool/directional/east,
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/airless,
@@ -2942,6 +2944,12 @@
 /obj/item/stack/sheet/mineral/wood/fifty,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
+"rL" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/derelict/arrival)
 "sd" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron/airless,
@@ -2954,6 +2962,12 @@
 /obj/item/wallframe/airalarm,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
+"tv" = (
+/obj/machinery/computer/terminal/derelict/cargo{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/derelict/arrival)
 "tH" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/airless,
@@ -3335,6 +3349,10 @@
 "IF" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"IP" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary)
 "IQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 4
@@ -3619,6 +3637,10 @@
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
+"Ul" = (
+/obj/structure/chair/office,
+/turf/open/floor/iron,
+/area/ruin/space/derelict/arrival)
 "US" = (
 /obj/structure/bed{
 	dir = 4
@@ -3642,6 +3664,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/atmospherics)
+"Xb" = (
+/obj/structure/table,
+/obj/item/paper/crumpled,
+/obj/item/pen,
+/turf/open/floor/iron,
+/area/ruin/space/derelict/arrival)
 "Xq" = (
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/iron/airless{
@@ -6946,7 +6974,7 @@ lf
 lq
 lI
 lr
-sd
+IP
 go
 fZ
 hD
@@ -7059,7 +7087,7 @@ sd
 lr
 lr
 lr
-sd
+IP
 go
 fZ
 gn
@@ -12368,7 +12396,7 @@ hf
 hP
 hf
 hf
-hf
+Xb
 jJ
 IF
 Gf
@@ -12477,11 +12505,11 @@ hP
 hf
 hf
 gW
-jt
 hf
 hf
 hf
-hf
+Ul
+tv
 jJ
 IF
 aa
@@ -12594,7 +12622,7 @@ kV
 hf
 hP
 hf
-hf
+rL
 jJ
 IF
 aa

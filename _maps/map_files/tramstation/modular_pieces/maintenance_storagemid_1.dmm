@@ -9,7 +9,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "e" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/stack/ore/glass,
@@ -21,14 +21,14 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/clothing/head/hardhat,
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "l" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 8
 	},
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "o" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/sign/warning{
@@ -37,21 +37,21 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "p" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "u" = (
 /turf/closed/wall,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "y" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/three,
@@ -61,10 +61,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "z" = (
 /turf/closed/wall/rust,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "D" = (
 /obj/item/clothing/head/cone{
 	pixel_x = -9;
@@ -78,29 +78,29 @@
 /area/template_noop)
 "E" = (
 /turf/closed/wall/rock/porous,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "F" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "M" = (
 /obj/structure/barricade/wooden,
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "O" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "P" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "S" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "V" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12"
@@ -109,12 +109,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 "X" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/flashlight/flare,
 /turf/open/floor/plating,
-/area/maintenance/central/greater)
+/area/station/maintenance/central/greater)
 
 (1,1,1) = {"
 a

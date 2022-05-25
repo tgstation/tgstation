@@ -26,7 +26,7 @@
 /area/mine/explored)
 "n" = (
 /turf/closed/wall,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "p" = (
 /mob/living/simple_animal/hostile/lizard/space{
 	name = "Digs-The-Tunnels"
@@ -50,7 +50,7 @@
 "x" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "y" = (
 /obj/item/clothing/head/cone{
 	pixel_x = 9;
@@ -80,7 +80,7 @@
 "P" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "R" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12"
@@ -92,7 +92,7 @@
 "S" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/starboard/greater)
+/area/station/maintenance/starboard/greater)
 "V" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/misc/asteroid,

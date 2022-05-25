@@ -5,7 +5,7 @@
 	program_icon_state = "research"
 	extended_desc = "Connect to the internal science server in order to assist in station research efforts."
 	requires_ntnet = TRUE
-	size = 16
+	size = 10
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
 	required_access = list(ACCESS_HEADS, ACCESS_RND)

@@ -4,37 +4,37 @@
 /area/template_noop)
 "h" = (
 /turf/closed/wall,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "G" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "J" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "P" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "S" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "U" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "X" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 "Y" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12"
@@ -42,7 +42,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/modular_map_connector,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/station/maintenance/port/fore)
 
 (1,1,1) = {"
 h

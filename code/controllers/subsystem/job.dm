@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(job)
 		if(!job.config_check())
 			continue
 		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
-			testing("Removed [job.type] due to map config")
+			log_job_debug("Removed [job.title] due to map config")
 			continue
 		new_all_occupations += job
 		name_occupations[job.title] = job
@@ -729,7 +729,7 @@ SUBSYSTEM_DEF(job)
 
 ///Lands specified mob at a random spot in the hallways
 /datum/controller/subsystem/job/proc/DropLandAtRandomHallwayPoint(mob/living/living_mob)
-	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/hallway))
+	var/turf/spawn_turf = get_safe_random_station_turf(typesof(/area/station/hallway))
 
 	if(!spawn_turf)
 		SendToLateJoin(living_mob)

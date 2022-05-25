@@ -8,7 +8,7 @@
 	program_icon_state = "research"
 	tgui_id = "NtosScipaper"
 	program_icon = "paper-plane"
-	transfer_access = ACCESS_ORDNANCE
+	transfer_access = list(ACCESS_ORDNANCE)
 
 	var/datum/techweb/linked_techweb
 	/// Unpublished, temporary paper datum.

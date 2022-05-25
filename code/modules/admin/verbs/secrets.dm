@@ -64,7 +64,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(GLOB.admin_datums)
 				for(var/ckey in GLOB.admin_datums)
 					var/datum/admins/D = GLOB.admin_datums[ckey]
-					dat += "[ckey] - [D.rank.name]<br>"
+					dat += "[ckey] - [D.rank_names()]<br>"
 				holder << browse(dat, "window=showadmins;size=600x500")
 		//Buttons for debug.
 		if("maint_access_engiebrig")
@@ -332,7 +332,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Egalitarian Station"))
 			for(var/obj/machinery/door/airlock/W in GLOB.machines)
-				if(is_station_level(W.z) && !istype(get_area(W), /area/command) && !istype(get_area(W), /area/commons) && !istype(get_area(W), /area/service) && !istype(get_area(W), /area/command/heads_quarters) && !istype(get_area(W), /area/security/prison))
+				if(is_station_level(W.z) && !istype(get_area(W), /area/station/command) && !istype(get_area(W), /area/station/commons) && !istype(get_area(W), /area/station/service) && !istype(get_area(W), /area/station/command/heads_quarters) && !istype(get_area(W), /area/station/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, SSstation.announcer.get_rand_report_sound())

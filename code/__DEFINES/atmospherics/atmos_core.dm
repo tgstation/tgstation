@@ -179,4 +179,6 @@
 #define KILL_EXCITED 3
 
 /// How many maximum iterations do we allow the Newton-Raphson approximation for gas pressure to do.
-#define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 10
+#define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 20
+/// We deal with big numbers and a lot of math, things are bound to get imprecise. Take this traveller.
+#define ATMOS_PRESSURE_ERROR_TOLERANCE 0.01

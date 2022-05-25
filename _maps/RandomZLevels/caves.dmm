@@ -518,7 +518,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "cK" = (
-/obj/structure/sign/warning/securearea{
+/obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'HOLY SHIT SWAGMAN WHAT ARE YOU DOING'.";
 	name = "\improper HOLY SHIT SWAGMAN WHAT ARE YOU DOING"
 	},
@@ -1120,7 +1120,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fL" = (
-/obj/structure/sign/departments/examroom{
+/obj/structure/sign/departments/maint{
 	pixel_y = 32
 	},
 /turf/open/floor/iron,

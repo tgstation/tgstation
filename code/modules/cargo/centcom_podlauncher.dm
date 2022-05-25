@@ -192,7 +192,7 @@
 			. = TRUE
 		if("buildMode")
 			var/mob/holder_mob = holder.mob
-			if (holder_mob && (holder.holder?.rank?.rights & R_BUILD))
+			if (holder_mob && (holder.holder?.rank_flags() & R_BUILD))
 				togglebuildmode(holder_mob)
 				SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Build Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 			. = TRUE

@@ -75,3 +75,8 @@ export const feature_vampire_status: Feature<string> = {
   name: "Vampire status",
   component: FeatureDropdownInput,
 };
+
+export const heterochromatic: Feature<string> = {
+  name: "Heterochromatic (Right Eye) color",
+  component: FeatureColorInput,
+};

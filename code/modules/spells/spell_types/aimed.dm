@@ -125,7 +125,7 @@
 	invocation_type = INVOCATION_SHOUT
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
-	projectile_type = /obj/projectile/magic/aoe/fireball
+	projectile_type = /obj/projectile/magic/fireball
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
 	sound = 'sound/magic/fireball.ogg'

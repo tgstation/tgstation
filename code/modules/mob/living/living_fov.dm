@@ -45,14 +45,7 @@
 		. = TRUE
 
 	// Handling nearsightnedness
-	if(. && HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		//Checking if our dude really is suffering from nearsightness! (very nice nearsightness code)
-		if(iscarbon(src))
-			var/mob/living/carbon/carbon_me = src
-			if(carbon_me.glasses)
-				var/obj/item/clothing/glasses/glass = carbon_me.glasses
-				if(glass.vision_correction)
-					return
+	if(. && is_nearsighted())					
 		if((rel_x >= NEARSIGHTNESS_FOV_BLINDNESS || rel_x <= -NEARSIGHTNESS_FOV_BLINDNESS) || (rel_y >= NEARSIGHTNESS_FOV_BLINDNESS || rel_y <= -NEARSIGHTNESS_FOV_BLINDNESS))
 			return FALSE
 

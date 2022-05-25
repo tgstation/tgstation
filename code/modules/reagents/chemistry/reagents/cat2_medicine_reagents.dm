@@ -221,7 +221,7 @@
 		return
 
 	exposed_mob.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
-	exposed_mob.adjust_fire_stacks(-reac_volume / 2)
+	exposed_mob.adjust_fire_stacks(reac_volume / -2)
 	if(reac_volume >= metabolization_rate)
 		exposed_mob.extinguish_mob()
 
@@ -535,8 +535,8 @@
 
 		H.adjustOrganLoss(ORGAN_SLOT_HEART, max(volume/10, 1) * REM * delta_time) // your heart is barely keeping up!
 
-		H.Jitter(rand(0, 2) * REM * delta_time)
-		H.Dizzy(rand(0, 2) * REM * delta_time)
+		H.set_timed_status_effect(rand(0 SECONDS, 4 SECONDS) * REM * delta_time, /datum/status_effect/jitter, only_if_higher = TRUE)
+		H.set_timed_status_effect(rand(0 SECONDS, 4 SECONDS) * REM * delta_time, /datum/status_effect/dizziness, only_if_higher = TRUE)
 
 		if(DT_PROB(18, delta_time))
 			to_chat(H,span_danger("Your body is trying to give up, but your heart is still beating!"))

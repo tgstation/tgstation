@@ -35,6 +35,7 @@
 /obj/machinery/atmospherics/components/binary/tank_compressor/examine()
 	. = ..()
 	. += "This one is rated for up to [TANK_COMPRESSOR_PRESSURE_LIMIT] kPa."
+	. += "Can be opened with a screwdriver and rotated with a wrench. The green port is the input, the red one is the output."
 
 /// Stores the record of the gas data for a significant enough tank leak
 /datum/data/compressor_record
@@ -84,43 +85,16 @@
 		return FALSE
 	if(!default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-open", tool))
 		return FALSE
+	change_nodes_connection(panel_open)
 	update_appearance()
 	return TRUE
-	
+
 /obj/machinery/atmospherics/components/binary/tank_compressor/crowbar_act(mob/living/user, obj/item/tool)
 	if(active || inserted_tank)
 		return FALSE
 	if(!default_deconstruction_crowbar(tool))
 		return FALSE
 	return TRUE
-
-/obj/machinery/atmospherics/components/binary/tank_compressor/default_change_direction_wrench(mob/user, obj/item/wrench)
-	. = ..()
-	if(!.)
-		return
-
-	// Disconnect our partner.
-	if(nodes[1])
-		nodes[1].disconnect(src)
-		nodes[1] = null
-		if(parents[1])
-			nullify_pipenet(parents[1])
-	if(nodes[2])
-		nodes[2].disconnect(src)
-		nodes[2] = null
-		if(parents[2])
-			nullify_pipenet(parents[2])
-	set_init_directions()
-	// Connect to a new one.
-	atmos_init()
-	if(nodes[1])
-		nodes[1].atmos_init()
-		nodes[1].add_member(src)
-	if(nodes[2])
-		nodes[2].atmos_init()
-		nodes[2].add_member(src)
-	SSair.add_to_rebuild_queue(src)
-	update_appearance()
 
 /// Glorified volume pump.
 /obj/machinery/atmospherics/components/binary/tank_compressor/process_atmos()
@@ -172,7 +146,7 @@
 	return COMSIG_CANCEL_EXPLOSION
 
 /**
- * Everytime a tank is destroyed or a new tank is inserted, our buffer is flushed. 
+ * Everytime a tank is destroyed or a new tank is inserted, our buffer is flushed.
  * Mole requirements in experiments are tracked by buffer data.
  */
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/flush_buffer()
@@ -194,7 +168,7 @@
 	new_record.timestamp = station_time_timestamp()
 	for(var/gas_path in leaked_gas_buffer.gases)
 		new_record.gas_data[gas_path] = leaked_gas_buffer.gases[gas_path][MOLES]
-	
+
 	compressor_record += new_record
 	record_number += 1
 	say("Buffer data stored.")
@@ -207,7 +181,7 @@
 		if(experiment.required_gas in gas_data)
 			if(gas_data[experiment.required_gas] > MINIMUM_MOLE_COUNT)
 				passed_experiments += list(experiment.type = gas_data[experiment.required_gas])
-	
+
 	return passed_experiments
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/print(mob/user, datum/data/compressor_record/record)
@@ -229,7 +203,7 @@
 	if(!inserted_tank)
 		return FALSE
 	var/datum/gas_mixture/tank_air = inserted_tank.return_air()
-	if(!tank_air.return_pressure() >= PUMP_MAX_PRESSURE)
+	if(tank_air.return_pressure() >= (PUMP_MAX_PRESSURE + ONE_ATMOSPHERE))
 		return FALSE
 	flush_buffer()
 	if(user)
@@ -280,7 +254,7 @@
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/update_overlays()
 	. = ..()
-	. += get_pipe_image(icon, "[base_icon_state]-pipe", dir, COLOR_BLUE, piping_layer)
+	. += get_pipe_image(icon, "[base_icon_state]-pipe", dir, COLOR_VIBRANT_LIME, piping_layer)
 	. += get_pipe_image(icon, "[base_icon_state]-pipe", turn(dir, 180), COLOR_RED, piping_layer)
 	if(!istype(inserted_tank))
 		. += mutable_appearance(icon, "[base_icon_state]-doors",)
@@ -327,7 +301,7 @@
 	"maxTransfer" = TANK_COMPRESSOR_MAX_TRANSFER_RATE,
 	"leakPressure" = round(TANK_LEAK_PRESSURE),
 	"fragmentPressure" = round(TANK_FRAGMENT_PRESSURE),
-	"ejectPressure" = PUMP_MAX_PRESSURE
+	"ejectPressure" = PUMP_MAX_PRESSURE + ONE_ATMOSPHERE,
 	)
 	return data
 

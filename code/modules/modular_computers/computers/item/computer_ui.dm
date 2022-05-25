@@ -66,7 +66,6 @@
 	data["disk"] = null
 
 	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-	var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
 	data["cardholder"] = FALSE
 
 	if(cardholder)
@@ -87,20 +86,9 @@
 			IDJob = cardholder.current_job,
 		)
 
-	if(ssd)
-		data["disk"] = ssd
-		data["disk_name"] = ssd.name
-
-		for(var/datum/computer_file/program/prog in ssd.stored_files)
-			var/running = FALSE
-			if(prog in idle_threads)
-				running = TRUE
-
-			data["disk_programs"] += list(list("name" = prog.filename, "desc" = prog.filedesc, "running" = running, "icon" = prog.program_icon, "alert" = prog.alert_pending))
-
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
-		data["removable_media"] += "removable storage disk"
+		data["removable_media"] += "Eject Disk"
 	var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
 	if(intelliholder?.stored_card)
 		data["removable_media"] += "intelliCard"
@@ -120,7 +108,7 @@
 	data["has_light"] = has_light
 	data["light_on"] = light_on
 	data["comp_light_color"] = comp_light_color
-	data["pai"] = pai
+	data["pai"] = inserted_pai
 	return data
 
 
@@ -140,7 +128,7 @@
 			return TRUE
 		if("PC_minimize")
 			var/mob/user = usr
-			if(!active_program || !all_components[MC_CPU])
+			if(!active_program)
 				return
 
 			idle_threads.Add(active_program)
@@ -168,13 +156,10 @@
 			var/prog = params["name"]
 			var/is_disk = params["is_disk"]
 			var/datum/computer_file/program/P = null
-			var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
 			var/mob/user = usr
 
 			if(hard_drive && !is_disk)
 				P = hard_drive.find_file_by_name(prog)
-			if(ssd && is_disk)
-				P = ssd.find_file_by_name(prog)
 
 			if(!P || !istype(P)) // Program not found or it's not executable program.
 				to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
@@ -194,9 +179,7 @@
 				update_appearance()
 				return
 
-			var/obj/item/computer_hardware/processor_unit/PU = all_components[MC_CPU]
-
-			if(idle_threads.len > PU.max_idle_programs)
+			if(idle_threads.len > max_idle_programs)
 				to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
 				return
 
@@ -228,19 +211,12 @@
 			var/param = params["name"]
 			var/mob/user = usr
 			switch(param)
-				if("removable storage disk")
+				if("Eject Disk")
 					var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
 					if(!portable_drive)
 						return
 					if(uninstall_component(portable_drive, usr))
 						user.put_in_hands(portable_drive)
-						playsound(src, 'sound/machines/card_slide.ogg', 50)
-				if("job disk")
-					var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
-					if(!ssd)
-						return
-					if(uninstall_component(ssd, usr))
-						user.put_in_hands(ssd)
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("intelliCard")
 					var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
@@ -262,26 +238,24 @@
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 		if("PC_Imprint_ID")
 			var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-			var/obj/item/computer_hardware/identifier/id_hardware = all_components[MC_IDENTIFY]
 			if(!cardholder)
 				return
 
 			saved_identification = cardholder.current_identification
 			saved_job = cardholder.current_job
 
-			if(id_hardware)
-				id_hardware.UpdateDisplay()
+			UpdateDisplay()
 
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 		if("PC_Pai_Interact")
 			switch(params["option"])
 				if("eject")
-					usr.put_in_hands(pai)
-					pai.slotted = FALSE
-					pai = null
-					to_chat(usr, span_notice("You remove the pAI from the [name]."))
+					usr.put_in_hands(inserted_pai)
+					to_chat(usr, span_notice("You remove [inserted_pai] from the [name]."))
+					inserted_pai.slotted = FALSE
+					inserted_pai = null
 				if("interact")
-					pai.attack_self(usr)
+					inserted_pai.attack_self(usr)
 			return UI_UPDATE
 		else
 			return

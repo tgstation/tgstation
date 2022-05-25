@@ -422,7 +422,8 @@
 #define MAX_REVIVE_FIRE_DAMAGE 180
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
-#define HUMAN_FIRE_STACK_ICON_NUM 3
+// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
+#define MOB_BIG_FIRE_STACK_THRESHOLD 3
 
 #define GRAB_PIXEL_SHIFT_PASSIVE 6
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12

@@ -36,6 +36,9 @@
 	///Does this organ use it's own color instead of bodypart/var/draw_color?
 	var/overrides_color = FALSE
 
+	///Does this organ have any bodytypes to pass to it's ownerlimb?
+	var/external_bodytypes = NONE
+
 /**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
 * I'm sorry
@@ -57,6 +60,8 @@
 	. = ..()
 
 	limb.contents.Add(src)
+	if(external_bodytypes)
+		limb.synchronize_bodytypes(reciever)
 
 	reciever.update_body_parts()
 
@@ -66,6 +71,8 @@
 	if(ownerlimb)
 		ownerlimb.external_organs.Remove(src)
 		ownerlimb.contents.Remove(src)
+		if(external_bodytypes) //Happens after removal from contents, and before ownerlimb is null.
+			ownerlimb.synchronize_bodytypes(organ_owner)
 		ownerlimb = null
 
 	organ_owner.update_body_parts()
@@ -197,6 +204,7 @@
 
 	feature_key = "snout"
 	preference = "feature_lizard_snout"
+	external_bodytypes = BODYTYPE_SNOUTED
 
 	dna_block = DNA_SNOUT_BLOCK
 

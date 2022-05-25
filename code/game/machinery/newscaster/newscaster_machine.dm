@@ -14,6 +14,8 @@
 	integrity_failure = 0.25
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
+	///Name of the logged in user.
+	var/newscaster_username
 	///How much paper is contained within the newscaster?
 	var/paper_remaining = 0
 
@@ -51,6 +53,9 @@
 	///Text of the currently written bounty
 	var/bounty_text = ""
 
+/obj/machinery/newscaster/pai/ui_state(mob/user)
+	return GLOB.reverse_contained_state
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 /obj/machinery/newscaster/Initialize(mapload, ndir, building)
@@ -66,6 +71,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	current_image = null
 	active_request = null
 	current_user = null
+	newscaster_username = null
 	return ..()
 
 /obj/machinery/newscaster/update_appearance(updates=ALL)
@@ -110,17 +116,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	alert = FALSE //We're checking our messages!
 	update_icon()
 
-
 /obj/machinery/newscaster/ui_data(mob/user)
 	var/list/data = list()
 	var/list/message_list = list()
 
 	//Code displaying name and Job Information, taken from the player mob's ID card if one exists.
 	var/obj/item/card/id/card
-	if(isliving(user))
+	if(issilicon(user))
+		newscaster_username = user.name
+	else if(isliving(user))
 		var/mob/living/living_user = user
 		card = living_user.get_idcard(hand_first = TRUE)
-	if(card?.registered_account)
+		newscaster_username = card?.registered_account.account_holder
+
+	if(card)
 		current_user = card.registered_account
 		data["user"] = list()
 		data["user"]["name"] = card.registered_account.account_holder
@@ -130,6 +139,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		else
 			data["user"]["job"] = "No Job"
 			data["user"]["department"] = "No Department"
+	else if(issilicon(user))
+		var/mob/living/silicon/silicon_user = user
+		data["user"] = list()
+		data["user"]["name"] = silicon_user.name
+		data["user"]["job"] = silicon_user.job
+		data["user"]["department"] = "N/A"
 	else
 		data["user"] = list()
 		data["user"]["name"] = user.name
@@ -346,7 +361,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			current_channel.toggle_censor_D_class()
 
 		if("startComment")
-			if(!current_user)
+			if(!newscaster_username)
 				creating_comment = FALSE
 				return TRUE
 			creating_comment = TRUE
@@ -392,7 +407,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if("submitWantedIssue")
 			if(!crime_description || !criminal_name)
 				return TRUE
-			GLOB.news_network.submit_wanted(criminal_name, crime_description, current_user?.account_holder, current_image, adminMsg = FALSE, newMessage = TRUE)
+			GLOB.news_network.submit_wanted(criminal_name, crime_description, newscaster_username, current_image, adminMsg = FALSE, newMessage = TRUE)
 			current_image = null
 			return TRUE
 
@@ -419,8 +434,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("clear")
-			if(current_user)
+			if(current_user || newscaster_username)
 				current_user = null
+				newscaster_username = null
 				say("Account Reset.")
 				return TRUE
 
@@ -619,7 +635,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return TRUE
 	var/choice = tgui_alert(usr, "Please confirm feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 	if(choice == "Confirm")
-		GLOB.news_network.create_feed_channel(channel_name, current_user.account_holder, channel_desc, locked = channel_locked)
+		GLOB.news_network.create_feed_channel(channel_name, newscaster_username, channel_desc, locked = channel_locked)
 		SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
 	creating_channel = FALSE
 	update_static_data(usr)
@@ -631,15 +647,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!comment_text)
 		creating_comment = FALSE
 		return TRUE
-	if(!current_user)
+	if(!newscaster_username)
 		creating_comment = FALSE
 		return TRUE
 	var/datum/feed_comment/new_feed_comment = new/datum/feed_comment
-	new_feed_comment.author = current_user.account_holder
+	new_feed_comment.author = newscaster_username
 	new_feed_comment.body = comment_text
 	new_feed_comment.time_stamp = station_time_timestamp()
 	current_message.comments += new_feed_comment
-	usr.log_message("(as [current_user.account_holder]) commented on message [current_message.return_body(-1)] -- [current_message.body]", LOG_COMMENT)
+	usr.log_message("(as [newscaster_username]) commented on message [current_message.return_body(-1)] -- [current_message.body]", LOG_COMMENT)
 	creating_comment = FALSE
 
 /**
@@ -655,7 +671,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			existing_authors += GLOB.news_network.redacted_text
 		else
 			existing_authors += iterated_feed_channel.author
-	if(!current_user?.account_holder || current_user.account_holder == "Unknown" || (current_user.account_holder in existing_authors))
+	if(!newscaster_username || (newscaster_username in existing_authors))
 		creating_channel = FALSE
 		tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
 		return TRUE
@@ -677,7 +693,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return TRUE
 	if(temp_message)
 		feed_channel_message = temp_message
-	GLOB.news_network.submit_article("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", current_user?.account_holder, current_channel.channel_name, send_photo_data(), adminMessage = FALSE, allow_comments = TRUE)
+	GLOB.news_network.submit_article("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", newscaster_username, current_channel.channel_name, send_photo_data(), adminMessage = FALSE, allow_comments = TRUE)
 	SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 	feed_channel_message = ""
 	current_image = null
@@ -716,7 +732,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!active_request || !current_user)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 		return TRUE
-	if(active_request?.owner != current_user?.account_holder)
+	if(active_request?.owner != current_user.account_holder)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 		return TRUE
 	say("Deleted current request.")
@@ -745,7 +761,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  */
 /obj/machinery/newscaster/proc/apply_to_bounty()
 	if(!current_user)
-		say("Please equip a valid ID first.")
+		say("No ID detected.")
 		return TRUE
 	if(current_user.account_holder == active_request.owner)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)

@@ -1,12 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/wall,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/girder,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
@@ -14,11 +14,11 @@
 /obj/item/crowbar,
 /obj/item/screwdriver,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "H" = (
 /obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
@@ -26,7 +26,7 @@
 	req_one_access_txt = "12"
 	},
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "I" = (
 /turf/template_noop,
 /area/template_noop)
@@ -37,12 +37,12 @@
 /obj/item/flashlight,
 /obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 "Z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
+/area/station/maintenance/port/aft)
 
 (1,1,1) = {"
 I

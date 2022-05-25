@@ -68,6 +68,20 @@
 		//handles temperature increase and gases made by the crystal
 		temperature_gas_production(env, removed)
 
+	if(check_cascade_requirements(anomaly_event))
+		cascade_initiated = TRUE
+		if(!warp)
+			warp = new(src)
+			vis_contents += warp
+		animate(warp, time = 1, transform = matrix().Scale(0.5,0.5))
+		animate(time = 9, transform = matrix())
+
+	else
+		if(warp)
+			vis_contents -= warp
+			warp = null
+		cascade_initiated = FALSE
+
 	//handles hallucinations and the presence of a psychiatrist
 	psychological_examination()
 
@@ -85,6 +99,9 @@
 
 	//Tells the engi team to get their butt in gear
 	handle_emergency_alerts()
+
+	if(damage == 0 && has_destabilizing_crystal)
+		has_destabilizing_crystal = FALSE
 
 	return TRUE
 
@@ -109,6 +126,15 @@
 	last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 
 /obj/machinery/power/supermatter_crystal/proc/deal_damage(datum/gas_mixture/removed)
+	var/has_holes = FALSE
+	//Check for holes in the SM inner chamber
+	for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
+		if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
+			damage += clamp((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
+			power += 250
+			has_holes = TRUE
+			break
+
 	//Due to DAMAGE_INCREASE_MULTIPLIER, we only deal one 4th of the damage the statements otherwise would cause
 	//((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 10)) * some number between 0.25 and knock your socks off / 150) * 0.25
 	//Heat and mols account for each other, a lot of hot mols are more damaging then a few
@@ -121,25 +147,11 @@
 
 	//There might be a way to integrate healing and hurting via heat
 	//healing damage
-	if(combined_gas < MOLE_PENALTY_THRESHOLD)
+	if(combined_gas < MOLE_PENALTY_THRESHOLD && !has_holes)
 		//Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psycologists increase this temp min by up to 45
 		damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
-	//Check for holes in the SM inner chamber
-	for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
-		if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
-			var/integrity = get_integrity_percent()
-			if(integrity < 10)
-				damage += clamp((power * 0.0005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
-			else if(integrity < 25)
-				damage += clamp((power * 0.0009) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
-			else if(integrity < 45)
-				damage += clamp((power * 0.005) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
-			else if(integrity < 75)
-				damage += clamp((power * 0.002) * DAMAGE_INCREASE_MULTIPLIER, 0, MAX_SPACE_EXPOSURE_DAMAGE)
-			break
 	//caps damage rate
-
 	//Takes the lower number between archived damage + (1.8) and damage
 	//This means we can only deal 1.8 damage per function call
 	damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
@@ -267,13 +279,16 @@
 		var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
 		var/pressure_multiplier = max((1 / ((env.return_pressure() ** pressure_bonus_curve_angle) + 1) * pressure_bonus_derived_steepness) + pressure_bonus_derived_constant, 1)
 		var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
+		hue_angle_shift = clamp(903 * log(10, (power + 8000)) - 3590, -50, 240)
+		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
 			zap_str = 2.5 * power * power_multiplier * pressure_multiplier * co2_power_increase,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
 			zap_cutoff = 300,
-			power_level = power
+			power_level = power,
+			color = zap_color,
 		)
 		last_power_zap = world.time
 
@@ -316,7 +331,7 @@
 			psy_overlay = TRUE
 
 		// If they are immune to supermatter hallucinations.
-		if (HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_MADNESS_IMMUNE) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_MADNESS_IMMUNE)))
+		if (HAS_TRAIT(seen_by_sm, TRAIT_MADNESS_IMMUNE) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_MADNESS_IMMUNE)))
 			continue
 
 		// Blind people don't get supermatter hallucinations.
@@ -370,6 +385,8 @@
 
 	if(prob(5))
 		supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
+	if(prob(5))
+		supermatter_anomaly_gen(src, HALLUCINATION_ANOMALY, rand(5, 10))
 	if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
 		supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))
 	if((power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2)) || (prob(0.3) && power > POWER_PENALTY_THRESHOLD))
@@ -408,6 +425,20 @@
 
 		if(combined_gas > MOLE_PENALTY_THRESHOLD)
 			radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel)
+
+		if(check_cascade_requirements(anomaly_event))
+			var/channel_to_talk_to = damage > emergency_point ? common_channel : engineering_channel
+			radio.talk_into(src, "DANGER: RESONANCE CASCADE INITIATED.", channel_to_talk_to)
+			for(var/mob/victim as anything in GLOB.player_list)
+				var/list/messages = list(
+					"You feel a strange presence in the air coming from engineering.",
+					"Something is wrong, there are weird sounds coming from engineering.",
+					"You don't like the smell of the SM.",
+					"The SM is emitting strange noises.",
+					"Crystals sounds are echoing through the station.",
+				)
+				to_chat(victim, span_boldannounce(pick(messages)))
+
 	//Boom (Mind blown)
 	if(damage > explosion_point)
 		countdown()

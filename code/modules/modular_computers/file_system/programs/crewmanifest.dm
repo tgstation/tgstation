@@ -9,6 +9,7 @@
 	size = 4
 	tgui_id = "NtosCrewManifest"
 	program_icon = "clipboard-list"
+	detomatix_resistance = DETOMATIX_RESIST_MAJOR
 
 /datum/computer_file/program/crew_manifest/ui_static_data(mob/user)
 	var/list/data = list()

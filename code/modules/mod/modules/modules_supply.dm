@@ -64,7 +64,6 @@
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [picked_crate]")
 		drain_power(use_power_cost)
-		mod.wearer.update_inv_back()
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
@@ -79,7 +78,6 @@
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		drain_power(use_power_cost)
-		mod.wearer.update_inv_back()
 	else
 		balloon_alert(mod.wearer, "invalid target!")
 

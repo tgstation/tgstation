@@ -62,21 +62,15 @@
 //Modular computer/NTNet defines
 
 //Modular computer part defines
-#define MC_CPU "CPU"
 #define MC_HDD "HDD"
-#define MC_HDD_JOB "HDD_JOB"
 #define MC_SDD "SDD"
 #define MC_CARD "CARD"
 #define MC_CARD2 "CARD2"
-#define MC_CART "CART"
 #define MC_NET "NET"
 #define MC_PRINT "PRINT"
 #define MC_CELL "CELL"
 #define MC_CHARGE "CHARGE"
 #define MC_AI "AI"
-#define MC_SENSORS "SENSORS"
-#define MC_SIGNALER "SIGNALER"
-#define MC_IDENTIFY "IDENTIFY"
 
 //NTNet stuff, for modular computers
 									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
@@ -113,7 +107,8 @@
 #define FIREDOOR_OPEN 1
 #define FIREDOOR_CLOSED 2
 
-
+#define DETOMATIX_RESIST_MINOR 1
+#define DETOMATIX_RESIST_MAJOR 2
 
 // These are used by supermatter and supermatter monitor program, mostly for UI updating purposes. Higher should always be worse!
 #define SUPERMATTER_ERROR -1 // Unknown status, shouldn't happen but just in case.

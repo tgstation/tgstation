@@ -656,19 +656,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
-"cg" = (
-/obj/structure/sign/warning/securearea{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	temperature = 251
-	},
-/area/awaymission/moonoutpost19/syndicate)
 "ch" = (
 /obj/machinery/light/small/broken/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -1668,10 +1655,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"eA" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall/r_wall,
-/area/awaymission/moonoutpost19/research)
 "eB" = (
 /obj/structure/alien/weeds/node,
 /turf/open/floor/engine,
@@ -1866,17 +1849,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/structure/cable,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"fe" = (
-/obj/structure/sign/warning/securearea{
-	pixel_x = 32
-	},
-/obj/structure/alien/weeds,
-/obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -2891,15 +2863,6 @@
 	dir = 5
 	},
 /area/awaymission/moonoutpost19/research)
-"hr" = (
-/obj/structure/table,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/obj/item/computer_hardware/hard_drive/role/signal/ordnance,
-/obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/cafeteria{
-	dir = 5
-	},
-/area/awaymission/moonoutpost19/research)
 "hs" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/light/small/broken/directional/north,
@@ -3358,21 +3321,6 @@
 /obj/item/paper/crumpled/awaymissions/moonoutpost19/hastey_note,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"iu" = (
-/obj/structure/sign/warning/securearea{
-	pixel_y = 32
-	},
-/obj/machinery/shower{
-	dir = 4;
-	name = "emergency shower"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
 	},
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
@@ -6139,6 +6087,19 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
+"zR" = (
+/obj/structure/sign/warning/secure_area{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	temperature = 251
+	},
+/area/awaymission/moonoutpost19/syndicate)
 "zZ" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -6162,6 +6123,15 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/hive)
+"CG" = (
+/obj/structure/table,
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/cafeteria{
+	dir = 5
+	},
+/area/awaymission/moonoutpost19/research)
 "CY" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -6226,6 +6196,17 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
+"HP" = (
+/obj/structure/sign/warning/secure_area{
+	pixel_x = 32
+	},
+/obj/structure/alien/weeds,
+/obj/effect/turf_decal/tile/purple,
+/obj/structure/cable,
+/turf/open/floor/iron/white{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
 "HQ" = (
 /obj/machinery/power/shieldwallgen/unlocked,
 /obj/structure/cable,
@@ -6256,6 +6237,21 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"Jr" = (
+/obj/structure/sign/warning/secure_area{
+	pixel_y = 32
+	},
+/obj/machinery/shower{
+	dir = 4;
+	name = "emergency shower"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
 "Ku" = (
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien,
@@ -6488,6 +6484,10 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
+"Zl" = (
+/obj/structure/sign/warning/electric_shock,
+/turf/closed/wall/r_wall,
+/area/awaymission/moonoutpost19/research)
 "Zs" = (
 /obj/structure/chair{
 	dir = 4
@@ -33911,7 +33911,7 @@ gA
 eJ
 he
 ea
-hr
+CG
 hB
 hC
 hX
@@ -35971,7 +35971,7 @@ fk
 hj
 hN
 ea
-iu
+Jr
 iN
 eI
 jx
@@ -36216,7 +36216,7 @@ eb
 ef
 ev
 eL
-fe
+HP
 fw
 fX
 gm
@@ -39041,13 +39041,13 @@ wq
 wq
 ea
 ea
-eA
+Zl
 eq
 eq
 fF
 gc
 gu
-eA
+Zl
 ea
 ea
 wq
@@ -41841,7 +41841,7 @@ Li
 bD
 bM
 at
-cg
+zR
 cu
 cI
 cU

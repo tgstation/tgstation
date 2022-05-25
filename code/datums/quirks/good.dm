@@ -40,17 +40,16 @@
 	processing_quirk = TRUE
 
 /datum/quirk/drunkhealing/process(delta_time)
-	var/mob/living/carbon/carbon_holder = quirk_holder
-	switch(carbon_holder.drunkenness)
+	switch(quirk_holder.get_drunk_amount())
 		if (6 to 40)
-			carbon_holder.adjustBruteLoss(-0.1*delta_time, FALSE)
-			carbon_holder.adjustFireLoss(-0.05*delta_time, FALSE)
+			quirk_holder.adjustBruteLoss(-0.1 * delta_time, FALSE)
+			quirk_holder.adjustFireLoss(-0.05 * delta_time)
 		if (41 to 60)
-			carbon_holder.adjustBruteLoss(-0.4*delta_time, FALSE)
-			carbon_holder.adjustFireLoss(-0.2*delta_time, FALSE)
+			quirk_holder.adjustBruteLoss(-0.4 * delta_time, FALSE)
+			quirk_holder.adjustFireLoss(-0.2 * delta_time)
 		if (61 to INFINITY)
-			carbon_holder.adjustBruteLoss(-0.8*delta_time, FALSE)
-			carbon_holder.adjustFireLoss(-0.4*delta_time, FALSE)
+			quirk_holder.adjustBruteLoss(-0.8 * delta_time, FALSE)
+			quirk_holder.adjustFireLoss(-0.4 * delta_time)
 
 /datum/quirk/empath
 	name = "Empath"
@@ -77,7 +76,7 @@
 
 /datum/quirk/item_quirk/clown_enjoyer/add()
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.add_hud_to(quirk_holder)
+	fan.show_to(quirk_holder)
 
 /datum/quirk/item_quirk/mime_fan
 	name = "Mime Fan"
@@ -94,7 +93,7 @@
 
 /datum/quirk/item_quirk/mime_fan/add()
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.add_hud_to(quirk_holder)
+	fan.show_to(quirk_holder)
 
 /datum/quirk/freerunning
 	name = "Freerunning"

@@ -393,7 +393,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "aK" = (
-/obj/structure/sign/warning/enginesafety,
+/obj/structure/sign/warning/engine_safety,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "aL" = (
@@ -442,7 +442,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/electricshock{
+/obj/structure/sign/warning/electric_shock{
 	pixel_y = 32
 	},
 /obj/machinery/airalarm/all_access{

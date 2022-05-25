@@ -223,7 +223,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "I" = (
-/obj/structure/sign/warning/securearea,
+/obj/structure/sign/warning/secure_area,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/testlab)
 "K" = (

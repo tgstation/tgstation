@@ -16,7 +16,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ag" = (
-/obj/structure/sign/warning/nosmoking,
+/obj/structure/sign/warning/no_smoking,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ah" = (

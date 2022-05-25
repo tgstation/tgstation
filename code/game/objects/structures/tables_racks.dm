@@ -60,6 +60,7 @@
 		)
 
 		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+		register_context()
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -114,10 +115,8 @@
 				user.stop_pulling()
 	return ..()
 
-
 /obj/structure/table/attack_tk(mob/user)
 	return
-
 
 /obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -215,6 +214,14 @@
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
+	if(istype(I, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = I
+		if(dealer_deck.wielded) // deal a card facedown on the table
+			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+			if(card)
+				attackby(card, user, params)
+			return
+
 	if(istype(I, /obj/item/riding_offhand))
 		var/obj/item/riding_offhand/riding_item = I
 		var/mob/living/carried_mob = riding_item.rider
@@ -251,6 +258,27 @@
 			return TRUE
 	else
 		return ..()
+
+/obj/structure/table/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = weapon
+		if(dealer_deck.wielded) // deal a card faceup on the table
+			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+			if(card)
+				card.Flip()
+				attackby(card, user, params)
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	..()
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(istype(held_item, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = held_item
+		if(dealer_deck.wielded)
+			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
+			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
+			return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	return

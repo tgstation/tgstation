@@ -173,9 +173,11 @@
 	icon_state = "magic_neutralizer"
 
 /obj/item/mod/module/anti_magic/wizard/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
 
 /obj/item/mod/module/anti_magic/wizard/on_suit_deactivation(deleting = FALSE)
+	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
 
 ///Insignia - Gives you a skin specific stripe.

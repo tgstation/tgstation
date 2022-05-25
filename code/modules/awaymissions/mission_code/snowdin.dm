@@ -6,7 +6,7 @@
 	requires_power = FALSE
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	
+
 /area/awaymission/snowdin/outside
 	name = "Snowdin Tundra Plains"
 	icon_state = "awaycontent25"
@@ -219,7 +219,7 @@
 		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.name] melts down to the bone!"), \
 			span_userdanger("You scream out in pain as your [burn_limb.name] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
 	if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
-		burn_human.IgniteMob()
+		burn_human.ignite_mob()
 		burn_human.set_species(/datum/species/plasmaman)
 		burn_human.visible_message(span_warning("[burn_human] bursts into a brilliant purple flame as [burn_human.p_their()] entire body is that of a skeleton!"), \
 			span_userdanger("Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!"))

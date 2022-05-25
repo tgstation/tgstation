@@ -81,7 +81,7 @@
 	base_icon_state = "donutbox"
 	spawn_type = /obj/item/food/donut/plain
 	is_open = TRUE
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
 
