@@ -441,6 +441,9 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	defer_change = TRUE
 
+/turf/closed/mineral/volcanic/lava_land_surface/hardened
+	tool_mine_speed = 20 SECONDS
+
 /turf/closed/mineral/ash_rock //wall piece
 	name = "rock"
 	icon = 'icons/turf/mining.dmi'

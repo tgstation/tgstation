@@ -1,0 +1,278 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"h" = (
+/obj/effect/decal/fakelattice,
+/turf/template_noop,
+/area/template_noop)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/modular_map_connector,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"x" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"C" = (
+/turf/template_noop,
+/area/template_noop)
+"E" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"F" = (
+/obj/structure/railing/corner,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"L" = (
+/obj/structure/railing/corner,
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+h
+h
+h
+C
+C
+C
+C
+C
+C
+h
+h
+h
+h
+h
+"}
+(2,1,1) = {"
+o
+A
+A
+b
+C
+C
+C
+C
+C
+C
+F
+A
+A
+o
+"}
+(3,1,1) = {"
+h
+h
+h
+C
+C
+C
+C
+C
+C
+C
+C
+h
+h
+h
+"}
+(4,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+"}
+(5,1,1) = {"
+h
+h
+h
+C
+C
+C
+C
+C
+C
+C
+h
+h
+h
+h
+"}
+(6,1,1) = {"
+s
+z
+z
+z
+h
+h
+C
+C
+C
+C
+z
+z
+z
+z
+"}
+(7,1,1) = {"
+h
+h
+h
+C
+C
+C
+C
+C
+C
+h
+h
+h
+h
+h
+"}
+(8,1,1) = {"
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+"}
+(9,1,1) = {"
+h
+h
+h
+h
+h
+C
+C
+C
+C
+C
+C
+L
+h
+h
+"}
+(10,1,1) = {"
+o
+A
+A
+A
+A
+E
+C
+C
+C
+C
+L
+x
+A
+o
+"}
+(11,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+C
+C
+C
+C
+h
+h
+h
+"}

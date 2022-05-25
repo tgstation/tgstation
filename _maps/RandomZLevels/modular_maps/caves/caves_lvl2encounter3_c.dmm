@@ -1,0 +1,32 @@
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"b" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"c" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"h" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/remains/human,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"i" = (/obj/effect/gibspawner/human/bodypartless,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"k" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"q" = (/obj/effect/decal/remains/human,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"s" = (/mob/living/simple_animal/hostile/asteroid/elite/broodmother,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"t" = (/turf/open/chasm/lavaland,/area/template_noop)
+"w" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"z" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"G" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"K" = (/obj/effect/mob_spawn/corpse/human/damaged{mob_name = "Probably-Dies-First"; mob_species = /datum/species/lizard/ashwalker; outfit = /datum/outfit/ashwalker},/obj/item/spear/bonespear,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"M" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Z" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+
+(1,1,1) = {"
+GkGaaaatttttttttttkkttkkk
+zkkkaaaaaaaktttttttkktttk
+aaGbkkaaaaakkkttttttktttt
+aaakkkkwZaakktttttttttttt
+akkkkbkkwackaattttttttttt
+akakkkikbkckaaatttttttttt
+kkaaahkwtKkkaaatttttttttt
+kkwaaaktttkbkkaaatttttttt
+kkZaakkttwskkkkaaattttttt
+akkkkkbkkkkkqkbaakktttttt
+aakkkaawwakaaakkkkkkktttt
+aaakaaaaaaaaaaaakkkkkkkkk
+aaakkkkkkMkMkkkaaaakkkkkk
+aaaaaaMkMMkkaaaaaaaaakkkk
+"}

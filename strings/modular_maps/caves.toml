@@ -1,0 +1,41 @@
+directory = "_maps/RandomZLevels/modular_maps/caves"
+
+#Various bridges on the 2nd floor
+[rooms.caves_lvl2bridge1]
+modules = ["caves_lvl2bridge1_broken.dmm", "caves_lvl2bridge1_unbroken.dmm"]
+
+[rooms.caves_lvl2bridge2]
+modules = ["caves_lvl2bridge2_broken.dmm", "caves_lvl2bridge2_unbroken.dmm"]
+
+[rooms.caves_lvl2bridge3]
+modules = ["caves_lvl2bridge3_broken.dmm", "caves_lvl2bridge3_unbroken.dmm"]
+
+[rooms.caves_lvl2tunnelbridge]
+modules = ["caves_lvl2tunnelbridge_broken.dmm", "caves_lvl2tunnelbridge_unbroken.dmm"]
+
+#Randomly chosen combat segments on the 2nd floor
+[rooms.caves_lvl2encounter1]
+modules = ["caves_lvl2encounter1_a.dmm", "caves_lvl2encounter1_b.dmm", "caves_lvl2encounter1_c.dmm"]
+
+[rooms.caves_lvl2encounter2]
+modules = ["caves_lvl2encounter2_a.dmm", "caves_lvl2encounter2_b.dmm", "caves_lvl2encounter2_c.dmm"]
+
+#Research outpost on the 2nd floor
+[rooms.caves_lvl2researchpost]
+modules = ["caves_lvl2researchpost_a.dmm", "caves_lvl2researchpost_b.dmm", "caves_lvl2researchpost_c.dmm"]
+
+#Spooky rift room oooOoooOooOooo
+[rooms.caves_lvl3tear]
+modules = ["caves_lvl3tear_a.dmm", "caves_lvl3tear_b.dmm", "caves_lvl3tear_c.dmm"]
+
+#1st segment of 3 on the 3rd floor
+[rooms.caves_lvl3segment1]
+modules = ["caves_lvl3segment1_a.dmm", "caves_lvl3segment1_b.dmm", "caves_lvl3segment1_c.dmm"]
+
+#2nd segment of 3 on the 3rd floor
+[rooms.caves_lvl3segment2]
+modules = ["caves_lvl3segment2_a.dmm", "caves_lvl3segment2_b.dmm", "caves_lvl3segment2_c.dmm"]
+
+#3rd segment of 3 on the 3rd floor
+[rooms.caves_lvl3segment2]
+modules = ["caves_lvl3segment3_a.dmm", "caves_lvl3segment3_b.dmm", "caves_lvl3segment3_c.dmm"]

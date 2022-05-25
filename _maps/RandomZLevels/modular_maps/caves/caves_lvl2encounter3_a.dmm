@@ -1,0 +1,43 @@
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"b" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"c" = (/obj/structure/barricade/sandbags,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"e" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"f" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"i" = (/obj/item/pickaxe,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"j" = (/turf/open/chasm/lavaland,/area/template_noop)
+"k" = (/obj/item/organ/alien/plasmavessel,/obj/structure/alien/weeds,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"l" = (/obj/structure/alien/resin/wall,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"o" = (/turf/closed/wall,/area/template_noop)
+"q" = (/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"t" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"w" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"x" = (/obj/effect/decal/remains/xeno/larva,/obj/item/toy/toy_xeno,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"y" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"z" = (/obj/modular_map_connector,/obj/structure/marker_beacon/burgundy,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"F" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"J" = (/obj/effect/gibspawner/xeno/bodypartless,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"K" = (/obj/item/emptysandbag,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"L" = (/obj/structure/alien/weeds,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"M" = (/obj/structure/marker_beacon/burgundy,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"O" = (/obj/structure/bed/nest,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"P" = (/obj/effect/decal/remains/human,/obj/effect/gibspawner/human/bodypartless,/obj/item/clothing/suit/xenos,/obj/item/clothing/head/xenos,/obj/structure/alien/weeds,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"R" = (/obj/effect/decal/remains/xeno,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"S" = (/obj/item/xenos_claw,/obj/structure/alien/weeds/node,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"T" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+
+(1,1,1) = {"
+Kceeeeejjjjjjjjjjjeejjeee
+zceeeeeytejjjjjjjjjeejjje
+aoaaeeettwejjjejjjjjejjjj
+aaaaqeewweqjeeejjjjjjjjjj
+JxRaeeeeeeejjejjjjjjjjjjj
+OPkayeeeejjjjejjjjjjjjjjj
+LSLaaeeejjjjeejjjjjjjjjjj
+bFlaaaejjjeeeewjjjjjjjjjj
+aLLqaTejjeeeeeejjjjjjjjjj
+aleTeejjeeqeeeeeeeejjjjjj
+aaaeeeeeeaeaaaeeeeeeejjjj
+aaaaaaeTaaaaaaaafieeceMee
+aaaaaaaaaaaaaaaaaaawceKee
+aaaaaaaaaaaaaaaaaaaaoKeee
+"}

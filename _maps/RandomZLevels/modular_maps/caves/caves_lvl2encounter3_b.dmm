@@ -1,0 +1,54 @@
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"b" = (/mob/living/simple_animal/hostile/ashwalker{name = "Throws-The-Spear"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"c" = (/obj/structure/water_source/puddle{pixel_x = -3; pixel_y = 1},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"f" = (/obj/structure/stone_tile/block/cracked{dir = 10},/obj/structure/stone_tile/block/cracked{dir = 9},/turf/open/chasm/lavaland,/area/template_noop)
+"g" = (/mob/living/simple_animal/hostile/ashwalker{name = "Eats-The-Shrooms"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"h" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"i" = (/obj/structure/stone_tile/block/cracked{dir = 4},/obj/structure/stone_tile/block/cracked{dir = 10},/turf/open/chasm/lavaland,/area/template_noop)
+"j" = (/obj/structure/stone_tile/surrounding,/obj/structure/stone_tile/center/burnt,/turf/open/chasm/lavaland,/area/template_noop)
+"k" = (/obj/structure/stone_tile/block/burnt{dir = 4},/turf/open/chasm/lavaland,/area/template_noop)
+"l" = (/obj/structure/stone_tile/block/cracked{dir = 9},/obj/structure/stone_tile/block/cracked{dir = 6},/turf/open/chasm/lavaland,/area/template_noop)
+"n" = (/obj/structure/stone_tile/surrounding,/obj/structure/stone_tile/center/cracked,/turf/open/chasm/lavaland,/area/template_noop)
+"p" = (/obj/structure/stone_tile/block/burnt{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"q" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"s" = (/obj/structure/rack,/obj/item/food/meat/slab/goliath,/obj/item/food/meat/slab/goliath,/obj/item/food/meat/slab/goliath,/obj/item/spear/bonespear,/obj/item/spear/bonespear,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"t" = (/obj/structure/stone_tile/block/cracked,/turf/open/chasm/lavaland,/area/template_noop)
+"u" = (/mob/living/simple_animal/hostile/ashwalker{name = "Cooks-The-Meat"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"v" = (/obj/structure/stone_tile/block/burnt{dir = 8},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"w" = (/obj/structure/stone_tile/block/cracked{dir = 4},/obj/structure/stone_tile/block/cracked{dir = 9},/turf/open/chasm/lavaland,/area/template_noop)
+"x" = (/turf/open/chasm/lavaland,/area/template_noop)
+"z" = (/obj/structure/stone_tile/block/burnt{dir = 1},/mob/living/simple_animal/hostile/ashwalker{name = "Polishes-The-Spear"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"A" = (/obj/structure/stone_tile/slab,/turf/open/chasm/lavaland,/area/template_noop)
+"C" = (/obj/structure/closet/crate,/obj/item/pickaxe,/obj/item/pickaxe,/obj/item/lazarus_injector,/obj/item/kinetic_crusher,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"D" = (/obj/structure/stone_tile/block/cracked{dir = 5},/obj/structure/stone_tile/block/cracked{dir = 8},/turf/open/chasm/lavaland,/area/template_noop)
+"E" = (/obj/structure/table/wood,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"F" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"G" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"H" = (/obj/structure/stone_tile/block/cracked{dir = 8},/turf/open/chasm/lavaland,/area/template_noop)
+"I" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"J" = (/mob/living/simple_animal/hostile/ashwalker{name = "Loves-The-Hunt"},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"L" = (/obj/structure/stone_tile/block/burnt{dir = 1},/turf/open/chasm/lavaland,/area/template_noop)
+"S" = (/obj/structure/closet/crate/internals,/obj/item/clothing/head/helmet/roman/legionnaire,/obj/item/clothing/head/helmet/rus_helmet,/obj/item/clothing/head/helmet/rus_ushanka,/obj/item/clothing/head/helmet/rus_helmet,/obj/item/clothing/suit/armor/vest/russian_coat,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"T" = (/obj/structure/bonfire/prelit,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"U" = (/obj/structure/stone_tile/block/burnt,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"V" = (/obj/structure/stone_tile/slab/cracked,/turf/open/chasm/lavaland,/area/template_noop)
+"W" = (/obj/structure/punji_sticks,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"Y" = (/turf/closed/wall,/area/template_noop)
+"Z" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+
+(1,1,1) = {"
+IIIWIaaxxxxxxxxxxxIIxxIII
+hIWEGIaaIqwxxxxxxxxIIxxxI
+aaWEFIIIIIFFxxqxxxxxIxxxx
+aaaaFqIbIIZFlIqxxxxxxxxxx
+IcsaFFqIIIIIIIxxxxxxxxxxx
+IIIIZFIIiIIgIIxxxxxxxxxxx
+IzIIuqIxxHIIIIaaxxxxxxxxx
+vTpIIIILxxDIIIFaaxxxxxxxx
+IUIIaIjAkJqIIIIaaaxxxxxxx
+IISaafVnIFFqIIIEWIIxxxxxx
+ICaaaxtIFaZaIIIEWIIIIxxxx
+aaaaxxIIaaaaIIaaWIIIIIIII
+aaaxxaaaIIIIIIaaaaaFIIIII
+aaaaaaaaaaIIIaaaaaaaYIIII
+"}

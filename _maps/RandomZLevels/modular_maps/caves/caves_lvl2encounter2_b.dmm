@@ -1,0 +1,35 @@
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"c" = (/obj/structure/flora/ash/stem_shroom,/turf/open/indestructible/necropolis,/area/template_noop)
+"e" = (/obj/structure/stone_tile/slab/cracked,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"j" = (/obj/structure/flora/rock/pile,/turf/open/indestructible/necropolis,/area/template_noop)
+"k" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"q" = (/obj/structure/stone_tile/surrounding/burnt,/obj/structure/stone_tile/center,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"t" = (/obj/structure/flora/ash/leaf_shroom,/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"u" = (/obj/structure/flora/ash/stem_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"v" = (/obj/structure/flora/ash/cap_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"D" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"E" = (/obj/structure/spawner/lavaland/goliath,/turf/open/indestructible/necropolis,/area/template_noop)
+"F" = (/mob/living/simple_animal/hostile/asteroid/goliath/beast,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"H" = (/obj/structure/stone_tile/block/cracked{dir = 10},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"I" = (/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"K" = (/obj/structure/stone_tile/slab,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"L" = (/obj/structure/flora/ash/leaf_shroom,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"O" = (/obj/structure/stone_tile/block/burnt{dir = 8},/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+"P" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"S" = (/turf/open/indestructible/necropolis,/area/template_noop)
+"W" = (/obj/structure/stone_tile/surrounding/burnt,/obj/structure/stone_tile/center/burnt,/turf/open/lava/smooth/lava_land_surface,/area/template_noop)
+
+(1,1,1) = {"
+DDaaaaaaaaaaaaaaaaaaaaaaa
+DaaaSSaaaaaaaaDIIIIIDakkP
+aaujjSaLDDDDFDDDaaaPDDDLt
+aSSEcaaaLIaDDFaaaaaaaDDDD
+aaSSSSaaDqaaDDkaaaaaaDDaa
+aaaSDDaaOKaakDvPaaaPkDaaa
+aaaakDDaHeaakDvkaaakFDaaa
+DDaaaDDaaWaaaDDDaaaDDDaaa
+DDaaaaDDaDDaaaaDDDDDDkaaa
+DDDDaaDDDDDaaaaaaaaaaaaaa
+DDDDaaaaaaaaaaaaaaaaaaaaa
+DDDDDaaaaaaaaaaaaaaaaaaaa
+"}

@@ -1,0 +1,240 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"g" = (
+/turf/template_noop,
+/area/template_noop)
+"h" = (
+/obj/effect/decal/fakelattice,
+/turf/template_noop,
+/area/template_noop)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"u" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 8
+	},
+/obj/modular_map_connector,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+
+(1,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+"}
+(2,1,1) = {"
+L
+K
+K
+K
+K
+K
+K
+K
+K
+K
+K
+K
+K
+L
+"}
+(3,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+"}
+(4,1,1) = {"
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+"}
+(5,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+"}
+(6,1,1) = {"
+u
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+r
+"}
+(7,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+"}
+(8,1,1) = {"
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+"}
+(9,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+"}
+(10,1,1) = {"
+L
+K
+K
+K
+K
+K
+K
+K
+K
+K
+K
+K
+K
+L
+"}
+(11,1,1) = {"
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+"}

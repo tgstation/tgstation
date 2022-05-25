@@ -1,0 +1,104 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"f" = (
+/obj/structure/railing/corner,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"h" = (
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/engine{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"i" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"H" = (
+/obj/effect/decal/fakelattice,
+/turf/template_noop,
+/area/template_noop)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"L" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+L
+h
+L
+"}
+(2,1,1) = {"
+L
+I
+H
+"}
+(3,1,1) = {"
+L
+I
+H
+"}
+(4,1,1) = {"
+H
+w
+H
+"}
+(5,1,1) = {"
+L
+i
+L
+"}
+(6,1,1) = {"
+L
+L
+L
+"}
+(7,1,1) = {"
+L
+f
+L
+"}
+(8,1,1) = {"
+H
+I
+H
+"}
+(9,1,1) = {"
+L
+a
+H
+"}
+(10,1,1) = {"
+L
+L
+H
+"}

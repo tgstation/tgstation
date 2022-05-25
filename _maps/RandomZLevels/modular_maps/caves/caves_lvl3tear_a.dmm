@@ -1,0 +1,69 @@
+"a" = (/turf/closed/mineral/asteroid/porous,/area/template_noop)
+"b" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt,/area/template_noop)
+"c" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"d" = (/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
+"i" = (/obj/structure/railing{dir = 1},/obj/structure/lattice{obj_flags = 4612},/obj/structure/fans/tiny/invisible{density = 1; name = "air flow + movement blocker"},/turf/template_noop,/area/template_noop)
+"j" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/obj/structure/mopbucket,/obj/item/mop/advanced,/obj/effect/decal/cleanable/dirt,/obj/machinery/light/directional/north,/turf/open/indestructible,/area/template_noop)
+"k" = (/turf/open/misc/asteroid/basalt,/area/template_noop)
+"l" = (/mob/living/simple_animal/hostile/asteroid/curseblob,/turf/open/misc/asteroid/basalt,/area/template_noop)
+"m" = (/obj/structure/railing,/obj/structure/lattice{obj_flags = 4612},/obj/structure/fans/tiny/invisible{density = 1; name = "air flow + movement blocker"},/turf/template_noop,/area/template_noop)
+"n" = (/obj/structure/fluff{desc = "A humanoid figure shrouded by erratic static."; icon = 'icons/effects/effects.dmi'; icon_state = "static"; name = "humanoid figure"},/turf/open/misc/asteroid/airless,/area/template_noop)
+"o" = (/obj/effect/decal/cleanable/dirt,/obj/effect/turf_decal/stripes/box,/turf/open/floor/plating,/area/template_noop)
+"p" = (/obj/structure/fluff{desc = "A humanoid figure shrouded by erratic static."; icon = 'icons/effects/effects.dmi'; icon_state = "static"; name = "humanoid figure"},/turf/open/misc/asteroid/basalt,/area/template_noop)
+"q" = (/obj/structure/fluff{desc = "A humanoid figure shrouded by erratic static."; icon = 'icons/effects/effects.dmi'; icon_state = "static"; name = "humanoid figure"},/turf/open/misc/asteroid,/area/template_noop)
+"r" = (/turf/open/misc/asteroid,/area/template_noop)
+"s" = (/obj/structure/flora/rock,/turf/open/misc/asteroid/basalt,/area/template_noop)
+"t" = (/obj/structure/lattice/catwalk/lava,/turf/open/lava/smooth,/area/template_noop)
+"u" = (/turf/open/indestructible,/area/template_noop)
+"v" = (/turf/open/misc/asteroid/airless,/area/template_noop)
+"w" = (/turf/open/space/basic,/area/template_noop)
+"x" = (/obj/structure/flora/ash/seraka,/turf/open/misc/asteroid/basalt,/area/template_noop)
+"y" = (/obj/structure/ore_box,/turf/open/misc/asteroid/basalt,/area/template_noop)
+"A" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/basalt,/area/template_noop)
+"B" = (/obj/structure/railing{dir = 1},/obj/structure/lattice/lava{icon_state = "lattice-255"; base_icon_state = "lattice"; icon = 'icons/obj/smooth_structures/lattice.dmi'},/turf/open/lava/smooth,/area/template_noop)
+"C" = (/obj/structure/fluff{desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions. This one seems frozen in place, eerily still."; icon = 'icons/mob/lavaland/lavaland_monsters.dmi'; icon_state = "Goliath"; name = "goliath"},/turf/open/misc/asteroid,/area/template_noop)
+"D" = (/obj/structure/fluff{desc = "You're not sure if walking into this is a great idea..."; icon = 'icons/effects/eldritch.dmi'; icon_state = "pierced_illusion"; name = "fluxating rift"},/obj/effect/step_trigger/teleport_fancy{entersmoke = 1; entersparks = 1; locationx = 52; locationy = 213; name = "rift teleport to mechabay"; uses = 0},/turf/open/misc/asteroid,/area/template_noop)
+"E" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/turf/open/indestructible,/area/template_noop)
+"F" = (/obj/structure/flora/ash/cacti,/turf/open/misc/asteroid/basalt,/area/template_noop)
+"G" = (/turf/closed/mineral/asteroid,/area/template_noop)
+"H" = (/turf/open/lava/smooth,/area/template_noop)
+"J" = (/turf/template_noop,/area/template_noop)
+"L" = (/obj/effect/step_trigger/message{message = "Life has many doors small one, some are best left closed. Hurry now, before someone less... lenient notices you."; name = "initial warning in the tear"},/turf/open/misc/asteroid/basalt,/area/template_noop)
+"M" = (/obj/effect/turf_decal/stripes/box,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/template_noop)
+"N" = (/obj/structure/railing,/obj/structure/lattice/lava{icon_state = "lattice-255"; base_icon_state = "lattice"; icon = 'icons/obj/smooth_structures/lattice.dmi'},/turf/open/lava/smooth,/area/template_noop)
+"O" = (/turf/open/space,/area/template_noop)
+"P" = (/turf/closed/indestructible/fakeglass,/area/template_noop)
+"Q" = (/obj/structure/lattice{obj_flags = 4612},/obj/structure/fans/tiny/invisible{density = 1; name = "air flow + movement blocker"},/turf/template_noop,/area/template_noop)
+"R" = (/obj/structure/lattice{obj_flags = 4612},/turf/open/space/basic,/area/template_noop)
+"S" = (/turf/closed/indestructible/fakedoor{name = "Secure Access"},/area/template_noop)
+"T" = (/obj/effect/turf_decal/tile/neutral/half/contrasted,/turf/open/indestructible,/area/template_noop)
+"U" = (/obj/effect/turf_decal/tile/neutral/half/contrasted{dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible,/area/template_noop)
+"V" = (/obj/effect/step_trigger/message{message = "Please do not come back any time soon, these sorts of things should be kept to a one-in-a-lifetime experience if possible."; name = "leaving message in the tear"},/turf/open/misc/asteroid,/area/template_noop)
+"W" = (/turf/closed/indestructible/reinforced,/area/template_noop)
+"X" = (/obj/modular_map_connector,/turf/template_noop,/area/template_noop)
+"Y" = (/obj/structure/fans/tiny/invisible{density = 1; name = "air flow + movement blocker"},/turf/template_noop,/area/template_noop)
+"Z" = (/obj/structure/flora/rock/pile,/turf/open/misc/asteroid/basalt,/area/template_noop)
+
+(1,1,1) = {"
+JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+JJJJJJJJJJJJJJJHJJJJJJJJYYYYYJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+JJJJJJJkJJJJJJJHHJJJJJJYGGGGvYJJJJJJJJJJJJJJJJJJJJJJJJJJ
+JJJJJJJkkJJJJJJHHJJJJJYGGvnvvYJJJJJYJJJJJJJJrJJJJJJJJJJJ
+JJJJJJJkFJJJJJJHHJJJJJJYYOvOOYJJYYYwWJJJJJJrCJJJJJJJJJJJ
+JJJJJJkFkyJJJJJJHJYJJYYYYYOYYJJYwwwwWuJJJJJrrrJJJJJJJJJJ
+JJJJJkkkkyJJJJYJJYHYYkcccYYJJJYwwRwwWuWJJJJJJJYYYYJJJJJJ
+JJJJJJkJJJJJJYHYYHHYYccccYJJJJYRwRwRWuWJJJJJYYaraaYJJJJJ
+JJJJJJJJYYYYYYHHYHHYYcccsZYYJJJcWPPPWSWWJWJYrrrraaaYJJJJ
+XJJJJJJYckkcMNNNNNNMkkkbkkkommQkEEUUjdUEYYYrrrrrrraYJJJJ
+JJJJJJYcckkkLttttttkkkAbklkktttkkkuudduuurVrrrrDrraYJJJJ
+JJJJJJYkkkkkMBBBBBBMkklkkkYoiYYMTYYYTTYYYYYYrrarraaYJJJJ
+JJJJJJYkkkYYYYHYHHYYYYZsZYJYJJJWYJJJYYWWJJWWYYraaaYJJJJJ
+JJJJJJJYYYJJJYHYHHYJJJYYYJJJJJJJJJJJJJJJJJJJJJYYYYJJJJJJ
+JJJJJJJJJJJJJJYJYYJJJJJJxJJJJJJJJJJJJJJJJJJJJqrrrJJJJJJJ
+JJJJJJJJJJJJxpJJJJJJJJJJkJJJJJHHHkkJJJJJJJJJrrrrJJJJJJJJ
+JJJJJJJJJJJkZccJJJHHJJJJJJJJJJJHkkcccJJJJJJJJJrJJJJJJJJJ
+JJJJJJJJJJJJccJJJJHHJJJsJJJJJJJJccccJJJJJJJJJJJJJJJJJJJJ
+JJJJJJJJJJJJJJJJJJJJJJJZJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+"}

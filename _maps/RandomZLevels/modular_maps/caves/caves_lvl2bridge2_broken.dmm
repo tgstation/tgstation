@@ -1,0 +1,75 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"h" = (
+/turf/template_noop,
+/area/template_noop)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/end,
+/obj/modular_map_connector,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/template_noop)
+"S" = (
+/obj/effect/decal/fakelattice,
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+S
+S
+S
+h
+h
+h
+h
+"}
+(2,1,1) = {"
+h
+c
+o
+h
+S
+s
+h
+"}
+(3,1,1) = {"
+S
+S
+h
+h
+h
+S
+S
+"}
