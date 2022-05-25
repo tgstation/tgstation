@@ -115,8 +115,6 @@
 
 ///Use transfer_to_limb() instead of this.
 /obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
-	PRIVATE_PROC(TRUE)
-
 	forceMove(bodypart, check_dest = FALSE)
 	ownerlimb = bodypart
 	ownerlimb.contents |= src
@@ -125,8 +123,6 @@
 
 ///Removes the organ from the limb. This proc assumes the organ_owner is null.
 /obj/item/organ/external/remove_from_limb()
-	PRIVATE_PROC(TRUE)
-
 	ownerlimb.external_organs -= src
 	if(ownerlimb.owner && external_bodytypes)
 		ownerlimb.synchronize_bodytypes(ownerlimb.owner)
