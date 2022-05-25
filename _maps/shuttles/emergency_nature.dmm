@@ -464,7 +464,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/left/directional/west{
-	name = "Nature pen"
+	name = "Nature Pen"
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -1042,7 +1042,7 @@
 /obj/effect/turf_decal/trimline/green/filled/end,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/window/left/directional/south{
-	name = "Nature pen"
+	name = "Nature Pen"
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -1305,7 +1305,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/left/directional/east{
-	name = "Nature pen"
+	name = "Nature Pen"
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
