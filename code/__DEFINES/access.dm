@@ -171,7 +171,7 @@
 /// Bitflag for Private Command ID card accesses. See PRIVATE_COMMAND_ACCESS.
 #define ACCESS_FLAG_PRV_COMMAND (1 << 2)
 /// Displayed name for Captain ID card accesses.
-#define ACCESS_FLAG_CAPTAIN_NAME "Captain"
+#define ACCESS_FLAG_CAPTAIN_NAME "Extra"
 /// Bitflag for Captain ID card accesses. See CAPTAIN_ACCESS.
 #define ACCESS_FLAG_CAPTAIN (1 << 3)
 /// Displayed name for Centcom ID card accesses.
