@@ -1,4 +1,4 @@
-#define PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT -1
+#define PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT 0
 
 /obj/machinery/portable_atmospherics
 	name = "portable_atmospherics"
