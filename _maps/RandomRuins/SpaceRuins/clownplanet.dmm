@@ -11,7 +11,7 @@
 /turf/open/floor/bronze,
 /area/ruin/powered/clownplanet)
 "ad" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/floor/bronze,
 /area/ruin/powered/clownplanet)
 "ae" = (
@@ -39,7 +39,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "ak" = (
-/obj/structure/flora/ausbushes/palebush,
+/obj/structure/flora/bush/pale/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -57,7 +57,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "an" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/bush/reed/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -70,19 +70,19 @@
 	},
 /area/ruin/powered/clownplanet)
 "ap" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
 /area/ruin/powered/clownplanet)
 "aq" = (
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/flora/bush/grassy/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
 /area/ruin/powered/clownplanet)
 "ar" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -97,7 +97,7 @@
 /turf/open/floor/iron/bluespace,
 /area/ruin/powered/clownplanet)
 "au" = (
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -114,7 +114,7 @@
 /turf/open/floor/iron/bluespace,
 /area/ruin/powered/clownplanet)
 "ay" = (
-/obj/structure/flora/tree/jungle,
+/obj/structure/flora/tree/jungle/style_random,
 /turf/open/floor/iron/bluespace,
 /area/ruin/powered/clownplanet)
 "az" = (
@@ -124,13 +124,13 @@
 	},
 /area/ruin/powered/clownplanet)
 "aA" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
 /area/ruin/powered/clownplanet)
 "aB" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -177,7 +177,7 @@
 /turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aK" = (
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/flora/bush/sunny/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
@@ -191,7 +191,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aM" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -205,7 +205,7 @@
 /turf/open/floor/bronze,
 /area/ruin/powered/clownplanet)
 "aO" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -222,13 +222,13 @@
 	},
 /area/ruin/powered/clownplanet)
 "aQ" = (
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
 /area/ruin/powered/clownplanet)
 "aR" = (
-/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/bush/flowers_pp/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -243,7 +243,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aT" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/grass{
 	color = "#1eff00"
@@ -280,7 +280,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aY" = (
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/bush/lavendergrass/style_random,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
@@ -289,21 +289,21 @@
 	},
 /area/ruin/powered/clownplanet)
 "aZ" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
 /area/ruin/powered/clownplanet)
 "ba" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/bush/reed/style_random,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
 /area/ruin/powered/clownplanet)
 "bb" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -328,7 +328,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "be" = (
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/bush/flowers_yw/style_random,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},

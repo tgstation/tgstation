@@ -9,6 +9,7 @@
 	preview_outfit = /datum/outfit/thief
 	antag_hud_name = "thief"
 	ui_name = "AntagInfoThief"
+	count_against_dynamic_roll_chance = FALSE
 	///assoc list of strings set up for the flavor of the thief.
 	var/list/thief_flavor
 	///if added by an admin, they can choose a thief flavor

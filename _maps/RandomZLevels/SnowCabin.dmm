@@ -278,7 +278,7 @@
 /area/awaymission/cabin)
 "aR" = (
 /obj/machinery/door/window/right/directional/west{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/structure/fireplace,
 /obj/effect/decal/cleanable/dirt,
@@ -299,7 +299,7 @@
 /area/awaymission/cabin)
 "aT" = (
 /obj/machinery/door/window/left/directional/east{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/structure/fireplace,
 /obj/effect/decal/cleanable/dirt,
@@ -308,7 +308,7 @@
 "aU" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/right/directional/west{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -320,7 +320,7 @@
 "aW" = (
 /obj/structure/fireplace,
 /obj/machinery/door/window/left/directional/east{
-	name = "fireplace"
+	name = "Fireplace"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -372,7 +372,7 @@
 /area/awaymission/cabin)
 "bg" = (
 /obj/machinery/door/window/left/directional/west{
-	name = "manager's desk"
+	name = "Manager's Desk"
 	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -1242,7 +1242,7 @@
 "eq" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "garage_cabin";
-	name = "garage door"
+	name = "Garage Door"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating/snowed/snow_cabin,
@@ -2122,7 +2122,7 @@
 /area/awaymission/cabin)
 "hg" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "janitor closet"
+	name = "Janitor Closet"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -2238,7 +2238,7 @@
 /area/awaymission/cabin)
 "hy" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "heater storage"
+	name = "Heater Storage"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -3679,7 +3679,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "pL" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "qe" = (
@@ -3983,7 +3983,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "xy" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "xJ" = (
@@ -4150,7 +4150,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Ao" = (
-/obj/structure/flora/rock/icy{
+/obj/structure/flora/rock/icy/style_random{
 	desc = "A mountain rock."
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4203,7 +4203,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "BZ" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "CA" = (
@@ -4255,7 +4255,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "Fz" = (
-/obj/structure/flora/rock/icy{
+/obj/structure/flora/rock/icy/style_random{
 	desc = "A mountain rock."
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4303,7 +4303,7 @@
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "Ho" = (
-/obj/structure/flora/stump{
+/obj/structure/flora/tree/stump{
 	desc = "Breaking it should be easy.";
 	max_integrity = 20;
 	name = "old stump"
@@ -4403,7 +4403,7 @@
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "LF" = (
-/obj/structure/flora/stump{
+/obj/structure/flora/tree/stump{
 	desc = "Breaking it should be easy.";
 	max_integrity = 20;
 	name = "old stump"
@@ -4545,7 +4545,7 @@
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "OZ" = (
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/tree/dead/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "Pd" = (
@@ -4592,7 +4592,7 @@
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "QL" = (
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin)
 "QT" = (
@@ -4613,7 +4613,7 @@
 /turf/open/floor/mineral/plastitanium/red/snow_cabin,
 /area/awaymission/cabin/caves/sovietcave)
 "Rs" = (
-/obj/structure/flora/stump{
+/obj/structure/flora/tree/stump{
 	desc = "Breaking it should be easy.";
 	max_integrity = 20;
 	name = "old stump"
@@ -4691,7 +4691,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "Sd" = (
-/obj/structure/flora/stump{
+/obj/structure/flora/tree/stump{
 	desc = "Breaking it should be easy.";
 	max_integrity = 20;
 	name = "old stump"
@@ -4825,7 +4825,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine/style_random,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
 "UO" = (

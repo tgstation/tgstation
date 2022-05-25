@@ -18,6 +18,7 @@
 	var/message_queue
 	var/sent_assets = list()
 	// Vars passed to initialize proc (and saved for later)
+	var/initial_strict_mode
 	var/initial_fancy
 	var/initial_assets
 	var/initial_inline_html
@@ -47,11 +48,15 @@
  * state. You can begin sending messages right after initializing. Messages
  * will be put into the queue until the window finishes loading.
  *
- * optional assets list List of assets to inline into the html.
- * optional inline_html string Custom HTML to inject.
- * optional fancy bool If TRUE, will hide the window titlebar.
+ * optional strict_mode bool - Enables strict error handling and BSOD.
+ * optional fancy bool - If TRUE and if this is NOT a panel, will hide the window titlebar.
+ * optional assets list - List of assets to load during initialization.
+ * optional inline_html string - Custom HTML to inject.
+ * optional inline_js string - Custom JS to inject.
+ * optional inline_css string - Custom CSS to inject.
  */
 /datum/tgui_window/proc/initialize(
+		strict_mode = FALSE,
 		fancy = FALSE,
 		assets = list(),
 		inline_html = "",
@@ -79,6 +84,7 @@
 	// Generate page html
 	var/html = SStgui.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)
+	html = replacetextEx(html, "\[tgui:strictMode]", strict_mode)
 	// Inject assets
 	var/inline_assets_str = ""
 	for(var/datum/asset/asset in assets)
@@ -99,7 +105,7 @@
 		html = replacetextEx(html, "<!-- tgui:inline-html -->", inline_html)
 	// Inject inline JS
 	if (inline_js)
-		inline_js = "<script>\n[inline_js]\n</script>"
+		inline_js = "<script>\n'use strict';\n[inline_js]\n</script>"
 		html = replacetextEx(html, "<!-- tgui:inline-js -->", inline_js)
 	// Inject inline CSS
 	if (inline_css)
@@ -112,6 +118,20 @@
 	// Instruct the client to signal UI when the window is closed.
 	if(!is_browser)
 		winset(client, id, "on-close=\"uiclose [id]\"")
+
+/**
+ * public
+ *
+ * Reinitializes the panel with previous data used for initialization.
+ */
+/datum/tgui_window/proc/reinitialize()
+	initialize(
+		strict_mode = initial_strict_mode,
+		fancy = initial_fancy,
+		assets = initial_assets,
+		inline_html = initial_inline_html,
+		inline_js = initial_inline_js,
+		inline_css = initial_inline_css)
 
 /**
  * public
@@ -292,6 +312,18 @@
 	message_queue = null
 
 /**
+ * public
+ *
+ * Replaces the inline HTML content.
+ *
+ * required inline_html string HTML to inject
+ */
+/datum/tgui_window/proc/replace_html(inline_html = "")
+	client << output(url_encode(inline_html), is_browser \
+		? "[id]:replaceHtml" \
+		: "[id].browser:replaceHtml")
+
+/**
  * private
  *
  * Callback for handling incoming tgui messages.
@@ -334,12 +366,7 @@
 			client << link(href_list["url"])
 		if("cacheReloaded")
 			// Reinitialize
-			initialize(
-				fancy = initial_fancy,
-				assets = initial_assets,
-				inline_html = initial_inline_html,
-				inline_js = initial_inline_js,
-				inline_css = initial_inline_css)
+			reinitialize()
 			// Resend the assets
 			for(var/asset in sent_assets)
 				send_asset(asset)

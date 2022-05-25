@@ -33,7 +33,7 @@
 /datum/game_mode/dynamic/proc/pick_midround_rule(list/drafted_rules)
 	var/datum/dynamic_ruleset/rule = pick_ruleset(drafted_rules)
 	if (isnull(rule))
-		return
+		return null
 	current_midround_rulesets = drafted_rules - rule
 
 	midround_injection_timer_id = addtimer(
@@ -46,6 +46,8 @@
 	message_admins("DYNAMIC: Executing midround ruleset [rule] in [DisplayTimeText(ADMIN_CANCEL_MIDROUND_TIME)]. \
 		<a href='?src=[REF(src)];cancelmidround=[midround_injection_timer_id]'>CANCEL</a> | \
 		<a href='?src=[REF(src)];differentmidround=[midround_injection_timer_id]'>SOMETHING ELSE</a>")
+
+	return rule
 
 /// Fired after admins do not cancel a midround injection.
 /datum/game_mode/dynamic/proc/execute_midround_rule(datum/dynamic_ruleset/rule)

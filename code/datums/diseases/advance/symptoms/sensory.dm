@@ -43,7 +43,7 @@
 
 
 	if(A.stage >= 3)
-		M.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/dizziness)
+		M.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
 		M.adjust_drowsyness(-2)
 		M.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/speech/slurring/drunk)
 		M.adjust_timed_status_effect(-2 SECONDS, /datum/status_effect/confusion)

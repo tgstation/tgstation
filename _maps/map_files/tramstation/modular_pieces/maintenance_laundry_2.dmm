@@ -15,11 +15,14 @@
 /area/station/maintenance/port/aft)
 "x" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Clothing Storage";
-	req_one_access_txt = "12"
+	name = "Clothing Storage"
 	},
 /obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
 "y" = (
