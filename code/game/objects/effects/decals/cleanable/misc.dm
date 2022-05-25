@@ -349,7 +349,6 @@
 /**
  * Ignites the fuel pool. This should be the only way to ignite fuel pools.
  */
-
 /obj/effect/decal/cleanable/fuel_pool/proc/ignite()
 	if(burning)
 		return
@@ -377,7 +376,6 @@
 /**
  * Ignites other oil pools around itself. Should not be called directly.
  */
-
 /obj/effect/decal/cleanable/fuel_pool/proc/ignite_others()
 	for(var/obj/effect/decal/cleanable/fuel_pool/oil in range(1, get_turf(src)))
 		oil.ignite()
