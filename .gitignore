@@ -202,3 +202,5 @@ Temporary Items
 
 /data/*
 /data
+config/motd.txt
+/config/motd.txt
