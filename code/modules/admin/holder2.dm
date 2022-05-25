@@ -172,7 +172,9 @@ GLOBAL_PROTECT(href_token)
 
 /// Returns the feedback forum thread for the admin holder's owner, as according to DB.
 /datum/admins/proc/feedback_link()
-	if(world.time - last_forum_access_time <= 10 SECONDS)
+	// This intentionally does not follow the 10-second maximum TTL rule,
+	// as this can be reloaded through the Reload-Admins verb.
+	if(!isnull(cached_forum_link))
 		return cached_forum_link
 
 	last_forum_access_time = world.time
@@ -181,7 +183,8 @@ GLOBAL_PROTECT(href_token)
 
 	if(!feedback_query.Execute())
 		log_sql("Error retrieving feedback link for [src]")
-		return cached_forum_link
+		return FALSE
+
 	if(!feedback_query.NextRow())
 		return FALSE // no feedback link exists
 
