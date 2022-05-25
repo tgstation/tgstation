@@ -151,24 +151,20 @@
 	var/obj/item/organ/eyes/eyeballies = victim.getorgan(/obj/item/organ/eyes)
 
 	if(!eyeballies)
-		balloon_alert(user, "[victim] has no eyes!")
 		return ..()
 
 	user.do_attack_animation(victim, used_item = src)
 	victim.visible_message(span_warning("[user] presses [src] against [victim]'s skull!"), span_userdanger("[user] presses [src] against your skull!"))
 	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, victim)))
-		balloon_alert(user, "you fail to extract [victim]'s eyes!")
 		return
 
 	to_chat(victim, span_userdanger("You feel [src] pushing at your skull!"))
 	to_chat(user, span_notice("You apply more pressure to [src]."))
 	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, victim)))
-		balloon_alert(user, "you fail to extract [victim]'s eyes!")
 		return
 
 	var/obj/item/bodypart/head = victim.get_bodypart(BODY_ZONE_HEAD)
 	if(!head) //WUT
-		balloon_alert(user, "you fail to extract [victim]'s eyes!")
 		return
 
 	var/datum/wound/blunt/severe/severe_wound_type = /datum/wound/blunt/severe
@@ -183,7 +179,6 @@
 	log_combat(user, victim, "pierced skull of", src)
 
 	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, victim)))
-		balloon_alert(user, "you fail to extract [victim]'s eyes!")
 		return
 
 	if(!HAS_TRAIT(victim, TRAIT_BLIND))
