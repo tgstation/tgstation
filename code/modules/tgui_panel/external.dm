@@ -41,6 +41,6 @@
 	set category = "OOC"
 
 	message_admins("start")
-	for(var/window in tgui_windows)
-		var/datum/tgui_window/path_window = tgui_windows[window]
-		path_window.reinitialize()
+	for(var/window_id in tgui_windows)
+		var/datum/tgui_window/window = tgui_windows[window_id]
+		window.reinitialize()
