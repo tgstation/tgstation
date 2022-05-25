@@ -9,7 +9,7 @@
 	lifespan = 150
 	endurance = 35
 	yield = 5
-	maturation = 15
+	maturation = 10
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "olive-grow"
 	icon_dead = "olive-dead"
