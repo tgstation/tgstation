@@ -309,3 +309,20 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 4, /datum/reagent/consumable/sugar = 2)
 	foodtypes = DAIRY | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/mothsicle
+	name = "mothsicle"
+	desc = "A cute, sweet frozen treat shaped like SafetyMoth!"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
+	tastes = list("comforting sugar", "a hint of lint")
+	icon = 'icons/obj/food/frozen_treats.dmi'
+	icon_state = "mothsicle"
+
+/obj/item/food/mothsicle/Initialize(mapload)
+	. = ..()
+	if(prob(5))
+		name = "horrific mothsicle"
+		desc += " This particular one looks like it didn't follow safety protocols!."
+		icon = 'icons/obj/food/frozen_treats.dmi'
+		icon_state = "mothsicle_void"
+		tastes = list("a swirling abyss of distortion and hate")
