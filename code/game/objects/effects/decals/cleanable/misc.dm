@@ -361,7 +361,6 @@
  * Else, queues another call of this proc upon hotspot getting deleted and ignites other fuel pools around itself after 0.5 seconds.
  * THIS SHOULD NOT BE CALLED DIRECTLY.
  */
-
 /obj/effect/decal/cleanable/fuel_pool/proc/burn_process()
 	SIGNAL_HANDLER
 
