@@ -1,4 +1,0 @@
-author: "MidoriWroth"
-delete-after: True
-changes: 
-  - bugfix: "Removes an extra table in Meta atmos"
