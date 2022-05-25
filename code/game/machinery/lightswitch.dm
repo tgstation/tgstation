@@ -10,6 +10,8 @@
 	/// Set this to a string, path, or area instance to control that area
 	/// instead of the switch's location.
 	var/area/area = null
+	///Range of the light emitted when powered, but off
+	var/light_on_range = 1
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()
@@ -38,6 +40,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	luminosity = (machine_stat & NOPOWER) ? 0 : 1
 
 /obj/machinery/light_switch/update_icon_state()
+	set_light(area.lightswitch ? 0 : light_on_range)
 	icon_state = "[base_icon_state]"
 	if(machine_stat & NOPOWER)
 		icon_state += "-nopower"
