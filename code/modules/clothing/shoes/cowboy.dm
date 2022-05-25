@@ -16,7 +16,7 @@
 		occupants += bootsnake
 
 /obj/item/clothing/shoes/cowboy/Destroy()
-	for(var/mob/living//occupant in occupants)
+	for(var/mob/living/occupant in occupants)
 		occupant.forceMove(loc)
 	return ..()
 
