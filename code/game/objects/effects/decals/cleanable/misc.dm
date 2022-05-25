@@ -374,7 +374,7 @@
 	RegisterSignal(hotspot, COMSIG_PARENT_QDELETING, .proc/burn_process)
 
 /**
- * Ignites other oil pools around itself. Should not be called directly.
+ * Ignites other oil pools around itself.
  */
 /obj/effect/decal/cleanable/fuel_pool/proc/ignite_others()
 	for(var/obj/effect/decal/cleanable/fuel_pool/oil in range(1, get_turf(src)))
