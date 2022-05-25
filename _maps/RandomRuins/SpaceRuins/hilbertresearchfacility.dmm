@@ -13,7 +13,7 @@
 "av" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
-	name = "secured door";
+	name = "Secured Door";
 	req_access = list("away_generic3")
 	},
 /turf/open/floor/mineral/plastitanium,
