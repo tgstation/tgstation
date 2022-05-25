@@ -48,7 +48,7 @@
 			break
 		if(Snake)
 			alerted = viewers(7,src)
-	..()
+	. = ..()
 	if(LAZYLEN(alerted))
 		egged = world.time + SNAKE_SPAM_TICKS
 		for(var/mob/living/L in alerted)
