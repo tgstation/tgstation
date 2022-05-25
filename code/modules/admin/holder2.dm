@@ -181,9 +181,13 @@ GLOBAL_PROTECT(href_token)
 
 	if(!feedback_query.Execute())
 		log_sql("Error retrieving feedback link for [src]")
+		qdel(feedback_query)
 		return cached_forum_link
 	if(!feedback_query.NextRow())
+		qdel(feedback_query)
 		return FALSE // no feedback link exists
+
+	qdel(feedback_query)
 
 	cached_forum_link = feedback_query.item[1]
 	return cached_forum_link
