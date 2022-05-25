@@ -8,6 +8,10 @@ import { selectBackend } from './backend';
 import { Icon, Section, Stack } from './components';
 import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
+import { AntagInfo } from './interfaces/AntagInfo';
+import { Atmos } from './interfaces/Atmos';
+import { Chemistry } from './interfaces/Chemistry';
+import { NtOS } from './interfaces/NtOS';
 
 const requireInterface = require.context('./interfaces');
 
@@ -76,6 +80,7 @@ export const getRoutedComponent = store => {
     name => `./${name}.js`,
     name => `./${name}/index.tsx`,
     name => `./${name}/index.js`,
+    name => checkBundle(name),
   ];
   let esModule;
   while (!esModule && interfacePathBuilders.length > 0) {
@@ -98,4 +103,13 @@ export const getRoutedComponent = store => {
     return routingError('missingExport', name);
   }
   return Component;
+};
+
+/** Checks bundled interfaces for the respective file */
+const checkBundle = (name) => {
+  return AntagInfo[name]
+  || Atmos[name]
+  || Chemistry[name]
+  || NtOS[name]
+  || null;
 };

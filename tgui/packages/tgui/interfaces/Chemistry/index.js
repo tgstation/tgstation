@@ -1,17 +1,19 @@
 /**
 * Master list of chemistry interfaces.
 */
+export const Chemistry = {
+  "ChemAcclimator": "./Chemistry/interfaces/ChemAcclimator.js",
+  "ChemDebugSynthesizer": "./Chemistry/interfaces/ChemDebugSynthesizer.js",
+  "ChemDispenser": "./Chemistry/interfaces/ChemDispenser.js",
+  "ChemFilter": "./Chemistry/interfaces/ChemFilter.js",
+  "ChemHeater": "./Chemistry/interfaces/ChemHeater.js",
+  "ChemMaster": "./Chemistry/interfaces/ChemMaster.js",
+  "ChemPress": "./Chemistry/interfaces/ChemPress.js",
+  "ChemReactionChamber": "./Chemistry/interfaces/ChemReactionChamber.js",
+  "ChemRecipeDebug": "./Chemistry/interfaces/ChemRecipeDebug.js",
+  "ChemSplitter": "./Chemistry/interfaces/ChemSplitter.js",
+  "ChemSynthesizer": "./Chemistry/interfaces/ChemSynthesizer.js",
+  "Reagents": "./Chemistry/interfaces/Reagents.js",
+  "Thermometer": "./Chemistry/interfaces/Thermometer.js",
+};
 
-export { ChemAcclimator } from "./interfaces/Acclimator";
-export { ChemDebugSynthesizer } from "./interfaces/DebugSynthesizer";
-export { ChemDispenser } from "./interfaces/Dispenser";
-export { ChemFIlter } from "./interfaces/Filter";
-export { ChemHeater } from "./interfaces/Heater";
-export { ChemMaster } from "./interfaces/Master";
-export { ChemPress } from "./interfaces/Press";
-export { ChemReactionChamber } from "./interfaces/ReactionChamber";
-export { ChemRecipeDebug } from "./interfaces/RecipeDebug";
-export { ChemSplitter } from "./interfaces/Splitter";
-export { ChemSynthesizer } from "./interfaces/Synthesizer";
-export { Reagents } from "./interfaces/Reagents";
-export { Thermometer } from "./interfaces/Thermometer";

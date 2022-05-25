@@ -1,25 +1,26 @@
 /**
 * Master record of atmos programs.
 */
-
-export { AirAlarm } from "./interfaces/AirAlarm";
-export { AtmosAlertConsole } from "./interfaces/AlertConsole";
-export { AtmosControlConsole } from "./interfaces/ControlConsole";
-export { AtmosControlPanel } from "./interfaces/ControlPanel";
-export { AtmosFilter } from "./interfaces/Filter";
-export { AtmosMixer } from "./interfaces/Mixer";
-export { AtmosPump } from "./interfaces/Pump";
-export { AtmosTempGate } from "./interfaces/TempGate";
-export { AtmosTempPump } from "./interfaces/TempPump";
-export { GasAnalyzer } from "./interfaces/GasAnalyzer";
-export { PipeDispenser } from "./interfaces/PipeDispenser";
-export { PortablePump } from "./interfaces/PortablePump";
-export { PortableScrubber } from "./interfaces/PortableScrubber";
-export { SpaceHeater } from "./interfaces/SpaceHeater";
-export { Tank } from "./interfaces/Tank";
-export { TankCompressor } from "./interfaces/TankCompressor";
-export { TankDispenser } from "./interfaces/TankDispenser";
-export { ThermoMachine } from "./interfaces/ThermoMachine";
+export const Atmos = {
+  "AirAlarm": "./Atmos/interfaces/AirAlarm.js",
+  "AtmosAlertConsole": "./Atmos/interfaces/AlertConsole.js",
+  "AtmosControlConsole": "./Atmos/interfaces/ControlConsole.tsx",
+  "AtmosControlPanel": "./Atmos/interfaces/ControlPanel.js",
+  "AtmosFilter": "./Atmos/interfaces/Filter.js",
+  "AtmosMixer": "./Atmos/interfaces/Mixer.js",
+  "AtmosPump": "./Atmos/interfaces/Pump.js",
+  "AtmosTempGate": "./Atmos/interfaces/TempGate.js",
+  "AtmosTempPump": "./Atmos/interfaces/TempPump.js",
+  "GasAnalyzer": "./Atmos/interfaces/GasAnalyzer.tsx",
+  "PipeDispenser": "./Atmos/interfaces/PipeDispenser.js",
+  "PortablePump": "./Atmos/interfaces/PortablePump.js",
+  "PortableScrubber": "./Atmos/interfaces/PortableScrubber.js",
+  "SpaceHeater": "./Atmos/interfaces/SpaceHeater.js",
+  "Tank": "./Atmos/interfaces/Tank.js",
+  "TankCompressor": "./Atmos/interfaces/TankCompressor.js",
+  "TankDispenser": "./Atmos/interfaces/TankDispenser.js",
+  "ThermoMachine": "./Atmos/interfaces/ThermoMachine.js",
+};
 
 
 

@@ -1,18 +1,22 @@
 /**
 * Master record of antag info screens.
 */
+export const AntagInfo = {
+  "AntagInfoBrainwashed": "./AntagInfo/interfaces/Brainwashed.tsx",
+  "AntagInfoBrother": "./AntagInfo/interfaces/Brother.tsx",
+  "AntagInfoChangeling": "./AntagInfo/interfaces/Changeling.tsx",
+  "AntagInfoDemon": "./AntagInfo/interfaces/Demon.tsx",
+  "AntagInfoGangmember": "./AntagInfo/interfaces/Gangmember.tsx",
+  "AntagInfoGeneric": "./AntagInfo/interfaces/Generic.tsx",
+  "AntagInfoHeretic": "./AntagInfo/interfaces/Heretic.tsx",
+  "AntagInfoMalf": "./AntagInfo/interfaces/Malf.tsx",
+  "AntagInfoMorph": "./AntagInfo/interfaces/Morph.tsx",
+  "AntagInfoNightmare": "./AntagInfo/interfaces/Nightmare.tsx",
+  "AntagInfoSeparatist": "./AntagInfo/interfaces/Separatist.tsx",
+  "AntagInfoThief": "./AntagInfo/interfaces/Thief.tsx",
+  "AntagInfoTraitor": "./AntagInfo/interfaces/Traitor.tsx",
+  "AntagInfoWizard": "./AntagInfo/interfaces/Wizard.tsx",
+};
 
-export { AntagInfoBrainwashed } from "./interfaces/Brainwashed";
-export { AntagInfoBrother } from "./interfaces/Brother";
-export { AntagInfoChangeling } from "./interfaces/Changeling";
-export { AntagInfoDemon } from "./interfaces/Demon";
-export { AntagInfoGangmember } from "./interfaces/Gangmember";
-export { AntagInfoGeneric } from "./interfaces/Generic";
-export { AntagInfoHeretic } from "./interfaces/Heretic";
-export { AntagInfoMalf } from "./interfaces/Malf";
-export { AntagInfoMorph } from "./interfaces/Morph";
-export { AntagInfoNightmare } from "./interfaces/Nightmare";
-export { AntagInfoSeparatist } from "./interfaces/Separatist";
-export { AntagInfoThief } from "./interfaces/Thief";
-export { AntagInfoTraitor } from "./interfaces/Traitor";
-export { AntagInfoWizard } from "./interfaces/Wizard";
+
+
