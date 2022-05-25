@@ -131,7 +131,7 @@
 /datum/station_trait/announcement_changes
 	name = "Alert Database Mishap"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 10
+	weight = 3
 	show_in_report = TRUE
 	report_message = "The Biohazard Alert Database was recently damaged by a nearby solar flare. Biohazard announcements may be mixed up as a result."
 	blacklist = list(/datum/station_trait/announcement_changes)
