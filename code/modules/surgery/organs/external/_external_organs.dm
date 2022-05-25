@@ -60,9 +60,10 @@
 
 /obj/item/organ/external/Destroy()
 	if(owner)
-		// The special flag is important, because otherwise mobs can die
-		// while undergoing transformation into different mobs.
 		Remove(owner, special=TRUE)
+	else if(ownerlimb)
+		remove_from_limb()
+
 	return ..()
 
 /obj/item/organ/external/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
@@ -103,17 +104,19 @@
 ///Transfers the organ to the limb, and to the limb's owner, if it has one.
 /obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
 	if(owner)
-		Remove(owner, special = TRUE, moving = TRUE)
+		Remove(owner, moving = TRUE)
 	else if(ownerlimb)
 		remove_from_limb()
 
 	if(bodypart_owner)
-		Insert(bodypart_owner)
+		Insert(bodypart_owner, TRUE)
 	else
 		add_to_limb(bodypart)
 
-
+///Use transfer_to_limb() instead of this.
 /obj/item/organ/external/add_to_limb(obj/item/bodypart/bodypart)
+	PRIVATE_PROC(TRUE)
+
 	forceMove(bodypart, check_dest = FALSE)
 	ownerlimb = bodypart
 	ownerlimb.contents |= src
@@ -122,6 +125,8 @@
 
 ///Removes the organ from the limb. This proc assumes the organ_owner is null.
 /obj/item/organ/external/remove_from_limb()
+	PRIVATE_PROC(TRUE)
+
 	ownerlimb.external_organs -= src
 	if(ownerlimb.owner && external_bodytypes)
 		ownerlimb.synchronize_bodytypes(ownerlimb.owner)
