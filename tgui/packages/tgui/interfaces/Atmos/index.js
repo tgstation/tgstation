@@ -15,9 +15,11 @@ export { GasAnalyzer } from "./interfaces/GasAnalyzer";
 export { PipeDispenser } from "./interfaces/PipeDispenser";
 export { PortablePump } from "./interfaces/PortablePump";
 export { PortableScrubber } from "./interfaces/PortableScrubber";
+export { SpaceHeater } from "./interfaces/SpaceHeater";
 export { Tank } from "./interfaces/Tank";
 export { TankCompressor } from "./interfaces/TankCompressor";
 export { TankDispenser } from "./interfaces/TankDispenser";
 export { ThermoMachine } from "./interfaces/ThermoMachine";
-export { Thermometer } from "./interfaces/Thermometer";
+
+
 

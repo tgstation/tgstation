@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from 'tgui/backend';
+import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from 'tgui/components';
+import { Window } from 'tgui/layouts';
 
 export const SpaceHeater = (props, context) => {
   const { act, data } = useBackend(context);

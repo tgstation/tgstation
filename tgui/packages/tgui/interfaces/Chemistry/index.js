@@ -14,3 +14,4 @@ export { ChemRecipeDebug } from "./interfaces/RecipeDebug";
 export { ChemSplitter } from "./interfaces/Splitter";
 export { ChemSynthesizer } from "./interfaces/Synthesizer";
 export { Reagents } from "./interfaces/Reagents";
+export { Thermometer } from "./interfaces/Thermometer";
