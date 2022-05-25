@@ -1,53 +1,114 @@
-"a" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
-"i" = (/turf/closed/wall/vault/alien,/area/template_noop)
-"t" = (/turf/open/floor/vault/rock{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"w" = (/turf/closed/indestructible/riveted,/area/template_noop)
-"x" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"y" = (/turf/closed/wall/vault/rock,/area/template_noop)
-"G" = (/obj/machinery/door/puzzle/keycard{open_message = "The door hums ominously and slides open."; puzzle_id = "number1victoryroyale"},/turf/open/floor/vault/rock{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
-"I" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
-"N" = (/turf/closed/indestructible/rock,/area/template_noop)
-"P" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 1},/obj/structure/railing,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
-"R" = (/turf/template_noop,/area/template_noop)
-"T" = (/turf/open/chasm/lavaland,/area/template_noop)
-"W" = (/obj/modular_map_root/caves{key = "caves_lvl3segment3"; name = "lvl3segment3"},/turf/template_noop,/area/template_noop)
+"aa" = (/turf/closed/mineral/volcanic/lava_land_surface/hardened,/area/template_noop)
+"aw" = (/turf/closed/indestructible/riveted,/area/template_noop)
+"ax" = (/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aA" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/lightgeist,/turf/open/floor/vault/alien,/area/template_noop)
+"aI" = (/obj/modular_map_connector,/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"aN" = (/turf/closed/indestructible/rock,/area/template_noop)
+"aR" = (/turf/template_noop,/area/template_noop)
+"aT" = (/turf/open/chasm/lavaland,/area/template_noop)
+"bw" = (/obj/effect/spawner/structure/window/plasma,/turf/open/floor/vault/alien,/area/template_noop)
+"bz" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/asteroid/elite/herald,/turf/open/floor/vault/alien,/area/template_noop)
+"cL" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/faithless,/turf/open/floor/vault/alien,/area/template_noop)
+"dj" = (/obj/machinery/door/airlock/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"ed" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/multitool/abductor,/obj/item/screwdriver/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"ei" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/bear/russian,/turf/open/floor/vault/alien,/area/template_noop)
+"eH" = (/obj/structure/table/optable/abductor,/obj/effect/light_emitter,/obj/item/keycard{desc = "A small keycard with a strange symbol marked on it."; name = "strange keycard"; puzzle_id = "number1victoryroyale"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"gz" = (/obj/structure/table/abductor,/obj/item/veilrender/vealrender{name = "Exhibit 5634Mo - BeefKnife"},/turf/open/floor/vault/alien,/area/template_noop)
+"ha" = (/obj/structure/window/reinforced/plasma/fulltile{max_integrity = 10000},/turf/open/floor/vault/alien,/area/template_noop)
+"hK" = (/obj/structure/table/abductor,/obj/machinery/recharger,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"hY" = (/obj/structure/table/abductor,/obj/item/melee/baseball_bat{name = "Exhibit 5321nL - Knee Hittur"},/turf/open/floor/vault/alien,/area/template_noop)
+"jX" = (/obj/structure/statue/bananium/clown{name = "Exhibit 5635jG - Hunk"},/turf/open/floor/vault/alien,/area/template_noop)
+"kt" = (/obj/structure/chair/office/tactical{dir = 4},/turf/open/floor/vault/alien,/area/template_noop)
+"kz" = (/turf/closed/wall/vault/alien,/area/template_noop)
+"nB" = (/obj/machinery/door/poddoor{id = "exhibitstorage"},/turf/open/floor/vault/alien,/area/template_noop)
+"oy" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/lizard,/turf/open/floor/vault/alien,/area/template_noop)
+"oZ" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/hivebot,/turf/open/floor/vault/alien,/area/template_noop)
+"pS" = (/obj/structure/chair/office/tactical{dir = 8},/turf/open/floor/vault/alien,/area/template_noop)
+"qb" = (/turf/open/floor/plating,/area/template_noop)
+"qx" = (/obj/structure/table/abductor,/obj/item/storage/box/alienhandcuffs,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"qz" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/russian/ranged/trooper,/turf/open/floor/vault/alien,/area/template_noop)
+"qK" = (/obj/machinery/door/puzzle/keycard{open_message = "The door hums ominously and slides open."; puzzle_id = "number1victoryroyale"},/turf/open/floor/vault/alien,/area/template_noop)
+"rG" = (/obj/structure/fluff{desc = "A futuristic looking console. The lock screen is written in a strange font."; icon = 'icons/obj/abductor.dmi'; icon_state = "console"; name = "console"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"tn" = (/obj/structure/table/abductor,/obj/item/plunger{name = "Exhibit 9456pL - Suckler"},/turf/open/floor/vault/alien,/area/template_noop)
+"um" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/turf/open/floor/vault/alien,/area/template_noop)
+"uu" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/clothing/head/helmet/abductor,/obj/item/crowbar/abductor,/obj/item/clothing/under/abductor,/obj/item/clothing/suit/armor/abductor/vest,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"vD" = (/obj/structure/fluff{desc = "A man-sized tube with various surgical equipment."; icon = 'icons/obj/abductor.dmi'; icon_state = "experiment-open"; name = "experimentation machine"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"wd" = (/turf/closed/wall/mineral/abductor,/area/template_noop)
+"wo" = (/obj/structure/table/optable/abductor,/obj/effect/light_emitter,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"wt" = (/obj/structure/table/abductor,/obj/item/hand_labeler{name = "Exhibit 4523Mn - Namer"},/turf/open/floor/vault/alien,/area/template_noop)
+"wu" = (/obj/machinery/door/poddoor/preopen{id = "exhibitstorage"},/turf/open/floor/vault/alien,/area/template_noop)
+"wI" = (/obj/structure/table/abductor,/obj/item/oar{name = "Exhibit 4312mJ - Ore"},/turf/open/floor/vault/alien,/area/template_noop)
+"wQ" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/statue,/turf/open/floor/vault/alien,/area/template_noop)
+"xl" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava,/turf/open/floor/vault/alien,/area/template_noop)
+"xD" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/carp/ranged/chaos,/turf/open/floor/vault/alien,/area/template_noop)
+"zb" = (/obj/structure/fluff{desc = "A tank filled with replacement organs. There appears to be some sort of lock on it."; icon = 'icons/obj/abductor.dmi'; icon_state = "dispenser"; name = "replacement organ storage"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"Cz" = (/obj/structure/fluff{desc = "A strange looking platform used to teleport (un)willing victims."; icon = 'icons/obj/abductor.dmi'; icon_state = "alien-pad-idle"; name = "alien teleport pad"},/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"CC" = (/obj/machinery/door/airlock/abductor,/turf/open/floor/plating,/area/template_noop)
+"CV" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/skeleton/templar,/turf/open/floor/vault/alien,/area/template_noop)
+"DA" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/stock_parts/cell/infinite/abductor,/obj/item/wrench/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"DS" = (/obj/structure/railing/corner,/obj/structure/railing/corner{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"DZ" = (/obj/structure/table/abductor,/obj/structure/fluff{desc = "A highly detailed visualization of a space carp, projected outwards via hologram."; dir = 4; icon = 'icons/mob/carp.dmi'; icon_state = "holocarp"; name = "hologram of a space carp"},/turf/open/floor/vault/alien,/area/template_noop)
+"Ex" = (/obj/structure/table/abductor,/turf/open/floor/vault/alien,/area/template_noop)
+"Gh" = (/turf/open/floor/vault/alien,/area/template_noop)
+"Ht" = (/obj/structure/table/abductor,/obj/item/gun/ballistic/automatic/pistol/deagle/gold{name = "Exhibit 4523hJ - Dessert Beagle"},/turf/open/floor/vault/alien,/area/template_noop)
+"Jm" = (/obj/modular_map_root/caves{key = "caves_lvl3segment3"; name = "lvl3segment3"},/turf/template_noop,/area/template_noop)
+"Jo" = (/obj/structure/closet{icon_state = "abductor"; name = "alien closet"},/obj/item/wirecutters/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"JY" = (/obj/structure/bed/abductor,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"KY" = (/obj/structure/table/abductor,/obj/item/hand_labeler_refill{name = "Exhibit 4562kM - Namer Names"},/turf/open/floor/vault/alien,/area/template_noop)
+"LS" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/tree,/turf/open/floor/vault/alien,/area/template_noop)
+"LW" = (/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"Mj" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/mushroom,/turf/open/floor/vault/alien,/area/template_noop)
+"MX" = (/obj/machinery/door/airlock/abductor,/turf/open/floor/vault/alien,/area/template_noop)
+"Nw" = (/obj/structure/toilet{name = "Exhibit 452Aj - ToyLet"},/turf/open/floor/vault/alien,/area/template_noop)
+"NA" = (/obj/structure/table/abductor,/obj/item/mop/advanced{name = "Exhibit 4999Mp - Fluff Steck"},/turf/open/floor/vault/alien,/area/template_noop)
+"NH" = (/obj/structure/chair/office/tactical,/turf/open/floor/vault/alien,/area/template_noop)
+"OV" = (/obj/structure/table/abductor,/obj/item/retractor/alien,/obj/item/hemostat/alien,/obj/item/surgicaldrill/alien,/obj/item/cautery/alien,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"PI" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/giant_spider/hunter,/turf/open/floor/vault/alien,/area/template_noop)
+"QI" = (/obj/structure/railing{dir = 4},/turf/open/misc/asteroid/basalt/lava_land_surface,/area/template_noop)
+"RM" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/gorilla,/turf/open/floor/vault/alien,/area/template_noop)
+"Ve" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/asteroid/goldgrub,/turf/open/floor/vault/alien,/area/template_noop)
+"VP" = (/obj/structure/table/abductor,/obj/item/hemostat/alien,/obj/item/retractor/alien,/obj/item/circular_saw/alien,/obj/item/scalpel/alien,/turf/open/floor/plating/abductor{initial_gas_mix = "LAVALAND_ATMOS"},/area/template_noop)
+"Xa" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/syndicate/melee/spacebattle,/turf/open/floor/vault/alien,/area/template_noop)
+"XM" = (/obj/structure/bed/dogbed,/mob/living/simple_animal/hostile/pirate/melee,/turf/open/floor/vault/alien,/area/template_noop)
+"YD" = (/obj/structure/table/abductor,/obj/item/gun/magic/wand/resurrection{charges = 1; max_charges = 1; name = "Exhibit 452Jf - Heelies Stick"},/turf/open/floor/vault/alien,/area/template_noop)
+"YW" = (/obj/effect/decal/cleanable/dirt,/obj/structure/railing{dir = 1},/obj/structure/railing,/turf/open/floor/plating/lavaland_atmos,/area/template_noop)
 
 (1,1,1) = {"
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxIxxxwwwwwwwwwwwwwwwwwwwww
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaaaaaaxxxxxxaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaTaaaaaxxxxxaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiiiiiaaaaTTaaaaxxxxxxaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiitttiiaxxTTTaaaxxaxxxxxxxaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaitttttixxxPPPxxxxxaxxxxxxxxxaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaitttttGxxxTTTaxaaaaxxaaaxxxxaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaitttttixxaTTTaaaaxxxxaaaaaxxxaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaayaaaaaaaaaaaaaiitttiiaaaaTaaaaaaaaaaaaaaxxxxaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiitiiaaaaaTTaaaaaaaaaaaaaxxxxaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaTTTaaaaaaaaaaaaaaaxxaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaTTaaaaaaaaaaaaaaaxxaaaaaxxxxaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaTTTaaaaaaaaaaaaaxxxxxaaaxxxxxxxaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaTTTTaaaaaaaaaaaaaxxxxaaxxxxxxxxaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaTTTTTaaaaaaaaaaaaaxxxxxxxxxxxxxxaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaTTTTTTaaaaaaaaaaaxxxxxxxxxxxxxxaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaTTTTaaaaaaaaaaaaaaxxxxxxxxxxxxxxaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaTTaaaaaaaaaaaaaaaxxxxxxxxxxxxxxaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaTTaaaaaaaaaaaaaaaxxxxxxxxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaTTTaaaaaaaaaaaaaaxxxxxxxxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaTTaaaaaaaaaaaaaaaxxxxxxxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaTTaaaaaaaaaaaaaaxxxxxxxxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaTTTaaaaaaaaaaaaaxxxxxxxxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaTTTTTTTaaaaaaaaxTTTTTTxxxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaTTTaaaaaaaaaaaTTTTTTTTxxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaTTaaaaaaaaaaTTTTTTTTTTxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaTTTaaaaaaaaaTTTTTTTTTTxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaTTTaaaaaaaaaTTTTTTTTTTxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaTTTaaaaaaaaaTTTTTTTTTTxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaTTTTTTTTaaaaaaaaTTTTTTTTTTxxxxxxxxa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaTTTTaaaaaaaaTTTTTTTTTxxxxxxxxaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaTTTaaaaaaaaaxTTTTTTTTxxxxxxxxaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaTTTaaaaaaaaaxxTTTTTTxxxxxxxxaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaaTaaaaaaaaaaaaaaaaaxxxxxxaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Naaaaaaaxxxxxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-RRRRRRRRRRWRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+awawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawawaxaxaIaxaxaxawawawawawawawawawawawawawawawawawawawawaw
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzkzaakzkzkzkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzaaaakzaaaaaaaaaaaTaaaaaaaaaaaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzExkzkzExkzaakzExkzkzExkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzGhGhGhkzkzaakzaaaaaaaaaTaTaaaaaaaaaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzbwkzkzbwkzkzkzbwkzkzbwkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhkzkzkzkzaaaxQIaTaTaTaaaaaaaxaxaaaxaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzGhGhGhGhGhGhGhGhGhGhGhkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzjXbwGhGhGhGhGhkzGhGhkzaxaxDSYWYWYWaxaxaxaxaxaaaxaxaxaxaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhNHNHNHGhGhGhGhGhkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhMXGhGhqKaxaxQIaTaTaTaaaxaaaaaaaaaxaxaaaaaaaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzExbwGhGhGhGhExExDZExExGhGhGhGhbwExkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzNwbwGhGhGhGhGhkzGhGhkzaxaxaaaTaTaTaaaaaaaaaxaxaxaxaaaaaaaaaaaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhktExpSGhGhGhGhGhkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhkzkzkzkzaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhGhGhGhGhGhGhkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzGhGhGhkzkzaakzaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzExbwGhGhGhGhGhGhGhGhGhGhGhbwExkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzMXkzkzaaaakzaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhGhGhGhGhGhGhGhGhkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaaaaaaaaaaaxaxaxaxaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzhaMXhakzkzkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzHtbwGhGhGhbwYDkzkzaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaaaaaaaxaxaxaxaxaxaxaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhhaGhGhGhhaGhGhGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaaaaaxaxaxaxaxaxaxaxaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhaAGhnBGhGhGhnBGhoyGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzaaaakzaaaaaaaTaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxwdwdwdwdwdaxaxaxaxaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhhaGhGhGhhaGhGhGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaTaTaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxwdwdzbVPJYwdwdaxaxaxaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzGhGhGhkzkzkzkzkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzwtbwGhGhGhbwKYkzkzaaaaaaaaaTaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdCzLWLWLWuuwdaxaxaxaxaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdrGLWwoLWqxwdaxaxaxaxaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzaaaakzaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdvDLWLWLWJowdaxaxaxaxaxaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzkzkzkzkzaaaakzkzkzkzkzaaaakzkzkzkzkzGhGhGhkzkzkzkzkzaaaakzkzkzkzkzaaaakzkzkzkzkzaaaakzkzkzkzkzaaaakzkzkzkzkzaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdwdLWLWhKwdwdaxaxaxaxaxaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzGhGhGhkzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaakzNAbwGhGhGhbwhYkzkzaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxwdwddjwdwdaxaxaxaxaxaxaa
+aaaaaaaaaaaaaaaaaaaakzkzkzaakzkzkzaaaakzGhMjGhkzaaaakzGhbzGhkzaaaakzGhqzGhkzGhGhGhkzGhLSGhkzaaaakzGhxDGhkzaaaakzGheiGhkzaaaakzGhRMGhkzaaaakzGhoZGhkzaakzkzkzGhGhGhkzkzkzkzaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaa
+aaaaaaaaaaaaaaaaaaaakztnkzaakzwIkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzGhGhGhkzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaaaakzkzMXkzkzaaaakzaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxaxaxaxaxaxaxaxaxaxaa
+aaaaaaaakzkzkzkzkzkzkzbwkzkzkzbwkzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzGhGhGhkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzkzGhGhGhkzaaaakzaaaaaaaaaaaTaTaTaTaTaTaTaaaaaaaaaaaaaaaaaxaTaTaTaTaTaTaxaxaxaxaxaxaxaxaxaxaa
+aaaaaaaakzExGhExkzGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhkzaaaakzaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaxaxaxwdwdwdwdwdaxaa
+aaaaaaaakzGhGhGhhaGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhkzaaaakzaaaaaaaaaaaaaaaTaTaaaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdwdvDLWCzwdwdaa
+aaaaaaaakzGhGhGhMXGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhkzaaaakzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdLWLWLWLWzbwdaa
+aaaaaaaakzGhGhGhhaGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhGhkzaaaakzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxdjLWLWeHLWOVwdaa
+aaaaaaaakzGhumGhkzGhGhGhkzkzkzkzkzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzGhGhGhkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzhanBhakzkzkzkzkzkzCCkzkzaaaakzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdhKLWLWLWJYwdaa
+aaaaaaaakzkzkzkzkzGhGhGhkzaaaaaaaaaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzkzbwkzkzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzqbqbqbqbqbqbkzaaaaaakzaaaaaaaTaTaTaTaTaTaTaTaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxwdwdDAqxedwdwdaa
+aaaaaaaaaaaaaakzkzwuwuwukzkzaaaaaaaaaakzGhXaGhkzaaaakzGhwQGhkzaaaakzGhVeGhkzkzgzkzkzGhXMGhkzaaaakzGhPIGhkzaaaakzGhxlGhkzaaaakzGhCVGhkzaaaakzGhcLGhkzqbkzkzkzqbkzkzkzaaaakzaaaaaaaaaaaaaaaTaTaTaTaaaaaaaaaaaaaaaaaTaTaTaTaTaTaTaTaTaTaxaxwdwdwdwdwdaxaa
+aaaaaaaaaaaaaakzGhGhGhGhGhkzaaaaaaaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzkzkzkzkzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzaaaakzGhGhGhkzqbkzqbqbqbqbqbkzaaaakzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaxaTaTaTaTaTaTaTaTaxaxaxaxaxaxaxaxaaaa
+aaaaaaaaaaaaaakzGhGhGhGhGhkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzaaaaaakzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzqbkzqbqbqbqbqbkzaaaakzaaaaaaaaaaaaaaaTaTaTaaaaaaaaaaaaaaaaaaaxaxaTaTaTaTaTaTaxaxaxaxaxaxaxaxaaaaaa
+aaaaaaaaaaaaaakzGhGhGhGhGhqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbqbkzqbqbqbqbqbkzaaaakzaaaaaaaaaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaxaxaxaxaxaaaaaaaaaaaa
+aaaaaaaaaaaaaakzkznBkznBkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzkzaaaakzaaaaaaaaaaaaaaaaaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aNaaaaaaaaaaaaaaaxaxaxaxaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aRaRaRaRaRaRaRaRaRaRJmaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaRaR
 "}
