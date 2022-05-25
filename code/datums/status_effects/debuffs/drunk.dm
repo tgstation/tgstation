@@ -184,7 +184,7 @@
 
 	// Over 71, we will constantly have blurry eyes
 	if(drunk_value >= 71)
-		owner.blur_eyes(5)
+		owner.blur_eyes(drunk_value - 70)
 
 	// Over 81, we will gain constant toxloss
 	if(drunk_value >= 81)

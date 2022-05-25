@@ -992,7 +992,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	try
 		return json_decode(data)
 	catch
-		return
+		return null
 
 /proc/num2loadingbar(percent as num, numSquares = 20, reverse = FALSE)
 	var/loadstring = ""

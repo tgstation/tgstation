@@ -261,3 +261,21 @@ Byond.winget(null, 'url').then((serverUrl) => {
   Byond.command('.quit');
 });
 ```
+
+## Strict Mode
+
+Strict mode is a flag that you can set on tgui window.
+
+```dm
+window.initialize(strict_mode = TRUE)
+```
+
+If `TRUE`, unhandled errors and common mistakes result in a blue screen of death with a stack trace of the error, which you can use to debug it. Bluescreened window stops handling incoming messages and closes the active instance of tgui datum if there was one, to avoid a massive spam of errors and help to deal with them one by one.
+
+It can be defined in `window.initialize()` in DM, as shown above, or changed in runtime at runtime via `Byond.strictMode` to `true` or `false`.
+
+```js
+Byond.strictMode = true;
+```
+
+It is recommended that you keep this **ON** to detect hard to find bugs.
