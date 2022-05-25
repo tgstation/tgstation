@@ -157,12 +157,10 @@
 		to_chat(ai_player, alertstr)
 
 	if(!do_after(user, 3 SECONDS, src, IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | IGNORE_HELD_ITEM | IGNORE_INCAPACITATED | IGNORE_SLOWDOWNS, extra_checks = CALLBACK(src, .proc/scan_checks, user, user_area, objective)))
-		balloon_alert(user, "scan failed!")
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
 
 	playsound(user, 'sound/machines/ding.ogg', 100, TRUE)
-	balloon_alert(user, "scan successful!")
 	objective.triangulation_locations[user_area.type] = FALSE
 	for(var/area/scan_area in objective.triangulation_locations)
 		if(objective.triangulation_locations[scan_area])
