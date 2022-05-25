@@ -476,7 +476,7 @@
 /datum/id_trim/job/security_officer/science
 	assignment = "Security Officer (Science)"
 	trim_state = "trim_securityofficer_sci"
-	department_access = list(ACCESS_AUX_BASE, ACCESS_GENETICS, ACCESS_ORDNANCE, ACCESS_ORDNANCE_STORAGE, ACCESS_RESEARCH, ACCESS_ROBOTICS, ACCESS_SCIENCE, ACCESS_XENOBIOLOGY, ACCESS_ROBOTICS)
+	department_access = list(ACCESS_AUX_BASE, ACCESS_GENETICS, ACCESS_ORDNANCE, ACCESS_ORDNANCE_STORAGE, ACCESS_RESEARCH, ACCESS_ROBOTICS, ACCESS_SCIENCE, ACCESS_XENOBIOLOGY)
 
 /datum/id_trim/job/shaft_miner
 	assignment = "Shaft Miner"
