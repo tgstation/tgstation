@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { AnimatedNumber, Button, LabeledList, ProgressBar, Section } from '../components';
-import { BeakerContents } from './common/BeakerContents';
+import { BeakerContents } from './Chemistry/common/BeakerContents';
 import { Window } from '../layouts';
 
 const damageTypes = [

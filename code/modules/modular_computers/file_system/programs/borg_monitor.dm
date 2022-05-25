@@ -10,6 +10,8 @@
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
 	program_icon = "project-diagram"
+	/// Determines if the tgui is in syndicate theme
+	var/syndi_theme = FALSE
 	var/emagged = FALSE ///Bool of if this app has already been emagged
 	var/list/loglist = list() ///A list to copy a borg's IC log list into
 	var/mob/living/silicon/robot/DL_source ///reference of a borg if we're downloading a log, or null if not.
@@ -108,6 +110,7 @@
 		)
 		data["cyborgs"] += list(cyborg_data)
 		data["DL_progress"] = DL_progress
+	data["syndi_theme"] = syndi_theme
 	return data
 
 /datum/computer_file/program/borg_monitor/ui_static_data(mob/user)
@@ -170,7 +173,7 @@
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
 	transfer_access = list()
-	tgui_id = "NtosCyborgRemoteMonitorSyndicate"
+	syndi_theme = TRUE
 
 /datum/computer_file/program/borg_monitor/syndicate/run_emag()
 	return FALSE

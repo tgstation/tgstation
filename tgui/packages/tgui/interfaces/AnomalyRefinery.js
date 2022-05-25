@@ -1,15 +1,7 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Button,
-  Icon,
-  Modal,
-  Section,
-  Stack,
-  LabeledList,
-  Box,
-} from '../components';
+import { Box, Button, Icon, LabeledList, Modal, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { GasmixParser } from './common/GasmixParser';
+import { GasmixParser } from './Atmos/common/GasmixParser';
 
 export const AnomalyRefinery = (props, context) => {
   const { act, data } = useBackend(context);

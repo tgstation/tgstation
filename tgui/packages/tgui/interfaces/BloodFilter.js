@@ -1,7 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { Stack } from '../components';
 import { Window } from '../layouts';
-import { ChemFilterPane } from './ChemFilter';
+import { ChemFilterPane } from './Chemistry/interfaces/Filter';
 
 export const BloodFilter = (props, context) => {
   const { act, data } = useBackend(context);

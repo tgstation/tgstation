@@ -9,6 +9,8 @@
 	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
 	size = 5
 	tgui_id = "NtosRadar"
+	/// Gives the ntos window a syndicate theme
+	var/syndi_theme = FALSE
 	///List of trackable entities. Updated by the scan() proc.
 	var/list/objects
 	///Ref of the last trackable object selected by the user in the tgui window. Updated in the ui_act() proc.
@@ -49,6 +51,7 @@
 	data["selected"] = selected
 	data["objects"] = list()
 	data["scanning"] = (world.time < next_scan)
+	data["syndi_theme"] = syndi_theme
 	for(var/list/i in objects)
 		var/list/objectdata = list(
 			ref = i["ref"],
@@ -305,10 +308,10 @@
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
-	tgui_id = "NtosRadarSyndicate"
 	program_icon = "bomb"
 	arrowstyle = "ntosradarpointerS.png"
 	pointercolor = "red"
+	syndi_theme = TRUE
 
 /datum/computer_file/program/radar/fission360/run_program(mob/living/user)
 	. = ..()
