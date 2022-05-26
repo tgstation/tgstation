@@ -55,10 +55,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
-	if(machine_stat & NOPOWER)
-		. += "It is unpowered."
-	else
-		. += "It is [area.lightswitch ? "on" : "off"]."
+	. += "It is [(machine_stat & NOPOWER) ? "unpowered" : (area.lightswitch ? "on" : "off")]."
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
