@@ -942,5 +942,5 @@
 
 /obj/effect/mapping_helpers/airlock/access/all/admin/bar/get_access()
 	var/list/access_list = ..()
-	access_list += ACCESS_CENT_CAPTAIN
+	access_list += ACCESS_CENT_BAR
 	return access_list
