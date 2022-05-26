@@ -221,9 +221,6 @@
 /datum/action/cooldown/spell/Activate(atom/cast_on)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	// We start a "buffer cooldown" to prevent spam clicks
-	StartCooldown(cooldown_time / 4)
-
 	// Pre-casting of the spell
 	// Pre-cast is the very last chance for a spell to cancel
 	// Stuff like target input can go here.

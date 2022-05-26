@@ -23,7 +23,7 @@
 	if(QDELETED(src) || QDELETED(caster) || QDELETED(chosen) || !can_cast_spell())
 		return FALSE
 
-	if(get_dist(chosen, caster) < target_radius)
+	if(get_dist(chosen, caster) > target_radius)
 		caster.balloon_alert(caster, "they're too far!")
 		return FALSE
 

@@ -1,7 +1,5 @@
 /datum/action/cooldown/spell/touch
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
-	// Touch spells don't after_cast:
-	// Sound and invocation is handled when the touch ACTUALLY hits a target
 	sound = 'sound/items/welder.ogg'
 	invocation = "High Five!"
 	invocation_type = INVOCATION_SHOUT
