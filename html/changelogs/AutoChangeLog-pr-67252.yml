@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - code_imp: "Added checks for several commonly misplaced structures"
+  - bugfix: "Fixed several overlapping structures on IceBox, Tram, and several CTF maps"

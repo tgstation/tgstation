@@ -1,0 +1,6 @@
+author: "fippefi"
+delete-after: True
+changes: 
+  - bugfix: "All request consoles on Icebox have been fixed to a new standard! No more Unknown request console sitting in the kitchen."
+  - bugfix: "Request consoles should more often default to a sane name instead of Unknown."
+  - code_imp: "Request console naming and subscription code has been redefined to work better with mapping. Auto-names, too!"

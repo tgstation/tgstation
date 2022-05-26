@@ -1,0 +1,5 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - refactor: "sm cascade walls are no longer turfs, but are object, no player facing changes"
+  - bugfix: "fixed announcement text and removed <bold></bold> texts"
