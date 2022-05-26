@@ -178,7 +178,11 @@
 		if("l_hand")
 			choose_any_item(slot)
 		if("back")
-			options = typesof(/obj/item/storage/backpack) + typesof(/obj/item/mod/control/pre_equipped)
+			options = typesof(/obj/item/storage/backpack)
+			for(var/obj/item/mod/control/pre_equipped/potential_mod as anything in typesof(/obj/item/mod/control/pre_equipped))
+				if(!(potential_mod.slot_flags == ITEM_SLOT_BACK))
+					continue
+				options |= potential_mod
 		if("r_hand")
 			choose_any_item(slot)
 
