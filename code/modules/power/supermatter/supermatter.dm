@@ -266,6 +266,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/cascade_initiated = FALSE
 	///Reference to the warp effect
 	var/atom/movable/supermatter_warp_effect/warp
+	///Is the environment suitable for atmos processing?
+	var/can_process_atmos
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()

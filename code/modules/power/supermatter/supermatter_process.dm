@@ -35,36 +35,20 @@
 		else
 			psy_overlay = FALSE
 	damage_archived = damage
-	if(!removed || !removed.total_moles() || isspaceturf(local_turf)) //we're in space or there is no gas to process
-		if(takes_damage)
-			damage += max((power / 1000) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
-		if(!istype(env, /datum/gas_mixture/immutable) && produces_gas && power) //There is no gas to process, but we are not in a space turf. Lets make them.
-			//Power * 0.55 * a value between 1 and 0.8
-			var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
-			//Can't do stuff if it's null, so lets make a new gasmix.
-			removed = new()
-			//Since there is no gas to process, we will produce as if heat penalty is 1 and temperature at TCMB.
-			removed.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
-			removed.temperature = ((device_energy) / THERMAL_RELEASE_MODIFIER)
-			removed.temperature = max(TCMB, min(removed.temperature, 2500))
-			removed.gases[/datum/gas/plasma][MOLES] = max((device_energy) / PLASMA_RELEASE_MODIFIER, 0)
-			removed.gases[/datum/gas/oxygen][MOLES] = max(((device_energy + TCMB) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
-			removed.garbage_collect()
-			env.merge(removed)
-			air_update_turf(FALSE, FALSE)
-	else
-		if(takes_damage)
-			//causing damage
-			deal_damage(removed)
-
+	can_process_atmos = (removed && removed.total_moles() && !isspaceturf(local_turf)) ? TRUE : FALSE
+	if(takes_damage)
+		//causing damage
+		deal_damage(removed)
+	if(!can_process_atmos)
+		//Processes damage in an environment without any gas, and attempt to get into an atmos processable state if the turf is not immutable.
+		process_atmos_independant(env, removed, local_turf)
+	if(can_process_atmos)
 		//registers the current enviromental gases in the various lists and vars
 		setup_lists(removed)
 		//some gases can have special interactions
 		special_gases_interactions(env, removed)
 		//main power calculations proc
 		power_calculations(env, removed)
-		//irradiate at this point
-		emit_radiation()
 		//handles temperature increase and gases made by the crystal
 		temperature_gas_production(env, removed)
 
@@ -84,6 +68,8 @@
 
 	//handles hallucinations and the presence of a psychiatrist
 	psychological_examination()
+	//irradiate at this point
+	emit_radiation()
 
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
@@ -155,6 +141,43 @@
 	//Takes the lower number between archived damage + (1.8) and damage
 	//This means we can only deal 1.8 damage per function call
 	damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
+
+/obj/machinery/power/supermatter_crystal/proc/process_atmos_independant(datum/gas_mixture/env, datum/gas_mixture/removed, turf/local_turf)
+	if(takes_damage)
+		damage += max((power / 1000) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
+	if(!istype(env, /datum/gas_mixture/immutable) && produces_gas && power) //Produces gases in an environment that can accept them, without relying on gases existing in the first place.
+		//Power * 0.55 * a value between 1 and 0.8
+		var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
+		//Can't do stuff if it's null, so lets make a new gasmix.
+		removed = new()
+		//Since there is no gas to process, we will produce as if heat penalty is 1 and temperature at TCMB.
+		removed.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+		removed.temperature = ((device_energy) / THERMAL_RELEASE_MODIFIER)
+		removed.temperature = max(TCMB, min(removed.temperature, 2500))
+		removed.gases[/datum/gas/plasma][MOLES] = max((device_energy) / PLASMA_RELEASE_MODIFIER, 0)
+		removed.gases[/datum/gas/oxygen][MOLES] = max(((device_energy + TCMB) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+		removed.garbage_collect()
+		env.merge(removed)
+		air_update_turf(FALSE, FALSE)
+		can_process_atmos = TRUE
+
+	//Zap without relying on atmos.
+	//Zaps around 2.5 seconds at 1500 MeV, limited to 0.5 from 4000 MeV and up
+	if(power && (last_power_zap + 4 SECONDS - (power * 0.001)) < world.time)
+		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
+		hue_angle_shift = clamp(903 * log(10, (power + 8000)) - 3590, -50, 240)
+		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
+		supermatter_zap(
+			zapstart = src,
+			range = 3,
+			zap_str = 2.5 * power,
+			zap_flags = ZAP_SUPERMATTER_FLAGS,
+			zap_cutoff = 300,
+			power_level = power,
+			color = zap_color,
+		)
+		last_power_zap = world.time
+
 
 /obj/machinery/power/supermatter_crystal/proc/setup_lists(datum/gas_mixture/removed)
 
