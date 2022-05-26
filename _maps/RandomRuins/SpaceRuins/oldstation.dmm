@@ -7443,6 +7443,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east{
+	start_charge = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "Ka" = (
@@ -8364,7 +8367,9 @@
 /area/ruin/space/ancientstation/delta/hall)
 "RO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west{
+	start_charge = 0
+	},
 /obj/structure/cable,
 /turf/open/floor/plating/rust,
 /area/ruin/space/ancientstation/charlie/hall)
