@@ -29,9 +29,8 @@
 
 /turf/closed/mineral/Initialize(mapload)
 	. = ..()
-	var/matrix/M = new
-	M.Translate(-4, -4)
-	transform = M
+	// Wallening todo: Mineral walls used to be offset down and left 4 pixels, so they looked right with the squish stuff basalt tiles do
+	// We need to figure out if this is behavior that needs to be retained
 	icon = smooth_icon
 
 

@@ -151,10 +151,13 @@
 	wires = set_wires()
 	if(frequency)
 		set_frequency(frequency)
-	if(glass)
+	if(glass && !istype(greyscale_config, /datum/greyscale_config/airlocks/custom))
 		airlock_material = "glass"
 		greyscale_config = /datum/greyscale_config/airlocks/window
 		greyscale_colors = (copytext(greyscale_colors, 1, 43))
+		update_greyscale()
+	else if(istype(greyscale_config, /datum/greyscale_config/airlocks))
+		greyscale_colors = (copytext(greyscale_colors, 1, 36))
 		update_greyscale()
 	if(security_level > AIRLOCK_SECURITY_IRON)
 		atom_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
