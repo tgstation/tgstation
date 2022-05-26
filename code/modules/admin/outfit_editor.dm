@@ -178,7 +178,7 @@
 		if("l_hand")
 			choose_any_item(slot)
 		if("back")
-			options = typesof(/obj/item/storage/backpack)
+			options = typesof(/obj/item/storage/backpack) + typesof(/obj/item/mod/control/pre_equipped)
 		if("r_hand")
 			choose_any_item(slot)
 
