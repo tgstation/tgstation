@@ -192,13 +192,11 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 			return
 		if(!is_type_in_typecache(harvesting_item, required_tools))
 			//Check to see if wooden flora is being attacked by a saw item (letting the items on/off state control this is better than putting them in the list)
-			if(flora_flags & FLORA_WOODEN)
-				if(harvesting_item.item_flags & TOOL_SAW)
-					return TRUE
+			if((flora_flags & FLORA_WOODEN) && (harvesting_item.item_flags & TOOL_SAW))
+				return TRUE
 			//Check to see if stone flora is being attacked by a mining item (same reason as above)
-			if(flora_flags & FLORA_STONE)
-				if(harvesting_item.item_flags & TOOL_MINING)
-					return TRUE
+			if((flora_flags && FLORA_STONE) && (harvesting_item.item_flags && TOOL_MINING))
+				return TRUE
 			return
 	return TRUE
 
