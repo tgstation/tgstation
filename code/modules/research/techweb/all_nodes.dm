@@ -880,8 +880,8 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
-/datum/techweb_node/ai
-	id = "ai"
+/datum/techweb_node/ai_basic
+	id = "ai_basic"
 	display_name = "Artificial Intelligence"
 	description = "AI unit research."
 	prereq_ids = list("adv_robotics")
@@ -892,44 +892,51 @@
 		"mecha_tracking_ai_control",
 		"aifixer",
 		"aiupload",
-		// AI equipment goes above, CORE modules go below
 		"reset_module",
 		"asimov_module",
-		"asimovpp_module",
 		"default_module",
-		"corporate_module",
-		"robocop_module",
-		"overlord_module",
+		"nutimov_module",
 		"paladin_module",
+		"robocop_module",
+		"corporate_module",
+		"drone_module",		
+		"oxygen_module",
+		"safeguard_module",
+		"protectstation_module",
+		"quarantine_module",
+		"freeform_module",
+		"remove_module",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	
+/datum/techweb_node/ai_adv
+	id = "ai_adv"
+	display_name = "Advanced Artificial Intelligence"
+	description = "State of the art lawsets to be used for AI research."
+	prereq_ids = list("ai_basic")
+	design_ids = list(
+		"asimovpp_module",
 		"paladin_devotion_module",
-		"freeformcore_module",
-		"tyrant_module",
 		"dungeon_master_module",
 		"painter_module",
-		"nutimov_module",
 		"ten_commandments_module",
 		"hippocratic_module",
 		"maintain_module",
 		"liveandletlive_module",
-		"peacekeeper_module",
 		"reporter_module",
 		"hulkamania_module",
-		"drone_module",
+		"peacekeeper_module",
+		"overlord_module",
+		"tyrant_module",
 		"antimov_module",
 		"balance_module",
 		"thermurderdynamic_module",
 		"damaged_module",
-		// CORE modules goes above, regular modules go below
-		"freeform_module",
+		"freeformcore_module",
 		"onehuman_module",
-		"oxygen_module",
-		"safeguard_module",
-		"protectstation_module",
 		"purge_module",
-		"quarantine_module",
-		"remove_module",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /////////////////////////EMP tech/////////////////////////
 /datum/techweb_node/emp_basic //EMP tech for some reason
