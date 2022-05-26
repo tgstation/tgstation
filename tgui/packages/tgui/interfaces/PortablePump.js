@@ -6,7 +6,7 @@ import { PortableBasicInfo } from './common/PortableAtmos';
 export const PortablePump = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    direction,
+    into_pump_or_port,
     source_one,
     source_two,
     target_pressure,
@@ -25,9 +25,9 @@ export const PortablePump = (props, context) => {
           buttons={(
             <Button
               content={
-                direction
-                  ? source_one + ' → ' + source_two
-                  : source_two + ' → ' + source_one
+                into_pump_or_port
+                  ? area_or_tank + ' → ' + pump_or_port
+                  : pump_or_port + ' → ' + area_or_tank
               }
               onClick={() => act('direction')} />
           )}>
