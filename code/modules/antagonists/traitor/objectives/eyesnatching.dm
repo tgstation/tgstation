@@ -188,7 +188,7 @@
 	victim.emote("scream")
 	playsound(victim, 'sound/surgery/retractor2.ogg', 100, TRUE)
 	playsound(victim, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
-	eyeballies.Remove(victim, TRUE)
+	eyeballies.Remove(victim)
 	eyeballies.forceMove(get_turf(victim))
 	used = TRUE
 	desc += " It has been used up."

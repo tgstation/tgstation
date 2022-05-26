@@ -13,7 +13,7 @@
 /datum/traitor_objective/kidnapping
 	name = "Kidnap %TARGET% the %JOB TITLE% and deliver them to %AREA%"
 	description = "%TARGET% holds extremely important information regarding secret NT projects - and you'll need to kidnap and deliver them to %AREA%, where our transport pod will be waiting. \
-				   You'll get additional reward if %TARGET% is delivered alive."
+		You'll get additional reward if %TARGET% is delivered alive."
 
 	abstract_type = /datum/traitor_objective/kidnapping
 
@@ -216,8 +216,7 @@
 	if(cargo_account) //Just in case
 		cargo_account.adjust_money(-min(rand(1000, 3000), cargo_account.account_balance)) //Not so much, especially for competent cargo. Plus this can't be mass-triggered like it has been done with contractors
 
-	priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. \
-					  As is policy we've taken a portion of the station's funds to offset the overall cost.","Nanotrasen Asset Protection", has_important_message = TRUE)
+	priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
 
 	addtimer(CALLBACK(src, .proc/handle_victim, sent_mob), 1.5 SECONDS)
 
@@ -242,8 +241,8 @@
 	sent_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness)
 	sent_mob.blur_eyes(5 SECONDS)
 	to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
-					we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
-					so it's only a matter of time before we ship you back...\"</i>")))
+		we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
+		so it's only a matter of time before we ship you back...\"</i>")))
 
 /datum/traitor_objective/kidnapping/proc/return_victim(mob/living/carbon/human/sent_mob)
 	if(!sent_mob || QDELETED(sent_mob)) //suicided and qdeleted themselves
@@ -259,7 +258,7 @@
 		var/turf/new_turf = get_safe_random_station_turf()
 		if(!new_turf) //SOMEHOW
 			to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Seems where you got sent here from won't \
-					be able to handle our pod... You will die here instead.\"</i></span>")))
+				be able to handle our pod... You will die here instead.\"</i></span>")))
 			if (sent_mob.can_heartattack())
 				sent_mob.set_heartattack(TRUE)
 			return
