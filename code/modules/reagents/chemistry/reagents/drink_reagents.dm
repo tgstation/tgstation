@@ -1270,3 +1270,33 @@
 	glass_name = "vanilla dream smoothie"
 	glass_desc = "A classic drink made with vanilla and fresh cream."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/lean
+	name = "Lean"
+	description = "The drank that makes you go wheezy."
+	color = "#C914BC"
+	quality = DRINK_NICE
+	nutriment_factor = 0
+	taste_description = "purple and a hint of opioid."
+	glass_icon_state = "lean"
+	glass_name = "lean"
+	glass_desc = "The drank that makes you go wheezy."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	addiction_types = list(/datum/addiction/opiods = 6)
+
+/datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(M.slurring < 3)
+		M.slurring += 2 * REM * delta_time
+	if(M.druggy < 3)
+		M.adjust_drugginess(1 * REM * delta_time)
+	if(M.drowsyness < 3)
+		M.adjust_drowsyness(1 * REM * delta_time)
+	return ..()
+
+/datum/reagent/consumable/strabeque
+	name = "Strabeque"
+	description = "What your grandma used to put on meatballs."
+	color = "#A80A44"
+	nutriment_factor = 0
+	taste_description = "tangy and sweet"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

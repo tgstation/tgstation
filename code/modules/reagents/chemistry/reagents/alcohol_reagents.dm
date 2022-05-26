@@ -2829,3 +2829,45 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(drinker.hallucination < hal_cap && DT_PROB(5, delta_time))
 		drinker.hallucination += hal_amt
 	..()
+
+/datum/reagent/consumable/ethanol/strabequbilk
+	name = "Strabequbilk"
+	description = "This is an unholy abomination."
+	color = "#C67593"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+	boozepwr = 10
+	taste_description = "creamy and tangy misery with a hint of sweetness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/strabequbilk/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.getBruteLoss() && DT_PROB(10, delta_time))
+		drinker.heal_bodypart_damage(brute = 1)
+		drinker.adjustToxLoss(2)
+		to_chat(drinker, span_danger("Your bruises get better but your insides feel like an oven."))
+		. = TRUE
+	return ..() || .
+
+/datum/reagent/consumable/ethanol/leagas
+	name = "Leagas"
+	description = "An utterly terrifying mixture of lean and welding fuel."
+	color = "#992C2C" // rgb: 102, 67, 0
+	boozepwr = 50
+	taste_description = "headaches, purple, and the void"
+	addiction_types = list(/datum/addiction/alcohol = 3, /datum/addiction/maintenance_drugs = 1)
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/beveragegod
+	name = "Beverage of the Gods"
+	description = "Through the alchemy of the most unholiest drinks, you have created something that surpasses all of man."
+	color = "#000000" // rgb: 102, 67, 0
+	boozepwr = 150
+	taste_description = "everything yet nothing at all"
+	addiction_types = list(/datum/addiction/alcohol = 15, /datum/addiction/maintenance_drugs = 10)
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/beveragegod/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(DT_PROB(10, delta_time))
+		drinker.heal_bodypart_damage(10)
+		to_chat(drinker, span_danger("You feel all your pain and issues melt away."))
+		. = TRUE
+	return ..() ||

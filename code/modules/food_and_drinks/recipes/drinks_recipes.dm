@@ -790,3 +790,22 @@
 	results = list(/datum/reagent/consumable/vanilla_dream = 3)
 	required_reagents = list(/datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/consumable/cream = 1)
 
+/datum/chemical_reaction/drink/lean
+	results = list(/datum/reagent/consumable/lean = 4)
+	required_reagents = list(/datum/reagent/medicine/morphine = 1, /datum/reagent/consumable/space_up = 3)
+
+/datum/chemical_reaction/drink/strabeque
+	results = list(/datum/reagent/consumable/strabeque = 2)
+	required_reagents = list(/datum/reagent/consumable/bbqsauce = 1, /datum/reagent/consumable/berryjuice = 1)
+
+/datum/chemical_reaction/drink/strabequbilk
+	results = list(/datum/reagent/consumable/ethanol/strabequbilk = 2)
+	required_reagents = list(/datum/reagent/consumable/ethanol/bilk = 1, /datum/reagent/consumable/strabeque = 1)
+
+/datum/chemical_reaction/drink/leagas
+	results = list(/datum/reagent/consumable/ethanol/leagas = 2)
+	required_reagents = list(/datum/reagent/consumable/lean = 1, /datum/reagent/fuel = 1)
+
+/datum/chemical_reaction/drink/beveragegod
+	results = list(/datum/reagent/consumable/ethanol/beveragegod = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/leagas = 1, /datum/reagent/consumable/ethanol/strabequbilk = 1)
