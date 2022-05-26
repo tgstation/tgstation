@@ -36,7 +36,7 @@
 		else
 			psy_overlay = FALSE
 	damage_archived = damage
-	can_process_atmos = (removed && removed.total_moles() && !isspaceturf(local_turf)) ? TRUE : FALSE
+	can_process_atmos = (removed && removed.total_moles() && !isspaceturf(local_turf))
 	if(takes_damage)
 		//causing damage
 		deal_damage(removed)
