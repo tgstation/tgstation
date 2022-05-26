@@ -54,6 +54,41 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/atmospherics/pipe/(?<type>[/\w]*)
     echo "ERROR: found multiple identical pipes on the same tile, please remove them."
     st=1
 fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/barricade/(?<type>[/\w]*),\n[^)]*?/obj/structure/barricade/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple identical barricades on the same tile, please remove them."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/table/(?<type>[/\w]*),\n[^)]*?/obj/structure/table/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple identical tables on the same tile, please remove them."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/chair/(?<type>[/\w]*),\n[^)]*?/obj/structure/chair/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple identical chairs on the same tile, please remove them."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/closet/(?<type>[/\w]*),\n[^)]*?/obj/structure/closet/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple identical closets on the same tile, please remove them."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/grille/(?<type>[/\w]*),\n[^)]*?/obj/structure/grille/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple identical grilles on the same tile, please remove them."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/girder/(?<type>[/\w]*),\n[^)]*?/obj/structure/girder/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple identical girders on the same tile, please remove them."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/stairs/(?<type>[/\w]*),\n[^)]*?/obj/structure/stairs/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple identical stairs on the same tile, please remove them."
+	st=1
+fi;
 if grep -rzoP 'machinery/door.*{([^}]|\n)*name = .*("|\s)(?!of|and|to)[a-z].*\n' _maps/**/*.dmm;	then
     echo
     echo "ERROR: found door names without proper upper-casing. Please upper-case your door names."
