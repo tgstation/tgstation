@@ -117,9 +117,8 @@
 /obj/projectile/bullet/pellet/shotgun_voidshot
 	name = "voidshot pellet"
 	damage = 8 // * 5 pellets = 40 brute
-	damage_dropoff_per_tile = 0.3 // slightly longer ranged
-	wound_bonus = 10
-	bare_wound_bonus = 12.5
+	wound_bonus = 6
+	bare_wound_bonus = 10
 	wound_falloff_tile = -1.5
 	weak_against_armour = TRUE
 	speed = 0.5
