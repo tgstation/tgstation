@@ -3,7 +3,6 @@
 	name = "\improper Podperson"
 	plural_form = "Podpeople"
 	id = SPECIES_PODPERSON
-	default_color = "59CE00"
 	species_traits = list(MUTCOLORS, EYECOLOR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
@@ -37,6 +36,8 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/pod,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/pod,
 	)
+
+	ass_image = 'icons/ass/asspodperson.png'
 
 /datum/species/pod/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD)

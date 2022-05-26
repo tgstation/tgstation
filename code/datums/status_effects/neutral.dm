@@ -343,14 +343,14 @@
 
 		//phase 1
 		if(1 to EIGENSTASIUM_PHASE_1_END)
-			owner.Jitter(2)
+			owner.set_timed_status_effect(4 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			owner.adjust_nutrition(-4)
 
 		//phase 2
 		if(EIGENSTASIUM_PHASE_1_END to EIGENSTASIUM_PHASE_2_END)
 			if(current_cycle == 51)
 				to_chat(owner, span_userdanger("You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!"))
-				owner.Jitter(200)
+				owner.set_timed_status_effect(400 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 				owner.Knockdown(10)
 
 			var/list/items = list()
@@ -378,7 +378,7 @@
 			//Clone function - spawns a clone then deletes it - simulates multiple copies of the player teleporting in
 			switch(phase_3_cycle) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 				if(0)
-					owner.Jitter(100)
+					owner.set_timed_status_effect(200 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 					to_chat(owner, span_userdanger("Your eigenstate starts to rip apart, drawing in alternative reality versions of yourself!"))
 				if(1)
 					var/typepath = owner.type
@@ -407,7 +407,7 @@
 			do_teleport(owner, get_turf(owner), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 			do_sparks(5, FALSE, owner)
 			owner.Sleeping(100)
-			owner.Jitter(50)
+			owner.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 			to_chat(owner, span_userdanger("You feel your eigenstate settle, as \"you\" become an alternative version of yourself!"))
 			owner.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 			log_game("FERMICHEM: [owner] ckey: [owner.key] has become an alternative universe version of themselves.")

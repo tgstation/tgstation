@@ -84,7 +84,7 @@
 #define DOOR_VISION_DISTANCE 11 ///The maximum distance a door will see out to
 
 /obj/machinery/door/airlock
-	name = "airlock"
+	name = "Airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
 	max_integrity = 300
@@ -1109,11 +1109,9 @@
 		return
 
 	if(!operating)
-		if(istype(I, /obj/item/fireaxe)) //being fireaxe'd
-			var/obj/item/fireaxe/axe = I
-			if(axe && !axe.wielded)
-				to_chat(user, span_warning("You need to be wielding \the [axe] to do that!"))
-				return
+		if(istype(I, /obj/item/fireaxe) && !HAS_TRAIT(I, TRAIT_WIELDED)) //being fireaxe'd
+			to_chat(user, span_warning("You need to be wielding [I] to do that!"))
+			return
 		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 
 /obj/machinery/door/airlock/open(forced=0)

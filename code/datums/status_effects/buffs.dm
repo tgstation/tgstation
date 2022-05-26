@@ -319,8 +319,8 @@
 /datum/status_effect/good_music/tick()
 	if(owner.can_hear())
 		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/dizziness)
-		owner.jitteriness = max(0, owner.jitteriness - 2)
-		owner.set_confusion(max(0, owner.get_confusion() - 1))
+		owner.adjust_timed_status_effect(-4 SECONDS, /datum/status_effect/jitter)
+		owner.adjust_timed_status_effect(-1 SECONDS, /datum/status_effect/confusion)
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 
 /atom/movable/screen/alert/status_effect/regenerative_core
@@ -517,6 +517,11 @@
 	if(!length(blades))
 		return
 
+	if(HAS_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED))
+		return
+
+	ADD_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED, type)
+
 	var/obj/effect/floating_blade/to_remove = blades[1]
 
 	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
@@ -527,6 +532,8 @@
 	)
 
 	qdel(to_remove)
+
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, type), 1)
 
 	return SHIELD_BLOCK
 

@@ -714,7 +714,6 @@
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux
-	. += limb
 
 	if(animal_origin)
 		if(IS_ORGANIC_LIMB(src))
@@ -731,6 +730,7 @@
 			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, alpha = limb.alpha)
 			limb_em_block.dir = image_dir
 			limb.overlays += limb_em_block
+		. += limb
 		return
 
 	//HUSK SHIIIIT
@@ -738,6 +738,7 @@
 		limb.icon = icon_husk
 		limb.icon_state = "[husk_type]_husk_[body_zone]"
 		icon_exists(limb.icon, limb.icon_state, scream = TRUE) //Prints a stack trace on the first failure of a given iconstate.
+		. += limb
 		if(aux_zone) //Hand shit
 			aux = image(limb.icon, "[husk_type]_husk_[aux_zone]", -aux_layer, image_dir)
 			. += aux
@@ -755,6 +756,16 @@
 		limb.icon_state = "[limb_id]_[body_zone]"
 
 	icon_exists(limb.icon, limb.icon_state, TRUE) //Prints a stack trace on the first failure of a given iconstate.
+
+	if(body_zone == BODY_ZONE_R_LEG)
+		var/obj/item/bodypart/r_leg/leg = src
+		var/limb_overlays = limb.overlays
+		var/image/new_limb = leg.generate_masked_right_leg(limb.icon, limb.icon_state, image_dir)
+		if(new_limb)
+			limb = new_limb
+			limb.overlays = limb_overlays
+
+	. += limb
 
 	if(aux_zone) //Hand shit
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)

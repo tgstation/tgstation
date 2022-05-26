@@ -19,6 +19,7 @@
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = local_turf.return_air()
+	environment_total_moles = env.total_moles()
 	var/datum/gas_mixture/removed
 	if(produces_gas)
 		//Remove gas from surrounding area
@@ -121,8 +122,9 @@
 			has_holes = TRUE
 			break
 
-	//Power only starts affecting damage when it is above 5000
-	damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
+	var/cascade_multiplier = cascade_initiated ? 0.25 : 1
+	//Power only starts affecting damage when it is above 5000 (1250 when a cascade is occurring)
+	damage = max(damage + (max(power - (POWER_PENALTY_THRESHOLD * cascade_multiplier), 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
 	//Gas based damage.
 	if(can_process_atmos)
@@ -131,8 +133,8 @@
 		//Heat and mols account for each other, a lot of hot mols are more damaging then a few
 		//Mols start to have a positive effect on damage after 350
 		damage = max(damage + (max(clamp(removed.total_moles() / 200, 0.5, 1) * removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
-		//Molar count only starts affecting damage when it is above 1800
-		damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
+		//Molar count only starts affecting damage when it is above 1800 (450 when a cascade is occurring)
+		damage = max(damage + (max(combined_gas - (MOLE_PENALTY_THRESHOLD * cascade_multiplier), 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
 
 		//There might be a way to integrate healing and hurting via heat
 		//healing damage

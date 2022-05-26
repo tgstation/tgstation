@@ -4,7 +4,6 @@
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
 	say_mod = "hisses"
-	default_color = COLOR_VIBRANT_LIME
 	species_traits = list(MUTCOLORS, EYECOLOR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
@@ -188,6 +187,7 @@ Lizard subspecies: ASHWALKERS
 		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_VIRUSIMMUNE,
+		TRAIT_ILLITERATE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
 	digitigrade_customization = DIGITIGRADE_FORCED
