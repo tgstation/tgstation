@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes: 
-  - bugfix: "Fixes stopping, dropping and rolling not extinguishing your clothing"
