@@ -3807,7 +3807,7 @@
 	name = "Engineering Secure Storage";
 	pixel_x = 25;
 	pixel_y = 23;
-	req_access = list("away_general")
+	req_access = list("engine_equip")
 	},
 /obj/item/shard/plasma,
 /turf/open/floor/engine/airless,
