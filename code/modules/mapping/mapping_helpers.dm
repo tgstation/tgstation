@@ -189,7 +189,7 @@
 
 
 /obj/effect/mapping_helpers/airlock/unres
-	name = "airlock unresctricted side helper"
+	name = "airlock unrestricted side helper"
 	icon_state = "airlock_unres_helper"
 
 /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
