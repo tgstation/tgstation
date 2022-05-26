@@ -142,7 +142,7 @@
 "W" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "X" = (
 /obj/structure/mirror/directional/north,
 /obj/structure/sink{
@@ -154,7 +154,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "Z" = (
 /obj/machinery/duct,
 /turf/open/floor/iron/dark,

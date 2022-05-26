@@ -1,0 +1,5 @@
+author: "Jolly"
+delete-after: True
+changes: 
+  - bugfix: "Scientists should now be able to access the mass driver on Kilo once more."
+  - bugfix: "Kilo had some of its areas fixed."

@@ -50797,6 +50797,8 @@
 /area/station/commons/vacant_room/commissary)
 "qsX" = (
 /obj/structure/table,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
 /obj/item/assembly/flash/handheld,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
