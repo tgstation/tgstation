@@ -43,10 +43,17 @@
 	//Handle the lawcap
 	if(law_datum)
 		var/tot_laws = 0
-		for(var/lawlist in list(law_datum.inherent, law_datum.supplied, law_datum.ion, law_datum.hacked, laws))
+		var/included_lawsets = list(law_datum.supplied, law_datum.ion, law_datum.hacked, laws)
+
+		// if the ai module is a core module we don't count inherent laws since they will be replaced
+		if(!istype(src, /obj/item/ai_module/core))
+			included_lawsets += law_datum.inherent
+
+		for(var/lawlist in included_lawsets)
 			for(var/mylaw in lawlist)
 				if(mylaw != "")
 					tot_laws++
+
 		if(tot_laws > CONFIG_GET(number/silicon_max_law_amount) && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
 			to_chat(user, span_alert("Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws."))
 			message_admins("[ADMIN_LOOKUPFLW(user)] tried to upload laws to [law_datum.owner ? ADMIN_LOOKUPFLW(law_datum.owner) : "an AI core"] that would exceed the law cap.")
