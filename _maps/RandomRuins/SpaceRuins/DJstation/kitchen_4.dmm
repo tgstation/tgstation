@@ -5,7 +5,7 @@
 "b" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "c" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
@@ -14,7 +14,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
 /turf/template_noop,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "f" = (
 /obj/machinery/door/window{
 	name = "Kitchen Coldroom"

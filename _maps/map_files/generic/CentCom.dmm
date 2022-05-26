@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "ac" = (
 /turf/closed/indestructible/fakedoor{
 	name = "Sub-Laboratory Elevator"
@@ -9,7 +9,7 @@
 /area/centcom/syndicate_mothership/control)
 "ad" = (
 /turf/open/space,
-/area/misc/space)
+/area/space)
 "af" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/railing/corner,
@@ -990,7 +990,7 @@
 	dir = 5
 	},
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "cS" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -2043,7 +2043,7 @@
 	name = "easter egg"
 	},
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "fT" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -2082,7 +2082,7 @@
 "fZ" = (
 /obj/effect/landmark/ctf,
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "ga" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -2219,7 +2219,7 @@
 "gt" = (
 /obj/effect/landmark/mafia_game_area,
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "gu" = (
 /turf/closed/indestructible/splashscreen,
 /area/misc/start)
@@ -2697,7 +2697,7 @@
 /area/centcom/central_command_areas/fore)
 "hH" = (
 /turf/open/floor/holofloor/hyperspace,
-/area/misc/space)
+/area/space)
 "hI" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -3401,7 +3401,7 @@
 "jA" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/holofloor/hyperspace,
-/area/misc/space)
+/area/space)
 "jB" = (
 /obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/stripes/line{
@@ -3421,7 +3421,7 @@
 	width = 20
 	},
 /turf/open/space,
-/area/misc/space)
+/area/space)
 "jD" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 8
@@ -4117,7 +4117,7 @@
 /area/centcom/abductor_ship)
 "lI" = (
 /turf/open/space/transit,
-/area/misc/space)
+/area/space)
 "lJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office";
@@ -5509,7 +5509,7 @@
 	width = 5
 	},
 /turf/open/space,
-/area/misc/space)
+/area/space)
 "pB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -7200,7 +7200,7 @@
 	width = 50
 	},
 /turf/open/space,
-/area/misc/space)
+/area/space)
 "vj" = (
 /turf/open/floor/wood,
 /area/centcom/wizard_station)
@@ -8367,7 +8367,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction,
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "yO" = (
 /obj/machinery/computer/communications,
 /obj/machinery/status_display/evac/directional/north,
@@ -12369,7 +12369,7 @@
 	width = 8
 	},
 /turf/open/space/basic,
-/area/misc/space)
+/area/space)
 "Kl" = (
 /obj/machinery/camera/autoname/directional/south{
 	network = list("nukie")
@@ -12526,7 +12526,7 @@
 	width = 3
 	},
 /turf/open/space,
-/area/misc/space)
+/area/space)
 "KM" = (
 /obj/docking_port/stationary{
 	dwidth = 1;
@@ -12536,7 +12536,7 @@
 	width = 3
 	},
 /turf/open/space,
-/area/misc/space)
+/area/space)
 "KN" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
@@ -12728,7 +12728,7 @@
 	width = 3
 	},
 /turf/open/space,
-/area/misc/space)
+/area/space)
 "Lt" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/centcom/central_command_areas/evacuation/ship)
@@ -12758,7 +12758,7 @@
 	width = 5
 	},
 /turf/open/space,
-/area/misc/space)
+/area/space)
 "LA" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
@@ -12976,7 +12976,7 @@
 	dir = 9
 	},
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "Mr" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -13504,7 +13504,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "NR" = (
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/mineral/titanium,
@@ -13878,7 +13878,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "OO" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -14623,7 +14623,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "QT" = (
 /obj/structure/chair/stool/directional/south,
 /obj/structure/sign/map/right{
@@ -15830,7 +15830,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/tank/nitrogen,
 /turf/open/space/basic,
-/area/misc/space/nearstation)
+/area/space/nearstation)
 "Uh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -17716,7 +17716,7 @@
 "Zb" = (
 /obj/machinery/door/poddoor/shuttledock{
 	checkdir = 1;
-	name = "syndicate blast door";
+	name = "Syndicate Blast Door";
 	turftype = /turf/open/misc/asteroid/snow
 	},
 /turf/open/floor/plating,
