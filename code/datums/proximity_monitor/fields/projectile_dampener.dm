@@ -1,7 +1,7 @@
 
 //Projectile dampening field that slows projectiles and lowers their damage for an energy cost deducted every 1/5 second.
 //Only use square radius for this!
-/datum/proximity_monitor/advanced/peaceborg_dampener
+/datum/proximity_monitor/advanced/projectile_dampener
 	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
 	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
 	var/static/image/edgeturf_west = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west")
@@ -11,43 +11,33 @@
 	var/static/image/northeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast")
 	var/static/image/southeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
 	var/static/image/generic_edge = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_generic")
-	var/obj/item/borg/projectile_dampen/projector = null
 	var/list/obj/projectile/tracked = list()
 	var/list/obj/projectile/staging = list()
 	// lazylist that keeps track of the overlays added to the edge of the field
 	var/list/edgeturf_effects
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, obj/item/borg/projectile_dampen/projector)
+/datum/proximity_monitor/advanced/projectile_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector)
 	..()
-	src.projector = projector
+	RegisterSignal(projector, COMSIG_PARENT_QDELETING, .proc/on_projector_del)
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
-	projector = null
+/datum/proximity_monitor/advanced/projectile_dampener/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
+	for(var/obj/projectile/projectile in tracked)
+		release_projectile(projectile)
 	return ..()
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/process()
-	if(!istype(projector))
-		qdel(src)
-		return
+/datum/proximity_monitor/advanced/projectile_dampener/process()
 	var/list/ranged = list()
-	for(var/obj/projectile/P in range(current_range, get_turf(host)))
-		ranged += P
-	for(var/obj/projectile/P in tracked)
-		if(!(P in ranged) || !P.loc)
-			release_projectile(P)
-	for(var/mob/living/silicon/robot/R in range(current_range, get_turf(host)))
-		if(R.has_buckled_mobs())
-			for(var/mob/living/L in R.buckled_mobs)
-				L.visible_message(span_warning("[L] is knocked off of [R] by the charge in [R]'s chassis induced by the hyperkinetic dampener field!")) //I know it's bad.
-				L.Paralyze(10)
-				R.unbuckle_mob(L)
-				do_sparks(5, 0, L)
+	for(var/obj/projectile/projectile in range(current_range, get_turf(host)))
+		ranged += projectile
+	for(var/obj/projectile/projectile in tracked)
+		if(!(projectile in ranged) || !projectile.loc)
+			release_projectile(projectile)
 	..()
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/setup_edge_turf(turf/target)
+/datum/proximity_monitor/advanced/projectile_dampener/setup_edge_turf(turf/target)
 	. = ..()
 	var/image/overlay = get_edgeturf_overlay(get_edgeturf_direction(target))
 	var/obj/effect/abstract/effect = new(target) // Makes the field visible to players.
@@ -58,14 +48,14 @@
 	effect.plane = ABOVE_GAME_PLANE
 	LAZYSET(edgeturf_effects, target, effect)
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/target)
+/datum/proximity_monitor/advanced/projectile_dampener/cleanup_edge_turf(turf/target)
 	. = ..()
 	var/obj/effect/abstract/effect = LAZYACCESS(edgeturf_effects, target)
 	LAZYREMOVE(edgeturf_effects, target)
 	if(effect)
 		qdel(effect)
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/proc/get_edgeturf_overlay(direction)
+/datum/proximity_monitor/advanced/projectile_dampener/proc/get_edgeturf_overlay(direction)
 	switch(direction)
 		if(NORTH)
 			return edgeturf_north
@@ -86,24 +76,37 @@
 		else
 			return generic_edge
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/proc/capture_projectile(obj/projectile/P, track_projectile = TRUE)
-	if(P in tracked)
+/datum/proximity_monitor/advanced/projectile_dampener/proc/capture_projectile(obj/projectile/projectile)
+	if(projectile in tracked)
 		return
-	projector.dampen_projectile(P, track_projectile)
-	if(track_projectile)
-		tracked += P
+	SEND_SIGNAL(src, COMSIG_DAMPENER_CAPTURE, projectile)
+	tracked += projectile
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/proc/release_projectile(obj/projectile/P)
-	projector.restore_projectile(P)
-	tracked -= P
+/datum/proximity_monitor/advanced/projectile_dampener/proc/release_projectile(obj/projectile/projectile)
+	SEND_SIGNAL(src, COMSIG_DAMPENER_RELEASE, projectile)
+	tracked -= projectile
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_uncrossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/projectile_dampener/proc/on_projector_del(datum/source)
+	SIGNAL_HANDLER
+
+	qdel(src)
+
+/datum/proximity_monitor/advanced/projectile_dampener/field_edge_uncrossed(atom/movable/movable, turf/location)
 	if(istype(movable, /obj/projectile) && get_dist(movable, host) > current_range)
 		if(movable in tracked)
 			release_projectile(movable)
-		else
-			capture_projectile(movable, FALSE)
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_crossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/projectile_dampener/field_edge_crossed(atom/movable/movable, turf/location)
 	if(istype(movable, /obj/projectile) && !(movable in tracked))
 		capture_projectile(movable)
+
+/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/process(delta_time)
+	for(var/mob/living/silicon/robot/borg in range(current_range, get_turf(host)))
+		if(!borg.has_buckled_mobs())
+			continue
+		for(var/mob/living/buckled_mob in borg.buckled_mobs)
+			buckled_mob.visible_message(span_warning("[buckled_mob] is knocked off of [borg] by the charge in [borg]'s chassis induced by the hyperkinetic dampener field!")) //I know it's bad.
+			buckled_mob.Paralyze(1 SECONDS)
+			borg.unbuckle_mob(buckled_mob)
+			do_sparks(5, 0, buckled_mob)
+	..()
