@@ -6661,7 +6661,7 @@
 	},
 /obj/machinery/door/window/left/directional/south{
 	name = "Mass Driver Door";
-	req_access_txt = "8"
+	req_access = list("ordnance")
 	},
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
 /turf/open/floor/iron/showroomfloor,
@@ -22480,8 +22480,8 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft)
 "grK" = (
-/turf/closed/wall/r_wall,
-/area/misc/space)
+/turf/open/space/basic,
+/area/station/maintenance/disposal/incinerator)
 "grQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
@@ -78982,7 +78982,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/station/maintenance/port/greater)
+/area/misc/space/nearstation)
 "wlm" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/iron/dark,
@@ -80842,6 +80842,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver{
+	pixel_x = 24
+	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -97228,9 +97231,9 @@ aeu
 aeu
 aeu
 qJs
-afI
-cmJ
-afI
+acK
+acm
+acK
 qJs
 aeu
 vjh
@@ -97742,9 +97745,9 @@ vjh
 vjh
 aeu
 aDU
-cry
-cry
-cry
+aaa
+aaa
+aaa
 aoe
 aeu
 vjh
@@ -113740,7 +113743,7 @@ mLN
 acK
 yma
 tur
-grK
+yma
 yma
 kix
 yma
@@ -117592,7 +117595,7 @@ qpI
 lNn
 rTi
 acm
-aaa
+grK
 gGF
 aaa
 cmU
