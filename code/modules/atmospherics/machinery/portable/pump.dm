@@ -1,7 +1,3 @@
-///The machine pumps from the turf to the internal tank
-#define PUMP_IN 1
-///The machine pumps from the internal source to the turf
-#define PUMP_OUT 0
 ///Maximum settable pressure
 #define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 25)
 ///Minimum settable pressure
@@ -21,7 +17,7 @@
 	///Is the machine on?
 	var/on = FALSE
 	///What direction is the machine pumping (in or out)?
-	var/direction = PUMP_OUT
+	var/pumping_in = FALSE
 	///Player configurable, sets what's the release pressure
 	var/target_pressure = ONE_ATMOSPHERE
 
@@ -62,11 +58,11 @@
 	var/datum/gas_mixture/receiving
 
 	if (holding) //Work with tank when inserted, otherwise - with area
-		sending = (direction == PUMP_IN ? air_contents : holding.return_air())
-		receiving = (direction == PUMP_IN ? holding.return_air() : air_contents)
+		sending = (pumping_in ? air_contents : holding.return_air())
+		receiving = (pumping_in ? holding.return_air() : air_contents)
 	else
-		sending = (direction == PUMP_IN ? local_turf.return_air() : air_contents)
-		receiving = (direction == PUMP_IN ? air_contents : local_turf.return_air())
+		sending = (pumping_in ? local_turf.return_air() : air_contents)
+		receiving = (pumping_in ? air_contents : local_turf.return_air())
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
 		air_update_turf(FALSE, FALSE) // Update the environment if needed.
@@ -84,7 +80,7 @@
 		if(on)
 			SSair.start_processing_machine(src)
 	if(prob(100 / severity))
-		direction = PUMP_OUT
+		pumping_in = FALSE
 	target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
 	update_appearance()
 
@@ -96,7 +92,7 @@
 		if(on)
 			on = FALSE
 			update_appearance()
-	else if(on && holding && direction == PUMP_OUT)
+	else if(on && holding && !pumping_in)
 		investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
@@ -108,7 +104,7 @@
 /obj/machinery/portable_atmospherics/pump/ui_data()
 	var/data = list()
 	data["on"] = on
-	data["direction"] = direction == PUMP_IN ? TRUE : FALSE
+	data["direction"] = pumping_in
 	data["connected"] = connected_port ? TRUE : FALSE
 	data["source_one"] = connected_port ? "Port" : "Pump"
 	data["source_two"] = holding ? "Tank" : "Area"
@@ -142,16 +138,16 @@
 				if(n2o || plasma)
 					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [ADMIN_VERBOSEJMP(src)]")
 					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [AREACOORD(src)]")
-			else if(on && direction == PUMP_OUT)
+			else if(on && !pumping_in)
 				investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("direction")
-			if(direction == PUMP_OUT)
-				direction = PUMP_IN
+			if(!pumping_in)
+				pumping_in = TRUE
 			else
 				if(on && holding)
 					investigate_log("[key_name(usr)] started a transfer into [holding].", INVESTIGATE_ATMOS)
-				direction = PUMP_OUT
+				pumping_in = FALSE
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
